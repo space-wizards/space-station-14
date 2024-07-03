@@ -201,3 +201,15 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: MaterialGunpowder
+
+- type: reaction
+  id: GlassSheet # Altered version of the plastic sheet creation. Hope it works.
+  impact: Low
+  quantized: true
+  minTemp: 370
+  reactants:
+    Quartzite:
+      amount: 10
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SheetGlass1

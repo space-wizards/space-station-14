@@ -429,6 +429,17 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of crystalthistle seeds
+  description: "Like a bag of needles"
+  id: crystalthistleSeeds
+  components:
+    - type: Seed
+      seedId: crystalthistle
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/crystal_thistle.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of fly amanita spores
   description: "The iconic, extremely deadly mushroom to be used for purely ornamental purposes."
   id: FlyAmanitaSeeds

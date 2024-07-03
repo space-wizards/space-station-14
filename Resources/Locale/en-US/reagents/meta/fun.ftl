@@ -27,3 +27,6 @@ reagent-desc-laughter = Some say that this is the best medicine, but recent stud
 
 reagent-name-weh = juice that makes you Weh
 reagent-desc-weh = Pure essence of lizard plush. Makes you Weh!
+
+reagent-name-quartzite = quartzite
+reagent-desc-quartzite = Millions of microscopic crystaline shards. Will cause internal bleeding, do not drink.

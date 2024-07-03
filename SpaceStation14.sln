@@ -69,39 +69,39 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Shared.Scripting", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetSerializer", "RobustToolbox\NetSerializer\NetSerializer\NetSerializer.csproj", "{7B9472D3-79D4-48D1-9B22-BCDE518FE842}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.LoaderApi", "RobustToolbox\Robust.LoaderApi\Robust.LoaderApi\Robust.LoaderApi.csproj", "{1FAE651D-29D8-437A-9864-47CE0D180016}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.LoaderApi", "RobustToolbox\Robust.LoaderApi\Robust.LoaderApi\Robust.LoaderApi.csproj", "{1FAE651D-29D8-437A-9864-47CE0D180016}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Client.NameGenerator", "RobustToolbox\Robust.Client.NameGenerator\Robust.Client.NameGenerator.csproj", "{3CFEB7DB-12C6-46F3-89FC-1450F3016FFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Client.NameGenerator", "RobustToolbox\Robust.Client.NameGenerator\Robust.Client.NameGenerator.csproj", "{3CFEB7DB-12C6-46F3-89FC-1450F3016FFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Client.Injectors", "RobustToolbox\Robust.Client.Injectors\Robust.Client.Injectors.csproj", "{8922428F-17C3-47A7-BFE9-570DEB2464DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Client.Injectors", "RobustToolbox\Robust.Client.Injectors\Robust.Client.Injectors.csproj", "{8922428F-17C3-47A7-BFE9-570DEB2464DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlX.IL.Cecil", "RobustToolbox\XamlX\src\XamlX.IL.Cecil\XamlX.IL.Cecil.csproj", "{16F7DE32-0186-44B9-9345-0C20D1BF2422}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlX.IL.Cecil", "RobustToolbox\XamlX\src\XamlX.IL.Cecil\XamlX.IL.Cecil.csproj", "{16F7DE32-0186-44B9-9345-0C20D1BF2422}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XamlX", "XamlX", "{AFF53804-115F-4E67-B81F-26265EA27880}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlX", "RobustToolbox\XamlX\src\XamlX\XamlX.csproj", "{23F09C45-950E-4DB7-A465-E937450FF008}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlX", "RobustToolbox\XamlX\src\XamlX\XamlX.csproj", "{23F09C45-950E-4DB7-A465-E937450FF008}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlX.Runtime", "RobustToolbox\XamlX\src\XamlX.Runtime\XamlX.Runtime.csproj", "{440426C1-8DCA-43F6-967F-94439B8DAF47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamlX.Runtime", "RobustToolbox\XamlX\src\XamlX.Runtime\XamlX.Runtime.csproj", "{440426C1-8DCA-43F6-967F-94439B8DAF47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Tools", "Content.Tools\Content.Tools.csproj", "{75AB8F8D-9E56-4B12-85E3-E03A852B31CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Tools", "Content.Tools\Content.Tools.csproj", "{75AB8F8D-9E56-4B12-85E3-E03A852B31CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Analyzers", "RobustToolbox\Robust.Analyzers\Robust.Analyzers.csproj", "{88B0FC0F-7209-40E2-AF16-EB90AF727C5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Analyzers", "RobustToolbox\Robust.Analyzers\Robust.Analyzers.csproj", "{88B0FC0F-7209-40E2-AF16-EB90AF727C5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.YAMLLinter", "Content.YAMLLinter\Content.YAMLLinter.csproj", "{A59E2FCC-93CF-4886-8EA7-94F021A7475D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.YAMLLinter", "Content.YAMLLinter\Content.YAMLLinter.csproj", "{A59E2FCC-93CF-4886-8EA7-94F021A7475D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.Base", "RobustToolbox\Avalonia.Base\Avalonia.Base.csproj", "{A3C5B00A-D232-4A01-B82E-B0E58BFD5C12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.Base", "RobustToolbox\Avalonia.Base\Avalonia.Base.csproj", "{A3C5B00A-D232-4A01-B82E-B0E58BFD5C12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Benchmarks", "RobustToolbox\Robust.Benchmarks\Robust.Benchmarks.csproj", "{8A21C7CA-2EB8-40E5-8043-33582C06D139}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Benchmarks", "RobustToolbox\Robust.Benchmarks\Robust.Benchmarks.csproj", "{8A21C7CA-2EB8-40E5-8043-33582C06D139}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pow3r", "Pow3r\Pow3r.csproj", "{1C048C9F-00A9-4796-BE4D-BB36B7769720}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pow3r", "Pow3r\Pow3r.csproj", "{1C048C9F-00A9-4796-BE4D-BB36B7769720}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Shared.Database", "Content.Shared.Database\Content.Shared.Database.csproj", "{8842381D-3426-4BA8-93DA-599AB14D88E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Shared.Database", "Content.Shared.Database\Content.Shared.Database.csproj", "{8842381D-3426-4BA8-93DA-599AB14D88E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.MapRenderer", "Content.MapRenderer\Content.MapRenderer.csproj", "{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.MapRenderer", "Content.MapRenderer\Content.MapRenderer.csproj", "{199BBEA1-7627-434B-B6F6-0F52A7C0E1E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Packaging", "RobustToolbox\Robust.Packaging\Robust.Packaging.csproj", "{952AAF2A-DF63-4A7D-8094-3453893EBA80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Packaging", "RobustToolbox\Robust.Packaging\Robust.Packaging.csproj", "{952AAF2A-DF63-4A7D-8094-3453893EBA80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Packaging", "Content.Packaging\Content.Packaging.csproj", "{424445D4-F5D9-4CA9-A435-0A36E8AA28F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Packaging", "Content.Packaging\Content.Packaging.csproj", "{424445D4-F5D9-4CA9-A435-0A36E8AA28F3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project Files", "Project Files", "{EC27A16C-9412-4AA6-AE68-CAAB28882802}"
 	ProjectSection(SolutionItems) = preProject
@@ -121,13 +121,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project Files", "Project Fi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Replay", "Content.Replay\Content.Replay.csproj", "{A493616C-338D-47B7-8072-A7F14D034D0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Shared.CompNetworkGenerator", "RobustToolbox\Robust.Shared.CompNetworkGenerator\Robust.Shared.CompNetworkGenerator.csproj", "{07CA34A1-1D37-4771-A2E3-495A1044AE0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Shared.CompNetworkGenerator", "RobustToolbox\Robust.Shared.CompNetworkGenerator\Robust.Shared.CompNetworkGenerator.csproj", "{07CA34A1-1D37-4771-A2E3-495A1044AE0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Serialization.Generator", "RobustToolbox\Robust.Serialization.Generator\Robust.Serialization.Generator.csproj", "{6FBF108E-5CB5-47DE-8D7E-B496ABA9E3E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Serialization.Generator", "RobustToolbox\Robust.Serialization.Generator\Robust.Serialization.Generator.csproj", "{6FBF108E-5CB5-47DE-8D7E-B496ABA9E3E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.PatreonParser", "Content.PatreonParser\Content.PatreonParser.csproj", "{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.PatreonParser", "Content.PatreonParser\Content.PatreonParser.csproj", "{D97D8258-D915-4D1D-B1E3-1A8D00CF9EB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Robust.Analyzers.Tests", "RobustToolbox\Robust.Analyzers.Tests\Robust.Analyzers.Tests.csproj", "{83F510FE-9B50-4D96-AFAB-CC13998D6AFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Analyzers.Tests", "RobustToolbox\Robust.Analyzers.Tests\Robust.Analyzers.Tests.csproj", "{83F510FE-9B50-4D96-AFAB-CC13998D6AFE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Roslyn", "Roslyn", "{7844DA69-B0F0-49FB-A05E-ECA37372277A}"
 	ProjectSection(SolutionItems) = preProject
@@ -150,16 +150,16 @@ Global
 		{26AEEBB3-DDE7-443A-9F43-7BC7F4ACF6B5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{26AEEBB3-DDE7-443A-9F43-7BC7F4ACF6B5}.Tools|Any CPU.ActiveCfg = Tools|Any CPU
 		{26AEEBB3-DDE7-443A-9F43-7BC7F4ACF6B5}.Tools|Any CPU.Build.0 = Tools|Any CPU
-		{B38DBBD0-04C2-4D1A-84E2-B3446F6ADF2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B38DBBD0-04C2-4D1A-84E2-B3446F6ADF2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B38DBBD0-04C2-4D1A-84E2-B3446F6ADF2A}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{B38DBBD0-04C2-4D1A-84E2-B3446F6ADF2A}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{B38DBBD0-04C2-4D1A-84E2-B3446F6ADF2A}.DebugOpt|Any CPU.ActiveCfg = DebugOpt|Any CPU
 		{B38DBBD0-04C2-4D1A-84E2-B3446F6ADF2A}.DebugOpt|Any CPU.Build.0 = DebugOpt|Any CPU
 		{B38DBBD0-04C2-4D1A-84E2-B3446F6ADF2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B38DBBD0-04C2-4D1A-84E2-B3446F6ADF2A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B38DBBD0-04C2-4D1A-84E2-B3446F6ADF2A}.Tools|Any CPU.ActiveCfg = Tools|Any CPU
 		{B38DBBD0-04C2-4D1A-84E2-B3446F6ADF2A}.Tools|Any CPU.Build.0 = Tools|Any CPU
-		{A2E5F175-78AF-4DDD-8F97-E2D2552372ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A2E5F175-78AF-4DDD-8F97-E2D2552372ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2E5F175-78AF-4DDD-8F97-E2D2552372ED}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{A2E5F175-78AF-4DDD-8F97-E2D2552372ED}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{A2E5F175-78AF-4DDD-8F97-E2D2552372ED}.DebugOpt|Any CPU.ActiveCfg = DebugOpt|Any CPU
 		{A2E5F175-78AF-4DDD-8F97-E2D2552372ED}.DebugOpt|Any CPU.Build.0 = DebugOpt|Any CPU
 		{A2E5F175-78AF-4DDD-8F97-E2D2552372ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -462,21 +462,21 @@ Global
 		{41B450C0-A361-4CD7-8121-7072B8995CFC} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{7B9472D3-79D4-48D1-9B22-BCDE518FE842} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{1FAE651D-29D8-437A-9864-47CE0D180016} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
+		{3CFEB7DB-12C6-46F3-89FC-1450F3016FFA} = {7844DA69-B0F0-49FB-A05E-ECA37372277A}
 		{8922428F-17C3-47A7-BFE9-570DEB2464DA} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{16F7DE32-0186-44B9-9345-0C20D1BF2422} = {AFF53804-115F-4E67-B81F-26265EA27880}
 		{AFF53804-115F-4E67-B81F-26265EA27880} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{23F09C45-950E-4DB7-A465-E937450FF008} = {AFF53804-115F-4E67-B81F-26265EA27880}
 		{440426C1-8DCA-43F6-967F-94439B8DAF47} = {AFF53804-115F-4E67-B81F-26265EA27880}
+		{88B0FC0F-7209-40E2-AF16-EB90AF727C5B} = {7844DA69-B0F0-49FB-A05E-ECA37372277A}
 		{A3C5B00A-D232-4A01-B82E-B0E58BFD5C12} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{8A21C7CA-2EB8-40E5-8043-33582C06D139} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{952AAF2A-DF63-4A7D-8094-3453893EBA80} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{A965CB3B-FD31-44AF-8872-85ABA436098D} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
-		{7844DA69-B0F0-49FB-A05E-ECA37372277A} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
-		{3CFEB7DB-12C6-46F3-89FC-1450F3016FFA} = {7844DA69-B0F0-49FB-A05E-ECA37372277A}
-		{6FBF108E-5CB5-47DE-8D7E-B496ABA9E3E2} = {7844DA69-B0F0-49FB-A05E-ECA37372277A}
 		{07CA34A1-1D37-4771-A2E3-495A1044AE0B} = {7844DA69-B0F0-49FB-A05E-ECA37372277A}
-		{88B0FC0F-7209-40E2-AF16-EB90AF727C5B} = {7844DA69-B0F0-49FB-A05E-ECA37372277A}
+		{6FBF108E-5CB5-47DE-8D7E-B496ABA9E3E2} = {7844DA69-B0F0-49FB-A05E-ECA37372277A}
 		{83F510FE-9B50-4D96-AFAB-CC13998D6AFE} = {7844DA69-B0F0-49FB-A05E-ECA37372277A}
+		{7844DA69-B0F0-49FB-A05E-ECA37372277A} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA37ED9F-F8D6-468E-A101-658AD605B09A}

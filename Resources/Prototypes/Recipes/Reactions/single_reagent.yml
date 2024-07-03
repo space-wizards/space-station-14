@@ -56,3 +56,14 @@
       amount: 1
   products:
     Holywater: 1
+
+-type: reaction
+ id: botanyglass
+ impact: Low
+  minTemp: 347
+  reactants:
+    Quartzite:
+      amount: 10
+  effects: 
+  - !type:CreateEntityReactionEffect
+    entity: SheetGlass
