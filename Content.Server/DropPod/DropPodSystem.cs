@@ -161,7 +161,7 @@ namespace Content.Server.DropPod
             {
                 _alertLevelSystem.SetLevel(end_stationAlert_uid, "red", true, true, true);
                 _chat.DispatchGlobalAnnouncement($"{component.Text} X: {Coords.X} Y: {Coords.Y}", "Central Command", true, component.Sound, component.Color);
-                Thread.Sleep(component.Time * 1000); // We wait 1 second before disembarking... In general, you need 12 :)
+                Thread.Sleep(component.Time * 1000);
             }
 
             if (!TryComp<MapGridComponent>(end_station_uid, out var end_station_gridComp))
