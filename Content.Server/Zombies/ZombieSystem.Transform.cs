@@ -210,7 +210,7 @@ namespace Content.Server.Zombies
             MakeSentientCommand.MakeSentient(target, EntityManager);
 
             //Make the zombie not die in the cold. Good for space zombies
-            if (TryComp<TemperatureComponent>(target, out var tempComp))
+            if (TryComp<TemperatureDamageThresholdsComponent>(target, out var tempComp))
                 tempComp.ColdDamage.ClampMax(0);
 
             //Heals the zombie from all the damage it took while human
