@@ -32,6 +32,7 @@ public abstract class SharedDrunkSystem : EntitySystem
                 { HungerThreshold.Peckish, 1.2f },
                 { HungerThreshold.Starving, 1.2f },
                 { HungerThreshold.Dead, 1.5f }
+            }
 
             // Get the current hunger threshold multiplier
             if (hungerMultipliers.TryGetValue(hunger.CurrentThreshold, out var multiplier))
