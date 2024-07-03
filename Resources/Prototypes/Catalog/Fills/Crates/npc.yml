@@ -43,6 +43,9 @@
       - id: MobBingus
         prob: 0.005
         orGroup: MobCat
+      - id: MobPipi
+        prob: 0.005
+        orGroup: MobCat
 
 - type: entity
   id: CrateNPCChicken
@@ -264,3 +267,14 @@
     contents:
       - id: MobMothroach
         amount: 4
+
+- type: entity
+  id: CrateNPCFinfin
+  parent: CrateLivestock
+  name: fin fin crate
+  description: A crate containing your new best friend, imported straight from Teo. Adorable, but otherwise useless. Are you SURE you want to buy this one?
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobFinfin
+        amount: 1

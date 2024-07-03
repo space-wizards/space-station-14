@@ -18,6 +18,24 @@
         - ReagentId: THC
           Quantity: 15
 
+- type: entity
+  name: green marijuana leaves
+  parent: ProduceBase
+  id: LeavesGreenMarijuana
+  description: "Recently legalized in most galaxies."
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/greenMarijuana.rsi
+  - type: Produce
+    seedId: greenMarijuana
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: THC
+          Quantity: 15
+
 
 - type: entity
   name: dried cannabis leaves

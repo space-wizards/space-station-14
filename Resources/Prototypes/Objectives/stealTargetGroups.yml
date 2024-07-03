@@ -394,3 +394,10 @@
   sprite:
     sprite: Mobs/Animals/crab.rsi
     state: crab
+
+- type: stealTargetGroup
+  id: AnimalPipi
+  name: Pipi
+  sprite:
+    sprite: Mobs/Pets/pipi.rsi
+    state: pipi

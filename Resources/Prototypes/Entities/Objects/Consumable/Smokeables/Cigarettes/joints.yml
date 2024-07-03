@@ -28,7 +28,12 @@
         reagents:
           - ReagentId: THC
             Quantity: 20
-            
+      food:
+        maxVol: 30
+        reagents:
+          - ReagentId: THC
+            Quantity: 20
+
 - type: entity
   id: JointRainbow
   parent: Joint
@@ -42,6 +47,21 @@
   - type: SolutionContainerManager
     solutions:
       smokable:
+        maxVol: 20
+        reagents:
+        - ReagentId: SpaceDrugs
+          Quantity: 4
+        - ReagentId: Lipolicide
+          Quantity: 4
+        - ReagentId: MindbreakerToxin
+          Quantity: 2.66
+        - ReagentId: Happiness
+          Quantity: 2.66
+#       - ReagentId: ColorfulReagent
+#         Quantity: 1.33
+        - ReagentId: Psicodine
+          Quantity: 0.8
+      food:
         maxVol: 20
         reagents:
         - ReagentId: SpaceDrugs
@@ -87,6 +107,11 @@
         reagents:
           - ReagentId: THC
             Quantity: 20
+      food:
+        maxVol: 30
+        reagents:
+          - ReagentId: THC
+            Quantity: 20
 
 - type: entity
   id: BluntRainbow
@@ -101,6 +126,21 @@
   - type: SolutionContainerManager
     solutions:
       smokable:
+        maxVol: 20
+        reagents:
+        - ReagentId: SpaceDrugs
+          Quantity: 4
+        - ReagentId: Lipolicide
+          Quantity: 4
+        - ReagentId: MindbreakerToxin
+          Quantity: 2.66
+        - ReagentId: Happiness
+          Quantity: 2.66
+#       - ReagentId: ColorfulReagent
+#         Quantity: 1.33
+        - ReagentId: Psicodine
+          Quantity: 0.8
+      food:
         maxVol: 20
         reagents:
         - ReagentId: SpaceDrugs

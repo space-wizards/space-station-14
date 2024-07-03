@@ -422,6 +422,18 @@
       - ReagentId: TearGas
         Quantity: 50
 
+- type: entity
+  name: tomato grenade
+  description: Careful, it bites!
+  parent: SmokeGrenade
+  id: TomatoGrenade
+  components:
+  - type: SmokeOnTrigger
+    duration: 5
+    spreadAmount: 30
+  - type: SpawnOnTrigger
+    proto: MobTomatoKiller
+
 # Non-explosive "dummy" grenades to use as a distraction.
 
 - type: entity

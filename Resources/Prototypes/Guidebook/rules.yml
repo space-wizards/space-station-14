@@ -2,7 +2,7 @@
   id: DefaultRuleset
   name: guide-entry-rules
   ruleEntry: true
-  text: "/ServerInfo/Guidebook/ServerRules/DefaultRules.xml"
+  text: "/ServerInfo/Guidebook/ServerRules/darules.xml"
 
 - type: guideEntry
   id: CoreRuleset

@@ -153,6 +153,32 @@
       - MobBingus
 
 - type: entity
+  name: Pipi Spawner
+  id: SpawnMobCatKittenPipi
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobPipi
+
+- type: entity
+  name: Finfin Spawner
+  id: SpawnMobCatKittenFinfin
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobFinfin
+
+- type: entity
   name: Space Cat Spawner
   id: SpawnMobCatSpace
   parent: MarkerBase
@@ -193,6 +219,7 @@
       - MobCatException
       - MobCatFloppa
       - MobBingus
+      - MobPipi
 
 - type: entity
   name: Generic Cat Spawner
