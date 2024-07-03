@@ -91,6 +91,7 @@ public partial class MobStateSystem
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Critical);
                 break;
             case MobState.Dead:
+                EnsureComp<CollisionWakeComponent>(target);
                 _standing.Down(target);
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Dead);
                 break;
