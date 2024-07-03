@@ -13,7 +13,7 @@
   parent: ClothingEyesGlassesSunglasses
   id: ClothingEyesGlassesNoir
   name: noir glasses
-  description: This city ain't what it used to be...
+  description: This station ain't what it used to be...
   components:
   - type: ShaderClothing
     shader: GreyscaleFullscreen
