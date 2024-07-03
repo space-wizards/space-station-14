@@ -16,7 +16,6 @@
         - TabletopMachineMask
         layer:
         - TabletopMachineLayer
-        hard: false
   - type: ApcPowerReceiver
     powerLoad: 300
   - type: Appearance
