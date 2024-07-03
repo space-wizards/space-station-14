@@ -8,9 +8,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Temperature.Components;
 
 /// <summary>
-/// Handles changing temperature,
-/// informing others of the current temperature,
-/// and taking fire damage from high temperature.
+/// Handles tracking the temperature of an entity.
 /// </summary>
 [RegisterComponent]
 public sealed partial class TemperatureComponent : Component
@@ -21,22 +19,22 @@ public sealed partial class TemperatureComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float CurrentTemperature = Atmospherics.T20C;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [Obsolete][DataField, ViewVariables(VVAccess.ReadWrite)]
     public float HeatDamageThreshold = 360f;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [Obsolete][DataField, ViewVariables(VVAccess.ReadWrite)]
     public float ColdDamageThreshold = 260f;
 
     /// <summary>
     /// Overrides HeatDamageThreshold if the entity's within a parent with the TemperatureDamageThresholdsComponent component.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [Obsolete][DataField, ViewVariables(VVAccess.ReadWrite)]
     public float? ParentHeatDamageThreshold;
 
     /// <summary>
     /// Overrides ColdDamageThreshold if the entity's within a parent with the TemperatureDamageThresholdsComponent component.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [Obsolete][DataField, ViewVariables(VVAccess.ReadWrite)]
     public float? ParentColdDamageThreshold;
 
     /// <summary>
@@ -60,10 +58,10 @@ public sealed partial class TemperatureComponent : Component
         }
     }
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [Obsolete][DataField, ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier ColdDamage = new();
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [Obsolete][DataField, ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier HeatDamage = new();
 
     /// <summary>
@@ -72,18 +70,18 @@ public sealed partial class TemperatureComponent : Component
     /// <remarks>
     /// Okay it genuinely reaches this basically immediately for a plasma fire.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [Obsolete][DataField, ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 DamageCap = FixedPoint2.New(8);
 
     /// <summary>
     /// Used to keep track of when damage starts/stops. Useful for logs.
     /// </summary>
-    [DataField]
+    [Obsolete][DataField]
     public bool TakingDamage = false;
 
-    [DataField]
+    [Obsolete][DataField]
     public ProtoId<AlertPrototype> HotAlert = "Hot";
 
-    [DataField]
+    [Obsolete][DataField]
     public ProtoId<AlertPrototype> ColdAlert = "Cold";
 }
