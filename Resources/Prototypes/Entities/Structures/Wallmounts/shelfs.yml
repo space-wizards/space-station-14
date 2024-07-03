@@ -6,7 +6,6 @@
   name: shelf
   description: a strange place to place, well, anything really. You feel like you shouldn't be seeing this.'
   components:
-  # make proto's with various lock presets like with windoors
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Storage/Shelfs/wood.rsi
