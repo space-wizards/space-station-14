@@ -1,10 +1,10 @@
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mobs.Components
+
+[RegisterComponent]
+public sealed partial class AddCompOnMobStateChangeComponent : Component
 {
-    [RegisterComponent]
-    public sealed partial class AddCompOnMobStateChangeComponent : Component
-    {
     /// <summary>
     /// On this state the component will be given.
     /// </summary>
@@ -16,6 +16,4 @@ namespace Content.Shared.Mobs.Components
     /// </summary>
     [DataField]
     public ComponentRegistry Components = new();
-    }
 }
-
