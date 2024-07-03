@@ -70,12 +70,15 @@ public class RadialContainer : LayoutContainer
 	
     protected override void Draw(DrawingHandleScreen handle)
     {
+		
         const float baseRadius = 100f;
         const float radiusIncrement = 5f;
 		
+		//takes ammount of icons
         var children = ReserveSpaceForHiddenChildren ? Children : Children.Where(x => x.Visible);
         var childCount = children.Count();
 		
+		//Multiplies the number of icons by the radius increase value and add it to base radius value
 		Radius = baseRadius + (childCount * radiusIncrement);
 
         // Determine the size of the arc, accounting for clockwise and anti-clockwise arrangements
