@@ -7,7 +7,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Ghost
 {
     [AnyCommand]
-    public sealed class Ghost : IConsoleCommand
+    public sealed class GhostCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
