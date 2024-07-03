@@ -6,6 +6,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Administration;
 using Content.Shared.Clothing;
 using Content.Shared.Hands.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
@@ -144,7 +145,9 @@ namespace Content.Server.Administration.Commands
                     break;
 
                 // Don't require a player, so this works on Urists
-                profile ??= new HumanoidCharacterProfile();
+                profile ??= entityManager.TryGetComponent<HumanoidAppearanceComponent>(target, out var comp)
+                    ? HumanoidCharacterProfile.DefaultWithSpecies(comp.Species)
+                    : new HumanoidCharacterProfile();
                 // Try to get the user's existing loadout for the role
                 profile.Loadouts.TryGetValue(jobProtoId, out var roleLoadout);
 
