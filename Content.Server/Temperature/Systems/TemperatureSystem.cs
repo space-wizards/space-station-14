@@ -119,7 +119,6 @@ public sealed class TemperatureSystem : EntitySystem
         float lastTemp = temperature.CurrentTemperature;
         float delta = temperature.CurrentTemperature - temp;
         temperature.CurrentTemperature = temp;
-        Dirty(uid, temperature);
         RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta),
             true);
     }
@@ -140,7 +139,6 @@ public sealed class TemperatureSystem : EntitySystem
         float lastTemp = temperature.CurrentTemperature;
         temperature.CurrentTemperature += heatAmount / GetHeatCapacity(uid, temperature);
         float delta = temperature.CurrentTemperature - lastTemp;
-        Dirty(uid, temperature);
 
         RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta), true);
     }
