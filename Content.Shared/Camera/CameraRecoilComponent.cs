@@ -8,6 +8,7 @@ namespace Content.Shared.Camera;
 public sealed partial class CameraRecoilComponent : Component
 {
     public Vector2 CurrentKick { get; set; }
+    public Vector2 LastKick { get; set; }
     public float LastKickTime { get; set; }
 
     /// <summary>
