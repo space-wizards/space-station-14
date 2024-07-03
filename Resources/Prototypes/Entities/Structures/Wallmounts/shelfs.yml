@@ -61,11 +61,17 @@
   name: reinforced shelf
   description: It looks as strong as reality itself.
   components:
+  - type: Lock
+  - type: LockVisuals
   - type: Sprite
     sprite: Structures/Storage/Shelfs/wood.rsi
+    state: base
     layers:
     - state: rbase
       map: ["enum.StorageVisualLayers.Base"]
+    - state: unlocked
+      shader: unshaded
+      # used to keep the unlocked light visible while open. 
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
     - state: locked
@@ -75,8 +81,7 @@
   - type: EntityStorageVisuals
     stateDoorOpen: open
     stateDoorClosed: closed
-  - type: Lock
-  - type: LockVisuals
+
   - type: AccessReader
 
 # Normal
@@ -187,6 +192,17 @@
   name: sturdy wood shelf
   description: A safe place to put your favorite bottle of whiskey
   components:
+  - type: Sprite
+    sprite: Structures/Storage/Shelfs/wood.rsi
+    state: base
+    layers:
+    - state: rbase
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
   - type: Destructible
     thresholds:
     - trigger:
@@ -397,6 +413,8 @@
     layers:
     - state: base
       map: ["enum.StorageVisualLayers.Base"]
+    - state: unlocked
+      shader: unshaded
     - state: chem-0
     - map: ["enum.StorageFillLayers.Fill"]
     - state: closed
@@ -442,4 +460,17 @@
   - type: Construction
     graph: Shelf
     node: ShelfChemistry
+
+
+
+# Access presets
+# Try to keep alphabetical sorting if adding more
+
+- type: entity
+  parent: ShelfChemistry
+  id: ShelfChemistryChemistrySecure
+  suffix: Chemistry, Secure
+  components:
+  - type: AccessReader
+    access: [["Chemistry"]]
 
