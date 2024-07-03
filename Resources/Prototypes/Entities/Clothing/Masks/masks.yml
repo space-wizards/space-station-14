@@ -414,7 +414,7 @@
     accent: StutteringAccent
 
 - type: entity
-  parent: ClothingMaskGasExplorer
+  parent: ClothingMaskGasSecurity # GreyStation
   id: ClothingMaskGasSwat
   name: swat gas mask
   description: A elite issue Security gas mask.
@@ -423,6 +423,13 @@
     sprite: Clothing/Mask/swat.rsi
   - type: Clothing
     sprite: Clothing/Mask/swat.rsi
+  - type: Armor # GreyStation - Changes to match old stats of explorer's mask
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.95
+        Heat: 0.95
   - type: Tag
     tags:
     - WhitelistChameleon
