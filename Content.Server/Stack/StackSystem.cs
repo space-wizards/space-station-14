@@ -15,6 +15,7 @@ namespace Content.Server.Stack
     public sealed class StackSystem : SharedStackSystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IComponentFactory _compFactory = default!;
 
         public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
 
@@ -100,19 +101,55 @@ namespace Content.Server.Stack
         /// </summary>
         public List<EntityUid> SpawnMultiple(string entityPrototype, int amount, EntityCoordinates spawnPosition)
         {
-            var proto = _prototypeManager.Index<EntityPrototype>(entityPrototype);
-            proto.TryGetComponent<StackComponent>(out var stack);
-            var maxCountPerStack = GetMaxCount(stack);
+            var spawns = CalculateSpawns(entityPrototype, amount);
+
             var spawnedEnts = new List<EntityUid>();
+            foreach (var count in spawns)
+            {
+                var entity = SpawnAtPosition(entityPrototype, spawnPosition);
+                spawnedEnts.Add(entity);
+                SetCount(entity, count);
+            }
+
+            return spawnedEnts;
+        }
+
+        /// <inheritdoc cref="SpawnMultiple(string,int,EntityCoordinates)"/>
+        public List<EntityUid> SpawnMultiple(string entityPrototype, int amount, EntityUid target)
+        {
+            var spawns = CalculateSpawns(entityPrototype, amount);
+
+            var spawnedEnts = new List<EntityUid>();
+            foreach (var count in spawns)
+            {
+                var entity = SpawnNextToOrDrop(entityPrototype, target);
+                spawnedEnts.Add(entity);
+                SetCount(entity, count);
+            }
+
+            return spawnedEnts;
+        }
+
+        /// <summary>
+        /// Calculates how many stacks to spawn that total up to <paramref name="amount"/>.
+        /// </summary>
+        /// <param name="entityPrototype">The stack to spawn.</param>
+        /// <param name="amount">The amount of pieces across all stacks.</param>
+        /// <returns>The list of stack counts per entity.</returns>
+        private List<int> CalculateSpawns(string entityPrototype, int amount)
+        {
+            var proto = _prototypeManager.Index<EntityPrototype>(entityPrototype);
+            proto.TryGetComponent<StackComponent>(out var stack, _compFactory);
+            var maxCountPerStack = GetMaxCount(stack);
+            var amounts = new List<int>();
             while (amount > 0)
             {
-                var entity = Spawn(entityPrototype, spawnPosition);
-                spawnedEnts.Add(entity);
                 var countAmount = Math.Min(maxCountPerStack, amount);
-                SetCount(entity, countAmount);
                 amount -= countAmount;
+                amounts.Add(countAmount);
             }
-            return spawnedEnts;
+
+            return amounts;
         }
 
         private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)
