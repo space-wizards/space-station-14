@@ -82,17 +82,17 @@ namespace Content.Server.DropPod
 
         private void OnStartLandingButtonPressed(EntityUid uid, DropPodConsoleComponent component, DropPodStartMessage message)
         {
-            EntityUid end_station_uid = uid; // пока присваиваем вообще не нужное значение
-            EntityUid end_stationAlert_uid = uid; // пока присваиваем вообще не нужное значение
-            EntityUid start_station_uid = uid; // пока присваиваем вообще не нужное значение
+            EntityUid end_station_uid = uid;
+            EntityUid end_stationAlert_uid = uid;
+            EntityUid start_station_uid = uid;
             var x_form = Transform(uid);
             var Coords = x_form.Coordinates;
             int count = 0;
 
-            var query_point = AllEntityQuery<LandingPointComponent>(); // находим все точки посадки
+            var query_point = AllEntityQuery<LandingPointComponent>();
             while (query_point.MoveNext(out var item_uid, out var item_comp))
             {
-                if (item_comp.UIN == UIN) // находим выбранную точку посадки
+                if (item_comp.UIN == UIN)
                 {
                     x_form = Transform(item_uid);
                     Coords = x_form.Coordinates;
@@ -101,7 +101,7 @@ namespace Content.Server.DropPod
                     {
                         if (Transform(st_uid).MapID == x_form.MapID)
                         {
-                            end_station_uid = st_uid; // получаем uid станции, на которой произойдет высадка Nuke Ops
+                            end_station_uid = st_uid;
                             break;
                         }
                     }
