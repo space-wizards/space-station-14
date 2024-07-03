@@ -1,4 +1,4 @@
-﻿using Content.Shared.ActionBlocker;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -7,6 +7,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
@@ -25,6 +26,7 @@ public sealed class SmartEquipSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -182,7 +184,7 @@ public sealed class SmartEquipSystem : EntitySystem
             foreach (var slot in slots.Slots.Values)
             {
                 if (!slot.HasItem
-                    && (slot.Whitelist?.IsValid(handItem.Value, EntityManager) ?? true)
+                    && _whitelistSystem.IsWhitelistPassOrNull(slot.Whitelist, handItem.Value)
                     && slot.Priority > (toInsertTo?.Priority ?? int.MinValue))
                 {
                     toInsertTo = slot;

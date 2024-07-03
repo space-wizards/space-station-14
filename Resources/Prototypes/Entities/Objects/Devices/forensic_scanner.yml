@@ -9,6 +9,7 @@
     state: forensicnew
   - type: Item
     size: Small
+    storedRotation: 90
   - type: Clothing
     sprite: Objects/Devices/forensic_scanner.rsi
     quickEquip: false

@@ -160,7 +160,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (explosive.Exploded)
             return;
 
-        explosive.Exploded = true;
+        explosive.Exploded = !explosive.Repeatable;
 
         // Override the explosion intensity if optional arguments were provided.
         if (radius != null)
@@ -423,7 +423,10 @@ public sealed partial class ExplosionSystem : EntitySystem
     {
         var value = MathF.Round((1f - component.DamageCoefficient) * 100, 1);
 
+        if (value == 0)
+            return;
+
         args.Msg.PushNewline();
-        args.Msg.AddMarkup(Loc.GetString(component.Examine, ("value", value)));
+        args.Msg.AddMarkupOrThrow(Loc.GetString(component.Examine, ("value", value)));
     }
 }

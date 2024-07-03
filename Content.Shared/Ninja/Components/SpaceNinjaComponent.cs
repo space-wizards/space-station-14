@@ -1,6 +1,7 @@
+using Content.Shared.Alert;
 using Content.Shared.Ninja.Systems;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Ninja.Components;
 
@@ -35,4 +36,25 @@ public sealed partial class SpaceNinjaComponent : Component
     /// </summary>
     [DataField("katana"), AutoNetworkedField]
     public EntityUid? Katana;
+
+    /// <summary>
+    /// Objective to complete after calling in a threat.
+    /// </summary>
+    [DataField]
+    public EntProtoId TerrorObjective = "TerrorObjective";
+
+    /// <summary>
+    /// Objective to complete after setting everyone to arrest.
+    /// </summary>
+    [DataField]
+    public EntProtoId MassArrestObjective = "MassArrestObjective";
+
+    /// <summary>
+    /// Objective to complete after the spider charge detonates.
+    /// </summary>
+    [DataField]
+    public EntProtoId SpiderChargeObjective = "SpiderChargeObjective";
+
+    [DataField]
+    public ProtoId<AlertPrototype> SuitPowerAlert = "SuitPower";
 }

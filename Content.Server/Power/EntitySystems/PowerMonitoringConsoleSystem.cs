@@ -6,6 +6,7 @@ using Content.Server.Power.Nodes;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Pinpointer;
 using Content.Shared.Power;
 using JetBrains.Annotations;
@@ -13,7 +14,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Server.GameTicking.Components;
 
 namespace Content.Server.Power.EntitySystems;
 

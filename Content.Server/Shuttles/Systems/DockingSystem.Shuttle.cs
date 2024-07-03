@@ -46,13 +46,13 @@ public sealed partial class DockingSystem
        FixturesComponent shuttleFixtures,
        MapGridComponent grid,
        bool isMap,
-       out Matrix3 matty,
+       out Matrix3x2 matty,
        out Box2 shuttleDockedAABB,
        out Angle gridRotation)
    {
        shuttleDockedAABB = Box2.UnitCentered;
        gridRotation = Angle.Zero;
-       matty = Matrix3.Identity;
+       matty = Matrix3x2.Identity;
 
        if (shuttleDock.Docked ||
            gridDock.Docked ||
@@ -71,9 +71,9 @@ public sealed partial class DockingSystem
        var gridDockAngle = gridDockXform.LocalRotation.Opposite();
        var offsetAngle = gridDockAngle - shuttleDockAngle;
 
-       var stationDockMatrix = Matrix3.CreateInverseTransform(stationDockPos, shuttleDockAngle);
-       var gridXformMatrix = Matrix3.CreateTransform(gridDockXform.LocalPosition, gridDockAngle);
-       Matrix3.Multiply(in stationDockMatrix, in gridXformMatrix, out matty);
+       var stationDockMatrix = Matrix3Helpers.CreateInverseTransform(stationDockPos, shuttleDockAngle);
+       var gridXformMatrix = Matrix3Helpers.CreateTransform(gridDockXform.LocalPosition, gridDockAngle);
+       matty = Matrix3x2.Multiply(stationDockMatrix, gridXformMatrix);
 
        if (!ValidSpawn(grid, matty, offsetAngle, shuttleFixtures, isMap))
            return false;
@@ -193,7 +193,7 @@ public sealed partial class DockingSystem
                    }
 
                    // Can't just use the AABB as we want to get bounds as tight as possible.
-                   var gridPosition = new EntityCoordinates(targetGrid, matty.Transform(Vector2.Zero));
+                   var gridPosition = new EntityCoordinates(targetGrid, Vector2.Transform(Vector2.Zero, matty));
                    var spawnPosition = new EntityCoordinates(targetGridXform.MapUid!.Value, gridPosition.ToMapPos(EntityManager, _transform));
 
                    // TODO: use tight bounds
@@ -303,9 +303,9 @@ public sealed partial class DockingSystem
    /// <summary>
    /// Checks whether the shuttle can warp to the specified position.
    /// </summary>
-   private bool ValidSpawn(MapGridComponent grid, Matrix3 matty, Angle angle, FixturesComponent shuttleFixturesComp, bool isMap)
+   private bool ValidSpawn(MapGridComponent grid, Matrix3x2 matty, Angle angle, FixturesComponent shuttleFixturesComp, bool isMap)
    {
-       var transform = new Transform(matty.Transform(Vector2.Zero), angle);
+       var transform = new Transform(Vector2.Transform(Vector2.Zero, matty), angle);
 
        // Because some docking bounds are tight af need to check each chunk individually
        foreach (var fix in shuttleFixturesComp.Fixtures.Values)

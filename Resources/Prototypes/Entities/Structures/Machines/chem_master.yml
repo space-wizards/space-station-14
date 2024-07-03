@@ -1,5 +1,5 @@
 - type: entity
-  id: chem_master
+  id: ChemMaster
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: ChemMaster 4000
   description: An industrial grade chemical manipulator with pill and bottle production included.

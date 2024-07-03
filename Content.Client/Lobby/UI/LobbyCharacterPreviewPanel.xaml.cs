@@ -10,12 +10,16 @@ namespace Content.Client.Lobby.UI;
 [GenerateTypedNameReferences]
 public sealed partial class LobbyCharacterPreviewPanel : Control
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
+
     public Button CharacterSetupButton => CharacterSetup;
+
+    private EntityUid? _previewDummy;
 
     public LobbyCharacterPreviewPanel()
     {
         RobustXamlLoader.Load(this);
-        UserInterfaceManager.GetUIController<LobbyUIController>().SetPreviewPanel(this);
+        IoCManager.InjectDependencies(this);
     }
 
     public void SetLoaded(bool value)
@@ -26,11 +30,18 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
 
     public void SetSummaryText(string value)
     {
-        Summary.Text = string.Empty;
+        Summary.Text = value;
     }
 
     public void SetSprite(EntityUid uid)
     {
+        if (_previewDummy != null)
+        {
+            _entManager.DeleteEntity(_previewDummy);
+        }
+
+        _previewDummy = uid;
+
         ViewBox.DisposeAllChildren();
         var spriteView = new SpriteView
         {
@@ -41,5 +52,12 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
         };
         spriteView.SetEntity(uid);
         ViewBox.AddChild(spriteView);
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        _entManager.DeleteEntity(_previewDummy);
+        _previewDummy = null;
     }
 }

@@ -34,6 +34,8 @@ public sealed partial class SlotDefinition
 
     [DataField("dependsOn")] public string? DependsOn { get; private set; }
 
+    [DataField("dependsOnComponents")] public ComponentRegistry? DependsOnComponents { get; private set; }
+
     [DataField("displayName", required: true)]
     public string DisplayName { get; private set; } = string.Empty;
 
