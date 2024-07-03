@@ -47,6 +47,16 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
         if (stationEvent.StartAnnouncement != null)
             ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(stationEvent.StartAnnouncement), playSound: false, colorOverride: stationEvent.StartAnnouncementColor);
 
+        if (stationEvent.AlertLevel != null)
+        {
+            if (!TryGetRandomStation(out var chosenStation))
+                return;
+            if (_alertLevelSystem.GetLevel(chosenStation.Value) != stationEvent.NotIgnoredAlarmLevel)
+                return;
+
+            _alertLevelSystem.SetLevel(chosenStation.Value, stationEvent.AlertLevel, true, true, true);
+        }
+        
         Audio.PlayGlobal(stationEvent.StartAudio, Filter.Broadcast(), true);
     }
 
@@ -82,16 +92,6 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
 
         if (stationEvent.EndAnnouncement != null)
             ChatSystem.DispatchGlobalAnnouncement(Loc.GetString(stationEvent.EndAnnouncement), playSound: false, colorOverride: stationEvent.EndAnnouncementColor);
-
-        if (stationEvent.AlertLevel != null)
-        {
-            if (!TryGetRandomStation(out var chosenStation))
-                return;
-            if (_alertLevelSystem.GetLevel(chosenStation.Value) != stationEvent.NotIgnoredAlarmLevel)
-                return;
-
-            _alertLevelSystem.SetLevel(chosenStation.Value, stationEvent.AlertLevel, true, true, true);
-        }
 
         Audio.PlayGlobal(stationEvent.EndAudio, Filter.Broadcast(), true);
     }

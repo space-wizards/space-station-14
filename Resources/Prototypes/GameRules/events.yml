@@ -448,7 +448,7 @@
   id: SleeperAgents
   components:
   - type: GameRule
-    canFalseActivate: true
+    falseActivationProb: 0.5
   - type: StationEvent
     earliestStart: 30
     weight: 8
@@ -459,6 +459,7 @@
     startAudio:
       path: /Audio/Announcements/intercept.ogg
     duration: null # the rule has to last the whole round not 1 second
+  - type: StartStationEventRule
   - type: AntagSelection
     definitions:
     - prefRoles: [ TraitorSleeper ]

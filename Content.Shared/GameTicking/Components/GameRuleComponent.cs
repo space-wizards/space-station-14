@@ -18,10 +18,16 @@ public sealed partial class GameRuleComponent : Component
     public TimeSpan ActivatedAt;
 
     /// <summary>
-    /// bool on whether the event can be falsely triggered
+    /// If true - adds StationEvent when adding the event 
     /// </summary>
     [DataField]
-    public bool CanFalseActivate = false;
+    public bool NeedAddStationEvent = false;
+    
+    /// <summary>
+    /// A floating indicator of how often an event can be falsely triggered
+    /// </summary>
+    [DataField]
+    public float FalseActivationProb = 0f;
 
     /// <summary>
     /// The minimum amount of players needed for this game rule.
