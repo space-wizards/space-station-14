@@ -1,6 +1,7 @@
 using Content.Shared.Clothing;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.GreyStation.Clothing;
@@ -24,6 +25,8 @@ public sealed class ShaderClothingSystem : EntitySystem
 
         SubscribeLocalEvent<ShaderClothingComponent, ClothingGotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<ShaderClothingComponent, ClothingGotUnequippedEvent>(OnUnequipped);
+
+        SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnPlayerDetached);
     }
 
     private void OnEquipped(Entity<ShaderClothingComponent> ent, ref ClothingGotEquippedEvent args)
@@ -41,6 +44,11 @@ public sealed class ShaderClothingSystem : EntitySystem
         if (_player.LocalEntity != args.Wearer)
             return;
 
+        _overlayMan.RemoveOverlay(_overlay);
+    }
+
+    private void OnPlayerDetached(LocalPlayerDetachedEvent args)
+    {
         _overlayMan.RemoveOverlay(_overlay);
     }
 }
