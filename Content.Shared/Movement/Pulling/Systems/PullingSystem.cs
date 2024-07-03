@@ -255,7 +255,9 @@ public sealed class PullingSystem : EntitySystem
 
             if (TryComp<PhysicsComponent>(pullableUid, out var pullablePhysics))
             {
-                _physics.SetFixedRotation(pullableUid, pullableComp.PrevFixedRotation, body: pullablePhysics);
+                // check if we even need to set the FixedRotation to save a dirty call
+                if (pullablePhysics.FixedRotation != pullableComp.PrevFixedRotation)
+                    _physics.SetFixedRotation(pullableUid, pullableComp.PrevFixedRotation, body: pullablePhysics);
             }
         }
 
@@ -455,7 +457,9 @@ public sealed class PullingSystem : EntitySystem
             joint.MinLength = 0f;
             joint.Stiffness = 1f;
 
-            _physics.SetFixedRotation(pullableUid, pullableComp.FixedRotationOnPull, body: pullablePhysics);
+            // check if we actually need to set the FixedRotation to false to save a dirty call
+            if (pullablePhysics.FixedRotation && !pullableComp.FixedRotationOnPull)
+                _physics.SetFixedRotation(pullableUid, false, body: pullablePhysics);
         }
 
         // Messaging
