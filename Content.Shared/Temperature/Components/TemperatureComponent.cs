@@ -1,6 +1,6 @@
 using Content.Shared.Atmos;
 
-namespace Content.Server.Temperature.Components;
+namespace Content.Shared.Temperature.Components;
 
 /// <summary>
 /// Handles tracking the temperature of an entity.

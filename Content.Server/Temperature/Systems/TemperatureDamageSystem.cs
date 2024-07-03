@@ -3,6 +3,7 @@ using Content.Server.Temperature.Components;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Temperature.Components;
 
 namespace Content.Server.Temperature.Systems;
 
