@@ -455,11 +455,7 @@ public sealed class PullingSystem : EntitySystem
             joint.MinLength = 0f;
             joint.Stiffness = 1f;
 
-            // if the entity has a FixedRotation, and the pulling comp says don't keep it on pull,
-            // set FixedRotation to false while the object is being pulled.
-            // because we stored the setting in PrevFixedRotation, it gets restored when pulling stops.
-            if (pullablePhysics.FixedRotation && !pullableComp.FixedRotationOnPull)
-                _physics.SetFixedRotation(pullableUid, false, body: pullablePhysics);
+            _physics.SetFixedRotation(pullableUid, pullableComp.FixedRotationOnPull, body: pullablePhysics);
         }
 
         // Messaging
