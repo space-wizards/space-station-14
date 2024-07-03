@@ -182,7 +182,7 @@
   id: CigPackNewport
   parent: CigPackBase
   name: Newports
-  description: todo
+  description: You're gonna be rich bitch!
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/newport.rsi
