@@ -40,7 +40,7 @@ public sealed class MassHallucinationsRule : StationEventSystem<MassHallucinatio
     {
         base.Ended(uid, component, gameRule, args);
 
-        foreach (EntityUid ent in _toChange)
+        foreach (var ent in _toChange)
         {
             RemComp<ParacusiaComponent>(ent);
             RemComp<MassHallucinationsComponent>(ent);
