@@ -25,6 +25,6 @@ public sealed partial class MassHallucinationsRuleComponent : Component
     [DataField("sounds", required: true)]
     public SoundSpecifier Sounds = default!;
 
-    [DataField("affectedEntities"), ViewVariables(VVAccess.ReadOnly)]
-    public List<EntityUid> AffectedEntites = new();
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public List<EntityUid> AffectedEntities = new();
 }
