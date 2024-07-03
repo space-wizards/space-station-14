@@ -12,10 +12,10 @@ public sealed partial class ActivatableUISystem
         SubscribeLocalEvent<ActivatableUIRequiresPowerCellComponent, ActivatableUIOpenAttemptEvent>(OnBatteryOpenAttempt);
         SubscribeLocalEvent<ActivatableUIRequiresPowerCellComponent, BoundUIOpenedEvent>(OnBatteryOpened);
         SubscribeLocalEvent<ActivatableUIRequiresPowerCellComponent, BoundUIClosedEvent>(OnBatteryClosed);
-        SubscribeLocalEvent<ActivatableUIRequiresPowerCellComponent, PowerCellSlotEmptyEvent>(OnPowerCellRemoved);
+        SubscribeLocalEvent<ActivatableUIRequiresPowerCellComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmptyEvent);
     }
 
-    private void OnPowerCellRemoved(EntityUid uid, ActivatableUIRequiresPowerCellComponent component, PowerCellSlotEmptyEvent args)
+    private void OnPowerCellSlotEmptyEvent(EntityUid uid, ActivatableUIRequiresPowerCellComponent component, PowerCellSlotEmptyEvent args)
     {
         _cell.SetPowerCellDrawEnabled(uid, false);
 
