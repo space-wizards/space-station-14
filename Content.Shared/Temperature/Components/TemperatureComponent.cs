@@ -12,13 +12,13 @@ namespace Content.Shared.Temperature.Components;
 /// informing others of the current temperature,
 /// and taking fire damage from high temperature.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class TemperatureComponent : Component
 {
     /// <summary>
     /// Surface temperature which is modified by the environment.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float CurrentTemperature = Atmospherics.T20C;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]

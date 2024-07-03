@@ -17,7 +17,7 @@ public sealed class SharedTemperatureSystem : EntitySystem
     /// <summary>
     /// Band-aid for unpredicted atmos. Delays the application for a short period so that laggy clients can get the replicated temperature.
     /// </summary>
-    private static readonly TimeSpan SlowdownApplicationDelay = TimeSpan.FromSeconds(1.5f);
+    private static readonly TimeSpan SlowdownApplicationDelay = TimeSpan.FromSeconds(1f);
 
     public override void Initialize()
     {
@@ -29,32 +29,34 @@ public sealed class SharedTemperatureSystem : EntitySystem
 
     private void OnTemperatureChanged(Entity<TemperatureSpeedComponent> ent, ref OnTemperatureChangeEvent args)
     {
-        foreach (var (threshold, _) in ent.Comp.Thresholds)
+        foreach (var (threshold, modifier) in ent.Comp.Thresholds)
         {
             if (args.CurrentTemperature < threshold && args.LastTemperature > threshold ||
                 args.CurrentTemperature > threshold && args.LastTemperature < threshold)
             {
                 ent.Comp.NextSlowdownUpdate = _timing.CurTime + SlowdownApplicationDelay;
+                ent.Comp.CurrentSpeedModifier = modifier;
+                Dirty(ent);
                 break;
             }
+        }
+
+        var maxThreshold = ent.Comp.Thresholds.Max(p => p.Key);
+        if (args.CurrentTemperature > maxThreshold && args.LastTemperature < maxThreshold)
+        {
+            ent.Comp.NextSlowdownUpdate = _timing.CurTime + SlowdownApplicationDelay;
+            ent.Comp.CurrentSpeedModifier = null;
+            Dirty(ent);
         }
     }
 
     private void OnRefreshMovementSpeedModifiers(Entity<TemperatureSpeedComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
     {
-        if (!TryComp<TemperatureComponent>(ent, out var temperatureComponent))
+        // Don't update speed and mispredict while we're compensating for lag.
+        if (ent.Comp.NextSlowdownUpdate != null || ent.Comp.CurrentSpeedModifier == null)
             return;
-        var temp = temperatureComponent.CurrentTemperature;
 
-        var sortedDict = ent.Comp.Thresholds.OrderBy(p => p.Key);
-
-        foreach (var (threshold, modifier) in sortedDict)
-        {
-            if (!(temp < threshold))
-                continue;
-            args.ModifySpeed(modifier, modifier);
-            break;
-        }
+        args.ModifySpeed(ent.Comp.CurrentSpeedModifier.Value, ent.Comp.CurrentSpeedModifier.Value);
     }
 
     public override void Update(float frameTime)
@@ -70,8 +72,8 @@ public sealed class SharedTemperatureSystem : EntitySystem
             if (_timing.CurTime < temp.NextSlowdownUpdate)
                 continue;
 
-            _movementSpeedModifier.RefreshMovementSpeedModifiers(uid, movement);
             temp.NextSlowdownUpdate = null;
+            _movementSpeedModifier.RefreshMovementSpeedModifiers(uid, movement);
             Dirty(uid, temp);
         }
     }
