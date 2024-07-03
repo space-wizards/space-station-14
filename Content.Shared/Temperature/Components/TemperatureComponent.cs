@@ -1,24 +1,24 @@
-using Content.Server.Temperature.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Temperature.Components;
+namespace Content.Shared.Temperature.Components;
 
 /// <summary>
 /// Handles changing temperature,
 /// informing others of the current temperature,
 /// and taking fire damage from high temperature.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TemperatureComponent : Component
 {
     /// <summary>
     /// Surface temperature which is modified by the environment.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float CurrentTemperature = Atmospherics.T20C;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
@@ -51,15 +51,6 @@ public sealed partial class TemperatureComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float AtmosTemperatureTransferEfficiency = 0.1f;
 
-    [Obsolete("Use system method")]
-    public float HeatCapacity
-    {
-        get
-        {
-            return IoCManager.Resolve<IEntityManager>().System<TemperatureSystem>().GetHeatCapacity(Owner, this);
-        }
-    }
-
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier ColdDamage = new();
 
@@ -71,7 +62,7 @@ public sealed partial class TemperatureComponent : Component
     /// </summary>
     /// <remarks>
     /// Okay it genuinely reaches this basically immediately for a plasma fire.
-    /// </summary>
+    /// </remarks>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 DamageCap = FixedPoint2.New(8);
 
@@ -79,11 +70,31 @@ public sealed partial class TemperatureComponent : Component
     /// Used to keep track of when damage starts/stops. Useful for logs.
     /// </summary>
     [DataField]
-    public bool TakingDamage = false;
+    public bool TakingDamage;
 
     [DataField]
     public ProtoId<AlertPrototype> HotAlert = "Hot";
 
     [DataField]
     public ProtoId<AlertPrototype> ColdAlert = "Cold";
+
+    /// <summary>
+    /// The slowdown from being at <see cref="ColdDamageThreshold"/>
+    /// </summary>
+    [DataField]
+    public float ColdSlowdown = 0.66f;
+}
+
+public sealed class OnTemperatureChangeEvent : EntityEventArgs
+{
+    public float CurrentTemperature { get; }
+    public float LastTemperature { get; }
+    public float TemperatureDelta { get; }
+
+    public OnTemperatureChangeEvent(float current, float last, float delta)
+    {
+        CurrentTemperature = current;
+        LastTemperature = last;
+        TemperatureDelta = delta;
+    }
 }

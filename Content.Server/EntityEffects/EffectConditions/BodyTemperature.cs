@@ -1,5 +1,6 @@
 using Content.Server.Temperature.Components;
 using Content.Shared.EntityEffects;
+using Content.Shared.Temperature.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.EntityEffects.EffectConditions;
