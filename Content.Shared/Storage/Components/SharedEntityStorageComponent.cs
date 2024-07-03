@@ -31,6 +31,12 @@ public abstract partial class SharedEntityStorageComponent : Component
     public int RemovedMasks;
 
     /// <summary>
+    /// Time required to pry open an entitystorage.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float PryTime = 9f;
+
+    /// <summary>
     /// The total amount of items that can fit in one entitystorage
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]

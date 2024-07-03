@@ -16,7 +16,7 @@ namespace Content.Shared.Prying.Systems;
 /// <summary>
 /// Handles prying of entities (e.g. doors)
 /// </summary>
-public sealed class PryingSystem : EntitySystem
+public abstract class SharedPryingSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -103,7 +103,7 @@ public sealed class PryingSystem : EntitySystem
         return StartPry(target, user, null, modifier, out id);
     }
 
-    private bool CanPry(EntityUid target, EntityUid user, out string? message, PryingComponent? comp = null, PryUnpoweredComponent? unpoweredComp = null)
+    protected bool CanPry(EntityUid target, EntityUid user, out string? message, PryingComponent? comp = null, PryUnpoweredComponent? unpoweredComp = null)
     {
         BeforePryEvent canev;
 
@@ -152,7 +152,7 @@ public sealed class PryingSystem : EntitySystem
         return _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
     }
 
-    private void OnDoAfter(EntityUid uid, DoorComponent door, DoorPryDoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, DoorComponent _, DoorPryDoAfterEvent args)
     {
         if (args.Cancelled)
             return;

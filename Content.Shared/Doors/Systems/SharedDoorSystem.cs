@@ -38,7 +38,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] private readonly OccluderSystem _occluder = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-    [Dependency] private readonly PryingSystem _pryingSystem = default!;
+    [Dependency] private readonly SharedPryingSystem _pryingSystem = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
 
     [ValidatePrototypeId<TagPrototype>]

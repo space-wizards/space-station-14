@@ -10,8 +10,10 @@ using Content.Shared.Foldable;
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Content.Shared.Movement.Events;
+using Content.Shared.Prying.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -27,6 +29,8 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
+    [Dependency] private readonly SharedEntityStorageSystem _storageSystem = default!;
+    [Dependency] private readonly LockSystem _lockSystem = default!;
 
     public override void Initialize()
     {
@@ -40,8 +44,12 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         SubscribeLocalEvent<EntityStorageComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
         SubscribeLocalEvent<EntityStorageComponent, DestructionEventArgs>(OnDestruction);
         SubscribeLocalEvent<EntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
+        SubscribeLocalEvent<EntityStorageComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<EntityStorageComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
         SubscribeLocalEvent<EntityStorageComponent, FoldAttemptEvent>(OnFoldAttempt);
+        SubscribeLocalEvent<EntityStorageComponent, BeforePryEvent>(OnBeforePry);
+        SubscribeLocalEvent<EntityStorageComponent, PriedEvent>(OnPried);
+        SubscribeLocalEvent<EntityStorageComponent, GetPryTimeModifierEvent>(OnGetPryMod);
 
         SubscribeLocalEvent<EntityStorageComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<EntityStorageComponent, ComponentHandleState>(OnHandleState);
@@ -115,7 +123,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         var serverComp = (EntityStorageComponent) component;
         var tile = GetOffsetTileRef(uid, serverComp);
 
-        if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
+        if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is { } environment)
         {
             _atmos.Merge(serverComp.Air, environment.RemoveVolume(serverComp.Air.Volume));
         }
@@ -130,7 +138,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
 
         var tile = GetOffsetTileRef(uid, serverComp);
 
-        if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
+        if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is { } environment)
         {
             _atmos.Merge(environment, serverComp.Air);
             serverComp.Air.Clear();
@@ -190,5 +198,34 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         args.Handled = true;
     }
 
+    #endregion
+
+    #region Pry event handlers
+    private void OnGetPryMod(EntityUid uid, EntityStorageComponent component, ref GetPryTimeModifierEvent args)
+    {
+        args.BaseTime = component.PryTime;
+    }
+
+
+    private void OnBeforePry(EntityUid uid, EntityStorageComponent component, ref BeforePryEvent args)
+    {
+        // A simple crowbar won't be enough. You need a proper prying tool.
+        if (!args.PryPowered)
+            args.Cancelled = true;
+
+        if (TryComp(uid, out WeldableComponent? weldable) && weldable.IsWelded)
+            args.Cancelled = true;
+    }
+
+    private void OnPried(EntityUid uid, EntityStorageComponent component, ref PriedEvent args)
+    {
+        if (component.Open)
+            return;
+
+        if (TryComp(uid, out LockComponent? _))
+            _lockSystem.TryUnlock(uid, args.User);
+
+        _storageSystem.TryOpenStorage(args.User, uid);
+    }
     #endregion
 }
