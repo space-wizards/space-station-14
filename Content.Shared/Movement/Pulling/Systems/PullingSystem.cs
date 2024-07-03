@@ -300,7 +300,7 @@ public sealed class PullingSystem : EntitySystem
 
     private void OnReleasePulledObject(ICommonSession? session)
     {
-        if (session?.AttachedEntity is not {Valid: true} player)
+        if (session?.AttachedEntity is not { Valid: true } player)
         {
             return;
         }
@@ -437,6 +437,9 @@ public sealed class PullingSystem : EntitySystem
         pullerComp.Pulling = pullableUid;
         pullableComp.Puller = pullerUid;
 
+        // store the pulled entity's physics FixedRotation setting in case we change it
+        pullableComp.PrevFixedRotation = pullablePhysics.FixedRotation;
+
         // joint state handling will manage its own state
         if (!_timing.ApplyingState)
         {
@@ -452,10 +455,13 @@ public sealed class PullingSystem : EntitySystem
             joint.MinLength = 0f;
             joint.Stiffness = 1f;
 
-            _physics.SetFixedRotation(pullableUid, pullableComp.FixedRotationOnPull, body: pullablePhysics);
+            // if the entity has a FixedRotation, and the pulling comp says don't keep it on pull,
+            // set FixedRotation to false while the object is being pulled.
+            // because we stored the setting in PrevFixedRotation, it gets restored when pulling stops.
+            if (pullablePhysics.FixedRotation)
+                if (!pullableComp.FixedRotationOnPull)
+                    _physics.SetFixedRotation(pullableUid, false, body: pullablePhysics);
         }
-
-        pullableComp.PrevFixedRotation = pullablePhysics.FixedRotation;
 
         // Messaging
         var message = new PullStartedMessage(pullerUid, pullableUid);
