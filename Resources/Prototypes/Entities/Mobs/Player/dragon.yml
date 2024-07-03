@@ -14,6 +14,7 @@
     makeSentient: true
     name: ghost-role-information-space-dragon-name
     description: ghost-role-information-space-dragon-description
+    rules: ghost-role-information-space-dragon-rules
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -142,7 +143,6 @@
 - type: entity
   parent: BaseMobDragon
   id: MobDragon
-  suffix: No role or objectives
   components:
   - type: Dragon
     spawnRiftAction: ActionSpawnRift
@@ -180,6 +180,7 @@
   components:
   - type: GhostRole
     description: ghost-role-information-space-dragon-dungeon-description
+    rules: ghost-role-information-space-dragon-dungeon-rules
     raffle:
       settings: default
   - type: SlowOnDamage

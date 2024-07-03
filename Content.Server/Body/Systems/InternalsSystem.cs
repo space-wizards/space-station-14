@@ -262,7 +262,7 @@ public sealed class InternalsSystem : EntitySystem
         // 3. in-hand tanks
         // 4. pocket/belt tanks
 
-        if (!Resolve(user, ref user.Comp1, ref user.Comp2, ref user.Comp3))
+        if (!Resolve(user, ref user.Comp2, ref user.Comp3))
             return null;
 
         if (_inventory.TryGetSlotEntity(user, "back", out var backEntity, user.Comp2, user.Comp3) &&

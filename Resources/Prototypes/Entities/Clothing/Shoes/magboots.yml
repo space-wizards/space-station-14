@@ -81,7 +81,7 @@
     price: 3000
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: [ClothingShoesBootsMag, BaseJetpack]
   id: ClothingShoesBootsMagSyndie
   name: blood-red magboots
   description: Reverse-engineered magnetic boots that have a heavy magnetic pull and integrated thrusters.
@@ -106,27 +106,9 @@
       moles:
         - 0.153853429 # oxygen
         - 0.153853429 # nitrogen
-  - type: ActivatableUI
-    key: enum.SharedGasTankUiKey.Key
-  - type: UserInterface
-    interfaces:
-      enum.SharedGasTankUiKey.Key:
-        type: GasTankBoundUserInterface
-  - type: Explosive
-    explosionType: Default
-    maxIntensity: 20
-  - type: Jetpack
-    moleUsage: 0.00085
-  - type: CanMoveInAir
-  - type: InputMover
-    toParent: true
-  - type: MovementSpeedModifier
-    weightlessAcceleration: 1
-    weightlessFriction: 0.3
-    weightlessModifier: 1.2
-  - type: Tag
-    tags:
-      - WhitelistChameleon
+  - type: Item
+    sprite: null
+    size: Normal
 
 - type: entity
   id: ActionBaseToggleMagboots

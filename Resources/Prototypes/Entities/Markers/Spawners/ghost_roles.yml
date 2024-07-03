@@ -18,7 +18,7 @@
   - type: GhostRole
     name: ghost-role-information-rat-king-name
     description: ghost-role-information-rat-king-description
-    rules: ghost-role-information-rat-king-rules
+    rules: ghost-role-information-freeagent-rules
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -39,7 +39,7 @@
   - type: GhostRole
     name: ghost-role-information-remilia-name
     description: ghost-role-information-remilia-description
-    rules: ghost-role-information-remilia-rules
+    rules: ghost-role-information-familiar-rules
     raffle:
       settings: short
   - type: GhostRoleMobSpawner
@@ -60,7 +60,7 @@
   - type: GhostRole
     name: ghost-role-information-cerberus-name
     description: ghost-role-information-cerberus-description
-    rules: ghost-role-information-cerberus-rules
+    rules: ghost-role-information-familiar-rules
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -143,7 +143,7 @@
   - type: GhostRole
     name: ghost-role-information-space-dragon-name
     description: ghost-role-information-space-dragon-description
-    rules: ghost-role-component-default-rules
+    rules: ghost-role-information-space-dragon-rules
   - type: Sprite
     layers:
     - state: green
@@ -159,7 +159,7 @@
   - type: GhostRole
     name: ghost-role-information-space-ninja-name
     description: ghost-role-information-space-ninja-description
-    rules: ghost-role-information-space-ninja-rules
+    rules: ghost-role-information-antagonist-rules
     raffle:
       settings: default
   - type: GhostRoleMobSpawner

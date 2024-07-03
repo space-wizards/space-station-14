@@ -18,6 +18,8 @@
     slots:
     - Hair
     - Snout
+    - HeadTop
+    - HeadSide
 
 - type: entity
   parent: ClothingHeadHatHoodBioGeneral
@@ -158,6 +160,8 @@
     slots:
     - Hair
     - Snout
+    - HeadTop
+    - HeadSide
 
 - type: entity
   parent: ClothingHeadBase
@@ -207,6 +211,22 @@
     - Hair
 
 - type: entity
+  parent: ClothingHeadHatHoodCarp
+  id: ClothingHeadHelmetHardsuitCarp
+  noSpawn: true
+  components:
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.2
+  - type: BreathMask
+  # this is on the hood so you only fool the fish if you wear the whole set
+  # wear carp suit and security helmet, they'll know you are fake
+  - type: FactionClothing
+    faction: Dragon
+
+- type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatHoodMoth
   name: moth mask
@@ -224,6 +244,8 @@
     slots:
     - Hair
     - Snout
+    - HeadTop
+    - HeadSide
 
 #Winter Coat Hoods
 - type: entity
