@@ -136,6 +136,6 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
     private void OnTemperatureChanged(Entity<TemperatureDamageThresholdsComponent> entity, ref OnTemperatureChangeEvent args)
     {
         // Enqueue damage tick.
-        _shouldUpdateDamage.Add((entity.Owner, entity.Comp, _temperatureQuery.GetComponent(entity.Owner)));
+        _shouldUpdateDamage.Add((entity.Owner, entity.Comp, args.Entity.Comp));
     }
 }

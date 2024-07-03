@@ -56,10 +56,10 @@ public sealed class TemperatureSystem : EntitySystem
             return;
 
         float lastTemp = temperature.CurrentTemperature;
-        float delta = temperature.CurrentTemperature - temp;
         temperature.CurrentTemperature = temp;
-        RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta),
-            true);
+
+        var ev = new OnTemperatureChangeEvent(temp, lastTemp, (uid, temperature));
+        RaiseLocalEvent(uid, ref ev);
     }
 
     public void ChangeHeat(EntityUid uid, float heatAmount, bool ignoreHeatResistance = false,
@@ -70,16 +70,16 @@ public sealed class TemperatureSystem : EntitySystem
 
         if (!ignoreHeatResistance)
         {
-            var ev = new ModifyChangedTemperatureEvent(heatAmount);
-            RaiseLocalEvent(uid, ev);
-            heatAmount = ev.TemperatureDelta;
+            var modEv = new ModifyChangedTemperatureEvent(heatAmount);
+            RaiseLocalEvent(uid, modEv);
+            heatAmount = modEv.TemperatureDelta;
         }
 
         float lastTemp = temperature.CurrentTemperature;
         temperature.CurrentTemperature += heatAmount / GetHeatCapacity(uid, temperature);
-        float delta = temperature.CurrentTemperature - lastTemp;
 
-        RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta), true);
+        var ev = new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, (uid, temperature));
+        RaiseLocalEvent(uid, ref ev);
     }
 
     private void OnAtmosExposedUpdate(EntityUid uid, TemperatureComponent temperature,
@@ -132,16 +132,8 @@ public sealed class TemperatureSystem : EntitySystem
     }
 }
 
-public sealed class OnTemperatureChangeEvent : EntityEventArgs
+[ByRefEvent]
+public readonly record struct OnTemperatureChangeEvent(float CurrentTemperature, float LastTemperature, Entity<TemperatureComponent> Entity)
 {
-    public float CurrentTemperature { get; }
-    public float LastTemperature { get; }
-    public float TemperatureDelta { get; }
-
-    public OnTemperatureChangeEvent(float current, float last, float delta)
-    {
-        CurrentTemperature = current;
-        LastTemperature = last;
-        TemperatureDelta = delta;
-    }
+    public readonly float TemperatureDelta = CurrentTemperature - LastTemperature;
 }
