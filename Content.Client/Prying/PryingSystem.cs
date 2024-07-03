@@ -13,10 +13,10 @@ public sealed class PryingSystem : SharedPryingSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<EntityStorageComponent, DoorPryDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<EntityStorageComponent, PryDoAfterEvent>(OnDoAfter);
     }
 
-    private void OnDoAfter(EntityUid uid, EntityStorageComponent storage, DoorPryDoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, EntityStorageComponent storage, PryDoAfterEvent args)
     {
         if (args.Cancelled)
             return;

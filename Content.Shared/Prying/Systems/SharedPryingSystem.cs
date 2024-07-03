@@ -29,7 +29,7 @@ public abstract class SharedPryingSystem : EntitySystem
 
         // Mob prying doors
         SubscribeLocalEvent<DoorComponent, GetVerbsEvent<AlternativeVerb>>(OnDoorAltVerb);
-        SubscribeLocalEvent<DoorComponent, DoorPryDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<DoorComponent, PryDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(TryPryDoor);
     }
 
@@ -134,7 +134,7 @@ public abstract class SharedPryingSystem : EntitySystem
         var modEv = new GetPryTimeModifierEvent(user);
 
         RaiseLocalEvent(target, ref modEv);
-        var doAfterArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(modEv.BaseTime * modEv.PryTimeModifier / toolModifier), new DoorPryDoAfterEvent(), target, target, tool)
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(modEv.BaseTime * modEv.PryTimeModifier / toolModifier), new PryDoAfterEvent(), target, target, tool)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -152,7 +152,7 @@ public abstract class SharedPryingSystem : EntitySystem
         return _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
     }
 
-    private void OnDoAfter(EntityUid uid, DoorComponent door, DoorPryDoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, DoorComponent door, PryDoAfterEvent args)
     {
         if (args.Cancelled)
             return;
@@ -179,4 +179,4 @@ public abstract class SharedPryingSystem : EntitySystem
 }
 
 [Serializable, NetSerializable]
-public sealed partial class DoorPryDoAfterEvent : SimpleDoAfterEvent;
+public sealed partial class PryDoAfterEvent : SimpleDoAfterEvent;
