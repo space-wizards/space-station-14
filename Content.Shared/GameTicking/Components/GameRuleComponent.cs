@@ -16,12 +16,6 @@ public sealed partial class GameRuleComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan ActivatedAt;
-
-    /// <summary>
-    /// If true - adds StationEvent when adding the event 
-    /// </summary>
-    [DataField]
-    public bool NeedAddStationEvent = false;
     
     /// <summary>
     /// A floating indicator of how often an event can be falsely triggered
