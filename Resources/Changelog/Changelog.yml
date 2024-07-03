@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Bellwether
-  changes:
-  - message: The nun hood now appears in the Chaplain's loadout.
-    type: Tweak
-  id: 6365
-  time: '2024-04-17T03:36:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27025
 - author: iNV3RT3D & metalgearsloth
   changes:
   - message: Added a jukebox.
@@ -3825,3 +3818,10 @@
   id: 6864
   time: '2024-07-03T15:14:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29120
+- author: ArkiveDev
+  changes:
+  - message: Railings can now be constructed in all 4 orientations.
+    type: Fix
+  id: 6865
+  time: '2024-07-03T16:59:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29687
