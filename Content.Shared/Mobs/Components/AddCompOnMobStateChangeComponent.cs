@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Mobs.Components
+namespace Content.Shared.Mobs.Components;
 
 [RegisterComponent]
 public sealed partial class AddCompOnMobStateChangeComponent : Component
