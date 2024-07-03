@@ -1,34 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Most job loadouts now have winter clothing available.
-    type: Tweak
-  id: 6362
-  time: '2024-04-17T02:49:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27022
-- author: metalgearsloth
-  changes:
-  - message: 'Fix the following in lobby: ShowClothes button not working, Skin Color
-      not updating, Skin Color slider not updating upon closing and re-opening character.'
-    type: Fix
-  id: 6363
-  time: '2024-04-17T02:54:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27033
-- author: MACMAN2003
-  changes:
-  - message: Nuclear operatives now only need 20 players to be readied up again instead
-      of 35.
-    type: Tweak
-  id: 6364
-  time: '2024-04-17T03:19:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27036
-- author: Bellwether
-  changes:
-  - message: The nun hood now appears in the Chaplain's loadout.
-    type: Tweak
-  id: 6365
-  time: '2024-04-17T03:36:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27025
 - author: iNV3RT3D & metalgearsloth
   changes:
   - message: Added a jukebox.
@@ -3825,3 +3795,33 @@
   id: 6861
   time: '2024-07-03T00:01:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29665
+- author: nikthechampiongr
+  changes:
+  - message: The Elite Syndicate hardsuit is now slightly slower.
+    type: Tweak
+  - message: The Elite Syndicate hardsuit now costs 12 Telecrystals.
+    type: Tweak
+  id: 6862
+  time: '2024-07-03T00:31:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29429
+- author: eoineoineoin
+  changes:
+  - message: Artifact Analyzer now collides with walls
+    type: Fix
+  id: 6863
+  time: '2024-07-03T05:27:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28117
+- author: TheShuEd
+  changes:
+  - message: anomalies have the ability to gain invisibility behavior
+    type: Add
+  id: 6864
+  time: '2024-07-03T15:14:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29120
+- author: ArkiveDev
+  changes:
+  - message: Railings can now be constructed in all 4 orientations.
+    type: Fix
+  id: 6865
+  time: '2024-07-03T16:59:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29687
