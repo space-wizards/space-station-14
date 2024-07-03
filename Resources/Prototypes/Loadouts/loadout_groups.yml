@@ -35,7 +35,7 @@
   - GlassesJamjar
   - GlassesJensen
 
-- type: loadoutGroup # Different group to ensure it can be applied
+- type: loadoutGroup
   id: GroupTankHarness
   name: loadout-group-tank-harness
   minLimit: 1
