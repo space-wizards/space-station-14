@@ -26,7 +26,7 @@ public sealed class MassHallucinationsRule : StationEventSystem<MassHallucinatio
             if (!HasComp<ParacusiaComponent>(ent))
                 _toChange.Add(ent);
 
-        foreach (EntityUid ent in _toChange)
+        foreach (var ent in _toChange)
         {
             EnsureComp<MassHallucinationsComponent>(ent);
             var paracusia = EnsureComp<ParacusiaComponent>(ent);
