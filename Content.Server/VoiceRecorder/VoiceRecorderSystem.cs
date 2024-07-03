@@ -1,3 +1,4 @@
+using Content.Server.Chat.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Systems;
 using Content.Server.Paper;
@@ -55,18 +56,21 @@ public sealed class VoiceRecorderSystem : SharedVoiceRecordedSystem
         if (!component.IsRecording)
             return;
 
-        var ev = new ListenAttemptEvent(args.Source);
-        RaiseLocalEvent(uid, ev);
+        var listenEv = new ListenAttemptEvent(args.Source);
+        RaiseLocalEvent(uid, listenEv);
 
-        if (ev.Cancelled)
+        if (listenEv.Cancelled)
             return;
 
         if (string.IsNullOrWhiteSpace(message))
             return;
 
+        var transformEv = new TransformSpeakerNameEvent(args.Source, Name(args.Source));
+        RaiseLocalEvent(args.Source, transformEv);
+
         component.RecordedText.Add(Loc.GetString("voice-recorder-message-text",
             ("time", component.RecordTime.ToString(@"hh\:mm\:ss")),
-            ("source", args.Source),
+            ("source", transformEv.Name),
             ("message", message)));
     }
 

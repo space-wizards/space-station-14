@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from ss220 paradise - https://github.com/ss220club/Paradise-SS220/commit/5678f13f3a1c3fd75944d5f0e8cfc8a849c615ad",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+		{
+			"name": "voice_recorder"
+		},
+		{
+			"name": "voice_recorder_working",
+			"delays": [
+				[
+				  0.2,
+				  0.2,
+				  0.2,
+				  0.2
+				]
+			]
+		}
+    ]
+}

@@ -5,7 +5,7 @@
   description: The best way to dig up dirt on someone!
   components:
   - type: Sprite
-    sprite: Objects/Devices/voice.rsi
+    sprite: Objects/Devices/recorder.rsi
     layers:
     - state: voice_recorder
       map: ["RecorderLayer.Base"]
