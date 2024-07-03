@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Most job loadouts now have winter clothing available.
-    type: Tweak
-  id: 6362
-  time: '2024-04-17T02:49:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27022
 - author: metalgearsloth
   changes:
   - message: 'Fix the following in lobby: ShowClothes button not working, Skin Color
@@ -3825,3 +3818,12 @@
   id: 6861
   time: '2024-07-03T00:01:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29665
+- author: nikthechampiongr
+  changes:
+  - message: The Elite Syndicate hardsuit is now slightly slower.
+    type: Tweak
+  - message: The Elite Syndicate hardsuit now costs 12 Telecrystals.
+    type: Tweak
+  id: 6862
+  time: '2024-07-03T00:31:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29429
