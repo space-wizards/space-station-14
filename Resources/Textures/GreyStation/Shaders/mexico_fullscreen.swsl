@@ -1,0 +1,6 @@
+uniform sampler2D SCREEN_TEXTURE;
+
+void fragment() {
+    highp vec4 color = zTextureSpec(SCREEN_TEXTURE, UV);
+    COLOR = color * vec4(1.0, 0.95, 0.3, 1.0);
+}

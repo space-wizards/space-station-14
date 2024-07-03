@@ -1,0 +1,4 @@
+- type: shader
+  id: MexicoFullscreen
+  kind: source
+  path: "/Textures/GreyStation/Shaders/mexico_fullscreen.swsl"
