@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Dutch-VanDerLinde
   changes:
-  - message: Senior role ID cards now function properly.
-    type: Fix
-  id: 6361
-  time: '2024-04-16T20:17:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27017
-- author: Dutch-VanDerLinde
-  changes:
   - message: Most job loadouts now have winter clothing available.
     type: Tweak
   id: 6362
@@ -3823,3 +3816,12 @@
   id: 6860
   time: '2024-07-02T15:28:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29667
+- author: Plykiya
+  changes:
+  - message: You now see pickup animations when stripping objects off of people.
+    type: Fix
+  - message: Thieving gloves no longer have a pickup animation when stripping people.
+    type: Fix
+  id: 6861
+  time: '2024-07-03T00:01:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29665
