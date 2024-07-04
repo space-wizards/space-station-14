@@ -203,7 +203,7 @@
       entity: MaterialGunpowder
 
 - type: reaction
-  id: GlassSheet # Altered version of the plastic sheet creation. Hope it works.
+  id: GlassSheet # Altered version of the plastic sheet creation. Hope it works. seems to.
   impact: Low
   quantized: true
   minTemp: 370

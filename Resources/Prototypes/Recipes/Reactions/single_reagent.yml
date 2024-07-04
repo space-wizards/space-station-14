@@ -33,7 +33,7 @@
   products:
     Syrup: 0.1 #12:1 sap to syruop
 
-# Holy - TODO: make it so only the chaplain can use the bible to start these reactions, not anyone with a bible
+# Holy - TODO: make it so only the chaplain can use the bible to start these reactions, not anyone with a bible.
 
 - type: reaction
   id: BloodToWine
