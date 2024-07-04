@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: The gas analyzer now tells you the volume of scanned objects. Tanks inside
-      canisters now show up as well.
-    type: Add
-  - message: The gas analyzer now shows the amount of moles inside the scanned pipe
-      element instead of the whole pipe network.
-    type: Tweak
-  id: 6370
-  time: '2024-04-17T17:42:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25720
 - author: deltanedas
   changes:
   - message: The Chameleon Projector has been added to the uplink for 7 TC, it lets
@@ -3825,3 +3814,10 @@
   id: 6869
   time: '2024-07-04T02:29:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29693
+- author: metalgearsloth
+  changes:
+  - message: Made vox roundstart.
+    type: Tweak
+  id: 6870
+  time: '2024-07-04T07:11:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29704
