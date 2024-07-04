@@ -114,6 +114,16 @@
           Quantity: 4
 
 - type: entity
+  name: finfin taco
+  parent: FoodTacoBase
+  id: FoodTacoFinfin
+  description: A not so basic or run of the mill finfin taco. Now with cheese!
+  components:
+  - type: Food
+  - type: Sprite
+    state: chickentaco
+
+- type: entity
   name: beef taco supreme
   parent: FoodTacoBase
   id: FoodTacoBeefSupreme
