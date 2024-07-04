@@ -13,6 +13,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
@@ -276,7 +277,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 return true;
             }
 
-            return false;
+            if (!HasComp<VirtualItemComponent>(held))
+                return false;
         }
 
         // Use hands clothing if applicable.
