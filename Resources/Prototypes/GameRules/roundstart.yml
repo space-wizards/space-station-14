@@ -82,7 +82,7 @@
   - type: AntagSelection
   - type: AntagLoadProfileRule
     speciesOverride: Human
-    speciesWhitelist:
+    speciesOverrideWhitelist:
     - Human
     - Dwarf
     - Arachnid
