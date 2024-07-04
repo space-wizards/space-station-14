@@ -57,7 +57,7 @@
   products:
     Holywater: 1
 
--type: reaction
+- type: reaction
  id: botanyglass
  impact: Low
   minTemp: 347
