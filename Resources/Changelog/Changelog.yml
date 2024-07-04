@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Vermidia
-  changes:
-  - message: Pirate Accent and Mobster accent will respect capitalization better now
-    type: Fix
-  id: 6367
-  time: '2024-04-17T10:04:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26644
 - author: metalgearsloth
   changes:
   - message: Fix lobby character preview not updating upon changing characters.
@@ -3825,3 +3818,10 @@
   id: 6866
   time: '2024-07-04T01:25:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29678
+- author: Plykiya
+  changes:
+  - message: An object's physics properly returns to normal after being pulled.
+    type: Fix
+  id: 6867
+  time: '2024-07-04T01:29:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29694
