@@ -171,6 +171,7 @@ flavor-complex-violets = like violets
 flavor-complex-pyrotton = like a burning mouth
 flavor-complex-mothballs = like mothballs
 flavor-complex-paint-thinner = like paint thinner
+flavor-complex-finfin = like your best friend
 
 # Drink-specific flavors.
 
@@ -269,5 +270,3 @@ flavor-complex-sax = like jazz
 flavor-complex-bottledlightning = like lightning in a bottle
 flavor-complex-punishment = like punishment
 flavor-weh = like weh
-
-flavor-complex-finfin = like your best friend
