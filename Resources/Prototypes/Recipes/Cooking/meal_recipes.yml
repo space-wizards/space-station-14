@@ -1105,6 +1105,16 @@
     FoodMeatFish: 2
 
 - type: microwaveMealRecipe
+  id: RecipeFinfinSashimi
+  name: finfin sashimi recipe
+  result: FoodMealFinfinSashimi
+  time: 15
+  reagents:
+    TableSalt: 1
+  solids:
+    FoodMeatFinfin: 2
+
+- type: microwaveMealRecipe
   id: RecipeMisoColaSoup
   name: salty sweet misocola soup recipe
   result: DisgustingSweptSoup
