@@ -1436,7 +1436,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/crystal_thistle.rsi
   - type: Produce
-    seedId: crystalythistle
+    seedId: crystalthistle
   - type: Extractable
     grindableSolutionName: food
 
