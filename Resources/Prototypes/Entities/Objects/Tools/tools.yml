@@ -100,7 +100,7 @@
   name: wrench
   parent: BaseItem
   id: Wrench
-  description: 'A common tool for assembly and disassembly. Remember: righty tighty, lefty loosey.'
+  description: 'A common tool for assembly and disassembly. Remember: lefty latchy, righty removey.'
   components:
   - type: EmitSoundOnPickup # GreyStation - Sound PR
     sound: /Audio/SimpleStation14/Items/Handling/wrench_pickup.ogg
