@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: The Chameleon Projector has been added to the uplink for 7 TC, it lets
-      you disguise as anything (within reason).
-    type: Add
-  id: 6371
-  time: '2024-04-17T21:48:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26691
 - author: ShadowCommander
   changes:
   - message: Fixed PDA and ID card name, job, and access not getting set on some jobs.
@@ -3821,3 +3813,11 @@
   id: 6870
   time: '2024-07-04T07:11:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29704
+- author: JIPDawg
+  changes:
+  - message: Changed the basic treatment module to include a Health Analyzer and removed
+      the dropper.
+    type: Tweak
+  id: 6871
+  time: '2024-07-04T07:17:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29696
