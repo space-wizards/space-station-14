@@ -104,7 +104,7 @@
 - type: gas
   id: 9
   name: gases-water
-  specificHeat: 40 # Or change it to low values
+  specificHeat: -10 # Or change it to low values
   heatCapacityRatio: 1.33
   molarMass: 18
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi

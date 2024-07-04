@@ -57,6 +57,8 @@ entities:
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
+      inherent: True
+      enabled: True
     - type: Parallax
       parallax: Sky
   - uid: 2

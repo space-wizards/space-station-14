@@ -42,3 +42,25 @@
       slowness: 0
       scale: "1, 1"
       shader: ""
+
+- type: parallax
+  id: Sea
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/Asteroids.png"
+      slowness: 0.98
+      scale: 1,1
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/algae.png"
+      slowness: 0.95
+      scale: "1, 1"
+      scrolling: "0.1, -0.05"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/algae2.png"
+      slowness: 0.85
+      scale: "1, 1"
+      scrolling: "0.1, -0.05"
+
