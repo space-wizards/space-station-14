@@ -1,5 +1,6 @@
 using Robust.Shared.Prototypes;
 
+// Use GenericSpawnerComponent instead
 namespace Content.Server.Spawners.Components
 {
     [RegisterComponent, EntityCategory("Spawner")]
