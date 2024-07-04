@@ -93,6 +93,20 @@ public sealed partial class HungerComponent : Component
     };
 
     /// <summary>
+    /// A dictionary relating HungerThreshold to how much they modify boozePower in <see cref="SharedDrunkSystem"/>.
+    /// </summary>
+    [DataField("hungerThresholdBoozeModifiers", customTypeSerializer: typeof(DictionarySerializer<HungerThreshold, float>))]
+    [AutoNetworkedField]
+    public Dictionary<HungerThreshold, float> HungerThresholdBoozeModifiers = new()
+    {
+        { HungerThreshold.Overfed, 0.8f },
+        { HungerThreshold.Okay, 1.0f },
+        { HungerThreshold.Peckish, 1.2f },
+        { HungerThreshold.Starving, 1.4f },
+        { HungerThreshold.Dead, 1.6f }
+    };
+
+    /// <summary>
     /// The amount of slowdown applied when an entity is starving
     /// </summary>
     [DataField("starvingSlowdownModifier"), ViewVariables(VVAccess.ReadWrite)]

@@ -24,11 +24,12 @@ public abstract class SharedDrunkSystem : EntitySystem
 
         if (TryComp<HungerComponent>(uid, out var hunger))
         {
-            if (hunger.HungerThresholdDecayModifiers.TryGetValue(hunger.CurrentThreshold, out var modifier) && modifier != 0)
+            if (hunger.HungerThresholdBoozeModifiers.TryGetValue(hunger.CurrentThreshold, out var boozeModifier))
             {
-                boozePower /= modifier;
+                boozePower *= boozeModifier;
             }
-}
+        }
+
         if (applySlur)
         {
             _slurredSystem.DoSlur(uid, TimeSpan.FromSeconds(boozePower), status);
