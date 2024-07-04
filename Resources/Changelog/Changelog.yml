@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: You now must equip gloved weapons (E.g boxing gloves) to use them.
-    type: Fix
-  id: 6369
-  time: '2024-04-17T10:10:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26762
 - author: slarticodefast
   changes:
   - message: The gas analyzer now tells you the volume of scanned objects. Tanks inside
@@ -3825,3 +3818,10 @@
   id: 6868
   time: '2024-07-04T01:51:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29564
+- author: EmoGarbage404
+  changes:
+  - message: All nuclear operatives are now humans.
+    type: Tweak
+  id: 6869
+  time: '2024-07-04T02:29:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29693
