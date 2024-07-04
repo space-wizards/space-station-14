@@ -20,7 +20,6 @@ namespace Content.Server.Ghost
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
-
             if (player == null)
             {
                 shell.WriteLine(Loc.GetString("ghost-command-no-session"));
