@@ -74,7 +74,6 @@ public class RadialContainer : LayoutContainer
         const float baseRadius = 100f;
         const float radiusIncrement = 5f;
 		
-		//takes ammount of icons
         var children = ReserveSpaceForHiddenChildren ? Children : Children.Where(x => x.Visible);
         var childCount = children.Count();
 		
