@@ -16,8 +16,8 @@ public sealed partial class AntagLoadProfileRuleComponent : Component
     public ProtoId<SpeciesPrototype>? SpeciesOverride;
 
     /// <summary>
-    /// List of allowed species
+    /// List of species that get ignored by the override
     /// </summary>
     [DataField]
-    public HashSet<ProtoId<SpeciesPrototype>>? SpeciesWhitelist;
+    public HashSet<ProtoId<SpeciesPrototype>>? SpeciesOverrideWhitelist;
 }
