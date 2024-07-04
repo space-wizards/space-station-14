@@ -84,7 +84,16 @@ public sealed class StationPowerTests
         }
 
         var estimatedDuration = totalStartingCharge / totalAPCLoad;
-        Assert.That(estimatedDuration, Is.GreaterThanOrEqualTo(MinimumPowerDurationSeconds));
+        var requiredStoredPower = totalAPCLoad * MinimumPowerDurationSeconds;
+        Assert.Multiple(() =>
+        {
+            Assert.That(estimatedDuration, Is.GreaterThanOrEqualTo(MinimumPowerDurationSeconds),
+                $"Initial power for {mapProtoId} does not last long enough! Needs at least {MinimumPowerDurationSeconds}s " +
+                $"but estimated to last only {estimatedDuration}s!");
+            Assert.That(totalStartingCharge, Is.GreaterThanOrEqualTo(requiredStoredPower),
+                $"Needs at least {requiredStoredPower - totalStartingCharge} more stored power!");
+        });
+
 
         await pair.CleanReturnAsync();
     }
