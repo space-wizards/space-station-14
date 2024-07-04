@@ -1,29 +1,33 @@
 <DefaultWindow xmlns="https://spacestation14.io">
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.4">
-            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.4" Margin="0 0 5 0">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 5">
                 <LineEdit Name="SearchBar" PlaceHolder="Search" HorizontalExpand="True"/>
-                <OptionButton Name="Category" Access="Public" MinSize="130 0"/>
+                <OptionButton Name="OptionCategories" Access="Public" MinSize="130 0"/>
             </BoxContainer>
             <ItemList Name="Recipes" Access="Public" SelectMode="Single" VerticalExpand="True"/>
         </BoxContainer>
-        <Control MinSize="10 0"/>
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.6">
+            <Button Name="FavoriteButton" Visible="false" HorizontalExpand="False"
+                HorizontalAlignment="Right" Margin="0 0 0 15"/>
             <Control>
-                <BoxContainer Orientation="Horizontal" Align="Center">
-                    <TextureRect Name="TargetTexture" HorizontalAlignment="Right" Stretch="Keep"/>
-                    <Control MinSize="10 0"/>
-                    <BoxContainer Orientation="Vertical">
-                        <RichTextLabel Name="TargetName"/>
-                        <RichTextLabel Name="TargetDesc"/>
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="0 0 0 5">
+                    <BoxContainer Orientation="Horizontal" Align="Center">
+                        <TextureRect Name="TargetTexture" HorizontalAlignment="Right" Stretch="Keep" Margin="0 0 10 0"/>
+                        <BoxContainer Orientation="Vertical">
+                            <RichTextLabel Name="TargetName"/>
+                            <RichTextLabel Name="TargetDesc"/>
+                        </BoxContainer>
                     </BoxContainer>
                 </BoxContainer>
             </Control>
-            <ItemList Name="RecipeStepList" Access="Public" VerticalExpand="True"/>
+            <ItemList Name="RecipeStepList" Access="Public" VerticalExpand="True" Margin="0 0 0 5"/>
             <BoxContainer Orientation="Vertical">
-                <Button Name="BuildButton" Disabled="True" ToggleMode="True" VerticalExpand="True" SizeFlagsStretchRatio="0.5"/>
+                <Button Name="BuildButton" Disabled="True" ToggleMode="True"
+                        VerticalExpand="True" SizeFlagsStretchRatio="0.5"/>
                 <BoxContainer Orientation="Horizontal" VerticalExpand="True" SizeFlagsStretchRatio="0.5">
-                    <Button Name="EraseButton" ToggleMode="True" HorizontalExpand="True" SizeFlagsStretchRatio="0.7"/>
+                    <Button Name="EraseButton" ToggleMode="True"
+                        HorizontalExpand="True" SizeFlagsStretchRatio="0.7"/>
                     <Button Name="ClearButton" HorizontalExpand="True" SizeFlagsStretchRatio="0.3"/>
                 </BoxContainer>
             </BoxContainer>
