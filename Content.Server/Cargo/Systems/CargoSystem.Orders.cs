@@ -192,6 +192,7 @@ namespace Content.Server.Cargo.Systems
                 }
             }
 
+            order.Approved = true;
             _audio.PlayPvs(component.ConfirmSound, uid);
 
             var message = Loc.GetString("cargo-console-unlock-approved-order-broadcast",
@@ -409,6 +410,7 @@ namespace Content.Server.Cargo.Systems
 
             // Approve it now
             order.SetApproverData(dest, sender);
+            order.Approved = true;
 
             // Log order addition
             _adminLogger.Add(LogType.Action, LogImpact.Low,
