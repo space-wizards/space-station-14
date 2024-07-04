@@ -290,6 +290,11 @@
     - id: PlushieLizard
       prob: 0.01
       orGroup: Plushies
+    - id: PlushieFinfin
+      prob: 0.01
+    - id: MobFinfin
+      prob: 0.01
+      orGroup: Plushies
     - id: PlushieRouny
       prob: 0.01
       orGroup: Plushies

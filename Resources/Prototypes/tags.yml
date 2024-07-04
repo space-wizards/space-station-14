@@ -545,6 +545,9 @@
 - type: Tag
   id: DrinkSpaceGlue
 
+- type: Tag 
+  id: Dropper
+
 - type: Tag
   id: Duck
 
@@ -796,6 +799,9 @@
 
 - type: Tag
   id: Lemon
+
+- type: Tag
+  id: Lemo
 
 - type: Tag
   id: Lime

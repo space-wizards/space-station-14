@@ -223,6 +223,17 @@
       - Lemon
 
 - type: cargoBounty
+  id: BountyLemo
+  reward: 12000
+  description: bounty-description-lemo
+  entries:
+  - name: bounty-item-lemo
+    amount: 5
+    whitelist:
+      tags:
+      - Lemo
+
+- type: cargoBounty
   id: BountyLime
   reward: 10000
   description: bounty-description-lime

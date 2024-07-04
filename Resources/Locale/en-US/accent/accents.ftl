@@ -124,3 +124,9 @@ accent-words-nymph-1 = Chirp!
 accent-words-nymph-2 = Churr...
 accent-words-nymph-3 = Cheep?
 accent-words-nymph-4 = Chrrup!
+
+#Finfin
+accent-words-finfin-1 = Mên-mên...
+accent-words-finfin-2 = Amu-amu!
+accent-words-finfin-3 = Kû-kû.
+accent-words-finfin-4 = Pô-pô?

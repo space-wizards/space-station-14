@@ -937,6 +937,16 @@
     FoodPlateTin: 1
 
 - type: microwaveMealRecipe
+  id: RecipeLemoPie
+  name: lemo pie recipe
+  result: FoodPieLemo
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodLemo: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
   id: RecipeBaklava
   name: baklava recipe
   result: FoodPieBaklava
@@ -1240,6 +1250,17 @@
     Sugar: 5
   solids:
     FoodButter: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMuffinLemo
+  name: lemuffin recipe
+  result: FoodBakedMuffinLemo
+  time: 5
+  reagents:
+    Flour: 5
+    Sugar: 5
+  solids:
+    FoodLemo: 3
 
 - type: microwaveMealRecipe
   id: RecipeChocolateChipPancake
@@ -1722,6 +1743,14 @@
     LeavesCannabis: 1
 
 - type: microwaveMealRecipe
+  id: RecipeDriedGreenMarijuana
+  name: dried green marijuana leaves recipe
+  result: LeavesCannabisDried
+  time: 10
+  solids:
+    LeavesGreenMarijuana: 1
+
+- type: microwaveMealRecipe
   id: RecipeDriedCannabisRainbow
   name: dried rainbow cannabis leaves recipe
   result: LeavesCannabisRainbowDried
@@ -1878,6 +1907,28 @@
     Sugar: 30
   solids:
     FoodCannabisButter: 2
+    FoodSnackChocolateBar: 2
+    FoodEgg: 3
+
+- type: microwaveMealRecipe
+  id: RecipeRainbowCannabisButter
+  name: cannabis butter recipe
+  result: FoodRainbowCannabisButter
+  time: 15
+  solids:
+    FoodButter: 1
+    LeavesCannabisRainbow: 6
+
+- type: microwaveMealRecipe
+  id: RecipeForeverWeedBrownies
+  name: cannabis brownie recipe
+  result: FoodBakedForeverWeedBrownieBatch
+  time: 25
+  reagents:
+    Flour: 15
+    Sugar: 30
+  solids:
+    FoodRainbowCannabisButter: 2
     FoodSnackChocolateBar: 2
     FoodEgg: 3
 

@@ -142,6 +142,8 @@
         - id: PlushieRainbowCarp
           prob: 0.03
           orGroup: carp
+        - id: PlushieFinfin
+          prob: 0.03
         - id: PlushieSlime
           prob: 0.2
         - id: PlushieSnake
@@ -177,6 +179,8 @@
         - id: TomatoGrenade
           prob: 0.01
         - id: MobPipi
+          prob: 0.005
+        - id: MobFinfin
           prob: 0.005
         # Syndicate loot
         - id: null
@@ -254,6 +258,8 @@
         - id: PlushieRainbowCarp
           prob: 0.03
           orGroup: carp
+        - id: PlushieFinfin
+          prob: 0.03
         - id: PlushieSlime
           prob: 0.2
         - id: PlushieSnake
@@ -279,6 +285,8 @@
         - id: TomatoGrenade
           prob: 0.01
         - id: MobPipi
+          prob: 0.005
+        - id: MobFinfin
           prob: 0.005
         # Syndicate loot
         - id: null

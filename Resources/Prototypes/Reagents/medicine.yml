@@ -1058,6 +1058,13 @@
             Heat: -0.2
             Shock: -0.2
             Cold: -0.2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: ForeverWeed
+          min: 1
+        reagent: ForeverWeed
+        amount: -1
   reactiveEffects:
     Extinguish:
       methods: [ Touch ]

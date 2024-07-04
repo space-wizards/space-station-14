@@ -174,3 +174,11 @@
   - accent-words-nymph-2
   - accent-words-nymph-3
   - accent-words-nymph-4
+
+- type: accent
+  id: finfin
+  fullReplacements:
+  - accent-words-finfin-1
+  - accent-words-finfin-2
+  - accent-words-finfin-3
+  - accent-words-finfin-4
