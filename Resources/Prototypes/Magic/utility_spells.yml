@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: ActionChargeSpell
-  name: Charge
+  name: charge
   description: Adds a charge back to your wand
   components:
   - type: InstantAction

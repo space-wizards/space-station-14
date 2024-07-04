@@ -112,7 +112,7 @@
 
 - type: entity
   id: ActionBaseToggleMagboots
-  name: Toggle Magboots
+  name: toggle magboots
   description: Toggles the magboots on and off.
   components:
   - type: InstantAction

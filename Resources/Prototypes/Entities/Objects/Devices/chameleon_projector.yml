@@ -25,7 +25,7 @@
   noSpawn: true
   parent: BaseMob
   id: ChameleonDisguise
-  name: Urist McKleiner
+  name: urist mckleiner
   components:
   # this and the name/desc get replaced, this is just placeholder incase something goes wrong
   - type: Sprite
@@ -50,7 +50,7 @@
 # actions
 - type: entity
   id: ActionDisguiseNoRot
-  name: Toggle Rotation
+  name: toggle rotation
   description: Use this to prevent your disguise from rotating, making it easier to hide in some scenarios.
   components:
   - type: InstantAction
@@ -59,7 +59,7 @@
 
 - type: entity
   id: ActionDisguiseAnchor
-  name: Toggle Anchored
+  name: toggle anchored
   description: For many objects you will want to be anchored to not be completely obvious.
   components:
   - type: InstantAction

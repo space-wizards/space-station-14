@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: ActionSmite
-  name: Smite
+  name: smite
   description: Instantly gibs a target.
   components:
   - type: EntityTargetAction

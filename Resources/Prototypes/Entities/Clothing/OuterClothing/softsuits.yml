@@ -2,7 +2,7 @@
 - type: entity
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitEVA
-  name: EVA suit
+  name: eva suit
   description: A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies.
   components:
   - type: Sprite
@@ -19,7 +19,7 @@
 - type: entity
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitSyndicate # TODO: rename to ClothingOuterEVASuitSyndicate
-  name: syndicate EVA suit
+  name: syndicate eva suit
   description: "Has a tag on the back that reads: 'Totally not property of an enemy corporation, honest!'"
   components:
   - type: Sprite
@@ -36,7 +36,7 @@
 - type: entity
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterSuitEmergency
-  name: emergency EVA suit
+  name: emergency eva suit
   description: An emergency EVA suit with a built-in helmet. It's horribly slow and lacking in temperature protection, but enough to buy you time from the harsh vaccuum of space.
   components:
   - type: Sprite
@@ -60,7 +60,7 @@
 - type: entity
   parent: ClothingOuterEVASuitBase
   id:  ClothingOuterHardsuitEVAPrisoner
-  name: prisoner EVA suit
+  name: prisoner eva suit
   description: A lightweight space suit for prisoners to protect them from the vacuum of space during emergencies.
   components:
   - type: Sprite
@@ -77,7 +77,7 @@
 - type: entity
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitAncientEVA
-  name: NTSRA voidsuit #Nanotrasen Space Research Association
+  name: ntsra voidsuit #nanotrasen space research association
   description: An ancient space suit, designed by the NTSRA branch of CentCom. It is very finely crafted, allowing for greater mobility than most modern space suits.
   components:
   - type: Sprite

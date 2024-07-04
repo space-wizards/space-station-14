@@ -112,7 +112,7 @@
 - type: entity
   id: BookHowToCookForFortySpaceman
   parent: BaseItem
-  name: How To Cook For Forty Spacemen
+  name: how to cook for forty spacemen
   description: A book about cooking written by a space chef.
   components:
   - type: Sprite
@@ -456,7 +456,7 @@
 - type: entity
   parent: BookBase
   id: BookAtmosDistro
-  name: "Newton's Guide to Atmos: The Distro"
+  name: "newton's guide to atmos: the distro"
   description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
   components:
   - type: Sprite
@@ -476,7 +476,7 @@
 - type: entity
   parent: BookBase
   id: BookAtmosWaste
-  name: "Newton's Guide to Atmos: Waste"
+  name: "newton's guide to atmos: waste"
   description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
   components:
   - type: Sprite
@@ -496,7 +496,7 @@
 - type: entity
   parent: BookBase
   id: BookAtmosAirAlarms
-  name: "Newton's Guide to Atmos: Air Alarms"
+  name: "newton's guide to atmos: air alarms"
   description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
   components:
   - type: Sprite
@@ -516,7 +516,7 @@
 - type: entity
   parent: BookBase
   id: BookAtmosVentsMore
-  name: "Newton's Guide to Atmos: Vents and More"
+  name: "newton's guide to atmos: vents and more"
   description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
   components:
   - type: Sprite

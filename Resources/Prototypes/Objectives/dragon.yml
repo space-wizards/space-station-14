@@ -31,7 +31,7 @@
 - type: entity
   parent: [BaseDragonObjective, BaseSurviveObjective]
   id: DragonSurviveObjective
-  name: Survive
+  name: survive
   description: You have to stay alive to maintain control.
   components:
   - type: Objective

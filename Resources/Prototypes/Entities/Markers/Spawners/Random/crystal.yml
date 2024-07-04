@@ -1,5 +1,5 @@
 - type: entity
-  name: Crystal Spawner
+  name: crystal spawner
   suffix: 70%
   id: CrystalSpawner
   parent: MarkerBase

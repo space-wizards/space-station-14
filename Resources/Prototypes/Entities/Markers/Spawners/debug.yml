@@ -1,5 +1,5 @@
 - type: entity
-  name: Urist Spawner
+  name: urist spawner
   id: SpawnMobHuman
   parent: MarkerBase
   suffix: DEBUG

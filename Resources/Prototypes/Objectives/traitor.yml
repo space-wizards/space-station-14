@@ -38,7 +38,7 @@
 - type: entity
   parent: [BaseTraitorObjective, BaseLivingObjective]
   id: EscapeShuttleObjective
-  name: Escape to centcom alive and unrestrained.
+  name: escape to centcom alive and unrestrained.
   description: One of our undercover agents will debrief you when you arrive. Don't show up in cuffs.
   components:
   - type: Objective
@@ -51,7 +51,7 @@
 - type: entity
   parent: BaseTraitorObjective
   id: DieObjective
-  name: Die a glorious death
+  name: die a glorious death
   description: Die.
   components:
   - type: Objective
@@ -69,7 +69,7 @@
 #- type: entity
 #  parent: [BaseTraitorObjective, BaseLivingObjective]
 #  id: HijackShuttleObjective
-#  name: Hijack emergency shuttle
+#  name: hijack emergency shuttle
 #  description: Leave on the shuttle free and clear of the loyal Nanotrasen crew on board. Use ANY methods available to you. Syndicate agents, Nanotrasen enemies, and handcuffed hostages may remain alive on the shuttle. Ignore assistance from anyone other than a support agent.
 #  components:
 #    - type: Objective

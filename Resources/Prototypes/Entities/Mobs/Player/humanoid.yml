@@ -18,7 +18,7 @@
 
 - type: entity
   id: RandomHumanoidSpawnerDeathSquad
-  name: Death Squad Agent
+  name: death squad agent
   suffix: ERTRole, Death Squad
   components:
     - type: Sprite
@@ -37,7 +37,7 @@
   randomizeName: false
   components:
     - type: GhostRole
-      name: ghost-role-information-Death-Squad-name
+      name: ghost-role-information-death-squad-name
       description: ghost-role-information-Death-Squad-description
       rules: ghost-role-information-Death-Squad-rules
       raffle:
@@ -54,7 +54,7 @@
 
 - type: entity
   id: RandomHumanoidSpawnerERTLeader
-  name: ERT leader
+  name: ert leader
   suffix: ERTRole, Basic
   components:
     - type: Sprite
@@ -88,7 +88,7 @@
 - type: entity
   id: RandomHumanoidSpawnerERTLeaderEVA
   parent: RandomHumanoidSpawnerERTLeader
-  name: ERT leader
+  name: ert leader
   suffix: ERTRole, Armored EVA
   components:
     - type: Sprite
@@ -136,7 +136,7 @@
 - type: entity
   id: RandomHumanoidSpawnerERTChaplain
   parent: RandomHumanoidSpawnerERTLeader
-  name: ERT chaplain
+  name: ert chaplain
   suffix: ERTRole, Basic
   components:
     - type: Sprite
@@ -169,7 +169,7 @@
 - type: entity
   id: RandomHumanoidSpawnerERTChaplainEVA
   parent: RandomHumanoidSpawnerERTChaplain
-  name: ERT chaplain
+  name: ert chaplain
   suffix: ERTRole, Enviro EVA
   components:
     - type: Sprite
@@ -196,7 +196,7 @@
 - type: entity
   id: RandomHumanoidSpawnerERTJanitor
   parent: RandomHumanoidSpawnerERTLeader
-  name: ERT janitor
+  name: ert janitor
   suffix: ERTRole, Basic
   components:
     - type: Sprite
@@ -229,7 +229,7 @@
 - type: entity
   id: RandomHumanoidSpawnerERTJanitorEVA
   parent: RandomHumanoidSpawnerERTJanitor
-  name: ERT janitor
+  name: ert janitor
   suffix: ERTRole, Enviro EVA
   components:
     - type: Sprite
@@ -256,7 +256,7 @@
 - type: entity
   id: RandomHumanoidSpawnerERTEngineer
   parent: RandomHumanoidSpawnerERTLeader
-  name: ERT engineer
+  name: ert engineer
   suffix: ERTRole, Basic
   components:
     - type: Sprite
@@ -289,7 +289,7 @@
 - type: entity
   id: RandomHumanoidSpawnerERTEngineerEVA
   parent: RandomHumanoidSpawnerERTEngineer
-  name: ERT engineer
+  name: ert engineer
   suffix: ERTRole, Enviro EVA
   components:
     - type: Sprite
@@ -316,7 +316,7 @@
 - type: entity
   id: RandomHumanoidSpawnerERTSecurity
   parent: RandomHumanoidSpawnerERTLeader
-  name: ERT security
+  name: ert security
   suffix: ERTRole, Basic
   components:
     - type: Sprite
@@ -349,7 +349,7 @@
 - type: entity
   id: RandomHumanoidSpawnerERTSecurityEVA
   parent: RandomHumanoidSpawnerERTSecurity
-  name: ERT security
+  name: ert security
   suffix: ERTRole, Armored EVA
   components:
     - type: Sprite
@@ -397,7 +397,7 @@
 - type: entity
   id: RandomHumanoidSpawnerERTMedical
   parent: RandomHumanoidSpawnerERTLeader
-  name: ERT medic
+  name: ert medic
   suffix: ERTRole, Basic
   components:
     - type: Sprite
@@ -430,7 +430,7 @@
 - type: entity
   id: RandomHumanoidSpawnerERTMedicalEVA
   parent: RandomHumanoidSpawnerERTMedical
-  name: ERT medic
+  name: ert medic
   suffix: ERTRole, Armored EVA
   components:
     - type: Sprite
@@ -456,7 +456,7 @@
 
 - type: entity
   id: RandomHumanoidSpawnerCBURNUnit
-  name: CBURN Agent
+  name: cburn agent
   suffix: ERTRole
   components:
     - type: Sprite
@@ -485,7 +485,7 @@
 ## Central Command
 
 - type: entity
-  name: CentCom official
+  name: centcom official
   id: RandomHumanoidSpawnerCentcomOfficial
   components:
     - type: Sprite
@@ -531,7 +531,7 @@
 
 - type: entity
   id: RandomHumanoidSpawnerNukeOp
-  name: Nuclear Operative
+  name: nuclear operative
   components:
     - type: Sprite
       sprite: Mobs/Species/Human/parts.rsi
@@ -548,7 +548,7 @@
 
 - type: entity
   id: RandomHumanoidSpawnerCluwne
-  name: Cluwne
+  name: cluwne
   suffix: spawns a cluwne
   components:
     - type: Sprite
@@ -739,7 +739,7 @@
 
 - type: entity
   id: RandomHumanoidDisasterVictimRD
-  name: disaster victim RD ghost role
+  name: disaster victim rd ghost role
   components:
     - type: Sprite
       sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
@@ -750,7 +750,7 @@
 - type: entity
   id: RandomHumanoidDisasterVictimCMO
   parent: RandomHumanoidDisasterVictimRD
-  name: disaster victim CMO ghost role
+  name: disaster victim cmo ghost role
   components:
     - type: RandomHumanoidSpawner
       settings: DisasterVictimCMO
@@ -758,7 +758,7 @@
 - type: entity
   id: RandomHumanoidDisasterVictimCaptain
   parent: RandomHumanoidDisasterVictimRD
-  name: disaster victim Captain ghost role
+  name: disaster victim captain ghost role
   components:
     - type: RandomHumanoidSpawner
       settings: DisasterVictimCaptain

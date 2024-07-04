@@ -117,7 +117,7 @@
 - type: entity
   id: MachineAPE
   parent: [ BaseMachinePowered, ConstructibleMachine ]
-  name: A.P.E.
+  name: a.p.e.
   description: An Anomalous Particle Emitter, capable of shooting out unstable particles which can interface with anomalies.
   components:
   - type: Sprite

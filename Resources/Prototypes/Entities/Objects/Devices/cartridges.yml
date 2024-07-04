@@ -55,7 +55,7 @@
 - type: entity
   parent: BaseItem
   id: NetProbeCartridge
-  name: NetProbe cartridge
+  name: netprobe cartridge
   description: A program for getting the address and frequency of network devices
   components:
     - type: Sprite
@@ -73,7 +73,7 @@
 - type: entity
   parent: BaseItem
   id: LogProbeCartridge
-  name: LogProbe cartridge
+  name: logprobe cartridge
   description: A program for getting access logs from devices
   components:
     - type: Sprite

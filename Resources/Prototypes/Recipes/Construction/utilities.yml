@@ -48,7 +48,7 @@
 
 # POWER
 - type: construction
-  name: APC
+  name: apc
   id: APC
   graph: APC
   startNode: start
@@ -126,7 +126,7 @@
   canBuildInImpassable: true
 
 - type: construction
-  name: wallmount APU
+  name: wallmount apu
   id: WallmountGeneratorAPU
   graph: WallmountGenerator
   startNode: start
@@ -305,7 +305,7 @@
   mirror: DisposalJunction
 
 - type: construction
-  name: disposal Y junction
+  name: disposal y junction
   description: A three-way junction with another exit point.
   id: DisposalYJunction
   graph: DisposalPipe
@@ -428,7 +428,7 @@
     state: pipeBend
 
 - type: construction
-  name: gas pipe T junction
+  name: gas pipe t junction
   id: GasPipeTJunction
   description: A pipe segment with a T junction.
   graph: GasPipe

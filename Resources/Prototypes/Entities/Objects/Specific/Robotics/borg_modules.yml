@@ -30,7 +30,7 @@
 
 - type: entity
   id: ActionBorgSwapModule
-  name: Swap Module
+  name: swap module
   description: Select this module, enabling you to use the tools it provides.
   components:
   - type: InstantAction
@@ -135,7 +135,7 @@
 - type: entity
   id: BorgModuleGPS
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
-  name: GPS cyborg module
+  name: gps cyborg module
   components:
   - type: Sprite
     layers:
@@ -261,7 +261,7 @@
 - type: entity
   id: BorgModuleRCD
   parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ]
-  name: RCD cyborg module
+  name: rcd cyborg module
   components:
   - type: Sprite
     layers:
@@ -542,7 +542,7 @@
 - type: entity
   id: BorgModuleL6C
   parent: [ BaseBorgModuleSyndicateAssault, BaseProviderBorgModule ]
-  name: L6C ROW cyborg module
+  name: l6c row cyborg module
   description: A module that comes with a L6C.
   components:
     - type: Sprite

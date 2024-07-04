@@ -247,7 +247,7 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelCBURN
-  name: CBURN duffel bag
+  name: cburn duffel bag
   description: A duffel bag containing a variety of biological containment equipment.
   components:
   - type: Storage

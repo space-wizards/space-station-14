@@ -581,7 +581,7 @@
 - type: entity
   parent: CrateGenericSteel
   id: CrateSyndicate
-  name: Syndicate crate
+  name: syndicate crate
   description: A dark steel crate with red bands and a letter S embossed on the front.
   components:
   - type: Icon

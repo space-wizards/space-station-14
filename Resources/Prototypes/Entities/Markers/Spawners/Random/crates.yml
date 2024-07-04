@@ -1,5 +1,5 @@
 - type: entity
-  name: Empty Crate Spawner
+  name: empty crate spawner
   id: CrateEmptySpawner
   parent: MarkerBase
   components:
@@ -25,7 +25,7 @@
       offset: 0.0
 
 - type: entity
-  name: Filled Crate Spawner
+  name: filled crate spawner
   id: CrateFilledSpawner
   suffix: Low Value
   parent: MarkerBase

@@ -131,7 +131,7 @@
 # Tastes like nachos, cheese.
 
 - type: entity
-  name: Cuban nachos
+  name: cuban nachos
   parent: FoodMealBase
   id: FoodMealNachosCuban
   description: That's some dangerously spicy nachos.
@@ -218,7 +218,7 @@
 # Tastes like sweet potato.
 
 - type: entity
-  name: Cuban carp
+  name: cuban carp
   parent: FoodMealBase
   id: FoodMealCubancarp
   description: A grifftastic sandwich that burns your tongue and then leaves it numb!

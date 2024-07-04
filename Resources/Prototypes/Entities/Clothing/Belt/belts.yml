@@ -313,7 +313,7 @@
 - type: entity
   parent: ClothingBeltMedical
   id: ClothingBeltMedicalEMT
-  name: EMT belt
+  name: emt belt
   description: Perfect for holding various equipment for medical emergencies.
   components:
   - type: Sprite
@@ -522,7 +522,7 @@
   - type: ItemSlots
     slots:
       item:
-        name: Sabre
+        name: sabre
         insertVerbText: sheath-insert-verb
         ejectVerbText: sheath-eject-verb
         insertSound: /Audio/Items/sheath.ogg

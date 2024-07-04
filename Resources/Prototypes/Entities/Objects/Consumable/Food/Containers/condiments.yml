@@ -73,7 +73,7 @@
 - type: entity
   parent: BaseFoodCondimentPacket
   id: FoodCondimentPacketAstrotame
-  name: Astrotame
+  name: astrotame
   description: The sweetness of a thousand sugars but none of the calories.
   components:
   - type: SolutionContainerManager
@@ -101,7 +101,7 @@
 - type: entity
   parent: BaseFoodCondimentPacket
   id: FoodCondimentPacketBbq
-  name: BBQ sauce
+  name: bbq sauce
   description: Hand wipes not included.
   components:
   - type: SolutionContainerManager
@@ -495,7 +495,7 @@
 - type: entity
   parent: BaseFoodCondimentBottle
   id: FoodCondimentBottleBBQ
-  name: BBQ sauce bottle
+  name: bbq sauce bottle
   description: Hand wipes not included.
   components:
   - type: SolutionContainerManager

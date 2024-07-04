@@ -1,5 +1,5 @@
 - type: entity
-  name: BaseWeaponLauncher
+  name: baseweaponlauncher
   parent: BaseItem
   id: BaseWeaponLauncher
   description: A rooty tooty point and shooty.
@@ -54,7 +54,7 @@
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
 
 - type: entity
-  name: RPG-7
+  name: rpg-7
   parent: BaseWeaponLauncher
   id: WeaponLauncherRocket
   description: A modified ancient rocket-propelled grenade launcher.

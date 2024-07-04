@@ -2,7 +2,7 @@
 #1D2L3U4R
 
 - type: entity
-  name: Ian
+  name: ian
   parent: MobCorgi
   id: MobCorgiIan
   description: Favorite pet corgi.
@@ -38,7 +38,7 @@
     stealGroup: AnimalIan
 
 - type: entity
-  name: Old Ian
+  name: old ian
   parent: MobCorgiIan
   id: MobCorgiIanOld
   description: Still the favorite pet corgi. Love his wheels.
@@ -63,7 +63,7 @@
     - id: MaterialHideCorgi
 
 - type: entity
-  name: Lisa
+  name: lisa
   parent: MobCorgiIan
   id: MobCorgiLisa
   description: Ian's favorite corgi.
@@ -86,7 +86,7 @@
       gender: female
 
 - type: entity
-  name: Puppy Ian
+  name: puppy ian
   parent: MobCorgiPuppy
   id: MobCorgiIanPup
   description: Favourite puppy corgi. Awww.
@@ -102,7 +102,7 @@
     - id: MaterialHideCorgi
 
 - type: entity
-  name: Runtime
+  name: runtime
   parent: MobCat
   id: MobCatRuntime
   description: Professional mouse hunter. Escape artist.
@@ -123,7 +123,7 @@
     - VimPilot
 
 - type: entity
-  name: Exception
+  name: exception
   id: MobCatException
   parent: MobCatCalico
   description: Ask nicely, and maybe they'll give you one of their spare lives.
@@ -141,7 +141,7 @@
     - VimPilot
 
 - type: entity
-  name: Floppa
+  name: floppa
   id: MobCatFloppa
   parent: MobCatCaracal
   description: He out here.
@@ -166,7 +166,7 @@
     - VimPilot
 
 - type: entity
-  name: Bandito
+  name: bandito
   parent: MobFerret
   id: MobBandito
   description: Just a silly little guy!
@@ -181,7 +181,7 @@
     - VimPilot
 
 - type: entity
-  name: Bingus
+  name: bingus
   parent: [SimpleMobBase, StripableInventoryBase]
   id: MobBingus
   description: Bingus my beloved...
@@ -238,7 +238,7 @@
     stealGroup: AnimalBingus
 
 - type: entity
-  name: McGriff
+  name: mcgriff
   parent: [SimpleMobBase, StripableInventoryBase]
   id: MobMcGriff
   description: This dog can tell something smells around here, and that something is CRIME!
@@ -297,7 +297,7 @@
     stealGroup: AnimalMcGriff
 
 - type: entity
-  name: Paperwork
+  name: paperwork
   parent: MobSloth
   id: MobPaperwork
   description: Took up a new job sorting books in the library after he got transferred from Space Station 13. He seems to be just as slow at this.
@@ -331,7 +331,7 @@
       gender: male
 
 - type: entity
-  name: Walter
+  name: walter
   parent: [SimpleMobBase, StripableInventoryBase]
   id: MobWalter
   description: He likes chems and treats. Walter.
@@ -390,7 +390,7 @@
     stealGroup: AnimalWalter
 
 - type: entity
-  name: Morty
+  name: morty
   parent: MobPossum
   id: MobPossumMorty
   description: The station's resident Didelphis virginiana. A sensitive but resilient kind of guy.
@@ -414,7 +414,7 @@
     stealGroup: AnimalMorty
 
 - type: entity
-  name: Morty
+  name: morty
   parent: MobPossumMorty
   id: MobPossumMortyOld
   suffix: Old sprite
@@ -433,7 +433,7 @@
         Base: possum_dead_old
 
 - type: entity
-  name: Poppy # the Safety Possum
+  name: poppy # the safety possum
   parent: MobPossumMorty
   id: MobPossumPoppy
   description: It's an opossum, a small scavenging marsupial. It's wearing appropriate personal protective equipment.
@@ -456,7 +456,7 @@
         Base: poppy_dead
 
 - type: entity
-  name: Morticia
+  name: morticia
   parent: MobRaccoon
   id: MobRaccoonMorticia
   description: A powerful creature of the night. Her eyeshadow is always on point.
@@ -478,7 +478,7 @@
     - VimPilot
 
 - type: entity
-  name: Alexander
+  name: alexander
   parent: MobPig
   id: MobAlexander
   description: Chef's finest colleague.
@@ -500,7 +500,7 @@
     - VimPilot
 
 - type: entity
-  name: Renault
+  name: renault
   parent: MobFox
   id: MobFoxRenault
   description: The captain's trustworthy fox.
@@ -530,7 +530,7 @@
     stealGroup: AnimalRenault
 
 - type: entity
-  name: Hamlet
+  name: hamlet
   parent: MobHamster
   id: MobHamsterHamlet
   description: A grumpy, cute and fluffy hamster.
@@ -579,7 +579,7 @@
     - ChefPilot
 
 - type: entity
-  name: Shiva
+  name: shiva
   parent: MobGiantSpider
   id: MobSpiderShiva
   description: The first defender of the station.
@@ -644,7 +644,7 @@
     stealGroup: AnimalShiva
 
 - type: entity
-  name: Willow
+  name: willow
   parent: MobKangaroo
   id: MobKangarooWillow
   description: Willow the boxing kangaroo.
@@ -675,7 +675,7 @@
     prototypes: [ BoxingKangarooGear ]
 
 - type: entity
-  name: Smile
+  name: smile
   id: MobSlimesPet
   parent: MobAdultSlimes
   description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
@@ -747,7 +747,7 @@
       gender: female
 
 - type: entity
-  name: Pun Pun
+  name: pun pun
   parent: MobMonkey
   id: MobMonkeyPunpun
   description: A prominent representative of monkeys with unlimited access to alcohol.
@@ -781,7 +781,7 @@
       gender: male
 
 - type: entity
-  name: Tropico
+  name: tropico
   parent: MobCrab
   id: MobCrabAtmos
   description: The noble and stalwart defender of Atmosia. Viva!

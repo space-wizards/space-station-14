@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: ActionBlink
-  name: Blink
+  name: blink
   description: Teleport to the clicked location.
   components:
   - type: WorldTargetAction

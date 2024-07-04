@@ -1,7 +1,7 @@
 ﻿- type: entity
   parent: BaseStructureDynamic
   id: SmartFridge
-  name: SmartFridge
+  name: smartfridge
   description: A refrigerated storage unit for keeping items cold and fresh.
   components:
   - type: Advertise

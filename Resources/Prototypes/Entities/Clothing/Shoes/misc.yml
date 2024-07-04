@@ -126,7 +126,7 @@
 
 - type: entity
   id: ActionToggleSpeedBoots
-  name: Toggle Speed Boots
+  name: toggle speed boots
   description: Toggles the speed boots on and off.
   components:
   - type: InstantAction

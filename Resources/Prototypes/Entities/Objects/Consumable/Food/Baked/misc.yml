@@ -67,7 +67,7 @@
     - Fruit
 
 - type: entity
-  name: honey bun #TODO honey
+  name: honey bun #todo honey
   parent: FoodBakedBase
   id: FoodBakedBunHoney
   description: A sticky pastry bun glazed with honey.

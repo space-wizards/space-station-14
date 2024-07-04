@@ -114,7 +114,7 @@
         name: power-cell-slot-component-slot-name-default
 
 - type: entity
-  name: G.O.R.I.L.L.A. gauntlet
+  name: g.o.r.i.l.l.a. gauntlet
   parent: BaseItem
   id: WeaponGauntletGorilla
   description: A robust piece of research equipment. When powered with an anomaly core, a single blow can launch anomalous objects through the air.

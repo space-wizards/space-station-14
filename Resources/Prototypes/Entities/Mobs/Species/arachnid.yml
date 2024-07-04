@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  name: Urist McWebs
+  name: urist mcwebs
   parent: BaseMobSpeciesOrganic
   id: BaseMobArachnid
   abstract: true

@@ -33,7 +33,7 @@
   - type: ItemSlots
     slots:
       projectiles:
-        name: Projectiles
+        name: projectiles
         startingItem: null
         insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
         whitelist:

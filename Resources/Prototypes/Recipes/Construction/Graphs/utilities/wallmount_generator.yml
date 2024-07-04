@@ -46,7 +46,7 @@
         steps:
         - tag: WallmountGeneratorAPUElectronics
           store: board
-          name: "wallmount APU circuit board"
+          name: "wallmount apu circuit board"
           icon:
             sprite: "Objects/Misc/module.rsi"
             state: "charger_APC"

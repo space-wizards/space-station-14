@@ -36,7 +36,7 @@
 # Magazines
 - type: entity
   id: MagazineLightRifleBox
-  name: "L6 SAW magazine box (.30 rifle)"
+  name: "l6 saw magazine box (.30 rifle)"
   parent: BaseMagazineLightRifle
   components:
   - type: Tag
@@ -133,7 +133,7 @@
 
 - type: entity
   id: MagazineLightRiflePkBox
-  name: "PK munitions box (.30 rifle)"
+  name: "pk munitions box (.30 rifle)"
   parent: BaseMagazineLightRifle
   components:
   - type: Tag

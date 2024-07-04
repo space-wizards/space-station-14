@@ -1,5 +1,5 @@
 - type: entity
-  name: Atmos Fix Vacuum Marker
+  name: atmos fix vacuum marker
   id: AtmosFixBlockerMarker
   description: "Vacuum, T20C"
   parent: MarkerBase
@@ -16,7 +16,7 @@
       mode: 1
 
 - type: entity
-  name: Atmos Fix Oxygen Marker
+  name: atmos fix oxygen marker
   id: AtmosFixOxygenMarker
   description: "Oxygen @ gas miner pressure, T20C"
   parent: MarkerBase
@@ -33,7 +33,7 @@
       mode: 2
 
 - type: entity
-  name: Atmos Fix Nitrogen Marker
+  name: atmos fix nitrogen marker
   id: AtmosFixNitrogenMarker
   description: "Nitrogen @ gas miner pressure, T20C"
   parent: MarkerBase
@@ -50,7 +50,7 @@
       mode: 3
 
 - type: entity
-  name: Atmos Fix Plasma Marker
+  name: atmos fix plasma marker
   id: AtmosFixPlasmaMarker
   description: "Plasma @ gas miner pressure, T20C"
   parent: MarkerBase
@@ -67,7 +67,7 @@
       mode: 4
 
 - type: entity
-  name: Atmos Fix Instant Plasmafire Marker
+  name: atmos fix instant plasmafire marker
   id: AtmosFixInstantPlasmaFireMarker
   description: "INSTANT PLASMAFIRE"
   parent: MarkerBase
@@ -84,7 +84,7 @@
       mode: 5
 
 - type: entity
-  name: Atmos Fix Freezer Marker
+  name: atmos fix freezer marker
   id: AtmosFixFreezerMarker
   description: "Change air temp to 235K, for freezer with a big of wiggle room to get set up."
   parent: MarkerBase

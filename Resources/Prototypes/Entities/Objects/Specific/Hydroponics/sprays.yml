@@ -1,5 +1,5 @@
 - type: entity
-  name: Plant-B-Gone
+  name: plant-b-gone
   id: PlantBGoneSpray
   parent: SprayBottle
   description: Kills those pesky weeds!

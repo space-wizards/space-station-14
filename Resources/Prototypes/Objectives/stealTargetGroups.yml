@@ -58,7 +58,7 @@
     #
 - type: stealTargetGroup
   id: CaptainIDCard
-  name: captain ID card
+  name: captain id card
   sprite:
     sprite: Objects/Misc/id_cards.rsi
     state: ert_commander #no one will know the difference.
@@ -137,7 +137,7 @@
 
 - type: stealTargetGroup
   id: IDCard
-  name: ID Cards (any)
+  name: id cards (any)
   sprite:
     sprite: Objects/Misc/id_cards.rsi
     state: default
@@ -146,7 +146,7 @@
 
 - type: stealTargetGroup
   id: LAMP
-  name: LAMPS
+  name: lamps
   sprite:
     sprite: Objects/Tools/lantern.rsi
     state: lantern
@@ -162,7 +162,7 @@
 
 - type: stealTargetGroup
   id: FlippoEngravedLighter
-  name: detective's Flippo engraved lighter
+  name: detective's flippo engraved lighter
   sprite:
     sprite: Objects/Tools/lighters.rsi
     state: zippo_engraved_icon_base
@@ -204,7 +204,7 @@
 
 - type: stealTargetGroup
   id: ResearchAndDevelopmentServerMachineCircuitboard
-  name: R&D server machine board
+  name: r&d server machine board
   sprite:
     sprite: Objects/Misc/module.rsi
     state: science
@@ -218,7 +218,7 @@
 
 - type: stealTargetGroup
   id: AmePartFlatpack
-  name: AME part
+  name: ame part
   sprite:
     sprite: Objects/Devices/flatpack.rsi
     state: ame-part
@@ -332,7 +332,7 @@
 
 - type: stealTargetGroup
   id: PlantRD
-  name: RD's potted plant
+  name: rd's potted plant
   sprite:
     sprite: Structures/Furniture/potted_plants.rsi
     state: plant-25
@@ -341,56 +341,56 @@
 
 - type: stealTargetGroup
   id: AnimalIan
-  name: Ian
+  name: ian
   sprite:
     sprite: Mobs/Pets/corgi.rsi
     state: ian
 
 - type: stealTargetGroup
   id: AnimalBingus
-  name: Bingus
+  name: bingus
   sprite:
     sprite: Mobs/Pets/bingus.rsi
     state: bingus
 
 - type: stealTargetGroup
   id: AnimalMcGriff
-  name: McGriff
+  name: mcgriff
   sprite:
     sprite: Mobs/Pets/mcgriff.rsi
     state: mcgriff
 
 - type: stealTargetGroup
   id: AnimalWalter
-  name: Walter
+  name: walter
   sprite:
     sprite: Mobs/Pets/walter.rsi
     state: walter
 
 - type: stealTargetGroup
   id: AnimalMorty
-  name: Morty
+  name: morty
   sprite:
     sprite: Mobs/Animals/possum.rsi
     state: possum
 
 - type: stealTargetGroup
   id: AnimalRenault
-  name: Renault
+  name: renault
   sprite:
     sprite: Mobs/Animals/fox.rsi
     state: fox
 
 - type: stealTargetGroup
   id: AnimalShiva
-  name: Shiva
+  name: shiva
   sprite:
     sprite: Mobs/Pets/shiva.rsi
     state: shiva
 
 - type: stealTargetGroup
   id: AnimalTropico
-  name: Tropico
+  name: tropico
   sprite:
     sprite: Mobs/Animals/crab.rsi
     state: crab

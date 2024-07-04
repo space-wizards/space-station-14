@@ -137,7 +137,7 @@
 # to be modified.
 - type: entity
   name: sweet snowcone
-  #  name: [Flavor] snowcone
+  #  name: [flavor] snowcone
   parent: FoodFrozenBase
   id: FoodFrozenSnowconeBase
   description: It's just shaved ice and simple syrup, minimum effort.

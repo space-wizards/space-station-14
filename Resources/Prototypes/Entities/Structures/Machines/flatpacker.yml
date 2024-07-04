@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: MachineFlatpacker
   parent: [ BaseMachinePowered, ConstructibleMachine ]
-  name: Flatpacker 1001
+  name: flatpacker 1001
   description: An industrial machine used for expediting machine construction across the station.
   components:
   - type: Sprite

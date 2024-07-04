@@ -36,7 +36,7 @@
                 state: potato
               doAfter: 1
             - tag: SmallAIChip
-              name: a super-compact AI chip
+              name: a super-compact ai chip
               icon:
                 sprite: Objects/Misc/potatoai_chip.rsi
                 state: icon

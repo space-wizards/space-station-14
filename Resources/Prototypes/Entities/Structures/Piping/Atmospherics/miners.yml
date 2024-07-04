@@ -33,7 +33,7 @@
       spawnAmount: 400
 
 - type: entity
-  name: O2 gas miner
+  name: o2 gas miner
   parent: GasMinerBase
   id: GasMinerOxygen
   suffix: Shuttle, 300kPa
@@ -44,7 +44,7 @@
       spawnGas: Oxygen
 
 - type: entity
-  name: O2 gas miner
+  name: o2 gas miner
   parent: GasMinerOxygen
   id: GasMinerOxygenStation
   suffix: Station, 1000kPa
@@ -53,7 +53,7 @@
       maxExternalPressure: 1000
 
 - type: entity
-  name: O2 gas miner
+  name: o2 gas miner
   parent: GasMinerOxygen
   id: GasMinerOxygenStationLarge
   suffix: Large Station, 4500kPa
@@ -62,7 +62,7 @@
       maxExternalPressure: 4500
 
 - type: entity
-  name: N2 gas miner
+  name: n2 gas miner
   parent: GasMinerBase
   id: GasMinerNitrogen
   suffix: Shuttle, 300kPa
@@ -71,7 +71,7 @@
       spawnGas: Nitrogen
 
 - type: entity
-  name: N2 gas miner
+  name: n2 gas miner
   parent: GasMinerNitrogen
   id: GasMinerNitrogenStation
   suffix: Station, 1000kPa
@@ -80,7 +80,7 @@
       maxExternalPressure: 1000
 
 - type: entity
-  name: N2 gas miner
+  name: n2 gas miner
   parent: GasMinerNitrogen
   id: GasMinerNitrogenStationLarge
   suffix: Large Station, 4500kPa
@@ -89,7 +89,7 @@
       maxExternalPressure: 4500
 
 - type: entity
-  name: CO2 gas miner
+  name: co2 gas miner
   parent: GasMinerBase
   id: GasMinerCarbonDioxide
   components:

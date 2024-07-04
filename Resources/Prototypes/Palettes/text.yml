@@ -1,6 +1,6 @@
 ﻿- type: palette
   id: Material
-  name: Material
+  name: material
   colors:
     red: "#a91409"
     red-darken-2: "#a72323"
@@ -36,7 +36,7 @@
 
 - type: palette
   id: ChatNames
-  name: Chat Names
+  name: chat names
   colors:
     ploink: "#da8bc9"
     ourple: "#b18bda"

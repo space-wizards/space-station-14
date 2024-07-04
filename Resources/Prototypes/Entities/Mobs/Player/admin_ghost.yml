@@ -93,7 +93,7 @@
 
 - type: entity
   id: ActionAGhostShowSolar
-  name: Solar Control Interface
+  name: solar control interface
   description: View a solar control interface.
   components:
   - type: InstantAction
@@ -105,7 +105,7 @@
 
 - type: entity
   id: ActionAGhostShowCommunications
-  name: Communications Interface
+  name: communications interface
   description: View a communications interface.
   components:
   - type: InstantAction
@@ -117,7 +117,7 @@
 
 - type: entity
   id: ActionAGhostShowRadar
-  name: Mass Scanner Interface
+  name: mass scanner interface
   description: View a mass scanner interface.
   components:
   - type: InstantAction
@@ -129,7 +129,7 @@
 
 - type: entity
   id: ActionAGhostShowCargo
-  name: Cargo Ordering Interface
+  name: cargo ordering interface
   description: View a cargo ordering interface.
   components:
   - type: InstantAction
@@ -141,7 +141,7 @@
 
 - type: entity
   id: ActionAGhostShowCrewMonitoring
-  name: Crew Monitoring Interface
+  name: crew monitoring interface
   description: View a crew monitoring interface.
   components:
   - type: InstantAction
@@ -153,7 +153,7 @@
 
 - type: entity
   id: ActionAGhostShowStationRecords
-  name: Station Records Interface
+  name: station records interface
   description: View a station records Interface
   components:
   - type: InstantAction

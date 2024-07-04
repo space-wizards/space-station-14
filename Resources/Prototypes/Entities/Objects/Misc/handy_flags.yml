@@ -13,7 +13,7 @@
 - type: entity
   parent: BaseItem
   id: NTHandyFlag
-  name: Nanotrasen handheld flag
+  name: nanotrasen handheld flag
   description: "Glory to NT! Wait, they really made a handheld flag for a corporation?"
   components:
   - type: Sprite
@@ -37,7 +37,7 @@
 - type: entity
   parent: BaseItem
   id: LGBTQHandyFlag
-  name: LGBTQ handheld flag
+  name: lgbtq handheld flag
   description: "The be gay do crime handy flag."
   components:
   - type: Sprite

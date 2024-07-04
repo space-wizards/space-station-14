@@ -3,7 +3,7 @@
 - type: entity
   id: ShuttleGunSvalinnMachineGunCircuitboard
   parent: BaseMachineCircuitboard
-  name: LSE-400c "Svalinn machine gun" machine board
+  name: lse-400c "svalinn machine gun" machine board
   description: A machine printed circuit board for an LSE-400c "Svalinn machine gun"
   suffix: DO NOT MAP, Machine Board
   components:
@@ -20,7 +20,7 @@
 - type: entity
   id: ShuttleGunPerforatorCircuitboard
   parent: BaseMachineCircuitboard
-  name: LSE-1200c "Perforator" machine board
+  name: lse-1200c "perforator" machine board
   description: A machine printed circuit board for an LSE-1200c "Perforator"
   suffix: DO NOT MAP, Machine Board
   components:
@@ -37,7 +37,7 @@
 - type: entity
   id: ShuttleGunFriendshipCircuitboard
   parent: BaseMachineCircuitboard
-  name: EXP-320g "Friendship" machine board
+  name: exp-320g "friendship" machine board
   description: A machine printed circuit board for an EXP-320g "Friendship"
   suffix: DO NOT MAP, Machine Board
   components:
@@ -54,7 +54,7 @@
 - type: entity
   id: ShuttleGunDusterCircuitboard
   parent: BaseMachineCircuitboard
-  name: EXP-2100g "Duster" machine board
+  name: exp-2100g "duster" machine board
   description: A machine printed circuit board for an EXP-2100g "Duster"
   suffix: DO NOT MAP, Machine Board
   components:
@@ -72,7 +72,7 @@
 - type: entity
   id: ShuttleGunKineticCircuitboard
   parent: BaseMachineCircuitboard
-  name: PTK-800 "Matter Dematerializer" machine board
+  name: ptk-800 "matter dematerializer" machine board
   description: A machine printed circuit board for an PTK-800 "Matter Dematerializer"
   suffix: DO NOT MAP, Machine Board
   components:

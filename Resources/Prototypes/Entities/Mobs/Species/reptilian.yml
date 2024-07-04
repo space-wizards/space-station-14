@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  name: Urisst' Mzhand
+  name: urisst' mzhand
   parent: BaseMobSpeciesOrganic
   id: BaseMobReptilian
   abstract: true

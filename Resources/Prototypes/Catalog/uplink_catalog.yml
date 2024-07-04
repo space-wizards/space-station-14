@@ -696,7 +696,7 @@
 
 # - type: listing
 #   id: UplinkGigacancerScanner
-#   name: Ultragigacancer Health Analyzer
+#   name: ultragigacancer health analyzer
 #   description: Works like a normal health analyzer, other than giving everyone it scans ultragigacancer.
 #   productEntity: HandheldHealthAnalyzerGigacancer
 #   cost:

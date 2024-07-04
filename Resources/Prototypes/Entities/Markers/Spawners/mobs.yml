@@ -1,7 +1,7 @@
 # Base
 
 - type: entity
-  name: Mouse Spawner
+  name: mouse spawner
   id: SpawnMobMouse
   parent: MarkerBase
   components:
@@ -18,7 +18,7 @@
       - MobMouse2
 
 - type: entity
-  name: Cockroach Spawner
+  name: cockroach spawner
   id: SpawnMobCockroach
   parent: MarkerBase
   components:
@@ -33,7 +33,7 @@
       - MobCockroach
 
 - type: entity
-  name: HoP Corgi Spawner
+  name: hop corgi spawner
   id: SpawnMobCorgi
   parent: MarkerBase
   components:
@@ -49,7 +49,7 @@
       - MobCorgiIanPup
 
 - type: entity
-  name: Possum Morty Spawner
+  name: possum morty spawner
   id: SpawnMobPossumMorty
   parent: MarkerBase
   components:
@@ -62,7 +62,7 @@
       - MobPossumMortyOld
 
 - type: entity
-  name: Raccoon Morticia Spawner
+  name: raccoon morticia spawner
   id: SpawnMobRaccoonMorticia
   parent: MarkerBase
   components:
@@ -75,7 +75,7 @@
       - MobRaccoonMorticia
 
 - type: entity
-  name: Fox Renault Spawner
+  name: fox renault spawner
   id: SpawnMobFoxRenault
   parent: MarkerBase
   components:
@@ -88,7 +88,7 @@
       - MobFoxRenault
 
 - type: entity
-  name: Runtime Spawner
+  name: runtime spawner
   id: SpawnMobCatRuntime
   parent: MarkerBase
   components:
@@ -101,7 +101,7 @@
       - MobCatRuntime
 
 - type: entity
-  name: Exception Spawner
+  name: exception spawner
   id: SpawnMobCatException
   parent: MarkerBase
   components:
@@ -114,7 +114,7 @@
       - MobCatException
 
 - type: entity
-  name: Tropico Spawner
+  name: tropico spawner
   id: SpawnMobCrabAtmos
   parent: MarkerBase
   components:
@@ -127,7 +127,7 @@
       - MobCrabAtmos
 
 - type: entity
-  name: Floppa Spawner
+  name: floppa spawner
   id: SpawnMobCatFloppa
   parent: MarkerBase
   components:
@@ -140,7 +140,7 @@
       - MobCatFloppa
 
 - type: entity
-  name: Bingus Spawner
+  name: bingus spawner
   id: SpawnMobCatBingus
   parent: MarkerBase
   components:
@@ -153,7 +153,7 @@
       - MobBingus
 
 - type: entity
-  name: Space Cat Spawner
+  name: space cat spawner
   id: SpawnMobCatSpace
   parent: MarkerBase
   components:
@@ -166,7 +166,7 @@
       - MobCatSpace
 
 - type: entity
-  name: Kitten Spawner
+  name: kitten spawner
   id: SpawnMobCatKitten
   parent: MarkerBase
   components:
@@ -179,7 +179,7 @@
       - MobCatKitten
 
 - type: entity
-  name: Cat Spawner
+  name: cat spawner
   id: SpawnMobCat
   parent: MarkerBase
   components:
@@ -195,7 +195,7 @@
       - MobBingus
 
 - type: entity
-  name: Generic Cat Spawner
+  name: generic cat spawner
   id: SpawnMobCatGeneric
   parent: MarkerBase
   components:
@@ -214,7 +214,7 @@
     rareChance: 0.05
 
 - type: entity
-  name: Bandito Spawner
+  name: bandito spawner
   id: SpawnMobBandito
   parent: MarkerBase
   components:
@@ -227,7 +227,7 @@
       - MobBandito
 
 - type: entity
-  name:  McGriff Spawner
+  name:  mcgriff spawner
   id: SpawnMobMcGriff
   parent: MarkerBase
   components:
@@ -240,7 +240,7 @@
       - MobMcGriff
 
 - type: entity
-  name: Sloth Paperwork Spawner
+  name: sloth paperwork spawner
   id: SpawnMobSlothPaperwork
   parent: MarkerBase
   components:
@@ -253,7 +253,7 @@
       - MobPaperwork
 
 - type: entity
-  name: Walter Spawner
+  name: walter spawner
   id: SpawnMobWalter
   parent: MarkerBase
   components:
@@ -266,7 +266,7 @@
       - MobWalter
 
 - type: entity
-  name: Space Bear Spawner
+  name: space bear spawner
   id: SpawnMobBear
   parent: MarkerBase
   components:
@@ -280,7 +280,7 @@
     - MobBearSpace
 
 - type: entity
-  name: Space Carp Spawner
+  name: space carp spawner
   id: SpawnMobCarp
   parent: MarkerBase
   components:
@@ -294,7 +294,7 @@
     - MobCarp
 
 - type: entity
-  name: Magicarp Spawner
+  name: magicarp spawner
   id: SpawnMobCarpMagic
   parent: MarkerBase
   components:
@@ -308,7 +308,7 @@
     - MobCarpMagic
 
 - type: entity
-  name: Holocarp Spawner
+  name: holocarp spawner
   id: SpawnMobCarpHolo
   parent: MarkerBase
   components:
@@ -322,7 +322,7 @@
     - MobCarpHolo
 
 - type: entity
-  name: Space Sharkminnow Spawner
+  name: space sharkminnow spawner
   id: SpawnMobShark
   parent: MarkerBase
   components:
@@ -336,7 +336,7 @@
     - MobShark
 
 - type: entity
-  name: Hamster Hamlet Spawner
+  name: hamster hamlet spawner
   id: SpawnMobHamsterHamlet
   parent: MarkerBase
   components:
@@ -351,7 +351,7 @@
       - CrateNPCHamlet
 
 - type: entity
-  name: Alexander Spawner
+  name: alexander spawner
   id: SpawnMobAlexander
   parent: MarkerBase
   components:
@@ -364,7 +364,7 @@
       - MobAlexander
 
 - type: entity
-  name: Shiva Spawner
+  name: shiva spawner
   id: SpawnMobShiva
   parent: MarkerBase
   components:
@@ -378,7 +378,7 @@
       - MobSpiderShiva
 
 - type: entity
-  name: Willow Spawner
+  name: willow spawner
   id: SpawnMobKangarooWillow
   parent: MarkerBase
   components:
@@ -392,7 +392,7 @@
     - MobKangarooWillow
 
 - type: entity
-  name: Space Kangaroo Spawner
+  name: space kangaroo spawner
   id: SpawnMobKangaroo
   parent: MarkerBase
   components:
@@ -406,7 +406,7 @@
     - MobKangarooSpace
 
 - type: entity
-  name: Boxing Kangaroo Spawner
+  name: boxing kangaroo spawner
   id: SpawnMobBoxingKangaroo
   parent: MarkerBase
   components:
@@ -420,7 +420,7 @@
     - MobBoxingKangaroo
 
 - type: entity
-  name: Space Spider Spawner
+  name: space spider spawner
   id: SpawnMobSpaceSpider
   parent: MarkerBase
   components:
@@ -434,7 +434,7 @@
     - MobSpiderSpace
 
 - type: entity
-  name: Space Cobra Spawner
+  name: space cobra spawner
   id: SpawnMobSpaceCobra
   parent: MarkerBase
   components:
@@ -448,7 +448,7 @@
     - MobCobraSpace
 
 - type: entity
-  name: Slimes Spawner Blue
+  name: slimes spawner blue
   id: SpawnMobAdultSlimesBlue
   parent: MarkerBase
   components:
@@ -461,7 +461,7 @@
       - MobAdultSlimesBlue
 
 - type: entity
-  name: Slimes Spawner Blue Angry
+  name: slimes spawner blue angry
   id: SpawnMobAdultSlimesBlueAngry
   parent: MarkerBase
   components:
@@ -474,7 +474,7 @@
       - MobAdultSlimesBlueAngry
 
 - type: entity
-  name: Slimes Spawner Green
+  name: slimes spawner green
   id: SpawnMobAdultSlimesGreen
   parent: MarkerBase
   components:
@@ -487,7 +487,7 @@
       - MobAdultSlimesGreen
 
 - type: entity
-  name: Slimes Spawner Green Angry
+  name: slimes spawner green angry
   id: SpawnMobAdultSlimesGreenAngry
   parent: MarkerBase
   components:
@@ -500,7 +500,7 @@
       - MobAdultSlimesGreenAngry
 
 - type: entity
-  name: Slimes Spawner Yellow
+  name: slimes spawner yellow
   id: SpawnMobAdultSlimesYellow
   parent: MarkerBase
   components:
@@ -513,7 +513,7 @@
       - MobAdultSlimesYellow
 
 - type: entity
-  name: Slimes Spawner Yellow Angry
+  name: slimes spawner yellow angry
   id: SpawnMobAdultSlimesYellowAngry
   parent: MarkerBase
   components:
@@ -526,7 +526,7 @@
       - MobAdultSlimesYellowAngry
 
 - type: entity
-  name: Smile Spawner
+  name: smile spawner
   id: SpawnMobSmile
   parent: MarkerBase
   components:
@@ -539,7 +539,7 @@
       - MobSlimesPet
 
 - type: entity
-  name: Pun Pun Spawner
+  name: pun pun spawner
   id: SpawnMobMonkeyPunpun
   parent: MarkerBase
   components:
@@ -553,7 +553,7 @@
     - MobMonkeyPunpun
 
 - type: entity
-  name: behonker Spawner
+  name: behonker spawner
   id: SpawnMobBehonker
   parent: MarkerBase
   components:
@@ -570,7 +570,7 @@
       - MobBehonkerGrav
 
 - type: entity
-  name: Monkey Spawner
+  name: monkey spawner
   id: SpawnMobMonkey
   parent: MarkerBase
   components:
@@ -584,7 +584,7 @@
     - MobMonkey
 
 - type: entity
-  name: Purple Snake Spawner
+  name: purple snake spawner
   id: SpawnMobPurpleSnake
   parent: MarkerBase
   components:
@@ -598,7 +598,7 @@
     - MobPurpleSnake
 
 - type: entity
-  name: Small Purple Snake Spawner
+  name: small purple snake spawner
   id: SpawnMobSmallPurpleSnake
   parent: MarkerBase
   components:
@@ -612,7 +612,7 @@
     - MobSmallPurpleSnake
 
 - type: entity
-  name: Slug Spawner
+  name: slug spawner
   id: SpawnMobSlug
   parent: MarkerBase
   components:
@@ -626,7 +626,7 @@
     - MobSlug
 
 - type: entity
-  name: Lizard Spawner
+  name: lizard spawner
   id: SpawnMobLizard
   parent: MarkerBase
   components:
@@ -640,7 +640,7 @@
     - MobLizard
 
 - type: entity
-  name: Crab Spawner
+  name: crab spawner
   id: SpawnMobCrab
   parent: MarkerBase
   components:
@@ -654,7 +654,7 @@
     - MobCrab
 
 - type: entity
-  name: Goat Spawner
+  name: goat spawner
   id: SpawnMobGoat
   parent: MarkerBase
   components:
@@ -668,7 +668,7 @@
     - MobGoat
 
 - type: entity
-  name: Frog Spawner
+  name: frog spawner
   id: SpawnMobFrog
   parent: MarkerBase
   components:
@@ -682,7 +682,7 @@
     - MobFrog
 
 - type: entity
-  name: Bee Spawner
+  name: bee spawner
   id: SpawnMobBee
   parent: MarkerBase
   components:
@@ -696,7 +696,7 @@
     - MobBee
 
 - type: entity
-  name: Parrot Spawner
+  name: parrot spawner
   id: SpawnMobParrot
   parent: MarkerBase
   components:
@@ -710,7 +710,7 @@
     - MobParrot
 
 - type: entity
-  name: Butterfly Spawner
+  name: butterfly spawner
   id: SpawnMobButterfly
   parent: MarkerBase
   components:
@@ -724,7 +724,7 @@
     - MobButterfly
 
 - type: entity
-  name: Cow Spawner
+  name: cow spawner
   id: SpawnMobCow
   parent: MarkerBase
   components:
@@ -738,7 +738,7 @@
     - MobCow
 
 - type: entity
-  name: Gorilla Spawner
+  name: gorilla spawner
   id: SpawnMobGorilla
   parent: MarkerBase
   components:
@@ -752,7 +752,7 @@
     - MobGorilla
 
 - type: entity
-  name: Penguin Spawner
+  name: penguin spawner
   id: SpawnMobPenguin
   parent: MarkerBase
   components:
@@ -767,7 +767,7 @@
 
 
 - type: entity
-  name: Hellspawn Spawner
+  name: hellspawn spawner
   id: SpawnMobHellspawn
   parent: MarkerBase
   components:

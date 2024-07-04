@@ -109,7 +109,7 @@
 - type: entity
   id: MechRipley
   parent: BaseMech
-  name: Ripley APLU
+  name: ripley aplu
   description: Versatile and lightly armored, the Ripley is useful for almost any heavy work scenario. The "APLU" stands for Autonomous Power Loading Unit.
   components:
   - type: Sprite
@@ -154,7 +154,7 @@
 - type: entity
   parent: BaseMech
   id: MechHonker
-  name: H.O.N.K.
+  name: h.o.n.k.
   description: "Produced by \"Tyranny of Honk, INC\", this exosuit is designed as heavy clown-support. Used to spread the fun and joy of life. HONK!"
   components:
   - type: Sprite
@@ -189,7 +189,7 @@
 - type: entity
   parent: BaseMech
   id: MechHamtr
-  name: HAMTR
+  name: hamtr
   description: "An experimental mech which uses a brain–computer interface to connect directly to a hamsters brain."
   components:
   - type: Sprite
@@ -241,7 +241,7 @@
 - type: entity
   parent: BaseMech
   id: MechVim
-  name: Vim
+  name: vim
   description: A miniature exosuit from Nanotrasen, developed to let the irreplaceable station pets live a little longer.
   components:
   - type: Sprite

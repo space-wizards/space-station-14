@@ -141,7 +141,7 @@
   abstract: true
   parent: [ClothingOuterBase, AllowSuitStorageClothing]
   id: ClothingOuterEVASuitBase
-  name: base EVA Suit
+  name: base eva suit
   components:
   - type: PressureProtection
     highPressureMultiplier: 0.6

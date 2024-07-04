@@ -45,7 +45,7 @@
 - type: entity
   id: CrateMindShieldImplants
   parent: CrateMedical
-  name: MindShield implant crate
+  name: mindshield implant crate
   description: Crate filled with 3 MindShield implants.
   components:
   - type: StorageFill
@@ -109,7 +109,7 @@
 - type: entity
   id: CrateEmergencyO2Kit
   parent: CrateMedical
-  name: emergency O2 kit
+  name: emergency o2 kit
   description: Crate filled with an O2 treatment kit.
   components:
   - type: StorageFill

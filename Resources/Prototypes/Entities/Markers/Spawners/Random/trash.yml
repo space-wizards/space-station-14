@@ -1,5 +1,5 @@
 - type: entity
-  name: Trash Spawner
+  name: trash spawner
   id: RandomSpawner
   parent: MarkerBase
   suffix: 50

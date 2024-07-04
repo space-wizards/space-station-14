@@ -1,5 +1,5 @@
 - type: entity
-  name: BasePistol
+  name: basepistol
   parent: BaseItem
   id: BaseWeaponPistol
   description: A rooty tooty point and shooty.
@@ -39,7 +39,7 @@
   - type: ItemSlots
     slots:
       gun_magazine:
-        name: Magazine
+        name: magazine
         startingItem: MagazinePistol
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
@@ -48,7 +48,7 @@
           tags:
             - MagazinePistol
       gun_chamber:
-        name: Chamber
+        name: chamber
         startingItem: CartridgePistol
         priority: 1
         whitelist:
@@ -81,7 +81,7 @@
   - type: ItemSlots
     slots:
       gun_magazine:
-        name: Magazine
+        name: magazine
         startingItem: MagazinePistol
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
@@ -91,7 +91,7 @@
             - MagazinePistol
             - MagazinePistolHighCapacity
       gun_chamber:
-        name: Chamber
+        name: chamber
         startingItem: CartridgePistol
         priority: 1
         whitelist:
@@ -130,7 +130,7 @@
   - type: ItemSlots
     slots:
       gun_magazine:
-        name: Magazine
+        name: magazine
         startingItem: MagazinePistolCaselessRifle
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
@@ -139,7 +139,7 @@
           tags:
             - MagazinePistolCaselessRifle
       gun_chamber:
-        name: Chamber
+        name: chamber
         startingItem: CartridgeCaselessRifle
         priority: 1
         whitelist:
@@ -173,7 +173,7 @@
       path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
 
 - type: entity
-  name: N1984
+  name: n1984
   parent: BaseWeaponPistol
   id: WeaponPistolN1984 # the spaces in description are for formatting.
   description: The sidearm of any self respecting officer.     Comes in .45 magnum, the lord's caliber.
@@ -200,7 +200,7 @@
   - type: ItemSlots
     slots:
       gun_magazine:
-        name: Magazine
+        name: magazine
         startingItem: MagazineMagnum
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
@@ -209,7 +209,7 @@
           tags:
             - MagazineMagnum
       gun_chamber:
-        name: Chamber
+        name: chamber
         startingItem: CartridgeMagnum
         priority: 1
         whitelist:

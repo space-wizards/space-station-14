@@ -189,7 +189,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: ResearchComputerCircuitboard
-  name: R&D computer board
+  name: r&d computer board
   description: A computer printed circuit board for a R&D console.
   components:
     - type: Sprite
@@ -231,7 +231,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: IDComputerCircuitboard
-  name: ID card computer board
+  name: id card computer board
   description: A computer printed circuit board for an ID card console.
   components:
     - type: Sprite
@@ -315,7 +315,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: ParticleAcceleratorComputerCircuitboard
-  name: PA control box computer board
+  name: pa control box computer board
   description: A computer printed circuit board for a particle accelerator control box.
   components:
     - type: Sprite
@@ -355,7 +355,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: ComputerIFFCircuitboard
-  name: IFF console board
+  name: iff console board
   description: Allows you to control the IFF characteristics of this vessel.
   components:
     - type: Sprite
@@ -366,7 +366,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: ComputerIFFSyndicateCircuitboard
-  name: syndicate IFF console board
+  name: syndicate iff console board
   description: Allows you to control the IFF and stealth characteristics of this vessel.
   components:
     - type: ComputerBoard

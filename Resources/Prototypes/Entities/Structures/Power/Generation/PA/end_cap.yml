@@ -1,7 +1,7 @@
 - type: entity
   parent: ParticleAcceleratorFinishedPart
   id: ParticleAcceleratorEndCap
-  name: PA end-cap
+  name: pa end-cap
   description: Formally known as the Alpha Particle Generation Array. This is where Alpha particles are generated from [REDACTED].
   components:
   - type: Sprite
@@ -18,7 +18,7 @@
 - type: entity
   parent: ParticleAcceleratorUnfinishedBase
   id: ParticleAcceleratorEndCapUnfinished
-  name: PA end-cap
+  name: pa end-cap
   suffix: Unfinished
   description: Formally known as the Alpha Particle Generation Array. This is where Alpha particles are generated from [REDACTED]. It looks unfinished.
   components:

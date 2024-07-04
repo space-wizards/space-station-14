@@ -61,7 +61,7 @@
   description: Calls in a faithfully trained cat with a microbomb to assist you.
   components:
   - type: GhostRole
-    name: ghost-role-information-SyndiCat-name
+    name: ghost-role-information-syndicat-name
     description: ghost-role-information-SyndiCat-description
     rules: ghost-role-information-SyndiCat-rules
     raffle:

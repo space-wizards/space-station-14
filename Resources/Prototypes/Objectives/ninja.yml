@@ -56,7 +56,7 @@
 - type: entity
   parent: [BaseNinjaObjective, BaseSurviveObjective]
   id: NinjaSurviveObjective
-  name: Survive
+  name: survive
   description: You wouldn't be a very good ninja if you died, now would you?
   components:
   - type: Objective
@@ -67,7 +67,7 @@
 - type: entity
   parent: [BaseNinjaObjective, BaseCodeObjective]
   id: TerrorObjective
-  name: Call in a threat
+  name: call in a threat
   description: Use your gloves on a communication console in order to bring another threat to the station.
   components:
   - type: Objective
@@ -78,7 +78,7 @@
 - type: entity
   parent: [BaseNinjaObjective, BaseCodeObjective]
   id: MassArrestObjective
-  name: Set everyone to wanted
+  name: set everyone to wanted
   description: Use your gloves to hack a criminal records console, setting the entire station to be wanted!
   components:
   - type: Objective

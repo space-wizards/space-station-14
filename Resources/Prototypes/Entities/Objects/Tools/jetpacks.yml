@@ -22,7 +22,7 @@
   parent: GasTankBase
   abstract: true
   id: BaseJetpack
-  name: Jetpack
+  name: jetpack
   description: It's a jetpack.
   components:
     - type: InputMover
@@ -60,7 +60,7 @@
 
 - type: entity
   id: ActionToggleJetpack
-  name: Toggle jetpack
+  name: toggle jetpack
   description: Toggles the jetpack, giving you movement outside the station.
   components:
   - type: InstantAction

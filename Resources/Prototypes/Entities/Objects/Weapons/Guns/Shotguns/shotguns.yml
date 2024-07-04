@@ -1,5 +1,5 @@
 - type: entity
-  name: BaseWeaponShotgun
+  name: baseweaponshotgun
   parent: BaseItem
   id: BaseWeaponShotgun
   description: A rooty tooty point and shooty.
@@ -44,7 +44,7 @@
     price: 500
 
 - type: entity
-  name: Bulldog
+  name: bulldog
   # Don't parent to BaseWeaponShotgun because it differs significantly
   parent: [BaseItem, BaseGunWieldable]
   id: WeaponShotgunBulldog
@@ -79,7 +79,7 @@
   - type: ItemSlots
     slots:
       gun_magazine:
-        name: Magazine
+        name: magazine
         startingItem: MagazineShotgun
         priority: 2
         whitelist:
@@ -134,7 +134,7 @@
     proto: ShellShotgunBeanbag
 
 - type: entity
-  name: Enforcer
+  name: enforcer
   parent: [BaseWeaponShotgun, BaseGunWieldable]
   id: WeaponShotgunEnforcer
   description: A premium combat shotgun based on the Kammerer design, featuring an upgraded clip capacity. .50 shotgun shells.
@@ -157,7 +157,7 @@
     proto: ShellShotgunBeanbag
 
 - type: entity
-  name: Kammerer
+  name: kammerer
   parent: [BaseWeaponShotgun, BaseGunWieldable]
   id: WeaponShotgunKammerer
   description: When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds. Uses .50 shotgun shells.

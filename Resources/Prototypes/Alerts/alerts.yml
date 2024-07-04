@@ -432,7 +432,7 @@
   icons:
   - sprite: /Textures/Interface/Alerts/human_alive.rsi
     state: health0
-  name: Debug1
+  name: debug1
   description: Debug
 
 - type: alert
@@ -440,7 +440,7 @@
   icons:
   - sprite: /Textures/Interface/Alerts/human_alive.rsi
     state: health1
-  name: Debug2
+  name: debug2
   description: Debug
 
 - type: alert
@@ -448,7 +448,7 @@
   icons:
   - sprite: /Textures/Interface/Alerts/human_alive.rsi
     state: health2
-  name: Debug3
+  name: debug3
   description: Debug
 
 - type: alert
@@ -456,7 +456,7 @@
   icons:
   - sprite: /Textures/Interface/Alerts/human_alive.rsi
     state: health3
-  name: Debug4
+  name: debug4
   description: Debug
 
 - type: alert
@@ -464,7 +464,7 @@
   icons:
   - sprite: /Textures/Interface/Alerts/human_alive.rsi
     state: health4
-  name: Debug5
+  name: debug5
   description: Debug
 
 - type: alert
@@ -472,5 +472,5 @@
   icons:
   - sprite: /Textures/Interface/Alerts/human_critical.rsi
     state: critical
-  name: Debug6
+  name: debug6
   description: Debug

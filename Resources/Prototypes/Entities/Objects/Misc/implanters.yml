@@ -22,7 +22,7 @@
         - Unimplantable
       currentMode: Draw
       implanterSlot:
-        name: Implant
+        name: implant
         locked: True
         priority: 0
         whitelist:
@@ -186,7 +186,7 @@
 
 - type: entity
   id: EmpImplanter
-  name: EMP implanter
+  name: emp implanter
   parent: BaseImplantOnlyImplanterSyndi
   components:
     - type: Implanter
@@ -202,7 +202,7 @@
 
 - type: entity
   id: DnaScramblerImplanter
-  name: DNA scrambler implanter
+  name: dna scrambler implanter
   parent: BaseImplantOnlyImplanterSyndi
   components:
     - type: Implanter

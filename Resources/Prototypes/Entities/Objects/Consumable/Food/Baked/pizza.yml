@@ -398,7 +398,7 @@
 # Tastes like crust, tomato, cheese, sausage, sass.
 
 - type: entity
-  name: Hawaiian pizza
+  name: hawaiian pizza
   parent: FoodPizzaBase
   id: FoodPizzaPineapple
   description: Makes people burst into tears. Tears of joy or sadness depends on the persons fondness for pineapple.
@@ -421,7 +421,7 @@
     - Pizza
 
 - type: entity
-  name: slice of Hawaiian pizza
+  name: slice of hawaiian pizza
   parent: FoodPizzaSliceBase
   id: FoodPizzaPineappleSlice
   description: A slice of joy/sin.
@@ -445,7 +445,7 @@
 
 #TODO: This is a meme pizza from /tg/. It has specially coded mechanics.
 - type: entity
-  name: Arnold's pizza
+  name: arnold's pizza
   parent: FoodPizzaBase
   id: FoodPizzaArnold
   description: Hello, you've reached Arnold's pizza shop. I'm not here now, I'm out killing pepperoni.
@@ -481,7 +481,7 @@
     - Pizza
 
 - type: entity
-  name: slice of Arnold's pizza
+  name: slice of arnold's pizza
   parent: FoodPizzaSliceBase
   id: FoodPizzaArnoldSlice
   description: I come over, maybe I give you a pizza, maybe I break off your arm.

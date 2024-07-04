@@ -20,7 +20,7 @@
 - type: entity
   parent: GrenadeBase
   id: ClusterBangFull
-  name: ClusterBang
+  name: clusterbang
   description: Launches three flashbangs after the timer runs out.
   suffix: Full
   components:

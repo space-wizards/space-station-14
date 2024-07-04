@@ -33,7 +33,7 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledShotgun
-  name: Bulldog bundle
+  name: bulldog bundle
   description: "Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 3 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
   components:
   - type: StorageFill
@@ -47,7 +47,7 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledSMG
-  name: C-20r bundle
+  name: c-20r bundle
   description: "Old faithful: The classic C-20r Submachine Gun, bundled with three magazines." #, and a Suppressor.
   components:
   - type: StorageFill
@@ -60,7 +60,7 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledRevolver
-  name: Python bundle
+  name: python bundle
   description: "Go loud and proud with a fully loaded Magnum Python, bundled with two speed loaders."
   components:
   - type: StorageFill
@@ -72,7 +72,7 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledLMG
-  name: L6 Saw bundle
+  name: l6 saw bundle
   description: "More dakka: The iconic L6 lightmachinegun, bundled with 2 box magazines."
   components:
   - type: StorageFill
@@ -83,7 +83,7 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
-  name: China-Lake bundle
+  name: china-lake bundle
   description: "An old China-Lake grenade launcher bundled with 11 rounds of various destruction capability."
   components:
   - type: StorageFill
@@ -97,7 +97,7 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledCarbine
-  name: M-90gl bundle
+  name: m-90gl bundle
   description: "A versatile battle rifle with an attached grenade launcher, bundled with 3 magazines and 6 grenades of various capabilities."
   components:
   - type: StorageFill
@@ -130,7 +130,7 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSyndicateCostumeCentcom
-  name: CentCom official costume duffel bag
+  name: centcom official costume duffel bag
   description: "Contains a full CentCom Official uniform set, headset and clipboard included. Encryption keys and ID access are not included."
   suffix: DO NOT MAP
   components:
@@ -206,7 +206,7 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateC4tBundle
-  name: syndicate C-4 bundle
+  name: syndicate c-4 bundle
   description: "Contains a lot of C-4 charges."
   components:
     - type: StorageFill
@@ -235,7 +235,7 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateEVABundle
-  name: syndicate EVA bundle
+  name: syndicate eva bundle
   description: "Contains the Syndicate approved EVA suit."
   components:
   - type: StorageFill

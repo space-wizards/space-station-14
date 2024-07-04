@@ -127,7 +127,7 @@
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkAbsintheBottleFull
-  name: Jailbreaker Verte
+  name: jailbreaker verte
   description: One sip of this and you just know you're gonna have a good time.
   components:
   - type: SolutionContainerManager
@@ -143,7 +143,7 @@
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkBlueCuracaoBottleFull
-  name: Miss Blue Curacao
+  name: miss blue curacao
   description: A fruity, exceptionally azure drink. Does not allow the imbiber to use the fifth magic.
   components:
   - type: SolutionContainerManager
@@ -256,7 +256,7 @@
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkGinBottleFull
-  name: Griffeater gin
+  name: griffeater gin
   description: A bottle of high quality gin, produced in the New London Space Station.
   components:
   - type: SolutionContainerManager
@@ -367,7 +367,7 @@
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkRumBottleFull
-  name: captain pete's Cuban spiced rum
+  name: captain pete's cuban spiced rum
   description: This isn't just rum, oh no. It's practically GRIFF in a bottle.
   components:
   - type: SolutionContainerManager
@@ -543,7 +543,7 @@
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkBeerGrowler # Needs to be renamed DrinkBeerBottleFull
-  name: Beer Growler  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
+  name: beer growler  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
   description: An alcoholic beverage made from malted grains, hops, yeast, and water. XL growler bottle.
   components:
   - type: SolutionContainerManager
@@ -567,7 +567,7 @@
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
   id: DrinkAleBottleFull
-  name: Magm-Ale
+  name: magm-ale
   description: A true dorf's drink of choice.
   components:
   - type: Item
@@ -587,7 +587,7 @@
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
   id: DrinkAleBottleFullGrowler
-  name: Magm-Ale Growler
+  name: magm-ale growler
   description: A true dorf's drink of choice. XL growler bottle.
   components:
   - type: SolutionContainerManager
@@ -691,7 +691,7 @@
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkJuiceLimeCartonXL
-  name: lime juice XL
+  name: lime juice xl
   description: Sweet-sour goodness.
   components:
   - type: SolutionContainerManager
@@ -710,7 +710,7 @@
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkJuiceOrangeCartonXL
-  name: orange juice XL
+  name: orange juice xl
   description: Full of vitamins and deliciousness!
   components:
   - type: SolutionContainerManager
@@ -729,7 +729,7 @@
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkCreamCartonXL
-  name: Milk Cream XL
+  name: milk cream xl
   description: It's cream. Made from milk. What else did you think you'd find in there?
   components:
   - type: SolutionContainerManager

@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  name: Urist McPlants
+  name: urist mcplants
   parent: BaseMobSpeciesOrganic
   id: BaseMobDiona
   abstract: true

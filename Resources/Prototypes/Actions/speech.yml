@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: ActionConfigureMeleeSpeech
-  name: Set Battlecry
+  name: set battlecry
   description: Set a custom battlecry for when you attack!
   components:
   - type: InstantAction

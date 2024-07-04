@@ -542,7 +542,7 @@
 # The white duck is more akin to a pekin or call duck.
 
 - type: entity
-  name: mallard duck #Quack
+  name: mallard duck #quack
   parent: SimpleMobBase
   id: MobDuckMallard
   description: An adorable mallard duck, it's fluffy and soft!
@@ -612,7 +612,7 @@
     - Passive
 
 - type: entity
-  name: white duck #Quack
+  name: white duck #quack
   parent: MobDuckMallard
   id: MobDuckWhite
   description: An adorable white duck, it's fluffy and soft!
@@ -629,7 +629,7 @@
         Base: dead-1
 
 - type: entity
-  name: brown duck #Quack
+  name: brown duck #quack
   parent: MobDuckMallard
   id: MobDuckBrown
   description: An adorable brown duck, it's fluffy and soft!
@@ -1777,7 +1777,7 @@
     damageModifierSet: Zombie
 
 - type: entity
-  name: lizard #Weh
+  name: lizard #weh
   parent: SimpleMobBase
   id: MobLizard
   description: A harmless dragon.
@@ -2802,7 +2802,7 @@
         Base: syndicat_dead
   - type: GhostRole
     prob: 1
-    name: ghost-role-information-SyndiCat-name
+    name: ghost-role-information-syndicat-name
     allowMovement: true
     description: ghost-role-information-SyndiCat-description
     rules: ghost-role-information-SyndiCat-rules

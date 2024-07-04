@@ -66,7 +66,7 @@
   - type: ItemSlots
     slots:
       disk_slot:
-        name: Disk
+        name: disk
         insertSound:
           path: /Audio/Machines/terminal_insert_disc.ogg
         ejectSound:
@@ -192,7 +192,7 @@
 - type: entity
   parent: BaseComputer
   id: ComputerIFF
-  name: IFF computer
+  name: iff computer
   description: Allows you to control the IFF characteristics of this vessel.
   components:
   - type: IFFConsole
@@ -219,7 +219,7 @@
 - type: entity
   parent: ComputerIFF
   id: ComputerIFFSyndicate
-  name: IFF computer
+  name: iff computer
   suffix: Syndicate
   description: Allows you to control the IFF and stealth characteristics of this vessel.
   components:
@@ -393,7 +393,7 @@
 - type: entity
   parent: BaseComputer
   id: ComputerResearchAndDevelopment
-  name: R&D computer
+  name: r&d computer
   description: A computer used to interface with R&D tools.
   components:
   - type: Sprite
@@ -483,7 +483,7 @@
 - type: entity
   parent: BaseComputer
   id: ComputerId
-  name: ID card computer
+  name: id card computer
   description: Terminal for programming Nanotrasen employee ID cards to access parts of the station.
   components:
   - type: IdCardConsole

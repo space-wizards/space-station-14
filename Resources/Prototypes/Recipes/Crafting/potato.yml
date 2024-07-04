@@ -21,7 +21,7 @@
   objectType: Item
   
 - type: construction
-  name: supercompact AI chip
+  name: supercompact ai chip
   id: PotatoAIChip
   graph: PotatoAIChip
   startNode: start

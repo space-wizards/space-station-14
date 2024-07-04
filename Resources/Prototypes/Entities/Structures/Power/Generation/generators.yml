@@ -208,7 +208,7 @@
 - type: entity
   parent: BaseGeneratorWallmount
   id: GeneratorWallmountAPU
-  name: shuttle APU
+  name: shuttle apu
   description: An auxiliary power unit for a shuttle - 6kW.
   suffix: APU, 6kW
   components:
@@ -231,7 +231,7 @@
 - type: entity
   parent: BaseGenerator
   id: GeneratorRTG
-  name: RTG
+  name: rtg
   description: A Radioisotope Thermoelectric Generator for long term power.
   suffix: 10kW
   components:
@@ -279,7 +279,7 @@
 - type: entity
   parent: GeneratorRTG
   id: GeneratorRTGDamaged
-  name: damaged RTG
+  name: damaged rtg
   description: A Radioisotope Thermoelectric Generator for long term power. This one has damaged shielding.
   suffix: 10kW
   components:

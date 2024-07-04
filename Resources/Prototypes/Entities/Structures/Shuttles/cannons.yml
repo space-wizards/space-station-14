@@ -59,7 +59,7 @@
 - type: entity
   id: ShuttleGunSvalinnMachineGun
   parent: [ ShuttleGunBase, ConstructibleMachine]
-  name: LSE-400c "Svalinn machine gun"
+  name: lse-400c "svalinn machine gun"
   description: Basic stationary laser unit. Effective against live targets and electronics. Uses regular power cells to fire, and has an extremely high rate of fire.
   suffix: DO NOT MAP
   components:
@@ -101,7 +101,7 @@
   - type: ItemSlots
     slots:
       gun_magazine:
-        name: Magazine
+        name: magazine
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
         whitelist:
@@ -113,7 +113,7 @@
 - type: entity
   id: ShuttleGunPerforator
   parent: [ ShuttleGunBase, ConstructibleMachine]
-  name: LSE-1200c "Perforator"
+  name: lse-1200c "perforator"
   description: Advanced stationary laser unit. Annihilates electronics and is extremely dangerous to health! Uses the power cage to fire.
   suffix: DO NOT MAP
   components:
@@ -154,7 +154,7 @@
   - type: ItemSlots
     slots:
       gun_magazine:
-        name: Magazine
+        name: magazine
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
         whitelist:
@@ -169,7 +169,7 @@
 - type: entity
   id: ShuttleGunFriendship
   parent: [ShuttleGunBase, ConstructibleMachine]
-  name: EXP-320g "Friendship"
+  name: exp-320g "friendship"
   description: A small stationary grenade launcher that holds 2 grenades.
   suffix: DO NOT MAP
   components:
@@ -223,7 +223,7 @@
 - type: entity
   id: ShuttleGunDuster
   parent: [ShuttleGunBase, ConstructibleMachine]
-  name: EXP-2100g "Duster"
+  name: exp-2100g "duster"
   description: A powerful stationary grenade launcher. A cartridge is required for use.
   suffix: DO NOT MAP
   components:
@@ -268,7 +268,7 @@
   - type: ItemSlots
     slots:
       gun_magazine:
-        name: Magazine
+        name: magazine
         priority: 2
         whitelist:
           tags:
@@ -321,7 +321,7 @@
 - type: entity
   id: ShuttleGunKinetic
   parent: [ ShuttleGunBase, ConstructibleMachine]
-  name: PTK-800 "Matter Dematerializer"
+  name: ptk-800 "matter dematerializer"
   description: Salvage stationary mining turret. Gradually accumulates charges on its own, extremely effective for asteroid excavation.
   suffix: DO NOT MAP
   components:

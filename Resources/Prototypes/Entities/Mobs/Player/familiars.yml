@@ -1,5 +1,5 @@
 - type: entity
-  name: Remilia
+  name: remilia
   parent: MobBat
   id: MobBatRemilia
   description: The chaplain's familiar. Likes fruit.
@@ -32,7 +32,7 @@
   - type: Familiar
 
 - type: entity
-  name: Cerberus
+  name: cerberus
   parent: MobCorgiNarsi
   id: MobCorgiCerberus
   description: This pupper is not wholesome.

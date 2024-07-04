@@ -165,7 +165,7 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: EmpImplant
-  name: EMP implant
+  name: emp implant
   description: This implant creates an electromagnetic pulse when activated.
   noSpawn: true
   components:
@@ -192,7 +192,7 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: DnaScramblerImplant
-  name: DNA scrambler implant
+  name: dna scrambler implant
   description: This implant lets the user randomly change their appearance and name once.
   noSpawn: true
   components:

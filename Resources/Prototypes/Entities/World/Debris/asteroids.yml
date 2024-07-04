@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: BaseAsteroidDebris
   parent: BaseDebris
-  name: Asteroid Debris
+  name: asteroid debris
   abstract: true
   components:
     - type: MapGrid
@@ -54,7 +54,7 @@
 - type: entity
   id: AsteroidDebrisSmall
   parent: BaseAsteroidDebris
-  name: Asteroid Debris Small
+  name: asteroid debris small
   noSpawn: true
   components:
     - type: MapGrid
@@ -64,7 +64,7 @@
 - type: entity
   id: AsteroidDebrisMedium
   parent: BaseAsteroidDebris
-  name: Asteroid Debris Medium
+  name: asteroid debris medium
   noSpawn: true
   components:
     - type: MapGrid
@@ -74,7 +74,7 @@
 - type: entity
   id: AsteroidDebrisLarge
   parent: BaseAsteroidDebris
-  name: Asteroid Debris Large
+  name: asteroid debris large
   noSpawn: true
   components:
     - type: MapGrid
@@ -84,7 +84,7 @@
 - type: entity
   id: AsteroidDebrisLarger
   parent: BaseAsteroidDebris
-  name: Asteroid Debris Larger
+  name: asteroid debris larger
   noSpawn: true
   components:
     - type: MapGrid
@@ -95,7 +95,7 @@
 - type: entity
   id: AsteroidSalvageSmall
   parent: BaseAsteroidDebris
-  name: Salvage Asteroid Small
+  name: salvage asteroid small
   noSpawn: true
   components:
     - type: MapGrid
@@ -107,7 +107,7 @@
 - type: entity
   id: AsteroidSalvageMedium
   parent: BaseAsteroidDebris
-  name: Salvage Asteroid Medium
+  name: salvage asteroid medium
   noSpawn: true
   components:
     - type: MapGrid
@@ -119,7 +119,7 @@
 - type: entity
   id: AsteroidSalvageLarge
   parent: BaseAsteroidDebris
-  name: Salvage Asteroid Large
+  name: salvage asteroid large
   noSpawn: true
   components:
     - type: MapGrid
@@ -131,7 +131,7 @@
 - type: entity
   id: AsteroidSalvageHuge
   parent: BaseAsteroidDebris
-  name: Salvage Asteroid Huge
+  name: salvage asteroid huge
   noSpawn: true
   components:
     - type: MapGrid

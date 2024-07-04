@@ -137,7 +137,7 @@
 
 - type: entity
   id: ActionPAIPlayMidi
-  name: Play MIDI
+  name: play midi
   description: Open your portable MIDI interface to soothe your owner.
   components:
   - type: InstantAction
@@ -149,7 +149,7 @@
 
 - type: entity
   id: ActionPAIOpenMap
-  name: Open Map
+  name: open map
   description: Open your map interface and guide your owner.
   components:
     - type: InstantAction

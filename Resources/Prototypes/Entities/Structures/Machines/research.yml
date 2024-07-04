@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: ResearchAndDevelopmentServer
   parent: [ BaseMachinePowered, ConstructibleMachine ]
-  name: R&D server
+  name: r&d server
   description: Contains the collective knowledge of the station's scientists. Destroying it would send them back to the stone age. You don't want that do you?
   components:
   - type: Sprite
@@ -60,7 +60,7 @@
 - type: entity
   id: BaseResearchAndDevelopmentPointSource
   parent: BaseMachinePowered
-  name: "base R&D point source"
+  name: "base r&d point source"
   # We should make this abstract once there are actual point sources.
   components:
   - type: Sprite

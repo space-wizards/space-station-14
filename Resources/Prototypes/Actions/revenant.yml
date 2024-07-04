@@ -1,6 +1,6 @@
 - type: entity
   id: ActionRevenantShop
-  name: Shop
+  name: shop
   description: Opens the ability shop.
   components:
   - type: InstantAction
@@ -9,7 +9,7 @@
 
 - type: entity
   id: ActionRevenantDefile
-  name: Defile
+  name: defile
   description: Costs 30 Essence.
   components:
   - type: InstantAction
@@ -19,7 +19,7 @@
 
 - type: entity
   id: ActionRevenantOverloadLights
-  name: Overload Lights
+  name: overload lights
   description: Costs 40 Essence.
   components:
   - type: InstantAction
@@ -29,7 +29,7 @@
 
 #- type: entity
 #  id: ActionRevenantBlight
-#  name: Blight
+#  name: blight
 #  description: Costs 50 Essence.
 #  components:
 #  - type: InstantAction
@@ -39,7 +39,7 @@
 
 - type: entity
   id: ActionRevenantMalfunction
-  name: Malfunction
+  name: malfunction
   description: Costs 60 Essence.
   components:
   - type: InstantAction

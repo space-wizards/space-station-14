@@ -21,7 +21,7 @@
 
 - type: entity
   id: ClickTestRotatingCornerVisible
-  name: ClickTestRotatingCornerVisible
+  name: clicktestrotatingcornervisible
   parent: ClickTestBase
   components:
   - type: Clickable
@@ -31,7 +31,7 @@
 
 - type: entity
   id: ClickTestRotatingCornerVisibleNoRot
-  name: ClickTestRotatingCornerVisibleNoRot
+  name: clicktestrotatingcornervisiblenorot
   parent: ClickTestRotatingCornerVisible
   components:
   - type: Sprite
@@ -39,7 +39,7 @@
 
 - type: entity
   id: ClickTestRotatingCornerInvisible
-  name: ClickTestRotatingCornerInvisible
+  name: clicktestrotatingcornerinvisible
   parent: ClickTestBase
   components:
   - type: Clickable
@@ -55,7 +55,7 @@
 
 - type: entity
   id: ClickTestRotatingCornerInvisibleNoRot
-  name: ClickTestRotatingCornerInvisibleNoRot
+  name: clicktestrotatingcornerinvisiblenorot
   parent: ClickTestRotatingCornerInvisible
   components:
     - type: Sprite
@@ -64,7 +64,7 @@
 
 - type: entity
   id: ClickTestFixedCornerVisible
-  name: ClickTestFixedCornerVisible
+  name: clicktestfixedcornervisible
   parent: ClickTestBase
   components:
   - type: Clickable
@@ -74,7 +74,7 @@
 
 - type: entity
   id: ClickTestFixedCornerInvisible
-  name: ClickTestFixedCornerInvisible
+  name: clicktestfixedcornerinvisible
   parent: ClickTestBase
   components:
   - type: Clickable

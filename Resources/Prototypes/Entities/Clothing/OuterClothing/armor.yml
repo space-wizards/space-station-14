@@ -270,7 +270,7 @@
 - type: entity
   parent: ClothingOuterBaseLarge
   id: ClothingOuterArmorPodWars
-  name: ironclad II armor
+  name: ironclad ii armor
   description: A repurposed suit of ironclad II armor, a relic of the pod wars.
   components:
   - type: Sprite

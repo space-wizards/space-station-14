@@ -126,7 +126,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCentcomAgent
-  name: CentCom agent's jumpsuit
+  name: centcom agent's jumpsuit
   description: A suit worn by CentCom's legal team. Smells of burnt coffee.
   components:
   - type: Sprite
@@ -137,7 +137,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCentcomOfficial
-  name: CentCom official's jumpsuit
+  name: centcom official's jumpsuit
   description: It's a jumpsuit worn by CentCom's officials.
   components:
   - type: Sprite
@@ -148,7 +148,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCentcomOfficer
-  name: CentCom officer's jumpsuit
+  name: centcom officer's jumpsuit
   description: It's a jumpsuit worn by CentCom Officers.
   components:
   - type: Sprite
@@ -973,7 +973,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitERTChaplain
-  name: ERT chaplain uniform
+  name: ert chaplain uniform
   description: A special suit made for Central Command's elite chaplain corps.
   components:
   - type: Sprite
@@ -984,7 +984,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitERTEngineer
-  name: ERT engineering uniform
+  name: ert engineering uniform
   description: A special suit made for the elite engineers under CentCom.
   components:
   - type: Sprite
@@ -995,7 +995,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitERTJanitor
-  name: ERT janitorial uniform
+  name: ert janitorial uniform
   description: A special suit made for the elite janitors under CentCom.
   components:
   - type: Sprite
@@ -1006,7 +1006,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitERTLeader
-  name: ERT leader uniform
+  name: ert leader uniform
   description: A special suit made for the best of the elites under CentCom.
   components:
   - type: Sprite
@@ -1017,7 +1017,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitERTMedic
-  name: ERT medical uniform
+  name: ert medical uniform
   description: A special suit made for the elite medics under CentCom.
   components:
   - type: Sprite
@@ -1028,7 +1028,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitERTSecurity
-  name: ERT security uniform
+  name: ert security uniform
   description: A special suit made for the elite security under CentCom.
   components:
   - type: Sprite

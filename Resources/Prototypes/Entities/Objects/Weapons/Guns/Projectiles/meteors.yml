@@ -173,7 +173,7 @@
 - type: entity
   parent: BaseMeteor
   id: MeteorUrist
-  name: Urist McMeteor
+  name: urist mcmeteor
   description: As a successful member of society with a stable unflinching psyche and limitless drive, natural affinity for finance and domination, you have been selected, no, you have been effortlessly guided by divine (biological) trauma towards this moment. The gates of destiny fling open, and once again you're left standing on pulsating nothingness. A strobing headache of the soul.
   suffix: Meteor
   components:

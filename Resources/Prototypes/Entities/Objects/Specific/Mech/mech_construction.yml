@@ -177,7 +177,7 @@
 - type: entity
   parent: BaseHonkerPart
   id: HonkerHarness
-  name: H.O.N.K. harness
+  name: h.o.n.k. harness
   description: The core of the H.O.N.K. mech
   components:
   - type: Appearance
@@ -217,7 +217,7 @@
 - type: entity
   parent: BaseHonkerPartItem
   id: HonkerLArm
-  name: H.O.N.K. left arm
+  name: h.o.n.k. left arm
   description: A H.O.N.K. left arm, with unique sockets that accept odd weaponry designed by clown scientists.
   components:
   - type: Sprite
@@ -229,7 +229,7 @@
 - type: entity
   parent: BaseHonkerPartItem
   id: HonkerLLeg
-  name: H.O.N.K. left leg
+  name: h.o.n.k. left leg
   description: A H.O.N.K. left leg. The foot appears just large enough to fully accommodate a clown shoe.
   components:
   - type: Sprite
@@ -241,7 +241,7 @@
 - type: entity
   parent: BaseHonkerPartItem
   id: HonkerRLeg
-  name: H.O.N.K. right leg
+  name: h.o.n.k. right leg
   description: A H.O.N.K. right leg. The foot appears just large enough to fully accommodate a clown shoe.
   components:
   - type: Sprite
@@ -253,7 +253,7 @@
 - type: entity
   parent: BaseHonkerPartItem
   id: HonkerRArm
-  name: H.O.N.K. right arm
+  name: h.o.n.k. right arm
   description: A H.O.N.K. right arm, with unique sockets that accept odd weaponry designed by clown scientists.
   components:
   - type: Sprite
@@ -265,7 +265,7 @@
 - type: entity
   id: HonkerChassis
   parent: BaseHonkerPart
-  name: H.O.N.K. chassis
+  name: h.o.n.k. chassis
   description: An in-progress construction of a H.O.N.K. mech. Contains chuckle unit, bananium core and honk support systems.
   components:
   - type: Appearance
@@ -305,7 +305,7 @@
 - type: entity
   parent: BaseHamtrPart
   id: HamtrHarness
-  name: HAMTR harness
+  name: hamtr harness
   description: The core of the HAMTR.
   components:
   - type: Appearance
@@ -345,7 +345,7 @@
 - type: entity
   parent: BaseHamtrPartItem
   id: HamtrLArm
-  name: HAMTR left arm
+  name: hamtr left arm
   description: The left arm of the HAMTR. It belongs on the chassis of the mech.
   components:
   - type: Sprite
@@ -357,7 +357,7 @@
 - type: entity
   parent: BaseHamtrPartItem
   id: HamtrLLeg
-  name: HAMTR left leg
+  name: hamtr left leg
   description: The left leg of the HAMTR. It belongs on the chassis of the mech.
   components:
   - type: Sprite
@@ -369,7 +369,7 @@
 - type: entity
   parent: BaseHamtrPartItem
   id: HamtrRLeg
-  name: HAMTR right leg
+  name: hamtr right leg
   description: The right leg of the HAMTR. It belongs on the chassis of the mech.
   components:
   - type: Sprite
@@ -381,7 +381,7 @@
 - type: entity
   parent: BaseHamtrPartItem
   id: HamtrRArm
-  name: HAMTR right arm
+  name: hamtr right arm
   description: The right arm of the HAMTR. It belongs on the chassis of the mech.
   components:
   - type: Sprite
@@ -393,7 +393,7 @@
 - type: entity
   id: HamtrChassis
   parent: BaseHamtrPart
-  name: HAMTR chassis
+  name: hamtr chassis
   description: An in-progress construction of the HAMTR mech.
   components:
   - type: Appearance

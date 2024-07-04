@@ -30,7 +30,7 @@
 - type: entity
   id: CrateFoodMRE
   parent: CratePlastic
-  name: MRE crate
+  name: mre crate
   description: A military style meal fit to feed a whole department.
   components:
   - type: StorageFill

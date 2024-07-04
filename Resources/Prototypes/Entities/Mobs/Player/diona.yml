@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  name: Urist McPlants
+  name: urist mcplants
   parent: BaseMobDiona
   id: MobDiona
   components:
@@ -17,7 +17,7 @@
   parent: MobDiona
   noSpawn: true
   id: MobDionaReformed
-  name: Reformed Diona
+  name: reformed diona
   components:
     - type: IsDeadIC
     - type: RandomHumanoidAppearance 

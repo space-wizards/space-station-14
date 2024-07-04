@@ -69,7 +69,7 @@
 
 - type: holiday
   id: holiday-name-easter
-  name: Easter
+  name: easter
   shouldCelebrate:
     !type:Computus { }
 
@@ -321,7 +321,7 @@
 
 - type: holiday
   id: holiday-name-halloween
-  name: Halloween
+  name: halloween
   beginDay: 31
   beginMonth: October
   greet:
@@ -384,7 +384,7 @@
 
 - type: holiday
   id: holiday-name-sinterklaas
-  name: Sinterklaas
+  name: sinterklaas
   beginDay: 5
   beginMonth: December
 
@@ -408,7 +408,7 @@
 
 - type: holiday
   id: holiday-name-christmas
-  name: Christmas
+  name: christmas
   beginDay: 24
   endDay: 26
   beginMonth: December

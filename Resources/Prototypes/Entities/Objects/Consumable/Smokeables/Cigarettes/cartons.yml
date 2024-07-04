@@ -1,7 +1,7 @@
 - type: entity
   id: CigCartonGreen
   parent: [ BoxCardboard, BaseBagOpenClose ]
-  name: Spessman's Smokes carton
+  name: spessman's smokes carton
   description: "A carton containing 6 packets of Spessman's Smokes."
   components:
   - type: Sprite
@@ -31,7 +31,7 @@
 - type: entity
   id: CigCartonRed
   parent: CigCartonGreen
-  name: DromedaryCo carton
+  name: dromedaryco carton
   description: A carton containing 6 packets of Dromedarycos.
   components:
   - type: Sprite
@@ -48,7 +48,7 @@
 - type: entity
   id: CigCartonBlue
   parent: CigCartonGreen
-  name: AcmeCo carton
+  name: acmeco carton
   description: A carton containing 6 packets of AcmeCo.
   components:
   - type: Sprite
@@ -65,7 +65,7 @@
 - type: entity
   id: CigCartonBlack
   parent: CigCartonGreen
-  name: Nomads carton
+  name: nomads carton
   description: A carton containing 6 packets of Nomads.
   components:
   - type: Sprite
@@ -82,7 +82,7 @@
 - type: entity
   id: CigCartonMixed
   parent: CigCartonGreen
-  name: Dan's soaked smokes
+  name: dan's soaked smokes
   description: A carton containg 3 packets of Dan's soaked smokes.
   components:
   - type: Sprite

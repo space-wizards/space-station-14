@@ -35,7 +35,7 @@
 #- type: entity
 #  id: CrateEngineeringPowercell
 #  parent: CrateElectrical
-#  name: AME crate
+#  name: ame crate
 #  description: Three microcreactor powercells.
 #  components:
 #  - type: StorageFill
@@ -46,7 +46,7 @@
 - type: entity
   id: CrateEngineeringCableLV
   parent: CrateElectrical
-  name: LV cable crate
+  name: lv cable crate
   description: 3 coils of LV cables.
   components:
   - type: StorageFill
@@ -57,7 +57,7 @@
 - type: entity
   id: CrateEngineeringCableMV
   parent: CrateElectrical
-  name: MV cable crate
+  name: mv cable crate
   description: 3 coils of LV cables.
   components:
   - type: StorageFill
@@ -68,7 +68,7 @@
 - type: entity
   id: CrateEngineeringCableHV
   parent: CrateElectrical
-  name: HV cable crate
+  name: hv cable crate
   description: 3 coils of HV cables.
   components:
   - type: StorageFill
@@ -153,7 +153,7 @@
 - type: entity
   id: CrateEvaKit
   parent: CrateCommandSecure
-  name: EVA kit
+  name: eva kit
   description: A set consisting of two prestigious EVA suits and helmets.
   components:
   - type: StorageFill
@@ -177,7 +177,7 @@
 - type: entity
   id: CrateRCD
   parent: CrateEngineeringSecure
-  name: RCD crate
+  name: rcd crate
   description: A crate containing a single rapid construction device.
   components:
   - type: StorageFill

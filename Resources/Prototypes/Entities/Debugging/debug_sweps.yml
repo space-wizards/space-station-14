@@ -25,7 +25,7 @@
   - type: ItemSlots
     slots:
       gun_magazine:
-        name: Magazine
+        name: magazine
         startingItem: MagazinePistolDebug
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
@@ -34,7 +34,7 @@
           tags:
             - Debug
       gun_chamber:
-        name: Chamber
+        name: chamber
         startingItem: CartridgeDebug
         priority: 1
         whitelist:

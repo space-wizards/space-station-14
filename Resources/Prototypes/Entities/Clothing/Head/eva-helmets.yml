@@ -2,7 +2,7 @@
 - type: entity
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetEVA
-  name: EVA helmet
+  name: eva helmet
   description: An old-but-gold helmet designed for extravehicular activites. Infamous for making security officers paranoid.
   components:
   - type: Sprite
@@ -18,7 +18,7 @@
 - type: entity
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetEVALarge
-  name: EVA helmet
+  name: eva helmet
   description: An old-but-gold helmet designed for extravehicular activites.
   components:
   - type: Sprite
@@ -30,7 +30,7 @@
 - type: entity
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetSyndicate
-  name: syndicate EVA helmet
+  name: syndicate eva helmet
   description: A simple, stylish EVA helmet. Designed for maximum humble space-badassery.
   components:
   - type: Sprite
@@ -73,7 +73,7 @@
 - type: entity
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetAncient
-  name: NTSRA void helmet
+  name: ntsra void helmet
   description: An ancient space helmet, designed by the NTSRA branch of CentCom.
   components:
   - type: Sprite

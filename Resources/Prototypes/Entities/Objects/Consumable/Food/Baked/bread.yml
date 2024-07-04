@@ -818,7 +818,7 @@
     size: Ginormous
   - type: GhostRole
     prob: 1
-    name: ghost-role-information-BreadDog-name
+    name: ghost-role-information-breaddog-name
     allowMovement: true
     description: ghost-role-information-BreadDog-description
     rules: ghost-role-information-nonantagonist-rules

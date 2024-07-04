@@ -697,7 +697,7 @@
 - type: entity
   parent:  ClothingOuterHardsuitBase
   id:  ClothingOuterHardsuitPirateEVA
-  name: deep space EVA suit
+  name: deep space eva suit
   suffix: Pirate
   description: A heavy space suit that provides some basic protection from the cold harsh realities of deep space.
   components:
@@ -762,7 +762,7 @@
 - type: entity
   parent: ClothingOuterHardsuitSyndieCommander
   id: ClothingOuterHardsuitERTLeader
-  name: ERT leader's hardsuit
+  name: ert leader's hardsuit
   description: A protective hardsuit worn by the leader of an emergency response team.
   components:
   - type: Sprite
@@ -776,7 +776,7 @@
 - type: entity
   parent: ClothingOuterHardsuitJuggernaut
   id: ClothingOuterHardsuitERTChaplain
-  name: ERT chaplain's hardsuit
+  name: ert chaplain's hardsuit
   description: A protective hardsuit worn by the chaplains of an Emergency Response Team.
   components:
   - type: Sprite
@@ -790,7 +790,7 @@
 - type: entity
   parent: ClothingOuterHardsuitCBURN
   id: ClothingOuterHardsuitERTEngineer
-  name: ERT engineer's hardsuit
+  name: ert engineer's hardsuit
   description: A protective hardsuit worn by the engineers of an emergency response team.
   components:
   - type: Sprite
@@ -804,7 +804,7 @@
 - type: entity
   parent: ClothingOuterHardsuitSyndieMedic
   id: ClothingOuterHardsuitERTMedical
-  name: ERT medic's hardsuit
+  name: ert medic's hardsuit
   description: A protective hardsuit worn by the medics of an emergency response team.
   components:
   - type: Sprite
@@ -818,7 +818,7 @@
 - type: entity
   parent: ClothingOuterHardsuitSyndie
   id: ClothingOuterHardsuitERTSecurity
-  name: ERT security's hardsuit
+  name: ert security's hardsuit
   description: A protective hardsuit worn by the security officers of an emergency response team.
   components:
   - type: Sprite
@@ -836,7 +836,7 @@
 - type: entity
   parent: ClothingOuterHardsuitCBURN
   id: ClothingOuterHardsuitERTJanitor
-  name: ERT janitor's hardsuit
+  name: ert janitor's hardsuit
   description: A protective hardsuit worn by the janitors of an emergency response team.
   components:
   - type: Sprite
@@ -886,7 +886,7 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitCBURN
-  name: CBURN exosuit
+  name: cburn exosuit
   description: A lightweight yet strong exosuit used for special cleanup operations.
   components:
   - type: Sprite
@@ -973,7 +973,7 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSanta
-  name: Santa's hardsuit
+  name: santa's hardsuit
   description: A festive, cheerful hardsuit that protects the jolly gift-giver while on sleighrides in space. Offers some resistance against asteroid strikes.
   components:
   - type: Sprite

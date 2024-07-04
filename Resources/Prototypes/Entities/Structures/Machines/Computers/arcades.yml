@@ -164,7 +164,7 @@
 - type: entity
   id: BlockGameArcade
   description: An arcade cabinet with a strangely familiar game.
-  name: NT block game
+  name: nt block game
   parent: ArcadeBase
   components:
   - type: Sprite

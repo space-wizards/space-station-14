@@ -1,7 +1,7 @@
 - type: entity
   id: DiseaseDiagnoser
   parent: [ BaseMachinePowered, SmallConstructibleMachine ]
-  name: Disease Diagnoser Delta Extreme
+  name: disease diagnoser delta extreme
   description: A machine that analyzes disease samples.
   placement:
     mode: SnapgridCenter

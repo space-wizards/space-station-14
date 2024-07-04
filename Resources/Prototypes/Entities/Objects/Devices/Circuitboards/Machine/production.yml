@@ -183,7 +183,7 @@
 - type: entity
   id: ResearchAndDevelopmentServerMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: R&D server machine board
+  name: r&d server machine board
   description: A machine printed circuit board for the R&D server.
   components:
   - type: Sprite
@@ -322,7 +322,7 @@
 - type: entity
   parent: BaseMachineCircuitboard
   id: APECircuitboard
-  name: A.P.E. machine board
+  name: a.p.e. machine board
   description: A machine printed circuit board for an A.P.E.
   components:
     - type: Sprite
@@ -515,7 +515,7 @@
 - type: entity
   id: ChemMasterMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: ChemMaster 4000 machine board
+  name: chemmaster 4000 machine board
   description: A machine printed circuit board for a ChemMaster 4000.
   components:
     - type: Sprite
@@ -607,7 +607,7 @@
 - type: entity
   id: SMESMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: SMES machine board
+  name: smes machine board
   description: A machine printed circuit board for a SMES.
   components:
     - type: Sprite
@@ -787,7 +787,7 @@
 - type: entity
   id: PortableGeneratorPacmanMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: P.A.C.M.A.N.-type portable generator machine board
+  name: p.a.c.m.a.n.-type portable generator machine board
   components:
     - type: Sprite
       state: engineering
@@ -830,7 +830,7 @@
 - type: entity
   id: PortableGeneratorSuperPacmanMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator machine board
+  name: s.u.p.e.r.p.a.c.m.a.n.-type portable generator machine board
   components:
     - type: Sprite
       state: engineering
@@ -850,7 +850,7 @@
 - type: entity
   id: PortableGeneratorJrPacmanMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: J.R.P.A.C.M.A.N.-type portable generator machine board
+  name: j.r.p.a.c.m.a.n.-type portable generator machine board
   components:
     - type: Sprite
       state: engineering
@@ -1055,7 +1055,7 @@
 - type: entity
   parent: BaseMachineCircuitboard
   id: FlatpackerMachineCircuitboard
-  name: Flatpacker 1001 machine board
+  name: flatpacker 1001 machine board
   components:
   - type: MachineBoard
     prototype: MachineFlatpacker

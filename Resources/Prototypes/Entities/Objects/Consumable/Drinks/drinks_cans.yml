@@ -299,7 +299,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkFourteenLokoCan
-  name: Fourteen Loko can
+  name: fourteen loko can
   description: The MBO has advised crew members that consumption of Fourteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly.
   components:
   - type: SolutionContainerManager
@@ -336,7 +336,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkDrGibbCan
-  name: Dr. Gibb can
+  name: dr. gibb can
   description: A delicious blend of 42 different flavours.
   components:
   - type: SolutionContainerManager

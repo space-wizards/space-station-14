@@ -1,5 +1,5 @@
 ﻿- type: entity
-  name: AI Timed Spawner
+  name: ai timed spawner
   id: AITimedSpawner
   parent: MarkerBase
   components:
@@ -20,7 +20,7 @@
       maximumEntitiesSpawned: 5
 
 - type: entity
-  name: Xeno AI Timed Spawner
+  name: xeno ai timed spawner
   id: XenoAITimedSpawner
   parent: MarkerBase
   components:
@@ -40,7 +40,7 @@
       maximumEntitiesSpawned: 4
 
 - type: entity
-  name: Mouse Timed Spawner
+  name: mouse timed spawner
   id: MouseTimedSpawner
   parent: MarkerBase
   components:
@@ -66,7 +66,7 @@
       maximumEntitiesSpawned: 1
 
 - type: entity
-  name: Cockroach Timed Spawner
+  name: cockroach timed spawner
   id: CockroachTimedSpawner
   parent: MouseTimedSpawner
   components:

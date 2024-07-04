@@ -1,5 +1,5 @@
 - type: entity
-  name: BaseWeaponSniper
+  name: baseweaponsniper
   parent: BaseItem
   id: BaseWeaponSniper
   description: A rooty tooty point and shooty.
@@ -39,7 +39,7 @@
     price: 500
 
 - type: entity
-  name: Kardashev-Mosin
+  name: kardashev-mosin
   parent: [BaseWeaponSniper, BaseGunWieldable]
   id: WeaponSniperMosin
   description: A weapon for hunting, or endless trench warfare. Uses .30 rifle ammo.
@@ -48,7 +48,7 @@
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
 
 - type: entity
-  name: Hristov
+  name: hristov
   parent: [BaseWeaponSniper, BaseGunWieldable]
   id: WeaponSniperHristov
   description: A portable anti-materiel rifle. Fires armor piercing 14.5mm shells. Uses .60 anti-materiel ammo.

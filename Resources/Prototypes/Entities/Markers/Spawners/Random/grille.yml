@@ -1,5 +1,5 @@
 - type: entity
-  name: Random Grille Spawner
+  name: random grille spawner
   id: GrilleSpawner
   parent: MarkerBase
   components:

@@ -137,7 +137,7 @@
 - type: entity
   id: CigPackGreen
   parent: CigPackBase
-  name: Spessman's Smokes packet
+  name: spessman's smokes packet
   description: A label on the packaging reads, Wouldn't a slow death make a change?
   components:
   - type: Sprite
@@ -148,7 +148,7 @@
 - type: entity
   id: CigPackRed
   parent: CigPackBase
-  name: DromedaryCo packet
+  name: dromedaryco packet
   description: The most popular brand of Space Cigarettes, sponsors of the Space Olympics.
   components:
   - type: Sprite
@@ -159,7 +159,7 @@
 - type: entity
   id: CigPackBlue
   parent: CigPackBase
-  name: AcmeCo packet
+  name: acmeco packet
   description: For those who somehow want to obtain the record for the most amount of cancerous tumors.
   components:
   - type: Sprite
@@ -170,7 +170,7 @@
 - type: entity
   id: CigPackBlack
   parent: CigPackBase
-  name: Nomads packet
+  name: nomads packet
   description: Nomads's extra strong, for when your life is more extra hard.
   components:
   - type: Sprite
@@ -181,7 +181,7 @@
 - type: entity
   id: CigPackSyndicate
   parent: CigPackBase
-  name: Interdyne herbals packet
+  name: interdyne herbals packet
   description: Elite cigarettes for elite syndicate agents. Infused with medicine for when you need to do more than calm your nerves.
   components:
   - type: Sprite
@@ -196,7 +196,7 @@
 - type: entity
   id: CigPackMixedMedical
   parent: CigPackMixedBase
-  name: Dan's soaked smokes
+  name: dan's soaked smokes
   suffix: Medical
   description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
   components:
@@ -224,7 +224,7 @@
 - type: entity
   id: CigPackMixed
   parent: CigPackMixedBase
-  name: Dan's soaked smokes
+  name: dan's soaked smokes
   suffix: Mixed
   description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
   components:
@@ -258,7 +258,7 @@
 - type: entity
   id: CigPackMixedNasty
   parent: CigPackMixedBase
-  name: Dan's soaked smokes
+  name: dan's soaked smokes
   suffix: Nasty
   description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
   components:

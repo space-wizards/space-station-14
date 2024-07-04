@@ -1,5 +1,5 @@
 - type: entity
-  name: BaseWeaponLightMachineGun
+  name: baseweaponlightmachinegun
   parent: BaseItem
   id: BaseWeaponLightMachineGun
   description: A rooty tooty point and shooty.
@@ -38,7 +38,7 @@
   - type: ItemSlots
     slots:
       gun_magazine:
-        name: Magazine
+        name: magazine
         startingItem: MagazineLightRifleBox
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
@@ -47,7 +47,7 @@
           tags:
             - MagazineLightRifleBox
       gun_chamber:
-        name: Chamber
+        name: chamber
         startingItem: CartridgeLightRifle
         priority: 1
         whitelist:
@@ -63,7 +63,7 @@
     delay: 1
 
 - type: entity
-  name: L6 SAW
+  name: l6 saw
   id: WeaponLightMachineGunL6
   parent: BaseWeaponLightMachineGun
   description: A rather traditionally made LMG with a pleasantly lacquered wooden pistol grip. Uses .30 rifle ammo.
@@ -82,7 +82,7 @@
   - type: Appearance
 
 - type: entity
-  name: L6C ROW
+  name: l6c row
   id: WeaponLightMachineGunL6C
   parent: BaseItem
   description: A L6 SAW for use by cyborgs. Creates .30 rifle ammo on the fly from an internal ammo fabricator, which slowly self-charges.

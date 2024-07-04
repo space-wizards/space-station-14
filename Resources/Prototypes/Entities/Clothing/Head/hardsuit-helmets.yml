@@ -505,7 +505,7 @@
 - type: entity
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitPirateEVA
-  name: deep space EVA helmet
+  name: deep space eva helmet
   suffix: Pirate
   description: A deep space EVA helmet, very heavy but provides good protection.
   components:
@@ -538,7 +538,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndieCommander
   id: ClothingHeadHelmetHardsuitERTLeader
-  name: ERT leader hardsuit helmet
+  name: ert leader hardsuit helmet
   description: A special hardsuit helmet worn by members of an emergency response team.
   components:
   - type: Sprite
@@ -559,7 +559,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndie
   id: ClothingHeadHelmetHardsuitERTChaplain
-  name: ERT chaplain hardsuit helmet
+  name: ert chaplain hardsuit helmet
   description: A special hardsuit helmet worn by members of an emergency response team.
   components:
   - type: Sprite
@@ -573,7 +573,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndie
   id: ClothingHeadHelmetHardsuitERTEngineer
-  name: ERT engineer hardsuit helmet
+  name: ert engineer hardsuit helmet
   description: A special hardsuit helmet worn by members of an emergency response team.
   components:
   - type: Sprite
@@ -594,7 +594,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndieElite
   id: ClothingHeadHelmetHardsuitERTMedical
-  name: ERT medic hardsuit helmet
+  name: ert medic hardsuit helmet
   description: A special hardsuit helmet worn by members of an emergency response team.
   components:
   - type: Sprite
@@ -608,7 +608,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndie
   id: ClothingHeadHelmetHardsuitERTSecurity
-  name: ERT security hardsuit helmet
+  name: ert security hardsuit helmet
   description: A special hardsuit helmet worn by members of an emergency response team.
   components:
   - type: Sprite
@@ -629,7 +629,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndie
   id: ClothingHeadHelmetHardsuitERTJanitor
-  name: ERT janitor hardsuit helmet
+  name: ert janitor hardsuit helmet
   description: A special hardsuit helmet worn by members of an emergency response team.
   components:
   - type: Sprite
@@ -643,7 +643,7 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetCBURN
-  name: CBURN exosuit helmet
+  name: cburn exosuit helmet
   description: A pressure resistant and fireproof hood worn by special cleanup units.
   components:
   - type: Sprite
@@ -737,7 +737,7 @@
 - type: entity
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitSanta
-  name: Santa's hardsuit helmet
+  name: santa's hardsuit helmet
   description: A festive-looking hardsuit helmet that provides the jolly gift-giver protection from low-pressure environments.
   components:
   - type: BreathMask

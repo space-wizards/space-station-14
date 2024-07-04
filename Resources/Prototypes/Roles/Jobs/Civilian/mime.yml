@@ -34,7 +34,7 @@
 
 - type: entity
   id: ActionMimeInvisibleWall
-  name: Create Invisible Wall
+  name: create invisible wall
   description: Create an invisible wall in front of you, if placeable there.
   components:
   - type: InstantAction

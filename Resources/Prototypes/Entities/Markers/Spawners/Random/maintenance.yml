@@ -1,5 +1,5 @@
 - type: entity
-  name: Maint Loot Spawner
+  name: maint loot spawner
   suffix: Fluff+Clothes
   id: MaintenanceFluffSpawner
   parent: MarkerBase
@@ -133,7 +133,7 @@
 
 
 - type: entity
-  name: Maint Loot Spawner
+  name: maint loot spawner
   suffix: Tools+Cells+Mats
   id: MaintenanceToolSpawner
   parent: MarkerBase
@@ -209,7 +209,7 @@
       offset: 0.0
 
 - type: entity
-  name: Maint Loot Spawner
+  name: maint loot spawner
   suffix: Scrap+Weapons
   id: MaintenanceWeaponSpawner
   parent: MarkerBase
@@ -261,7 +261,7 @@
       offset: 0.0
 
 - type: entity
-  name: Maint Loot Spawner
+  name: maint loot spawner
   suffix: Plants
   id: MaintenancePlantSpawner
   parent: MarkerBase

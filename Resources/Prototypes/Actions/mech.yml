@@ -1,6 +1,6 @@
 - type: entity
   id: ActionMechCycleEquipment
-  name: Cycle
+  name: cycle
   description: Cycles currently selected equipment
   components:
   - type: InstantAction
@@ -13,7 +13,7 @@
 
 - type: entity
   id: ActionMechOpenUI
-  name: Control Panel
+  name: control panel
   description: Opens the control panel for the mech
   components:
   - type: InstantAction
@@ -26,7 +26,7 @@
 
 - type: entity
   id: ActionMechEject
-  name: Eject
+  name: eject
   description: Ejects the pilot from the mech
   components:
   - type: InstantAction

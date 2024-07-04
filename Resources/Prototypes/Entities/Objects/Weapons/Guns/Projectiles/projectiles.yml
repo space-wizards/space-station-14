@@ -20,7 +20,7 @@
 # One bullet to bring them all into the darkness and bind them
 - type: entity
   id: BaseBullet
-  name: BaseBullet
+  name: basebullet
   description: If you can see this you're probably dead!
   abstract: true
   components:
@@ -753,7 +753,7 @@
 
 - type: entity
   id: BulletGrenadeEMP
-  name: EMP rocket
+  name: emp rocket
   parent: BaseBulletTrigger
   noSpawn: true
   components:

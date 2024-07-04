@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
   id: MobRatvarBase #can't have the clockwork justiciar be associated with his (im)mortal enemy
-  name: Ratvar
+  name: ratvar
   description: Your mind aches as it fails to understand the complex mechanics of what is before you.
   components:
   - type: Sprite

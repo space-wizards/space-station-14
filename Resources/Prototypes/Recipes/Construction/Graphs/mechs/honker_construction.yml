@@ -14,7 +14,7 @@
           data: 1
 
       - tag: HonkerCentralControlModule
-        name: H.O.N.K. central control module
+        name: h.o.n.k. central control module
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: "mainboard"
@@ -31,7 +31,7 @@
           data: 3
 
       - tag: HonkerPeripheralsControlModule
-        name: H.O.N.K. peripherals control module
+        name: h.o.n.k. peripherals control module
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: id_mod
@@ -48,7 +48,7 @@
           data: 5
 
       - tag: HonkerTargetingControlModule
-        name: H.O.N.K. weapon control and targeting module
+        name: h.o.n.k. weapon control and targeting module
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: id_mod

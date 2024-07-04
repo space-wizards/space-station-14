@@ -1,7 +1,7 @@
 - type: entity
   id: CrateArmorySMG
   parent: CrateWeaponSecure
-  name: SMG crate
+  name: smg crate
   description: Contains two high-powered, semiautomatic rifles with four mags. Requires Armory access to open.
   components:
   - type: StorageFill

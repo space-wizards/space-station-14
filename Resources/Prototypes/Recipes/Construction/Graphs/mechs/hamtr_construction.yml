@@ -34,7 +34,7 @@
           data: 4
 
       - tag: HamtrCentralControlModule
-        name: HAMTR central control module
+        name: hamtr central control module
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: "mainboard"
@@ -51,7 +51,7 @@
           data: 6
 
       - tag: HamtrPeripheralsControlModule
-        name: HAMTR peripherals control module
+        name: hamtr peripherals control module
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: id_mod

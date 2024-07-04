@@ -80,7 +80,7 @@
 - type: entity
   id: CrateEngineeringParticleAccelerator
   parent: CrateEngineeringSecure
-  name: PA crate
+  name: pa crate
   description: Complex to setup, but rewarding as fuck.
   components:
   - type: StorageFill

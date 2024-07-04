@@ -1,7 +1,7 @@
 # Actions added to mobs in crit.
 - type: entity
   id: ActionCritSuccumb
-  name: Succumb
+  name: succumb
   description: Accept your fate.
   components:
   - type: InstantAction
@@ -15,7 +15,7 @@
 
 - type: entity
   id: ActionCritFakeDeath
-  name: Fake Death
+  name: fake death
   description: Pretend to take your final breath while staying alive.
   components:
   - type: InstantAction
@@ -30,7 +30,7 @@
 
 - type: entity
   id: ActionCritLastWords
-  name: Say Last Words
+  name: say last words
   description: Whisper your last words to anyone nearby, and then succumb to your fate. You only have 30 characters to work with.
   components:
   - type: InstantAction

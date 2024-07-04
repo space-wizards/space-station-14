@@ -22,7 +22,7 @@
 - type: entity
   parent: FlaskBase
   id: DrinkMREFlask
-  name: MRE flask
+  name: mre flask
   description: An old military flask, filled with the finest contents for soldiers
   components:
   - type: Sprite

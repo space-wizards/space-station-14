@@ -1,5 +1,5 @@
 - type: entity
-  name: BaseSMG
+  name: basesmg
   parent: BaseItem
   id: BaseWeaponSubMachineGun
   description: A rooty tooty point and shooty.
@@ -33,7 +33,7 @@
   - type: ItemSlots
     slots:
       gun_magazine:
-        name: Magazine
+        name: magazine
         startingItem: MagazinePistolSubMachineGun
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
@@ -42,7 +42,7 @@
           tags:
             - MagazinePistolSubMachineGun
       gun_chamber:
-        name: Chamber
+        name: chamber
         startingItem: CartridgePistol
         priority: 1
         whitelist:
@@ -56,7 +56,7 @@
     price: 500
 
 - type: entity
-  name: Atreides
+  name: atreides
   parent: BaseWeaponSubMachineGun
   id: WeaponSubMachineGunAtreides
   description: Pla-ket-ket-ket-ket! Uses .35 auto ammo.
@@ -79,7 +79,7 @@
   - type: Appearance
 
 - type: entity
-  name: C-20r sub machine gun
+  name: c-20r sub machine gun
   parent: BaseWeaponSubMachineGun
   id: WeaponSubMachineGunC20r
   description: A firearm that is often used by the infamous nuclear operatives. Uses .35 auto ammo.
@@ -117,7 +117,7 @@
   - type: Appearance
 
 - type: entity
-  name: Drozd
+  name: drozd
   parent: BaseWeaponSubMachineGun
   id: WeaponSubMachineGunDrozd
   description: An excellent fully automatic Heavy SMG.
@@ -148,7 +148,7 @@
     - type: ItemSlots
       slots:
         gun_magazine:
-          name: Magazine
+          name: magazine
           startingItem: MagazinePistolSubMachineGun
           insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
           ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
@@ -157,7 +157,7 @@
             tags:
               - MagazinePistolSubMachineGun
         gun_chamber:
-          name: Chamber
+          name: chamber
           startingItem: CartridgePistol
           priority: 1
           whitelist:
@@ -170,7 +170,7 @@
     - type: Appearance
 
 - type: entity
-  name: Vector
+  name: vector
   parent: BaseWeaponSubMachineGun
   id: WeaponSubMachineGunVector
   suffix: Deprecated use Drozd
@@ -195,7 +195,7 @@
   - type: ItemSlots
     slots:
       gun_magazine:
-        name: Magazine
+        name: magazine
         startingItem: MagazineMagnumSubMachineGun
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
@@ -204,7 +204,7 @@
           tags:
             - MagazineMagnumSubMachineGun
       gun_chamber:
-        name: Chamber
+        name: chamber
         startingItem: CartridgeMagnum
         priority: 1
         whitelist:
@@ -217,7 +217,7 @@
   - type: Appearance
 
 - type: entity
-  name: WT550
+  name: wt550
   parent: BaseWeaponSubMachineGun
   id: WeaponSubMachineGunWt550
   description: An excellent SMG, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo.
@@ -254,7 +254,7 @@
   - type: ItemSlots
     slots:
       gun_magazine:
-        name: Magazine
+        name: magazine
         startingItem: MagazinePistolSubMachineGunTopMounted
         insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
@@ -263,7 +263,7 @@
           tags:
             - MagazinePistolSubMachineGunTopMounted
       gun_chamber:
-        name: Chamber
+        name: chamber
         startingItem: CartridgePistol
         priority: 1
         whitelist:

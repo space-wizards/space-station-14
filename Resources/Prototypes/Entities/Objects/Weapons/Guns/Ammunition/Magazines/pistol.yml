@@ -66,7 +66,7 @@
 
 - type: entity
   id: BaseMagazinePistolSubMachineGun  # Yeah it's weird but it's pistol caliber
-  name: SMG magazine (.35 auto)
+  name: smg magazine (.35 auto)
   parent: BaseItem
   abstract: true
   components:
@@ -99,7 +99,7 @@
 
 - type: entity
   id: MagazinePistolSubMachineGunTopMounted
-  name: WT550 magazine (.35 auto top-mounted)
+  name: wt550 magazine (.35 auto top-mounted)
   parent: BaseItem
   components:
   - type: Tag
@@ -130,7 +130,7 @@
 
 - type: entity
   id: MagazinePistolSubMachineGunTopMountedEmpty
-  name: WT550 magazine (.35 auto top-mounted any)
+  name: wt550 magazine (.35 auto top-mounted any)
   parent: MagazinePistolSubMachineGunTopMounted
   components:
   - type: BallisticAmmoProvider
@@ -257,7 +257,7 @@
 
 - type: entity
   id: MagazinePistolSubMachineGun
-  name: SMG magazine (.35 auto)
+  name: smg magazine (.35 auto)
   parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -277,7 +277,7 @@
 
 - type: entity
   id: MagazinePistolSubMachineGunEmpty
-  name: SMG magazine (.35 auto any)
+  name: smg magazine (.35 auto any)
   suffix: empty
   parent: BaseMagazinePistolSubMachineGun
   components:
@@ -290,7 +290,7 @@
 
 - type: entity
   id: MagazinePistolSubMachineGunPractice
-  name: SMG magazine (.35 auto practice)
+  name: smg magazine (.35 auto practice)
   parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -304,7 +304,7 @@
 
 - type: entity
   id: MagazinePistolSubMachineGunUranium
-  name: SMG magazine (.35 auto rubber)
+  name: smg magazine (.35 auto rubber)
   parent: BaseMagazinePistolSubMachineGun
   components:
   - type: BallisticAmmoProvider

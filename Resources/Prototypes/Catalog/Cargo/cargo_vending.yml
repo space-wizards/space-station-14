@@ -18,7 +18,7 @@
 
 - type: cargoProduct
   id: CrateVendingMachineRestockChefvend
-  name: ChefVend restock crate
+  name: chefvend restock crate
   icon:
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base

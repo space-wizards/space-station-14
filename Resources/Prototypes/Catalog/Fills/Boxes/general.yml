@@ -85,7 +85,7 @@
         amount: 6
 
 - type: entity
-  name: PDA box
+  name: pda box
   parent: BoxCardboard
   id: BoxPDA
   description: A box of spare PDA microcomputers.
@@ -100,7 +100,7 @@
       - state: pda
 
 - type: entity
-  name: ID card box
+  name: id card box
   parent: BoxCardboard
   id: BoxID
   description: A box of spare blank ID cards.
@@ -145,7 +145,7 @@
       - state: meson
 
 - type: entity
-  name: M.R.E.
+  name: m.r.e.
   parent: BoxCardboard
   id: BoxMRE
   description: A box of decades old military surplus rations. It is surprisingly not rotten.

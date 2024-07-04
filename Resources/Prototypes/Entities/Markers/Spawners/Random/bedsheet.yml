@@ -1,5 +1,5 @@
 - type: entity
-  name: Random Sheet Spawner
+  name: random sheet spawner
   id: BedsheetSpawner
   parent: MarkerBase
   components:

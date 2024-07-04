@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  name: Urist McHands
+  name: urist mchands
   parent: BaseMobHuman
   id: MobHuman
 
@@ -43,7 +43,7 @@
 # Nuclear Operative
 - type: entity
   noSpawn: true
-  name: Nuclear Operative
+  name: nuclear operative
   parent: MobHuman
   id: MobHumanNukeOp
   components:
@@ -54,7 +54,7 @@
   noSpawn: true
   parent: MobHuman
   id: MobHumanLoneNuclearOperative
-  name: Lone Operative
+  name: lone operative
   components:
     - type: RandomHumanoidAppearance
       randomizeName: false
@@ -72,7 +72,7 @@
 # Space Ninja
 - type: entity
   noSpawn: true
-  name: Space Ninja
+  name: space ninja
   parent: MobHuman
   id: MobHumanSpaceNinja
   components:

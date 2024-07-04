@@ -72,7 +72,7 @@
   - type: ItemSlots
     slots:
       item:
-        name: CaneBlade
+        name: caneblade
         insertVerbText: sheath-insert-verb
         ejectVerbText: sheath-eject-verb
         whitelist:

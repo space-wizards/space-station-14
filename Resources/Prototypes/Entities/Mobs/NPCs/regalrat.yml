@@ -1,5 +1,5 @@
 - type: entity
-  name: Rat King
+  name: rat king
   id: MobRatKing
   parent: [ SimpleMobBase, MobCombat ]
   description: He's da rat. He make da roolz.
@@ -158,7 +158,7 @@
     - MinorAntagonists
 
 - type: entity
-  name: Rat Servant
+  name: rat servant
   id: MobRatServant
   parent: [ SimpleMobBase, MobCombat ]
   description: He's da mini rat. He don't make da roolz.
@@ -299,7 +299,7 @@
 
 - type: entity
   id: ActionRatKingRaiseArmy
-  name: Raise Army
+  name: raise army
   description: Spend some hunger to summon an allied rat to help defend you.
   components:
   - type: InstantAction
@@ -311,7 +311,7 @@
 
 - type: entity
   id: ActionRatKingDomain
-  name: Rat King's Domain
+  name: rat king's domain
   description: Spend some hunger to release a cloud of ammonia into the air.
   components:
   - type: InstantAction
@@ -323,7 +323,7 @@
 
 - type: entity
   id: ActionRatKingOrderStay
-  name: Stay
+  name: stay
   description: Command your army to stand in place.
   components:
   - type: InstantAction
@@ -341,7 +341,7 @@
 
 - type: entity
   id: ActionRatKingOrderFollow
-  name: Follow
+  name: follow
   description: Command your army to follow you around.
   components:
   - type: InstantAction
@@ -359,7 +359,7 @@
 
 - type: entity
   id: ActionRatKingOrderCheeseEm
-  name: Cheese 'Em
+  name: cheese 'em
   description: Command your army to attack whoever you point at.
   components:
   - type: InstantAction
@@ -377,7 +377,7 @@
 
 - type: entity
   id: ActionRatKingOrderLoose
-  name: Loose
+  name: loose
   description: Command your army to act at their own will.
   components:
   - type: InstantAction

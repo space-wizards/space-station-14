@@ -410,7 +410,7 @@
 
 - type: entity
   id: BoxFolderCentCom
-  name: CentCom folder
+  name: centcom folder
   parent: BoxFolderBase
   suffix: DO NOT MAP
   description: CentCom's miserable little pile of secrets!
@@ -482,7 +482,7 @@
 - type: entity
   id: BoxFolderCentComClipboard
   parent: BoxFolderClipboard
-  name: CentCom clipboard
+  name: centcom clipboard
   description: A luxurious clipboard upholstered with green velvet. Often seen carried by CentCom officials, seldom seen actually used.
   components:
   - type: Sprite

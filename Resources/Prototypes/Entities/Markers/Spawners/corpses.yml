@@ -1,5 +1,5 @@
 - type: entity
-  name: Human Corpse Spawner
+  name: human corpse spawner
   id: SalvageHumanCorpseSpawner
   parent: MarkerBase
   components:
@@ -12,7 +12,7 @@
       - SalvageHumanCorpse
 
 - type: entity
-  name: Random Service Corpse Spawner
+  name: random service corpse spawner
   id: RandomServiceCorpseSpawner
   parent: SalvageHumanCorpseSpawner
   components:
@@ -25,7 +25,7 @@
       - MobRandomServiceCorpse
 
 - type: entity
-  name: Random Engineer Corpse Spawner
+  name: random engineer corpse spawner
   id: RandomEngineerCorpseSpawner
   parent: SalvageHumanCorpseSpawner
   components:
@@ -38,7 +38,7 @@
       - MobRandomEngineerCorpse
 
 - type: entity
-  name: Random Cargo Corpse Spawner
+  name: random cargo corpse spawner
   id: RandomCargoCorpseSpawner
   parent: SalvageHumanCorpseSpawner
   components:
@@ -51,7 +51,7 @@
       - MobRandomCargoCorpse
 
 - type: entity
-  name: Random Medic Corpse Spawner
+  name: random medic corpse spawner
   id: RandomMedicCorpseSpawner
   parent: SalvageHumanCorpseSpawner
   components:
@@ -64,7 +64,7 @@
       - MobRandomMedicCorpse
 
 - type: entity
-  name: Random Science Corpse Spawner
+  name: random science corpse spawner
   id: RandomScienceCorpseSpawner
   parent: SalvageHumanCorpseSpawner
   components:
@@ -77,7 +77,7 @@
       - MobRandomScienceCorpse
 
 - type: entity
-  name: Random Security Corpse Spawner
+  name: random security corpse spawner
   id: RandomSecurityCorpseSpawner
   parent: SalvageHumanCorpseSpawner
   components:
@@ -90,7 +90,7 @@
       - MobRandomSecurityCorpse
 
 - type: entity
-  name: Random Command Corpse Spawner
+  name: random command corpse spawner
   id: RandomCommandCorpseSpawner
   parent: SalvageHumanCorpseSpawner
   components:

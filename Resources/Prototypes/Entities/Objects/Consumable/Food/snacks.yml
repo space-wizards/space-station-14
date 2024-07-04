@@ -44,7 +44,7 @@
     trash: FoodPacketBoritosTrash
 
 - type: entity
-  name: C&Ds
+  name: c&ds
   parent: FoodSnackBase
   id: FoodSnackCnDs
   description: Legally, we cannot say that these won't melt in your hands.
@@ -518,7 +518,7 @@
   noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketCnDsTrash
-  name: C&Ds bag
+  name: c&ds bag
   components:
   - type: Sprite
     state: cnds-trash
@@ -657,7 +657,7 @@
   noSpawn: true
   parent: FoodPacketTrash
   id: FoodPacketMRETrash
-  name: MRE wrapper
+  name: mre wrapper
   description: A general purpose wrapper for a variety of military food goods.
   components:
   - type: Food

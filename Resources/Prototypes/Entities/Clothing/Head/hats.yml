@@ -28,7 +28,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretFrench
-  name: French beret
+  name: french beret
   description: A French beret, "vive la France".
   components:
   - type: Sprite
@@ -222,7 +222,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatCentcom
-  name: CentCom brand hat
+  name: centcom brand hat
   description: "It's good to be the emperor."
   components:
   - type: Sprite
@@ -874,7 +874,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatCentcomcap
-  name: CentCom cap
+  name: centcom cap
   description: An extravagant, fancy Central Commander cap.
   components:
   - type: Sprite

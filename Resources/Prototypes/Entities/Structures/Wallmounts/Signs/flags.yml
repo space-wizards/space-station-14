@@ -21,7 +21,7 @@
 - type: entity
   parent: BaseFlag
   id: NTFlag
-  name: Nanotrasen flag
+  name: nanotrasen flag
   description: "Glory to NT! Wait, they really made a flag for a corporation?"
   components:
   - type: Sprite
@@ -39,7 +39,7 @@
 - type: entity
   parent: BaseFlag
   id: LGBTQFlag
-  name: LGBTQ flag
+  name: lgbtq flag
   description: "Be gay do crime flag"
   components:
   - type: Sprite

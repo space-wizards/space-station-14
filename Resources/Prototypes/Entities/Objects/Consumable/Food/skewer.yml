@@ -51,7 +51,7 @@
 # Custom Kebab Example
 
 - type: entity
-  name: Hawaiian kebab
+  name: hawaiian kebab
   parent: FoodSkewerBase
   id: FoodMeatHawaiianKebab
   description: A delicious kebab made of pineapple, ham and green peppers.

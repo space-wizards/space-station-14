@@ -56,7 +56,7 @@
 
 - type: entity
   id: MagazineGrenadeEMP
-  name: EMP grenade cartridge
+  name: emp grenade cartridge
   parent: BaseMagazineGrenade
   components:
   - type: BallisticAmmoProvider

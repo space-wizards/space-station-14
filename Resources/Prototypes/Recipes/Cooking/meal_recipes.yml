@@ -226,7 +226,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeBurgerMcguffin
-  name: McGuffin recipe
+  name: mcguffin recipe
   result: FoodBurgerMcguffin
   time: 10
   solids:
@@ -236,7 +236,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeBurgerMcrib
-  name: BBQ rib sandwich recipe
+  name: bbq rib sandwich recipe
   result: FoodBurgerMcrib
   time: 10
   solids:
@@ -561,7 +561,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeHawaiianPizza
-  name: Hawaiian pizza recipe
+  name: hawaiian pizza recipe
   result: FoodPizzaPineapple
   time: 30
   solids:
@@ -1075,7 +1075,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeCubanCarp
-  name: Cuban carp recipe
+  name: cuban carp recipe
   result: FoodMealCubancarp
   time: 15
   solids:
@@ -1575,7 +1575,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeRibs
-  name: BBQ ribs recipe
+  name: bbq ribs recipe
   result: FoodMealRibs
   time: 15
   reagents:
@@ -1762,7 +1762,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeHawaiianKebab
-  name: Hawaiian kebab recipe
+  name: hawaiian kebab recipe
   result: FoodMeatHawaiianKebab
   time: 5
   solids:

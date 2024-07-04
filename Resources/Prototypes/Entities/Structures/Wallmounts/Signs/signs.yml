@@ -498,7 +498,7 @@
 - type: entity
   parent: BaseSign
   id: SignEVA
-  name: EVA sign
+  name: eva sign
   description: A sign indicating an EVA area. EVA equipment may be required beyond this point.
   components:
   - type: Sprite
@@ -1133,7 +1133,7 @@
 - type: entity
   parent: BaseSign
   id: WarningCO2
-  name: CO2 warning sign
+  name: co2 warning sign
   description: WARNING! CO2 flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Sprite
@@ -1142,7 +1142,7 @@
 - type: entity
   parent: BaseSign
   id: WarningN2
-  name: N2 warning sign
+  name: n2 warning sign
   description: WARNING! N2 flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Sprite
@@ -1151,7 +1151,7 @@
 - type: entity
   parent: BaseSign
   id: WarningN2O
-  name: N2O warning sign
+  name: n2o warning sign
   description: WARNING! N2O flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Sprite
@@ -1160,7 +1160,7 @@
 - type: entity
   parent: BaseSign
   id: WarningO2
-  name: O2 warning sign
+  name: o2 warning sign
   description: WARNING! O2 flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Sprite

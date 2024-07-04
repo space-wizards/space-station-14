@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  name: Urist McWeb
+  name: urist mcweb
   parent: BaseMobArachnid
   id: MobArachnid
   components:

@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: ActionSummonGhosts
-  name: Summon Ghosts
+  name: summon ghosts
   description: Makes all current ghosts permanently invisible
   components:
   - type: InstantAction

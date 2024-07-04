@@ -8,7 +8,7 @@
       uiWindowPos: 0,1
       strippingWindowPos: 1,2
       displayName: Jumpsuit
-    - name: outerClothing
+    - name: outerclothing
       slotTexture: suit
       slotFlags: OUTERCLOTHING
       stripTime: 3

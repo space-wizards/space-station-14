@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
   id: MobNarsieBase
-  name: Nar'Sie
+  name: nar'sie
   description: Your mind begins to bubble and ooze as it tries to comprehend what it sees.
   components:
   - type: Sprite

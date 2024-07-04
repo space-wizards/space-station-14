@@ -501,7 +501,7 @@
 - type: entity
   id: SpawnPointERTLeader
   parent: SpawnPointJobBase
-  name: ERTleader
+  name: ertleader
   components:
   - type: SpawnPoint
     job_id: ERTLeader
@@ -513,7 +513,7 @@
 - type: entity
   id: SpawnPointERTChaplain
   parent: SpawnPointJobBase
-  name: ERTchaplain
+  name: ertchaplain
   components:
   - type: SpawnPoint
     job_id: ERTChaplain
@@ -525,7 +525,7 @@
 - type: entity
   id: SpawnPointERTEngineer
   parent: SpawnPointJobBase
-  name: ERTengineer
+  name: ertengineer
   components:
   - type: SpawnPoint
     job_id: ERTEngineer
@@ -537,7 +537,7 @@
 - type: entity
   id: SpawnPointERTMedical
   parent: SpawnPointJobBase
-  name: ERTmedical
+  name: ertmedical
   components:
   - type: SpawnPoint
     job_id: ERTMedical
@@ -549,7 +549,7 @@
 - type: entity
   id: SpawnPointERTSecurity
   parent: SpawnPointJobBase
-  name: ERTsecurity
+  name: ertsecurity
   components:
   - type: SpawnPoint
     job_id: ERTSecurity
@@ -561,7 +561,7 @@
 - type: entity
   id: SpawnPointERTJanitor
   parent: SpawnPointJobBase
-  name: ERTjanitor
+  name: ertjanitor
   components:
   - type: SpawnPoint
     job_id: ERTJanitor

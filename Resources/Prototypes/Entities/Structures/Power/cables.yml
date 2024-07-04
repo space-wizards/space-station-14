@@ -51,7 +51,7 @@
 - type: entity
   parent: CableBase
   id: CableHV
-  name: HV power cable
+  name: hv power cable
   description: An orange high voltage power cable.
   components:
   - type: Sprite
@@ -101,7 +101,7 @@
 - type: entity
   parent: CableBase
   id: CableMV
-  name: MV power cable
+  name: mv power cable
   description: A medium voltage power cable.
   components:
   - type: Sprite
@@ -145,7 +145,7 @@
 - type: entity
   parent: CableBase
   id: CableApcExtension
-  name: LV power cable
+  name: lv power cable
   description: A cable used to connect machines to an APC. #APCs aren't area defined anymore so need this cable to connect things to the APC. This description should be dynamic in future.
   components:
   - type: Sprite

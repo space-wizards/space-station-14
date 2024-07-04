@@ -297,7 +297,7 @@
 # Tastes like bun, beef patty, cheese.
 
 - type: entity
-  name: chicken sandwich # Burger for you euro-cucks
+  name: chicken sandwich # burger for you euro-cucks
   parent: FoodBurgerBase
   id: FoodBurgerChicken
   description: A delicious chicken sandwich, it is said the proceeds from this treat helps criminalize disarming people on the space frontier.
@@ -406,7 +406,7 @@
     - Meat
 
 - type: entity
-  name: crazy hamburger # Burger for you euro-cucks
+  name: crazy hamburger # burger for you euro-cucks
   parent: FoodBurgerBase
   id: FoodBurgerCrazy
   description: This looks like the sort of food that a demented clown in a trenchcoat would make.
@@ -437,7 +437,7 @@
     - Meat
 
 - type: entity
-  name: duck sandwich # Burger for you sick bastards
+  name: duck sandwich # burger for you sick bastards
   parent: FoodBurgerBase
   id: FoodBurgerDuck
   description: A duck sandwich, only the criminally insane would dare to eat the meat of such an adorable creature.
@@ -587,7 +587,7 @@
     - Meat
 
 - type: entity
-  name: McGuffin
+  name: mcguffin
   parent: FoodBurgerBase
   id: FoodBurgerMcguffin
   description: A cheap and greasy imitation of an eggs Benedict.
@@ -614,7 +614,7 @@
     - Meat
 
 - type: entity
-  name: BBQ Rib Sandwich
+  name: bbq rib sandwich
   parent: FoodBurgerBase
   id: FoodBurgerMcrib
   description: An elusive rib shaped burger with limited availability across the galaxy. Not as good as you remember it.

@@ -1,6 +1,6 @@
 - type: palette
   id: KoboldColors
-  name: KoboldColors
+  name: koboldcolors
   colors:
     ForestA: "#71a457"
     ForestB: "#536f18"
@@ -36,7 +36,7 @@
 
 - type: palette
   id: KoboldHornColors
-  name: KoboldHornColors
+  name: koboldhorncolors
   colors:
     HornA: "#d4c8bf"
     hornB: "#eec7ab"

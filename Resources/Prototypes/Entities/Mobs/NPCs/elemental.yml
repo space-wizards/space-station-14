@@ -223,7 +223,7 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  name: Reagent slime
+  name: reagent slime
   id: ReagentSlime
   suffix: Water
   parent: [ MobAdultSlimes, MobCombat ]
@@ -299,7 +299,7 @@
     solution: bloodstream
 
 - type: entity
-  name: Reagent Slime Spawner
+  name: reagent slime spawner
   id: ReagentSlimeSpawner
   parent: MarkerBase
   components:

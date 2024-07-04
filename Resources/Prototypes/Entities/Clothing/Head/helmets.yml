@@ -43,7 +43,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetSwat
-  name: SWAT helmet
+  name: swat helmet
   description: An extremely robust helmet, commonly used by paramilitary forces. This one has the Nanotrasen logo emblazoned on the top.
   components:
   - type: Sprite
@@ -66,7 +66,7 @@
 - type: entity
   parent: ClothingHeadHelmetSwat
   id: ClothingHeadHelmetSwatSyndicate
-  name: SWAT helmet
+  name: swat helmet
   suffix: Syndicate
   description: An extremely robust helmet, commonly used by paramilitary forces. It is adorned in a nefarious red and black stripe pattern.
   components:
@@ -301,7 +301,7 @@
 - type: entity
   parent: ClothingHeadHelmetBasic
   id: ClothingHeadHelmetERTLeader
-  name: ERT leader helmet
+  name: ert leader helmet
   description: An in-atmosphere helmet worn by the leader of a Nanotrasen Emergency Response Team. Has blue highlights.
   components:
   - type: Sprite
@@ -313,7 +313,7 @@
 - type: entity
   parent: ClothingHeadHelmetBasic
   id: ClothingHeadHelmetERTSecurity
-  name: ERT security helmet
+  name: ert security helmet
   description: An in-atmosphere helmet worn by security members of the Nanotrasen Emergency Response Team. Has red highlights.
   components:
   - type: Sprite
@@ -325,7 +325,7 @@
 - type: entity
   parent: ClothingHeadHelmetBasic
   id: ClothingHeadHelmetERTMedic
-  name: ERT medic helmet
+  name: ert medic helmet
   description: An in-atmosphere helmet worn by medical members of the Nanotrasen Emergency Response Team. Has white highlights.
   components:
   - type: Sprite
@@ -337,7 +337,7 @@
 - type: entity
   parent: ClothingHeadHelmetBasic
   id: ClothingHeadHelmetERTEngineer
-  name: ERT engineer helmet
+  name: ert engineer helmet
   description: An in-atmosphere helmet worn by engineering members of the Nanotrasen Emergency Response Team. Has orange highlights.
   components:
   - type: Sprite
@@ -349,7 +349,7 @@
 - type: entity
   parent: ClothingHeadHelmetBasic
   id: ClothingHeadHelmetERTJanitor
-  name: ERT janitor helmet
+  name: ert janitor helmet
   description: An in-atmosphere helmet worn by janitorial members of the Nanotrasen Emergency Response Team. Has dark purple highlights.
   components:
   - type: Sprite
@@ -375,7 +375,7 @@
 - type: entity
   parent: ClothingHeadHelmetBasic
   id: ClothingHeadHelmetPodWars
-  name: ironclad II helmet
+  name: ironclad ii helmet
   description: An ironclad II helmet, a relic of the pod wars.
   components:
   - type: Sprite

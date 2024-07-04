@@ -1,6 +1,6 @@
 - type: entity
   id: ActionSpiderWeb
-  name: Spider Web
+  name: spider web
   description: Spawns a web that slows your prey down.
   components:
   - type: InstantAction
@@ -10,7 +10,7 @@
 
 - type: entity
   id: ActionSericulture
-  name: Weave silk
+  name: weave silk
   description: Weave a bit of silk for use in arts and crafts.
   components:
   - type: InstantAction

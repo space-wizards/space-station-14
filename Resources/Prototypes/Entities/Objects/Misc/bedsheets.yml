@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseItem
   id: BedsheetBase
-  name: BedsheetBase
+  name: bedsheetbase
   abstract: true
   description: A surprisingly soft linen bedsheet.
   placement:
@@ -70,7 +70,7 @@
 - type: entity
   id: BedsheetCE
   parent: BedsheetBase
-  name: CE's bedsheet
+  name: ce's bedsheet
   description: It's decorated with a wrench emblem. It's highly reflective and stain resistant, so you don't need to worry about ruining it with oil.
   components:
   - type: Sprite
@@ -83,7 +83,7 @@
 - type: entity
   id: BedsheetCentcom
   parent: BedsheetBase
-  name: CentCom bedsheet
+  name: centcom bedsheet
   description: Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials.
   components:
   - type: Sprite
@@ -107,7 +107,7 @@
 - type: entity
   id: BedsheetCMO
   parent: BedsheetBase
-  name: CMO's bedsheet
+  name: cmo's bedsheet
   description: It's a sterilized blanket that has a cross emblem. There's some cat fur on it, likely from Runtime.
   components:
   - type: Sprite
@@ -162,7 +162,7 @@
 - type: entity
   id: BedsheetHOP
   parent: BedsheetBase
-  name: HOP's bedsheet
+  name: hop's bedsheet
   description: It's decorated with a key emblem. For those rare moments when you can rest and cuddle with Ian without someone screaming for you over the radio.
   components:
   - type: Sprite
@@ -175,7 +175,7 @@
 - type: entity
   id: BedsheetHOS
   parent: BedsheetBase
-  name: HOS's bedsheet
+  name: hos's bedsheet
   description: It's decorated with a shield emblem. While crime doesn't sleep, you do, but you are still THE LAW!
   components:
   - type: Sprite
@@ -188,7 +188,7 @@
 - type: entity
   id: BedsheetIan
   parent: BedsheetBase
-  name: Ian's bedsheet
+  name: ian's bedsheet
   components:
   - type: Sprite
     state: sheetian
@@ -220,7 +220,7 @@
 - type: entity
   id: BedsheetNT
   parent: BedsheetBase
-  name: NT bedsheet
+  name: nt bedsheet
   description: It has the Nanotrasen logo on it and an aura of duty.
   components:
   - type: Sprite
@@ -251,7 +251,7 @@
 - type: entity
   id: BedsheetQM
   parent: BedsheetBase
-  name: QM's bedsheet
+  name: qm's bedsheet
   components:
   - type: Sprite
     state: sheetqm
@@ -273,7 +273,7 @@
 - type: entity
   id: BedsheetRD
   parent: BedsheetBase
-  name: RD's bedsheet
+  name: rd's bedsheet
   description: It appears to have a beaker emblem, and is made out of fire-resistant material, although it probably won't protect you in the event of fires you're familiar with every day.
   components:
   - type: Sprite
@@ -318,7 +318,7 @@
 - type: entity
   id: BedsheetUSA
   parent: BedsheetBase
-  name: USA bedsheet
+  name: usa bedsheet
   components:
   - type: Sprite
     state: sheetUSA

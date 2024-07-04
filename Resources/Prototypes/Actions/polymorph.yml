@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: ActionRevertPolymorph
-  name: Revert
+  name: revert
   description: Revert back into your original form.
   components:
   - type: InstantAction
@@ -15,7 +15,7 @@
 
 - type: entity
   id: ActionPolymorphWizardSpider
-  name: Spider Polymorph
+  name: spider polymorph
   description: Polymorphs you into a Spider.
   components:
   - type: InstantAction
@@ -29,7 +29,7 @@
 
 - type: entity
   id: ActionPolymorphWizardRod
-  name: Rod Form
+  name: rod form
   description: CLANG!
   components:
   - type: InstantAction

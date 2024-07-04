@@ -1,6 +1,6 @@
 ﻿- type: palette
   id: Departmental
-  name: Departmental
+  name: departmental
   colors:
     command: "#334E6DC8"
     medical: "#52B4E996"

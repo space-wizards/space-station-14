@@ -69,7 +69,7 @@
 
 - type: entity
   id: ActionStethoscope
-  name: Listen with stethoscope
+  name: listen with stethoscope
   components:
   - type: EntityTargetAction
     icon:

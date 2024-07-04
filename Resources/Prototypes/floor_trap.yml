@@ -51,7 +51,7 @@
 - type: entity
   parent: CollideFloorTrap
   id: FloorTrapEMP
-  name: EMP floor trap
+  name: emp floor trap
   components:
     - type: TriggerOnCollide
       fixtureID: floortrap

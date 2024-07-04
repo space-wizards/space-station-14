@@ -51,7 +51,7 @@
     state: stamp-cap
 
 - type: entity
-  name: CentCom rubber stamp
+  name: centcom rubber stamp
   parent: RubberStampBase
   id: RubberStampCentcom
   suffix: DO NOT MAP
@@ -236,7 +236,7 @@
     state: stamp-warden
 
 - type: entity
-  name: APPROVED rubber stamp
+  name: approved rubber stamp
   parent: RubberStampBaseAlt
   id: RubberStampApproved
   components:
@@ -248,7 +248,7 @@
     state: stamp-ok
 
 - type: entity
-  name: DENIED rubber stamp
+  name: denied rubber stamp
   parent: RubberStampBaseAlt
   id: RubberStampDenied
   components:

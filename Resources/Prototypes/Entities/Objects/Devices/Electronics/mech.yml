@@ -39,7 +39,7 @@
 - type: entity
   id: HonkerCentralElectronics
   parent: BaseElectronics
-  name: H.O.N.K. central control module
+  name: h.o.n.k. central control module
   description: The electrical control center for the H.O.N.K. mech.
   components:
     - type: Item
@@ -57,7 +57,7 @@
 - type: entity
   id: HonkerPeripheralsElectronics
   parent: BaseElectronics
-  name: H.O.N.K. peripherals control module
+  name: h.o.n.k. peripherals control module
   description: The electrical peripherals control for the H.O.N.K. mech.
   components:
     - type: Sprite
@@ -73,7 +73,7 @@
 - type: entity
   id: HonkerTargetingElectronics
   parent: BaseElectronics
-  name: H.O.N.K. weapon control and targeting module
+  name: h.o.n.k. weapon control and targeting module
   description: The electrical targeting control for the H.O.N.K. mech.
   components:
     - type: Sprite
@@ -91,7 +91,7 @@
 - type: entity
   id: HamtrCentralElectronics
   parent: BaseElectronics
-  name: HAMTR central control module
+  name: hamtr central control module
   description: The electrical control center for the HAMTR mech.
   components:
     - type: Item
@@ -109,7 +109,7 @@
 - type: entity
   id: HamtrPeripheralsElectronics
   parent: BaseElectronics
-  name: HAMTR peripherals control module
+  name: hamtr peripherals control module
   description: The electrical peripherals control for the HAMTR mech.
   components:
     - type: Sprite

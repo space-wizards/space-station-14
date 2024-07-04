@@ -1,7 +1,7 @@
 - type: entity
   id: FTLPoint
   parent: MarkerBase
-  name: FTL point
+  name: ftl point
   components:
     - type: FTLBeacon
     - type: Sprite
@@ -10,7 +10,7 @@
 - type: entity
   id: FTLExclusion
   parent: MarkerBase
-  name: FTL exclusion point
+  name: ftl exclusion point
   components:
     - type: FTLExclusion
       range: 32

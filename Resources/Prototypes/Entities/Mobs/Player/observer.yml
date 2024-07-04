@@ -51,7 +51,7 @@
 
 - type: entity
   id: ActionGhostBoo
-  name: Boo!
+  name: boo!
   description: Scare your crew members because of boredom!
   components:
   - type: InstantAction
@@ -62,7 +62,7 @@
 
 - type: entity
   id: ActionToggleLighting
-  name: Toggle All Lighting
+  name: toggle all lighting
   description: Toggle all light rendering to better observe dark areas.
   components:
   - type: InstantAction
@@ -73,7 +73,7 @@
 
 - type: entity
   id: ActionToggleFov
-  name: Toggle FoV
+  name: toggle fov
   description: Toggles field-of-view in order to see what players see.
   components:
   - type: InstantAction
@@ -84,7 +84,7 @@
 
 - type: entity
   id: ActionToggleGhosts
-  name: Toggle Ghosts
+  name: toggle ghosts
   description: Toggle the visibility of other ghosts.
   components:
   - type: InstantAction
@@ -95,7 +95,7 @@
 
 - type: entity
   id: ActionToggleGhostHearing
-  name: Toggle Ghost Hearing
+  name: toggle ghost hearing
   description: Toggle between hearing all messages and hearing only radio & nearby messages.
   components:
   - type: InstantAction

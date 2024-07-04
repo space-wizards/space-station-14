@@ -121,7 +121,7 @@
         volume: 12
 
 - type: entity
-  name: Self Destruct
+  name: self destruct
   description: Go out on your own terms!
   parent: GrenadeBase
   id: SelfDestructSeq
@@ -330,7 +330,7 @@
     price: 25
 
 - type: entity
-  name: EMP grenade
+  name: emp grenade
   description: A grenade designed to wreak havoc on electronic systems.
   parent: GrenadeBase
   id: EmpGrenade

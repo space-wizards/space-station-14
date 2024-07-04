@@ -2,7 +2,7 @@
 # These rulesets exist because Salvage mobs kept harassing the station and going out of control.
 
 - type: entity
-  name: Salvage Material Crate Spawner
+  name: salvage material crate spawner
   id: SalvageMaterialCrateSpawner
   parent: MarkerBase
   components:
@@ -40,7 +40,7 @@
       offset: 0.0
 
 - type: entity
-  name: Salvage Canister Spawner
+  name: salvage canister spawner
   id: SalvageCanisterSpawner
   parent: MarkerBase
   components:
@@ -81,7 +81,7 @@
       offset: 0.0
 
 - type: entity
-  name: Salvage Mob Spawner
+  name: salvage mob spawner
   id: SalvageMobSpawner
   parent: MarkerBase
   suffix: 25
@@ -110,7 +110,7 @@
       offset: 0.2
 
 - type: entity #I made this in case someone decided to make a terrifying space tick swarm for salvage. that someone may be me -EG404
-  name: Salvage Space Tick Spawner
+  name: salvage space tick spawner
   id: SpaceTickSpawner
   parent: MarkerBase
   suffix: 100
@@ -125,7 +125,7 @@
         - MobTickSalvage
 
 - type: entity
-  name: Salvage Space Bear Spawner
+  name: salvage space bear spawner
   id: SpawnMobBearSalvage
   parent: MarkerBase
   components:
@@ -162,7 +162,7 @@
     offset: 0.2
 
 - type: entity
-  name: Salvage Space Kangaroo Spawner
+  name: salvage space kangaroo spawner
   id: SpawnMobKangarooSalvage
   parent: MarkerBase
   components:
@@ -176,7 +176,7 @@
     - MobKangarooSpaceSalvage
 
 - type: entity
-  name: Salvage Space Spider Spawner
+  name: salvage space spider spawner
   id: SpawnMobSpiderSalvage
   parent: MarkerBase
   components:
@@ -190,7 +190,7 @@
     - MobSpiderSpaceSalvage
 
 - type: entity
-  name: Salvage Space Cobra Spawner
+  name: salvage space cobra spawner
   id: SpawnMobCobraSalvage
   parent: MarkerBase
   components:
@@ -204,7 +204,7 @@
     - MobCobraSpaceSalvage
 
 - type: entity
-  name: Salvage Flesh Spawner
+  name: salvage flesh spawner
   id: SalvageFleshSpawner
   parent: SalvageMobSpawner
   suffix: 100

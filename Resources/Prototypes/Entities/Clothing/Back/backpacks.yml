@@ -46,7 +46,7 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackIan
-  name: Ian's backpack
+  name: ian's backpack
   description: Sometimes he wears it.
   components:
   - type: Sprite
@@ -194,7 +194,7 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackERTLeader
-  name: ERT leader backpack
+  name: ert leader backpack
   description: A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team.
   components:
   - type: Sprite
@@ -206,7 +206,7 @@
 - type: entity
   parent: ClothingBackpackERTLeader
   id: ClothingBackpackERTSecurity
-  name: ERT security backpack
+  name: ert security backpack
   description: A spacious backpack with lots of pockets, worn by Security Officers of an Emergency Response Team.
   components:
   - type: Sprite
@@ -215,7 +215,7 @@
 - type: entity
   parent: ClothingBackpackERTLeader
   id: ClothingBackpackERTMedical
-  name: ERT medical backpack
+  name: ert medical backpack
   description: A spacious backpack with lots of pockets, worn by Medical Officers of an Emergency Response Team.
   components:
   - type: Sprite
@@ -224,7 +224,7 @@
 - type: entity
   parent: ClothingBackpackERTLeader
   id: ClothingBackpackERTEngineer
-  name: ERT engineer backpack
+  name: ert engineer backpack
   description: A spacious backpack with lots of pockets, worn by Engineers of an Emergency Response Team.
   components:
   - type: Sprite
@@ -233,7 +233,7 @@
 - type: entity
   parent: ClothingBackpackERTLeader
   id: ClothingBackpackERTJanitor
-  name: ERT janitor backpack
+  name: ert janitor backpack
   description: A spacious backpack with lots of pockets, worn by Janitors of an Emergency Response Team.
   components:
   - type: Sprite
@@ -242,7 +242,7 @@
 - type: entity
   parent: ClothingBackpackERTLeader
   id: ClothingBackpackERTClown
-  name: ERT clown backpack
+  name: ert clown backpack
   description: A spacious backpack with lots of pockets, worn by Clowns of an Emergency Response Team.
   components:
   - type: Sprite
@@ -251,7 +251,7 @@
 - type: entity
   parent: ClothingBackpackERTLeader
   id: ClothingBackpackERTChaplain
-  name: ERT chaplain backpack
+  name: ert chaplain backpack
   description: A spacious backpack with lots of pockets, worn by Chaplains of an Emergency Response Team.
   components:
   - type: Sprite

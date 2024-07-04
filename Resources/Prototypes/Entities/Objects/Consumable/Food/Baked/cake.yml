@@ -696,7 +696,7 @@
     - HEAD
   - type: GhostRole
     prob: 1
-    name: ghost-role-information-Cak-name
+    name: ghost-role-information-cak-name
     allowMovement: true
     description: ghost-role-information-Cak-description
     rules: ghost-role-information-nonantagonist-rules

@@ -45,7 +45,7 @@
 - type: entity
   id: CigarGold
   parent: Cigar
-  name: premium Havanian cigar
+  name: premium havanian cigar
   description: A cigar fit for only the best of the best.
   components:
   - type: Sprite

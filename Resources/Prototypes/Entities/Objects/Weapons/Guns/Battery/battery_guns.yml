@@ -51,7 +51,7 @@
   - type: ItemSlots
     slots:
       gun_magazine:
-        name: Magazine
+        name: magazine
         startingItem: PowerCellSmall
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
@@ -447,7 +447,7 @@
       - Security
 
 - type: entity
-  name: disabler SMG
+  name: disabler smg
   parent: BaseWeaponBattery
   id: WeaponDisablerSMG
   description: Advanced weapon that exhausts organic targets, weakening them until they collapse.
@@ -621,7 +621,7 @@
     price: 63
 
 - type: entity
-  name: C.H.I.M.P. handcannon
+  name: c.h.i.m.p. handcannon
   parent: BaseWeaponBatterySmall
   id: WeaponPistolCHIMP
   description: Just because it's a little C.H.I.M.P. doesn't mean it can't punch like an A.P.E.
@@ -667,7 +667,7 @@
     price: 100
 
 - type: entity
-  name: experimental C.H.I.M.P. handcannon
+  name: experimental c.h.i.m.p. handcannon
   parent: WeaponPistolCHIMP
   id: WeaponPistolCHIMPUpgraded
   description: This C.H.I.M.P. seems to have a greater punch than is usual...
