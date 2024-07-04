@@ -32,6 +32,27 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
+    - type: Parallax
+      parallax: Sea
+    - type: MapAtmosphere
+      space: False
+      mixture:
+        volume: 2500
+        immutable: True
+        temperature: 150
+        moles:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 125
+        - 0
+        - 0
     - type: PhysicsMap
     - type: GridTree
     - type: MovedGrids
@@ -184,6 +205,8 @@ entities:
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
+      inherent: True
+      enabled: True
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -553,27 +576,6 @@ entities:
     - type: BecomesStation
       id: caves
     - type: ArrivalsSource
-    - type: Parallax
-      parallax: Caves
-    - type: MapAtmosphere
-      space: False
-      mixture:
-        volume: 2500
-        immutable: True
-        temperature: 248.15
-        moles:
-        - 21.824879
-        - 82.10312
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
 - proto: AirlockEngineering
   entities:
   - uid: 690
