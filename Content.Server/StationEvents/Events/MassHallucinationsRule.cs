@@ -20,16 +20,14 @@ public sealed class MassHallucinationsRule : StationEventSystem<MassHallucinatio
         var query = EntityQueryEnumerator<MindContainerComponent, HumanoidAppearanceComponent>();
         while (query.MoveNext(out var ent, out _, out _))
         {
-            if (!HasComp<ParacusiaComponent>(ent))
+            if (!EnsureComp<ParacusiaComponent>(ent, out var paracusia))
             {
-                var paracusia = EnsureComp<ParacusiaComponent>(ent);
                 _paracusia.SetSounds(ent, component.Sounds, paracusia);
                 _paracusia.SetTime(ent, component.MinTimeBetweenIncidents, component.MaxTimeBetweenIncidents, paracusia);
                 _paracusia.SetDistance(ent, component.MaxSoundDistance);
 
                 component.AffectedEntities.Add(ent);
             }
-
         }
     }
 
