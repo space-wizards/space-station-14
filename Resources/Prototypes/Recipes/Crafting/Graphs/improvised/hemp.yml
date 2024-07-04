@@ -10,4 +10,4 @@
         amount: 6
         doAfter: 3
   - node: hempcloth
-    entity: MaterialCloth1
+    entity: MaterialHempCloth1

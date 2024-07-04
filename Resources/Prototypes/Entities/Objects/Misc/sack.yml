@@ -1,0 +1,18 @@
+- type: entity
+  name: hemp sack
+  id: HempClothSack
+  parent: BaseStorageItem
+  description: A hempen sack.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/Equipment/plant_bag.rsi
+    state: icon
+  - type: Item
+    storedRotation: -90
+  - type: Storage
+    grid:
+    - 0,0,4,4
+    maxItemSize: Small
+    quickInsert: true
+    areaInsert: true
+  - type: Dumpable
