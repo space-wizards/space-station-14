@@ -24,23 +24,11 @@ public abstract class SharedDrunkSystem : EntitySystem
 
         if (TryComp<HungerComponent>(uid, out var hunger))
         {
-            // Define multipliers for each hunger threshold
-            var hungerMultipliers = new Dictionary<HungerThreshold, float>
+            if (hunger.HungerThresholdDecayModifiers.TryGetValue(hunger.CurrentThreshold, out var modifier) && modifier != 0)
             {
-                { HungerThreshold.Overfed, 1.0f },
-                { HungerThreshold.Okay, 1.0f },
-                { HungerThreshold.Peckish, 1.2f },
-                { HungerThreshold.Starving, 1.2f },
-                { HungerThreshold.Dead, 1.5f }
-            };
-
-            // Get the current hunger threshold multiplier
-            if (hungerMultipliers.TryGetValue(hunger.CurrentThreshold, out var multiplier))
-            {
-                boozePower *= multiplier;
+                boozePower /= modifier;
             }
-        }
-
+}
         if (applySlur)
         {
             _slurredSystem.DoSlur(uid, TimeSpan.FromSeconds(boozePower), status);
