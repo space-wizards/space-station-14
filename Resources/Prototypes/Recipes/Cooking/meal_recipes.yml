@@ -340,6 +340,15 @@
     FoodBreadBun: 1
     MobMothroach: 1
 
+- type: microwaveMealRecipe
+  id: RecipeFinfinBurger
+  name: finfin burger recipe
+  result: FoodBurgerFinfin
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    FoodMeatFinfin: 1
+
 #Breads & Sandwiches
 
 - type: microwaveMealRecipe
@@ -590,6 +599,16 @@
     FoodDonkpocketWarm: 3
     FoodCheeseSlice: 1
     FoodTomato: 1
+
+- type: microwaveMealRecipe
+  id: RecipeTeoeanPizza
+  name: Teoean pizza recipe
+  result: FoodPizzaLemo
+  time: 30
+  solids:
+    FoodDoughFlat: 1
+    FoodMeatFinfinCutlet: 3
+    FoodLemoSlice: 5
 
 #Italian
 - type: microwaveMealRecipe
@@ -1103,6 +1122,16 @@
     TableSalt: 1
   solids:
     FoodMeatFish: 2
+
+- type: microwaveMealRecipe
+  id: RecipeFinfinSashimi
+  name: finfin sashimi recipe
+  result: FoodMealFinfinSashimi
+  time: 15
+  reagents:
+    TableSalt: 1
+  solids:
+    FoodMeatFinfin: 2
 
 - type: microwaveMealRecipe
   id: RecipeMisoColaSoup
@@ -2002,6 +2031,16 @@
     FoodTacoShell: 1
     FoodCheeseSlice: 1
     FoodMeatRat: 1
+
+- type: microwaveMealRecipe
+  id: RecipeTacofinfin
+  name: finfin taco recipe
+  result: FoodTacoFinfin
+  time: 10
+  solids:
+    FoodTacoShell: 1
+    FoodMeatFinfinCutlet: 1
+    FoodCheeseSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeTacoBeefSupreme

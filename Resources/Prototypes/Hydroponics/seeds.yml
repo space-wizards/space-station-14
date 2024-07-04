@@ -815,10 +815,10 @@
 
 - type: seed
   id: greenMarijuana
-  name: seeds-greenMarijuana-name
+  name: seeds-green-marijuana-name
   noun: seeds-noun-seeds
-  displayName: seeds-greenMarijuana-display-name
-  plantRsi: Objects/Specific/Hydroponics/greenMarijuana.rsi
+  displayName: seeds-green-marijuana-display-name
+  plantRsi: Objects/Specific/Hydroponics/cannabis.rsi
   packetPrototype: GreenMarijuanaSeeds
   productPrototypes:
     - LeavesGreenMarijuana

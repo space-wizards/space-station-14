@@ -676,6 +676,32 @@
   - type: Sprite
     state: slime
 
+- type: entity
+  name: raw finfin meat
+  parent: FoodMeatRawBase
+  id: FoodMeatFinfin
+  description: A slab of raw finfin. He was your best friend!
+  components:
+  - type: Sprite
+    state: bird
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatFinfinCutlet
+  - type: InternalTemperature
+    conductivity: 0.41
+  - type: Construction
+    graph: FinfinSteak
+    node: start
+    defaultTarget: cooked finfin
+
 # Cooked
 
 - type: entity
@@ -1067,6 +1093,62 @@
         - ReagentId: Protein
           Quantity: 5
 
+- type: entity
+  name: cooked finfin
+  parent: FoodMeatBase
+  id: FoodMeatFinfinCooked
+  description: A cooked piece of finfin. Best used in other recipes.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+  - type: Sprite
+    layers:
+    - state: bird-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatFinfinCutletCooked
+  - type: Construction
+    graph: FinfinSteak
+    node: cooked finfin
+
+- type: entity
+  name: fried finfin
+  parent: FoodMeatBase
+  id: FoodMeatFinfinFried
+  description: A juicy hunk of finfin meat, fried to perfection.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+  - type: Sprite
+    layers:
+    - state: chicken-fried
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          chicken-fried: ""
+          chicken2-fried: ""
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
+
 # Cutlets
 
 # Raw
@@ -1297,6 +1379,29 @@
         - ReagentId: Protein
           Quantity: 1
 
+- type: entity
+  name: raw finfin cutlet
+  parent: FoodMeatBase
+  id: FoodMeatFinfinCutlet
+  description: A cutlet of raw finfin. He was your best friend!
+  components:
+  - type: Tag
+    tags:
+    - Raw
+    - Cutlet
+    - Meat
+  - type: Sprite
+    state: cutlet
+    color: white
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
+        - ReagentId: Fat
+          Quantity: 2
+
 # Cooked
 
 - type: entity
@@ -1482,3 +1587,26 @@
           Quantity: 1
         - ReagentId: Protein
           Quantity: 1
+
+- type: entity
+  name: finfin cutlet
+  parent: FoodMeatBase
+  id: FoodMeatFinfinCutletCooked
+  description: A cutlet of cooked finfin. Will these hands never be clean?
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Cutlet
+    - Meat
+  - type: Sprite
+    state: cutlet-cooked
+    color: white
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
