@@ -11,6 +11,7 @@ namespace Content.Server.Ghost
     public sealed class GhostCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly GameTicker _ticker = default!;
 
         public string Command => "ghost";
         public string Description => Loc.GetString("ghost-command-description");
@@ -19,7 +20,6 @@ namespace Content.Server.Ghost
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
-            var ticker = _entities.System<GameTicker>();
 
             if (player == null)
             {
@@ -37,7 +37,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            if (ticker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) &&
+            if (_ticker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) &&
                 status != PlayerGameStatus.JoinedGame)
             {
                 shell.WriteLine(Loc.GetString("ghost-command-lobby"));
