@@ -455,9 +455,7 @@ public sealed class PullingSystem : EntitySystem
             joint.MinLength = 0f;
             joint.Stiffness = 1f;
 
-            // check if we actually need to set the FixedRotation to false to save a dirty call
-            if (pullablePhysics.FixedRotation && !pullableComp.FixedRotationOnPull)
-                _physics.SetFixedRotation(pullableUid, false, body: pullablePhysics);
+            _physics.SetFixedRotation(pullableUid, pullableComp.FixedRotationOnPull, body: pullablePhysics);
         }
 
         // Messaging
