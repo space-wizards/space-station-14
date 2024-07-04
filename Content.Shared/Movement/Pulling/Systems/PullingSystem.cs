@@ -255,9 +255,7 @@ public sealed class PullingSystem : EntitySystem
 
             if (TryComp<PhysicsComponent>(pullableUid, out var pullablePhysics))
             {
-                // check if we even need to set the FixedRotation to save a dirty call
-                if (pullablePhysics.FixedRotation != pullableComp.PrevFixedRotation)
-                    _physics.SetFixedRotation(pullableUid, pullableComp.PrevFixedRotation, body: pullablePhysics);
+                _physics.SetFixedRotation(pullableUid, pullableComp.PrevFixedRotation, body: pullablePhysics);
             }
         }
 
