@@ -6,14 +6,14 @@ namespace Content.Shared.Temperature.Components;
 /// <summary>
 /// This is used for an entity that varies in speed based on current temperature.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedTemperatureSystem)), AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedTemperatureSystem)), AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class TemperatureSpeedComponent : Component
 {
     /// <summary>
     /// Pairs of temperature thresholds to applied slowdown values.
     /// </summary>
     [DataField]
-    public Dictionary<float, float> Thresholds;
+    public Dictionary<float, float> Thresholds = new();
 
     /// <summary>
     /// The current speed modifier from <see cref="Thresholds"/> we reached.
@@ -25,6 +25,6 @@ public sealed partial class TemperatureSpeedComponent : Component
     /// <summary>
     /// The time at which the temperature slowdown is updated.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan? NextSlowdownUpdate;
 }
