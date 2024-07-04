@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: iNV3RT3D & metalgearsloth
-  changes:
-  - message: Added a jukebox.
-    type: Add
-  id: 6366
-  time: '2024-04-17T09:27:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26736
 - author: Vermidia
   changes:
   - message: Pirate Accent and Mobster accent will respect capitalization better now
@@ -3825,3 +3818,10 @@
   id: 6865
   time: '2024-07-03T16:59:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29687
+- author: Rinary
+  changes:
+  - message: Fixed radial menus overlapping where there's many icons.
+    type: Fix
+  id: 6866
+  time: '2024-07-04T01:25:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29678
