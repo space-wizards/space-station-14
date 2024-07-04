@@ -31,14 +31,15 @@ public sealed class AntagLoadProfileRuleSystem : GameRuleSystem<AntagLoadProfile
             ? _prefs.GetPreferences(args.Session.UserId).SelectedCharacter as HumanoidCharacterProfile
             : HumanoidCharacterProfile.RandomWithSpecies();
 
-        SpeciesPrototype? species;
-        if (ent.Comp.SpeciesOverride != null)
-        {
-            species = _proto.Index(ent.Comp.SpeciesOverride.Value);
-        }
-        else if (profile?.Species is not { } speciesId || !_proto.TryIndex(speciesId, out species))
+
+        if (profile?.Species is not { } speciesId || !_proto.TryIndex(speciesId, out var species))
         {
             species = _proto.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies);
+        }
+
+        if (!ent.Comp.SpeciesWhitelist?.Contains(new ProtoId<SpeciesPrototype>(species.ID)) ?? false)
+        {
+            species = _proto.Index(ent.Comp.SpeciesOverride ?? SharedHumanoidAppearanceSystem.DefaultSpecies);
         }
 
         args.Entity = Spawn(species.Prototype);
