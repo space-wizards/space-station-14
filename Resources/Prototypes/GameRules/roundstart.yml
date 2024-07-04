@@ -81,7 +81,6 @@
   - type: RuleGrids
   - type: AntagSelection
   - type: AntagLoadProfileRule
-    speciesOverride: Human
 
 - type: entity
   parent: BaseNukeopsRule
