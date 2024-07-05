@@ -81,6 +81,18 @@
   - type: RuleGrids
   - type: AntagSelection
   - type: AntagLoadProfileRule
+    speciesOverride: Human
+    speciesOverrideWhitelist:
+    - Human
+    - Dwarf
+    - Arachnid
+    - Moth
+    - Reptilian
+    # These species currently have issues that make them not suitable to be used with nukies.
+    # Add them back in when those issues got addressed
+    #- Vox
+    #- Diona
+    #- SlimePerson
 
 - type: entity
   parent: BaseNukeopsRule

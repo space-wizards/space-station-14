@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ShadowCommander
-  changes:
-  - message: Fixed PDA and ID card name, job, and access not getting set on some jobs.
-    type: Fix
-  id: 6372
-  time: '2024-04-17T22:16:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27062
 - author: Krunk
   changes:
   - message: Head of Security and Warden now have armored and unarmored variants of
@@ -3821,3 +3814,10 @@
   id: 6871
   time: '2024-07-04T07:17:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29696
+- author: PJB3005
+  changes:
+  - message: Fixed flashlights and similar permanently getting stuck blinking.
+    type: Fix
+  id: 6872
+  time: '2024-07-04T08:02:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29457
