@@ -116,11 +116,9 @@
     id: CBURNPDA
     pocket1: RadioHandheld
     pocket2: WeaponLaserGun
-    suitstorage: OxygenTankFilled
     belt: ClothingBeltBandolier
   storage:
     back:
-    - BoxSurvivalEngineering
     - WeaponShotgunDoubleBarreled
     - BoxShotgunIncendiary
     - GrenadeFlashBang
