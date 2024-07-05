@@ -37,6 +37,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
 
     public const string SawmillId = "admin.bans";
     public const string JobPrefix = "Job:";
+    public const string AntagPrefix = "Antag:";
 
     private readonly Dictionary<NetUserId, HashSet<ServerRoleBanDef>> _cachedRoleBans = new();
 
@@ -186,12 +187,26 @@ public sealed class BanManager : IBanManager, IPostInjectInit
     // Removing it will clutter the note list. Please also make sure that department bans are applied to roles with the same DateTimeOffset.
     public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableArray<byte>? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan)
     {
-        if (!_prototypeManager.TryIndex(role, out JobPrototype? _))
+        string? prefix = null;
+
+        if (_prototypeManager.TryIndex<JobPrototype>(role, out _))
+        {
+            prefix = JobPrefix;
+        }
+        else if (_prototypeManager.TryIndex<AntagPrototype>(role, out _))
+        {
+            prefix = AntagPrefix;
+        }
+
+        if (prefix != null)
+        {
+            role = string.Concat(prefix, role);
+        }
+        else
         {
             throw new ArgumentException($"Invalid role '{role}'", nameof(role));
         }
 
-        role = string.Concat(JobPrefix, role);
         DateTimeOffset? expires = null;
         if (minutes > 0)
         {
@@ -274,6 +289,17 @@ public sealed class BanManager : IBanManager, IPostInjectInit
             .Select(ban => new ProtoId<JobPrototype>(ban.Role[JobPrefix.Length..]))
             .ToHashSet();
     }
+
+    public HashSet<ProtoId<AntagPrototype>>? GetAntagBans(NetUserId playerUserId)
+    {
+        if (!_cachedRoleBans.TryGetValue(playerUserId, out var roleBans))
+            return null;
+        return roleBans
+            .Where(ban => ban.Role.StartsWith(AntagPrefix, StringComparison.Ordinal))
+            .Select(ban => new ProtoId<AntagPrototype>(ban.Role[AntagPrefix.Length..]))
+            .ToHashSet();
+    }
+
     #endregion
 
     public void SendRoleBans(NetUserId userId)
