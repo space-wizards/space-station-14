@@ -580,14 +580,14 @@
 - type: entity
   name: space mirage
   parent: Pill
-  id: PillSpaceDrugs
+  id: PillSpaceMirage
   components:
   - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 20
         reagents:
-        - ReagentId: SpaceDrugs
+        - ReagentId: SpaceMirage
           Quantity: 15
 
 - type: entity
@@ -787,7 +787,7 @@
       prob: 0.075
       maxAmount: 7
       orGroup: RandomPill
-    - id: PillSpaceDrugs
+    - id: PillSpaceMirage
       prob: 0.075
       maxAmount: 7
       orGroup: RandomPill

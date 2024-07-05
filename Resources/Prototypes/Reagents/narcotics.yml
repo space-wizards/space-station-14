@@ -225,7 +225,7 @@
         boozePower: 5
 
 - type: reagent
-  id: SpaceDrugs
+  id: SpaceMirage
   name: reagent-name-space-drugs
   group: Narcotics
   desc: reagent-desc-space-drugs
