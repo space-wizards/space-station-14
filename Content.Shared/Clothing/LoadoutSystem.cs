@@ -126,13 +126,20 @@ public sealed class LoadoutSystem : EntitySystem
         if (component.RoleLoadout == null)
             return;
 
-        // Equip role loadout, if specified
-        // TODO: figure out if it would cause any issues if all of these were applied, not just a random one
-        var id = _random.Pick(component.RoleLoadout);
-        var proto = _protoMan.Index(id);
-        var loadout = new RoleLoadout(id);
-        loadout.SetDefault(GetProfile(uid), _actors.GetSession(uid), _protoMan, true);
-        _station.EquipRoleLoadout(uid, loadout, proto);
+        // Equip role loadout(s). By default, only a single random loadout will be applied.
+        var idList = new List<ProtoId<RoleLoadoutPrototype>>();
+        if (!component.AddAllRoleLoadout)
+            idList.Add(_random.Pick(component.RoleLoadout));
+        else
+            idList = component.RoleLoadout;
+
+        foreach (var id in idList)
+        {
+            var proto = _protoMan.Index(id);
+            var loadout = new RoleLoadout(id);
+            loadout.SetDefault(GetProfile(uid), _actors.GetSession(uid), _protoMan, true);
+            _station.EquipRoleLoadout(uid, loadout, proto);
+        }
     }
 
     public HumanoidCharacterProfile GetProfile(EntityUid? uid)
