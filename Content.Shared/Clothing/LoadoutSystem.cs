@@ -120,7 +120,7 @@ public sealed class LoadoutSystem : EntitySystem
         if (component.StartingGear != null)
         {
             var gear = _protoMan.Index(_random.Pick(component.StartingGear));
-            _station.EquipStartingGear(uid, gear);
+            _station.EquipStartingGear(uid, gear, false);
         }
 
         if (component.RoleLoadout == null)
@@ -141,6 +141,9 @@ public sealed class LoadoutSystem : EntitySystem
             loadout.SetDefault(GetProfile(uid), _actors.GetSession(uid), _protoMan, true);
             _station.EquipRoleLoadout(uid, loadout, proto);
         }
+
+        var ev = new StartingGearEquippedEvent(uid);
+        RaiseLocalEvent(uid, ref ev);
     }
 
     public HumanoidCharacterProfile GetProfile(EntityUid? uid)
