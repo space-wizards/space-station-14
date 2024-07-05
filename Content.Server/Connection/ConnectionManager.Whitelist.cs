@@ -1,0 +1,241 @@
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Content.Server.Connection.Whitelist;
+using Content.Server.Connection.Whitelist.Conditions;
+using Content.Server.Database;
+using Content.Shared.CCVar;
+using Content.Shared.Database;
+using Content.Shared.Players.PlayTimeTracking;
+using Robust.Shared.Network;
+
+namespace Content.Server.Connection;
+
+/// <summary>
+/// Handles whitelist conditions for incoming connections.
+/// </summary>
+public sealed partial class ConnectionManager
+{
+    private PlayerConnectionWhitelistPrototype[]? _whitelists;
+
+    public void PostInit()
+    {
+        _cfg.OnValueChanged(CCVars.WhitelistPrototypeList, UpdateWhitelists, true);
+    }
+
+    private void UpdateWhitelists(string s)
+    {
+        var list = new List<PlayerConnectionWhitelistPrototype>();
+        foreach (var id in s.Split(','))
+        {
+            if (_prototypeManager.TryIndex(id, out PlayerConnectionWhitelistPrototype? prototype))
+            {
+                list.Add(prototype);
+            }
+            else
+            {
+                _sawmill.Fatal($"Whitelist prototype {id} does not exist. Denying all connections.");
+                _whitelists = null; // Invalidate the list, causes deny on all connections.
+                return;
+            }
+        }
+
+        _whitelists = list.ToArray();
+    }
+
+    private bool IsValid(PlayerConnectionWhitelistPrototype whitelist, int playerCount)
+    {
+        return playerCount >= whitelist.MinimumPlayers && playerCount <= whitelist.MaximumPlayers;
+    }
+
+    public async Task<(bool isWhitelisted, string? denyMessage)> IsWhitelisted(PlayerConnectionWhitelistPrototype whitelist, NetUserData data, ISawmill sawmill)
+    {
+        Dictionary<NetUserId, List<IAdminRemarksRecord>> cacheRemarks = new();
+        Dictionary<NetUserId, List<PlayTime>> cachePlaytime = new();
+
+        foreach (var condition in whitelist.Conditions)
+        {
+            var remarks = await GetAdminRemarks(data.UserId);
+            var playtime = await GetPlayTime(data.UserId);
+            bool matched;
+            string denyMessage;
+            switch (condition)
+            {
+                case ConditionAlwaysMatch:
+                    matched = true;
+                    denyMessage = Loc.GetString("whitelist-always-deny");
+                    break;
+                case ConditionManualWhitelist:
+                    matched = await CheckConditionManualWhitelist(data);
+                    denyMessage = Loc.GetString("whitelist-manual");
+                    break;
+                case ConditionManualBlacklist:
+                    matched = await CheckConditionManualBlacklist(data);
+                    denyMessage = Loc.GetString("whitelist-blacklisted");
+                    break;
+                case ConditionNotesDateRange conditionNotes:
+                    matched = await CheckConditionNotesDateRange(conditionNotes, remarks);
+                    denyMessage = Loc.GetString("whitelist-notes");
+                    break;
+                case ConditionPlayerCount conditionPlayerCount:
+                    matched = CheckConditionPlayerCount(conditionPlayerCount);
+                    denyMessage = Loc.GetString("whitelist-player-count");
+                    break;
+                case ConditionPlaytime conditionPlaytime:
+                    matched = await CheckConditionPlaytime(conditionPlaytime, playtime);
+                    denyMessage = Loc.GetString("whitelist-playtime", ("minutes", conditionPlaytime.MinimumPlaytime));
+                    break;
+                case ConditionNotesPlaytimeRange conditionNotesPlaytimeRange:
+                    matched = await CheckConditionNotesPlaytimeRange(conditionNotesPlaytimeRange, remarks, playtime);
+                    denyMessage = Loc.GetString("whitelist-notes");
+                    break;
+                default:
+                    throw new NotImplementedException($"Whitelist condition {condition.GetType().Name} not implemented");
+            }
+
+            sawmill.Verbose($"User {data.UserName} whitelist condition {condition.GetType().Name} result: {matched}");
+            sawmill.Verbose($"Action: {condition.Action.ToString()}");
+            switch (condition.Action)
+            {
+                case ConditionAction.Allow:
+                    if (matched)
+                    {
+                        sawmill.Verbose($"User {data.UserName} passed whitelist condition {condition.GetType().Name} and it's a breaking condition");
+                        return (true, denyMessage);
+                    }
+                    break;
+                case ConditionAction.Deny:
+                    if (matched)
+                    {
+                        sawmill.Verbose($"User {data.UserName} failed whitelist condition {condition.GetType().Name}");
+                        return (false, denyMessage);
+                    }
+                    break;
+                default:
+                    sawmill.Verbose($"User {data.UserName} failed whitelist condition {condition.GetType().Name} but it's not a breaking condition");
+                    break;
+            }
+        }
+        sawmill.Verbose($"User {data.UserName} passed all whitelist conditions");
+        return (true, null);
+
+        // Local function to get admin remarks for a user.
+        async Task<List<IAdminRemarksRecord>> GetAdminRemarks(NetUserId userId)
+        {
+            if (cacheRemarks.TryGetValue(userId, out var remarks))
+            {
+                return remarks;
+            }
+
+            var records = await _db.GetAllAdminRemarks(userId.UserId);
+            cacheRemarks.Add(userId, records);
+            return records;
+        }
+
+        // Local function to get playtime for a user.
+        async Task<List<PlayTime>> GetPlayTime(NetUserId userId)
+        {
+            if (cachePlaytime.TryGetValue(userId, out var playtime))
+            {
+                return playtime;
+            }
+
+            var records = await _db.GetPlayTimes(userId.UserId);
+            cachePlaytime.Add(userId, records);
+            return records;
+        }
+    }
+
+    #region Condition Checking
+
+    private async Task<bool> CheckConditionManualWhitelist(NetUserData data)
+    {
+        return !(await _db.GetWhitelistStatusAsync(data.UserId));
+    }
+
+    private async Task<bool> CheckConditionManualBlacklist(NetUserData data)
+    {
+        return await _db.GetBlacklistStatusAsync(data.UserId);
+    }
+
+    private async Task<bool> CheckConditionNotesDateRange(ConditionNotesDateRange conditionNotes, List<IAdminRemarksRecord> remarks)
+    {
+        var range = DateTime.UtcNow.AddDays(-conditionNotes.Range);
+
+        return CheckRemarks(remarks,
+            conditionNotes.IncludeExpired,
+            conditionNotes.IncludeSecret,
+            conditionNotes.MinimumSeverity,
+            adminRemarksRecord => adminRemarksRecord.CreatedAt > range);
+    }
+
+    private bool CheckConditionPlayerCount(ConditionPlayerCount conditionPlayerCount)
+    {
+        var count = _plyMgr.PlayerCount;
+        return count >= conditionPlayerCount.MinimumPlayers && count <= conditionPlayerCount.MaximumPlayers;
+    }
+
+    private async Task<bool> CheckConditionPlaytime(ConditionPlaytime conditionPlaytime, List<PlayTime> playtime)
+    {
+        var tracker = playtime.Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
+        if (tracker is null)
+        {
+            return false;
+        }
+
+        return tracker.TimeSpent.TotalMinutes >= conditionPlaytime.MinimumPlaytime;
+    }
+
+    private async Task<bool> CheckConditionNotesPlaytimeRange(
+        ConditionNotesPlaytimeRange conditionNotesPlaytimeRange,
+        List<IAdminRemarksRecord> remarks,
+        List<PlayTime> playtime)
+    {
+        var overallTracker = playtime.Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
+        if (overallTracker is null)
+        {
+            return false;
+        }
+
+        return CheckRemarks(remarks,
+            conditionNotesPlaytimeRange.IncludeExpired,
+            conditionNotesPlaytimeRange.IncludeSecret,
+            conditionNotesPlaytimeRange.MinimumSeverity,
+            adminRemarksRecord => adminRemarksRecord.PlaytimeAtNote >= overallTracker.TimeSpent - TimeSpan.FromMinutes(conditionNotesPlaytimeRange.Range));
+    }
+
+    private bool CheckRemarks(List<IAdminRemarksRecord> remarks, bool includeExpired, bool includeSecret, NoteSeverity minimumSeverity, Func<IAdminRemarksRecord, bool> additionalCheck)
+    {
+        var utcNow = DateTime.UtcNow;
+
+        foreach (var adminRemarksRecord in remarks)
+        {
+            // If we're not including expired notes, skip them
+            if (!includeExpired && (adminRemarksRecord.ExpirationTime == null || adminRemarksRecord.ExpirationTime <= utcNow))
+                continue;
+
+            // In order to get the severity of the remark, we need to see if it's an AdminNoteRecord.
+            if (adminRemarksRecord is not AdminNoteRecord adminNoteRecord)
+                continue;
+
+            // We want to filter out secret notes if we're not including them.
+            if (!includeSecret && adminNoteRecord.Secret)
+                continue;
+
+            // At this point, we need to remove the note if it's not within the severity range.
+            if (adminNoteRecord.Severity < minimumSeverity)
+                continue;
+
+            // Perform the additional check specific to each method
+            if (!additionalCheck(adminRemarksRecord))
+                continue;
+
+            // If we've made it this far, we have a match
+            return true;
+        }
+
+        // No matches
+        return false;
+    }
+
+    #endregion
+}
