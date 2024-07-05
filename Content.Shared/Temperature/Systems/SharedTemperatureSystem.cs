@@ -151,6 +151,18 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
     }
 
     /// <summary>
+    /// Dirties the heat capacity of an entity.
+    /// </summary>
+    /// <param name="entity">The entity to dirty the heat capacity of.</param>
+    public void DirtyHeatCapacity(Entity<TemperatureComponent?> entity)
+    {
+        if (!TemperatureQuery.Resolve(entity, ref entity.Comp))
+            return;
+
+        entity.Comp.HeatCapacityDirty = true;
+    }
+
+    /// <summary>
     /// Sets the base heat capacity of an entity.
     /// </summary>
     /// <remarks>
