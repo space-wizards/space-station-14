@@ -85,7 +85,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: SpaceDrugs
+        - ReagentId: SpaceMirage
           Quantity: 3
         - ReagentId: Lipolicide
           Quantity: 3
@@ -112,7 +112,7 @@
       food:
         maxVol: 8.5 #fuck you saveload test fail
         reagents:
-        - ReagentId: SpaceDrugs
+        - ReagentId: SpaceMirage
           Quantity: 2.4
         - ReagentId: Lipolicide
           Quantity: 2.4
@@ -141,7 +141,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: SpaceDrugs
+        - ReagentId: SpaceMirage
           Quantity: 4
         - ReagentId: Lipolicide
           Quantity: 4

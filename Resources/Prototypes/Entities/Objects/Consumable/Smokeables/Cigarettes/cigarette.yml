@@ -323,7 +323,7 @@
             Quantity: 10
 
 - type: entity
-  id: CigaretteSpaceDrugs
+  id: CigaretteSpaceMirage
   parent: SoakedCigarette
   name: 80's Power Hour
   components:
@@ -334,7 +334,7 @@
         reagents:
           - ReagentId: Nicotine
             Quantity: 10
-          - ReagentId: SpaceDrugs
+          - ReagentId: SpaceMirage
             Quantity: 10
 
 - type: entity

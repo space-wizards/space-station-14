@@ -1368,7 +1368,7 @@
         reagents:
         - ReagentId: Omnizine
           Quantity: 3
-        - ReagentId: SpaceDrugs
+        - ReagentId: SpaceMirage
           Quantity: 5
         - ReagentId: Nutriment
           Quantity: 2
