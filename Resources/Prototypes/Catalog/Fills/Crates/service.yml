@@ -338,19 +338,9 @@
   id: CrateCandles
   parent: CrateGenericSteel
   name: candles crate
-  description: Contains all colors of candles for atmosphere or something.
+  description: Contains a box of candles, large and small. For atmosphere or something.
   components:
   - type: StorageFill
     contents:
-      - id: Candle
-        amount: 3
-      - id: CandleRed
-        amount: 3
-      - id: CandleBlue
-        amount: 3
-      - id: CandleBlack
-        amount: 3
-      - id: CandleGreen
-        amount: 3
-      - id: CandlePurple
-        amount: 3
+      - id: BoxCandle
+      - id: BoxCandleSmall

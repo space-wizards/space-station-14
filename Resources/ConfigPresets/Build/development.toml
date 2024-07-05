@@ -1,4 +1,4 @@
-﻿[game]
+[game]
 # Straight in-game baby
 lobbyenabled = false
 # Dev map for faster loading & convenience
@@ -19,7 +19,7 @@ preload = false
 expedition_cooldown = 30.0
 
 [shuttle]
-grid_fill = false
+grid_fill = true
 auto_call_time = 0
 emergency = false
 arrivals = false
