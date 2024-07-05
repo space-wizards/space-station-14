@@ -13,6 +13,7 @@ namespace Content.Shared.Temperature.Systems;
 /// </summary>
 public abstract partial class SharedTemperatureSystem : EntitySystem
 {
+    [Dependency] protected readonly IViewVariablesManager Vvm = default!;
     private EntityQuery<PhysicsComponent> _physicsQuery = default!;
     protected EntityQuery<TemperatureComponent> TemperatureQuery = default!;
 
@@ -28,6 +29,24 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         SubscribeLocalEvent<TemperatureComponent, MassDataChangedEvent>(OnMassChanged);
         SubscribeLocalEvent<TemperatureComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<TemperatureProtectionComponent, InventoryRelayedEvent<ModifyChangedTemperatureEvent>>(OnTemperatureChangeAttempt);
+
+        // ViewVariables
+        var vvHandle = Vvm.GetTypeHandler<TemperatureComponent>();
+        vvHandle.AddPath(nameof(TemperatureComponent.CurrentTemperature), (_, comp) => comp.CurrentTemperature, (uid, value, comp) => SetTemperature((uid, comp), value));
+        vvHandle.AddPath(nameof(TemperatureComponent.BaseHeatCapacity), (_, comp) => comp.BaseHeatCapacity, (uid, value, comp) => SetHeatCapacity((uid, comp), value));
+        vvHandle.AddPath(nameof(TemperatureComponent.SpecificHeat), (_, comp) => comp.SpecificHeat, (uid, value, comp) => SetSpecificHeat((uid, comp), value));
+        vvHandle.AddPath(nameof(TemperatureComponent.CachedHeatCapacity), (uid, comp) => GetHeatCapacity((uid, comp)));
+    }
+
+    public override void Shutdown()
+    {
+        var vvHandle = Vvm.GetTypeHandler<TemperatureComponent>();
+        vvHandle.RemovePath(nameof(TemperatureComponent.CurrentTemperature));
+        vvHandle.RemovePath(nameof(TemperatureComponent.BaseHeatCapacity));
+        vvHandle.RemovePath(nameof(TemperatureComponent.SpecificHeat));
+        vvHandle.RemovePath(nameof(TemperatureComponent.CachedHeatCapacity));
+
+        base.Shutdown();
     }
 
     public override void Update(float frameTime)

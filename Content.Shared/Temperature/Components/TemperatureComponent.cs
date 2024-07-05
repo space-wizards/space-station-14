@@ -13,7 +13,7 @@ public sealed partial class TemperatureComponent : Component
     /// <summary>
     /// Surface temperature which is modified by the environment.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField] // VV handled through SharedTemperatureSystem
     public float CurrentTemperature = Atmospherics.T20C;
 
     /// <summary>
@@ -22,8 +22,8 @@ public sealed partial class TemperatureComponent : Component
     /// <remarks>
     /// Should not be directly accessed. Use <see cref="SharedTemperatureSystem.GetHeatCapacity"/>.
     /// </remarks>
-    [Access(typeof(SharedTemperatureSystem), Other = AccessPermissions.None)]
-    public float CachedHeatCapacity = float.NaN; // Landmine for people trying to access this without going through the proper channels. Should make such activity fairly obvious.
+    [Access(typeof(SharedTemperatureSystem), Other = AccessPermissions.None)] // VV handled through SharedTemperatureSystem
+    public float CachedHeatCapacity = float.NaN;
 
     /// <summary>
     /// Whether the heat capacity needs to be recalculated 
@@ -34,13 +34,13 @@ public sealed partial class TemperatureComponent : Component
     /// <summary>
     /// The base <see cref="CachedHeatCapacity"/>
     /// </summary>
-    [DataField("heatCapacity"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("heatCapacity")] // VV handled through SharedTemperatureSystem
     public float BaseHeatCapacity = 0f;
 
     /// <summary>
     /// Heat capacity per kg of mass.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField] // VV handled through SharedTemperatureSystem
     public float SpecificHeat = 50f;
 
     /// <summary>
