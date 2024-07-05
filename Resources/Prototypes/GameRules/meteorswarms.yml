@@ -3,7 +3,7 @@
   id: GameRuleMeteorScheduler
   components:
   - type: GameRule
-    minPlayers: 25
+    minPlayers: 999
     cancelPresetOnTooFewPlayers: false
   - type: MeteorScheduler
 
