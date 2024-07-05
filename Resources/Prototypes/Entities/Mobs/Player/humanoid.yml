@@ -530,6 +530,7 @@
       randomizeName: false
     - type: Loadout
       prototypes: [SyndicateOperativeGearExtremelyBasic]
+      roleLoadout: [ RoleSurvivalSyndicate ]
 
 - type: entity
   id: RandomHumanoidSpawnerNukeOp

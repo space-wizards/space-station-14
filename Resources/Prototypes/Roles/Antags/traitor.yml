@@ -31,7 +31,6 @@
     gloves: ClothingHandsGlovesColorBlack
   storage:
     back:
-    - BoxSurvivalSyndicate
     - WeaponPistolViper
     - PinpointerSyndicateNuclear
     - DeathAcidifierImplanter
