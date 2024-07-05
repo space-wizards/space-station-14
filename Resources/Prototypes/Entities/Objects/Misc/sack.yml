@@ -2,17 +2,23 @@
   name: hemp sack
   id: HempClothSack
   parent: BaseStorageItem
-  description: A hempen sack.
+  description: A sack made from hemp cloth.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/Equipment/plant_bag.rsi
+    sprite: Objects/Storage/hempsack.rsi
     state: icon
   - type: Item
-    storedRotation: -90
+    size: Normal
   - type: Storage
     grid:
     - 0,0,4,4
-    maxItemSize: Small
+    maxItemSize: Normal
     quickInsert: true
     areaInsert: true
   - type: Dumpable
+  - type: Construction
+    graph: HempWovenSack
+    node: hempsack
+  - type: Tag
+    tags:
+    - HempSack

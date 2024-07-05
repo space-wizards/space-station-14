@@ -204,15 +204,15 @@
 
 - type: construction
   name: hemp sack
-  id: HempWovenSack
-  graph: Sack
+  id: hempWovenSack
+  graph: HempWovenSack
   startNode: start
   targetNode: hempsack
   category: construction-category-misc
-  description: "A woven hemp sack. Rough and sturdy."
+  description: "A woven hemp sack. Feels sturdy."
   icon:
-    sprite: Objects/Materials/materials.rsi
-    state: hemp_cloth_3
+    sprite: Objects/Storage/hempsack.rsi
+    state: icon
   objectType: Item
 
 - type: construction

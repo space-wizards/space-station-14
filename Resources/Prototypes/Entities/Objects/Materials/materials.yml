@@ -172,7 +172,7 @@
     healingEndSound:
       path: "/Audio/Items/Medical/brutepack_end.ogg"
   - type: Stack
-    stackType: Cloth
+    stackType: HempCloth
     baseLayer: base
     layerStates:
     - hemp_cloth
@@ -193,23 +193,26 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
+        maxVol: 10
         reagents:
         - ReagentId: Fiber
-          Quantity: 3
+          Quantity: 5
         - ReagentId: THC
-          Quantity: 2
+          Quantity: 5
   - type: Extractable
     juiceSolution:
       reagents:
       - ReagentId: Fiber
-        Quantity: 3
+        Quantity: 4
       - ReagentId: THC
-        Quantity: 1
+        Quantity: 4
   - type: Tag
     tags:
       - ClothMade
       - RawMaterial
+  - type: Construction
+    graph: HempObjects
+    node: hempcloth
 
 - type: entity
   parent: MaterialHempCloth
@@ -521,19 +524,19 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
+        maxVol: 10
         reagents:
         - ReagentId: Fiber
-          Quantity: 3
+          Quantity: 5
         - ReagentId: THC
-          Quantity: 2
+          Quantity: 5
   - type: Extractable
     juiceSolution:
       reagents:
       - ReagentId: Fiber
-        Quantity: 3
+        Quantity: 4
       - ReagentId: THC
-        Quantity: 1
+        Quantity: 4
   - type: Tag
     tags:
       - ClothMade

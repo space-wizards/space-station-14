@@ -1,5 +1,5 @@
 ﻿- type: constructionGraph
-  id: Sack
+  id: HempWovenSack
   start: start
   graph:
   - node: start
@@ -7,7 +7,7 @@
     - to: hempsack
       steps:
       - material: HempCloth
-        amount: 6
-        doAfter: 20
+        amount: 5
+        doAfter: 15
   - node: hempsack
     entity: HempClothSack

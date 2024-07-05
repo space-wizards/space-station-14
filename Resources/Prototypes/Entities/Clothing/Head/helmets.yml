@@ -382,3 +382,20 @@
     sprite: Clothing/Head/Helmets/podwars_helmet.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/podwars_helmet.rsi
+
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadSack
+  name: hemp sack with eyeholes
+  description: A hemp sack with eyeholes in it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/hempsack.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/hempsack.rsi
+  - type: Construction
+    graph: SackHead
+    node: eyesack
+  - type: Armor
+  - type: IdentityBlocker
+
