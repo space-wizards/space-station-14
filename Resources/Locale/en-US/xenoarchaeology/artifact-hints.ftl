@@ -53,6 +53,16 @@ xenoarch-trigger-tip-ammonia = Ammonia
 xenoarch-trigger-tip-n2o = Nitrous oxide
 xenoarch-trigger-tip-frezon = Frezon
 xenoarch-trigger-tip-radiation = Radiation
-xenoarch-trigger-tip-pressure-low = Low environmental pressure
-xenoarch-trigger-tip-pressure-high = High environmental pressure
+xenoarch-trigger-tip-brute-damage = Physical damage
+xenoarch-trigger-tip-interaction = Phyiscal interaction
+xenoarch-trigger-tip-wrenching = Tightening
+xenoarch-trigger-tip-prying = Prying
+xenoarch-trigger-tip-screwing = Screwing
+xenoarch-trigger-tip-pressure-low = Low pressure
+xenoarch-trigger-tip-pressure-high = High pressure
 xenoarch-trigger-tip-examine = Close inspection
+
+### Description hints
+xenoarch-trigger-examine-wrenching = [italic]There's a loose bit spinning around.[/italic]
+xenoarch-trigger-examine-prying = [italic]There's a panel coming up from the surface.[/italic]
+xenoarch-trigger-examine-screwing = [italic]There's a raised section with a small inset on it.[/italic]

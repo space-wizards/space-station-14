@@ -1,5 +1,6 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
+using Content.Shared.Whitelist;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Console;
@@ -9,6 +10,7 @@ namespace Content.Server.Xenoarchaeology.Artifact;
 public sealed partial class XenoArtifactSystem : SharedXenoArtifactSystem
 {
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
+    [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

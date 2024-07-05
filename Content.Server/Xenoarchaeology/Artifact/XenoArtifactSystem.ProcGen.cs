@@ -1,6 +1,6 @@
 using Content.Shared.Random.Helpers;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
-using Content.Shared.Xenoarchaeology.Artifact.XAT;
+using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -13,8 +13,8 @@ public sealed partial class XenoArtifactSystem
     private void GenerateArtifactStructure(Entity<XenoArtifactComponent> ent)
     {
         var nodeCount = ent.Comp.NodeCount.Next(RobustRandom);
+        CreateTriggerPool(ent, ref nodeCount);
         ResizeNodeGraph(ent, nodeCount);
-        CreateTriggerPool(ent, nodeCount);
         while (nodeCount > 0)
         {
             GenerateArtifactSegment(ent, ref nodeCount);
@@ -23,7 +23,7 @@ public sealed partial class XenoArtifactSystem
         RebuildNodeData((ent, ent));
     }
 
-    private void CreateTriggerPool(Entity<XenoArtifactComponent> ent, int size)
+    private void CreateTriggerPool(Entity<XenoArtifactComponent> ent, ref int size)
     {
         _triggerPool.Clear();
         var weightsProto = PrototypeManager.Index(ent.Comp.TriggerWeights);
@@ -31,9 +31,18 @@ public sealed partial class XenoArtifactSystem
 
         while (_triggerPool.Count < size)
         {
-            var triggerId = RobustRandom.Pick(weights);
+            // OOPS! We ran out of triggers.
+            if (weights.Count == 0)
+            {
+                Log.Error($"Insufficient triggers for generating {ToPrettyString(ent)}! Needed {size} but had {_triggerPool.Count}");
+                size = _triggerPool.Count;
+                return;
+            }
 
+            var triggerId = RobustRandom.Pick(weights);
             var trigger = PrototypeManager.Index<XenoArchTriggerPrototype>(triggerId);
+            if (_entityWhitelist.IsWhitelistFail(trigger.Whitelist, ent))
+                continue;
 
             _triggerPool.Add(trigger);
             weights.Remove(triggerId);
@@ -44,7 +53,6 @@ public sealed partial class XenoArtifactSystem
     {
         var segmentSize = GetArtifactSegmentSize(ent, nodeCount);
         nodeCount -= segmentSize;
-        // TODO: generate a pool of triggers here based on segmentsize
         PopulateArtifactSegmentRecursive(ent, ref segmentSize, ensureLayerConnected: true);
     }
 

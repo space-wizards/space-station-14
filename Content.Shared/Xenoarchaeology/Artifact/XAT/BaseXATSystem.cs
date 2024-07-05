@@ -20,7 +20,7 @@ public abstract class BaseXATSystem<T> : EntitySystem where T : Component
 
     protected void XATSubscribeLocalEvent<TEvent>(XATEventHandler<TEvent> eventHandler) where TEvent : notnull
     {
-        SubscribeLocalEvent<T, XATRelayedEvent<TEvent>>((uid, component, args) =>
+        SubscribeLocalEvent<T, XenoArchNodeRelayedEvent<TEvent>>((uid, component, args) =>
         {
             var nodeComp = Comp<XenoArtifactNodeComponent>(uid);
 

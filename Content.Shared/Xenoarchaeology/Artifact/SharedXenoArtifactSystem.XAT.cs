@@ -1,17 +1,25 @@
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Movement.Pulling.Events;
+using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
+using Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
 
 namespace Content.Shared.Xenoarchaeology.Artifact;
 
 public abstract partial class SharedXenoArtifactSystem
 {
+    // todo this is kinda a misnomer since it handles generic relays.
     private void InitializeXAT()
     {
         XATRelayLocalEvent<DamageChangedEvent>();
         XATRelayLocalEvent<ExaminedEvent>();
         XATRelayLocalEvent<InteractUsingEvent>();
+        XATRelayLocalEvent<PullStartedMessage>();
+        XATRelayLocalEvent<AttackedEvent>();
+        XATRelayLocalEvent<XATToolUseDoAfterEvent>();
+        XATRelayLocalEvent<InteractHandEvent>();
     }
 
     protected void XATRelayLocalEvent<T>() where T : notnull
@@ -21,7 +29,7 @@ public abstract partial class SharedXenoArtifactSystem
 
     protected void RelayEventToNodes<T>(Entity<XenoArtifactComponent> ent, ref T args) where T : notnull
     {
-        var ev = new XATRelayedEvent<T>(ent, args);
+        var ev = new XenoArchNodeRelayedEvent<T>(ent, args);
 
         var nodes = GetAllNodes(ent);
         foreach (var node in nodes)
@@ -57,13 +65,13 @@ public abstract partial class SharedXenoArtifactSystem
 /// Event wrapper for XenoArch Trigger events.
 /// </summary>
 [ByRefEvent]
-public sealed class XATRelayedEvent<TEvent> : EntityEventArgs
+public sealed class XenoArchNodeRelayedEvent<TEvent> : EntityEventArgs
 {
     public Entity<XenoArtifactComponent> Artifact;
 
     public TEvent Args;
 
-    public XATRelayedEvent(Entity<XenoArtifactComponent> artifact, TEvent args)
+    public XenoArchNodeRelayedEvent(Entity<XenoArtifactComponent> artifact, TEvent args)
     {
         Artifact = artifact;
         Args = args;

@@ -2,12 +2,14 @@ using Content.Shared.Damage;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 
 public sealed class XATDamageSystem : BaseXATSystem<XATDamageComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -22,7 +24,8 @@ public sealed class XATDamageSystem : BaseXATSystem<XATDamageComponent>
         if (!args.DamageIncreased || args.DamageDelta == null)
             return;
 
-        node.Comp1.AccumulatedDamage += args.DamageDelta;
+        if (_timing.IsFirstTimePredicted)
+            node.Comp1.AccumulatedDamage += args.DamageDelta;
 
         foreach (var (type, needed) in node.Comp1.TypesNeeded)
         {

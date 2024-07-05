@@ -1,8 +1,9 @@
 using Content.Shared.Random;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
-namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
+namespace Content.Shared.Xenoarchaeology.Artifact.Prototypes;
 
 [Prototype]
 public sealed partial class XenoArchTriggerPrototype : IPrototype
@@ -13,6 +14,9 @@ public sealed partial class XenoArchTriggerPrototype : IPrototype
 
     [DataField]
     public LocId Tip;
+
+    [DataField]
+    public EntityWhitelist? Whitelist;
 
     [DataField]
     public ComponentRegistry Components = new();

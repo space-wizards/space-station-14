@@ -16,6 +16,11 @@
     TriggerPressureHigh: 0.5
     TriggerPressureLow: 0.5
     TriggerExamine: 1
+    TriggerBruteDamage: 1
+    TriggerInteraction: 1
+    TriggerWrenching: 0.33
+    TriggerPrying: 0.33
+    TriggerScrewing: 0.33
 
 - type: xenoArchTrigger
   id: TriggerMusic
@@ -31,10 +36,13 @@
   - type: XATTemperature
     targetTemperature: 373
     triggerOnHigherTemp: true
-  # TODO: add interaction for welders, etc.
   - type: XATDamage
     typesNeeded:
       Heat: 50
+  - type: XATToolUse
+    neededTool: Welding
+    delay: 5
+    fuel: 10
 
 - type: xenoArchTrigger
   id: TriggerCold
@@ -115,7 +123,6 @@
     typesNeeded:
       Radiation: 100
   # TODO: legendary microwave trigger
-  # TODO: add rad receiver to artifact
 
 - type: xenoArchTrigger
   id: TriggerPressureHigh
@@ -136,3 +143,44 @@
   tip: xenoarch-trigger-tip-examine
   components:
   - type: XATExamine
+
+- type: xenoArchTrigger
+  id: TriggerBruteDamage
+  tip: xenoarch-trigger-tip-brute-damage
+  components:
+  - type: XATDamage
+    groupsNeeded:
+      Brute: 150
+
+- type: xenoArchTrigger
+  id: TriggerInteraction
+  tip: xenoarch-trigger-tip-interaction
+  components:
+  - type: XATInteraction
+
+- type: xenoArchTrigger
+  id: TriggerWrenching
+  tip: xenoarch-trigger-tip-wrenching
+  components:
+  - type: XATToolUse
+    neededTool: Anchoring
+  - type: XATExaminableText
+    examineText: xenoarch-trigger-examine-wrenching
+
+- type: xenoArchTrigger
+  id: TriggerPrying
+  tip: xenoarch-trigger-tip-prying
+  components:
+  - type: XATToolUse
+    neededTool: Prying
+  - type: XATExaminableText
+    examineText: xenoarch-trigger-examine-prying
+
+- type: xenoArchTrigger
+  id: TriggerScrewing
+  tip: xenoarch-trigger-tip-screwing
+  components:
+  - type: XATToolUse
+    neededTool: Screwing
+  - type: XATExaminableText
+    examineText: xenoarch-trigger-examine-screwing

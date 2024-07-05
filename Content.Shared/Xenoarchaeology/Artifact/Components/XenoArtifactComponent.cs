@@ -1,5 +1,6 @@
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Random;
+using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
 using Content.Shared.Xenoarchaeology.Artifact.XAT;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -77,7 +78,7 @@ public sealed partial class XenoArtifactComponent : Component
     /// The total number of nodes that make up this artifact.
     /// </summary>
     [DataField]
-    public MinMax NodeCount = new(10, 12);// TODO: add back in. 24);
+    public MinMax NodeCount = new(10, 16);
 
     /// <summary>
     /// The amount of nodes that go in each segment.
