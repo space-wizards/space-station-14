@@ -25,7 +25,7 @@
   description: "Recently legalized in most galaxies."
   components:
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/greenMarijuana.rsi
+    sprite: Objects/Specific/Hydroponics/cannabis.rsi
   - type: Produce
     seedId: greenMarijuana
   - type: Food
@@ -83,7 +83,7 @@
       - Smokable
   - type: Item
     size: Tiny
-    
+
 - type: entity
   name: rainbow cannabis leaves
   parent: LeavesCannabis
