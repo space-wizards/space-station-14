@@ -235,6 +235,8 @@ public abstract partial class SharedGunSystem
 
     private void OnBallisticTakeAmmo(EntityUid uid, BallisticAmmoProviderComponent component, TakeAmmoEvent args)
     {
+        TryComp<GunComponent>(uid, out var gun);
+
         for (var i = 0; i < args.Shots; i++)
         {
             EntityUid entity;
@@ -244,6 +246,11 @@ public abstract partial class SharedGunSystem
                 entity = component.Entities[^1];
 
                 args.Ammo.Add((entity, EnsureShootable(entity)));
+
+                // if entity in container it can't be ejected, so shell will remain in gun and block next shoot
+                if (gun != null && gun.SelectedMode == SelectiveFire.PumpAction)
+                    break;
+
                 component.Entities.RemoveAt(component.Entities.Count - 1);
                 Containers.Remove(entity, component.Container);
             }
@@ -252,6 +259,12 @@ public abstract partial class SharedGunSystem
                 component.UnspawnedCount--;
                 entity = Spawn(component.Proto, args.Coordinates);
                 args.Ammo.Add((entity, EnsureShootable(entity)));
+
+                if (gun != null && gun.SelectedMode == SelectiveFire.PumpAction)
+                {
+                    component.Entities.Add(entity);
+                    Containers.Insert(entity, component.Container);
+                }
             }
         }
 

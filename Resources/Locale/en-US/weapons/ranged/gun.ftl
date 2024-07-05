@@ -11,6 +11,7 @@ gun-set-fire-mode = Set to {$mode}
 gun-SemiAuto = semi-auto
 gun-Burst = burst
 gun-FullAuto = full-auto
+gun-PumpAction = pump action
 
 # BallisticAmmoProvider
 gun-ballistic-cycle = Cycle
