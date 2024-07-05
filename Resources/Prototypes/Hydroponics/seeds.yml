@@ -832,7 +832,7 @@
   idealLight: 9
   idealHeat: 298
   chemicals:
-    SpaceDrugs:
+    SpaceMirage:
       Min: 1
       Max: 15
       PotencyDivisor: 10
@@ -1174,7 +1174,7 @@
       Min: 1
       Max: 3
       PotencyDivisor: 35
-    SpaceDrugs:
+    SpaceMirage:
       Min: 1
       Max: 5
       PotencyDivisor: 20

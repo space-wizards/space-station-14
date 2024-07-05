@@ -268,7 +268,7 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
   - type: StorageFill
     contents:
-    - id: CigaretteSpaceDrugs
+    - id: CigaretteSpaceMirage
       amount: 2
     - id: CigaretteWeldingFuel
       amount: 2
