@@ -5,6 +5,7 @@
     "version": "0.2.0",
     "configurations": [
 
+
         {
             "name": "Client",
             "type": "coreclr",
@@ -79,6 +80,13 @@
                 "Client (Tools Config)"
             ],
             "preLaunchTask": "build"
+        },
+        {
+            "name": "Server/Client (No Build)",
+            "configurations": [
+                "Server",
+                "Client"
+            ],
         }
     ]
 }
