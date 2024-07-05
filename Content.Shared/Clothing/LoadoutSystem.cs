@@ -126,9 +126,10 @@ public sealed class LoadoutSystem : EntitySystem
         if (component.RoleLoadout == null)
             return;
 
-        // Equip role loadout(s). By default, only a single random loadout will be applied.
+        // Equip role loadout(s). The component's AddAllRoleLoadouts datafield determines
+        // if all loadouts should be applied, or only a single random one.
         var idList = new List<ProtoId<RoleLoadoutPrototype>>();
-        if (!component.AddAllRoleLoadout)
+        if (!component.AddAllRoleLoadouts)
             idList.Add(_random.Pick(component.RoleLoadout));
         else
             idList = component.RoleLoadout;

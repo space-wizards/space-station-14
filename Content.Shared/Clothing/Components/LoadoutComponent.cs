@@ -31,5 +31,5 @@ public sealed partial class LoadoutComponent : Component
     /// </summary>
     [DataField]
     [AutoNetworkedField]
-    public bool AddAllRoleLoadout;
+    public bool AddAllRoleLoadouts = true;
 }
