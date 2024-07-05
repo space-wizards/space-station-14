@@ -104,13 +104,17 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 if (pressureDelta <= 0)
                     return;
 
-                float transferMoles = 0;
+                // how many moles to transfer to change external pressure by pressureDelta
+                // (ignoring temperature differences because I am lazy)
+                var transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R);
 
                 // Don't transfer air if pressure is actively dropping
-                if (pressurizationLockout(vent, environment, args.dt) | vent.PressureLockoutOverride)
-                    // how many moles to transfer to change external pressure by pressureDelta
-                    // (ignoring temperature differences because I am lazy)
-                    transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R);
+                var pressurizing = pressurizationLockout(vent, environment, args.dt);
+                if (!pressurizing)
+                    transferMoles = 0;
+
+                if (overheating(pressurizing, vent, environment, args.dt))
+                    transferMoles = 0;
 
                 // Only run if the device is under lockout and not being overriden
                 if (vent.UnderPressureLockout & !vent.PressureLockoutOverride)
@@ -168,6 +172,30 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
         }
 
+        private bool overheating(bool pressurizing, GasVentPumpComponent vent, GasMixture environment, float dt)
+        {
+            if (pressurizing)
+                vent.OverheatCounter += dt;
+            else
+                vent.OverheatCounter = 0;
+
+            if (vent.OverheatCounter > vent.OverheatMaxTime)
+            {
+                vent.OverheatCounter -= vent.OverheatMaxTime + vent.OverheatCooldownMaxTime;
+                vent.OverheatCooldownCounter += vent.OverheatCooldownMaxTime;
+            }
+
+            if (vent.OverheatCooldownCounter > 0f && vent.OverheatTimerEnabled)
+            {
+                vent.OverheatCooldownCounter -= dt;
+                vent.LastPressure = environment.Pressure;
+                vent.PressureDelta = 0f;
+                return true;
+            }
+
+            return false;
+        }
+
         /// <summary>
         ///     Keeps track of the average rate of change in pressure, and returns `false` if
         ///     the rate is less than <see cref=GasVentPumpComponent.PressurizationLockout>.
@@ -186,13 +214,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return false;
             }
 
-            if (vent.OverheatCooldownCounter > 0f && vent.OverheatTimerEnabled)
-            {
-                vent.OverheatCooldownCounter -= dt;
-                vent.LastPressure = environment.Pressure;
-                vent.PressureDelta = 0f;
-                return false;
-            }
 
             var difference = environment.Pressure - vent.LastPressure;
             vent.LastPressure = environment.Pressure;
@@ -213,15 +234,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             if (vent.PressureDelta < vent.PressurizationLockout * dt)
             {
-                vent.OverheatCounter = 0;
                 return false;
-            }
-
-            vent.OverheatCounter += dt;
-            if (vent.OverheatCounter > vent.OverheatMaxTime)
-            {
-                vent.OverheatCounter -= vent.OverheatMaxTime;
-                vent.OverheatCooldownCounter += vent.OverheatCooldownMaxTime;
             }
             return true;
         }
