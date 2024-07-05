@@ -512,7 +512,8 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("assigned_user_id", (string)null);
                 });
 
-            modelBuilder.Entity("Content.Server.Database.Blacklist", b =>
+            modelBuilder.Entity("Content.Server.Database.Blacklist",
+                b =>
                 {
                     b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
@@ -522,7 +523,8 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.HasKey("UserId")
                         .HasName("PK_blacklist");
 
-                    b.ToTable("blacklist", (string)null);
+                    b.ToTable("blacklist", (string) null);
+                });
 
             modelBuilder.Entity("Content.Server.Database.BanTemplate", b =>
                 {
