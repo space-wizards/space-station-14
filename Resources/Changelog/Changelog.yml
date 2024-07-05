@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Krunk
-  changes:
-  - message: Head of Security and Warden now have armored and unarmored variants of
-      their winter coats and the unarmored variants are available in the uniform printer.
-    type: Tweak
-  - message: Head of Security's and Warden's winter coats now provide resistances
-      equal to their non-winter counterparts.
-    type: Tweak
-  id: 6373
-  time: '2024-04-18T00:08:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24865
 - author: icekot8
   changes:
   - message: "\u0421argo request console now reports when a request is approved"
@@ -3821,3 +3810,11 @@
   id: 6872
   time: '2024-07-04T08:02:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29457
+- author: Jezithyr
+  changes:
+  - message: All species except for Vox can now be played as Nukies. (Vox will be
+      enabled when load out code supports them)
+    type: Tweak
+  id: 6873
+  time: '2024-07-05T07:59:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29707
