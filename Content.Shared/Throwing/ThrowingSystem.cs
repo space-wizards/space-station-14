@@ -201,9 +201,6 @@ public sealed class ThrowingSystem : EntitySystem
         // else let the item land on the cursor and from where it slides a little further
         var throwSpeed = compensateFriction ? direction.Length() / (flyTime + 1 / tileFriction) : baseThrowSpeed;
         var impulseVector = direction.Normalized() * throwSpeed * physics.Mass;
-        Log.Debug($"flyTime {flyTime}");
-        Log.Debug($"throwSpeed {throwSpeed}");
-        Log.Debug($"impulseVector {impulseVector.Length()}");
         _physics.ApplyLinearImpulse(uid, impulseVector, body: physics);
 
         if (comp.LandTime == null || comp.LandTime <= TimeSpan.Zero)
