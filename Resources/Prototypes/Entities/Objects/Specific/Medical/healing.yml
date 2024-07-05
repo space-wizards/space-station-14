@@ -977,5 +977,5 @@
       injector:
         maxVol: 15
         reagents:
-        - ReagentId: Stimulants
+        - ReagentId: Hyperzine
           Quantity: 15
