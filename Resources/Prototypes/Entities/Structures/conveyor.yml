@@ -24,10 +24,10 @@
       conveyor:
         shape: !type:PolygonShape
           vertices:
-          - -0.55,-0.55
-          - 0.55,-0.55
-          - 0.55,0.55
-          - -0.55,0.55
+          - -0.49,-0.49
+          - 0.49,-0.49
+          - 0.49,0.49
+          - -0.49,0.49
         layer:
         - Impassable
         - MidImpassable
