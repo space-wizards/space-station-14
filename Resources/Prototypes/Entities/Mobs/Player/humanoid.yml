@@ -682,6 +682,7 @@
   components:
     - type: Loadout
       prototypes: [ BananaClown ]
+      roleLoadout: [ RoleSurvivalStandard ]
 
 # Traveling exotic chef
 
