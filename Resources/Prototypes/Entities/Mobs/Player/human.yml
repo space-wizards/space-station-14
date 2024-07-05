@@ -17,7 +17,6 @@
     - type: Loadout
       prototypes: [SyndicateOperativeGearExtremelyBasic]
       roleLoadout: [ RoleSurvivalSyndicate ]
-
     - type: RandomMetadata
       nameSegments: [names_death_commando]
     - type: NpcFactionMember
@@ -40,7 +39,7 @@
   id: MobHumanSyndicateAgentNukeops # Reinforcement exclusive to nukeops uplink
   suffix: Human, NukeOps
   components:
-    - type: NukeOperative
+  - type: NukeOperative
 
 # Nuclear Operative
 - type: entity
