@@ -121,13 +121,13 @@ public sealed class LoadoutSystem : EntitySystem
         {
             var gear = _protoMan.Index(_random.Pick(component.StartingGear));
             _station.EquipStartingGear(uid, gear);
-            return;
         }
 
         if (component.RoleLoadout == null)
             return;
 
-        // ...otherwise equip from role loadout
+        // Equip role loadout, if specified
+        // TODO: figure out if it would cause any issues if all of these were applied, not just a random one
         var id = _random.Pick(component.RoleLoadout);
         var proto = _protoMan.Index(id);
         var loadout = new RoleLoadout(id);

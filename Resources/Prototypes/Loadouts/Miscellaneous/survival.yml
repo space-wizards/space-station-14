@@ -190,18 +190,43 @@
 
 # Pre-equipped species gear
 
-# Full Tank Equipped
+# Full Roundstart Tank, special on-station cases only
 - type: loadout
-  id: LoadoutSpeciesEVANitrogen
-  equipment: GearEVANitrogen
+  id: LoadoutSpeciesVoxNitrogen
+  equipment: GearVoxNitrogen
   effects:
   - !type:GroupLoadoutEffect
     proto: EffectSpeciesVox
 
 - type: startingGear
+  id: GearVoxNitrogen
+  equipment:
+    suitstorage: NitrogenTankFilled
+
+# Full EVA Tank, Any Species
+- type: loadout
+  id: LoadoutSpeciesEVANitrogen
+  equipment: GearEVANitrogen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+
+- type: startingGear
   id: GearEVANitrogen
   equipment:
     suitstorage: NitrogenTankFilled
+
+- type: loadout
+  id: LoadoutSpeciesEVAOxygen
+  equipment: GearEVAOxygen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+
+- type: startingGear
+  id: GearEVAOxygen
+  equipment:
+    suitstorage: OxygenTankFilled
 
 # Tank Harness
 - type: loadout
@@ -216,7 +241,7 @@
   equipment:
     outerClothing: ClothingOuterVestTank
 
-# Breaths Tool On Face
+# Breath Tool On Face
 - type: loadout
   id: LoadoutSpeciesBreathTool
   equipment: GearSpeciesBreathTool
