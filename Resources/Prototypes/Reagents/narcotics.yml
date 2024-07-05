@@ -93,7 +93,7 @@
           min: 30
 
 - type: reagent
-  id: Stimulants
+  id: Hyperzine
   name: reagent-name-stimulants
   group: Narcotics
   desc: reagent-desc-stimulants
