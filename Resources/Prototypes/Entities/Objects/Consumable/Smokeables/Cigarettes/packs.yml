@@ -250,7 +250,7 @@
       prob: 0.70
     - id: CigaretteTricordrazine
       prob: 0.25
-    - id: CigaretteSpaceDrugs
+    - id: CigaretteSpaceMirage
       prob: 0.50
     - id: CigaretteLicoxide
       prob: 0.10
