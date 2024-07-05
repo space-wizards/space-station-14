@@ -617,6 +617,8 @@
         settings: short
     - type: Loadout
       prototypes: [ LostCargoTechGearSuit, LostCargoTechGearCoat ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
 
 # Clown troupe
 
@@ -668,6 +670,7 @@
         settings: short
     - type: Loadout
       prototypes: [ ClownTroupe ]
+      roleLoadout: [ RoleSurvivalStandard ]
     - type: RandomMetadata
       nameSegments:
       - names_clown
@@ -718,6 +721,7 @@
         settings: short
     - type: Loadout
       prototypes: [ TravelingChef ]
+      roleLoadout: [ RoleSurvivalStandard ]
 
 # Disaster victim
 
@@ -783,6 +787,7 @@
   components:
     - type: Loadout
       prototypes: [ DisasterVictimRD, DisasterVictimRDAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
 
 - type: randomHumanoidSettings
   id: DisasterVictimCMO
@@ -790,6 +795,7 @@
   components:
     - type: Loadout
       prototypes: [ DisasterVictimCMO, DisasterVictimCMOAlt ]
+      roleLoadout: [ RoleSurvivalMedical ]
 
 - type: randomHumanoidSettings
   id: DisasterVictimCaptain
@@ -797,6 +803,7 @@
   components:
     - type: Loadout
       prototypes: [ DisasterVictimCaptain, DisasterVictimCaptainAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
 
 # Syndie Disaster Victim
 
@@ -839,3 +846,4 @@
         settings: short
     - type: Loadout
       prototypes: [ SyndicateOperativeGearCivilian ]
+      roleLoadout: [ RoleSurvivalStandard ]
