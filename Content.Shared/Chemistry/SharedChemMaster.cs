@@ -11,6 +11,8 @@ namespace Content.Shared.Chemistry
     {
         public const uint PillTypes = 20;
         public const string BufferSolutionName = "buffer";
+
+        public const string OutputBufferSolutionName = "outputBuffer";
         public const string InputSlotName = "beakerSlot";
         public const string OutputSlotName = "outputSlot";
         public const string PillSolutionName = "food";
@@ -83,9 +85,21 @@ namespace Content.Shared.Chemistry
         }
     }
 
+    [Serializable, NetSerializable]
+    public sealed class ChemMasterDiscardBufferMessage : BoundUserInterfaceMessage
+    {
+        public readonly string BufferName;
+
+        public ChemMasterDiscardBufferMessage(string bufferName)
+        {
+            BufferName = bufferName;
+        }
+    }
+
     public enum ChemMasterMode
     {
-        Transfer,
+        Storage,
+        Output,
         Discard,
     }
 
@@ -156,11 +170,15 @@ namespace Content.Shared.Chemistry
         /// <summary>
         /// A list of the reagents and their amounts within the buffer, if applicable.
         /// </summary>
-        public readonly IReadOnlyList<ReagentQuantity> BufferReagents;
+        public readonly IReadOnlyList<ReagentQuantity> BufferStorageReagents;
+
+        public readonly IReadOnlyList<ReagentQuantity> BufferOutputReagents;
 
         public readonly ChemMasterMode Mode;
 
-        public readonly FixedPoint2? BufferCurrentVolume;
+        public readonly FixedPoint2? BufferStorageVolume;
+
+        public readonly FixedPoint2? BufferOutputVolume;
         public readonly uint SelectedPillType;
 
         public readonly uint PillDosageLimit;
@@ -169,14 +187,17 @@ namespace Content.Shared.Chemistry
 
         public ChemMasterBoundUserInterfaceState(
             ChemMasterMode mode, ContainerInfo? inputContainerInfo, ContainerInfo? outputContainerInfo,
-            IReadOnlyList<ReagentQuantity> bufferReagents, FixedPoint2 bufferCurrentVolume,
+            IReadOnlyList<ReagentQuantity> bufferStorageReagents, IReadOnlyList<ReagentQuantity> bufferOutputReagents,
+            FixedPoint2 bufferStorageVolume, FixedPoint2 bufferOutputVolume,
             uint selectedPillType, uint pillDosageLimit, bool updateLabel)
         {
             InputContainerInfo = inputContainerInfo;
             OutputContainerInfo = outputContainerInfo;
-            BufferReagents = bufferReagents;
+            BufferStorageReagents = bufferStorageReagents;
+            BufferOutputReagents = bufferOutputReagents;
             Mode = mode;
-            BufferCurrentVolume = bufferCurrentVolume;
+            BufferStorageVolume = bufferStorageVolume;
+            BufferOutputVolume = bufferOutputVolume;
             SelectedPillType = selectedPillType;
             PillDosageLimit = pillDosageLimit;
             UpdateLabel = updateLabel;

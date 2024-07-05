@@ -86,6 +86,7 @@
   - type: SolutionContainerManager
     solutions:
       buffer: {}
+      outputBuffer: {}
   - type: DumpableSolution
     solution: buffer
     unlimited: true

@@ -33,7 +33,8 @@
             <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc 'chem-master-window-buffer-text'}" />
                 <Control HorizontalExpand="True" />
-                <Button MinSize="80 0" Name="BufferTransferButton" Access="Public" Text="{Loc 'chem-master-window-transfer-button'}" ToggleMode="True" StyleClasses="OpenRight" />
+                <Button MinSize="80 0" Name="BufferStorageButton" Access="Public" Text="{Loc 'chem-master-window-storage-button'}" ToggleMode="True" StyleClasses="OpenRight" />
+                <Button MinSize="80 0" Name="BufferOutputButton" Access="Public" Text="{Loc 'chem-master-window-output-button'}" ToggleMode="True" StyleClasses="ButtonSquare" />
                 <Button MinSize="80 0" Name="BufferDiscardButton" Access="Public" Text="{Loc 'chem-master-window-discard-button'}" ToggleMode="True" StyleClasses="OpenLeft" />
             </BoxContainer>
 
@@ -81,7 +82,9 @@
                 <Label Text="{Loc 'chem-master-window-packaging-text'}" />
                 <Control HorizontalExpand="True"/>
                 <Label Text="{Loc 'chem-master-window-buffer-label'}" />
-                <Label Name="BufferCurrentVolume" StyleClasses="LabelSecondaryColor" />
+                <Label Name="BufferOutputVolume" StyleClasses="LabelSecondaryColor" />
+                <Control HorizontalExpand="True"/>
+                <Button MinSize="80 0" Name="OutputBufferDiscardButton" Access="Public" Text="{Loc 'chem-master-window-discard-button'}" ToggleMode="True" StyleClasses="OpenRight" />
             </BoxContainer>
 
             <!-- Wrap the packaging info-->

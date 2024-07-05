@@ -109,7 +109,7 @@ namespace Content.Client.Chemistry.UI
 
             var output = castState.OutputContainerInfo;
 
-            BufferCurrentVolume.Text = $" {castState.BufferCurrentVolume?.Int() ?? 0}u";
+            BufferOutputVolume.Text = $" {castState.BufferOutputVolume?.Int() ?? 0}u";
 
             InputEjectButton.Disabled = castState.InputContainerInfo is null;
             OutputEjectButton.Disabled = output is null;
@@ -138,10 +138,10 @@ namespace Content.Client.Chemistry.UI
         /// <param name="state">State data sent by the server.</param>
         private string GenerateLabel(ChemMasterBoundUserInterfaceState state)
         {
-            if (state.BufferCurrentVolume == 0)
+            if (state.BufferOutputVolume == 0)
                 return "";
 
-            var reagent = state.BufferReagents.OrderBy(r => r.Quantity).First().Reagent;
+            var reagent = state.BufferOutputReagents.OrderBy(r => r.Quantity).First().Reagent;
             _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
             return proto?.LocalizedName ?? "";
         }
@@ -152,7 +152,8 @@ namespace Content.Client.Chemistry.UI
         /// <param name="state">State data for the dispenser.</param>
         private void UpdatePanelInfo(ChemMasterBoundUserInterfaceState state)
         {
-            BufferTransferButton.Pressed = state.Mode == ChemMasterMode.Transfer;
+            BufferStorageButton.Pressed = state.Mode == ChemMasterMode.Storage;
+            BufferOutputButton.Pressed = state.Mode == ChemMasterMode.Output;
             BufferDiscardButton.Pressed = state.Mode == ChemMasterMode.Discard;
 
             BuildContainerUI(InputContainerInfo, state.InputContainerInfo, true);
@@ -160,7 +161,7 @@ namespace Content.Client.Chemistry.UI
 
             BufferInfo.Children.Clear();
 
-            if (!state.BufferReagents.Any())
+            if (!state.BufferStorageReagents.Any())
             {
                 BufferInfo.Children.Add(new Label { Text = Loc.GetString("chem-master-window-buffer-empty-text") });
 
@@ -177,12 +178,12 @@ namespace Content.Client.Chemistry.UI
             bufferHBox.AddChild(bufferLabel);
             var bufferVol = new Label
             {
-                Text = $"{state.BufferCurrentVolume}u",
+                Text = $"{state.BufferOutputVolume}u",
                 StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
             };
             bufferHBox.AddChild(bufferVol);
 
-            foreach (var (reagent, quantity) in state.BufferReagents)
+            foreach (var (reagent, quantity) in state.BufferStorageReagents)
             {
                 // Try to get the prototype for the given reagent. This gives us its name.
                 _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
