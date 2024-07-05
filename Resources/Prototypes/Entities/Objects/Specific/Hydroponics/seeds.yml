@@ -304,7 +304,7 @@
     - type: Seed
       seedId: greenMarijuana
     - type: Sprite
-      sprite: Objects/Specific/Hydroponics/greenMarijuana.rsi
+      sprite: Objects/Specific/Hydroponics/cannabis.rsi
 
 - type: entity
   parent: SeedBase
