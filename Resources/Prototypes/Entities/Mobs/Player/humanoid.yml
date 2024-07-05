@@ -507,6 +507,7 @@
         settings: default
     - type: Loadout
       prototypes: [ CentcomGear ]
+      roleLoadout: [ RoleSurvivalStandard ]
 
 ## Syndicate
 
