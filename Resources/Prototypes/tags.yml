@@ -545,7 +545,7 @@
 - type: Tag
   id: DrinkSpaceGlue
 
-- type: Tag 
+- type: Tag
   id: Dropper
 
 - type: Tag
@@ -703,6 +703,9 @@
 
 - type: Tag
   id: HelmetEVA
+
+- type: Tag
+  id: HempSack
 
 - type: Tag
   id: HideContextMenu
