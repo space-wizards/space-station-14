@@ -214,6 +214,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return false;
             }
 
+            /// Don't start repressurizing instantly after exiting UPLO.
+            /// <see cref=GasVentPumpComponent.underPressureLockoutCooldown>
+            if (vent.LastPressure < vent.UnderPressureLockoutThreshold)
+                vent.OverheatCooldownCounter = vent.underPressureLockoutCooldown;
 
             var difference = environment.Pressure - vent.LastPressure;
             vent.LastPressure = environment.Pressure;

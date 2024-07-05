@@ -130,8 +130,23 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float OverheatCooldownMaxTime { get; set; } = 1f;
+
+        /// <summary>
+        ///     Setting this property tells the vent to stop pumping air for X seconds.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float OverheatCooldownCounter { get; set; } = 0f;
+
+        /// <summary>
+        ///     The vent will stay locked up for X seconds after exiting <see cref=UnderPressureLockout>
+        ///     <seealso cref=UnderPressureLockoutThreshold>
+        /// </summary>
+        /// <remarks>
+        ///     This is supposed to stop the vent from trying to repressurize a spaced room just because someone opened
+        ///     a door and increased the room pressure above UPLO threshold for a tick.
+        /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float underPressureLockoutCooldown { get; set; } = 5f;
 
         #endregion
 
