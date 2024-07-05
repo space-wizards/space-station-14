@@ -10,7 +10,7 @@ namespace Content.Shared.Chemistry
     public sealed class SharedChemMaster
     {
         public const uint PillTypes = 20;
-        public const string BufferSolutionName = "buffer";
+        public const string StorageBufferSolutionName = "storageBuffer";
 
         public const string OutputBufferSolutionName = "outputBuffer";
         public const string InputSlotName = "beakerSlot";
@@ -48,12 +48,14 @@ namespace Content.Shared.Chemistry
         public readonly ReagentId ReagentId;
         public readonly ChemMasterReagentAmount Amount;
         public readonly bool FromBuffer;
+        public readonly string Origin;
 
-        public ChemMasterReagentAmountButtonMessage(ReagentId reagentId, ChemMasterReagentAmount amount, bool fromBuffer)
+        public ChemMasterReagentAmountButtonMessage(ReagentId reagentId, ChemMasterReagentAmount amount, bool fromBuffer, string origin)
         {
             ReagentId = reagentId;
             Amount = amount;
             FromBuffer = fromBuffer;
+            Origin = origin;
         }
     }
 

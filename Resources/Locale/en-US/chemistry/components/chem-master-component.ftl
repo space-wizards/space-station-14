@@ -14,6 +14,7 @@ chem-master-window-container-label = Container
 chem-master-window-eject-button = Eject
 chem-master-window-no-container-loaded-text = No container loaded.
 chem-master-window-buffer-text = Storage Buffer
+chem-master-window-output-buffer-text = Output Buffer
 chem-master-window-buffer-label = buffer:
 chem-master-window-buffer-all-amount = All
 chem-master-window-buffer-empty-text = Buffer empty.
