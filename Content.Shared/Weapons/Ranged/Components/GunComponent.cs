@@ -242,4 +242,5 @@ public enum SelectiveFire : byte
     SemiAuto = 1 << 0,
     Burst = 1 << 1,
     FullAuto = 1 << 2, // Not in the building!
+    PumpAction = 1 << 3,
 }

@@ -288,6 +288,9 @@ public abstract partial class SharedGunSystem : EntitySystem
                 break;
             case SelectiveFire.FullAuto:
                 break;
+            case SelectiveFire.PumpAction:
+                shots = Math.Min(shots, 1);
+                break;
             default:
                 throw new ArgumentOutOfRangeException($"No implemented shooting behavior for {gun.SelectedMode}!");
         }
