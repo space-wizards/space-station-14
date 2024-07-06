@@ -475,10 +475,35 @@
   components:
   - type: Sprite
     state: butter
+  - type: Slippery
+    paralyzeTime: 1.5
+    launchForwardsMultiplier: 1.2
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.2,0.3,0.2"
+        layer:
+        - SlipLayer
+        hard: false
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.2,0.3,0.2"
+        density: 10
+        mask:
+        - ItemMask
 
 - type: entity
   name: stick of cannabis butter
-  parent: FoodBakingBase
+  parent: FoodButter
   id: FoodCannabisButter
   description: Add this to your favorite baked goods for an irie time.
   components:
