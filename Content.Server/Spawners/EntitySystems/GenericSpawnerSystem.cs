@@ -74,11 +74,13 @@ public sealed class GenericSpawnerSystem : EntitySystem
         if (component.Chance != 1.0f && !_robustRandom.Prob(component.Chance))
             return;
 
-        if (!_proto.TryIndex(component.EntityTable, out var entTable))
+        if (!_proto.HasIndex(component.EntityTable))
         {
             Log.Warning($"Referenced entity table prototype does not exist! Entity: {ToPrettyString(uid)}");
             return;
         }
+
+        var entTable = _proto.Index(component.EntityTable);
 
         if (entTable.Weights.Count == 0)
         {
