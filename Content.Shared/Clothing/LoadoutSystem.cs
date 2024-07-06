@@ -124,7 +124,10 @@ public sealed class LoadoutSystem : EntitySystem
         }
 
         if (component.RoleLoadout == null)
+        {
+            GearEquipped(uid);
             return;
+        }
 
         // Equip role loadout(s). The component's AddAllRoleLoadouts datafield determines
         // if all loadouts should be applied, or only a single random one.
@@ -142,6 +145,11 @@ public sealed class LoadoutSystem : EntitySystem
             _station.EquipRoleLoadout(uid, loadout, proto);
         }
 
+        GearEquipped(uid);
+    }
+
+    public void GearEquipped(EntityUid uid)
+    {
         var ev = new StartingGearEquippedEvent(uid);
         RaiseLocalEvent(uid, ref ev);
     }
