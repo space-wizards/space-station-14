@@ -64,11 +64,11 @@ public sealed partial class ConnectionManager
                     matched = true;
                     denyMessage = Loc.GetString("whitelist-always-deny");
                     break;
-                case ConditionManualWhitelist:
+                case ConditionManualWhitelistMembership:
                     matched = await CheckConditionManualWhitelist(data);
                     denyMessage = Loc.GetString("whitelist-manual");
                     break;
-                case ConditionManualBlacklist:
+                case ConditionManualBlacklistMembership:
                     matched = await CheckConditionManualBlacklist(data);
                     denyMessage = Loc.GetString("whitelist-blacklisted");
                     break;

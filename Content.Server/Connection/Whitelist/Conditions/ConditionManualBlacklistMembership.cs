@@ -5,8 +5,8 @@ using Robust.Shared.Network;
 namespace Content.Server.Connection.Whitelist.Conditions;
 
 /// <summary>
-/// Condition that matches if the player is in the manual whitelist.
+/// Condition that matches if the player is in the manual blacklist.
 /// </summary>
-public sealed partial class ConditionManualWhitelist : WhitelistCondition
+public sealed partial class ConditionManualBlacklistMembership : WhitelistCondition
 {
 }

@@ -3,7 +3,7 @@
 - type: PlayerConnectionWhitelist
   id: salamanderMrpWhitelist
   conditions:
-  - !type:ConditionManualBlacklist # Deny blacklisted (MRP ban)
+  - !type:ConditionManualBlacklistMembership # Deny blacklisted (MRP ban)
     action: Deny
   - !type:ConditionNotesPlaytimeRange # Deny for high severity notes in the last 30 days
     includeExpired: false
@@ -26,7 +26,7 @@
     range: 14 # 14 Days
     action: Deny
     includeSecret: false
-  - !type:ConditionManualWhitelist # Allow whitelisted players
+  - !type:ConditionManualWhitelistMembership # Allow whitelisted players
     action: Allow
   - !type:ConditionPlayerCount # Allow when <= 15 players are online
     minimumPlayers: 0
