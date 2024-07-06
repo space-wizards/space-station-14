@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: icekot8
-  changes:
-  - message: "\u0421argo request console now reports when a request is approved"
-    type: Add
-  id: 6374
-  time: '2024-04-18T00:32:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27038
 - author: Bellwether
   changes:
   - message: Midround zombie outbreaks are less common and spread more slowly.
@@ -3818,3 +3811,10 @@
   id: 6873
   time: '2024-07-05T07:59:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29707
+- author: metalgearsloth
+  changes:
+  - message: Shuttle map buttons will show up faster.
+    type: Tweak
+  id: 6874
+  time: '2024-07-06T03:51:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29757
