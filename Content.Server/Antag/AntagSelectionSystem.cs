@@ -21,7 +21,6 @@ using Content.Shared.Humanoid;
 using Content.Shared.Players;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Whitelist;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
