@@ -1,7 +1,6 @@
 - type: vendingMachineInventory
   id: WinterDrobeInventory
   startingInventory:
-    ClothingNeckMantle: 4
     ClothingNeckScarfStripedRed: 3
     ClothingNeckScarfStripedGreen: 3
     ClothingNeckScarfStripedBlue: 3
@@ -11,6 +10,7 @@
     ClothingNeckScarfStripedOrange: 3
     ClothingNeckScarfStripedPurple: 3
     ClothingOuterCoatTrench: 6
+    ClothingNeckMantle: 4
     ClothingOuterWinterCoat: 6
     ClothingShoesBootsWinter: 6
     ClothingOuterFlannelRed: 2
