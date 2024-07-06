@@ -1,15 +1,18 @@
 accent-caveman-forbidden-words-0 = a
 accent-caveman-forbidden-words-1 = an
 accent-caveman-forbidden-words-2 = to
-accent-caveman-forbidden-words-3 = in
+accent-caveman-forbidden-words-3 = were
 accent-caveman-forbidden-words-4 = at
 accent-caveman-forbidden-words-5 = am
 accent-caveman-forbidden-words-6 = as
 accent-caveman-forbidden-words-7 = is
-
-accent-caveman-forbidden-suffixes-0 = ing
-accent-caveman-forbidden-suffixes-1 = ed
-accent-caveman-forbidden-suffixes-2 = s
+accent-caveman-forbidden-words-8 = it
+accent-caveman-forbidden-words-9 = do
+accent-caveman-forbidden-words-10 = does
+accent-caveman-forbidden-words-11 = did
+accent-caveman-forbidden-words-12 = just
+accent-caveman-forbidden-words-13 = are
+accent-caveman-forbidden-words-14 = was
 
 accent-caveman-numbers-0 = no
 accent-caveman-numbers-1 = one
@@ -47,17 +50,11 @@ accent-caveman-grunts-18 = meh
 accent-caveman-phonemes-fancy-0 = th
 accent-caveman-phonemes-simple-0 = d
 
-accent-caveman-phonemes-fancy-1 = ph
-accent-caveman-phonemes-simple-1 = f
+accent-caveman-phonemes-fancy-1 = ck
+accent-caveman-phonemes-simple-1= k
 
-accent-caveman-phonemes-fancy-2 = gh
-accent-caveman-phonemes-simple-2 = g
-
-accent-caveman-phonemes-fancy-3 = ck
-accent-caveman-phonemes-simple-3 = k
-
-accent-caveman-replaced-0 = the
-accent-caveman-replacement-0 = da
+accent-caveman-replaced-0 = going
+accent-caveman-replacement-0 = go
 
 accent-caveman-replaced-1 = i
 accent-caveman-replacement-1 = me
@@ -71,47 +68,68 @@ accent-caveman-replacement-3 = she
 accent-caveman-replaced-4 = us
 accent-caveman-replacement-4 = we
 
-accent-caveman-replaced-5 = them
-accent-caveman-replacement-5 = they
+accent-caveman-replaced-5 = shall
+accent-caveman-replacement-5 = can
 
-accent-caveman-replaced-6 = is
-accent-caveman-replacement-6 = be
+accent-caveman-replaced-6= = could
+accent-caveman-replacement-6 = can
 
-accent-caveman-replaced-7 = are
-accent-caveman-replacement-7 = be
+accent-caveman-replaced-7 = might
+accent-caveman-replacement-7 = can
 
-accent-caveman-replaced-8 = was
-accent-caveman-replacement-8 = be
+accent-caveman-replaced-8 = had
+accent-caveman-replacement-8 = have
 
-accent-caveman-replaced-9 = were
-accent-caveman-replacement-9 = be
+accent-caveman-replaced-9 = will
+accent-caveman-replacement-9 = can
 
-accent-caveman-replaced-10 = has
-accent-caveman-replacement-10 = have
+accent-caveman-replaced-10 = would
+accent-caveman-replacement-10 = can
 
-accent-caveman-replaced-11 = had
-accent-caveman-replacement-11 = have
+accent-caveman-replaced-11 = wont
+accent-caveman-replacement-11 = no
 
-accent-caveman-replaced-12 = does
-accent-caveman-replacement-12 = do
+accent-caveman-replaced-12 = not
+accent-caveman-replacement-12 = no
 
-accent-caveman-replaced-13 = did
-accent-caveman-replacement-13 = do
+accent-caveman-replaced-13 = dont
+accent-caveman-replacement-13 = no
 
-accent-caveman-replaced-14 = would
-accent-caveman-replacement-14 = will
+accent-caveman-replaced-14 = didnt
+accent-caveman-replacement-14 = no
 
-accent-caveman-replaced-15 = shall
-accent-caveman-replacement-15 = will
+accent-caveman-replaced-15 = cant
+accent-caveman-replacement-15 = no
 
-accent-caveman-replaced-16 = should
-accent-caveman-replacement-16 = will
+accent-caveman-replaced-16 = the
+accent-caveman-replacement-16 = da
 
-accent-caveman-replaced-17 = could
-accent-caveman-replacement-17 = can
+accent-caveman-replaced-17 = very
+accent-caveman-replacement-17 = big
 
-accent-caveman-replaced-18 = might
-accent-caveman-replacement-18 = may
+accent-caveman-replaced-18 = im
+accent-caveman-replacement-18 = me
 
-accent-caveman-replaced-19 = must
-accent-caveman-replacement-19 = must
+accent-caveman-replaced-19 = youre
+accent-caveman-replacement-19 = you
+
+accent-caveman-replaced-20 = their
+accent-caveman-replacement-20 = dey
+
+accent-caveman-replaced-21 = there
+accent-caveman-replacement-21 = dey
+
+accent-caveman-replaced-22 = speso
+accent-caveman-replacement-22 = shell
+
+accent-caveman-replaced-23 = ship
+accent-caveman-replacement-23 = bird
+
+accent-caveman-replaced-24 = gun
+accent-caveman-replacement-24 = boom
+
+accent-caveman-replaced-25 = laser
+accent-caveman-replacement-25 = zap
+
+accent-caveman-replaced-26 = sword
+accent-caveman-replacement-26 = stab

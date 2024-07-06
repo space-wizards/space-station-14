@@ -44,15 +44,22 @@ public sealed class CavemanAccentSystem : EntitySystem
 
             if (IsForbidden(word)) continue;
 
-            modifiedWord = TryRemoveForbiddenSuffix(modifiedWord);
+            if (modifiedWord.Length > CavemanAccentComponent.MaxWordLength)
+            {
+                modifiedWord = Loc.GetString(_random.Pick(CavemanAccentComponent.Grunts));
+
+                modifiedWord += endPunctuation;
+
+                modifiedWords.Add(modifiedWord);
+
+                continue;
+            }
 
             modifiedWord = TryRemovePunctuation(modifiedWord);
 
-            modifiedWord = TryRemoveFancyPhonemes(modifiedWord);
+            modifiedWord = TryReplaceFancyPhonemes(modifiedWord);
 
             modifiedWord = TryConvertNumbers(modifiedWord);
-
-            if (modifiedWord.Length > CavemanAccentComponent.MaxWordLength) modifiedWord = Loc.GetString(_random.Pick(CavemanAccentComponent.Grunts));
 
             foreach (var c in modifiedWord)
             {
@@ -96,33 +103,19 @@ public sealed class CavemanAccentSystem : EntitySystem
         return false;
     }
 
-    private string TryRemoveForbiddenSuffix(string word)
-    {
-        if (word.Length < CavemanAccentComponent.MinWordLengthToRemoveForbiddenSuffix)
-        {
-            return word;
-        }
-
-        foreach (string localizationID in CavemanAccentComponent.ForbiddenSuffixes)
-        {
-            string suffix = Loc.GetString(localizationID);
-
-            if (word.EndsWith(suffix))
-            {
-                return word.Substring(0, word.Length - suffix.Length);
-            }
-        }
-
-        return word;
-    }
-
     private string TryRemovePunctuation(string word)
     {
         return word.Trim(['.', ',', '!', '?', ';', ':']);
     }
 
-    private string TryRemoveFancyPhonemes(string word)
+    private string TryReplaceFancyPhonemes(string word)
     {
+        foreach (var phonemePair in CavemanAccentComponent.PhonemeConversions)
+        {
+            word = word.Replace(Loc.GetString(phonemePair.Key), Loc.GetString(phonemePair.Value));
+        }
+
+
         return word;
     }
 

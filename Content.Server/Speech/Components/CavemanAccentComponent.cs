@@ -8,11 +8,7 @@ public sealed partial class CavemanAccentComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("MaxWordLength")]
-    public static int MaxWordLength = 6; // so caveman not be verbose
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("MinWordLengthToRemoveForbiddenSuffix")]
-    public static int MinWordLengthToRemoveForbiddenSuffix = 5; // 5 means going = go, but ring != ri
+    public static int MaxWordLength = 5; // so man not talk smart, any word up dis be gone
 
     [ViewVariables]
     public static readonly List<string> ForbiddenWords = new()
@@ -25,6 +21,13 @@ public sealed partial class CavemanAccentComponent : Component
         "accent-caveman-forbidden-words-5",
         "accent-caveman-forbidden-words-6",
         "accent-caveman-forbidden-words-7",
+        "accent-caveman-forbidden-words-8",
+        "accent-caveman-forbidden-words-9",
+        "accent-caveman-forbidden-words-10",
+        "accent-caveman-forbidden-words-11",
+        "accent-caveman-forbidden-words-12",
+        "accent-caveman-forbidden-words-13",
+        "accent-caveman-forbidden-words-14",
     };
 
     [ViewVariables]
@@ -69,19 +72,10 @@ public sealed partial class CavemanAccentComponent : Component
     };
 
     [ViewVariables]
-    public static readonly List<string> ForbiddenSuffixes = new()
+    public static readonly Dictionary<string, string> PhonemeConversions = new()
     {
-        "accent-caveman-forbidden-suffixes-0",
-        "accent-caveman-forbidden-suffixes-1",
-        "accent-caveman-forbidden-suffixes-2"
-    };
-
-    [ViewVariables]
-    public static readonly List<string> Endings = new()
-    {
-        ".",
-        "!",
-        "!!"
+        {"accent-caveman-phonemes-fancy-0", "accent-caveman-phonemes-simple-0" },
+        {"accent-caveman-phonemes-fancy-1", "accent-caveman-phonemes-simple-1" },
     };
 
 }
