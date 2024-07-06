@@ -56,7 +56,6 @@
     belt: ClothingBeltMilitaryWebbing
   storage:
     back:
-    - BoxSurvivalSyndicate
     - WeaponPistolViper
     - PinpointerSyndicateNuclear
     - DeathAcidifierImplanter
@@ -84,7 +83,6 @@
   storage:
     back:
     - SyndiHypo
-    - BoxSurvivalSyndicate
     - SawAdvanced
     - Cautery
     - CombatKnife

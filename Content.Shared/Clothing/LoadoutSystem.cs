@@ -121,7 +121,6 @@ public sealed class LoadoutSystem : EntitySystem
         {
             var gear = _protoMan.Index(_random.Pick(component.StartingGear));
             _station.EquipStartingGear(uid, gear);
-            return;
         }
 
         if (component.RoleLoadout == null)

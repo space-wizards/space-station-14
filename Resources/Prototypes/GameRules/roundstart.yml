@@ -103,6 +103,8 @@
       fallbackRoles: [ Nukeops, NukeopsMedic ]
       spawnerPrototype: SpawnPointNukeopsCommander
       startingGear: SyndicateCommanderGearFull
+      roleLoadout:
+      - RoleSurvivalSyndicate
       components:
       - type: NukeOperative
       - type: RandomMetadata
@@ -119,6 +121,8 @@
       fallbackRoles: [ Nukeops, NukeopsCommander ]
       spawnerPrototype: SpawnPointNukeopsMedic
       startingGear: SyndicateOperativeMedicFull
+      roleLoadout:
+      - RoleSurvivalSyndicate
       components:
       - type: NukeOperative
       - type: RandomMetadata
@@ -137,6 +141,8 @@
       max: 3
       playerRatio: 10
       startingGear: SyndicateOperativeGearFull
+      roleLoadout:
+      - RoleSurvivalSyndicate
       components:
       - type: NukeOperative
       - type: RandomMetadata
