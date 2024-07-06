@@ -80,6 +80,7 @@
   name: Command personal ai device
   description: Your Command pal ! This model is a custom NT version, known for quickly taking management of the station's borgs.
   components:
+  - type: CommandPAI
   - type: Sprite
     sprite: Objects/Fun/pai.rsi
     layers:
@@ -112,6 +113,32 @@
           Off: { state: command-pai-off-overlay }
           Searching: { state: command-pai-searching-overlay }
           On: { state: command-pai-on-overlay }
+  - type: WirelessNetworkConnection
+    range: 500
+  - type: StationLimitedNetwork
+  - type: CrewMonitoringConsole
+    snap: false
+    precision: 3
+  - type: SurveillanceCameraMonitor
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId:  #crewmonitor #SurveillanceCamera
+    #transmitFrequencyId: SurveillanceCamera
+  - type: UserInterface
+    interfaces:
+      - key: enum.InstrumentUiKey.Key
+        type: InstrumentBoundUserInterface
+      - key: enum.StationMapUiKey.Key
+        type: UntrackedStationMapBoundUserInterface
+      - key: enum.CrewMonitoringUIKey.Key
+        type: CrewMonitoringBoundUserInterface
+      - key: enum.SurveillanceCameraMonitorUiKey.Key
+        type: SurveillanceCameraMonitorBoundUserInterface
+  - type: IntrinsicUI
+    uis:
+      - key: enum.CrewMonitoringUIKey.Key
+        toggleAction: ActionPAIShowCrewMonitoring
+
 
 - type: entity
   parent: PersonalAI
@@ -173,6 +200,33 @@
   - type: Construction
     graph: PotatoAI
     node: potatoai
+
+- type: entity
+  id: ActionPAIShowCameraMonitor
+  name: Camera Monitoring Interface
+  description: View a camera monitor interface.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
+    iconOn: Structures/Machines/parts.rsi/box_2.png
+    event: !type:OpenUiActionEvent
+      key: enum.SurveillanceCameraMonitorUiKey.Key
+
+- type: entity
+  id: ActionPAIShowCrewMonitoring
+  name: Crew Monitoring Interface
+  description: View a crew monitoring interface.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
+    iconOn: Structures/Machines/parts.rsi/box_2.png
+    event: !type:ToggleIntrinsicUIEvent { key: enum.CrewMonitoringUIKey.Key }
 
 - type: entity
   id: ActionPAIPlayMidi
