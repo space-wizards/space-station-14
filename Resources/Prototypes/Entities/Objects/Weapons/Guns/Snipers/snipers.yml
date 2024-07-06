@@ -20,9 +20,9 @@
   - type: AmmoCounter
   - type: Gun
     fireRate: 0.75
-    selectedMode: SemiAuto
+    selectedMode: PumpAction
     availableModes:
-    - SemiAuto
+    - PumpAction
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
   - type: BallisticAmmoProvider

@@ -21,9 +21,9 @@
   - type: AmmoCounter
   - type: Gun
     fireRate: 2
-    selectedMode: SemiAuto
+    selectedMode: PumpAction
     availableModes:
-    - SemiAuto
+    - PumpAction
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
     soundEmpty:
@@ -116,6 +116,9 @@
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
