@@ -105,7 +105,7 @@ public sealed partial class AdminVerbSystem
                 var coords = _transformSystem.GetMapCoordinates(args.Target);
                 Timer.Spawn(_gameTiming.TickPeriod,
                     () => _explosionSystem.QueueExplosion(coords, ExplosionSystem.DefaultExplosionPrototypeId,
-                        4, 1, 2, maxTileBreak: 0), // it gibs, damage doesn't need to be high.
+                        4, 1, 2, args.Target, maxTileBreak: 0), // it gibs, damage doesn't need to be high.
                     CancellationToken.None);
 
                 _bodySystem.GibBody(args.Target);
