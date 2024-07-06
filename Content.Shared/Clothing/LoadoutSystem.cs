@@ -134,6 +134,12 @@ public sealed class LoadoutSystem : EntitySystem
         _station.EquipRoleLoadout(uid, loadout, proto);
     }
 
+    public void GearEquipped(EntityUid uid)
+    {
+        var ev = new StartingGearEquippedEvent(uid);
+        RaiseLocalEvent(uid, ref ev);
+    }
+
     public HumanoidCharacterProfile GetProfile(EntityUid? uid)
     {
         if (TryComp(uid, out HumanoidAppearanceComponent? appearance))

@@ -353,7 +353,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             }
         }
 
-        // TODO: Event to trigger autointernals
+        _loadout.GearEquipped(player);
 
         if (session != null)
         {
