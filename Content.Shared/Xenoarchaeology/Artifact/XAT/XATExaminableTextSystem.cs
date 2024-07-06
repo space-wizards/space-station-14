@@ -14,7 +14,7 @@ public sealed class XATExaminableTextSystem : BaseXATSystem<XATExaminableTextCom
     {
         base.Initialize();
 
-        XATSubscribeLocalEvent<ExaminedEvent>(OnExamined);
+        XATSubscribeDirectEvent<ExaminedEvent>(OnExamined);
     }
 
     private void OnExamined(Entity<XenoArtifactComponent> artifact, Entity<XATExaminableTextComponent, XenoArtifactNodeComponent> node, ref ExaminedEvent args)

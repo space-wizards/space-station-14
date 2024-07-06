@@ -18,8 +18,8 @@ public sealed class XATToolUseSystem : BaseXATSystem<XATToolUseComponent>
     {
         base.Initialize();
 
-        XATSubscribeLocalEvent<InteractUsingEvent>(OnInteractUsing);
-        XATSubscribeLocalEvent<XATToolUseDoAfterEvent>(OnToolUseComplete);
+        XATSubscribeDirectEvent<InteractUsingEvent>(OnInteractUsing);
+        XATSubscribeDirectEvent<XATToolUseDoAfterEvent>(OnToolUseComplete);
     }
 
     private void OnToolUseComplete(Entity<XenoArtifactComponent> artifact, Entity<XATToolUseComponent, XenoArtifactNodeComponent> node, ref XATToolUseDoAfterEvent args)

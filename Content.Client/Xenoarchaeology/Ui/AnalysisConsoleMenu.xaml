@@ -26,6 +26,10 @@
                         </BoxContainer>
                         <BoxContainer Name="InfoContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
                             <BoxContainer HorizontalExpand="True">
+                                <RichTextLabel Name="ClassLabel" HorizontalExpand="True"/>
+                                <RichTextLabel Name="ClassValueLabel" HorizontalAlignment="Right"/>
+                            </BoxContainer>
+                            <BoxContainer HorizontalExpand="True">
                                 <RichTextLabel Name="ActiveLabel" HorizontalExpand="True"/>
                                 <RichTextLabel Name="ActiveValueLabel" HorizontalAlignment="Right"/>
                             </BoxContainer>

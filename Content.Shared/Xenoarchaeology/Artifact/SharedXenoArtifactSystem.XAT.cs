@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -13,18 +14,31 @@ public abstract partial class SharedXenoArtifactSystem
     // todo this is kinda a misnomer since it handles generic relays.
     private void InitializeXAT()
     {
+        base.Initialize();
+
         XATRelayLocalEvent<DamageChangedEvent>();
-        XATRelayLocalEvent<ExaminedEvent>();
         XATRelayLocalEvent<InteractUsingEvent>();
         XATRelayLocalEvent<PullStartedMessage>();
         XATRelayLocalEvent<AttackedEvent>();
         XATRelayLocalEvent<XATToolUseDoAfterEvent>();
         XATRelayLocalEvent<InteractHandEvent>();
+        XATRelayLocalEvent<ReactionEntityEvent>();
+
+        // special case this one because we need to order the messages
+        SubscribeLocalEvent<XenoArtifactComponent, ExaminedEvent>(OnExamined);
     }
 
     protected void XATRelayLocalEvent<T>() where T : notnull
     {
         SubscribeLocalEvent<XenoArtifactComponent, T>(RelayEventToNodes);
+    }
+
+    private void OnExamined(Entity<XenoArtifactComponent> ent, ref ExaminedEvent args)
+    {
+        //using (args.PushGroup(nameof(XenoArtifactComponent)))
+        //{
+            RelayEventToNodes(ent, ref args);
+        //}
     }
 
     protected void RelayEventToNodes<T>(Entity<XenoArtifactComponent> ent, ref T args) where T : notnull

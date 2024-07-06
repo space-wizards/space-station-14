@@ -16,8 +16,10 @@ analysis-console-info-no-artifact = No artifact present! Place one on the pad th
 analysis-console-info-ready = Systems operational. Ready to scan.
 
 analysis-console-no-node = [font="Monospace" size=11]Select node to view[/font]
-analysis-console-info-id = [font="Monospace" size=11]Node ID:[/font]
+analysis-console-info-id = [font="Monospace" size=11]ID:[/font]
 analysis-console-info-id-value = [font="Monospace" size=11][color=yellow]{$id}[/color][/font]
+analysis-console-info-class = [font="Monospace" size=11]Class:[/font]
+analysis-console-info-class-value = [font="Monospace" size=11]{$class}[/font]
 analysis-console-info-locked = [font="Monospace" size=11]Status:[/font]
 analysis-console-info-locked-value = [font="Monospace" size=11][color={ $state ->
     [true] red]Locked

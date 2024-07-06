@@ -12,7 +12,7 @@ public sealed class XATExamineSystem : BaseXATSystem<XATExamineComponent>
     {
         base.Initialize();
 
-        XATSubscribeLocalEvent<ExaminedEvent>(OnExamine);
+        XATSubscribeDirectEvent<ExaminedEvent>(OnExamine);
     }
 
     private void OnExamine(Entity<XenoArtifactComponent> artifact, Entity<XATExamineComponent, XenoArtifactNodeComponent> node, ref ExaminedEvent args)

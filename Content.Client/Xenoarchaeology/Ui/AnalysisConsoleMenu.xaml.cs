@@ -45,6 +45,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         if (BackPanel.PanelOverride is StyleBoxTexture tex)
             tex.Texture = _resCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
 
+        ClassLabel.SetMarkup(Loc.GetString("analysis-console-info-class"));
         LockedLabel.SetMarkup(Loc.GetString("analysis-console-info-locked"));
         ActiveLabel.SetMarkup(Loc.GetString("analysis-console-info-active"));
         EffectLabel.SetMarkup(Loc.GetString("analysis-console-info-effect"));
@@ -111,6 +112,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         EffectValueLabel.SetMarkup(Loc.GetString("analysis-console-info-effect-value",
             ("state", hasInfo)));
 
+        var predecessorNodes = _xenoArtifact.GetPredecessorNodes(artifact.Value.Owner, node.Value);
         if (!hasInfo)
         {
             TriggerValueLabel.SetMarkup(Loc.GetString("analysis-console-info-effect-value", ("state", false)));
@@ -121,13 +123,16 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
             triggerStr.Append("- ");
             triggerStr.AppendLine(Loc.GetString(node.Value.Comp.TriggerTip));
 
-            foreach (var predecessor in _xenoArtifact.GetPredecessorNodes(artifact.Value.Owner, node.Value))
+            foreach (var predecessor in predecessorNodes)
             {
                 triggerStr.Append("- ");
                 triggerStr.AppendLine(Loc.GetString(predecessor.Comp.TriggerTip));
             }
             TriggerValueLabel.SetMarkup(Loc.GetString("analysis-console-info-triggered-value", ("triggers", triggerStr.ToString())));
         }
+
+        ClassValueLabel.SetMarkup(Loc.GetString("analysis-console-info-class-value",
+            ("class", Loc.GetString($"artifact-node-class-{Math.Min(6, predecessorNodes.Count + 1)}"))));
     }
 }
 

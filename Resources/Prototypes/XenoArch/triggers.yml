@@ -2,25 +2,31 @@
   id: DefaultTriggers
   weights:
     TriggerMusic: 1
-    TriggerHeat: 0.5
+    TriggerHeat: 1
     TriggerCold: 0.5
     TriggerNoOxygen: 1
     TriggerWater: 1
-    TriggerCO2: 0.16
-    TriggerPlasma: 0.16
-    TriggerTritium: 0.16
-    TriggerAmmonia: 0.16
-    TriggerN2O: 0.16
-    TriggerFrezon: 0.16
+    TriggerCO2: 0.5
+    TriggerPlasma: 0.5
+    TriggerN2O: 0.5
+    TriggerTritium: 0.1
+    TriggerAmmonia: 0.1
+    TriggerFrezon: 0.1
     TriggerRadiation: 1
     TriggerPressureHigh: 0.5
-    TriggerPressureLow: 0.5
+    TriggerPressureLow: 1
     TriggerExamine: 1
     TriggerBruteDamage: 1
     TriggerInteraction: 1
-    TriggerWrenching: 0.33
-    TriggerPrying: 0.33
-    TriggerScrewing: 0.33
+    TriggerWrenching: 0.5
+    TriggerPrying: 0.5
+    TriggerScrewing: 0.5
+    TriggerPulsing: 0.5
+    TriggerTimer: 0.25
+    TriggerBlood: 1
+    TriggerThrow: 1
+    TriggerDeath: 1
+    TriggerMagnet: 1
 
 - type: xenoArchTrigger
   id: TriggerMusic
@@ -64,13 +70,15 @@
     moles: 10
     shouldBePresent: false
 
-# TODO: all the gas triggers need to support liquid versions as well
 - type: xenoArchTrigger
   id: TriggerWater
   tip: xenoarch-trigger-tip-water
   components:
   - type: XATGas
     targetGas: WaterVapor
+  - type: XATReactive
+    reagents:
+    - Water
 
 - type: xenoArchTrigger
   id: TriggerCO2
@@ -78,6 +86,9 @@
   components:
   - type: XATGas
     targetGas: CarbonDioxide
+  - type: XATReactive
+    reagents:
+    - CarbonDioxide
 
 - type: xenoArchTrigger
   id: TriggerPlasma
@@ -85,6 +96,9 @@
   components:
   - type: XATGas
     targetGas: Plasma
+  - type: XATReactive
+    reagents:
+    - Plasma
 
 - type: xenoArchTrigger
   id: TriggerTritium
@@ -92,6 +106,9 @@
   components:
   - type: XATGas
     targetGas: Tritium
+  - type: XATReactive
+    reagents:
+    - Tritium
 
 - type: xenoArchTrigger
   id: TriggerAmmonia
@@ -99,6 +116,9 @@
   components:
   - type: XATGas
     targetGas: Ammonia
+  - type: XATReactive
+    reagents:
+    - Ammonia
 
 - type: xenoArchTrigger
   id: TriggerN2O
@@ -106,6 +126,9 @@
   components:
   - type: XATGas
     targetGas: NitrousOxide
+  - type: XATReactive
+    reagents:
+    - NitrousOxide
 
 - type: xenoArchTrigger
   id: TriggerFrezon
@@ -113,7 +136,9 @@
   components:
   - type: XATGas
     targetGas: Frezon
-# END GAS TRIGGERS
+  - type: XATReactive
+    reagents:
+    - Frezon
 
 - type: xenoArchTrigger
   id: TriggerRadiation
@@ -184,3 +209,53 @@
     neededTool: Screwing
   - type: XATExaminableText
     examineText: xenoarch-trigger-examine-screwing
+
+- type: xenoArchTrigger
+  id: TriggerPulsing
+  tip: xenoarch-trigger-tip-pulsing
+  components:
+  - type: XATToolUse
+    neededTool: Pulsing
+  - type: XATExaminableText
+    examineText: xenoarch-trigger-examine-pulsing
+
+- type: xenoArchTrigger
+  id: TriggerTimer
+  tip: xenoarch-trigger-tip-timer
+  components:
+  - type: XATTimer
+    delay: 120 #2 minutes
+
+- type: xenoArchTrigger
+  id: TriggerBlood
+  tip: xenoarch-trigger-tip-blood
+  components:
+  - type: XATReactive
+    reagents:
+    - Blood
+    - CopperBlood
+    - InsectBlood
+    - Slime
+    - AmmoniaBlood
+    - ZombieBlood
+
+- type: xenoArchTrigger
+  id: TriggerThrow
+  tip: xenoarch-trigger-tip-throw
+  whitelist:
+    components:
+    - Item
+  components:
+  - type: XATItemLand
+
+- type: xenoArchTrigger
+  id: TriggerDeath
+  tip: xenoarch-trigger-tip-death
+  components:
+  - type: XATDeath
+
+- type: xenoArchTrigger
+  id: TriggerMagnet
+  tip: xenoarch-trigger-tip-magnet
+  components:
+  - type: XATMagnet

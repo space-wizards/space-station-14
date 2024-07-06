@@ -40,12 +40,12 @@ public sealed partial class XenoArtifactSystem
             }
 
             var triggerId = RobustRandom.Pick(weights);
+            weights.Remove(triggerId);
             var trigger = PrototypeManager.Index<XenoArchTriggerPrototype>(triggerId);
             if (_entityWhitelist.IsWhitelistFail(trigger.Whitelist, ent))
                 continue;
 
             _triggerPool.Add(trigger);
-            weights.Remove(triggerId);
         }
     }
 
@@ -158,7 +158,7 @@ public sealed partial class XenoArtifactSystem
         nodeEnt.Value.Comp.TriggerTip = trigger.Tip;
         EntityManager.AddComponents(nodeEnt.Value, trigger.Components);
 
-        Dirty(nodeEnt.Value);
+        //Dirty(nodeEnt.Value);
         return nodeEnt.Value;
     }
 }

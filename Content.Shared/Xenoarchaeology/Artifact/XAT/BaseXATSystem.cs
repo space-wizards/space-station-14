@@ -5,10 +5,10 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 
 public abstract class BaseXATSystem<T> : EntitySystem where T : Component
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly SharedXenoArtifactSystem XenoArtifact = default!;
 
-    private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery;
+    protected EntityQuery<XenoArtifactComponent> _xenoArtifactQuery;
     private EntityQuery<XenoArtifactUnlockingComponent> _unlockingQuery;
 
     /// <inheritdoc/>
@@ -18,7 +18,7 @@ public abstract class BaseXATSystem<T> : EntitySystem where T : Component
         _unlockingQuery = GetEntityQuery<XenoArtifactUnlockingComponent>();
     }
 
-    protected void XATSubscribeLocalEvent<TEvent>(XATEventHandler<TEvent> eventHandler) where TEvent : notnull
+    protected void XATSubscribeDirectEvent<TEvent>(XATEventHandler<TEvent> eventHandler) where TEvent : notnull
     {
         SubscribeLocalEvent<T, XenoArchNodeRelayedEvent<TEvent>>((uid, component, args) =>
         {
@@ -57,9 +57,9 @@ public abstract class BaseXATSystem<T> : EntitySystem where T : Component
         }
     }
 
-    private bool CanTrigger(Entity<XenoArtifactComponent> artifact, Entity<XenoArtifactNodeComponent> node)
+    protected bool CanTrigger(Entity<XenoArtifactComponent> artifact, Entity<XenoArtifactNodeComponent> node)
     {
-        if (_timing.CurTime < artifact.Comp.NextUnlockTime)
+        if (Timing.CurTime < artifact.Comp.NextUnlockTime)
             return false;
 
         if (_unlockingQuery.TryComp(artifact, out var unlocking) &&
@@ -79,7 +79,8 @@ public abstract class BaseXATSystem<T> : EntitySystem where T : Component
 
     protected void Trigger(Entity<XenoArtifactComponent> artifact, Entity<T, XenoArtifactNodeComponent> node)
     {
-        Log.Debug($"Activated trigger {typeof(T).Name} on node {ToPrettyString(node)} for {ToPrettyString(artifact)}");
+        if (Timing.IsFirstTimePredicted)
+            Log.Debug($"Activated trigger {typeof(T).Name} on node {ToPrettyString(node)} for {ToPrettyString(artifact)}");
         XenoArtifact.TriggerXenoArtifact(artifact, (node.Owner, node.Comp2));
     }
 }

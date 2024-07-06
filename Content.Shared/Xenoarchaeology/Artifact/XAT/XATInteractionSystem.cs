@@ -13,9 +13,9 @@ public sealed class XATInteractionSystem : BaseXATSystem<XATInteractionComponent
     {
         base.Initialize();
 
-        XATSubscribeLocalEvent<PullStartedMessage>(OnPullStart);
-        XATSubscribeLocalEvent<AttackedEvent>(OnAttacked);
-        XATSubscribeLocalEvent<InteractHandEvent>(OnInteractHand);
+        XATSubscribeDirectEvent<PullStartedMessage>(OnPullStart);
+        XATSubscribeDirectEvent<AttackedEvent>(OnAttacked);
+        XATSubscribeDirectEvent<InteractHandEvent>(OnInteractHand);
     }
 
     private void OnPullStart(Entity<XenoArtifactComponent> artifact, Entity<XATInteractionComponent, XenoArtifactNodeComponent> node, ref PullStartedMessage args)

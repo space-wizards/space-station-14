@@ -31,10 +31,10 @@
         mask:
         - MachineMask
   - type: InteractionOutline
-  - type: RandomSprite
-    available:
-    - enum.ArtifactsVisualLayers.Effect:
-        ano01_on: Rainbow
+  #- type: RandomSprite
+  #  available:
+  #  - enum.ArtifactsVisualLayers.Effect:
+  #      ano01_on: Rainbow
   - type: XenoArtifact
   - type: StealTarget
     stealGroup: XenoArtifact
@@ -43,3 +43,4 @@
     - Xenoarchaeology
   # These components are needed for certain triggers to work.
   - type: RadiationReceiver
+  - type: Reactive
