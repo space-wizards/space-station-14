@@ -486,6 +486,21 @@ namespace Content.Shared.Interaction
         public void InteractUsingRanged(EntityUid user, EntityUid used, EntityUid? target,
             EntityCoordinates clickLocation, bool inRangeUnobstructed)
         {
+            if (target != null)
+            {
+                _adminLogger.Add(
+                    LogType.InteractUsing,
+                    LogImpact.Low,
+                    $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target} using {ToPrettyString(used):used}");
+            }
+            else
+            {
+                _adminLogger.Add(
+                    LogType.InteractUsing,
+                    LogImpact.Low,
+                    $"{ToPrettyString(user):user} interacted with *nothing* using {ToPrettyString(used):used}");
+            }
+
             if (RangedInteractDoBefore(user, used, target, clickLocation, inRangeUnobstructed))
                 return;
 
@@ -925,6 +940,11 @@ namespace Content.Shared.Interaction
 
             if (checkCanUse && !_actionBlockerSystem.CanUseHeldEntity(user, used))
                 return;
+
+            _adminLogger.Add(
+                LogType.InteractUsing,
+                LogImpact.Low,
+                $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target} using {ToPrettyString(used):used}");
 
             if (RangedInteractDoBefore(user, used, target, clickLocation, true))
                 return;

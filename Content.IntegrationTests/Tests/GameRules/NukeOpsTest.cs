@@ -7,6 +7,7 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Pinpointer;
 using Content.Server.Roles;
+using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Components;
 using Content.Shared.CCVar;
@@ -49,6 +50,7 @@ public sealed class NukeOpsTest
         var roleSys = server.System<RoleSystem>();
         var invSys = server.System<InventorySystem>();
         var factionSys = server.System<NpcFactionSystem>();
+        var roundEndSys = server.System<RoundEndSystem>();
 
         server.CfgMan.SetCVar(CCVars.GridFill, true);
 
@@ -63,11 +65,11 @@ public sealed class NukeOpsTest
 
         // Opt into the nukies role.
         await pair.SetAntagPreference("NukeopsCommander", true);
-        await pair.SetAntagPreference( "NukeopsMedic", true, dummies[1].UserId);
+        await pair.SetAntagPreference("NukeopsMedic", true, dummies[1].UserId);
 
         // Initially, the players have no attached entities
         Assert.That(pair.Player?.AttachedEntity, Is.Null);
-        Assert.That(dummies.All(x => x.AttachedEntity  == null));
+        Assert.That(dummies.All(x => x.AttachedEntity == null));
 
         // There are no grids or maps
         Assert.That(entMan.Count<MapComponent>(), Is.Zero);
@@ -150,7 +152,8 @@ public sealed class NukeOpsTest
         }
 
         // The game rule exists, and all the stations/shuttles/maps are properly initialized
-        var rule = entMan.AllComponents<NukeopsRuleComponent>().Single().Component;
+        var rule = entMan.AllComponents<NukeopsRuleComponent>().Single();
+        var ruleComp = rule.Component;
         var gridsRule = entMan.AllComponents<RuleGridsComponent>().Single().Component;
         foreach (var grid in gridsRule.MapGrids)
         {
@@ -158,12 +161,14 @@ public sealed class NukeOpsTest
             Assert.That(entMan.HasComponent<MapGridComponent>(grid));
             Assert.That(entMan.HasComponent<StationMemberComponent>(grid));
         }
-        Assert.That(entMan.EntityExists(rule.TargetStation));
+        Assert.That(entMan.EntityExists(ruleComp.TargetStation));
 
-        Assert.That(entMan.HasComponent<StationDataComponent>(rule.TargetStation));
+        Assert.That(entMan.HasComponent<StationDataComponent>(ruleComp.TargetStation));
 
-        var nukieShuttlEnt = entMan.AllComponents<NukeOpsShuttleComponent>().FirstOrDefault().Uid;
+        var nukieShuttle = entMan.AllComponents<NukeOpsShuttleComponent>().Single();
+        var nukieShuttlEnt = nukieShuttle.Uid;
         Assert.That(entMan.EntityExists(nukieShuttlEnt));
+        Assert.That(nukieShuttle.Component.AssociatedRule, Is.EqualTo(rule.Uid));
 
         EntityUid? nukieStationEnt = null;
         foreach (var grid in gridsRule.MapGrids)
@@ -179,12 +184,12 @@ public sealed class NukeOpsTest
         var nukieStation = entMan.GetComponent<StationMemberComponent>(nukieStationEnt!.Value);
 
         Assert.That(entMan.EntityExists(nukieStation.Station));
-        Assert.That(nukieStation.Station, Is.Not.EqualTo(rule.TargetStation));
+        Assert.That(nukieStation.Station, Is.Not.EqualTo(ruleComp.TargetStation));
 
         Assert.That(server.MapMan.MapExists(gridsRule.Map));
         var nukieMap = mapSys.GetMap(gridsRule.Map!.Value);
 
-        var targetStation = entMan.GetComponent<StationDataComponent>(rule.TargetStation!.Value);
+        var targetStation = entMan.GetComponent<StationDataComponent>(ruleComp.TargetStation!.Value);
         var targetGrid = targetStation.Grids.First();
         var targetMap = entMan.GetComponent<TransformComponent>(targetGrid).MapUid!.Value;
         Assert.That(targetMap, Is.Not.EqualTo(nukieMap));
@@ -206,7 +211,7 @@ public sealed class NukeOpsTest
         Assert.That(LifeStage(targetMap), Is.GreaterThan(EntityLifeStage.Initialized));
         Assert.That(LifeStage(nukieStationEnt.Value), Is.GreaterThan(EntityLifeStage.Initialized));
         Assert.That(LifeStage(nukieShuttlEnt), Is.GreaterThan(EntityLifeStage.Initialized));
-        Assert.That(LifeStage(rule.TargetStation), Is.GreaterThan(EntityLifeStage.Initialized));
+        Assert.That(LifeStage(ruleComp.TargetStation), Is.GreaterThan(EntityLifeStage.Initialized));
 
         // Make sure the player has hands. We've had fucking disarmed nukies before.
         Assert.That(entMan.HasComponent<HandsComponent>(player));
@@ -222,10 +227,10 @@ public sealed class NukeOpsTest
         }
         Assert.That(total, Is.GreaterThan(3));
 
-        // Finally lets check the nukie commander passed basic training and figured out how to breathe.
+        // Check the nukie commander passed basic training and figured out how to breathe.
         var totalSeconds = 30;
         var totalTicks = (int) Math.Ceiling(totalSeconds / server.Timing.TickPeriod.TotalSeconds);
-        int increment = 5;
+        var increment = 5;
         var resp = entMan.GetComponent<RespiratorComponent>(player);
         var damage = entMan.GetComponent<DamageableComponent>(player);
         for (var tick = 0; tick < totalTicks; tick += increment)
@@ -235,7 +240,24 @@ public sealed class NukeOpsTest
             Assert.That(damage.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
         }
 
-        ticker.SetGamePreset((GamePresetPrototype?)null);
+        // Check that the round does not end prematurely when agents are deleted in the outpost
+        var nukies = dummyEnts.Where(entMan.HasComponent<NukeOperativeComponent>).Append(player).ToArray();
+        await server.WaitAssertion(() =>
+        {
+            for (var i = 0; i < nukies.Length - 1; i++)
+            {
+                entMan.DeleteEntity(nukies[i]);
+                Assert.That(roundEndSys.IsRoundEndRequested, Is.False,
+                    $"The round ended, but {nukies.Length - i - 1} nukies are still alive!");
+            }
+            // Delete the last nukie and make sure the round ends.
+            entMan.DeleteEntity(nukies[^1]);
+
+            Assert.That(roundEndSys.IsRoundEndRequested,
+                "All nukies were deleted, but the round didn't end!");
+        });
+
+        ticker.SetGamePreset((GamePresetPrototype?) null);
         await pair.CleanReturnAsync();
     }
 }

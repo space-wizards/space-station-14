@@ -100,7 +100,7 @@ public sealed class InternalsSystem : EntitySystem
         // Toggle off if they're on
         if (AreInternalsWorking(internals))
         {
-            if (force || user == uid)
+            if (force)
             {
                 DisconnectTank(internals);
                 return;
