@@ -122,21 +122,25 @@
   - type: SurveillanceCameraMonitor
   - type: DeviceNetwork
     deviceNetId: Wireless
-    receiveFrequencyId:  #crewmonitor #SurveillanceCamera
-    #transmitFrequencyId: SurveillanceCamera
+    receiveFrequencyId:  CrewMonitor #SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
   - type: UserInterface
     interfaces:
-      - key: enum.InstrumentUiKey.Key
+      enum.InstrumentUiKey.Key:
         type: InstrumentBoundUserInterface
-      - key: enum.StationMapUiKey.Key
+        requireInputValidation: false
+      enum.StationMapUiKey.Key:
         type: UntrackedStationMapBoundUserInterface
-      - key: enum.CrewMonitoringUIKey.Key
+        requireInputValidation: false
+      enum.CrewMonitoringUIKey.Key:
         type: CrewMonitoringBoundUserInterface
-      - key: enum.SurveillanceCameraMonitorUiKey.Key
+        requireInputValidation: false
+      enum.SurveillanceCameraMonitorUiKey.Key:
         type: SurveillanceCameraMonitorBoundUserInterface
+        requireInputValidation: false
   - type: IntrinsicUI
     uis:
-      - key: enum.CrewMonitoringUIKey.Key
+      enum.CrewMonitoringUIKey.Key:
         toggleAction: ActionPAIShowCrewMonitoring
 
 
@@ -212,8 +216,7 @@
     checkConsciousness: false
     icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
     iconOn: Structures/Machines/parts.rsi/box_2.png
-    event: !type:OpenUiActionEvent
-      key: enum.SurveillanceCameraMonitorUiKey.Key
+    event: !type:OpenUiActionEvent { key: enum.SurveillanceCameraMonitorUiKey.Key }
 
 - type: entity
   id: ActionPAIShowCrewMonitoring
