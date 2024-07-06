@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -6,25 +6,25 @@ using Robust.Shared.Utility;
 namespace Content.Shared.FixedPoint
 {
     /// <summary>
-    ///     Represents a quantity of something, to a precision of 0.01.
-    ///     To enforce this level of precision, floats are shifted by 2 decimal points, rounded, and converted to an int.
+    ///     Represents a quantity of something, to a precision of 0.0001.
+    ///     To enforce this level of precision, floats are shifted by 4 decimal points, rounded, and converted to an int.
     /// </summary>
     [Serializable, CopyByRef]
-    public struct FixedPoint2 : ISelfSerialize, IComparable<FixedPoint2>, IEquatable<FixedPoint2>, IFormattable
+    public struct FixedPoint4 : ISelfSerialize, IComparable<FixedPoint4>, IEquatable<FixedPoint4>, IFormattable
     {
         public int Value { get; private set; }
-        private const int Shift = 2;
-        private const int ShiftConstant = 100; // Must be equal to pow(10, Shift)
+        private const int Shift = 4;
+        private const int ShiftConstant = 10000; // Must be equal to pow(10, Shift)
 
-        public static FixedPoint2 MaxValue { get; } = new(int.MaxValue);
-        public static FixedPoint2 Epsilon { get; } = new(1);
-        public static FixedPoint2 Zero { get; } = new(0);
+        public static FixedPoint4 MaxValue { get; } = new(int.MaxValue);
+        public static FixedPoint4 Epsilon { get; } = new(1);
+        public static FixedPoint4 Zero { get; } = new(0);
 
         // This value isn't picked by any proper testing, don't @ me.
         private const float FloatEpsilon = 0.00001f;
 
 #if DEBUG
-        static FixedPoint2()
+        static FixedPoint4()
         {
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             DebugTools.Assert(Math.Pow(10, Shift) == ShiftConstant, "ShiftConstant must be equal to pow(10, Shift)");
@@ -36,21 +36,19 @@ namespace Content.Shared.FixedPoint
             return Value / (double) ShiftConstant;
         }
 
-        private FixedPoint2(int value)
+        private FixedPoint4(int value)
         {
             Value = value;
         }
 
-        public static FixedPoint2 New(int value)
+        public static FixedPoint4 New(int value)
         {
             return new(value * ShiftConstant);
         }
 
-        public static FixedPoint2 FromCents(int value) => new(value);
+        public static FixedPoint4 FromTenThousandths(int value) => new(value);
 
-        public static FixedPoint2 FromHundredths(int value) => new(value);
-
-        public static FixedPoint2 New(float value)
+        public static FixedPoint4 New(float value)
         {
             return new((int) ApplyFloatEpsilon(value * ShiftConstant));
         }
@@ -66,119 +64,119 @@ namespace Content.Shared.FixedPoint
         }
 
         /// <summary>
-        /// Create the closest <see cref="FixedPoint2"/> for a float value, always rounding up.
+        /// Create the closest <see cref="FixedPoint4"/> for a float value, always rounding up.
         /// </summary>
-        public static FixedPoint2 NewCeiling(float value)
+        public static FixedPoint4 NewCeiling(float value)
         {
             return new((int) MathF.Ceiling(value * ShiftConstant));
         }
 
-        public static FixedPoint2 New(double value)
+        public static FixedPoint4 New(double value)
         {
             return new((int) ApplyFloatEpsilon(value * ShiftConstant));
         }
 
-        public static FixedPoint2 New(string value)
+        public static FixedPoint4 New(string value)
         {
-            return New(Parse.Float(value));
+            return New(Parse.Double(value));
         }
 
-        public static FixedPoint2 operator +(FixedPoint2 a) => a;
+        public static FixedPoint4 operator +(FixedPoint4 a) => a;
 
-        public static FixedPoint2 operator -(FixedPoint2 a) => new(-a.Value);
+        public static FixedPoint4 operator -(FixedPoint4 a) => new(-a.Value);
 
-        public static FixedPoint2 operator +(FixedPoint2 a, FixedPoint2 b)
+        public static FixedPoint4 operator +(FixedPoint4 a, FixedPoint4 b)
             => new(a.Value + b.Value);
 
-        public static FixedPoint2 operator -(FixedPoint2 a, FixedPoint2 b)
+        public static FixedPoint4 operator -(FixedPoint4 a, FixedPoint4 b)
             => new(a.Value - b.Value);
 
-        public static FixedPoint2 operator *(FixedPoint2 a, FixedPoint2 b)
+        public static FixedPoint4 operator *(FixedPoint4 a, FixedPoint4 b)
         {
             return new(b.Value * a.Value / ShiftConstant);
         }
 
-        public static FixedPoint2 operator *(FixedPoint2 a, float b)
+        public static FixedPoint4 operator *(FixedPoint4 a, float b)
         {
             return new((int) ApplyFloatEpsilon(a.Value * b));
         }
 
-        public static FixedPoint2 operator *(FixedPoint2 a, double b)
+        public static FixedPoint4 operator *(FixedPoint4 a, double b)
         {
             return new((int) ApplyFloatEpsilon(a.Value * b));
         }
 
-        public static FixedPoint2 operator *(FixedPoint2 a, int b)
+        public static FixedPoint4 operator *(FixedPoint4 a, int b)
         {
             return new(a.Value * b);
         }
 
-        public static FixedPoint2 operator /(FixedPoint2 a, FixedPoint2 b)
+        public static FixedPoint4 operator /(FixedPoint4 a, FixedPoint4 b)
         {
             return new((int) (ShiftConstant * (long) a.Value / b.Value));
         }
 
-        public static FixedPoint2 operator /(FixedPoint2 a, float b)
+        public static FixedPoint4 operator /(FixedPoint4 a, float b)
         {
             return new((int) ApplyFloatEpsilon(a.Value / b));
         }
 
-        public static bool operator <=(FixedPoint2 a, int b)
+        public static bool operator <=(FixedPoint4 a, int b)
         {
             return a <= New(b);
         }
 
-        public static bool operator >=(FixedPoint2 a, int b)
+        public static bool operator >=(FixedPoint4 a, int b)
         {
             return a >= New(b);
         }
 
-        public static bool operator <(FixedPoint2 a, int b)
+        public static bool operator <(FixedPoint4 a, int b)
         {
             return a < New(b);
         }
 
-        public static bool operator >(FixedPoint2 a, int b)
+        public static bool operator >(FixedPoint4 a, int b)
         {
             return a > New(b);
         }
 
-        public static bool operator ==(FixedPoint2 a, int b)
+        public static bool operator ==(FixedPoint4 a, int b)
         {
             return a == New(b);
         }
 
-        public static bool operator !=(FixedPoint2 a, int b)
+        public static bool operator !=(FixedPoint4 a, int b)
         {
             return a != New(b);
         }
 
-        public static bool operator ==(FixedPoint2 a, FixedPoint2 b)
+        public static bool operator ==(FixedPoint4 a, FixedPoint4 b)
         {
             return a.Equals(b);
         }
 
-        public static bool operator !=(FixedPoint2 a, FixedPoint2 b)
+        public static bool operator !=(FixedPoint4 a, FixedPoint4 b)
         {
             return !a.Equals(b);
         }
 
-        public static bool operator <=(FixedPoint2 a, FixedPoint2 b)
+        public static bool operator <=(FixedPoint4 a, FixedPoint4 b)
         {
             return a.Value <= b.Value;
         }
 
-        public static bool operator >=(FixedPoint2 a, FixedPoint2 b)
+        public static bool operator >=(FixedPoint4 a, FixedPoint4 b)
         {
             return a.Value >= b.Value;
         }
 
-        public static bool operator <(FixedPoint2 a, FixedPoint2 b)
+        public static bool operator <(FixedPoint4 a, FixedPoint4 b)
         {
             return a.Value < b.Value;
         }
 
-        public static bool operator >(FixedPoint2 a, FixedPoint2 b)
+        public static bool operator >(FixedPoint4 a, FixedPoint4 b)
         {
             return a.Value > b.Value;
         }
@@ -199,30 +197,30 @@ namespace Content.Shared.FixedPoint
         }
 
         // Implicit operators ftw
-        public static implicit operator FixedPoint2(float n) => FixedPoint2.New(n);
-        public static implicit operator FixedPoint2(double n) => FixedPoint2.New(n);
-        public static implicit operator FixedPoint2(int n) => FixedPoint2.New(n);
+        public static implicit operator FixedPoint4(float n) => FixedPoint4.New(n);
+        public static implicit operator FixedPoint4(double n) => FixedPoint4.New(n);
+        public static implicit operator FixedPoint4(int n) => FixedPoint4.New(n);
 
-        public static explicit operator float(FixedPoint2 n) => n.Float();
-        public static explicit operator double(FixedPoint2 n) => n.Double();
-        public static explicit operator int(FixedPoint2 n) => n.Int();
+        public static explicit operator float(FixedPoint4 n) => n.Float();
+        public static explicit operator double(FixedPoint4 n) => n.Double();
+        public static explicit operator int(FixedPoint4 n) => n.Int();
 
-        public static FixedPoint2 Min(params FixedPoint2[] fixedPoints)
+        public static FixedPoint4 Min(params FixedPoint4[] fixedPoints)
         {
             return fixedPoints.Min();
         }
 
-        public static FixedPoint2 Min(FixedPoint2 a, FixedPoint2 b)
+        public static FixedPoint4 Min(FixedPoint4 a, FixedPoint4 b)
         {
             return a < b ? a : b;
         }
 
-        public static FixedPoint2 Max(FixedPoint2 a, FixedPoint2 b)
+        public static FixedPoint4 Max(FixedPoint4 a, FixedPoint4 b)
         {
             return a > b ? a : b;
         }
 
-        public static int Sign(FixedPoint2 value)
+        public static int Sign(FixedPoint4 value)
         {
             if (value < Zero)
             {
@@ -237,17 +235,17 @@ namespace Content.Shared.FixedPoint
             return 0;
         }
 
-        public static FixedPoint2 Abs(FixedPoint2 a)
+        public static FixedPoint4 Abs(FixedPoint4 a)
         {
-            return FromCents(Math.Abs(a.Value));
+            return FromTenThousandths(Math.Abs(a.Value));
         }
 
-        public static FixedPoint2 Dist(FixedPoint2 a, FixedPoint2 b)
+        public static FixedPoint4 Dist(FixedPoint4 a, FixedPoint4 b)
         {
-            return FixedPoint2.Abs(a - b);
+            return FixedPoint4.Abs(a - b);
         }
 
-        public static FixedPoint2 Clamp(FixedPoint2 number, FixedPoint2 min, FixedPoint2 max)
+        public static FixedPoint4 Clamp(FixedPoint4 number, FixedPoint4 min, FixedPoint4 max)
         {
             if (min > max)
             {
@@ -259,7 +257,7 @@ namespace Content.Shared.FixedPoint
 
         public override readonly bool Equals(object? obj)
         {
-            return obj is FixedPoint2 unit &&
+            return obj is FixedPoint4 unit &&
                    Value == unit.Value;
         }
 
@@ -296,31 +294,33 @@ namespace Content.Shared.FixedPoint
             return ToString();
         }
 
-        public readonly bool Equals(FixedPoint2 other)
+        public readonly bool Equals(FixedPoint4 other)
         {
             return Value == other.Value;
         }
 
-        public readonly int CompareTo(FixedPoint2 other)
+        public readonly int CompareTo(FixedPoint4 other)
         {
             if (other.Value > Value)
             {
                 return -1;
             }
+
             if (other.Value < Value)
             {
                 return 1;
             }
+
             return 0;
         }
 
     }
 
-    public static class FixedPoint2EnumerableExt
+    public static class FixedPoint4EnumerableExt
     {
-        public static FixedPoint2 Sum(this IEnumerable<FixedPoint2> source)
+        public static FixedPoint4 Sum(this IEnumerable<FixedPoint4> source)
         {
-            var acc = FixedPoint2.Zero;
+            var acc = FixedPoint4.Zero;
 
             foreach (var n in source)
             {
