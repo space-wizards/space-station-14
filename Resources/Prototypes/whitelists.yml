@@ -2,5 +2,6 @@
   id: basicWhitelist # Basic whitelist using only the ManualWhitelist condition
   conditions:
     - !type:ConditionManualWhitelist
-      action: Deny
-    # Passing ConditionManualWhitelist means the player is whitelisted
+      action: Allow # Allow connection if matched
+    - !type:ConditionAlwaysMatch # Condition that always matches
+      action: Deny # Deny connection if matched
