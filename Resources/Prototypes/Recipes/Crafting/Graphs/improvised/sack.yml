@@ -7,7 +7,7 @@
     - to: hempsack
       steps:
       - material: HempCloth
-        amount: 5
-        doAfter: 15
+        amount: 3
+        doAfter: 10
   - node: hempsack
     entity: HempClothSack
