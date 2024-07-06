@@ -539,6 +539,86 @@ public abstract class SharedActionsSystem : EntitySystem
         return _interactionSystem.InRangeUnobstructed(user, coords, range: action.Range);
     }
 
+    public bool ValidateEntityWorldTarget(EntityUid user,
+        EntityUid entity,
+        EntityCoordinates coords,
+        Entity<EntityWorldTargetActionComponent> action)
+    {
+        var entityValidated = ValidateEntityWorldTargetBaseEntity(user, entity, action);
+        var worldValidated = ValidateEntityWorldTargetBaseWorld(user, coords, action);
+
+        if (!entityValidated && !worldValidated)
+            return false;
+
+        var ev = new ValidateActionEntityWorldTargetEvent(user,
+            entityValidated ? entity : null,
+            worldValidated ? coords : null);
+        RaiseLocalEvent(action, ref ev);
+        return !ev.Cancelled;
+    }
+
+    private bool ValidateEntityWorldTargetBaseEntity(EntityUid user,
+        EntityUid target,
+        EntityWorldTargetActionComponent action)
+    {
+        if (!target.IsValid() || Deleted(target))
+            return false;
+
+        if (_whitelistSystem.IsWhitelistFail(action.Whitelist, target))
+            return false;
+
+        if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, target))
+            return false;
+
+        if (user == target)
+            return action.CanTargetSelf;
+
+        if (!action.CheckCanAccess)
+        {
+            // even if we don't check for obstructions, we may still need to check the range.
+            var xform = Transform(user);
+            var targetXform = Transform(target);
+
+            if (xform.MapID != targetXform.MapID)
+                return false;
+
+            if (action.Range <= 0)
+                return true;
+
+            var distance
+                = (_transformSystem.GetWorldPosition(xform) - _transformSystem.GetWorldPosition(targetXform))
+                .Length();
+            return distance <= action.Range;
+        }
+
+        return _interactionSystem.InRangeAndAccessible(user, target, range: action.Range);
+    }
+
+    private bool ValidateEntityWorldTargetBaseWorld(EntityUid user,
+        EntityCoordinates coords,
+        EntityWorldTargetActionComponent action)
+    {
+        if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
+            return false;
+
+        if (!action.CheckCanAccess)
+        {
+            // even if we don't check for obstructions, we may still need to check the range.
+            var xform = Transform(user);
+
+            if (xform.MapID != coords.GetMapId(EntityManager))
+                return false;
+
+            if (action.Range <= 0)
+                return true;
+
+            return coords.InRange(EntityManager, _transformSystem, Transform(user).Coordinates, action.Range);
+        }
+
+        return _interactionSystem.InRangeUnobstructed(user, coords, range: action.Range);
+    }
+
+
     public void PerformAction(EntityUid performer, ActionsComponent? component, EntityUid actionId, BaseActionComponent action, BaseActionEvent? actionEvent, TimeSpan curTime, bool predicted = true)
     {
         var handled = false;
