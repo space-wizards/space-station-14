@@ -5,7 +5,7 @@
     xmlns:ui="clr-namespace:Content.Client.Xenoarchaeology.Ui"
     Title="{Loc 'analysis-console-menu-title'}"
     MinSize="700 350"
-    SetSize="980 500">
+    SetSize="980 550">
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
         <BoxContainer Margin="10 10 10 10" MaxWidth="220" SetWidth="220" Orientation="Vertical" HorizontalExpand="False" VerticalExpand="True">
             <PanelContainer Name="BackPanel" HorizontalAlignment="Center">

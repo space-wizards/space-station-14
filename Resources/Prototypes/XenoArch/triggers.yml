@@ -45,10 +45,11 @@
   - type: XATDamage
     typesNeeded:
       Heat: 50
-  - type: XATToolUse
-    neededTool: Welding
-    delay: 5
-    fuel: 10
+# This kinda trivializes the difficulty.
+#  - type: XATToolUse
+#    neededTool: Welding
+#    delay: 5
+#    fuel: 10
 
 - type: xenoArchTrigger
   id: TriggerCold

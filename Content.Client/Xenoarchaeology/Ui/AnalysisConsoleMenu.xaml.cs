@@ -121,12 +121,13 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         {
             var triggerStr = new StringBuilder();
             triggerStr.Append("- ");
-            triggerStr.AppendLine(Loc.GetString(node.Value.Comp.TriggerTip));
+            triggerStr.Append(Loc.GetString(node.Value.Comp.TriggerTip));
 
             foreach (var predecessor in predecessorNodes)
             {
+                triggerStr.AppendLine();
                 triggerStr.Append("- ");
-                triggerStr.AppendLine(Loc.GetString(predecessor.Comp.TriggerTip));
+                triggerStr.Append(Loc.GetString(predecessor.Comp.TriggerTip));
             }
             TriggerValueLabel.SetMarkup(Loc.GetString("analysis-console-info-triggered-value", ("triggers", triggerStr.ToString())));
         }
