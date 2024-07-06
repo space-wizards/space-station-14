@@ -1,0 +1,11 @@
+﻿- type: entity
+  parent: BaseItem
+  id: Dinkystar
+  name: star sticker
+  description: A star for only the hardest working security officers! It's not even sticky anymore.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/dinkystar.rsi
+      state: icon
+    - type: Item
+      size: Tiny
