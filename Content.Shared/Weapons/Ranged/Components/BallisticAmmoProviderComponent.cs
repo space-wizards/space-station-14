@@ -45,6 +45,12 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     public bool Cycleable = true;
 
     /// <summary>
+    /// Is ammo ejected after each shot, or not.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public bool AutoCycle = true;
+
+    /// <summary>
     /// Is it okay for this entity to directly transfer its valid ammunition into another provider?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField]
