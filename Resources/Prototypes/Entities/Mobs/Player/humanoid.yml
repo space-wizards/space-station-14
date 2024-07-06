@@ -42,6 +42,9 @@
       rules: ghost-role-information-Death-Squad-rules
       raffle:
         settings: short
+      requirements:
+      - !type:OverallPlaytimeRequirement
+        time: 54000 #15 hrs
     - type: Loadout
       prototypes: [ DeathSquadGear ]
     - type: RandomMetadata
@@ -78,6 +81,10 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      requirements:
+      - !type:DepartmentTimeRequirement
+        department: Command
+        time: 18000 #5 hours
     - type: Loadout
       prototypes: [ ERTLeaderGear ]
     - type: RandomMetadata
@@ -107,6 +114,10 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      requirements:
+      - !type:DepartmentTimeRequirement
+        department: Command
+        time: 18000 #5 hours
     - type: Loadout
       prototypes: [ ERTLeaderGearEVA ]
 
@@ -128,6 +139,10 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      requirements:
+      - !type:DepartmentTimeRequirement
+        department: Command
+        time: 18000 #5 hours
     - type: Loadout
       prototypes: [ ERTLeaderGearEVALecter ]
 
@@ -279,6 +294,10 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      requirements:
+      - !type:DepartmentTimeRequirement
+        department: Engineering
+        time: 36000 # 10 hrs
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -308,6 +327,10 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      requirements:
+      - !type:DepartmentTimeRequirement
+        department: Engineering
+        time: 36000 # 10 hrs
     - type: Loadout
       prototypes: [ ERTEngineerGearEVA ]
 
@@ -339,6 +362,10 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      requirements:
+        - !type:DepartmentTimeRequirement
+          department: Security
+          time: 36000 #10 hrs
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -368,6 +395,10 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      requirements:
+        - !type:DepartmentTimeRequirement
+          department: Security
+          time: 36000 #10 hrs
     - type: Loadout
       prototypes: [ ERTSecurityGearEVA ]
 
@@ -389,6 +420,10 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      requirements:
+        - !type:DepartmentTimeRequirement
+          department: Security
+          time: 36000 #10 hrs
     - type: Loadout
       prototypes: [ ERTSecurityGearEVALecter ]
 
@@ -420,6 +455,10 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      requirements:
+        - !type:DepartmentTimeRequirement
+          department: Medical
+          time: 36000 #10 hrs
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -449,6 +488,10 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      requirements:
+        - !type:DepartmentTimeRequirement
+          department: Medical
+          time: 36000 #10 hrs
     - type: Loadout
       prototypes: [ ERTMedicalGearEVA ]
 
@@ -477,6 +520,9 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      requirements:
+      - !type:OverallPlaytimeRequirement
+        time: 54000 #15 hrs
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
