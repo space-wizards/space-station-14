@@ -133,3 +133,9 @@ accent-caveman-replacement-25 = zap
 
 accent-caveman-replaced-26 = sword
 accent-caveman-replacement-26 = stab
+
+accent-caveman-replaced-27 = don't
+accent-caveman-replacement-27 = no
+
+accent-caveman-replaced-28 = can't
+accent-caveman-replacement-28 = no
