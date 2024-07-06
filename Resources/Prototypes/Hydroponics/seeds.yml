@@ -823,6 +823,7 @@
   packetPrototype: GreenMarijuanaSeeds
   productPrototypes:
     - LeavesGreenMarijuana
+    - MaterialHemp1
   mutationPrototypes:
     - rainbowCannabis
   harvestRepeat: Repeat
@@ -850,6 +851,7 @@
   packetPrototype: RainbowCannabisSeeds
   productPrototypes:
     - LeavesCannabisRainbow
+    - MaterialHemp1
   harvestRepeat: Repeat
   lifespan: 75
   maturation: 8
