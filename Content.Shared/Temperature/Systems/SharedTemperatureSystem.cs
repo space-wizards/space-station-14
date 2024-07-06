@@ -166,7 +166,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         RaiseLocalEvent(uid, ref ev);
         temperature.CachedHeatCapacity = ev.HeatCapacity;
 
-        DebugTools.Assert(temperature.HeatCapacityDirty, $"The heat capacity of {ToPrettyString(entity)} was dirtied while it was being recalculated.");
+        DebugTools.Assert(!temperature.HeatCapacityDirty, $"The heat capacity of {ToPrettyString(entity)} was dirtied while it was being recalculated.");
     }
 
     /// <summary>

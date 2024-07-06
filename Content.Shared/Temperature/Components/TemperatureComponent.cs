@@ -22,7 +22,8 @@ public sealed partial class TemperatureComponent : Component
     /// <remarks>
     /// Should not be directly accessed. Use <see cref="SharedTemperatureSystem.GetHeatCapacity"/>.
     /// </remarks>
-    [Access(typeof(SharedTemperatureSystem), Other = AccessPermissions.None)] // VV handled through SharedTemperatureSystem
+    [Access(typeof(SharedTemperatureSystem), Other = AccessPermissions.None)]
+    [ViewVariables(VVAccess.ReadOnly)]
     public float CachedHeatCapacity = float.NaN;
 
     /// <summary>
@@ -34,13 +35,13 @@ public sealed partial class TemperatureComponent : Component
     /// <summary>
     /// The base <see cref="CachedHeatCapacity"/>
     /// </summary>
-    [DataField("heatCapacity")] // VV handled through SharedTemperatureSystem
+    [DataField("heatCapacity")]
     public float BaseHeatCapacity = 0f;
 
     /// <summary>
     /// Heat capacity per kg of mass.
     /// </summary>
-    [DataField] // VV handled through SharedTemperatureSystem
+    [DataField]
     public float SpecificHeat = 50f;
 
     /// <summary>
