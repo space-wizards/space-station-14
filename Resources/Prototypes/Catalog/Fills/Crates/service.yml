@@ -343,4 +343,6 @@
   - type: StorageFill
     contents:
       - id: BoxCandle
+        amount: 2
       - id: BoxCandleSmall
+        amount: 2
