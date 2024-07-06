@@ -25,7 +25,7 @@ public sealed partial class SolutionRegenerationComponent : Component
     /// <summary>
     /// The reagent(s) to be regenerated in the solution.
     /// </summary>
-    [DataField("generated", required: true)]
+    [DataField(required: true)]
     public Solution Generated = default!;
 
     /// <summary>
