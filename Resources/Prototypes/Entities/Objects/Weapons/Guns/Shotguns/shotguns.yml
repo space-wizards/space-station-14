@@ -33,6 +33,7 @@
       tags:
       - ShellShotgun
     capacity: 7
+    autoCycle: false
     proto: ShellShotgun
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
@@ -118,6 +119,7 @@
     fireRate: 2
   - type: BallisticAmmoProvider
     capacity: 2
+    autoCycle: true
   - type: Construction
     graph: ShotgunSawn
     node: start
