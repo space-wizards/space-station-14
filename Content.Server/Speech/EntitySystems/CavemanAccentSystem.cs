@@ -98,7 +98,7 @@ public sealed class CavemanAccentSystem : EntitySystem
 
     private string TryRemoveForbiddenSuffix(string word)
     {
-        if (word.Length < 4)
+        if (word.Length < CavemanAccentComponent.MinWordLengthToRemoveForbiddenSuffix)
         {
             return word;
         }

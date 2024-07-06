@@ -8,7 +8,11 @@ public sealed partial class CavemanAccentComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("MaxWordLength")]
-    public static int MaxWordLength = 6;
+    public static int MaxWordLength = 6; // so caveman not be verbose
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("MinWordLengthToRemoveForbiddenSuffix")]
+    public static int MinWordLengthToRemoveForbiddenSuffix = 5; // 5 means going = go, but ring != ri
 
     [ViewVariables]
     public static readonly List<string> ForbiddenWords = new()
