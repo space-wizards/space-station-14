@@ -1,7 +1,7 @@
 ﻿### GasTankComponent stuff.
 
 # Examine text showing pressure in tank.
-comp-gas-tank-examine-pressure = Pressure: [color=orange]{PRESSURE($pressure)}[/color].
+comp-gas-tank-examine = Pressure: [color=orange]{PRESSURE($pressure)}[/color].
 
 # Examine text when internals are active.
 comp-gas-tank-connected = It's connected to an external component.
