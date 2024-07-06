@@ -1,62 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix lobby character preview not updating upon changing characters.
-    type: Fix
-  id: 6368
-  time: '2024-04-17T10:06:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27043
-- author: Beck Thompson
-  changes:
-  - message: You now must equip gloved weapons (E.g boxing gloves) to use them.
-    type: Fix
-  id: 6369
-  time: '2024-04-17T10:10:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26762
-- author: slarticodefast
-  changes:
-  - message: The gas analyzer now tells you the volume of scanned objects. Tanks inside
-      canisters now show up as well.
-    type: Add
-  - message: The gas analyzer now shows the amount of moles inside the scanned pipe
-      element instead of the whole pipe network.
-    type: Tweak
-  id: 6370
-  time: '2024-04-17T17:42:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25720
-- author: deltanedas
-  changes:
-  - message: The Chameleon Projector has been added to the uplink for 7 TC, it lets
-      you disguise as anything (within reason).
-    type: Add
-  id: 6371
-  time: '2024-04-17T21:48:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26691
-- author: ShadowCommander
-  changes:
-  - message: Fixed PDA and ID card name, job, and access not getting set on some jobs.
-    type: Fix
-  id: 6372
-  time: '2024-04-17T22:16:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27062
-- author: Krunk
-  changes:
-  - message: Head of Security and Warden now have armored and unarmored variants of
-      their winter coats and the unarmored variants are available in the uniform printer.
-    type: Tweak
-  - message: Head of Security's and Warden's winter coats now provide resistances
-      equal to their non-winter counterparts.
-    type: Tweak
-  id: 6373
-  time: '2024-04-18T00:08:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24865
-- author: icekot8
-  changes:
-  - message: "\u0421argo request console now reports when a request is approved"
-    type: Add
-  id: 6374
-  time: '2024-04-18T00:32:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27038
 - author: Bellwether
   changes:
   - message: Midround zombie outbreaks are less common and spread more slowly.
@@ -3825,3 +3767,54 @@
   id: 6867
   time: '2024-07-04T01:29:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29694
+- author: Plykiya
+  changes:
+  - message: You can now destroy portable flashers.
+    type: Fix
+  id: 6868
+  time: '2024-07-04T01:51:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29564
+- author: EmoGarbage404
+  changes:
+  - message: All nuclear operatives are now humans.
+    type: Tweak
+  id: 6869
+  time: '2024-07-04T02:29:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29693
+- author: metalgearsloth
+  changes:
+  - message: Made vox roundstart.
+    type: Tweak
+  id: 6870
+  time: '2024-07-04T07:11:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29704
+- author: JIPDawg
+  changes:
+  - message: Changed the basic treatment module to include a Health Analyzer and removed
+      the dropper.
+    type: Tweak
+  id: 6871
+  time: '2024-07-04T07:17:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29696
+- author: PJB3005
+  changes:
+  - message: Fixed flashlights and similar permanently getting stuck blinking.
+    type: Fix
+  id: 6872
+  time: '2024-07-04T08:02:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29457
+- author: Jezithyr
+  changes:
+  - message: All species except for Vox can now be played as Nukies. (Vox will be
+      enabled when load out code supports them)
+    type: Tweak
+  id: 6873
+  time: '2024-07-05T07:59:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29707
+- author: metalgearsloth
+  changes:
+  - message: Shuttle map buttons will show up faster.
+    type: Tweak
+  id: 6874
+  time: '2024-07-06T03:51:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29757
