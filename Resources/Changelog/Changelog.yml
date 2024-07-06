@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Bellwether
-  changes:
-  - message: Midround zombie outbreaks are less common and spread more slowly.
-    type: Tweak
-  id: 6375
-  time: '2024-04-18T01:06:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27060
 - author: Flareguy
   changes:
   - message: Updated Remote Signaller sprites.
@@ -3818,3 +3811,10 @@
   id: 6874
   time: '2024-07-06T03:51:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29757
+- author: JIPDawg
+  changes:
+  - message: Added Late join CryoSleepers to Origin.
+    type: Tweak
+  id: 6875
+  time: '2024-07-06T17:33:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29761
