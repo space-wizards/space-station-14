@@ -108,7 +108,10 @@ namespace Content.Server.Atmos.EntitySystems
         {
             using(args.PushGroup(nameof(GasTankComponent)));
             if (args.IsInDetailsRange)
-                args.PushMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(component.Air?.Pressure ?? 0))));
+            {
+                args.PushMarkup(Loc.GetString("comp-gas-tank-examine-pressure", ("pressure", Math.Round(component.Air?.Pressure ?? 0))));
+                args.PushMarkup(Loc.GetString("comp-gas-tank-examine-volume", ("volume", $"{component.Air?.Volume ?? 0:0.##}")));
+            }
             if (component.IsConnected)
                 args.PushMarkup(Loc.GetString("comp-gas-tank-connected"));
             args.PushMarkup(Loc.GetString(component.IsValveOpen ? "comp-gas-tank-examine-open-valve" : "comp-gas-tank-examine-closed-valve"));
