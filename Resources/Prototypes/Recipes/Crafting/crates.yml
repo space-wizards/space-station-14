@@ -73,7 +73,7 @@
   category: construction-category-storage
   description: A box for pizza.
   icon: 
-    sprite: Objects/Consumable/food/baked/pizza.rsi
+    sprite: Objects/Consumable/Food/Baked/pizza.rsi
     state: box
   objectType: Item
 
