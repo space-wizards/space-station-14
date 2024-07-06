@@ -44,7 +44,7 @@
         settings: short
       requirements:
       - !type:OverallPlaytimeRequirement
-        time: 54000 #15 hrs
+        time: 36000 #10 hrs
     - type: Loadout
       prototypes: [ DeathSquadGear ]
     - type: RandomMetadata
@@ -522,7 +522,7 @@
         settings: short
       requirements:
       - !type:OverallPlaytimeRequirement
-        time: 54000 #15 hrs
+        time: 36000 # 10 hrs
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
