@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Updated Remote Signaller sprites.
-    type: Tweak
-  id: 6376
-  time: '2024-04-18T01:16:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27073
 - author: Dutch-VanDerLinde
   changes:
   - message: Grey security jumpsuits are now available in the security officer loadout.
@@ -3818,3 +3811,10 @@
   id: 6875
   time: '2024-07-06T17:33:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29761
+- author: Beck Thompson
+  changes:
+  - message: Splashing reagents on players will now apply the correct amounts.
+    type: Fix
+  id: 6876
+  time: '2024-07-07T03:52:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29763
