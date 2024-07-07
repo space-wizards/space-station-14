@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Krunk
-  changes:
-  - message: Cyborgs no longer see criminal status icons.
-    type: Remove
-  id: 6382
-  time: '2024-04-18T03:20:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26207
-- author: ArZarLordOfMango
-  changes:
-  - message: Added autolathe recipe for beverage jug.
-    type: Add
-  id: 6383
-  time: '2024-04-18T03:24:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25681
 - author: superjj18
   changes:
   - message: Emergency lighting now changes based on station alert level!
@@ -3822,3 +3808,23 @@
   id: 6881
   time: '2024-07-07T14:22:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29005
+- author: EmoGarbage404
+  changes:
+  - message: Changed AME power output. Lower injection amounts now produce more power
+      but further injections have diminishing returns.
+    type: Tweak
+  - message: Increased damage per injection overclocked AMEs.
+    type: Tweak
+  - message: Halved fuel per AME jar.
+    type: Tweak
+  id: 6882
+  time: '2024-07-07T14:27:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29587
+- author: Plykiya
+  changes:
+  - message: Hyperzine's effective healing range has been changed from 70 to 120,
+      to anything above 70 total damage.
+    type: Tweak
+  id: 6883
+  time: '2024-07-07T14:28:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29712
