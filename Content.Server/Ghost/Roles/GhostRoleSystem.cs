@@ -32,6 +32,8 @@ using Content.Server.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Collections;
 using Content.Server.Administration.Managers;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 
 namespace Content.Server.Ghost.Roles
 {
@@ -50,6 +52,7 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;
@@ -589,9 +592,11 @@ namespace Content.Server.Ghost.Roles
             // forced into a ghost role.
             LeaveAllRaffles(message.Player);
             CloseEui(message.Player);
+
             // The player is no longer a ghost, so they should not be adminned anymore. Deadmin them.
             // Ensures that admins do not forget to deadmin themselves upon entering a ghost role.
-            if (_adminManager.IsAdmin(message.Entity))
+            var autoDeAdmin = _cfg.GetCVar(CCVars.AdminDeadminOnJoin);
+            if (autoDeAdmin && _adminManager.IsAdmin(message.Entity))
             {
                 _adminManager.DeAdmin(message.Player);
             }
