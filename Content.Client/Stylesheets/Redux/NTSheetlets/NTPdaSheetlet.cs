@@ -3,7 +3,6 @@ using Content.Client.Stylesheets.Redux.Sheetlets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using static Robust.Client.UserInterface.StylesheetHelpers;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Redux.NTSheetlets;
@@ -20,69 +19,69 @@ public sealed class NTPdaSheetlet : Sheetlet<PalettedStylesheet>
         return new StyleRule[]
         {
             //PDA - Backgrounds
-            Element<PanelContainer>()
+            E<PanelContainer>()
                 .Class("PdaContentBackground")
                 .Prop(PanelContainer.StylePropertyPanel, cfg.ConfigureOpenBothButton(sheet))
                 .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252a")),
 
-            Element<PanelContainer>()
+            E<PanelContainer>()
                 .Class("PdaBackground")
                 .Prop(PanelContainer.StylePropertyPanel, cfg.ConfigureOpenBothButton(sheet))
                 .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#000000")),
 
-            Element<PanelContainer>()
+            E<PanelContainer>()
                 .Class("PdaBackgroundRect")
                 .Prop(PanelContainer.StylePropertyPanel, cfg.ConfigureBaseButton(sheet))
                 .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#717059")),
 
-            Element<PanelContainer>()
+            E<PanelContainer>()
                 .Class("PdaBorderRect")
                 .Prop(PanelContainer.StylePropertyPanel, angleBorderRect),
 
-            Element<PanelContainer>()
+            E<PanelContainer>()
                 .Class("BackgroundDark")
                 .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat(Color.FromHex("#25252A"))),
 
             //PDA - Buttons
-            Element<PdaSettingsButton>()
+            E<PdaSettingsButton>()
                 .Pseudo(ContainerButton.StylePseudoClassNormal)
                 .Prop(PdaSettingsButton.StylePropertyBgColor, Color.FromHex(PdaSettingsButton.NormalBgColor))
                 .Prop(PdaSettingsButton.StylePropertyFgColor, Color.FromHex(PdaSettingsButton.EnabledFgColor)),
 
-            Element<PdaSettingsButton>()
+            E<PdaSettingsButton>()
                 .Pseudo(ContainerButton.StylePseudoClassHover)
                 .Prop(PdaSettingsButton.StylePropertyBgColor, Color.FromHex(PdaSettingsButton.HoverColor))
                 .Prop(PdaSettingsButton.StylePropertyFgColor, Color.FromHex(PdaSettingsButton.EnabledFgColor)),
 
-            Element<PdaSettingsButton>()
+            E<PdaSettingsButton>()
                 .Pseudo(ContainerButton.StylePseudoClassPressed)
                 .Prop(PdaSettingsButton.StylePropertyBgColor, Color.FromHex(PdaSettingsButton.PressedColor))
                 .Prop(PdaSettingsButton.StylePropertyFgColor, Color.FromHex(PdaSettingsButton.EnabledFgColor)),
 
-            Element<PdaSettingsButton>()
+            E<PdaSettingsButton>()
                 .Pseudo(ContainerButton.StylePseudoClassDisabled)
                 .Prop(PdaSettingsButton.StylePropertyBgColor, Color.FromHex(PdaSettingsButton.NormalBgColor))
                 .Prop(PdaSettingsButton.StylePropertyFgColor, Color.FromHex(PdaSettingsButton.DisabledFgColor)),
 
-            Element<PdaProgramItem>()
+            E<PdaProgramItem>()
                 .Pseudo(ContainerButton.StylePseudoClassNormal)
                 .Prop(PdaProgramItem.StylePropertyBgColor, Color.FromHex(PdaProgramItem.NormalBgColor)),
 
-            Element<PdaProgramItem>()
+            E<PdaProgramItem>()
                 .Pseudo(ContainerButton.StylePseudoClassHover)
                 .Prop(PdaProgramItem.StylePropertyBgColor, Color.FromHex(PdaProgramItem.HoverColor)),
 
-            Element<PdaProgramItem>()
+            E<PdaProgramItem>()
                 .Pseudo(ContainerButton.StylePseudoClassPressed)
                 .Prop(PdaProgramItem.StylePropertyBgColor, Color.FromHex(PdaProgramItem.HoverColor)),
 
             //PDA - Text
-            Element<Label>()
+            E<Label>()
                 .Class("PdaContentFooterText")
                 .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(10))
                 .Prop(Label.StylePropertyFontColor, Color.FromHex("#757575")),
 
-            Element<Label>()
+            E<Label>()
                 .Class("PdaWindowFooterText")
                 .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(10))
                 .Prop(Label.StylePropertyFontColor, Color.FromHex("#333d3b")),

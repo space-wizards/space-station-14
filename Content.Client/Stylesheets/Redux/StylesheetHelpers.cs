@@ -129,6 +129,11 @@ public static class StylesheetHelpers
         return new() { Type = typeof(T) };
     }
 
+    public static MutableSelectorElement E()
+    {
+        return new() { };
+    }
+
     public static MutableSelector Panel(this MutableSelector selector, StyleBox panel)
     {
         return selector.Prop(PanelContainer.StylePropertyPanel, panel);

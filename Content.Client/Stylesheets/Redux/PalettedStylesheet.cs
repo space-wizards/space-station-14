@@ -1,16 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Content.Client.Resources;
-using Content.Client.Stylesheets.Redux.Fonts;
-using JetBrains.Annotations;
-using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
+﻿using JetBrains.Annotations;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Reflection;
-using Robust.Shared.Sandboxing;
-using Robust.Shared.Utility;
-using static Robust.Client.UserInterface.StylesheetHelpers;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Redux;
@@ -29,7 +18,7 @@ public abstract partial class PalettedStylesheet : BaseStylesheet
     {
         var rules = new List<StyleRule>()
         {
-            Element()
+            E()
                 .Prop(StyleProperties.PrimaryPalette, PrimaryPalette)
                 .Prop(StyleProperties.SecondaryPalette, SecondaryPalette)
                 .Prop(StyleProperties.PositivePalette, PositivePalette)
@@ -51,9 +40,10 @@ public abstract partial class PalettedStylesheet : BaseStylesheet
             for (uint i = 0; i < palette.Length; i++)
             {
                 rules.Add(
-                    Element().Class(StyleClass.GetColorClass(styleclass, i))
+                    E()
+                        .Class(StyleClass.GetColorClass(styleclass, i))
                         .Modulate(palette[i])
-                    );
+                );
             }
         }
 
@@ -66,13 +56,13 @@ public abstract partial class PalettedStylesheet : BaseStylesheet
     }
 
     public StyleRule[] GetSheetletRules<T>()
-        where T: Sheetlet<PalettedStylesheet>
+        where T : Sheetlet<PalettedStylesheet>
     {
         return GetSheetletRules<T, PalettedStylesheet>();
     }
 
     public StyleRule[] GetAllSheetletRules<T>()
-        where T: Attribute
+        where T : Attribute
     {
         return GetAllSheetletRules<PalettedStylesheet, T>();
     }

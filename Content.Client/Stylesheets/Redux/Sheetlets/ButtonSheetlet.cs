@@ -4,7 +4,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
-using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
 
@@ -20,27 +19,34 @@ public abstract class ButtonSheetlet : Sheetlet<PalettedStylesheet>
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
         var cfg = (IButtonConfig) sheet;
-        var rules =  new List<StyleRule>
+        var rules = new List<StyleRule>
         {
             // Set textures for the kinds of buttons
             CButton()
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureBaseButton(sheet)),
-            CButton().Class(StyleClass.ButtonOpenLeft)
+            CButton()
+                .Class(StyleClass.ButtonOpenLeft)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenLeftButton(sheet)),
-            CButton().Class(StyleClass.ButtonOpenRight)
+            CButton()
+                .Class(StyleClass.ButtonOpenRight)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenRightButton(sheet)),
-            CButton().Class(StyleClass.ButtonOpenBoth)
+            CButton()
+                .Class(StyleClass.ButtonOpenBoth)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenBothButton(sheet)),
-            CButton().Class(StyleClass.ButtonSquare)
+            CButton()
+                .Class(StyleClass.ButtonSquare)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenSquareButton(sheet)),
-            CButton().Class(StyleClass.ButtonSmall)
+            CButton()
+                .Class(StyleClass.ButtonSmall)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureSmallButton(sheet)),
-            CButton().Class(StyleClass.ButtonSmall)
-                .ParentOf(Element<Label>())
+            CButton()
+                .Class(StyleClass.ButtonSmall)
+                .ParentOf(E<Label>())
                 .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(8)),
 
             // Ensure labels in buttons are aligned.
-            E<Label>().Class(Button.StyleClassButton)
+            E<Label>()
+                .Class(Button.StyleClassButton)
                 .AlignMode(Label.AlignMode.Center),
         };
         // Texture button modulation
@@ -49,8 +55,11 @@ public abstract class ButtonSheetlet : Sheetlet<PalettedStylesheet>
         return rules.ToArray();
     }
 
-    public static void MakeButtonRules<T>(IButtonConfig _, List<StyleRule> rules, IReadOnlyList<Color> palette, string? styleclass)
-        where T: Control
+    public static void MakeButtonRules<T>(IButtonConfig _,
+        List<StyleRule> rules,
+        IReadOnlyList<Color> palette,
+        string? styleclass)
+        where T : Control
     {
         rules.AddRange(new StyleRule[]
         {
@@ -61,14 +70,17 @@ public abstract class ButtonSheetlet : Sheetlet<PalettedStylesheet>
         });
     }
 
-    public static void MakeButtonRules(IButtonConfig _, List<StyleRule> rules, IReadOnlyList<Color> palette, string? styleclass)
+    public static void MakeButtonRules(IButtonConfig _,
+        List<StyleRule> rules,
+        IReadOnlyList<Color> palette,
+        string? styleclass)
     {
         rules.AddRange(new StyleRule[]
         {
-            Element().MaybeClass(styleclass).ButtonNormal().Prop(Button.StylePropertyModulateSelf, palette[1]),
-            Element().MaybeClass(styleclass).ButtonHovered().Prop(Button.StylePropertyModulateSelf, palette[0]),
-            Element().MaybeClass(styleclass).ButtonPressed().Prop(Button.StylePropertyModulateSelf, palette[2]),
-            Element().MaybeClass(styleclass).ButtonDisabled().Prop(Button.StylePropertyModulateSelf, palette[4])
+            E().MaybeClass(styleclass).ButtonNormal().Prop(Button.StylePropertyModulateSelf, palette[1]),
+            E().MaybeClass(styleclass).ButtonHovered().Prop(Button.StylePropertyModulateSelf, palette[0]),
+            E().MaybeClass(styleclass).ButtonPressed().Prop(Button.StylePropertyModulateSelf, palette[2]),
+            E().MaybeClass(styleclass).ButtonDisabled().Prop(Button.StylePropertyModulateSelf, palette[4])
         });
     }
 
@@ -84,7 +96,7 @@ public interface IButtonConfig : ISheetletConfig
     public ResPath OpenLeftButtonTexturePath { get; }
     public ResPath OpenRightButtonTexturePath { get; }
     public ResPath OpenBothButtonTexturePath { get; }
-    public ResPath SmallButtonTexturePath { get;  }
+    public ResPath SmallButtonTexturePath { get; }
 
     /// <summary>
     ///     A lightest-to-darkest five color palette, for use by buttons.
@@ -117,9 +129,10 @@ public interface IButtonConfig : ISheetletConfig
 
     public virtual StyleBox ConfigureOpenRightButton(IStyleResources sheet)
     {
-        var b = new StyleBoxTexture((StyleBoxTexture)ConfigureBaseButton(sheet))
+        var b = new StyleBoxTexture((StyleBoxTexture) ConfigureBaseButton(sheet))
         {
-            Texture = new AtlasTexture(sheet.GetTexture(OpenRightButtonTexturePath), UIBox2.FromDimensions(new Vector2(0, 0), new Vector2(14, 24))),
+            Texture = new AtlasTexture(sheet.GetTexture(OpenRightButtonTexturePath),
+                UIBox2.FromDimensions(new Vector2(0, 0), new Vector2(14, 24))),
         };
         b.SetPatchMargin(StyleBox.Margin.Right, 0);
         b.SetContentMarginOverride(StyleBox.Margin.Right, 8);
@@ -129,9 +142,10 @@ public interface IButtonConfig : ISheetletConfig
 
     public virtual StyleBox ConfigureOpenLeftButton(IStyleResources sheet)
     {
-        var b = new StyleBoxTexture((StyleBoxTexture)ConfigureBaseButton(sheet))
+        var b = new StyleBoxTexture((StyleBoxTexture) ConfigureBaseButton(sheet))
         {
-            Texture = new AtlasTexture(sheet.GetTexture(OpenLeftButtonTexturePath), UIBox2.FromDimensions(new Vector2(10, 0), new Vector2(14, 24))),
+            Texture = new AtlasTexture(sheet.GetTexture(OpenLeftButtonTexturePath),
+                UIBox2.FromDimensions(new Vector2(10, 0), new Vector2(14, 24))),
         };
         b.SetPatchMargin(StyleBox.Margin.Left, 0);
         b.SetContentMarginOverride(StyleBox.Margin.Left, 8);
@@ -141,9 +155,10 @@ public interface IButtonConfig : ISheetletConfig
 
     public virtual StyleBox ConfigureOpenBothButton(IStyleResources sheet)
     {
-        var b = new StyleBoxTexture((StyleBoxTexture)ConfigureBaseButton(sheet))
+        var b = new StyleBoxTexture((StyleBoxTexture) ConfigureBaseButton(sheet))
         {
-            Texture = new AtlasTexture(sheet.GetTexture(OpenBothButtonTexturePath), UIBox2.FromDimensions(new Vector2(10, 0), new Vector2(3, 24))),
+            Texture = new AtlasTexture(sheet.GetTexture(OpenBothButtonTexturePath),
+                UIBox2.FromDimensions(new Vector2(10, 0), new Vector2(3, 24))),
         };
         b.SetPatchMargin(StyleBox.Margin.Horizontal, 0);
         b.SetContentMarginOverride(StyleBox.Margin.Horizontal, 8);
@@ -161,9 +176,8 @@ public interface IButtonConfig : ISheetletConfig
     {
         var b = new StyleBoxTexture
         {
-            Texture =  sheet.GetTexture(SmallButtonTexturePath),
+            Texture = sheet.GetTexture(SmallButtonTexturePath),
         };
         return b;
     }
 }
-

@@ -1,7 +1,6 @@
 ﻿using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using static Robust.Client.UserInterface.StylesheetHelpers;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
@@ -14,17 +13,20 @@ public sealed class LineEditSheetlet : Sheetlet<PalettedStylesheet>
         var lineEditStylebox = sheet.GetTexture("lineedit.png").IntoPatch(StyleBox.Margin.All, 3);
         lineEditStylebox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
-        return new StyleRule[]
-        {
+        return
+        [
             E<LineEdit>()
                 .Prop(LineEdit.StylePropertyStyleBox, lineEditStylebox),
             // TODO: Hardcoded colors bad, kill.
-            Element<LineEdit>().Class(LineEdit.StyleClassLineEditNotEditable)
+            E<LineEdit>()
+                .Class(LineEdit.StyleClassLineEditNotEditable)
                 .Prop("font-color", new Color(192, 192, 192)),
-            Element<LineEdit>().Pseudo(LineEdit.StylePseudoClassPlaceholder)
+            E<LineEdit>()
+                .Pseudo(LineEdit.StylePseudoClassPlaceholder)
                 .Prop("font-color", Color.Gray),
-            Element<TextEdit>().Pseudo(TextEdit.StylePseudoClassPlaceholder)
+            E<TextEdit>()
+                .Pseudo(TextEdit.StylePseudoClassPlaceholder)
                 .Prop("font-color", Color.Gray),
-        };
+        ];
     }
 }

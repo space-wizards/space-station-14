@@ -4,7 +4,6 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using static Robust.Client.UserInterface.StylesheetHelpers;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Redux.NTSheetlets;
@@ -55,16 +54,16 @@ public sealed class PalettedWindowSheetlet : Sheetlet<PalettedStylesheet>
                 .FontColor(Color.White)
                 .Font(sheet.BaseFont.GetFont(14, FontStack.FontKind.Bold)),
             // TODO: maybe also change everything here to `NanoWindow` or something
-            Element()
+            E()
                 .Class(DefaultWindow.StyleClassWindowPanel)
                 .Panel(backgroundStylebox),
-            Element()
+            E()
                 .Class(DefaultWindow.StyleClassWindowHeader)
                 .Panel(headerStylebox),
-            Element()
+            E()
                 .Class(StyleClass.AlertWindowHeader)
                 .Panel(headerAlertStylebox),
-            Element()
+            E()
                 .Class(StyleClass.BorderedWindowPanel)
                 .Panel(borderedBackgroundStylebox),
             E<TextureButton>()

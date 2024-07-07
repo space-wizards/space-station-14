@@ -3,7 +3,6 @@ using Content.Client.UserInterface.Screens;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using static Robust.Client.UserInterface.StylesheetHelpers;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Redux.Sheetlets.Hud;
@@ -16,7 +15,7 @@ public sealed class ChatGameScreenSheetlet : Sheetlet<PalettedStylesheet>
         var panel = (IPanelPalette) sheet;
         return
         [
-            Element()
+            E()
                 .Class(SeparatedChatGameScreen.StyleClassChatContainer)
                 .Panel(new StyleBoxFlat(panel.BackingPanelPalette)),
             E<OutputPanel>()

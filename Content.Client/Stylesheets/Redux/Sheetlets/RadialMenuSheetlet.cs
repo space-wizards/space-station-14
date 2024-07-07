@@ -1,6 +1,5 @@
 ﻿using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using static Robust.Client.UserInterface.StylesheetHelpers;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
@@ -12,26 +11,26 @@ public sealed class RadialMenuSheetlet : Sheetlet<PalettedStylesheet>
     {
         return new StyleRule[]
         {
-            Element<TextureButton>()
+            E<TextureButton>()
                 .Class("RadialMenuButton")
                 .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture("Radial/button_normal.png")),
-            Element<TextureButton>()
+            E<TextureButton>()
                 .Class("RadialMenuButton")
                 .Pseudo(TextureButton.StylePseudoClassHover)
                 .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture("Radial/button_hover.png")),
 
-            Element<TextureButton>()
+            E<TextureButton>()
                 .Class("RadialMenuCloseButton")
                 .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture("Radial/close_normal.png")),
-            Element<TextureButton>()
+            E<TextureButton>()
                 .Class("RadialMenuCloseButton")
                 .Pseudo(TextureButton.StylePseudoClassHover)
                 .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture("Radial/close_hover.png")),
 
-            Element<TextureButton>()
+            E<TextureButton>()
                 .Class("RadialMenuBackButton")
                 .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture("Radial/back_normal.png")),
-            Element<TextureButton>()
+            E<TextureButton>()
                 .Class("RadialMenuBackButton")
                 .Pseudo(TextureButton.StylePseudoClassHover)
                 .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture("Radial/back_hover.png")),

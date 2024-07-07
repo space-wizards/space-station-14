@@ -2,7 +2,6 @@
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using static Robust.Client.UserInterface.StylesheetHelpers;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Redux.NTSheetlets;
@@ -15,13 +14,16 @@ public sealed class NTPanelSheetlet : Sheetlet<PalettedStylesheet>
 
         var rules = new List<StyleRule>
         {
-            Element().Class(StyleClass.BackgroundPanel)
+            E()
+                .Class(StyleClass.BackgroundPanel)
                 .Prop(PanelContainer.StylePropertyPanel, cfg.ConfigureBaseButton(sheet))
                 .Modulate(sheet.SecondaryPalette[3]),
-            Element().Class(StyleClass.BackgroundPanelOpenLeft)
+            E()
+                .Class(StyleClass.BackgroundPanelOpenLeft)
                 .Prop(PanelContainer.StylePropertyPanel, cfg.ConfigureOpenLeftButton(sheet))
                 .Modulate(sheet.SecondaryPalette[3]),
-            Element().Class(StyleClass.BackgroundPanelOpenRight)
+            E()
+                .Class(StyleClass.BackgroundPanelOpenRight)
                 .Prop(PanelContainer.StylePropertyPanel, cfg.ConfigureOpenRightButton(sheet))
                 .Modulate(sheet.SecondaryPalette[3]),
         };

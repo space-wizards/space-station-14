@@ -4,7 +4,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Reflection;
 using Robust.Shared.Sandboxing;
-using static Robust.Client.UserInterface.StylesheetHelpers;
+using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Redux;
 
@@ -37,9 +37,7 @@ public abstract partial class BaseStylesheet : IStyleResources
         {
             foreach (var kind in stack.AvailableKinds)
             {
-                var builder =
-                    Element()
-                        .Class(GetFontClass(kind, prefix));
+                var builder = E().Class(GetFontClass(kind, prefix));
 
                 if (name is not null)
                     builder.Class(name);
