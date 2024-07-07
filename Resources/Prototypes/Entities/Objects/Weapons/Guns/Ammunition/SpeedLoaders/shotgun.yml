@@ -1,40 +1,40 @@
 - type: entity
-  id: BaseSpeedLoaderLightRifle
-  name: "speed loader (.30 rifle)"
+  id: BaseSpeedLoaderShotgun
+  name: "speed loader (shotgun)"
   parent: BaseItem
   abstract: true
   components:
   - type: Tag
     tags:
-    - SpeedLoaderRifle
+    - SpeedLoaderShotgun
   - type: SpeedLoader
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-      - CartridgeLightRifle
+      - ShellShotgun
     capacity: 6
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/LightRifle/light_rifle_speed_loader.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_speed_loader.rsi
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
         ents: []
 
 - type: entity
-  id: SpeedLoaderLightRifle
-  name: "speed loader (.30 rifle)"
-  parent: BaseSpeedLoaderLightRifle
+  id: SpeedLoaderShotgun
+  name: "speed loader (shotgun)"
+  parent: BaseSpeedLoaderShotgun
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeLightRifle
+    proto: ShellShotgun
   - type: Sprite
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-5
+    - state: base-6
       map: ["enum.GunVisualLayers.Mag"]
   - type: MagazineVisuals
-    magState: mag
-    steps: 6
+    magState: base
+    steps: 7
     zeroVisible: false
   - type: Appearance

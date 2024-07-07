@@ -44,6 +44,18 @@
     price: 500
 
 - type: entity
+  name: BaseWeaponShotgunSpeedLoadable
+  parent: BaseWeaponShotgun
+  id: BaseWeaponShotgunSpeedLoadable
+  abstract: true
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - ShellShotgun
+      - SpeedLoaderShotgun
+
+- type: entity
   name: Bulldog
   # Don't parent to BaseWeaponShotgun because it differs significantly
   parent: [BaseItem, BaseGunWieldable]
@@ -135,7 +147,7 @@
 
 - type: entity
   name: Enforcer
-  parent: [BaseWeaponShotgun, BaseGunWieldable]
+  parent: [BaseWeaponShotgunSpeedLoadable, BaseGunWieldable]
   id: WeaponShotgunEnforcer
   description: A premium combat shotgun based on the Kammerer design, featuring an upgraded clip capacity. .50 shotgun shells.
   components:
@@ -158,7 +170,7 @@
 
 - type: entity
   name: Kammerer
-  parent: [BaseWeaponShotgun, BaseGunWieldable]
+  parent: [BaseWeaponShotgunSpeedLoadable, BaseGunWieldable]
   id: WeaponShotgunKammerer
   description: When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds. Uses .50 shotgun shells.
   components:
