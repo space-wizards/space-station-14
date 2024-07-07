@@ -790,7 +790,7 @@
 # INTERCOM
 - type: construction
   name: intercom
-  id: IntercomAssesmbly
+  id: IntercomAssembly
   graph: Intercom
   startNode: start
   targetNode: intercom
