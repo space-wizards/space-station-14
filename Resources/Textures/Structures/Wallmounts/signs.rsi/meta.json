@@ -169,47 +169,47 @@
         },
         {
             "name": "direction_sci",
-            "directions":
+            "directions": 4
         },
         {
             "name": "direction_sec",
-            "directions":
+            "directions": 4
         },
         {
             "name": "direction_brig",
-            "directions":
+            "directions": 4
         },
         {
             "name": "direction_chapel",
-            "directions":
+            "directions": 4
         },
         {
             "name": "direction_hydro",
-            "directions":
+            "directions": 4
         },
         {
             "name": "direction_dorms",
-            "directions":
+            "directions": 4
         },
         {
             "name": "direction_cryo",
-            "directions":
+            "directions": 4
         },
         {
             "name": "direction_gravity",
-            "directions":
+            "directions": 4
         },
         {
             "name": "direction_salvage",
-            "directions":
+            "directions": 4
         },
         {
             "name": "direction_solar",
-            "directions":
+            "directions": 4
         },
         {
             "name": "direction_wash",
-            "directions":
+            "directions": 4
         },
         {
             "name": "dock"
