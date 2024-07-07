@@ -158,13 +158,6 @@ namespace Content.Client.Stylesheets
             invSlotBg.SetPatchMargin(StyleBox.Margin.All, 2);
             invSlotBg.SetContentMarginOverride(StyleBox.Margin.All, 0);
 
-            var handSlotHighlightTex = resCache.GetTexture("/Textures/Interface/Inventory/hand_slot_highlight.png");
-            var handSlotHighlight = new StyleBoxTexture
-            {
-                Texture = handSlotHighlightTex,
-            };
-            handSlotHighlight.SetPatchMargin(StyleBox.Margin.All, 2);
-
             var hotbarBackground = new StyleBoxTexture
             {
                 Texture = borderedWindowBackgroundTex,
@@ -187,17 +180,6 @@ namespace Content.Client.Stylesheets
             buttonRect.SetPadding(StyleBox.Margin.All, 2);
             buttonRect.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             buttonRect.SetContentMarginOverride(StyleBox.Margin.Horizontal, 2);
-
-            var buttonRectActionMenuItemTex = resCache.GetTexture("/Textures/Interface/Nano/black_panel_light_thin_border.png");
-            var buttonRectActionMenuRevokedItemTex = resCache.GetTexture("/Textures/Interface/Nano/black_panel_red_thin_border.png");
-            var buttonRectActionMenuItem = new StyleBoxTexture(BaseButton)
-            {
-                Texture = buttonRectActionMenuItemTex
-            };
-            buttonRectActionMenuItem.SetPatchMargin(StyleBox.Margin.All, 2);
-            buttonRectActionMenuItem.SetPadding(StyleBox.Margin.All, 2);
-            buttonRectActionMenuItem.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
-            buttonRectActionMenuItem.SetContentMarginOverride(StyleBox.Margin.Horizontal, 2);
 
             var buttonTex = resCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
 
@@ -310,13 +292,6 @@ namespace Content.Client.Stylesheets
                 Element().Class("monospace")
                     .Prop("font", notoSansMono),
 
-                // hand slot highlight
-                new StyleRule(
-                    new SelectorElement(null, new[] {StyleClassHandSlotHighlight}, null, null),
-                    new[]
-                    {
-                        new StyleProperty(PanelContainer.StylePropertyPanel, handSlotHighlight),
-                    }),
                 // Hotbar background
                 new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {StyleClassHotbarPanel}, null, null),
                     new[]
