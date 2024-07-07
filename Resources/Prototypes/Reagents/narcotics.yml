@@ -151,8 +151,7 @@
         - !type:HealthChange
           conditions:
           - !type:TotalDamage
-            min: 70
-            max: 120 # you've got a chance to get out of crit
+            min: 70 # only heals when you're more dead than alive
           damage: # heals at the same rate as tricordrazine, doesn't heal poison because if you OD'd I'm not giving you a safety net
             groups:
               Burn: -1

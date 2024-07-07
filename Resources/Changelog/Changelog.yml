@@ -1,75 +1,4 @@
 ﻿Entries:
-- author: icekot8
-  changes:
-  - message: "\u0421argo request console now reports when a request is approved"
-    type: Add
-  id: 6374
-  time: '2024-04-18T00:32:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27038
-- author: Bellwether
-  changes:
-  - message: Midround zombie outbreaks are less common and spread more slowly.
-    type: Tweak
-  id: 6375
-  time: '2024-04-18T01:06:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27060
-- author: Flareguy
-  changes:
-  - message: Updated Remote Signaller sprites.
-    type: Tweak
-  id: 6376
-  time: '2024-04-18T01:16:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27073
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Grey security jumpsuits are now available in the security officer loadout.
-    type: Tweak
-  id: 6377
-  time: '2024-04-18T01:22:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27023
-- author: Tayrtahn
-  changes:
-  - message: Sodas and other fizzy drinks can be shaken with the verbs menu to build
-      up fizziness so they spray when opened.
-    type: Add
-  id: 6378
-  time: '2024-04-18T01:49:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25574
-- author: metalgearsloth
-  changes:
-  - message: Fix lobby UI not resetting for character changes.
-    type: Fix
-  id: 6379
-  time: '2024-04-18T03:01:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27075
-- author: TokenStyle
-  changes:
-  - message: Benzene is no longer required for the Insuzine recipe.
-    type: Tweak
-  id: 6380
-  time: '2024-04-18T03:03:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26829
-- author: Golinth
-  changes:
-  - message: The Nukie Agent now comes with a medihud built into their visor!
-    type: Add
-  id: 6381
-  time: '2024-04-18T03:04:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26218
-- author: Krunk
-  changes:
-  - message: Cyborgs no longer see criminal status icons.
-    type: Remove
-  id: 6382
-  time: '2024-04-18T03:20:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26207
-- author: ArZarLordOfMango
-  changes:
-  - message: Added autolathe recipe for beverage jug.
-    type: Add
-  id: 6383
-  time: '2024-04-18T03:24:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25681
 - author: superjj18
   changes:
   - message: Emergency lighting now changes based on station alert level!
@@ -3818,3 +3747,84 @@
   id: 6873
   time: '2024-07-05T07:59:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29707
+- author: metalgearsloth
+  changes:
+  - message: Shuttle map buttons will show up faster.
+    type: Tweak
+  id: 6874
+  time: '2024-07-06T03:51:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29757
+- author: JIPDawg
+  changes:
+  - message: Added Late join CryoSleepers to Origin.
+    type: Tweak
+  id: 6875
+  time: '2024-07-06T17:33:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29761
+- author: Beck Thompson
+  changes:
+  - message: Splashing reagents on players will now apply the correct amounts.
+    type: Fix
+  id: 6876
+  time: '2024-07-07T03:52:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29763
+- author: Tayrtahn
+  changes:
+  - message: Dead bodies will no longer remain standing after being unbuckled from
+      chairs.
+    type: Fix
+  id: 6877
+  time: '2024-07-07T06:20:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29741
+- author: Simyon
+  changes:
+  - message: Ratkings now require at least 30 players in order to spawn.
+    type: Tweak
+  id: 6878
+  time: '2024-07-07T13:06:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29737
+- author: EmoGarbage404
+  changes:
+  - message: Intercoms now use encryption keys to determine what channels they can
+      broadcast on.
+    type: Tweak
+  - message: Intercoms and handheld radios no longer rely on telecom servers.
+    type: Fix
+  id: 6879
+  time: '2024-07-07T14:19:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29580
+- author: Vermidia
+  changes:
+  - message: Some drink reactions now require shaking with the shaker or stirring
+      with a spoon
+    type: Add
+  id: 6880
+  time: '2024-07-07T14:21:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29243
+- author: Dezzzix
+  changes:
+  - message: Now you can slice food with swords
+    type: Add
+  id: 6881
+  time: '2024-07-07T14:22:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29005
+- author: EmoGarbage404
+  changes:
+  - message: Changed AME power output. Lower injection amounts now produce more power
+      but further injections have diminishing returns.
+    type: Tweak
+  - message: Increased damage per injection overclocked AMEs.
+    type: Tweak
+  - message: Halved fuel per AME jar.
+    type: Tweak
+  id: 6882
+  time: '2024-07-07T14:27:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29587
+- author: Plykiya
+  changes:
+  - message: Hyperzine's effective healing range has been changed from 70 to 120,
+      to anything above 70 total damage.
+    type: Tweak
+  id: 6883
+  time: '2024-07-07T14:28:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29712
