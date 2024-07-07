@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Grey security jumpsuits are now available in the security officer loadout.
-    type: Tweak
-  id: 6377
-  time: '2024-04-18T01:22:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27023
 - author: Tayrtahn
   changes:
   - message: Sodas and other fizzy drinks can be shaken with the verbs menu to build
@@ -3818,3 +3811,11 @@
   id: 6876
   time: '2024-07-07T03:52:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29763
+- author: Tayrtahn
+  changes:
+  - message: Dead bodies will no longer remain standing after being unbuckled from
+      chairs.
+    type: Fix
+  id: 6877
+  time: '2024-07-07T06:20:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29741
