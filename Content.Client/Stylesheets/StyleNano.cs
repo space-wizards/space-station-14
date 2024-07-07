@@ -312,39 +312,6 @@ namespace Content.Client.Stylesheets
                 Mode = StyleBoxTexture.StretchMode.Tile
             };
 
-            // Slider
-            var sliderOutlineTex = resCache.GetTexture("/Textures/Interface/Nano/slider_outline.svg.96dpi.png");
-            var sliderFillTex = resCache.GetTexture("/Textures/Interface/Nano/slider_fill.svg.96dpi.png");
-            var sliderGrabTex = resCache.GetTexture("/Textures/Interface/Nano/slider_grabber.svg.96dpi.png");
-
-            var sliderFillBox = new StyleBoxTexture
-            {
-                Texture = sliderFillTex,
-                Modulate = Color.FromHex("#3E6C45")
-            };
-
-            var sliderBackBox = new StyleBoxTexture
-            {
-                Texture = sliderFillTex,
-                Modulate = PanelDark,
-            };
-
-            var sliderForeBox = new StyleBoxTexture
-            {
-                Texture = sliderOutlineTex,
-                Modulate = Color.FromHex("#494949")
-            };
-
-            var sliderGrabBox = new StyleBoxTexture
-            {
-                Texture = sliderGrabTex,
-            };
-
-            sliderFillBox.SetPatchMargin(StyleBox.Margin.All, 12);
-            sliderBackBox.SetPatchMargin(StyleBox.Margin.All, 12);
-            sliderForeBox.SetPatchMargin(StyleBox.Margin.All, 12);
-            sliderGrabBox.SetPatchMargin(StyleBox.Margin.All, 12);
-
             var boxFont13 = resCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
 
             var insetBack = new StyleBoxTexture
@@ -361,11 +328,6 @@ namespace Content.Client.Stylesheets
                 Modulate = Color.FromHex("#eaedde"), // A light cream
             };
             paperBackground.SetPatchMargin(StyleBox.Margin.All, 16.0f);
-
-            // south-facing arrow:
-            var directionIconArrowTex = resCache.GetTexture("/Textures/Interface/VerbIcons/drop.svg.192dpi.png");
-            var directionIconQuestionTex = resCache.GetTexture("/Textures/Interface/VerbIcons/information.svg.192dpi.png");
-            var directionIconHereTex = resCache.GetTexture("/Textures/Interface/VerbIcons/dot.svg.192dpi.png");
 
             Stylesheet = new Stylesheet(BaseRules.Concat(new[]
             {
@@ -484,40 +446,6 @@ namespace Content.Client.Stylesheets
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
 
-                // Colors for the caution buttons.
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(StyleClass.Negative)
-                    .Pseudo(ContainerButton.StylePseudoClassNormal)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDefault),
-
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(StyleClass.Negative)
-                    .Pseudo(ContainerButton.StylePseudoClassHover)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionHovered),
-
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(StyleClass.Negative)
-                    .Pseudo(ContainerButton.StylePseudoClassPressed)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionPressed),
-
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(StyleClass.Negative)
-                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
-
-                // Colors for confirm buttons confirm states.
-                Element<ConfirmButton>()
-                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassNormal)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDefault),
-
-                Element<ConfirmButton>()
-                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassHover)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionHovered),
-
-                Element<ConfirmButton>()
-                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassPressed)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionPressed),
-
-                Element<ConfirmButton>()
-                    .Pseudo(ConfirmButton.ConfirmPrefix + ContainerButton.StylePseudoClassDisabled)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
-
                 new StyleRule(new SelectorChild(
                     new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassDisabled}),
                     new SelectorElement(typeof(Label), null, null, null)),
@@ -526,36 +454,7 @@ namespace Content.Client.Stylesheets
                         new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
                     }),
 
-                // Direction / arrow icon
-                Element<DirectionIcon>().Class(DirectionIcon.StyleClassDirectionIconArrow)
-                    .Prop(TextureRect.StylePropertyTexture, directionIconArrowTex),
-
-                Element<DirectionIcon>().Class(DirectionIcon.StyleClassDirectionIconUnknown)
-                    .Prop(TextureRect.StylePropertyTexture, directionIconQuestionTex),
-
-                Element<DirectionIcon>().Class(DirectionIcon.StyleClassDirectionIconHere)
-                    .Prop(TextureRect.StylePropertyTexture, directionIconHereTex),
-
-                // Thin buttons (No padding nor vertical margin)
-                Element<ContainerButton>().Class(StyleClassStorageButton)
-                    .Prop(ContainerButton.StylePropertyStyleBox, buttonStorage),
-
-                Element<ContainerButton>().Class(StyleClassStorageButton)
-                    .Pseudo(ContainerButton.StylePseudoClassNormal)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDefault),
-
-                Element<ContainerButton>().Class(StyleClassStorageButton)
-                    .Pseudo(ContainerButton.StylePseudoClassHover)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorHovered),
-
-                Element<ContainerButton>().Class(StyleClassStorageButton)
-                    .Pseudo(ContainerButton.StylePseudoClassPressed)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorPressed),
-
-                Element<ContainerButton>().Class(StyleClassStorageButton)
-                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
-// ListContainer
+                // ListContainer
                 Element<ContainerButton>().Class(ListContainer.StyleClassListContainerButton)
                     .Prop(ContainerButton.StylePropertyStyleBox, listContainerButton),
 

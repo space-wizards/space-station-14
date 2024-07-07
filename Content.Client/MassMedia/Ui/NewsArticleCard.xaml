@@ -17,13 +17,13 @@
             <Label FontColorOverride="#b1b1b2" StyleClasses="LabelSmall" Name="AuthorLabel" Margin="14 6 6 6"/>
             <Control HorizontalExpand="True"/>
             <Label FontColorOverride="#b1b1b2" StyleClasses="LabelSmall" Name="PublishTimeLabel" Margin="6 6 6 6"/>
-            <controls:ConfirmButton Name="DeleteButton" Text="{Loc news-write-ui-delete-text}"
+            <Button Name="DeleteButton" Text="{Loc news-write-ui-delete-text}"
                     HorizontalAlignment="Right" Margin="8 6 6 6" SetHeight="19" SetWidth="52" Access="Public">
                 <Button.StyleClasses>
                     <system:String>ButtonSmall</system:String>
                     <system:String>negative</system:String>
                 </Button.StyleClasses>
-            </controls:ConfirmButton>
+            </Button>
         </BoxContainer>
     </BoxContainer>
 </Control>
