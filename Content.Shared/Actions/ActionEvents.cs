@@ -157,12 +157,12 @@ public abstract partial class EntityWorldTargetActionEvent : BaseActionEvent
     /// <summary>
     ///     The entity that the user targeted.
     /// </summary>
-    public EntityUid Entity;
+    public EntityUid? Entity;
 
     /// <summary>
     ///     The coordinates of the location that the user targeted.
     /// </summary>
-    public EntityCoordinates Coords;
+    public EntityCoordinates? Coords;
 }
 
 /// <summary>

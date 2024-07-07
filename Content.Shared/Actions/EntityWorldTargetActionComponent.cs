@@ -1,8 +1,10 @@
 ﻿using Content.Shared.Whitelist;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Actions;
 
+[RegisterComponent, NetworkedComponent]
 public sealed partial class EntityWorldTargetActionComponent : BaseTargetActionComponent
 {
     public override BaseActionEvent? BaseEvent => Event;
@@ -10,24 +12,21 @@ public sealed partial class EntityWorldTargetActionComponent : BaseTargetActionC
     /// <summary>
     ///     The local-event to raise when this action is performed.
     /// </summary>
-    [DataField("event")]
+    [DataField]
     [NonSerialized]
     public EntityWorldTargetActionEvent? Event;
 
-    [DataField("whitelist")] public EntityWhitelist? Whitelist;
+    [DataField] public EntityWhitelist? Whitelist;
 
-    [DataField("canTargetSelf")] public bool CanTargetSelf = true;
+    [DataField] public bool CanTargetSelf = true;
 }
 
 [Serializable, NetSerializable]
-public sealed class EntityWorldTargetActionComponentState : BaseActionComponentState
+public sealed class EntityWorldTargetActionComponentState(
+    EntityWorldTargetActionComponent component,
+    IEntityManager entManager)
+    : BaseActionComponentState(component, entManager)
 {
-    public EntityWhitelist? Whitelist;
-    public bool CanTargetSelf;
-
-    public EntityWorldTargetActionComponentState(EntityTargetActionComponent component, IEntityManager entManager) : base(component, entManager)
-    {
-        Whitelist = component.Whitelist;
-        CanTargetSelf = component.CanTargetSelf;
-    }
+    public EntityWhitelist? Whitelist = component.Whitelist;
+    public bool CanTargetSelf = component.CanTargetSelf;
 }

@@ -198,47 +198,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         }
     }
 
-    private bool TryTargetEntityWorld(in PointerInputCmdArgs args,
-        EntityUid actionId,
-        EntityWorldTargetActionComponent action,
-        EntityUid user,
-        ActionsComponent actionComp)
-    {
-        if (_actionsSystem == null)
-            return false;
-
-        var entity = args.EntityUid;
-        var coords = args.Coordinates;
-
-        if (!_actionsSystem.ValidateEntityWorldTarget(user, entity, coords, (actionId, action)))
-        {
-            if (action.DeselectOnMiss)
-                StopTargeting();
-
-            return false;
-        }
-
-        if (action.ClientExclusive)
-        {
-            if (action.Event != null)
-            {
-                action.Event.Entity = entity;
-                action.Event.Coords = coords;
-                action.Event.Performer = user;
-                action.Event.Action = actionId;
-            }
-
-            _actionsSystem.PerformAction(user, actionComp, actionId, action, action.Event, _timing.CurTime);
-        }
-        else
-            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(EntityManager.GetNetEntity(actionId), EntityManager.GetNetEntity(args.EntityUid)));
-
-        if (!action.Repeat)
-            StopTargeting();
-
-        return true;
-    }
-
     private bool TryTargetWorld(in PointerInputCmdArgs args, EntityUid actionId, WorldTargetActionComponent action, EntityUid user, ActionsComponent actionComp)
     {
         if (_actionsSystem == null)
@@ -295,6 +254,47 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             if (action.Event != null)
             {
                 action.Event.Target = entity;
+                action.Event.Performer = user;
+                action.Event.Action = actionId;
+            }
+
+            _actionsSystem.PerformAction(user, actionComp, actionId, action, action.Event, _timing.CurTime);
+        }
+        else
+            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(EntityManager.GetNetEntity(actionId), EntityManager.GetNetEntity(args.EntityUid)));
+
+        if (!action.Repeat)
+            StopTargeting();
+
+        return true;
+    }
+
+    private bool TryTargetEntityWorld(in PointerInputCmdArgs args,
+        EntityUid actionId,
+        EntityWorldTargetActionComponent action,
+        EntityUid user,
+        ActionsComponent actionComp)
+    {
+        if (_actionsSystem == null)
+            return false;
+
+        var entity = args.EntityUid;
+        var coords = args.Coordinates;
+
+        if (!_actionsSystem.ValidateEntityWorldTarget(user, entity, coords, (actionId, action)))
+        {
+            if (action.DeselectOnMiss)
+                StopTargeting();
+
+            return false;
+        }
+
+        if (action.ClientExclusive)
+        {
+            if (action.Event != null)
+            {
+                action.Event.Entity = entity;
+                action.Event.Coords = coords;
                 action.Event.Performer = user;
                 action.Event.Action = actionId;
             }

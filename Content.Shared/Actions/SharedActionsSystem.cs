@@ -39,10 +39,12 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<InstantActionComponent, MapInitEvent>(OnActionMapInit);
         SubscribeLocalEvent<EntityTargetActionComponent, MapInitEvent>(OnActionMapInit);
         SubscribeLocalEvent<WorldTargetActionComponent, MapInitEvent>(OnActionMapInit);
+        SubscribeLocalEvent<EntityWorldTargetActionComponent, MapInitEvent>(OnActionMapInit);
 
         SubscribeLocalEvent<InstantActionComponent, ComponentShutdown>(OnActionShutdown);
         SubscribeLocalEvent<EntityTargetActionComponent, ComponentShutdown>(OnActionShutdown);
         SubscribeLocalEvent<WorldTargetActionComponent, ComponentShutdown>(OnActionShutdown);
+        SubscribeLocalEvent<EntityWorldTargetActionComponent, ComponentShutdown>(OnActionShutdown);
 
         SubscribeLocalEvent<ActionsComponent, DidEquipEvent>(OnDidEquip);
         SubscribeLocalEvent<ActionsComponent, DidEquipHandEvent>(OnHandEquipped);
@@ -57,10 +59,12 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<InstantActionComponent, ComponentGetState>(OnInstantGetState);
         SubscribeLocalEvent<EntityTargetActionComponent, ComponentGetState>(OnEntityTargetGetState);
         SubscribeLocalEvent<WorldTargetActionComponent, ComponentGetState>(OnWorldTargetGetState);
+        SubscribeLocalEvent<EntityWorldTargetActionComponent, ComponentGetState>(OnEntityWorldTargetGetState);
 
         SubscribeLocalEvent<InstantActionComponent, GetActionDataEvent>(OnGetActionData);
         SubscribeLocalEvent<EntityTargetActionComponent, GetActionDataEvent>(OnGetActionData);
         SubscribeLocalEvent<WorldTargetActionComponent, GetActionDataEvent>(OnGetActionData);
+        SubscribeLocalEvent<EntityWorldTargetActionComponent, GetActionDataEvent>(OnGetActionData);
 
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
     }
@@ -101,6 +105,11 @@ public abstract class SharedActionsSystem : EntitySystem
     private void OnWorldTargetGetState(EntityUid uid, WorldTargetActionComponent component, ref ComponentGetState args)
     {
         args.State = new WorldTargetActionComponentState(component, EntityManager);
+    }
+
+    private void OnEntityWorldTargetGetState(EntityUid uid, EntityWorldTargetActionComponent component, ref ComponentGetState args)
+    {
+        args.State = new EntityWorldTargetActionComponentState(component, EntityManager);
     }
 
     private void OnGetActionData<T>(EntityUid uid, T component, ref GetActionDataEvent args) where T : BaseActionComponent
@@ -443,6 +452,50 @@ public abstract class SharedActionsSystem : EntitySystem
                 }
 
                 break;
+            case EntityWorldTargetActionComponent entityWorldAction:
+                if (ev.EntityTarget is not { Valid: true } netEntityTarget)
+                {
+                    Log.Error($"Attempted to perform an entity-world-targeted action without a target entity! Action: {name}");
+                    return;
+                }
+                if (ev.EntityCoordinatesTarget is not { } netCoordinatesWorldTarget)
+                {
+                    Log.Error($"Attempted to perform an entity-world-targeted action without target coordinates! Action: {name}");
+                    return;
+                }
+
+                var entityWorldTarget = GetEntity(netEntityTarget);
+
+                var entityCoordinatesWorldTarget = GetCoordinates(netCoordinatesWorldTarget);
+                _rotateToFaceSystem.TryFaceCoordinates(user,
+                    entityCoordinatesWorldTarget.ToMapPos(EntityManager, _transformSystem));
+
+                var entWorldAction = new Entity<EntityWorldTargetActionComponent>(actionEnt, entityWorldAction);
+
+                var entityValidated = ValidateEntityWorldTargetBaseEntity(user, entityWorldTarget, entWorldAction);
+                var worldValidated = ValidateEntityWorldTargetBaseWorld(user, entityCoordinatesWorldTarget, entWorldAction);
+
+                if (!ValidateEntityWorldTarget(user,
+                        entityWorldTarget,
+                        entityCoordinatesWorldTarget,
+                        entityValidated,
+                        worldValidated,
+                        entWorldAction))
+                    return;
+
+                _adminLogger.Add(LogType.Action,
+                    $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString (action.Container ?? user):provider}) targeted at {ToPrettyString(entityWorldTarget):target} {entityCoordinatesWorldTarget:target}.");
+
+                if (entityWorldAction.Event != null)
+                {
+                    if (entityValidated)
+                        entityWorldAction.Event.Entity = entityWorldTarget;
+                    if (worldValidated)
+                        entityWorldAction.Event.Coords = entityCoordinatesWorldTarget;
+                    Dirty(actionEnt, entityWorldAction);
+                    performEvent = entityWorldAction.Event;
+                }
+                break;
             case InstantActionComponent instantAction:
                 if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
                     return;
@@ -547,6 +600,16 @@ public abstract class SharedActionsSystem : EntitySystem
         var entityValidated = ValidateEntityWorldTargetBaseEntity(user, entity, action);
         var worldValidated = ValidateEntityWorldTargetBaseWorld(user, coords, action);
 
+        return ValidateEntityWorldTarget(user, entity, coords, entityValidated, worldValidated, action);
+    }
+
+    private bool ValidateEntityWorldTarget(EntityUid user,
+        EntityUid entity,
+        EntityCoordinates coords,
+        bool entityValidated,
+        bool worldValidated,
+        Entity<EntityWorldTargetActionComponent> action)
+    {
         if (!entityValidated && !worldValidated)
             return false;
 
@@ -556,6 +619,7 @@ public abstract class SharedActionsSystem : EntitySystem
         RaiseLocalEvent(action, ref ev);
         return !ev.Cancelled;
     }
+
 
     private bool ValidateEntityWorldTargetBaseEntity(EntityUid user,
         EntityUid target,
