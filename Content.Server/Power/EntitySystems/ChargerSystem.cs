@@ -62,7 +62,7 @@ internal sealed class ChargerSystem : EntitySystem
                 foreach (var contained in container.ContainedEntities)
                 {
                     if (!TryComp<BatteryComponent>(contained, out var battery))
-                        return;
+                        continue;
 
                     var chargePercentage = (battery.CurrentCharge / battery.MaxCharge) * 100;
                     args.PushMarkup(Loc.GetString("charger-content", ("chargePercentage", (int) chargePercentage)));
