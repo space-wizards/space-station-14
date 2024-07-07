@@ -116,22 +116,30 @@ public sealed class LoadoutSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, LoadoutComponent component, MapInitEvent args)
     {
+        Equip(uid, component.StartingGear, component.RoleLoadout);
+    }
+
+    public void Equip(EntityUid uid, List<ProtoId<StartingGearPrototype>>? startingGear,
+        List<ProtoId<RoleLoadoutPrototype>>? loadoutGroups)
+    {
         // Use starting gear if specified
-        if (component.StartingGear != null)
+        if (startingGear != null)
         {
-            var gear = _protoMan.Index(_random.Pick(component.StartingGear));
+            var gear = _protoMan.Index(_random.Pick(startingGear));
             _station.EquipStartingGear(uid, gear);
         }
 
-        if (component.RoleLoadout == null)
+        if (loadoutGroups == null)
             return;
 
         // ...otherwise equip from role loadout
-        var id = _random.Pick(component.RoleLoadout);
+        var id = _random.Pick(loadoutGroups);
         var proto = _protoMan.Index(id);
         var loadout = new RoleLoadout(id);
         loadout.SetDefault(GetProfile(uid), _actors.GetSession(uid), _protoMan, true);
         _station.EquipRoleLoadout(uid, loadout, proto);
+
+        GearEquipped(uid);
     }
 
     public void GearEquipped(EntityUid uid)

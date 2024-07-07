@@ -20,6 +20,7 @@ using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Players;
 using Content.Shared.Preferences.Loadouts;
+using Content.Shared.Roles;
 using Content.Shared.Whitelist;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
@@ -331,28 +332,12 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         // The following is where we apply components, equipment, and other changes to our antagonist entity.
         EntityManager.AddComponents(player, def.Components);
 
-        // Equip the entity's RoleLoadout
-        _stationSpawning.EquipStartingGear(player, def.StartingGear, false);
+        // Equip the entity's RoleLoadout and LoadoutGroup
+        List<ProtoId<StartingGearPrototype>>? gear = new(); // TODO: Just make this a list on AntagSelectionComponent, and update every antag prototype
+        if (def.StartingGear is not null)
+            gear.Add(def.StartingGear.Value);
 
-        // Equip the entity's LoadoutGroup
-        if (def.RoleLoadout is not null)
-        {
-            foreach (var id in def.RoleLoadout)
-            {
-                if (_proto.TryIndex(id, out var roleProto))
-                {
-                    var loadout = new RoleLoadout(id);
-
-                    var a = antagEnt;
-                    var p = player;
-
-                    loadout.SetDefault(_loadout.GetProfile(player), _actors.GetSession(player), _proto);
-                    _stationSpawning.EquipRoleLoadout(player, loadout , roleProto);
-                }
-            }
-        }
-
-        _loadout.GearEquipped(player);
+        _loadout.Equip(player, gear, def.RoleLoadout);
 
         if (session != null)
         {
