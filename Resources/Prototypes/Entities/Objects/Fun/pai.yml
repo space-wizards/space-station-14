@@ -115,15 +115,16 @@
           On: { state: command-pai-on-overlay }
   - type: WirelessNetworkConnection
     range: 500
-  - type: StationLimitedNetwork
+  - type: StationLimitedNetwork #Block Camera monitor
   - type: CrewMonitoringConsole
-    snap: false
-    precision: 3
   - type: SurveillanceCameraMonitor
+  #- type: DeviceNetwork
+  #  deviceNetId: Wired
+  #  receiveFrequencyId:  SurveillanceCamera
+  #  transmitFrequencyId: SurveillanceCamera
   - type: DeviceNetwork
     deviceNetId: Wireless
-    receiveFrequencyId:  CrewMonitor #SurveillanceCamera
-    transmitFrequencyId: SurveillanceCamera
+    receiveFrequencyId:  CrewMonitor
   - type: UserInterface
     interfaces:
       enum.InstrumentUiKey.Key:
@@ -138,10 +139,7 @@
       enum.SurveillanceCameraMonitorUiKey.Key:
         type: SurveillanceCameraMonitorBoundUserInterface
         requireInputValidation: false
-  - type: IntrinsicUI
-    uis:
-      enum.CrewMonitoringUIKey.Key:
-        toggleAction: ActionPAIShowCrewMonitoring
+
 
 
 - type: entity
@@ -229,7 +227,7 @@
     checkConsciousness: false
     icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
     iconOn: Structures/Machines/parts.rsi/box_2.png
-    event: !type:ToggleIntrinsicUIEvent { key: enum.CrewMonitoringUIKey.Key }
+    event: !type:OpenUiActionEvent { key: enum.CrewMonitoringUIKey.Key }
 
 - type: entity
   id: ActionPAIPlayMidi

@@ -15,4 +15,11 @@ public sealed partial class CommandPAIComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? CameraMonitorAction;
 
+
+    [DataField]
+    public ProtoId<EntityPrototype> CrewMonitorActionId = "ActionPAIShowCrewMonitoring";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? CrewMonitorAction;
+
 }
