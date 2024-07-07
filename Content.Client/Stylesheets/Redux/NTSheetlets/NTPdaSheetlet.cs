@@ -1,4 +1,5 @@
 ﻿using Content.Client.PDA;
+using Content.Client.Stylesheets.Redux.SheetletConfig;
 using Content.Client.Stylesheets.Redux.Sheetlets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;

@@ -1,4 +1,5 @@
 ﻿using Content.Client.Stylesheets.Redux.Fonts;
+using Content.Client.Stylesheets.Redux.SheetletConfig;
 using Content.Client.Stylesheets.Redux.Sheetlets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -79,12 +80,4 @@ public sealed class PalettedWindowSheetlet : Sheetlet<PalettedStylesheet>
 
         return rules.ToArray();
     }
-}
-
-public interface IPanelPalette : ISheetletConfig
-{
-    /// <summary>
-    ///     Color used for window backgrounds.
-    /// </summary>
-    public Color BackingPanelPalette { get; }
 }

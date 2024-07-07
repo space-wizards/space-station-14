@@ -1,5 +1,6 @@
 ﻿using Content.Client.Stylesheets.Redux.Colorspace;
 using Content.Client.Stylesheets.Redux.NTSheetlets;
+using Content.Client.Stylesheets.Redux.SheetletConfig;
 using Content.Client.Stylesheets.Redux.Sheetlets;
 using Robust.Shared.Utility;
 
