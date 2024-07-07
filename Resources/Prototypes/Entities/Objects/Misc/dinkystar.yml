@@ -1,12 +1,21 @@
 ﻿- type: entity
-  parent: BaseItem
+  parent: ClothingNeckBase
   id: Dinkystar
   name: star sticker
   description: A dinky lil star for only the hardest working security officers! It's not even sticky anymore.
   components:
     - type: Sprite
-      sprite: Objects/Misc/dinkystar.rsi
+      sprite: Clothing/Neck/Misc/dinkystar.rsi
       state: icon
+    - type: Clothing
+      sprite: Clothing/Neck/Misc/dinkystar.rsi
+      clothingVisuals:
+        neck:
+          - state: star-equipped
+    - type: EmbeddableProjectile
+      sound: /Audio/Weapons/dodgeball.ogg
+      minimumSpeed: 3
+      removalTime: 0.5
     - type: Item
       size: Tiny
     - type: Tag

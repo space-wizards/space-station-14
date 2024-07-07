@@ -9,6 +9,10 @@
     "states": [
         {
             "name": "icon"
+        },
+        {
+            "name": "star-equipped",
+            "directions": 4
         }
     ]
 }
