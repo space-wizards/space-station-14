@@ -130,9 +130,12 @@ public sealed class LoadoutSystem : EntitySystem
         }
 
         if (loadoutGroups == null)
+        {
+            GearEquipped(uid);
             return;
+        }
 
-        // ...otherwise equip from role loadout
+        // then equip from role loadout
         var id = _random.Pick(loadoutGroups);
         var proto = _protoMan.Index(id);
         var loadout = new RoleLoadout(id);
