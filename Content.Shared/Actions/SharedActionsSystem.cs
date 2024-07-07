@@ -453,49 +453,56 @@ public abstract class SharedActionsSystem : EntitySystem
 
                 break;
             case EntityWorldTargetActionComponent entityWorldAction:
-                if (ev.EntityTarget is not { Valid: true } netEntityTarget)
-                {
-                    Log.Error($"Attempted to perform an entity-world-targeted action without a target entity! Action: {name}");
-                    return;
-                }
-                if (ev.EntityCoordinatesTarget is not { } netCoordinatesWorldTarget)
-                {
-                    Log.Error($"Attempted to perform an entity-world-targeted action without target coordinates! Action: {name}");
-                    return;
-                }
+            {
 
-                var entityWorldTarget = GetEntity(netEntityTarget);
-
-                var entityCoordinatesWorldTarget = GetCoordinates(netCoordinatesWorldTarget);
-                _rotateToFaceSystem.TryFaceCoordinates(user,
-                    entityCoordinatesWorldTarget.ToMapPos(EntityManager, _transformSystem));
+                EntityUid? actionEntity = null;
+                EntityCoordinates? actionCoords = null;
+                var entityValidated = false;
+                var worldValidated = false;
 
                 var entWorldAction = new Entity<EntityWorldTargetActionComponent>(actionEnt, entityWorldAction);
 
-                var entityValidated = ValidateEntityWorldTargetBaseEntity(user, entityWorldTarget, entWorldAction);
-                var worldValidated = ValidateEntityWorldTargetBaseWorld(user, entityCoordinatesWorldTarget, entWorldAction);
+                if (ev.EntityCoordinatesTarget is { } netCoordinatesWorldTarget)
+                {
+                    actionCoords = GetCoordinates(netCoordinatesWorldTarget);
+                    worldValidated
+                        = ValidateEntityWorldTargetBaseWorld(user, actionCoords.Value, entWorldAction);
+                }
+
+                if (ev.EntityTarget is {Valid: true} netEntityTarget)
+                {
+                    actionEntity = GetEntity(netEntityTarget);
+                    entityValidated = ValidateEntityWorldTargetBaseEntity(user, actionEntity.Value, entWorldAction);
+                }
 
                 if (!ValidateEntityWorldTarget(user,
-                        entityWorldTarget,
-                        entityCoordinatesWorldTarget,
+                        actionEntity,
+                        actionCoords,
                         entityValidated,
                         worldValidated,
                         entWorldAction))
                     return;
 
                 _adminLogger.Add(LogType.Action,
-                    $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString (action.Container ?? user):provider}) targeted at {ToPrettyString(entityWorldTarget):target} {entityCoordinatesWorldTarget:target}.");
+                    $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(action.Container ?? user):provider}) targeted at {ToPrettyString(actionEntity):target} {actionCoords:target}.");
 
                 if (entityWorldAction.Event != null)
                 {
                     if (entityValidated)
-                        entityWorldAction.Event.Entity = entityWorldTarget;
+                        entityWorldAction.Event.Entity = actionEntity;
                     if (worldValidated)
-                        entityWorldAction.Event.Coords = entityCoordinatesWorldTarget;
+                        entityWorldAction.Event.Coords = actionCoords;
                     Dirty(actionEnt, entityWorldAction);
                     performEvent = entityWorldAction.Event;
                 }
+
                 break;
+                Log.Error(
+                    $"Attempted to perform an entity-world-targeted action without target coordinates! Action: {name}");
+                Log.Error(
+                    $"Attempted to perform an entity-world-targeted action without a target entity! Action: {name}");
+                return;
+            }
             case InstantActionComponent instantAction:
                 if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
                     return;
@@ -604,8 +611,8 @@ public abstract class SharedActionsSystem : EntitySystem
     }
 
     private bool ValidateEntityWorldTarget(EntityUid user,
-        EntityUid entity,
-        EntityCoordinates coords,
+        EntityUid? entity,
+        EntityCoordinates? coords,
         bool entityValidated,
         bool worldValidated,
         Entity<EntityWorldTargetActionComponent> action)
