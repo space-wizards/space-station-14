@@ -41,7 +41,7 @@ public abstract class ButtonSheetlet : Sheetlet<PalettedStylesheet>
 
             // Ensure labels in buttons are aligned.
             E<Label>().Class(Button.StyleClassButton)
-                .Prop(Label.StylePropertyAlignMode, Label.AlignMode.Center),
+                .AlignMode(Label.AlignMode.Center),
         };
         // Texture button modulation
         MakeButtonRules<TextureButton>(cfg, rules, _textureButtonPalette, null);

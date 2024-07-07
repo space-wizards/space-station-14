@@ -38,7 +38,6 @@ namespace Content.Client.Stylesheets
     // STLYE SHEETS WERE A MISTAKE. KILL ALL OF THIS WITH FIRE
     public sealed class StyleNano : StyleBase
     {
-        public const string StyleClassInventorySlotBackground = "InventorySlotBackground";
         public const string StyleClassHandSlotHighlight = "HandSlotHighlight";
         public const string StyleClassChatSubPanel = "ChatSubPanel";
         public const string StyleClassHotbarPanel = "HotbarPanel";
@@ -273,12 +272,7 @@ namespace Content.Client.Stylesheets
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
 
-            var squareTex = resCache.GetTexture("/Textures/Interface/Nano/square.png");
-            var listContainerButton = new StyleBoxTexture
-            {
-                Texture = squareTex,
-                ContentMarginLeftOverride = 10
-            };
+
 
             // NanoHeading
             var nanoHeadingTex = resCache.GetTexture("/Textures/Interface/Nano/nanoheading.svg.96dpi.png");
@@ -311,55 +305,11 @@ namespace Content.Client.Stylesheets
             };
             insetBack.SetPatchMargin(StyleBox.Margin.All, 10);
 
-            // Default paper background:
-            var paperBackground = new StyleBoxTexture
-            {
-                Texture = resCache.GetTexture("/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"),
-                Modulate = Color.FromHex("#eaedde"), // A light cream
-            };
-            paperBackground.SetPatchMargin(StyleBox.Margin.All, 16.0f);
-
             Stylesheet = new Stylesheet(BaseRules.Concat(new[]
             {
                 Element().Class("monospace")
                     .Prop("font", notoSansMono),
-                // Window title.
-                new StyleRule(
-                    new SelectorElement(typeof(Label), new[] {DefaultWindow.StyleClassWindowTitle}, null, null),
-                    new[]
-                    {
-                        new StyleProperty(Label.StylePropertyFontColor, NanoGold),
-                        new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
-                    }),
-                // Alert (white) window title.
-                new StyleRule(
-                    new SelectorElement(typeof(Label), new[] {"windowTitleAlert"}, null, null),
-                    new[]
-                    {
-                        new StyleProperty(Label.StylePropertyFontColor, Color.White),
-                        new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
-                    }),
-                // Window background.
-                new StyleRule(
-                    new SelectorElement(null, new[] {DefaultWindow.StyleClassWindowPanel}, null, null),
-                    new[]
-                    {
-                        new StyleProperty(PanelContainer.StylePropertyPanel, windowBackground),
-                    }),
-                // bordered window background
-                new StyleRule(
-                    new SelectorElement(null, new[] {StyleClass.BorderedWindowPanel}, null, null),
-                    new[]
-                    {
-                        new StyleProperty(PanelContainer.StylePropertyPanel, borderedWindowBackground),
-                    }),
-                // inventory slot background
-                new StyleRule(
-                    new SelectorElement(null, new[] {StyleClassInventorySlotBackground}, null, null),
-                    new[]
-                    {
-                        new StyleProperty(PanelContainer.StylePropertyPanel, invSlotBg),
-                    }),
+
                 // hand slot highlight
                 new StyleRule(
                     new SelectorElement(null, new[] {StyleClassHandSlotHighlight}, null, null),
@@ -373,63 +323,6 @@ namespace Content.Client.Stylesheets
                     {
                         new StyleProperty(PanelContainer.StylePropertyPanel, hotbarBackground),
                     }),
-                // Window header.
-                new StyleRule(
-                    new SelectorElement(typeof(PanelContainer), new[] {DefaultWindow.StyleClassWindowHeader}, null, null),
-                    new[]
-                    {
-                        new StyleProperty(PanelContainer.StylePropertyPanel, windowHeader),
-                    }),
-                // Alert (red) window header.
-                new StyleRule(
-                    new SelectorElement(typeof(PanelContainer), new[] {"windowHeaderAlert"}, null, null),
-                    new[]
-                    {
-                        new StyleProperty(PanelContainer.StylePropertyPanel, windowHeaderAlert),
-                    }),
-
-                // Shapes for the buttons.
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
-                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButton),
-
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
-                    .Class(StyleClass.ButtonOpenRight)
-                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenRight),
-
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
-                    .Class(StyleClass.ButtonOpenLeft)
-                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenLeft),
-
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
-                    .Class(StyleClass.ButtonOpenBoth)
-                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenBoth),
-
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
-                    .Class(StyleClass.ButtonSquare)
-                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonSquare),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] { Button.StyleClassButton }, null, null), new[]
-                {
-                    new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Center),
-                }),
-
-                // Colors for the buttons.
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
-                    .Pseudo(ContainerButton.StylePseudoClassNormal)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDefault),
-
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
-                    .Pseudo(ContainerButton.StylePseudoClassHover)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorHovered),
-
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
-                    .Pseudo(ContainerButton.StylePseudoClassPressed)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorPressed),
-
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
-                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
-                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
-
                 new StyleRule(new SelectorChild(
                     new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassDisabled}),
                     new SelectorElement(typeof(Label), null, null, null)),
@@ -437,26 +330,6 @@ namespace Content.Client.Stylesheets
                     {
                         new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
                     }),
-
-                // ListContainer
-                Element<ContainerButton>().Class(ListContainer.StyleClassListContainerButton)
-                    .Prop(ContainerButton.StylePropertyStyleBox, listContainerButton),
-
-                Element<ContainerButton>().Class(ListContainer.StyleClassListContainerButton)
-                    .Pseudo(ContainerButton.StylePseudoClassNormal)
-                    .Prop(Control.StylePropertyModulateSelf, new Color(55, 55, 68)),
-
-                Element<ContainerButton>().Class(ListContainer.StyleClassListContainerButton)
-                    .Pseudo(ContainerButton.StylePseudoClassHover)
-                    .Prop(Control.StylePropertyModulateSelf, new Color(75, 75, 86)),
-
-                Element<ContainerButton>().Class(ListContainer.StyleClassListContainerButton)
-                    .Pseudo(ContainerButton.StylePseudoClassPressed)
-                    .Prop(Control.StylePropertyModulateSelf, new Color(75, 75, 86)),
-
-                Element<ContainerButton>().Class(ListContainer.StyleClassListContainerButton)
-                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
-                    .Prop(Control.StylePropertyModulateSelf, new Color(10, 10, 12)),
 
                 // Main menu: Make those buttons bigger.
                 new StyleRule(new SelectorChild(
@@ -775,20 +648,6 @@ namespace Content.Client.Stylesheets
                 Element<TextureButton>().Class("SpeciesInfoWarning")
                     .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/info.svg.192dpi.png"))
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#eeee11")),
-
-                // The default look of paper in UIs. Pages can have components which override this
-                Element<PanelContainer>().Class("PaperDefaultBorder")
-                    .Prop(PanelContainer.StylePropertyPanel, paperBackground),
-                Element<RichTextLabel>().Class("PaperWrittenText")
-                    .Prop(Label.StylePropertyFont, notoSans12)
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#111111")),
-
-                Element<RichTextLabel>().Class("LabelSubText")
-                    .Prop(Label.StylePropertyFont, notoSans10)
-                    .Prop(Label.StylePropertyFontColor, Color.DarkGray),
-
-                Element<LineEdit>().Class("PaperLineEdit")
-                    .Prop(LineEdit.StylePropertyStyleBox, new StyleBoxEmpty()),
 
                 Element<Label>().Class("StatusFieldTitle")
                     .Prop("font-color", NanoGold),

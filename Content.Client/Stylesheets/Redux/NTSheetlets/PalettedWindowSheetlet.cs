@@ -1,4 +1,5 @@
-﻿using Content.Client.Stylesheets.Redux.Sheetlets;
+﻿using Content.Client.Stylesheets.Redux.Fonts;
+using Content.Client.Stylesheets.Redux.Sheetlets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -21,7 +22,6 @@ public sealed class PalettedWindowSheetlet : Sheetlet<PalettedStylesheet>
             ExpandMarginBottom = 3,
             ContentMarginBottomOverride = 0
         };
-
         // TODO: This would probably be better palette-based but we can leave it for now.
         var headerAlertStylebox = new StyleBoxTexture
         {
@@ -30,38 +30,53 @@ public sealed class PalettedWindowSheetlet : Sheetlet<PalettedStylesheet>
             ExpandMarginBottom = 3,
             ContentMarginBottomOverride = 0
         };
-
         var backgroundStylebox = new StyleBoxTexture()
         {
             Texture = sheet.GetTexture("window_background.png")
         };
         backgroundStylebox.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
         backgroundStylebox.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
-
         var borderedBackgroundStylebox = new StyleBoxTexture
         {
             Texture = sheet.GetTexture("window_background_bordered.png"),
         };
         borderedBackgroundStylebox.SetPatchMargin(StyleBox.Margin.All, 2);
-
         var closeButtonTex = sheet.GetTexture("cross.svg.png");
 
         var rules = new List<StyleRule>()
         {
-            Element().Class(DefaultWindow.StyleClassWindowPanel)
+            // TODO: KILL DEFAULT WINDOW (in a bit)
+            E<Label>()
+                .Class(DefaultWindow.StyleClassWindowTitle)
+                .FontColor(sheet.HighlightPalette[0])
+                .Font(sheet.BaseFont.GetFont(14, FontStack.FontKind.Bold)),
+            E<Label>()
+                .Class("windowTitleAlert")
+                .FontColor(Color.White)
+                .Font(sheet.BaseFont.GetFont(14, FontStack.FontKind.Bold)),
+            // TODO: maybe also change everything here to `NanoWindow` or something
+            Element()
+                .Class(DefaultWindow.StyleClassWindowPanel)
                 .Panel(backgroundStylebox),
-            Element().Class(DefaultWindow.StyleClassWindowHeader)
+            Element()
+                .Class(DefaultWindow.StyleClassWindowHeader)
                 .Panel(headerStylebox),
-            Element().Class(StyleClass.AlertWindowHeader)
+            Element()
+                .Class(StyleClass.AlertWindowHeader)
                 .Panel(headerAlertStylebox),
-            Element().Class(StyleClass.BorderedWindowPanel)
+            Element()
+                .Class(StyleClass.BorderedWindowPanel)
                 .Panel(borderedBackgroundStylebox),
-            E<TextureButton>().Class(DefaultWindow.StyleClassWindowCloseButton)
+            E<TextureButton>()
+                .Class(DefaultWindow.StyleClassWindowCloseButton)
                 .Prop(TextureButton.StylePropertyTexture, closeButtonTex)
                 .Margin(3),
         };
 
-        NTButtonSheetlet.MakeButtonRules(buttonCfg, rules, buttonCfg.NegativeButtonPalette, DefaultWindow.StyleClassWindowCloseButton);
+        ButtonSheetlet.MakeButtonRules(buttonCfg,
+            rules,
+            buttonCfg.NegativeButtonPalette,
+            DefaultWindow.StyleClassWindowCloseButton);
 
         return rules.ToArray();
     }
