@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix lobby UI not resetting for character changes.
-    type: Fix
-  id: 6379
-  time: '2024-04-18T03:01:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27075
 - author: TokenStyle
   changes:
   - message: Benzene is no longer required for the Insuzine recipe.
@@ -3818,3 +3811,13 @@
   id: 6878
   time: '2024-07-07T13:06:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29737
+- author: EmoGarbage404
+  changes:
+  - message: Intercoms now use encryption keys to determine what channels they can
+      broadcast on.
+    type: Tweak
+  - message: Intercoms and handheld radios no longer rely on telecom servers.
+    type: Fix
+  id: 6879
+  time: '2024-07-07T14:19:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29580
