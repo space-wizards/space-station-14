@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: TokenStyle
-  changes:
-  - message: Benzene is no longer required for the Insuzine recipe.
-    type: Tweak
-  id: 6380
-  time: '2024-04-18T03:03:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26829
-- author: Golinth
-  changes:
-  - message: The Nukie Agent now comes with a medihud built into their visor!
-    type: Add
-  id: 6381
-  time: '2024-04-18T03:04:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26218
 - author: Krunk
   changes:
   - message: Cyborgs no longer see criminal status icons.
@@ -3821,3 +3807,18 @@
   id: 6879
   time: '2024-07-07T14:19:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29580
+- author: Vermidia
+  changes:
+  - message: Some drink reactions now require shaking with the shaker or stirring
+      with a spoon
+    type: Add
+  id: 6880
+  time: '2024-07-07T14:21:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29243
+- author: Dezzzix
+  changes:
+  - message: Now you can slice food with swords
+    type: Add
+  id: 6881
+  time: '2024-07-07T14:22:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29005
