@@ -15,4 +15,4 @@ health-analyzer-window-scan-mode-inactive = INACTIVE
 
 health-analyzer-window-malnutrition = Severely malnourished
 
-health-analyzer-popup-scan-target = {$user} is trying to scan you!
+health-analyzer-popup-scan-target = {CAPITALIZE(THE($user))} is trying to scan you!
