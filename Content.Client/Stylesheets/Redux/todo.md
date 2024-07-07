@@ -31,7 +31,6 @@ TL;DR port all of `StyleNano` into sheetlets
 ### Significant Interface Changes
 
 - Tooltips on action menu now is slightly transparent for consistency w/ examine popup
-- HUD and non diagetic UIs (todo) now have a different palette
 
 ### Another PR:
 

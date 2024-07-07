@@ -6,8 +6,9 @@ using Robust.Client.UserInterface.Controls;
 using static Robust.Client.UserInterface.StylesheetHelpers;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
-namespace Content.Client.Stylesheets.Redux.InterfaceSheetlets;
+namespace Content.Client.Stylesheets.Redux.Sheetlets.Hud;
 
+[CommonSheetlet]
 public sealed class ChatGameScreenSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
@@ -20,7 +21,7 @@ public sealed class ChatGameScreenSheetlet : Sheetlet<PalettedStylesheet>
                 .Panel(new StyleBoxFlat(panel.BackingPanelPalette)),
             E<OutputPanel>()
                 .Class(SeparatedChatGameScreen.StyleClassChatOutput)
-                .Panel(new StyleBoxFlat(sheet.SecondaryPalette[4]))
+                .Panel(new StyleBoxFlat(sheet.SecondaryPalette[4])),
         ];
     }
 }

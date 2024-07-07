@@ -24,15 +24,17 @@ namespace Content.Client.Stylesheets
             SheetSpace = new StyleSpace(_resourceCache).Stylesheet;
 
             _userInterfaceManager.Stylesheet = SheetNano;
-            _userInterfaceManager.OnScreenChanged += OnScreenChanged;
+            // _userInterfaceManager.OnScreenChanged += OnScreenChanged;
         }
 
-        // Required because stylesheet is initialized before .ActiveScreen is set on UiManager and after the
-        // HUD UIs are actually constructed.
-        private void OnScreenChanged((UIScreen? Old, UIScreen? New) ev)
-        {
-            if (ev.New is not null)
-                ev.New.Stylesheet = SheetInterface;
-        }
+        // NOTE: taken out b/c chat colors being different looked slightly wacky
+
+        // // Required because stylesheet is initialized before .ActiveScreen is set on UiManager and after the
+        // // HUD UIs are actually constructed.
+        // private void OnScreenChanged((UIScreen? Old, UIScreen? New) ev)
+        // {
+        //     if (ev.New is not null)
+        //         ev.New.Stylesheet = SheetInterface;
+        // }
     }
 }
