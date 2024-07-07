@@ -160,6 +160,9 @@ public sealed class ThrowingSystem : EntitySystem
         // if not given, get the default friction value for distance calculation
         var tileFriction = friction ?? _frictionModifier * TileFrictionController.DefaultFriction;
 
+        if (tileFriction == 0)
+            compensateFriction = false; // cannot calculate this if there is no friction
+
         // Set the time the item is supposed to be in the air so we can apply OnGround status.
         // This is a free parameter, but we should set it to something reasonable.
         var flyTime = direction.Length() / baseThrowSpeed;
@@ -197,8 +200,10 @@ public sealed class ThrowingSystem : EntitySystem
         if (user != null)
             _adminLogger.Add(LogType.Throw, LogImpact.Low, $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):entity}");
 
-        // if compensateFriction==true compensate for the distance the item will slide over the floor after landing by reducing the throw speed accordingly
-        // else let the item land on the cursor and from where it slides a little further
+        // if compensateFriction==true compensate for the distance the item will slide over the floor after landing by reducing the throw speed accordingly.
+        // else let the item land on the cursor and from where it slides a little further.
+        // This is an exact formula we get from exponentially decaying velocity after landing.
+        // If someone changes how tile friction works at some point, this will have to be adjusted.
         var throwSpeed = compensateFriction ? direction.Length() / (flyTime + 1 / tileFriction) : baseThrowSpeed;
         var impulseVector = direction.Normalized() * throwSpeed * physics.Mass;
         _physics.ApplyLinearImpulse(uid, impulseVector, body: physics);

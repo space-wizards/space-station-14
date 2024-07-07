@@ -151,6 +151,7 @@
     damage:
       types:
         Slash: 10
+  - type: LandAtCursor
   - type: Sprite
     sprite: Clothing/Head/Hats/greyflatcap.rsi
   - type: Clothing
