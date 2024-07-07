@@ -14,6 +14,10 @@ public static class StyleClass
     public const string NegativeColor = "color-negative";
     public const string HighlightColor = "color-highlight";
 
+    /**
+     * <returns>The style class that will apply `ModulateSelf` with the specified color</returns>
+     * <example><code>StyleClass.GetColorClass(StyleClass.PrimaryColor, 0)</code></example>
+     */
     public static string GetColorClass(string styleclass, uint index)
     {
         return $"{styleclass}-{index}";
@@ -43,6 +47,7 @@ public static class StyleClass
     public const string ButtonOpenBoth = "OpenBoth";
     public const string ButtonSquare = "ButtonSquare";
     public const string ButtonSmall = "ButtonSmall";
+    public const string ButtonBig = "ButtonBig";
 
     public const string StyleClassSliderRed = "Red";
     public const string StyleClassSliderGreen = "Green";

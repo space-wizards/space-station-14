@@ -43,6 +43,7 @@ public abstract class ButtonSheetlet : Sheetlet<PalettedStylesheet>
                 .Class(StyleClass.ButtonSmall)
                 .ParentOf(E<Label>())
                 .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(8)),
+            CButton().Class(StyleClass.ButtonBig).ParentOf(E<Label>()).Font(sheet.BaseFont.GetFont(16)),
 
             // Ensure labels in buttons are aligned.
             E<Label>()

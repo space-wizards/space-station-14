@@ -40,7 +40,6 @@ namespace Content.Client.Stylesheets
     {
         public const string StyleClassHandSlotHighlight = "HandSlotHighlight";
         public const string StyleClassChatSubPanel = "ChatSubPanel";
-        public const string StyleClassHotbarPanel = "HotbarPanel";
         public const string StyleClassTooltipPanel = "tooltipBox";
         public const string StyleClassTooltipAlertTitle = "tooltipAlertTitle";
         public const string StyleClassTooltipAlertDescription = "tooltipAlertDesc";
@@ -55,7 +54,7 @@ namespace Content.Client.Stylesheets
 
         public const string StyleClassLabelHeadingBigger = "LabelHeadingBigger";
         public const string StyleClassLabelSecondaryColor = "LabelSecondaryColor";
-        public const string StyleClassButtonBig = "ButtonBig";
+        // public const string StyleClassButtonBig = "ButtonBig";
 
         public const string StyleClassButtonHelp = "HelpButton";
 
@@ -119,51 +118,6 @@ namespace Content.Client.Stylesheets
             var notoSansBold18 = resCache.NotoStack(variation: "Bold", size: 18);
             var notoSansBold20 = resCache.NotoStack(variation: "Bold", size: 20);
             var notoSansMono = resCache.GetFont("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf", size: 12);
-            var windowHeaderTex = resCache.GetTexture("/Textures/Interface/Nano/window_header.png");
-            var windowHeader = new StyleBoxTexture
-            {
-                Texture = windowHeaderTex,
-                PatchMarginBottom = 3,
-                ExpandMarginBottom = 3,
-                ContentMarginBottomOverride = 0
-            };
-            var windowHeaderAlertTex = resCache.GetTexture("/Textures/Interface/Nano/window_header_alert.png");
-            var windowHeaderAlert = new StyleBoxTexture
-            {
-                Texture = windowHeaderAlertTex,
-                PatchMarginBottom = 3,
-                ExpandMarginBottom = 3,
-                ContentMarginBottomOverride = 0
-            };
-            var windowBackgroundTex = resCache.GetTexture("/Textures/Interface/Nano/window_background.png");
-            var windowBackground = new StyleBoxTexture
-            {
-                Texture = windowBackgroundTex,
-            };
-            windowBackground.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
-            windowBackground.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
-
-            var borderedWindowBackgroundTex = resCache.GetTexture("/Textures/Interface/Nano/window_background_bordered.png");
-            var borderedWindowBackground = new StyleBoxTexture
-            {
-                Texture = borderedWindowBackgroundTex,
-            };
-            borderedWindowBackground.SetPatchMargin(StyleBox.Margin.All, 2);
-
-            var invSlotBgTex = resCache.GetTexture("/Textures/Interface/Inventory/inv_slot_background.png");
-            var invSlotBg = new StyleBoxTexture
-            {
-                Texture = invSlotBgTex,
-            };
-            invSlotBg.SetPatchMargin(StyleBox.Margin.All, 2);
-            invSlotBg.SetContentMarginOverride(StyleBox.Margin.All, 0);
-
-            var hotbarBackground = new StyleBoxTexture
-            {
-                Texture = borderedWindowBackgroundTex,
-            };
-            hotbarBackground.SetPatchMargin(StyleBox.Margin.All, 2);
-            hotbarBackground.SetExpandMargin(StyleBox.Margin.All, 4);
 
             var buttonStorage = new StyleBoxTexture(BaseButton);
             buttonStorage.SetPatchMargin(StyleBox.Margin.All, 10);
@@ -254,8 +208,6 @@ namespace Content.Client.Stylesheets
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
 
-
-
             // NanoHeading
             var nanoHeadingTex = resCache.GetTexture("/Textures/Interface/Nano/nanoheading.svg.96dpi.png");
             var nanoHeadingBox = new StyleBoxTexture
@@ -293,18 +245,6 @@ namespace Content.Client.Stylesheets
                     .Prop("font", notoSansMono),
 
                 // Hotbar background
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {StyleClassHotbarPanel}, null, null),
-                    new[]
-                    {
-                        new StyleProperty(PanelContainer.StylePropertyPanel, hotbarBackground),
-                    }),
-                new StyleRule(new SelectorChild(
-                    new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassDisabled}),
-                    new SelectorElement(typeof(Label), null, null, null)),
-                    new[]
-                    {
-                        new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
-                    }),
 
                 // Main menu: Make those buttons bigger.
                 new StyleRule(new SelectorChild(
@@ -479,15 +419,6 @@ namespace Content.Client.Stylesheets
                     {
                         new StyleProperty(Label.StylePropertyFont, notoSans12),
                         new StyleProperty(Label.StylePropertyFontColor, Color.DarkGray),
-                    }),
-
-                // Big Button
-                new StyleRule(new SelectorChild(
-                    new SelectorElement(typeof(Button), new[] {StyleClassButtonBig}, null, null),
-                    new SelectorElement(typeof(Label), null, null, null)),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSans16)
                     }),
 
                 //APC and SMES power state label colors
