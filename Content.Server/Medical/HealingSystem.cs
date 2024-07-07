@@ -193,7 +193,7 @@ public sealed class HealingSystem : EntitySystem
         if (isNotSelf)
         {
             var msg = Loc.GetString("medical-item-popup-target", ("user", Identity.Entity(user, EntityManager)), ("item", uid));
-            _popupSystem.PopupEntity(msg, target);
+            _popupSystem.PopupEntity(msg, target, PopupType.Medium);
         }
 
         var delay = isNotSelf
