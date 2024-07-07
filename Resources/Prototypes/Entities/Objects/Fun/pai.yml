@@ -195,7 +195,6 @@
     graph: PotatoAI
     node: potatoai
 
-
 - type: entity
   id: ActionPAIShowCrewMonitoring
   name: Crew Monitoring Interface
