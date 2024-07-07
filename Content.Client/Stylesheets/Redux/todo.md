@@ -41,3 +41,5 @@ TL;DR port all of `StyleNano` into sheetlets
 - [ ] `[X]` button is misaligned on FancyWindow also title text too kinda
 - [ ] Make a consistent `Tooltip` component that can be used for `ActionAlertTooltip`, ``
 - [ ] Character info screen popup button thing stays pressed when you dont use `C` to close the popup window
+- [ ] `OptionButton` looks kinda gross :(
+- [ ] Make all admin menus a different palette

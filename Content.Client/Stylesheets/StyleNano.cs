@@ -202,8 +202,6 @@ namespace Content.Client.Stylesheets
 
             var buttonTex = resCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
 
-            var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
-
             var lineEditTex = resCache.GetTexture("/Textures/Interface/Nano/lineedit.png");
             var lineEdit = new StyleBoxTexture
             {
@@ -694,39 +692,6 @@ namespace Content.Client.Stylesheets
                     .Class(StyleClass.StyleClassItemStatus)
                     .Prop(nameof(RichTextLabel.LineHeightScale), 0.7f)
                     .Prop(nameof(Control.Margin), new Thickness(0, 0, 0, -6)),
-
-                // OptionButton
-                new StyleRule(new SelectorElement(typeof(OptionButton), null, null, null), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, BaseButton),
-                }),
-                new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
-                {
-                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorDefault),
-                }),
-                new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
-                {
-                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorHovered),
-                }),
-                new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
-                {
-                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorPressed),
-                }),
-                new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
-                {
-                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorDisabled),
-                }),
-
-                new StyleRule(new SelectorElement(typeof(TextureRect), new[] {OptionButton.StyleClassOptionTriangle}, null, null), new[]
-                {
-                    new StyleProperty(TextureRect.StylePropertyTexture, textureInvertedTriangle),
-                    //new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#FFFFFF")),
-                }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] { OptionButton.StyleClassOptionButton }, null, null), new[]
-                {
-                    new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Center),
-                }),
 
                 new StyleRule(new SelectorElement(typeof(PanelContainer), new []{StyleClass.HighDivider}, null, null), new []
                 {

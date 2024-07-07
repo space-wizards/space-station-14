@@ -89,6 +89,11 @@ public static class StylesheetHelpers
         return selector.Prop(nameof(Control.VerticalExpand), val);
     }
 
+    public static MutableSelector AlignMode(this MutableSelector selector, Label.AlignMode mode)
+    {
+        return selector.Prop(Label.StylePropertyAlignMode, mode);
+    }
+
     // Button helpers
 
     public static MutableSelectorElement ButtonNormal(this MutableSelectorElement selector)
