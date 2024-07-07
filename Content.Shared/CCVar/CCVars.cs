@@ -1214,6 +1214,14 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> AtmosHeatScale =
             CVarDef.Create("atmos.heat_scale", 8f, CVar.SERVERONLY);
 
+        /// <summary>
+        ///     A barely functioning system for stopping vents from trying to pressurize spaced rooms.
+        ///     Uses the time differential of pressure in order to determine when to close.
+        ///     Requires <see cref=MonstermosEqualization> to be true in order to work, otherwise this cvar is ignored.
+        /// </summary>
+        public static readonly CVarDef<bool> VentPressurizationLockout =
+            CVarDef.Create("atmos.vent_pressurization_lockout", true, CVar.SERVERONLY);
+
         /*
          * MIDI instruments
          */

@@ -109,7 +109,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 var transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R);
 
                 // Don't transfer air if pressure is actively dropping
-                var pressurizing = pressurizationLockout(vent, environment, args.dt);
+                var pressurizing = !vent.UnderPressureLockout;
+                if (_atmosphereSystem.VentPressurizationLockout && _atmosphereSystem.MonstermosEqualization)
+                    pressurizing = pressurizationLockout(vent, environment, args.dt);
                 if (!pressurizing)
                     transferMoles = 0;
 
