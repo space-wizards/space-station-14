@@ -24,14 +24,12 @@ namespace Content.Shared.PAI
 
         private void OnMapInit(EntityUid uid, CommandPAIComponent component, MapInitEvent args)
         {
-            _actionsSystem.AddAction(uid, ref component.CameraMonitorAction, component.CameraMonitorActionId);
             _actionsSystem.AddAction(uid, ref component.CrewMonitorAction, component.CrewMonitorActionId);
 
         }
 
         private void OnShutdown(EntityUid uid, CommandPAIComponent component, ComponentShutdown args)
         {
-            _actionsSystem.RemoveAction(uid, component.CameraMonitorAction);
             _actionsSystem.RemoveAction(uid, component.CrewMonitorAction);
         }
     }

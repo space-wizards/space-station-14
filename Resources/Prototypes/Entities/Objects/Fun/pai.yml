@@ -115,13 +115,8 @@
           On: { state: command-pai-on-overlay }
   - type: WirelessNetworkConnection
     range: 500
-  - type: StationLimitedNetwork #Block Camera monitor
+  - type: StationLimitedNetwork
   - type: CrewMonitoringConsole
-  - type: SurveillanceCameraMonitor
-  #- type: DeviceNetwork
-  #  deviceNetId: Wired
-  #  receiveFrequencyId:  SurveillanceCamera
-  #  transmitFrequencyId: SurveillanceCamera
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId:  CrewMonitor
@@ -135,9 +130,6 @@
         requireInputValidation: false
       enum.CrewMonitoringUIKey.Key:
         type: CrewMonitoringBoundUserInterface
-        requireInputValidation: false
-      enum.SurveillanceCameraMonitorUiKey.Key:
-        type: SurveillanceCameraMonitorBoundUserInterface
         requireInputValidation: false
 
 
@@ -203,18 +195,6 @@
     graph: PotatoAI
     node: potatoai
 
-- type: entity
-  id: ActionPAIShowCameraMonitor
-  name: Camera Monitoring Interface
-  description: View a camera monitor interface.
-  noSpawn: true
-  components:
-  - type: InstantAction
-    checkCanInteract: false
-    checkConsciousness: false
-    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-    iconOn: Structures/Machines/parts.rsi/box_2.png
-    event: !type:OpenUiActionEvent { key: enum.SurveillanceCameraMonitorUiKey.Key }
 
 - type: entity
   id: ActionPAIShowCrewMonitoring
@@ -225,8 +205,7 @@
   - type: InstantAction
     checkCanInteract: false
     checkConsciousness: false
-    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-    iconOn: Structures/Machines/parts.rsi/box_2.png
+    icon: { sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi, state: icon }
     event: !type:OpenUiActionEvent { key: enum.CrewMonitoringUIKey.Key }
 
 - type: entity
