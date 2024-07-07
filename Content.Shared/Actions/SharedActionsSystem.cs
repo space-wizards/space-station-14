@@ -462,24 +462,9 @@ public abstract class SharedActionsSystem : EntitySystem
 
                 var entWorldAction = new Entity<EntityWorldTargetActionComponent>(actionEnt, entityWorldAction);
 
-                if (ev.EntityCoordinatesTarget is { } netCoordinatesWorldTarget)
-                {
-                    actionCoords = GetCoordinates(netCoordinatesWorldTarget);
-                    worldValidated
-                        = ValidateEntityWorldTargetBaseWorld(user, actionCoords.Value, entWorldAction);
-                }
-
-                if (ev.EntityTarget is {Valid: true} netEntityTarget)
-                {
-                    actionEntity = GetEntity(netEntityTarget);
-                    entityValidated = ValidateEntityWorldTargetBaseEntity(user, actionEntity.Value, entWorldAction);
-                }
-
                 if (!ValidateEntityWorldTarget(user,
-                        actionEntity,
-                        actionCoords,
-                        entityValidated,
-                        worldValidated,
+                        GetEntity(ev.EntityTarget),
+                        GetCoordinates(ev.EntityCoordinatesTarget),
                         entWorldAction))
                     return;
 
@@ -600,23 +585,13 @@ public abstract class SharedActionsSystem : EntitySystem
     }
 
     public bool ValidateEntityWorldTarget(EntityUid user,
-        EntityUid entity,
-        EntityCoordinates coords,
+        EntityUid? entity,
+        EntityCoordinates? coords,
         Entity<EntityWorldTargetActionComponent> action)
     {
         var entityValidated = ValidateEntityWorldTargetBaseEntity(user, entity, action);
         var worldValidated = ValidateEntityWorldTargetBaseWorld(user, coords, action);
 
-        return ValidateEntityWorldTarget(user, entity, coords, entityValidated, worldValidated, action);
-    }
-
-    private bool ValidateEntityWorldTarget(EntityUid user,
-        EntityUid? entity,
-        EntityCoordinates? coords,
-        bool entityValidated,
-        bool worldValidated,
-        Entity<EntityWorldTargetActionComponent> action)
-    {
         if (!entityValidated && !worldValidated)
             return false;
 
@@ -629,10 +604,10 @@ public abstract class SharedActionsSystem : EntitySystem
 
 
     private bool ValidateEntityWorldTargetBaseEntity(EntityUid user,
-        EntityUid target,
+        EntityUid? targetEntity,
         EntityWorldTargetActionComponent action)
     {
-        if (!target.IsValid() || Deleted(target))
+        if (targetEntity is not { } target || !target.IsValid() || Deleted(target))
             return false;
 
         if (_whitelistSystem.IsWhitelistFail(action.Whitelist, target))
@@ -666,9 +641,12 @@ public abstract class SharedActionsSystem : EntitySystem
     }
 
     private bool ValidateEntityWorldTargetBaseWorld(EntityUid user,
-        EntityCoordinates coords,
+        EntityCoordinates? entityCoordinates,
         EntityWorldTargetActionComponent action)
     {
+        if (entityCoordinates is not { } coords)
+            return false;
+
         if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
             return false;
 
