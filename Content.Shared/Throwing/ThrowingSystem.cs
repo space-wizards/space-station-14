@@ -160,7 +160,7 @@ public sealed class ThrowingSystem : EntitySystem
         // if not given, get the default friction value for distance calculation
         var tileFriction = friction ?? _frictionModifier * TileFrictionController.DefaultFriction;
 
-        if (tileFriction == 0)
+        if (tileFriction == 0f)
             compensateFriction = false; // cannot calculate this if there is no friction
 
         // Set the time the item is supposed to be in the air so we can apply OnGround status.
