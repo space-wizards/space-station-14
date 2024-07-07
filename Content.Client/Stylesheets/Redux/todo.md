@@ -4,7 +4,7 @@
     - Ported `ContextMenu` styles from `StyleNano.cs`
 - [ ] Admin Message window exit button is basically indistinguishable from the red header
 - [x] Colors are slightly too dark IMO
-- [ ] Text when editing paper is white
+- [x] Text when editing paper is white
 - [ ] Stamps look weird?
 - [ ] `ScrollContainer` has no scrollbar!!!
 - [ ] Action buttons don't have highlighting
