@@ -15,6 +15,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Server.Audio;
+using Robust.Shared.Containers;
 
 namespace Content.Server.PDA.Ringer
 {
@@ -27,8 +28,11 @@ namespace Content.Server.PDA.Ringer
         [Dependency] private readonly AudioSystem _audio = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
         private readonly Dictionary<NetUserId, TimeSpan> _lastSetRingtoneAt = new();
+
+        private EntityQuery<VisibilityComponent> _visibilityQuery;
 
         public override void Initialize()
         {
@@ -44,6 +48,8 @@ namespace Content.Server.PDA.Ringer
             SubscribeLocalEvent<RingerComponent, RingerRequestUpdateInterfaceMessage>(UpdateRingerUserInterfaceDriver);
 
             SubscribeLocalEvent<RingerComponent, CurrencyInsertAttemptEvent>(OnCurrencyInsert);
+
+            _visibilityQuery = GetEntityQuery<VisibilityComponent>();
         }
 
         //Event Functions
@@ -216,9 +222,17 @@ namespace Content.Server.PDA.Ringer
                 ringer.TimeElapsed -= NoteDelay;
                 var ringerXform = Transform(uid);
 
+                // If the PDA is in something with a visibility layer, only play sounds for players who can see it
+                var visLayer = 1U;
+                VisibilityComponent? visibility = null;
+                if (_containerSystem.TryFindComponentOnEntityContainerOrParent(uid, _visibilityQuery, ref visibility))
+                {
+                    visLayer = visibility.Layer;
+                }
+
                 _audio.PlayEntity(
                     GetSound(ringer.Ringtone[ringer.NoteCount]),
-                    Filter.Empty().AddInRange(_transform.GetMapCoordinates(uid, ringerXform), ringer.Range),
+                    Filter.Empty().AddInRange(_transform.GetMapCoordinates(uid, ringerXform), ringer.Range).RemoveByVisibility(visLayer),
                     uid,
                     true,
                     AudioParams.Default.WithMaxDistance(ringer.Range).WithVolume(ringer.Volume)
