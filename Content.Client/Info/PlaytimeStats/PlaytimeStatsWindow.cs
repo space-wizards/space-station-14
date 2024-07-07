@@ -104,7 +104,7 @@ public sealed partial class PlaytimeStatsWindow : FancyWindow
     {
         var overallPlaytime = _jobRequirementsManager.FetchOverallPlaytime();
 
-        var formattedPlaytime = ConvertTimeSpanToHoursMinutes(overallPlaytime);
+        var formattedPlaytime = overallPlaytime.ToString(Loc.GetString("ui-playtime-time-format"));
         OverallPlaytimeLabel.Text = Loc.GetString("ui-playtime-overall", ("time", formattedPlaytime));
 
         var rolePlaytimes = _jobRequirementsManager.FetchPlaytimeByRoles();
@@ -133,14 +133,5 @@ public sealed partial class PlaytimeStatsWindow : FancyWindow
         {
             _sawmill.Error($"The provided playtime string '{playtimeString}' is not in the correct format.");
         }
-    }
-
-    private static string ConvertTimeSpanToHoursMinutes(TimeSpan timeSpan)
-    {
-        var hours = (int) timeSpan.TotalHours;
-        var minutes = timeSpan.Minutes;
-
-        var formattedTimeLoc = Loc.GetString("ui-playtime-time-format", ("hours", hours), ("minutes", minutes));
-        return formattedTimeLoc;
     }
 }
