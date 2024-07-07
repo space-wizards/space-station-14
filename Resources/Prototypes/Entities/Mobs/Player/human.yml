@@ -65,6 +65,12 @@
     - type: Loadout
       prototypes: [SyndicateOperativeGearReinforcementNukeOps]
     - type: NukeOperative
+    - type: RandomMetadata
+      nameSegments:
+      - SyndicateNamesPrefix
+      - SyndicateNamesNormal
+    - type: Loadout
+      prototypes: [SyndicateOperativeGearNoUplink]
 
 # Nuclear Operative
 - type: entity
