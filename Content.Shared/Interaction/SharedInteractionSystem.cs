@@ -923,11 +923,21 @@ namespace Content.Shared.Interaction
         }
 
         /// <summary>
-        /// Uses a item/object on an entity
+        /// Uses an item/object on an entity
         /// Finds components with the InteractUsing interface and calls their function
         /// NOTE: Does not have an InRangeUnobstructed check
         /// </summary>
-        public void InteractUsing(
+        /// <param name="user">User doing the interaction.</param>
+        /// <param name="used">Item being used on the <paramref name="target"/>.</param>
+        /// <param name="target">Entity getting interacted with by the <paramref name="user"/> using the
+        ///     <paramref name="used"/> entity.</param>
+        /// <param name="clickLocation">The location that the <paramref name="user"/> clicked.</param>
+        /// <param name="checkCanInteract">Whether to check that the <paramref name="user"/> can interact with the
+        ///     <paramref name="target"/>.</param>
+        /// <param name="checkCanUse">Whether to check that the <paramref name="user"/> can use the
+        ///     <paramref name="used"/> entity.</param>
+        /// <returns>True if the interaction was handled. Otherwise, false.</returns>
+        public bool InteractUsing(
             EntityUid user,
             EntityUid used,
             EntityUid target,
@@ -936,10 +946,10 @@ namespace Content.Shared.Interaction
             bool checkCanUse = true)
         {
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, target))
-                return;
+                return false;
 
             if (checkCanUse && !_actionBlockerSystem.CanUseHeldEntity(user, used))
-                return;
+                return false;
 
             _adminLogger.Add(
                 LogType.InteractUsing,
@@ -947,7 +957,7 @@ namespace Content.Shared.Interaction
                 $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target} using {ToPrettyString(used):used}");
 
             if (RangedInteractDoBefore(user, used, target, clickLocation, true))
-                return;
+                return true;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var interactUsingEvent = new InteractUsingEvent(user, used, target, clickLocation);
@@ -956,15 +966,24 @@ namespace Content.Shared.Interaction
             DoContactInteraction(user, target, interactUsingEvent);
             DoContactInteraction(used, target, interactUsingEvent);
             if (interactUsingEvent.Handled)
-                return;
+                return true;
 
-            InteractDoAfter(user, used, target, clickLocation, canReach: true);
+            if (InteractDoAfter(user, used, target, clickLocation, canReach: true))
+                return true;
+            return false;
         }
 
         /// <summary>
         ///     Used when clicking on an entity resulted in no other interaction. Used for low-priority interactions.
         /// </summary>
-        public void InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
+        /// <param name="user"><inheritdoc cref="InteractUsing"/></param>
+        /// <param name="used"><inheritdoc cref="InteractUsing"/></param>
+        /// <param name="target"><inheritdoc cref="InteractUsing"/></param>
+        /// <param name="clickLocation"><inheritdoc cref="InteractUsing"/></param>
+        /// <param name="canReach">Whether the <paramref name="user"/> is in range of the <paramref name="target"/>.
+        ///     </param>
+        /// <returns>True if the interaction was handled. Otherwise, false.</returns>
+        public bool InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
         {
             if (target is {Valid: false})
                 target = null;
@@ -979,10 +998,10 @@ namespace Content.Shared.Interaction
             }
 
             if (afterInteractEvent.Handled)
-                return;
+                return true;
 
             if (target == null)
-                return;
+                return false;
 
             var afterInteractUsingEvent = new AfterInteractUsingEvent(user, used, target, clickLocation, canReach);
             RaiseLocalEvent(target.Value, afterInteractUsingEvent);
@@ -993,6 +1012,10 @@ namespace Content.Shared.Interaction
                 DoContactInteraction(user, target, afterInteractUsingEvent);
                 DoContactInteraction(used, target, afterInteractUsingEvent);
             }
+
+            if (afterInteractUsingEvent.Handled)
+                return true;
+            return false;
         }
 
         #region ActivateItemInWorld

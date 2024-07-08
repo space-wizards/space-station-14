@@ -359,7 +359,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (HasComp<PlaceableSurfaceComponent>(uid))
             return;
 
-        PlayerInsertHeldEntity(uid, args.User, storageComp);
+        PlayerInsertHeldEntity((uid, storageComp), args.User);
         // Always handle it, even if insertion fails.
         // We don't want to trigger any AfterInteract logic here.
         // Example issue would be placing wires if item doesn't fit in backpack.
@@ -610,7 +610,14 @@ public abstract class SharedStorageSystem : EntitySystem
         }
 
         // Else, interact using the held item
-        _interactionSystem.InteractUsing(player, hands.ActiveHandEntity.Value, entity, Transform(entity).Coordinates, checkCanInteract: false);
+        if (_interactionSystem.InteractUsing(player,
+                hands.ActiveHandEntity.Value,
+                entity,
+                Transform(entity).Coordinates,
+                checkCanInteract: false))
+            return;
+
+        PlayerInsertHeldEntity((uid, storageComp), (player, hands));
     }
 
     private void OnSetItemLocation(StorageSetItemLocationEvent msg, EntitySessionEventArgs args)
@@ -1049,35 +1056,36 @@ public abstract class SharedStorageSystem : EntitySystem
     /// <summary>
     ///     Inserts an entity into storage from the player's active hand
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="player">The player to insert an entity from</param>
-    /// <param name="storageComp"></param>
-    /// <returns>true if inserted, false otherwise</returns>
-    public bool PlayerInsertHeldEntity(EntityUid uid, EntityUid player, StorageComponent? storageComp = null)
+    /// <param name="ent">The storage entity and component to insert into.</param>
+    /// <param name="player">The player and hands component to insert the held entity from.</param>
+    /// <returns>True if inserted, otherwise false.</returns>
+    public bool PlayerInsertHeldEntity(Entity<StorageComponent?> ent, Entity<HandsComponent?> player)
     {
-        if (!Resolve(uid, ref storageComp) || !TryComp(player, out HandsComponent? hands) || hands.ActiveHandEntity == null)
+        if (!Resolve(ent.Owner, ref ent.Comp)
+            || !Resolve(player.Owner, ref player.Comp)
+            || player.Comp.ActiveHandEntity == null)
             return false;
 
-        var toInsert = hands.ActiveHandEntity;
+        var toInsert = player.Comp.ActiveHandEntity;
 
-        if (!CanInsert(uid, toInsert.Value, out var reason, storageComp))
+        if (!CanInsert(ent, toInsert.Value, out var reason, ent.Comp))
         {
-            _popupSystem.PopupClient(Loc.GetString(reason ?? "comp-storage-cant-insert"), uid, player);
+            _popupSystem.PopupClient(Loc.GetString(reason ?? "comp-storage-cant-insert"), ent, player);
             return false;
         }
 
-        if (!_sharedHandsSystem.CanDrop(player, toInsert.Value, hands))
+        if (!_sharedHandsSystem.CanDrop(player, toInsert.Value, player.Comp))
         {
-            _popupSystem.PopupClient(Loc.GetString("comp-storage-cant-drop", ("entity", toInsert.Value)), uid, player);
+            _popupSystem.PopupClient(Loc.GetString("comp-storage-cant-drop", ("entity", toInsert.Value)), ent, player);
             return false;
         }
 
-        return PlayerInsertEntityInWorld((uid, storageComp), player, toInsert.Value);
+        return PlayerInsertEntityInWorld((ent, ent.Comp), player, toInsert.Value);
     }
 
     /// <summary>
     ///     Inserts an Entity (<paramref name="toInsert"/>) in the world into storage, informing <paramref name="player"/> if it fails.
-    ///     <paramref name="toInsert"/> is *NOT* held, see <see cref="PlayerInsertHeldEntity(EntityUid,EntityUid,StorageComponent)"/>.
+    ///     <paramref name="toInsert"/> is *NOT* held, see <see cref="PlayerInsertHeldEntity(Robust.Shared.GameObjects.Entity{Content.Shared.Storage.StorageComponent?},Robust.Shared.GameObjects.Entity{Content.Shared.Hands.Components.HandsComponent?})"/>.
     /// </summary>
     /// <param name="uid"></param>
     /// <param name="player">The player to insert an entity with</param>
