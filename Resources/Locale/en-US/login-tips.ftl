@@ -25,3 +25,13 @@ login-tips-dataset-24 = The chicken is the symbel of farms but its also somethin
 login-tips-dataset-25 = TIL that the raeson why water doesnt enter our buttholes when we fart or spread our asscheeks arbitrarily is because, is because the human body is engineered after the principle of the submarine, who is also doesnt the water doesnt enter his butthole when he enlarges rectum to shoot tortilas
 login-tips-dataset-26 = The science behind THC + alcohol as a combination is literally soo interesting because it basically causes the crimson red duckling in your body to confront the serpent in the bronze vessel of your heart. Basically you feel good because the duckling is able to eat the harmonious seeds stored within the vessel and transfer these positive energies into your body. You can have bad highs when this happens if the duckling awakens the serpent and it bites the duckling. The interesting part is when you ingest alcohol after THC because it floods the vessel and causes the serpent to fall into a deep sleep. The duckling never gets attacked by the serpent when this happens because it is unconscious and the duckling is actually able to get fat from the harmonious seed, which causes an enjoyable sensation.
 login-tips-dataset-27 = I saw someone got bannned earlier, it's concerning
+login-tips-dataset-28 = Finfin meat is considered a delicacy in some secretive circles. Watch out though!
+login-tips-dataset-29 = I'll get the admin and ban you forever!
+login-tips-dataset-30 = Slut.
+login-tips-dataset-31 =
+    pls rember that wen u feel scare or frigten
+    never forget ttimes wen u feeled happy
+
+    wen day is dark alway rember happy day
+login-tips-dataset-32 = CHICACO DEEP DISH + 9 BEERS + HEAD
+login-tips-dataset-33 = PENIX AHEAD
