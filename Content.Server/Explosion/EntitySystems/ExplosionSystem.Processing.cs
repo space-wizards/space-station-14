@@ -455,11 +455,11 @@ public sealed partial class ExplosionSystem
 
                     if (cause != null)
                     {
-                        _adminLogger.Add(LogType.Explosion, $"{ToPrettyString(cause)} exploded at {epicenter:coordinates} and dealt {damageStr} damage to {ToPrettyString(entity)}.");
+                        _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"Explosion of {ToPrettyString(cause):actor} dealt {damageStr} damage to {ToPrettyString(entity):subject}");
                     }
                     else
                     {
-                        _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"Explosion at {epicenter:coordinates} dealt {damageStr} damage to {ToPrettyString(entity)}.");
+                        _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"Explosion at {epicenter:epicenter} dealt {damageStr} damage to {ToPrettyString(entity):subject}");
                     }
 
                 }
