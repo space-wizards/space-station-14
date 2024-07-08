@@ -57,7 +57,7 @@ jobs:
         password: ${{ secrets.PUBLISH_KEY }}
         port: ${{ secrets.PUBLISH_PORT }}
         source: "release/${{ github.sha }}"
-        target: "/home/harmony_build/builds_dir/builds/"
+        target: "/var/lib/harmony-builds/builds/"
         strip_components: 1
 
     - name: Update manifest JSON
