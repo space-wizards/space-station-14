@@ -19,6 +19,7 @@ using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Storage.Components;
+using Content.Shared.Storage.Events;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
@@ -617,7 +618,8 @@ public abstract class SharedStorageSystem : EntitySystem
                 checkCanInteract: false))
             return;
 
-        PlayerInsertHeldEntity((uid, storageComp), (player, hands));
+        var failedEv = new StorageInsertFailedEvent((uid, storageComp), (player, hands));
+        RaiseLocalEvent(uid, ref failedEv);
     }
 
     private void OnSetItemLocation(StorageSetItemLocationEvent msg, EntitySessionEventArgs args)
@@ -1085,7 +1087,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
     /// <summary>
     ///     Inserts an Entity (<paramref name="toInsert"/>) in the world into storage, informing <paramref name="player"/> if it fails.
-    ///     <paramref name="toInsert"/> is *NOT* held, see <see cref="PlayerInsertHeldEntity(Robust.Shared.GameObjects.Entity{Content.Shared.Storage.StorageComponent?},Robust.Shared.GameObjects.Entity{Content.Shared.Hands.Components.HandsComponent?})"/>.
+    ///     <paramref name="toInsert"/> is *NOT* held, see <see cref="PlayerInsertHeldEntity(Entity{StorageComponent?},Entity{HandsComponent?})"/>.
     /// </summary>
     /// <param name="uid"></param>
     /// <param name="player">The player to insert an entity with</param>
