@@ -54,7 +54,7 @@ jobs:
       with:
         host: ${{ secrets.PUBLISH_HOST }}
         username: ${{ secrets.PUBLISH_USER }}
-        key: ${{ secrets.PUBLISH_KEY }}
+        password: ${{ secrets.PUBLISH_KEY }}
         port: ${{ secrets.PUBLISH_PORT }}
         source: "release/${{ github.sha }}"
         target: "/home/harmony_build/builds_dir/builds/"
@@ -65,7 +65,7 @@ jobs:
       with:
         host: centcomm.spacestation14.io
         username: ${{ secrets.PUBLISH_USER }}
-        key: ${{ secrets.PUBLISH_KEY }}
+        password: ${{ secrets.PUBLISH_KEY }}
         script: /home/harmony_build/push.ps1 ${{ github.sha }}
 
 #    - name: Publish changelog (Discord)
