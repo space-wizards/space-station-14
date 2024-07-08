@@ -214,6 +214,6 @@
     sprite: Structures/Wallmounts/posters.rsi
     state: poster12_legit
   product: CrateFunPosters
-  cost: 1000
+  cost: 1500
   category: cargoproduct-category-name-fun
   group: market
