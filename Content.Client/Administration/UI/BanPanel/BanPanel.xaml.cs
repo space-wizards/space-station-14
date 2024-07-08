@@ -189,11 +189,28 @@ public sealed partial class BanPanel : DefaultWindow
         };
         departmentCheckbox.OnToggled += args =>
         {
-            foreach (var child in innerContainer.Children)
+            if (args.Pressed && roleName == _antagCategory)
             {
-                if (child is CheckBox c)
+                foreach (var child in innerContainer.Children)
                 {
-                    c.Pressed = args.Pressed;
+                    if (child is CheckBox antagCheckbox && antagCheckbox.Name == $"{_antagAllSelection}RoleCheckbox")
+                    {
+                        antagCheckbox.Pressed = true;
+                    }
+                    else if (child is CheckBox otherAntagCheckbox)
+                    {
+                        otherAntagCheckbox.Pressed = false;
+                    }
+                }
+            }
+            else
+            {
+                foreach (var child in innerContainer.Children)
+                {
+                    if (child is CheckBox roleChildCheckbox)
+                    {
+                        roleChildCheckbox.Pressed = args.Pressed;
+                    }
                 }
             }
 
@@ -205,7 +222,7 @@ public sealed partial class BanPanel : DefaultWindow
                         .Warning("Departmental role ban severity could not be parsed from config!");
                     return;
                 }
-                SeverityOption.SelectId((int) newSeverity);
+                SeverityOption.SelectId((int)newSeverity);
             }
             else
             {
@@ -227,7 +244,7 @@ public sealed partial class BanPanel : DefaultWindow
                         .Warning("Role ban severity could not be parsed from config!");
                     return;
                 }
-                SeverityOption.SelectId((int) newSeverity);
+                SeverityOption.SelectId((int)newSeverity);
             }
         };
         outerContainer.AddChild(innerContainer);
@@ -257,11 +274,6 @@ public sealed partial class BanPanel : DefaultWindow
             Margin = new Thickness(2),
         };
 
-        if (isAntagonistGroup && role != _antagAllSelection)
-        {
-            roleCheckbox.Disabled = true;
-        }
-
         roleCheckbox.OnToggled += args =>
         {
             if (isAntagonistGroup && role == _antagAllSelection)
@@ -270,29 +282,23 @@ public sealed partial class BanPanel : DefaultWindow
                 {
                     if (child is CheckBox c && c != roleCheckbox)
                     {
-                        c.Disabled = args.Pressed;
                         c.Pressed = false;
                     }
                 }
             }
 
-            if (args is { Pressed: true, Button.Parent: { } } && args.Button.Parent.Children.Where(e => e is CheckBox).All(e => ((CheckBox)e).Pressed))
-                header.Pressed = args.Pressed;
+            if (args is { Pressed: true, Button.Parent: { } } && args.Button.Parent.Children.OfType<CheckBox>().All(e => e.Pressed))
+                header.Pressed = true;
             else
                 header.Pressed = false;
 
-            // Ensure only one checkbox is selected within the antagonist group
+            // Ensure "All" checkbox logic within the antagonist group
             if (isAntagonistGroup && role != _antagAllSelection)
             {
                 var allAntagsCheckbox = container.Children.OfType<CheckBox>().FirstOrDefault(c => c.Name == $"{_antagAllSelection}RoleCheckbox");
                 if (allAntagsCheckbox != null && args.Pressed)
                 {
                     allAntagsCheckbox.Pressed = false;
-                    allAntagsCheckbox.Disabled = true;
-                }
-                else if (allAntagsCheckbox != null)
-                {
-                    allAntagsCheckbox.Disabled = container.Children.OfType<CheckBox>().Any(c => c != allAntagsCheckbox && c.Pressed);
                 }
             }
         };
