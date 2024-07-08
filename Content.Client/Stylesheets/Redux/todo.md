@@ -21,6 +21,7 @@
 - [x] `ButtonSmall`
 - [ ] Whatever the hell `StyleClassSliderWhite` and friends are being used for
 - [ ] Move `Chat` style classes from `StyleClass.cs`
+- [ ] Vending machines entries no hover?
 
 TL;DR port all of `StyleNano` into sheetlets
 

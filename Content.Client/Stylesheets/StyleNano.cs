@@ -142,17 +142,6 @@ namespace Content.Client.Stylesheets
             lineEdit.SetPatchMargin(StyleBox.Margin.All, 3);
             lineEdit.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
-            var tabContainerPanelTex = resCache.GetTexture("/Textures/Interface/Nano/tabcontainer_panel.png");
-            var tabContainerPanel = new StyleBoxTexture
-            {
-                Texture = tabContainerPanelTex,
-            };
-            tabContainerPanel.SetPatchMargin(StyleBox.Margin.All, 2);
-
-            var tabContainerBoxActive = new StyleBoxFlat { BackgroundColor = new Color(64, 64, 64) };
-            tabContainerBoxActive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
-            var tabContainerBoxInactive = new StyleBoxFlat { BackgroundColor = new Color(32, 32, 32) };
-            tabContainerBoxInactive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
             var progressBarBackground = new StyleBoxFlat
             {
@@ -165,15 +154,6 @@ namespace Content.Client.Stylesheets
                 BackgroundColor = new Color(0.25f, 0.50f, 0.25f)
             };
             progressBarForeground.SetContentMarginOverride(StyleBox.Margin.Vertical, 14.5f);
-
-            // Tooltip box
-            var tooltipTexture = resCache.GetTexture("/Textures/Interface/Nano/tooltip.png");
-            var tooltipBox = new StyleBoxTexture
-            {
-                Texture = tooltipTexture,
-            };
-            tooltipBox.SetPatchMargin(StyleBox.Margin.All, 2);
-            tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
 
             // Whisper box
             var whisperTexture = resCache.GetTexture("/Textures/Interface/Nano/whisper.png");
@@ -197,28 +177,6 @@ namespace Content.Client.Stylesheets
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
 
-            // NanoHeading
-            var nanoHeadingTex = resCache.GetTexture("/Textures/Interface/Nano/nanoheading.svg.96dpi.png");
-            var nanoHeadingBox = new StyleBoxTexture
-            {
-                Texture = nanoHeadingTex,
-                PatchMarginRight = 10,
-                PatchMarginTop = 10,
-                ContentMarginTopOverride = 2,
-                ContentMarginLeftOverride = 10,
-                PaddingTop = 4
-            };
-
-            nanoHeadingBox.SetPatchMargin(StyleBox.Margin.Left | StyleBox.Margin.Bottom, 2);
-
-            // Stripe background
-            var stripeBackTex = resCache.GetTexture("/Textures/Interface/Nano/stripeback.svg.96dpi.png");
-            var stripeBack = new StyleBoxTexture
-            {
-                Texture = stripeBackTex,
-                Mode = StyleBoxTexture.StretchMode.Tile
-            };
-
             var boxFont13 = resCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
 
             var insetBack = new StyleBoxTexture
@@ -234,22 +192,6 @@ namespace Content.Client.Stylesheets
                     .Prop("font", notoSansMono),
 
                 // Hotbar background
-
-                // Main menu: Make those buttons bigger.
-                new StyleRule(new SelectorChild(
-                    new SelectorElement(typeof(Button), null, "mainMenu", null),
-                    new SelectorElement(typeof(Label), null, null, null)),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansBold16),
-                    }),
-
-                // Main menu: also make those buttons slightly more separated.
-                new StyleRule(new SelectorElement(typeof(BoxContainer), null, "mainMenuVBox", null),
-                    new[]
-                    {
-                        new StyleProperty(BoxContainer.StylePropertySeparation, 2),
-                    }),
 
                 // ProgressBar
                 new StyleRule(new SelectorElement(typeof(ProgressBar), null, null, null),
@@ -285,15 +227,6 @@ namespace Content.Client.Stylesheets
                 {
                     new StyleProperty("font", notoSansDisplayBold16)
                 }),
-
-                // Entity tooltip
-                new StyleRule(
-                    new SelectorElement(typeof(PanelContainer), new[] {ExamineSystem.StyleClassEntityTooltip}, null,
-                        null), new[]
-                    {
-                        new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
-                    }),
-
                 // ItemList
                 new StyleRule(new SelectorElement(typeof(ItemList), null, null, null), new[]
                 {
@@ -359,25 +292,6 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(Label.StylePropertyFontColor, new Color(0.024f, 0.8f, 0.0f))
                 }),
 
-                // NanoHeading
-
-                new StyleRule(
-                    new SelectorChild(
-                        SelectorElement.Type(typeof(NanoHeading)),
-                        SelectorElement.Type(typeof(PanelContainer))),
-                    new[]
-                    {
-                        new StyleProperty(PanelContainer.StylePropertyPanel, nanoHeadingBox),
-                    }),
-
-                // StripeBack
-                new StyleRule(
-                    SelectorElement.Type(typeof(StripeBack)),
-                    new[]
-                    {
-                        new StyleProperty(StripeBack.StylePropertyBackground, stripeBack),
-                    }),
-
                 // StyleClassItemStatus
                 new StyleRule(SelectorElement.Class(StyleClass.StyleClassItemStatus), new[]
                 {
@@ -398,44 +312,6 @@ namespace Content.Client.Stylesheets
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, new StyleBoxFlat { BackgroundColor = NanoGold, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2}),
                 }),
-
-                Element<TextureButton>()
-                    .Class(StyleClassButtonHelp)
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
-
-                // Different Background shapes ---
-                Element<PanelContainer>().Class(StyleClass.BackgroundPanel)
-                    .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
-
-                Element<PanelContainer>().Class("BackgroundOpenRight")
-                    .Prop(PanelContainer.StylePropertyPanel, BaseButtonOpenRight)
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
-
-                Element<PanelContainer>().Class("BackgroundOpenLeft")
-                    .Prop(PanelContainer.StylePropertyPanel, BaseButtonOpenLeft)
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
-
-                //The lengths you have to go through to change a background color smh
-                Element<PanelContainer>().Class("PanelBackgroundBaseDark")
-                    .Prop("panel", new StyleBoxTexture(BaseButtonOpenBoth) { Padding = default })
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#1F1F23")),
-
-                Element<PanelContainer>().Class("PanelBackgroundLight")
-                    .Prop("panel", new StyleBoxTexture(BaseButtonOpenBoth) { Padding = default })
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#2F2F3B")),
-
-                // X Texture button ---
-                Element<TextureButton>().Class("CrossButtonRed")
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/cross.svg.png"))
-                    .Prop(Control.StylePropertyModulateSelf, DangerousRedFore),
-
-                Element<TextureButton>().Class("CrossButtonRed").Pseudo(TextureButton.StylePseudoClassHover)
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#7F3636")),
-
-                Element<TextureButton>().Class("CrossButtonRed").Pseudo(TextureButton.StylePseudoClassHover)
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
-                // ---
 
                 // Profile Editor
                 Element<TextureButton>().Class("SpeciesInfoDefault")

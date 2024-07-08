@@ -62,5 +62,7 @@ public partial class InterfaceStylesheet : IPanelPalette
         HighlightColor.NudgeLightness(-24f),
     };
 
-    Color IPanelPalette.BackingPanelPalette => SecondaryPalette[3];
+    Color IPanelPalette.PanelLightColor => SecondaryPalette[2];
+    Color IPanelPalette.PanelColor => SecondaryPalette[3];
+    Color IPanelPalette.PanelDarkColor => SecondaryPalette[4];
 }

@@ -1,8 +1,10 @@
-﻿using Content.Client.Stylesheets.Redux.Fonts;
+﻿using System.Numerics;
+using Content.Client.Stylesheets.Redux.Fonts;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.CustomControls;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
@@ -34,6 +36,11 @@ public sealed class FancyWindowSheetlet : Sheetlet<PalettedStylesheet>
                 .Class(FancyWindow.StyleClassWindowHelpButton)
                 .Pseudo(ContainerButton.StylePseudoClassPressed)
                 .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette[2]),
+
+            // Close Button
+            E<TextureButton>()
+                .Class(FancyWindow.StyleClassWindowCloseButton)
+                .Margin(new Thickness(0, 0, -3, 0)),
 
             // Footer
             E<Label>()

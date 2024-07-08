@@ -20,6 +20,7 @@ public abstract class ButtonSheetlet : Sheetlet<PalettedStylesheet>
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
         var cfg = (IButtonConfig) sheet;
+
         var rules = new List<StyleRule>
         {
             // Set textures for the kinds of buttons
@@ -46,6 +47,11 @@ public abstract class ButtonSheetlet : Sheetlet<PalettedStylesheet>
                 .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(8)),
             CButton().Class(StyleClass.ButtonBig).ParentOf(E<Label>()).Font(sheet.BaseFont.GetFont(16)),
 
+            // Cross Button (Red)
+            E<TextureButton>()
+                .Class(StyleClass.CrossButtonRed)
+                .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture("cross.svg.png")),
+
             // Ensure labels in buttons are aligned.
             E<Label>()
                 .Class(Button.StyleClassButton)
@@ -53,6 +59,7 @@ public abstract class ButtonSheetlet : Sheetlet<PalettedStylesheet>
         };
         // Texture button modulation
         MakeButtonRules<TextureButton>(cfg, rules, _textureButtonPalette, null);
+        MakeButtonRules<TextureButton>(cfg, rules, sheet.NegativePalette, StyleClass.CrossButtonRed);
 
         return rules.ToArray();
     }

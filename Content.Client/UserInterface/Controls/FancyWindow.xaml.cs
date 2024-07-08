@@ -16,7 +16,9 @@ namespace Content.Client.UserInterface.Controls
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;
         private GuidebookSystem? _guidebookSystem;
         private const int DRAG_MARGIN_SIZE = 7;
+
         public const string StyleClassWindowHelpButton = "windowHelpButton";
+        public const string StyleClassWindowCloseButton = "windowCloseButton";
 
         public FancyWindow()
         {

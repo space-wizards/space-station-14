@@ -46,12 +46,17 @@ public static class StyleClass
     public const string BackgroundPanelOpenLeft = "BackgroundOpenLeft";
     public const string BackgroundPanelOpenRight = "BackgroundOpenRight";
 
+    public const string PanelDark = "PanelDark";
+    public const string PanelLight = "PanelLight";
+
     public const string ButtonOpenRight = "OpenRight";
     public const string ButtonOpenLeft = "OpenLeft";
     public const string ButtonOpenBoth = "OpenBoth";
     public const string ButtonSquare = "ButtonSquare";
     public const string ButtonSmall = "ButtonSmall";
     public const string ButtonBig = "ButtonBig";
+
+    public const string CrossButtonRed = "CrossButtonRed";
 
     public const string StyleClassSliderRed = "Red";
     public const string StyleClassSliderGreen = "Green";
