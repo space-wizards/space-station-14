@@ -3,14 +3,11 @@ using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.AlertLevel;
 using Content.Server.Chat.Systems;
-using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.RoundEnd;
-using Content.Server.Screens;
-using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Components;
@@ -22,6 +19,7 @@ using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Emag.Components;
 using Content.Shared.Popups;
+using Content.Shared.Screen;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 
@@ -291,9 +289,10 @@ namespace Content.Server.Communications
             if (!TryComp<DeviceNetworkComponent>(uid, out var net))
                 return;
 
+            var update = new ScreenUpdate(GetNetEntity(Transform(uid).MapUid), ScreenPriority.Default, message.Message);
             var payload = new NetworkPayload
             {
-                [ScreenMasks.Text] = message.Message
+                [ScreenMasks.Updates] = new ScreenUpdate[] { update }
             };
 
             _deviceNetworkSystem.QueuePacket(uid, null, payload, net.TransmitFrequency);

@@ -10203,7 +10203,7 @@ entities:
     - type: Transform
       pos: 1.5,-361.5
       parent: 2
-- proto: ArrivalsShuttleTimer
+- proto: ArrivalsScreen
   entities:
   - uid: 12014
     components:

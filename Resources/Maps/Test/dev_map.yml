@@ -780,7 +780,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: -5.5,-14.5
       parent: 179
-- proto: ArrivalsShuttleTimer
+- proto: ArrivalsScreen
   entities:
   - uid: 1191
     components:

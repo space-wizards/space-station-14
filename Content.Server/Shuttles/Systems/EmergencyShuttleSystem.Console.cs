@@ -1,6 +1,5 @@
 using System.Threading;
 using Content.Server.DeviceNetwork.Components;
-using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Access;
@@ -12,6 +11,7 @@ using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.UserInterface;
+using Content.Shared.Screen;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Timer = Robust.Shared.Timing.Timer;
@@ -383,16 +383,12 @@ public sealed partial class EmergencyShuttleSystem
         var shuttle = GetShuttle();
         if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle, out var net))
         {
-            var payload = new NetworkPayload
-            {
-                [ShuttleTimerMasks.ShuttleMap] = shuttle,
-                [ShuttleTimerMasks.SourceMap] = _roundEnd.GetStation(),
-                [ShuttleTimerMasks.DestMap] = _roundEnd.GetCentcomm(),
-                [ShuttleTimerMasks.ShuttleTime] = time,
-                [ShuttleTimerMasks.SourceTime] = time,
-                [ShuttleTimerMasks.DestTime] = time + TimeSpan.FromSeconds(TransitTime),
-                [ShuttleTimerMasks.Docked] = true
-            };
+            var shuttleUpdate = new ScreenUpdate(GetNetEntity(shuttle), ScreenPriority.Shuttle, ScreenMasks.ETD, _timing.CurTime +  time);
+            var sourceUpdate = new ScreenUpdate(GetNetEntity(_roundEnd.GetStation()), ScreenPriority.Shuttle, ScreenMasks.ETD, _timing.CurTime + time);
+            var destUpdate = new ScreenUpdate(GetNetEntity(_roundEnd.GetCentcomm()),
+                ScreenPriority.Shuttle, ScreenMasks.ETA, _timing.CurTime + time + TimeSpan.FromSeconds(TransitTime));
+
+            var payload = new NetworkPayload { [ScreenMasks.Updates] = new ScreenUpdate[] { shuttleUpdate, sourceUpdate, destUpdate } };
             _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
         }
 

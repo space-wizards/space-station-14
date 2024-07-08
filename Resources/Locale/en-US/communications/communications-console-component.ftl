@@ -1,6 +1,6 @@
 # User interface
 comms-console-menu-title = Communications Console
-comms-console-menu-announcement-placeholder = Announcement text...
+comms-console-menu-announcement-placeholder = Announce text or broadcast to screens...
 comms-console-menu-announcement-button = Announce
 comms-console-menu-broadcast-button = Broadcast
 comms-console-menu-call-shuttle = Call emergency shuttle

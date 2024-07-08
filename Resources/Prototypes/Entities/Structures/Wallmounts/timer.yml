@@ -53,8 +53,8 @@
   components:
   - type: SignalTimer
     canEditLabel: true
-  - type: TextScreenVisuals
-    color: FloralWhite
+  - type: Screen
+    defaultColor: FloralWhite
     textOffset: 0,8
     timerOffset: 0,8
     textLength: 5
