@@ -721,6 +721,15 @@
 
 - type: entity
   parent: BaseSign
+  id: SignServer
+  name: server sign
+  description: Ever heard of Big Data? This is it, chump. The biggest.
+  components:
+  - type: Sprite
+    state: data
+
+- type: entity
+  parent: BaseSign
   id: SignCans
   name: canisters sign
   description: A sign indicating the auspicious presence of gas canisters.

@@ -434,6 +434,9 @@
             "name": "security"
         },
         {
+            "name": "data"
+        },
+        {
             "name": "nanotrasen_sign1"
         },
         {
