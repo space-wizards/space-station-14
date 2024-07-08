@@ -118,7 +118,7 @@ public sealed class InjectorSystem : SharedInjectorSystem
         if (!SolutionContainers.TryGetSolution(injector.Owner, injector.Comp.SolutionName, out _, out var solution))
             return;
 
-        var actualDelay = MathHelper.Max(injector.Comp.Delay, TimeSpan.FromSeconds(1));
+        var actualDelay = injector.Comp.Delay;
         float amountToInject;
         if (injector.Comp.ToggleState == InjectorToggleMode.Draw)
         {
@@ -132,7 +132,11 @@ public sealed class InjectorSystem : SharedInjectorSystem
         }
 
         // Injections take 0.5 seconds longer per 5u of possible space/content
-        actualDelay += TimeSpan.FromSeconds(amountToInject / 10);
+        // First 5u doesn't incur delay
+        actualDelay += TimeSpan.FromSeconds((amountToInject - 5) * injector.Comp.DelayPerVolume);
+
+        // Ensure that minimum delay before incapacitation checks is 1 seconds
+        actualDelay = MathHelper.Max(actualDelay, TimeSpan.FromSeconds(1));
 
 
         var isTarget = user != target;
