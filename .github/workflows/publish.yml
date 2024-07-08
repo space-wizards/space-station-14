@@ -63,9 +63,10 @@ jobs:
     - name: Update manifest JSON
       uses: appleboy/ssh-action@master
       with:
-        host: centcomm.spacestation14.io
+        host: ${{ secrets.PUBLISH_HOST }}
         username: ${{ secrets.PUBLISH_USER }}
         password: ${{ secrets.PUBLISH_KEY }}
+        port: ${{ secrets.PUBLISH_PORT }}
         script: /home/harmony_build/push.ps1 ${{ github.sha }}
 
 #    - name: Publish changelog (Discord)
