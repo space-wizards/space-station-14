@@ -1,5 +1,7 @@
+using Content.Shared.EntityList;
 using Content.Shared.Random;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Spawners.Components;
 
@@ -11,8 +13,8 @@ namespace Content.Server.Spawners.Components;
 public partial class GenericSpawnerComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField]
-    public ProtoId<WeightedRandomEntityPrototype> EntityTable = string.Empty;
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomEntityPrototype>))]
+    public string EntityTable = string.Empty;
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
