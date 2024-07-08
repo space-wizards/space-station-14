@@ -113,12 +113,9 @@ namespace Content.Client.Stylesheets
             var notoSansBold16 = resCache.NotoStack(variation: "Bold", size: 16);
             var notoSansBold18 = resCache.NotoStack(variation: "Bold", size: 18);
             var notoSansBold20 = resCache.NotoStack(variation: "Bold", size: 20);
-            var notoSansMono = resCache.GetFont("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf", size: 12);
 
             Stylesheet = new Stylesheet(BaseRules.Concat(new[]
             {
-                Element().Class("monospace")
-                    .Prop("font", notoSansMono),
                 //APC and SMES power state label colors
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPowerStateNone}, null, null), new[]
                 {
@@ -135,34 +132,10 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(Label.StylePropertyFontColor, new Color(0.024f, 0.8f, 0.0f))
                 }),
 
-                // StyleClassItemStatus
-                new StyleRule(SelectorElement.Class(StyleClass.StyleClassItemStatus), new[]
-                {
-                    new StyleProperty("font", notoSans10),
-                }),
-
-                Element()
-                    .Class(StyleClass.StyleClassItemStatusNotHeld)
-                    .Prop("font", notoSansItalic10)
-                    .Prop("font-color", ItemStatusNotHeldColor),
-
-                Element<RichTextLabel>()
-                    .Class(StyleClass.StyleClassItemStatus)
-                    .Prop(nameof(RichTextLabel.LineHeightScale), 0.7f)
-                    .Prop(nameof(Control.Margin), new Thickness(0, 0, 0, -6)),
-
                 new StyleRule(new SelectorElement(typeof(PanelContainer), new []{StyleClass.HighDivider}, null, null), new []
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, new StyleBoxFlat { BackgroundColor = NanoGold, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2}),
                 }),
-
-                // Profile Editor
-                Element<TextureButton>().Class("SpeciesInfoDefault")
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
-
-                Element<TextureButton>().Class("SpeciesInfoWarning")
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/info.svg.192dpi.png"))
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#eeee11")),
 
                 Element<Label>().Class("StatusFieldTitle")
                     .Prop("font-color", NanoGold),

@@ -1,18 +1,23 @@
 ﻿namespace Content.Client.Stylesheets.Redux;
 
 /**
- * A collection of public reusable style classes. These should be general purpose (Not specific to only one Ui).
+ * A collection of public reusable style classes. These should be general purpose (Not specific to only one element or
+ * Ui).
  *
  * It is named `StyleClass` as opposed to `StyleClasses` because `StyleClasses` is a field on `Control` so it made it
- * a pain to reference this class from a `Control`.
+ * a pain to reference this class from a `Control`. (Weird name is worth typing `StyleClass.OpenBoth` vs.
+ * `Stylesheets.Redux.Styleclasses.OpenBoth`)
  */
 public static class StyleClass
 {
-    public const string PrimaryColor = "color-primary";
-    public const string SecondaryColor = "color-secondary";
-    public const string PositiveColor = "color-positive";
-    public const string NegativeColor = "color-negative";
-    public const string HighlightColor = "color-highlight";
+    // These style classes affect more than one type of element
+    public const string Positive = "positive";
+    public const string Negative = "negative";
+
+    public const string FontLarge = "font-large";
+    public const string FontSmall = "font-small";
+    public const string Italic = "italic";
+    public const string Monospace = "monospace";
 
     /**
      * <returns>The style class that will apply `ModulateSelf` with the specified color</returns>
@@ -23,10 +28,13 @@ public static class StyleClass
         return $"{styleclass}-{index}";
     }
 
-    public const string LargeLabel = "font-large";
-    public const string SmallLabel = "font-small";
-    public const string Negative = "negative";
-    public const string Positive = "positive";
+    public const string PrimaryColor = "color-primary";
+    public const string SecondaryColor = "color-secondary";
+    public const string PositiveColor = "color-positive";
+    public const string NegativeColor = "color-negative";
+    public const string HighlightColor = "color-highlight";
+
+
     public const string BorderedWindowPanel = "BorderedWindowPanel";
     public const string AlertWindowHeader = "windowHeaderAlert";
     public const string WindowContentsContainer = "WindowContentsContainer";
@@ -39,8 +47,6 @@ public static class StyleClass
     public const string LabelSubText = "LabelSubText";
     public const string LabelKeyText = "LabelKeyText";
     public const string LabelWeak = "LabelWeak"; // replaces `StyleClassLabelSecondaryColor`
-
-    public const string Italic = "Italic";
 
     public const string BackgroundPanel = "AngleRect";
     public const string BackgroundPanelOpenLeft = "BackgroundOpenLeft";

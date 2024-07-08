@@ -147,7 +147,7 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
                     Orientation = BoxContainer.LayoutOrientation.Horizontal,
                     Children =
                     {
-                        new Label { Text = stream.Name, StyleClasses = { "monospace" }, HorizontalExpand = true },
+                        new Label { Text = stream.Name, StyleClasses = { "Monospace" }, HorizontalExpand = true },
                         new Label { Text = FormatValue(stream.Unit, lastSample.Value) }
                     }
                 });
