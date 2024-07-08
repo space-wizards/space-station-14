@@ -132,8 +132,8 @@ public sealed class InjectorSystem : SharedInjectorSystem
         }
 
         // Injections take 0.5 seconds longer per 5u of possible space/content
-        // First 5u doesn't incur delay
-        actualDelay += TimeSpan.FromSeconds((amountToInject - 5) * injector.Comp.DelayPerVolume);
+        // First 5u(MinimumTransferAmount) doesn't incur delay
+        actualDelay += TimeSpan.FromSeconds(Math.Max(0, amountToInject - injector.Comp.MinimumTransferAmount.Float()) * injector.Comp.DelayPerVolume);
 
         // Ensure that minimum delay before incapacitation checks is 1 seconds
         actualDelay = MathHelper.Max(actualDelay, TimeSpan.FromSeconds(1));
