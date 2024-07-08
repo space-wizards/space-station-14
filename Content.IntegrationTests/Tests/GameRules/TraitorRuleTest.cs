@@ -117,6 +117,10 @@ public sealed class TraitorRuleTest
         var totalDifficulty = mindComp.Objectives.Sum(o => entMan.GetComponent<ObjectiveComponent>(o).Difficulty);
         Assert.That(totalDifficulty, Is.AtMost(maxDifficulty),
             $"MaxDifficulty exceeded! Objectives: {string.Join(", ", mindComp.Objectives.Select(o => FormatObjective(o, entMan)))}");
+        Assert.That(mindComp.Objectives, Is.Not.Empty,
+            $"No objectives assigned!");
+
+
         await pair.CleanReturnAsync();
     }
 
