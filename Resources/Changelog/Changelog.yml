@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: superjj18
-  changes:
-  - message: Emergency lighting now changes based on station alert level!
-    type: Tweak
-  id: 6384
-  time: '2024-04-18T10:50:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26932
 - author: Dutch-VanDerLinde
   changes:
   - message: Chemists now start with chemical analysis goggles.
@@ -3828,3 +3821,10 @@
   id: 6883
   time: '2024-07-07T14:28:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29712
+- author: Tayrtahn
+  changes:
+  - message: Fixed admin ghosts briefly becoming visible when a news article is published.
+    type: Fix
+  id: 6884
+  time: '2024-07-08T03:33:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29801
