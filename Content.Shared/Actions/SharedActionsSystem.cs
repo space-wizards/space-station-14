@@ -455,17 +455,12 @@ public abstract class SharedActionsSystem : EntitySystem
             case EntityWorldTargetActionComponent entityWorldAction:
             {
 
-                EntityUid? actionEntity = null;
-                EntityCoordinates? actionCoords = null;
-                var entityValidated = false;
-                var worldValidated = false;
+                var actionEntity = GetEntity(ev.EntityTarget);
+                var actionCoords = GetCoordinates(ev.EntityCoordinatesTarget);
 
                 var entWorldAction = new Entity<EntityWorldTargetActionComponent>(actionEnt, entityWorldAction);
 
-                if (!ValidateEntityWorldTarget(user,
-                        GetEntity(ev.EntityTarget),
-                        GetCoordinates(ev.EntityCoordinatesTarget),
-                        entWorldAction))
+                if (!ValidateEntityWorldTarget(user, actionEntity, actionCoords, entWorldAction))
                     return;
 
                 _adminLogger.Add(LogType.Action,
@@ -473,10 +468,8 @@ public abstract class SharedActionsSystem : EntitySystem
 
                 if (entityWorldAction.Event != null)
                 {
-                    if (entityValidated)
-                        entityWorldAction.Event.Entity = actionEntity;
-                    if (worldValidated)
-                        entityWorldAction.Event.Coords = actionCoords;
+                    entityWorldAction.Event.Entity = actionEntity;
+                    entityWorldAction.Event.Coords = actionCoords;
                     Dirty(actionEnt, entityWorldAction);
                     performEvent = entityWorldAction.Event;
                 }
