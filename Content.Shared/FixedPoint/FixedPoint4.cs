@@ -201,11 +201,13 @@ namespace Content.Shared.FixedPoint
         }
 
         // Implicit operators ftw
+        public static implicit operator FixedPoint4(FixedPoint2 n) => New(n.Int());
         public static implicit operator FixedPoint4(float n) => New(n);
         public static implicit operator FixedPoint4(double n) => New(n);
         public static implicit operator FixedPoint4(int n) => New(n);
         public static implicit operator FixedPoint4(long n) => New(n);
 
+        public static explicit operator FixedPoint2(FixedPoint4 n) => n.Int();
         public static explicit operator float(FixedPoint4 n) => n.Float();
         public static explicit operator double(FixedPoint4 n) => n.Double();
         public static explicit operator int(FixedPoint4 n) => n.Int();
