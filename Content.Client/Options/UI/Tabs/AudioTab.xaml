@@ -4,9 +4,7 @@
          xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
-            <Label Text="{Loc 'ui-options-volume-label'}"
-                   FontColorOverride="{x:Static s:StyleNano.NanoGold}"
-                   StyleClasses="LabelKeyText"/>
+            <Label Text="{Loc 'ui-options-volume-label'}" StyleClasses="LabelKeyText"/>
             <BoxContainer Orientation="Vertical" Margin="0 3 0 0">
                 <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
                     <Label Text="{Loc 'ui-options-master-volume'}" HorizontalExpand="True" />

@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Shared.CCVar;
 using Content.Shared.Procedural;
 using Content.Shared.Salvage.Expeditions;
@@ -95,9 +96,9 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
             offering.AddContent(new Label
             {
                 Text = difficultyProto.RecommendedPlayers.ToString(),
-                FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = Control.HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
+                StyleClasses = { StyleClass.LabelKeyText },
             });
 
             // Details
@@ -111,9 +112,9 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
             offering.AddContent(new Label
             {
                 Text = faction,
-                FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = Control.HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
+                StyleClasses = { StyleClass.LabelKeyText },
             });
 
             // Duration
@@ -125,9 +126,9 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
             offering.AddContent(new Label
             {
                 Text = mission.Duration.ToString(),
-                FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = Control.HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
+                StyleClasses = { StyleClass.LabelKeyText },
             });
 
             // Biome
@@ -141,9 +142,9 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
             offering.AddContent(new Label
             {
                 Text = Loc.GetString(_protoManager.Index<SalvageBiomeModPrototype>(biome).ID),
-                FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = Control.HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
+                StyleClasses = { StyleClass.LabelKeyText },
             });
 
             // Modifiers
@@ -157,9 +158,9 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
             offering.AddContent(new Label
             {
                 Text = string.Join("\n", mods.Select(o => "- " + o)).TrimEnd(),
-                FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = Control.HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
+                StyleClasses = { StyleClass.LabelKeyText },
             });
 
             offering.ClaimPressed += args =>

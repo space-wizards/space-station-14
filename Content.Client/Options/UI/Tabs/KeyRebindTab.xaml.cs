@@ -131,7 +131,6 @@ namespace Content.Client.Options.UI.Tabs
                 KeybindsContainer.AddChild(new Label
                 {
                     Text = Loc.GetString(headerContents),
-                    FontColorOverride = StyleNano.NanoGold,
                     StyleClasses = { StyleClass.LabelKeyText }
                 });
             }

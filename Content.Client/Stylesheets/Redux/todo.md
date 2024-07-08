@@ -4,25 +4,25 @@
     - Ported `ContextMenu` styles from `StyleNano.cs`
 - [x] Colors are slightly too dark IMO
 - [x] Text when editing paper is white
-- [ ] Stamps look weird?
-- [ ] `ScrollContainer` has no scrollbar!!!
 - [x] Action buttons don't have highlighting
-- [ ] `NavMapControl.cs:133` fix this
+- [x] `ButtonSmall`
+- [x] `[X]` button is misaligned on FancyWindow also title text too kinda
+- [x] Move `ISheetletConfig` classes into their own directory
 - [x] Create a HUD stylesheet for examine, right click, chat etc. perhaps, distinguish from NT Ui
     - [ ] (remove `ContextMenuSheetlet.cs:16`)
     - [x] ~~seperated chat ui~~ (looks funky)
     - [ ] ~~Admin / debug menus~~ (do in another PR)
     - [ ] I cheat on the "resources are access locked" thing in `ContextMenuSheetlet.cs:36`. This needs to be fixed!
     - [x] ~~Tooltips!~~ (weird)
+- [ ] Stamps look weird?
+- [ ] `ScrollContainer` has no scrollbar!!!
+- [ ] `NavMapControl.cs:133` fix this
 - [ ] `CrewMonitoringWindow` uses `TooltipDesc` for some reason??
 - [ ] Enum for accessing palette?
 - [ ] `MenuButton.cs` hardcoded colors
-- [x] `ButtonSmall`
 - [ ] Whatever the hell `StyleClassSliderWhite` and friends are being used for
 - [ ] Move `Chat` style classes from `StyleClass.cs`
 - [ ] Vending machines entries no hover?
-- [x] `[X]` button is misaligned on FancyWindow also title text too kinda
-- [x] Move `ISheetletConfig` classes into their own directory
 - [ ] `ApcMenu.xaml.cs` maybe make the text color fully dynamic
 - [ ] Also `ApcMenu.xaml.cs`: localize watts
 - [ ] `PopupUiController` lots of hardcoding
@@ -37,6 +37,11 @@
 - [ ] Make all `StyleClass` conform to naming conventions
 - [ ] `LabelSheetlet` / `TextSheetlet` dont hardcode the label sizes
 - [ ] Separate out `FontKind` maybe
+
+MARK:
+- StampWidget.xaml
+- AirAlarmWindow.xaml.cs
+- ReplayMainMenuControl.xaml
 
 TL;DR port all of `StyleNano` into sheetlets
 

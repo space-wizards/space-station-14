@@ -21,11 +21,18 @@ public sealed class PanelSheetlet : Sheetlet<PalettedStylesheet>
         {
             BackgroundColor = cfg.PanelDarkColor
         };
+        var boxDivider = new StyleBoxFlat
+        {
+            BackgroundColor = sheet.HighlightPalette[0],
+            ContentMarginBottomOverride = 2,
+            ContentMarginLeftOverride = 2,
+        };
 
         return
         [
             E<PanelContainer>().Class(StyleClass.PanelLight).Panel(boxLight),
             E<PanelContainer>().Class(StyleClass.PanelDark).Panel(boxDark),
+            E<PanelContainer>().Class(StyleClass.HighDivider).Panel(boxDivider),
         ];
     }
 }

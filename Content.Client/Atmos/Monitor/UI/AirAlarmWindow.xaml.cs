@@ -187,16 +187,17 @@ public sealed partial class AirAlarmWindow : FancyWindow
 
     public static Color ColorForAlarm(AtmosAlarmType curAlarm)
     {
-        if(curAlarm == AtmosAlarmType.Danger)
-        {
-            return StyleNano.DangerousRedFore;
-        }
-        else if(curAlarm == AtmosAlarmType.Warning)
-        {
-            return StyleNano.ConcerningOrangeFore;
-        }
-
-        return StyleNano.GoodGreenFore;
+        throw new NotImplementedException("TEMPORARY");
+        // if(curAlarm == AtmosAlarmType.Danger)
+        // {
+        //     return StyleNano.DangerousRedFore;
+        // }
+        // else if(curAlarm == AtmosAlarmType.Warning)
+        // {
+        //     return StyleNano.ConcerningOrangeFore;
+        // }
+        //
+        // return StyleNano.GoodGreenFore;
     }
 
 
