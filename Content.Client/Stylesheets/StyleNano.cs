@@ -46,7 +46,6 @@ namespace Content.Client.Stylesheets
         public const string StyleClassTooltipAlertCooldown = "tooltipAlertCooldown";
 
         public const string StyleClassHotbarSlotNumber = "hotbarSlotNumber";
-        public const string StyleClassActionSearchBox = "actionSearchBox";
         public const string StyleClassActionMenuItemRevoked = "actionMenuItemRevoked";
         public const string StyleClassChatChannelSelectorButton = "chatSelectorOptionButton";
         public const string StyleClassChatFilterOptionButton = "chatFilterOptionButton";
@@ -142,14 +141,6 @@ namespace Content.Client.Stylesheets
             };
             lineEdit.SetPatchMargin(StyleBox.Margin.All, 3);
             lineEdit.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
-
-            var actionSearchBoxTex = resCache.GetTexture("/Textures/Interface/Nano/black_panel_dark_thin_border.png");
-            var actionSearchBox = new StyleBoxTexture
-            {
-                Texture = actionSearchBoxTex,
-            };
-            actionSearchBox.SetPatchMargin(StyleBox.Margin.All, 3);
-            actionSearchBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
             var tabContainerPanelTex = resCache.GetTexture("/Textures/Interface/Nano/tabcontainer_panel.png");
             var tabContainerPanel = new StyleBoxTexture
@@ -258,37 +249,6 @@ namespace Content.Client.Stylesheets
                     new[]
                     {
                         new StyleProperty(BoxContainer.StylePropertySeparation, 2),
-                    }),
-
-                // Fancy LineEdit
-                new StyleRule(new SelectorElement(typeof(LineEdit), null, null, null),
-                    new[]
-                    {
-                        new StyleProperty(LineEdit.StylePropertyStyleBox, lineEdit),
-                    }),
-
-                new StyleRule(
-                    new SelectorElement(typeof(LineEdit), new[] {LineEdit.StyleClassLineEditNotEditable}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font-color", new Color(192, 192, 192)),
-                    }),
-
-                new StyleRule(
-                    new SelectorElement(typeof(LineEdit), null, null, new[] {LineEdit.StylePseudoClassPlaceholder}),
-                    new[]
-                    {
-                        new StyleProperty("font-color", Color.Gray),
-                    }),
-
-                Element<TextEdit>().Pseudo(TextEdit.StylePseudoClassPlaceholder)
-                    .Prop("font-color", Color.Gray),
-
-                // Action searchbox lineedit
-                new StyleRule(new SelectorElement(typeof(LineEdit), new[] {StyleClassActionSearchBox}, null, null),
-                    new[]
-                    {
-                        new StyleProperty(LineEdit.StylePropertyStyleBox, actionSearchBox),
                     }),
 
                 // ProgressBar

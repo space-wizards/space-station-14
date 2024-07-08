@@ -1,5 +1,6 @@
 using Content.Client.Resources;
 using Content.Client.UserInterface.Systems.Actions.Controls;
+using Content.Client.UserInterface.Systems.Actions.Windows;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -8,7 +9,7 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Redux.Sheetlets.Hud;
 
 [CommonSheetlet]
-public sealed class ActionButtonSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class ActionSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
@@ -20,9 +21,18 @@ public sealed class ActionButtonSheetlet : Sheetlet<PalettedStylesheet>
         };
         handSlotHighlight.SetPatchMargin(StyleBox.Margin.All, 2);
 
+        var actionSearchBoxTex = sheet.GetTexture("black_panel_dark_thin_border.png");
+        var actionSearchBox = new StyleBoxTexture
+        {
+            Texture = actionSearchBoxTex,
+        };
+        actionSearchBox.SetPatchMargin(StyleBox.Margin.All, 3);
+        actionSearchBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
+
         return
         [
             E<PanelContainer>().Class(ActionButton.StyleClassActionHighlightRect).Panel(handSlotHighlight),
+            E<LineEdit>().Class(ActionsWindow.StyleClassActionSearchBox).Box(actionSearchBox),
         ];
     }
 }
