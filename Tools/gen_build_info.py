@@ -2,6 +2,7 @@
 
 # Generates build info and injects it into the server zip files.
 
+import sys
 import codecs
 import hashlib
 import io
@@ -18,12 +19,14 @@ SERVER_FILES = [
     "SS14.Server_win-x64.zip",
     "SS14.Server_osx-x64.zip"
 ]
-
-VERSION = os.environ['GITHUB_SHA']
-FORK_ID = "wizards"
-BUILD_URL = f"https://cdn.centcomm.spacestation14.com/builds/wizards/builds/{{FORK_VERSION}}/{FILE}"
-MANIFEST_URL = f"https://cdn.centcomm.spacestation14.com/cdn/version/{{FORK_VERSION}}/manifest"
-MANIFEST_DOWNLOAD_URL = f"https://cdn.centcomm.spacestation14.com/cdn/version/{{FORK_VERSION}}/download"
+if sys.argv[1] is not None:
+    VERSION = sys.argv[1]
+else
+    sys.exit()
+FORK_ID = "harmony"
+BUILD_URL = f"http://cdn.harmony14.com:25566/builds/{{FORK_ID}}/builds/{{FORK_VERSION}}/{FILE}"
+MANIFEST_URL = f"http://cdn.harmony14.com:25566/cdn/version/{{FORK_VERSION}}/manifest"
+MANIFEST_DOWNLOAD_URL = f"http://cdn.harmony14.com:25566/cdn/version/{{FORK_VERSION}}/download"
 
 def main() -> None:
     client_file = os.path.join("release", FILE)
