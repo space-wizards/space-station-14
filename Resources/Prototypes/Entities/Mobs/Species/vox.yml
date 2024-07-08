@@ -26,7 +26,7 @@
             layerKey: dummy
             parameterTexture: displacementMap
             parameterUV: displacementUV
-      glasses:
+      eyes:
         layer:
           sprite: Mobs/Species/Vox/displacement.rsi
           state: eyes
