@@ -21,7 +21,7 @@ SERVER_FILES = [
 ]
 if sys.argv[1] is not None:
     VERSION = sys.argv[1]
-else
+else:
     sys.exit()
 FORK_ID = "harmony"
 BUILD_URL = f"http://cdn.harmony14.com:25566/builds/{{FORK_ID}}/builds/{{FORK_VERSION}}/{FILE}"
