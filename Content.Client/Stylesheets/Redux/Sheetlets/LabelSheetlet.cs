@@ -31,6 +31,15 @@ public sealed class LabelSheetlet : Sheetlet<PalettedStylesheet>
             E<Label>()
                 .Class(StyleClass.LabelWeak)
                 .FontColor(Color.DarkGray), // TODO: you know the drill by now
+            E<Label>()
+                .Class(StyleClass.Positive)
+                .FontColor(sheet.PositivePalette[0]),
+            E<Label>()
+                .Class(StyleClass.Negative)
+                .FontColor(sheet.NegativePalette[0]),
+            E<Label>()
+                .Class(StyleClass.Highlight)
+                .FontColor(sheet.HighlightPalette[0]),
         ];
     }
 }

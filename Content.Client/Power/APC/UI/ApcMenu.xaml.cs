@@ -4,12 +4,14 @@ using Robust.Client.GameObjects;
 using Robust.Shared.IoC;
 using System;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux.SheetletConfig;
 using Content.Shared.APC;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
 
 namespace Content.Client.Power.APC.UI
@@ -32,7 +34,7 @@ namespace Content.Client.Power.APC.UI
 
             if (BreakerButton != null)
             {
-                if(castState.HasAccess == false)
+                if (castState.HasAccess == false)
                 {
                     BreakerButton.Disabled = true;
                     BreakerButton.ToolTip = Loc.GetString("apc-component-insufficient-access");
@@ -52,19 +54,20 @@ namespace Content.Client.Power.APC.UI
 
             if (ExternalPowerStateLabel != null)
             {
+                // var statusPalette = IStatusPalette.GetFromControl(this);
                 switch (castState.ApcExternalPower)
                 {
                     case ApcExternalPowerState.None:
                         ExternalPowerStateLabel.Text = Loc.GetString("apc-menu-power-state-none");
-                        ExternalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
+                        ExternalPowerStateLabel.SetOnlyStyleClass("negative");
                         break;
                     case ApcExternalPowerState.Low:
                         ExternalPowerStateLabel.Text = Loc.GetString("apc-menu-power-state-low");
-                        ExternalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateLow);
+                        ExternalPowerStateLabel.SetOnlyStyleClass("highlight");
                         break;
                     case ApcExternalPowerState.Good:
                         ExternalPowerStateLabel.Text = Loc.GetString("apc-menu-power-state-good");
-                        ExternalPowerStateLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
+                        ExternalPowerStateLabel.SetOnlyStyleClass("positive");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -76,7 +79,8 @@ namespace Content.Client.Power.APC.UI
                 ChargeBar.Value = castState.Charge;
                 UpdateChargeBarColor(castState.Charge);
                 var chargePercentage = (castState.Charge / ChargeBar.MaxValue);
-                ChargePercentage.Text = Loc.GetString("apc-menu-charge-label",("percent",  chargePercentage.ToString("P0")));
+                ChargePercentage.Text =
+                    Loc.GetString("apc-menu-charge-label", ("percent", chargePercentage.ToString("P0")));
             }
         }
 

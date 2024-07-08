@@ -13,6 +13,7 @@ public static class StyleClass
     // These style classes affect more than one type of element
     public const string Positive = "positive";
     public const string Negative = "negative";
+    public const string Highlight = "highlight";
 
     public const string FontLarge = "font-large";
     public const string FontSmall = "font-small";

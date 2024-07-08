@@ -114,7 +114,7 @@
                           VerticalExpand="True">
                 <Button Name="ResetButton"
                         Text="{Loc 'ui-options-reset-all'}"
-                        StyleClasses="Caution"
+                        StyleClasses="highlight"
                         HorizontalExpand="True"
                         HorizontalAlignment="Right" />
                 <Control MinSize="2 0" />

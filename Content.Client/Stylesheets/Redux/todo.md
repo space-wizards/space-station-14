@@ -23,6 +23,9 @@
 - [ ] Vending machines entries no hover?
 - [x] `[X]` button is misaligned on FancyWindow also title text too kinda
 - [x] Move `ISheetletConfig` classes into their own directory
+- [ ] `ApcMenu.xaml.cs` maybe make the text color fully dynamic
+- [ ] Also `ApcMenu.xaml.cs`: localize watts
+- [ ] `PopupUiController` lots of hardcoding
 
 - [ ] `ScopedResCache` because moving around resources is annoying and prone to error when merging
 - [ ] `MainMenuSheetlet` should maybe be with the xaml?

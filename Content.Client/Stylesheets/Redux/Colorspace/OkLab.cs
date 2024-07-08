@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using JetBrains.Annotations;
+using Robust.Shared.Utility;
 using Vector4 = Robust.Shared.Maths.Vector4;
 
 namespace Content.Client.Stylesheets.Redux.Colorspace;
@@ -63,9 +64,9 @@ public struct OklabColor
         var m_ = double.Cbrt(m);
         var s_ = double.Cbrt(s);
 
-        L = (float)(0.2104542553d * l_ + 0.7936177850d * m_ - 0.0040720468d * s_);
-        A = (float)(1.9779984951d * l_ - 2.4285922050d * m_ + 0.4505937099d * s_);
-        B = (float)(0.0259040371d * l_ + 0.7827717662d * m_ - 0.8086757660d * s_);
+        L = (float) (0.2104542553d * l_ + 0.7936177850d * m_ - 0.0040720468d * s_);
+        A = (float) (1.9779984951d * l_ - 2.4285922050d * m_ + 0.4505937099d * s_);
+        B = (float) (0.0259040371d * l_ + 0.7827717662d * m_ - 0.8086757660d * s_);
         Alpha = c.A;
     }
 
@@ -75,15 +76,30 @@ public struct OklabColor
         var m_ = c.L - 0.1055613458d * c.A - 0.0638541728d * c.B;
         var s_ = c.L - 0.0894841775d * c.A - 1.2914855480d * c.B;
 
-        var l = l_*l_*l_;
-        var m = m_*m_*m_;
-        var s = s_*s_*s_;
+        var l = l_ * l_ * l_;
+        var m = m_ * m_ * m_;
+        var s = s_ * s_ * s_;
 
         return new(
-            (float)(+4.0767416621d * l - 3.3077115913d * m + 0.2309699292d * s),
-            (float)(-1.2684380046d * l + 2.6097574011d * m - 0.3413193965d * s),
-            (float)(-0.0041960863d * l - 0.7034186147d * m + 1.7076147010d * s),
+            (float) (+4.0767416621d * l - 3.3077115913d * m + 0.2309699292d * s),
+            (float) (-1.2684380046d * l + 2.6097574011d * m - 0.3413193965d * s),
+            (float) (-0.0041960863d * l - 0.7034186147d * m + 1.7076147010d * s),
             c.Alpha
         );
+    }
+
+    /**
+     * <param name="a">The color the blend from</param>
+     * <param name="b">The color to blend to</param>
+     * <param name="factor">The amount to blend to from 0 to 1, with 0 being a and 1 being b</param>
+     * <returns> a color thats a linear Oklab blend of a and b</returns>
+     */
+    public static OklabColor Blend(OklabColor a, OklabColor b, float factor)
+    {
+        DebugTools.Assert(factor >= 0.0 && factor <= 1.0, "Expected factor >= 0.0 && factor <= 1.0");
+        return new OklabColor
+        {
+            _color = a._color + (b._color - a._color) * factor,
+        };
     }
 }
