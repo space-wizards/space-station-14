@@ -26,8 +26,8 @@ public sealed class ItemListSheetlet : Sheetlet<PalettedStylesheet>
         itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
         itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
 
-        return new StyleRule[]
-        {
+        return
+        [
             E<ItemList>()
                 .Prop(ItemList.StylePropertyBackground,
                     new StyleBoxFlat {BackgroundColor = new Color(32, 32, 40)})
@@ -57,6 +57,6 @@ public sealed class ItemListSheetlet : Sheetlet<PalettedStylesheet>
                     itemListItemBackgroundDisabled)
                 .Prop(ItemList.StylePropertySelectedItemBackground,
                     itemListBackgroundSelected),
-        };
+        ];
     }
 }

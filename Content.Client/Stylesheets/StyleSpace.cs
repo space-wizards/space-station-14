@@ -76,7 +76,7 @@ namespace Content.Client.Stylesheets
                     .Prop(Label.StylePropertyFont, notoSansBold16)
                     .Prop(Label.StylePropertyFontColor, SpaceRed),
 
-                Element<Label>().Class(StyleClass.LabelSubtext)
+                Element<Label>().Class(StyleClass.LabelSubText)
                     .Prop(Label.StylePropertyFont, notoSans10)
                     .Prop(Label.StylePropertyFontColor, Color.DarkGray),
 

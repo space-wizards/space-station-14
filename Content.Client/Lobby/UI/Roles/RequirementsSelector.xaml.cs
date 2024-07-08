@@ -50,7 +50,7 @@ public sealed partial class RequirementsSelector : BoxContainer
             Text = Loc.GetString("role-timer-locked"),
             Visible = true,
             HorizontalAlignment = HAlignment.Center,
-            StyleClasses = {Stylesheets.Redux.StyleClass.LabelSubtext},
+            StyleClasses = {Stylesheets.Redux.StyleClass.LabelSubText},
         };
 
         _lockStripe = new StripeBack()

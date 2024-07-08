@@ -21,7 +21,7 @@ public sealed class LabelSheetlet : Sheetlet<PalettedStylesheet>
                 .Font(sheet.BaseFont.GetFont(20, FontStack.FontKind.Bold))
                 .FontColor(sheet.HighlightPalette[0]),
             E<Label>()
-                .Class(StyleClass.LabelSubtext)
+                .Class(StyleClass.LabelSubText)
                 .Font(sheet.BaseFont.GetFont(10))
                 .FontColor(Color.DarkGray),
             E<Label>()

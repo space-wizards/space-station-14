@@ -45,7 +45,6 @@ namespace Content.Client.Stylesheets
         public const string StyleClassTooltipAlertDescription = "tooltipAlertDesc";
         public const string StyleClassTooltipAlertCooldown = "tooltipAlertCooldown";
 
-        public const string StyleClassHotbarSlotNumber = "hotbarSlotNumber";
         public const string StyleClassActionMenuItemRevoked = "actionMenuItemRevoked";
         public const string StyleClassChatChannelSelectorButton = "chatSelectorOptionButton";
         public const string StyleClassChatFilterOptionButton = "chatFilterOptionButton";
@@ -116,166 +115,10 @@ namespace Content.Client.Stylesheets
             var notoSansBold20 = resCache.NotoStack(variation: "Bold", size: 20);
             var notoSansMono = resCache.GetFont("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf", size: 12);
 
-            var buttonStorage = new StyleBoxTexture(BaseButton);
-            buttonStorage.SetPatchMargin(StyleBox.Margin.All, 10);
-            buttonStorage.SetPadding(StyleBox.Margin.All, 0);
-            buttonStorage.SetContentMarginOverride(StyleBox.Margin.Vertical, 0);
-            buttonStorage.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
-
-            var buttonRectTex = resCache.GetTexture("/Textures/Interface/Nano/light_panel_background_bordered.png");
-            var buttonRect = new StyleBoxTexture(BaseButton)
-            {
-                Texture = buttonRectTex
-            };
-            buttonRect.SetPatchMargin(StyleBox.Margin.All, 2);
-            buttonRect.SetPadding(StyleBox.Margin.All, 2);
-            buttonRect.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
-            buttonRect.SetContentMarginOverride(StyleBox.Margin.Horizontal, 2);
-
-            var buttonTex = resCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
-
-            var lineEditTex = resCache.GetTexture("/Textures/Interface/Nano/lineedit.png");
-            var lineEdit = new StyleBoxTexture
-            {
-                Texture = lineEditTex,
-            };
-            lineEdit.SetPatchMargin(StyleBox.Margin.All, 3);
-            lineEdit.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
-
-
-            var progressBarBackground = new StyleBoxFlat
-            {
-                BackgroundColor = new Color(0.25f, 0.25f, 0.25f)
-            };
-            progressBarBackground.SetContentMarginOverride(StyleBox.Margin.Vertical, 14.5f);
-
-            var progressBarForeground = new StyleBoxFlat
-            {
-                BackgroundColor = new Color(0.25f, 0.50f, 0.25f)
-            };
-            progressBarForeground.SetContentMarginOverride(StyleBox.Margin.Vertical, 14.5f);
-
-            // Whisper box
-            var whisperTexture = resCache.GetTexture("/Textures/Interface/Nano/whisper.png");
-            var whisperBox = new StyleBoxTexture
-            {
-                Texture = whisperTexture,
-            };
-            whisperBox.SetPatchMargin(StyleBox.Margin.All, 2);
-            whisperBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
-
-            var itemListBackgroundSelected = new StyleBoxFlat { BackgroundColor = new Color(75, 75, 86) };
-            itemListBackgroundSelected.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
-            itemListBackgroundSelected.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
-            var itemListItemBackgroundDisabled = new StyleBoxFlat { BackgroundColor = new Color(10, 10, 12) };
-            itemListItemBackgroundDisabled.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
-            itemListItemBackgroundDisabled.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
-            var itemListItemBackground = new StyleBoxFlat { BackgroundColor = new Color(55, 55, 68) };
-            itemListItemBackground.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
-            itemListItemBackground.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
-            var itemListItemBackgroundTransparent = new StyleBoxFlat { BackgroundColor = Color.Transparent };
-            itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
-            itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
-
-            var boxFont13 = resCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
-
-            var insetBack = new StyleBoxTexture
-            {
-                Texture = buttonTex,
-                Modulate = Color.FromHex("#202023"),
-            };
-            insetBack.SetPatchMargin(StyleBox.Margin.All, 10);
-
             Stylesheet = new Stylesheet(BaseRules.Concat(new[]
             {
                 Element().Class("monospace")
                     .Prop("font", notoSansMono),
-
-                // Hotbar background
-
-                // ProgressBar
-                new StyleRule(new SelectorElement(typeof(ProgressBar), null, null, null),
-                    new[]
-                    {
-                        new StyleProperty(ProgressBar.StylePropertyBackground, progressBarBackground),
-                        new StyleProperty(ProgressBar.StylePropertyForeground, progressBarForeground)
-                }),
-
-                // alert tooltip
-                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipAlertTitle}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSansBold18)
-                }),
-                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipAlertDescription}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSans16)
-                }),
-                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipAlertCooldown}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSans16)
-                }),
-
-                // small number for the entity counter in the entity menu
-                new StyleRule(new SelectorElement(typeof(Label), new[] {ContextMenuElement.StyleClassEntityMenuIconLabel}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSans10),
-                    new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Right),
-                }),
-
-                // hotbar slot
-                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassHotbarSlotNumber}, null, null), new[]
-                {
-                    new StyleProperty("font", notoSansDisplayBold16)
-                }),
-                // ItemList
-                new StyleRule(new SelectorElement(typeof(ItemList), null, null, null), new[]
-                {
-                    new StyleProperty(ItemList.StylePropertyBackground,
-                        new StyleBoxFlat {BackgroundColor = new Color(32, 32, 40)}),
-                    new StyleProperty(ItemList.StylePropertyItemBackground,
-                        itemListItemBackground),
-                    new StyleProperty(ItemList.StylePropertyDisabledItemBackground,
-                        itemListItemBackgroundDisabled),
-                    new StyleProperty(ItemList.StylePropertySelectedItemBackground,
-                        itemListBackgroundSelected)
-                }),
-
-                new StyleRule(new SelectorElement(typeof(ItemList), new[] {"transparentItemList"}, null, null), new[]
-                {
-                    new StyleProperty(ItemList.StylePropertyBackground,
-                        new StyleBoxFlat {BackgroundColor = Color.Transparent}),
-                    new StyleProperty(ItemList.StylePropertyItemBackground,
-                        itemListItemBackgroundTransparent),
-                    new StyleProperty(ItemList.StylePropertyDisabledItemBackground,
-                        itemListItemBackgroundDisabled),
-                    new StyleProperty(ItemList.StylePropertySelectedItemBackground,
-                        itemListBackgroundSelected)
-                }),
-
-                 new StyleRule(new SelectorElement(typeof(ItemList), new[] {"transparentBackgroundItemList"}, null, null), new[]
-                {
-                    new StyleProperty(ItemList.StylePropertyBackground,
-                        new StyleBoxFlat {BackgroundColor = Color.Transparent}),
-                    new StyleProperty(ItemList.StylePropertyItemBackground,
-                        itemListItemBackground),
-                    new StyleProperty(ItemList.StylePropertyDisabledItemBackground,
-                        itemListItemBackgroundDisabled),
-                    new StyleProperty(ItemList.StylePropertySelectedItemBackground,
-                        itemListBackgroundSelected)
-                }),
-
-                // Tree
-                new StyleRule(new SelectorElement(typeof(Tree), null, null, null), new[]
-                {
-                    new StyleProperty(Tree.StylePropertyBackground,
-                        new StyleBoxFlat {BackgroundColor = new Color(32, 32, 40)}),
-                    new StyleProperty(Tree.StylePropertyItemBoxSelected, new StyleBoxFlat
-                    {
-                        BackgroundColor = new Color(55, 55, 68),
-                        ContentMarginLeftOverride = 4
-                    })
-                }),
-
                 //APC and SMES power state label colors
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPowerStateNone}, null, null), new[]
                 {

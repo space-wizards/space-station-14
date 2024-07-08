@@ -134,7 +134,7 @@ namespace Content.Client.ParticleAccelerator.UI
             var serviceManual = new Label
             {
                 HorizontalAlignment = HAlignment.Center,
-                StyleClasses = { StyleClass.LabelSubtext },
+                StyleClasses = { StyleClass.LabelSubText },
                 Text = Loc.GetString("particle-accelerator-control-menu-service-manual-reference")
             };
             _drawLabel = new Label();
@@ -297,7 +297,7 @@ namespace Content.Client.ParticleAccelerator.UI
                                 Margin = new Thickness(4, 4, 0, 4),
                                 Text = Loc.GetString("particle-accelerator-control-menu-check-containment-field-warning"),
                                 HorizontalAlignment = HAlignment.Center,
-                                StyleClasses = {StyleClass.LabelSubtext},
+                                StyleClasses = {StyleClass.LabelSubText},
                             }
                         }
                     },
@@ -310,7 +310,7 @@ namespace Content.Client.ParticleAccelerator.UI
                             new Label
                             {
                                 Text = Loc.GetString("particle-accelerator-control-menu-foo-bar-baz"),
-                                StyleClasses = {StyleClass.LabelSubtext}
+                                StyleClasses = {StyleClass.LabelSubText}
                             }
                         }
                     },

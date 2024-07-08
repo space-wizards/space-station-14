@@ -36,7 +36,7 @@ public static class StyleClass
 
     public const string LabelHeading = "LabelHeading";
     public const string LabelHeadingBigger = "LabelHeadingBigger";
-    public const string LabelSubtext = "LabelSubText";
+    public const string LabelSubText = "LabelSubText";
     public const string LabelKeyText = "LabelKeyText";
     public const string LabelWeak = "LabelWeak"; // replaces `StyleClassLabelSecondaryColor`
 
