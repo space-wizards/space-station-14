@@ -82,3 +82,7 @@ ban-panel-erase = Erase chat messages and player from round
 server-ban-string = {$admin} created a {$severity} severity server ban that expires {$expires} for [{$name}, {$ip}, {$hwid}], with reason: {$reason}
 server-ban-string-no-pii = {$admin} created a {$severity} severity server ban that expires {$expires} for {$name} with reason: {$reason}
 server-ban-string-never = never
+
+# Antag Bans
+ban-panel-role-selection-antag = Antagonist
+ban-panel-role-selection-antag-all-option = All

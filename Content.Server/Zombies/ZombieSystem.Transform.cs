@@ -1,7 +1,9 @@
+using Content.Server.Administration.Managers;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
@@ -12,6 +14,7 @@ using Content.Server.NPC;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
+using Content.Server.Popups;
 using Content.Server.Roles;
 using Content.Server.Speech.Components;
 using Content.Server.Temperature.Components;
@@ -61,6 +64,10 @@ namespace Content.Server.Zombies
         [Dependency] private readonly MindSystem _mind = default!;
         [Dependency] private readonly SharedRoleSystem _roles = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!; // Add GameTicker dependency
+        [Dependency] private readonly PopupSystem _popupSystem = default!; // Add PopupSystem dependency
+        [Dependency] private readonly IBanManager _banManager = default!;
+
 
         /// <summary>
         /// Handles an entity turning into a zombie when they die or go into crit
@@ -232,16 +239,27 @@ namespace Content.Server.Zombies
             _npc.SleepNPC(target, htn);
 
             //He's gotta have a mind
-            var hasMind = _mind.TryGetMind(target, out var mindId, out _);
+            var hasMind = _mind.TryGetMind(target, out var mindId, out var mind);
             if (hasMind && _mind.TryGetSession(mindId, out var session))
             {
-                //Zombie role for player manifest
+                // Retrieve the user's bans
+                var antagBans = _banManager.GetAntagBans(session.UserId);
+                var antagAllSelection = Loc.GetString("ban-panel-role-selection-antag-all-option");
+
+                // Check if the user has a ban on "Zombie"
+                if (antagBans != null && (antagBans.Contains(antagAllSelection) || antagBans.Contains(zombiecomp.ZombieRoleId)))
+                {
+                    // Ghost the player if they have a "Zombie" ban
+                    _gameTicker.OnGhostAttempt(mindId, true, true, mind);
+                }
+
+                // Zombie role for player manifest
                 _roles.MindAddRole(mindId, new ZombieRoleComponent { PrototypeId = zombiecomp.ZombieRoleId });
 
-                //Greeting message for new bebe zombers
+                // Greeting message for new bebe zombers
                 _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));
 
-                // Notificate player about new role assignment
+                // Notify player about new role assignment
                 _audio.PlayGlobal(zombiecomp.GreetSoundNotification, session);
             }
             else
