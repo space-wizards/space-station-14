@@ -132,7 +132,7 @@ namespace Content.Client.Options.UI.Tabs
                 {
                     Text = Loc.GetString(headerContents),
                     FontColorOverride = StyleNano.NanoGold,
-                    StyleClasses = { StyleClass.StyleClassLabelKeyText }
+                    StyleClasses = { StyleClass.LabelKeyText }
                 });
             }
 

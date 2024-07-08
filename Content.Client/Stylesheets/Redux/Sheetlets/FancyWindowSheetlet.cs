@@ -15,35 +15,27 @@ public sealed class FancyWindowSheetlet : Sheetlet<PalettedStylesheet>
         var boxFont = new SingleFont(ResCache, "/Fonts/Boxfont-round/Boxfont Round.ttf");
         return
         [
-            /*
-             * Title.
-             */
+            // Title
             E<Label>()
                 .Class("FancyWindowTitle")
                 .Prop("font", boxFont.GetFont(13, FontStack.FontKind.Bold))
                 .Prop("font-color", sheet.HighlightPalette[0]),
 
-            /*
-             * Help button.
-             */
+            // Help Button
             E<TextureButton>()
                 .Class(FancyWindow.StyleClassWindowHelpButton)
                 .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture("help.png"))
                 .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette[1]),
-
             E<TextureButton>()
                 .Class(FancyWindow.StyleClassWindowHelpButton)
                 .Pseudo(ContainerButton.StylePseudoClassHover)
                 .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette[0]),
-
             E<TextureButton>()
                 .Class(FancyWindow.StyleClassWindowHelpButton)
                 .Pseudo(ContainerButton.StylePseudoClassPressed)
                 .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette[2]),
 
-            /*
-             * Footer
-             */
+            // Footer
             E<Label>()
                 .Class("WindowFooterText")
                 .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(8))

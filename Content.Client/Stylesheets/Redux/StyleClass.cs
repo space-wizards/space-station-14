@@ -35,7 +35,11 @@ public static class StyleClass
     public const string LowDivider = "LowDivider";
 
     public const string LabelHeading = "LabelHeading";
+    public const string LabelHeadingBigger = "LabelHeadingBigger";
     public const string LabelSubtext = "LabelSubText";
+    public const string LabelKeyText = "LabelKeyText";
+    public const string LabelWeak = "LabelWeak"; // replaces `StyleClassLabelSecondaryColor`
+
     public const string Italic = "Italic";
 
     public const string BackgroundPanel = "AngleRect";
@@ -59,7 +63,6 @@ public static class StyleClass
     public const string ChatLineEdit = "chatLineEdit";
     public const string ChatChannelSelectorButton = "chatSelectorOptionButton";
     public const string ChatFilterOptionButton = "chatFilterOptionButton";
-    public const string StyleClassLabelKeyText = "LabelKeyText";
 
     public const string TooltipPanel = "tooltipPanel";
     public const string TooltipTitle = "tooltipTitle";

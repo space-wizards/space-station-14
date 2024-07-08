@@ -179,7 +179,7 @@ namespace Content.Client.Chemistry.UI
             var bufferVol = new Label
             {
                 Text = $"{state.BufferCurrentVolume}u",
-                StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
+                StyleClasses = { StyleClass.LabelWeak }
             };
             bufferHBox.AddChild(bufferVol);
 
@@ -200,7 +200,7 @@ namespace Content.Client.Chemistry.UI
                             new Label
                             {
                                 Text = $"{quantity}u",
-                                StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
+                                StyleClasses = { StyleClass.LabelWeak }
                             },
 
                             // Padding
@@ -242,7 +242,7 @@ namespace Content.Client.Chemistry.UI
                         new Label
                         {
                             Text = $"{info.CurrentVolume}/{info.MaxVolume}",
-                            StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
+                            StyleClasses = { StyleClass.LabelWeak }
                         }
                     }
                 });
@@ -282,7 +282,7 @@ namespace Content.Client.Chemistry.UI
                             new Label
                             {
                                 Text = $"{quantity}u",
-                                StyleClasses = { StyleNano.StyleClassLabelSecondaryColor },
+                                StyleClasses = { StyleClass.LabelWeak },
                             }
                         }
                     };

@@ -116,7 +116,7 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
                 Text = sensor.Address,
                 Margin = new Thickness(4, 0),
                 VerticalAlignment = VAlignment.Bottom,
-                StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
+                StyleClasses = { StyleClass.LabelWeak }
             };
 
             Asdf.AddChild(new BoxContainer

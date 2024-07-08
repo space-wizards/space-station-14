@@ -52,8 +52,6 @@ namespace Content.Client.Stylesheets
         public const string StyleClassChatFilterOptionButton = "chatFilterOptionButton";
         public const string StyleClassStorageButton = "storageButton";
 
-        public const string StyleClassLabelHeadingBigger = "LabelHeadingBigger";
-        public const string StyleClassLabelSecondaryColor = "LabelSecondaryColor";
         // public const string StyleClassButtonBig = "ButtonBig";
 
         public const string StyleClassButtonHelp = "HelpButton";
@@ -385,42 +383,6 @@ namespace Content.Client.Stylesheets
                     })
                 }),
 
-                // Big Label
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClass.LabelHeading}, null, null), new[]
-                {
-                    new StyleProperty(Label.StylePropertyFont, notoSansBold16),
-                    new StyleProperty(Label.StylePropertyFontColor, NanoGold),
-                }),
-
-                // Bigger Label
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelHeadingBigger}, null, null),
-                    new[]
-                    {
-                        new StyleProperty(Label.StylePropertyFont, notoSansBold20),
-                        new StyleProperty(Label.StylePropertyFontColor, NanoGold),
-                    }),
-
-                // Small Label
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClass.LabelSubtext}, null, null), new[]
-                {
-                    new StyleProperty(Label.StylePropertyFont, notoSans10),
-                    new StyleProperty(Label.StylePropertyFontColor, Color.DarkGray),
-                }),
-
-                // Label Key
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClass.StyleClassLabelKeyText}, null, null), new[]
-                {
-                    new StyleProperty(Label.StylePropertyFont, notoSansBold12),
-                    new StyleProperty(Label.StylePropertyFontColor, NanoGold)
-                }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelSecondaryColor}, null, null),
-                    new[]
-                    {
-                        new StyleProperty(Label.StylePropertyFont, notoSans12),
-                        new StyleProperty(Label.StylePropertyFontColor, Color.DarkGray),
-                    }),
-
                 //APC and SMES power state label colors
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPowerStateNone}, null, null), new[]
                 {
@@ -494,29 +456,6 @@ namespace Content.Client.Stylesheets
                     .Prop(PanelContainer.StylePropertyPanel, BaseButtonOpenLeft)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
 
-                // Window Headers
-                Element<Label>().Class("FancyWindowTitle")
-                    .Prop("font", boxFont13)
-                    .Prop("font-color", NanoGold),
-
-                Element<PanelContainer>().Class("WindowHeadingBackground")
-                    .Prop("panel", new StyleBoxTexture(BaseButtonOpenLeft) { Padding = default })
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#1F1F23")),
-
-                Element<PanelContainer>().Class("WindowHeadingBackgroundLight")
-                    .Prop("panel", new StyleBoxTexture(BaseButtonOpenLeft) { Padding = default }),
-
-                // Window Header Help Button
-                Element<TextureButton>().Class(FancyWindow.StyleClassWindowHelpButton)
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/help.png"))
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#4B596A")),
-
-                Element<TextureButton>().Class(FancyWindow.StyleClassWindowHelpButton).Pseudo(ContainerButton.StylePseudoClassHover)
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#7F3636")),
-
-                Element<TextureButton>().Class(FancyWindow.StyleClassWindowHelpButton).Pseudo(ContainerButton.StylePseudoClassPressed)
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
-
                 //The lengths you have to go through to change a background color smh
                 Element<PanelContainer>().Class("PanelBackgroundBaseDark")
                     .Prop("panel", new StyleBoxTexture(BaseButtonOpenBoth) { Padding = default })
@@ -525,15 +464,6 @@ namespace Content.Client.Stylesheets
                 Element<PanelContainer>().Class("PanelBackgroundLight")
                     .Prop("panel", new StyleBoxTexture(BaseButtonOpenBoth) { Padding = default })
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#2F2F3B")),
-
-                // Window Footer
-                Element<TextureRect>().Class("NTLogoDark")
-                    .Prop(TextureRect.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/ntlogo.svg.png"))
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#757575")),
-
-                Element<Label>().Class("WindowFooterText")
-                    .Prop(Label.StylePropertyFont, notoSans8)
-                    .Prop(Label.StylePropertyFontColor, Color.FromHex("#757575")),
 
                 // X Texture button ---
                 Element<TextureButton>().Class("CrossButtonRed")

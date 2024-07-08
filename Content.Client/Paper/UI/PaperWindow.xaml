@@ -13,7 +13,7 @@
                     <BoxContainer Orientation="Vertical" VerticalAlignment="Stretch">
                         <TextureButton Name="HeaderImage" HorizontalAlignment="Center" VerticalAlignment="Top" MouseFilter="Ignore"/>
                         <Control Name="TextAlignmentPadding" VerticalAlignment="Top"/>
-                        <RichTextLabel Name="BlankPaperIndicator" StyleClasses="LabelSecondaryColor" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                        <RichTextLabel Name="BlankPaperIndicator" StyleClasses="LabelWeak" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                         <RichTextLabel StyleClasses="PaperWrittenText" Name="WrittenTextLabel" VerticalAlignment="Top"/>
                         <PanelContainer Name="InputContainer" StyleClasses="PaperContainer" MinHeight="100"
                                         VerticalAlignment="Stretch" VerticalExpand="True" HorizontalExpand="True">

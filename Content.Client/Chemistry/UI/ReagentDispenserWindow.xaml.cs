@@ -1,4 +1,5 @@
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
@@ -106,7 +107,7 @@ namespace Content.Client.Chemistry.UI
                 var quantityLabel = new Label
                 {
                     Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", quantity)),
-                    StyleClasses = { StyleNano.StyleClassLabelSecondaryColor },
+                    StyleClasses = { StyleClass.LabelWeak },
                 };
 
                 ContainerInfo.Children.Add(new BoxContainer
