@@ -454,9 +454,14 @@ public abstract class SharedActionsSystem : EntitySystem
                 break;
             case EntityWorldTargetActionComponent entityWorldAction:
             {
-
                 var actionEntity = GetEntity(ev.EntityTarget);
                 var actionCoords = GetCoordinates(ev.EntityCoordinatesTarget);
+
+                if (actionEntity is null && actionCoords is null)
+                {
+                    Log.Error($"Attempted to perform an entity-world-targeted action without an entity or world coordinates! Action: {name}");
+                    return;
+                }
 
                 var entWorldAction = new Entity<EntityWorldTargetActionComponent>(actionEnt, entityWorldAction);
 
@@ -473,13 +478,7 @@ public abstract class SharedActionsSystem : EntitySystem
                     Dirty(actionEnt, entityWorldAction);
                     performEvent = entityWorldAction.Event;
                 }
-
                 break;
-                Log.Error(
-                    $"Attempted to perform an entity-world-targeted action without target coordinates! Action: {name}");
-                Log.Error(
-                    $"Attempted to perform an entity-world-targeted action without a target entity! Action: {name}");
-                return;
             }
             case InstantActionComponent instantAction:
                 if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
