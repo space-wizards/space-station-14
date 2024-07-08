@@ -119,21 +119,21 @@ public sealed class InjectorSystem : SharedInjectorSystem
             return;
 
         var actualDelay = injector.Comp.Delay;
-        float amountToInject;
+        FixedPoint2 amountToInject;
         if (injector.Comp.ToggleState == InjectorToggleMode.Draw)
         {
             // additional delay is based on actual volume left to draw in syringe when smaller than transfer amount
-            amountToInject = Math.Min(injector.Comp.TransferAmount.Float(), (solution.MaxVolume - solution.Volume).Float());
+            amountToInject = FixedPoint2.Min(injector.Comp.TransferAmount, (solution.MaxVolume - solution.Volume));
         }
         else
         {
             // additional delay is based on actual volume left to inject in syringe when smaller than transfer amount
-            amountToInject = Math.Min(injector.Comp.TransferAmount.Float(), solution.Volume.Float());
+            amountToInject = FixedPoint2.Min(injector.Comp.TransferAmount, solution.Volume);
         }
 
         // Injections take 0.5 seconds longer per 5u of possible space/content
         // First 5u(MinimumTransferAmount) doesn't incur delay
-        actualDelay += TimeSpan.FromSeconds(Math.Max(0, amountToInject - injector.Comp.MinimumTransferAmount.Float()) * injector.Comp.DelayPerVolume);
+        actualDelay += injector.Comp.DelayPerVolume * FixedPoint2.Max(0, amountToInject - injector.Comp.MinimumTransferAmount).Double();
 
         // Ensure that minimum delay before incapacitation checks is 1 seconds
         actualDelay = MathHelper.Max(actualDelay, TimeSpan.FromSeconds(1));

@@ -77,7 +77,7 @@ public sealed partial class InjectorComponent : Component
     /// Each additional 1u after first 5u increases the delay by X seconds.
     /// <summary>
     [DataField]
-    public double DelayPerVolume = 0.1;
+    public TimeSpan DelayPerVolume = TimeSpan.FromSeconds(0.1);
 
     /// <summary>
     /// The state of the injector. Determines it's attack behavior. Containers must have the
