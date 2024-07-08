@@ -86,12 +86,12 @@ public abstract partial class SharedXenoArtifactSystem
         Dirty(ent);
     }
 
-    public Entity<XenoArtifactNodeComponent> CreateRandomNode(Entity<XenoArtifactComponent> ent, ProtoId<XenoArchTriggerPrototype> trigger, int depth = 0)
+    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, ProtoId<XenoArchTriggerPrototype> trigger, int depth = 0)
     {
-        return CreateRandomNode(ent, PrototypeManager.Index(trigger), depth);
+        return CreateNode(ent, PrototypeManager.Index(trigger), depth);
     }
 
-    public Entity<XenoArtifactNodeComponent> CreateRandomNode(Entity<XenoArtifactComponent> ent, XenoArchTriggerPrototype trigger, int depth = 0)
+    public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, XenoArchTriggerPrototype trigger, int depth = 0)
     {
         var proto = PrototypeManager.Index(ent.Comp.EffectWeights).Pick(RobustRandom);
 

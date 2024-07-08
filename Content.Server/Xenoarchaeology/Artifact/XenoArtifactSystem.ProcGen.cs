@@ -125,7 +125,7 @@ public sealed partial class XenoArtifactSystem
         for (var i = 0; i < nodeCount; i++)
         {
             var trigger = RobustRandom.PickAndTake(_triggerPool);
-            nodes.Add(CreateRandomNode(ent, trigger, iteration));
+            nodes.Add(CreateNode(ent, trigger, iteration));
         }
 
         var successors = PopulateArtifactSegmentRecursive(
