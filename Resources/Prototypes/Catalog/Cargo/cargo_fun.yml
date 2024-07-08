@@ -207,3 +207,13 @@
   cost: 10000
   category: cargoproduct-category-name-fun
   group: market
+
+- type: cargoProduct
+  id: FunCratePosters
+  icon:
+    sprite: Structures/Wallmounts/posters.rsi
+    state: poster12_legit
+  product: CrateFunPosters
+  cost: 1000
+  category: cargoproduct-category-name-fun
+  group: market

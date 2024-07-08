@@ -15,6 +15,7 @@
   - type: Tag
     tags:
     - Poster
+    - Recyclable
 
 - type: entity
   parent: FoldedPosterBase
@@ -810,7 +811,7 @@
 - type: entity
   parent: FoldedPosterContrabandBase
   id: FoldedPosterContrabandSyndicateRecruitment
-  suffix: Syndicate Pistol
+  suffix: Syndicate Recruitment
   components:
   - type: FoldedPoster
     posterPrototype: PosterContrabandSyndicateRecruitment
