@@ -1,8 +1,8 @@
+using System.Linq;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Xenoarchaeology.Artifact;
 
@@ -53,22 +53,67 @@ public sealed partial class XenoArtifactSystem
     {
         var segmentSize = GetArtifactSegmentSize(ent, nodeCount);
         nodeCount -= segmentSize;
-        PopulateArtifactSegmentRecursive(ent, ref segmentSize, ensureLayerConnected: true);
+        var populatedNodes = PopulateArtifactSegmentRecursive(ent, ref segmentSize);
+
+        var segments = GetSegmentsFromNodes(ent, populatedNodes).ToList();
+
+        // We didn't connect all of our nodes: do extra work to make sure there's a connection.
+        if (segments.Count > 1)
+        {
+            var parent = segments.MaxBy(s => s.Count)!;
+            var minP = parent.Min(n => n.Comp.Depth);
+            var maxP = parent.Max(n => n.Comp.Depth);
+
+            segments.Remove(parent);
+            foreach (var segment in segments)
+            {
+                // calculate the range of the depth of the nodes in the segment
+                var minS = segment.Min(n => n.Comp.Depth);
+                var maxS = segment.Max(n => n.Comp.Depth);
+
+                // Figure out the range of depths that allows for a connection between these two.
+                // The range is essentially the lower values + 1 on each side.
+                var min = Math.Max(minS, minP) - 1;
+                var max = Math.Min(maxS, maxP) + 1;
+
+                // how the fuck did you do this? you don't even deserve to get a parent. fuck you.
+                if (min > max || min == max)
+                    continue;
+
+                var node1 = RobustRandom.Pick(segment
+                    .Where(n => n.Comp.Depth >= min && n.Comp.Depth <= max)
+                    .ToList());
+                var node1Depth = node1.Comp.Depth;
+
+                var node2 = RobustRandom.Pick(parent
+                    .Where(n => n.Comp.Depth >= node1Depth - 1 && n.Comp.Depth <= node1Depth + 1 && n.Comp.Depth != node1Depth)
+                    .ToList());
+
+                if (node1.Comp.Depth < node2.Comp.Depth)
+                {
+                    AddEdge((ent, ent.Comp), node1, node2, false);
+                }
+                else
+                {
+                    AddEdge((ent, ent.Comp), node2, node1, false);
+                }
+            }
+        }
     }
 
     private List<Entity<XenoArtifactNodeComponent>> PopulateArtifactSegmentRecursive(
         Entity<XenoArtifactComponent> ent,
         ref int segmentSize,
-        int layerMinMod = 0,
-        int layerMaxMod = 0,
-        bool ensureLayerConnected = false,
         int iteration = 0)
     {
         if (segmentSize == 0)
             return new();
 
-        var layerMin = Math.Min(ent.Comp.NodesPerSegmentLayer.Min + layerMinMod, segmentSize);
-        var layerMax = Math.Min(ent.Comp.NodesPerSegmentLayer.Max + layerMaxMod, segmentSize);
+        // Try and get larger as the we create more layers. Prevents excessive layers.
+        var mod = RobustRandom.Next((int) (iteration / 1.5f), iteration + 1);
+
+        var layerMin = Math.Min(ent.Comp.NodesPerSegmentLayer.Min + mod, segmentSize);
+        var layerMax = Math.Min(ent.Comp.NodesPerSegmentLayer.Max + mod, segmentSize);
 
         // Default to one node if we had shenanigans and ended up with weird layer counts.
         var nodeCount = 1;
@@ -79,42 +124,27 @@ public sealed partial class XenoArtifactSystem
         var nodes = new List<Entity<XenoArtifactNodeComponent>>();
         for (var i = 0; i < nodeCount; i++)
         {
-            nodes.Add(CreateRandomNode(ent, iteration));
+            var trigger = RobustRandom.PickAndTake(_triggerPool);
+            nodes.Add(CreateRandomNode(ent, trigger, iteration));
         }
 
-        var minMod = ent.Comp.NodeContainer.Count < 3 ? 0 : 1; // Try to stop boring linear generation.
-        var maxMod = nodes.Count / 2; // cumulative modifier to enable slight growth for something like 3 -> 4
         var successors = PopulateArtifactSegmentRecursive(
             ent,
             ref segmentSize,
-            layerMinMod: minMod,
-            layerMaxMod: maxMod,
             iteration: iteration + 1);
 
         if (successors.Count == 0)
             return nodes;
 
-        // TODO: this doesn't actually make sure that the segment is interconnected.
-        // You can still occasionally get orphaned segments.
-
-        // We do the picks from node -> successor and from successor -> node to ensure that no nodes get orphaned without connections.
         foreach (var successor in successors)
         {
             var node = RobustRandom.Pick(nodes);
             AddEdge((ent, ent), node, successor, dirty: false);
         }
 
-        if (ensureLayerConnected)
-        {
-            foreach (var node in nodes)
-            {
-                var successor = RobustRandom.Pick(successors);
-                AddEdge((ent, ent), node, successor, dirty: false);
-            }
-        }
-
-        var reverseScatterCount = ent.Comp.ReverseScatterPerLayer.Next(RobustRandom);
-        for (var i = 0; i < reverseScatterCount; i++)
+        // randomly add in some extra edges for variance.
+        var scatterCount = ent.Comp.ScatterPerLayer.Next(RobustRandom);
+        for (var i = 0; i < scatterCount; i++)
         {
             var node = RobustRandom.Pick(nodes);
             var successor = RobustRandom.Pick(successors);
@@ -142,23 +172,5 @@ public sealed partial class XenoArtifactSystem
         segmentSize = Math.Min(nodeCount, segmentSize);
 
         return segmentSize;
-    }
-
-    //todo: move this into system.node or something.
-    private Entity<XenoArtifactNodeComponent> CreateRandomNode(Entity<XenoArtifactComponent> ent, int depth = 0)
-    {
-        var proto = PrototypeManager.Index(ent.Comp.EffectWeights).Pick(RobustRandom);
-
-        AddNode((ent, ent), proto, out var nodeEnt, dirty: false);
-        DebugTools.Assert(nodeEnt.HasValue, "Failed to create node on artifact.");
-
-        var trigger = RobustRandom.PickAndTake(_triggerPool);
-
-        nodeEnt.Value.Comp.Depth = depth;
-        nodeEnt.Value.Comp.TriggerTip = trigger.Tip;
-        EntityManager.AddComponents(nodeEnt.Value, trigger.Components);
-
-        //Dirty(nodeEnt.Value);
-        return nodeEnt.Value;
     }
 }

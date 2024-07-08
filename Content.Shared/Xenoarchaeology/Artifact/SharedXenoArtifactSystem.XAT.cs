@@ -11,7 +11,6 @@ namespace Content.Shared.Xenoarchaeology.Artifact;
 
 public abstract partial class SharedXenoArtifactSystem
 {
-    // todo this is kinda a misnomer since it handles generic relays.
     private void InitializeXAT()
     {
         base.Initialize();
@@ -35,10 +34,10 @@ public abstract partial class SharedXenoArtifactSystem
 
     private void OnExamined(Entity<XenoArtifactComponent> ent, ref ExaminedEvent args)
     {
-        //using (args.PushGroup(nameof(XenoArtifactComponent)))
-        //{
+        using (args.PushGroup(nameof(XenoArtifactComponent)))
+        {
             RelayEventToNodes(ent, ref args);
-        //}
+        }
     }
 
     protected void RelayEventToNodes<T>(Entity<XenoArtifactComponent> ent, ref T args) where T : notnull

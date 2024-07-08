@@ -1,7 +1,6 @@
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Random;
 using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
-using Content.Shared.Xenoarchaeology.Artifact.XAT;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -94,7 +93,7 @@ public sealed partial class XenoArtifactComponent : Component
     public MinMax NodesPerSegmentLayer = new(1, 3);
 
     [DataField]
-    public MinMax ReverseScatterPerLayer = new(0, 2);
+    public MinMax ScatterPerLayer = new(0, 2);
 
     [DataField]
     public ProtoId<WeightedRandomEntityPrototype> EffectWeights = "XenoArtifactEffectsDefault";

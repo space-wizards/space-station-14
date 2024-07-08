@@ -1,7 +1,16 @@
 - type: entity
+  id: BaseXenoArtifactEffect
+  name: effect
+  description: Unknown
+  categories: [ HideSpawnMenu ]
+  abstract: true
+  components:
+  - type: XenoArtifactNode
+
+- type: entity
   id: XenoArtifactEffectTest
-  name: test effect
-  noSpawn: true
+  parent: BaseXenoArtifactEffect
+  description: Bombs the middle east.
   components:
   - type: XenoArtifactNode
   - type: NameIdentifier
