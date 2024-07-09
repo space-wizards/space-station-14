@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Whisper
-  changes:
-  - message: Raised the difficulty class of RD hardsuit objective, it will be less
-      likely to get it with other hard objectives.
-    type: Tweak
-  id: 6390
-  time: '2024-04-18T23:41:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27103
 - author: iztokbajcar
   changes:
   - message: Glass textures are now less transparent.
@@ -3829,3 +3821,10 @@
   id: 6889
   time: '2024-07-09T13:39:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29820
+- author: Cojoke-dot
+  changes:
+  - message: Pacifists can now use foam weaponry
+    type: Tweak
+  id: 6890
+  time: '2024-07-09T13:46:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29835
