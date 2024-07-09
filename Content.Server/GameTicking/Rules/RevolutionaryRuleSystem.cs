@@ -1,4 +1,6 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Managers;
+using Content.Server.Administration.Systems;
 using Content.Server.Antag;
 using Content.Server.EUI;
 using Content.Server.Flash;
@@ -29,6 +31,7 @@ using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Popups;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -50,6 +53,11 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!; // Add GameTicker dependency
+    [Dependency] private readonly PopupSystem _popupSystem = default!; // Add PopupSystem dependency
+    [Dependency] private readonly IBanManager _banManager = default!;
+    [Dependency] private readonly AdminVerbSystem _adminVerbSystem = default!; // Add AdminVerbSystem dependency
+
 
     //Used in OnPostFlash, no reference to the rule component is available
     public readonly ProtoId<NpcFactionPrototype> RevolutionaryNpcFaction = "Revolutionary";
@@ -138,6 +146,26 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             HasComp<ZombieComponent>(ev.Target))
         {
             return;
+        }
+
+        // Check if the user has a ban on "Revolutionary"
+        if (mind != null && mind.Session != null)
+        {
+            var antagBans = _banManager.GetAntagBans(mind.Session.UserId);
+            var antagAllSelection = Loc.GetString("ban-panel-role-selection-antag-all-option");
+            var revolutionaryRoleId = "Rev"; // Assuming "Rev" is the ID for RevolutionaryRoleComponent
+
+            if (antagBans != null && (antagBans.Contains(antagAllSelection) || antagBans.Contains(revolutionaryRoleId)))
+            {
+                // Notify the player and trigger a random bad event
+                _popup.PopupEntity("You have been converted but are unable to play due to a ban for this role.", ev.Target, ev.Target, PopupType.LargeCaution);
+
+                var randomDelay = new Random().Next(10000, 60000); // 10-60 seconds
+                var @event = ev;
+                Timer.Spawn(TimeSpan.FromMilliseconds(randomDelay), () => _adminVerbSystem.RandomDeath(@event.Target));
+
+                return;
+            }
         }
 
         _npcFaction.AddFaction(ev.Target, RevolutionaryNpcFaction);
