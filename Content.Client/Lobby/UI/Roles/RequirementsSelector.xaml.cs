@@ -71,7 +71,6 @@ public sealed partial class RequirementsSelector : BoxContainer
                 OnOpenGuidebook?.Invoke(_guides);
         };
     }
-
     /// <summary>
     /// Actually adds the controls.
     /// </summary>
@@ -107,8 +106,50 @@ public sealed partial class RequirementsSelector : BoxContainer
 
     public void LockRequirements(FormattedMessage requirements)
     {
+        var requirementsLabel = new Label()
+        {
+            Text = Loc.GetString("role-timer-locked"),
+            Visible = true,
+            HorizontalAlignment = HAlignment.Center,
+            StyleClasses = {StyleBase.StyleClassLabelSubText},
+        };
+
+        _lockStripe.Children.Clear();
+        _lockStripe.AddChild(requirementsLabel);
+
         var tooltip = new Tooltip();
         tooltip.SetMessage(requirements);
+        _lockStripe.TooltipSupplier = _ => tooltip;
+        _lockStripe.Visible = true;
+        _options.Visible = false;
+    }
+
+    public void LockDueToBan(string banReason, DateTime? expirationTime)
+    {
+        var requirementsLabel = new Label()
+        {
+            Text = Loc.GetString("role-banned-locked"),
+            Visible = true,
+            HorizontalAlignment = HAlignment.Center,
+            FontColorOverride = Color.Red,
+            StyleClasses = {StyleBase.StyleClassLabelSubText},
+        };
+
+        _lockStripe.Children.Clear();
+        _lockStripe.AddChild(requirementsLabel);
+
+        var tooltip = new Tooltip();
+
+        var message = new FormattedMessage();
+        message.AddText(Loc.GetString("role-banned-reason", ("reason", banReason)));
+        message.AddText("\n");
+
+        var expirationText = expirationTime.HasValue
+            ? Loc.GetString("role-banned-expiration", ("expiration", expirationTime.Value.ToString("G")))
+            : Loc.GetString("role-banned-permanent");
+        message.AddText(expirationText);
+
+        tooltip.SetMessage(message);
         _lockStripe.TooltipSupplier = _ => tooltip;
         _lockStripe.Visible = true;
         _options.Visible = false;

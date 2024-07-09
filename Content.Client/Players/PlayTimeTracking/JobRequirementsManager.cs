@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.CCVar;
 using Content.Shared.Players;
 using Content.Shared.Players.JobWhitelist;
@@ -24,7 +25,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     private readonly Dictionary<string, TimeSpan> _roles = new();
-    private readonly List<string> _roleBans = new();
+    private readonly List<BanInfo> _roleBans = new();
     private readonly List<string> _jobWhitelists = new();
 
     private ISawmill _sawmill = default!;
@@ -56,11 +57,9 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     {
         _sawmill.Debug($"Received roleban info containing {message.Bans.Count} entries.");
 
-        if (_roleBans.Equals(message.Bans))
-            return;
-
         _roleBans.Clear();
         _roleBans.AddRange(message.Bans);
+
         Updated?.Invoke();
     }
 
@@ -93,7 +92,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     {
         reason = null;
 
-        if (_roleBans.Contains($"Job:{job.ID}"))
+        if (_roleBans.Any(ban => ban.Role == $"Job:{job.ID}"))
         {
             reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
             return false;
@@ -177,4 +176,24 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
 
         return _roles;
     }
+
+    public bool IsRoleBanned(IEnumerable<string> roles, out string? banReason, out DateTime? expirationTime)
+    {
+        banReason = null;
+        expirationTime = null;
+
+        foreach (var role in roles)
+        {
+            var roleBan = _roleBans.FirstOrDefault(ban => ban.Role == role);
+            if (roleBan != null)
+            {
+                banReason = roleBan.Reason;
+                expirationTime = roleBan.ExpirationTime;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

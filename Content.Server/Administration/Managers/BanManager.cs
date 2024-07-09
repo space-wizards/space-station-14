@@ -300,6 +300,20 @@ public sealed class BanManager : IBanManager, IPostInjectInit
             .ToHashSet();
     }
 
+    public bool IsRoleBanned(NetUserId userId, IEnumerable<string> roles)
+    {
+        var antagAllSelection = Loc.GetString("ban-panel-role-selection-antag-all-option");
+        var roleBans = GetRoleBans(userId);
+
+        if (roleBans == null)
+            return false;
+
+        if (roleBans.Contains(antagAllSelection))
+            return true;
+
+        return roles.Any(role => roleBans.Contains(role));
+    }
+
     #endregion
 
     public void SendRoleBans(NetUserId userId)
@@ -315,10 +329,17 @@ public sealed class BanManager : IBanManager, IPostInjectInit
     public void SendRoleBans(ICommonSession pSession)
     {
         var roleBans = _cachedRoleBans.GetValueOrDefault(pSession.UserId) ?? new HashSet<ServerRoleBanDef>();
-        var bans = new MsgRoleBans()
+        var bans = new MsgRoleBans();
+
+        foreach (var ban in roleBans)
         {
-            Bans = roleBans.Select(o => o.Role).ToList()
-        };
+            bans.Bans.Add(new BanInfo
+            {
+                Role = ban.Role,
+                Reason = ban.Reason,
+                ExpirationTime = ban.ExpirationTime?.UtcDateTime,
+            });
+        }
 
         _sawmill.Debug($"Sent rolebans to {pSession.Name}");
         _netManager.ServerSendMessage(bans, pSession.Channel);
