@@ -9,7 +9,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Sandbox.Commands
 {
     [AnyCommand]
-    public sealed class ColorNetworkCommand : IConsoleCommand
+    public sealed class ColorNetworkCommand : LocalizedCommands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
 
