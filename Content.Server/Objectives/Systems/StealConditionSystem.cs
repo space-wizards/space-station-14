@@ -106,7 +106,7 @@ public sealed class StealConditionSystem : EntitySystem
             if (pulledEntity != null)
             {
                 // check if this is the item
-                if (CheckStealTarget(pulledEntity.Value, condition)) count++;
+                count += CheckStealTarget(pulledEntity.Value, condition);
 
                 //we don't check the inventories of sentient entity
                 if (!HasComp<MindContainerComponent>(pulledEntity))
