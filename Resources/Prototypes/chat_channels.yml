@@ -1,0 +1,43 @@
+﻿- type: verbalChatChannel
+  id: Internal
+  range: 0.0
+
+- type: verbalChatChannel
+  id: Talk
+  range: 10.0
+
+- type: verbalChatChannel
+  id: Whisper
+  range: 2.0
+
+- type: verbalChatChannel
+  id: Shout
+  range: 10.0
+
+- type: verbalChatChannel
+  id: OutOfCharacter
+  range: 10.0
+
+- type: verbalChatChannel
+  id: Background
+  range: 10.0
+  hideInChatLogs: true
+
+- type: visualChatChannel
+  id: Emote
+
+- type: outOfCharacterChannel
+  id: Dead
+  observersOnly: true
+
+- type: outOfCharacterChannel
+  id: OutOfCharacter
+
+- type: outOfCharacterChannel
+  id: Admin
+  adminsWriteOnly: true
+  adminsReadOnly: true
+
+- type: outOfCharacterChannel
+  id: System
+  adminsWriteOnly: true
