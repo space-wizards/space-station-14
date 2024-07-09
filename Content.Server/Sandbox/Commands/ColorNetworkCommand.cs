@@ -14,8 +14,6 @@ namespace Content.Server.Sandbox.Commands
         [Dependency] private readonly IEntityManager _entManager = default!;
 
         public string Command => "colornetwork";
-        public string Description => Loc.GetString("cmd-colornetwork-desc");
-        public string Help => Loc.GetString("cmd-colornetwork-help", ("command",Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
