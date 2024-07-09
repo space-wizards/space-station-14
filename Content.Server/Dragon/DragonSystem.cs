@@ -8,6 +8,7 @@ using Content.Shared.Maps;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Zombies;
@@ -28,6 +29,7 @@ public sealed partial class DragonSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     private EntityQuery<CarpRiftsConditionComponent> _objQuery;
 
@@ -92,7 +94,7 @@ public sealed partial class DragonSystem : EntitySystem
                 }
             }
 
-            if (comp.RiftAccumulatorActive)
+            if (!_mobState.IsDead(uid))
                 comp.RiftAccumulator += frameTime;
 
             // Delete it, naughty dragon!
@@ -189,8 +191,6 @@ public sealed partial class DragonSystem : EntitySystem
 
         // objective is explicitly not reset so that it will show how many you got before dying in round end text
         DeleteRifts(uid, false, component);
-        // prevent the rift accumulator from going up after the dragon dies
-        component.RiftAccumulatorActive = false;
     }
 
     private void OnZombified(Entity<DragonComponent> ent, ref EntityZombifiedEvent args)

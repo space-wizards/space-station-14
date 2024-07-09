@@ -32,9 +32,6 @@ namespace Content.Server.Dragon
         [ViewVariables(VVAccess.ReadWrite), DataField("riftAccumulator")]
         public float RiftAccumulator = 0f;
 
-        [ViewVariables(VVAccess.ReadWrite), DataField("riftAccumulatorActive")]
-        public bool RiftAccumulatorActive = true;
-
         /// <summary>
         /// Maximum time the dragon can go without spawning a rift before they die.
         /// </summary>
