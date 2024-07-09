@@ -49,7 +49,7 @@ namespace Content.Client.Power.APC.UI
 
             if (PowerLabel != null)
             {
-                PowerLabel.Text = castState.Power + " W";
+                PowerLabel.Text = Loc.GetString("apc-menu-power-state-label-text", ("power", castState.Power));
             }
 
             if (ExternalPowerStateLabel != null)

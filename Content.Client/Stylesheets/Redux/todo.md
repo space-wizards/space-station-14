@@ -9,10 +9,8 @@
 - [x] `[X]` button is misaligned on FancyWindow also title text too kinda
 - [x] Move `ISheetletConfig` classes into their own directory
 - [x] Create a HUD stylesheet for examine, right click, chat etc. perhaps, distinguish from NT Ui
-    - [ ] (remove `ContextMenuSheetlet.cs:16`)
     - [x] ~~seperated chat ui~~ (looks funky)
     - [ ] ~~Admin / debug menus~~ (do in another PR)
-    - [ ] I cheat on the "resources are access locked" thing in `ContextMenuSheetlet.cs:36`. This needs to be fixed!
     - [x] ~~Tooltips!~~ (weird)
 - [x] ~~Stamps look weird?~~ they look fine
 - [x] `ScrollContainer` has no scrollbar!!!
@@ -23,8 +21,9 @@
 - [x] Move `Chat` style classes from `StyleClass.cs`
 - [x] Vending machines entries no hover?
   - `ItemList` skill issue
-- [ ] Also `ApcMenu.xaml.cs`: localize watts
-- [ ] `PopupUiController` lots of hardcoding
+- [x] Also `ApcMenu.xaml.cs`: localize watts
+- [x] `PopupUiController` lots of hardcoding
+  - Ehhh probably fine
 
 - [ ] `ScopedResCache` because moving around resources is annoying and prone to error when merging
 - [ ] `MainMenuSheetlet` should maybe be with the xaml?
@@ -45,6 +44,7 @@ HARDCODED COLORS
 - ReplayMainMenuControl.xaml
 - LobbyGui.xaml
 - MenuButton.cs
+- ContextMenuSheetlet.cs
 
 TL;DR port all of `StyleNano` into sheetlets
 
