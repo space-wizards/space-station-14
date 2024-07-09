@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: TheShuEd
   changes:
-  - message: botanist can now mutate blood tomatoes into killer tomatoes! they will
-      be personal pets, aggressively defending the owner from any social interactions.
-    type: Add
-  id: 6386
-  time: '2024-04-18T11:21:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26053
-- author: TheShuEd
-  changes:
   - message: Now winter around Europa is different every round
     type: Tweak
   id: 6387
@@ -3830,3 +3822,10 @@
   id: 6885
   time: '2024-07-08T09:03:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29726
+- author: Errant
+  changes:
+  - message: Vox now have their entry in the guidebook.
+    type: Fix
+  id: 6886
+  time: '2024-07-09T00:28:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29713
