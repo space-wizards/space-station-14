@@ -102,7 +102,6 @@ public sealed class FoodSystem : EntitySystem
     /// <summary>
     /// Tries to feed the food item to the target entity
     /// </summary>
-    /// <param name="usedFromHand">Changes the do-after so that you stop eating if you drop the food</param>
     public (bool Success, bool Handled) TryFeed(EntityUid user, EntityUid target, EntityUid food, FoodComponent foodComp)
     {
         //Suppresses eating yourself and alive mobs
