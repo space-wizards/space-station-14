@@ -75,7 +75,7 @@ public sealed partial class InjectorComponent : Component
 
     /// <summary>
     /// Each additional 1u after first 5u increases the delay by X seconds.
-    /// <summary>
+    /// </summary>
     [DataField]
     public TimeSpan DelayPerVolume = TimeSpan.FromSeconds(0.1);
 
