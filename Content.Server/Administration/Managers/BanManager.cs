@@ -188,12 +188,14 @@ public sealed class BanManager : IBanManager, IPostInjectInit
     public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableArray<byte>? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan)
     {
         string? prefix = null;
+        var antagAllSelection = Loc.GetString("ban-panel-role-selection-antag-all-option");
 
         if (_prototypeManager.TryIndex<JobPrototype>(role, out _))
         {
             prefix = JobPrefix;
         }
-        else if (_prototypeManager.TryIndex<AntagPrototype>(role, out _))
+
+        else if (_prototypeManager.TryIndex<AntagPrototype>(role, out _) || role == antagAllSelection)
         {
             prefix = AntagPrefix;
         }
