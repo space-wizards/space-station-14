@@ -357,39 +357,28 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Useful for predicted interactions
         /// </param>
         /// <returns>False if failed to insert item</returns>
-        public bool TryInsertEmpty(Entity<ItemSlotsComponent?> ent, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
+        public bool TryInsertEmpty(Entity<ItemSlotsComponent?> ent,
+            EntityUid item,
+            EntityUid? user,
+            bool excludeUserAudio = false)
         {
             if (!Resolve(ent, ref ent.Comp, false))
                 return false;
 
-            var slots = new List<ItemSlot>();
-            foreach (var slot in ent.Comp.Slots.Values)
-            {
-                if (slot.ContainerSlot?.ContainedEntity != null)
-                    continue;
+            TryComp(user, out HandsComponent? handsComp);
 
-                if (CanInsert(ent, item, user, slot))
-                    slots.Add(slot);
-            }
-
-            if (slots.Count == 0)
+            if (!TryGetAvailableSlot(ent,
+                    item,
+                    user == null ? null : (user.Value, handsComp),
+                    out var itemSlot,
+                    emptyOnly: true))
                 return false;
 
-            if (user != null && _handsSystem.IsHolding(user.Value, item))
-            {
-                if (!_handsSystem.TryDrop(user.Value, item))
-                    return false;
-            }
+            if (user != null && !_handsSystem.TryDrop(user.Value, item, handsComp: handsComp))
+                return false;
 
-            slots.Sort(SortEmpty);
-
-            foreach (var slot in slots)
-            {
-                if (TryInsert(ent, slot, item, user, excludeUserAudio: excludeUserAudio))
-                    return true;
-            }
-
-            return false;
+            Insert(ent, itemSlot, item, user, excludeUserAudio: excludeUserAudio);
+            return true;
         }
 
         /// <summary>
