@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: The Research Director's hardsuit is now 5x5 in the inventory instead
-      of 2x2. You'll need a duffelbag to store it now.
-    type: Tweak
-  id: 6388
-  time: '2024-04-18T18:05:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27094
 - author: Dutch-VanDerLinde
   changes:
   - message: Roboticist gear in now available in the scientist loadout.
@@ -3829,3 +3821,10 @@
   id: 6887
   time: '2024-07-09T04:14:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29833
+- author: Cojoke-dot
+  changes:
+  - message: Shotgun loading doafter now does something
+    type: Fix
+  id: 6888
+  time: '2024-07-09T04:23:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29827
