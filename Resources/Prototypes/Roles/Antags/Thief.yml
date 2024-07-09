@@ -7,7 +7,5 @@
 
 - type: startingGear
   id: ThiefGear
-  storage:
-    back:
-    - ToolboxThief
-    - ClothingHandsChameleonThief
+  inhand:
+    - ClothingBackpackChameleonThievingBundle
