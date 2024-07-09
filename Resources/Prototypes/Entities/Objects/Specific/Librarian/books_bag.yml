@@ -22,9 +22,9 @@
       whitelist:
         tags:
           - Book
-          - Document
-          - Write
           - Dice
+          - Document
           - Figurine
           - TabletopBoard
+          - Write
     - type: Dumpable
