@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Snouts and noses no longer disappear with toggled masks.
-    type: Fix
-  id: 6392
-  time: '2024-04-19T05:39:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25716
 - author: shampunj
   changes:
   - message: 'Now for crafting stunprod you need: igniter, cable cuffs, small power
@@ -3828,3 +3821,10 @@
   id: 6891
   time: '2024-07-09T23:12:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29854
+- author: Boaz1111
+  changes:
+  - message: Guitars can now be worn in the suit storage slot
+    type: Add
+  id: 6892
+  time: '2024-07-09T23:28:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29048
