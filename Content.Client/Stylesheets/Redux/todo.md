@@ -14,8 +14,8 @@
     - [ ] ~~Admin / debug menus~~ (do in another PR)
     - [ ] I cheat on the "resources are access locked" thing in `ContextMenuSheetlet.cs:36`. This needs to be fixed!
     - [x] ~~Tooltips!~~ (weird)
-- [ ] Stamps look weird?
-- [ ] `ScrollContainer` has no scrollbar!!!
+- [x] ~~Stamps look weird?~~ they look fine
+- [x] `ScrollContainer` has no scrollbar!!!
 - [ ] `NavMapControl.cs:133` fix this
 - [ ] `CrewMonitoringWindow` uses `TooltipDesc` for some reason??
 - [ ] Enum for accessing palette?
@@ -23,7 +23,6 @@
 - [ ] Whatever the hell `StyleClassSliderWhite` and friends are being used for
 - [ ] Move `Chat` style classes from `StyleClass.cs`
 - [ ] Vending machines entries no hover?
-- [ ] `ApcMenu.xaml.cs` maybe make the text color fully dynamic
 - [ ] Also `ApcMenu.xaml.cs`: localize watts
 - [ ] `PopupUiController` lots of hardcoding
 
@@ -94,3 +93,4 @@ The style rule definition syntax is also pretty good IMO but that wasn't me so,
 - [ ] Make all admin menus a different palette
 - [ ] Shadows on windows?
 - [ ] `HLine` and probably other classes in RobustToolbox dont have `StyleClass<X>` props
+- [ ] `ApcMenu.xaml.cs` maybe make the text color fully dynamic

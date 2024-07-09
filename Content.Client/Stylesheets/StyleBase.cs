@@ -13,8 +13,6 @@ namespace Content.Client.Stylesheets
 {
     public abstract class StyleBase
     {
-        public const int DefaultGrabberSize = 10;
-
         public abstract Stylesheet Stylesheet { get; }
 
         protected StyleRule[] BaseRules { get; }
@@ -109,35 +107,6 @@ namespace Content.Client.Stylesheets
             };
             AngleBorderRect.SetPatchMargin(StyleBox.Margin.All, 10);
 
-            var vScrollBarGrabberNormal = new StyleBoxFlat
-            {
-                BackgroundColor = Color.Gray.WithAlpha(0.35f), ContentMarginLeftOverride = DefaultGrabberSize,
-                ContentMarginTopOverride = DefaultGrabberSize
-            };
-            var vScrollBarGrabberHover = new StyleBoxFlat
-            {
-                BackgroundColor = new Color(140, 140, 140).WithAlpha(0.35f), ContentMarginLeftOverride = DefaultGrabberSize,
-                ContentMarginTopOverride = DefaultGrabberSize
-            };
-            var vScrollBarGrabberGrabbed = new StyleBoxFlat
-            {
-                BackgroundColor = new Color(160, 160, 160).WithAlpha(0.35f), ContentMarginLeftOverride = DefaultGrabberSize,
-                ContentMarginTopOverride = DefaultGrabberSize
-            };
-
-            var hScrollBarGrabberNormal = new StyleBoxFlat
-            {
-                BackgroundColor = Color.Gray.WithAlpha(0.35f), ContentMarginTopOverride = DefaultGrabberSize
-            };
-            var hScrollBarGrabberHover = new StyleBoxFlat
-            {
-                BackgroundColor = new Color(140, 140, 140).WithAlpha(0.35f), ContentMarginTopOverride = DefaultGrabberSize
-            };
-            var hScrollBarGrabberGrabbed = new StyleBoxFlat
-            {
-                BackgroundColor = new Color(160, 160, 160).WithAlpha(0.35f), ContentMarginTopOverride = DefaultGrabberSize
-            };
-
 
             BaseRules = new[]
             {
@@ -181,53 +150,6 @@ namespace Content.Client.Stylesheets
                     new[]
                     {
                         new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
-                    }),
-
-                // Scroll bars
-                new StyleRule(new SelectorElement(typeof(VScrollBar), null, null, null),
-                    new[]
-                    {
-                        new StyleProperty(ScrollBar.StylePropertyGrabber,
-                            vScrollBarGrabberNormal),
-                    }),
-
-                new StyleRule(
-                    new SelectorElement(typeof(VScrollBar), null, null, new[] {ScrollBar.StylePseudoClassHover}),
-                    new[]
-                    {
-                        new StyleProperty(ScrollBar.StylePropertyGrabber,
-                            vScrollBarGrabberHover),
-                    }),
-
-                new StyleRule(
-                    new SelectorElement(typeof(VScrollBar), null, null, new[] {ScrollBar.StylePseudoClassGrabbed}),
-                    new[]
-                    {
-                        new StyleProperty(ScrollBar.StylePropertyGrabber,
-                            vScrollBarGrabberGrabbed),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(HScrollBar), null, null, null),
-                    new[]
-                    {
-                        new StyleProperty(ScrollBar.StylePropertyGrabber,
-                            hScrollBarGrabberNormal),
-                    }),
-
-                new StyleRule(
-                    new SelectorElement(typeof(HScrollBar), null, null, new[] {ScrollBar.StylePseudoClassHover}),
-                    new[]
-                    {
-                        new StyleProperty(ScrollBar.StylePropertyGrabber,
-                            hScrollBarGrabberHover),
-                    }),
-
-                new StyleRule(
-                    new SelectorElement(typeof(HScrollBar), null, null, new[] {ScrollBar.StylePseudoClassGrabbed}),
-                    new[]
-                    {
-                        new StyleProperty(ScrollBar.StylePropertyGrabber,
-                            hScrollBarGrabberGrabbed),
                     }),
             };
         }
