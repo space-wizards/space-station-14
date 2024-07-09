@@ -607,7 +607,7 @@
     state: pda-hos
 
 - type: entity
-  parent: BasePDA
+  parent: BaseMedicalPDA
   id: WardenPDA
   name: warden PDA
   description: The OS appears to have been jailbroken.
@@ -620,6 +620,11 @@
     accentVColor: "#949137"
   - type: Icon
     state: pda-warden
+  - type: Instrument
+    allowPercussion: false
+    handheld: true
+    bank: 1
+    program: 2
 
 - type: entity
   parent: BasePDA
