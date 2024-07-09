@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: shampunj
-  changes:
-  - message: 'Now for crafting stunprod you need: igniter, cable cuffs, small power
-      cell, metal rod.'
-    type: Tweak
-  - message: Stunprod deals 35 stamina damage per hit and 5 shock damage. The battery
-      charge is enough for 3 hits.
-    type: Tweak
-  id: 6393
-  time: '2024-04-19T05:50:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25922
 - author: EmoGarbage404
   changes:
   - message: Halved passive fuel consumption of welding tools.
@@ -3828,3 +3817,10 @@
   id: 6892
   time: '2024-07-09T23:28:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29048
+- author: Winkarst-cpu
+  changes:
+  - message: Fixed popup spam when trying to open borg's UI while the borg is locked.
+    type: Fix
+  id: 6893
+  time: '2024-07-09T23:48:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29861
