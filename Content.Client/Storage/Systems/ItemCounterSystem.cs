@@ -31,7 +31,10 @@ public sealed class ItemCounterSystem : SharedItemCounterSystem
 
         if (!_appearanceSystem.TryGetData<bool>(uid, StackVisuals.Hide, out var hidden, args.Component))
             hidden = false;
-        
+
+        if (comp.NeverHidden)
+            hidden = false;
+
         if (comp.IsComposite)
             ProcessCompositeSprite(uid, actual, maxCount, comp.LayerStates, hidden, sprite: args.Sprite);
         else

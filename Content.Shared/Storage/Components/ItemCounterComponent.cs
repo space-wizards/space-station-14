@@ -1,4 +1,4 @@
-﻿using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Whitelist;
 
 namespace Content.Shared.Storage.Components
@@ -56,5 +56,13 @@ namespace Content.Shared.Storage.Components
         [DataField("layerStates")]
         [ViewVariables(VVAccess.ReadWrite)]
         public List<string> LayerStates = new();
+
+        /// <summary>
+        /// Should the sprite layers always be visible regardless of storage open/closed status?
+        /// e.g. 6pack of soda never 'closes' to hide the cans, so they're always visable.
+        /// </summary>
+        [DataField]
+        [ViewVariables]
+        public bool NeverHidden;
     }
 }

@@ -440,6 +440,7 @@
     count:
       tags: [Cola]
     composite: true
+    neverHidden: true
     layerStates:
     - 6pack1
     - 6pack2
