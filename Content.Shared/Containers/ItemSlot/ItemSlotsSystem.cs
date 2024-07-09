@@ -384,12 +384,13 @@ namespace Content.Shared.Containers.ItemSlots
         /// <summary>
         /// Tries to get any slot that the <paramref name="item"/> can be inserted into.
         /// </summary>
-        /// <param name="ent"></param>
-        /// <param name="item"></param>
-        /// <param name="userEnt"></param>
-        /// <param name="itemSlot"></param>
-        /// <param name="emptyOnly"></param>
-        /// <returns></returns>
+        /// <param name="ent">Entity that <paramref name="item"/> is being inserted into.</param>
+        /// <param name="item">Entity being inserted into <paramref name="ent"/>.</param>
+        /// <param name="userEnt">Entity inserting <paramref name="item"/> into <paramref name="ent"/>.</param>
+        /// <param name="itemSlot">The ItemSlot on <paramref name="ent"/> to insert <paramref name="item"/> into.</param>
+        /// <param name="emptyOnly"> True only returns slots that are empty.
+        /// False returns any slot that is able to receive <paramref name="item"/>.</param>
+        /// <returns>True when a slot is found. Otherwise, false.</returns>
         public bool TryGetAvailableSlot(Entity<ItemSlotsComponent?> ent,
             EntityUid item,
             Entity<HandsComponent?>? userEnt,
