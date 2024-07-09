@@ -1,6 +1,7 @@
 using Content.Client.Atmos.Monitor.UI.Widgets;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux.SheetletConfig;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
@@ -18,7 +19,7 @@ namespace Content.Client.Atmos.Monitor.UI;
 public sealed partial class AirAlarmWindow : FancyWindow
 {
     public event Action<string, IAtmosDeviceData>? AtmosDeviceDataChanged;
-	public event Action<IAtmosDeviceData>? AtmosDeviceDataCopied;
+    public event Action<IAtmosDeviceData>? AtmosDeviceDataCopied;
     public event Action<string, AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? AtmosAlarmThresholdChanged;
     public event Action<AirAlarmMode>? AirAlarmModeChanged;
     public event Action<bool>? AutoModeChanged;
@@ -103,11 +104,14 @@ public sealed partial class AirAlarmWindow : FancyWindow
     {
         _address.SetMarkup(state.Address);
         _deviceTotal.SetMarkup($"{state.DeviceCount}");
-        _pressure.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure", ("pressure", $"{state.PressureAverage:0.##}")));
-        _temperature.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature", ("tempC", $"{TemperatureHelpers.KelvinToCelsius(state.TemperatureAverage):0.#}"), ("temperature", $"{state.TemperatureAverage:0.##}")));
+        _pressure.SetMarkup(
+            Loc.GetString("air-alarm-ui-window-pressure", ("pressure", $"{state.PressureAverage:0.##}")));
+        _temperature.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature",
+            ("tempC", $"{TemperatureHelpers.KelvinToCelsius(state.TemperatureAverage):0.#}"),
+            ("temperature", $"{state.TemperatureAverage:0.##}")));
         _alarmState.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state",
-                    ("color", ColorForAlarm(state.AlarmType)),
-                    ("state", $"{state.AlarmType}")));
+            ("color", ColorForAlarm(state.AlarmType)),
+            ("state", $"{state.AlarmType}")));
         UpdateModeSelector(state.Mode);
         UpdateAutoMode(state.AutoMode);
         foreach (var (addr, dev) in state.DeviceData)
@@ -135,9 +139,9 @@ public sealed partial class AirAlarmWindow : FancyWindow
             case GasVentPumpData pump:
                 if (!_pumps.TryGetValue(addr, out var pumpControl))
                 {
-                    var control= new PumpControl(pump, addr);
+                    var control = new PumpControl(pump, addr);
                     control.PumpDataChanged += AtmosDeviceDataChanged!.Invoke;
-					control.PumpDataCopied += AtmosDeviceDataCopied!.Invoke;
+                    control.PumpDataCopied += AtmosDeviceDataCopied!.Invoke;
                     _pumps.Add(addr, control);
                     CVentContainer.AddChild(control);
                 }
@@ -152,7 +156,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
                 {
                     var control = new ScrubberControl(scrubber, addr);
                     control.ScrubberDataChanged += AtmosDeviceDataChanged!.Invoke;
-					control.ScrubberDataCopied += AtmosDeviceDataCopied!.Invoke;
+                    control.ScrubberDataCopied += AtmosDeviceDataCopied!.Invoke;
                     _scrubbers.Add(addr, control);
                     CScrubberContainer.AddChild(control);
                 }
@@ -187,18 +191,15 @@ public sealed partial class AirAlarmWindow : FancyWindow
 
     public static Color ColorForAlarm(AtmosAlarmType curAlarm)
     {
-        throw new NotImplementedException("TEMPORARY");
-        // if(curAlarm == AtmosAlarmType.Danger)
-        // {
-        //     return StyleNano.DangerousRedFore;
-        // }
-        // else if(curAlarm == AtmosAlarmType.Warning)
-        // {
-        //     return StyleNano.ConcerningOrangeFore;
-        // }
-        //
-        // return StyleNano.GoodGreenFore;
+        // TODO: hardcoded, fix when i get palettes done
+        switch (curAlarm)
+        {
+            case AtmosAlarmType.Danger:
+                return Color.FromHex("#BB3232");
+            case AtmosAlarmType.Warning:
+                return Color.FromHex("#A5762F");
+            default:
+                return Color.FromHex("#BB3232");
+        }
     }
-
-
 }

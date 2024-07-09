@@ -14,17 +14,41 @@ namespace Content.Client.Stylesheets
 
         public Stylesheet SheetNano { get; private set; } = default!;
         public Stylesheet SheetInterface { get; private set; } = default!;
-
         public Stylesheet SheetSpace { get; private set; } = default!;
 
         public void Initialize()
         {
-            SheetNano = new NanotrasenStylesheet(new PalettedStylesheet.NoConfig()).Stylesheet;
+            var nanoBase = new NanotrasenStylesheet(new PalettedStylesheet.NoConfig());
+            _defaultSheetBase = nanoBase;
+            SheetNano = Init(nanoBase);
             SheetInterface = new InterfaceStylesheet(new PalettedStylesheet.NoConfig()).Stylesheet;
             SheetSpace = new StyleSpace(_resourceCache).Stylesheet;
 
             _userInterfaceManager.Stylesheet = SheetNano;
             // _userInterfaceManager.OnScreenChanged += OnScreenChanged;
+        }
+
+        private Dictionary<Stylesheet, BaseStylesheet> _sheetToBaseSheet = new();
+        private BaseStylesheet _defaultSheetBase = default!;
+
+        public Stylesheet Init(BaseStylesheet baseSheet)
+        {
+            _sheetToBaseSheet.Add(baseSheet.Stylesheet, baseSheet);
+            return baseSheet.Stylesheet;
+        }
+
+        public BaseStylesheet GetBaseStylesheet(Stylesheet? sheet)
+        {
+            if (sheet is null)
+                return _defaultSheetBase;
+            try
+            {
+                return _sheetToBaseSheet[sheet];
+            }
+            catch
+            {
+                return _defaultSheetBase;
+            }
         }
 
         // NOTE: taken out b/c chat colors being different looked slightly wacky

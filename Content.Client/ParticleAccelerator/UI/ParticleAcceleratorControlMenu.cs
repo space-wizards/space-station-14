@@ -160,7 +160,7 @@ namespace Content.Client.ParticleAccelerator.UI
                     },
                     new PanelContainer
                     {
-                        StyleClasses = { StyleClass.Highlight }, // ADD STYLES FOR THIS
+                        StyleClasses = { StyleClass.Highlight },
                         MinSize = new Vector2(0, 2),
                     },
                     new Control

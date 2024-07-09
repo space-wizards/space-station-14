@@ -37,11 +37,14 @@
 - [ ] Make all `StyleClass` conform to naming conventions
 - [ ] `LabelSheetlet` / `TextSheetlet` dont hardcode the label sizes
 - [ ] Separate out `FontKind` maybe
+- [ ] change `ButtonHovered` and friends to `PseudoHovered`
 
-MARK:
+HARDCODED COLORS
+
 - StampWidget.xaml
 - AirAlarmWindow.xaml.cs
 - ReplayMainMenuControl.xaml
+- LobbyGui.xaml
 
 TL;DR port all of `StyleNano` into sheetlets
 
@@ -90,3 +93,4 @@ The style rule definition syntax is also pretty good IMO but that wasn't me so,
 - [ ] `OptionButton` looks kinda gross :(
 - [ ] Make all admin menus a different palette
 - [ ] Shadows on windows?
+- [ ] `HLine` and probably other classes in RobustToolbox dont have `StyleClass<X>` props

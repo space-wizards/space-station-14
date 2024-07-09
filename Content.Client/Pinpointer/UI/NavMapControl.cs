@@ -133,7 +133,7 @@ public partial class NavMapControl : MapGridControl
             {
                 BackgroundColor = ContextMenuSheetlet.ContextButtonPalette[1].WithAlpha(1f),
             },
-            StyleClasses = { StyleClass.PanelDark }, // CONFIRM THIS COLOR IS THE SAME
+            StyleClasses = { StyleClass.PanelDark },
             VerticalExpand = false,
             HorizontalExpand = true,
             SetWidth = 650f,

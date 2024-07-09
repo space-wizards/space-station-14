@@ -4,7 +4,7 @@
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:paper="clr-namespace:Content.Client.Paper.UI" HorizontalAlignment="Center" Margin="6">
 
-    <!-- FontColorOverride="{x:Static style:StyleNano.DangerousRedFore}" -->
     <paper:StampLabel Name="StampedByLabel" StyleClasses="LabelHeadingBigger"
+        FontColorOverride="#cf2f2f"
         Margin="12 6 12 6"/>
 </paper:StampWidget>

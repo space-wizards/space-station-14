@@ -8,9 +8,9 @@ public partial class InterfaceStylesheet : IPanelPalette
 {
     private static readonly Color PrimaryColor = Color.FromHex("#4a6173");
     private static readonly Color SecondaryColor = Color.FromHex("#5e5e5e");
-    private static readonly Color PositiveColor = Color.FromHex("#3E6C45");
-    private static readonly Color NegativeColor = Color.FromHex("#CF2F2F");
-    private static readonly Color HighlightColor = Color.FromHex("#A88B5E");
+    private static readonly Color PositiveColor = Color.FromHex("#3e6c45");
+    private static readonly Color NegativeColor = Color.FromHex("#cf2f2f");
+    private static readonly Color HighlightColor = Color.FromHex("#a88b5e");
 
     // The primary/vibrant palette used by interactables like buttons.
     public override Color[] PrimaryPalette { get; } = new[]

@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Stylesheets.Redux.Stylesheets;
 
-public sealed partial class NanotrasenStylesheet : IPanelPalette
+public sealed partial class NanotrasenStylesheet : IPanelPalette, IStatusPalette
 {
     /*
      * NT Colors.
@@ -74,4 +74,6 @@ public sealed partial class NanotrasenStylesheet : IPanelPalette
     Color IPanelPalette.PanelLightColor => SecondaryPalette[2];
     Color IPanelPalette.PanelColor => SecondaryPalette[3];
     Color IPanelPalette.PanelDarkColor => SecondaryPalette[4];
+
+    OklabColor[] IStatusPalette.StatusColors => [new(NegativeColor), new(HighlightColor), new(PositiveColor)];
 }

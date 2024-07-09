@@ -27,12 +27,19 @@ public sealed class PanelSheetlet : Sheetlet<PalettedStylesheet>
             ContentMarginBottomOverride = 2,
             ContentMarginLeftOverride = 2,
         };
+        var boxPositive = new StyleBoxFlat { BackgroundColor = sheet.PositivePalette[0] };
+        var boxNegative = new StyleBoxFlat { BackgroundColor = sheet.NegativePalette[0] };
+        var boxHighlight = new StyleBoxFlat { BackgroundColor = sheet.HighlightPalette[0] };
 
         return
         [
             E<PanelContainer>().Class(StyleClass.PanelLight).Panel(boxLight),
             E<PanelContainer>().Class(StyleClass.PanelDark).Panel(boxDark),
             E<PanelContainer>().Class(StyleClass.HighDivider).Panel(boxDivider),
+
+            E<PanelContainer>().Class(StyleClass.Positive).Panel(boxPositive),
+            E<PanelContainer>().Class(StyleClass.Negative).Panel(boxNegative),
+            E<PanelContainer>().Class(StyleClass.Highlight).Panel(boxHighlight),
         ];
     }
 }
