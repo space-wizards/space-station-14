@@ -2828,6 +2828,7 @@
         Slash: 6
         Piercing: 6
         Structural: 15
+  - type: StepTriggerImmune
 
 - type: entity
   name: space cat
