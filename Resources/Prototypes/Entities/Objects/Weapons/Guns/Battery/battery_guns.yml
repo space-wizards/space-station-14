@@ -445,6 +445,7 @@
     - type: GuideHelp
       guides:
       - Security
+    - type: PacifismAllowedGun
 
 - type: entity
   name: disabler SMG
@@ -483,6 +484,7 @@
     zeroVisible: true
   - type: StaticPrice
     price: 260
+  - type: PacifismAllowedGun
 
 - type: entity
   name: practice disabler
