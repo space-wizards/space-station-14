@@ -92,7 +92,8 @@ public sealed partial class DragonSystem : EntitySystem
                 }
             }
 
-            comp.RiftAccumulator += frameTime;
+            if (comp.RiftAccumulatorActive)
+                comp.RiftAccumulator += frameTime;
 
             // Delete it, naughty dragon!
             if (comp.RiftAccumulator >= comp.RiftMaxAccumulator)
@@ -188,6 +189,8 @@ public sealed partial class DragonSystem : EntitySystem
 
         // objective is explicitly not reset so that it will show how many you got before dying in round end text
         DeleteRifts(uid, false, component);
+        // prevent the rift accumulator from going up after the dragon dies
+        component.RiftAccumulatorActive = false;
     }
 
     private void OnZombified(Entity<DragonComponent> ent, ref EntityZombifiedEvent args)
