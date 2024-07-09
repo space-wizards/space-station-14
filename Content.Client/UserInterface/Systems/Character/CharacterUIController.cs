@@ -125,7 +125,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
 
             var objectiveText = new FormattedMessage();
-            objectiveText.TryAddMarkup(Loc.GetString($"objective-issuer-{groupId}"), out _); //TODO Burn this shit
+            objectiveText.TryAddMarkup(groupId, out _);
 
             var objectiveLabel = new RichTextLabel
             {
