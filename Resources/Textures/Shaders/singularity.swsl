@@ -30,7 +30,6 @@ void fragment() {
 
         // ensure deformation goes to zero at max distance
         // avoids long-range single-pixel shifts that are noticeable when leaving PVS.
-
         if (distance >= maxDistance) {
             deformation = 0.0;
         } else {
@@ -39,9 +38,6 @@ void fragment() {
 
             cumulativeBrightnessFactor *= brightnessFactor;
         }
-
-        if(deformation > 0.8)
-            deformation = pow(deformation, 0.3);
 
         finalCoords -= deformation * delta;
     }
