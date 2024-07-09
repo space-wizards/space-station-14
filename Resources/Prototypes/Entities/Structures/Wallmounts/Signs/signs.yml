@@ -442,6 +442,16 @@
 
 - type: entity
   parent: BaseSign
+  id: SignCryo
+  name: cryosleep sign
+  description: Just like that? You're gonna chicken out?
+  components:
+  - type: Sprite
+    state: cryo
+
+
+- type: entity
+  parent: BaseSign
   id: SignDisposalSpace
   name: disposal sign
   description: A sign indicating a disposal area.
