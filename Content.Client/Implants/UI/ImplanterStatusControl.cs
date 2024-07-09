@@ -17,7 +17,7 @@ public sealed class ImplanterStatusControl : Control
     public ImplanterStatusControl(ImplanterComponent parent)
     {
         _parent = parent;
-        _label = new RichTextLabel { StyleClasses = { StyleClass.StyleClassItemStatus } };
+        _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
         _label.MaxWidth = 350;
         AddChild(new ClipControl { Children = { _label } });
 

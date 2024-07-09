@@ -138,7 +138,7 @@ public sealed partial class GunSystem
                     }),
                     (_ammoCount = new Label
                     {
-                        StyleClasses = { StyleClass.StyleClassItemStatus },
+                        StyleClasses = { StyleClass.ItemStatus },
                         HorizontalAlignment = HAlignment.Right,
                         VerticalAlignment = VAlignment.Bottom
                     }),
@@ -190,7 +190,7 @@ public sealed partial class GunSystem
                             (_noMagazineLabel = new Label
                             {
                                 Text = "No Magazine!",
-                                StyleClasses = {StyleClass.StyleClassItemStatus}
+                                StyleClasses = {StyleClass.ItemStatus}
                             })
                         }
                     },
@@ -203,7 +203,7 @@ public sealed partial class GunSystem
                         {
                             (_ammoCount = new Label
                             {
-                                StyleClasses = {StyleClass.StyleClassItemStatus},
+                                StyleClasses = {StyleClass.ItemStatus},
                                 HorizontalAlignment = HAlignment.Right,
                             }),
                             (_chamberedBullet = new TextureRect

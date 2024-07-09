@@ -1,4 +1,5 @@
-﻿using Robust.Client.Graphics;
+﻿using Content.Client.UserInterface.Systems.Chat.Controls;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
@@ -32,13 +33,13 @@ public sealed class ChatSheetlet : Sheetlet<PalettedStylesheet>
         return
         [
             E<PanelContainer>()
-                .Class(StyleClass.ChatPanel)
+                .Class(ChatInputBox.StyleClassChatPanel)
                 .Panel(chatBg),
             E<LineEdit>()
-                .Class(StyleClass.ChatLineEdit)
+                .Class(ChatInputBox.StyleClassChatLineEdit)
                 .Prop(LineEdit.StylePropertyStyleBox, new StyleBoxEmpty()),
-            E<Button>().Class(StyleClass.ChatFilterOptionButton).Box(chatChannelButton),
-            E<ContainerButton>().Class(StyleClass.ChatFilterOptionButton).Box(chatFilterButton),
+            E<Button>().Class(ChatInputBox.StyleClassChatFilterOptionButton).Box(chatChannelButton),
+            E<ContainerButton>().Class(ChatInputBox.StyleClassChatFilterOptionButton).Box(chatFilterButton),
         ];
     }
 }

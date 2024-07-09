@@ -1,12 +1,15 @@
 ﻿namespace Content.Client.Stylesheets.Redux;
 
 /**
- * A collection of public reusable style classes. These should be general purpose (Not specific to only one element or
- * Ui).
- *
- * It is named `StyleClass` as opposed to `StyleClasses` because `StyleClasses` is a field on `Control` so it made it
- * a pain to reference this class from a `Control`. (Weird name is worth typing `StyleClass.OpenBoth` vs.
- * `Stylesheets.Redux.Styleclasses.OpenBoth`)
+ * <summary>
+ *  A collection of public reusable style classes. These should be general purpose (Not specific to only one element or
+ *  Ui).
+ * </summary>
+ * <remarks>
+ *  It is named `StyleClass` as opposed to `StyleClasses` because `StyleClasses` is a field on `Control` so it made it
+ *  a pain to reference this class from a `Control`. (Weird name is worth typing `StyleClass.OpenBoth` vs.
+ *  `Stylesheets.Redux.Styleclasses.OpenBoth`)
+ * </remarks>
  */
 public static class StyleClass
 {
@@ -65,14 +68,10 @@ public static class StyleClass
 
     public const string CrossButtonRed = "CrossButtonRed";
 
-    public const string StyleClassItemStatus = "ItemStatus";
-    public const string StyleClassItemStatusNotHeld = "ItemStatusNotHeld";
-    public const string ChatPanel = "ChatPanel";
-    public const string ChatLineEdit = "chatLineEdit";
-    public const string ChatChannelSelectorButton = "chatSelectorOptionButton";
-    public const string ChatFilterOptionButton = "chatFilterOptionButton";
+    public const string ItemStatus = "ItemStatus";
+    public const string ItemStatusNotHeld = "ItemStatusNotHeld";
 
-    public const string TooltipPanel = "tooltipPanel";
-    public const string TooltipTitle = "tooltipTitle";
-    public const string TooltipDesc = "tooltipDesc";
+    public const string TooltipPanel = "TooltipPanel";
+    public const string TooltipTitle = "TooltipTitle";
+    public const string TooltipDesc = "TooltipDesc";
 }

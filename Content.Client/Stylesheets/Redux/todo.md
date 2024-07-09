@@ -20,7 +20,7 @@
 - [x] `CrewMonitoringWindow` uses `TooltipDesc` for some reason??
 - [x] Whatever the hell `StyleClassSliderWhite` and friends are being used for
   - nothing, apparently
-- [ ] Move `Chat` style classes from `StyleClass.cs`
+- [x] Move `Chat` style classes from `StyleClass.cs`
 - [ ] Vending machines entries no hover?
 - [ ] Also `ApcMenu.xaml.cs`: localize watts
 - [ ] `PopupUiController` lots of hardcoding
