@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: iztokbajcar
-  changes:
-  - message: Glass textures are now less transparent.
-    type: Tweak
-  id: 6391
-  time: '2024-04-18T23:43:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26948
 - author: SlamBamActionman
   changes:
   - message: Snouts and noses no longer disappear with toggled masks.
@@ -3828,3 +3821,10 @@
   id: 6890
   time: '2024-07-09T13:46:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29835
+- author: Plykiya
+  changes:
+  - message: You can now drop food and drinks to stop consuming it.
+    type: Fix
+  id: 6891
+  time: '2024-07-09T23:12:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29854
