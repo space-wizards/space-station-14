@@ -20,7 +20,7 @@ public sealed class XATExamineSystem : BaseXATSystem<XATExamineComponent>
         if (!args.IsInDetailsRange)
             return;
 
-        if (TryComp<GhostComponent>(args.Examiner, out var ghost) && !ghost.CanGhostInteract)
+        if (HasComp<GhostComponent>(args.Examiner))
             return;
 
         Trigger(artifact, node);
