@@ -392,6 +392,53 @@ namespace Content.Shared.Containers.ItemSlots
             return false;
         }
 
+        /// <summary>
+        /// Tries to get any slot that the <paramref name="item"/> can be inserted into.
+        /// </summary>
+        /// <param name="ent"></param>
+        /// <param name="item"></param>
+        /// <param name="userEnt"></param>
+        /// <param name="itemSlot"></param>
+        /// <param name="emptyOnly"></param>
+        /// <returns></returns>
+        public bool TryGetAvailableSlot(Entity<ItemSlotsComponent?> ent,
+            EntityUid item,
+            Entity<HandsComponent?>? userEnt,
+            [NotNullWhen(true)] out ItemSlot? itemSlot,
+            bool emptyOnly = false)
+        {
+            itemSlot = null;
+
+            if (userEnt is { } user
+                && Resolve(user, ref user.Comp)
+                && _handsSystem.IsHolding(user, item))
+            {
+                if (!_handsSystem.CanDrop(user, item, user.Comp))
+                    return false;
+            }
+
+            if (!Resolve(ent, ref ent.Comp, false))
+                return false;
+
+            var slots = new List<ItemSlot>();
+            foreach (var slot in ent.Comp.Slots.Values)
+            {
+                if (emptyOnly && slot.ContainerSlot?.ContainedEntity != null)
+                    continue;
+
+                if (CanInsert(ent, item, userEnt, slot))
+                    slots.Add(slot);
+            }
+
+            if (slots.Count == 0)
+                return false;
+
+            slots.Sort(SortEmpty);
+
+            itemSlot = slots[0];
+            return true;
+        }
+
         private static int SortEmpty(ItemSlot a, ItemSlot b)
         {
             var aEnt = a.ContainerSlot?.ContainedEntity;
