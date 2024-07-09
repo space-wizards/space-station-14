@@ -14,8 +14,8 @@ namespace Content.Server.Sandbox.Commands
         [Dependency] private readonly IEntityManager _entManager = default!;
 
         public string Command => "colornetwork";
-        public string Description => Loc.GetString("color-network-command-description");
-        public string Help => Loc.GetString("color-network-command-help-text", ("command",Command));
+        public string Description => Loc.GetString("cmd-colornetwork-desc");
+        public string Help => Loc.GetString("cmd-colornetwork-help", ("command",Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -23,7 +23,7 @@ namespace Content.Server.Sandbox.Commands
             var adminManager = IoCManager.Resolve<IAdminManager>();
             if (shell.IsClient && (!sandboxManager.IsSandboxEnabled && !adminManager.HasAdminFlag(shell.Player!, AdminFlags.Mapping)))
             {
-                shell.WriteError("You are not currently able to use mapping commands.");
+                shell.WriteError(Loc.GetString("cmd-colornetwork-no-access"));
             }
 
             if (args.Length != 3)
