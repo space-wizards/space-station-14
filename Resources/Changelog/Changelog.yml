@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Now winter around Europa is different every round
-    type: Tweak
-  id: 6387
-  time: '2024-04-18T11:27:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26510
 - author: Flareguy
   changes:
   - message: The Research Director's hardsuit is now 5x5 in the inventory instead
@@ -3829,3 +3822,10 @@
   id: 6886
   time: '2024-07-09T00:28:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29713
+- author: Whisper
+  changes:
+  - message: Light toggle actions now have a 1 second cooldown between uses.
+    type: Tweak
+  id: 6887
+  time: '2024-07-09T04:14:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29833
