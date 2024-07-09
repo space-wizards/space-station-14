@@ -338,7 +338,7 @@
   id: CrateCandles
   parent: CrateGenericSteel
   name: candles crate
-  description: Contains two boxes of candles, large and small. For atmosphere or something.
+  description: Contains 4 boxes of candles, 2 large and 2 small. For atmosphere or something.
   components:
   - type: StorageFill
     contents:
