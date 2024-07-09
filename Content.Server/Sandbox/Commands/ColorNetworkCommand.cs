@@ -13,7 +13,7 @@ namespace Content.Server.Sandbox.Commands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
 
-        public string Command => "colornetwork";
+        public override string Command => "colornetwork";
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
