@@ -9,13 +9,14 @@
     layers:
     - state: old-radio
   - type: GhostRole
-    name: ghost-role-information-syndicate-reinforcement-name
+    name: ghost-role-information-syndicate-reinforcement-spy-name
     description: ghost-role-information-syndicate-reinforcement-description
     rules: ghost-role-information-syndicate-reinforcement-rules
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
-    prototype: MobHumanSyndicateAgent
+    prototype: MobHumanSyndicateAgentSpy
+    selectablePrototypes: ["SyndicateAgentMedic", "SyndicateAgentSpy", "SyndicateAgentThief"]
   - type: EmitSoundOnUse
     sound: /Audio/Effects/Emotes/parp1.ogg
   - type: UseDelay
