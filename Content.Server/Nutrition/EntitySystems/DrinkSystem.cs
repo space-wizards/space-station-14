@@ -215,8 +215,8 @@ public sealed class DrinkSystem : SharedDrinkSystem
             BreakOnDamage = true,
             MovementThreshold = 0.01f,
             DistanceThreshold = 1.0f,
-            // Mice and the like can eat without hands.
-            // TODO maybe set this based on some CanEatWithoutHands event or component?
+            // do-after will stop if item is dropped when trying to feed someone else
+            // or if the item started out in the user's own hands
             NeedHand = forceDrink || _hands.IsHolding(user, item),
         };
 

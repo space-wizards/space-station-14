@@ -192,8 +192,8 @@ public sealed class FoodSystem : EntitySystem
             BreakOnDamage = true,
             MovementThreshold = 0.01f,
             DistanceThreshold = MaxFeedDistance,
-            // Mice and the like can eat without hands.
-            // TODO maybe set this based on some CanEatWithoutHands event or component?
+            // do-after will stop if item is dropped when trying to feed someone else
+            // or if the item started out in the user's own hands
             NeedHand = forceFeed || _hands.IsHolding(user, food),
         };
 
