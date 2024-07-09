@@ -15,7 +15,7 @@ namespace Content.Server.Sandbox.Commands
 
         public string Command => "colornetwork";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var sandboxManager = _entManager.System<SandboxSystem>();
             var adminManager = IoCManager.Resolve<IAdminManager>();
