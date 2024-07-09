@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Roboticist gear in now available in the scientist loadout.
-    type: Tweak
-  id: 6389
-  time: '2024-04-18T23:38:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27045
 - author: Whisper
   changes:
   - message: Raised the difficulty class of RD hardsuit objective, it will be less
@@ -3828,3 +3821,11 @@
   id: 6888
   time: '2024-07-09T04:23:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29827
+- author: slarticodefast
+  changes:
+  - message: The construction menu and building preview now show the correct passive
+      vent sprite.
+    type: Fix
+  id: 6889
+  time: '2024-07-09T13:39:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29820
