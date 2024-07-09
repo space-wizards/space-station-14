@@ -23,7 +23,7 @@ public sealed partial class ObjectiveComponent : Component
     /// Organisation that issued this objective, used for grouping and as a header above common objectives.
     /// </summary>
     [DataField(required: true)]
-    public string Issuer = string.Empty;
+    public string Issuer = Loc.GetString(issuer);
 
     /// <summary>
     /// Unique objectives can only have 1 per prototype id.

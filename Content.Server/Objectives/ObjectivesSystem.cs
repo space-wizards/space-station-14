@@ -133,7 +133,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
                 //TO DO:
                 //check for the right group here. Getting the target issuer is easy: objectiveGroup.Key
                 //It should be compared to the type of the group's issuer.
-                agentSummary.AppendLine(Loc.GetString($"objective-issuer-{objectiveGroup.Key}")); //TODO Burn this shit
+                agentSummary.AppendLine(objectiveGroup.Key);
 
                 foreach (var objective in objectiveGroup)
                 {
