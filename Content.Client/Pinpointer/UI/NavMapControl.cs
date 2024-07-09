@@ -129,10 +129,6 @@ public partial class NavMapControl : MapGridControl
 
         var topPanel = new PanelContainer()
         {
-            PanelOverride = new StyleBoxFlat()
-            {
-                BackgroundColor = ContextMenuSheetlet.ContextButtonPalette[1].WithAlpha(1f),
-            },
             StyleClasses = { StyleClass.PanelDark },
             VerticalExpand = false,
             HorizontalExpand = true,

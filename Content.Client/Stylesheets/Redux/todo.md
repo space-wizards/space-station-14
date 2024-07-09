@@ -16,11 +16,10 @@
     - [x] ~~Tooltips!~~ (weird)
 - [x] ~~Stamps look weird?~~ they look fine
 - [x] `ScrollContainer` has no scrollbar!!!
-- [ ] `NavMapControl.cs:133` fix this
-- [ ] `CrewMonitoringWindow` uses `TooltipDesc` for some reason??
-- [ ] Enum for accessing palette?
-- [ ] `MenuButton.cs` hardcoded colors
-- [ ] Whatever the hell `StyleClassSliderWhite` and friends are being used for
+- [x] `NavMapControl.cs:133` fix this
+- [x] `CrewMonitoringWindow` uses `TooltipDesc` for some reason??
+- [x] Whatever the hell `StyleClassSliderWhite` and friends are being used for
+  - nothing, apparently
 - [ ] Move `Chat` style classes from `StyleClass.cs`
 - [ ] Vending machines entries no hover?
 - [ ] Also `ApcMenu.xaml.cs`: localize watts
@@ -44,6 +43,7 @@ HARDCODED COLORS
 - AirAlarmWindow.xaml.cs
 - ReplayMainMenuControl.xaml
 - LobbyGui.xaml
+- MenuButton.cs
 
 TL;DR port all of `StyleNano` into sheetlets
 

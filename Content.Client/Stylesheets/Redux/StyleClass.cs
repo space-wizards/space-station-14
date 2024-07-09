@@ -65,10 +65,6 @@ public static class StyleClass
 
     public const string CrossButtonRed = "CrossButtonRed";
 
-    public const string StyleClassSliderRed = "Red";
-    public const string StyleClassSliderGreen = "Green";
-    public const string StyleClassSliderBlue = "Blue";
-    public const string StyleClassSliderWhite = "White";
     public const string StyleClassItemStatus = "ItemStatus";
     public const string StyleClassItemStatusNotHeld = "ItemStatusNotHeld";
     public const string ChatPanel = "ChatPanel";

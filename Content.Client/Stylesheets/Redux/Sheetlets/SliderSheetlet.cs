@@ -52,18 +52,19 @@ public sealed class SliderSheetlet : Sheetlet<PalettedStylesheet>
                 .Prop(Slider.StylePropertyForeground, sliderForeBox)
                 .Prop(Slider.StylePropertyGrabber, sliderGrabBox)
                 .Prop(Slider.StylePropertyFill, sliderFillBox),
-            E<ColorableSlider>()
-                .Prop(ColorableSlider.StylePropertyFillWhite, sliderFillWhite)
-                .Prop(ColorableSlider.StylePropertyBackgroundWhite, sliderFillWhite),
-
-            E<Slider>().Class(StyleClass.StyleClassSliderRed)
-                .Prop(Slider.StylePropertyFill, sliderFillRed),
-            E<Slider>().Class(StyleClass.StyleClassSliderBlue)
-                .Prop(Slider.StylePropertyFill, sliderFillBlue),
-            E<Slider>().Class(StyleClass.StyleClassSliderGreen)
-                .Prop(Slider.StylePropertyFill, sliderFillGreen),
-            E<Slider>().Class(StyleClass.StyleClassSliderWhite)
-                .Prop(Slider.StylePropertyFill, sliderFillWhite),
+            // these styles seem to be unused now
+            // E<ColorableSlider>()
+            //     .Prop(ColorableSlider.StylePropertyFillWhite, sliderFillWhite)
+            //     .Prop(ColorableSlider.StylePropertyBackgroundWhite, sliderFillWhite),
+            //
+            // E<Slider>().Class(StyleClass.StyleClassSliderRed)
+            //     .Prop(Slider.StylePropertyFill, sliderFillRed),
+            // E<Slider>().Class(StyleClass.StyleClassSliderBlue)
+            //     .Prop(Slider.StylePropertyFill, sliderFillBlue),
+            // E<Slider>().Class(StyleClass.StyleClassSliderGreen)
+            //     .Prop(Slider.StylePropertyFill, sliderFillGreen),
+            // E<Slider>().Class(StyleClass.StyleClassSliderWhite)
+            //     .Prop(Slider.StylePropertyFill, sliderFillWhite),
         };
     }
 }
