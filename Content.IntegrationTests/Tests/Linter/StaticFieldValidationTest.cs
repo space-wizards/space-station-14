@@ -26,26 +26,26 @@ public sealed class StaticFieldValidationTest
             protos.Add(kind, ids);
         }
 
-        Assert.That(protoMan.ValidateStaticFields(typeof(StringValid), protos).Count, Is.Zero);
-        Assert.That(protoMan.ValidateStaticFields(typeof(StringArrayValid), protos).Count, Is.Zero);
-        Assert.That(protoMan.ValidateStaticFields(typeof(EntProtoIdValid), protos).Count, Is.Zero);
-        Assert.That(protoMan.ValidateStaticFields(typeof(EntProtoIdArrayValid), protos).Count, Is.Zero);
-        Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdTestValid), protos).Count, Is.Zero);
-        Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdArrayValid), protos).Count, Is.Zero);
-        Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdListValid), protos).Count, Is.Zero);
-        Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdSetValid), protos).Count, Is.Zero);
-        Assert.That(protoMan.ValidateStaticFields(typeof(PrivateProtoIdArrayValid), protos).Count, Is.Zero);
-        
-        Assert.That(protoMan.ValidateStaticFields(typeof(StringInvalid), protos).Count, Is.EqualTo(1));
-        Assert.That(protoMan.ValidateStaticFields(typeof(StringArrayInvalid), protos).Count, Is.EqualTo(2));
-        Assert.That(protoMan.ValidateStaticFields(typeof(EntProtoIdInvalid), protos).Count, Is.EqualTo(1));
-        Assert.That(protoMan.ValidateStaticFields(typeof(EntProtoIdArrayInvalid), protos).Count, Is.EqualTo(2));
-        Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdTestInvalid), protos).Count, Is.EqualTo(1));
-        Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdArrayInvalid), protos).Count, Is.EqualTo(2));
-        Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdListInvalid), protos).Count, Is.EqualTo(2));
-        Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdSetInvalid), protos).Count, Is.EqualTo(2));
-        Assert.That(protoMan.ValidateStaticFields(typeof(PrivateProtoIdArrayInvalid), protos).Count, Is.EqualTo(2));
-        
+        Assert.That(protoMan.ValidateStaticFields(typeof(StringValid), protos), Is.Empty);
+        Assert.That(protoMan.ValidateStaticFields(typeof(StringArrayValid), protos), Is.Empty);
+        Assert.That(protoMan.ValidateStaticFields(typeof(EntProtoIdValid), protos), Is.Empty);
+        Assert.That(protoMan.ValidateStaticFields(typeof(EntProtoIdArrayValid), protos), Is.Empty);
+        Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdTestValid), protos), Is.Empty);
+        Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdArrayValid), protos), Is.Empty);
+        Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdListValid), protos), Is.Empty);
+        Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdSetValid), protos), Is.Empty);
+        Assert.That(protoMan.ValidateStaticFields(typeof(PrivateProtoIdArrayValid), protos), Is.Empty);
+
+        Assert.That(protoMan.ValidateStaticFields(typeof(StringInvalid), protos), Has.Count.EqualTo(1));
+        Assert.That(protoMan.ValidateStaticFields(typeof(StringArrayInvalid), protos), Has.Count.EqualTo(2));
+        Assert.That(protoMan.ValidateStaticFields(typeof(EntProtoIdInvalid), protos), Has.Count.EqualTo(1));
+        Assert.That(protoMan.ValidateStaticFields(typeof(EntProtoIdArrayInvalid), protos), Has.Count.EqualTo(2));
+        Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdTestInvalid), protos), Has.Count.EqualTo(1));
+        Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdArrayInvalid), protos), Has.Count.EqualTo(2));
+        Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdListInvalid), protos), Has.Count.EqualTo(2));
+        Assert.That(protoMan.ValidateStaticFields(typeof(ProtoIdSetInvalid), protos), Has.Count.EqualTo(2));
+        Assert.That(protoMan.ValidateStaticFields(typeof(PrivateProtoIdArrayInvalid), protos), Has.Count.EqualTo(2));
+
         await pair.CleanReturnAsync();
     }
 
@@ -58,93 +58,111 @@ public sealed class StaticFieldValidationTest
   id: StaticFieldTestTag
 ";
 
-    [Reflect(false)] private sealed class StringValid
+    [Reflect(false)]
+    private sealed class StringValid
     {
         [ValidatePrototypeId<TagPrototype>] public static string Tag = "StaticFieldTestTag";
     }
 
-    [Reflect(false)] private sealed class StringInvalid
+    [Reflect(false)]
+    private sealed class StringInvalid
     {
         [ValidatePrototypeId<TagPrototype>] public static string Tag = string.Empty;
     }
 
-    [Reflect(false)] private sealed class StringArrayValid
+    [Reflect(false)]
+    private sealed class StringArrayValid
     {
-        [ValidatePrototypeId<TagPrototype>] public static string[] Tag = {"StaticFieldTestTag", "StaticFieldTestTag"};
+        [ValidatePrototypeId<TagPrototype>] public static string[] Tag = ["StaticFieldTestTag", "StaticFieldTestTag"];
     }
 
-    [Reflect(false)] private sealed class StringArrayInvalid
+    [Reflect(false)]
+    private sealed class StringArrayInvalid
     {
-        [ValidatePrototypeId<TagPrototype>] public static string[] Tag = {string.Empty, "StaticFieldTestTag", string.Empty};
+        [ValidatePrototypeId<TagPrototype>] public static string[] Tag = [string.Empty, "StaticFieldTestTag", string.Empty];
     }
 
-    [Reflect(false)] private sealed class EntProtoIdValid
+    [Reflect(false)]
+    private sealed class EntProtoIdValid
     {
         public static EntProtoId Tag = "StaticFieldTestEnt";
     }
 
-    [Reflect(false)] private sealed class EntProtoIdInvalid
+    [Reflect(false)]
+    private sealed class EntProtoIdInvalid
     {
         public static EntProtoId Tag = string.Empty;
     }
 
-    [Reflect(false)] private sealed class EntProtoIdArrayValid
+    [Reflect(false)]
+    private sealed class EntProtoIdArrayValid
     {
-        public static EntProtoId[] Tag = {"StaticFieldTestEnt", "StaticFieldTestEnt"};
+        public static EntProtoId[] Tag = ["StaticFieldTestEnt", "StaticFieldTestEnt"];
     }
 
-    [Reflect(false)] private sealed class EntProtoIdArrayInvalid
+    [Reflect(false)]
+    private sealed class EntProtoIdArrayInvalid
     {
-        public static EntProtoId[] Tag = {string.Empty, "StaticFieldTestEnt", string.Empty};
+        public static EntProtoId[] Tag = [string.Empty, "StaticFieldTestEnt", string.Empty];
     }
 
-    [Reflect(false)] private sealed class ProtoIdTestValid
+    [Reflect(false)]
+    private sealed class ProtoIdTestValid
     {
         public static ProtoId<TagPrototype> Tag = "StaticFieldTestTag";
     }
 
-    [Reflect(false)] private sealed class ProtoIdTestInvalid
+    [Reflect(false)]
+    private sealed class ProtoIdTestInvalid
     {
         public static ProtoId<TagPrototype> Tag = string.Empty;
     }
 
-    [Reflect(false)] private sealed class ProtoIdArrayValid
+    [Reflect(false)]
+    private sealed class ProtoIdArrayValid
     {
-        public static ProtoId<TagPrototype>[] Tag = {"StaticFieldTestTag", "StaticFieldTestTag"};
+        public static ProtoId<TagPrototype>[] Tag = ["StaticFieldTestTag", "StaticFieldTestTag"];
     }
 
-    [Reflect(false)] private sealed class ProtoIdArrayInvalid
+    [Reflect(false)]
+    private sealed class ProtoIdArrayInvalid
     {
-        public static ProtoId<TagPrototype>[] Tag = {string.Empty, "StaticFieldTestTag", string.Empty};
+        public static ProtoId<TagPrototype>[] Tag = [string.Empty, "StaticFieldTestTag", string.Empty];
     }
 
-    [Reflect(false)] private sealed class ProtoIdListValid
+    [Reflect(false)]
+    private sealed class ProtoIdListValid
     {
-        public static List<ProtoId<TagPrototype>> Tag = new() {"StaticFieldTestTag", "StaticFieldTestTag"};
+        public static List<ProtoId<TagPrototype>> Tag = ["StaticFieldTestTag", "StaticFieldTestTag"];
     }
 
-    [Reflect(false)] private sealed class ProtoIdListInvalid
+    [Reflect(false)]
+    private sealed class ProtoIdListInvalid
     {
-        public static List<ProtoId<TagPrototype>> Tag = new() {string.Empty, "StaticFieldTestTag", string.Empty};
+        public static List<ProtoId<TagPrototype>> Tag = [string.Empty, "StaticFieldTestTag", string.Empty];
     }
 
-    [Reflect(false)] private sealed class ProtoIdSetValid
+    [Reflect(false)]
+    private sealed class ProtoIdSetValid
     {
-        public static HashSet<ProtoId<TagPrototype>> Tag = new() {"StaticFieldTestTag", "StaticFieldTestTag"};
+        public static HashSet<ProtoId<TagPrototype>> Tag = ["StaticFieldTestTag", "StaticFieldTestTag"];
     }
 
-    [Reflect(false)] private sealed class ProtoIdSetInvalid
+    [Reflect(false)]
+    private sealed class ProtoIdSetInvalid
     {
-        public static HashSet<ProtoId<TagPrototype>> Tag = new() {string.Empty, "StaticFieldTestTag", string.Empty, " "};
+        public static HashSet<ProtoId<TagPrototype>> Tag = [string.Empty, "StaticFieldTestTag", string.Empty, " "];
     }
 
-    [Reflect(false)] private sealed class PrivateProtoIdArrayValid
+    [Reflect(false)]
+    private sealed class PrivateProtoIdArrayValid
     {
-        private static ProtoId<TagPrototype>[] Tag = {"StaticFieldTestTag", "StaticFieldTestTag"};
+        private static readonly ProtoId<TagPrototype>[] Tag = ["StaticFieldTestTag", "StaticFieldTestTag"];
     }
 
-    [Reflect(false)] private sealed class PrivateProtoIdArrayInvalid
+    [Reflect(false)]
+    private sealed class PrivateProtoIdArrayInvalid
     {
-        private static ProtoId<TagPrototype>[] Tag = {string.Empty, "StaticFieldTestTag", string.Empty};
+        private static readonly ProtoId<TagPrototype>[] Tag = [string.Empty, "StaticFieldTestTag", string.Empty];
     }
 }
