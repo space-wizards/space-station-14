@@ -21,7 +21,8 @@
 - [x] Whatever the hell `StyleClassSliderWhite` and friends are being used for
   - nothing, apparently
 - [x] Move `Chat` style classes from `StyleClass.cs`
-- [ ] Vending machines entries no hover?
+- [x] Vending machines entries no hover?
+  - `ItemList` skill issue
 - [ ] Also `ApcMenu.xaml.cs`: localize watts
 - [ ] `PopupUiController` lots of hardcoding
 
