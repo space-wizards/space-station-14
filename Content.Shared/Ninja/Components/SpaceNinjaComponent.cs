@@ -57,4 +57,11 @@ public sealed partial class SpaceNinjaComponent : Component
 
     [DataField]
     public ProtoId<AlertPrototype> SuitPowerAlert = "SuitPower";
+
+    /// <summary>
+    /// Can this ninja use guns? Set to true by default.
+    /// </summary>
+    [DataField]
+    public bool PreventGuns = true;
+
 }

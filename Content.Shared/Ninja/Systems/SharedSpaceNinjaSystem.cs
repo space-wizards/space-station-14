@@ -96,7 +96,10 @@ public abstract class SharedSpaceNinjaSystem : EntitySystem
     /// </summary>
     private void OnShotAttempted(EntityUid uid, SpaceNinjaComponent comp, ref ShotAttemptedEvent args)
     {
-        Popup.PopupClient(Loc.GetString("gun-disabled"), uid, uid);
-        args.Cancel();
+        if (comp.PreventGuns == true)
+        {
+            Popup.PopupClient(Loc.GetString("gun-disabled"), uid, uid);
+            args.Cancel();
+        }
     }
 }
