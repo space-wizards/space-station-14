@@ -607,7 +607,7 @@
     state: pda-hos
 
 - type: entity
-  parent: BaseMedicalPDA
+  parent: BasePDA
   id: WardenPDA
   name: warden PDA
   description: The OS appears to have been jailbroken.
