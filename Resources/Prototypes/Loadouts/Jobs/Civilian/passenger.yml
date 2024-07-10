@@ -612,25 +612,6 @@
   equipment:
     gloves: ClothingHandsGlovesColorGreen
 
-- type: loadout
-  id: OrangeGloves
-  equipment: OrangeGloves
-
-- type: startingGear
-  id: OrangeGloves
-  equipment:
-    gloves: ClothingHandsGlovesColorOrange
-
-- type: loadout
-  id: PurpleGloves
-  equipment: PurpleGloves
-
-- type: startingGear
-  id: PurpleGloves
-  equipment:
-    gloves: ClothingHandsGlovesColorPurple
-
-
 # Outerclothing
 - type: loadout
   id: PassengerWintercoat
