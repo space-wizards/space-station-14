@@ -422,6 +422,21 @@
       - ReagentId: TearGas
         Quantity: 50
 
+- type: entity
+  parent: SmokeGrenade
+  id: MetalFoamGrenade
+  name: metal foam grenade
+  description: An emergency tool used for patching up holes. Almost as good as real walls.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/metalfoam.rsi
+  - type: SmokeOnTrigger
+    duration: 10
+    spreadAmount: 13
+    smokePrototype: AluminiumMetalFoam
+  - type: StaticPrice
+    price: 350
+
 # Non-explosive "dummy" grenades to use as a distraction.
 
 - type: entity
