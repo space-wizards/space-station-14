@@ -652,33 +652,6 @@
     shoes: ClothingShoesColorBlack
 
 - type: loadout
-  id: WhiteShoes
-  equipment: WhiteShoes
-
-- type: startingGear
-  id: WhiteShoes
-  equipment:
-    shoes: ClothingShoesColorWhite
-
-- type: loadout
-  id: BrownShoes
-  equipment: BrownShoes
-
-- type: startingGear
-  id: BrownShoes
-  equipment:
-    shoes: ClothingShoesColorBrown
-
-- type: loadout
-  id: BlueShoes
-  equipment: BlueShoes
-
-- type: startingGear
-  id: BlueShoes
-  equipment:
-    shoes: ClothingShoesColorBlue
-
-- type: loadout
   id: YellowShoes
   equipment: YellowShoes
 
@@ -722,7 +695,6 @@
   id: PurpleShoes
   equipment:
     shoes: ClothingShoesColorPurple
-
 
 - type: loadout
   id: WinterBoots
