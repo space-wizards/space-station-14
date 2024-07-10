@@ -74,7 +74,7 @@ namespace Content.Server.Administration.Systems
             Subs.CVar(_config, CCVars.PanicBunkerDisableWithAdmins, OnPanicBunkerDisableWithAdminsChanged, true);
             Subs.CVar(_config, CCVars.PanicBunkerEnableWithoutAdmins, OnPanicBunkerEnableWithoutAdminsChanged, true);
             Subs.CVar(_config, CCVars.PanicBunkerCountDeadminnedAdmins, OnPanicBunkerCountDeadminnedAdminsChanged, true);
-            Subs.CVar(_config, CCVars.PanicBunkerShowReason, OnShowReasonChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerShowReason, OnPanicBunkerShowReasonChanged, true);
             Subs.CVar(_config, CCVars.PanicBunkerMinAccountAge, OnPanicBunkerMinAccountAgeChanged, true);
             Subs.CVar(_config, CCVars.PanicBunkerMinOverallMinutes, OnPanicBunkerMinOverallMinutesChanged, true);
 
@@ -268,7 +268,7 @@ namespace Content.Server.Administration.Systems
             UpdatePanicBunker();
         }
 
-        private void OnShowReasonChanged(bool enabled)
+        private void OnPanicBunkerShowReasonChanged(bool enabled)
         {
             PanicBunker.ShowReason = enabled;
             SendPanicBunkerStatusAll();
