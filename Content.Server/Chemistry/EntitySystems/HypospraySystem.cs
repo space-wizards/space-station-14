@@ -176,16 +176,16 @@ public sealed class HypospraySystem : SharedHypospraySystem
 
         var removedSolution = _solutionContainers.Draw(target.Owner, targetSolution, realTransferAmount);
 
+        if (!_solutionContainers.TryAddSolution(soln.Value, removedSolution))
+        {
+            return false;
+        }
+
         Dictionary<ReagentId, FixedPoint2>? removedReagents = new();
         if (entity.Comp.FilterPoison)
         {
             // To filter out any toxins, we remove any reagents with the group set to the ToxinReagentGroup
-            removedReagents = removedSolution.RemoveReagentsByGroup(ToxinReagentGroup, _prototypeManager);
-        }
-
-        if (!_solutionContainers.TryAddSolution(soln.Value, removedSolution))
-        {
-            return false;
+            removedReagents = soln.Value.Comp.Solution.RemoveReagentsByGroup(ToxinReagentGroup, _prototypeManager);
         }
 
         if (removedReagents.Count > 0)
