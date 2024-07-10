@@ -1159,6 +1159,9 @@
   id: Spear
 
 - type: Tag
+  id: Harpoon
+
+- type: Tag
   id: SpeedLoaderCap
 
 - type: Tag
