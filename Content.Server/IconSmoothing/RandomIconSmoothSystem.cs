@@ -6,6 +6,7 @@ namespace Content.Server.IconSmoothing;
 public sealed partial class RandomIconSmoothSystem : SharedRandomIconSmoothSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -20,7 +21,6 @@ public sealed partial class RandomIconSmoothSystem : SharedRandomIconSmoothSyste
             return;
 
         var state = _random.Pick(ent.Comp.RandomStates);
-        ent.Comp.SelectedState = state;
-        Dirty(ent);
+        _appearance.SetData(ent, RandomIconSmoothState.State, state);
     }
 }

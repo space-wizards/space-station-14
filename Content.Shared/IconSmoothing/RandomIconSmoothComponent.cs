@@ -1,11 +1,9 @@
-using Robust.Shared.GameStates;
-
 namespace Content.Shared.IconSmoothing;
 
 /// <summary>
 /// Allow randomize StateBase of IconSmoothComponent for random visual variation
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent]
 public sealed partial class RandomIconSmoothComponent : Component
 {
     /// <summary>
@@ -13,10 +11,4 @@ public sealed partial class RandomIconSmoothComponent : Component
     /// </summary>
     [DataField(required: true)]
     public List<string> RandomStates = new();
-
-    /// <summary>
-    /// save information about the selected state on the server for synchronization between clients
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public string SelectedState = string.Empty;
 }

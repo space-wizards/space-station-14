@@ -1113,6 +1113,7 @@
     randomStates:
     - mining
     - miningB
+  - type: Appearance
 
 - type: entity
   parent: WallShuttleDiagonal
