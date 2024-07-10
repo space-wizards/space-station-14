@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: superjj18
-  changes:
-  - message: Pneumatic cannon inventory reduced in size to 2x2, item blacklist removed
-    type: Tweak
-  id: 6395
-  time: '2024-04-19T23:22:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26878
 - author: Aquif
   changes:
   - message: The Communication Console will no longer cut off your messages.
@@ -3822,3 +3815,11 @@
   id: 6894
   time: '2024-07-10T05:26:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29779
+- author: Aquif
+  changes:
+  - message: It is now possible to "lock" admin faxes such that they cannot be edited
+      by cybersun pens or any other IC means.
+    type: Add
+  id: 6895
+  time: '2024-07-10T05:28:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28972
