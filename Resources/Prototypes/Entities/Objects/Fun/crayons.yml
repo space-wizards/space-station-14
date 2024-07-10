@@ -18,8 +18,8 @@
   - type: SpaceGarbage
   - type: UserInterface
     interfaces:
-    - key: enum.CrayonUiKey.Key
-      type: CrayonBoundUserInterface
+      enum.CrayonUiKey.Key:
+        type: CrayonBoundUserInterface
   - type: Crayon
     capacity: 15
   - type: Food

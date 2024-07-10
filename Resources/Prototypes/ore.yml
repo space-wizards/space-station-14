@@ -1,9 +1,5 @@
 # TODO: Kill ore veins
 # Split it into 2 components, 1 for "spawn XYZ on destruction" and 1 for "randomly select one of these for spawn on destruction"
-# You could even just use an entityspawncollection instead.
-- type: ore
-  id: SpaceShrooms
-  oreEntity: FoodSpaceshroom
 
 # High yields
 - type: ore

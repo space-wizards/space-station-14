@@ -282,6 +282,7 @@
           MaterialWoodPlank:
             min: 1
             max: 1
+  - type: Construction
     graph: RitualSeat
     node: chairCursed
 
@@ -356,6 +357,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Strap
+    enabled: False
 
 - type: entity
   name: steel bench

@@ -1,13 +1,31 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: WoodenBat
   start: start
   graph:
     - node: start
       edges:
-        - to: bat
+        - to: incompleteBat
           steps:
             - material: WoodPlank
               amount: 5
               doAfter: 4
+        
+    - node: incompleteBat
+      entity: IncompleteBaseBallBat
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 5
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 1
+        - to: bat
+          steps:
+            - tool: Slicing
+              doAfter: 4
+        
     - node: bat
       entity: BaseBallBat

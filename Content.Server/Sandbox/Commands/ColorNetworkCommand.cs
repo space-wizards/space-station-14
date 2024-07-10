@@ -19,7 +19,7 @@ namespace Content.Server.Sandbox.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var sandboxManager = EntitySystem.Get<SandboxSystem>();
+            var sandboxManager = _entManager.System<SandboxSystem>();
             var adminManager = IoCManager.Resolve<IAdminManager>();
             if (shell.IsClient && (!sandboxManager.IsSandboxEnabled && !adminManager.HasAdminFlag(shell.Player!, AdminFlags.Mapping)))
             {

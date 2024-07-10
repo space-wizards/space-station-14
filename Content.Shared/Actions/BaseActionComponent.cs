@@ -1,15 +1,16 @@
-﻿using Content.Shared.Mobs;
-using Robust.Shared.Audio;
+﻿using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Actions;
 
-// TODO ACTIONS make this a seprate component and remove the inheritance stuff.
+// TODO ACTIONS make this a separate component and remove the inheritance stuff.
 // TODO ACTIONS convert to auto comp state?
 
 // TODO add access attribute. Need to figure out what to do with decal & mapping actions.
 // [Access(typeof(SharedActionsSystem))]
+[EntityCategory("Actions")]
 public abstract partial class BaseActionComponent : Component
 {
     public abstract BaseActionEvent? BaseEvent { get; }
@@ -24,6 +25,11 @@ public abstract partial class BaseActionComponent : Component
     ///     when turned on.
     /// </summary>
     [DataField("iconOn")] public SpriteSpecifier? IconOn;
+
+    /// <summary>
+    ///     For toggle actions only, background to show when toggled on.
+    /// </summary>
+    [DataField] public SpriteSpecifier? BackgroundOn;
 
     /// <summary>
     ///     If not null, this color will modulate the action icon color.

@@ -1,5 +1,6 @@
 using Content.Shared.Gravity;
 using Content.Shared.StepTrigger.Components;
+using Content.Shared.Whitelist;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -12,6 +13,7 @@ public sealed class StepTriggerSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -59,7 +61,7 @@ public sealed class StepTriggerSystem : EntitySystem
 
         if (component.Blacklist != null && TryComp<MapGridComponent>(transform.GridUid, out var grid))
         {
-            var positon = _map.LocalToTile(uid, grid, transform.Coordinates);
+            var positon = _map.LocalToTile(transform.GridUid.Value, grid, transform.Coordinates);
             var anch = _map.GetAnchoredEntitiesEnumerator(uid, grid, positon);
 
             while (anch.MoveNext(out var ent))
@@ -67,7 +69,7 @@ public sealed class StepTriggerSystem : EntitySystem
                 if (ent == uid)
                     continue;
 
-                if (component.Blacklist.IsValid(ent.Value, EntityManager) == true)
+                if (_whitelistSystem.IsBlacklistPass(component.Blacklist, ent.Value))
                 {
                     return false;
                 }

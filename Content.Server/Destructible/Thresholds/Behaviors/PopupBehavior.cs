@@ -1,6 +1,6 @@
 using Content.Shared.Popups;
 
-﻿namespace Content.Server.Destructible.Thresholds.Behaviors;
+namespace Content.Server.Destructible.Thresholds.Behaviors;
 
 /// <summary>
 /// Shows a popup for everyone.

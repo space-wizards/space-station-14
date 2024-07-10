@@ -1,5 +1,7 @@
 using Content.Shared.Access.Systems;
+using Content.Shared.StatusIcon;
 using Robust.Client.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Access.UI
 {
@@ -40,9 +42,9 @@ namespace Content.Client.Access.UI
             SendMessage(new AgentIDCardJobChangedMessage(newJob));
         }
 
-        public void OnJobIconChanged(string newJobIcon)
+        public void OnJobIconChanged(ProtoId<StatusIconPrototype> newJobIconId)
         {
-            SendMessage(new AgentIDCardJobIconChangedMessage(newJobIcon));
+            SendMessage(new AgentIDCardJobIconChangedMessage(newJobIconId));
         }
 
         /// <summary>
@@ -57,7 +59,7 @@ namespace Content.Client.Access.UI
 
             _window.SetCurrentName(cast.CurrentName);
             _window.SetCurrentJob(cast.CurrentJob);
-            _window.SetAllowedIcons(cast.Icons);
+            _window.SetAllowedIcons(cast.Icons, cast.CurrentJobIconId);
         }
 
         protected override void Dispose(bool disposing)

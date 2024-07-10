@@ -19,12 +19,12 @@ namespace Content.IntegrationTests.Tests.Sprite;
 /// - Shouldn't have an item component
 /// - Is missing the required sprite information.
 /// If none of the abveo are true, it might need to be added to the list of ignored components, see
-/// <see cref="_ignored"/>
+/// <see cref="Ignored"/>
 /// </remarks>
 [TestFixture]
 public sealed class PrototypeSaveTest
 {
-    private static HashSet<string> _ignored = new()
+    private static readonly HashSet<string> Ignored = new()
     {
         // The only prototypes that should get ignored are those that REQUIRE setup to get a sprite. At that point it is
         // the responsibility of the spawner to ensure that a valid sprite is set.
@@ -34,13 +34,13 @@ public sealed class PrototypeSaveTest
     [Test]
     public async Task AllItemsHaveSpritesTest()
     {
-        var settings = new PoolSettings() {Connected = true}; // client needs to be in-game
+        var settings = new PoolSettings() { Connected = true }; // client needs to be in-game
         await using var pair = await PoolManager.GetServerClient(settings);
-        List<EntityPrototype> badPrototypes = new();
+        List<EntityPrototype> badPrototypes = [];
 
         await pair.Client.WaitPost(() =>
         {
-            foreach (var proto in pair.GetPrototypesWithComponent<ItemComponent>(_ignored))
+            foreach (var proto in pair.GetPrototypesWithComponent<ItemComponent>(Ignored))
             {
                 var dummy = pair.Client.EntMan.Spawn(proto.ID);
                 pair.Client.EntMan.RunMapInit(dummy, pair.Client.MetaData(dummy));

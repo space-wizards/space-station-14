@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: CrateArtifactContainer
   parent: BaseStructureDynamic
   name: artifact container
@@ -7,7 +7,7 @@
     - type: Transform
       noRot: true
     - type: AccessReader
-      access: [["Research"], ["Salvage"]]
+      access: [["Research"], ["Cargo"]]
     - type: Lock
     - type: ResistLocker
     - type: Sprite
@@ -24,6 +24,8 @@
       - state: locked
         map: ["enum.LockVisualLayers.Lock"]
         shader: unshaded
+      - state: paper
+        map: ["enum.PaperLabelVisuals.Layer"]
     - type: InteractionOutline
     - type: Physics
     - type: Fixtures
@@ -34,7 +36,7 @@
             radius: 0.45
           density: 50
           mask:
-          - SmallMobMask #this is so they can go under plastic flaps
+          - CrateMask #this is so they can go under plastic flaps
           layer:
           - MachineLayer
     - type: Icon
@@ -73,6 +75,23 @@
     - type: EntityStorageVisuals
       stateDoorOpen: artifact_container_open
       stateDoorClosed: artifact_container_door
+    - type: GenericVisualizer
+      visuals:
+        enum.PaperLabelVisuals.HasLabel:
+          enum.PaperLabelVisuals.Layer:
+            True: { visible: true }
+            False: { visible: false }
+        enum.PaperLabelVisuals.LabelType:
+          enum.PaperLabelVisuals.Layer:
+            Paper: { state: paper }
+            Bounty: { state: bounty }
+            CaptainsPaper: { state: captains_paper }
+            Invoice: { state: invoice }
+        enum.StorageVisuals.Open:
+          enum.PaperLabelVisuals.Layer:
+            True: { offset: "0.0,0.3125" }
+            False: { offset: "0.0,0.0" }
+            
     - type: LockVisuals
     - type: ItemSlots
     - type: ContainerContainer

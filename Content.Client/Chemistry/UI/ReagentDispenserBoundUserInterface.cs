@@ -1,3 +1,4 @@
+using Content.Client.Guidebook.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
@@ -34,6 +35,7 @@ namespace Content.Client.Chemistry.UI
             _window = new()
             {
                 Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName,
+                HelpGuidebookIds = EntMan.GetComponent<GuideHelpComponent>(Owner).Guides
             };
 
             _window.OpenCentered();
@@ -42,38 +44,11 @@ namespace Content.Client.Chemistry.UI
             // Setup static button actions.
             _window.EjectButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(SharedReagentDispenser.OutputSlotName));
             _window.ClearButton.OnPressed += _ => SendMessage(new ReagentDispenserClearContainerSolutionMessage());
-            _window.DispenseButton1.OnPressed += _ => SendMessage(new ReagentDispenserSetDispenseAmountMessage(ReagentDispenserDispenseAmount.U1));
-            _window.DispenseButton5.OnPressed += _ => SendMessage(new ReagentDispenserSetDispenseAmountMessage(ReagentDispenserDispenseAmount.U5));
-            _window.DispenseButton10.OnPressed += _ => SendMessage(new ReagentDispenserSetDispenseAmountMessage(ReagentDispenserDispenseAmount.U10));
-            _window.DispenseButton15.OnPressed += _ => SendMessage(new ReagentDispenserSetDispenseAmountMessage(ReagentDispenserDispenseAmount.U15));
-            _window.DispenseButton20.OnPressed += _ => SendMessage(new ReagentDispenserSetDispenseAmountMessage(ReagentDispenserDispenseAmount.U20));
-            _window.DispenseButton25.OnPressed += _ => SendMessage(new ReagentDispenserSetDispenseAmountMessage(ReagentDispenserDispenseAmount.U25));
-            _window.DispenseButton30.OnPressed += _ => SendMessage(new ReagentDispenserSetDispenseAmountMessage(ReagentDispenserDispenseAmount.U30));
-            _window.DispenseButton50.OnPressed += _ => SendMessage(new ReagentDispenserSetDispenseAmountMessage(ReagentDispenserDispenseAmount.U50));
-            _window.DispenseButton100.OnPressed += _ => SendMessage(new ReagentDispenserSetDispenseAmountMessage(ReagentDispenserDispenseAmount.U100));
 
-            // Setup reagent button actions.
-            _window.OnDispenseReagentButtonPressed += (args, button) => SendMessage(new ReagentDispenserDispenseReagentMessage(button.ReagentId));
-            _window.OnDispenseReagentButtonMouseEntered += (args, button) =>
-            {
-                if (_lastState is not null)
-                    _window.UpdateContainerInfo(_lastState);
-            };
-            _window.OnDispenseReagentButtonMouseExited += (args, button) =>
-            {
-                if (_lastState is not null)
-                    _window.UpdateContainerInfo(_lastState);
-            };
+            _window.AmountGrid.OnButtonPressed += s => SendMessage(new ReagentDispenserSetDispenseAmountMessage(s));
 
-            _window.OnEjectJugButtonPressed += (args, button) => SendMessage(new ItemSlotButtonPressedEvent(button.ReagentId));
-            _window.OnEjectJugButtonMouseEntered += (args, button) => {
-                if (_lastState is not null)
-                    _window.UpdateContainerInfo(_lastState);
-            };
-            _window.OnEjectJugButtonMouseExited += (args, button) => {
-                if (_lastState is not null)
-                    _window.UpdateContainerInfo(_lastState);
-            };
+            _window.OnDispenseReagentButtonPressed += (id) => SendMessage(new ReagentDispenserDispenseReagentMessage(id));
+            _window.OnEjectJugButtonPressed += (id) => SendMessage(new ItemSlotButtonPressedEvent(id));
         }
 
         /// <summary>

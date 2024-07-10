@@ -259,7 +259,7 @@ namespace Content.Shared.Movement.Systems
             }
 
             var oldMapId = args.OldMapId;
-            var mapId = args.Transform.MapID;
+            var mapId = args.Transform.MapUid;
 
             // If we change maps then reset eye rotation entirely.
             if (oldMapId != mapId)
@@ -313,7 +313,7 @@ namespace Content.Shared.Movement.Systems
             // For stuff like "Moving out of locker" or the likes
             // We'll relay a movement input to the parent.
             if (_container.IsEntityInContainer(entity) &&
-                TryComp<TransformComponent>(entity, out var xform) &&
+                TryComp(entity, out TransformComponent? xform) &&
                 xform.ParentUid.IsValid() &&
                 _mobState.IsAlive(entity))
             {

@@ -13,6 +13,7 @@ mech-menu-title = mech control panel
 
 mech-integrity-display = Integrity: {$amount}%
 mech-energy-display = Energy: {$amount}%
+mech-energy-missing = Energy: MISSING
 mech-slot-display = Open Slots: {$amount}
 
 mech-no-enter = You cannot pilot this.

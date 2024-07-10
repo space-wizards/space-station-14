@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Examine;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -55,7 +56,7 @@ public sealed class PopupOverlay : Overlay
         if (args.ViewportControl == null)
             return;
 
-        args.DrawingHandle.SetTransform(Matrix3.Identity);
+        args.DrawingHandle.SetTransform(Matrix3x2.Identity);
         args.DrawingHandle.UseShader(_shader);
         var scale = _configManager.GetCVar(CVars.DisplayUIScale);
 
@@ -90,7 +91,7 @@ public sealed class PopupOverlay : Overlay
                     e => e == popup.InitialPos.EntityId || e == ourEntity, entMan: _entManager))
                 continue;
 
-            var pos = matrix.Transform(mapPos.Position);
+            var pos = Vector2.Transform(mapPos.Position, matrix);
             _controller.DrawPopup(popup, worldHandle, pos, scale);
         }
     }

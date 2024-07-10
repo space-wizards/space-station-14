@@ -23,3 +23,20 @@
   - type: Tag
     tags:
     - Radio
+
+- type: entity
+  name: security radio
+  description: A handy security radio.
+  parent: RadioHandheld
+  id: RadioHandheldSecurity
+  components:
+  - type: RadioMicrophone
+    broadcastChannel: Security
+  - type: RadioSpeaker
+    channels:
+    - Security
+  - type: Sprite
+    sprite: Objects/Devices/securityhandy.rsi
+  - type: Item
+    sprite: Objects/Devices/securityhandy.rsi
+    heldPrefix: walkietalkie

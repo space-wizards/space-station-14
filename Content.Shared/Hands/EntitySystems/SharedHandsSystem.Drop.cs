@@ -120,22 +120,19 @@ public abstract partial class SharedHandsSystem
             return true;
 
         var userXform = Transform(uid);
-        var isInContainer = ContainerSystem.IsEntityInContainer(uid);
+        var isInContainer = ContainerSystem.IsEntityOrParentInContainer(uid, xform: userXform);
 
         if (targetDropLocation == null || isInContainer)
         {
-            // If user is in a container, drop item into that container. Otherwise, attach to grid or map.\
-            // TODO recursively check upwards for containers
-
-            if (!isInContainer
-                || !ContainerSystem.TryGetContainingContainer(userXform.ParentUid, uid, out var container, skipExistCheck: true)
-                || !ContainerSystem.Insert((entity, itemXform), container))
-                TransformSystem.AttachToGridOrMap(entity, itemXform);
+            // If user is in a container, drop item into that container. Otherwise, attach to grid or map.
+            TransformSystem.DropNextTo((entity, itemXform), (uid, userXform));
             return true;
         }
 
+        var (itemPos, itemRot) = TransformSystem.GetWorldPositionRotation(entity);
+        var origin = new MapCoordinates(itemPos, itemXform.MapID);
         var target = targetDropLocation.Value.ToMap(EntityManager, TransformSystem);
-        TransformSystem.SetWorldPosition(itemXform, GetFinalDropCoordinates(uid, userXform.MapPosition, target));
+        TransformSystem.SetWorldPositionRotation(entity, GetFinalDropCoordinates(uid, origin, target), itemRot);
         return true;
     }
 

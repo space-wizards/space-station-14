@@ -58,7 +58,7 @@ public sealed partial class ClimbSystem : VirtualController
         SubscribeLocalEvent<ClimbingComponent, EntParentChangedMessage>(OnParentChange);
         SubscribeLocalEvent<ClimbingComponent, ClimbDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
-        SubscribeLocalEvent<ClimbingComponent, BuckleChangeEvent>(OnBuckleChange);
+        SubscribeLocalEvent<ClimbingComponent, BuckledEvent>(OnBuckled);
 
         SubscribeLocalEvent<ClimbableComponent, CanDropTargetEvent>(OnCanDragDropOn);
         SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
@@ -222,7 +222,8 @@ public sealed partial class ClimbSystem : VirtualController
             used: entityToMove)
         {
             BreakOnMove = true,
-            BreakOnDamage = true
+            BreakOnDamage = true,
+            DuplicateCondition = DuplicateConditions.SameTool | DuplicateConditions.SameTarget
         };
 
         _audio.PlayPredicted(comp.StartClimbSound, climbable, user);
@@ -307,8 +308,7 @@ public sealed partial class ClimbSystem : VirtualController
                 ("climbable", climbable));
         }
 
-        _popupSystem.PopupEntity(othersMessage, uid, Filter.PvsExcept(user, entityManager: EntityManager), true);
-        _popupSystem.PopupClient(selfMessage, uid, user);
+        _popupSystem.PopupPredicted(selfMessage, othersMessage, uid, user);
     }
 
     /// <summary>
@@ -468,10 +468,8 @@ public sealed partial class ClimbSystem : VirtualController
         Climb(uid, uid, climbable, true, component);
     }
 
-    private void OnBuckleChange(EntityUid uid, ClimbingComponent component, ref BuckleChangeEvent args)
+    private void OnBuckled(EntityUid uid, ClimbingComponent component, ref BuckledEvent args)
     {
-        if (!args.Buckling)
-            return;
         StopClimb(uid, component);
     }
 

@@ -1,5 +1,5 @@
 using Content.Shared.StatusIcon;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Access.Components
 {
@@ -9,7 +9,7 @@ namespace Content.Server.Access.Components
         /// <summary>
         /// Set of job icons that the agent ID card can show.
         /// </summary>
-        [DataField("icons", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<StatusIconPrototype>))]
-        public HashSet<string> Icons = new();
+        [DataField]
+        public HashSet<ProtoId<StatusIconPrototype>> Icons;
     }
 }

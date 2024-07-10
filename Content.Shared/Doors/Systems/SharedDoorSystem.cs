@@ -6,7 +6,6 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Emag.Systems;
-using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
@@ -216,7 +215,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     #region Interactions
     protected void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
     {
-        if (args.Handled || !door.ClickOpen)
+        if (args.Handled || !args.Complex || !door.ClickOpen)
             return;
 
         if (!TryToggleDoor(uid, door, args.User, predicted: true))
@@ -466,7 +465,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         door.Partial = true;
 
-        // Make sure no entity waled into the airlock when it started closing.
+        // Make sure no entity walked into the airlock when it started closing.
         if (!CanClose(uid, door))
         {
             door.NextStateChange = GameTiming.CurTime + door.OpenTimeTwo;

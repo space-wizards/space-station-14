@@ -60,6 +60,7 @@ namespace Content.Server.Atmos.EntitySystems
         private float _updateInterval;
 
         private int _thresholds;
+        private EntityQuery<GasTileOverlayComponent> _query;
 
         public override void Initialize()
         {
@@ -84,6 +85,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GasTileOverlayComponent, ComponentStartup>(OnStartup);
+            _query = GetEntityQuery<GasTileOverlayComponent>();
         }
 
         private void OnStartup(EntityUid uid, GasTileOverlayComponent component, ComponentStartup args)
@@ -120,7 +122,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             // PVS was turned off, ensure data gets sent to all clients.
-            var query = EntityQueryEnumerator<GasTileOverlayComponent, MetaDataComponent>();
+            var query = AllEntityQuery<GasTileOverlayComponent, MetaDataComponent>();
             while (query.MoveNext(out var uid, out var grid, out var meta))
             {
                 grid.ForceTick = _gameTiming.CurTick;
@@ -132,10 +134,10 @@ namespace Content.Server.Atmos.EntitySystems
         private void UpdateThresholds(int value) => _thresholds = value;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Invalidate(EntityUid grid, Vector2i index, GasTileOverlayComponent? comp = null)
+        public void Invalidate(Entity<GasTileOverlayComponent?> grid, Vector2i index)
         {
-            if (Resolve(grid, ref comp))
-                comp.InvalidTiles.Add(index);
+            if (_query.Resolve(grid.Owner, ref grid.Comp))
+                grid.Comp.InvalidTiles.Add(index);
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -267,7 +269,7 @@ namespace Content.Server.Atmos.EntitySystems
         private void UpdateOverlayData()
         {
             // TODO parallelize?
-            var query = EntityQueryEnumerator<GasTileOverlayComponent, GridAtmosphereComponent, MetaDataComponent>();
+            var query = AllEntityQuery<GasTileOverlayComponent, GridAtmosphereComponent, MetaDataComponent>();
             while (query.MoveNext(out var uid, out var overlay, out var gam, out var meta))
             {
                 var changed = false;
@@ -430,14 +432,16 @@ namespace Content.Server.Atmos.EntitySystems
                         if (!overlay.Chunks.TryGetValue(gIndex, out var value))
                             continue;
 
-                        if (previousChunks != null &&
-                            previousChunks.Contains(gIndex) &&
-                            value.LastUpdate > LastSessionUpdate)
+                        // If the chunk was updated since we last sent it, send it again
+                        if (value.LastUpdate > LastSessionUpdate)
                         {
+                            dataToSend.Add(value);
                             continue;
                         }
 
-                        dataToSend.Add(value);
+                        // Always send it if we didn't previously send it
+                        if (previousChunks == null || !previousChunks.Contains(gIndex))
+                            dataToSend.Add(value);
                     }
 
                     previouslySent[netGrid] = gridChunks;

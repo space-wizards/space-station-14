@@ -70,7 +70,6 @@
 - type: entity
   id: ActionStethoscope
   name: Listen with stethoscope
-  noSpawn: true
   components:
   - type: EntityTargetAction
     icon:
@@ -79,17 +78,3 @@
     event: !type:StethoscopeActionEvent
     checkCanInteract: false
     priority: -1
-
-- type: entity
-  parent: ClothingNeckBase
-  id: ClothingNeckFlowerWreath
-  name: flower wreath
-  description: A wreath of colourful flowers.
-  components:
-  - type: Sprite
-    sprite: Clothing/Neck/Misc/flower-wreath.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Misc/flower-wreath.rsi
-  - type: Construction
-    graph: flowerwreath
-    node: flowerwreath

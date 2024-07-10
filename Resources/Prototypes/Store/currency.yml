@@ -1,13 +1,18 @@
 - type: currency
   id: Telecrystal
   displayName: store-currency-display-telecrystal
-  cash: 
+  cash:
     1: Telecrystal1
   canWithdraw: true
 
 - type: currency
   id: StolenEssence
   displayName: store-currency-display-stolen-essence
+  canWithdraw: false
+
+- type: currency
+  id: WizCoin
+  displayName: store-currency-display-wizcoin
   canWithdraw: false
 
 #debug
