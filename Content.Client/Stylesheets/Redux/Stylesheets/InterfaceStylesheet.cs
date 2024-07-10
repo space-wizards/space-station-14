@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Client.Stylesheets.Redux.Fonts;
-using Content.Client.Stylesheets.Redux.InterfaceSheetlets;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -42,10 +41,6 @@ public partial class InterfaceStylesheet : PalettedStylesheet
                 // Declare the default font.
                 Element().Prop(Label.StylePropertyFont, BaseFont.GetFont(PrimaryFontSize)),
             ],
-            // Rules for common buttons.
-            GetSheetletRules<InterfaceButtonSheetlet>(),
-            // Rules for various HUD elements
-            GetSheetletRules<InterfaceTooltipSheetlet>(),
             // Finally, load all the other sheetlets.
             GetAllSheetletRules<CommonSheetletAttribute>(),
         };

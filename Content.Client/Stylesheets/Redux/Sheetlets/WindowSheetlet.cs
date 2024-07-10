@@ -1,26 +1,30 @@
-﻿using Content.Client.Stylesheets.Redux.Fonts;
+﻿using System.Numerics;
+using Content.Client.Stylesheets.Redux.Fonts;
 using Content.Client.Stylesheets.Redux.SheetletConfig;
-using Content.Client.Stylesheets.Redux.Sheetlets;
+using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
-namespace Content.Client.Stylesheets.Redux.NTSheetlets;
+namespace Content.Client.Stylesheets.Redux.Sheetlets;
 
-public sealed class PalettedWindowSheetlet : Sheetlet<PalettedStylesheet>
+[CommonSheetlet]
+public sealed class WindowSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
         var buttonCfg = (IButtonConfig) sheet;
+
+        var boxFont = new SingleFont(ResCache, "/Fonts/Boxfont-round/Boxfont Round.ttf");
 
         var headerStylebox = new StyleBoxTexture
         {
             Texture = sheet.GetTexture("window_header.png"),
             PatchMarginBottom = 3,
             ExpandMarginBottom = 3,
-            ContentMarginBottomOverride = 0
+            ContentMarginBottomOverride = 0,
         };
         // TODO: This would probably be better palette-based but we can leave it for now.
         var headerAlertStylebox = new StyleBoxTexture
@@ -43,6 +47,10 @@ public sealed class PalettedWindowSheetlet : Sheetlet<PalettedStylesheet>
         borderedBackgroundStylebox.SetPatchMargin(StyleBox.Margin.All, 2);
         var closeButtonTex = sheet.GetTexture("cross.svg.png");
 
+        var leftPanel = buttonCfg.ConfigureOpenLeftButton(sheet);
+        leftPanel.SetPadding(StyleBox.Margin.All, 0.0f);
+
+        // TODO: maybe also change everything here to `NanoWindow` or something
         var rules = new List<StyleRule>()
         {
             // TODO: KILL DEFAULT WINDOW (in a bit)
@@ -71,6 +79,37 @@ public sealed class PalettedWindowSheetlet : Sheetlet<PalettedStylesheet>
                 .Class(DefaultWindow.StyleClassWindowCloseButton)
                 .Prop(TextureButton.StylePropertyTexture, closeButtonTex)
                 .Margin(3),
+
+            // Title
+            E<Label>()
+                .Class("FancyWindowTitle")
+                .Prop("font", boxFont.GetFont(13, FontStack.FontKind.Bold))
+                .Prop("font-color", sheet.HighlightPalette.Text),
+
+            // Help Button
+            E<TextureButton>()
+                .Class(FancyWindow.StyleClassWindowHelpButton)
+                .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture("help.png"))
+                .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette.Element),
+            E<TextureButton>()
+                .Class(FancyWindow.StyleClassWindowHelpButton)
+                .Pseudo(ContainerButton.StylePseudoClassHover)
+                .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette.HoveredElement),
+            E<TextureButton>()
+                .Class(FancyWindow.StyleClassWindowHelpButton)
+                .Pseudo(ContainerButton.StylePseudoClassPressed)
+                .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette.PressedElement),
+
+            // Close Button
+            E<TextureButton>()
+                .Class(FancyWindow.StyleClassWindowCloseButton)
+                .Margin(new Thickness(0, 0, -3, 0)),
+
+            // Footer
+            E<Label>()
+                .Class("WindowFooterText")
+                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(8))
+                .Prop(Label.StylePropertyFontColor, Color.FromHex("#757575")),
         };
 
         ButtonSheetlet.MakeButtonRules(buttonCfg,

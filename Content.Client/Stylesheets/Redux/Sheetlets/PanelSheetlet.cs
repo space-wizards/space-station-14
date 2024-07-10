@@ -11,15 +11,16 @@ public sealed class PanelSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var cfg = (IPanelPalette) sheet;
+        var panelPalette = (IPanelPalette) sheet;
+        var buttonCfg = (IButtonConfig) sheet;
 
         var boxLight = new StyleBoxFlat()
         {
-            BackgroundColor = cfg.PanelLightColor,
+            BackgroundColor = panelPalette.PanelLightColor,
         };
         var boxDark = new StyleBoxFlat()
         {
-            BackgroundColor = cfg.PanelDarkColor,
+            BackgroundColor = panelPalette.PanelDarkColor,
         };
         var boxDivider = new StyleBoxFlat
         {
@@ -40,6 +41,19 @@ public sealed class PanelSheetlet : Sheetlet<PalettedStylesheet>
             E<PanelContainer>().Class(StyleClass.Positive).Panel(boxPositive),
             E<PanelContainer>().Class(StyleClass.Negative).Panel(boxNegative),
             E<PanelContainer>().Class(StyleClass.Highlight).Panel(boxHighlight),
+
+            E()
+                .Class(StyleClass.BackgroundPanel)
+                .Prop(PanelContainer.StylePropertyPanel, buttonCfg.ConfigureBaseButton(sheet))
+                .Modulate(sheet.SecondaryPalette.Background),
+            E()
+                .Class(StyleClass.BackgroundPanelOpenLeft)
+                .Prop(PanelContainer.StylePropertyPanel, buttonCfg.ConfigureOpenLeftButton(sheet))
+                .Modulate(sheet.SecondaryPalette.Background),
+            E()
+                .Class(StyleClass.BackgroundPanelOpenRight)
+                .Prop(PanelContainer.StylePropertyPanel, buttonCfg.ConfigureOpenRightButton(sheet))
+                .Modulate(sheet.SecondaryPalette.Background),
         ];
     }
 }

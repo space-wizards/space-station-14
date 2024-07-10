@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Client.Stylesheets.Redux.Fonts;
 using Content.Client.Stylesheets.Redux.NTSheetlets;
+using Content.Client.Stylesheets.Redux.Sheetlets;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -47,16 +48,7 @@ public partial class NanotrasenStylesheet : PalettedStylesheet
                     .Prop(TextureRect.StylePropertyTexture, GetTexture("ntlogo.svg.png"))
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#757575")),
             },
-            // Load the rules for common buttons.
-            GetSheetletRules<NTButtonSheetlet>(),
-            // Rules for windows.
-            GetSheetletRules<PalettedWindowSheetlet>(),
-            // Rules for panels.
-            GetSheetletRules<NTPanelSheetlet>(),
-            // Rules for fancy windows.
-            GetSheetletRules<NTFancyWindowSheetlet>(),
-            // Rules for the `NanoHeading` element
-            GetSheetletRules<NanoHeadingSheetlet>(),
+            GetSheetletRules<ButtonSheetlet>(),
             // PDAs rely on IButtonCfg for bad reasons.
             GetSheetletRules<NTPdaSheetlet>(),
             // Finally, load all the other sheetlets.

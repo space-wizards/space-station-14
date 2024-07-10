@@ -8,7 +8,8 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
 
-public abstract class ButtonSheetlet : Sheetlet<PalettedStylesheet>
+[CommonSheetlet]
+public sealed class ButtonSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
@@ -53,6 +54,10 @@ public abstract class ButtonSheetlet : Sheetlet<PalettedStylesheet>
         // Texture button modulation
         MakeButtonRules<TextureButton>(cfg, rules, Palettes.AlphaModulate, null);
         MakeButtonRules<TextureButton>(cfg, rules, sheet.NegativePalette, StyleClass.CrossButtonRed);
+
+        MakeButtonRules(cfg, rules, cfg.ButtonPalette, null);
+        MakeButtonRules(cfg, rules, cfg.PositiveButtonPalette, StyleClass.Positive);
+        MakeButtonRules(cfg, rules, cfg.NegativeButtonPalette, StyleClass.Negative);
 
         return rules.ToArray();
     }

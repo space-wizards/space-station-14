@@ -17,8 +17,8 @@ public sealed class NTPdaSheetlet : Sheetlet<PalettedStylesheet>
         var angleBorderRect =
             sheet.GetTexture("geometric_panel_border.svg.96dpi.png").IntoPatch(StyleBox.Margin.All, 10);
 
-        return new StyleRule[]
-        {
+        return
+        [
             //PDA - Backgrounds
             E<PanelContainer>()
                 .Class("PdaContentBackground")
@@ -86,6 +86,6 @@ public sealed class NTPdaSheetlet : Sheetlet<PalettedStylesheet>
                 .Class("PdaWindowFooterText")
                 .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(10))
                 .Prop(Label.StylePropertyFontColor, Color.FromHex("#333d3b")),
-        };
+        ];
     }
 }

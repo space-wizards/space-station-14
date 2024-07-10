@@ -27,17 +27,21 @@
 
 - [ ] ~~`ScopedResCache` because moving around resources is annoying and prone to error when merging~~
     - You can have multiple roots
+    - [ ] `GetResourceOr` and also redo common sheetlets to use this instead
 - [x] `MainMenuSheetlet` should maybe be with the xaml?
 - [x] `Palette` class and kick out indexing palette with a number
     - `ColorPalette` / `Palettes` but same thing
 - [ ] tooltips being part of another stylesheet is kinda bad
 - [ ] rename `InterfaceStylesheet` to `SystemStylesheet`
 - [ ] rename `FancyWindow` to `NanoWindow`
-- [ ] Get rid of `NTSheetlets` & `InterfaceSheetlets`
-- [ ] Make all `StyleClass` conform to naming conventions
+- [x] Get rid of `NTSheetlets` & `InterfaceSheetlets`
+  - Eh, most of it anyway
+- [x] Make all `StyleClass` conform to naming conventions
 - [ ] `LabelSheetlet` / `TextSheetlet` dont hardcode the label sizes
 - [ ] Separate out `FontKind` maybe
 - [ ] change `ButtonHovered` and friends to `PseudoHovered`
+- [ ] `WindowSheetlet` `NanoHeading` hardcoded classnames
+- [ ] `IPanelPalette` is unnecessary now
 
 HARDCODED COLORS
 
