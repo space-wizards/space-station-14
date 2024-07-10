@@ -19,14 +19,15 @@
 - [x] Whatever the hell `StyleClassSliderWhite` and friends are being used for
   - nothing, apparently
 - [x] Move `Chat` style classes from `StyleClass.cs`
-- [x] Vending machines entries no hover?
+- [ ] ~~Vending machines entries no hover?~~
   - `ItemList` skill issue
 - [x] Also `ApcMenu.xaml.cs`: localize watts
-- [x] `PopupUiController` lots of hardcoding
+- [ ] ~~`PopupUiController` lots of hardcoding~~
   - Ehhh probably fine
 
-- [ ] `ScopedResCache` because moving around resources is annoying and prone to error when merging
-- [ ] `MainMenuSheetlet` should maybe be with the xaml?
+- [ ] ~~`ScopedResCache` because moving around resources is annoying and prone to error when merging~~
+  - You can have multiple roots
+- [x] `MainMenuSheetlet` should maybe be with the xaml?
 - [ ] `Palette` class and kick out indexing palette with a number
 - [ ] tooltips being part of another stylesheet is kinda bad
 - [ ] rename `InterfaceStylesheet` to `SystemStylesheet`

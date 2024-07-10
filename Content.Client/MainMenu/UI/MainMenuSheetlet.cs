@@ -1,11 +1,12 @@
-using Content.Client.MainMenu.UI;
+using Content.Client.Stylesheets.Redux;
 using Content.Client.Stylesheets.Redux.Fonts;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
-namespace Content.Client.Stylesheets.Redux.Sheetlets.Hud;
+namespace Content.Client.MainMenu.UI;
 
+[CommonSheetlet]
 public sealed class MainMenuSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
