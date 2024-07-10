@@ -506,7 +506,7 @@
     - state: icon-syndicate
   - type: ItemBorgModule
     items:
-    - WeaponPistolRinkhal
+    - WeaponPistolEchis
     - EnergyDagger
 
 - type: entity

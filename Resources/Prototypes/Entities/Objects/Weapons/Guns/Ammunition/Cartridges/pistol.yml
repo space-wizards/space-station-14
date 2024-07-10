@@ -27,6 +27,15 @@
     proto: BulletPistol
 
 - type: entity
+  id: CartridgePistolCaseless
+  name: cartridge (.35 auto caseless)
+  parent: BaseCartridgePistol
+  components:
+  - type: CartridgeAmmo
+    deleteOnSpawn: true
+    proto: BulletPistol
+
+- type: entity
   id: CartridgePistolPractice
   name: cartridge (.35 auto practice)
   parent: BaseCartridgePistol
