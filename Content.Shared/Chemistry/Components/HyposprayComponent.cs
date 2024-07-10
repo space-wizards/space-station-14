@@ -37,4 +37,10 @@ public sealed partial class HyposprayComponent : Component
     /// </summary>
     [DataField]
     public bool InjectOnly = false;
+
+    /// <summary>
+    /// Whether or not this hypospray will destroy poisons when drawing from a container.
+    /// </summary>
+    [DataField]
+    public bool FilterPoison = false;
 }

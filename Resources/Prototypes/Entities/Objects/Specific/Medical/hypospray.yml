@@ -19,6 +19,7 @@
     solution: hypospray
   - type: Hypospray
     onlyAffectsMobs: false
+    filterPoison: true
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice

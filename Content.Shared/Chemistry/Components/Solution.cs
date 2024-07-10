@@ -539,6 +539,36 @@ namespace Content.Shared.Chemistry.Components
             return RemoveReagent(new ReagentQuantity(reagentId, quantity), preserveOrder);
         }
 
+        /// <summary>
+        ///     Attempts to remove all reagents of a group from the solution.
+        /// </summary>
+        /// <param name="group">The group to remove i.e. "Toxins"</param>
+        /// <param name="prototypeManager">The prototype manager to fetch the reagent prototypes from.</param>
+        /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
+        public Dictionary<ReagentId, FixedPoint2> RemoveReagentsByGroup(string group, IPrototypeManager prototypeManager)
+        {
+            var removedReagents = new Dictionary<ReagentId, FixedPoint2>();
+            for (var i = Contents.Count - 1; i >= 0; i--)
+            {
+                var (reagent, quantity) = Contents[i];
+                // We need to fetch the prototype of the reagent to check its groups.
+                if (!prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var reagentProto))
+                {
+                    DebugTools.Assert("Reagent prototype not found in prototype manager.");
+                    continue;
+                }
+
+                if (reagentProto.Group != group)
+                    continue;
+
+                var amountRemoved = RemoveReagent(reagent, quantity);
+                if (amountRemoved > 0)
+                    removedReagents.Add(reagent, amountRemoved);
+            }
+
+            return removedReagents;
+        }
+
         public void RemoveAllSolution()
         {
             Contents.Clear();

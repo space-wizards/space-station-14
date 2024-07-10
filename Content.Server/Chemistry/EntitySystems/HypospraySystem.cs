@@ -17,7 +17,9 @@ using Content.Server.Chemistry.Containers.EntitySystems;
 using Robust.Shared.GameStates;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Server.Audio;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -25,6 +27,9 @@ public sealed class HypospraySystem : SharedHypospraySystem
 {
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    private const string ToxinReagentGroup = "Toxins";
 
     public override void Initialize()
     {
@@ -171,14 +176,32 @@ public sealed class HypospraySystem : SharedHypospraySystem
 
         var removedSolution = _solutionContainers.Draw(target.Owner, targetSolution, realTransferAmount);
 
+        Dictionary<ReagentId, FixedPoint2>? removedReagents = new();
+        if (entity.Comp.FilterPoison)
+        {
+            // To filter out any toxins, we remove any reagents with the group set to the ToxinReagentGroup
+            removedReagents = removedSolution.RemoveReagentsByGroup(ToxinReagentGroup, _prototypeManager);
+        }
+
         if (!_solutionContainers.TryAddSolution(soln.Value, removedSolution))
         {
             return false;
         }
 
-        _popup.PopupEntity(Loc.GetString("injector-component-draw-success-message",
-            ("amount", removedSolution.Volume),
-            ("target", Identity.Entity(target, EntityManager))), entity.Owner, user);
+        if (removedReagents.Count > 0)
+        {
+            _popup.PopupEntity(Loc.GetString("hypospray-filtered-some",
+                        ("amount", removedSolution.Volume),
+                        ("target", Identity.Entity(target, EntityManager))),
+                entity.Owner,
+                user);
+        }
+        else
+        {
+            _popup.PopupEntity(Loc.GetString("injector-component-draw-success-message",
+                ("amount", removedSolution.Volume),
+                ("target", Identity.Entity(target, EntityManager))), entity.Owner, user);
+        }
         return true;
     }
 
