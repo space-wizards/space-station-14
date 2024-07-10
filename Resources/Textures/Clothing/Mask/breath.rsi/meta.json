@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e. Reptilian edit by Nairod(Github)",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e. Reptilian edit by Nairod(Github). equipped-MASK-vox & up-equipped-MASK-vox state in /vg/station at commit https://github.com/vgstation-coders/vgstation13/commit/4638130fab5ff0e9faa220688811349d3297a33e",
   "size": {
     "x": 32,
     "y": 32
@@ -16,6 +16,14 @@
     },
     {
       "name": "up-equipped-MASK",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-vox",
+      "directions": 4
+    },
+    {
+      "name": "up-equipped-MASK-vox",
       "directions": 4
     },
     {
@@ -48,10 +56,6 @@
     },
     {
       "name": "equipped-MASK-possum",
-      "directions": 4
-    },
-    {
-      "name": "equipped-MASK-vox",
       "directions": 4
     },
     {

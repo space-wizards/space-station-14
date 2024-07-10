@@ -7,7 +7,7 @@
     uiWindowPos: 1,0
     strippingWindowPos: 0,0
     displayName: Head
-    offset: 0, -0.09375
+    offset: 0.015625, -0.09375
 
 - type: inventoryTemplate
   id: borgShort
@@ -18,7 +18,7 @@
     uiWindowPos: 1,0
     strippingWindowPos: 0,0
     displayName: Head
-    offset: 0, -0.1875
+    offset: 0.015625, -0.1875
 
 - type: inventoryTemplate
   id: borgTall
@@ -30,6 +30,7 @@
     uiWindowPos: 0,0
     strippingWindowPos: 0,0
     displayName: Head
+    offset: 0.015625, 0
 
 # taller than tall
 - type: inventoryTemplate

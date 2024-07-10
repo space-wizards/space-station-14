@@ -15,6 +15,7 @@
                 Margin="0,0,4,0"
                 MinSize="48 48"
                 Stretch="KeepAspectCentered" />
+            <Control MinWidth="5"/>
             <RichTextLabel Name="StoreItemDescription" />
         </BoxContainer>
     </BoxContainer>

@@ -65,8 +65,8 @@
     key: enum.AmeControllerUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.AmeControllerUiKey.Key
-      type: AmeControllerBoundUserInterface
+      enum.AmeControllerUiKey.Key:
+        type: AmeControllerBoundUserInterface
   - type: Appearance
   - type: GenericVisualizer
     visuals:

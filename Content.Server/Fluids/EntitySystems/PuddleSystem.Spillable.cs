@@ -1,16 +1,15 @@
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
-using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Clothing.Components;
+using Content.Shared.Chemistry;
+using Content.Shared.Clothing;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Inventory.Events;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Spillable;
 using Content.Shared.Throwing;
@@ -28,7 +27,6 @@ public sealed partial class PuddleSystem
         SubscribeLocalEvent<SpillableComponent, LandEvent>(SpillOnLand);
         // Openable handles the event if it's closed
         SubscribeLocalEvent<SpillableComponent, MeleeHitEvent>(SplashOnMeleeHit, after: [typeof(OpenableSystem)]);
-        SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<SpillableComponent, SolutionContainerOverflowEvent>(OnOverflow);
         SubscribeLocalEvent<SpillableComponent, SpillDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<SpillableComponent, AttemptPacifiedThrowEvent>(OnAttemptPacifiedThrow);
@@ -72,13 +70,18 @@ public sealed partial class PuddleSystem
             return;
 
         args.Handled = true;
+
+        // First update the hit count so anything that is not reactive wont count towards the total!
         foreach (var hit in args.HitEntities)
         {
             if (!HasComp<ReactiveComponent>(hit))
-            {
-                hitCount -= 1; // so we don't undershoot solution calculation for actual reactive entities
+                hitCount -= 1;
+        }
+
+        foreach (var hit in args.HitEntities)
+        {
+            if (!HasComp<ReactiveComponent>(hit))
                 continue;
-            }
 
             var splitSolution = _solutionContainerSystem.SplitSolution(soln.Value, totalSplit / hitCount);
 
@@ -97,37 +100,15 @@ public sealed partial class PuddleSystem
         }
     }
 
-    private void OnGotEquipped(Entity<SpillableComponent> entity, ref GotEquippedEvent args)
-    {
-        if (!entity.Comp.SpillWorn)
-            return;
-
-        if (!TryComp(entity, out ClothingComponent? clothing))
-            return;
-
-        // check if entity was actually used as clothing
-        // not just taken in pockets or something
-        var isCorrectSlot = clothing.Slots.HasFlag(args.SlotFlags);
-        if (!isCorrectSlot)
-            return;
-
-        if (!_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var soln, out var solution))
-            return;
-
-        if (solution.Volume == 0)
-            return;
-
-        // spill all solution on the player
-        var drainedSolution = _solutionContainerSystem.Drain(entity.Owner, soln.Value, solution.Volume);
-        TrySplashSpillAt(entity.Owner, Transform(args.Equipee).Coordinates, drainedSolution, out _);
-    }
-
     private void SpillOnLand(Entity<SpillableComponent> entity, ref LandEvent args)
     {
         if (!_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var soln, out var solution))
             return;
 
         if (Openable.IsClosed(entity.Owner))
+            return;
+
+        if (!entity.Comp.SpillWhenThrown)
             return;
 
         if (args.User != null)

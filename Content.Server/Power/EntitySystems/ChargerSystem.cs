@@ -1,13 +1,16 @@
 using Content.Server.Power.Components;
+using Content.Server.Emp;
 using Content.Server.PowerCell;
 using Content.Shared.Examine;
 using Content.Shared.Power;
 using Content.Shared.PowerCell.Components;
+using Content.Shared.Emp;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Storage.Components;
 using Robust.Server.Containers;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -18,6 +21,7 @@ internal sealed class ChargerSystem : EntitySystem
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -28,6 +32,8 @@ internal sealed class ChargerSystem : EntitySystem
         SubscribeLocalEvent<ChargerComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
         SubscribeLocalEvent<ChargerComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
         SubscribeLocalEvent<ChargerComponent, ExaminedEvent>(OnChargerExamine);
+
+        SubscribeLocalEvent<ChargerComponent, EmpPulseEvent>(OnEmpPulse);
     }
 
     private void OnStartup(EntityUid uid, ChargerComponent component, ComponentStartup args)
@@ -158,18 +164,27 @@ internal sealed class ChargerSystem : EntitySystem
         }
     }
 
+    private void OnEmpPulse(EntityUid uid, ChargerComponent component, ref EmpPulseEvent args)
+    {
+        args.Affected = true;
+        args.Disabled = true;
+    }
+
     private CellChargerStatus GetStatus(EntityUid uid, ChargerComponent component)
     {
-        if (!TryComp(uid, out TransformComponent? transformComponent))
-            return CellChargerStatus.Off;
-
-        if (!transformComponent.Anchored)
-            return CellChargerStatus.Off;
+        if (!component.Portable)
+        {
+            if (!TryComp(uid, out TransformComponent? transformComponent) || !transformComponent.Anchored)
+                return CellChargerStatus.Off;
+        }
 
         if (!TryComp(uid, out ApcPowerReceiverComponent? apcPowerReceiverComponent))
             return CellChargerStatus.Off;
 
-        if (!apcPowerReceiverComponent.Powered)
+        if (!component.Portable && !apcPowerReceiverComponent.Powered)
+            return CellChargerStatus.Off;
+
+        if (HasComp<EmpDisabledComponent>(uid))
             return CellChargerStatus.Off;
 
         if (!_container.TryGetContainer(uid, component.SlotId, out var container))
@@ -186,7 +201,7 @@ internal sealed class ChargerSystem : EntitySystem
 
         return CellChargerStatus.Charging;
     }
-
+    
     private void TransferPower(EntityUid uid, EntityUid targetEntity, ChargerComponent component, float frameTime)
     {
         if (!TryComp(uid, out ApcPowerReceiverComponent? receiverComponent))
@@ -195,7 +210,7 @@ internal sealed class ChargerSystem : EntitySystem
         if (!receiverComponent.Powered)
             return;
 
-        if (component.Whitelist?.IsValid(targetEntity, EntityManager) == false)
+        if (_whitelistSystem.IsWhitelistFail(component.Whitelist, targetEntity))
             return;
 
         if (!SearchForBattery(targetEntity, out var batteryUid, out var heldBattery))

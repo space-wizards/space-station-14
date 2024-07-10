@@ -199,7 +199,7 @@ namespace Content.Client.NodeContainer
             }
 
 
-            handle.SetTransform(Matrix3.Identity);
+            handle.SetTransform(Matrix3x2.Identity);
             _gridIndex.Clear();
         }
 

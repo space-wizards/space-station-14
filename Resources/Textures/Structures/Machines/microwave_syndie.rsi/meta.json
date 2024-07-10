@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from /tg/station at commit 9065b811726ae52be5d1889f436c01a24efbf47a, edited by github user @Flareguy for Space Station 14, modified by Vermidia",
+    "states": [
+        {
+            "name": "mw"
+        },
+        {
+            "name": "mw_unlit"
+        },
+        {
+            "name": "mw0"
+        },
+        {
+            "name": "mw_running_unlit"
+        },
+        {
+            "name": "mwb"
+        },
+        {
+            "name": "mwbloody0"
+        },
+        {
+            "name": "mwbloody1"
+        },
+        {
+            "name": "mwo"
+        }
+      ]
+    }

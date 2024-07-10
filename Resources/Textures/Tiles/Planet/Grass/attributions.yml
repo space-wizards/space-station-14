@@ -1,7 +1,4 @@
-- files:
-  - grass.png
-  - double_edge.png
-  - single_edge.png
+- files: ["grass.png", "triple_edge.png", "double_edge.png", "single_edge.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "https://github.com/discordia-space/CEV-Eris/commit/026ee3250ac1de938b503e3eb46ad73dd9c3ca82"
-  source: "https://github.com/discordia-space/CEV-Eris/commit/026ee3250ac1de938b503e3eb46ad73dd9c3ca82"
+  copyright: "tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49. double_edge, single_edge, and triple_edge modified from grass by github user @Flareguy"
+  source: "https://github.com/space-wizards/space-station-14/pull/27912"

@@ -67,15 +67,12 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            if (!vent.Enabled
-                || !TryComp(uid, out AtmosDeviceComponent? device)
-                || !TryComp(uid, out NodeContainerComponent? nodeContainer)
-                || !_nodeContainer.TryGetNode(nodeContainer, nodeName, out PipeNode? pipe))
+            if (!vent.Enabled || !_nodeContainer.TryGetNode(uid, nodeName, out PipeNode? pipe))
             {
                 return;
             }
 
-            var environment = _atmosphereSystem.GetContainingMixture(uid, true, true);
+            var environment = _atmosphereSystem.GetContainingMixture(uid, args.Grid, args.Map, true, true);
 
             // We're in an air-blocked tile... Do nothing.
             if (environment == null)
@@ -83,15 +80,20 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
-            var timeDelta =  args.dt;
+            var timeDelta = args.dt;
             var pressureDelta = timeDelta * vent.TargetPressureChange;
+
+            var lockout = (environment.Pressure < vent.UnderPressureLockoutThreshold);
+            if (vent.UnderPressureLockout != lockout) // update visuals only if this changes
+            {
+                vent.UnderPressureLockout = lockout;
+                UpdateState(uid, vent);
+            }
 
             if (vent.PumpDirection == VentPumpDirection.Releasing && pipe.Air.Pressure > 0)
             {
                 if (environment.Pressure > vent.MaxPressure)
                     return;
-
-                vent.UnderPressureLockout = (environment.Pressure < vent.UnderPressureLockoutThreshold);
 
                 if ((vent.PressureChecks & VentPressureBound.ExternalBound) != 0)
                 {
@@ -111,7 +113,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 // (ignoring temperature differences because I am lazy)
                 var transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R);
 
-                if (vent.UnderPressureLockout)
+                // Only run if the device is under lockout and not being overriden
+                if (vent.UnderPressureLockout & !vent.PressureLockoutOverride)
                 {
                     // Leak only a small amount of gas as a proportion of supply pipe pressure.
                     var pipeDelta = pipe.Air.Pressure - environment.Pressure;
@@ -269,7 +272,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
             else if (vent.PumpDirection == VentPumpDirection.Releasing)
             {
-                _appearance.SetData(uid, VentPumpVisuals.State, VentPumpState.Out, appearance);
+                if (vent.UnderPressureLockout & !vent.PressureLockoutOverride)
+                    _appearance.SetData(uid, VentPumpVisuals.State, VentPumpState.Lockout, appearance);
+                else
+                    _appearance.SetData(uid, VentPumpVisuals.State, VentPumpState.Out, appearance);
             }
             else if (vent.PumpDirection == VentPumpDirection.Siphoning)
             {
@@ -283,7 +289,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             if (args.IsInDetailsRange)
             {
-                if (pumpComponent.UnderPressureLockout)
+                if (pumpComponent.PumpDirection == VentPumpDirection.Releasing & pumpComponent.UnderPressureLockout & !pumpComponent.PressureLockoutOverride)
                 {
                     args.PushMarkup(Loc.GetString("gas-vent-pump-uvlo"));
                 }
@@ -295,10 +301,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         /// </summary>
         private void OnAnalyzed(EntityUid uid, GasVentPumpComponent component, GasAnalyzerScanEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
-            var gasMixDict = new Dictionary<string, GasMixture?>();
+            args.GasMixtures ??= new List<(string, GasMixture?)>();
 
             // these are both called pipe, above it switches using this so I duplicated that...?
             var nodeName = component.PumpDirection switch
@@ -307,10 +310,14 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 VentPumpDirection.Siphoning => component.Outlet,
                 _ => throw new ArgumentOutOfRangeException()
             };
-            if (_nodeContainer.TryGetNode(nodeContainer, nodeName, out PipeNode? pipe))
-                gasMixDict.Add(nodeName, pipe.Air);
-
-            args.GasMixtures = gasMixDict;
+            // multiply by volume fraction to make sure to send only the gas inside the analyzed pipe element, not the whole pipe system
+            if (_nodeContainer.TryGetNode(uid, nodeName, out PipeNode? pipe) && pipe.Air.Volume != 0f)
+            {
+                var pipeAirLocal = pipe.Air.Clone();
+                pipeAirLocal.Multiply(pipe.Volume / pipe.Air.Volume);
+                pipeAirLocal.Volume = pipe.Volume;
+                args.GasMixtures.Add((nodeName, pipeAirLocal));
+            }
         }
 
         private void OnWeldChanged(EntityUid uid, GasVentPumpComponent component, ref WeldableChangedEvent args)

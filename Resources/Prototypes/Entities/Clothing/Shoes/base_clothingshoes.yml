@@ -23,6 +23,7 @@
     tags:
     - ClothMade
     - WhitelistChameleon
+  - type: ClothingRequiredStepTriggerImmune
 
 - type: entity
   abstract: true
@@ -50,6 +51,16 @@
           tags:
           - Knife
           - Sidearm
+
+- type: entity
+  abstract: true
+  id: ClothingShoesBootsSecFilled
+  suffix: Filled
+  components:
+  - type: ContainerFill
+    containers:
+      item:
+      - CombatKnife
 
 - type: entity
   abstract: true

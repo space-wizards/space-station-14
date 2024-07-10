@@ -55,7 +55,7 @@ namespace Content.Shared.Atmos.EntitySystems
                     data[index] = chunk;
             }
 
-            args.State = new GasTileOverlayState(data) { AllChunks = new(component.Chunks.Keys) };
+            args.State = new GasTileOverlayDeltaState(data, new(component.Chunks.Keys));
         }
 
         public static Vector2i GetGasChunkIndices(Vector2i indices)

@@ -51,8 +51,15 @@ public sealed class BurialSystem : EntitySystem
                 BreakOnHandChange = true
             };
 
+            if (component.Stream == null)
+                component.Stream = _audioSystem.PlayPredicted(component.DigSound, uid, args.User)?.Entity;
+
             if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs))
+            {
+                _audioSystem.Stop(component.Stream);
                 return;
+            }
+
 
             StartDigging(uid, args.User, args.Used, component);
         }
@@ -76,10 +83,11 @@ public sealed class BurialSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, GraveComponent component, ActivateInWorldEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !args.Complex)
             return;
 
         _popupSystem.PopupClient(Loc.GetString("grave-digging-requires-tool", ("grave", args.Target)), uid, args.User);
+        args.Handled = true;
     }
 
     private void OnGraveDigging(EntityUid uid, GraveComponent component, GraveDiggingDoAfterEvent args)
@@ -109,10 +117,9 @@ public sealed class BurialSystem : EntitySystem
     {
         if (used != null)
         {
-            _popupSystem.PopupClient(Loc.GetString("grave-start-digging-user", ("grave", uid), ("tool", used)), user, user);
-            _popupSystem.PopupEntity(Loc.GetString("grave-start-digging-others", ("user", user), ("grave", uid), ("tool", used)), user, Filter.PvsExcept(user), true);
-            if (component.Stream == null)
-                component.Stream = _audioSystem.PlayPredicted(component.DigSound, uid, user)?.Entity;
+            var selfMessage = Loc.GetString("grave-start-digging-user", ("grave", uid), ("tool", used));
+            var othersMessage = Loc.GetString("grave-start-digging-others", ("user", user), ("grave", uid), ("tool", used));
+            _popupSystem.PopupPredicted(selfMessage, othersMessage, user, user);
             component.ActiveShovelDigging = true;
             Dirty(uid, component);
         }
@@ -163,8 +170,15 @@ public sealed class BurialSystem : EntitySystem
             BreakOnDamage = false
         };
 
-        if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs, out component.HandDiggingDoAfter))
+
+        if (component.Stream == null)
+            component.Stream = _audioSystem.PlayPredicted(component.DigSound, uid, args.Entity)?.Entity;
+
+        if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs))
+        {
+            _audioSystem.Stop(component.Stream);
             return;
+        }
 
         StartDigging(uid, args.Entity, null, component);
     }

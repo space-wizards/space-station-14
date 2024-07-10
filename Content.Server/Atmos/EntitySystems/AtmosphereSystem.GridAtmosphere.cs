@@ -1,8 +1,8 @@
-using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Reactions;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
@@ -160,7 +160,7 @@ public sealed partial class AtmosphereSystem
     }
 
     /// <summary>
-    /// Update array of adjacent tiles and the adjacency flags. Optionally activates all tiles with modified adjacencies.
+    /// Update array of adjacent tiles and the adjacency flags.
     /// </summary>
     private void UpdateAdjacentTiles(
         Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
@@ -195,14 +195,16 @@ public sealed partial class AtmosphereSystem
             if (activate)
                 AddActiveTile(atmos, adjacent);
 
-            var oppositeDirection = direction.GetOpposite();
+            var oppositeIndex = i.ToOppositeIndex();
+            var oppositeDirection = (AtmosDirection) (1 << oppositeIndex);
+
             if (adjBlockDirs.IsFlagSet(oppositeDirection) || blockedDirs.IsFlagSet(direction))
             {
                 // Adjacency is blocked by some airtight entity.
                 tile.AdjacentBits &= ~direction;
                 adjacent.AdjacentBits &= ~oppositeDirection;
                 tile.AdjacentTiles[i] = null;
-                adjacent.AdjacentTiles[oppositeDirection.ToIndex()] = null;
+                adjacent.AdjacentTiles[oppositeIndex] = null;
             }
             else
             {
@@ -210,7 +212,7 @@ public sealed partial class AtmosphereSystem
                 tile.AdjacentBits |= direction;
                 adjacent.AdjacentBits |= oppositeDirection;
                 tile.AdjacentTiles[i] = adjacent;
-                adjacent.AdjacentTiles[oppositeDirection.ToIndex()] = tile;
+                adjacent.AdjacentTiles[oppositeIndex] = tile;
             }
 
             DebugTools.Assert(!(tile.AdjacentBits.IsFlagSet(direction) ^

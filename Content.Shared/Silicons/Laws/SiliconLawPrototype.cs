@@ -39,6 +39,13 @@ public partial class SiliconLaw : IComparable<SiliconLaw>
         return Order.CompareTo(other.Order);
     }
 
+    public bool Equals(SiliconLaw other)
+    {
+        return LawString == other.LawString
+               && Order == other.Order
+               && LawIdentifierOverride == other.LawIdentifierOverride;
+    }
+
     /// <summary>
     /// Return a shallow clone of this law.
     /// </summary>
@@ -58,7 +65,7 @@ public partial class SiliconLaw : IComparable<SiliconLaw>
 /// </summary>
 [Prototype("siliconLaw")]
 [Serializable, NetSerializable]
-public sealed class SiliconLawPrototype : SiliconLaw, IPrototype
+public sealed partial class SiliconLawPrototype : SiliconLaw, IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]

@@ -28,9 +28,6 @@
   id: ATVKeys
 
 - type: Tag
-  id: Baguette
-
-- type: Tag
   id: Balloon
 
 - type: Tag
@@ -259,10 +256,16 @@
   id: CableCoil
 
 - type: Tag
-  id: CannonBall
+  id: Candle
 
 - type: Tag
-  id: CannonRestrict
+  id: Cake
+
+- type: Tag
+  id: CaneBlade
+
+- type: Tag
+  id: CannonBall
 
 - type: Tag
   id: CannotSuicide
@@ -361,6 +364,10 @@
 - type: Tag
   id: Chicken
 
+# Allowed to control someone wearing a Chef's hat if inside their hat.
+- type: Tag
+  id: ChefPilot
+
 - type: Tag
   id: ChemDispensable # container that can go into the chem dispenser
 
@@ -401,6 +408,9 @@
   id: ClownSuit
 
 - type: Tag
+  id: CluwneHappyHonk
+
+- type: Tag
   id: CluwneHorn
 
 - type: Tag
@@ -417,6 +427,9 @@
 
 - type: Tag
   id: ConveyorAssembly
+
+- type: Tag
+  id: CoordinatesDisk
 
 - type: Tag #Ohioans die happy
   id: Corn
@@ -521,6 +534,9 @@
   id: DoorElectronics
 
 - type: Tag
+  id: DoorElectronicsConfigurator
+
+- type: Tag
   id: DrinkBottle
 
 - type: Tag
@@ -528,6 +544,9 @@
 
 - type: Tag
   id: DrinkSpaceGlue
+
+- type: Tag 
+  id: Dropper
 
 - type: Tag
   id: Duck
@@ -603,6 +622,9 @@
 
 - type: Tag
   id: GasScrubber
+
+- type: Tag
+  id: GasTank
 
 - type: Tag
   id: GasVent
@@ -858,6 +880,9 @@
   id: Meat
 
 - type: Tag
+  id: Medal
+
+- type: Tag
   id: Medkit
 
 - type: Tag
@@ -912,10 +937,10 @@
   id: NoBlockAnchoring
 
 - type: Tag
-  id: NoPaint
+  id: NozzleBackTank
 
 - type: Tag
-  id: NozzleBackTank
+  id: Nugget # for chicken nuggets
 
 - type: Tag
   id: NukeOpsUplink
@@ -1034,9 +1059,6 @@
 - type: Tag
   id: RawMaterial
 
-- type: Tag
-  id: RCDDeconstructWhitelist
-
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
   id: Recyclable
@@ -1084,6 +1106,9 @@
   id: SalvageExperiment
 
 - type: Tag
+  id: Scarf
+
+- type: Tag
   id: Screwdriver
 
 - type: Tag
@@ -1102,19 +1127,22 @@
   id: Shiv
 
 - type: Tag
-  id: ShoesRequiredStepTriggerImmune
-
-- type: Tag
   id: Shovel
 
 - type: Tag
   id: Sidearm
 
 - type: Tag
+  id: SignalTrigger
+
+- type: Tag
   id: SkeletonMotorcycleKeys
 
 - type: Tag
   id: Skewer
+
+- type: Tag
+  id: Slice # sliced fruit, vegetables, pizza etc.
 
 - type: Tag
   id: SmallAIChip
@@ -1124,9 +1152,6 @@
 
 - type: Tag
   id: Smokable
-
-- type: Tag
-  id: SnapPop
 
 - type: Tag
   id: SnowyLabs
@@ -1180,6 +1205,9 @@
 
 - type: Tag
   id: SuitEVA
+
+- type: Tag
+  id: Sunglasses
 
 - type: Tag
   id: SurgeryTool
@@ -1236,6 +1264,9 @@
   id: TrashBag
 
 - type: Tag
+  id: Truncheon
+
+- type: Tag
   id: Unimplantable
 
 - type: Tag
@@ -1273,6 +1304,9 @@
 
 - type: Tag
   id: WeaponShotgunKammerer
+
+- type: Tag
+  id: WeldingMask
 
 - type: Tag
   id: WetFloorSign
@@ -1315,3 +1349,5 @@
 
 - type: Tag
   id: WriteIgnoreStamps
+
+# ALPHABETICAL

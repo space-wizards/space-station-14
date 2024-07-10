@@ -19,6 +19,10 @@
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
+    - type: RCDDeconstructable
+      cost: 4
+      delay: 6
+      fx: EffectRCDDeconstruct6
     - type: Destructible
       thresholds:
       - trigger:
@@ -78,17 +82,15 @@
       openingAnimationTime: 0.6
       closingAnimationTime: 0.6
     - type: Weldable
+      fuel: 5
       time: 3
     - type: Firelock
     - type: Appearance
     - type: WiresVisuals
     - type: WiresPanel
-    - type: Wires
-      boardName: wires-board-name-firelock
-      layoutId: Firelock
     - type: UserInterface
       interfaces:
-        - key: enum.WiresUiKey.Key
+        enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
     - type: Physics
       canCollide: false
@@ -103,9 +105,16 @@
       arc: 360
     - type: StaticPrice
       price: 150
-    - type: DoorBolt
     - type: AccessReader
       access: [ [ "Engineering" ] ]
+    - type: PryUnpowered
+      pryModifier: 0.5
+    - type: PointLight
+      energy: 0.5
+      radius: 1.75
+      color: Red
+      enabled: false
+      castShadows: false
 
 - type: entity
   id: Firelock
@@ -150,7 +159,7 @@
 
 - type: entity
   id: FirelockEdge
-  parent: BaseFirelock
+  parent: Firelock
   name: firelock
   components:
     - type: Sprite
@@ -180,3 +189,6 @@
       canCollide: false
     - type: StaticPrice
       price: 100
+    - type: Construction
+      graph: Firelock
+      node: FirelockEdge

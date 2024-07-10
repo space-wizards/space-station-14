@@ -1,11 +1,21 @@
 - type: marking
+  id: VoxFacialHairBeard
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Vox]
+  sprites:
+    - sprite: Mobs/Customization/vox_facial_hair.rsi
+      state: beard_s
+
+- type: marking
   id: VoxFacialHairColonel
   bodyPart: FacialHair
   markingCategory: FacialHair
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
-      state: vox_colonel_s
+      state: colonel_s
+
 - type: marking
   id: VoxFacialHairFu
   bodyPart: FacialHair
@@ -13,7 +23,17 @@
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
-      state: vox_fu_s
+      state: fu_s
+
+- type: marking
+  id: VoxFacialHairMane
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Vox]
+  sprites:
+    - sprite: Mobs/Customization/vox_facial_hair.rsi
+      state: mane_s
+
 - type: marking
   id: VoxFacialHairNeck
   bodyPart: FacialHair
@@ -21,20 +41,4 @@
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
-      state: vox_neck_s
-- type: marking
-  id: VoxFacialHairBeard
-  bodyPart: FacialHair
-  markingCategory: FacialHair
-  speciesRestriction: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_facial_hair.rsi
-      state: vox_beard_s
-- type: marking
-  id: VoxFacialHairRuffBeard
-  bodyPart: FacialHair
-  markingCategory: FacialHair
-  speciesRestriction: [Vox]
-  sprites:
-    - sprite: Mobs/Customization/vox_facial_hair.rsi
-      state: vox_ruff_beard_s
+      state: neck_s

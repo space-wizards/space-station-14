@@ -17,6 +17,29 @@
         - !type:HTNCompoundTask
           task: PickupMeleeCompound
 
+    - preconditions:
+      - !type:BuckledPrecondition
+        isBuckled: true
+      tasks:
+      - !type:HTNPrimitiveTask
+        operator: !type:UnbuckleOperator
+          shutdownState: TaskFinished
+
+    - preconditions:
+      - !type:InContainerPrecondition
+        isInContainer: true
+      tasks:
+      - !type:HTNCompoundTask
+        task: EscapeCompound
+
+    - preconditions:
+      - !type:PulledPrecondition
+        isPulled: true
+      tasks:
+      - !type:HTNPrimitiveTask
+        operator: !type:UnPullOperator
+          shutdownState: TaskFinished
+
     # Melee combat (unarmed or otherwise)
     - tasks:
         - !type:HTNPrimitiveTask
@@ -70,12 +93,11 @@
 # Tries to melee attack our target.
 - type: htnCompound
   id: MeleeAttackTargetCompound
-  preconditions:
-    - !type:KeyExistsPrecondition
-      key: Target
   branches:
-    # Move to melee range and hit them
-    - tasks:
+    - preconditions:
+      - !type:KeyExistsPrecondition
+        key: Target
+      tasks:
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             shutdownState: PlanFinished
@@ -103,12 +125,27 @@
               key: Target
 
 - type: htnCompound
-  id: MeleeAttackOrderedTargetCompound
-  preconditions:
-    - !type:KeyExistsPrecondition
-      key: Target
+  id: EscapeCompound
   branches:
-    - tasks:
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:ContainerOperator
+        targetKey: Target
+        shutdownState: TaskFinished
+    - !type:HTNPrimitiveTask
+      operator: !type:EscapeOperator
+        targetKey: Target
+      preconditions:
+      - !type:InContainerPrecondition
+        isInContainer: true
+
+- type: htnCompound
+  id: MeleeAttackOrderedTargetCompound
+  branches:
+    - preconditions:
+      - !type:KeyExistsPrecondition
+        key: Target
+      tasks:
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             shutdownState: PlanFinished

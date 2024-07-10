@@ -12,6 +12,10 @@
   - type: Item
     sprite: Objects/Devices/gps.rsi
   - type: HandheldGPS
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 400
+      Glass: 150
   - type: Tag
     tags:
     - GPS

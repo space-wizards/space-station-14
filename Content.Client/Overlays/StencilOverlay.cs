@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Parallax;
 using Content.Client.Weather;
 using Content.Shared.Salvage;
@@ -72,6 +73,6 @@ public sealed partial class StencilOverlay : Overlay
         }
 
         args.WorldHandle.UseShader(null);
-        args.WorldHandle.SetTransform(Matrix3.Identity);
+        args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
 }
