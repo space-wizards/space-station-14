@@ -18,6 +18,10 @@ public sealed class SoundOnMeleeSystem : EntitySystem
 
     private void OnMeleeHit(Entity<SoundOnMeleeComponent> ent, ref MeleeHitEvent args)
     {
+        // no sound if you swing at the air
+        if (args.HitEntities.Count == 0)
+            return;
+
         var now = _timing.CurTime;
         if (now < ent.Comp.NextSound)
             return;
