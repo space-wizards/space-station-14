@@ -45,7 +45,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     [UISystemDependency] private readonly GuidebookSystem _guide = default!;
 
     private CharacterSetupGui? _characterSetup;
-    private HumanoidProfileEditor? _profileEditor;
+    public HumanoidProfileEditor? _profileEditor;
     private CharacterSetupGuiSavePanel? _savePanel;
 
     /// <summary>
@@ -162,10 +162,6 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     public void ReloadCharacterSetup()
     {
         RefreshLobbyPreview();
-
-        if (_profileEditor is { Visible: true })
-            return;
-
         var (characterGui, profileEditor) = EnsureGui();
         characterGui.ReloadCharacterPickers();
         profileEditor.SetProfile(
