@@ -6,16 +6,7 @@
     sprite: /Textures/Clothing/OuterClothing/Misc/black_hoodie.rsi
     state: icon
   content:
-  - ClothingUniformJumpsuitChameleon
-  - ClothingOuterChameleon
-  - ClothingNeckChameleon
-  - ClothingMaskGasChameleon
-  - ClothingHeadHatChameleon
-  - ClothingEyesChameleon
-  - ClothingHeadsetChameleon
-  - ClothingShoesChameleon
-  - BarberScissors
-  - ChameleonProjector
+  - ClothingBackpackChameleonThievingBundle
 
 - type: thiefBackpackSet
   id: ToolsSet

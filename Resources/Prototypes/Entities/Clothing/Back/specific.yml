@@ -20,27 +20,6 @@
           type: ChameleonBoundUserInterface
 
 - type: entity
-  parent: ClothingBackpackChameleon
-  id: ClothingBackpackChameleonThieving
-  suffix: Chameleon, Thieving
-  components:
-  - type: Storage
-    grid:
-    - 0,0,6,3
-    maxItemSize: Huge
-    storageInsertSound: null
-
-- type: entity
-  parent: ClothingBackpackChameleonThieving
-  id: ClothingBackpackChameleonThievingBundle
-  suffix: Chameleon, Thieving, Filled
-  components:
-  - type: StorageFill
-    contents:
-      - id: ToolboxThief
-      - id: ClothingHandsChameleonThief
-
-- type: entity
   parent: Clothing
   id: ClothingBackpackWaterTank
   name: backpack water tank

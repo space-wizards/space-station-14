@@ -314,6 +314,35 @@
   - type: Unremoveable
     deleteOnDrop: false
 
+- type: entity
+  parent: ClothingBackpackChameleon
+  id: ClothingBackpackChameleonThieving
+  suffix: Chameleon, Thieving
+  components:
+  - type: Storage
+    grid:
+    - 0,0,6,3
+    maxItemSize: Huge
+    storageInsertSound: null
+
+- type: entity
+  parent: ClothingBackpackChameleonThieving
+  id: ClothingBackpackChameleonThievingBundle
+  suffix: Chameleon, Thieving, Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformJumpsuitChameleon
+      - id: ClothingOuterChameleon
+      - id: ClothingNeckChameleon
+      - id: ClothingMaskGasChameleon
+      - id: ClothingHeadHatChameleon
+      - id: ClothingEyesChameleon
+      - id: ClothingHeadsetChameleon
+      - id: ClothingShoesChameleon
+      - id: BarberScissors
+      - id: ChameleonProjector
+
 # Debug
 - type: entity
   parent: ClothingBackpack
