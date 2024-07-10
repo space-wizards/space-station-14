@@ -35,13 +35,14 @@
 - [ ] rename `InterfaceStylesheet` to `SystemStylesheet`
 - [ ] rename `FancyWindow` to `NanoWindow`
 - [x] Get rid of `NTSheetlets` & `InterfaceSheetlets`
-  - Eh, most of it anyway
+    - Eh, most of it anyway
 - [x] Make all `StyleClass` conform to naming conventions
 - [ ] `LabelSheetlet` / `TextSheetlet` dont hardcode the label sizes
 - [ ] Separate out `FontKind` maybe
 - [ ] change `ButtonHovered` and friends to `PseudoHovered`
 - [ ] `WindowSheetlet` `NanoHeading` hardcoded classnames
 - [ ] `IPanelPalette` is unnecessary now
+- [ ] What the fuck is `StyleSpace` get rid of it
 
 HARDCODED COLORS
 
@@ -91,6 +92,12 @@ readable / robust.
   style classes defined in `Content.Client.Stylesheets.Redux.StyleClass` or create a new Sheetlet (Again, see guide)
 - If you are planning on creating a new UI, there are new conventions you should follow (Yet again, see guide)
 
+#### `Content.Client/Stylesheets/Redux`
+
+Since this was such a large refactor, all the code is in `Content.Client/Stylesheets/Redux`. Anything
+in `Content.Client/Stylesheets` is now then obsolete. For now all the new code is staying in `Redux` so downstream forks
+will have an easier time merging this change.
+
 ### Another PR:
 
 - [ ] Admin Message window exit button is basically indistinguishable from the red header
@@ -107,3 +114,4 @@ readable / robust.
 - [ ] Shadows on windows?
 - [ ] `HLine` and probably other classes in RobustToolbox dont have `StyleClass<X>` props
 - [ ] `ApcMenu.xaml.cs` maybe make the text color fully dynamic
+- [ ] Have `ScrollContainer`s remember how much you've scrolled?

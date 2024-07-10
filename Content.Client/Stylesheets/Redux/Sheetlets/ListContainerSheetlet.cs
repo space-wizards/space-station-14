@@ -6,6 +6,7 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
 
+[CommonSheetlet]
 public sealed class ListContainerSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)

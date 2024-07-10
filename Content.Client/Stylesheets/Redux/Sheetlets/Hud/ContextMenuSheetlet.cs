@@ -1,7 +1,7 @@
 using Content.Client.ContextMenu.UI;
 using Content.Client.Resources;
 using Content.Client.Stylesheets.Redux.Fonts;
-using Content.Client.Stylesheets.Redux.SheetletConfig;
+using Content.Client.Stylesheets.Redux.SheetletConfigs;
 using Content.Client.Verbs.UI;
 using Content.Shared.Verbs;
 using Robust.Client.Graphics;
@@ -59,7 +59,7 @@ public sealed class ContextMenuSheetlet : Sheetlet<PalettedStylesheet>
                 .Font(sheet.BaseFont.GetFont(12, FontStack.FontKind.Italic)),
             E<RichTextLabel>()
                 .Class(Verb.DefaultTextStyleClass)
-                .Font(sheet.BaseFont.GetFont(12, FontStack.FontKind.Regular)),
+                .Font(sheet.BaseFont.GetFont(12)),
             E<TextureRect>()
                 .Class(ContextMenuElement.StyleClassContextMenuExpansionTexture)
                 .Prop(TextureRect.StylePropertyTexture, contextMenuExpansionTexture),

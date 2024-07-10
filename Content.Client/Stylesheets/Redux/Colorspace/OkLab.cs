@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Robust.Shared.Utility;
 using Vector4 = Robust.Shared.Maths.Vector4;
 
@@ -60,9 +59,11 @@ public struct OklabColor
         var m = 0.2119034982d * c.R + 0.6806995451d * c.G + 0.1073969566d * c.B;
         var s = 0.0883024619d * c.R + 0.2817188376d * c.G + 0.6299787005d * c.B;
 
+        // ReSharper disable InconsistentNaming
         var l_ = double.Cbrt(l);
         var m_ = double.Cbrt(m);
         var s_ = double.Cbrt(s);
+        // ReSharper restore InconsistentNaming
 
         L = (float) (0.2104542553d * l_ + 0.7936177850d * m_ - 0.0040720468d * s_);
         A = (float) (1.9779984951d * l_ - 2.4285922050d * m_ + 0.4505937099d * s_);
@@ -72,9 +73,11 @@ public struct OklabColor
 
     public static explicit operator Color(OklabColor c)
     {
+        // ReSharper disable InconsistentNaming
         var l_ = c.L + 0.3963377774d * c.A + 0.2158037573d * c.B;
         var m_ = c.L - 0.1055613458d * c.A - 0.0638541728d * c.B;
         var s_ = c.L - 0.0894841775d * c.A - 1.2914855480d * c.B;
+        // ReSharper restore InconsistentNaming
 
         var l = l_ * l_ * l_;
         var m = m_ * m_ * m_;
@@ -88,12 +91,10 @@ public struct OklabColor
         );
     }
 
-    /**
-     * <param name="a">The color the blend from</param>
-     * <param name="b">The color to blend to</param>
-     * <param name="factor">The amount to blend to from 0 to 1, with 0 being a and 1 being b</param>
-     * <returns> a color thats a linear Oklab blend of a and b</returns>
-     */
+    /// <param name="a">The color the blend from</param>
+    /// <param name="b">The color to blend to</param>
+    /// <param name="factor">The amount to blend to from 0 to 1, with 0 being a and 1 being b</param>
+    /// <returns> a color thats a linear Oklab blend of a and b</returns>
     public static OklabColor Blend(OklabColor a, OklabColor b, float factor)
     {
         DebugTools.Assert(factor >= 0.0 && factor <= 1.0, "Expected factor >= 0.0 && factor <= 1.0");

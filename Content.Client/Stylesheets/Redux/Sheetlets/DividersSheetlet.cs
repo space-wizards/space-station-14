@@ -1,4 +1,5 @@
-﻿using Robust.Client.Graphics;
+﻿using System.Numerics;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
@@ -15,7 +16,7 @@ public sealed class DividersSheetlet : Sheetlet<PalettedStylesheet>
             E<PanelContainer>()
                 .Class(StyleClass.LowDivider)
                 .Panel(new StyleBoxFlat(sheet.SecondaryPalette.TextDark))
-                .MinSize(new(2, 2)),
+                .MinSize(new Vector2(2, 2)),
         ];
     }
 }

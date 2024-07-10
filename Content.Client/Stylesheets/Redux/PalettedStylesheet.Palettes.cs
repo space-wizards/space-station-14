@@ -1,7 +1,4 @@
-﻿using Content.Client.Stylesheets.Redux.Colorspace;
-using Content.Client.Stylesheets.Redux.SheetletConfig;
-
-namespace Content.Client.Stylesheets.Redux;
+﻿namespace Content.Client.Stylesheets.Redux;
 
 public abstract partial class PalettedStylesheet
 {

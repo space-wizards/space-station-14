@@ -6,9 +6,7 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Redux.NTSheetlets;
 
-/**
- * Not NTHeading because NanoHeading is the name of the element
- */
+/// Not NTHeading because NanoHeading is the name of the element
 public sealed class NanoHeadingSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)

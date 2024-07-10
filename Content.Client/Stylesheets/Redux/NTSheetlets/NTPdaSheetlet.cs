@@ -1,6 +1,5 @@
 ﻿using Content.Client.PDA;
-using Content.Client.Stylesheets.Redux.SheetletConfig;
-using Content.Client.Stylesheets.Redux.Sheetlets;
+using Content.Client.Stylesheets.Redux.SheetletConfigs;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -8,6 +7,7 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Redux.NTSheetlets;
 
+// ReSharper disable once InconsistentNaming
 public sealed class NTPdaSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)

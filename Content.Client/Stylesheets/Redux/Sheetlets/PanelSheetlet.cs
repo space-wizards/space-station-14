@@ -1,4 +1,4 @@
-using Content.Client.Stylesheets.Redux.SheetletConfig;
+using Content.Client.Stylesheets.Redux.SheetletConfigs;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

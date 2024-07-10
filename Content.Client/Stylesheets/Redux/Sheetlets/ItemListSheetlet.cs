@@ -8,7 +8,7 @@ namespace Content.Client.Stylesheets.Redux.Sheetlets;
 [CommonSheetlet]
 public sealed class ItemListSheetlet : Sheetlet<PalettedStylesheet>
 {
-    private StyleBoxFlat Box(Color c)
+    private static StyleBoxFlat Box(Color c)
     {
         return new StyleBoxFlat(c)
             // TODO: dont hardcode these maybe

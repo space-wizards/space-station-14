@@ -1,9 +1,6 @@
-using System.Numerics;
-using Content.Client.Stylesheets.Redux.SheetletConfig;
-using Robust.Client.Graphics;
+using Content.Client.Stylesheets.Redux.SheetletConfigs;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Utility;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
@@ -84,10 +81,10 @@ public sealed class ButtonSheetlet : Sheetlet<PalettedStylesheet>
     {
         rules.AddRange(new StyleRule[]
         {
-            E().MaybeClass(styleclass).ButtonNormal().Prop(Button.StylePropertyModulateSelf, palette.Element),
-            E().MaybeClass(styleclass).ButtonHovered().Prop(Button.StylePropertyModulateSelf, palette.HoveredElement),
-            E().MaybeClass(styleclass).ButtonPressed().Prop(Button.StylePropertyModulateSelf, palette.PressedElement),
-            E().MaybeClass(styleclass).ButtonDisabled().Prop(Button.StylePropertyModulateSelf, palette.DisabledElement),
+            E().MaybeClass(styleclass).ButtonNormal().Prop(Control.StylePropertyModulateSelf, palette.Element),
+            E().MaybeClass(styleclass).ButtonHovered().Prop(Control.StylePropertyModulateSelf, palette.HoveredElement),
+            E().MaybeClass(styleclass).ButtonPressed().Prop(Control.StylePropertyModulateSelf, palette.PressedElement),
+            E().MaybeClass(styleclass).ButtonDisabled().Prop(Control.StylePropertyModulateSelf, palette.DisabledElement),
         });
     }
 

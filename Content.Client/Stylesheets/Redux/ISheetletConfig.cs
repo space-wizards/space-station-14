@@ -1,4 +1,4 @@
-﻿namespace Content.Client.Stylesheets.Redux.SheetletConfig;
+﻿namespace Content.Client.Stylesheets.Redux;
 
 public interface ISheetletConfig : IStyleResources
 {

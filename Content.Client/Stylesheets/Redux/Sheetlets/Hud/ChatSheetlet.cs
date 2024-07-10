@@ -1,5 +1,4 @@
-﻿using Content.Client.UserInterface.Screens;
-using Content.Client.UserInterface.Systems.Chat.Controls;
+﻿using Content.Client.UserInterface.Systems.Chat.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

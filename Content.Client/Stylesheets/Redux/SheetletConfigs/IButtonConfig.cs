@@ -2,7 +2,7 @@ using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Stylesheets.Redux.SheetletConfig
+namespace Content.Client.Stylesheets.Redux.SheetletConfigs
 {
     public interface IButtonConfig : ISheetletConfig
     {

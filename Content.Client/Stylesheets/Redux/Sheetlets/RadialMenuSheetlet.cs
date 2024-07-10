@@ -9,8 +9,8 @@ public sealed class RadialMenuSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        return new StyleRule[]
-        {
+        return
+        [
             E<TextureButton>()
                 .Class("RadialMenuButton")
                 .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture("Radial/button_normal.png")),
@@ -34,6 +34,6 @@ public sealed class RadialMenuSheetlet : Sheetlet<PalettedStylesheet>
                 .Class("RadialMenuBackButton")
                 .Pseudo(TextureButton.StylePseudoClassHover)
                 .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture("Radial/back_hover.png")),
-        };
+        ];
     }
 }

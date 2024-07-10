@@ -18,18 +18,18 @@ public partial class NanotrasenStylesheet : PalettedStylesheet
 
     public override Dictionary<Type, ResPath[]> Roots => new()
     {
-        {typeof(TextureResource), new[] {new ResPath("/Textures/Interface/Nano/")}}
+        { typeof(TextureResource), new[] { new ResPath("/Textures/Interface/Nano/") } },
     };
 
     private const int PrimaryFontSize = 12;
     private const int FontSizeStep = 2;
 
-    private readonly List<(string?, int)> _commonFontSizes = new()
-    {
+    private readonly List<(string?, int)> _commonFontSizes =
+    [
         (null, PrimaryFontSize),
         (StyleClass.FontSmall, PrimaryFontSize - FontSizeStep),
         (StyleClass.FontLarge, PrimaryFontSize + FontSizeStep),
-    };
+    ];
 
     public NanotrasenStylesheet(object config) : base(config)
     {
@@ -44,7 +44,8 @@ public partial class NanotrasenStylesheet : PalettedStylesheet
                 // Declare the default font.
                 Element().Prop(Label.StylePropertyFont, BaseFont.GetFont(PrimaryFontSize)),
                 // Branding.
-                Element<TextureRect>().Class("NTLogoDark")
+                Element<TextureRect>()
+                    .Class("NTLogoDark")
                     .Prop(TextureRect.StylePropertyTexture, GetTexture("ntlogo.svg.png"))
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#757575")),
             },

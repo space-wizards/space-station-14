@@ -4,9 +4,7 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
 
-/**
- * These are not in `LabelSheetlet` because, say, a label is not the only thing you'd want to be monospaced.
- */
+/// These are not in `LabelSheetlet` because a label is not the only thing you might want to be monospaced.
 [CommonSheetlet]
 public sealed class TextSheetlet : Sheetlet<PalettedStylesheet>
 {

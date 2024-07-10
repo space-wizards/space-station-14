@@ -1,16 +1,15 @@
 ﻿namespace Content.Client.Stylesheets.Redux;
 
-/**
- * <summary>
- *  A collection of public reusable style classes. These should be general purpose (Not specific to only one element or
- *  Ui).
- * </summary>
- * <remarks>
- *  It is named `StyleClass` as opposed to `StyleClasses` because `StyleClasses` is a field on `Control` so it made it
- *  a pain to reference this class from a `Control`. (Weird name is worth typing `StyleClass.OpenBoth` vs.
- *  `Stylesheets.Redux.Styleclasses.OpenBoth`)
- * </remarks>
- */
+///
+/// <summary>
+///     A collection of public reusable style classes. These should be general purpose (Not specific to only one element
+///     or Ui).
+/// </summary>
+/// <remarks>
+///     It is named `StyleClass` as opposed to `StyleClasses` because `StyleClasses` is a field on `Control` so it made
+///     it a pain to reference this class from a `Control`. (Weird name is worth typing `StyleClass.OpenBoth` vs.
+///     `Stylesheets.Redux.Styleclasses.OpenBoth`)
+/// </remarks>
 public static class StyleClass
 {
     // These style classes affect more than one type of element
@@ -22,22 +21,6 @@ public static class StyleClass
     public const string FontSmall = "font-small";
     public const string Italic = "italic";
     public const string Monospace = "monospace";
-
-    /**
-     * <returns>The style class that will apply `ModulateSelf` with the specified color</returns>
-     * <example><code>StyleClass.GetColorClass(StyleClass.PrimaryColor, 0)</code></example>
-     */
-    public static string GetColorClass(string styleclass, uint index)
-    {
-        return $"{styleclass}-{index}";
-    }
-
-    public const string PrimaryColor = "color-primary";
-    public const string SecondaryColor = "color-secondary";
-    public const string PositiveColor = "color-positive";
-    public const string NegativeColor = "color-negative";
-    public const string HighlightColor = "color-highlight";
-
 
     public const string BorderedWindowPanel = "BorderedWindowPanel";
     public const string AlertWindowHeader = "windowHeaderAlert";

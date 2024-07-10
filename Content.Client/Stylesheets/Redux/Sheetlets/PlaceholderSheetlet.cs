@@ -18,6 +18,7 @@ public sealed class PlaceholderSheetlet : Sheetlet<PalettedStylesheet>
         return
         [
             E<Placeholder>()
+                // ReSharper disable once AccessToStaticMemberViaDerivedType
                 .Prop(Placeholder.StylePropertyPanel, placeholderBox),
             E<Label>()
                 .Class(Placeholder.StyleClassPlaceholderText)

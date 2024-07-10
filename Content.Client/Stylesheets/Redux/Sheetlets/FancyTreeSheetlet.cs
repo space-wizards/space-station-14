@@ -11,8 +11,8 @@ public sealed class FancyTreeSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        return new StyleRule[]
-        {
+        return
+        [
             E<ContainerButton>()
                 .Identifier(TreeItem.StyleIdentifierTreeButton)
                 .Class(TreeItem.StyleClassEvenRow)
@@ -31,6 +31,6 @@ public sealed class FancyTreeSheetlet : Sheetlet<PalettedStylesheet>
                 .Identifier(TreeItem.StyleIdentifierTreeButton)
                 .Pseudo(ContainerButton.StylePseudoClassHover)
                 .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat(sheet.PrimaryPalette.HoveredElement)),
-        };
+        ];
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using Microsoft.CodeAnalysis.FlowAnalysis;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -126,12 +125,12 @@ public static class StylesheetHelpers
 
     public static MutableSelectorElement E<T>() where T : Control
     {
-        return new() { Type = typeof(T) };
+        return new MutableSelectorElement { Type = typeof(T) };
     }
 
     public static MutableSelectorElement E()
     {
-        return new() { };
+        return new MutableSelectorElement();
     }
 
     public static MutableSelector Panel(this MutableSelector selector, StyleBox panel)

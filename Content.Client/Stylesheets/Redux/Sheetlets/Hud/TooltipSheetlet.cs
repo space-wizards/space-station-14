@@ -22,6 +22,7 @@ public sealed class TooltipSheetlet : Sheetlet<PalettedStylesheet>
         return
         [
             E<Tooltip>()
+                // ReSharper disable once AccessToStaticMemberViaDerivedType
                 .Prop(Tooltip.StylePropertyPanel, tooltipBox),
             E<PanelContainer>()
                 .Class(ExamineSystem.StyleClassEntityTooltip)

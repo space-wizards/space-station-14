@@ -1,5 +1,4 @@
-using Content.Client.Stylesheets.Redux.SheetletConfig;
-using Content.Client.Stylesheets.Redux.Sheetlets;
+using Content.Client.Stylesheets.Redux.SheetletConfigs;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Stylesheets.Redux.Stylesheets;
