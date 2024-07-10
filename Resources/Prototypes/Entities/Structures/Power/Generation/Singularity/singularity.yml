@@ -59,9 +59,3 @@
     follow: true
     location: singularity
   - type: Sprite
-    visible: false
-    sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
-    shader: unshaded
-    layers:
-    - map: [ "VisualLevel" ]
-      state: singularity_1
