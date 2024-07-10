@@ -45,7 +45,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     [UISystemDependency] private readonly GuidebookSystem _guide = default!;
 
     private CharacterSetupGui? _characterSetup;
-    public HumanoidProfileEditor? _profileEditor;
+    private HumanoidProfileEditor? _profileEditor;
     private CharacterSetupGuiSavePanel? _savePanel;
 
     /// <summary>
