@@ -22,12 +22,15 @@ public partial class InterfaceStylesheet : PalettedStylesheet
     private const int PrimaryFontSize = 12;
     private const int FontSizeStep = 2;
 
-    private readonly List<(string?, int)> _commonFontSizes =
-    [
+    // for some GOD FORSAKEN REASON if I use a collection expression here it throws a sandbox error
+    // Thanks ReSharper, this was very fun to find in the ~40 files I last committed
+    // ReSharper disable once UseCollectionExpression
+    private readonly List<(string?, int)> _commonFontSizes = new()
+    {
         (null, PrimaryFontSize),
         (StyleClass.FontSmall, PrimaryFontSize - FontSizeStep),
         (StyleClass.FontLarge, PrimaryFontSize + FontSizeStep),
-    ];
+    };
 
     public InterfaceStylesheet(object config) : base(config)
     {
