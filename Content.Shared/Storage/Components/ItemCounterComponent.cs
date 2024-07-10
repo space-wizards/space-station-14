@@ -57,13 +57,5 @@ namespace Content.Shared.Storage.Components
         [DataField("layerStates")]
         [ViewVariables(VVAccess.ReadWrite)]
         public List<string> LayerStates = new();
-
-        /// <summary>
-        /// If the component has a storage component, show sprite layers for counting on open storage only, 
-        /// Defaults to true
-        /// </summary>
-        [DataField("openContainerOnly")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool OpenContainerOnly = true;
     }
 }

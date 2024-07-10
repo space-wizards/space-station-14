@@ -432,6 +432,7 @@
     whitelist:
       tags:
         - Cola
+    hideOpenStackVisuals: false
   - type: StorageFill
     contents:
       - id: DrinkColaCan
@@ -440,7 +441,6 @@
     count:
       tags: [Cola]
     composite: true
-    openContainerOnly: false
     layerStates:
     - 6pack1
     - 6pack2

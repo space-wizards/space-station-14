@@ -33,10 +33,6 @@ public sealed class ItemCounterSystem : SharedItemCounterSystem
         if (!_appearanceSystem.TryGetData<bool>(uid, StackVisuals.Hide, out var hidden, args.Component))
             hidden = false;
 
-        // try and use the container state if there is one
-        if (_appearanceSystem.TryGetData<bool>(uid, StorageVisuals.Open, out var openContainer, args.Component))
-            hidden = !openContainer && comp.OpenContainerOnly;
-
         if (comp.IsComposite)
             ProcessCompositeSprite(uid, actual, maxCount, comp.LayerStates, hidden, sprite: args.Sprite);
         else
