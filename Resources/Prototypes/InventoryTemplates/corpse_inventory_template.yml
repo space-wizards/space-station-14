@@ -1,4 +1,4 @@
-﻿- type: inventoryTemplate
+- type: inventoryTemplate
   id: corpse
   slots:
     - name: shoes
@@ -82,7 +82,6 @@
       stripTime: 3
       uiWindowPos: 2,0
       strippingWindowPos: 2,5
-      dependsOn: outerClothing
       displayName: Suit Storage
     - name: belt
       slotTexture: belt
