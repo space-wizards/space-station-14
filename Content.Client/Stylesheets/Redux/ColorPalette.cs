@@ -15,7 +15,7 @@ public sealed class ColorPalette
     public Color Base;
 
     public float LightnessPositiveShift = 6f;
-    public float LightnessNegativeShift = -6f;
+    public float LightnessNegativeShift = 6f;
     public float ChromaPositiveShift = 0f;
     public float ChromaNegativeShift = 0f;
 
