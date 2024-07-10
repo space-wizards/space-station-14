@@ -96,7 +96,7 @@ public abstract class SharedObjectivesSystem : EntitySystem
     /// The objective is not added to the mind's objectives, mind system does that in TryAddObjective.
     /// If the objective could not be assigned the objective is deleted and false is returned.
     /// </summary>
-    public bool TryCreateObjective(Entity<MindComponent> mind, ProtoId<EntityPrototype> proto, [NotNullWhen(true)] out EntityUid? objective)
+    public bool TryCreateObjective(Entity<MindComponent> mind, EntProtoId proto, [NotNullWhen(true)] out EntityUid? objective)
     {
         objective = TryCreateObjective(mind.Owner, mind.Comp, proto);
         return objective != null;
