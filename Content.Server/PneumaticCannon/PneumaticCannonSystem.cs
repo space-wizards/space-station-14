@@ -128,7 +128,7 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
     {
         return component.Power switch
         {
-            PneumaticCannonPower.High => component.BaseProjectileSpeed * 4f,
+            PneumaticCannonPower.High => component.BaseProjectileSpeed * 2f,
             PneumaticCannonPower.Medium => component.BaseProjectileSpeed,
             PneumaticCannonPower.Low or _ => component.BaseProjectileSpeed * 0.5f,
         };
