@@ -235,7 +235,7 @@
     damage:
       types:
         Blunt: 0
-      angle: 10
+    angle: 10
   - type: LimitedCharges
     maxCharges: 3
     charges: 3
