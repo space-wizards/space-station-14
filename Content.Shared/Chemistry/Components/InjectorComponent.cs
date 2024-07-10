@@ -81,6 +81,12 @@ public sealed partial class InjectorComponent : Component
     [AutoNetworkedField]
     [DataField]
     public InjectorToggleMode ToggleState = InjectorToggleMode.Draw;
+
+    [DataField]
+    public bool NeedHand = true;
+
+    [DataField]
+    public bool BreakOnHandChange = true;
 }
 
 /// <summary>
