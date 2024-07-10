@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Halved passive fuel consumption of welding tools.
-    type: Tweak
-  - message: Completing an action with a welding tool now directly drains the fuel.
-    type: Tweak
-  id: 6394
-  time: '2024-04-19T23:20:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27030
 - author: superjj18
   changes:
   - message: Pneumatic cannon inventory reduced in size to 2x2, item blacklist removed
@@ -3824,3 +3815,10 @@
   id: 6893
   time: '2024-07-09T23:48:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29861
+- author: Lokachop
+  changes:
+  - message: Scarves now count as warm clothing for the warm clothing cargo bounty.
+    type: Tweak
+  id: 6894
+  time: '2024-07-10T05:26:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29779
