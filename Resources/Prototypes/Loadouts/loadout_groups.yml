@@ -140,8 +140,70 @@
   loadouts:
   - GreyJumpsuit
   - GreyJumpskirt
+  - WhiteJumpsuit
+  - WhiteJumpskirt
+  - BlackJumpsuit
+  - BlackJumpskirt
+  - BlueJumpsuit
+  - BlueJumpskirt
+  - YellowJumpsuit
+  - YellowJumpskirt
+  - GreenJumpsuit
+  - GreenJumpskirt
+  - OrangeJumpsuit
+  - OrangeJumpskirt
+  - RedJumpsuit
+  - RedJumpskirt
+  - PurpleJumpsuit
+  - PurpleJumpskirt
+  - PinkJumpsuit
+  - PinkJumpskirt
+  - DarkBlueJumpsuit
+  - DarkBlueJumpskirt
+  - DarkGreenJumpsuit
+  - DarkGreenJumpskirt
+  - TealJumpsuit
+  - TealJumpskirt
+  - BlackHawaiian
+  - BlueHawaiian
+  - RedHawaiian
+  - YellowHawaiian
+  - FlannelJumpsuit
+  - CasualBlueSuit
+  - CasualBlueSkirt
+  - CasualPurpleSuit
+  - CasualPurpleSkirt
+  - CasualRedSuit
+  - CasualRedSkirt
+  - RandomColorful
   - AncientJumpsuit
   - RainbowJumpsuit
+
+- type: loadoutGroup
+  id: PassengerHead
+  name: loadout-group-passenger-head
+  minLimit: 0
+  loadouts:
+  - MimeHead
+  - BlackHeadBand
+  - BlueHeadBand
+  - GreenHeadBand
+  - RedHeadBand
+  - SkullHeadBand
+  - HatGrey
+  - HatMime
+  - HatBlue
+  - HatYellow
+  - HatGreen
+  - HatOrange
+  - HatRed
+  - HatBlack
+  - HatPurple
+  - HatCorp
+  - HatFishing
+  - HatRasta
+  - GreyFlatcap
+  - BrownFlatcap
 
 - type: loadoutGroup
   id: PassengerFace
@@ -156,6 +218,15 @@
   minLimit: 0
   loadouts:
   - PassengerGloves
+  - BlackGloves
+  - GreyGloves
+  - BrownGloves
+  - WhiteGloves
+  - RedGloves
+  - BlueGloves
+  - GreenGloves
+  - OrangeGloves
+  - PurpleGloves
 
 - type: loadoutGroup
   id: CommonBackpack
@@ -178,6 +249,14 @@
   loadouts:
   - BlackShoes
   - WinterBoots
+  - WhiteShoes
+  - BrownShoes
+  - BlueShoes
+  - YellowShoes
+  - GreenShoes
+  - OrangeShoes
+  - RedShoes
+  - PurpleShoes
 
 - type: loadoutGroup
   id: BartenderHead

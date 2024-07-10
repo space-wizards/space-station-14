@@ -8,6 +8,178 @@
       role: JobPassenger
       time: 36000 #10 hrs, silly reward for people who play passenger a lot
 
+# Head
+- type: loadout
+  id: BlackHeadBand
+  equipment: BlackHeadBand
+
+- type: startingGear
+  id: BlackHeadBand
+  equipment:
+    head: ClothingHeadBandBlack
+
+- type: loadout
+  id: BlueHeadBand
+  equipment: BlueHeadBand
+
+- type: startingGear
+  id: BlueHeadBand
+  equipment:
+    head: ClothingHeadBandBlue
+
+- type: loadout
+  id: GreenHeadBand
+  equipment: GreenHeadBand
+
+- type: startingGear
+  id: GreenHeadBand
+  equipment:
+    head: ClothingHeadBandGreen
+
+- type: loadout
+  id: RedHeadBand
+  equipment: RedHeadBand
+
+- type: startingGear
+  id: RedHeadBand
+  equipment:
+    head: ClothingHeadBandRed
+
+- type: loadout
+  id: SkullHeadBand
+  equipment: SkullHeadBand
+
+- type: startingGear
+  id: SkullHeadBand
+  equipment:
+    head: ClothingHeadBandSkull
+
+- type: loadout
+  id: HatGrey
+  equipment: HatGrey
+
+- type: startingGear
+  id: HatGrey
+  equipment:
+    head: ClothingHeadHatGreysoft
+
+- type: loadout
+  id: HatMime
+  equipment: HatMime
+
+- type: startingGear
+  id: HatMime
+  equipment:
+    head: ClothingHeadHatMimesoft
+
+- type: loadout
+  id: HatBlue
+  equipment: HatBlue
+
+- type: startingGear
+  id: HatBlue
+  equipment:
+    head: ClothingHeadHatBluesoft
+
+- type: loadout
+  id: HatYellow
+  equipment: HatYellow
+
+- type: startingGear
+  id: HatYellow
+  equipment:
+    head: ClothingHeadHatYellowsoft
+
+- type: loadout
+  id: HatGreen
+  equipment: HatGreen
+
+- type: startingGear
+  id: HatGreen
+  equipment:
+    head: ClothingHeadHatGreensoft
+
+- type: loadout
+  id: HatOrange
+  equipment: HatOrange
+
+- type: startingGear
+  id: HatOrange
+  equipment:
+    head: ClothingHeadHatOrangesoft
+
+- type: loadout
+  id: HatRed
+  equipment: HatRed
+
+- type: startingGear
+  id: HatRed
+  equipment:
+    head: ClothingHeadHatRedsoft
+
+- type: loadout
+  id: HatBlack
+  equipment: HatBlack
+
+- type: startingGear
+  id: HatBlack
+  equipment:
+    head: ClothingHeadHatBlacksoft
+
+- type: loadout
+  id: HatPurple
+  equipment: HatPurple
+
+- type: startingGear
+  id: HatPurple
+  equipment:
+    head: ClothingHeadHatPurplesoft
+
+- type: loadout
+  id: HatCorp
+  equipment: HatCorp
+
+- type: startingGear
+  id: HatCorp
+  equipment:
+    head: ClothingHeadHatCorpsoft
+
+- type: loadout
+  id: HatFishing
+  equipment: HatFishing
+
+- type: startingGear
+  id: HatFishing
+  equipment:
+    head: ClothingHeadFishCap
+
+- type: loadout
+  id: HatRasta
+  equipment: HatRasta
+
+- type: startingGear
+  id: HatRasta
+  equipment:
+    head: ClothingHeadRastaHat    
+
+- type: loadout
+  id: GreyFlatcap
+  equipment: GreyFlatcap
+
+- type: startingGear
+  id: GreyFlatcap
+  equipment:
+    head: ClothingHeadHatGreyFlatcap
+
+- type: loadout
+  id: BrownFlatcap
+  equipment: BrownFlatcap
+
+- type: startingGear
+  id: BrownFlatcap
+  equipment:
+    head: ClothingHeadHatBrownFlatcap
+
 # Face
 - type: loadout
   id: PassengerFace
@@ -41,7 +213,331 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorGrey
 
-# Rainbow
+- type: loadout
+  id: WhiteJumpsuit
+  equipment: WhiteJumpsuit
+
+- type: startingGear
+  id: WhiteJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorWhite
+
+- type: loadout
+  id: WhiteJumpskirt
+  equipment: WhiteJumpskirt
+
+- type: startingGear
+  id: WhiteJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorWhite
+
+- type: loadout
+  id: BlackJumpsuit
+  equipment: BlackJumpsuit
+
+- type: startingGear
+  id: BlackJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlack
+
+- type: loadout
+  id: BlackJumpskirt
+  equipment: BlackJumpskirt
+
+- type: startingGear
+  id: BlackJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorBlack
+
+- type: loadout
+  id: BlueJumpsuit
+  equipment: BlueJumpsuit
+
+- type: startingGear
+  id: BlueJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+
+- type: loadout
+  id: BlueJumpskirt
+  equipment: BlueJumpskirt
+
+- type: startingGear
+  id: BlueJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorBlue
+
+- type: loadout
+  id: YellowJumpsuit
+  equipment: YellowJumpsuit
+
+- type: startingGear
+  id: YellowJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorYellow
+
+- type: loadout
+  id: YellowJumpskirt
+  equipment: YellowJumpskirt
+
+- type: startingGear
+  id: YellowJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorYellow
+
+- type: loadout
+  id: GreenJumpsuit
+  equipment: GreenJumpsuit
+
+- type: startingGear
+  id: GreenJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorGreen
+
+- type: loadout
+  id: GreenJumpskirt
+  equipment: GreenJumpskirt
+
+- type: startingGear
+  id: GreenJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorGreen
+
+- type: loadout
+  id: OrangeJumpsuit
+  equipment: OrangeJumpsuit
+
+- type: startingGear
+  id: OrangeJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorOrange
+
+- type: loadout
+  id: OrangeJumpskirt
+  equipment: OrangeJumpskirt
+
+- type: startingGear
+  id: OrangeJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorOrange
+
+- type: loadout
+  id: RedJumpsuit
+  equipment: RedJumpsuit
+
+- type: startingGear
+  id: RedJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorRed
+
+- type: loadout
+  id: RedJumpskirt
+  equipment: RedJumpskirt
+
+- type: startingGear
+  id: RedJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorRed
+
+- type: loadout
+  id: PurpleJumpsuit
+  equipment: PurpleJumpsuit
+
+- type: startingGear
+  id: PurpleJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorPurple
+
+- type: loadout
+  id: PurpleJumpskirt
+  equipment: PurpleJumpskirt
+
+- type: startingGear
+  id: PurpleJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorPurple
+
+- type: loadout
+  id: PinkJumpsuit
+  equipment: PinkJumpsuit
+
+- type: startingGear
+  id: PinkJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorPink
+
+- type: loadout
+  id: PinkJumpskirt
+  equipment: PinkJumpskirt
+
+- type: startingGear
+  id: PinkJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorPink
+
+- type: loadout
+  id: DarkBlueJumpsuit
+  equipment: DarkBlueJumpsuit
+
+- type: startingGear
+  id: DarkBlueJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorDarkBlue
+
+- type: loadout
+  id: DarkBlueJumpskirt
+  equipment: DarkBlueJumpskirt
+
+- type: startingGear
+  id: DarkBlueJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorDarkBlue
+
+- type: loadout
+  id: DarkGreenJumpsuit
+  equipment: DarkGreenJumpsuit
+
+- type: startingGear
+  id: DarkGreenJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorDarkGreen
+
+- type: loadout
+  id: DarkGreenJumpskirt
+  equipment: DarkGreenJumpskirt
+
+- type: startingGear
+  id: DarkGreenJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorDarkGreen
+
+- type: loadout
+  id: TealJumpsuit
+  equipment: TealJumpsuit
+
+- type: startingGear
+  id: TealJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorTeal
+
+- type: loadout
+  id: TealJumpskirt
+  equipment: TealJumpskirt
+
+- type: startingGear
+  id: TealJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorTeal
+    
+- type: loadout # Rom Killinger Buff
+  id: BlackHawaiian
+  equipment: BlackHawaiian
+
+- type: startingGear
+  id: BlackHawaiian
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHawaiBlack
+
+- type: loadout
+  id: BlueHawaiian
+  equipment: BlueHawaiian
+
+- type: startingGear
+  id: BlueHawaiian
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHawaiBlue
+
+- type: loadout
+  id: RedHawaiian
+  equipment: RedHawaiian
+
+- type: startingGear
+  id: RedHawaiian
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHawaiRed
+
+- type: loadout
+  id: YellowHawaiian
+  equipment: YellowHawaiian
+
+- type: startingGear
+  id: YellowHawaiian
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHawaiYellow
+
+- type: loadout
+  id: FlannelJumpsuit
+  equipment: FlannelJumpsuit
+
+- type: startingGear
+  id: FlannelJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitFlannel
+
+- type: loadout
+  id: CasualBlueSuit
+  equipment: CasualBlueSuit
+
+- type: startingGear
+  id: CasualBlueSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCasualBlue
+
+- type: loadout
+  id: CasualBlueSkirt
+  equipment: CasualBlueSkirt
+
+- type: startingGear
+  id: CasualBlueSkirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCasualBlue
+
+- type: loadout
+  id: CasualPurpleSuit
+  equipment: CasualPurpleSuit
+
+- type: startingGear
+  id: CasualPurpleSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCasualPurple
+
+- type: loadout
+  id: CasualPurpleSkirt
+  equipment: CasualPurpleSkirt
+
+- type: startingGear
+  id: CasualPurpleSkirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCasualPurple
+
+- type: loadout
+  id: CasualRedSuit
+  equipment: CasualRedSuit
+
+- type: startingGear
+  id: CasualRedSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCasualRed
+
+- type: loadout
+  id: CasualRedSkirt
+  equipment: CasualRedSkirt
+
+- type: startingGear
+  id: CasualRedSkirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCasualRed
+
+- type: loadout
+  id: RandomColorful
+  equipment: RandomColorful
+
+- type: startingGear
+  id: RandomColorful
+  equipment:
+    jumpsuit: ClothingUniformRandomShirt
+
+# GreyTider
 - type: loadout
   id: RainbowJumpsuit
   equipment: RainbowJumpsuit
@@ -54,7 +550,6 @@
   equipment:
     jumpsuit: ClothingUniformColorRainbow
 
-# Ancient
 - type: loadout
   id: AncientJumpsuit
   equipment: AncientJumpsuit
@@ -108,6 +603,88 @@
   equipment:
     gloves: ClothingHandsGlovesFingerlessInsulated
 
+- type: loadout
+  id: BlackGloves
+  equipment: BlackGloves
+
+- type: startingGear
+  id: BlackGloves
+  equipment:
+    gloves: ClothingHandsGlovesColorBlack
+
+- type: loadout
+  id: GreyGloves
+  equipment: GreyGloves
+
+- type: startingGear
+  id: GreyGloves
+  equipment:
+    gloves: ClothingHandsGlovesColorGray
+
+- type: loadout
+  id: BrownGloves
+  equipment: BrownGloves
+
+- type: startingGear
+  id: BrownGloves
+  equipment:
+    gloves: ClothingHandsGlovesColorBrown
+
+- type: loadout
+  id: WhiteGloves
+  equipment: WhiteGloves
+
+- type: startingGear
+  id: WhiteGloves
+  equipment:
+    gloves: ClothingHandsGlovesColorWhite
+
+- type: loadout
+  id: RedGloves
+  equipment: RedGloves
+
+- type: startingGear
+  id: RedGloves
+  equipment:
+    gloves: ClothingHandsGlovesColorRed
+
+- type: loadout
+  id: BlueGloves
+  equipment: BlueGloves
+
+- type: startingGear
+  id: BlueGloves
+  equipment:
+    gloves: ClothingHandsGlovesColorBlue
+
+- type: loadout
+  id: GreenGloves
+  equipment: GreenGloves
+
+- type: startingGear
+  id: GreenGloves
+  equipment:
+    gloves: ClothingHandsGlovesColorGreen
+
+- type: loadout
+  id: OrangeGloves
+  equipment: OrangeGloves
+
+- type: startingGear
+  id: OrangeGloves
+  equipment:
+    gloves: ClothingHandsGlovesColorOrange
+
+- type: loadout
+  id: PurpleGloves
+  equipment: PurpleGloves
+
+- type: startingGear
+  id: PurpleGloves
+  equipment:
+    gloves: ClothingHandsGlovesColorPurple
+
+
 # Outerclothing
 - type: loadout
   id: PassengerWintercoat
@@ -127,6 +704,79 @@
   id: BlackShoes
   equipment:
     shoes: ClothingShoesColorBlack
+
+- type: loadout
+  id: WhiteShoes
+  equipment: WhiteShoes
+
+- type: startingGear
+  id: WhiteShoes
+  equipment:
+    shoes: ClothingShoesColorWhite
+
+- type: loadout
+  id: BrownShoes
+  equipment: BrownShoes
+
+- type: startingGear
+  id: BrownShoes
+  equipment:
+    shoes: ClothingShoesColorBrown
+
+- type: loadout
+  id: BlueShoes
+  equipment: BlueShoes
+
+- type: startingGear
+  id: BlueShoes
+  equipment:
+    shoes: ClothingShoesColorBlue
+
+- type: loadout
+  id: YellowShoes
+  equipment: YellowShoes
+
+- type: startingGear
+  id: YellowShoes
+  equipment:
+    shoes: ClothingShoesColorYellow
+
+- type: loadout
+  id: GreenShoes
+  equipment: GreenShoes
+
+- type: startingGear
+  id: GreenShoes
+  equipment:
+    shoes: ClothingShoesColorGreen
+
+- type: loadout
+  id: OrangeShoes
+  equipment: OrangeShoes
+
+- type: startingGear
+  id: OrangeShoes
+  equipment:
+    shoes: ClothingShoesColorOrange
+
+- type: loadout
+  id: RedShoes
+  equipment: RedShoes
+
+- type: startingGear
+  id: RedShoes
+  equipment:
+    shoes: ClothingShoesColorRed
+
+- type: loadout
+  id: PurpleShoes
+  equipment: PurpleShoes
+
+- type: startingGear
+  id: PurpleShoes
+  equipment:
+    shoes: ClothingShoesColorPurple
+
 
 - type: loadout
   id: WinterBoots
