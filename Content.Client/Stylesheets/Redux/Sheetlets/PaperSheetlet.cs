@@ -1,4 +1,5 @@
 ﻿using Content.Client.Resources;
+using Content.Client.Stylesheets.Redux.SheetletConfigs;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -11,16 +12,16 @@ public sealed class PaperSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        // This REALLY has no business being style-independent, but I don't want to touch that right now.
+        var windowCfg = (IWindowConfig) sheet;
+
+        // TODO: This REALLY has no business being style-independent, but I don't want to touch that right now.
         var paperBackground = ResCache.GetTexture("/Textures/Interface/Paper/paper_background_default.svg.96dpi.png")
             .IntoPatch(StyleBox.Margin.All, 16);
         paperBackground.Modulate = Color.FromHex("#eaedde");
 
-        var borderedTransparentWindowBackgroundTex =
-            sheet.GetTexture("transparent_window_background_bordered.png");
         var borderedTransparentWindowBackground = new StyleBoxTexture
         {
-            Texture = borderedTransparentWindowBackgroundTex,
+            Texture = sheet.GetTexture(windowCfg.TransparentWindowBackgroundBorderedPath),
         };
         borderedTransparentWindowBackground.SetPatchMargin(StyleBox.Margin.All, 2);
 

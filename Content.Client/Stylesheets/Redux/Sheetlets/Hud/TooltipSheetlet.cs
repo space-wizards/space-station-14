@@ -1,5 +1,6 @@
 ﻿using Content.Client.Examine;
 using Content.Client.Stylesheets.Redux.Fonts;
+using Content.Client.Stylesheets.Redux.SheetletConfigs;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -13,10 +14,12 @@ public sealed class TooltipSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var tooltipBox = sheet.GetTexture("tooltip.png").IntoPatch(StyleBox.Margin.All, 2);
+        var tooltipCfg = (ITooltipConfig) sheet;
+
+        var tooltipBox = sheet.GetTexture(tooltipCfg.TooltipBoxPath).IntoPatch(StyleBox.Margin.All, 2);
         tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
 
-        var whisperBox = sheet.GetTexture("whisper.png").IntoPatch(StyleBox.Margin.All, 2);
+        var whisperBox = sheet.GetTexture(tooltipCfg.WhisperBoxPath).IntoPatch(StyleBox.Margin.All, 2);
         whisperBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
 
         return

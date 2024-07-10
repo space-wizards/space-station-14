@@ -1,3 +1,4 @@
+using Content.Client.Stylesheets.Redux.SheetletConfigs;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
@@ -9,13 +10,13 @@ public sealed class OptionButtonSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var invertedTriangleTex = sheet.GetTexture("inverted_triangle.svg.png");
+        var iconCfg = (IIconConfig) sheet;
 
         return
         [
             E<TextureRect>()
                 .Class(OptionButton.StyleClassOptionTriangle)
-                .Prop(TextureRect.StylePropertyTexture, invertedTriangleTex),
+                .Prop(TextureRect.StylePropertyTexture, sheet.GetTexture(iconCfg.InvertedTriangleIconPath)),
             E<Label>().Class(OptionButton.StyleClassOptionButton).AlignMode(Label.AlignMode.Center),
         ];
     }

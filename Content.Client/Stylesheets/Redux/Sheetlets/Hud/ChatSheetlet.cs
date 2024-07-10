@@ -1,4 +1,5 @@
-﻿using Content.Client.UserInterface.Systems.Chat.Controls;
+﻿using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Content.Client.UserInterface.Systems.Chat.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -11,10 +12,12 @@ public sealed class ChatSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
+        var btnCfg = (IButtonConfig) sheet;
+
         var chatColor = sheet.SecondaryPalette.Background.WithAlpha(221.0f / 255.0f);
         var chatBg = new StyleBoxFlat(chatColor);
 
-        var chatChannelButtonTex = sheet.GetTexture("rounded_button.svg.96dpi.png");
+        var chatChannelButtonTex = sheet.GetTexture(btnCfg.RoundedButtonBorderedPath);
         var chatChannelButton = new StyleBoxTexture
         {
             Texture = chatChannelButtonTex,
@@ -22,7 +25,7 @@ public sealed class ChatSheetlet : Sheetlet<PalettedStylesheet>
         chatChannelButton.SetPatchMargin(StyleBox.Margin.All, 5);
         chatChannelButton.SetPadding(StyleBox.Margin.All, 2);
 
-        var chatFilterButtonTex = sheet.GetTexture("rounded_button_bordered.svg.96dpi.png");
+        var chatFilterButtonTex = sheet.GetTexture(btnCfg.RoundedButtonBorderedPath);
         var chatFilterButton = new StyleBoxTexture
         {
             Texture = chatFilterButtonTex,

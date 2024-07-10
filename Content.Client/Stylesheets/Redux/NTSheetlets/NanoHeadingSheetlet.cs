@@ -1,3 +1,4 @@
+using Content.Client.Stylesheets.Redux.SheetletConfigs;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -11,7 +12,9 @@ public sealed class NanoHeadingSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var nanoHeadingTex = sheet.GetTexture("nanoheading.svg.96dpi.png");
+        var nanoHeadingCfg = (INanoHeadingConfig) sheet;
+
+        var nanoHeadingTex = sheet.GetTexture(nanoHeadingCfg.NanoHeadingPath);
         var nanoHeadingBox = new StyleBoxTexture
         {
             Texture = nanoHeadingTex,
@@ -19,7 +22,7 @@ public sealed class NanoHeadingSheetlet : Sheetlet<PalettedStylesheet>
             PatchMarginTop = 10,
             ContentMarginTopOverride = 2,
             ContentMarginLeftOverride = 10,
-            PaddingTop = 4
+            PaddingTop = 4,
         };
         nanoHeadingBox.SetPatchMargin(StyleBox.Margin.Left | StyleBox.Margin.Bottom, 2);
 

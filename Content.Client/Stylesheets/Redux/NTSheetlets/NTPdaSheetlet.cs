@@ -12,27 +12,29 @@ public sealed class NTPdaSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
+        var panelCfg = (IPanelConfig) sheet;
+        var btnCfg = (IButtonConfig) sheet;
+
         // TODO: This should have its own set of images, instead of using button cfg directly.
-        var cfg = (IButtonConfig) sheet;
         var angleBorderRect =
-            sheet.GetTexture("geometric_panel_border.svg.96dpi.png").IntoPatch(StyleBox.Margin.All, 10);
+            sheet.GetTexture(panelCfg.GeometricPanelBorderPath).IntoPatch(StyleBox.Margin.All, 10);
 
         return
         [
             //PDA - Backgrounds
             E<PanelContainer>()
                 .Class("PdaContentBackground")
-                .Prop(PanelContainer.StylePropertyPanel, cfg.ConfigureOpenBothButton(sheet))
+                .Prop(PanelContainer.StylePropertyPanel, btnCfg.ConfigureOpenBothButton(sheet))
                 .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252a")),
 
             E<PanelContainer>()
                 .Class("PdaBackground")
-                .Prop(PanelContainer.StylePropertyPanel, cfg.ConfigureOpenBothButton(sheet))
+                .Prop(PanelContainer.StylePropertyPanel, btnCfg.ConfigureOpenBothButton(sheet))
                 .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#000000")),
 
             E<PanelContainer>()
                 .Class("PdaBackgroundRect")
-                .Prop(PanelContainer.StylePropertyPanel, cfg.ConfigureBaseButton(sheet))
+                .Prop(PanelContainer.StylePropertyPanel, btnCfg.ConfigureBaseButton(sheet))
                 .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#717059")),
 
             E<PanelContainer>()

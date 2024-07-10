@@ -10,28 +10,29 @@ public sealed class ButtonSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var cfg = (IButtonConfig) sheet;
+        var buttonCfg = (IButtonConfig) sheet;
+        var iconCfg = (IIconConfig) sheet;
 
         var rules = new List<StyleRule>
         {
             // Set textures for the kinds of buttons
             CButton()
-                .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureBaseButton(sheet)),
+                .Prop(ContainerButton.StylePropertyStyleBox, buttonCfg.ConfigureBaseButton(sheet)),
             CButton()
                 .Class(StyleClass.ButtonOpenLeft)
-                .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenLeftButton(sheet)),
+                .Prop(ContainerButton.StylePropertyStyleBox, buttonCfg.ConfigureOpenLeftButton(sheet)),
             CButton()
                 .Class(StyleClass.ButtonOpenRight)
-                .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenRightButton(sheet)),
+                .Prop(ContainerButton.StylePropertyStyleBox, buttonCfg.ConfigureOpenRightButton(sheet)),
             CButton()
                 .Class(StyleClass.ButtonOpenBoth)
-                .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenBothButton(sheet)),
+                .Prop(ContainerButton.StylePropertyStyleBox, buttonCfg.ConfigureOpenBothButton(sheet)),
             CButton()
                 .Class(StyleClass.ButtonSquare)
-                .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenSquareButton(sheet)),
+                .Prop(ContainerButton.StylePropertyStyleBox, buttonCfg.ConfigureOpenSquareButton(sheet)),
             CButton()
                 .Class(StyleClass.ButtonSmall)
-                .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureSmallButton(sheet)),
+                .Prop(ContainerButton.StylePropertyStyleBox, buttonCfg.ConfigureSmallButton(sheet)),
             CButton()
                 .Class(StyleClass.ButtonSmall)
                 .ParentOf(E<Label>())
@@ -41,7 +42,7 @@ public sealed class ButtonSheetlet : Sheetlet<PalettedStylesheet>
             // Cross Button (Red)
             E<TextureButton>()
                 .Class(StyleClass.CrossButtonRed)
-                .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture("cross.svg.png")),
+                .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture(iconCfg.CrossIconPath)),
 
             // Ensure labels in buttons are aligned.
             E<Label>()
@@ -49,12 +50,12 @@ public sealed class ButtonSheetlet : Sheetlet<PalettedStylesheet>
                 .AlignMode(Label.AlignMode.Center),
         };
         // Texture button modulation
-        MakeButtonRules<TextureButton>(cfg, rules, Palettes.AlphaModulate, null);
-        MakeButtonRules<TextureButton>(cfg, rules, sheet.NegativePalette, StyleClass.CrossButtonRed);
+        MakeButtonRules<TextureButton>(buttonCfg, rules, Palettes.AlphaModulate, null);
+        MakeButtonRules<TextureButton>(buttonCfg, rules, sheet.NegativePalette, StyleClass.CrossButtonRed);
 
-        MakeButtonRules(cfg, rules, cfg.ButtonPalette, null);
-        MakeButtonRules(cfg, rules, cfg.PositiveButtonPalette, StyleClass.Positive);
-        MakeButtonRules(cfg, rules, cfg.NegativeButtonPalette, StyleClass.Negative);
+        MakeButtonRules(buttonCfg, rules, buttonCfg.ButtonPalette, null);
+        MakeButtonRules(buttonCfg, rules, buttonCfg.PositiveButtonPalette, StyleClass.Positive);
+        MakeButtonRules(buttonCfg, rules, buttonCfg.NegativeButtonPalette, StyleClass.Negative);
 
         return rules.ToArray();
     }

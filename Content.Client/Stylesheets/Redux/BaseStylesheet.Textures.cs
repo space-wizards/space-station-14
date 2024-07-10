@@ -27,12 +27,6 @@ public abstract partial class BaseStylesheet
         return false;
     }
 
-    /// <inheritdoc cref="M:Content.Client.Stylesheets.Redux.BaseStylesheet.TryGetTexture(Robust.Shared.Utility.ResPath,Robust.Client.Graphics.Texture@)"/>
-    public bool TryGetTexture(string target, [NotNullWhen(true)] out Texture? texture)
-    {
-        return TryGetTexture(new ResPath(target), out texture);
-    }
-
     /// <summary>
     ///     Retrieves a texture, or throws.
     /// </summary>
@@ -40,11 +34,6 @@ public abstract partial class BaseStylesheet
     /// <returns>The retrieved texture</returns>
     /// <exception cref="MissingResourceException">Thrown if the texture does not exist within the stylesheet's roots.</exception>
     public Texture GetTexture(ResPath target)
-    {
-        return GetResource<TextureResource>(target).Texture;
-    }
-
-    public Texture GetTexture(string target)
     {
         return GetResource<TextureResource>(target).Texture;
     }

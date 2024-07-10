@@ -2,7 +2,6 @@
 using Content.Client.Stylesheets.Redux.Fonts;
 using Content.Client.Stylesheets.Redux.NTSheetlets;
 using Content.Client.Stylesheets.Redux.Sheetlets;
-using Content.Client.UserInterface.Controls;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -48,7 +47,7 @@ public partial class NanotrasenStylesheet : PalettedStylesheet
                 // Branding.
                 Element<TextureRect>()
                     .Class("NTLogoDark")
-                    .Prop(TextureRect.StylePropertyTexture, GetTexture("ntlogo.svg.png"))
+                    .Prop(TextureRect.StylePropertyTexture, GetTexture(new ResPath("ntlogo.svg.png")))
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#757575")),
             },
             GetSheetletRules<ButtonSheetlet>(),

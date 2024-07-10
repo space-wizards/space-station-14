@@ -1,4 +1,5 @@
-﻿using Robust.Client.Graphics;
+﻿using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
@@ -10,7 +11,9 @@ public sealed class SliderSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var sliderFillTex = sheet.GetTexture("slider_fill.svg.96dpi.png");
+        var sliderCfg = (ISliderConfig) sheet;
+
+        var sliderFillTex = sheet.GetTexture(sliderCfg.SliderFillPath);
 
         var sliderFillBox = new StyleBoxTexture
         {
@@ -26,13 +29,13 @@ public sealed class SliderSheetlet : Sheetlet<PalettedStylesheet>
 
         var sliderForeBox = new StyleBoxTexture
         {
-            Texture = sheet.GetTexture("slider_outline.svg.96dpi.png"),
+            Texture = sheet.GetTexture(sliderCfg.SliderOutlinePath),
             Modulate = Color.FromHex("#494949") // TODO: Unhardcode.
         };
 
         var sliderGrabBox = new StyleBoxTexture
         {
-            Texture = sheet.GetTexture("slider_grabber.svg.96dpi.png"),
+            Texture = sheet.GetTexture(sliderCfg.SliderGrabber),
         };
 
         sliderFillBox.SetPatchMargin(StyleBox.Margin.All, 12);

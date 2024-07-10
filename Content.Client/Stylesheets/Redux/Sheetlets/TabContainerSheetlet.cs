@@ -1,4 +1,5 @@
-﻿using Robust.Client.Graphics;
+﻿using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
@@ -10,7 +11,9 @@ public sealed class TabContainerSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var tabContainerPanel = sheet.GetTexture("tabcontainer_panel.png").IntoPatch(StyleBox.Margin.All, 2);
+        var tabCfg = (ITabContainerConfig) sheet;
+
+        var tabContainerPanel = sheet.GetTexture(tabCfg.TabContainerPanelPath).IntoPatch(StyleBox.Margin.All, 2);
 
         var tabContainerBoxActive = new StyleBoxFlat(sheet.SecondaryPalette.Element);
         tabContainerBoxActive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);

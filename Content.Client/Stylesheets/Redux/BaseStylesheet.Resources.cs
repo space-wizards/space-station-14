@@ -15,13 +15,6 @@ public abstract partial class BaseStylesheet
     /// </remarks>
     public abstract Dictionary<Type, ResPath[]> Roots { get; }
 
-    /// <inheritdoc cref="M:Content.Client.Stylesheets.Redux.BaseStylesheet.TryGetResource``1(Robust.Shared.Utility.ResPath,``0@)"/>
-    public bool TryGetResource<T>(string target, [NotNullWhen(true)] out T? resource)
-        where T : BaseResource, new()
-    {
-        return TryGetResource(new ResPath(target), out resource);
-    }
-
     /// <summary>
     ///     Attempts to locate a resource within the stylesheet's roots.
     /// </summary>
@@ -43,13 +36,6 @@ public abstract partial class BaseStylesheet
 
         resource = null;
         return false;
-    }
-
-    /// <inheritdoc cref="M:Content.Client.Stylesheets.Redux.BaseStylesheet.GetResource``1(Robust.Shared.Utility.ResPath)"/>
-    public T GetResource<T>(string target)
-        where T : BaseResource, new()
-    {
-        return GetResource<T>(new ResPath(target));
     }
 
     /// <summary>
@@ -76,7 +62,8 @@ public abstract partial class BaseStylesheet
 /// <param name="target"></param>
 public sealed class MissingResourceException(BaseStylesheet sheet, string target) : Exception
 {
-    public override string Message => $"Failed to find any resource at \"{target}\" for {sheet}. The roots are: {sheet.Roots}";
+    public override string Message =>
+        $"Failed to find any resource at \"{target}\" for {sheet}. The roots are: {sheet.Roots}";
 
     public override string? Source => sheet.ToString();
 }

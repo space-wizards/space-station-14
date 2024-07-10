@@ -24,11 +24,12 @@ public sealed class ContextMenuSheetlet : Sheetlet<PalettedStylesheet>
 
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var cfg = (IButtonConfig) sheet;
+        var windowCfg = (IWindowConfig) sheet;
+        var btnCfg = (IButtonConfig) sheet;
 
         var borderedWindowBackground = new StyleBoxTexture
         {
-            Texture = sheet.GetTexture("window_background_bordered.png"),
+            Texture = sheet.GetTexture(windowCfg.WindowBackgroundBorderedPath),
         };
         borderedWindowBackground.SetPatchMargin(StyleBox.Margin.All, ContextMenuElement.ElementMargin);
         var buttonContext = new StyleBoxTexture { Texture = Texture.White };
@@ -73,11 +74,11 @@ public sealed class ContextMenuSheetlet : Sheetlet<PalettedStylesheet>
                 .Prop(ContainerButton.StylePropertyStyleBox, buttonContext),
         };
 
-        ButtonSheetlet.MakeButtonRules<ContextMenuElement>(cfg,
+        ButtonSheetlet.MakeButtonRules<ContextMenuElement>(btnCfg,
             rules,
             ContextButtonPalette,
             ContextMenuElement.StyleClassContextMenuButton);
-        ButtonSheetlet.MakeButtonRules<ContextMenuElement>(cfg,
+        ButtonSheetlet.MakeButtonRules<ContextMenuElement>(btnCfg,
             rules,
             sheet.NegativePalette,
             ConfirmationMenuElement.StyleClassConfirmationContextMenuButton);

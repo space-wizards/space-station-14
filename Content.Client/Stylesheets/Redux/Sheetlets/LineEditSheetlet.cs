@@ -1,4 +1,5 @@
-﻿using Robust.Client.Graphics;
+﻿using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
@@ -10,7 +11,9 @@ public sealed class LineEditSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var lineEditStylebox = sheet.GetTexture("lineedit.png").IntoPatch(StyleBox.Margin.All, 3);
+        var lineEditCfg = (ILineEditConfig) sheet;
+
+        var lineEditStylebox = sheet.GetTexture(lineEditCfg.LineEditPath).IntoPatch(StyleBox.Margin.All, 3);
         lineEditStylebox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
         return

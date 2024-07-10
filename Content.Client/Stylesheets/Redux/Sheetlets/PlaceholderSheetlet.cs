@@ -1,4 +1,5 @@
-﻿using Content.Client.UserInterface.Controls;
+﻿using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -11,7 +12,9 @@ public sealed class PlaceholderSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var placeholderBox = sheet.GetTexture("placeholder.png").IntoPatch(StyleBox.Margin.All, 19);
+        var placeholderCfg = (IPlaceholderConfig) sheet;
+
+        var placeholderBox = sheet.GetTexture(placeholderCfg.PlaceholderPath).IntoPatch(StyleBox.Margin.All, 19);
         placeholderBox.SetExpandMargin(StyleBox.Margin.All, -5);
         placeholderBox.Mode = StyleBoxTexture.StretchMode.Tile;
 

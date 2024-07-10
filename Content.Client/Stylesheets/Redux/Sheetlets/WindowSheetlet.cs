@@ -15,12 +15,14 @@ public sealed class WindowSheetlet : Sheetlet<PalettedStylesheet>
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
         var buttonCfg = (IButtonConfig) sheet;
+        var windowCfg = (IWindowConfig) sheet;
+        var iconCfg = (IIconConfig) sheet;
 
         var boxFont = new SingleFont(ResCache, "/Fonts/Boxfont-round/Boxfont Round.ttf");
 
         var headerStylebox = new StyleBoxTexture
         {
-            Texture = sheet.GetTexture("window_header.png"),
+            Texture = sheet.GetTexture(windowCfg.WindowHeaderTexturePath),
             PatchMarginBottom = 3,
             ExpandMarginBottom = 3,
             ContentMarginBottomOverride = 0,
@@ -28,23 +30,23 @@ public sealed class WindowSheetlet : Sheetlet<PalettedStylesheet>
         // TODO: This would probably be better palette-based but we can leave it for now.
         var headerAlertStylebox = new StyleBoxTexture
         {
-            Texture = sheet.GetTexture("window_header_alert.png"),
+            Texture = sheet.GetTexture(windowCfg.WindowHeaderAlertTexturePath),
             PatchMarginBottom = 3,
             ExpandMarginBottom = 3,
-            ContentMarginBottomOverride = 0
+            ContentMarginBottomOverride = 0,
         };
-        var backgroundStylebox = new StyleBoxTexture()
+        var backgroundBox = new StyleBoxTexture()
         {
-            Texture = sheet.GetTexture("window_background.png")
+            Texture = sheet.GetTexture(windowCfg.WindowBackgroundPath),
         };
-        backgroundStylebox.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
-        backgroundStylebox.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
-        var borderedBackgroundStylebox = new StyleBoxTexture
+        backgroundBox.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
+        backgroundBox.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
+        var borderedBackgroundBox = new StyleBoxTexture
         {
-            Texture = sheet.GetTexture("window_background_bordered.png"),
+            Texture = sheet.GetTexture(windowCfg.WindowBackgroundBorderedPath),
         };
-        borderedBackgroundStylebox.SetPatchMargin(StyleBox.Margin.All, 2);
-        var closeButtonTex = sheet.GetTexture("cross.svg.png");
+        borderedBackgroundBox.SetPatchMargin(StyleBox.Margin.All, 2);
+        var closeButtonTex = sheet.GetTexture(iconCfg.CrossIconPath);
 
         var leftPanel = buttonCfg.ConfigureOpenLeftButton(sheet);
         leftPanel.SetPadding(StyleBox.Margin.All, 0.0f);
@@ -64,7 +66,7 @@ public sealed class WindowSheetlet : Sheetlet<PalettedStylesheet>
             // TODO: maybe also change everything here to `NanoWindow` or something
             E()
                 .Class(DefaultWindow.StyleClassWindowPanel)
-                .Panel(backgroundStylebox),
+                .Panel(backgroundBox),
             E()
                 .Class(DefaultWindow.StyleClassWindowHeader)
                 .Panel(headerStylebox),
@@ -73,7 +75,7 @@ public sealed class WindowSheetlet : Sheetlet<PalettedStylesheet>
                 .Panel(headerAlertStylebox),
             E()
                 .Class(StyleClass.BorderedWindowPanel)
-                .Panel(borderedBackgroundStylebox),
+                .Panel(borderedBackgroundBox),
             E<TextureButton>()
                 .Class(DefaultWindow.StyleClassWindowCloseButton)
                 .Prop(TextureButton.StylePropertyTexture, closeButtonTex)
@@ -81,14 +83,14 @@ public sealed class WindowSheetlet : Sheetlet<PalettedStylesheet>
 
             // Title
             E<Label>()
-                .Class("FancyWindowTitle")
-                .Prop("font", boxFont.GetFont(13, FontStack.FontKind.Bold))
-                .Prop("font-color", sheet.HighlightPalette.Text),
+                .Class("FancyWindowTitle") // TODO: HARDCODING AAAAAA (theres a lot more in this file)
+                .Font(boxFont.GetFont(13, FontStack.FontKind.Bold))
+                .FontColor(sheet.HighlightPalette.Text),
 
             // Help Button
             E<TextureButton>()
                 .Class(FancyWindow.StyleClassWindowHelpButton)
-                .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture("help.png"))
+                .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture(iconCfg.HelpIconPath))
                 .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette.Element),
             E<TextureButton>()
                 .Class(FancyWindow.StyleClassWindowHelpButton)

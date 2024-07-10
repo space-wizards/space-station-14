@@ -11,18 +11,14 @@ public sealed class ListContainerSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var squareTex = sheet.GetTexture("square.png");
-        var listContainerButton = new StyleBoxTexture
-        {
-            Texture = squareTex,
-            ContentMarginLeftOverride = 10
-        };
+        // TODO: why is this hardcoded???
+        var box = new StyleBoxFlat() { BackgroundColor = Color.White };
+
         return
         [
-            // TODO: why is this hardcoded???
             E<ContainerButton>()
                 .Class(ListContainer.StyleClassListContainerButton)
-                .Box(listContainerButton),
+                .Box(box),
             E<ContainerButton>()
                 .Class(ListContainer.StyleClassListContainerButton)
                 .ButtonNormal()

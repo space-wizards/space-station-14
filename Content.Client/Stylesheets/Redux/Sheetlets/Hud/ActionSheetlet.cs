@@ -1,4 +1,5 @@
 using Content.Client.Resources;
+using Content.Client.Stylesheets.Redux.SheetletConfigs;
 using Content.Client.UserInterface.Systems.Actions.Controls;
 using Content.Client.UserInterface.Systems.Actions.Windows;
 using Robust.Client.Graphics;
@@ -13,6 +14,8 @@ public sealed class ActionSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
+        var panelCfg = (IPanelConfig) sheet;
+
         // TODO: absolute texture access
         var handSlotHighlightTex = ResCache.GetTexture("/Textures/Interface/Inventory/hand_slot_highlight.png");
         var handSlotHighlight = new StyleBoxTexture
@@ -21,7 +24,7 @@ public sealed class ActionSheetlet : Sheetlet<PalettedStylesheet>
         };
         handSlotHighlight.SetPatchMargin(StyleBox.Margin.All, 2);
 
-        var actionSearchBoxTex = sheet.GetTexture("black_panel_dark_thin_border.png");
+        var actionSearchBoxTex = sheet.GetTexture(panelCfg.BlackPanelDarkThinBorderPath);
         var actionSearchBox = new StyleBoxTexture
         {
             Texture = actionSearchBoxTex,

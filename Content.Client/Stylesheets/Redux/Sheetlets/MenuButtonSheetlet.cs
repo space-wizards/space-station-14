@@ -21,7 +21,7 @@ public sealed class MenuButtonSheetlet : Sheetlet<PalettedStylesheet>
     {
         var cfg = (IButtonConfig) sheet;
 
-        var buttonTex = sheet.GetTexture(cfg.BaseButtonTexturePath);
+        var buttonTex = sheet.GetTexture(cfg.BaseButtonPath);
         var topButtonBase = new StyleBoxTexture
         {
             Texture = buttonTex,
