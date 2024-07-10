@@ -107,7 +107,7 @@
   - type: Item
     size: Normal
   - type: Tag
-    tags: 
+    tags:
     - Truncheon
   - type: Clothing
     sprite: Objects/Weapons/Melee/truncheon.rsi
@@ -222,3 +222,26 @@
     - type: GuideHelp
       guides:
       - Security
+
+- type: entity
+  name: pen
+  suffix: Flash
+  parent: Pen # No way, another syndie pen
+  description: A dark ink pen.
+  id: PenFlash
+  components:
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    damage:
+      types:
+        Blunt: 0
+      angle: 10
+  - type: LimitedCharges
+    maxCharges: 3
+    charges: 3
+  - type: Flash
+    meleeStunDuration: 2.5
+    aoeFlashDuration: 6000
+    range: 5
+    slowTo: 0.25
+  - type: UseDelay
