@@ -1,66 +1,4 @@
 ﻿Entries:
-- author: iztokbajcar
-  changes:
-  - message: Glass textures are now less transparent.
-    type: Tweak
-  id: 6391
-  time: '2024-04-18T23:43:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26948
-- author: SlamBamActionman
-  changes:
-  - message: Snouts and noses no longer disappear with toggled masks.
-    type: Fix
-  id: 6392
-  time: '2024-04-19T05:39:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25716
-- author: shampunj
-  changes:
-  - message: 'Now for crafting stunprod you need: igniter, cable cuffs, small power
-      cell, metal rod.'
-    type: Tweak
-  - message: Stunprod deals 35 stamina damage per hit and 5 shock damage. The battery
-      charge is enough for 3 hits.
-    type: Tweak
-  id: 6393
-  time: '2024-04-19T05:50:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25922
-- author: EmoGarbage404
-  changes:
-  - message: Halved passive fuel consumption of welding tools.
-    type: Tweak
-  - message: Completing an action with a welding tool now directly drains the fuel.
-    type: Tweak
-  id: 6394
-  time: '2024-04-19T23:20:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27030
-- author: superjj18
-  changes:
-  - message: Pneumatic cannon inventory reduced in size to 2x2, item blacklist removed
-    type: Tweak
-  id: 6395
-  time: '2024-04-19T23:22:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26878
-- author: Aquif
-  changes:
-  - message: The Communication Console will no longer cut off your messages.
-    type: Fix
-  id: 6396
-  time: '2024-04-20T01:07:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27145
-- author: osjarw
-  changes:
-  - message: Wallmount substation electronics can now be created at an autolathe.
-    type: Add
-  id: 6397
-  time: '2024-04-20T01:14:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27138
-- author: Gyrandola
-  changes:
-  - message: Pepper sprites are now properly centered!
-    type: Fix
-  id: 6398
-  time: '2024-04-20T02:06:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25971
 - author: ElectroJr
   changes:
   - message: Fixed a bug causing the emergency shuttle to not spawn
@@ -3828,3 +3766,63 @@
   id: 6890
   time: '2024-07-09T13:46:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29835
+- author: Plykiya
+  changes:
+  - message: You can now drop food and drinks to stop consuming it.
+    type: Fix
+  id: 6891
+  time: '2024-07-09T23:12:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29854
+- author: Boaz1111
+  changes:
+  - message: Guitars can now be worn in the suit storage slot
+    type: Add
+  id: 6892
+  time: '2024-07-09T23:28:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29048
+- author: Winkarst-cpu
+  changes:
+  - message: Fixed popup spam when trying to open borg's UI while the borg is locked.
+    type: Fix
+  id: 6893
+  time: '2024-07-09T23:48:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29861
+- author: Lokachop
+  changes:
+  - message: Scarves now count as warm clothing for the warm clothing cargo bounty.
+    type: Tweak
+  id: 6894
+  time: '2024-07-10T05:26:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29779
+- author: Aquif
+  changes:
+  - message: It is now possible to "lock" admin faxes such that they cannot be edited
+      by cybersun pens or any other IC means.
+    type: Add
+  id: 6895
+  time: '2024-07-10T05:28:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28972
+- author: Ghagliiarghii
+  changes:
+  - message: The Librarian's Books Bag can now hold D&D related items such as dice
+      and battlemats.
+    type: Tweak
+  id: 6896
+  time: '2024-07-10T05:51:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29863
+- author: Beck Thompson, Tayrtahn
+  changes:
+  - message: Typing indicators now correctly stack and will not overwrite your default
+      species indicator.
+    type: Fix
+  id: 6897
+  time: '2024-07-10T05:51:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29492
+- author: Winkarst-cpu
+  changes:
+  - message: Now confirmation popup is displayed and item panel status is updated
+      after setting a custom solution transfer volume.
+    type: Fix
+  id: 6898
+  time: '2024-07-10T10:32:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29852
