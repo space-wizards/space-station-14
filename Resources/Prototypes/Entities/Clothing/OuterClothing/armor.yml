@@ -21,7 +21,6 @@
         Heat: 0.80
   - type: ExplosionResistance
     damageCoefficient: 0.90
-  - type: AllowSuitStorage
 
 #Alternate / slim basic armor vest
 - type: entity
@@ -211,7 +210,6 @@
   - type: ExplosionResistance
     damageCoefficient: 0.65
   - type: GroupExamine
-  - type: AllowSuitStorage
 
 - type: entity
   parent: ClothingOuterBaseLarge
