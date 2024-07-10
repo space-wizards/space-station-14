@@ -1,7 +1,7 @@
 - type: entity
   name: hypospray
   parent: BaseItem
-  description: A sterile injector for rapid administration of drugs to patients.
+  description: A sterile injector for rapid administration of drugs to patients. It contains an internal Toxin filter.
   id: Hypospray
   components:
   - type: Sprite
