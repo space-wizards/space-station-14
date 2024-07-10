@@ -1,0 +1,81 @@
+- type: entity
+  name: BaseHarpoongun
+  parent: BaseItem
+  id: BaseHarpoongun
+  description: For spearing fish, or people!
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/HarpoonGun/harpoongun.rsi
+  - type: Item
+    size: Normal
+  - type: Clothing
+    quickEquip: false
+    slots:
+      - Back
+      - suitStorage
+  - type: Wieldable
+    wieldSound:
+      path: /Audio/Items/bow_pull.ogg
+  - type: UseDelay
+    delay: 1
+  - type: GunRequiresWield
+  - type: Gun
+    minAngle: 0
+    maxAngle: 5
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      collection: BulletMiss
+    soundEmpty: null
+  - type: ItemSlots
+    slots:
+      projectiles:
+        name: Projectiles
+        startingItem: null
+        insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
+        whitelist:
+          tags:
+          - Harpoon
+  - type: ContainerContainer
+    containers:
+      projectiles: !type:ContainerSlot
+  - type: ContainerAmmoProvider
+    container: projectiles
+
+- type: entity
+  name: Harpoon Gun
+  id: HarpoonGun
+  parent: BaseHarpoongun
+  components:
+  - type: Sprite
+    layers:
+    - state: unwielded
+      map: [ base ]
+    - state: unwielded-arrow
+      map: [ arrow ]
+      visible: false
+  # to elucidate whats intended here:
+  # arrow is inserted -> ItemMapper sets layer with map `arrow` to visible
+  # bow is wielded -> generic vis sets states of layers with map `arrow` and `base`
+  # arrow is removed -> itemmapper sets layer with map `arrow` to invisible
+  - type: Appearance
+  - type: ItemMapper
+    spriteLayers:
+    - arrow
+    mapLayers:
+      arrow:
+        whitelist:
+          tags:
+          - Harpoon
+  - type: GenericVisualizer
+    visuals:
+      enum.WieldableVisuals.Wielded:
+        arrow:
+          True: { state: wielded-arrow }
+          False: { state: unwielded-arrow }
+        base:
+          True: { state: wielded }
+          False: { state: unwielded }

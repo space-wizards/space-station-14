@@ -656,6 +656,50 @@
     color: orange
     energy: 0.5
 
+#- type: entity
+ # id: HarpoonBombBullet
+  #name: explosive harpoon
+  #parent: BaseBulletTrigger
+  #noSpawn: true
+  #components:
+  #- type: Sprite
+  #  sprite: Objects/Weapons/Guns/Projectiles/explosive_harpoons.rsi
+  #  layers:
+  #    - state: explosive
+  #- type: ExplodeOnTrigger
+  #- type: Explosive
+  #  explosionType: Default
+  #  maxIntensity: 10
+  #  intensitySlope: 4
+  #  totalIntensity: 50
+  #  maxTileBreak: 0.5
+  #- type: PointLight
+  #  radius: 1.5
+  #  color: orange
+  #  energy: 0.09
+
+- type: entity
+  id: HarpoonBombBullet
+  name: rocket
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects\Weapons\Guns\Projectiles\explosive_harpoons.rsi
+    layers:
+      - state: explosive
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 10
+    intensitySlope: 3
+    totalIntensity: 100
+    maxTileBreak: 1
+  - type: PointLight
+    radius: 3.5
+    color: orange
+    energy: 0.5
+
 - type: entity
   id: BulletWeakRocket
   name: weak rocket

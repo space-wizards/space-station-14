@@ -20,6 +20,8 @@
   - type: StaticPrice
     price: 20
 
+
+
 - type: entity
   id: CartridgeRocketSlow
   name: PG-7VL grenade "Snail-Rocket"
@@ -122,7 +124,7 @@
   - type: SpentAmmoVisuals
     state: frag
     suffix: false
-    
+
 - type: entity
   id: GrenadeEMP
   name: EMP grenade
@@ -154,7 +156,7 @@
   - type: Item
     size: Small
   - type: Sprite
-  
+
 - type: entity
   id: CannonBall
   name: cannonball
