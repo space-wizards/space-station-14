@@ -18,7 +18,7 @@ thief-backpack-button-deselect = Select [X]
 thief-backpack-category-chameleon-name = chameleon kit
 thief-backpack-category-chameleon-description =
     You are everyone and no one; you are a master of disguise.
-    Includes: A chameleon thieving backpack,
+    Includes: A silent chameleon thieving backpack,
     a set of chameleon clothing, and a chameleon projector.
     Disguise as anyone and anything.
 
