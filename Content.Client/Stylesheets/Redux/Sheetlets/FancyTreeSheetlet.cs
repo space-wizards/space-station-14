@@ -7,27 +7,30 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
 
 [CommonSheetlet]
-public sealed class FancyTreeSheetlet: Sheetlet<PalettedStylesheet>
+public sealed class FancyTreeSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
         return new StyleRule[]
         {
-            E<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
+            E<ContainerButton>()
+                .Identifier(TreeItem.StyleIdentifierTreeButton)
                 .Class(TreeItem.StyleClassEvenRow)
-                .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat(sheet.SecondaryPalette[2])),
-
-            E<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
+                .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat(sheet.SecondaryPalette.BackgroundLight)),
+            E<ContainerButton>()
+                .Identifier(TreeItem.StyleIdentifierTreeButton)
                 .Class(TreeItem.StyleClassOddRow)
-                .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat(sheet.SecondaryPalette[3])),
+                .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat(sheet.SecondaryPalette.Background)),
 
-            E<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
+            E<ContainerButton>()
+                .Identifier(TreeItem.StyleIdentifierTreeButton)
                 .Class(TreeItem.StyleClassSelected)
-                .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat(sheet.PrimaryPalette[1])),
+                .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat(sheet.PrimaryPalette.Element)),
 
-            E<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
+            E<ContainerButton>()
+                .Identifier(TreeItem.StyleIdentifierTreeButton)
                 .Pseudo(ContainerButton.StylePseudoClassHover)
-                .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat(sheet.PrimaryPalette[0])),
+                .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat(sheet.PrimaryPalette.HoveredElement)),
         };
     }
 }

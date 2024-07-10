@@ -48,7 +48,7 @@ public sealed class PalettedWindowSheetlet : Sheetlet<PalettedStylesheet>
             // TODO: KILL DEFAULT WINDOW (in a bit)
             E<Label>()
                 .Class(DefaultWindow.StyleClassWindowTitle)
-                .FontColor(sheet.HighlightPalette[0])
+                .FontColor(sheet.HighlightPalette.Text)
                 .Font(sheet.BaseFont.GetFont(14, FontStack.FontKind.Bold)),
             E<Label>()
                 .Class("windowTitleAlert")

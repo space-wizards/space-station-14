@@ -19,11 +19,11 @@ public sealed class NTFancyWindowSheetlet : Sheetlet<PalettedStylesheet>
             E<PanelContainer>()
                 .Class("WindowHeadingBackground")
                 .Prop("panel", leftPanel)
-                .Prop(Control.StylePropertyModulateSelf, sheet.SecondaryPalette[4]),
+                .Prop(Control.StylePropertyModulateSelf, sheet.SecondaryPalette.BackgroundDark),
             E<PanelContainer>()
                 .Class("WindowHeadingBackgroundLight")
                 .Prop("panel", leftPanel)
-                .Prop(Control.StylePropertyModulateSelf, sheet.SecondaryPalette[3]),
+                .Prop(Control.StylePropertyModulateSelf, sheet.SecondaryPalette.Background),
             E()
                 .Class(StyleClass.WindowContentsContainer)
                 .Margin(new Thickness(0, 2)),

@@ -15,21 +15,21 @@ public sealed class PanelSheetlet : Sheetlet<PalettedStylesheet>
 
         var boxLight = new StyleBoxFlat()
         {
-            BackgroundColor = cfg.PanelLightColor
+            BackgroundColor = cfg.PanelLightColor,
         };
         var boxDark = new StyleBoxFlat()
         {
-            BackgroundColor = cfg.PanelDarkColor
+            BackgroundColor = cfg.PanelDarkColor,
         };
         var boxDivider = new StyleBoxFlat
         {
-            BackgroundColor = sheet.HighlightPalette[0],
+            BackgroundColor = sheet.HighlightPalette.Base,
             ContentMarginBottomOverride = 2,
             ContentMarginLeftOverride = 2,
         };
-        var boxPositive = new StyleBoxFlat { BackgroundColor = sheet.PositivePalette[0] };
-        var boxNegative = new StyleBoxFlat { BackgroundColor = sheet.NegativePalette[0] };
-        var boxHighlight = new StyleBoxFlat { BackgroundColor = sheet.HighlightPalette[0] };
+        var boxPositive = new StyleBoxFlat { BackgroundColor = sheet.PositivePalette.Background };
+        var boxNegative = new StyleBoxFlat { BackgroundColor = sheet.NegativePalette.Background };
+        var boxHighlight = new StyleBoxFlat { BackgroundColor = sheet.HighlightPalette.Background };
 
         return
         [

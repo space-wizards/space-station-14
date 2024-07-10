@@ -35,8 +35,6 @@ public partial class NanotrasenStylesheet : PalettedStylesheet
         BaseFont = new NotoFontStack(ResCache);
         var rules = new[]
         {
-            // Base rules from the base stylesheet.
-            BaseRules(),
             // Set up important rules that need to go first.
             GetRulesForFont(null, BaseFont, _commonFontSizes),
             // Set up our core rules.

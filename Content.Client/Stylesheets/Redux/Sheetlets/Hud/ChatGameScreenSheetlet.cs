@@ -21,7 +21,7 @@ public sealed class ChatGameScreenSheetlet : Sheetlet<PalettedStylesheet>
                 .Panel(new StyleBoxFlat(panel.PanelColor)),
             E<OutputPanel>()
                 .Class(SeparatedChatGameScreen.StyleClassChatOutput)
-                .Panel(new StyleBoxFlat(sheet.SecondaryPalette[4])),
+                .Panel(new StyleBoxFlat(sheet.SecondaryPalette.BackgroundDark)),
         ];
     }
 }

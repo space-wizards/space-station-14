@@ -11,7 +11,7 @@ public sealed class ChatSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var chatColor = sheet.SecondaryPalette[3].WithAlpha(221.0f / 255.0f);
+        var chatColor = sheet.SecondaryPalette.Background.WithAlpha(221.0f / 255.0f);
         var chatBg = new StyleBoxFlat(chatColor);
 
         var chatChannelButtonTex = sheet.GetTexture("rounded_button.svg.96dpi.png");

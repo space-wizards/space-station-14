@@ -11,7 +11,8 @@ public sealed partial class InterfaceStylesheet : IButtonConfig
     ResPath IButtonConfig.OpenRightButtonTexturePath => new("button.svg.96dpi.png");
     ResPath IButtonConfig.OpenBothButtonTexturePath => new("button.svg.96dpi.png");
     ResPath IButtonConfig.SmallButtonTexturePath => new("button_small.svg.96dpi.png");
-    Color[] IButtonConfig.ButtonPalette => PrimaryPalette;
-    Color[] IButtonConfig.PositiveButtonPalette => PositivePalette;
-    Color[] IButtonConfig.NegativeButtonPalette => NegativePalette;
+
+    ColorPalette IButtonConfig.ButtonPalette => PrimaryPalette;
+    ColorPalette IButtonConfig.PositiveButtonPalette => PositivePalette;
+    ColorPalette IButtonConfig.NegativeButtonPalette => NegativePalette;
 }

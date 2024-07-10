@@ -14,7 +14,7 @@ public sealed class DividersSheetlet : Sheetlet<PalettedStylesheet>
         [
             E<PanelContainer>()
                 .Class(StyleClass.LowDivider)
-                .Panel(new StyleBoxFlat(sheet.SecondaryPalette[1]))
+                .Panel(new StyleBoxFlat(sheet.SecondaryPalette.TextDark))
                 .MinSize(new(2, 2)),
         ];
     }

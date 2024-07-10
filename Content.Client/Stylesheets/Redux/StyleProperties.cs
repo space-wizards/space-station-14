@@ -7,6 +7,4 @@ public sealed class StyleProperties
     public const string PositivePalette = "palette-positive";
     public const string NegativePalette = "palette-negative";
     public const string HighlightPalette = "palette-highlight";
-
-
 }

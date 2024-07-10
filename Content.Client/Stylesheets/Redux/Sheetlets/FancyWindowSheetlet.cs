@@ -21,21 +21,21 @@ public sealed class FancyWindowSheetlet : Sheetlet<PalettedStylesheet>
             E<Label>()
                 .Class("FancyWindowTitle")
                 .Prop("font", boxFont.GetFont(13, FontStack.FontKind.Bold))
-                .Prop("font-color", sheet.HighlightPalette[0]),
+                .Prop("font-color", sheet.HighlightPalette.Text),
 
             // Help Button
             E<TextureButton>()
                 .Class(FancyWindow.StyleClassWindowHelpButton)
                 .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture("help.png"))
-                .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette[1]),
+                .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette.Element),
             E<TextureButton>()
                 .Class(FancyWindow.StyleClassWindowHelpButton)
                 .Pseudo(ContainerButton.StylePseudoClassHover)
-                .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette[0]),
+                .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette.HoveredElement),
             E<TextureButton>()
                 .Class(FancyWindow.StyleClassWindowHelpButton)
                 .Pseudo(ContainerButton.StylePseudoClassPressed)
-                .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette[2]),
+                .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette.PressedElement),
 
             // Close Button
             E<TextureButton>()

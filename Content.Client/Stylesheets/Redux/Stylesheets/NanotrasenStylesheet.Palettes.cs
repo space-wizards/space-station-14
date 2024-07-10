@@ -8,72 +8,15 @@ namespace Content.Client.Stylesheets.Redux.Stylesheets;
 
 public sealed partial class NanotrasenStylesheet : IPanelPalette, IStatusPalette
 {
-    /*
-     * NT Colors.
-     * Do NOT copy-paste these. I will find you.
-     * Seriously, use the stylesheet.
-     */
+    public override ColorPalette PrimaryPalette => Palettes.NanoPrimary;
+    public override ColorPalette SecondaryPalette => Palettes.NanoSecondary;
+    public override ColorPalette PositivePalette => Palettes.PositiveGreen;
+    public override ColorPalette NegativePalette => Palettes.NegativeRed;
+    public override ColorPalette HighlightPalette => Palettes.HighlightYellow;
 
-    private static readonly Color PrimaryColor = Color.FromHex("#575B7F");
-    private static readonly Color SecondaryColor = Color.FromHex("#5B5D6E");
-    private static readonly Color PositiveColor = Color.FromHex("#3E6C45");
-    private static readonly Color NegativeColor = Color.FromHex("#CF2F2F");
-    private static readonly Color HighlightColor = Color.FromHex("#A88B5E");
+    Color IPanelPalette.PanelLightColor => SecondaryPalette.BackgroundLight;
+    Color IPanelPalette.PanelColor => SecondaryPalette.Background;
+    Color IPanelPalette.PanelDarkColor => SecondaryPalette.BackgroundDark;
 
-    // The primary/vibrant palette used by interactables like buttons.
-    public override Color[] PrimaryPalette { get; } =  new[]
-    {
-        PrimaryColor,
-        PrimaryColor.NudgeLightness(-6f),
-        PrimaryColor.NudgeLightness(-12f),
-        PrimaryColor.NudgeLightness(-18f),
-        PrimaryColor.NudgeLightness(-24f),
-    };
-
-    // The secondary/mundane palette used by background elements.
-    public override Color[] SecondaryPalette { get; } = new[]
-    {
-        SecondaryColor,
-        SecondaryColor.NudgeLightness(-6f),
-        SecondaryColor.NudgeLightness(-12f),
-        SecondaryColor.NudgeLightness(-18f),
-        SecondaryColor.NudgeLightness(-24f),
-    };
-
-    // A (traditionally) green palette used for positive actions.
-    public override Color[] PositivePalette { get; } = new[]
-    {
-        PositiveColor,
-        PositiveColor.NudgeLightness(-6f),
-        PositiveColor.NudgeLightness(-12f),
-        PositiveColor.NudgeLightness(-18f),
-        PositiveColor.NudgeLightness(-24f),
-    };
-
-    // A (traditionally) red palette used for negative actions.
-    public override Color[] NegativePalette { get; } = new[]
-    {
-        NegativeColor,
-        NegativeColor.NudgeLightness(-6f),
-        NegativeColor.NudgeLightness(-12f),
-        NegativeColor.NudgeLightness(-18f),
-        NegativeColor.NudgeLightness(-24f),
-    };
-
-
-    public override Color[] HighlightPalette { get; } = new[]
-    {
-        HighlightColor,
-        HighlightColor.NudgeLightness(-6f),
-        HighlightColor.NudgeLightness(-12f),
-        HighlightColor.NudgeLightness(-18f),
-        HighlightColor.NudgeLightness(-24f),
-    };
-
-
-    Color IPanelPalette.PanelLightColor => SecondaryPalette[2];
-    Color IPanelPalette.PanelColor => SecondaryPalette[3];
-    Color IPanelPalette.PanelDarkColor => SecondaryPalette[4];
-
-    OklabColor[] IStatusPalette.StatusColors => [new(NegativeColor), new(HighlightColor), new(PositiveColor)];
+    Color[] IStatusPalette.StatusColors => [NegativePalette.Base, HighlightPalette.Base, PositivePalette.Base];
 }

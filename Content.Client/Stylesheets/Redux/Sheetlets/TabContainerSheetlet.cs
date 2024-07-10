@@ -13,9 +13,9 @@ public sealed class TabContainerSheetlet : Sheetlet<PalettedStylesheet>
     {
         var tabContainerPanel = sheet.GetTexture("tabcontainer_panel.png").IntoPatch(StyleBox.Margin.All, 2);
 
-        var tabContainerBoxActive = new StyleBoxFlat(sheet.SecondaryPalette[1]);
+        var tabContainerBoxActive = new StyleBoxFlat(sheet.SecondaryPalette.Element);
         tabContainerBoxActive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
-        var tabContainerBoxInactive = new StyleBoxFlat(sheet.SecondaryPalette[3]);
+        var tabContainerBoxInactive = new StyleBoxFlat(sheet.SecondaryPalette.Background);
         tabContainerBoxInactive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
         return new StyleRule[]

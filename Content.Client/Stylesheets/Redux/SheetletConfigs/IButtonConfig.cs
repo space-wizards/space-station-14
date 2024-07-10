@@ -15,17 +15,17 @@ namespace Content.Client.Stylesheets.Redux.SheetletConfig
         /// <summary>
         ///     A lightest-to-darkest five color palette, for use by buttons.
         /// </summary>
-        public Color[] ButtonPalette { get; }
+        public ColorPalette ButtonPalette { get; }
 
         /// <summary>
         ///     A lightest-to-darkest five color palette, for use by "positive" buttons.
         /// </summary>
-        public Color[] PositiveButtonPalette { get; }
+        public ColorPalette PositiveButtonPalette { get; }
 
         /// <summary>
         ///     A lightest-to-darkest five color palette, for use by "negative" buttons.
         /// </summary>
-        public Color[] NegativeButtonPalette { get; }
+        public ColorPalette NegativeButtonPalette { get; }
 
         public StyleBox ConfigureBaseButton(IStyleResources sheet)
         {

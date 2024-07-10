@@ -17,18 +17,19 @@
 - [x] `NavMapControl.cs:133` fix this
 - [x] `CrewMonitoringWindow` uses `TooltipDesc` for some reason??
 - [x] Whatever the hell `StyleClassSliderWhite` and friends are being used for
-  - nothing, apparently
+    - nothing, apparently
 - [x] Move `Chat` style classes from `StyleClass.cs`
 - [ ] ~~Vending machines entries no hover?~~
-  - `ItemList` skill issue
+    - `ItemList` skill issue
 - [x] Also `ApcMenu.xaml.cs`: localize watts
 - [ ] ~~`PopupUiController` lots of hardcoding~~
-  - Ehhh probably fine
+    - Ehhh probably fine
 
 - [ ] ~~`ScopedResCache` because moving around resources is annoying and prone to error when merging~~
-  - You can have multiple roots
+    - You can have multiple roots
 - [x] `MainMenuSheetlet` should maybe be with the xaml?
-- [ ] `Palette` class and kick out indexing palette with a number
+- [x] `Palette` class and kick out indexing palette with a number
+    - `ColorPalette` / `Palettes` but same thing
 - [ ] tooltips being part of another stylesheet is kinda bad
 - [ ] rename `InterfaceStylesheet` to `SystemStylesheet`
 - [ ] rename `FancyWindow` to `NanoWindow`
@@ -58,7 +59,12 @@ new iteration, I tried to maximize the readability of the *structure* of the cod
 available for you to use? Look in `StyleClass`. Want to know the styles applicable to labels? `LabelSheetlet`
 or `TextSheetlet`. Buttons? `ButtonSheetlet`.
 
-The style rule definition syntax is also pretty good IMO but that wasn't me so,
+Blah blah explain sheetlets
+
+Instead of an array of colors, I made a custom [`ColorPalette`] class. This is because when transferring all the styles
+into `Sheetlet`s, I noticed I basically used the palette in one of three ways, foreground elements (Buttons etc.),
+background elements, (Panels, etc.), and text. So I represented that in the palette! Just makes code a bit more
+readable / robust.
 
 ### Significant Interface Changes
 
@@ -68,6 +74,7 @@ The style rule definition syntax is also pretty good IMO but that wasn't me so,
   correctly, as I was pretty methodical with it, but its also entirely possible I forgot something. If anybody notices a
   UI that looks worse than they remember, double check it actually is different (this happened to me several times, some
   of the UIs are just kinda bad), and pretty please PR the changes (or ask me, and I'll probably do it).
+- I definitely like messed a couple colors up but whatever
 
 ### Breaking Changes
 

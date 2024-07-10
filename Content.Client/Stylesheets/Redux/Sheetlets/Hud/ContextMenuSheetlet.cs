@@ -14,13 +14,12 @@ namespace Content.Client.Stylesheets.Redux.Sheetlets.Hud;
 [CommonSheetlet]
 public sealed class ContextMenuSheetlet : Sheetlet<PalettedStylesheet>
 {
-    public static readonly Color[] ContextButtonPalette = new[]
+    // TODO: make this note hardcoded (I am too scared to change the context menu colors)
+    public static readonly ColorPalette ContextButtonPalette = new(Color.Black)
     {
-        Color.DarkSlateGray,
-        Color.FromHex("#1119"),
-        Color.LightSlateGray,
-        Color.Black, // unused
-        Color.Black, // also unused i think??
+        HoveredElement = Color.DarkSlateGray,
+        Element = Color.FromHex("#1119"),
+        PressedElement = Color.LightSlateGray,
     };
 
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
@@ -33,10 +32,8 @@ public sealed class ContextMenuSheetlet : Sheetlet<PalettedStylesheet>
         };
         borderedWindowBackground.SetPatchMargin(StyleBox.Margin.All, ContextMenuElement.ElementMargin);
         var buttonContext = new StyleBoxTexture { Texture = Texture.White };
-        var contextMenuExpansionTexture =
-            sheet.ResCache.GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png");
-        var verbMenuConfirmationTexture =
-            sheet.ResCache.GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png");
+        var contextMenuExpansionTexture = ResCache.GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png");
+        var verbMenuConfirmationTexture = ResCache.GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png");
 
         var rules = new List<StyleRule>
         {

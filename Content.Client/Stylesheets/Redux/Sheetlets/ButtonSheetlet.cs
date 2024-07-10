@@ -10,13 +10,6 @@ namespace Content.Client.Stylesheets.Redux.Sheetlets;
 
 public abstract class ButtonSheetlet : Sheetlet<PalettedStylesheet>
 {
-    // this is hardcoded, but the other option is adding another field to the palette class. doesn't seem worth it
-    private readonly Color[] _textureButtonPalette = new[]
-    {
-        Color.FromHex("#ffffff"), Color.FromHex("#d0d0d0"), Color.FromHex("#b0b0b0"), Color.FromHex("#909090"),
-        Color.FromHex("#707070"), Color.FromHex("#505050"),
-    };
-
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
         var cfg = (IButtonConfig) sheet;
@@ -58,7 +51,7 @@ public abstract class ButtonSheetlet : Sheetlet<PalettedStylesheet>
                 .AlignMode(Label.AlignMode.Center),
         };
         // Texture button modulation
-        MakeButtonRules<TextureButton>(cfg, rules, _textureButtonPalette, null);
+        MakeButtonRules<TextureButton>(cfg, rules, Palettes.AlphaModulate, null);
         MakeButtonRules<TextureButton>(cfg, rules, sheet.NegativePalette, StyleClass.CrossButtonRed);
 
         return rules.ToArray();
@@ -66,30 +59,30 @@ public abstract class ButtonSheetlet : Sheetlet<PalettedStylesheet>
 
     public static void MakeButtonRules<T>(IButtonConfig _,
         List<StyleRule> rules,
-        IReadOnlyList<Color> palette,
+        ColorPalette palette,
         string? styleclass)
         where T : Control
     {
         rules.AddRange(new StyleRule[]
         {
-            E<T>().MaybeClass(styleclass).ButtonNormal().Modulate(palette[1]),
-            E<T>().MaybeClass(styleclass).ButtonHovered().Modulate(palette[0]),
-            E<T>().MaybeClass(styleclass).ButtonPressed().Modulate(palette[2]),
-            E<T>().MaybeClass(styleclass).ButtonDisabled().Modulate(palette[4])
+            E<T>().MaybeClass(styleclass).ButtonNormal().Modulate(palette.Element),
+            E<T>().MaybeClass(styleclass).ButtonHovered().Modulate(palette.HoveredElement),
+            E<T>().MaybeClass(styleclass).ButtonPressed().Modulate(palette.PressedElement),
+            E<T>().MaybeClass(styleclass).ButtonDisabled().Modulate(palette.DisabledElement),
         });
     }
 
     public static void MakeButtonRules(IButtonConfig _,
         List<StyleRule> rules,
-        IReadOnlyList<Color> palette,
+        ColorPalette palette,
         string? styleclass)
     {
         rules.AddRange(new StyleRule[]
         {
-            E().MaybeClass(styleclass).ButtonNormal().Prop(Button.StylePropertyModulateSelf, palette[1]),
-            E().MaybeClass(styleclass).ButtonHovered().Prop(Button.StylePropertyModulateSelf, palette[0]),
-            E().MaybeClass(styleclass).ButtonPressed().Prop(Button.StylePropertyModulateSelf, palette[2]),
-            E().MaybeClass(styleclass).ButtonDisabled().Prop(Button.StylePropertyModulateSelf, palette[4])
+            E().MaybeClass(styleclass).ButtonNormal().Prop(Button.StylePropertyModulateSelf, palette.Element),
+            E().MaybeClass(styleclass).ButtonHovered().Prop(Button.StylePropertyModulateSelf, palette.HoveredElement),
+            E().MaybeClass(styleclass).ButtonPressed().Prop(Button.StylePropertyModulateSelf, palette.PressedElement),
+            E().MaybeClass(styleclass).ButtonDisabled().Prop(Button.StylePropertyModulateSelf, palette.DisabledElement),
         });
     }
 

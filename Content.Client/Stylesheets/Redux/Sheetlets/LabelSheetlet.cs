@@ -15,11 +15,11 @@ public sealed class LabelSheetlet : Sheetlet<PalettedStylesheet>
             E<Label>()
                 .Class(StyleClass.LabelHeading)
                 .Font(sheet.BaseFont.GetFont(16, FontStack.FontKind.Bold))
-                .FontColor(sheet.HighlightPalette[0]),
+                .FontColor(sheet.HighlightPalette.Text),
             E<Label>()
                 .Class(StyleClass.LabelHeadingBigger)
                 .Font(sheet.BaseFont.GetFont(20, FontStack.FontKind.Bold))
-                .FontColor(sheet.HighlightPalette[0]),
+                .FontColor(sheet.HighlightPalette.Text),
             E<Label>()
                 .Class(StyleClass.LabelSubText)
                 .Font(sheet.BaseFont.GetFont(10))
@@ -27,19 +27,19 @@ public sealed class LabelSheetlet : Sheetlet<PalettedStylesheet>
             E<Label>()
                 .Class(StyleClass.LabelKeyText)
                 .Font(sheet.BaseFont.GetFont(12, FontStack.FontKind.Bold))
-                .FontColor(sheet.HighlightPalette[0]),
+                .FontColor(sheet.HighlightPalette.Text),
             E<Label>()
                 .Class(StyleClass.LabelWeak)
                 .FontColor(Color.DarkGray), // TODO: you know the drill by now
             E<Label>()
                 .Class(StyleClass.Positive)
-                .FontColor(sheet.PositivePalette[0]),
+                .FontColor(sheet.PositivePalette.Text),
             E<Label>()
                 .Class(StyleClass.Negative)
-                .FontColor(sheet.NegativePalette[0]),
+                .FontColor(sheet.NegativePalette.Text),
             E<Label>()
                 .Class(StyleClass.Highlight)
-                .FontColor(sheet.HighlightPalette[0]),
+                .FontColor(sheet.HighlightPalette.Text),
         ];
     }
 }

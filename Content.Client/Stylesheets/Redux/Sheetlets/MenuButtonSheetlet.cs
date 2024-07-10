@@ -55,8 +55,7 @@ public sealed class MenuButtonSheetlet : Sheetlet<PalettedStylesheet>
             CButton().Class(StyleClass.ButtonSquare).Box(topButtonSquare),
             CButton().Class(StyleClass.ButtonOpenLeft).Box(topButtonOpenLeft),
             CButton().Class(StyleClass.ButtonOpenRight).Box(topButtonOpenRight),
-            CButton()
-                .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureBaseButton(sheet)),
+            CButton().Box(cfg.ConfigureBaseButton(sheet)),
             CButton()
                 .Class(StyleClass.ButtonOpenLeft)
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenLeftButton(sheet)),
@@ -71,7 +70,7 @@ public sealed class MenuButtonSheetlet : Sheetlet<PalettedStylesheet>
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenSquareButton(sheet)),
             E<Label>()
                 .Class(MenuButton.StyleClassLabelTopButton)
-                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(14, FontStack.FontKind.Bold))
+                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(14, FontStack.FontKind.Bold)),
             // new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
         };
 

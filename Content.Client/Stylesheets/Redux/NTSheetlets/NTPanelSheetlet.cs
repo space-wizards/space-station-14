@@ -18,15 +18,15 @@ public sealed class NTPanelSheetlet : Sheetlet<PalettedStylesheet>
             E()
                 .Class(StyleClass.BackgroundPanel)
                 .Prop(PanelContainer.StylePropertyPanel, cfg.ConfigureBaseButton(sheet))
-                .Modulate(sheet.SecondaryPalette[3]),
+                .Modulate(sheet.SecondaryPalette.Background),
             E()
                 .Class(StyleClass.BackgroundPanelOpenLeft)
                 .Prop(PanelContainer.StylePropertyPanel, cfg.ConfigureOpenLeftButton(sheet))
-                .Modulate(sheet.SecondaryPalette[3]),
+                .Modulate(sheet.SecondaryPalette.Background),
             E()
                 .Class(StyleClass.BackgroundPanelOpenRight)
                 .Prop(PanelContainer.StylePropertyPanel, cfg.ConfigureOpenRightButton(sheet))
-                .Modulate(sheet.SecondaryPalette[3]),
+                .Modulate(sheet.SecondaryPalette.Background),
         };
 
         return rules.ToArray();

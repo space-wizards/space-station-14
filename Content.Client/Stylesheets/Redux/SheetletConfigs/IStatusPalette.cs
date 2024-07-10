@@ -13,7 +13,7 @@ public interface IStatusPalette : ISheetletConfig
      *
      * Traditionally, something like { Red, Yellow, Green }
      */
-    public OklabColor[] StatusColors { get; }
+    public Color[] StatusColors { get; }
 
     /**
      * <param name="factor">The severity of this status from 0 to 1. Traditionally, 1 will be green and 0 red</param>
@@ -37,6 +37,6 @@ public interface IStatusPalette : ISheetletConfig
         var to = StatusColors[fromIdx + 1];
         var f = (factor - (float) fromIdx / intervals) * intervals;
 
-        return (Color) OklabColor.Blend(from, to, f);
+        return (Color) OklabColor.Blend(new OklabColor(from), new OklabColor(to), f);
     }
 }
