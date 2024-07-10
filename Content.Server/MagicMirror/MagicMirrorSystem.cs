@@ -74,7 +74,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
 
     private void OnSelectSlotDoAfter(EntityUid uid, MagicMirrorComponent component, MagicMirrorSelectDoAfterEvent args)
     {
-        if (args.Handled || args.Target == null || args.Cancelled || !TryComp(component.Target, out HumanoidAppearanceComponent? humanoid))
+        if (args.Handled || args.Target == null || args.Cancelled)
             return;
 
         if (component.Target != args.Target)
