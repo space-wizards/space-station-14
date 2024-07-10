@@ -548,6 +548,31 @@ entities:
       parent: 2
 - proto: AtmosDeviceFanTiny
   entities:
+  - uid: 472
+    components:
+    - type: Transform
+      pos: 2.5,-7.5
+      parent: 2
+  - uid: 473
+    components:
+    - type: Transform
+      pos: 2.5,-9.5
+      parent: 2
+  - uid: 475
+    components:
+    - type: Transform
+      pos: 16.5,-9.5
+      parent: 2
+  - uid: 476
+    components:
+    - type: Transform
+      pos: 16.5,-15.5
+      parent: 2
+  - uid: 477
+    components:
+    - type: Transform
+      pos: 16.5,-17.5
+      parent: 2
   - uid: 586
     components:
     - type: Transform
