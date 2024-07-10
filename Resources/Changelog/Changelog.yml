@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Gyrandola
-  changes:
-  - message: Pepper sprites are now properly centered!
-    type: Fix
-  id: 6398
-  time: '2024-04-20T02:06:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25971
 - author: ElectroJr
   changes:
   - message: Fixed a bug causing the emergency shuttle to not spawn
@@ -3825,3 +3818,11 @@
   id: 6897
   time: '2024-07-10T05:51:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29492
+- author: Winkarst-cpu
+  changes:
+  - message: Now confirmation popup is displayed and item panel status is updated
+      after setting a custom solution transfer volume.
+    type: Fix
+  id: 6898
+  time: '2024-07-10T10:32:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29852
