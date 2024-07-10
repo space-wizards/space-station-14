@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Aquif
-  changes:
-  - message: The Communication Console will no longer cut off your messages.
-    type: Fix
-  id: 6396
-  time: '2024-04-20T01:07:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27145
-- author: osjarw
-  changes:
-  - message: Wallmount substation electronics can now be created at an autolathe.
-    type: Add
-  id: 6397
-  time: '2024-04-20T01:14:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27138
 - author: Gyrandola
   changes:
   - message: Pepper sprites are now properly centered!
@@ -3823,3 +3809,19 @@
   id: 6895
   time: '2024-07-10T05:28:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28972
+- author: Ghagliiarghii
+  changes:
+  - message: The Librarian's Books Bag can now hold D&D related items such as dice
+      and battlemats.
+    type: Tweak
+  id: 6896
+  time: '2024-07-10T05:51:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29863
+- author: Beck Thompson, Tayrtahn
+  changes:
+  - message: Typing indicators now correctly stack and will not overwrite your default
+      species indicator.
+    type: Fix
+  id: 6897
+  time: '2024-07-10T05:51:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29492
