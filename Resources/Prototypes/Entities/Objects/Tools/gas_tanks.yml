@@ -45,6 +45,12 @@
       Steel: 185
   - type: StaticPrice
     price: 20
+  - type: RequireWhitelistStorage
+    whitelist:
+      tags:
+      - Hardsuit
+      - SuitEVA
+
 
 - type: entity
   abstract: true

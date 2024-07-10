@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Armor;
 using Content.Shared.Clothing.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
@@ -10,6 +11,7 @@ using Content.Shared.Item;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
+using Content.Shared.Tag;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -31,6 +33,7 @@ public abstract partial class InventorySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     [ValidatePrototypeId<ItemSizePrototype>]
     private const string PocketableItemSize = "Small";
@@ -243,6 +246,37 @@ public abstract partial class InventorySystem
         DebugTools.Assert(slotDefinition.Name == slot);
         if (slotDefinition.DependsOn != null && !TryGetSlotEntity(target, slotDefinition.DependsOn, out _, inventory))
             return false;
+
+        if (TryComp<RequireWhitelistStorageComponent>(itemUid, out var whitelistComp))
+        {
+            if (whitelistComp.Whitelist == null)
+            {
+                return false;
+            }
+
+            bool whitelistPassed = false;
+
+            // i dont see why youd to check any other slot
+            foreach (var tagSlot in new[] { "jumpsuit", "outerClothing", "head" })
+            {
+                if (!TryGetSlotEntity(target, tagSlot, out EntityUid? slotEntity, inventory))
+                {
+                    continue;
+                }
+
+                if (_whitelistSystem.IsWhitelistPass(whitelistComp.Whitelist, slotEntity.Value))
+                {
+                    whitelistPassed = true;
+                    break;
+                }
+
+            }
+
+            if (!whitelistPassed)
+            {
+                return false;
+            }
+        }
 
         var fittingInPocket = slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) &&
                               item != null &&
