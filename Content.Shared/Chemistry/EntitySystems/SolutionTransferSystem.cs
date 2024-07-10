@@ -38,15 +38,11 @@ public sealed class SolutionTransferSystem : EntitySystem
 
     private void OnTransferAmountSetValueMessage(Entity<SolutionTransferComponent> ent, ref TransferAmountSetValueMessage message)
     {
-        var (uid, comp) = ent;
-
-        var newTransferAmount = FixedPoint2.Clamp(message.Value, comp.MinimumTransferAmount, comp.MaximumTransferAmount);
-        comp.TransferAmount = newTransferAmount;
+        var newTransferAmount = FixedPoint2.Clamp(message.Value, ent.Comp.MinimumTransferAmount, ent.Comp.MaximumTransferAmount);
+        ent.Comp.TransferAmount = newTransferAmount;
 
         if (message.Actor is { Valid: true } user)
-            _popup.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", newTransferAmount)), uid, user);
-
-        Dirty(uid, comp);
+            _popup.PopupClient(Loc.GetString("comp-solution-transfer-set-amount", ("amount", newTransferAmount)), ent, user);
     }
 
     private void AddSetTransferVerbs(Entity<SolutionTransferComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -82,7 +78,10 @@ public sealed class SolutionTransferSystem : EntitySystem
             verb.Act = () =>
             {
                 comp.TransferAmount = amount;
+
                 _popup.PopupClient(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)), uid, user);
+
+                Dirty(uid, comp);
             };
 
             // we want to sort by size, not alphabetically by the verb text.
