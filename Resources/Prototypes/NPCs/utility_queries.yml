@@ -91,9 +91,6 @@
     - !type:TargetDistanceCon
       curve: !type:PresetCurve
         preset: TargetDistance
-    - !type:TargetHealthCon
-      curve: !type:PresetCurve
-        preset: TargetHealth
     - !type:TargetAccessibleCon
       curve: !type:BoolCurve
     - !type:TargetInLOSOrCurrentCon
@@ -109,9 +106,6 @@
     - !type:TargetDistanceCon
       curve: !type:PresetCurve
         preset: TargetDistance
-    - !type:TargetHealthCon
-      curve: !type:PresetCurve
-        preset: TargetHealth
     - !type:TargetAccessibleCon
       curve: !type:BoolCurve
     - !type:TargetInLOSOrCurrentCon
@@ -169,9 +163,6 @@
     - !type:TargetDistanceCon
       curve: !type:PresetCurve
         preset: TargetDistance
-    - !type:TargetHealthCon
-      curve: !type:PresetCurve
-        preset: TargetHealth
     - !type:TargetAccessibleCon
       curve: !type:BoolCurve
     - !type:TargetInLOSOrCurrentCon
