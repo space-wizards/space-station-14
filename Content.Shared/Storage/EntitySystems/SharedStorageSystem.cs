@@ -809,7 +809,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         // set the StackVisuals.Hide property to true when the container is closed. This is done
         // on containers that only show their contents when they are open (e.g. donut boxes)
-        if (storage.HideOpenStackVisuals)
+        if (storage.HideClosedStackVisuals)
             _appearance.SetData(uid, StackVisuals.Hide, !isOpen, appearance);
     }
 
