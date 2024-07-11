@@ -12,15 +12,19 @@ namespace Content.Client.Administration.UI.AdminRemarks;
 [GenerateTypedNameReferences]
 public sealed partial class AdminMessagePopupWindow : Control
 {
+    [Dependency] private readonly IStylesheetManager _styleMan = default!;
+
     private float _timer = float.MaxValue;
 
     public event Action? OnDismissPressed;
-
     public event Action? OnAcceptPressed;
 
     public AdminMessagePopupWindow()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
+
+        Stylesheet = _styleMan.SheetSystem;
 
         AcceptButton.OnPressed += OnAcceptButtonPressed;
         DismissButton.OnPressed += OnDismissButtonPressed;

@@ -34,8 +34,8 @@
 - [x] tooltips being part of another stylesheet is kinda bad
 - [x] rename `InterfaceStylesheet` to `SystemStylesheet`
 - [ ] ~~rename `FancyWindow` to `NanoWindow`~~
-  - doesnt work with other stylesheets so `FancyWindow` stays!
-  - [x] add a `Stylesheet` property, so you can like, set the styles of a window
+    - doesnt work with other stylesheets so `FancyWindow` stays!
+    - [x] add a `Stylesheet` property, so you can like, set the styles of a window
 - [x] Get rid of `NTSheetlets` & `InterfaceSheetlets`
     - Eh, most of it anyway
 - [x] Make all `StyleClass` conform to naming conventions
@@ -43,7 +43,7 @@
 - [x] change `ButtonHovered` and friends to `PseudoHovered`
 - [x] `IPanelPalette` is unnecessary now
 - [x] What the fuck is `StyleSpace` get rid of it
-  - Switched to `SystemStylesheet`
+    - Switched to `SystemStylesheet`
 - [x] Fix the codepen
 - [ ] figure out `BaseStylesheet.Fonts`
 
@@ -80,8 +80,6 @@ TL;DR port all of `StyleNano` into sheetlets
 - [ ] Have `ScrollContainer`s remember how much you've scrolled?
 
 ### Design Decisions
-
-Hello! Here you will find the rationale behind many design decisions that I (or moony) made.
 
 As anyone who's had the misfortune of editing `StyleNano` is probably painfully aware of, the main problem
 with `StyleNano` is how difficult it is to find anything. Maybe the style classes you want are sitting somewhere in that
@@ -175,4 +173,4 @@ staying in `Redux` so downstream forks will have an easier time merging this cha
 
 Some resources have been moved around.
 
-**PUT FULL LIST HEREE!!!!!**
+
