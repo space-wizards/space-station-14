@@ -546,3 +546,14 @@
       maxOccurrences: 1 # this event has diminishing returns on interesting-ness, so we cap it
       weight: 5
     - type: MobReplacementRule
+
+- type: entity
+  id: SpaceLawChange
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 8
+    reoccurrenceDelay: 20
+    duration: 1
+  - type: SpaceLawChangeRule
