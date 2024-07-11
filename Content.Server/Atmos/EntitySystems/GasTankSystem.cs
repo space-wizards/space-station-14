@@ -266,6 +266,13 @@ namespace Content.Server.Atmos.EntitySystems
             UpdateUserInterface(ent);
         }
 
+        private Entity<InternalsComponent>? GetInternalsEntity(Entity<GasTankComponent> entity, EntityUid? owner = null)
+        {
+            // the owner is the player or mob
+            owner ??= entity.Comp.User;
+
+            if (TerminatingOrDeleted(entity.Owner))
+        }
         private InternalsComponent? GetInternalsComponent(GasTankComponent component, EntityUid? owner = null)
         {
             owner ??= component.User;
