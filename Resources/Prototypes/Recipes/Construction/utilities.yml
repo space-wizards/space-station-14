@@ -489,12 +489,12 @@
   canBuildInImpassable: false
   icon:
     sprite: Structures/Piping/Atmospherics/vent.rsi
-    state: vent_off
+    state: vent_passive
   layers:
   - sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeHalf
   - sprite: Structures/Piping/Atmospherics/vent.rsi
-    state: vent_off
+    state: vent_passive
   conditions:
     - !type:NoUnstackableInTile
 

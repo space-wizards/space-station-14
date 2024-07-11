@@ -29,6 +29,7 @@
   - type: Tag
     tags:
     - Trash
+    - PetWearable
   - type: Food
   - type: FlavorProfile
     flavors:

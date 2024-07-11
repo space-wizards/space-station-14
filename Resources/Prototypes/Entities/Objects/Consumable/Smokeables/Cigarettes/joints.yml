@@ -11,6 +11,7 @@
     tags:
       - Cigarette
       - Trash
+      - PetWearable
   - type: SpaceGarbage
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cannabis/joint.rsi
@@ -90,6 +91,7 @@
     tags:
       - Cigarette
       - Trash
+      - HamsterWearable
   - type: SpaceGarbage
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cannabis/blunt.rsi
