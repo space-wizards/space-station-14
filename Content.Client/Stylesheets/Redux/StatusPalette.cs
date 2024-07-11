@@ -1,15 +1,15 @@
 using Content.Client.Stylesheets.Redux.Colorspace;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Stylesheets.Redux.SheetletConfigs;
+namespace Content.Client.Stylesheets.Redux;
 
-public interface IStatusPalette : ISheetletConfig
+public sealed class StatusPalette(Color[] statusColors)
 {
     /// The status colors to blend between, these are equally spaced from 0 to 1 with 0 being StatusColors[0], and 1 being
     /// StatusColors.Last()
     ///
     /// Traditionally, something like { Red, Yellow, Green }
-    public Color[] StatusColors { get; }
+    public Color[] StatusColors = statusColors;
 
     /// <param name="factor">The severity of this status from 0 to 1. Traditionally, 1 will be green and 0 red</param>
     /// <returns>The color for this status, linearly Oklab blended between equal intervals of the colors in StatusColor</returns>

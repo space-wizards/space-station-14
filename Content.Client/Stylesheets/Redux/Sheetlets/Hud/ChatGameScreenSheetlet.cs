@@ -12,12 +12,11 @@ public sealed class ChatGameScreenSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var panel = (IPanelPalette) sheet;
         return
         [
             E()
                 .Class(SeparatedChatGameScreen.StyleClassChatContainer)
-                .Panel(new StyleBoxFlat(panel.PanelColor)),
+                .Panel(new StyleBoxFlat(sheet.SecondaryPalette.Background)),
             E<OutputPanel>()
                 .Class(SeparatedChatGameScreen.StyleClassChatOutput)
                 .Panel(new StyleBoxFlat(sheet.SecondaryPalette.BackgroundDark)),

@@ -20,4 +20,6 @@ public static class Palettes
 
     // Intended to be used with `ModulateSelf` to darken / lighten something
     public static readonly ColorPalette AlphaModulate = new(Color.FromHex("#ffffff"));
+
+    public static readonly StatusPalette Status = new([NegativeRed.Base, HighlightYellow.Base, PositiveGreen.Base]);
 }

@@ -11,16 +11,15 @@ public sealed class PanelSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var panelPalette = (IPanelPalette) sheet;
         var buttonCfg = (IButtonConfig) sheet;
 
         var boxLight = new StyleBoxFlat()
         {
-            BackgroundColor = panelPalette.PanelLightColor,
+            BackgroundColor = sheet.SecondaryPalette.BackgroundLight,
         };
         var boxDark = new StyleBoxFlat()
         {
-            BackgroundColor = panelPalette.PanelDarkColor,
+            BackgroundColor = sheet.SecondaryPalette.BackgroundDark,
         };
         var boxDivider = new StyleBoxFlat
         {

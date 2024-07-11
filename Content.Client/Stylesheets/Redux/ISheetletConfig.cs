@@ -4,4 +4,3 @@ public interface ISheetletConfig : IStyleResources
 {
     // For access.
 }
-

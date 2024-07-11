@@ -26,7 +26,7 @@
     - Ehhh probably fine
 - [ ] ~~`ScopedResCache` because moving around resources is annoying and prone to error when merging~~
     - You can have multiple roots
-    - [ ] `GetResourceOr` and also redo common sheetlets to use this instead
+    - [x] `GetResourceOr` and also redo common sheetlets to use this instead
     - [x] and since you'll have to refactor that anyway, move all the resource paths into `ISheetletConfig`s
 - [x] `MainMenuSheetlet` should maybe be with the xaml?
 - [x] `Palette` class and kick out indexing palette with a number
@@ -40,19 +40,20 @@
 - [ ] `LabelSheetlet` / `TextSheetlet` dont hardcode the label sizes
 - [ ] Separate out `FontKind` maybe
 - [ ] change `ButtonHovered` and friends to `PseudoHovered`
-- [ ] `WindowSheetlet` `NanoHeading` hardcoded classnames
-- [ ] `IPanelPalette` is unnecessary now
+- [x] `IPanelPalette` is unnecessary now
 - [ ] What the fuck is `StyleSpace` get rid of it
 - [ ] Fix the codepen
 - [ ] figure out `BaseStylesheet.Fonts`
 
-HARDCODED COLORS
+#### HARDCODED SHIT (non exhaustive list)
 
-- StampWidget.xaml
-- AirAlarmWindow.xaml.cs
-- ReplayMainMenuControl.xaml
-- LobbyGui.xaml
-- MenuButton.cs
+- COLORS
+  - [ ] `StampWidget.xaml`
+  - [ ] `AirAlarmWindow.xaml.cs`
+  - [ ] `ReplayMainMenuControl.xaml`
+  - [ ] `LobbyGui.xaml`
+  - [ ] `MenuButton.cs`
+- [ ] `WindowSheetlet` `NanoHeading` hardcoded classnames
 
 TL;DR port all of `StyleNano` into sheetlets
 

@@ -49,6 +49,7 @@ public sealed class ButtonSheetlet : Sheetlet<PalettedStylesheet>
 
             // Ensure labels in buttons are aligned.
             E<Label>()
+                // ReSharper disable once AccessToStaticMemberViaDerivedType
                 .Class(Button.StyleClassButton)
                 .AlignMode(Label.AlignMode.Center),
         };
