@@ -1,4 +1,5 @@
 ﻿using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Content.Client.Stylesheets.Redux.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -13,7 +14,8 @@ public sealed class TabContainerSheetlet : Sheetlet<PalettedStylesheet>
     {
         var tabCfg = (ITabContainerConfig) sheet;
 
-        var tabContainerPanel = sheet.GetTexture(tabCfg.TabContainerPanelPath).IntoPatch(StyleBox.Margin.All, 2);
+        var tabContainerPanel = sheet.GetTextureOr(tabCfg.TabContainerPanelPath, NanotrasenStylesheet.TextureRoot)
+            .IntoPatch(StyleBox.Margin.All, 2);
 
         var tabContainerBoxActive = new StyleBoxFlat(sheet.SecondaryPalette.Element);
         tabContainerBoxActive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);

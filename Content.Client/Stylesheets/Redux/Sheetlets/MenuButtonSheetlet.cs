@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using Content.Client.Stylesheets.Redux.Fonts;
 using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Content.Client.Stylesheets.Redux.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -21,7 +22,7 @@ public sealed class MenuButtonSheetlet : Sheetlet<PalettedStylesheet>
     {
         var cfg = (IButtonConfig) sheet;
 
-        var buttonTex = sheet.GetTexture(cfg.BaseButtonPath);
+        var buttonTex = sheet.GetTextureOr(cfg.BaseButtonPath, NanotrasenStylesheet.TextureRoot);
         var topButtonBase = new StyleBoxTexture
         {
             Texture = buttonTex,

@@ -11,6 +11,7 @@ namespace Content.Client.Stylesheets.Redux.Sheetlets.Hud;
 public sealed class ExamineButtonSheetlet : Sheetlet<PalettedStylesheet>
 {
     // Examine button colors
+    // TODO: FIX!!
     private static readonly Color ExamineButtonColorContext = Color.Transparent;
     private static readonly Color ExamineButtonColorContextHover = Color.DarkSlateGray;
     private static readonly Color ExamineButtonColorContextPressed = Color.LightSlateGray;

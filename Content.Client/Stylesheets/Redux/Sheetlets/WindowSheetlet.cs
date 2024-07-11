@@ -1,5 +1,6 @@
 ﻿using Content.Client.Stylesheets.Redux.Fonts;
 using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Content.Client.Stylesheets.Redux.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -22,7 +23,7 @@ public sealed class WindowSheetlet : Sheetlet<PalettedStylesheet>
 
         var headerStylebox = new StyleBoxTexture
         {
-            Texture = sheet.GetTexture(windowCfg.WindowHeaderTexturePath),
+            Texture = sheet.GetTextureOr(windowCfg.WindowHeaderTexturePath, NanotrasenStylesheet.TextureRoot),
             PatchMarginBottom = 3,
             ExpandMarginBottom = 3,
             ContentMarginBottomOverride = 0,
@@ -30,23 +31,23 @@ public sealed class WindowSheetlet : Sheetlet<PalettedStylesheet>
         // TODO: This would probably be better palette-based but we can leave it for now.
         var headerAlertStylebox = new StyleBoxTexture
         {
-            Texture = sheet.GetTexture(windowCfg.WindowHeaderAlertTexturePath),
+            Texture = sheet.GetTextureOr(windowCfg.WindowHeaderAlertTexturePath, NanotrasenStylesheet.TextureRoot),
             PatchMarginBottom = 3,
             ExpandMarginBottom = 3,
             ContentMarginBottomOverride = 0,
         };
         var backgroundBox = new StyleBoxTexture()
         {
-            Texture = sheet.GetTexture(windowCfg.WindowBackgroundPath),
+            Texture = sheet.GetTextureOr(windowCfg.WindowBackgroundPath, NanotrasenStylesheet.TextureRoot),
         };
         backgroundBox.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
         backgroundBox.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
         var borderedBackgroundBox = new StyleBoxTexture
         {
-            Texture = sheet.GetTexture(windowCfg.WindowBackgroundBorderedPath),
+            Texture = sheet.GetTextureOr(windowCfg.WindowBackgroundBorderedPath, NanotrasenStylesheet.TextureRoot),
         };
         borderedBackgroundBox.SetPatchMargin(StyleBox.Margin.All, 2);
-        var closeButtonTex = sheet.GetTexture(iconCfg.CrossIconPath);
+        var closeButtonTex = sheet.GetTextureOr(iconCfg.CrossIconPath, NanotrasenStylesheet.TextureRoot);
 
         var leftPanel = buttonCfg.ConfigureOpenLeftButton(sheet);
         leftPanel.SetPadding(StyleBox.Margin.All, 0.0f);
@@ -90,7 +91,8 @@ public sealed class WindowSheetlet : Sheetlet<PalettedStylesheet>
             // Help Button
             E<TextureButton>()
                 .Class(FancyWindow.StyleClassWindowHelpButton)
-                .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture(iconCfg.HelpIconPath))
+                .Prop(TextureButton.StylePropertyTexture,
+                    sheet.GetTextureOr(iconCfg.HelpIconPath, NanotrasenStylesheet.TextureRoot))
                 .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette.Element),
             E<TextureButton>()
                 .Class(FancyWindow.StyleClassWindowHelpButton)

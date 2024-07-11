@@ -27,7 +27,7 @@
 - [ ] ~~`ScopedResCache` because moving around resources is annoying and prone to error when merging~~
     - You can have multiple roots
     - [ ] `GetResourceOr` and also redo common sheetlets to use this instead
-    - [ ] and since you'll have to refactor that anyway, move all the resource paths into `ISheetletConfig`s
+    - [x] and since you'll have to refactor that anyway, move all the resource paths into `ISheetletConfig`s
 - [x] `MainMenuSheetlet` should maybe be with the xaml?
 - [x] `Palette` class and kick out indexing palette with a number
     - `ColorPalette` / `Palettes` but same thing
@@ -44,6 +44,7 @@
 - [ ] `IPanelPalette` is unnecessary now
 - [ ] What the fuck is `StyleSpace` get rid of it
 - [ ] Fix the codepen
+- [ ] figure out `BaseStylesheet.Fonts`
 
 HARDCODED COLORS
 
@@ -128,10 +129,13 @@ order, but that's kinda icky. So! I propose (and have already implemented) the f
 
 <sub>(and `GetTextureOr`)</sub>
 
-It gets the scoped resource like normal, but if it doesn't exist, falls back to an absolute resource. Is it a generic
+It gets the scoped resource like normal, but if it doesn't exist, falls back to an absolute root. Is it a generic
 resource that has no business being is `Textures/Interface/Nano`? I don't care! It can stay there! I really can't be
 bothered to move it! Now the sheetlet will work with any stylesheet. If the scope happens to exist, it'll use that
 instead.
+
+This method is kinda clunky but that's good (maybe?) because you want to use it where it counts. If there's a resource
+that, ideally, every theme should have a unique implementation of, then you would just use `GetResource`.
 
 ### Significant Interface Changes
 
@@ -142,10 +146,6 @@ instead.
   UI that looks worse than they remember, double check it actually is different (this happened to me several times, some
   of the UIs are just kinda bad), and pretty please PR the changes (or ask me, and I'll probably do it).
 - I definitely like messed a couple colors up but whatever
-
-### Concerns
-
-While I'm pretty happy with the state of the code, there are a couple things that I
 
 ### Breaking Changes
 
@@ -164,3 +164,9 @@ While I'm pretty happy with the state of the code, there are a couple things tha
 Since this was such a large refactor, all the code is in `Content.Client/Stylesheets/Redux`. Anything in
 `Content.Client/Stylesheets` is now obsolete. For now all the new code is staying in `Redux` so downstream forks will
 have an easier time merging this change.
+
+#### Also
+
+Some resources have been moved around.
+
+**PUT FULL LIST HEREE!!!!!**

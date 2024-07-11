@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Client.Stylesheets.Redux.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Shared.Utility;
 
@@ -22,7 +23,7 @@ public interface IButtonConfig : ISheetletConfig
     {
         var b = new StyleBoxTexture
         {
-            Texture = sheet.GetTexture(BaseButtonPath),
+            Texture = sheet.GetTextureOr(BaseButtonPath, NanotrasenStylesheet.TextureRoot),
         };
         // TODO: Figure out a nicer way to store/represent this. This is icky.
         b.SetPatchMargin(StyleBox.Margin.All, 10);
@@ -36,7 +37,7 @@ public interface IButtonConfig : ISheetletConfig
     {
         var b = new StyleBoxTexture((StyleBoxTexture) ConfigureBaseButton(sheet))
         {
-            Texture = new AtlasTexture(sheet.GetTexture(OpenRightButtonPath),
+            Texture = new AtlasTexture(sheet.GetTextureOr(OpenRightButtonPath, NanotrasenStylesheet.TextureRoot),
                 UIBox2.FromDimensions(new Vector2(0, 0), new Vector2(14, 24))),
         };
         b.SetPatchMargin(StyleBox.Margin.Right, 0);
@@ -49,7 +50,7 @@ public interface IButtonConfig : ISheetletConfig
     {
         var b = new StyleBoxTexture((StyleBoxTexture) ConfigureBaseButton(sheet))
         {
-            Texture = new AtlasTexture(sheet.GetTexture(OpenLeftButtonPath),
+            Texture = new AtlasTexture(sheet.GetTextureOr(OpenLeftButtonPath, NanotrasenStylesheet.TextureRoot),
                 UIBox2.FromDimensions(new Vector2(10, 0), new Vector2(14, 24))),
         };
         b.SetPatchMargin(StyleBox.Margin.Left, 0);
@@ -62,7 +63,7 @@ public interface IButtonConfig : ISheetletConfig
     {
         var b = new StyleBoxTexture((StyleBoxTexture) ConfigureBaseButton(sheet))
         {
-            Texture = new AtlasTexture(sheet.GetTexture(OpenBothButtonPath),
+            Texture = new AtlasTexture(sheet.GetTextureOr(OpenBothButtonPath, NanotrasenStylesheet.TextureRoot),
                 UIBox2.FromDimensions(new Vector2(10, 0), new Vector2(3, 24))),
         };
         b.SetPatchMargin(StyleBox.Margin.Horizontal, 0);
@@ -81,7 +82,7 @@ public interface IButtonConfig : ISheetletConfig
     {
         var b = new StyleBoxTexture
         {
-            Texture = sheet.GetTexture(SmallButtonPath),
+            Texture = sheet.GetTextureOr(SmallButtonPath, NanotrasenStylesheet.TextureRoot),
         };
         return b;
     }

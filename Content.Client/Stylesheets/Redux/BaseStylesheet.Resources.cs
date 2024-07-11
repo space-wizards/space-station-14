@@ -53,6 +53,31 @@ public abstract partial class BaseStylesheet
 
         throw new MissingResourceException(this, target.ToString());
     }
+
+    /// <summary>
+    ///     Retrieves a resource, or falls back to the specified root. The resource should be present at the fallback
+    ///     root, or else it throws
+    /// </summary>
+    /// <remarks>
+    ///     This should be used to allow common sheetlets to be generic over multiple stylesheets without forcing other
+    ///     styles to have the resource present, if your sheetlet is stylesheet-specific you should not use this.
+    /// </remarks>
+    /// <param name="target">The relative path of the target resource.</param>
+    /// <param name="fallbackRoot">The root that this resource will always exist at</param>
+    /// <typeparam name="T">Type of the resource to read.</typeparam>
+    /// <returns>The retrieved resource</returns>
+    /// <exception cref="ExpectedResourceException">Thrown if the resource does not exist in the fallback root.</exception>
+    public T GetResourceOr<T>(ResPath target, ResPath fallbackRoot)
+        where T : BaseResource, new()
+    {
+        DebugTools.Assert(fallbackRoot.IsRooted,
+            "Fallback root must be absolute. Roots can be retrieved from the stylesheets.");
+
+        if (!ResCache.TryGetResource(fallbackRoot / target, out T? fallback))
+            throw new ExpectedResourceException(this, target.ToString());
+
+        return TryGetResource(target, out T? res) ? res : fallback;
+    }
 }
 
 /// <summary>
@@ -64,6 +89,20 @@ public sealed class MissingResourceException(BaseStylesheet sheet, string target
 {
     public override string Message =>
         $"Failed to find any resource at \"{target}\" for {sheet}. The roots are: {sheet.Roots}";
+
+    public override string? Source => sheet.ToString();
+}
+
+/// <summary>
+///     Exception thrown when the never-fail helpers in <see cref="PalettedStylesheet"/> expect a resource at a location
+///     but do not find it.
+/// </summary>
+/// <param name="sheet">The stylesheet</param>
+/// <param name="target"></param>
+public sealed class ExpectedResourceException(BaseStylesheet sheet, string target) : Exception
+{
+    public override string Message =>
+        $"Failed to find any resource at \"{target}\" for {sheet}, when such a resource was expected.";
 
     public override string? Source => sheet.ToString();
 }

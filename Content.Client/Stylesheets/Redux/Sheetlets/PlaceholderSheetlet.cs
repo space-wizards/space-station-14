@@ -1,4 +1,5 @@
 ﻿using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Content.Client.Stylesheets.Redux.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -14,7 +15,8 @@ public sealed class PlaceholderSheetlet : Sheetlet<PalettedStylesheet>
     {
         var placeholderCfg = (IPlaceholderConfig) sheet;
 
-        var placeholderBox = sheet.GetTexture(placeholderCfg.PlaceholderPath).IntoPatch(StyleBox.Margin.All, 19);
+        var placeholderBox = sheet.GetTextureOr(placeholderCfg.PlaceholderPath, NanotrasenStylesheet.TextureRoot)
+            .IntoPatch(StyleBox.Margin.All, 19);
         placeholderBox.SetExpandMargin(StyleBox.Margin.All, -5);
         placeholderBox.Mode = StyleBoxTexture.StretchMode.Tile;
 

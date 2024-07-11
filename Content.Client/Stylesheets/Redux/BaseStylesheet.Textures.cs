@@ -38,5 +38,22 @@ public abstract partial class BaseStylesheet
         return GetResource<TextureResource>(target).Texture;
     }
 
+    /// <summary>
+    ///     Retrieves a texture, or falls back to the specified root. The resource should be present at the fallback
+    ///     root, or else it throws
+    /// </summary>
+    /// <remarks>
+    ///     This should be used to allow common sheetlets to be generic over multiple stylesheets without forcing other
+    ///     styles to have the resource present, if your sheetlet is stylesheet-specific you should not use this.
+    /// </remarks>
+    /// <param name="target">The relative path of the target texture.</param>
+    /// <param name="fallbackRoot">The root that this resource will always exist at</param>
+    /// <returns>The retrieved texture</returns>
+    /// <exception cref="ExpectedResourceException">Thrown if the texture does not exist in the fallback root.</exception>
+    public Texture GetTextureOr(ResPath target, ResPath fallbackRoot)
+    {
+        return GetResourceOr<TextureResource>(target, fallbackRoot).Texture;
+    }
+
     #endregion
 }

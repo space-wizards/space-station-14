@@ -16,7 +16,7 @@ public partial class InterfaceStylesheet : PalettedStylesheet
 
     public override Dictionary<Type, ResPath[]> Roots => new()
     {
-        { typeof(TextureResource), [new ResPath("/Textures/Interface/Nano")] },
+        { typeof(TextureResource), [] },
     };
 
     private const int PrimaryFontSize = 12;

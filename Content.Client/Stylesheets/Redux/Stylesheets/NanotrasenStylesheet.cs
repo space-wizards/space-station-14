@@ -15,9 +15,12 @@ public partial class NanotrasenStylesheet : PalettedStylesheet
 {
     public override FontStack BaseFont { get; }
 
+
+    public static readonly ResPath TextureRoot = new("/Textures/Interface/Nano");
+
     public override Dictionary<Type, ResPath[]> Roots => new()
     {
-        { typeof(TextureResource), [new ResPath("/Textures/Interface/Nano/")] },
+        { typeof(TextureResource), [TextureRoot] },
     };
 
     private const int PrimaryFontSize = 12;

@@ -1,4 +1,5 @@
 ﻿using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Content.Client.Stylesheets.Redux.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -13,7 +14,7 @@ public sealed class SliderSheetlet : Sheetlet<PalettedStylesheet>
     {
         var sliderCfg = (ISliderConfig) sheet;
 
-        var sliderFillTex = sheet.GetTexture(sliderCfg.SliderFillPath);
+        var sliderFillTex = sheet.GetTextureOr(sliderCfg.SliderFillPath, NanotrasenStylesheet.TextureRoot);
 
         var sliderFillBox = new StyleBoxTexture
         {
@@ -29,13 +30,13 @@ public sealed class SliderSheetlet : Sheetlet<PalettedStylesheet>
 
         var sliderForeBox = new StyleBoxTexture
         {
-            Texture = sheet.GetTexture(sliderCfg.SliderOutlinePath),
+            Texture = sheet.GetTextureOr(sliderCfg.SliderOutlinePath, NanotrasenStylesheet.TextureRoot),
             Modulate = Color.FromHex("#494949") // TODO: Unhardcode.
         };
 
         var sliderGrabBox = new StyleBoxTexture
         {
-            Texture = sheet.GetTexture(sliderCfg.SliderGrabber),
+            Texture = sheet.GetTextureOr(sliderCfg.SliderGrabber, NanotrasenStylesheet.TextureRoot),
         };
 
         sliderFillBox.SetPatchMargin(StyleBox.Margin.All, 12);
@@ -43,10 +44,10 @@ public sealed class SliderSheetlet : Sheetlet<PalettedStylesheet>
         sliderForeBox.SetPatchMargin(StyleBox.Margin.All, 12);
         sliderGrabBox.SetPatchMargin(StyleBox.Margin.All, 12);
 
-        var sliderFillGreen = new StyleBoxTexture(sliderFillBox) { Modulate = Color.LimeGreen };
-        var sliderFillRed = new StyleBoxTexture(sliderFillBox) { Modulate = Color.Red };
-        var sliderFillBlue = new StyleBoxTexture(sliderFillBox) { Modulate = Color.Blue };
-        var sliderFillWhite = new StyleBoxTexture(sliderFillBox) { Modulate = Color.White };
+        // var sliderFillGreen = new StyleBoxTexture(sliderFillBox) { Modulate = Color.LimeGreen };
+        // var sliderFillRed = new StyleBoxTexture(sliderFillBox) { Modulate = Color.Red };
+        // var sliderFillBlue = new StyleBoxTexture(sliderFillBox) { Modulate = Color.Blue };
+        // var sliderFillWhite = new StyleBoxTexture(sliderFillBox) { Modulate = Color.White };
 
         return new StyleRule[]
         {

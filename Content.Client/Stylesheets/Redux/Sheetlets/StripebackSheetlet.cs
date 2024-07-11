@@ -1,4 +1,5 @@
 ﻿using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Content.Client.Stylesheets.Redux.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -14,7 +15,7 @@ public sealed class StripebackSheetlet : Sheetlet<PalettedStylesheet>
         var stripebackCfg = (IStripebackConfig) sheet;
         var stripeBack = new StyleBoxTexture
         {
-            Texture = sheet.GetTexture(stripebackCfg.StripebackPath),
+            Texture = sheet.GetTextureOr(stripebackCfg.StripebackPath, NanotrasenStylesheet.TextureRoot),
             Mode = StyleBoxTexture.StretchMode.Tile,
         };
 

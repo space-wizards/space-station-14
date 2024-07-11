@@ -37,6 +37,22 @@ public interface IStyleResources
         where T : BaseResource, new();
 
     /// <summary>
+    ///     Retrieves a resource, or falls back to the specified root. The resource should be present at the fallback
+    ///     root, or else it throws
+    /// </summary>
+    /// <remarks>
+    ///     This should be used to allow common sheetlets to be generic over multiple stylesheets without forcing other
+    ///     styles to have the resource present, if your sheetlet is stylesheet-specific you should not use this.
+    /// </remarks>
+    /// <param name="target">The relative path of the target resource.</param>
+    /// <param name="fallbackRoot">The root that this resource will always exist at</param>
+    /// <typeparam name="T">Type of the resource to read.</typeparam>
+    /// <returns>The retrieved resource</returns>
+    /// <exception cref="ExpectedResourceException">Thrown if the resource does not exist in the fallback root.</exception>
+    T GetResourceOr<T>(ResPath target, ResPath fallbackRoot)
+        where T : BaseResource, new();
+
+    /// <summary>
     ///     Attempts to locate a texture within the stylesheet's roots.
     /// </summary>
     /// <param name="target">The relative path of the target resource.</param>
@@ -51,4 +67,18 @@ public interface IStyleResources
     /// <returns>The retrieved texture</returns>
     /// <exception cref="MissingResourceException">Thrown if the texture does not exist within the stylesheet's roots.</exception>
     Texture GetTexture(ResPath target);
+
+    /// <summary>
+    ///     Retrieves a texture, or falls back to the specified root. The resource should be present at the fallback
+    ///     root, or else it throws
+    /// </summary>
+    /// <remarks>
+    ///     This should be used to allow common sheetlets to be generic over multiple stylesheets without forcing other
+    ///     styles to have the resource present, if your sheetlet is stylesheet-specific you should not use this.
+    /// </remarks>
+    /// <param name="target">The relative path of the target texture.</param>
+    /// <param name="fallbackRoot">The root that this resource will always exist at</param>
+    /// <returns>The retrieved texture</returns>
+    /// <exception cref="ExpectedResourceException">Thrown if the texture does not exist in the fallback root.</exception>
+    Texture GetTextureOr(ResPath target, ResPath fallbackRoot);
 }

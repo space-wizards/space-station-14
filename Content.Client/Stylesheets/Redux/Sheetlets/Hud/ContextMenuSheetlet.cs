@@ -2,6 +2,7 @@ using Content.Client.ContextMenu.UI;
 using Content.Client.Resources;
 using Content.Client.Stylesheets.Redux.Fonts;
 using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Content.Client.Stylesheets.Redux.Stylesheets;
 using Content.Client.Verbs.UI;
 using Content.Shared.Verbs;
 using Robust.Client.Graphics;
@@ -29,7 +30,7 @@ public sealed class ContextMenuSheetlet : Sheetlet<PalettedStylesheet>
 
         var borderedWindowBackground = new StyleBoxTexture
         {
-            Texture = sheet.GetTexture(windowCfg.WindowBackgroundBorderedPath),
+            Texture = sheet.GetTextureOr(windowCfg.WindowBackgroundBorderedPath, NanotrasenStylesheet.TextureRoot),
         };
         borderedWindowBackground.SetPatchMargin(StyleBox.Margin.All, ContextMenuElement.ElementMargin);
         var buttonContext = new StyleBoxTexture { Texture = Texture.White };

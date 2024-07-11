@@ -1,5 +1,6 @@
 using Content.Client.Resources;
 using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Content.Client.Stylesheets.Redux.Stylesheets;
 using Content.Client.UserInterface.Systems.Actions.Controls;
 using Content.Client.UserInterface.Systems.Actions.Windows;
 using Robust.Client.Graphics;
@@ -24,7 +25,8 @@ public sealed class ActionSheetlet : Sheetlet<PalettedStylesheet>
         };
         handSlotHighlight.SetPatchMargin(StyleBox.Margin.All, 2);
 
-        var actionSearchBoxTex = sheet.GetTexture(panelCfg.BlackPanelDarkThinBorderPath);
+        var actionSearchBoxTex =
+            sheet.GetTextureOr(panelCfg.BlackPanelDarkThinBorderPath, NanotrasenStylesheet.TextureRoot);
         var actionSearchBox = new StyleBoxTexture
         {
             Texture = actionSearchBoxTex,

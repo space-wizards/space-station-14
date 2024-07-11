@@ -1,4 +1,5 @@
 using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Content.Client.Stylesheets.Redux.Stylesheets;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
@@ -12,6 +13,8 @@ public sealed class ButtonSheetlet : Sheetlet<PalettedStylesheet>
     {
         var buttonCfg = (IButtonConfig) sheet;
         var iconCfg = (IIconConfig) sheet;
+
+        var crossTex = sheet.GetTextureOr(iconCfg.CrossIconPath, NanotrasenStylesheet.TextureRoot);
 
         var rules = new List<StyleRule>
         {
@@ -42,7 +45,7 @@ public sealed class ButtonSheetlet : Sheetlet<PalettedStylesheet>
             // Cross Button (Red)
             E<TextureButton>()
                 .Class(StyleClass.CrossButtonRed)
-                .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture(iconCfg.CrossIconPath)),
+                .Prop(TextureButton.StylePropertyTexture, crossTex),
 
             // Ensure labels in buttons are aligned.
             E<Label>()
@@ -85,7 +88,10 @@ public sealed class ButtonSheetlet : Sheetlet<PalettedStylesheet>
             E().MaybeClass(styleclass).ButtonNormal().Prop(Control.StylePropertyModulateSelf, palette.Element),
             E().MaybeClass(styleclass).ButtonHovered().Prop(Control.StylePropertyModulateSelf, palette.HoveredElement),
             E().MaybeClass(styleclass).ButtonPressed().Prop(Control.StylePropertyModulateSelf, palette.PressedElement),
-            E().MaybeClass(styleclass).ButtonDisabled().Prop(Control.StylePropertyModulateSelf, palette.DisabledElement),
+            E()
+                .MaybeClass(styleclass)
+                .ButtonDisabled()
+                .Prop(Control.StylePropertyModulateSelf, palette.DisabledElement),
         });
     }
 

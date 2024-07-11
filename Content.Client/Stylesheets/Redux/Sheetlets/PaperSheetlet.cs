@@ -1,5 +1,6 @@
 ﻿using Content.Client.Resources;
 using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Content.Client.Stylesheets.Redux.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -21,7 +22,8 @@ public sealed class PaperSheetlet : Sheetlet<PalettedStylesheet>
 
         var borderedTransparentWindowBackground = new StyleBoxTexture
         {
-            Texture = sheet.GetTexture(windowCfg.TransparentWindowBackgroundBorderedPath),
+            Texture = sheet.GetTextureOr(windowCfg.TransparentWindowBackgroundBorderedPath,
+                NanotrasenStylesheet.TextureRoot),
         };
         borderedTransparentWindowBackground.SetPatchMargin(StyleBox.Margin.All, 2);
 

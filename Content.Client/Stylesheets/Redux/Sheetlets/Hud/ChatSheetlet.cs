@@ -1,4 +1,5 @@
 ﻿using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Content.Client.Stylesheets.Redux.Stylesheets;
 using Content.Client.UserInterface.Systems.Chat.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -17,7 +18,8 @@ public sealed class ChatSheetlet : Sheetlet<PalettedStylesheet>
         var chatColor = sheet.SecondaryPalette.Background.WithAlpha(221.0f / 255.0f);
         var chatBg = new StyleBoxFlat(chatColor);
 
-        var chatChannelButtonTex = sheet.GetTexture(btnCfg.RoundedButtonBorderedPath);
+        var chatChannelButtonTex =
+            sheet.GetTextureOr(btnCfg.RoundedButtonBorderedPath, NanotrasenStylesheet.TextureRoot);
         var chatChannelButton = new StyleBoxTexture
         {
             Texture = chatChannelButtonTex,
@@ -25,7 +27,8 @@ public sealed class ChatSheetlet : Sheetlet<PalettedStylesheet>
         chatChannelButton.SetPatchMargin(StyleBox.Margin.All, 5);
         chatChannelButton.SetPadding(StyleBox.Margin.All, 2);
 
-        var chatFilterButtonTex = sheet.GetTexture(btnCfg.RoundedButtonBorderedPath);
+        var chatFilterButtonTex =
+            sheet.GetTextureOr(btnCfg.RoundedButtonBorderedPath, NanotrasenStylesheet.TextureRoot);
         var chatFilterButton = new StyleBoxTexture
         {
             Texture = chatFilterButtonTex,

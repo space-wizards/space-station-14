@@ -7,4 +7,6 @@ public interface IIconConfig : ISheetletConfig
     public ResPath HelpIconPath { get; }
     public ResPath CrossIconPath { get; }
     public ResPath InvertedTriangleIconPath { get; }
+
+
 }

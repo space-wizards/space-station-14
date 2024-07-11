@@ -1,4 +1,5 @@
 ﻿using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Content.Client.Stylesheets.Redux.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -13,7 +14,8 @@ public sealed class LineEditSheetlet : Sheetlet<PalettedStylesheet>
     {
         var lineEditCfg = (ILineEditConfig) sheet;
 
-        var lineEditStylebox = sheet.GetTexture(lineEditCfg.LineEditPath).IntoPatch(StyleBox.Margin.All, 3);
+        var lineEditStylebox = sheet.GetTextureOr(lineEditCfg.LineEditPath, NanotrasenStylesheet.TextureRoot)
+            .IntoPatch(StyleBox.Margin.All, 3);
         lineEditStylebox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
         return
