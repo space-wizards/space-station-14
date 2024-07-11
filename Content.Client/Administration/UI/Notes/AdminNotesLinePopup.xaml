@@ -16,7 +16,7 @@
             <Label Name="EditedAtLabel"/>
             <Label Name="ExpiryTimeLabel"/>
             <TextEdit Name="NoteTextEdit" Editable="False" MinHeight="24" />
-            <BoxContainer Orientation="Horizontal" Margin="4 4 4 4">
+            <BoxContainer Orientation="Horizontal">
                 <Button Name="EditButton" Text="{Loc admin-notes-edit}"/>
                 <Control HorizontalExpand="True"/>
                 <Button Name="DeleteButton" Text="{Loc admin-notes-delete}" HorizontalAlignment="Right"/>
