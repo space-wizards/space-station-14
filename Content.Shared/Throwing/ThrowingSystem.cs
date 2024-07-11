@@ -83,6 +83,7 @@ public sealed class ThrowingSystem : EntitySystem
     /// <param name="friction">friction value used for the distance calculation. If set to null this defaults to the standard tile values</param>
     /// <param name="compensateFriction">True will adjust the throw so the item stops at the target coordinates. False means it will land at the target and keep sliding.</param>
     /// <param name="doSpin">Whether spin will be applied to the thrown entity.</param>
+    /// <param name="compensateSpeed"> True will reduce throw speed based on MinFlyTime . False means leave it unchanged</param>
     public void TryThrow(EntityUid uid,
         Vector2 direction,
         float baseThrowSpeed = 10.0f,
@@ -93,7 +94,8 @@ public sealed class ThrowingSystem : EntitySystem
         bool recoil = true,
         bool animated = true,
         bool playSound = true,
-        bool doSpin = true)
+        bool doSpin = true,
+        bool compensateSpeed = false)
     {
         var physicsQuery = GetEntityQuery<PhysicsComponent>();
         if (!physicsQuery.TryGetComponent(uid, out var physics))
@@ -110,7 +112,7 @@ public sealed class ThrowingSystem : EntitySystem
             baseThrowSpeed,
             user,
             pushbackRatio,
-            friction, compensateFriction: compensateFriction, recoil: recoil, animated: animated, playSound: playSound, doSpin: doSpin);
+            friction, compensateFriction: compensateFriction, recoil: recoil, animated: animated, playSound: playSound, doSpin: doSpin, compensateSpeed: compensateSpeed);
     }
 
     /// <summary>
@@ -123,6 +125,7 @@ public sealed class ThrowingSystem : EntitySystem
     /// <param name="friction">friction value used for the distance calculation. If set to null this defaults to the standard tile values</param>
     /// <param name="compensateFriction">True will adjust the throw so the item stops at the target coordinates. False means it will land at the target and keep sliding.</param>
     /// <param name="doSpin">Whether spin will be applied to the thrown entity.</param>
+    /// <param name="compensateSpeed"> True will reduce throw speed based on MinFlyTime. False means leave it unchanged</param>
     public void TryThrow(EntityUid uid,
         Vector2 direction,
         PhysicsComponent physics,
@@ -136,7 +139,8 @@ public sealed class ThrowingSystem : EntitySystem
         bool recoil = true,
         bool animated = true,
         bool playSound = true,
-        bool doSpin = true)
+        bool doSpin = true,
+        bool compensateSpeed = false)
     {
         if (baseThrowSpeed <= 0 || direction == Vector2Helpers.Infinity || direction == Vector2Helpers.NaN || direction == Vector2.Zero || friction < 0)
             return;
@@ -169,8 +173,17 @@ public sealed class ThrowingSystem : EntitySystem
         if (compensateFriction)
             flyTime *= FlyTimePercentage;
 
+        // if baseThrowSpeed is too high or direction length is too short the item's flyTime will be below the minimum and the item will land before it should
+        // compensateSpeed accounts for extreme throw speeds like the pneumatic cannon and could be used anywhere else where the throw speed is higher than normal.
+        if (flyTime < MinFlyTime && compensateSpeed)
+        {
+            baseThrowSpeed = direction.Length() / MinFlyTime;
+            flyTime = direction.Length() / baseThrowSpeed;
+        }
+
         if (flyTime < MinFlyTime)
-            flyTime = 0f;
+            flyTime = MinFlyTime;
+
         comp.ThrownTime = _gameTiming.CurTime;
         comp.LandTime = comp.ThrownTime + TimeSpan.FromSeconds(flyTime);
         comp.PlayLandSound = playSound;

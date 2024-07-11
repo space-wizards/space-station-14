@@ -13,6 +13,7 @@ public sealed partial class PneumaticCannonComponent : Component
     public const string TankSlotId = "gas_tank";
 
     [ViewVariables(VVAccess.ReadWrite)]
+
     public PneumaticCannonPower Power = PneumaticCannonPower.Medium;
 
     [DataField("toolModifyPower", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
@@ -49,12 +50,20 @@ public sealed partial class PneumaticCannonComponent : Component
     /// </summary>
     [DataField("throwItems"), ViewVariables(VVAccess.ReadWrite)]
     public bool ThrowItems = true;
+
+    /// <summary>
+    ///    How much to multiply the distance by. This is used to make the gun shoot farther on higher Power settings.
+    /// </summary>
+    [DataField("distanceFactor"), ViewVariables(VVAccess.ReadWrite)]
+    public float DistanceFactor = 1.5f;
 }
 
 /// <summary>
-///     How strong the pneumatic cannon should be.
-///     Each tier throws items farther and with more speed, but has drawbacks.
-///     The highest power knocks the player down for a considerable amount of time.
+///    How strong the pneumatic cannon should be.
+///    Each tier throws items farther and with more speed, but has drawbacks.
+///    Low is like a regular hand throw but with more range,
+///    Medium is faster than low and will overshoot the click target because of it,
+///    High will knock the player down but is really fast and has increased range.
 /// </summary>
 public enum PneumaticCannonPower : byte
 {

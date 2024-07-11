@@ -6,6 +6,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Stunnable;
 using Content.Server.Weapons.Ranged.Components;
 using Content.Shared.Damage;
+using Content.Shared.PneumaticCannon;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Effects;
@@ -304,7 +305,19 @@ public sealed partial class GunSystem : SharedGunSystem
         if (!HasComp<ProjectileComponent>(uid))
         {
             RemoveShootable(uid);
+
             // TODO: Someone can probably yeet this a billion miles so need to pre-validate input somewhere up the call stack.
+
+            // makes the high power pneumatic cannon shoot further
+            if (TryComp<PneumaticCannonComponent>(gunUid, out var pneumaticCannon))
+            {
+                if (pneumaticCannon.Power == PneumaticCannonPower.High)
+                    mapDirection *= pneumaticCannon.DistanceFactor;
+
+                ThrowingSystem.TryThrow(uid, mapDirection, gun.ProjectileSpeedModified, user, compensateSpeed: true);
+                return;
+            }
+
             ThrowingSystem.TryThrow(uid, mapDirection, gun.ProjectileSpeedModified, user);
             return;
         }
