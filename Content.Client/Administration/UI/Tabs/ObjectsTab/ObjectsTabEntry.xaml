@@ -1,6 +1,6 @@
-﻿<ContainerButton xmlns="https://spacestation14.io"
-                 xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls">
-    <PanelContainer Name="BackgroundColorPanel"/>
+﻿<PanelContainer xmlns="https://spacestation14.io"
+                xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                Name="BackgroundColorPanel">
     <BoxContainer Orientation="Horizontal"
                   HorizontalExpand="True"
                   SeparationOverride="4">
@@ -14,4 +14,4 @@
                HorizontalExpand="True"
                ClipText="True"/>
     </BoxContainer>
-</ContainerButton>
+</PanelContainer>
