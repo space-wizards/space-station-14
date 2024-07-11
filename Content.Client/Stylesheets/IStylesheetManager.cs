@@ -10,7 +10,4 @@ public interface IStylesheetManager
     Stylesheet SheetInterface { get; }
 
     void Initialize();
-
-    public Stylesheet Init(BaseStylesheet baseSheet);
-    public BaseStylesheet GetBaseStylesheet(Stylesheet? sheet);
 }

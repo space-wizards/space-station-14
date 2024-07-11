@@ -11,6 +11,5 @@ public sealed partial class SandboxWindow : DefaultWindow
     public SandboxWindow()
     {
         RobustXamlLoader.Load(this);
-        Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetInterface;
     }
 }

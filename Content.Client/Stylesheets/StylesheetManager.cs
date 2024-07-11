@@ -1,14 +1,14 @@
+using System.Diagnostics;
 using Content.Client.Stylesheets.Redux;
 using Content.Client.Stylesheets.Redux.Stylesheets;
-using Content.Client.UserInterface.Screens;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
-using Robust.Shared.IoC;
 
 namespace Content.Client.Stylesheets
 {
     public sealed class StylesheetManager : IStylesheetManager
     {
+        [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
@@ -18,47 +18,25 @@ namespace Content.Client.Stylesheets
 
         public void Initialize()
         {
-            var nanoBase = new NanotrasenStylesheet(new PalettedStylesheet.NoConfig());
-            _defaultSheetBase = nanoBase;
-            SheetNano = Init(nanoBase);
-            SheetInterface = new InterfaceStylesheet(new PalettedStylesheet.NoConfig()).Stylesheet;
-            SheetSpace = new StyleSpace(_resourceCache).Stylesheet;
+            var sawmill = _logManager.GetSawmill("style");
+            sawmill.Debug("Initializing Stylesheets...");
+            var sw = Stopwatch.StartNew();
+
+            SheetNano = Init(new NanotrasenStylesheet(new PalettedStylesheet.NoConfig()));
+            SheetInterface = Init(new InterfaceStylesheet(new PalettedStylesheet.NoConfig()));
+            SheetSpace = new StyleSpace(_resourceCache).Stylesheet; // TODO: REMOVE
 
             _userInterfaceManager.Stylesheet = SheetNano;
-            // _userInterfaceManager.OnScreenChanged += OnScreenChanged;
+
+            sawmill.Debug($"Initialized {_styleRuleCount} style rules in {sw.Elapsed}");
         }
 
-        private Dictionary<Stylesheet, BaseStylesheet> _sheetToBaseSheet = new();
-        private BaseStylesheet _defaultSheetBase = default!;
+        private int _styleRuleCount = 0;
 
         public Stylesheet Init(BaseStylesheet baseSheet)
         {
-            _sheetToBaseSheet.Add(baseSheet.Stylesheet, baseSheet);
+            _styleRuleCount += baseSheet.Stylesheet.Rules.Count;
             return baseSheet.Stylesheet;
         }
-
-        public BaseStylesheet GetBaseStylesheet(Stylesheet? sheet)
-        {
-            if (sheet is null)
-                return _defaultSheetBase;
-            try
-            {
-                return _sheetToBaseSheet[sheet];
-            }
-            catch
-            {
-                return _defaultSheetBase;
-            }
-        }
-
-        // NOTE: taken out b/c chat colors being different looked slightly wacky
-
-        // // Required because stylesheet is initialized before .ActiveScreen is set on UiManager and after the
-        // // HUD UIs are actually constructed.
-        // private void OnScreenChanged((UIScreen? Old, UIScreen? New) ev)
-        // {
-        //     if (ev.New is not null)
-        //         ev.New.Stylesheet = SheetInterface;
-        // }
     }
 }
