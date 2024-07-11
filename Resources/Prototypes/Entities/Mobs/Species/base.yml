@@ -142,6 +142,7 @@
     - Pacified
     - StaminaModifier
     - Flashed
+    - Hallucinations
   - type: Reflect
     enabled: false
     reflectProb: 0

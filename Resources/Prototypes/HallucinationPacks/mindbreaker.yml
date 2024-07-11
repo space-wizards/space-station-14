@@ -1,0 +1,9 @@
+- type: hallucinationsPack
+  id: MindBreaker
+  minChance: 0.4
+  maxChance: 0.9
+  entities:
+  - HallucinationMobMedical
+  - HallucinationMobNukeop
+  - HallucinationMobMusician
+  - HallucinationMobYeti
