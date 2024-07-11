@@ -14,7 +14,6 @@ namespace Content.Shared.Storage.Components
     ///    amount: 6 # Note: this field can be omitted.
     ///    count:
     ///      tags: [Cigarette]
-    ///    openContainerOnly: true
     /// </code>
     [RegisterComponent]
     [Access(typeof(SharedItemCounterSystem))]
