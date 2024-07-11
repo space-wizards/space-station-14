@@ -214,7 +214,9 @@ public sealed partial class GunSystem : SharedGunSystem
                                 {
                                     if (collide.HitEntity != gun.Target &&
                                         CompOrNull<RequireProjectileTargetComponent>(collide.HitEntity)?.Active == true)
+                                    {
                                         continue;
+                                    }
 
                                     result = collide;
                                     break;
