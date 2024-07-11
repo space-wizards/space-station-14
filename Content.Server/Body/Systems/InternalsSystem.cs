@@ -267,21 +267,21 @@ public sealed class InternalsSystem : EntitySystem
 
         if (_inventory.TryGetSlotEntity(user, "back", out var backEntity, user.Comp2, user.Comp3) &&
             TryComp<GasTankComponent>(backEntity, out var backGasTank) &&
-            _gasTank.CanConnectToInternals(backGasTank))
+            _gasTank.CanConnectToInternals((backEntity.Value, backGasTank)))
         {
             return (backEntity.Value, backGasTank);
         }
 
         if (_inventory.TryGetSlotEntity(user, "suitstorage", out var entity, user.Comp2, user.Comp3) &&
             TryComp<GasTankComponent>(entity, out var gasTank) &&
-            _gasTank.CanConnectToInternals(gasTank))
+            _gasTank.CanConnectToInternals((entity.Value, gasTank)))
         {
             return (entity.Value, gasTank);
         }
 
         foreach (var item in _inventory.GetHandOrInventoryEntities((user.Owner, user.Comp1, user.Comp2)))
         {
-            if (TryComp(item, out gasTank) && _gasTank.CanConnectToInternals(gasTank))
+            if (TryComp(item, out gasTank) && _gasTank.CanConnectToInternals((item, gasTank)))
                 return (item, gasTank);
         }
 
