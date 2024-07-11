@@ -102,7 +102,7 @@ public sealed class InternalsSystem : EntitySystem
         {
             if (force)
             {
-                DisconnectTank(internals);
+                DisconnectTank((uid, internals));
                 return;
             }
 
@@ -199,16 +199,13 @@ public sealed class InternalsSystem : EntitySystem
         _alerts.ShowAlert(ent, ent.Comp.InternalsAlert, GetSeverity(ent));
     }
 
-    public void DisconnectTank(InternalsComponent? component)
+    public void DisconnectTank(Entity<InternalsComponent> ent)
     {
-        if (component is null)
-            return;
+        if (TryComp(ent.Comp.GasTankEntity, out GasTankComponent? tank))
+            _gasTank.DisconnectFromInternals((ent.Comp.GasTankEntity.Value, tank));
 
-        if (TryComp(component.GasTankEntity, out GasTankComponent? tank))
-            _gasTank.DisconnectFromInternals((component.GasTankEntity.Value, tank));
-
-        component.GasTankEntity = null;
-        _alerts.ShowAlert(component.Owner, component.InternalsAlert, GetSeverity(component));
+        ent.Comp.GasTankEntity = null;
+        _alerts.ShowAlert(ent.Owner, ent.Comp.InternalsAlert, GetSeverity(ent.Comp));
     }
 
     public bool TryConnectTank(Entity<InternalsComponent> ent, EntityUid tankEntity)

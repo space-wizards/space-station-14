@@ -226,7 +226,6 @@ namespace Content.Server.Atmos.EntitySystems
         public void ConnectToInternals(Entity<GasTankComponent> ent)
         {
             var (owner, component) = ent;
-
             if (component.IsConnected || !CanConnectToInternals(ent))
                 return;
 
@@ -244,7 +243,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             component.ConnectStream = _audioSys.Stop(component.ConnectStream);
-            component.ConnectStream = _audioSys.PlayPvs(component.ConnectSound, ent.Owner)?.Entity;
+            component.ConnectStream = _audioSys.PlayPvs(component.ConnectSound, owner)?.Entity;
 
             UpdateUserInterface(ent);
         }
@@ -256,12 +255,13 @@ namespace Content.Server.Atmos.EntitySystems
             if (component.User == null)
                 return;
 
-            TryGetInternalsComp(ent, out _, out var internalsComp, component.User);
+            TryGetInternalsComp(ent, out var internalsUid, out var internalsComp, component.User);
             component.User = null;
 
             _actions.SetToggled(component.ToggleActionEntity, false);
 
-            _internals.DisconnectTank(internalsComp);
+            if (internalsUid != null && internalsComp != null)
+                _internals.DisconnectTank((internalsUid.Value, internalsComp));
             component.DisconnectStream = _audioSys.Stop(component.DisconnectStream);
             component.DisconnectStream = _audioSys.PlayPvs(component.DisconnectSound, owner)?.Entity;
 
