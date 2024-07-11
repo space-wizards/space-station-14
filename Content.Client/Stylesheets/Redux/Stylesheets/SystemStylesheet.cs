@@ -10,7 +10,7 @@ using static Robust.Client.UserInterface.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Redux.Stylesheets;
 
 [Virtual]
-public partial class InterfaceStylesheet : PalettedStylesheet
+public partial class SystemStylesheet : PalettedStylesheet
 {
     public override FontStack BaseFont { get; }
 
@@ -32,7 +32,7 @@ public partial class InterfaceStylesheet : PalettedStylesheet
         (StyleClass.FontLarge, PrimaryFontSize + FontSizeStep),
     };
 
-    public InterfaceStylesheet(object config) : base(config)
+    public SystemStylesheet(object config) : base(config)
     {
         BaseFont = new NotoFontStack(ResCache);
         var rules = new[]
@@ -46,7 +46,7 @@ public partial class InterfaceStylesheet : PalettedStylesheet
             ],
             // Finally, load all the other sheetlets.
             GetAllSheetletRules<PalettedStylesheet, CommonSheetletAttribute>(),
-            GetAllSheetletRules<InterfaceStylesheet, CommonSheetletAttribute>(),
+            GetAllSheetletRules<SystemStylesheet, CommonSheetletAttribute>(),
         };
 
         Stylesheet = new Stylesheet(rules.SelectMany(x => x).ToArray());

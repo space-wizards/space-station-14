@@ -32,7 +32,7 @@
 - [x] `Palette` class and kick out indexing palette with a number
     - `ColorPalette` / `Palettes` but same thing
 - [x] tooltips being part of another stylesheet is kinda bad
-- [ ] rename `InterfaceStylesheet` to `SystemStylesheet`
+- [x] rename `InterfaceStylesheet` to `SystemStylesheet`
 - [ ] rename `FancyWindow` to `NanoWindow`
 - [x] Get rid of `NTSheetlets` & `InterfaceSheetlets`
     - Eh, most of it anyway

@@ -28,7 +28,7 @@ namespace Content.Client.Actions.UI
             string? requires = null,
             FormattedMessage? charges = null)
         {
-            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetInterface;
+            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSystem;
             _gameTiming = IoCManager.Resolve<IGameTiming>();
 
             SetOnlyStyleClass(StyleClass.TooltipPanel);

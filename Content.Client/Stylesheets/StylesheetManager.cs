@@ -13,7 +13,7 @@ namespace Content.Client.Stylesheets
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         public Stylesheet SheetNano { get; private set; } = default!;
-        public Stylesheet SheetInterface { get; private set; } = default!;
+        public Stylesheet SheetSystem { get; private set; } = default!;
         public Stylesheet SheetSpace { get; private set; } = default!;
 
         public void Initialize()
@@ -23,7 +23,7 @@ namespace Content.Client.Stylesheets
             var sw = Stopwatch.StartNew();
 
             SheetNano = Init(new NanotrasenStylesheet(new PalettedStylesheet.NoConfig()));
-            SheetInterface = Init(new InterfaceStylesheet(new PalettedStylesheet.NoConfig()));
+            SheetSystem = Init(new SystemStylesheet(new PalettedStylesheet.NoConfig()));
             SheetSpace = new StyleSpace(_resourceCache).Stylesheet; // TODO: REMOVE
 
             _userInterfaceManager.Stylesheet = SheetNano;

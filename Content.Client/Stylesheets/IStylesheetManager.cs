@@ -7,7 +7,7 @@ public interface IStylesheetManager
 {
     Stylesheet SheetNano { get; }
     Stylesheet SheetSpace { get; }
-    Stylesheet SheetInterface { get; }
+    Stylesheet SheetSystem { get; }
 
     void Initialize();
 }

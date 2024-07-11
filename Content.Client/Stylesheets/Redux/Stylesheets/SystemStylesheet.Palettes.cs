@@ -2,7 +2,7 @@ using Content.Client.Stylesheets.Redux.SheetletConfigs;
 
 namespace Content.Client.Stylesheets.Redux.Stylesheets;
 
-public partial class InterfaceStylesheet
+public partial class SystemStylesheet
 {
     public override ColorPalette PrimaryPalette => Palettes.InterfacePrimary;
     public override ColorPalette SecondaryPalette => Palettes.InterfaceSecondary;

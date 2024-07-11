@@ -3,7 +3,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Stylesheets.Redux.Stylesheets;
 
-public sealed partial class InterfaceStylesheet : IButtonConfig, IWindowConfig, IIconConfig, ITabContainerConfig,
+public sealed partial class SystemStylesheet : IButtonConfig, IWindowConfig, IIconConfig, ITabContainerConfig,
     ISliderConfig, IRadialMenuConfig, IPlaceholderConfig, ITooltipConfig, IPanelConfig, INanoHeadingConfig,
     ILineEditConfig, IStripebackConfig, ICheckboxConfig
 {
