@@ -129,7 +129,6 @@ public abstract partial class SharedHandsSystem
         // otherwise, remove the item from their hands and place it at the calculated interaction range position
         if (targetDropLocation == null || isInContainer)
         {
-            // If user is in a container, drop item into that container. Otherwise, attach to grid or map.
             TransformSystem.DropNextTo((entity, itemXform), (uid, userXform));
             return true;
         }
