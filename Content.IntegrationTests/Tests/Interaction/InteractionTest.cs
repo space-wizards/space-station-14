@@ -104,7 +104,7 @@ public abstract partial class InteractionTest
     protected Content.Server.Construction.ConstructionSystem SConstruction = default!;
     protected SharedDoAfterSystem DoAfterSys = default!;
     protected ToolSystem ToolSys = default!;
-    protected SharedItemToggleSystem ItemToggleSys = default!;
+    protected ItemToggleSystem ItemToggleSys = default!;
     protected InteractionTestSystem STestSystem = default!;
     protected SharedTransformSystem Transform = default!;
     protected SharedMapSystem MapSystem = default!;
@@ -165,7 +165,7 @@ public abstract partial class InteractionTest
         HandSys = SEntMan.System<HandsSystem>();
         InteractSys = SEntMan.System<SharedInteractionSystem>();
         ToolSys = SEntMan.System<ToolSystem>();
-        ItemToggleSys = SEntMan.System<SharedItemToggleSystem>();
+        ItemToggleSys = SEntMan.System<ItemToggleSystem>();
         DoAfterSys = SEntMan.System<SharedDoAfterSystem>();
         Transform = SEntMan.System<SharedTransformSystem>();
         MapSystem = SEntMan.System<SharedMapSystem>();
