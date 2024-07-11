@@ -197,23 +197,6 @@
   - type: KudzuGrowthRule
 
 - type: entity
-  id: MeteorSwarm
-  parent: BaseStationEventLongDelay
-  components:
-  - type: StationEvent
-    earliestStart: 30
-    weight: 7.5
-    minimumPlayers: 10 #Enough to hopefully have at least one engineering guy
-    startAnnouncement: station-event-meteor-swarm-start-announcement
-    endAnnouncement: station-event-meteor-swarm-end-announcement
-    startAudio:
-      path: /Audio/Announcements/meteors.ogg
-      params:
-        volume: -4
-    duration: null #ending is handled by MeteorSwarmRule
-  - type: MeteorSwarmRule
-
-- type: entity
   id: MouseMigration
   parent: BaseStationEventShortDelay
   components:
@@ -247,7 +230,7 @@
     earliestStart: 15
     weight: 6
     duration: 50
-    minimumPlayers: 15 # Hopefully this is enough for the Rat King's potential Army
+    minimumPlayers: 30 # Hopefully this is enough for the Rat King's potential Army (it was not, raised from 15 -> 30)
   - type: VentCrittersRule
     entries:
     - id: MobMouse
@@ -294,18 +277,6 @@
     duration: 60
     maxDuration: 120
   - type: PowerGridCheckRule
-
-- type: entity
-  id: RandomSentience
-  parent: BaseGameRule
-  components:
-  - type: StationEvent
-    weight: 6
-    duration: 1
-    maxOccurrences: 1 # this event has diminishing returns on interesting-ness, so we cap it
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-  - type: RandomSentienceRule
 
 - type: entity
   parent: BaseGameRule
@@ -422,7 +393,7 @@
       blacklist:
         components:
         - ZombieImmune
-        - InitialInfectedExempt
+        - AntagImmune
       briefing:
         text: zombie-patientzero-role-greeting
         color: Plum
@@ -433,6 +404,7 @@
         maxInitialInfectedGrace: 450
       - type: ZombifyOnDeath
       - type: IncurableZombie
+      - type: InitialInfected
       mindComponents:
       - type: InitialInfectedRole
         prototype: InitialInfected
@@ -473,7 +445,7 @@
 
 - type: entity
   parent: BaseTraitorRule
-  id: SleeperAgentsRule
+  id: SleeperAgents
   components:
   - type: StationEvent
     earliestStart: 30
@@ -483,16 +455,21 @@
     startAnnouncement: station-event-communication-interception
     startAudio:
       path: /Audio/Announcements/intercept.ogg
+    duration: null # the rule has to last the whole round not 1 second
   - type: AlertLevelInterceptionRule
   - type: AntagSelection
     definitions:
-    - prefRoles: [ Traitor ]
+    - prefRoles: [ TraitorSleeper ]
+      fallbackRoles: [ Traitor ]
       min: 1
       max: 2
       playerRatio: 10
+      blacklist:
+        components:
+        - AntagImmune
       mindComponents:
       - type: TraitorRole
-        prototype: Traitor
+        prototype: TraitorSleeper
 
 - type: entity
   id: MassHallucinations
