@@ -204,7 +204,7 @@
 - type: entity
   parent: BaseAPC
   id: APCBasic
-  suffix: Basic, 50kW
+  suffix: Basic, 50kJ
   components:
   - type: Battery
     maxCharge: 50000
@@ -213,7 +213,7 @@
 - type: entity
   parent: BaseAPC
   id: APCHighCapacity
-  suffix: High Capacity, 100kW
+  suffix: High Capacity, 100kJ
   components:
   - type: Battery
     maxCharge: 100000
@@ -222,7 +222,7 @@
 - type: entity
   parent: BaseAPC
   id: APCSuperCapacity
-  suffix: Super Capacity, 150kW
+  suffix: Super Capacity, 150kJ
   components:
   - type: Battery
     maxCharge: 150000
@@ -231,7 +231,7 @@
 - type: entity
   parent: BaseAPC
   id: APCHyperCapacity
-  suffix: Hyper Capacity, 200kW
+  suffix: Hyper Capacity, 200kJ
   components:
   - type: Battery
     maxCharge: 200000
