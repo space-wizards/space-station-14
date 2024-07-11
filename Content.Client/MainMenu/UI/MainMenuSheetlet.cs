@@ -1,5 +1,6 @@
 using Content.Client.Stylesheets.Redux;
 using Content.Client.Stylesheets.Redux.Fonts;
+using Content.Client.Stylesheets.Redux.Stylesheets;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
@@ -7,9 +8,9 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 namespace Content.Client.MainMenu.UI;
 
 [CommonSheetlet]
-public sealed class MainMenuSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class MainMenuSheetlet : Sheetlet<NanotrasenStylesheet>
 {
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
     {
         return
         [

@@ -6,9 +6,9 @@ public abstract partial class BaseStylesheet
 {
     public StyleRule[] GetSheetletRules<TSheetTy>(Type sheetletTy)
     {
-        var sheetlet = (Sheetlet<TSheetTy>) SandboxHelper.CreateInstance(sheetletTy);
-
-        return sheetlet.GetRules((TSheetTy) (object) this, _config);
+        if (SandboxHelper.CreateInstance(sheetletTy) is Sheetlet<TSheetTy> sheetlet)
+            return sheetlet.GetRules((TSheetTy) (object) this, _config);
+        return [];
     }
 
     public StyleRule[] GetSheetletRules<T, TSheetTy>()
