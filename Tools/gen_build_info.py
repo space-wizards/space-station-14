@@ -22,9 +22,9 @@ SERVER_FILES = [
 
 VERSION = os.environ['GITHUB_SHA']
 FORK_ID = "harmony"
-BUILD_URL = f"http://cdn.harmony14.com:1212/builds/{{FORK_ID}}/builds/{{FORK_VERSION}}/{FILE}"
-MANIFEST_URL = f"http://cdn.harmony14.com:1212/cdn/version/{{FORK_VERSION}}/manifest"
-MANIFEST_DOWNLOAD_URL = f"http://cdn.harmony14.com:1212/cdn/version/{{FORK_VERSION}}/download"
+BUILD_URL = f"http://cdn.harmony14.com:27690/builds/{{FORK_ID}}/builds/{{FORK_VERSION}}/{FILE}"
+MANIFEST_URL = f"http://cdn.harmony14.com:27690/cdn/version/{{FORK_VERSION}}/manifest"
+MANIFEST_DOWNLOAD_URL = f"http://cdn.harmony14.com:27690/cdn/version/{{FORK_VERSION}}/download"
 
 def main() -> None:
     client_file = os.path.join("release", FILE)
