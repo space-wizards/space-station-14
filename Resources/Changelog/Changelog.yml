@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Fixed a bug causing the emergency shuttle to not spawn
-    type: Fix
-  id: 6399
-  time: '2024-04-20T02:10:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27144
 - author: slarticodefast
   changes:
   - message: The internal volume of cryopods has been increased from 101.3 to 1000L.
@@ -3826,3 +3819,10 @@
   id: 6898
   time: '2024-07-10T10:32:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29852
+- author: Winkarst-cpu
+  changes:
+  - message: Added exit confirmation for character setup menu with unsaved changes.
+    type: Add
+  id: 6899
+  time: '2024-07-11T00:24:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29875
