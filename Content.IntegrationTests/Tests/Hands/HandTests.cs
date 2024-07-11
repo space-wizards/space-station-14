@@ -90,7 +90,6 @@ public sealed class HandTests
         var mapMan = server.ResolveDependency<IMapManager>();
         var sys = entMan.System<SharedHandsSystem>();
         var tSys = entMan.System<TransformSystem>();
-        // Initially the crowbar is not in a contaienr.
         var containerSystem = server.System<SharedContainerSystem>();
 
         EntityUid item = default;
