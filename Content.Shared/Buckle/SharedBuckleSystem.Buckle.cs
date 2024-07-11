@@ -196,7 +196,6 @@ public abstract partial class SharedBuckleSystem
         buckle.Comp.BuckleTime = _gameTiming.CurTime;
         ActionBlocker.UpdateCanMove(buckle);
         Appearance.SetData(buckle, StrapVisuals.State, buckle.Comp.Buckled);
-        Appearance.SetData(buckle, RotationVisuals.RotationState, RotationState.Horizontal);
         Dirty(buckle);
     }
 
@@ -350,7 +349,6 @@ public abstract partial class SharedBuckleSystem
         SetBuckledTo(buckle, strap!);
         Appearance.SetData(strap, StrapVisuals.State, true);
         Appearance.SetData(buckle, BuckleVisuals.Buckled, true);
-        Appearance.SetData(buckle, RotationVisuals.RotationState, RotationState.Horizontal);
 
         _rotationVisuals.SetHorizontalAngle(buckle.Owner, strap.Comp.Rotation);
 
@@ -363,10 +361,10 @@ public abstract partial class SharedBuckleSystem
         switch (strap.Comp.Position)
         {
             case StrapPosition.Stand:
-                _standing.Stand(buckle);
+                _standing.Stand(buckle, force: true);
                 break;
             case StrapPosition.Down:
-                _standing.Down(buckle, false, false);
+                _standing.Down(buckle, false, false, force: true);
                 break;
         }
 
@@ -458,10 +456,9 @@ public abstract partial class SharedBuckleSystem
         _rotationVisuals.ResetHorizontalAngle(buckle.Owner);
         Appearance.SetData(strap, StrapVisuals.State, strap.Comp.BuckledEntities.Count != 0);
         Appearance.SetData(buckle, BuckleVisuals.Buckled, false);
-        Appearance.SetData(buckle, RotationVisuals.RotationState, RotationState.Vertical);
 
         if (HasComp<KnockedDownComponent>(buckle) || _mobState.IsIncapacitated(buckle))
-            _standing.Down(buckle);
+            _standing.Down(buckle, playSound: false);
         else
             _standing.Stand(buckle);
 
