@@ -58,7 +58,7 @@ public abstract partial class BaseStylesheet : IStyleResources
     /// <param name="kind"></param>
     /// <param name="prefix"></param>
     /// <returns></returns>
-    public static string GetFontClass(FontStack.FontKind kind, string? prefix = null)
+    public static string GetFontClass(FontKind kind, string? prefix = null)
     {
         var kindStr = kind.ToString().ToLowerInvariant();
         return prefix is null ? $"font-{kindStr}" : $"{prefix}-{kindStr}";

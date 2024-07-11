@@ -37,8 +37,7 @@
 - [x] Get rid of `NTSheetlets` & `InterfaceSheetlets`
     - Eh, most of it anyway
 - [x] Make all `StyleClass` conform to naming conventions
-- [ ] `LabelSheetlet` / `TextSheetlet` dont hardcode the label sizes
-- [ ] Separate out `FontKind` maybe
+- [x] Separate out `FontKind` maybe
 - [ ] change `ButtonHovered` and friends to `PseudoHovered`
 - [x] `IPanelPalette` is unnecessary now
 - [ ] What the fuck is `StyleSpace` get rid of it
@@ -54,6 +53,7 @@
     - [ ] `LobbyGui.xaml`
     - [ ] `MenuButton.cs`
 - [ ] `WindowSheetlet` `NanoHeading` hardcoded classnames
+- [ ] `LabelSheetlet` / `TextSheetlet` dont hardcode the label sizes
 
 TL;DR port all of `StyleNano` into sheetlets
 
@@ -90,7 +90,7 @@ Buttons? `ButtonSheetlet`.
 But what are `Sheetlet`s? Good question person-who-didnt-read-the-original-PR! Basically how styles used to work is
 every single style rule would be agglomerated in one unholy massive fucking list. This is still how it works, but now
 the responsibility of chipping in styles to this massive list is spread out among all the sheetlets. They have one
-method, `StyleRule[] GetRules`, and all these rules from all the sheetlets are collected up to do in like 30ish files
+method, `StyleRule[] GetRules`, and all these rules from all the sheetlets are collected up to do in like 30-40ish files
 what used to be one 1600 line file.
 
 `ISheetletConfig` is intended to cut down on repeated code by providing shared functionality between the stylesheets.

@@ -52,13 +52,13 @@ public sealed class ContextMenuSheetlet : Sheetlet<PalettedStylesheet>
             // Context Menu Labels
             E<RichTextLabel>()
                 .Class(InteractionVerb.DefaultTextStyleClass)
-                .Font(sheet.BaseFont.GetFont(12, FontStack.FontKind.BoldItalic)),
+                .Font(sheet.BaseFont.GetFont(12, FontKind.BoldItalic)),
             E<RichTextLabel>()
                 .Class(ActivationVerb.DefaultTextStyleClass)
-                .Font(sheet.BaseFont.GetFont(12, FontStack.FontKind.Bold)),
+                .Font(sheet.BaseFont.GetFont(12, FontKind.Bold)),
             E<RichTextLabel>()
                 .Class(AlternativeVerb.DefaultTextStyleClass)
-                .Font(sheet.BaseFont.GetFont(12, FontStack.FontKind.Italic)),
+                .Font(sheet.BaseFont.GetFont(12, FontKind.Italic)),
             E<RichTextLabel>()
                 .Class(Verb.DefaultTextStyleClass)
                 .Font(sheet.BaseFont.GetFont(12)),

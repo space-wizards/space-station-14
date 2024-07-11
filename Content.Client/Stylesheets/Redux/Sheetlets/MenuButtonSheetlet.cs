@@ -69,7 +69,7 @@ public sealed class MenuButtonSheetlet : Sheetlet<PalettedStylesheet>
                 .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenSquareButton(sheet)),
             E<Label>()
                 .Class(MenuButton.StyleClassLabelTopButton)
-                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(14, FontStack.FontKind.Bold)),
+                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(14, FontKind.Bold)),
             // new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
         };
 

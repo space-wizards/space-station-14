@@ -59,11 +59,11 @@ public sealed class WindowSheetlet : Sheetlet<PalettedStylesheet>
             E<Label>()
                 .Class(DefaultWindow.StyleClassWindowTitle)
                 .FontColor(sheet.HighlightPalette.Text)
-                .Font(sheet.BaseFont.GetFont(14, FontStack.FontKind.Bold)),
+                .Font(sheet.BaseFont.GetFont(14, FontKind.Bold)),
             E<Label>()
                 .Class("windowTitleAlert")
                 .FontColor(Color.White)
-                .Font(sheet.BaseFont.GetFont(14, FontStack.FontKind.Bold)),
+                .Font(sheet.BaseFont.GetFont(14, FontKind.Bold)),
             // TODO: maybe also change everything here to `NanoWindow` or something
             E()
                 .Class(DefaultWindow.StyleClassWindowPanel)
@@ -85,7 +85,7 @@ public sealed class WindowSheetlet : Sheetlet<PalettedStylesheet>
             // Title
             E<Label>()
                 .Class("FancyWindowTitle") // TODO: HARDCODING AAAAAA (theres a lot more in this file)
-                .Font(boxFont.GetFont(13, FontStack.FontKind.Bold))
+                .Font(boxFont.GetFont(13, FontKind.Bold))
                 .FontColor(sheet.HighlightPalette.Text),
 
             // Help Button

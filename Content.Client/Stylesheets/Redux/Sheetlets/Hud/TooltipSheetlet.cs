@@ -33,7 +33,7 @@ public sealed class TooltipSheetlet : Sheetlet<PalettedStylesheet>
                 .Panel(tooltipBox),
             E<RichTextLabel>()
                 .Class(StyleClass.TooltipTitle)
-                .Font(sheet.BaseFont.GetFont(14, FontStack.FontKind.Bold)),
+                .Font(sheet.BaseFont.GetFont(14, FontKind.Bold)),
             E<RichTextLabel>()
                 .Class(StyleClass.TooltipDesc)
                 .Font(sheet.BaseFont.GetFont(12)),
@@ -54,11 +54,11 @@ public sealed class TooltipSheetlet : Sheetlet<PalettedStylesheet>
             E<PanelContainer>()
                 .Class("speechBox", "whisperBox")
                 .ParentOf(E<RichTextLabel>().Class("bubbleContent"))
-                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(12, FontStack.FontKind.Italic)),
+                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(12, FontKind.Italic)),
             E<PanelContainer>()
                 .Class("speechBox", "emoteBox")
                 .ParentOf(E<RichTextLabel>().Class("bubbleContent"))
-                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(12, FontStack.FontKind.Italic)),
+                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(12, FontKind.Italic)),
         ];
     }
 }

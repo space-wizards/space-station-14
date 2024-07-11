@@ -18,7 +18,7 @@ public sealed class ItemStatusSheetlet : Sheetlet<PalettedStylesheet>
 
             E()
                 .Class(StyleClass.ItemStatusNotHeld)
-                .Prop("font", sheet.BaseFont.GetFont(10, FontStack.FontKind.Italic))
+                .Prop("font", sheet.BaseFont.GetFont(10, FontKind.Italic))
                 .Prop("font-color", Color.Gray),
 
             E<RichTextLabel>()

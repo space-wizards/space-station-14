@@ -14,11 +14,11 @@ public sealed class LabelSheetlet : Sheetlet<PalettedStylesheet>
         [
             E<Label>()
                 .Class(StyleClass.LabelHeading)
-                .Font(sheet.BaseFont.GetFont(16, FontStack.FontKind.Bold))
+                .Font(sheet.BaseFont.GetFont(16, FontKind.Bold))
                 .FontColor(sheet.HighlightPalette.Text),
             E<Label>()
                 .Class(StyleClass.LabelHeadingBigger)
-                .Font(sheet.BaseFont.GetFont(20, FontStack.FontKind.Bold))
+                .Font(sheet.BaseFont.GetFont(20, FontKind.Bold))
                 .FontColor(sheet.HighlightPalette.Text),
             E<Label>()
                 .Class(StyleClass.LabelSubText)
@@ -26,7 +26,7 @@ public sealed class LabelSheetlet : Sheetlet<PalettedStylesheet>
                 .FontColor(Color.DarkGray),
             E<Label>()
                 .Class(StyleClass.LabelKeyText)
-                .Font(sheet.BaseFont.GetFont(12, FontStack.FontKind.Bold))
+                .Font(sheet.BaseFont.GetFont(12, FontKind.Bold))
                 .FontColor(sheet.HighlightPalette.Text),
             E<Label>()
                 .Class(StyleClass.LabelWeak)

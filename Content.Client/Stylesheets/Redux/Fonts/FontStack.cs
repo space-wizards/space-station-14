@@ -17,6 +17,7 @@ public abstract class FontStack(IResourceCache resCache)
     ///     1 is the font kind with BoldItalic replaced with Bold when it occurs.
     /// </remarks>
     public abstract string FontPrimary { get; }
+
     /// <summary>
     ///     The symbols font path, with string substitution markers.
     /// </summary>
@@ -37,7 +38,8 @@ public abstract class FontStack(IResourceCache resCache)
     /// </summary>
     public abstract string[] Extra { get; }
 
-    public virtual HashSet<FontKind> AvailableKinds => new() {FontKind.Regular, FontKind.Bold, FontKind.Italic, FontKind.BoldItalic};
+    public virtual HashSet<FontKind> AvailableKinds => new()
+        { FontKind.Regular, FontKind.Bold, FontKind.Italic, FontKind.BoldItalic };
 
     /// <summary>
     ///     This should return the paths of every font in this stack given the abstract members.
@@ -84,61 +86,5 @@ public abstract class FontStack(IResourceCache resCache)
         var paths = GetFontPaths(kind);
 
         return resCache.GetFont(paths, size);
-    }
-
-    /// <summary>
-    ///     The available kinds of font.
-    /// </summary>
-    public enum FontKind
-    {
-        Regular,
-        Bold,
-        Italic,
-        BoldItalic
-    }
-}
-
-[PublicAPI]
-public static class FontKindExtensions
-{
-    public static string AsFileName(this FontStack.FontKind kind)
-    {
-        return kind switch
-        {
-            FontStack.FontKind.Regular => "Regular",
-            FontStack.FontKind.Bold => "Bold",
-            FontStack.FontKind.Italic => "Italic",
-            FontStack.FontKind.BoldItalic => "BoldItalic",
-            _ => throw new ArgumentOutOfRangeException(nameof(kind), kind, null)
-        };
-    }
-
-    public static bool IsBold(this FontStack.FontKind kind)
-    {
-        return kind == FontStack.FontKind.Bold || kind == FontStack.FontKind.BoldItalic;
-    }
-
-    public static bool IsItalic(this FontStack.FontKind kind)
-    {
-        return kind == FontStack.FontKind.Italic || kind == FontStack.FontKind.BoldItalic;
-    }
-
-    public static FontStack.FontKind SimplifyCompound(this FontStack.FontKind kind)
-    {
-        return kind switch
-        {
-            FontStack.FontKind.BoldItalic => FontStack.FontKind.Bold,
-            _ => kind
-        };
-    }
-
-
-    public static FontStack.FontKind RegularOr(this FontStack.FontKind kind, FontStack.FontKind other)
-    {
-        return kind switch
-        {
-            FontStack.FontKind.Regular => FontStack.FontKind.Regular,
-            _ => other
-        };
     }
 }
