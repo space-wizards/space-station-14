@@ -90,8 +90,8 @@ namespace Content.Server.Traitor.Uplink
                 [DiscountCategory.UsualDiscounts] = 0,
                 [DiscountCategory.VeryRareDiscounts] = 0,
             };
-            var category2DiscountCount = 0;
-            var category0DiscountCount = 0;
+            var veryRareDiscountCount = 0;
+            var rareDiscountCount = 0;
             for (var i = 0; i < settings.TotalAvailableDiscounts; i++)
             {
                 var roll = _random.Next(100);
@@ -100,21 +100,21 @@ namespace Content.Server.Traitor.Uplink
                 {
                     case <= 2:
                         chosenDiscounts[DiscountCategory.VeryRareDiscounts]++;
-                        if (category2DiscountCount >= settings.MaxCategory2Discounts)
+                        if (veryRareDiscountCount >= settings.MaxVeryRareDiscounts)
                         {
                             chosenDiscounts[DiscountCategory.UsualDiscounts]++;
                         }
                         else
                         {
-                            category2DiscountCount++;
+                            veryRareDiscountCount++;
                         }
 
                         break;
                     case <= 20:
-                        if (category0DiscountCount <= settings.MaxCategory0Discounts)
+                        if (rareDiscountCount <= settings.MaxRareDiscounts)
                         {
                             chosenDiscounts[DiscountCategory.RareDiscounts]++;
-                            category0DiscountCount++;
+                            rareDiscountCount++;
                         }
                         else
                         {
@@ -142,18 +142,17 @@ namespace Content.Server.Traitor.Uplink
                 }
 
                 var chosen = _random.GetItems(itemsForDiscount, itemsCount, allowDuplicates: false);
-                var discountData = from listingData in chosen
-                    let discount = _random.Pick(listingData.DiscountOptions!)
-                    select new StoreDiscountData
+                foreach (var listingData in chosen)
+                {
+                    var discount = _random.Pick(listingData.DiscountOptions!);
+                    var discountData = new StoreDiscountData
                     {
                         ListingId = listingData.ID,
                         Count = 1,
-                        DiscountByCurrency = new Dictionary<string, float>
-                        {
-                            [TelecrystalCurrencyPrototype] = discount
-                        }
+                        DiscountByCurrency = new Dictionary<string, float> { [TelecrystalCurrencyPrototype] = discount }
                     };
-                list.AddRange(discountData);
+                    list.Add(discountData);
+                }
             }
 
             return list;
@@ -202,11 +201,11 @@ namespace Content.Server.Traitor.Uplink
         /// <summary>
         /// Maximum count of category 2 (not cheap stuff) items to be discounted.
         /// </summary>
-        public int MaxCategory2Discounts { get; set; } = 1;
+        public int MaxVeryRareDiscounts { get; set; } = 1;
 
         /// <summary>
         /// Maximum count of category 0 (very low-costing stuff) items to be discounted.
         /// </summary>
-        public int MaxCategory0Discounts { get; set; } = 2;
+        public int MaxRareDiscounts { get; set; } = 2;
     }
 }
