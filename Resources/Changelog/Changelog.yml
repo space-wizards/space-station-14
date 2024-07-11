@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SoulFN
-  changes:
-  - message: Various types of glass shards now causes diffrent damage
-    type: Tweak
-  id: 6403
-  time: '2024-04-20T06:21:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26783
 - author: Vermidia
   changes:
   - message: Most medical roles now can choose to start with nitrile or latex gloves,
@@ -3826,3 +3819,10 @@
   id: 6902
   time: '2024-07-11T05:33:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29869
+- author: MFMessage
+  changes:
+  - message: Picking a ghost role as an admin will now deadmin.
+    type: Fix
+  id: 6903
+  time: '2024-07-11T05:53:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29790
