@@ -29,7 +29,7 @@ public sealed partial class NearbyEntitiesRule : RulesRule
         }
 
         var transform = entManager.System<SharedTransformSystem>();
-        var lookup = IoCManager.Resolve<EntityLookupSystem>();
+        var lookup = entManager.System<EntityLookupSystem>();
         var whitelistSystem = entManager.System<EntityWhitelistSystem>();
 
         var found = false;
