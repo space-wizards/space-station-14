@@ -190,16 +190,16 @@
 
 # Pre-equipped species gear
 
-# Full Tank Equipped
+# Full tank for vox as part of any Survival loadout
 - type: loadout
-  id: LoadoutSpeciesEVANitrogen
-  equipment: GearEVANitrogen
+  id: LoadoutSpeciesVoxNitrogen
+  equipment: GearVoxNitrogen
   effects:
   - !type:GroupLoadoutEffect
     proto: EffectSpeciesVox
 
 - type: startingGear
-  id: GearEVANitrogen
+  id: GearVoxNitrogen
   equipment:
     suitstorage: NitrogenTankFilled
 
