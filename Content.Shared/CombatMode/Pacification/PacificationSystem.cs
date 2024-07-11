@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
+using Content.Shared.Damage.Events;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
@@ -26,6 +27,7 @@ public sealed class PacificationSystem : EntitySystem
         SubscribeLocalEvent<PacifiedComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<PacifiedComponent, BeforeThrowEvent>(OnBeforeThrow);
         SubscribeLocalEvent<PacifiedComponent, AttackAttemptEvent>(OnAttackAttempt);
+        SubscribeLocalEvent<PacifiedComponent, StaminaDamageOnHitAttemptEvent>(OnStamAttackAttempt);
         SubscribeLocalEvent<PacifiedComponent, ShotAttemptedEvent>(OnShootAttempt);
         SubscribeLocalEvent<PacifismDangerousAttackComponent, AttemptPacifiedAttackEvent>(OnPacifiedDangerousAttack);
     }
@@ -62,10 +64,10 @@ public sealed class PacificationSystem : EntitySystem
 
     private void OnShootAttempt(Entity<PacifiedComponent> ent, ref ShotAttemptedEvent args)
     {
+        // Don't allow the user to fire the gun if the weapon does not have the PacifismAllowedGunComponent
         if (HasComp<PacifismAllowedGunComponent>(args.Used))
             return;
 
-        // Disallow firing guns in all cases.
         ShowPopup(ent, args.Used, "pacified-cannot-fire-gun");
         args.Cancel();
     }
@@ -96,6 +98,19 @@ public sealed class PacificationSystem : EntitySystem
 
         ShowPopup((uid, component), args.Target.Value, reason);
         args.Cancel();
+    }
+
+    private void OnStamAttackAttempt(Entity<PacifiedComponent> ent, ref StaminaDamageOnHitAttemptEvent args)
+    {
+        // Check if the stamina damage dealt is less than the max
+        if (args.Damage < ent.Comp.MaxStaminaDamage)
+            return;
+
+        if (PacifiedCanAttack(ent.Owner, args.Target, out var reason))
+            return;
+
+        ShowPopup(ent, args.Target, reason);
+        args.Cancelled = true;
     }
 
     private void OnStartup(EntityUid uid, PacifiedComponent component, ComponentStartup args)

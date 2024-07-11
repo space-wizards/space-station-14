@@ -14,6 +14,7 @@ using Content.Shared.Rounding;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.CombatMode.Pacification;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -55,6 +56,7 @@ public sealed partial class StaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaDamageOnEmbedComponent, EmbedEvent>(OnProjectileEmbed);
 
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ProjectileHitEvent>(OnProjectileHit);
+        SubscribeLocalEvent<StaminaDamageOnCollideComponent, AttemptPacifiedThrowEvent>(OnAttemptPacifiedThrow);
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ThrowDoHitEvent>(OnThrowHit);
 
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
@@ -137,11 +139,6 @@ public sealed partial class StaminaSystem : EntitySystem
             return;
         }
 
-        var ev = new StaminaDamageOnHitAttemptEvent();
-        RaiseLocalEvent(uid, ref ev);
-        if (ev.Cancelled)
-            return;
-
         var stamQuery = GetEntityQuery<StaminaComponent>();
         var toHit = new List<(EntityUid Entity, StaminaComponent Component)>();
 
@@ -153,6 +150,12 @@ public sealed partial class StaminaSystem : EntitySystem
 
             toHit.Add((ent, stam));
         }
+
+        var ev = new StaminaDamageOnHitAttemptEvent(toHit[0].Entity, component.Damage);
+        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(args.User, ref ev);
+        if (ev.Cancelled)
+            return;
 
         var hitEvent = new StaminaMeleeHitEvent(toHit);
         RaiseLocalEvent(uid, hitEvent);
@@ -383,6 +386,11 @@ public sealed partial class StaminaSystem : EntitySystem
         RemComp<ActiveStaminaComponent>(uid);
         Dirty(uid, component);
         _adminLogger.Add(LogType.Stamina, LogImpact.Low, $"{ToPrettyString(uid):user} recovered from stamina crit");
+    }
+
+    private void OnAttemptPacifiedThrow(Entity<StaminaDamageOnCollideComponent> ent, ref AttemptPacifiedThrowEvent args)
+    {
+        args.Cancel("pacified-cannot-throw");
     }
 }
 
