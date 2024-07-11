@@ -42,11 +42,8 @@ void fragment() {
         finalCoords -= deformation * delta;
     }
 
-
     highp vec4 color = zTextureSpec(SCREEN_TEXTURE, finalCoords * SCREEN_PIXEL_SIZE);
-    // Apply darkness
     color.rgb *= cumulativeBrightnessFactor;
 
-    // Set the final color
     COLOR = color;
 }
