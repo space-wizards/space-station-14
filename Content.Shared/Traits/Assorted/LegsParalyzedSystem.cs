@@ -17,7 +17,8 @@ public sealed class LegsParalyzedSystem : EntitySystem
     {
         SubscribeLocalEvent<LegsParalyzedComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<LegsParalyzedComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<LegsParalyzedComponent, BuckleChangeEvent>(OnBuckleChange);
+        SubscribeLocalEvent<LegsParalyzedComponent, BuckledEvent>(OnBuckled);
+        SubscribeLocalEvent<LegsParalyzedComponent, UnbuckledEvent>(OnUnbuckled);
         SubscribeLocalEvent<LegsParalyzedComponent, ThrowPushbackAttemptEvent>(OnThrowPushbackAttempt);
         SubscribeLocalEvent<LegsParalyzedComponent, UpdateCanMoveEvent>(OnUpdateCanMoveEvent);
     }
@@ -34,16 +35,14 @@ public sealed class LegsParalyzedSystem : EntitySystem
         _bodySystem.UpdateMovementSpeed(uid);
     }
 
-    private void OnBuckleChange(EntityUid uid, LegsParalyzedComponent component, ref BuckleChangeEvent args)
+    private void OnBuckled(EntityUid uid, LegsParalyzedComponent component, ref BuckledEvent args)
     {
-        if (args.Buckling)
-        {
-            _standingSystem.Stand(args.BuckledEntity);
-        }
-        else
-        {
-            _standingSystem.Down(args.BuckledEntity);
-        }
+        _standingSystem.Stand(uid);
+    }
+
+    private void OnUnbuckled(EntityUid uid, LegsParalyzedComponent component, ref UnbuckledEvent args)
+    {
+        _standingSystem.Down(uid);
     }
 
     private void OnUpdateCanMoveEvent(EntityUid uid, LegsParalyzedComponent component, UpdateCanMoveEvent args)

@@ -35,7 +35,7 @@ public sealed partial class StoreMenu : DefaultWindow
     private List<ListingData> _cachedListings = new();
     private List<StoreDiscountData> _cachedDiscounts = new();
 
-    public StoreMenu(string name)
+    public StoreMenu()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
@@ -43,9 +43,6 @@ public sealed partial class StoreMenu : DefaultWindow
         WithdrawButton.OnButtonDown += OnWithdrawButtonDown;
         RefundButton.OnButtonDown += OnRefundButtonDown;
         SearchBar.OnTextChanged += _ => SearchTextUpdated?.Invoke(this, SearchBar.Text);
-
-        if (Window != null)
-            Window.Title = name;
     }
 
     public void UpdateBalance(Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance)

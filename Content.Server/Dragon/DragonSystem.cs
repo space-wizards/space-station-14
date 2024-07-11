@@ -1,4 +1,3 @@
-using Content.Server.GenericAntag;
 using Content.Server.Objectives.Components;
 using Content.Server.Objectives.Systems;
 using Content.Server.Popups;
@@ -55,7 +54,6 @@ public sealed partial class DragonSystem : EntitySystem
         SubscribeLocalEvent<DragonComponent, DragonSpawnRiftActionEvent>(OnSpawnRift);
         SubscribeLocalEvent<DragonComponent, RefreshMovementSpeedModifiersEvent>(OnDragonMove);
         SubscribeLocalEvent<DragonComponent, MobStateChangedEvent>(OnMobStateChanged);
-        SubscribeLocalEvent<DragonComponent, GenericAntagCreatedEvent>(OnCreated);
         SubscribeLocalEvent<DragonComponent, EntityZombifiedEvent>(OnZombified);
     }
 
@@ -190,18 +188,6 @@ public sealed partial class DragonSystem : EntitySystem
 
         // objective is explicitly not reset so that it will show how many you got before dying in round end text
         DeleteRifts(uid, false, component);
-    }
-
-    private void OnCreated(EntityUid uid, DragonComponent comp, ref GenericAntagCreatedEvent args)
-    {
-        var mindId = args.MindId;
-        var mind = args.Mind;
-
-        _role.MindAddRole(mindId, new DragonRoleComponent(), mind);
-        _role.MindAddRole(mindId, new RoleBriefingComponent()
-        {
-            Briefing = Loc.GetString("dragon-role-briefing")
-        }, mind);
     }
 
     private void OnZombified(Entity<DragonComponent> ent, ref EntityZombifiedEvent args)

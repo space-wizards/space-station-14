@@ -96,6 +96,7 @@
     damage:
       types:
         Blunt: 10
+  - type: LandAtCursor
   - type: Damageable
     damageContainer: Inorganic
   - type: EmitSoundOnTrigger
@@ -224,6 +225,7 @@
     damage:
       types:
         Blunt: 10
+  - type: LandAtCursor
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
@@ -241,3 +243,22 @@
   - type: ContainerContainer
     containers:
       cluster-payload: !type:Container
+
+- type: entity
+  parent: GrenadeShrapnel
+  id: GrenadeFoamDart
+  name: foam dart grenade
+  description: Releases a bothersome spray of foam darts that cause severe welching.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/foamdart.rsi
+    layers:
+    - state: icon
+      map: ["Base"]
+    - state: primed
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: ClusterGrenade
+    fillPrototype: BulletFoam
+    maxGrenadesCount: 30
+    grenadeType: enum.GrenadeType.Throw
+    velocity: 70

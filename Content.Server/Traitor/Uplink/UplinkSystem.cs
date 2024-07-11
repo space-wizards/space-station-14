@@ -7,6 +7,7 @@ using Content.Server.Store.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Robust.Shared.Random;
+using Content.Shared.Store.Components;
 
 namespace Content.Server.Traitor.Uplink
 {
@@ -19,18 +20,6 @@ namespace Content.Server.Traitor.Uplink
 
         [ValidatePrototypeId<CurrencyPrototype>]
         public const string TelecrystalCurrencyPrototype = "Telecrystal";
-
-        /// <summary>
-        ///     Gets the amount of TC on an "uplink"
-        ///     Mostly just here for legacy systems based on uplink.
-        /// </summary>
-        /// <param name="component"></param>
-        /// <returns>the amount of TC</returns>
-        public int GetTCBalance(StoreComponent component)
-        {
-            FixedPoint2? tcBalance = component.Balance.GetValueOrDefault(TelecrystalCurrencyPrototype);
-            return tcBalance?.Int() ?? 0;
-        }
 
         /// <summary>
         /// Adds an uplink to the target
@@ -56,6 +45,7 @@ namespace Content.Server.Traitor.Uplink
                 return false;
             }
 
+            EnsureComp<UplinkComponent>(uplinkEntity.Value);
             var store = EnsureComp<StoreComponent>(uplinkEntity.Value);
             _store.InitializeFromPreset(uplinkPresetId, uplinkEntity.Value, store);
             var availableListings = _store.GetAvailableListings(user, store.Listings, store.Categories, null);
@@ -64,7 +54,6 @@ namespace Content.Server.Traitor.Uplink
                 : new List<StoreDiscountData>(0);
             store.AccountOwner = user;
             store.Balance.Clear();
-
             if (balance != null)
             {
                 store.Balance.Clear();

@@ -15,6 +15,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Jittering;
 using Content.Shared.Medical;
 using Content.Shared.Mind;
@@ -36,6 +37,7 @@ namespace Content.Server.Medical.BiomassReclaimer
     public sealed class BiomassReclaimerSystem : EntitySystem
     {
         [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedJitteringSystem _jitteringSystem = default!;
         [Dependency] private readonly SharedAudioSystem _sharedAudioSystem = default!;
@@ -49,6 +51,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly MaterialStorageSystem _material = default!;
         [Dependency] private readonly SharedMindSystem _minds = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!;
 
         [ValidatePrototypeId<MaterialPrototype>]
         public const string BiomassPrototype = "Biomass";
@@ -220,6 +223,12 @@ namespace Content.Server.Medical.BiomassReclaimer
             component.CurrentExpectedYield += expectedYield;
 
             component.ProcessingTimer = physics.FixturesMass * component.ProcessingTimePerUnitMass;
+
+            var inventory = _inventory.GetHandOrInventoryEntities(toProcess);
+            foreach (var item in inventory)
+            {
+                _transform.DropNextTo(item, ent.Owner);
+            }
 
             QueueDel(toProcess);
         }

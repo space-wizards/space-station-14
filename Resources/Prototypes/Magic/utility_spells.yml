@@ -2,7 +2,6 @@
   id: ActionChargeSpell
   name: Charge
   description: Adds a charge back to your wand
-  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 30

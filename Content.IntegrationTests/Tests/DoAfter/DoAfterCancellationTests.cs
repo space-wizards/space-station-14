@@ -16,31 +16,31 @@ public sealed class DoAfterCancellationTests : InteractionTest
     public async Task CancelWallDeconstruct()
     {
         await StartDeconstruction(WallConstruction.WallSolid);
-        await Interact(Weld, awaitDoAfters: false);
+        await InteractUsing(Weld, awaitDoAfters: false);
 
         // Failed do-after has no effect
         await CancelDoAfters();
         AssertPrototype(WallConstruction.WallSolid);
 
         // Second attempt works fine
-        await Interact(Weld);
+        await InteractUsing(Weld);
         AssertPrototype(WallConstruction.Girder);
 
         // Repeat for wrenching interaction
         AssertAnchored();
-        await Interact(Wrench, awaitDoAfters: false);
+        await InteractUsing(Wrench, awaitDoAfters: false);
         await CancelDoAfters();
         AssertAnchored();
         AssertPrototype(WallConstruction.Girder);
-        await Interact(Wrench);
+        await InteractUsing(Wrench);
         AssertAnchored(false);
 
         // Repeat for screwdriver interaction.
         AssertExists();
-        await Interact(Screw, awaitDoAfters: false);
+        await InteractUsing(Screw, awaitDoAfters: false);
         await CancelDoAfters();
         AssertExists();
-        await Interact(Screw);
+        await InteractUsing(Screw);
         AssertDeleted();
     }
 
@@ -48,17 +48,16 @@ public sealed class DoAfterCancellationTests : InteractionTest
     public async Task CancelWallConstruct()
     {
         await StartConstruction(WallConstruction.Wall);
-        await Interact(Steel, 5, awaitDoAfters: false);
+        await InteractUsing(Steel, 5, awaitDoAfters: false);
         await CancelDoAfters();
 
-        await Interact(Steel, 5);
-        ClientAssertPrototype(WallConstruction.Girder, ClientTarget);
-        Target = CTestSystem.Ghosts[ClientTarget!.Value.GetHashCode()];
-        await Interact(Steel, 5, awaitDoAfters: false);
+        await InteractUsing(Steel, 5);
+        ClientAssertPrototype(WallConstruction.Girder, Target);
+        await InteractUsing(Steel, 5, awaitDoAfters: false);
         await CancelDoAfters();
         AssertPrototype(WallConstruction.Girder);
 
-        await Interact(Steel, 5);
+        await InteractUsing(Steel, 5);
         AssertPrototype(WallConstruction.WallSolid);
     }
 
@@ -66,11 +65,11 @@ public sealed class DoAfterCancellationTests : InteractionTest
     public async Task CancelTilePry()
     {
         await SetTile(Floor);
-        await Interact(Pry, awaitDoAfters: false);
+        await InteractUsing(Pry, awaitDoAfters: false);
         await CancelDoAfters();
         await AssertTile(Floor);
 
-        await Interact(Pry);
+        await InteractUsing(Pry);
         await AssertTile(Plating);
     }
 
@@ -78,7 +77,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
     public async Task CancelRepeatedTilePry()
     {
         await SetTile(Floor);
-        await Interact(Pry, awaitDoAfters: false);
+        await InteractUsing(Pry, awaitDoAfters: false);
         await RunTicks(1);
         Assert.That(ActiveDoAfters.Count(), Is.EqualTo(1));
         await AssertTile(Floor);
@@ -89,7 +88,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
         await AssertTile(Floor);
 
         // Third do after will work fine
-        await Interact(Pry);
+        await InteractUsing(Pry);
         Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
         await AssertTile(Plating);
     }
@@ -102,7 +101,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
 
         Assert.That(comp.IsWelded, Is.False);
 
-        await Interact(Weld, awaitDoAfters: false);
+        await InteractUsing(Weld, awaitDoAfters: false);
         await RunTicks(1);
         Assert.Multiple(() =>
         {
@@ -120,7 +119,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
         });
 
         // Third do after will work fine
-        await Interact(Weld);
+        await InteractUsing(Weld);
         Assert.Multiple(() =>
         {
             Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
@@ -128,7 +127,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
         });
 
         // Repeat test for un-welding
-        await Interact(Weld, awaitDoAfters: false);
+        await InteractUsing(Weld, awaitDoAfters: false);
         await RunTicks(1);
         Assert.Multiple(() =>
         {
@@ -141,7 +140,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
             Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
             Assert.That(comp.IsWelded, Is.True);
         });
-        await Interact(Weld);
+        await InteractUsing(Weld);
         Assert.Multiple(() =>
         {
             Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));

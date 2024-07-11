@@ -1,6 +1,6 @@
 using Content.Server.Administration.Systems;
-using Content.Server.Destructible.Thresholds;
 using Content.Shared.Antag;
+using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Roles;
 using Content.Shared.Storage;
 using Content.Shared.Whitelist;
@@ -104,6 +104,7 @@ public partial struct AntagSelectionDefinition()
 
     /// <summary>
     /// Whether or not players should be picked to inhabit this antag or not.
+    /// If no players are left and <see cref="SpawnerPrototype"/> is set, it will make a ghost role.
     /// </summary>
     [DataField]
     public bool PickPlayer = true;

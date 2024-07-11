@@ -21,7 +21,7 @@ public abstract class SharedStrippableSystem : EntitySystem
 
     private void OnActivateInWorld(EntityUid uid, StrippableComponent component, ActivateInWorldEvent args)
     {
-        if (args.Handled || args.Target == args.User)
+        if (args.Handled || !args.Complex || args.Target == args.User)
             return;
 
         if (TryOpenStrippingUi(args.User, (uid, component)))

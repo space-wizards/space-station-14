@@ -237,6 +237,16 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         component.Chunks.Clear();
         component.Beacons.Clear();
 
+        // Refresh beacons
+        var query = EntityQueryEnumerator<NavMapBeaconComponent, TransformComponent>();
+        while (query.MoveNext(out var qUid, out var qNavComp, out var qTransComp))
+        {
+            if (qTransComp.ParentUid != uid)
+                continue;
+
+            UpdateNavMapBeaconData(qUid, qNavComp);
+        }
+
         // Loop over all tiles
         var tileRefs = _mapSystem.GetAllTiles(uid, mapGrid);
 
@@ -421,6 +431,10 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         return beacon != null;
     }
 
+    /// <summary>
+    /// Returns a string describing the rough distance and direction
+    /// to the position of <paramref name="ent"/> from the nearest beacon.
+    /// </summary>
     [PublicAPI]
     public string GetNearestBeaconString(Entity<TransformComponent?> ent)
     {
@@ -429,6 +443,11 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
 
         return GetNearestBeaconString(_transformSystem.GetMapCoordinates(ent, ent.Comp));
     }
+
+    /// <summary>
+    /// Returns a string describing the rough distance and direction
+    /// to <paramref name="coordinates"/> from the nearest beacon.
+    /// </summary>
 
     public string GetNearestBeaconString(MapCoordinates coordinates)
     {
@@ -441,10 +460,11 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
 
         // get the angle between the two positions, adjusted for the grid rotation so that
         // we properly preserve north in relation to the grid.
-        var dir = (pos.Value.Position - coordinates.Position).ToWorldAngle();
+        var offset = coordinates.Position - pos.Value.Position;
+        var dir = offset.ToWorldAngle();
         var adjustedDir = (dir - gridOffset).GetDir();
 
-        var length = (pos.Value.Position - coordinates.Position).Length();
+        var length = offset.Length();
         if (length < CloseDistance)
         {
             return Loc.GetString("nav-beacon-pos-format",

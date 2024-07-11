@@ -12,7 +12,7 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
@@ -27,7 +27,6 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Robust.Shared.Toolshed.Syntax;
 using ItemToggleMeleeWeaponComponent = Content.Shared.Item.ItemToggle.Components.ItemToggleMeleeWeaponComponent;
 
 namespace Content.Shared.Weapons.Melee;
@@ -276,7 +275,8 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 return true;
             }
 
-            return false;
+            if (!HasComp<VirtualItemComponent>(held))
+                return false;
         }
 
         // Use hands clothing if applicable.
@@ -499,7 +499,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         var modifiedDamage = DamageSpecifier.ApplyModifierSets(damage + hitEvent.BonusDamage + attackedEvent.BonusDamage, hitEvent.ModifiersList);
         var damageResult = Damageable.TryChangeDamage(target, modifiedDamage, origin:user);
 
-        if (damageResult != null && damageResult.Any())
+        if (damageResult is {Empty: false})
         {
             // If the target has stamina and is taking blunt damage, they should also take stamina damage based on their blunt to stamina factor
             if (damageResult.DamageDict.TryGetValue("Blunt", out var bluntDamage))
@@ -751,7 +751,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return;
 
         var invMatrix = TransformSystem.GetInvWorldMatrix(userXform);
-        var localPos = invMatrix.Transform(coordinates.Position);
+        var localPos = Vector2.Transform(coordinates.Position, invMatrix);
 
         if (localPos.LengthSquared() <= 0f)
             return;

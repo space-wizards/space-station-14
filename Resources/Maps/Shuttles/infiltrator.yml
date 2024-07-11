@@ -3607,7 +3607,7 @@ entities:
     - type: Transform
       pos: 3.5,-3.5
       parent: 1
-- proto: KitchenMicrowave
+- proto: SyndicateMicrowave
   entities:
   - uid: 497
     components:
