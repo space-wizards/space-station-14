@@ -33,14 +33,17 @@
     - `ColorPalette` / `Palettes` but same thing
 - [x] tooltips being part of another stylesheet is kinda bad
 - [x] rename `InterfaceStylesheet` to `SystemStylesheet`
-- [ ] rename `FancyWindow` to `NanoWindow`
+- [ ] ~~rename `FancyWindow` to `NanoWindow`~~
+  - doesnt work with other stylesheets so `FancyWindow` stays!
+  - [x] add a `Stylesheet` property, so you can like, set the styles of a window
 - [x] Get rid of `NTSheetlets` & `InterfaceSheetlets`
     - Eh, most of it anyway
 - [x] Make all `StyleClass` conform to naming conventions
 - [x] Separate out `FontKind` maybe
 - [x] change `ButtonHovered` and friends to `PseudoHovered`
 - [x] `IPanelPalette` is unnecessary now
-- [ ] What the fuck is `StyleSpace` get rid of it
+- [x] What the fuck is `StyleSpace` get rid of it
+  - Switched to `SystemStylesheet`
 - [x] Fix the codepen
 - [ ] figure out `BaseStylesheet.Fonts`
 
@@ -59,6 +62,7 @@ TL;DR port all of `StyleNano` into sheetlets
 
 ### Another PR:
 
+- [ ] Style classes for window sizes (and yayyy refactor all the windows maybe?)
 - [ ] Admin Message window exit button is basically indistinguishable from the red header
 - [ ] Button text colors / change text color when pressed / disabled?
 - [ ] Resizing windows is like, too precise
@@ -152,6 +156,7 @@ that, ideally, every theme should have a unique implementation of, then you woul
 
 #### `StyleNano` is gone!!
 
+- Well it's not gone, but it is obsolete. If you have messed with it at all, your changes will need to be redone.
 - Style classes defined in `StyleNano` have been moved either to `Content.Client.Stylesheets.Redux.StyleClass` or their
   associated `Control`.
 - Any `StyleRule` additions to `StyleNano` must be rewritten to conform to the new format (See guide (TODO: LINK GUIDE))
@@ -159,6 +164,7 @@ that, ideally, every theme should have a unique implementation of, then you woul
   appropriate style classes defined in `Content.Client.Stylesheets.Redux.StyleClass` or create a new Sheetlet (Again,
   see guide)
 - If you are planning on creating a new UI, there are new conventions you should follow (Yet again, see guide)
+- `StyleSpace` is gone too but that probably doesn't affect you
 
 #### `Content.Client/Stylesheets/Redux`
 

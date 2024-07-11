@@ -26,7 +26,7 @@ namespace Content.Client.Voting.UI
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
 
-            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
+            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSystem;
 
             Modulate = Color.White.WithAlpha(0.75f);
             _voteButtons = new Button[vote.Entries.Length];

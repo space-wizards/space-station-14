@@ -23,7 +23,6 @@ namespace Content.Client.Changelog
         {
             RobustXamlLoader.Load(this);
             WindowTitle.AddStyleClass(StyleClass.LabelHeading);
-            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
         }
 
         protected override void Opened()

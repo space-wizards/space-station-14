@@ -22,8 +22,6 @@ public sealed partial class AdminMessagePopupWindow : Control
     {
         RobustXamlLoader.Load(this);
 
-        Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
-
         AcceptButton.OnPressed += OnAcceptButtonPressed;
         DismissButton.OnPressed += OnDismissButtonPressed;
     }
@@ -49,7 +47,8 @@ public sealed partial class AdminMessagePopupWindow : Control
             MessageContainer.AddChild(new AdminMessagePopupMessage(message));
         }
 
-        Description.SetMessage(FormattedMessage.FromMarkup(Loc.GetString("admin-notes-message-desc", ("count", state.Messages.Length))));
+        Description.SetMessage(
+            FormattedMessage.FromMarkup(Loc.GetString("admin-notes-message-desc", ("count", state.Messages.Length))));
     }
 
     private void OnDismissButtonPressed(BaseButton.ButtonEventArgs obj)

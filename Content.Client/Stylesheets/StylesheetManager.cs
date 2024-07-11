@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using Content.Client.Stylesheets.Redux;
 using Content.Client.Stylesheets.Redux.Stylesheets;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Stylesheets
@@ -10,11 +9,11 @@ namespace Content.Client.Stylesheets
     {
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
 
-        public Stylesheet SheetNano { get; private set; } = default!;
+        public Stylesheet SheetNanotransen { get; private set; } = default!;
         public Stylesheet SheetSystem { get; private set; } = default!;
-        public Stylesheet SheetSpace { get; private set; } = default!;
+
+        public Dictionary<string, Stylesheet> Stylesheets { get; private set; } = default!;
 
         public void Initialize()
         {
@@ -22,19 +21,21 @@ namespace Content.Client.Stylesheets
             sawmill.Debug("Initializing Stylesheets...");
             var sw = Stopwatch.StartNew();
 
-            SheetNano = Init(new NanotrasenStylesheet(new PalettedStylesheet.NoConfig()));
-            SheetSystem = Init(new SystemStylesheet(new PalettedStylesheet.NoConfig()));
-            SheetSpace = new StyleSpace(_resourceCache).Stylesheet; // TODO: REMOVE
+            Stylesheets = new Dictionary<string, Stylesheet>();
 
-            _userInterfaceManager.Stylesheet = SheetNano;
+            SheetNanotransen = Init("Nanotransen", new NanotrasenStylesheet(new PalettedStylesheet.NoConfig()));
+            SheetSystem = Init("Interface", new SystemStylesheet(new PalettedStylesheet.NoConfig()));
+
+            _userInterfaceManager.Stylesheet = SheetNanotransen;
 
             sawmill.Debug($"Initialized {_styleRuleCount} style rules in {sw.Elapsed}");
         }
 
-        private int _styleRuleCount = 0;
+        private int _styleRuleCount;
 
-        public Stylesheet Init(BaseStylesheet baseSheet)
+        public Stylesheet Init(string name, BaseStylesheet baseSheet)
         {
+            Stylesheets.Add(name, baseSheet.Stylesheet);
             _styleRuleCount += baseSheet.Stylesheet.Rules.Count;
             return baseSheet.Stylesheet;
         }

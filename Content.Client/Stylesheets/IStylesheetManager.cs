@@ -5,9 +5,10 @@ namespace Content.Client.Stylesheets;
 
 public interface IStylesheetManager
 {
-    Stylesheet SheetNano { get; }
-    Stylesheet SheetSpace { get; }
+    Stylesheet SheetNanotransen { get; }
     Stylesheet SheetSystem { get; }
+
+    public Dictionary<string, Stylesheet> Stylesheets { get; }
 
     void Initialize();
 }

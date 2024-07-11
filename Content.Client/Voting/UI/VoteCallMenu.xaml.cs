@@ -39,7 +39,7 @@ namespace Content.Client.Voting.UI
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
 
-            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
+            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSystem;
             CloseButton.OnPressed += _ => Close();
 
             for (var i = 0; i < AvailableVoteTypes.Length; i++)

@@ -41,7 +41,7 @@ namespace Content.Client.Launcher
 
             LayoutContainer.SetAnchorPreset(this, LayoutContainer.LayoutPreset.Wide);
 
-            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
+            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSystem;
 
             ChangeLoginTip();
             ReconnectButton.OnPressed += ReconnectButtonPressed;
