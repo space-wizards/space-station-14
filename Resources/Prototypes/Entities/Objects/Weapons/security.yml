@@ -224,10 +224,8 @@
       - Security
 
 - type: entity
-  name: pen
   suffix: Flash
   parent: Pen # No way, another syndie pen
-  description: A dark ink pen.
   id: PenFlash
   components:
   - type: MeleeWeapon
