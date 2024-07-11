@@ -117,6 +117,7 @@ public sealed class SolutionTransferSystem : EntitySystem
                 transferAmount = FixedPoint2.Min(transferAmount, maxRefill);
 
             var transferred = Transfer(args.User, target, targetSoln.Value, uid, ownerSoln.Value, transferAmount);
+            args.Handled = true;
             if (transferred > 0)
             {
                 var toTheBrim = ownerRefill.AvailableVolume == 0;
@@ -125,8 +126,6 @@ public sealed class SolutionTransferSystem : EntitySystem
                     : "comp-solution-transfer-fill-normal";
 
                 _popup.PopupClient(Loc.GetString(msg, ("owner", args.Target), ("amount", transferred), ("target", uid)), uid, args.User);
-
-                args.Handled = true;
                 return;
             }
         }
@@ -143,13 +142,11 @@ public sealed class SolutionTransferSystem : EntitySystem
                 transferAmount = FixedPoint2.Min(transferAmount, maxRefill);
 
             var transferred = Transfer(args.User, uid, ownerSoln.Value, target, targetSoln.Value, transferAmount);
-
+            args.Handled = true;
             if (transferred > 0)
             {
                 var message = Loc.GetString("comp-solution-transfer-transfer-solution", ("amount", transferred), ("target", target));
                 _popup.PopupClient(message, uid, args.User);
-
-                args.Handled = true;
             }
         }
     }
