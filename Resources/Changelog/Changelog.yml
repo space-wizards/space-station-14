@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Vermidia
-  changes:
-  - message: You can now bless many more containers with a bible.
-    type: Tweak
-  id: 6402
-  time: '2024-04-20T06:16:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26526
 - author: SoulFN
   changes:
   - message: Various types of glass shards now causes diffrent damage
@@ -3825,3 +3818,11 @@
   id: 6901
   time: '2024-07-11T05:14:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28961
+- author: Cojoke-dot
+  changes:
+  - message: The Spray Painter can now be used to paint glass airlocks to look like
+      regular glass airlocks.
+    type: Tweak
+  id: 6902
+  time: '2024-07-11T05:33:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29869
