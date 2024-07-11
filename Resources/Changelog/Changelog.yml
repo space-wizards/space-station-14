@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: The internal volume of cryopods has been increased from 101.3 to 1000L.
-      This speeds up cooling patients inside.
-    type: Tweak
-  id: 6400
-  time: '2024-04-20T03:44:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27148
 - author: UBlueberry
   changes:
   - message: Changed the guidebook entry for the Space Ninja, bringing it up to the
@@ -3826,3 +3818,11 @@
   id: 6899
   time: '2024-07-11T00:24:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29875
+- author: ShadowCommander
+  changes:
+  - message: Players can now use melee attacks and shoves while dragging an entity
+      in their active hand.
+    type: Tweak
+  id: 6900
+  time: '2024-07-11T04:48:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29703
