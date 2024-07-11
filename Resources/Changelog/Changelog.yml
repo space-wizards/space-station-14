@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: UBlueberry
-  changes:
-  - message: Changed the guidebook entry for the Space Ninja, bringing it up to the
-      same quality as the other antagonist entries.
-    type: Tweak
-  id: 6401
-  time: '2024-04-20T06:10:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26650
 - author: Vermidia
   changes:
   - message: You can now bless many more containers with a bible.
@@ -3826,3 +3818,10 @@
   id: 6900
   time: '2024-07-11T04:48:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29703
+- author: Cojoke-dot
+  changes:
+  - message: You can no longer shoot out of crates with guns
+    type: Fix
+  id: 6901
+  time: '2024-07-11T05:14:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28961
