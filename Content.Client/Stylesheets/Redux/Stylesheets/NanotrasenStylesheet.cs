@@ -43,8 +43,7 @@ public partial class NanotrasenStylesheet : PalettedStylesheet
             // Set up important rules that need to go first.
             GetRulesForFont(null, BaseFont, _commonFontSizes),
             // Set up our core rules.
-            new StyleRule[]
-            {
+            [
                 // Declare the default font.
                 Element().Prop(Label.StylePropertyFont, BaseFont.GetFont(PrimaryFontSize)),
                 // Branding.
@@ -52,12 +51,10 @@ public partial class NanotrasenStylesheet : PalettedStylesheet
                     .Class("NTLogoDark")
                     .Prop(TextureRect.StylePropertyTexture, GetTexture(new ResPath("ntlogo.svg.png")))
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#757575")),
-            },
-            GetSheetletRules<ButtonSheetlet>(),
-            // PDAs rely on IButtonCfg for bad reasons.
-            GetSheetletRules<NTPdaSheetlet>(),
+            ],
             // Finally, load all the other sheetlets.
-            GetAllSheetletRules<CommonSheetletAttribute>(),
+            GetAllSheetletRules<PalettedStylesheet, CommonSheetletAttribute>(),
+            GetAllSheetletRules<NanotrasenStylesheet, CommonSheetletAttribute>(),
         };
 
         Stylesheet = new Stylesheet(rules.SelectMany(x => x).ToArray());

@@ -45,7 +45,8 @@ public partial class InterfaceStylesheet : PalettedStylesheet
                 Element().Prop(Label.StylePropertyFont, BaseFont.GetFont(PrimaryFontSize)),
             ],
             // Finally, load all the other sheetlets.
-            GetAllSheetletRules<CommonSheetletAttribute>(),
+            GetAllSheetletRules<PalettedStylesheet, CommonSheetletAttribute>(),
+            GetAllSheetletRules<InterfaceStylesheet, CommonSheetletAttribute>(),
         };
 
         Stylesheet = new Stylesheet(rules.SelectMany(x => x).ToArray());

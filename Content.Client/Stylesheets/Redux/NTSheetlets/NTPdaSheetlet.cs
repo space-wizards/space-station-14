@@ -1,5 +1,6 @@
 ﻿using Content.Client.PDA;
 using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Content.Client.Stylesheets.Redux.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -8,9 +9,10 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Redux.NTSheetlets;
 
 // ReSharper disable once InconsistentNaming
-public sealed class NTPdaSheetlet : Sheetlet<PalettedStylesheet>
+[CommonSheetlet]
+public sealed class NTPdaSheetlet : Sheetlet<NanotrasenStylesheet>
 {
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
     {
         var panelCfg = (IPanelConfig) sheet;
         var btnCfg = (IButtonConfig) sheet;

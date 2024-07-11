@@ -24,10 +24,4 @@ public abstract partial class PalettedStylesheet : BaseStylesheet
     {
         return GetSheetletRules<T, PalettedStylesheet>();
     }
-
-    public StyleRule[] GetAllSheetletRules<T>()
-        where T : Attribute
-    {
-        return GetAllSheetletRules<PalettedStylesheet, T>();
-    }
 }

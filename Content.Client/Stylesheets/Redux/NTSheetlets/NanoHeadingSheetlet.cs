@@ -1,4 +1,5 @@
 using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Content.Client.Stylesheets.Redux.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -8,9 +9,10 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Redux.NTSheetlets;
 
 /// Not NTHeading because NanoHeading is the name of the element
-public sealed class NanoHeadingSheetlet : Sheetlet<PalettedStylesheet>
+[CommonSheetlet]
+public sealed class NanoHeadingSheetlet : Sheetlet<NanotrasenStylesheet>
 {
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
     {
         var nanoHeadingCfg = (INanoHeadingConfig) sheet;
 

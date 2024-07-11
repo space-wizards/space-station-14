@@ -17,14 +17,27 @@ public sealed class TooltipSheetlet : Sheetlet<PalettedStylesheet>
     {
         var tooltipCfg = (ITooltipConfig) sheet;
 
-        var tooltipBox = sheet.GetTextureOr(tooltipCfg.TooltipBoxPath, NanotrasenStylesheet.TextureRoot).IntoPatch(StyleBox.Margin.All, 2);
+        var tooltipBox = sheet.GetTextureOr(tooltipCfg.TooltipBoxPath, NanotrasenStylesheet.TextureRoot)
+            .IntoPatch(StyleBox.Margin.All, 2);
         tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
 
-        var whisperBox = sheet.GetTextureOr(tooltipCfg.WhisperBoxPath, NanotrasenStylesheet.TextureRoot).IntoPatch(StyleBox.Margin.All, 2);
+        var whisperBox = sheet.GetTextureOr(tooltipCfg.WhisperBoxPath, NanotrasenStylesheet.TextureRoot)
+            .IntoPatch(StyleBox.Margin.All, 2);
         whisperBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
 
         return
         [
+            E<PanelContainer>()
+                .Class(StyleClass.TooltipPanel)
+                .Modulate(Color.Gray.WithAlpha(0.9f)) // TODO: you know the drill by now
+                .Panel(tooltipBox),
+            E<RichTextLabel>()
+                .Class(StyleClass.TooltipTitle)
+                .Font(sheet.BaseFont.GetFont(14, FontStack.FontKind.Bold)),
+            E<RichTextLabel>()
+                .Class(StyleClass.TooltipDesc)
+                .Font(sheet.BaseFont.GetFont(12)),
+
             E<Tooltip>()
                 // ReSharper disable once AccessToStaticMemberViaDerivedType
                 .Prop(Tooltip.StylePropertyPanel, tooltipBox),

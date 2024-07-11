@@ -31,7 +31,7 @@
 - [x] `MainMenuSheetlet` should maybe be with the xaml?
 - [x] `Palette` class and kick out indexing palette with a number
     - `ColorPalette` / `Palettes` but same thing
-- [ ] tooltips being part of another stylesheet is kinda bad
+- [x] tooltips being part of another stylesheet is kinda bad
 - [ ] rename `InterfaceStylesheet` to `SystemStylesheet`
 - [ ] rename `FancyWindow` to `NanoWindow`
 - [x] Get rid of `NTSheetlets` & `InterfaceSheetlets`
@@ -48,11 +48,11 @@
 #### HARDCODED SHIT (non exhaustive list)
 
 - COLORS
-  - [ ] `StampWidget.xaml`
-  - [ ] `AirAlarmWindow.xaml.cs`
-  - [ ] `ReplayMainMenuControl.xaml`
-  - [ ] `LobbyGui.xaml`
-  - [ ] `MenuButton.cs`
+    - [ ] `StampWidget.xaml`
+    - [ ] `AirAlarmWindow.xaml.cs`
+    - [ ] `ReplayMainMenuControl.xaml`
+    - [ ] `LobbyGui.xaml`
+    - [ ] `MenuButton.cs`
 - [ ] `WindowSheetlet` `NanoHeading` hardcoded classnames
 
 TL;DR port all of `StyleNano` into sheetlets
@@ -162,9 +162,8 @@ that, ideally, every theme should have a unique implementation of, then you woul
 
 #### `Content.Client/Stylesheets/Redux`
 
-Since this was such a large refactor, all the code is in `Content.Client/Stylesheets/Redux`. Anything in
-`Content.Client/Stylesheets` is now obsolete. For now all the new code is staying in `Redux` so downstream forks will
-have an easier time merging this change.
+Since this was such a large refactor, all the code is in `Content.Client/Stylesheets/Redux`. For now all the new code is
+staying in `Redux` so downstream forks will have an easier time merging this change.
 
 #### Also
 
