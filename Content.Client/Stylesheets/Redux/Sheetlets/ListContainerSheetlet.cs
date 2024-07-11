@@ -21,19 +21,19 @@ public sealed class ListContainerSheetlet : Sheetlet<PalettedStylesheet>
                 .Box(box),
             E<ContainerButton>()
                 .Class(ListContainer.StyleClassListContainerButton)
-                .ButtonNormal()
+                .PseudoNormal()
                 .Modulate(new Color(55, 55, 68)),
             E<ContainerButton>()
                 .Class(ListContainer.StyleClassListContainerButton)
-                .ButtonHovered()
+                .PseudoHovered()
                 .Modulate(new Color(75, 75, 86)),
             E<ContainerButton>()
                 .Class(ListContainer.StyleClassListContainerButton)
-                .ButtonPressed()
+                .PseudoPressed()
                 .Modulate(new Color(75, 75, 86)),
             E<ContainerButton>()
                 .Class(ListContainer.StyleClassListContainerButton)
-                .ButtonDisabled()
+                .PseudoDisabled()
                 .Modulate(new Color(10, 10, 12)),
         ];
     }

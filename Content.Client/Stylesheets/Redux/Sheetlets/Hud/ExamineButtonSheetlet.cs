@@ -28,19 +28,19 @@ public sealed class ExamineButtonSheetlet : Sheetlet<PalettedStylesheet>
                 .Prop(ContainerButton.StylePropertyStyleBox, buttonContext),
             E<ExamineButton>()
                 .Class(ExamineButton.StyleClassExamineButton)
-                .ButtonNormal()
+                .PseudoNormal()
                 .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContext),
             E<ExamineButton>()
                 .Class(ExamineButton.StyleClassExamineButton)
-                .ButtonHovered()
+                .PseudoHovered()
                 .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextHover),
             E<ExamineButton>()
                 .Class(ExamineButton.StyleClassExamineButton)
-                .ButtonPressed()
+                .PseudoPressed()
                 .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextPressed),
             E<ExamineButton>()
                 .Class(ExamineButton.StyleClassExamineButton)
-                .ButtonDisabled()
+                .PseudoDisabled()
                 .Prop(Control.StylePropertyModulateSelf, ExamineButtonColorContextDisabled),
         ];
     }

@@ -93,24 +93,24 @@ public static class StylesheetHelpers
         return selector.Prop(Label.StylePropertyAlignMode, mode);
     }
 
-    // Button helpers
+    // Pseudo class helpers
 
-    public static MutableSelectorElement ButtonNormal(this MutableSelectorElement selector)
+    public static MutableSelectorElement PseudoNormal(this MutableSelectorElement selector)
     {
         return selector.Pseudo(ContainerButton.StylePseudoClassNormal);
     }
 
-    public static MutableSelectorElement ButtonHovered(this MutableSelectorElement selector)
+    public static MutableSelectorElement PseudoHovered(this MutableSelectorElement selector)
     {
         return selector.Pseudo(ContainerButton.StylePseudoClassHover);
     }
 
-    public static MutableSelectorElement ButtonPressed(this MutableSelectorElement selector)
+    public static MutableSelectorElement PseudoPressed(this MutableSelectorElement selector)
     {
         return selector.Pseudo(ContainerButton.StylePseudoClassPressed);
     }
 
-    public static MutableSelectorElement ButtonDisabled(this MutableSelectorElement selector)
+    public static MutableSelectorElement PseudoDisabled(this MutableSelectorElement selector)
     {
         return selector.Pseudo(ContainerButton.StylePseudoClassDisabled);
     }

@@ -48,11 +48,11 @@ public sealed class ScrollbarSheetlet : Sheetlet<PalettedStylesheet>
         return
         [
             E<VScrollBar>().Prop(ScrollBar.StylePropertyGrabber, vScrollBarGrabberNormal),
-            E<VScrollBar>().ButtonHovered().Prop(ScrollBar.StylePropertyGrabber, vScrollBarGrabberHover),
-            E<VScrollBar>().ButtonPressed().Prop(ScrollBar.StylePropertyGrabber, vScrollBarGrabberGrabbed),
+            E<VScrollBar>().PseudoHovered().Prop(ScrollBar.StylePropertyGrabber, vScrollBarGrabberHover),
+            E<VScrollBar>().PseudoPressed().Prop(ScrollBar.StylePropertyGrabber, vScrollBarGrabberGrabbed),
             E<HScrollBar>().Prop(ScrollBar.StylePropertyGrabber, hScrollBarGrabberNormal),
-            E<HScrollBar>().ButtonHovered().Prop(ScrollBar.StylePropertyGrabber, hScrollBarGrabberHover),
-            E<HScrollBar>().ButtonPressed().Prop(ScrollBar.StylePropertyGrabber, hScrollBarGrabberGrabbed),
+            E<HScrollBar>().PseudoHovered().Prop(ScrollBar.StylePropertyGrabber, hScrollBarGrabberHover),
+            E<HScrollBar>().PseudoPressed().Prop(ScrollBar.StylePropertyGrabber, hScrollBarGrabberGrabbed),
         ];
     }
 }

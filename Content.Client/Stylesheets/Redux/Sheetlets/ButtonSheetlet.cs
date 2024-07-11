@@ -72,10 +72,10 @@ public sealed class ButtonSheetlet : Sheetlet<PalettedStylesheet>
     {
         rules.AddRange(new StyleRule[]
         {
-            E<T>().MaybeClass(styleclass).ButtonNormal().Modulate(palette.Element),
-            E<T>().MaybeClass(styleclass).ButtonHovered().Modulate(palette.HoveredElement),
-            E<T>().MaybeClass(styleclass).ButtonPressed().Modulate(palette.PressedElement),
-            E<T>().MaybeClass(styleclass).ButtonDisabled().Modulate(palette.DisabledElement),
+            E<T>().MaybeClass(styleclass).PseudoNormal().Modulate(palette.Element),
+            E<T>().MaybeClass(styleclass).PseudoHovered().Modulate(palette.HoveredElement),
+            E<T>().MaybeClass(styleclass).PseudoPressed().Modulate(palette.PressedElement),
+            E<T>().MaybeClass(styleclass).PseudoDisabled().Modulate(palette.DisabledElement),
         });
     }
 
@@ -86,12 +86,12 @@ public sealed class ButtonSheetlet : Sheetlet<PalettedStylesheet>
     {
         rules.AddRange(new StyleRule[]
         {
-            E().MaybeClass(styleclass).ButtonNormal().Prop(Control.StylePropertyModulateSelf, palette.Element),
-            E().MaybeClass(styleclass).ButtonHovered().Prop(Control.StylePropertyModulateSelf, palette.HoveredElement),
-            E().MaybeClass(styleclass).ButtonPressed().Prop(Control.StylePropertyModulateSelf, palette.PressedElement),
+            E().MaybeClass(styleclass).PseudoNormal().Prop(Control.StylePropertyModulateSelf, palette.Element),
+            E().MaybeClass(styleclass).PseudoHovered().Prop(Control.StylePropertyModulateSelf, palette.HoveredElement),
+            E().MaybeClass(styleclass).PseudoPressed().Prop(Control.StylePropertyModulateSelf, palette.PressedElement),
             E()
                 .MaybeClass(styleclass)
-                .ButtonDisabled()
+                .PseudoDisabled()
                 .Prop(Control.StylePropertyModulateSelf, palette.DisabledElement),
         });
     }

@@ -38,7 +38,7 @@
     - Eh, most of it anyway
 - [x] Make all `StyleClass` conform to naming conventions
 - [x] Separate out `FontKind` maybe
-- [ ] change `ButtonHovered` and friends to `PseudoHovered`
+- [x] change `ButtonHovered` and friends to `PseudoHovered`
 - [x] `IPanelPalette` is unnecessary now
 - [ ] What the fuck is `StyleSpace` get rid of it
 - [ ] Fix the codepen
