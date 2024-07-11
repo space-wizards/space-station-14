@@ -64,8 +64,8 @@
     visuals:
       enum.ToggleVisuals.Toggled:
         enum.ToggleVisuals.Layer:
-          True: { state: fire_extinguisher_closed }
-          False: { state: fire_extinguisher_open }
+          True: { state: fire_extinguisher_open }
+          False: { state: fire_extinguisher_closed }
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
