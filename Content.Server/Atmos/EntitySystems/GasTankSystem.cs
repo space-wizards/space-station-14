@@ -225,41 +225,45 @@ namespace Content.Server.Atmos.EntitySystems
 
         public void ConnectToInternals(Entity<GasTankComponent> ent)
         {
-            if (ent.Comp.IsConnected || !CanConnectToInternals(ent))
+            var (owner, component) = ent;
+
+            if (component.IsConnected || !CanConnectToInternals(ent))
                 return;
 
             TryGetInternalsComp(ent, out var internalsUid, out var internalsComp, ent.Comp.User);
             if (internalsUid == null || internalsComp == null)
                 return;
 
-            if (_internals.TryConnectTank((internalsUid.Value, internalsComp), ent.Owner))
-                ent.Comp.User = internalsUid.Value;
+            if (_internals.TryConnectTank((internalsUid.Value, internalsComp), owner))
+                component.User = internalsUid.Value;
 
-            _actions.SetToggled(ent.Comp.ToggleActionEntity, ent.Comp.IsConnected);
+            _actions.SetToggled(component.ToggleActionEntity, component.IsConnected);
 
             // Couldn't toggle!
-            if (!ent.Comp.IsConnected)
+            if (!component.IsConnected)
                 return;
 
-            ent.Comp.ConnectStream = _audioSys.Stop(ent.Comp.ConnectStream);
-            ent.Comp.ConnectStream = _audioSys.PlayPvs(ent.Comp.ConnectSound, ent.Owner)?.Entity;
+            component.ConnectStream = _audioSys.Stop(component.ConnectStream);
+            component.ConnectStream = _audioSys.PlayPvs(component.ConnectSound, ent.Owner)?.Entity;
 
             UpdateUserInterface(ent);
         }
 
         public void DisconnectFromInternals(Entity<GasTankComponent> ent)
         {
-            if (ent.Comp.User == null)
+            var (owner, component) = ent;
+
+            if (component.User == null)
                 return;
 
-            TryGetInternalsComp(ent, out _, out var internalsComp, ent.Comp.User);
-            ent.Comp.User = null;
+            TryGetInternalsComp(ent, out _, out var internalsComp, component.User);
+            component.User = null;
 
-            _actions.SetToggled(ent.Comp.ToggleActionEntity, false);
+            _actions.SetToggled(component.ToggleActionEntity, false);
 
             _internals.DisconnectTank(internalsComp);
-            ent.Comp.DisconnectStream = _audioSys.Stop(ent.Comp.DisconnectStream);
-            ent.Comp.DisconnectStream = _audioSys.PlayPvs(ent.Comp.DisconnectSound, ent.Owner)?.Entity;
+            component.DisconnectStream = _audioSys.Stop(component.DisconnectStream);
+            component.DisconnectStream = _audioSys.PlayPvs(component.DisconnectSound, owner)?.Entity;
 
             UpdateUserInterface(ent);
         }
