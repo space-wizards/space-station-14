@@ -1,5 +1,4 @@
 using Content.Shared.Polymorph.Systems;
-using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Polymorph.Components;
@@ -11,12 +10,6 @@ namespace Content.Shared.Polymorph.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedChameleonProjectorSystem))]
 public sealed partial class ChameleonDisguisedComponent : Component
 {
-    /// <summary>
-    /// How much damage can be taken before revealing automatically.
-    /// </summary>
-    [DataField]
-    public FixedPoint2 Integrity = FixedPoint2.Zero;
-
     /// <summary>
     /// The disguise entity parented to the player.
     /// </summary>
