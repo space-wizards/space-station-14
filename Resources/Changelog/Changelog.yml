@@ -1,50 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Fixed a bug causing the emergency shuttle to not spawn
-    type: Fix
-  id: 6399
-  time: '2024-04-20T02:10:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27144
-- author: slarticodefast
-  changes:
-  - message: The internal volume of cryopods has been increased from 101.3 to 1000L.
-      This speeds up cooling patients inside.
-    type: Tweak
-  id: 6400
-  time: '2024-04-20T03:44:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27148
-- author: UBlueberry
-  changes:
-  - message: Changed the guidebook entry for the Space Ninja, bringing it up to the
-      same quality as the other antagonist entries.
-    type: Tweak
-  id: 6401
-  time: '2024-04-20T06:10:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26650
-- author: Vermidia
-  changes:
-  - message: You can now bless many more containers with a bible.
-    type: Tweak
-  id: 6402
-  time: '2024-04-20T06:16:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26526
-- author: SoulFN
-  changes:
-  - message: Various types of glass shards now causes diffrent damage
-    type: Tweak
-  id: 6403
-  time: '2024-04-20T06:21:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26783
-- author: Vermidia
-  changes:
-  - message: Most medical roles now can choose to start with nitrile or latex gloves,
-      or a sterile mask in their loadout, Medical Doctors can also start with a nurse
-      hat.
-    type: Add
-  id: 6404
-  time: '2024-04-20T06:22:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27029
 - author: MilenVolf
   changes:
   - message: Most crates can now go through plastic flaps.
@@ -3826,3 +3780,47 @@
   id: 6898
   time: '2024-07-10T10:32:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29852
+- author: Winkarst-cpu
+  changes:
+  - message: Added exit confirmation for character setup menu with unsaved changes.
+    type: Add
+  id: 6899
+  time: '2024-07-11T00:24:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29875
+- author: ShadowCommander
+  changes:
+  - message: Players can now use melee attacks and shoves while dragging an entity
+      in their active hand.
+    type: Tweak
+  id: 6900
+  time: '2024-07-11T04:48:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29703
+- author: Cojoke-dot
+  changes:
+  - message: You can no longer shoot out of crates with guns
+    type: Fix
+  id: 6901
+  time: '2024-07-11T05:14:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28961
+- author: Cojoke-dot
+  changes:
+  - message: The Spray Painter can now be used to paint glass airlocks to look like
+      regular glass airlocks.
+    type: Tweak
+  id: 6902
+  time: '2024-07-11T05:33:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29869
+- author: MFMessage
+  changes:
+  - message: Picking a ghost role as an admin will now deadmin.
+    type: Fix
+  id: 6903
+  time: '2024-07-11T05:53:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29790
+- author: Winkarst-cpu
+  changes:
+  - message: Admin notes popups are now more readable.
+    type: Tweak
+  id: 6904
+  time: '2024-07-11T14:03:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29909

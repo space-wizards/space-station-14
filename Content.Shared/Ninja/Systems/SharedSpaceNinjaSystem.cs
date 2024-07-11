@@ -3,6 +3,7 @@ using Content.Shared.Ninja.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Popups;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Ninja.Systems;
 
@@ -14,49 +15,59 @@ public abstract class SharedSpaceNinjaSystem : EntitySystem
     [Dependency] protected readonly SharedNinjaSuitSystem Suit = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
 
+    public EntityQuery<SpaceNinjaComponent> NinjaQuery;
+
     public override void Initialize()
     {
         base.Initialize();
+
+        NinjaQuery = GetEntityQuery<SpaceNinjaComponent>();
 
         SubscribeLocalEvent<SpaceNinjaComponent, AttackedEvent>(OnNinjaAttacked);
         SubscribeLocalEvent<SpaceNinjaComponent, MeleeAttackEvent>(OnNinjaAttack);
         SubscribeLocalEvent<SpaceNinjaComponent, ShotAttemptedEvent>(OnShotAttempted);
     }
 
+    public bool IsNinja([NotNullWhen(true)] EntityUid? uid)
+    {
+        return NinjaQuery.HasComp(uid);
+    }
+
     /// <summary>
     /// Set the ninja's worn suit entity
     /// </summary>
-    public void AssignSuit(EntityUid uid, EntityUid? suit, SpaceNinjaComponent? comp = null)
+    public void AssignSuit(Entity<SpaceNinjaComponent> ent, EntityUid? suit)
     {
-        if (!Resolve(uid, ref comp) || comp.Suit == suit)
+        if (ent.Comp.Suit == suit)
             return;
 
-        comp.Suit = suit;
-        Dirty(uid, comp);
+        ent.Comp.Suit = suit;
+        Dirty(ent, ent.Comp);
     }
 
     /// <summary>
     /// Set the ninja's worn gloves entity
     /// </summary>
-    public void AssignGloves(EntityUid uid, EntityUid? gloves, SpaceNinjaComponent? comp = null)
+    public void AssignGloves(Entity<SpaceNinjaComponent> ent, EntityUid? gloves)
     {
-        if (!Resolve(uid, ref comp) || comp.Gloves == gloves)
+        if (ent.Comp.Gloves == gloves)
             return;
 
-        comp.Gloves = gloves;
-        Dirty(uid, comp);
+        ent.Comp.Gloves = gloves;
+        Dirty(ent, ent.Comp);
     }
 
     /// <summary>
     /// Bind a katana entity to a ninja, letting it be recalled and dash.
+    /// Does nothing if the player is not a ninja or already has a katana bound.
     /// </summary>
-    public void BindKatana(EntityUid uid, EntityUid? katana, SpaceNinjaComponent? comp = null)
+    public void BindKatana(Entity<SpaceNinjaComponent?> ent, EntityUid katana)
     {
-        if (!Resolve(uid, ref comp) || comp.Katana == katana)
+        if (!NinjaQuery.Resolve(ent, ref ent.Comp) || ent.Comp.Katana != null)
             return;
 
-        comp.Katana = katana;
-        Dirty(uid, comp);
+        ent.Comp.Katana = katana;
+        Dirty(ent, ent.Comp);
     }
 
     /// <summary>
@@ -71,32 +82,32 @@ public abstract class SharedSpaceNinjaSystem : EntitySystem
     /// <summary>
     /// Handle revealing ninja if cloaked when attacked.
     /// </summary>
-    private void OnNinjaAttacked(EntityUid uid, SpaceNinjaComponent comp, AttackedEvent args)
+    private void OnNinjaAttacked(Entity<SpaceNinjaComponent> ent, ref AttackedEvent args)
     {
-        if (comp.Suit != null && TryComp<StealthClothingComponent>(comp.Suit, out var stealthClothing) && stealthClothing.Enabled)
-        {
-            Suit.RevealNinja(comp.Suit.Value, uid, true, null, stealthClothing);
-        }
+        TryRevealNinja(ent, disable: true);
     }
 
     /// <summary>
     /// Handle revealing ninja if cloaked when attacking.
     /// Only reveals, there is no cooldown.
     /// </summary>
-    private void OnNinjaAttack(EntityUid uid, SpaceNinjaComponent comp, ref MeleeAttackEvent args)
+    private void OnNinjaAttack(Entity<SpaceNinjaComponent> ent, ref MeleeAttackEvent args)
     {
-        if (comp.Suit != null && TryComp<StealthClothingComponent>(comp.Suit, out var stealthClothing) && stealthClothing.Enabled)
-        {
-            Suit.RevealNinja(comp.Suit.Value, uid, false, null, stealthClothing);
-        }
+        TryRevealNinja(ent, disable: false);
+    }
+
+    private void TryRevealNinja(Entity<SpaceNinjaComponent> ent, bool disable)
+    {
+        if (ent.Comp.Suit is {} uid && TryComp<NinjaSuitComponent>(ent.Comp.Suit, out var suit))
+            Suit.RevealNinja((uid, suit), ent, disable: disable);
     }
 
     /// <summary>
     /// Require ninja to fight with HONOR, no guns!
     /// </summary>
-    private void OnShotAttempted(EntityUid uid, SpaceNinjaComponent comp, ref ShotAttemptedEvent args)
+    private void OnShotAttempted(Entity<SpaceNinjaComponent> ent, ref ShotAttemptedEvent args)
     {
-        Popup.PopupClient(Loc.GetString("gun-disabled"), uid, uid);
+        Popup.PopupClient(Loc.GetString("gun-disabled"), ent, ent);
         args.Cancel();
     }
 }
