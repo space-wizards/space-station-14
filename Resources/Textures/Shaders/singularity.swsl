@@ -34,7 +34,7 @@ void fragment() {
             deformation = 0.0;
         } else {
             deformation *= (1.0 - pow(distance / maxDistance, 4.0));
-            brightnessFactor = clamp(1 - pow(deformation / 2, 4.0), 0.0, 1.0);
+            brightnessFactor = clamp(1.0 - pow(deformation / 2.0, 4.0), 0.0, 1.0);
 
             cumulativeBrightnessFactor *= brightnessFactor;
         }
@@ -43,7 +43,7 @@ void fragment() {
     }
 
 
-    lowp vec4 color = zTextureSpec(SCREEN_TEXTURE, finalCoords * SCREEN_PIXEL_SIZE);
+    highp vec4 color = zTextureSpec(SCREEN_TEXTURE, finalCoords * SCREEN_PIXEL_SIZE);
     // Apply darkness
     color.rgb *= cumulativeBrightnessFactor;
 
