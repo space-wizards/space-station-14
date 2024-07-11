@@ -6,6 +6,7 @@ using Content.Server.Fluids.Components;
 using Content.Server.Gravity;
 using Content.Server.Popups;
 using Content.Shared.FixedPoint;
+using Content.Shared.Fluids;
 using Content.Shared.Interaction;
 using Content.Shared.Timing;
 using Content.Shared.Vapor;
@@ -146,15 +147,5 @@ public sealed class SpraySystem : EntitySystem
 
         _useDelay.SetLength(entity.Owner, TimeSpan.FromSeconds(cooldownTime));
         _useDelay.TryResetDelay((entity, useDelay));
-    }
-}
-
-public sealed class SprayAttemptEvent : CancellableEntityEventArgs
-{
-    public EntityUid User;
-
-    public SprayAttemptEvent(EntityUid user)
-    {
-        User = user;
     }
 }
