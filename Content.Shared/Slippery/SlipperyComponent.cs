@@ -1,6 +1,7 @@
 using Content.Shared.StepTrigger.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Slippery
 {
@@ -41,5 +42,12 @@ namespace Content.Shared.Slippery
         [DataField, AutoNetworkedField]
         [Access(Other = AccessPermissions.ReadWrite)]
         public bool SuperSlippery;
+
+        /// <summary>
+        /// Solutions that this entity will lose if some other entity slips on it.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        [Access(Other = AccessPermissions.ReadWrite)]
+        public Dictionary<string, FixedPoint2>? Solutions = null;
     }
 }

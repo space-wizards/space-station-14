@@ -23,6 +23,8 @@
   - type: Slippery
     paralyzeTime: 2
     launchForwardsMultiplier: 1.5
+    solutions:
+      soap: 10
   - type: StepTrigger
     intersectRatio: 0.2
   - type: CollisionWake

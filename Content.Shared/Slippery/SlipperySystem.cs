@@ -13,6 +13,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Components.SolutionManager;
 
 namespace Content.Shared.Slippery;
 
@@ -25,6 +27,8 @@ public sealed class SlipperySystem : EntitySystem
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -84,6 +88,18 @@ public sealed class SlipperySystem : EntitySystem
 
         var ev = new SlipEvent(other);
         RaiseLocalEvent(uid, ref ev);
+
+        // Take solutions from this entity if we can. Doing this only on the server, because otherwise it looks too bad.
+        if (_net.IsServer && HasComp<SolutionContainerManagerComponent>(uid) && component.Solutions != null)
+        {
+            foreach (var solution in component.Solutions)
+            {
+                if (!_solutionContainer.TryGetSolution(uid, solution.Key, out var soln))
+                    continue;
+
+                _solutionContainer.SplitSolution(soln.Value, solution.Value);
+            }
+        }
 
         if (TryComp(other, out PhysicsComponent? physics) && !HasComp<SlidingComponent>(other))
         {
