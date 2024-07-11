@@ -92,7 +92,7 @@ public abstract class SharedObjectivesSystem : EntitySystem
     }
 
     /// <summary>
-    /// Get the title, description, icon and progress of an objective using <see cref="ObjectiveGetInfoEvent"/>.
+    /// Get the title, description, icon and progress of an objective using <see cref="ObjectiveGetProgressEvent"/>.
     /// If any of them are null it is logged and null is returned.
     /// </summary>
     /// <param name="uid"/>ID of the condition entity</param>
@@ -103,20 +103,43 @@ public abstract class SharedObjectivesSystem : EntitySystem
         if (!Resolve(mindId, ref mind))
             return null;
 
-        var ev = new ObjectiveGetProgressEvent(mindId, mind);
-        RaiseLocalEvent(uid, ref ev);
+        if (GetProgress(uid, (mindId, mind)) is not {} progress)
+            return null;
 
         var comp = Comp<ObjectiveComponent>(uid);
         var meta = MetaData(uid);
         var title = meta.EntityName;
         var description = meta.EntityDescription;
-        if (comp.Icon == null || ev.Progress == null)
+        if (comp.Icon == null)
         {
-            Log.Error($"An objective {ToPrettyString(uid):objective} of {_mind.MindOwnerLoggingString(mind)} is missing icon or progress ({ev.Progress})");
+            Log.Error($"An objective {ToPrettyString(uid):objective} of {_mind.MindOwnerLoggingString(mind)} is missing an icon!");
             return null;
         }
 
-        return new ObjectiveInfo(title, description, comp.Icon, ev.Progress.Value);
+        return new ObjectiveInfo(title, description, comp.Icon, progress);
+    }
+
+    /// <summary>
+    /// Gets the progress of an objective using <see cref="ObjectiveGetProgressEvent"/>.
+    /// Returning null is a programmer error.
+    /// </summary>
+    public float? GetProgress(EntityUid uid, Entity<MindComponent> mind)
+    {
+        var ev = new ObjectiveGetProgressEvent(mind, mind.Comp);
+        RaiseLocalEvent(uid, ref ev);
+        if (ev.Progress != null)
+            return ev.Progress;
+
+        Log.Error($"Objective {ToPrettyString(uid):objective} of {_mind.MindOwnerLoggingString(mind.Comp)} didn't set a progress value!");
+        return null;
+    }
+
+    /// <summary>
+    /// Returns true if an objective is completed.
+    /// </summary>
+    public bool IsCompleted(EntityUid uid, Entity<MindComponent> mind)
+    {
+        return (GetProgress(uid, mind) ?? 0f) >= 0.999f;
     }
 
     /// <summary>

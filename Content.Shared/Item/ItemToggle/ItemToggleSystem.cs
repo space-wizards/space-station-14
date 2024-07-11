@@ -15,12 +15,12 @@ namespace Content.Shared.Item.ItemToggle;
 /// <remarks>
 /// If you need extended functionality (e.g. requiring power) then add a new component and use events.
 /// </remarks>
-public abstract class SharedItemToggleSystem : EntitySystem
+public sealed class ItemToggleSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
@@ -28,8 +28,9 @@ public abstract class SharedItemToggleSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ItemToggleComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<ItemToggleComponent, ItemUnwieldedEvent>(TurnOffonUnwielded);
-        SubscribeLocalEvent<ItemToggleComponent, ItemWieldedEvent>(TurnOnonWielded);
+        SubscribeLocalEvent<ItemToggleComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ItemToggleComponent, ItemUnwieldedEvent>(TurnOffOnUnwielded);
+        SubscribeLocalEvent<ItemToggleComponent, ItemWieldedEvent>(TurnOnOnWielded);
         SubscribeLocalEvent<ItemToggleComponent, UseInHandEvent>(OnUseInHand);
 
         SubscribeLocalEvent<ItemToggleHotComponent, IsHotEvent>(OnIsHotEvent);
@@ -42,57 +43,76 @@ public abstract class SharedItemToggleSystem : EntitySystem
         UpdateVisuals(ent);
     }
 
-    private void OnUseInHand(EntityUid uid, ItemToggleComponent itemToggle, UseInHandEvent args)
+    private void OnMapInit(Entity<ItemToggleComponent> ent, ref MapInitEvent args)
     {
-        if (args.Handled)
+        if (!ent.Comp.Activated)
+            return;
+
+        var ev = new ItemToggledEvent(Predicted: ent.Comp.Predictable, Activated: ent.Comp.Activated, User: null);
+        RaiseLocalEvent(ent, ref ev);
+    }
+
+    private void OnUseInHand(Entity<ItemToggleComponent> ent, ref UseInHandEvent args)
+    {
+        if (args.Handled || !ent.Comp.OnUse)
             return;
 
         args.Handled = true;
 
-        Toggle(uid, args.User, predicted: itemToggle.Predictable, itemToggle: itemToggle);
+        Toggle((ent, ent.Comp), args.User, predicted: ent.Comp.Predictable);
     }
 
     /// <summary>
     /// Used when an item is attempted to be toggled.
+    /// Sets its state to the opposite of what it is.
     /// </summary>
-    public void Toggle(EntityUid uid, EntityUid? user = null, bool predicted = true, ItemToggleComponent? itemToggle = null)
+    /// <returns>Same as <see cref="TrySetActive"/></returns>
+    public bool Toggle(Entity<ItemToggleComponent?> ent, EntityUid? user = null, bool predicted = true)
     {
-        if (!Resolve(uid, ref itemToggle))
-            return;
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
 
-        if (itemToggle.Activated)
-        {
-            TryDeactivate(uid, user, itemToggle: itemToggle, predicted: predicted);
-        }
+        return TrySetActive(ent, !ent.Comp.Activated, user, predicted);
+    }
+
+    /// <summary>
+    /// Tries to set the activated bool from a value.
+    /// </summary>
+    /// <returns>false if the attempt fails for any reason</returns>
+    public bool TrySetActive(Entity<ItemToggleComponent?> ent, bool active, EntityUid? user = null, bool predicted = true)
+    {
+        if (active)
+            return TryActivate(ent, user, predicted: predicted);
         else
-        {
-            TryActivate(uid, user, itemToggle: itemToggle, predicted: predicted);
-        }
+            return TryDeactivate(ent, user, predicted: predicted);
     }
 
     /// <summary>
     /// Used when an item is attempting to be activated. It returns false if the attempt fails any reason, interrupting the activation.
     /// </summary>
-    public bool TryActivate(EntityUid uid, EntityUid? user = null, bool predicted = true, ItemToggleComponent? itemToggle = null)
+    public bool TryActivate(Entity<ItemToggleComponent?> ent, EntityUid? user = null, bool predicted = true)
     {
-        if (!Resolve(uid, ref itemToggle))
+        if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        if (itemToggle.Activated)
+        var uid = ent.Owner;
+        var comp = ent.Comp;
+        if (comp.Activated)
             return true;
 
-        if (!itemToggle.Predictable && _netManager.IsClient)
+        if (!comp.Predictable && _netManager.IsClient)
             return true;
 
         var attempt = new ItemToggleActivateAttemptEvent(user);
         RaiseLocalEvent(uid, ref attempt);
 
+        if (!comp.Predictable) predicted = false;
         if (attempt.Cancelled)
         {
             if (predicted)
-                _audio.PlayPredicted(itemToggle.SoundFailToActivate, uid, user);
+                _audio.PlayPredicted(comp.SoundFailToActivate, uid, user);
             else
-                _audio.PlayPvs(itemToggle.SoundFailToActivate, uid);
+                _audio.PlayPvs(comp.SoundFailToActivate, uid);
 
             if (attempt.Popup != null && user != null)
             {
@@ -105,7 +125,7 @@ public abstract class SharedItemToggleSystem : EntitySystem
             return false;
         }
 
-        Activate(uid, itemToggle, predicted, user);
+        Activate((uid, comp), predicted, user);
 
         return true;
     }
@@ -113,75 +133,65 @@ public abstract class SharedItemToggleSystem : EntitySystem
     /// <summary>
     /// Used when an item is attempting to be deactivated. It returns false if the attempt fails any reason, interrupting the deactivation.
     /// </summary>
-    public bool TryDeactivate(EntityUid uid, EntityUid? user = null, bool predicted = true, ItemToggleComponent? itemToggle = null)
+    public bool TryDeactivate(Entity<ItemToggleComponent?> ent, EntityUid? user = null, bool predicted = true)
     {
-        if (!Resolve(uid, ref itemToggle))
+        if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        if (!itemToggle.Predictable && _netManager.IsClient)
+        var uid = ent.Owner;
+        var comp = ent.Comp;
+        if (!comp.Activated)
             return true;
 
-        if (!itemToggle.Activated)
+        if (!comp.Predictable && _netManager.IsClient)
             return true;
 
         var attempt = new ItemToggleDeactivateAttemptEvent(user);
         RaiseLocalEvent(uid, ref attempt);
 
         if (attempt.Cancelled)
-        {
             return false;
-        }
 
-        Deactivate(uid, itemToggle, predicted, user);
+        if (!comp.Predictable) predicted = false;
+        Deactivate((uid, comp), predicted, user);
         return true;
     }
 
-    private void Activate(EntityUid uid, ItemToggleComponent itemToggle, bool predicted, EntityUid? user = null)
+    private void Activate(Entity<ItemToggleComponent> ent, bool predicted, EntityUid? user = null)
     {
-        // TODO: Fix this hardcoding
-        TryComp(uid, out AppearanceComponent? appearance);
-        _appearance.SetData(uid, ToggleableLightVisuals.Enabled, true, appearance);
-        _appearance.SetData(uid, ToggleVisuals.Toggled, true, appearance);
-
-        if (_light.TryGetLight(uid, out var light))
-        {
-            _light.SetEnabled(uid, true, light);
-        }
-
-        var soundToPlay = itemToggle.SoundActivate;
+        var (uid, comp) = ent;
+        var soundToPlay = comp.SoundActivate;
         if (predicted)
             _audio.PlayPredicted(soundToPlay, uid, user);
         else
             _audio.PlayPvs(soundToPlay, uid);
 
-        // END FIX HARDCODING
+        comp.Activated = true;
+        UpdateVisuals((uid, comp));
+        Dirty(uid, comp);
 
         var toggleUsed = new ItemToggledEvent(predicted, Activated: true, user);
         RaiseLocalEvent(uid, ref toggleUsed);
-
-        itemToggle.Activated = true;
-        UpdateVisuals((uid, itemToggle));
-        Dirty(uid, itemToggle);
     }
 
     /// <summary>
     /// Used to make the actual changes to the item's components on deactivation.
     /// </summary>
-    private void Deactivate(EntityUid uid, ItemToggleComponent itemToggle, bool predicted, EntityUid? user = null)
+    private void Deactivate(Entity<ItemToggleComponent> ent, bool predicted, EntityUid? user = null)
     {
-        var soundToPlay = itemToggle.SoundDeactivate;
+        var (uid, comp) = ent;
+        var soundToPlay = comp.SoundDeactivate;
         if (predicted)
             _audio.PlayPredicted(soundToPlay, uid, user);
         else
             _audio.PlayPvs(soundToPlay, uid);
-        // END FIX HARDCODING
+
+        comp.Activated = false;
+        UpdateVisuals((uid, comp));
+        Dirty(uid, comp);
 
         var toggleUsed = new ItemToggledEvent(predicted, Activated: false, user);
         RaiseLocalEvent(uid, ref toggleUsed);
-
-        itemToggle.Activated = false;
-        UpdateVisuals((uid, itemToggle));
-        Dirty(uid, itemToggle);
     }
 
     private void UpdateVisuals(Entity<ItemToggleComponent> ent)
@@ -204,55 +214,56 @@ public abstract class SharedItemToggleSystem : EntitySystem
     /// <summary>
     /// Used for items that require to be wielded in both hands to activate. For instance the dual energy sword will turn off if not wielded.
     /// </summary>
-    private void TurnOffonUnwielded(EntityUid uid, ItemToggleComponent itemToggle, ItemUnwieldedEvent args)
+    private void TurnOffOnUnwielded(Entity<ItemToggleComponent> ent, ref ItemUnwieldedEvent args)
     {
-        if (itemToggle.Activated)
-            TryDeactivate(uid, args.User, itemToggle: itemToggle);
+        TryDeactivate((ent, ent.Comp), args.User);
     }
 
     /// <summary>
     /// Wieldable items will automatically turn on when wielded.
     /// </summary>
-    private void TurnOnonWielded(EntityUid uid, ItemToggleComponent itemToggle, ref ItemWieldedEvent args)
+    private void TurnOnOnWielded(Entity<ItemToggleComponent> ent, ref ItemWieldedEvent args)
     {
-        if (!itemToggle.Activated)
-            TryActivate(uid, itemToggle: itemToggle);
+        // FIXME: for some reason both client and server play sound
+        TryActivate((ent, ent.Comp));
     }
 
-    public bool IsActivated(EntityUid uid, ItemToggleComponent? comp = null)
+    public bool IsActivated(Entity<ItemToggleComponent?> ent)
     {
-        if (!Resolve(uid, ref comp, false))
+        if (!Resolve(ent, ref ent.Comp, false))
             return true; // assume always activated if no component
 
-        return comp.Activated;
+        return ent.Comp.Activated;
     }
 
     /// <summary>
     /// Used to make the item hot when activated.
     /// </summary>
-    private void OnIsHotEvent(EntityUid uid, ItemToggleHotComponent itemToggleHot, IsHotEvent args)
+    private void OnIsHotEvent(Entity<ItemToggleHotComponent> ent, ref IsHotEvent args)
     {
-        args.IsHot |= IsActivated(uid);
+        args.IsHot |= IsActivated(ent.Owner);
     }
 
     /// <summary>
     /// Used to update the looping active sound linked to the entity.
     /// </summary>
-    private void UpdateActiveSound(EntityUid uid, ItemToggleActiveSoundComponent activeSound, ref ItemToggledEvent args)
+    private void UpdateActiveSound(Entity<ItemToggleActiveSoundComponent> ent, ref ItemToggledEvent args)
     {
-        if (args.Activated)
+        var (uid, comp) = ent;
+        if (!args.Activated)
         {
-            if (activeSound.ActiveSound != null && activeSound.PlayingStream == null)
-            {
-                if (args.Predicted)
-                    activeSound.PlayingStream = _audio.PlayPredicted(activeSound.ActiveSound, uid, args.User, AudioParams.Default.WithLoop(true)).Value.Entity;
-                else
-                    activeSound.PlayingStream = _audio.PlayPvs(activeSound.ActiveSound, uid, AudioParams.Default.WithLoop(true)).Value.Entity;
-            }
+            comp.PlayingStream = _audio.Stop(comp.PlayingStream);
+            return;
         }
-        else
+
+        if (comp.ActiveSound != null && comp.PlayingStream == null)
         {
-            activeSound.PlayingStream = _audio.Stop(activeSound.PlayingStream);
+            var loop = AudioParams.Default.WithLoop(true);
+            var stream = args.Predicted
+                ? _audio.PlayPredicted(comp.ActiveSound, uid, args.User, loop)
+                : _audio.PlayPvs(comp.ActiveSound, uid, loop);
+            if (stream?.Entity is {} entity)
+                comp.PlayingStream = entity;
         }
     }
 }
