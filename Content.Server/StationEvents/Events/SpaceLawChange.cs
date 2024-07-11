@@ -7,6 +7,8 @@ using Content.Shared.Paper;
 using Robust.Shared.Random;
 using Content.Shared.Fax.Components;
 using Content.Server.StationEvents.Events;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.StationEvents.Events
 {
@@ -17,21 +19,23 @@ namespace Content.Server.StationEvents.Events
         [Dependency] private readonly FaxSystem _faxSystem = default!;
         private readonly RandomSelector _randomSelector = default!;
 
+        private string? _randomMessage;
+
         public SpaceLawChangeRule()
         {
             var options = new List<string>
             {
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9",
-                "10",
-                "11"
+                "station-event-space-law-change-essence-1",
+                "station-event-space-law-change-essence-2",
+                "station-event-space-law-change-essence-3",
+                "station-event-space-law-change-essence-4",
+                "station-event-space-law-change-essence-5",
+                "station-event-space-law-change-essence-6",
+                "station-event-space-law-change-essence-7",
+                "station-event-space-law-change-essence-8",
+                "station-event-space-law-change-essence-9",
+                "station-event-space-law-change-essence-10",
+                "station-event-space-law-change-essence-11"
                 // Add other message options here if necessary
             };
 
@@ -43,13 +47,29 @@ namespace Content.Server.StationEvents.Events
         {
             base.Started(uid, component, gameRule, args);
 
-            var randomMessage = _randomSelector.GetRandom(_robustRandom);
-
-            var message = Loc.GetString($"station-event-space-law-change-announcement-{randomMessage}");
+            int dispatchTime = 10;
+            _randomMessage = Loc.GetString($"{_randomSelector.GetRandom(_robustRandom)}");
+            var message = Loc.GetString("station-event-space-law-change-announcement",
+            ("essence", _randomMessage),
+            ("time", dispatchTime));
 
             _chat.DispatchGlobalAnnouncement(message, playSound: true, colorOverride: Color.Gold);
 
             SendSpaceLawChangeFax(message);
+
+            // Start a timer to send a confirmation message
+            Timer.Spawn(TimeSpan.FromMinutes(dispatchTime), SendConfirmationMessage);
+        }
+
+        /// <summary>
+        ///     Sends a confirmation message that the change in Space Law has come into effect
+        /// </summary>
+        private void SendConfirmationMessage()
+        {
+            if (_randomMessage == null) return;
+
+            var confirmationMessage = Loc.GetString("station-event-space-law-change-announcement-confirmation", ("essence", _randomMessage));
+            _chat.DispatchGlobalAnnouncement(confirmationMessage, playSound: true, colorOverride: Color.Gold);
         }
 
         /// <summary>
@@ -76,9 +96,6 @@ namespace Content.Server.StationEvents.Events
         }
     }
 
-    /// <summary>
-    ///     Randomly selects an option from the list. Selected options cannot be selected again until all unselected options are exhausted.
-    /// </summary>
     public class RandomSelector
     {
         private readonly List<string> _options;
@@ -90,6 +107,9 @@ namespace Content.Server.StationEvents.Events
             _exclusions = new List<string>();
         }
 
+        /// <summary>
+        ///     Randomly selects an option from the list. Selected options cannot be selected again until all unselected options are exhausted.
+        /// </summary>
         public string GetRandom(IRobustRandom robustRandom)
         {
             if (_exclusions.Count >= _options.Count)
@@ -108,5 +128,4 @@ namespace Content.Server.StationEvents.Events
             return selectedOption;
         }
     }
-
 }
