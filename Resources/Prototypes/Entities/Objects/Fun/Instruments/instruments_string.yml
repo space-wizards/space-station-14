@@ -181,6 +181,12 @@
   - type: Sprite
     sprite: Objects/Fun/Instruments/banjo.rsi
     state: icon
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+    - suitStorage
+    sprite: Objects/Fun/Instruments/banjo.rsi
   - type: Item
     size: Normal
     sprite: Objects/Fun/Instruments/banjo.rsi
