@@ -24,7 +24,7 @@
   - type: DrainableSolution
     solution: spray
   - type: SolutionTransfer
-    maximumTransferAmount: 100
+    maxTransferAmount: 100
     transferAmount: 100
   - type: UseDelay
   - type: Spray
