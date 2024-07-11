@@ -41,7 +41,7 @@
 - [x] change `ButtonHovered` and friends to `PseudoHovered`
 - [x] `IPanelPalette` is unnecessary now
 - [ ] What the fuck is `StyleSpace` get rid of it
-- [ ] Fix the codepen
+- [x] Fix the codepen
 - [ ] figure out `BaseStylesheet.Fonts`
 
 #### HARDCODED SHIT (non exhaustive list)

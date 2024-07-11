@@ -4,9 +4,9 @@ namespace Content.Client.Stylesheets.Redux.Stylesheets;
 
 public partial class SystemStylesheet
 {
-    public override ColorPalette PrimaryPalette => Palettes.InterfacePrimary;
-    public override ColorPalette SecondaryPalette => Palettes.InterfaceSecondary;
-    public override ColorPalette PositivePalette => Palettes.PositiveGreen;
-    public override ColorPalette NegativePalette => Palettes.NegativeRed;
-    public override ColorPalette HighlightPalette => Palettes.HighlightYellow;
+    public override ColorPalette PrimaryPalette => Palettes.Cyan;
+    public override ColorPalette SecondaryPalette => Palettes.Neutral;
+    public override ColorPalette PositivePalette => Palettes.Green;
+    public override ColorPalette NegativePalette => Palettes.Red;
+    public override ColorPalette HighlightPalette => Palettes.Maroon;
 }
