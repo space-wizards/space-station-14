@@ -202,6 +202,9 @@ public sealed class SolutionTransferSystem : EntitySystem
         var solution = _solution.SplitSolution(source, actualAmount);
         _solution.AddSolution(target, solution);
 
+        var ev = new SolutionTransferredEvent(sourceEntity, targetEntity, user, actualAmount);
+        RaiseLocalEvent(targetEntity, ref ev);
+
         _adminLogger.Add(LogType.Action, LogImpact.Medium,
             $"{ToPrettyString(user):player} transferred {SharedSolutionContainerSystem.ToPrettyString(solution)} to {ToPrettyString(targetEntity):target}, which now contains {SharedSolutionContainerSystem.ToPrettyString(targetSolution)}");
 
@@ -225,3 +228,9 @@ public record struct SolutionTransferAttemptEvent(EntityUid From, EntityUid To, 
         CancelReason = reason;
     }
 }
+
+/// <summary>
+/// Raised on the target entity when a non-zero amount of solution gets transferred.
+/// </summary>
+[ByRefEvent]
+public record struct SolutionTransferredEvent(EntityUid From, EntityUid To, EntityUid User, FixedPoint2 Amount);
