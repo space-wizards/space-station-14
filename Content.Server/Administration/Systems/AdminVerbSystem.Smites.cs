@@ -361,9 +361,10 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new ("/Textures/Mobs/Species/Human/organs.rsi"), "stomach"),
                 Act = () =>
                 {
-                    foreach (var (component, _) in _bodySystem.GetBodyOrganComponents<StomachComponent>(args.Target, body))
+                    foreach (var (organUid, _) in _bodySystem.GetBodyOrgans(args.Target, body))
                     {
-                        QueueDel(component.Owner);
+                        if (HasComp<StomachComponent>(organUid))
+                            QueueDel(organUid);
                     }
 
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-stomach-removal-self"), args.Target,
@@ -381,9 +382,10 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new ("/Textures/Mobs/Species/Human/organs.rsi"), "lung-r"),
                 Act = () =>
                 {
-                    foreach (var (component, _) in _bodySystem.GetBodyOrganComponents<LungComponent>(args.Target, body))
+                    foreach (var (organUid, _) in _bodySystem.GetBodyOrgans(args.Target, body))
                     {
-                        QueueDel(component.Owner);
+                        if (HasComp<LungComponent>(organUid))
+                            QueueDel(organUid);
                     }
 
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-lung-removal-self"), args.Target,
