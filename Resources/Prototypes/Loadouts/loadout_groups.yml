@@ -53,6 +53,14 @@
   - EmergencyOxygen
   - LoadoutSpeciesEVANitrogen
 
+- type: loadoutGroup
+  id: GroupEVATank
+  name: loadout-group-EVA-tank
+  hidden: true
+  loadouts:
+  - LoadoutSpeciesEVANitrogen
+  - LoadoutSpeciesEVAOxygen
+
 # Command
 - type: loadoutGroup
   id: CaptainHead

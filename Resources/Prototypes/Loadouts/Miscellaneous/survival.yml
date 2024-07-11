@@ -203,6 +203,31 @@
   equipment:
     suitstorage: NitrogenTankFilled
 
+# Full EVA Tank, Any Species
+- type: loadout
+  id: LoadoutSpeciesEVANitrogen
+  equipment: GearEVANitrogen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+
+- type: startingGear
+  id: GearEVANitrogen
+  equipment:
+    suitstorage: NitrogenTankFilled
+
+- type: loadout
+  id: LoadoutSpeciesEVAOxygen
+  equipment: GearEVAOxygen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+
+- type: startingGear
+  id: GearEVAOxygen
+  equipment:
+    suitstorage: OxygenTankFilled
+
 # Tank Harness
 - type: loadout
   id: LoadoutTankHarness
