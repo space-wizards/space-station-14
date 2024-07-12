@@ -207,7 +207,7 @@
     state: e_dagger
   - type: SpawnItemsOnUse
     items:
-    - id: EnergyDaggerPen
+    - id: EnergyDagger
     sound:
       path: /Audio/Effects/unwrap.ogg
 
