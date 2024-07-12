@@ -1,0 +1,14 @@
+- type: soundCollection
+  id: GachiPain
+  files:
+  - /Audio/GreyStation/Effects/Gachi/van_fuckyou.ogg
+  - /Audio/GreyStation/Effects/Gachi/ohmyshoulder.ogg
+  - /Audio/GreyStation/Effects/Gachi/pain6.ogg
+  - /Audio/GreyStation/Effects/Gachi/huhyoulikeembarassingme.ogg
+  - /Audio/GreyStation/Effects/Gachi/loud_FUCKYOU.ogg
+
+- type: soundCollection
+  id: GachiHitOther
+  files:
+  - /Audio/GreyStation/Effects/Gachi/huhyoulikethat.ogg
+  - /Audio/GreyStation/Effects/Gachi/gangingup.ogg
