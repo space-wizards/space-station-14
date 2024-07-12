@@ -355,7 +355,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
     {
         var (cornerNE, cornerNW, cornerSW, cornerSE) = grid == null
             ? (CornerFill.None, CornerFill.None, CornerFill.None, CornerFill.None)
-            : CalculateCornerFill(spriteEnt.Owner, grid, smooth, xform, smoothQuery);
+            : CalculateCornerFill(grid, smooth, xform, smoothQuery);
 
         // TODO figure out a better way to set multiple sprite layers.
         // This will currently re-calculate the sprite bounding box 4 times.
@@ -385,7 +385,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
         CalculateEdge(spriteEnt, directions, sprite);
     }
 
-    private (CornerFill ne, CornerFill nw, CornerFill sw, CornerFill se) CalculateCornerFill(EntityUid uid, MapGridComponent grid, IconSmoothComponent smooth, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
+    private (CornerFill ne, CornerFill nw, CornerFill sw, CornerFill se) CalculateCornerFill(MapGridComponent grid, IconSmoothComponent smooth, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
     {
         var pos = _map.TileIndicesFor(xform.ParentUid, grid, xform.Coordinates);
         var n = MatchingEntity(smooth, _map.GetAnchoredEntitiesEnumerator(xform.ParentUid, grid, pos.Offset(Direction.North)), smoothQuery);
