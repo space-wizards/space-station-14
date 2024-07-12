@@ -50,6 +50,8 @@
       tags:
       - Hardsuit
       - SuitEVA
+    slots:
+    - outerCLothing
 
 
 - type: entity

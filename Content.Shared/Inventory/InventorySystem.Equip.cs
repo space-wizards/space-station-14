@@ -249,16 +249,20 @@ public abstract partial class InventorySystem
 
         if (TryComp<RequireWhitelistStorageComponent>(itemUid, out var whitelistComp))
         {
-            if (whitelistComp.Whitelist == null)
-            {
-                return false;
-            }
-
             bool whitelistPassed = false;
 
-            // i dont see why youd to check any other slot
-            foreach (var tagSlot in new[] { "jumpsuit", "outerClothing", "head" })
+            if (whitelistComp.IgnoreSlots.Contains(slot))
             {
+                whitelistPassed = true;
+            }
+
+            foreach (var tagSlot in whitelistComp.Slots)
+            {
+                if (whitelistPassed)
+                {
+                    break; //whitelist has passed elsewhere
+                }
+
                 if (!TryGetSlotEntity(target, tagSlot, out EntityUid? slotEntity, inventory))
                 {
                     continue;
@@ -267,7 +271,7 @@ public abstract partial class InventorySystem
                 if (_whitelistSystem.IsWhitelistPass(whitelistComp.Whitelist, slotEntity.Value))
                 {
                     whitelistPassed = true;
-                    break;
+                    break; //only need one to pass whitelist
                 }
 
             }

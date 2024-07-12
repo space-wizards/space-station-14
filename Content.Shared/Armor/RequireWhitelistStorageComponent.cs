@@ -6,8 +6,27 @@ namespace Content.Shared.Armor;
 public sealed partial class RequireWhitelistStorageComponent : Component
 {
     /// <summary>
-    /// What tag is needed on the slot to equip it.
+    /// Whitelist for what is needed on the slot to equip it.
+    /// </summary>
+    [DataField(required:true)]
+    public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// What slots to check has the whitelist.
+    /// </summary>
+    [DataField(required:true)]
+    public List<string> Slots = new();
+
+    /// <summary>
+    /// What slots should ignore the whitelist
     /// </summary>
     [DataField]
-    public EntityWhitelist? Whitelist;
+    public List<string> IgnoreSlots = new()
+    {
+        "pocket1",
+        "pocket2",
+        "pocket3",
+        "pocket4"
+    };
+
 }
