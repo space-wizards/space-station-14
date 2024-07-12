@@ -42,7 +42,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!isHotEvent.IsHot)
                 return;
 
-            if (TryTransferReagents(entity.Comp, smokable))
+            if (TryTransferReagents(entity, (entity.Owner, smokable)))
                 SetSmokableState(entity, SmokableState.Lit, smokable);
             args.Handled = true;
         }
@@ -62,7 +62,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!isHotEvent.IsHot)
                 return;
 
-            if (TryTransferReagents(entity.Comp, smokable))
+            if (TryTransferReagents(entity, (entity.Owner, smokable)))
                 SetSmokableState(entity, SmokableState.Lit, smokable);
             args.Handled = true;
         }
@@ -74,15 +74,15 @@ namespace Content.Server.Nutrition.EntitySystems
         }
 
         // Convert smokable item into reagents to be smoked
-        private bool TryTransferReagents(SmokingPipeComponent component, SmokableComponent smokable)
+        private bool TryTransferReagents(Entity<SmokingPipeComponent> entity, Entity<SmokableComponent> smokable)
         {
-            if (component.BowlSlot.Item == null)
+            if (entity.Comp.BowlSlot.Item == null)
                 return false;
 
-            EntityUid contents = component.BowlSlot.Item.Value;
+            EntityUid contents = entity.Comp.BowlSlot.Item.Value;
 
             if (!TryComp<SolutionContainerManagerComponent>(contents, out var reagents) ||
-                !_solutionContainerSystem.TryGetSolution(smokable.Owner, smokable.Solution, out var pipeSolution, out _))
+                !_solutionContainerSystem.TryGetSolution(smokable.Owner, smokable.Comp.Solution, out var pipeSolution, out _))
                 return false;
 
             foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((contents, reagents)))
@@ -93,7 +93,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             EntityManager.DeleteEntity(contents);
 
-            _itemSlotsSystem.SetLock(component.Owner, component.BowlSlot, true); //no inserting more until current runs out
+            _itemSlotsSystem.SetLock(entity.Owner, entity.Comp.BowlSlot, true); //no inserting more until current runs out
 
             return true;
         }
