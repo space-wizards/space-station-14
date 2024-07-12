@@ -289,14 +289,14 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     _vomitSystem.Vomit(args.Target, -1000, -1000); // You feel hollow!
-                    var organs = _bodySystem.GetBodyOrgans(args.Target, body);
+                    var organs = _bodySystem.GetBodyOrganEntityComps<TransformComponent>(args.Target, body);
                     var baseXform = Transform(args.Target);
-                    foreach (var (organUid, _) in organs)
+                    foreach (var (organ, _) in organs)
                     {
-                        if (HasComp<BrainComponent>(organUid) || HasComp<EyeComponent>(organUid))
+                        if (HasComp<BrainComponent>(organ.Owner) || HasComp<EyeComponent>(organ.Owner))
                             continue;
 
-                        _transformSystem.PlaceNextTo((organUid, Transform(organUid)), (args.Target, baseXform));
+                        _transformSystem.PlaceNextTo((organ.Owner, organ.Comp), (args.Target, baseXform));
                     }
 
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-vomit-organs-self"), args.Target,

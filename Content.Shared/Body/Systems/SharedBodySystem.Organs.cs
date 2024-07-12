@@ -184,6 +184,32 @@ public partial class SharedBodySystem
     }
 
     /// <summary>
+    /// Returns a list of Entity<<see cref="T"/>> and OrganComponents
+    /// for each organ of the body
+    /// </summary>
+    /// <typeparam name="T">The component that we want to return</typeparam>
+    /// <param name="bodyUid">The EntityUid of the body to check the organs of</param>
+    /// <param name="body">The BodyComponent of the body to check the organs of</param>
+    public List<(Entity<T> entity, OrganComponent organ)> GetBodyOrganEntityComps<T>(
+        EntityUid bodyUid,
+        BodyComponent? body = null)
+        where T : IComponent
+    {
+        if (!Resolve(bodyUid, ref body))
+            return new List<(Entity<T> entity, OrganComponent Organ)>();
+
+        var query = GetEntityQuery<T>();
+        var list = new List<(Entity<T> entity, OrganComponent Organ)>(3);
+        foreach (var organ in GetBodyOrgans(bodyUid, body))
+        {
+            if (query.TryGetComponent(organ.Id, out var comp))
+                list.Add(((organ.Id, comp), organ.Component));
+        }
+
+        return list;
+    }
+
+    /// <summary>
     ///     Tries to get a list of ValueTuples of <see cref="T"/> and OrganComponent on each organs
     ///     in the given body.
     /// </summary>
