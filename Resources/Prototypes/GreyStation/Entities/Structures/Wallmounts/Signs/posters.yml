@@ -1,0 +1,11 @@
+#Eventually localize posters to contraband and legit sections if enough are added into this fork.
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSecEnlist
+  name: "Enlist"
+  description: "Enlist in the Nanotrasen security force today!"
+  components:
+  - type: Sprite
+    sprite: GreyStation/Structures/Wallmounts/Posters/misc.rsi
+    state: secenlist

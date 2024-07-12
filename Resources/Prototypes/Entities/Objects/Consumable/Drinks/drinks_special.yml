@@ -11,7 +11,7 @@
   - type: MixableSolution
     solution: drink
   - type: Drink
-  - type: Shakeable # Doesn't do anything, but I mean...
+  - type: Shakeable
   - type: FitsInDispenser
     solution: drink
   - type: DrawableSolution
@@ -40,6 +40,10 @@
     sound: /Audio/SimpleStation14/Items/Handling/drinkglass_drop.ogg
   - type: EmitSoundOnLand
     sound: /Audio/SimpleStation14/Items/Handling/drinkglass_drop.ogg
+  - type: ReactionMixer
+    mixOnInteract: false
+    reactionTypes:
+    - Shake
 
 - type: entity
   parent: DrinkGlassBase
