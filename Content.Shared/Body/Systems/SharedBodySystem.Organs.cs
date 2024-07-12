@@ -190,20 +190,20 @@ public partial class SharedBodySystem
     /// <typeparam name="T">The component that we want to return</typeparam>
     /// <param name="bodyUid">The EntityUid of the body to check the organs of</param>
     /// <param name="body">The BodyComponent of the body to check the organs of</param>
-    public List<(Entity<T> entity, OrganComponent organ)> GetBodyOrganEntityComps<T>(
+    public List<Entity<T, OrganComponent>> GetBodyOrganEntityComps<T>(
         EntityUid bodyUid,
         BodyComponent? body = null)
         where T : IComponent
     {
         if (!Resolve(bodyUid, ref body))
-            return new List<(Entity<T> entity, OrganComponent Organ)>();
+            return new List<Entity<T, OrganComponent>>();
 
         var query = GetEntityQuery<T>();
-        var list = new List<(Entity<T> entity, OrganComponent Organ)>(3);
+        var list = new List<Entity<T, OrganComponent>>(3);
         foreach (var organ in GetBodyOrgans(bodyUid, body))
         {
             if (query.TryGetComponent(organ.Id, out var comp))
-                list.Add(((organ.Id, comp), organ.Component));
+                list.Add((organ.Id, comp, organ.Component));
         }
 
         return list;
