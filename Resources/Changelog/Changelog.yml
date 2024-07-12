@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: MilenVolf
-  changes:
-  - message: Electronics inside windoors now has proper accesses.
-    type: Fix
-  id: 6406
-  time: '2024-04-20T06:26:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27133
-- author: Bhijn and Myr
-  changes:
-  - message: An option to tie your viewport's scaling to your vertical screenspace
-      has been added, enabled by default! In laymen's terms, this means that manual
-      configuration is no longer necessary to avoid letterboxing on aspect ratios
-      tighter than 16:9, as the viewport will now default to cutting off any excess
-      horizontal width instead of letterboxing vertically when the screen is too tight.
-    type: Add
-  id: 6407
-  time: '2024-04-20T06:46:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27061
 - author: Whisper
   changes:
   - message: All mobs should now properly burn to ash.
@@ -3824,3 +3806,18 @@
   id: 6905
   time: '2024-07-12T09:16:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29910
+- author: themias
+  changes:
+  - message: Notice boards can now be built on walls
+    type: Fix
+  id: 6906
+  time: '2024-07-12T09:18:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29851
+- author: slarticodefast
+  changes:
+  - message: Stun batons, stun prods and banana cream pies now fly like other throwing
+      weapons when thrown.
+    type: Fix
+  id: 6907
+  time: '2024-07-12T09:19:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29883
