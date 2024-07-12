@@ -107,7 +107,7 @@
     - Robotics
   - type: Speech
     speechVerb: Robotic
-    speechSounds: Borg
+    speechSounds: Pai
   - type: TypingIndicator
     proto: robot
   - type: Vocal
