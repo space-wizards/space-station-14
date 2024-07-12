@@ -1,14 +1,17 @@
-using System.Linq;
+using System.Collections.Generic;
 using Content.Server.Chat.Systems;
 using Content.Server.Fax;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Paper;
+using Content.Shared.Dataset;
 using Robust.Shared.Random;
 using Content.Shared.Fax.Components;
 using Content.Server.StationEvents.Events;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.StationEvents.Events
 {
@@ -17,58 +20,64 @@ namespace Content.Server.StationEvents.Events
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly FaxSystem _faxSystem = default!;
-        private readonly RandomSelector _randomSelector = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        private string? _randomMessage;
-
-        public SpaceLawChangeRule()
-        {
-            var options = new List<string>
-            {
-                "station-event-space-law-change-essence-1",
-                "station-event-space-law-change-essence-2",
-                "station-event-space-law-change-essence-3",
-                "station-event-space-law-change-essence-4",
-                "station-event-space-law-change-essence-5",
-                "station-event-space-law-change-essence-6",
-                "station-event-space-law-change-essence-7",
-                "station-event-space-law-change-essence-8",
-                "station-event-space-law-change-essence-9",
-                "station-event-space-law-change-essence-10",
-                "station-event-space-law-change-essence-11"
-                // Add other message options here if necessary
-            };
-
-            _randomSelector = new RandomSelector(options);
-        }
+        private const int DispatchTime = 10; // Wait time to send confirmation
 
         protected override void Started(EntityUid uid, SpaceLawChangeRuleComponent component,
             GameRuleComponent gameRule, GameRuleStartedEvent args)
         {
             base.Started(uid, component, gameRule, args);
 
-            int dispatchTime = 10;
-            _randomMessage = Loc.GetString($"{_randomSelector.GetRandom(_robustRandom)}");
+            // Loading a prototype dataset
+            if (!_prototypeManager.TryIndex<LocalizedDatasetPrototype>("spaceLawChangeLaws", out var dataset))
+            {
+                Logger.Error("Could not find dataset prototype 'spaceLawChangeLaws'");
+                return;
+            }
+
+            // Ensure SequenceLaws is initialized only once
+            if (component.SequenceLaws.Count == 0)
+            {
+                component.SequenceLaws.AddRange(dataset.Values);
+            }
+
+            // Select a random law from the first half of SequenceLaws
+            List<string> listOldLaws = component.SequenceLaws.GetRange(0, component.SequenceLaws.Count / 2);
+
+            var randomLaw = _robustRandom.Pick(listOldLaws);
+            var rearrangement = component.SequenceLaws.IndexOf(randomLaw);
+
+            // Move the selected law to the end of SequenceLaws
+            component.SequenceLaws.RemoveAt(rearrangement);
+            component.SequenceLaws.Add(randomLaw);
+
+            component.RandomMessage = Loc.GetString(randomLaw);
             var message = Loc.GetString("station-event-space-law-change-announcement",
-            ("essence", _randomMessage),
-            ("time", dispatchTime));
+                ("essence", component.RandomMessage),
+                ("time", DispatchTime));
 
+            // Send a global announcement
             _chat.DispatchGlobalAnnouncement(message, playSound: true, colorOverride: Color.Gold);
-
             SendSpaceLawChangeFax(message);
 
-            // Start a timer to send a confirmation message
-            Timer.Spawn(TimeSpan.FromMinutes(dispatchTime), SendConfirmationMessage);
+            // Start a timer to send a confirmation message after DispatchTime minutes
+            Timer.Spawn(TimeSpan.FromMinutes(DispatchTime), () => SendConfirmationMessage(uid));
         }
 
         /// <summary>
         ///     Sends a confirmation message that the change in Space Law has come into effect
         /// </summary>
-        private void SendConfirmationMessage()
+        private void SendConfirmationMessage(EntityUid uid)
         {
-            if (_randomMessage == null) return;
+            if (!_entityManager.TryGetComponent(uid, out SpaceLawChangeRuleComponent? component) || component.RandomMessage == null)
+            {
+                Logger.Error($"Failed to send confirmation message for Space Law change event for entity {uid}: Component or RandomMessage is null.");
+                return;
+            }
 
-            var confirmationMessage = Loc.GetString("station-event-space-law-change-announcement-confirmation", ("essence", _randomMessage));
+            var confirmationMessage = Loc.GetString("station-event-space-law-change-announcement-confirmation", ("essence", component.RandomMessage));
             _chat.DispatchGlobalAnnouncement(confirmationMessage, playSound: true, colorOverride: Color.Gold);
         }
 
@@ -88,44 +97,11 @@ namespace Content.Server.StationEvents.Events
                     new() { StampedName = Loc.GetString("stamp-component-stamped-name-centcom"), StampedColor = Color.FromHex("#006600") }
                 });
 
-            var faxes = EntityManager.EntityQuery<FaxMachineComponent>();
+            var faxes = _entityManager.EntityQuery<FaxMachineComponent>();
             foreach (var fax in faxes)
             {
                 _faxSystem.Receive(fax.Owner, printout, null, fax);
             }
-        }
-    }
-
-    public class RandomSelector
-    {
-        private readonly List<string> _options;
-        private readonly List<string> _exclusions;
-
-        public RandomSelector(List<string> options)
-        {
-            _options = options;
-            _exclusions = new List<string>();
-        }
-
-        /// <summary>
-        ///     Randomly selects an option from the list. Selected options cannot be selected again until all unselected options are exhausted.
-        /// </summary>
-        public string GetRandom(IRobustRandom robustRandom)
-        {
-            if (_exclusions.Count >= _options.Count)
-                _exclusions.Clear();
-
-            var availableOptions = _options.Except(_exclusions).ToList();
-            if (availableOptions.Count == 0)
-            {
-                _exclusions.Clear();
-                availableOptions = _options.ToList();
-            }
-
-            var selectedOption = robustRandom.PickAndTake(availableOptions);
-            _exclusions.Add(selectedOption);
-
-            return selectedOption;
         }
     }
 }

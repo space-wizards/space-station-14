@@ -1,4 +1,4 @@
-station-event-space-law-change-announcement = Due to recent changes in corporate policy, { $essence } are (or is) now illegal under the Space Law code number "1XX". You must correct the situation immediately before the change takes effect in { $time } minutes. We strongly recommend that you hurry up to avoid possible negative consequences.
+station-event-space-law-change-announcement = Due to recent changes in corporate policy, { $essence } are (or is) now illegal under the Space Law code number "1XX". You must correct the situation immediately before the change takes effect in { $time } minutes. Security and Command are to ensure the station is fully compliant with the law by the time the adjustment period is over.
 
 station-event-space-law-change-essence-1 = skirts and shorts
 station-event-space-law-change-essence-2 = kitchen knives

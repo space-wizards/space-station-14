@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: spaceLawChangeLaws
+  values:
+    prefix: station-event-space-law-change-essence-
+    count: 11
