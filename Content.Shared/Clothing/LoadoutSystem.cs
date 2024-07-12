@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Body.Systems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
@@ -27,7 +28,8 @@ public sealed class LoadoutSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<LoadoutComponent, MapInitEvent>(OnMapInit);
+        // Wait until the character has all their organs before we give them their loadout
+        SubscribeLocalEvent<LoadoutComponent, MapInitEvent>(OnMapInit, after: [typeof(SharedBodySystem)]);
     }
 
     public static string GetJobPrototype(string? loadout)

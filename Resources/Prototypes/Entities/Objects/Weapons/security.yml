@@ -43,6 +43,7 @@
   - type: StaminaDamageOnCollide
     damage: 35
     sound: /Audio/Weapons/egloves.ogg
+  - type: LandAtCursor # it deals stamina damage when thrown
   - type: Battery
     maxCharge: 1000
     startingCharge: 1000
@@ -107,7 +108,7 @@
   - type: Item
     size: Normal
   - type: Tag
-    tags: 
+    tags:
     - Truncheon
   - type: Clothing
     sprite: Objects/Weapons/Melee/truncheon.rsi
@@ -180,7 +181,7 @@
 
 - type: entity
   name: portable flasher
-  parent: BaseStructure
+  parent: BaseMachine
   id: PortableFlasher
   description: An ultrabright flashbulb with a proximity trigger, useful for making an area security-only.
   components:
@@ -196,14 +197,11 @@
         !type:PhysShapeCircle
           radius: 2
       repeating: true
-    - type: Anchorable
     - type: Sprite
       sprite: Objects/Weapons/pflash.rsi
       layers:
         - state: "off"
           map: ["enum.ProximityTriggerVisualLayers.Base"]
-    - type: InteractionOutline
-    - type: Physics
     - type: Fixtures
       fixtures:
         fix1:
