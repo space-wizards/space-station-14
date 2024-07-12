@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: MilenVolf
   changes:
-  - message: Most crates can now go through plastic flaps.
-    type: Fix
-  id: 6405
-  time: '2024-04-20T06:23:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27137
-- author: MilenVolf
-  changes:
   - message: Electronics inside windoors now has proper accesses.
     type: Fix
   id: 6406
@@ -3824,3 +3817,10 @@
   id: 6904
   time: '2024-07-11T14:03:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29909
+- author: jonathanargo
+  changes:
+  - message: Muskets are now wieldable.
+    type: Tweak
+  id: 6905
+  time: '2024-07-12T09:16:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29910
