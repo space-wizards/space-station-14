@@ -280,7 +280,6 @@
     tags:
     - NuclearOperative
     - SyndicateAgent
-    - SiliconEmotes
   - type: AccessReader
     access: [["SyndicateAgent"], ["NuclearOperative"]]
   - type: SiliconLawProvider
