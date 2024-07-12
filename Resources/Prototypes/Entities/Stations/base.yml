@@ -46,17 +46,17 @@
       path: /Maps/Shuttles/cargo.yml
     - type: GridSpawn
       groups:
-        trade:
+        trade: !type:GridSpawnGroup
           addComponents:
             - type: ProtectedGrid
             - type: TradeStation
           paths:
             - /Maps/Shuttles/trading_outpost.yml
-        mining:
+        mining: !type:GridSpawnGroup
           paths:
           - /Maps/Shuttles/mining.yml
         # Spawn last
-        ruins:
+        ruins: !type:GridSpawnGroup
           hide: true
           nameGrid: true
           minCount: 2
@@ -72,6 +72,16 @@
           - /Maps/Ruins/syndicate_dropship.yml
           - /Maps/Ruins/whiteship_ancient.yml
           - /Maps/Ruins/whiteship_bluespacejumper.yml
+        vgroid: !type:DungeonSpawnGroup
+          minimumDistance: 1000
+          nameDataset: names_borer
+          stationGrid: false
+          addComponents:
+          - type: Gravity
+            enabled: true
+            inherent: true
+          protos:
+          - VGRoid
 
 - type: entity
   id: BaseStationCentcomm
