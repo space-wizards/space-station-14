@@ -184,7 +184,6 @@
   id: EnergyDaggerLoud
   description: A not as loud and dangerous dagger with a beam made of pure, concentrated plasma. This one is completely undisguised.
   components:
-  - type: EnergySword
   - type: ItemToggle
     soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
@@ -210,8 +209,11 @@
       path: /Audio/Weapons/ebladehum.ogg
       params:
         volume: -3
-  - type: ItemToggleDisarmMalus
-    activatedDisarmMalus: 0.4
+  - type: ComponentToggler
+    components:
+    - type: Sharp
+    - type: DisarmMalus
+      malus: 0.4
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger_loud.rsi
     layers:
