@@ -49,38 +49,15 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
 
         SubscribeLocalEvent<ActiveScannedArtifactComponent, ArtifactActivatedEvent>(OnArtifactActivated);
 
-        SubscribeLocalEvent<ActiveArtifactAnalyzerComponent, ComponentStartup>(OnAnalyzeStart);
-        SubscribeLocalEvent<ActiveArtifactAnalyzerComponent, ComponentShutdown>(OnAnalyzeEnd);
         SubscribeLocalEvent<ActiveArtifactAnalyzerComponent, PowerChangedEvent>(OnPowerChanged);
 
-        SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleServerSelectionMessage>(OnServerSelectionMessage);
-        SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleScanButtonPressedMessage>(OnScanButton);
-        SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsolePrintButtonPressedMessage>(OnPrintButton);
         SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleExtractButtonPressedMessage>(OnExtractButton);
-        SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleBiasButtonPressedMessage>(OnBiasButton);
 
         SubscribeLocalEvent<AnalysisConsoleComponent, ResearchClientServerSelectedMessage>((e, c, _) => UpdateUserInterface(e, c),
             after: [typeof(ResearchSystem)]);
         SubscribeLocalEvent<AnalysisConsoleComponent, ResearchClientServerDeselectedMessage>((e, c, _) => UpdateUserInterface(e, c),
             after: [typeof(ResearchSystem)]);
         SubscribeLocalEvent<AnalysisConsoleComponent, BeforeActivatableUIOpenEvent>((e, c, _) => UpdateUserInterface(e, c));
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<ActiveArtifactAnalyzerComponent, ArtifactAnalyzerComponent>();
-        while (query.MoveNext(out var uid, out var active, out var scan))
-        {
-            if (active.AnalysisPaused)
-                continue;
-
-            if (_timing.CurTime - active.StartTime < scan.AnalysisDuration - active.AccumulatedRunTime)
-                continue;
-
-            FinishScan(uid, scan, active);
-        }
     }
 
     /// <summary>
@@ -98,18 +75,6 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
         return placer.PlacedEntities.FirstOrNull();
     }
 
-    /// <summary>
-    /// Updates the current scan information based on
-    /// the last artifact that was scanned.
-    /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="component"></param>
-    private void UpdateAnalyzerInformation(EntityUid uid, ArtifactAnalyzerComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-    }
-
     private void UpdateUserInterface(EntityUid uid, AnalysisConsoleComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
@@ -117,41 +82,6 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
 
         return;
 
-    }
-
-    /// <summary>
-    /// opens the server selection menu.
-    /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="component"></param>
-    /// <param name="args"></param>
-    private void OnServerSelectionMessage(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsoleServerSelectionMessage args)
-    {
-        _ui.OpenUi(uid, ResearchClientUiKey.Key, args.Actor);
-    }
-
-    /// <summary>
-    /// Starts scanning the artifact.
-    /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="component"></param>
-    /// <param name="args"></param>
-    private void OnScanButton(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsoleScanButtonPressedMessage args)
-    {
-        if (component.AnalyzerEntity == null)
-            return;
-    }
-
-    private void OnPrintButton(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsolePrintButtonPressedMessage args)
-    {
-
-    }
-
-    private FormattedMessage? GetArtifactScanMessage(ArtifactAnalyzerComponent component)
-    {
-        var msg = new FormattedMessage();
-
-        return msg;
     }
 
     /// <summary>
@@ -189,20 +119,6 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
         UpdateUserInterface(uid, component);
     }
 
-    private void OnBiasButton(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsoleBiasButtonPressedMessage args)
-    {
-        if (component.AnalyzerEntity == null)
-            return;
-
-        // if (!TryComp<TraversalDistorterComponent>(component.AnalyzerEntity, out var trav))
-        //     return;
-        //
-        // if (!_traversalDistorter.SetState(component.AnalyzerEntity.Value, trav, args.IsDown))
-        //     return;
-
-        UpdateUserInterface(uid, component);
-    }
-
     /// <summary>
     /// Cancels scans if the artifact changes nodes (is activated) during the scan.
     /// </summary>
@@ -232,78 +148,9 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
         RemCompDeferred(artifact, component);
     }
 
-    /// <summary>
-    /// Finishes the current scan.
-    /// </summary>
-    [PublicAPI]
-    public void FinishScan(EntityUid uid, ArtifactAnalyzerComponent? component = null, ActiveArtifactAnalyzerComponent? active = null)
-    {
-        if (!Resolve(uid, ref component, ref active))
-            return;
-
-        component.ReadyToPrint = true;
-        _audio.PlayPvs(component.ScanFinishedSound, uid);
-        UpdateAnalyzerInformation(uid, component);
-
-        RemComp<ActiveScannedArtifactComponent>(active.Artifact);
-        RemComp(uid, active);
-        if (component.Console != null)
-            UpdateUserInterface(component.Console.Value);
-    }
-
-    [PublicAPI]
-    public void PauseScan(EntityUid uid, ArtifactAnalyzerComponent? component = null, ActiveArtifactAnalyzerComponent? active = null)
-    {
-        if (!Resolve(uid, ref component, ref active) || active.AnalysisPaused)
-            return;
-
-        active.AnalysisPaused = true;
-        // As we pause, we store what was already completed.
-        active.AccumulatedRunTime = (_timing.CurTime - active.StartTime) + active.AccumulatedRunTime;
-
-        if (Exists(component.Console))
-            UpdateUserInterface(component.Console.Value);
-    }
-
-    [PublicAPI]
-    public void ResumeScan(EntityUid uid, ArtifactAnalyzerComponent? component = null, ActiveArtifactAnalyzerComponent? active = null)
-    {
-        if (!Resolve(uid, ref component, ref active) || !active.AnalysisPaused)
-            return;
-
-        active.StartTime = _timing.CurTime;
-        active.AnalysisPaused = false;
-
-        if (Exists(component.Console))
-            UpdateUserInterface(component.Console.Value);
-    }
-
-    private void OnAnalyzeStart(EntityUid uid, ActiveArtifactAnalyzerComponent component, ComponentStartup args)
-    {
-        if (TryComp<ApcPowerReceiverComponent>(uid, out var powa))
-            powa.NeedsPower = true;
-
-        _ambientSound.SetAmbience(uid, true);
-    }
-
-    private void OnAnalyzeEnd(EntityUid uid, ActiveArtifactAnalyzerComponent component, ComponentShutdown args)
-    {
-        if (TryComp<ApcPowerReceiverComponent>(uid, out var powa))
-            powa.NeedsPower = false;
-
-        _ambientSound.SetAmbience(uid, false);
-    }
-
     private void OnPowerChanged(EntityUid uid, ActiveArtifactAnalyzerComponent active, ref PowerChangedEvent args)
     {
-        if (!args.Powered)
-        {
-            PauseScan(uid, null, active);
-        }
-        else
-        {
-            ResumeScan(uid, null, active);
-        }
+
     }
 }
 

@@ -28,11 +28,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
     private Entity<XenoArtifactNodeComponent>? _currentNode;
 
     public event Action? OnServerSelectionButtonPressed;
-    public event Action? OnScanButtonPressed;
-    public event Action? OnPrintButtonPressed;
     public event Action? OnExtractButtonPressed;
-    public event Action? OnUpBiasButtonPressed;
-    public event Action? OnDownBiasButtonPressed;
 
     public AnalysisConsoleMenu(EntityUid owner)
     {
@@ -45,9 +41,9 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         if (BackPanel.PanelOverride is StyleBoxTexture tex)
             tex.Texture = _resCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
 
+        IDLabel.SetMarkup(Loc.GetString("analysis-console-info-id"));
         ClassLabel.SetMarkup(Loc.GetString("analysis-console-info-class"));
         LockedLabel.SetMarkup(Loc.GetString("analysis-console-info-locked"));
-        ActiveLabel.SetMarkup(Loc.GetString("analysis-console-info-active"));
         EffectLabel.SetMarkup(Loc.GetString("analysis-console-info-effect"));
         TriggerLabel.SetMarkup(Loc.GetString("analysis-console-info-trigger"));
         DurabilityLabel.SetMarkup(Loc.GetString("analysis-console-info-durability"));
@@ -57,6 +53,13 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
             _currentNode = node;
             SetSelectedNode(node);
         };
+
+        ServerButton.OnPressed += _ =>
+        {
+            OnServerSelectionButtonPressed?.Invoke();
+        };
+
+        //TODO: extract button
 
         var comp = _ent.GetComponent<AnalysisConsoleComponent>(owner);
         _owner = (owner, comp);
@@ -70,6 +73,25 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         ArtifactView.SetEntity(arti);
         GraphControl.SetArtifact(arti);
 
+        ExtractButton.Disabled = arti == null;
+
+        if (arti == null)
+            NoneSelectedLabel.Visible = false;
+
+        NoArtiLabel.Visible = true;
+        if (!_artifactAnalyzer.TryGetAnalyzer(ent, out _))
+        {
+            NoArtiLabel.Text = Loc.GetString("analysis-console-info-no-scanner");
+        }
+        else if (arti == null)
+        {
+            NoArtiLabel.Text = Loc.GetString("analysis-console-info-no-artifact");
+        }
+        else
+        {
+            NoArtiLabel.Visible = false;
+        }
+
         if (_currentNode == null || arti == null || !_xenoArtifact.TryGetIndex((arti.Value, arti.Value), _currentNode.Value, out _))
         {
             SetSelectedNode(null);
@@ -78,22 +100,25 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
 
     public void SetSelectedNode(Entity<XenoArtifactNodeComponent>? node)
     {
-        var idLabelMsg = node != null
-            ? Loc.GetString("analysis-console-info-id")
-            : Loc.GetString("analysis-console-no-node");
-        IDLabel.SetMarkup(idLabelMsg);
-
-        IDValueLabel.Visible = node != null;
         InfoContainer.Visible = node != null;
-        if (node == null || !_artifactAnalyzer.TryGetArtifactFromConsole(_owner, out var artifact))
+        if (!_artifactAnalyzer.TryGetArtifactFromConsole(_owner, out var artifact))
+            return;
+        NoneSelectedLabel.Visible = node == null;
+
+        if (node == null)
             return;
 
         IDValueLabel.SetMarkup(Loc.GetString("analysis-console-info-id-value",
             ("id", (_ent.GetComponentOrNull<NameIdentifierComponent>(node.Value)?.Identifier ?? 0).ToString("D3"))));
+
+        // If active, state is 2. else, it is 0 or 1 based on whether or not it is unlocked.
+        var lockedState = _xenoArtifact.IsNodeActive(artifact.Value, node.Value)
+            ? 2
+            : node.Value.Comp.Locked
+                ? 0
+                : 1;
         LockedValueLabel.SetMarkup(Loc.GetString("analysis-console-info-locked-value",
-            ("state", node.Value.Comp.Locked)));
-        ActiveValueLabel.SetMarkup(Loc.GetString("analysis-console-info-active-value",
-            ("state", _xenoArtifact.IsNodeActive(artifact.Value, node.Value))));
+            ("state", lockedState)));
 
         var percent = (float) node.Value.Comp.Durability / node.Value.Comp.MaxDurability;
         var color = percent switch
@@ -110,7 +135,8 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         var hasInfo = _xenoArtifact.HasUnlockedPredecessor(artifact.Value, node.Value);
 
         EffectValueLabel.SetMarkup(Loc.GetString("analysis-console-info-effect-value",
-            ("state", hasInfo)));
+            ("state", hasInfo),
+            ("info", _ent.GetComponentOrNull<MetaDataComponent>(node.Value)?.EntityDescription ?? string.Empty)));
 
         var predecessorNodes = _xenoArtifact.GetPredecessorNodes(artifact.Value.Owner, node.Value);
         if (!hasInfo)

@@ -111,7 +111,7 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
                     var color = _lockedNodeColor;
                     if (artiSys.IsNodeActive(_artifact.Value, node))
                     {
-                        color = Color.Orange;
+                        color = Color.Plum;
                     }
                     else if (!node.Comp.Locked)
                     {

@@ -1,3 +1,4 @@
+using Content.Shared.Research.Components;
 using Content.Shared.Xenoarchaeology.Equipment;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
 using JetBrains.Annotations;
@@ -21,27 +22,11 @@ public sealed class AnalysisConsoleBoundUserInterface(EntityUid owner, Enum uiKe
 
         _consoleMenu.OnServerSelectionButtonPressed += () =>
         {
-            SendMessage(new AnalysisConsoleServerSelectionMessage());
-        };
-        _consoleMenu.OnScanButtonPressed += () =>
-        {
-            SendMessage(new AnalysisConsoleScanButtonPressedMessage());
-        };
-        _consoleMenu.OnPrintButtonPressed += () =>
-        {
-            SendMessage(new AnalysisConsolePrintButtonPressedMessage());
+            SendMessage(new ConsoleServerSelectionMessage());
         };
         _consoleMenu.OnExtractButtonPressed += () =>
         {
             SendMessage(new AnalysisConsoleExtractButtonPressedMessage());
-        };
-        _consoleMenu.OnUpBiasButtonPressed += () =>
-        {
-            SendMessage(new AnalysisConsoleBiasButtonPressedMessage(false));
-        };
-        _consoleMenu.OnDownBiasButtonPressed += () =>
-        {
-            SendMessage(new AnalysisConsoleBiasButtonPressedMessage(true));
         };
     }
 

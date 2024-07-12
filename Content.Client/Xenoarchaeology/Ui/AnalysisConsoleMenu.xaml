@@ -16,22 +16,19 @@
                     <SpriteView Name="ArtifactView" Scale="4 4" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalExpand="True" VerticalExpand="True"/>
                 </BoxContainer>
             </PanelContainer>
-            <customControls:HSeparator StyleClasses="HighDivider" Margin="0 10"/>
-            <BoxContainer Orientation="Horizontal" VerticalExpand="True">
+            <customControls:HSeparator StyleClasses="HighDivider" Margin="0 15 0 10"/>
+            <BoxContainer Orientation="Vertical" VerticalExpand="True">
                 <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
                     <BoxContainer Orientation="Vertical" HorizontalExpand="False" VerticalExpand="True">
-                        <BoxContainer HorizontalExpand="True">
-                            <RichTextLabel Name="IDLabel" HorizontalExpand="True"/>
-                            <RichTextLabel Name="IDValueLabel" HorizontalAlignment="Right"/>
-                        </BoxContainer>
+                        <Label Name="NoneSelectedLabel" Text="{Loc 'analysis-console-no-node'}" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalExpand="True" Visible="False"/>
                         <BoxContainer Name="InfoContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+                            <BoxContainer HorizontalExpand="True">
+                                <RichTextLabel Name="IDLabel" HorizontalExpand="True"/>
+                                <RichTextLabel Name="IDValueLabel" HorizontalAlignment="Right"/>
+                            </BoxContainer>
                             <BoxContainer HorizontalExpand="True">
                                 <RichTextLabel Name="ClassLabel" HorizontalExpand="True"/>
                                 <RichTextLabel Name="ClassValueLabel" HorizontalAlignment="Right"/>
-                            </BoxContainer>
-                            <BoxContainer HorizontalExpand="True">
-                                <RichTextLabel Name="ActiveLabel" HorizontalExpand="True"/>
-                                <RichTextLabel Name="ActiveValueLabel" HorizontalAlignment="Right"/>
                             </BoxContainer>
                             <BoxContainer HorizontalExpand="True">
                                 <RichTextLabel Name="LockedLabel" HorizontalExpand="True"/>
@@ -49,6 +46,11 @@
                         </BoxContainer>
                     </BoxContainer>
                 </ScrollContainer>
+                <Control MinHeight="5"/>
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Button Name="ServerButton" Text="{Loc 'analysis-console-server-list-button'}" StyleClasses="OpenRight" HorizontalExpand="True" MinHeight="35"/>
+                    <Button Name="ExtractButton" Text="{Loc 'analysis-console-extract-button'}" StyleClasses="OpenLeft" HorizontalExpand="True" MinHeight="35"/>
+                </BoxContainer>
             </BoxContainer>
         </BoxContainer>
         <customControls:VSeparator StyleClasses="LowDivider" />
@@ -58,7 +60,9 @@
                     <gfx:StyleBoxFlat BackgroundColor="#000000FF" />
                 </PanelContainer.PanelOverride>
                 <BoxContainer Margin="10 10 10 10" Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
-                    <ui:XenoArtifactGraphControl Name="GraphControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <ui:XenoArtifactGraphControl Name="GraphControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Label Name="NoArtiLabel" Text="{Loc 'analysis-console-info-no-artifact'}" HorizontalExpand="True" VerticalExpand="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </ui:XenoArtifactGraphControl>
                 </BoxContainer>
             </PanelContainer>
         </BoxContainer>

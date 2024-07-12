@@ -4,30 +4,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Xenoarchaeology.Equipment;
 
 [Serializable, NetSerializable]
-public sealed class AnalysisConsoleServerSelectionMessage : BoundUserInterfaceMessage
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class AnalysisConsoleScanButtonPressedMessage : BoundUserInterfaceMessage
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class AnalysisConsolePrintButtonPressedMessage : BoundUserInterfaceMessage
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class AnalysisConsoleExtractButtonPressedMessage : BoundUserInterfaceMessage
-{
-}
-
-[Serializable, NetSerializable]
-public sealed class AnalysisConsoleBiasButtonPressedMessage(bool isDown) : BoundUserInterfaceMessage
-{
-    public bool IsDown = isDown;
-}
+public sealed class AnalysisConsoleExtractButtonPressedMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
 public sealed class AnalysisConsoleUpdateState(
