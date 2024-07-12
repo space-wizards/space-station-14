@@ -193,6 +193,10 @@
   description: Used to contain a large amount of chemicals or solutions.
   id: LargeBeaker
   components:
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+    minTransferAmount: 0.1
+    maxTransferAmount: 100
   - type: Spillable
     solution: beaker
   - type: Sprite
