@@ -255,11 +255,7 @@ public sealed partial class SalvageSystem
 
         var offering = GetSalvageOffering(seed);
         var salvMap = _mapSystem.CreateMap();
-
-        // need the MapComponent to get the MapId later on for loading and deletion of the map
-        // I'm just assuming that CreateMap gives it this component
-        if (!TryComp<MapComponent>(salvMap, out var salvMapComp))
-            return;
+        var salvMapXform = Transform(salvMap);
 
         // Set values while awaiting asteroid dungeon if relevant so we can't double-take offers.
         data.Comp.ActiveSeed = seed;
@@ -281,10 +277,10 @@ public sealed partial class SalvageSystem
                     Offset = new Vector2(0, 0)
                 };
 
-                if (!_map.TryLoad(salvMapComp.MapId, salvageProto.MapPath.ToString(), out _, opts))
+                if (!_map.TryLoad(salvMapXform.MapID, salvageProto.MapPath.ToString(), out _, opts))
                 {
                     Report(magnet, MagnetChannel, "salvage-system-announcement-spawn-debris-disintegrated");
-                    _mapManager.DeleteMap(salvMapComp.MapId);
+                    _mapManager.DeleteMap(salvMapXform.MapID);
                     return;
                 }
 
@@ -294,15 +290,14 @@ public sealed partial class SalvageSystem
         }
 
         Box2? bounds = null;
-        var mapXform = Transform(salvMap);
 
-        if (mapXform.ChildCount == 0)
+        if (salvMapXform.ChildCount == 0)
         {
             Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-spawn-no-debris-available");
             return;
         }
 
-        var mapChildren = mapXform.ChildEnumerator;
+        var mapChildren = salvMapXform.ChildEnumerator;
 
         while (mapChildren.MoveNext(out var mapChild))
         {
@@ -346,7 +341,7 @@ public sealed partial class SalvageSystem
         if (!TryGetSalvagePlacementLocation(mapId, attachedBounds, bounds!.Value, worldAngle, out var spawnLocation, out var spawnAngle))
         {
             Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-spawn-no-debris-available");
-            _mapManager.DeleteMap(salvMapComp.MapId);
+            _mapManager.DeleteMap(salvMapXform.MapID);
             return;
         }
 
@@ -356,7 +351,7 @@ public sealed partial class SalvageSystem
             return;
 
         data.Comp.ActiveEntities = null;
-        mapChildren = mapXform.ChildEnumerator;
+        mapChildren = salvMapXform.ChildEnumerator;
 
         // It worked, move it into position and cleanup values.
         while (mapChildren.MoveNext(out var mapChild))
@@ -383,7 +378,7 @@ public sealed partial class SalvageSystem
         }
 
         Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-arrived", ("timeLeft", data.Comp.ActiveTime.TotalSeconds));
-        _mapManager.DeleteMap(salvMapComp.MapId);
+        _mapManager.DeleteMap(salvMapXform.MapID);
 
         data.Comp.Announced = false;
 
