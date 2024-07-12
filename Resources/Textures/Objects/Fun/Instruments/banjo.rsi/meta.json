@@ -19,8 +19,10 @@
         "directions": 4
       },
       {
+        
         "name": "equipped-SUITSTORAGE",
-        "directions": 4
+        "directions": 4,
+        "comment": "lol i made these shitty sprites in like 2 minutes -archangel"
       },
       {
         "name": "equipped-BACKPACK",
