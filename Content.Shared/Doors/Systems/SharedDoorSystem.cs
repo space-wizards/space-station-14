@@ -549,13 +549,17 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref physics))
             yield break;
 
-        // TODO SLOTH fix electro's code.
-        // ReSharper disable once InconsistentNaming
+        
         var xform = Transform(uid);
+        // Getting the world bounds from the gridUid allows us to use the version of
+        // GetCollidingEntities that returns Entity<PhysicsComponent>
         if (!TryComp<MapGridComponent>(xform.GridUid, out var mapGridComp))
             yield break;
         var tileRef = _mapSystem.GetTileRef(xform.GridUid.Value, mapGridComp, xform.Coordinates);
         var doorWorldBounds = _entityLookup.GetWorldBounds(tileRef);
+
+        // TODO SLOTH fix electro's code.
+        // ReSharper disable once InconsistentNaming
         var doorAABB = _entityLookup.GetWorldAABB(uid);
 
         foreach (var otherPhysics in PhysicsSystem.GetCollidingEntities(Transform(uid).MapID, doorWorldBounds))
