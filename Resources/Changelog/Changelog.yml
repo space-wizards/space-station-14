@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: KittenColony
-  changes:
-  - message: Added a new lizard snout, featuring a split muzzle and snoot that can
-      be coloured independently
-    type: Add
-  id: 6410
-  time: '2024-04-21T06:18:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27143
 - author: SpeltIncorrectyl
   changes:
   - message: Security Officers, Head of Security, and Warden can now choose to start
@@ -3825,3 +3817,10 @@
   id: 6909
   time: '2024-07-12T10:32:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29935
+- author: themias
+  changes:
+  - message: Timers can now be deconstructed
+    type: Fix
+  id: 6910
+  time: '2024-07-12T11:38:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29917
