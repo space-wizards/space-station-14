@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: New map Oasis.
-    type: Add
-  id: 6409
-  time: '2024-04-21T05:59:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25736
 - author: KittenColony
   changes:
   - message: Added a new lizard snout, featuring a split muzzle and snoot that can
@@ -3821,3 +3814,14 @@
   id: 6908
   time: '2024-07-12T09:24:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29900
+- author: coffeeware, slarticodefast
+  changes:
+  - message: Fixed items thrown very fast not being in the air. In particular this
+      fixes the pneumatic cannon.
+    type: Fix
+  - message: Buffed base hand throwing speed by 10% to be more similar to before the
+      recent throwing changes.
+    type: Tweak
+  id: 6909
+  time: '2024-07-12T10:32:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29935
