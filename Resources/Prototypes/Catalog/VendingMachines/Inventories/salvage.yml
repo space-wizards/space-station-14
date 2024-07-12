@@ -1,7 +1,6 @@
 ﻿- type: vendingMachineInventory
   id: SalvageEquipmentInventory
   startingInventory:
-    OreLocator: 2 # GreyStation
     ClothingBackpackSalvage: 3 # GreyStation
     ClothingBackpackSatchelSalvage: 3 # GreyStation
     ClothingBackpackDuffelSalvage: 3 # GreyStation
