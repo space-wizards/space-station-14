@@ -798,10 +798,12 @@
 
 # Syringes
 - type: entity
-  name: ephedrine syringe
+  suffix: ephedrine
   parent: PrefilledSyringe
   id: SyringeEphedrine
   components:
+  - type: Label
+    currentLabel: reagent-name-ephedrine
   - type: SolutionContainerManager
     solutions:
       injector:
@@ -811,10 +813,12 @@
           Quantity: 15
 
 - type: entity
-  name: inaprovaline syringe
+  suffix: inaprovaline
   parent: PrefilledSyringe
   id: SyringeInaprovaline
   components:
+  - type: Label
+    currentLabel: reagent-name-inaprovaline
   - type: SolutionContainerManager
     solutions:
       injector:
@@ -824,10 +828,12 @@
           Quantity: 15
 
 - type: entity
-  name: tranexamic acid syringe
+  suffix: tranexamic acid
   parent: PrefilledSyringe
   id: SyringeTranexamicAcid
   components:
+  - type: Label
+    currentLabel: reagent-name-tranexamic-acid
   - type: SolutionContainerManager
     solutions:
       injector:
@@ -837,10 +843,12 @@
           Quantity: 15
 
 - type: entity
-  name: bicaridine syringe
+  suffix: bicaridine
   parent: PrefilledSyringe
   id: SyringeBicaridine
   components:
+  - type: Label
+    currentLabel: reagent-name-bicaridine
   - type: SolutionContainerManager
     solutions:
       injector:
@@ -850,10 +858,12 @@
           Quantity: 15
 
 - type: entity
-  name: dermaline syringe
+  suffix: dermaline
   parent: PrefilledSyringe
   id: SyringeDermaline
   components:
+  - type: Label
+    currentLabel: reagent-name-dermaline
   - type: SolutionContainerManager
     solutions:
       injector:
@@ -863,10 +873,12 @@
           Quantity: 15
 
 - type: entity
-  name: hyronalin syringe
+  suffix: hyronalin
   parent: PrefilledSyringe
   id: SyringeHyronalin
   components:
+  - type: Label
+    currentLabel: reagent-name-hyronalin
   - type: SolutionContainerManager
     solutions:
       injector:
@@ -876,10 +888,12 @@
           Quantity: 15
 
 - type: entity
-  name: ipecac syringe
+  suffix: ipecac
   parent: PrefilledSyringe
   id: SyringeIpecac
   components:
+  - type: Label
+    currentLabel: reagent-name-ipecac
   - type: SolutionContainerManager
     solutions:
       injector:
@@ -889,76 +903,88 @@
           Quantity: 15
 
 - type: entity
-  name: ambuzol syringe
+  suffix: ambuzol
   parent: PrefilledSyringe
   id: SyringeAmbuzol
   components:
-    - type: SolutionContainerManager
-      solutions:
-        injector:
-          maxVol: 15
-          reagents:
-            - ReagentId: Ambuzol
-              Quantity: 15
+  - type: Label
+    currentLabel: reagent-name-ambuzol
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+          - ReagentId: Ambuzol
+            Quantity: 15
 
 - type: entity
-  name: sigynate syringe
+  suffix: sigynate
   parent: PrefilledSyringe
   id: SyringeSigynate
   components:
-    - type: SolutionContainerManager
-      solutions:
-        injector:
-          maxVol: 15
-          reagents:
-            - ReagentId: Sigynate
-              Quantity: 15
+  - type: Label
+    currentLabel: reagent-name-sigynate
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+          - ReagentId: Sigynate
+            Quantity: 15
 
 - type: entity
-  name: ethylredoxrazine syringe
+  suffix: ethylredoxrazine
   parent: PrefilledSyringe
   id: SyringeEthylredoxrazine
   components:
-    - type: SolutionContainerManager
-      solutions:
-        injector:
-          maxVol: 15
-          reagents:
-            - ReagentId: Ethylredoxrazine
-              Quantity: 15
+  - type: Label
+    currentLabel: reagent-name-ethylredoxrazine
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+          - ReagentId: Ethylredoxrazine
+            Quantity: 15
 
 - type: entity
-  name: phalanximine syringe
+  suffix: phalanximine
   parent: PrefilledSyringe
   id: SyringePhalanximine
   components:
-    - type: SolutionContainerManager
-      solutions:
-        injector:
-          maxVol: 15
-          reagents:
-            - ReagentId: Phalanximine
-              Quantity: 15
+  - type: Label
+    currentLabel: reagent-name-phalanximine
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+          - ReagentId: Phalanximine
+            Quantity: 15
 
 - type: entity
-  name: saline syringe
+  suffix: saline
   parent: PrefilledSyringe
   id: SyringeSaline
   components:
-    - type: SolutionContainerManager
-      solutions:
-        injector:
-          maxVol: 15
-          reagents:
-            - ReagentId: Saline
-              Quantity: 15
+  - type: Label
+    currentLabel: reagent-name-saline
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+          - ReagentId: Saline
+            Quantity: 15
 
 #this is where all the syringes are so i didn't know where to put it
 - type: entity
-  name: romerol syringe
+  suffix: romerol
   parent: PrefilledSyringe
   id: SyringeRomerol
   components:
+  - type: Label
+    currentLabel: reagent-name-romerol
   - type: SolutionContainerManager
     solutions:
       injector:
@@ -968,10 +994,12 @@
           Quantity: 15
 
 - type: entity
-  name: hyperzine syringe
+  suffix: hyperzine
   parent: PrefilledSyringe
   id: SyringeStimulants
   components:
+  - type: Label
+    currentLabel: reagent-name-hyperzine
   - type: SolutionContainerManager
     solutions:
       injector:
