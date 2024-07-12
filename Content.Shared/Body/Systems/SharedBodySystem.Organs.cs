@@ -184,7 +184,7 @@ public partial class SharedBodySystem
     }
 
     /// <summary>
-    /// Returns a list of Entity<<see cref="T"/>> and OrganComponents
+    /// Returns a list of Entity<<see cref="T"/>, <see cref="OrganComponent"/>>
     /// for each organ of the body
     /// </summary>
     /// <typeparam name="T">The component that we want to return</typeparam>
