@@ -150,7 +150,7 @@
         Piercing: 0.8
         Heat: 0.8
   - type: ClothingSpeedModifier
-    walkModifier: 1.1
+    walkModifier: 1.0
     sprintModifier: 1.2
   # phase cloak
   - type: ToggleClothing
