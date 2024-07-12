@@ -549,7 +549,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref physics))
             yield break;
 
-        
         var xform = Transform(uid);
         // Getting the world bounds from the gridUid allows us to use the version of
         // GetCollidingEntities that returns Entity<PhysicsComponent>
