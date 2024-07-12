@@ -60,7 +60,7 @@ namespace Content.Client.Physics.Controllers
             Physics.UpdateIsPredicted(uid);
             Physics.UpdateIsPredicted(component.RelayEntity);
             if (MoverQuery.TryGetComponent(component.RelayEntity, out var inputMover))
-                SetMoveInput(inputMover, MoveButtons.None);
+                SetMoveInput(uid, inputMover, MoveButtons.None);
         }
 
         private void OnRelayPlayerDetached(EntityUid uid, RelayInputMoverComponent component, LocalPlayerDetachedEvent args)
@@ -68,17 +68,17 @@ namespace Content.Client.Physics.Controllers
             Physics.UpdateIsPredicted(uid);
             Physics.UpdateIsPredicted(component.RelayEntity);
             if (MoverQuery.TryGetComponent(component.RelayEntity, out var inputMover))
-                SetMoveInput(inputMover, MoveButtons.None);
+                SetMoveInput(uid, inputMover, MoveButtons.None);
         }
 
         private void OnPlayerAttached(EntityUid uid, InputMoverComponent component, LocalPlayerAttachedEvent args)
         {
-            SetMoveInput(component, MoveButtons.None);
+            SetMoveInput(uid, component, MoveButtons.None);
         }
 
         private void OnPlayerDetached(EntityUid uid, InputMoverComponent component, LocalPlayerDetachedEvent args)
         {
-            SetMoveInput(component, MoveButtons.None);
+            SetMoveInput(uid, component, MoveButtons.None);
         }
 
         public override void UpdateBeforeSolve(bool prediction, float frameTime)

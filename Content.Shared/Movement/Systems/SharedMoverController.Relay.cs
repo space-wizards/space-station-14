@@ -67,7 +67,7 @@ public abstract partial class SharedMoverController
         Physics.UpdateIsPredicted(component.RelayEntity);
 
         if (TryComp<InputMoverComponent>(component.RelayEntity, out var inputMover))
-            SetMoveInput(inputMover, MoveButtons.None);
+            SetMoveInput(uid, inputMover, MoveButtons.None);
 
         if (Timing.ApplyingState)
             return;

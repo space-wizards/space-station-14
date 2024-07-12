@@ -33,23 +33,23 @@ namespace Content.Server.Physics.Controllers
         private void OnRelayPlayerAttached(EntityUid uid, RelayInputMoverComponent component, PlayerAttachedEvent args)
         {
             if (MoverQuery.TryGetComponent(component.RelayEntity, out var inputMover))
-                SetMoveInput(inputMover, MoveButtons.None);
+                SetMoveInput(uid, inputMover, MoveButtons.None);
         }
 
         private void OnRelayPlayerDetached(EntityUid uid, RelayInputMoverComponent component, PlayerDetachedEvent args)
         {
             if (MoverQuery.TryGetComponent(component.RelayEntity, out var inputMover))
-                SetMoveInput(inputMover, MoveButtons.None);
+                SetMoveInput(uid, inputMover, MoveButtons.None);
         }
 
         private void OnPlayerAttached(EntityUid uid, InputMoverComponent component, PlayerAttachedEvent args)
         {
-            SetMoveInput(component, MoveButtons.None);
+            SetMoveInput(uid, component, MoveButtons.None);
         }
 
         private void OnPlayerDetached(EntityUid uid, InputMoverComponent component, PlayerDetachedEvent args)
         {
-            SetMoveInput(component, MoveButtons.None);
+            SetMoveInput(uid, component, MoveButtons.None);
         }
 
         protected override bool CanSound()

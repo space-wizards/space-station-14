@@ -83,17 +83,17 @@ namespace Content.Shared.Movement.Systems
             return oldMovement;
         }
 
-        protected void SetMoveInput(InputMoverComponent component, MoveButtons buttons)
+        protected void SetMoveInput(EntityUid entity, InputMoverComponent component, MoveButtons buttons)
         {
             if (component.HeldMoveButtons == buttons)
                 return;
 
             // Relay the fact we had any movement event.
             // TODO: Ideally we'd do these in a tick instead of out of sim.
-            var moveEvent = new MoveInputEvent(component.Owner, component, component.HeldMoveButtons);
+            var moveEvent = new MoveInputEvent(entity, component, component.HeldMoveButtons);
             component.HeldMoveButtons = buttons;
-            RaiseLocalEvent(component.Owner, ref moveEvent);
-            Dirty(component.Owner, component);
+            RaiseLocalEvent(entity, ref moveEvent);
+            Dirty(entity, component);
         }
 
         private void OnMoverHandleState(EntityUid uid, InputMoverComponent component, ComponentHandleState args)
@@ -299,7 +299,7 @@ namespace Content.Shared.Movement.Systems
                 DebugTools.AssertNotNull(relayMover.RelayEntity);
 
                 if (MoverQuery.TryGetComponent(entity, out var mover))
-                    SetMoveInput(mover, MoveButtons.None);
+                    SetMoveInput(entity, mover, MoveButtons.None);
 
                 if (!_mobState.IsIncapacitated(entity))
                     HandleDirChange(relayMover.RelayEntity, dir, subTick, state);
@@ -344,7 +344,7 @@ namespace Content.Shared.Movement.Systems
                 // if we swap to relay then stop our existing input if we ever change back.
                 if (moverComp != null)
                 {
-                    SetMoveInput(moverComp, MoveButtons.None);
+                    SetMoveInput(uid, moverComp, MoveButtons.None);
                 }
 
                 HandleRunChange(relayMover.RelayEntity, subTick, walking);
@@ -447,7 +447,7 @@ namespace Content.Shared.Movement.Systems
                 buttons &= ~bit;
             }
 
-            SetMoveInput(component, buttons);
+            SetMoveInput(entity, component, buttons);
         }
 
         private void ResetSubtick(InputMoverComponent component)
