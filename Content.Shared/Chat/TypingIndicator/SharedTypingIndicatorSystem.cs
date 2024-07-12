@@ -1,6 +1,8 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Clothing;
+using Content.Shared.Inventory;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Chat.TypingIndicator;
 
@@ -11,6 +13,7 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     /// <summary>
     ///     Default ID of <see cref="TypingIndicatorPrototype"/>
@@ -26,6 +29,7 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
 
         SubscribeLocalEvent<TypingIndicatorClothingComponent, ClothingGotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<TypingIndicatorClothingComponent, ClothingGotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<TypingIndicatorClothingComponent, InventoryRelayedEvent<BeforeShowTypingIndicatorEvent>>(BeforeShow);
 
         SubscribeAllEvent<TypingChangedEvent>(OnTypingChanged);
     }
@@ -44,20 +48,19 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
         SetTypingIndicatorEnabled(uid, false);
     }
 
-    private void OnGotEquipped(EntityUid uid, TypingIndicatorClothingComponent component, ClothingGotEquippedEvent args)
+    private void OnGotEquipped(Entity<TypingIndicatorClothingComponent> entity, ref ClothingGotEquippedEvent args)
     {
-        if (!TryComp<TypingIndicatorComponent>(args.Wearer, out var indicator))
-            return;
-
-        indicator.Prototype = component.Prototype;
+        entity.Comp.GotEquippedTime = _timing.CurTime;
     }
 
-    private void OnGotUnequipped(EntityUid uid, TypingIndicatorClothingComponent component, ClothingGotUnequippedEvent args)
+    private void OnGotUnequipped(Entity<TypingIndicatorClothingComponent> entity, ref ClothingGotUnequippedEvent args)
     {
-        if (!TryComp<TypingIndicatorComponent>(args.Wearer, out var indicator))
-            return;
+        entity.Comp.GotEquippedTime = null;
+    }
 
-        indicator.Prototype = InitialIndicatorId;
+    private void BeforeShow(Entity<TypingIndicatorClothingComponent> entity, ref InventoryRelayedEvent<BeforeShowTypingIndicatorEvent> args)
+    {
+        args.Args.TryUpdateTimeAndIndicator(entity.Comp.TypingIndicatorPrototype, entity.Comp.GotEquippedTime);
     }
 
     private void OnTypingChanged(TypingChangedEvent ev, EntitySessionEventArgs args)

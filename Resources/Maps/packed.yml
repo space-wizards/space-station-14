@@ -33890,11 +33890,6 @@ entities:
     - type: Transform
       pos: 28.5,-40.5
       parent: 2
-  - uid: 5262
-    components:
-    - type: Transform
-      pos: 28.5,-41.5
-      parent: 2
 - proto: CrateEngineeringCableBulk
   entities:
   - uid: 782
@@ -65602,25 +65597,6 @@ entities:
         - Pressed: Toggle
         4503:
         - Pressed: Toggle
-  - uid: 1151
-    components:
-    - type: MetaData
-      name: Bar Shutters
-    - type: Transform
-      pos: 40.15871,-2.7952938
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        1154:
-        - Pressed: Toggle
-        913:
-        - Pressed: Toggle
-        6512:
-        - Pressed: Toggle
-        1658:
-        - Pressed: Toggle
-        419:
-        - Pressed: Toggle
   - uid: 1471
     components:
     - type: MetaData
@@ -65749,6 +65725,28 @@ entities:
         12822:
         - Pressed: Toggle
         12824:
+        - Pressed: Toggle
+- proto: SignalButtonDirectional
+  entities:
+  - uid: 543
+    components:
+    - type: MetaData
+      name: Bar Shutters
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 40.5,-8.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        419:
+        - Pressed: Toggle
+        1658:
+        - Pressed: Toggle
+        6512:
+        - Pressed: Toggle
+        913:
+        - Pressed: Toggle
+        1154:
         - Pressed: Toggle
 - proto: SignAnomaly
   entities:
@@ -81933,10 +81931,10 @@ entities:
       parent: 2
 - proto: WindoorKitchenHydroponicsLocked
   entities:
-  - uid: 543
+  - uid: 1151
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
+      rot: 1.5707963267948966 rad
       pos: 40.5,-7.5
       parent: 2
   - uid: 5055
