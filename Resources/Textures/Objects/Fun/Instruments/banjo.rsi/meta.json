@@ -17,13 +17,13 @@
       {
         "name": "inhand-right",
         "directions": 4
-      }
+      },
       {
-        "name": "equipped-SUITSTORAGE"
+        "name": "equipped-SUITSTORAGE",
         "directions": 4
-      }
+      },
       {
-        "name": "equipped-BACKPACK"
+        "name": "equipped-BACKPACK",
         "directions": 4
       }
     ]
