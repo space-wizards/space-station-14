@@ -42,7 +42,7 @@ public sealed partial class HandsComponent : Component
     /// </summary>
     [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
-    public float BaseThrowspeed { get; set; } = 10f;
+    public float BaseThrowspeed { get; set; } = 11f;
 
     /// <summary>
     ///     Distance after which longer throw targets stop increasing throw impulse.
