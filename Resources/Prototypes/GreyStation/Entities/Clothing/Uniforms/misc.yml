@@ -41,3 +41,30 @@
     sprite: GreyStation/Clothing/Uniforms/Misc/scarecrow_clothes.rsi
   - type: Clothing
     sprite: GreyStation/Clothing/Uniforms/Misc/scarecrow_clothes.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: UniformJabroni
+  name: jabroni outfit
+  description: For artists, performance artists.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Uniforms/Costume/jabroni.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Uniforms/Costume/jabroni.rsi
+  - type: ComponentsWhenWorn
+    components:
+    - type: MeleeSound
+      soundGroups:
+        Brute:
+          collection: GachiPain
+    - type: SoundOnMelee
+      cooldown: 5
+      sound:
+        collection: GachiHitOther
+    - type: TriggerOnMobstateChange
+      mobState:
+      - Critical
+    - type: EmitSoundOnTrigger
+      sound:
+        path: /Audio/GreyStation/Effects/Gachi/knockedhimout.ogg
