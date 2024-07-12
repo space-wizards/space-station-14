@@ -195,8 +195,6 @@
   components:
   - type: SolutionTransfer
     canChangeTransferAmount: true
-    minTransferAmount: 0.1
-    maxTransferAmount: 100
   - type: Spillable
     solution: beaker
   - type: Sprite
@@ -284,7 +282,7 @@
   - type: Injector
     injectOnly: false
     ignoreMobs: true
-    minTransferAmount: 1
+    minTransferAmount: 0.1
     maxTransferAmount: 5
     transferAmount: 1
     toggleState: 1 # draw
