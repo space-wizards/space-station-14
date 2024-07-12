@@ -26,7 +26,6 @@ public sealed partial class StationJobsSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
