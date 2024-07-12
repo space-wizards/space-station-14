@@ -81,106 +81,8 @@
     temperature: 700
 
 - type: entity
-  name: pen
-  parent: EnergySword
-  id: EnergyDagger
-  suffix: E-Dagger
-  description: 'A dark ink pen.'
-  components:
-  - type: ItemToggle
-    soundActivate:
-      path: /Audio/Weapons/ebladeon.ogg
-      params:
-        volume: -6
-    soundDeactivate:
-      path: /Audio/Weapons/ebladeoff.ogg
-      params:
-        volume: -6
-  - type: ItemToggleMeleeWeapon
-    activatedSoundOnSwing:
-      path: /Audio/Weapons/eblademiss.ogg
-      params:
-        volume: -6
-        variation: 0.250
-    activatedDamage:
-        types:
-            Slash: 10
-            Heat: 10
-    deactivatedSecret: true
-  - type: ItemToggleActiveSound
-    activeSound:
-      path: /Audio/Weapons/ebladehum.ogg
-      params:
-        volume: -6
-  - type: ComponentToggler
-    components:
-    - type: Sharp
-    - type: DisarmMalus
-      malus: 0.4
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/e_dagger.rsi
-    layers:
-      - state: e_sword
-      - state: e_sword_blade
-        color: "#FFFFFF"
-        visible: false
-        shader: unshaded
-        map: [ "blade" ]
-  - type: MeleeWeapon
-    wideAnimationRotation: 145
-    attackRate: 1
-    hidden: true
-    damage:
-      types:
-        Blunt: 1
-  - type: Item
-    size: Tiny
-    sprite: Objects/Weapons/Melee/e_dagger.rsi
-  - type: UseDelay
-    delay: 1.0
-  - type: PointLight
-    enabled: false
-    radius: 1.5
-    energy: 1.5
-    color: white
-    netsync: false
-  - type: Appearance
-  - type: ToggleableLightVisuals
-    spriteLayer: blade
-    inhandVisuals:
-      left:
-      - state: inhand-left-blade
-        shader: unshaded
-      right:
-      - state: inhand-right-blade
-        shader: unshaded
-  - type: Tag
-    tags:
-    - Write
-  - type: DisarmMalus
-    malus: 0
-
-- type: entity
-  parent: BaseItem
-  id: EnergyDaggerBox
-  name: e-dagger box
-  suffix: E-Dagger
-  description: A small box containing an e-dagger. Packaging disintegrates when opened, leaving no evidence behind.
-  components:
-  - type: Item
-    size: Tiny
-  - type: Sprite
-    sprite: Objects/Storage/penbox.rsi
-    state: e_dagger
-  - type: SpawnItemsOnUse
-    items:
-    - id: EnergyDagger
-    sound:
-      path: /Audio/Effects/unwrap.ogg
-
-- type: entity
   name: energy dagger
-  parent: EnergySword # I don't just parent it to energy dagger because then it would be able to write on paper.
+  parent: EnergySword
   id: EnergyDaggerLoud
   description: A not as loud and dangerous dagger with a beam made of pure, concentrated plasma. This one is completely undisguised.
   components:
@@ -253,6 +155,61 @@
         shader: unshaded
   - type: DisarmMalus
     malus: 0
+
+- type: entity
+  name: pen
+  parent: EnergyDaggerLoud
+  id: EnergyDagger
+  suffix: E-Dagger
+  description: 'A dark ink pen.'
+  components:
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Weapons/ebladeon.ogg
+      params:
+        volume: -6
+    soundDeactivate:
+      path: /Audio/Weapons/ebladeoff.ogg
+      params:
+        volume: -6
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+      params:
+        volume: -6
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_dagger.rsi
+    layers:
+      - state: e_sword
+      - state: e_sword_blade
+        color: "#FFFFFF"
+        visible: false
+        shader: unshaded
+        map: [ "blade" ]
+  - type: Item
+    size: Tiny
+    sprite: Objects/Weapons/Melee/e_dagger.rsi
+  - type: Tag
+    tags:
+    - Write
+
+- type: entity
+  parent: BaseItem
+  id: EnergyDaggerBox
+  name: e-dagger box
+  suffix: E-Dagger
+  description: A small box containing an e-dagger. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Objects/Storage/penbox.rsi
+    state: e_dagger
+  - type: SpawnItemsOnUse
+    items:
+    - id: EnergyDaggerPen
+    sound:
+      path: /Audio/Effects/unwrap.ogg
 
 - type: entity
   name: energy cutlass
