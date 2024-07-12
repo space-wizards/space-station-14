@@ -51,7 +51,7 @@
       - Hardsuit
       - SuitEVA
     slots:
-    - outerCLothing
+    - outerClothing
 
 
 - type: entity
