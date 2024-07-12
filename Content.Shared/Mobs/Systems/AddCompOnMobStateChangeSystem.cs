@@ -3,7 +3,7 @@ using Content.Shared.Mobs.Components;
 namespace Content.Shared.Mobs.Systems;
 
 /// <summary>
-///     Adds components to entity on certain mobstate. Remove when it changes.
+/// Adds components to entity on certain mobstate. Remove when it changes.
 /// </summary>
 public sealed class AddCompOnMobStateChangeSystem : EntitySystem
 {
