@@ -9,6 +9,7 @@ using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -85,9 +86,15 @@ public sealed partial class ShuttleSystem
         _mapManager.DeleteMap(mapId);
     }
 
-    private bool TryDungeonSpawn(EntityUid targetGrid, EntityUid stationUid, MapId mapId, DungeonSpawnGroup group, out EntityUid spawned)
+    private bool TryDungeonSpawn(Entity<MapGridComponent?> targetGrid, EntityUid stationUid, MapId mapId, DungeonSpawnGroup group, out EntityUid spawned)
     {
         spawned = EntityUid.Invalid;
+
+        if (!_gridQuery.Resolve(targetGrid.Owner, ref targetGrid.Comp))
+        {
+            return false;
+        }
+
         var dungeonProtoId = _random.Pick(group.Protos);
 
         if (!_protoManager.TryIndex(dungeonProtoId, out var dungeonProto))
@@ -95,11 +102,13 @@ public sealed partial class ShuttleSystem
             return false;
         }
 
-        var spawnCoords = new EntityCoordinates(targetGrid, Vector2.Zero);
+        var targetPhysics = _physicsQuery.Comp(targetGrid);
+        var spawnCoords = new EntityCoordinates(targetGrid, targetPhysics.LocalCenter);
 
         if (group.MinimumDistance > 0f)
         {
-            spawnCoords = spawnCoords.Offset(_random.NextVector2(group.MinimumDistance, group.MaximumDistance));
+            var distancePadding = MathF.Max(targetGrid.Comp.LocalAABB.Width, targetGrid.Comp.LocalAABB.Height);
+            spawnCoords = spawnCoords.Offset(_random.NextVector2(distancePadding + group.MinimumDistance, distancePadding + group.MaximumDistance));
         }
 
         var spawnMapCoords = _transform.ToMapCoordinates(spawnCoords);
