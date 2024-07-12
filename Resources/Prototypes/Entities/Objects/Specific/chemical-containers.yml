@@ -32,6 +32,8 @@
       solution: beaker
     - type: SolutionTransfer
       canChangeTransferAmount: true
+      MinimumTransferAmount: 1
+      maxTransferAmount: 200
     - type: SolutionItemStatus
       solution: beaker
     - type: UserInterface
