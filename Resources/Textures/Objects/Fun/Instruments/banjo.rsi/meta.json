@@ -5,7 +5,7 @@
       "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/vgstation-coders/vgstation13 at 8d9c91e19cb52713c7f7f1804c2b6f7203f8d331",
+    "copyright": "https://github.com/vgstation-coders/vgstation13 at 8d9c91e19cb52713c7f7f1804c2b6f7203f8d331. i made the shitty back sprites in 2 minutes lol -archangel",
     "states": [
       {
         "name": "icon"
@@ -20,8 +20,7 @@
       },
       {
         "name": "equipped-SUITSTORAGE",
-        "directions": 4,
-        "copyright": "lol i made these shitty sprites in like 2 minutes -archangel"
+        "directions": 4
       },
       {
         "name": "equipped-BACKPACK",
