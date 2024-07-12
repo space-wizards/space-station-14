@@ -154,7 +154,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockSalvageEquipmentFilled
-  cost: 1768 # GreyStation
+  cost: 1660 # GreyStation
   category: cargoproduct-category-name-engineering
   group: market
 
