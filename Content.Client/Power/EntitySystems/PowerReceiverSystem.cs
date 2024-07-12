@@ -20,4 +20,9 @@ public sealed class PowerReceiverSystem : SharedPowerReceiverSystem
 
         component.Powered = state.Powered;
     }
+
+    public override bool IsPoweredShared(EntityUid uid)
+    {
+        return !TryComp<ApcPowerReceiverComponent>(uid, out var power) || power.Powered;
+    }
 }

@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Placeable;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
 
@@ -9,6 +10,8 @@ namespace Content.Shared.Xenoarchaeology.Equipment;
 
 public abstract class SharedArtifactAnalyzerSystem : EntitySystem
 {
+    [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -83,8 +86,14 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
     {
         analyzer = null;
 
+        if (!_powerReceiver.IsPoweredShared(ent))
+            return false;
+
         var analyzerUid = GetEntity(ent.Comp.AnalyzerEntity);
         if (!TryComp<ArtifactAnalyzerComponent>(analyzerUid, out var comp))
+            return false;
+
+        if (!_powerReceiver.IsPoweredShared(analyzerUid.Value))
             return false;
 
         analyzer = (analyzerUid.Value, comp);
