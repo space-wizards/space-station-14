@@ -3,6 +3,7 @@
   abstract: true
   id: MobSiliconBase
   components:
+  - type: Alerts
   - type: LagCompensation
   - type: Reactive
     groups:
@@ -58,7 +59,9 @@
     - Stutter
     - Electrocution
   - type: NameIdentifier
-    group: GenericNumber
+    group: Silicon
+  - type: Examiner
+  - type: ContentEye
   - type: Repairable
     doAfterDelay: 8
     fuelCost: 15
@@ -66,6 +69,7 @@
   - type: Tag
     tags:
     - DoorBumpOpener
+    - SiliconEmotes
   - type: MobState
     allowedStates:
       - Alive
@@ -103,8 +107,13 @@
     - Robotics
   - type: Speech
     speechVerb: Robotic
+    speechSounds: Borg
   - type: TypingIndicator
     proto: robot
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
+  - type: Emoting
   - type: ZombieImmune
   - type: StepTriggerImmune
   - type: NoSlip
@@ -388,6 +397,7 @@
     tags:
     - DoorBumpOpener
     - FootstepSound
+    - SiliconEmotes
   - type: ActiveRadio
     channels:
     - Binary

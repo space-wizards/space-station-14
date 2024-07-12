@@ -216,6 +216,7 @@
     - DoorBumpOpener
     - FootstepSound
     - CanPilot
+    - SiliconEmotes
   - type: Emoting
   - type: GuideHelp
     guides:
@@ -279,6 +280,7 @@
     tags:
     - NuclearOperative
     - SyndicateAgent
+    - SiliconEmotes
   - type: AccessReader
     access: [["SyndicateAgent"], ["NuclearOperative"]]
   - type: SiliconLawProvider
