@@ -136,7 +136,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
 
         if (transform.Anchored && TryComp<MapGridComponent>(transform.GridUid, out var grid))
         {
-            pos = grid.CoordinatesToTile(transform.Coordinates);
+            pos = _map.CoordinatesToTile(uid, grid, transform.Coordinates);
         }
         else
         {
