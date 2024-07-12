@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SpeltIncorrectyl
-  changes:
-  - message: Security Officers, Head of Security, and Warden can now choose to start
-      with a security webbing instead of a belt in their loadout menu.
-    type: Add
-  id: 6411
-  time: '2024-04-21T06:19:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27189
 - author: ElectroJr
   changes:
   - message: Fixed the nukie station not getting properly initialized.
@@ -3824,3 +3816,10 @@
   id: 6910
   time: '2024-07-12T11:38:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29917
+- author: jonathanargo
+  changes:
+  - message: Hard hat icon sprites are now centered correctly.
+    type: Fix
+  id: 6911
+  time: '2024-07-12T15:00:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29953
