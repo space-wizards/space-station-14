@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Whisper
-  changes:
-  - message: All mobs should now properly burn to ash.
-    type: Fix
-  id: 6408
-  time: '2024-04-20T14:44:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27158
 - author: IProduceWidgets
   changes:
   - message: New map Oasis.
@@ -3821,3 +3814,10 @@
   id: 6907
   time: '2024-07-12T09:19:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29883
+- author: Plykiya
+  changes:
+  - message: Dropping an item while in a container now places the item in the container.
+    type: Fix
+  id: 6908
+  time: '2024-07-12T09:24:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29900
