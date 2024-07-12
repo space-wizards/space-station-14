@@ -807,8 +807,8 @@ public abstract class SharedStorageSystem : EntitySystem
         _appearance.SetData(uid, StorageVisuals.Open, isOpen, appearance);
         _appearance.SetData(uid, SharedBagOpenVisuals.BagState, isOpen ? SharedBagState.Open : SharedBagState.Closed, appearance);
 
-        // set the StackVisuals.Hide property to true when the container is closed. This is done
-        // on containers that only show their contents when they are open (e.g. donut boxes)
+        // HideClosedStackVisuals true sets the StackVisuals.Hide to the open state of the storage.
+        // This is for containers that only show their contents when open. (e.g. donut boxes)
         if (storage.HideClosedStackVisuals)
             _appearance.SetData(uid, StackVisuals.Hide, !isOpen, appearance);
     }
