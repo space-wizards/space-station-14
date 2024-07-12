@@ -127,7 +127,7 @@
     slots: WITHOUT_POCKET
 
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseToggleClothing]
+  parent: [ClothingOuterBase, AllowSuitStorageClothing, BaseToggleClothing]
   id: ClothingOuterSuitSpaceNinja
   name: space ninja suit
   description: This black technologically advanced, cybernetically-enhanced suit provides many abilities like invisibility or teleportation.
@@ -136,6 +136,8 @@
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
+  - type: Item
+    size: Huge
   # hardsuit stuff
   - type: PressureProtection
     highPressureMultiplier: 0.6
