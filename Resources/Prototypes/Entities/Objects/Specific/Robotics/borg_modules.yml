@@ -506,7 +506,7 @@
   - type: ItemBorgModule
     items:
     - WeaponPistolEchis
-    - EnergyDagger
+    - EnergyDaggerLoud
 
 - type: entity
   id: BorgModuleOperative
