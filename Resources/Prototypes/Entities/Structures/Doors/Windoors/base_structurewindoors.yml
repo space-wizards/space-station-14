@@ -173,7 +173,6 @@
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: RGlass
   - type: Destructible
     thresholds:
