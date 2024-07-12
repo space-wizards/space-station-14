@@ -99,7 +99,7 @@ public sealed partial class ShuttleSystem
 
         if (group.MinimumDistance > 0f)
         {
-            spawnCoords = spawnCoords.Offset(_random.NextVector2(group.MinimumDistance, group.MinimumDistance * 1.5f));
+            spawnCoords = spawnCoords.Offset(_random.NextVector2(group.MinimumDistance, group.MaximumDistance));
         }
 
         var spawnMapCoords = _transform.ToMapCoordinates(spawnCoords);
