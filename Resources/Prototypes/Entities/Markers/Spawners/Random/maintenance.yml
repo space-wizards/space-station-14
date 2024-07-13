@@ -130,6 +130,7 @@
         - ClothingUniformJumpsuitLoungewear
         - ClothingHeadHatCowboyRed
         - Wristwatch
+        - CoinQuarter # GreyStation - Addition
       chance: 0.6
       offset: 0.0
 

@@ -30,6 +30,16 @@
     - HarmonicaInstrument
 
 - type: loadout
+  id: CoinQuarter
+  equipment: CoinQuarter
+
+- type: startingGear
+  id: CoinQuarter
+  storage:
+    back:
+    - CoinQuarter
+
+- type: loadout
   id: BalloonNT
   equipment: BalloonNT
 
