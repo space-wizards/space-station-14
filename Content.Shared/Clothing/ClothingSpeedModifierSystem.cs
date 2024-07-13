@@ -78,7 +78,7 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
         var msg = new FormattedMessage();
 
-        if (Math.Abs(walkModifierPercentage - sprintModifierPercentage) < 1f)
+        if (MathHelper.CloseTo(walkModifierPercentage, sprintModifierPercentage, 0.5f))
         {
             if (walkModifierPercentage < 0.0f)
                 msg.AddMarkupOrThrow(Loc.GetString("clothing-speed-increase-equal-examine", ("walkSpeed", (int) MathF.Abs(walkModifierPercentage)), ("runSpeed", (int) MathF.Abs(sprintModifierPercentage))));
