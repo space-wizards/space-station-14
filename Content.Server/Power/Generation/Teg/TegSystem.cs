@@ -113,7 +113,6 @@ public sealed class TegSystem : EntitySystem
         if (tegGroup is not { IsFullyBuilt: true })
             return;
 
-
         var circA = tegGroup.CirculatorA!.Owner;
         var circB = tegGroup.CirculatorB!.Owner;
 
