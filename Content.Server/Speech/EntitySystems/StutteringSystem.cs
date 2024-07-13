@@ -12,10 +12,6 @@ namespace Content.Server.Speech.EntitySystems
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        // Regex of characters to stutter.
-        private static readonly Regex Stutter = new(@"[b-df-hj-np-tv-wxyz]",
-            RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
         public override void Initialize()
         {
             SubscribeLocalEvent<StutteringAccentComponent, AccentGetEvent>(OnAccent);
@@ -37,15 +33,15 @@ namespace Content.Server.Speech.EntitySystems
         public string Accentuate(string message, StutteringAccentComponent component)
         {
             var length = message.Length;
-
             var finalMessage = new StringBuilder();
-
             string newLetter;
+
+            Regex stutter = new(Loc.GetString("stutter-speech-regex-accent"), RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
             for (var i = 0; i < length; i++)
             {
                 newLetter = message[i].ToString();
-                if (Stutter.IsMatch(newLetter) && _random.Prob(component.MatchRandomProb))
+                if (stutter.IsMatch(newLetter) && _random.Prob(component.MatchRandomProb))
                 {
                     if (_random.Prob(component.FourRandomProb))
                     {
