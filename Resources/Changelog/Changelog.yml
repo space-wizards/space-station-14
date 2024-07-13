@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: Xenoarchaeology Traversal Distorters have been rolled into the Artifact
-      Analyzers to make artifact gameplay a bit more controlled.
-    type: Tweak
-  - message: The T2 Abnormal Artifact Manipulation tech has been made cheaper to compensate
-      for losing an unlock.
-    type: Tweak
-  - message: The Xenoarchaeology guidebook entry has been rewritten to be more useful
-      and comprehensive for newbies.
-    type: Tweak
-  id: 6415
-  time: '2024-04-21T16:09:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26545
 - author: deltanedas
   changes:
   - message: Flaming mice no longer completely engulf people they touch.
@@ -3818,3 +3804,12 @@
   id: 6914
   time: '2024-07-13T06:09:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29550
+- author: TheShuEd
+  changes:
+  - message: Added diamonds ore!
+    type: Add
+  - message: Diamonds can now be sold at a bargain price.
+    type: Add
+  id: 6915
+  time: '2024-07-13T12:15:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25750
