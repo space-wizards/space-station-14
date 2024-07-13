@@ -12,6 +12,8 @@
     - state: flipping_heads
       visible: false
       map: [ "flipping" ]
+  - type: Item
+    size: Tiny
   - type: FlippableCoin
   - type: Appearance
   - type: GenericVisualizer
