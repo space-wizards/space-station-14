@@ -95,7 +95,8 @@ namespace Content.Shared.Storage.EntitySystems
             var list = new List<string>();
             foreach (var mapLayerData in itemMapper.MapLayers.Values)
             {
-                var count = containedLayers.Count(ent => _whitelistSystem.IsWhitelistPass(mapLayerData.Whitelist, ent));
+                var count = containedLayers.Count(ent => _whitelistSystem.IsWhitelistPassOrNull(mapLayerData.Whitelist,
+                    ent));
                 if (count >= mapLayerData.MinCount && count <= mapLayerData.MaxCount)
                 {
                     list.Add(mapLayerData.Layer);
