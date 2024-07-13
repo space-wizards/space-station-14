@@ -132,7 +132,6 @@
   parent: WeaponRevolverPython
   id: WeaponRevolverPythonAP # For the uplink.
   suffix: armor-piercing
-  description: A robust revolver favoured by Syndicate agents. Uses .45 magnum ammo.
   components:
   - type: RevolverAmmoProvider
     whitelist:
