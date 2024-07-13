@@ -61,19 +61,19 @@ public abstract partial class SharedMoverController
         Dirty(relayEntity, targetComp);
     }
 
-    private void OnRelayShutdown(EntityUid uid, RelayInputMoverComponent component, ComponentShutdown args)
+    private void OnRelayShutdown(Entity<RelayInputMoverComponent> entity, ComponentShutdown args)
     {
-        Physics.UpdateIsPredicted(uid);
-        Physics.UpdateIsPredicted(component.RelayEntity);
+        Physics.UpdateIsPredicted(entity.Owner);
+        Physics.UpdateIsPredicted(entity.Comp.RelayEntity);
 
-        if (TryComp<InputMoverComponent>(component.RelayEntity, out var inputMover))
-            SetMoveInput(uid, inputMover, MoveButtons.None);
+        if (TryComp<InputMoverComponent>(entity.Comp.RelayEntity, out var inputMover))
+            SetMoveInput((entity.Comp.RelayEntity, inputMover), MoveButtons.None);
 
         if (Timing.ApplyingState)
             return;
 
-        if (TryComp(component.RelayEntity, out MovementRelayTargetComponent? target) && target.LifeStage <= ComponentLifeStage.Running)
-            RemComp(component.RelayEntity, target);
+        if (TryComp(entity.Comp.RelayEntity, out MovementRelayTargetComponent? target) && target.LifeStage <= ComponentLifeStage.Running)
+            RemComp(entity.Comp.RelayEntity, target);
     }
 
     private void OnTargetRelayShutdown(EntityUid uid, MovementRelayTargetComponent component, ComponentShutdown args)
