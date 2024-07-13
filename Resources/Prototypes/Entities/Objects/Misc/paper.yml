@@ -554,6 +554,7 @@
           tags:
           - Write
   - type: CargoOrderConsole
+  - type: BankClient
   - type: ActivatableUI
     verbText: qm-clipboard-computer-verb-text
     key: enum.CargoConsoleUiKey.Orders
