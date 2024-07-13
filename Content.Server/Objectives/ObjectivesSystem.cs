@@ -12,6 +12,7 @@ using Robust.Shared.Random;
 using System.Linq;
 using System.Text;
 using Robust.Server.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives;
 
@@ -180,33 +181,32 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
         }
     }
 
-    public EntityUid? GetRandomObjective(EntityUid mindId, MindComponent mind, string objectiveGroupProto)
+    public EntityUid? GetRandomObjective(EntityUid mindId, MindComponent mind, ProtoId<WeightedRandomPrototype> objectiveGroupProto, float maxDifficulty)
     {
-        if (!_prototypeManager.TryIndex<WeightedRandomPrototype>(objectiveGroupProto, out var groups))
+        if (!_prototypeManager.TryIndex(objectiveGroupProto, out var groupsProto))
         {
             Log.Error($"Tried to get a random objective, but can't index WeightedRandomPrototype {objectiveGroupProto}");
             return null;
         }
 
-        // TODO replace whatever the fuck this is with a proper objective selection system
-        // yeah the old 'preventing infinite loops' thing wasn't super elegant either and it mislead people on what exactly it did
-        var tries = 0;
-        while (tries < 20)
-        {
-            var groupName = groups.Pick(_random);
+        // Make a copy of the weights so we don't trash the prototype by removing entries
+        var groups = groupsProto.Weights.ShallowClone();
 
+        while (_random.TryPickAndTake(groups, out var groupName))
+        {
             if (!_prototypeManager.TryIndex<WeightedRandomPrototype>(groupName, out var group))
             {
                 Log.Error($"Couldn't index objective group prototype {groupName}");
                 return null;
             }
 
-            var proto = group.Pick(_random);
-            var objective = TryCreateObjective(mindId, mind, proto);
-            if (objective != null)
-                return objective;
-
-            tries++;
+            var objectives = group.Weights.ShallowClone();
+            while (_random.TryPickAndTake(objectives, out var objectiveProto))
+            {
+                if (TryCreateObjective((mindId, mind), objectiveProto, out var objective)
+                    && Comp<ObjectiveComponent>(objective.Value).Difficulty <= maxDifficulty)
+                    return objective;
+            }
         }
 
         return null;

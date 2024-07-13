@@ -1,85 +1,4 @@
 ﻿Entries:
-- author: MilenVolf
-  changes:
-  - message: Most crates can now go through plastic flaps.
-    type: Fix
-  id: 6405
-  time: '2024-04-20T06:23:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27137
-- author: MilenVolf
-  changes:
-  - message: Electronics inside windoors now has proper accesses.
-    type: Fix
-  id: 6406
-  time: '2024-04-20T06:26:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27133
-- author: Bhijn and Myr
-  changes:
-  - message: An option to tie your viewport's scaling to your vertical screenspace
-      has been added, enabled by default! In laymen's terms, this means that manual
-      configuration is no longer necessary to avoid letterboxing on aspect ratios
-      tighter than 16:9, as the viewport will now default to cutting off any excess
-      horizontal width instead of letterboxing vertically when the screen is too tight.
-    type: Add
-  id: 6407
-  time: '2024-04-20T06:46:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27061
-- author: Whisper
-  changes:
-  - message: All mobs should now properly burn to ash.
-    type: Fix
-  id: 6408
-  time: '2024-04-20T14:44:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27158
-- author: IProduceWidgets
-  changes:
-  - message: New map Oasis.
-    type: Add
-  id: 6409
-  time: '2024-04-21T05:59:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25736
-- author: KittenColony
-  changes:
-  - message: Added a new lizard snout, featuring a split muzzle and snoot that can
-      be coloured independently
-    type: Add
-  id: 6410
-  time: '2024-04-21T06:18:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27143
-- author: SpeltIncorrectyl
-  changes:
-  - message: Security Officers, Head of Security, and Warden can now choose to start
-      with a security webbing instead of a belt in their loadout menu.
-    type: Add
-  id: 6411
-  time: '2024-04-21T06:19:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27189
-- author: ElectroJr
-  changes:
-  - message: Fixed the nukie station not getting properly initialized.
-    type: Fix
-  id: 6412
-  time: '2024-04-21T06:52:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27201
-- author: Blackern5000
-  changes:
-  - message: '"Experienced" passengers can now wear a rainbow jumpsuit using loadouts.'
-    type: Add
-  id: 6413
-  time: '2024-04-21T11:53:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27211
-- author: PJB3005
-  changes:
-  - message: The item status menu has been moved to the side of the hands. There is
-      now one for each hand.
-    type: Add
-  - message: The item status menu fits with the rest of the HUD theme now.
-    type: Add
-  - message: Improved, fixed and otherwise added a bunch of item status menus.
-    type: Add
-  id: 6414
-  time: '2024-04-21T13:16:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/22986
 - author: FairlySadPanda
   changes:
   - message: Xenoarchaeology Traversal Distorters have been rolled into the Artifact
@@ -3824,3 +3743,78 @@
   id: 6904
   time: '2024-07-11T14:03:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29909
+- author: jonathanargo
+  changes:
+  - message: Muskets are now wieldable.
+    type: Tweak
+  id: 6905
+  time: '2024-07-12T09:16:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29910
+- author: themias
+  changes:
+  - message: Notice boards can now be built on walls
+    type: Fix
+  id: 6906
+  time: '2024-07-12T09:18:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29851
+- author: slarticodefast
+  changes:
+  - message: Stun batons, stun prods and banana cream pies now fly like other throwing
+      weapons when thrown.
+    type: Fix
+  id: 6907
+  time: '2024-07-12T09:19:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29883
+- author: Plykiya
+  changes:
+  - message: Dropping an item while in a container now places the item in the container.
+    type: Fix
+  id: 6908
+  time: '2024-07-12T09:24:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29900
+- author: coffeeware, slarticodefast
+  changes:
+  - message: Fixed items thrown very fast not being in the air. In particular this
+      fixes the pneumatic cannon.
+    type: Fix
+  - message: Buffed base hand throwing speed by 10% to be more similar to before the
+      recent throwing changes.
+    type: Tweak
+  id: 6909
+  time: '2024-07-12T10:32:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29935
+- author: themias
+  changes:
+  - message: Timers can now be deconstructed
+    type: Fix
+  id: 6910
+  time: '2024-07-12T11:38:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29917
+- author: jonathanargo
+  changes:
+  - message: Hard hat icon sprites are now centered correctly.
+    type: Fix
+  id: 6911
+  time: '2024-07-12T15:00:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29953
+- author: lzk228
+  changes:
+  - message: Secure windoors now use reinforced glass damage modifier.
+    type: Fix
+  id: 6912
+  time: '2024-07-13T04:03:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29941
+- author: Tayrtahn
+  changes:
+  - message: Antag objective total difficulty is now properly capped.
+    type: Fix
+  id: 6913
+  time: '2024-07-13T04:14:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29830
+- author: EmoGarbage404
+  changes:
+  - message: Added wristwatches for telling time.
+    type: Add
+  id: 6914
+  time: '2024-07-13T06:09:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29550
