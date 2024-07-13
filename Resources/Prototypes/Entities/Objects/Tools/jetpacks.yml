@@ -22,7 +22,7 @@
   parent: GasTankBase
   abstract: true
   id: BaseJetpack
-  name: Jetpack
+  name: jetpack
   description: It's a jetpack.
   components:
     - type: InputMover

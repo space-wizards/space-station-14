@@ -129,7 +129,6 @@
         volume: 2.25
 
 - type: entity
-  name: Python
   parent: WeaponRevolverPython
   id: WeaponRevolverPythonAP # For the uplink.
   suffix: armor-piercing
