@@ -12,15 +12,13 @@ namespace Content.Client.Access.UI;
 [GenerateTypedNameReferences]
 public sealed partial class AccessLevelControl : GridContainer
 {
-    private readonly ISawmill _sawmill;
+    private readonly ISawmill _sawmill = Logger.GetSawmill("accesslevelcontrol");
 
     public readonly Dictionary<ProtoId<AccessLevelPrototype>, Button> ButtonsList = new();
 
     public AccessLevelControl()
     {
         RobustXamlLoader.Load(this);
-
-        _sawmill = Logger.GetSawmill("accesslevelcontrol");
     }
 
     public void Populate(List<ProtoId<AccessLevelPrototype>> accessLevels, IPrototypeManager prototypeManager)
