@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseBarSign
   parent: BaseStructure
   name: bar sign
@@ -181,7 +181,7 @@
   parent: BaseBarSign
   id: BarSignTheLightbulb
   name: The Lightbulb
-  description: A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms.
+  description: A cafe popular among nians and moffs. Once shut down for a week after the bartender used nianballs to protect her spare uniforms.
   components:
   - type: BarSign
     current: TheLightbulb

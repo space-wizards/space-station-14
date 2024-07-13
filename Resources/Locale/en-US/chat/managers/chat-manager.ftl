@@ -78,7 +78,7 @@ chat-speech-verb-insect-1 = chitters
 chat-speech-verb-insect-2 = chirps
 chat-speech-verb-insect-3 = clicks
 
-chat-speech-verb-name-moth = Moth
+chat-speech-verb-name-moth = Nian
 chat-speech-verb-winged-1 = flutters
 chat-speech-verb-winged-2 = flaps
 chat-speech-verb-winged-3 = buzzes
@@ -98,7 +98,7 @@ chat-speech-verb-robotic-1 = states
 chat-speech-verb-robotic-2 = beeps
 chat-speech-verb-robotic-3 = boops
 
-chat-speech-verb-name-reptilian = Reptilian
+chat-speech-verb-name-reptilian = Unathi
 chat-speech-verb-reptilian-1 = hisses
 chat-speech-verb-reptilian-2 = snorts
 chat-speech-verb-reptilian-3 = huffs

@@ -138,259 +138,259 @@ marking-MothWingsUnderwing = Wings (Underwing)
 
 
 marking-MothChestCharred-charred_chest = Chest
-marking-MothChestCharred = Moth Chest (Charred)
+marking-MothChestCharred = Nian Chest (Charred)
 
 marking-MothHeadCharred-charred_head = Head
-marking-MothHeadCharred = Moth Head (Charred)
+marking-MothHeadCharred = Nian Head (Charred)
 
 marking-MothLLegCharred-charred_l_leg =  Left Leg
-marking-MothLLegCharred = Moth Left Leg (Charred)
+marking-MothLLegCharred = Nian Left Leg (Charred)
 
 marking-MothRLegCharred-charred_r_leg = Right Leg
-marking-MothRLegCharred = Moth Right Leg (Charred)
+marking-MothRLegCharred = Nian Right Leg (Charred)
 
 marking-MothLArmCharred-charred_l_arm = Left Arm
-marking-MothLArmCharred = Moth Left Arm (Charred)
+marking-MothLArmCharred = Nian Left Arm (Charred)
 
 marking-MothRArmCharred-charred_r_arm = Right Arm
-marking-MothRArmCharred = Moth Right Arm (Charred)
+marking-MothRArmCharred = Nian Right Arm (Charred)
 
 
 
 marking-MothChestDeathhead-deathhead_chest = Chest
-marking-MothChestDeathhead = Moth Chest (Death's-Head)
+marking-MothChestDeathhead = Nian Chest (Death's-Head)
 
 marking-MothHeadDeathhead-deathhead_head = Head
-marking-MothHeadDeathhead = Moth Head (Death's-Head)
+marking-MothHeadDeathhead = Nian Head (Death's-Head)
 
 marking-MothLLegDeathhead-deathhead_l_leg = Left Leg
-marking-MothLLegDeathhead = Moth Left Leg (Death's-Head)
+marking-MothLLegDeathhead = Nian Left Leg (Death's-Head)
 
 marking-MothRLegDeathhead-deathhead_r_leg = Right Leg
-marking-MothRLegDeathhead = Moth Right Leg (Death's-Head)
+marking-MothRLegDeathhead = Nian Right Leg (Death's-Head)
 
 marking-MothLArmDeathhead-deathhead_l_arm = Left Arm
-marking-MothLArmDeathhead = Moth Left Arm (Death's-Head)
+marking-MothLArmDeathhead = Nian Left Arm (Death's-Head)
 
 marking-MothRArmDeathhead-deathhead_r_arm = Right Arm
-marking-MothRArmDeathhead = Moth Right Arm (Death's-Head)
+marking-MothRArmDeathhead = Nian Right Arm (Death's-Head)
 
 
 
 marking-MothChestFan-fan_chest = Chest
-marking-MothChestFan = Moth Chest (Fan)
+marking-MothChestFan = Nian Chest (Fan)
 
 marking-MothHeadFan-fan_head = Head
-marking-MothHeadFan = Moth Head (Fan)
+marking-MothHeadFan = Nian Head (Fan)
 
 marking-MothLLegFan-fan_l_leg = Left Leg
-marking-MothLLegFan = Moth Left Leg (Fan)
+marking-MothLLegFan = Nian Left Leg (Fan)
 
 marking-MothRLegFan-fan_r_leg = Right Leg
-marking-MothRLegFan = Moth Right Leg (Fan)
+marking-MothRLegFan = Nian Right Leg (Fan)
 
 marking-MothLArmFan-fan_l_arm = Left Arm
-marking-MothLArmFan = Moth Left Arm (Fan)
+marking-MothLArmFan = Nian Left Arm (Fan)
 
 marking-MothRArmFan-fan_r_arm = Right Arm
-marking-MothRArmFan = Moth Right Arm (Fan)
+marking-MothRArmFan = Nian Right Arm (Fan)
 
 
 
 marking-MothChestFirewatch-firewatch_chest = Chest
-marking-MothChestFirewatch = Moth Chest (Firewatch)
+marking-MothChestFirewatch = Nian Chest (Firewatch)
 
 marking-MothHeadFirewatch-firewatch_head = Head
-marking-MothHeadFirewatch = Moth Head (Firewatch)
+marking-MothHeadFirewatch = Nian Head (Firewatch)
 
 marking-MothLLegFirewatch-firewatch_l_leg = Left Leg
-marking-MothLLegFirewatch = Moth Left Leg (Firewatch)
+marking-MothLLegFirewatch = Nian Left Leg (Firewatch)
 
 marking-MothRLegFirewatch-firewatch_r_leg = Right Leg
-marking-MothRLegFirewatch = Moth Right Leg (Firewatch)
+marking-MothRLegFirewatch = Nian Right Leg (Firewatch)
 
 marking-MothLArmFirewatch-firewatch_l_arm = Left Arm
-marking-MothLArmFirewatch = Moth Left Arm (Firewatch)
+marking-MothLArmFirewatch = Nian Left Arm (Firewatch)
 
 marking-MothRArmFirewatch-firewatch_r_arm = Right Arm
-marking-MothRArmFirewatch = Moth Right Arm (Firewatch)
+marking-MothRArmFirewatch = Nian Right Arm (Firewatch)
 
 
 
 marking-MothChestGothic-gothic_chest = Chest
-marking-MothChestGothic = Moth Chest (Gothic)
+marking-MothChestGothic = Nian Chest (Gothic)
 
-marking-MothHeadGothic-gothic_head = Head 
-marking-MothHeadGothic = Moth Head (Gothic)
+marking-MothHeadGothic-gothic_head = Head
+marking-MothHeadGothic = Nian Head (Gothic)
 
 marking-MothLLegGothic-gothic_l_leg = Left Leg
-marking-MothLLegGothic = Moth Left Leg (Gothic)
+marking-MothLLegGothic = Nian Left Leg (Gothic)
 
 marking-MothRLegGothic-gothic_r_leg = Right Leg
-marking-MothRLegGothic = Moth Right Leg (Gothic)
+marking-MothRLegGothic = Nian Right Leg (Gothic)
 
 marking-MothLArmGothic-gothic_l_arm = Left Arm
-marking-MothLArmGothic = Moth Left Arm (Gothic)
+marking-MothLArmGothic = Nian Left Arm (Gothic)
 
 marking-MothRArmGothic-gothic_r_arm = Right Arm
-marking-MothRArmGothic = Moth Right Arm (Gothic)
+marking-MothRArmGothic = Nian Right Arm (Gothic)
 
 
 
 marking-MothChestJungle-jungle_chest = Chest
-marking-MothChestJungle = Moth Chest (Jungle)
+marking-MothChestJungle = Nian Chest (Jungle)
 
 marking-MothHeadJungle-jungle_head = Head
-marking-MothHeadJungle = Moth Head (Jungle)
+marking-MothHeadJungle = Nian Head (Jungle)
 
 marking-MothLLegJungle-jungle_l_leg = Left Leg
-marking-MothLLegJungle = Moth Left Leg (Jungle)
+marking-MothLLegJungle = Nian Left Leg (Jungle)
 
 marking-MothRLegJungle-jungle_r_leg = Right Leg
-marking-MothRLegJungle = Moth Right Leg (Jungle)
+marking-MothRLegJungle = Nian Right Leg (Jungle)
 
 marking-MothLArmJungle-jungle_l_arm = Left Arm
-marking-MothLArmJungle = Moth Left Arm (Jungle)
+marking-MothLArmJungle = Nian Left Arm (Jungle)
 
 marking-MothRArmJungle-jungle_r_arm = Right Arm
-marking-MothRArmJungle = Moth Right Arm (Jungle)
+marking-MothRArmJungle = Nian Right Arm (Jungle)
 
 
 
 marking-MothChestMoonfly-moonfly_chest = Chest
-marking-MothChestMoonfly = Moth Chest (Moonfly)
+marking-MothChestMoonfly = Nian Chest (Moonfly)
 
 marking-MothHeadMoonfly-moonfly_head = Head
-marking-MothHeadMoonfly = Moth Head (Moonfly)
+marking-MothHeadMoonfly = Nian Head (Moonfly)
 
 marking-MothLLegMoonfly-moonfly_l_leg = Left Leg
-marking-MothLLegMoonfly = Moth Left Leg (Moonfly)
+marking-MothLLegMoonfly = Nian Left Leg (Moonfly)
 
 marking-MothRLegMoonfly-moonfly_r_leg = Right Leg
-marking-MothRLegMoonfly = Moth Right Leg (Moonfly)
+marking-MothRLegMoonfly = Nian Right Leg (Moonfly)
 
 marking-MothLArmMoonfly-moonfly_l_arm = Left Arm
-marking-MothLArmMoonfly = Moth Left Arm (Moonfly)
+marking-MothLArmMoonfly = Nian Left Arm (Moonfly)
 
 marking-MothRArmMoonfly-moonfly_r_arm = Right Arm
-marking-MothRArmMoonfly = Moth Right Arm (Moonfly)
+marking-MothRArmMoonfly = Nian Right Arm (Moonfly)
 
 
 
 marking-MothChestOakworm-oakworm_chest = Chest
-marking-MothChestOakworm = Moth Chest (Oak Worm)
+marking-MothChestOakworm = Nian Chest (Oak Worm)
 
 marking-MothHeadOakworm-oakworm_head = Head
-marking-MothHeadOakworm = Moth Head (Oak Worm)
+marking-MothHeadOakworm = Nian Head (Oak Worm)
 
 marking-MothLLegOakworm-oakworm_l_leg = Left Leg
-marking-MothLLegOakworm = Moth Left Leg (Oak Worm)
+marking-MothLLegOakworm = Nian Left Leg (Oak Worm)
 
 marking-MothRLegOakworm-oakworm_r_leg = Right Leg
-marking-MothRLegOakworm = Moth Right Leg (Oak Worm)
+marking-MothRLegOakworm = Nian Right Leg (Oak Worm)
 
 marking-MothLArmOakworm-oakworm_l_arm = Left Arm
-marking-MothLArmOakworm = Moth Left Arm (Oak Worm)
+marking-MothLArmOakworm = Nian Left Arm (Oak Worm)
 
 marking-MothRArmOakworm-oakworm_r_arm = Right Arm
-marking-MothRArmOakworm = Moth Right Arm (Oak Worm)
+marking-MothRArmOakworm = Nian Right Arm (Oak Worm)
 
 
 
 marking-MothChestPointy-pointy_chest = Chest
-marking-MothChestPointy = Moth Chest (Pointy)
+marking-MothChestPointy = Nian Chest (Pointy)
 
 marking-MothHeadPointy-pointy_head = Head
-marking-MothHeadPointy = Moth Head (Pointy)
+marking-MothHeadPointy = Nian Head (Pointy)
 
 marking-MothLLegPointy-pointy_l_leg = Left Leg
-marking-MothLLegPointy = Moth Left Leg (Pointy)
+marking-MothLLegPointy = Nian Left Leg (Pointy)
 
 marking-MothRLegPointy-pointy_r_leg = Right Leg
-marking-MothRLegPointy = Moth Right Leg (Pointy)
+marking-MothRLegPointy = Nian Right Leg (Pointy)
 
 marking-MothLArmPointy-pointy_l_arm = Left Arm
-marking-MothLArmPointy = Moth Left Arm (Pointy)
+marking-MothLArmPointy = Nian Left Arm (Pointy)
 
 marking-MothRArmPointy-pointy_r_arm = Right Arm
-marking-MothRArmPointy = Moth Right Arm (Pointy)
+marking-MothRArmPointy = Nian Right Arm (Pointy)
 
 
 
 marking-MothChestRagged-ragged_chest = Chest
-marking-MothChestRagged = Moth Chest (Ragged)
+marking-MothChestRagged = Nian Chest (Ragged)
 
 marking-MothHeadRagged-ragged_head = Head
-marking-MothHeadRagged = Moth Head (Ragged)
+marking-MothHeadRagged = Nian Head (Ragged)
 
 marking-MothLLegRagged-ragged_l_leg = Left Leg
-marking-MothLLegRagged = Moth Left Leg (Ragged)
+marking-MothLLegRagged = Nian Left Leg (Ragged)
 
 marking-MothRLegRagged-ragged_r_leg = Right Leg
-marking-MothRLegRagged = Moth Right Leg (Ragged)
+marking-MothRLegRagged = Nian Right Leg (Ragged)
 
 marking-MothLArmRagged-ragged_l_arm = Left Arm
-marking-MothLArmRagged = Moth Left Arm (Ragged)
+marking-MothLArmRagged = Nian Left Arm (Ragged)
 
 marking-MothRArmRagged-ragged_r_arm = Right Arm
-marking-MothRArmRagged = Moth Right Arm (Ragged)
+marking-MothRArmRagged = Nian Right Arm (Ragged)
 
 
 
 marking-MothChestRoyal-royal_chest = Chest
-marking-MothChestRoyal = Moth Chest (Royal)
+marking-MothChestRoyal = Nian Chest (Royal)
 
 marking-MothHeadRoyal-royal_head = Head
-marking-MothHeadRoyal = Moth Head (Royal)
+marking-MothHeadRoyal = Nian Head (Royal)
 
 marking-MothLLegRoyal-royal_l_leg = Left Leg
-marking-MothLLegRoyal = Moth Left Leg (Royal)
+marking-MothLLegRoyal = Nian Left Leg (Royal)
 
 marking-MothRLegRoyal-royal_r_leg = Right Leg
-marking-MothRLegRoyal = Moth Right Leg (Royal)
+marking-MothRLegRoyal = Nian Right Leg (Royal)
 
 marking-MothLArmRoyal-royal_l_arm = Left Arm
-marking-MothLArmRoyal = Moth Left Arm (Royal)
+marking-MothLArmRoyal = Nian Left Arm (Royal)
 
 marking-MothRArmRoyal-royal_r_arm = Right Arm
-marking-MothRArmRoyal = Moth Right Arm (Royal)
+marking-MothRArmRoyal = Nian Right Arm (Royal)
 
 
 
 marking-MothChestWhitefly-whitefly_chest = Chest
-marking-MothChestWhitefly = Moth Chest (White Fly)
+marking-MothChestWhitefly = Nian Chest (White Fly)
 
 marking-MothHeadWhitefly-whitefly_head = Head
-marking-MothHeadWhitefly = Moth Head (White Fly)
+marking-MothHeadWhitefly = Nian Head (White Fly)
 
 marking-MothLLegWhitefly-whitefly_l_leg = Left Leg
-marking-MothLLegWhitefly = Moth Left Leg (White Fly)
+marking-MothLLegWhitefly = Nian Left Leg (White Fly)
 
 marking-MothRLegWhitefly-whitefly_r_leg = Right Leg
-marking-MothRLegWhitefly = Moth Right Leg (White Fly)
+marking-MothRLegWhitefly = Nian Right Leg (White Fly)
 
 marking-MothLArmWhitefly-whitefly_l_arm = Left Arm
-marking-MothLArmWhitefly = Moth Left Arm (White Fly)
+marking-MothLArmWhitefly = Nian Left Arm (White Fly)
 
 marking-MothRArmWhitefly-whitefly_r_arm = Right Arm
-marking-MothRArmWhitefly = Moth Right Arm (White Fly)
+marking-MothRArmWhitefly = Nian Right Arm (White Fly)
 
 
 
 marking-MothChestWitchwing-witchwing_chest = Chest
-marking-MothChestWitchwing = Moth Chest (Witch Wing)
+marking-MothChestWitchwing = Nian Chest (Witch Wing)
 
 marking-MothHeadWitchwing-witchwing_head = Head
-marking-MothHeadWitchwing = Moth Head (Witch Wing)
+marking-MothHeadWitchwing = Nian Head (Witch Wing)
 
 marking-MothLLegWitchwing-witchwing_l_leg = Left Leg
-marking-MothLLegWitchwing = Moth Left Leg (Witch Wing)
+marking-MothLLegWitchwing = Nian Left Leg (Witch Wing)
 
 marking-MothRLegWitchwing-witchwing_r_leg = Right Leg
-marking-MothRLegWitchwing = Moth Right Leg (Witch Wing)
+marking-MothRLegWitchwing = Nian Right Leg (Witch Wing)
 
 marking-MothLArmWitchwing-witchwing_l_arm = Left Arm
-marking-MothLArmWitchwing = Moth Left Arm (Witch Wing)
+marking-MothLArmWitchwing = Nian Left Arm (Witch Wing)
 
 marking-MothRArmWitchwing-witchwing_r_arm = Right Arm
-marking-MothRArmWitchwing = Moth Right Arm (Witch Wing)
+marking-MothRArmWitchwing = Nian Right Arm (Witch Wing)

@@ -3,7 +3,7 @@
 - type: entity
   id: PartReptilian
   parent: [BaseItem, BasePart]
-  name: "reptilian body part"
+  name: "unathi body part"
   abstract: true
   components:
   - type: Extractable
@@ -16,7 +16,7 @@
 
 - type: entity
   id: TorsoReptilian
-  name: "reptilian torso"
+  name: "unathi torso"
   parent: [PartReptilian, BaseTorso]
   components:
   - type: Sprite
@@ -32,7 +32,7 @@
 
 - type: entity
   id: HeadReptilian
-  name: "reptilian head"
+  name: "unathi head"
   parent: [PartReptilian, BaseHead]
   components:
   - type: Sprite
@@ -48,7 +48,7 @@
 
 - type: entity
   id: LeftArmReptilian
-  name: "left reptilian arm"
+  name: "left unathi arm"
   parent: [PartReptilian, BaseLeftArm]
   components:
   - type: Sprite
@@ -57,7 +57,7 @@
 
 - type: entity
   id: RightArmReptilian
-  name: "right reptilian arm"
+  name: "right unathi arm"
   parent: [PartReptilian, BaseRightArm]
   components:
   - type: Sprite
@@ -66,7 +66,7 @@
 
 - type: entity
   id: LeftHandReptilian
-  name: "left reptilian hand"
+  name: "left unathi hand"
   parent: [PartReptilian, BaseLeftHand]
   components:
   - type: Sprite
@@ -75,7 +75,7 @@
 
 - type: entity
   id: RightHandReptilian
-  name: "right reptilian hand"
+  name: "right unathi hand"
   parent: [PartReptilian, BaseRightHand]
   components:
   - type: Sprite
@@ -84,7 +84,7 @@
 
 - type: entity
   id: LeftLegReptilian
-  name: "left reptilian leg"
+  name: "left unathi leg"
   parent: [PartReptilian, BaseLeftLeg]
   components:
   - type: Sprite
@@ -93,7 +93,7 @@
 
 - type: entity
   id: RightLegReptilian
-  name: "right reptilian leg"
+  name: "right unathi leg"
   parent: [PartReptilian, BaseRightLeg]
   components:
   - type: Sprite
@@ -102,7 +102,7 @@
 
 - type: entity
   id: LeftFootReptilian
-  name: "left reptilian foot"
+  name: "left unathi foot"
   parent: [PartReptilian, BaseLeftFoot]
   components:
   - type: Sprite
@@ -111,7 +111,7 @@
 
 - type: entity
   id: RightFootReptilian
-  name: "right reptilian foot"
+  name: "right unathi foot"
   parent: [PartReptilian, BaseRightFoot]
   components:
   - type: Sprite

@@ -7,5 +7,5 @@ metabolizer-type-vox = Vox
 metabolizer-type-rat = Rat
 metabolizer-type-plant = Plant
 metabolizer-type-dwarf = Dwarf
-metabolizer-type-moth = Moth
+metabolizer-type-moth = Nian
 metabolizer-type-arachnid = Arachnid

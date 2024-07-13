@@ -78,7 +78,7 @@ barsign-prototype-description-wiggle-room = MoMMIs got moves.
 
 ## The Lightbulb
 barsign-prototype-name-the-lightbulb = The Lightbulb
-barsign-prototype-description-the-lightbulb = A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms.
+barsign-prototype-description-the-lightbulb = A cafe popular among nians and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms.
 
 ## The Loose Goose
 barsign-prototype-name-goose = The Loose Goose

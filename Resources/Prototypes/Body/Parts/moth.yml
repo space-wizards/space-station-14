@@ -3,7 +3,7 @@
 - type: entity
   id: PartMoth
   parent: [BaseItem, BasePart]
-  name: "moth body part"
+  name: "nian body part"
   abstract: true
   components:
   - type: Extractable
@@ -16,7 +16,7 @@
 
 - type: entity
   id: TorsoMoth
-  name: "moth torso"
+  name: "nian torso"
   parent: [PartMoth, BaseTorso]
   components:
   - type: Sprite
@@ -33,7 +33,7 @@
 
 - type: entity
   id: HeadMoth
-  name: "moth head"
+  name: "nian head"
   parent: [PartMoth, BaseHead]
   components:
   - type: Sprite
@@ -49,7 +49,7 @@
 
 - type: entity
   id: LeftArmMoth
-  name: "left moth arm"
+  name: "left nian arm"
   parent: [PartMoth, BaseLeftArm]
   components:
   - type: Sprite
@@ -58,7 +58,7 @@
 
 - type: entity
   id: RightArmMoth
-  name: "right moth arm"
+  name: "right nian arm"
   parent: [PartMoth, BaseRightArm]
   components:
   - type: Sprite
@@ -67,7 +67,7 @@
 
 - type: entity
   id: LeftHandMoth
-  name: "left moth hand"
+  name: "left nian hand"
   parent: [PartMoth, BaseLeftHand]
   components:
   - type: Sprite
@@ -76,7 +76,7 @@
 
 - type: entity
   id: RightHandMoth
-  name: "right moth hand"
+  name: "right nian hand"
   parent: [PartMoth, BaseRightHand]
   components:
   - type: Sprite
@@ -85,7 +85,7 @@
 
 - type: entity
   id: LeftLegMoth
-  name: "left moth leg"
+  name: "left nian leg"
   parent: [PartMoth, BaseLeftLeg]
   components:
   - type: Sprite
@@ -94,7 +94,7 @@
 
 - type: entity
   id: RightLegMoth
-  name: "right moth leg"
+  name: "right nian leg"
   parent: [PartMoth, BaseRightLeg]
   components:
   - type: Sprite
@@ -103,7 +103,7 @@
 
 - type: entity
   id: LeftFootMoth
-  name: "left moth foot"
+  name: "left nian foot"
   parent: [PartMoth, BaseLeftFoot]
   components:
   - type: Sprite
@@ -112,7 +112,7 @@
 
 - type: entity
   id: RightFootMoth
-  name: "right moth foot"
+  name: "right nian foot"
   parent: [PartMoth, BaseRightFoot]
   components:
   - type: Sprite
