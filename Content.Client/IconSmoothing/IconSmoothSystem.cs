@@ -45,10 +45,15 @@ public sealed partial class IconSmoothSystem : EntitySystem
     private void OnStartup(EntityUid uid, IconSmoothComponent component, ComponentStartup args)
     {
         var xform = Transform(uid);
+
+        var gridEnt = xform.ParentUid;
+        if (xform.GridUid is not null)
+            gridEnt = xform.GridUid.Value;
+
         if (xform.Anchored)
         {
-            component.LastPosition = TryComp<MapGridComponent>(xform.GridUid, out var grid)
-                ? (xform.GridUid.Value, _map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates))
+            component.LastPosition = TryComp<MapGridComponent>(gridEnt, out var grid)
+                ? (gridEnt, _map.TileIndicesFor(gridEnt, grid, xform.Coordinates))
                 : (null, new Vector2i(0, 0));
 
             DirtyNeighbours(uid, component);
@@ -215,7 +220,10 @@ public sealed partial class IconSmoothSystem : EntitySystem
 
                 if (TryComp(xform.GridUid, out grid))
                 {
-                    var gridEnt = xform.GridUid.Value;
+                    var gridEnt = xform.ParentUid;
+                    if (xform.GridUid is not null)
+                        gridEnt = xform.GridUid.Value;
+
                     var pos = _map.TileIndicesFor(gridEnt, grid, xform.Coordinates);
 
                     if (MatchingEntity(smooth, _map.GetAnchoredEntitiesEnumerator(gridEnt, grid, pos.Offset(Direction.North)), smoothQuery))
@@ -277,7 +285,7 @@ public sealed partial class IconSmoothSystem : EntitySystem
         TransformComponent xform,
         EntityQuery<IconSmoothComponent> smoothQuery)
     {
-        if (grid == null || xform.GridUid == null )
+        if (grid == null)
         {
             sprite.Comp.LayerSetState(0, $"{smooth.StateBase}0");
             return;
@@ -290,7 +298,9 @@ public sealed partial class IconSmoothSystem : EntitySystem
             new(0, -1),
         };
 
-        var gridEnt = xform.GridUid.Value;
+        var gridEnt = xform.ParentUid;
+        if (xform.GridUid is not null)
+            gridEnt = xform.GridUid.Value;
         var pos = _map.TileIndicesFor(gridEnt, grid, xform.Coordinates);
         var rotation = xform.LocalRotation;
         var matching = true;
@@ -320,13 +330,16 @@ public sealed partial class IconSmoothSystem : EntitySystem
     {
         var dirs = CardinalConnectDirs.None;
 
-        if (grid == null || xform.GridUid == null)
+        if (grid == null)
         {
             sprite.Comp.LayerSetState(0, $"{smooth.StateBase}{(int) dirs}");
             return;
         }
 
-        var gridEnt = xform.GridUid.Value;
+        var gridEnt = xform.ParentUid;
+        if (xform.GridUid is not null)
+            gridEnt = xform.GridUid.Value;
+
         var pos = _map.TileIndicesFor(gridEnt, grid, xform.Coordinates);
 
         if (MatchingEntity(smooth, _map.GetAnchoredEntitiesEnumerator(gridEnt, grid, pos.Offset(Direction.North)), smoothQuery))
