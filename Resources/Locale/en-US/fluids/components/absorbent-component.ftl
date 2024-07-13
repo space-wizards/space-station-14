@@ -4,5 +4,7 @@ mopping-system-puddle-space = { CAPITALIZE(THE($used)) } is full of water
 mopping-system-puddle-evaporate = {  CAPITALIZE(THE($target)) } is evaporating
 mopping-system-no-water = { CAPITALIZE(THE($used)) } has no water!
 
+mopping-system-dump = You dump {THE($used)} in {THE($target)}!
+
 mopping-system-full = { CAPITALIZE(THE($used)) } is full!
 mopping-system-empty = { CAPITALIZE(THE($used)) } is empty!
