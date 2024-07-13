@@ -27,7 +27,7 @@ namespace Content.Client.MainMenu
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
 
-        private readonly ISawmill _sawmill = _logManager.GetSawmill("mainmenu");
+        private ISawmill _sawmill = default!;
 
         private MainMenuControl _mainMenuControl = default!;
         private bool _isConnecting;
@@ -38,6 +38,8 @@ namespace Content.Client.MainMenu
         /// <inheritdoc />
         protected override void Startup()
         {
+            _sawmill = _logManager.GetSawmill("mainmenu");
+
             _mainMenuControl = new MainMenuControl(_resourceCache, _configurationManager);
             _userInterfaceManager.StateRoot.AddChild(_mainMenuControl);
 
