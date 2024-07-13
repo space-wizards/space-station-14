@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Fixed the nukie station not getting properly initialized.
-    type: Fix
-  id: 6412
-  time: '2024-04-21T06:52:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27201
 - author: Blackern5000
   changes:
   - message: '"Experienced" passengers can now wear a rainbow jumpsuit using loadouts.'
@@ -3823,3 +3816,10 @@
   id: 6911
   time: '2024-07-12T15:00:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29953
+- author: lzk228
+  changes:
+  - message: Secure windoors now use reinforced glass damage modifier.
+    type: Fix
+  id: 6912
+  time: '2024-07-13T04:03:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29941
