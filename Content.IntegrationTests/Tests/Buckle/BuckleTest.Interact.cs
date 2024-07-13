@@ -104,8 +104,7 @@ public sealed partial class BuckleTest
             });
         });
 
-        // Wait enough ticks for the unbuckling cooldown to run out
-        // await server.WaitRunTicks(3);
+        await server.WaitRunTicks(3);
 
         await server.WaitAssertion(() =>
         {
