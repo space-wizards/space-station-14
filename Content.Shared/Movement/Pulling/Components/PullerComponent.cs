@@ -1,4 +1,4 @@
-﻿using Content.Shared.Alert;
+using Content.Shared.Alert;
 using Content.Shared.Movement.Pulling.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -43,4 +43,25 @@ public sealed partial class PullerComponent : Component
 
     [DataField]
     public ProtoId<AlertPrototype> PullingAlert = "Pulling";
+
+    [AutoNetworkedField, DataField]
+    public GrabStage GrabStage = GrabStage.No;
+
+    [DataField]
+    public float SoftStageEscapeChance = 0.7f;
+
+    [DataField]
+    public float HardStageEscapeChance = 0.4f;
+
+    [DataField]
+    public float SuffocateStageEscapeChance = 0.1f;
+
+    [AutoNetworkedField]
+    public TimeSpan NextStageChange = TimeSpan.Zero;
+
+    [DataField]
+    public float SuffocateGrabStaminaDamage = 10f;
+
+    [DataField]
+    public float GrabThrowDamageModifier = 1f;
 }

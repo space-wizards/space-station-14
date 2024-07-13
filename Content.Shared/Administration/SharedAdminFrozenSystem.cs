@@ -62,7 +62,7 @@ public abstract class SharedAdminFrozenSystem : EntitySystem
     {
         if (TryComp<PullableComponent>(uid, out var pullable))
         {
-            _pulling.TryStopPull(uid, pullable);
+            _pulling.TryStopPull(uid, pullable, ignoreGrab: true);
         }
 
         UpdateCanMove(uid, component, args);

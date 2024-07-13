@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Ghost;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
@@ -95,13 +95,13 @@ public abstract class SharedPortalSystem : EntitySystem
         // break pulls before portal enter so we dont break shit
         if (TryComp<PullableComponent>(subject, out var pullable) && pullable.BeingPulled)
         {
-            _pulling.TryStopPull(subject, pullable);
+            _pulling.TryStopPull(subject, pullable, ignoreGrab: true);
         }
 
         if (TryComp<PullerComponent>(subject, out var pullerComp)
             && TryComp<PullableComponent>(pullerComp.Pulling, out var subjectPulling))
         {
-            _pulling.TryStopPull(subject, subjectPulling);
+            _pulling.TryStopPull(subject, subjectPulling, ignoreGrab: true);
         }
 
         // if they came from another portal, just return and wait for them to exit the portal
