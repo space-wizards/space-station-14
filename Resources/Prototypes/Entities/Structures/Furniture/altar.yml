@@ -106,7 +106,7 @@
 - type: entity
   id: AltarSpaceChristian
   parent: AltarNanotrasen
-  name: space-christian altar
+  name: space-Christian altar
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
