@@ -402,7 +402,8 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
                 var trans = transformQuery.GetComponent(uid);
                 var masterTrans = transformQuery.GetComponent(master);
-                if (!masterTrans.Coordinates.InRange(EntityManager, _transform, trans.Coordinates, 10f))
+                if (!_transform.InRange(masterTrans.Coordinates, trans.Coordinates, 10f)
+)
                 {
                     Clean(uid, instrument);
                 }

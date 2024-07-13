@@ -533,7 +533,7 @@ public abstract class SharedActionsSystem : EntitySystem
             if (action.Range <= 0)
                 return true;
 
-            return coords.InRange(EntityManager, _transformSystem, Transform(user).Coordinates, action.Range);
+            return _transformSystem.InRange(coords, Transform(user).Coordinates, action.Range);
         }
 
         return _interactionSystem.InRangeUnobstructed(user, coords, range: action.Range);

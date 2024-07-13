@@ -8,6 +8,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 public sealed partial class TargetInRangePrecondition : HTNPrecondition
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     [DataField("targetKey", required: true)] public string TargetKey = default!;
 
@@ -23,6 +24,6 @@ public sealed partial class TargetInRangePrecondition : HTNPrecondition
             !_entManager.TryGetComponent<TransformComponent>(target, out var targetXform))
             return false;
 
-        return coordinates.InRange(_entManager, _entManager.System<SharedTransformSystem>(), targetXform.Coordinates, blackboard.GetValueOrDefault<float>(RangeKey, _entManager));
+        return _transformSystem.InRange(coordinates, targetXform.Coordinates, blackboard.GetValueOrDefault<float>(RangeKey, _entManager));
     }
 }
