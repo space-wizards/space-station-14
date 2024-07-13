@@ -68,6 +68,7 @@ public sealed class SmartEquipSystem : EntitySystem
 
         var handItem = hands.ActiveHand.HeldEntity;
 
+        // can the user interact, and is the item interactable? e.g. virtual items
         if (!_actionBlocker.CanInteract(uid, handItem))
             return;
 
