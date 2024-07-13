@@ -60,6 +60,7 @@
     ClothingShoesTourist: 60
     ClothingUniformJumpsuitLoungewear: 60
     ClothingHeadHatCowboyRed: 60
+    Wristwatch: 60
     ClothingUniformJumpsuitFamilyGuy: 1
     CigarGold: 1
     ClothingNeckCloakHerald: 1
@@ -116,6 +117,7 @@
     ClothingHeadHatCowboyBountyHunter: 1
     ClothingNeckAutismPin: 1
     ClothingNeckGoldAutismPin: 1
+    WristwatchGold: 1
 
 - type: weightedRandomEntity
   id: MaintenanceToolEntityTable
