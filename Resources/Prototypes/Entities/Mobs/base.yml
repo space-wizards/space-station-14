@@ -99,6 +99,7 @@
     - Piercing
     - Heat
     - Shock
+    - Cold
   - type: DamageOnHighSpeedImpact
     damage:
       types:
