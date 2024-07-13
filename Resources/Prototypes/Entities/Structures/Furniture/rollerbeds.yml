@@ -71,6 +71,7 @@
             False: {visible: true}
     - type: StaticPrice
       price: 120
+    - type: DeployFoldable
 
 - type: entity
   parent: RollerBed
