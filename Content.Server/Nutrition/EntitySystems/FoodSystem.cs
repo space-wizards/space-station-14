@@ -33,6 +33,7 @@ using Robust.Shared.Utility;
 using System.Linq;
 using Robust.Server.GameObjects;
 using Content.Shared.Whitelist;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -136,6 +137,16 @@ public sealed class FoodSystem : EntitySystem
         {
             _popup.PopupEntity(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
             return (false, true);
+        }
+
+        if (TryComp<ContainerManagerComponent>(food, out var containerManager))
+        {
+            // hardcode container name
+            if (containerManager.Containers.TryGetValue("item", out var container) && container.ContainedEntities.Any())
+            {
+                _popup.PopupEntity(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
+                return (false, true);
+            }
         }
 
         var flavors = _flavorProfile.GetLocalizedFlavorsMessage(food, user, foodSolution);
