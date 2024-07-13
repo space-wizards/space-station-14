@@ -25,8 +25,9 @@ namespace Content.Client.MainMenu
         [Dependency] private readonly IGameController _controllerProxy = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
 
-        private readonly ISawmill _sawmill = Logger.GetSawmill("mainmenu");
+        private readonly ISawmill _sawmill = _logManager.GetSawmill("mainmenu");
 
         private MainMenuControl _mainMenuControl = default!;
         private bool _isConnecting;
