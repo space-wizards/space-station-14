@@ -1,0 +1,32 @@
+- type: entity
+  parent: BaseItem
+  id: CoinQuarter
+  name: quarter
+  description: A shiny coin mass produced by NanoTrasen, worth a quarter of a speso. You could flip it.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Objects/Misc/quarter.rsi
+    layers:
+    - state: icon_heads
+      map: [ "normal" ]
+    - state: flipping_heads
+      visible: false
+      map: [ "flipping" ]
+  - type: FlippableCoin
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.FlippableCoinVisuals.Flipping:
+        normal:
+          True: { visible: false }
+          False: { visible: true }
+        flipping:
+          True: { visible: true }
+          False: { visible: false }
+      enum.FlippableCoinVisuals.Flipped:
+        normal:
+          True: { state: icon_tails }
+          False: { state: icon_heads }
+        flipping:
+          True: { state: flipping_tails }
+          False: { state: flipping_heads }
