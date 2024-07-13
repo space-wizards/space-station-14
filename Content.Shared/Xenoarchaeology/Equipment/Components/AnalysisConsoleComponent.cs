@@ -19,6 +19,9 @@ public sealed partial class AnalysisConsoleComponent : Component
     [DataField, AutoNetworkedField]
     public NetEntity? AnalyzerEntity;
 
+    [DataField]
+    public SoundSpecifier? ScanFinishedSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
+
     /// <summary>
     /// The sound played when an artifact has points extracted.
     /// </summary>
@@ -33,7 +36,11 @@ public sealed partial class AnalysisConsoleComponent : Component
 }
 
 [Serializable, NetSerializable]
-public enum ArtifactAnalzyerUiKey : byte
+public enum ArtifactAnalyzerUiKey : byte
 {
     Key
 }
+
+[Serializable, NetSerializable]
+public sealed class AnalysisConsoleExtractButtonPressedMessage : BoundUserInterfaceMessage;
+

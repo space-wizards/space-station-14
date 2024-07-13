@@ -48,4 +48,12 @@ public sealed partial class XenoArtifactNodeComponent : Component
     [DataField]
     public int MaxDurability = 5;
     #endregion
+
+    #region Research
+    [DataField, AutoNetworkedField]
+    public int ResearchValue;
+
+    [DataField, AutoNetworkedField]
+    public int ConsumedResearchValue;
+    #endregion
 }

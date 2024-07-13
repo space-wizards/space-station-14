@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Paper;
 using Content.Server.Power.Components;
 using Content.Server.Research.Systems;
+using Content.Server.Xenoarchaeology.Artifact;
 using Content.Shared.UserInterface;
 using Content.Server.Xenoarchaeology.Equipment.Components;
 using Content.Server.Xenoarchaeology.Equipment.Systems;
@@ -35,7 +36,6 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly ResearchSystem _research = default!;
@@ -52,12 +52,6 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
         SubscribeLocalEvent<ActiveArtifactAnalyzerComponent, PowerChangedEvent>(OnPowerChanged);
 
         SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleExtractButtonPressedMessage>(OnExtractButton);
-
-        SubscribeLocalEvent<AnalysisConsoleComponent, ResearchClientServerSelectedMessage>((e, c, _) => UpdateUserInterface(e, c),
-            after: [typeof(ResearchSystem)]);
-        SubscribeLocalEvent<AnalysisConsoleComponent, ResearchClientServerDeselectedMessage>((e, c, _) => UpdateUserInterface(e, c),
-            after: [typeof(ResearchSystem)]);
-        SubscribeLocalEvent<AnalysisConsoleComponent, BeforeActivatableUIOpenEvent>((e, c, _) => UpdateUserInterface(e, c));
     }
 
     /// <summary>
@@ -79,9 +73,7 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
     {
         if (!Resolve(uid, ref component, false))
             return;
-
         return;
-
     }
 
     /// <summary>
@@ -115,8 +107,6 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
         //
         // _popup.PopupEntity(Loc.GetString("analyzer-artifact-extract-popup"),
         //     component.AnalyzerEntity.Value, PopupType.Large);
-
-        UpdateUserInterface(uid, component);
     }
 
     /// <summary>

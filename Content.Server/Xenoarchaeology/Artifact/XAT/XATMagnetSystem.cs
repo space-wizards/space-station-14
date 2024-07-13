@@ -1,6 +1,7 @@
 using Content.Server.Salvage;
 using Content.Server.Xenoarchaeology.Artifact.XAT.Components;
 using Content.Shared.Clothing;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.XAT;
 
@@ -43,10 +44,10 @@ public sealed class XATMagnetSystem : BaseXATSystem<XATMagnetComponent>
     {
         base.UpdateXAT(artifact, node, frameTime);
 
-        var query = EntityQueryEnumerator<MagbootsComponent, TransformComponent>();
-        while (query.MoveNext(out _, out var magboots, out var xform))
+        var query = EntityQueryEnumerator<MagbootsComponent, ItemToggleComponent, TransformComponent>();
+        while (query.MoveNext(out _, out _, out var itemToggle, out var xform))
         {
-            if (!magboots.On)
+            if (!itemToggle.Activated)
                 continue;
 
             if (!_transform.InRange(xform.Coordinates, Transform(artifact).Coordinates, node.Comp1.MagnetRange))

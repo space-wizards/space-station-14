@@ -2,6 +2,8 @@ using System.Text;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
+using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
 
 namespace Content.Server.Xenoarchaeology.Artifact;
@@ -57,6 +59,55 @@ public sealed class XenoArtifactCommand : ToolshedCommand
             {
                 builder.Append($"---+");
             }
+        }
+    }
+
+    [CommandImplementation("totalResearch")]
+    public int TotalResearch([PipedArgument] EntityUid ent)
+    {
+        var artiSys = EntityManager.System<XenoArtifactSystem>();
+        var comp = EntityManager.GetComponent<XenoArtifactComponent>(ent);
+
+        var sum = 0;
+
+        var nodes = artiSys.GetAllNodes((ent, comp));
+        foreach (var node in nodes)
+        {
+            sum += node.Comp.ResearchValue;
+        }
+
+        return sum;
+    }
+
+    [ValidatePrototypeId<EntityPrototype>]
+    public const string ArtifactPrototype = "XenoArtifact";
+
+    [CommandImplementation("averageResearch")]
+    public float AverageResearch()
+    {
+        const int n = 100;
+        var sum = 0;
+
+        for (var i = 0; i < n; i++)
+        {
+            var ent = Spawn(ArtifactPrototype, MapCoordinates.Nullspace);
+            sum += TotalResearch(ent);
+            Del(ent);
+        }
+
+        return (float) sum / n;
+    }
+
+    [CommandImplementation("unlockAllNodes")]
+    public void UnlockAllNodes([PipedArgument] EntityUid ent)
+    {
+        var artiSys = EntityManager.System<XenoArtifactSystem>();
+        var comp = EntityManager.GetComponent<XenoArtifactComponent>(ent);
+
+        var nodes = artiSys.GetAllNodes((ent, comp));
+        foreach (var node in nodes)
+        {
+            artiSys.SetNodeUnlocked((node, node.Comp));
         }
     }
 }

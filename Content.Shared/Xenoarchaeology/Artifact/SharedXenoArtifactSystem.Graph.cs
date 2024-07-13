@@ -137,7 +137,9 @@ public abstract partial class SharedXenoArtifactSystem
 
         ent.Comp.NodeAdjacencyMatrix[fromIdx][toIdx] = true;
         if (dirty)
-            RebuildNodeData(ent);
+        {
+            RebuildXenoArtifactMetaData(ent);
+        }
         return true;
     }
 
@@ -167,7 +169,9 @@ public abstract partial class SharedXenoArtifactSystem
         ent.Comp.NodeAdjacencyMatrix[fromIdx][toIdx] = false;
 
         if (dirty)
-            RebuildNodeData(ent);
+        {
+            RebuildXenoArtifactMetaData(ent);
+        }
         return true;
     }
 
@@ -198,7 +202,9 @@ public abstract partial class SharedXenoArtifactSystem
 
         Dirty(node);
         if (dirty)
-            RebuildNodeData(ent);
+        {
+            RebuildXenoArtifactMetaData(ent);
+        }
         return true;
     }
 
@@ -218,7 +224,7 @@ public abstract partial class SharedXenoArtifactSystem
         ent.Comp.NodeVertices[idx.Value] = null;
         if (dirty)
         {
-            RebuildNodeData(ent);
+            RebuildXenoArtifactMetaData(ent);
         }
         Dirty(node);
         return true;
@@ -243,7 +249,7 @@ public abstract partial class SharedXenoArtifactSystem
 
         if (dirty)
         {
-            RebuildNodeData(ent);
+            RebuildXenoArtifactMetaData(ent);
         }
     }
 

@@ -20,7 +20,7 @@ public sealed partial class XenoArtifactSystem
             GenerateArtifactSegment(ent, ref nodeCount);
         }
 
-        RebuildNodeData((ent, ent));
+        RebuildXenoArtifactMetaData((ent, ent));
     }
 
     private void CreateTriggerPool(Entity<XenoArtifactComponent> ent, ref int size)

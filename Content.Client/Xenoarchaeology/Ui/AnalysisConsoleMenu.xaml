@@ -17,7 +17,23 @@
                 </BoxContainer>
             </PanelContainer>
             <customControls:HSeparator StyleClasses="HighDivider" Margin="0 15 0 10"/>
-            <BoxContainer Orientation="Vertical" VerticalExpand="True">
+            <BoxContainer Name="ExtractContainer" Orientation="Vertical" VerticalExpand="True" Visible="False">
+                <PanelContainer HorizontalExpand="True" VerticalExpand="True" RectClipContent="True">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#000000FF" />
+                    </PanelContainer.PanelOverride>
+                    <BoxContainer Margin="10 10 10 5" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+                        <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
+                            <BoxContainer HorizontalExpand="True" VerticalExpand="True">
+                                <RichTextLabel Name="ExtractionResearchLabel" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                            </BoxContainer>
+                        </ScrollContainer>
+                        <Control MinHeight="5"/>
+                        <RichTextLabel Name="ExtractionSumLabel" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                    </BoxContainer>
+                </PanelContainer>
+            </BoxContainer>
+            <BoxContainer Name="NodeViewContainer" Orientation="Vertical" VerticalExpand="True">
                 <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
                     <BoxContainer Orientation="Vertical" HorizontalExpand="False" VerticalExpand="True">
                         <Label Name="NoneSelectedLabel" Text="{Loc 'analysis-console-no-node'}" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalExpand="True" Visible="False"/>

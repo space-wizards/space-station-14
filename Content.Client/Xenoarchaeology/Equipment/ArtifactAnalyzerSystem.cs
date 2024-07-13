@@ -23,7 +23,7 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
 
     private void OnAnalysisConsoleAfterAutoHandleState(Entity<AnalysisConsoleComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        if (_ui.TryGetOpenUi<AnalysisConsoleBoundUserInterface>(ent.Owner, ArtifactAnalzyerUiKey.Key, out var bui))
+        if (_ui.TryGetOpenUi<AnalysisConsoleBoundUserInterface>(ent.Owner, ArtifactAnalyzerUiKey.Key, out var bui))
             bui.Update(ent);
     }
 
@@ -32,7 +32,7 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
         if (!TryGetAnalysisConsole(ent, out var analysisConsole))
             return;
 
-        if (_ui.TryGetOpenUi<AnalysisConsoleBoundUserInterface>(analysisConsole.Value.Owner, ArtifactAnalzyerUiKey.Key, out var bui))
+        if (_ui.TryGetOpenUi<AnalysisConsoleBoundUserInterface>(analysisConsole.Value.Owner, ArtifactAnalyzerUiKey.Key, out var bui))
             bui.Update(analysisConsole.Value);
     }
 }

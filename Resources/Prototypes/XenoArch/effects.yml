@@ -6,12 +6,10 @@
   abstract: true
   components:
   - type: XenoArtifactNode
+  - type: NameIdentifier
+    group: XenoArtifactNode
 
 - type: entity
   id: XenoArtifactEffectTest
   parent: BaseXenoArtifactEffect
-  description: Bombs the middle east.
-  components:
-  - type: XenoArtifactNode
-  - type: NameIdentifier
-    group: XenoArtifactNode
+  description: Does... something. Supposedly.

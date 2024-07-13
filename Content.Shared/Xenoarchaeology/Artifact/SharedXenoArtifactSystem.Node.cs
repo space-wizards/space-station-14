@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.NameIdentifier;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
@@ -9,12 +10,14 @@ namespace Content.Shared.Xenoarchaeology.Artifact;
 
 public abstract partial class SharedXenoArtifactSystem
 {
+    private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery;
     private EntityQuery<XenoArtifactNodeComponent> _nodeQuery;
 
     public void InitializeNode()
     {
         SubscribeLocalEvent<XenoArtifactNodeComponent, MapInitEvent>(OnNodeMapInit);
 
+        _xenoArtifactQuery = GetEntityQuery<XenoArtifactComponent>();
         _nodeQuery = GetEntityQuery<XenoArtifactNodeComponent>();
     }
 
@@ -114,6 +117,24 @@ public abstract partial class SharedXenoArtifactSystem
         return true;
     }
 
+    public bool IsNodeActive(Entity<XenoArtifactComponent> ent, EntityUid node)
+    {
+        return ent.Comp.CachedActiveNodes.Contains(GetNetEntity(node));
+    }
+
+    public int GetResearchValue(Entity<XenoArtifactNodeComponent> ent)
+    {
+        if (ent.Comp.Locked)
+            return 0;
+
+        return ent.Comp.ResearchValue - ent.Comp.ConsumedResearchValue;
+    }
+
+    public string GetNodeId(EntityUid uid)
+    {
+        return (CompOrNull<NameIdentifierComponent>(uid)?.Identifier ?? 0).ToString("D3");
+    }
+
     public List<List<Entity<XenoArtifactNodeComponent>>> GetSegments(Entity<XenoArtifactComponent> ent)
     {
         var output = new List<List<Entity<XenoArtifactNodeComponent>>>();
@@ -149,17 +170,21 @@ public abstract partial class SharedXenoArtifactSystem
     /// <summary>
     /// Rebuilds all the data associated with nodes in an artifact.
     /// </summary>
-    public void RebuildNodeData(Entity<XenoArtifactComponent?> ent)
+    public void RebuildXenoArtifactMetaData(Entity<XenoArtifactComponent?> artifact)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!Resolve(artifact, ref artifact.Comp))
             return;
-        RebuildCachedActiveNodes(ent);
-        RebuildCachedSegments(ent);
+        RebuildCachedActiveNodes(artifact);
+        RebuildCachedSegments(artifact);
+        foreach (var node in GetAllNodes((artifact, artifact.Comp)))
+        {
+            RebuildNodeMetaData(node);
+        }
     }
 
-    public bool IsNodeActive(Entity<XenoArtifactComponent> ent, EntityUid node)
+    public void RebuildNodeMetaData(Entity<XenoArtifactNodeComponent> node)
     {
-        return ent.Comp.CachedActiveNodes.Contains(GetNetEntity(node));
+        UpdateNodeResearchValue(node);
     }
 
     /// <summary>
@@ -269,5 +294,17 @@ public abstract partial class SharedXenoArtifactSystem
         {
             GetSegmentNodesRecursive(ent, s, ref segment, ref otherSegments);
         }
+    }
+
+    public void UpdateNodeResearchValue(Entity<XenoArtifactNodeComponent> node)
+    {
+        if (node.Comp.Attached == null)
+        {
+            node.Comp.ResearchValue = 0;
+            return;
+        }
+
+        var artifact = _xenoArtifactQuery.Get(GetEntity(node.Comp.Attached.Value));
+        node.Comp.ResearchValue = (int) (Math.Pow(1.25, GetPredecessorNodes((artifact, artifact), node).Count) * 5000);
     }
 }
