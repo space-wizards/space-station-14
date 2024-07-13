@@ -96,11 +96,11 @@
   - type: Wieldable
     unwieldOnUse: false
   - type: GunWieldBonus
-    minAngle: -19
-    maxAngle: -16
+    minAngle: -1
+    maxAngle: -4
   - type: Gun
-    minAngle: 21
-    maxAngle: 32 
+    minAngle: 2
+    maxAngle: 8 
     shotsPerBurst: 5
     availableModes:
     - SemiAuto
