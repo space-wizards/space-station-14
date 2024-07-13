@@ -3,7 +3,6 @@ using Content.Server.Store.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
-using Content.Server.Store.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Robust.Shared.Random;
@@ -47,7 +46,6 @@ namespace Content.Server.Traitor.Uplink
 
             EnsureComp<UplinkComponent>(uplinkEntity.Value);
             var store = EnsureComp<StoreComponent>(uplinkEntity.Value);
-            _store.InitializeFromPreset(uplinkPresetId, uplinkEntity.Value, store);
             var availableListings = _store.GetAvailableListings(user, store.Listings, store.Categories, null);
             store.Discounts = giveDiscounts
                 ? InitializeDiscounts(availableListings, new DiscountSettings())
