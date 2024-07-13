@@ -12,7 +12,7 @@ namespace Content.Client.Access.UI;
 [GenerateTypedNameReferences]
 public sealed partial class AccessLevelControl : GridContainer
 {
-    private readonly ISawmill _sawmill = default!;
+    private readonly ISawmill _sawmill;
 
     public readonly Dictionary<ProtoId<AccessLevelPrototype>, Button> ButtonsList = new();
 
