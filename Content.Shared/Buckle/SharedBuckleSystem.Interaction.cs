@@ -66,7 +66,7 @@ public abstract partial class SharedBuckleSystem
         if (!TryComp(args.User, out BuckleComponent? buckle))
             return;
 
-        // If has space and not buckled, the buckle
+        // Buckle self
         if (StrapHasSpace(uid, buckle, component) && buckle.BuckledTo == null)
         {
             TryBuckle(args.User, args.User, uid, buckle, popup: true);
@@ -74,12 +74,14 @@ public abstract partial class SharedBuckleSystem
             return;
         }
 
+        // Unbuckle self
         if (buckle.BuckledTo == uid && TryUnbuckle(args.User, args.User, buckle, popup: true))
         {
             args.Handled = true;
             return;
         }
 
+        // Unbuckle others
         var buckled = component.BuckledEntities.First();
         if (TryUnbuckle(buckled, args.User))
         {
