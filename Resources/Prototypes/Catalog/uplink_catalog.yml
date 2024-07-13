@@ -135,7 +135,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledSMG
   cost:
-    Telecrystal: 17
+    Telecrystal: 20
   categories:
   - UplinkWeaponry
 
