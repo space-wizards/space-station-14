@@ -36,6 +36,10 @@ public sealed partial class BuckleTest
             Assert.That(entMan.TryGetComponent(victim, out buckle));
             Assert.That(entMan.TryGetComponent(chair, out strap));
 
+#pragma warning disable RA0002
+            buckle.Delay = TimeSpan.Zero;
+#pragma warning restore RA0002
+
             // Buckle victim to chair
             Assert.That(buckleSystem.TryBuckle(victim, user, chair, buckle));
             Assert.Multiple(() =>
@@ -44,15 +48,23 @@ public sealed partial class BuckleTest
                 Assert.That(buckle.Buckled, "Victim is not buckled.");
                 Assert.That(strap.BuckledEntities, Does.Contain(victim), "Chair does not have victim buckled to it.");
             });
+        });
 
+        // Wait enough ticks for the unbuckling cooldown to run out
+        await server.WaitRunTicks(3);
+
+        await server.WaitAssertion(() =>
+        {
             // InteractHand with chair
             buckleSystem.OnStrapInteractHand(chair, strap, new InteractHandEvent(user, chair));
             Assert.Multiple(() =>
             {
-                Assert.That(buckle.BuckledTo, Is.EqualTo(null));
-                Assert.That(!buckle.Buckled);
+                Assert.That(buckle.BuckledTo, Is.Null);
+                Assert.That(buckle.Buckled, Is.False);
                 Assert.That(strap.BuckledEntities, Does.Not.Contain(victim));
             });
         });
+
+        await pair.CleanReturnAsync();
     }
 }
