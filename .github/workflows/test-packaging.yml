@@ -64,11 +64,3 @@ jobs:
 
       - name: Package client
         run: dotnet run --project Content.Packaging client --no-wipe-release
-
-      - name: Update Build Info
-        run: Tools/gen_build_info.py
-
-      - name: Shuffle files around
-        run: |
-          mkdir "release/${{ github.sha }}"
-          mv release/*.zip "release/${{ github.sha }}"
