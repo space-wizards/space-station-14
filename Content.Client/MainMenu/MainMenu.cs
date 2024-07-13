@@ -26,6 +26,8 @@ namespace Content.Client.MainMenu
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
+        private readonly ISawmill _sawmill = Logger.GetSawmill("mainmenu");
+
         private MainMenuControl _mainMenuControl = default!;
         private bool _isConnecting;
 
@@ -116,7 +118,7 @@ namespace Content.Client.MainMenu
             catch (ArgumentException e)
             {
                 _userInterfaceManager.Popup($"Unable to connect: {e.Message}", "Connection error.");
-                Logger.Warning(e.ToString());
+                _sawmill.Warning(e.ToString());
                 _netManager.ConnectFailed -= _onConnectFailed;
                 _setConnectingState(false);
             }
