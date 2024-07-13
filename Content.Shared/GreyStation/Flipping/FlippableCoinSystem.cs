@@ -45,6 +45,10 @@ public sealed class FlippableCoinSystem : EntitySystem
             // if under 1s ping, server has sent updated Flipped state by now
             _appearance.SetData(uid, FlippableCoinVisuals.Flipped, comp.Flipped, appearance);
 
+            // PopupClient doesnt like null user
+            if (!_timing.IsFirstTimePredicted || _net.IsServer)
+                return;
+
             var popup = Loc.GetString(comp.Flipped ? comp.TailsPopup : comp.HeadsPopup, ("coin", uid));
             _popup.PopupEntity(popup, uid);
         }
