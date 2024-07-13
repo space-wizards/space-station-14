@@ -74,7 +74,7 @@ public sealed class AlignRCDConstruction : PlacementMode
         // If the destination is out of interaction range, set the placer alpha to zero
         if (!_entityManager.TryGetComponent<TransformComponent>(player, out var xform))
             return false;
-        
+
         if (!_transformSystem.InRange(xform.Coordinates, position, SharedInteractionSystem.InteractionRange))
         {
             InvalidPlaceColor = InvalidPlaceColor.WithAlpha(0);
