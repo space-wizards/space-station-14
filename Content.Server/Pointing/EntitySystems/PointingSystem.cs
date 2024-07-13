@@ -101,7 +101,6 @@ namespace Content.Server.Pointing.EntitySystems
         {
             if (HasComp<GhostComponent>(pointer))
             {
-                
                 return _transform.InRange(Transform(pointer).Coordinates, coordinates, 15);
             }
             else
