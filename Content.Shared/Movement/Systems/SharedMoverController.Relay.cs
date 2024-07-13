@@ -61,7 +61,7 @@ public abstract partial class SharedMoverController
         Dirty(relayEntity, targetComp);
     }
 
-    private void OnRelayShutdown(Entity<RelayInputMoverComponent> entity, ComponentShutdown args)
+    private void OnRelayShutdown(Entity<RelayInputMoverComponent> entity, ref ComponentShutdown args)
     {
         Physics.UpdateIsPredicted(entity.Owner);
         Physics.UpdateIsPredicted(entity.Comp.RelayEntity);

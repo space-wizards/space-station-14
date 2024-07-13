@@ -12,7 +12,7 @@ public readonly struct MoveInputEvent
     public readonly Entity<InputMoverComponent> Entity;
     public readonly MoveButtons OldMovement;
 
-    public bool HasDirectionalMovement => (Component.HeldMoveButtons & MoveButtons.AnyDirection) != MoveButtons.None;
+    public bool HasDirectionalMovement => (Entity.Comp.HeldMoveButtons & MoveButtons.AnyDirection) != MoveButtons.None;
 
     public MoveInputEvent(Entity<InputMoverComponent> entity, MoveButtons oldMovement)
     {
