@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: '"Experienced" passengers can now wear a rainbow jumpsuit using loadouts.'
-    type: Add
-  id: 6413
-  time: '2024-04-21T11:53:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27211
 - author: PJB3005
   changes:
   - message: The item status menu has been moved to the side of the hands. There is
@@ -3823,3 +3816,10 @@
   id: 6912
   time: '2024-07-13T04:03:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29941
+- author: Tayrtahn
+  changes:
+  - message: Antag objective total difficulty is now properly capped.
+    type: Fix
+  id: 6913
+  time: '2024-07-13T04:14:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29830
