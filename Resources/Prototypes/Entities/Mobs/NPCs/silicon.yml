@@ -1,6 +1,7 @@
 - type: entity
   save: false
   abstract: true
+  parent: BaseMob
   id: MobSiliconBase
   components:
   - type: Reactive
