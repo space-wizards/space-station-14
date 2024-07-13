@@ -26,11 +26,11 @@ namespace Content.Client.Radiation.Overlays
         private readonly ShaderInstance _baseShader;
         private readonly Dictionary<EntityUid, (ShaderInstance shd, RadiationShaderInstance instance)> _pulses = new();
 
-        public RadiationPulseOverlay(SharedTransformSystem transformSystem)
+        public RadiationPulseOverlay()
         {
             IoCManager.InjectDependencies(this);
             _baseShader = _prototypeManager.Index<ShaderPrototype>("Radiation").Instance().Duplicate();
-            _transformSystem = transformSystem;
+            _transformSystem = _entityManager.System<SharedTransformSystem>();
         }
 
         protected override bool BeforeDraw(in OverlayDrawArgs args)
