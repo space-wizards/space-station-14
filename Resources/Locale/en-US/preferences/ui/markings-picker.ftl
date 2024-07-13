@@ -13,6 +13,7 @@ marking-slot-remove = Remove
 
 # Categories
 
+markings-category-Special = Special
 markings-category-Hair = Hair
 markings-category-FacialHair = Facial Hair
 markings-category-Head = Head
