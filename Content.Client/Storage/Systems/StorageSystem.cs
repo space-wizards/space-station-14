@@ -142,8 +142,8 @@ public sealed class StorageSystem : SharedStorageSystem
     {
         if (!_timing.IsFirstTimePredicted)
             return;
-
-        if (finalCoords.InRange(EntityManager, TransformSystem, initialCoords, 0.1f) ||
+        
+        if (TransformSystem.InRange(finalCoords, initialCoords, 0.1f) ||
             !Exists(initialCoords.EntityId) || !Exists(finalCoords.EntityId))
         {
             return;
