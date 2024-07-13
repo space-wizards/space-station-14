@@ -1,5 +1,3 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Content.Server.Chat.Systems;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
@@ -10,9 +8,6 @@ public sealed partial class SpeakOperator : HTNOperator
 
     [DataField(required: true)]
     public string Speech = string.Empty;
-
-    [DataField]
-    public string PlanSpeech = string.Empty;
 
     /// <summary>
     /// Whether to hide message from chat window and logs.
@@ -26,18 +21,6 @@ public sealed partial class SpeakOperator : HTNOperator
 
         _chat = sysManager.GetEntitySystem<ChatSystem>();
     }
-
-    public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
-        CancellationToken cancelToken)
-    {
-        if (PlanSpeech != string.Empty)
-            {
-                var speaker = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-                _chat.TrySendInGameICMessage(speaker, PlanSpeech, InGameICChatType.Speak, hideChat: Hidden, hideLog: Hidden);
-            }
-        return (true, null);
-    }
-
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {

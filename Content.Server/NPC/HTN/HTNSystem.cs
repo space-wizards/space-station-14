@@ -176,7 +176,6 @@ public sealed class HTNSystem : EntitySystem
                     var oldMtr = comp.Plan.BranchTraversalRecord;
                     var mtr = comp.PlanningJob.Result.BranchTraversalRecord;
 
-                    Logger.Debug("Compare plans {old} {new}",oldMtr,mtr);
                     for (var i = 0; i < oldMtr.Count; i++)
                     {
                         if (i < mtr.Count && oldMtr[i] > mtr[i])

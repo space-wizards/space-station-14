@@ -2557,15 +2557,6 @@
     - VimPilot
 
 - type: entity
-  parent: MobFox
-  id: pleaseFox
-  suffix: please
-  components:
-    - type: HTN
-      rootTask:
-        task: PleaseWork
-
-- type: entity
   name: corgi
   parent: [SimpleMobBase, StripableInventoryBase]
   id: MobCorgi
