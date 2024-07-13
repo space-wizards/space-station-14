@@ -15,11 +15,8 @@ public sealed partial class BuckleTest
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
-        var testMap = await pair.CreateTestMap();
-
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var buckleSystem = entMan.System<SharedBuckleSystem>();
-        var coordinates = testMap.GridCoords;
 
         EntityUid user = default;
         EntityUid victim = default;
@@ -29,9 +26,9 @@ public sealed partial class BuckleTest
 
         await server.WaitAssertion(() =>
         {
-            user = entMan.SpawnEntity(BuckleDummyId, coordinates);
-            victim = entMan.SpawnEntity(BuckleDummyId, coordinates);
-            chair = entMan.SpawnEntity(StrapDummyId, coordinates);
+            user = entMan.SpawnEntity(BuckleDummyId, MapCoordinates.Nullspace);
+            victim = entMan.SpawnEntity(BuckleDummyId, MapCoordinates.Nullspace);
+            chair = entMan.SpawnEntity(StrapDummyId, MapCoordinates.Nullspace);
 
             Assert.That(entMan.TryGetComponent(victim, out buckle));
             Assert.That(entMan.TryGetComponent(chair, out strap));
@@ -48,14 +45,8 @@ public sealed partial class BuckleTest
                 Assert.That(buckle.Buckled, "Victim is not buckled.");
                 Assert.That(strap.BuckledEntities, Does.Contain(victim), "Chair does not have victim buckled to it.");
             });
-        });
 
-        // Wait enough ticks for the unbuckling cooldown to run out
-        await server.WaitRunTicks(3);
-
-        await server.WaitAssertion(() =>
-        {
-            // InteractHand with chair
+            // InteractHand with chair to unbuckle victim
             entMan.EventBus.RaiseLocalEvent(chair, new InteractHandEvent(user, chair));
             Assert.Multiple(() =>
             {
@@ -94,7 +85,6 @@ public sealed partial class BuckleTest
 #pragma warning restore RA0002
 
             // Buckle user to chair
-
             entMan.EventBus.RaiseLocalEvent(chair, new InteractHandEvent(user, chair));
             Assert.Multiple(() =>
             {
@@ -102,12 +92,7 @@ public sealed partial class BuckleTest
                 Assert.That(buckle.Buckled, "Victim is not buckled.");
                 Assert.That(strap.BuckledEntities, Does.Contain(user), "Chair does not have victim buckled to it.");
             });
-        });
 
-        await server.WaitRunTicks(3);
-
-        await server.WaitAssertion(() =>
-        {
             // InteractHand with chair to unbuckle
             entMan.EventBus.RaiseLocalEvent(chair, new InteractHandEvent(user, chair));
             Assert.Multiple(() =>
