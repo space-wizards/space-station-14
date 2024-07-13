@@ -8,7 +8,6 @@ namespace Content.IntegrationTests.Tests.Buckle;
 
 public sealed partial class BuckleTest
 {
-
     [Test]
     public async Task BuckleInteractUnbuckleOther()
     {
@@ -56,7 +55,7 @@ public sealed partial class BuckleTest
         await server.WaitAssertion(() =>
         {
             // InteractHand with chair
-            buckleSystem.OnStrapInteractHand(chair, strap, new InteractHandEvent(user, chair));
+            entMan.EventBus.RaiseLocalEvent(chair, new InteractHandEvent(user, chair));
             Assert.Multiple(() =>
             {
                 Assert.That(buckle.BuckledTo, Is.Null);

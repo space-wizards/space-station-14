@@ -55,7 +55,7 @@ public abstract partial class SharedBuckleSystem
         return _interaction.InRangeUnobstructed(targetUid, buckleUid, buckleComp.Range, predicate: Ignored);
     }
 
-    public void OnStrapInteractHand(EntityUid uid, StrapComponent component, InteractHandEvent args)
+    private void OnStrapInteractHand(EntityUid uid, StrapComponent component, InteractHandEvent args)
     {
         if (args.Handled)
             return;
