@@ -44,8 +44,7 @@ public abstract class SharedItemMapperSystem : EntitySystem
         UpdateAppearance(uid, component);
     }
 
-    private void MapperEntityRemoved(EntityUid uid, ItemMapperComponent itemMapper,
-        EntRemovedFromContainerMessage args)
+    private void MapperEntityRemoved(EntityUid uid, ItemMapperComponent itemMapper, EntRemovedFromContainerMessage args)
     {
         if (itemMapper.ContainerWhitelist != null && !itemMapper.ContainerWhitelist.Contains(args.Container.ID))
             return;
@@ -53,7 +52,8 @@ public abstract class SharedItemMapperSystem : EntitySystem
         UpdateAppearance(uid, itemMapper);
     }
 
-    private void MapperEntityInserted(EntityUid uid, ItemMapperComponent itemMapper,
+    private void MapperEntityInserted(EntityUid uid,
+        ItemMapperComponent itemMapper,
         EntInsertedIntoContainerMessage args)
     {
         if (itemMapper.ContainerWhitelist != null && !itemMapper.ContainerWhitelist.Contains(args.Container.ID))
@@ -64,13 +64,16 @@ public abstract class SharedItemMapperSystem : EntitySystem
 
     private void UpdateAppearance(EntityUid uid, ItemMapperComponent? itemMapper = null)
     {
-        if(!Resolve(uid, ref itemMapper))
+        if (!Resolve(uid, ref itemMapper))
             return;
 
         if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent)
             && TryGetLayers(uid, itemMapper, out var containedLayers))
         {
-            _appearance.SetData(uid, StorageMapVisuals.LayerChanged, new ShowLayerData(containedLayers), appearanceComponent);
+            _appearance.SetData(uid,
+                StorageMapVisuals.LayerChanged,
+                new ShowLayerData(containedLayers),
+                appearanceComponent);
         }
     }
 
@@ -85,12 +88,12 @@ public abstract class SharedItemMapperSystem : EntitySystem
     /// </param>
     /// <param name="containedLayers">list of <paramref name="itemMapper"/> layers that should be visible</param>
     /// <returns>false if <c>msg.Container.Owner</c> is not a storage, true otherwise.</returns>
-    private bool TryGetLayers(EntityUid uid,
-        ItemMapperComponent itemMapper,
-        out List<string> showLayers)
+    private bool TryGetLayers(EntityUid uid, ItemMapperComponent itemMapper, out List<string> showLayers)
     {
         var containedLayers = _container.GetAllContainers(uid)
-            .Where(c => itemMapper.ContainerWhitelist?.Contains(c.ID) ?? true).SelectMany(cont => cont.ContainedEntities).ToArray();
+            .Where(c => itemMapper.ContainerWhitelist?.Contains(c.ID) ?? true)
+            .SelectMany(cont => cont.ContainedEntities)
+            .ToArray();
 
         var list = new List<string>();
         foreach (var mapLayerData in itemMapper.MapLayers.Values)
