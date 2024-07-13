@@ -517,6 +517,9 @@ public sealed class DragDropSystem : SharedDragDropSystem
         if (dropEv2.Handled)
             return dropEv2.CanDrop;
 
+        if (dropEv.Handled && dropEv.CanDrop)
+            return true;
+
         return null;
     }
 
