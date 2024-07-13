@@ -1,0 +1,16 @@
+﻿- type: constructionGraph
+  id: DiamondHoe
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: gauze
+      steps:
+      - material: WoodPlank
+        amount: 2
+        doAfter: 10
+      - material: MaterialDiamond
+        amount: 2
+        doAfter: 10
+  - node: DiamondHoe
+    entity: HydroponicsToolDiamondHoe
