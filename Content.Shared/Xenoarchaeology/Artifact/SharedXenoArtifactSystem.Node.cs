@@ -130,6 +130,12 @@ public abstract partial class SharedXenoArtifactSystem
         return ent.Comp.ResearchValue - ent.Comp.ConsumedResearchValue;
     }
 
+    public void SetConsumedResearchValue(Entity<XenoArtifactNodeComponent> ent, int value)
+    {
+        ent.Comp.ConsumedResearchValue = value;
+        Dirty(ent);
+    }
+
     public string GetNodeId(EntityUid uid)
     {
         return (CompOrNull<NameIdentifierComponent>(uid)?.Identifier ?? 0).ToString("D3");

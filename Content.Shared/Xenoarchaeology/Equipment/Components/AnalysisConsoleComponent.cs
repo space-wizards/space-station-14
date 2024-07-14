@@ -19,6 +19,7 @@ public sealed partial class AnalysisConsoleComponent : Component
     [DataField, AutoNetworkedField]
     public NetEntity? AnalyzerEntity;
 
+    // TODO: GOD MY EARS ITS SO FUCKING LOUD
     [DataField]
     public SoundSpecifier? ScanFinishedSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
 
@@ -26,7 +27,13 @@ public sealed partial class AnalysisConsoleComponent : Component
     /// The sound played when an artifact has points extracted.
     /// </summary>
     [DataField]
-    public SoundSpecifier? ExtractSound = new SoundPathSpecifier("/Audio/Effects/radpulse11.ogg");
+    public SoundSpecifier? ExtractSound = new SoundPathSpecifier("/Audio/Effects/radpulse11.ogg")
+    {
+        Params = new AudioParams
+        {
+            Volume = 4,
+        }
+    };
 
     /// <summary>
     /// The machine linking port for the analyzer

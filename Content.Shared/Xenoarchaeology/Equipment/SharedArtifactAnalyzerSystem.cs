@@ -3,7 +3,6 @@ using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Placeable;
 using Content.Shared.Power.EntitySystems;
-using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
 
@@ -12,7 +11,6 @@ namespace Content.Shared.Xenoarchaeology.Equipment;
 public abstract class SharedArtifactAnalyzerSystem : EntitySystem
 {
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
-    [Dependency] private readonly SharedXenoArtifactSystem _xenoArtifact = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -25,12 +23,6 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
 
         SubscribeLocalEvent<AnalysisConsoleComponent, NewLinkEvent>(OnNewLink);
         SubscribeLocalEvent<AnalysisConsoleComponent, PortDisconnectedEvent>(OnPortDisconnected);
-
-        Subs.BuiEvents<AnalysisConsoleComponent>(ArtifactAnalyzerUiKey.Key,
-            subs =>
-        {
-            subs.Event<AnalysisConsoleExtractButtonPressedMessage>(OnExtractButtonPressed);
-        });
     }
 
     private void OnItemPlaced(Entity<ArtifactAnalyzerComponent> ent, ref ItemPlacedEvent args)
@@ -88,29 +80,6 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
         }
         ent.Comp.AnalyzerEntity = null;
         Dirty(ent);
-    }
-
-    private void OnExtractButtonPressed(Entity<AnalysisConsoleComponent> ent, ref AnalysisConsoleExtractButtonPressedMessage args)
-    {
-        if (!TryGetArtifactFromConsole(ent, out var artifact))
-            return;
-
-        // if (!_research.TryGetClientServer(uid, out var server, out var serverComponent))
-        //     return;
-
-        // var pointValue = _artifact.GetResearchPointValue(artifact.Value);
-        //
-        // // no new nodes triggered so nothing to add
-        // if (pointValue == 0)
-        //     return;
-        //
-        // _research.ModifyServerPoints(server.Value, pointValue, serverComponent);
-        // _artifact.AdjustConsumedPoints(artifact.Value, pointValue);
-        //
-        // _audio.PlayPvs(component.ExtractSound, component.AnalyzerEntity.Value, AudioParams.Default.WithVolume(2f));
-        //
-        // _popup.PopupEntity(Loc.GetString("analyzer-artifact-extract-popup"),
-        //     component.AnalyzerEntity.Value, PopupType.Large);
     }
 
     public bool TryGetAnalyzer(Entity<AnalysisConsoleComponent> ent, [NotNullWhen(true)] out Entity<ArtifactAnalyzerComponent>? analyzer)
