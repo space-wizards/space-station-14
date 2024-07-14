@@ -9249,7 +9249,7 @@ entities:
     - type: Transform
       pos: 14.438607,42.637726
       parent: 588
-- proto: PillSpaceMirage
+- proto: PillSpaceDrugs
   entities:
   - uid: 1479
     components:
