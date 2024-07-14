@@ -244,7 +244,7 @@ public abstract class SharedVirtualItemSystem : EntitySystem
         if (TerminatingOrDeleted(item))
             return;
 
-        _transformSystem.DetachParentToNull(item, Transform(item));
+        _transformSystem.DetachEntity(item, Transform(item));
         if (_netManager.IsServer)
             QueueDel(item);
     }
