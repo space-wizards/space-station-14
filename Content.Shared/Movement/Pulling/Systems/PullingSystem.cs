@@ -97,6 +97,7 @@ public sealed class PullingSystem : EntitySystem
         SubscribeLocalEvent<PullerComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
         SubscribeLocalEvent<PullerComponent, DropHandItemsEvent>(OnDropHandItems);
         SubscribeLocalEvent<PullerComponent, VirtualItemThrownEvent>(OnVirtualItemThrown);
+        SubscribeLocalEvent<PullerComponent, VirtualItemDropAttemptEvent>(OnVirtualItemDropAttempt);
 
         SubscribeLocalEvent<PullableComponent, StrappedEvent>(OnBuckled);
         SubscribeLocalEvent<PullableComponent, BuckledEvent>(OnGotBuckled);
@@ -186,6 +187,41 @@ public sealed class PullingSystem : EntitySystem
         component.NextThrow += args.PausedTime;
     }
 
+    private void OnVirtualItemDropAttempt(EntityUid uid, PullerComponent component, VirtualItemDropAttemptEvent args)
+    {
+        // If client deletes the virtual hand then stop the pull.
+        if (component.Pulling == null)
+            return;
+
+        if (component.Pulling != args.BlockingEntity)
+            return;
+
+        if (_timing.CurTime < component.NextStageChange)
+        {
+            args.Cancel();
+            return;
+        }
+
+        if (!args.Throw)
+        {
+            if (component.GrabStage > GrabStage.No)
+            {
+                if (EntityManager.TryGetComponent(args.BlockingEntity, out PullableComponent? comp))
+                {
+                    TryLowerGrabStage(component.Pulling.Value, uid);
+                    args.Cancel();
+                }
+            }
+        }
+        else
+        {
+            if (component.GrabStage <= GrabStage.Soft)
+            {
+                TryLowerGrabStage(component.Pulling.Value, uid);
+                args.Cancel();
+            }
+        }
+    }
     private void OnVirtualItemDeleted(EntityUid uid, PullerComponent component, VirtualItemDeletedEvent args)
     {
         // If client deletes the virtual hand then stop the pull.
@@ -197,20 +233,7 @@ public sealed class PullingSystem : EntitySystem
 
         if (EntityManager.TryGetComponent(args.BlockingEntity, out PullableComponent? comp))
         {
-            if (component.SuffocateVirtualItems.Count > 0 && component.NextStageChange >= _timing.CurTime)
-            {
-                if (!component.SuffocateVirtualItems.Contains(args.VirtualItem))
-                {
-                    component.SuffocateVirtualItems.Remove(component.SuffocateVirtualItems.Last());
-                }
-                TryLowerGrabStage(component.Pulling.Value, uid);
-            }
-            else
-            {
-                TryLowerGrabStage(component.Pulling.Value, uid);
-                if (_netManager.IsServer && component.Pulling != null)
-                    _virtualSystem.TrySpawnVirtualItemInHand(args.BlockingEntity, uid);
-            }
+            TryLowerGrabStage(component.Pulling.Value, uid);
         }
     }
 
@@ -227,8 +250,8 @@ public sealed class PullingSystem : EntitySystem
         {
             if (TryComp<CombatModeComponent>(uid, out var combatMode) &&
                 combatMode.IsInCombatMode &&
-                component.GrabStage >= GrabStage.Hard &&
-                !HasComp<GrabThrownComponent>(args.BlockingEntity))
+                !HasComp<GrabThrownComponent>(args.BlockingEntity) &&
+                component.GrabStage > GrabStage.Soft)
             {
                 //var thrownPos = _transform.GetMapCoordinates(args.BlockingEntity);
                 var direction = args.Direction;
@@ -449,6 +472,12 @@ public sealed class PullingSystem : EntitySystem
             pullerComp.Pulling = null;
 
             pullerComp.GrabStage = GrabStage.No;
+            List<EntityUid> virtItems = pullerComp.SuffocateVirtualItems;
+            foreach (var item in virtItems)
+            {
+                QueueDel(item);
+            }
+            pullerComp.SuffocateVirtualItems.Clear();
 
             Dirty(oldPuller.Value, pullerComp);
 
@@ -851,12 +880,20 @@ public sealed class PullingSystem : EntitySystem
                 return true;
             }
 
-            if (puller.Comp.GrabStage == GrabStage.Suffocate)
+            if (puller.Comp.GrabStage >= GrabStage.Hard && puller.Comp.SuffocateVirtualItems.Count > 0)
             {
-                foreach (var item in puller.Comp.SuffocateVirtualItems)
+                var ent = puller.Comp.SuffocateVirtualItems.Last();
+                puller.Comp.SuffocateVirtualItems.Remove(ent);
+                QueueDel(ent);
+            }
+            if (puller.Comp.GrabStage < GrabStage.Hard)
+            {
+                List<EntityUid> virtItems = puller.Comp.SuffocateVirtualItems;
+                foreach (var item in virtItems)
                 {
                     QueueDel(item);
                 }
+                puller.Comp.SuffocateVirtualItems.Clear();
             }
 
             _audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg"), pullable);

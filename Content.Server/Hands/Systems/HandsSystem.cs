@@ -24,6 +24,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Hands;
+using Content.Shared.Inventory.VirtualItem;
 
 namespace Content.Server.Hands.Systems
 {
@@ -173,6 +174,18 @@ namespace Content.Server.Hands.Systems
         {
             if (playerSession?.AttachedEntity is not {Valid: true} player || !Exists(player))
                 return false;
+
+            if (TryGetActiveItem(player, out var item) && TryComp<VirtualItemComponent>(item, out var virtComp))
+            {
+                var userEv = new VirtualItemDropAttemptEvent(virtComp.BlockingEntity, player, item.Value, true);
+                RaiseLocalEvent(player, userEv);
+
+                var targEv = new VirtualItemDropAttemptEvent(virtComp.BlockingEntity, player, item.Value, true);
+                RaiseLocalEvent(virtComp.BlockingEntity, targEv);
+
+                if (userEv.Cancelled || targEv.Cancelled)
+                    return false;
+            }
 
             return ThrowHeldItem(player, coordinates);
         }

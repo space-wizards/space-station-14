@@ -18,7 +18,7 @@ public sealed partial class GrabThrownComponent : Component
 
     public float? StaminaDamageOnCollide;
 
-    public int? SavedCollisionMask;
+    //public int? SavedCollisionMask;
 
-    public int? SavedCollisionLayer;
+    //public int? SavedCollisionLayer;
 }

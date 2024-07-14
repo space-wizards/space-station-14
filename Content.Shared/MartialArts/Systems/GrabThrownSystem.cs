@@ -38,8 +38,8 @@ public sealed class GrabThrownSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GrabThrownComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<GrabThrownComponent, ComponentShutdown>(OnShutdown);
+        //SubscribeLocalEvent<GrabThrownComponent, ComponentStartup>(OnStartup);
+        //SubscribeLocalEvent<GrabThrownComponent, ComponentShutdown>(OnShutdown);
 
         SubscribeLocalEvent<GrabThrownComponent, StartCollideEvent>(HandleCollide);
         SubscribeLocalEvent<GrabThrownComponent, StopThrowEvent>(OnStopThrow);
@@ -56,7 +56,7 @@ public sealed class GrabThrownSystem : EntitySystem
             return;
         }
 
-        if (!args.OurFixture.Hard || !args.OtherFixture.Hard)
+        if (!args.OtherFixture.Hard)
             return;
 
         if (!EntityManager.HasComponent<DamageableComponent>(uid))
@@ -88,39 +88,39 @@ public sealed class GrabThrownSystem : EntitySystem
             RemComp<GrabThrownComponent>(uid);
     }
 
-    public void OnStartup(EntityUid uid, GrabThrownComponent component, ComponentStartup args)
-    {
-        if (_netMan.IsClient)
-            return;
+    //public void OnStartup(EntityUid uid, GrabThrownComponent component, ComponentStartup args)
+    //{
+    //    if (_netMan.IsClient)
+    //        return;
 
-        if (TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.FixtureCount >= 1)
-        {
-            var fixture = fixtures.Fixtures.First();
+    //    if (TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.FixtureCount >= 1)
+    //    {
+    //        var fixture = fixtures.Fixtures.First();
 
-            component.SavedCollisionMask = fixture.Value.CollisionMask;
-            component.SavedCollisionLayer = fixture.Value.CollisionLayer;
+    //        component.SavedCollisionMask = fixture.Value.CollisionMask;
+    //        component.SavedCollisionLayer = fixture.Value.CollisionLayer;
+            
+    //        _physics.SetCollisionMask(uid, fixture.Key, fixture.Value, (int) CollisionGroup.FlyingMobMask, fixtures);
+    //       _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, (int) CollisionGroup.FlyingMobLayer, fixtures);
+    //    }
+    //}
 
-            _physics.SetCollisionMask(uid, fixture.Key, fixture.Value, (int) CollisionGroup.FlyingMobMask, fixtures);
-            _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, (int) CollisionGroup.FlyingMobLayer, fixtures);
-        }
-    }
+    //public void OnShutdown(EntityUid uid, GrabThrownComponent component, ComponentShutdown args)
+    //{
+    //    if (_netMan.IsClient)
+    //        return;
 
-    public void OnShutdown(EntityUid uid, GrabThrownComponent component, ComponentShutdown args)
-    {
-        if (_netMan.IsClient)
-            return;
+    //    if (TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.FixtureCount >= 1)
+    //    {
+    //        var fixture = fixtures.Fixtures.First();
 
-        if (TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.FixtureCount >= 1)
-        {
-            var fixture = fixtures.Fixtures.First();
-
-            if (component.SavedCollisionLayer != null && component.SavedCollisionMask != null)
-            {
-                _physics.SetCollisionMask(uid, fixture.Key, fixture.Value, component.SavedCollisionMask.Value, fixtures);
-                _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, component.SavedCollisionLayer.Value, fixtures);
-            }
-        }
-    }
+    //        if (component.SavedCollisionLayer != null && component.SavedCollisionMask != null)
+    //        {
+    //            _physics.SetCollisionMask(uid, fixture.Key, fixture.Value, component.SavedCollisionMask.Value, fixtures);
+    //            _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, component.SavedCollisionLayer.Value, fixtures);
+    //        }
+    //    }
+    //}
 
     public void Throw(EntityUid uid, Vector2 vector, float? staminaDamage = null, DamageSpecifier? damageToUid = null, DamageSpecifier? damageToWall = null)
     {

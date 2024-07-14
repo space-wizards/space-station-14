@@ -173,6 +173,21 @@ namespace Content.Shared.Hands
         }
     }
 
+    public sealed class VirtualItemDropAttemptEvent : CancellableEntityEventArgs
+    {
+        public EntityUid BlockingEntity;
+        public EntityUid User;
+        public EntityUid VirtualItem;
+        public bool Throw;
+        public VirtualItemDropAttemptEvent(EntityUid blockingEntity, EntityUid user, EntityUid virtualItem, bool thrown)
+        {
+            BlockingEntity = blockingEntity;
+            User = user;
+            VirtualItem = virtualItem;
+            Throw = thrown;
+        }
+    }
+
     /// <summary>
     ///     Raised when putting an entity into a hand slot
     /// </summary>
