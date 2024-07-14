@@ -64,6 +64,7 @@
     - type: Tag
       tags:
       - Flashlight
+    - type: SmartEquipForceItem
 
 - type: entity
   parent: Lantern

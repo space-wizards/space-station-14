@@ -66,6 +66,7 @@
   - type: Appearance
   - type: StaticPrice
     price: 500
+  - type: SmartEquipForceItem
 
 - type: entity
   name: viper

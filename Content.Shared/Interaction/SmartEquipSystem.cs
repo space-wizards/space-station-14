@@ -3,11 +3,11 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
-using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
@@ -126,7 +126,8 @@ public sealed class SmartEquipSystem : EntitySystem
         }
 
         // case 2 (storage item):
-        if (TryComp<StorageComponent>(slotItem, out var storage))
+        if (TryComp<StorageComponent>(slotItem, out var storage)&&
+            !HasComp<SmartEquipForceItemComponent>(slotItem))
         {
             switch (handItem)
             {
@@ -159,7 +160,7 @@ public sealed class SmartEquipSystem : EntitySystem
 
         // case 3 (itemslot item):
         if (TryComp<ItemSlotsComponent>(slotItem, out var slots) &&
-            !HasComp<GunComponent>(slotItem))
+            !HasComp<SmartEquipForceItemComponent>(slotItem))
         {
             if (handItem == null)
             {
