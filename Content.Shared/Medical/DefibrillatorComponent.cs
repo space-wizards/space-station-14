@@ -12,38 +12,38 @@ namespace Content.Shared.Medical;
 /// person back into the world of the living.
 /// Uses <c>ItemToggleComponent</c>
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedDefibrillatorSystem)), AutoGenerateComponentPause]
 public sealed partial class DefibrillatorComponent : Component
 {
     /// <summary>
     /// The time at which the zap cooldown will be completed
     /// </summary>
-    [DataField("nextZapTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     [AutoPausedField]
     public TimeSpan? NextZapTime;
 
     /// <summary>
     /// The minimum time between zaps
     /// </summary>
-    [DataField("zapDelay"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan ZapDelay = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// How much damage is healed from getting zapped.
     /// </summary>
-    [DataField("zapHeal", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier ZapHeal = default!;
 
     /// <summary>
     /// The electrical damage from getting zapped.
     /// </summary>
-    [DataField("zapDamage"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int ZapDamage = 5;
 
     /// <summary>
     /// How long the victim will be electrocuted after getting zapped.
     /// </summary>
-    [DataField("writheDuration"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan WritheDuration = TimeSpan.FromSeconds(3);
 
     /// <summary>
@@ -52,31 +52,31 @@ public sealed partial class DefibrillatorComponent : Component
     /// <remarks>
     /// This is synced with the audio; do not change one but not the other.
     /// </remarks>
-    [DataField("doAfterDuration"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan DoAfterDuration = TimeSpan.FromSeconds(3);
 
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool AllowDoAfterMovement = true;
 
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool CanDefibCrit = true;
 
     /// <summary>
     /// The sound when someone is zapped.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("zapSound")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier? ZapSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_zap.ogg");
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("chargeSound")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier? ChargeSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_charge.ogg");
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("failureSound")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier? FailureSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_failed.ogg");
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("successSound")]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier? SuccessSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_success.ogg");
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("readySound")]
+    [DataField, ViewVariables(VVAccess.ReadWrite),]
     public SoundSpecifier? ReadySound = new SoundPathSpecifier("/Audio/Items/Defib/defib_ready.ogg");
 }
 
@@ -89,5 +89,4 @@ public enum DefibrillatorVisuals : byte
 [Serializable, NetSerializable]
 public sealed partial class DefibrillatorZapDoAfterEvent : SimpleDoAfterEvent
 {
-
 }
