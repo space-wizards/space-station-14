@@ -71,7 +71,7 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
         if (!_toggle.IsActivated(uid))
         {
             if (user != null)
-                _popup.PopupEntity(Loc.GetString("defibrillator-not-on"), uid, user.Value);
+                _popup.PopupClient(Loc.GetString("defibrillator-not-on"), uid, user.Value);
             return false;
         }
 
@@ -101,7 +101,7 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
         if (!CanZap(uid, target, user, component))
             return false;
 
-        _audio.PlayPvs(component.ChargeSound, uid);
+        _audio.PlayPredicted(component.ChargeSound, uid, user);
         return _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.DoAfterDuration, new DefibrillatorZapDoAfterEvent(),
             uid, target, uid)
         {
@@ -129,7 +129,7 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
 
     public virtual void Zap(EntityUid uid, EntityUid target, EntityUid user, DefibrillatorComponent component, MobStateComponent? mob = null)
     {
-        _audio.PlayPvs(component.ZapSound, uid);
+        _audio.PlayPredicted(component.ZapSound, uid, user);
         _electrocution.TryDoElectrocution(target, null, component.ZapDamage, component.WritheDuration, true, ignoreInsulation: true);
         component.NextZapTime = _timing.CurTime + component.ZapDelay;
         _appearance.SetData(uid, DefibrillatorVisuals.Ready, false);
@@ -162,9 +162,11 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
             if (defib.NextZapTime == null || _timing.CurTime < defib.NextZapTime)
                 continue;
 
-            _audio.PlayPvs(defib.ReadySound, uid);
+            _audio.PlayPredicted(defib.ReadySound, uid, null);
             _appearance.SetData(uid, DefibrillatorVisuals.Ready, true);
             defib.NextZapTime = null;
+
+            Dirty(uid, defib);
         }
     }
 }
