@@ -1,6 +1,6 @@
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.GridPreloader;
+using Content.Shared.GameTicking.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.Map;

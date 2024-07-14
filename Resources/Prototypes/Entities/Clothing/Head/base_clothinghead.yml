@@ -119,6 +119,7 @@
   id: ClothingHeadEVAHelmetBase
   name: base space helmet
   components:
+  - type: BreathMask
   - type: Item
     size: Normal
   - type: PressureProtection
@@ -142,6 +143,8 @@
     slots:
     - Hair
     - Snout
+    - HeadTop
+    - HeadSide
 
 - type: entity
   abstract: true
@@ -150,6 +153,7 @@
   name: base hardsuit helmet
   noSpawn: true
   components:
+  - type: BreathMask
   - type: Sprite
     state: icon # default state used by most inheritors
   - type: Clickable
@@ -165,8 +169,6 @@
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.1
-  - type: FireProtection
-    reduction: 0.2
   - type: Armor
     modifiers:
       coefficients:
@@ -185,6 +187,8 @@
     slots:
     - Hair
     - Snout
+    - HeadTop
+    - HeadSide
 
 - type: entity
   abstract: true
@@ -259,3 +263,5 @@
   - type: HideLayerClothing
     slots:
     - Hair
+    - HeadTop
+    - HeadSide

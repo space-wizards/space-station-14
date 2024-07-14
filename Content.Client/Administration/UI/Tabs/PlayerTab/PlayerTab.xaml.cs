@@ -53,6 +53,7 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
             SearchList.ItemKeyBindDown += (args, data) => OnEntryKeyBindDown?.Invoke(args, data);
 
             RefreshPlayerList(_adminSystem.PlayerList);
+
         }
 
         #region Antag Overlay
@@ -108,9 +109,11 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab
         private void RefreshPlayerList(IReadOnlyList<PlayerInfo> players)
         {
             _players = players;
-            PlayerCount.Text = $"Players: {_playerMan.PlayerCount}";
+            PlayerCount.Text = Loc.GetString("player-tab-player-count", ("count", _playerMan.PlayerCount));
 
-            var sortedPlayers = new List<PlayerInfo>(players);
+            var filteredPlayers = players.Where(info => _showDisconnected || info.Connected).ToList();
+
+            var sortedPlayers = new List<PlayerInfo>(filteredPlayers);
             sortedPlayers.Sort(Compare);
 
             UpdateHeaderSymbols();

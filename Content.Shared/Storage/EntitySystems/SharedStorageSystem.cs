@@ -96,6 +96,7 @@ public abstract class SharedStorageSystem : EntitySystem
             subs.Event<BoundUIClosedEvent>(OnBoundUIClosed);
         });
 
+        SubscribeLocalEvent<StorageComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<StorageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<StorageComponent, GetVerbsEvent<ActivationVerb>>(AddUiVerb);
         SubscribeLocalEvent<StorageComponent, ComponentGetState>(OnStorageGetState);
@@ -131,6 +132,11 @@ public abstract class SharedStorageSystem : EntitySystem
             .Register<SharedStorageSystem>();
 
         UpdatePrototypeCache();
+    }
+
+    private void OnRemove(Entity<StorageComponent> entity, ref ComponentRemove args)
+    {
+        _ui.CloseUi(entity.Owner, StorageComponent.StorageUiKey.Key);
     }
 
     private void OnMapInit(Entity<StorageComponent> entity, ref MapInitEvent args)
@@ -298,7 +304,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
 
         // prevent spamming bag open / honkerton honk sound
-        silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && UseDelay.IsDelayed((uid, useDelay));
+        silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && UseDelay.IsDelayed((uid, useDelay), id: OpenUiUseDelayID);
         if (!CanInteract(entity, (uid, storageComp), silent: silent))
             return;
 
@@ -308,7 +314,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 Audio.PlayPredicted(storageComp.StorageOpenSound, uid, entity);
 
             if (useDelay != null)
-                UseDelay.TryResetDelay((uid, useDelay));
+                UseDelay.TryResetDelay((uid, useDelay), id: OpenUiUseDelayID);
         }
 
         _ui.OpenUi(uid, StorageComponent.StorageUiKey.Key, entity);
@@ -1384,7 +1390,12 @@ public abstract class SharedStorageSystem : EntitySystem
 
         // If we specify a max item size, use that
         if (uid.Comp.MaxItemSize != null)
-            return _prototype.Index(uid.Comp.MaxItemSize.Value);
+        {
+            if (_prototype.TryIndex(uid.Comp.MaxItemSize.Value, out var proto))
+                return proto;
+
+            Log.Error($"{ToPrettyString(uid.Owner)} tried to get invalid item size prototype: {uid.Comp.MaxItemSize.Value}. Stack trace:\\n{Environment.StackTrace}");
+        }
 
         if (!_itemQuery.TryGetComponent(uid, out var item))
             return _defaultStorageMaxItemSize;

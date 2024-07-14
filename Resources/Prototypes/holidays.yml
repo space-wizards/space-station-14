@@ -437,3 +437,10 @@
   name: holiday-name-friday-thirteenth
   shouldCelebrate:
     !type:FridayThirteenth { }
+
+- type: holiday
+  id: PrideMonth
+  name: holiday-name-pride-month
+  beginDay: 1
+  endDay: 31
+  beginMonth: June
