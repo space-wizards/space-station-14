@@ -166,8 +166,8 @@ public sealed class TargetOutlineSystem : EntitySystem
                 valid = _interactionSystem.InRangeUnobstructed(player, entity, Range);
             else if (Range >= 0)
             {
-                var origin = _transformSystem.GetWorldPosition(Transform(player));
-                var target = _transformSystem.GetWorldPosition(Transform(entity));
+                var origin = _transformSystem.GetWorldPosition(player);
+                var target = _transformSystem.GetWorldPosition(entity);
                 valid = (origin - target).LengthSquared() <= Range;
             }
 

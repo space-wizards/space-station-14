@@ -35,8 +35,8 @@ public sealed class ContainmentFieldSystem : EntitySystem
 
         if (TryComp<PhysicsComponent>(otherBody, out var physics) && physics.Mass <= component.MaxMass && physics.Hard)
         {
-            var fieldDir = _transformSystem.GetWorldPosition(Transform(uid));
-            var playerDir = _transformSystem.GetWorldPosition(Transform(otherBody));
+            var fieldDir = _transformSystem.GetWorldPosition(uid);
+            var playerDir = _transformSystem.GetWorldPosition(otherBody);
 
             _throwing.TryThrow(otherBody, playerDir-fieldDir, baseThrowSpeed: component.ThrowForce);
         }
