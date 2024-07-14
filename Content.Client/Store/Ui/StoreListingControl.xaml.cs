@@ -65,6 +65,7 @@ public sealed partial class StoreListingControl : Control
         }
         else
         {
+            DiscountSubText.Text = _discount;
             StoreItemBuyButton.Text = _price;
         }
     }

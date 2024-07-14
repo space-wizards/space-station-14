@@ -7,7 +7,8 @@
   description: uplink-pistol-viper-desc
   productEntity: WeaponPistolViper
   discountCategory: rareDiscounts
-  discountOptions: [ 0.33, 0.66 ]
+  discountDownUntil:
+    Telecrystal: 1
   cost:
     Telecrystal: 3
   categories:
@@ -19,7 +20,8 @@
   description: uplink-revolver-python-desc
   productEntity: WeaponRevolverPythonAP
   discountCategory: usualDiscounts
-  discountOptions: [ 0.25, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 4
   cost:
     Telecrystal: 8 # Originally was 13 TC but was not used due to high cost
   categories:
@@ -32,7 +34,8 @@
   description: uplink-pistol-cobra-desc
   productEntity: WeaponPistolCobra
   discountCategory: rareDiscounts
-  discountOptions: [ 0.25, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 2
   cost:
     Telecrystal: 4
   categories:
@@ -45,7 +48,8 @@
   description: uplink-rifle-mosin-desc
   productEntity: WeaponSniperMosin
   discountCategory: rareDiscounts
-  discountOptions: [ 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -57,7 +61,8 @@
   description: uplink-esword-desc
   icon: { sprite: /Textures/Objects/Weapons/Melee/e_sword.rsi, state: icon }
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.125, 0.250, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 4
   productEntity: EnergySword
   cost:
     Telecrystal: 8
@@ -71,7 +76,8 @@
   icon: { sprite: /Textures/Objects/Weapons/Melee/e_dagger.rsi, state: icon }
   productEntity: EnergyDaggerBox
   discountCategory: rareDiscounts
-  discountOptions: [ 0.5, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -94,7 +100,8 @@
   description: uplink-gloves-north-star-desc
   productEntity: ClothingHandsGlovesNorthStar
   discountCategory: usualDiscounts
-  discountOptions: [ 0.125, 0.250, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 4
   cost:
     Telecrystal: 8
   categories:
@@ -106,7 +113,8 @@
   description: uplink-disposable-turret-desc
   productEntity: ToolboxElectricalTurretFilled
   discountCategory: usualDiscounts
-  discountOptions: [ 0.166, 0,33, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 3
   cost:
     Telecrystal: 6
   categories:
@@ -124,7 +132,8 @@
   icon: { sprite: /Textures/Objects/Weapons/Melee/e_shield.rsi, state: eshield-on }
   productEntity: EnergyShield
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.125, 0.250, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 4
   cost:
     Telecrystal: 8
   categories:
@@ -142,7 +151,8 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi, state: base }
   productEntity: BriefcaseSyndieSniperBundleFilled
   discountCategory: usualDiscounts
-  discountOptions: [ 0.2, 0.2, 0.2, 0.4, 0.8 ]
+  discountDownUntil:
+    Telecrystal: 4
   cost:
     Telecrystal: 12
   categories:
@@ -155,7 +165,8 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledSMG
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.2, 0.4 ]
+  discountDownUntil:
+    Telecrystal: 10
   cost:
     Telecrystal: 17
   categories:
@@ -168,7 +179,8 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Shotguns/bulldog.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledShotgun
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.05, 0.1, 0.2, 0.4 ]
+  discountDownUntil:
+    Telecrystal: 12
   cost:
     Telecrystal: 20
   categories:
@@ -181,7 +193,8 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.04, 0.2 ]
+  discountDownUntil:
+    Telecrystal: 20
   cost:
     Telecrystal: 25
   categories:
@@ -194,7 +207,8 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledLMG
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.05, 0.1, 0.2 ]
+  discountDownUntil:
+    Telecrystal: 24
   cost:
     Telecrystal: 30
   categories:
@@ -208,7 +222,8 @@
   description: uplink-explosive-grenade-desc
   productEntity: ExGrenade
   discountCategory: usualDiscounts
-  discountOptions: [ 0.25, 0.5, 0.75 ]
+  discountDownUntil:
+    Telecrystal: 1
   cost:
     Telecrystal: 4
   categories:
@@ -220,7 +235,8 @@
   description: uplink-flash-grenade-desc
   productEntity: GrenadeFlashBang
   discountCategory: rareDiscounts
-  discountOptions: [ 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -232,7 +248,8 @@
   description: uplink-smoke-grenade-desc
   productEntity: SmokeGrenade
   discountCategory: rareDiscounts
-  discountOptions: [ 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -244,7 +261,8 @@
   description: uplink-mini-bomb-desc
   productEntity: SyndieMiniBomb
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.166, 0.33 ]
+  discountDownUntil:
+    Telecrystal: 2
   cost:
     Telecrystal: 6
   categories:
@@ -256,7 +274,8 @@
   description: uplink-supermatter-grenade-desc
   productEntity: SupermatterGrenade
   discountCategory: usualDiscounts
-  discountOptions: [ 0.166, 0.33, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 3
   cost:
     Telecrystal: 6
   categories:
@@ -268,7 +287,8 @@
   description: uplink-whitehole-grenade-desc
   productEntity: WhiteholeGrenade
   discountCategory: usualDiscounts
-  discountOptions: [0.33, 0.66, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 3
   categories:
@@ -280,7 +300,8 @@
   description: uplink-penguin-grenade-desc
   productEntity: MobGrenadePenguin
   discountCategory: usualDiscounts
-  discountOptions: [0.2, 0.4, 0.6 ]
+  discountDownUntil:
+    Telecrystal: 2
   cost:
     Telecrystal: 5
   categories:
@@ -297,7 +318,8 @@
   description: uplink-c4-desc
   productEntity: C4
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.5, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -309,7 +331,8 @@
   description: uplink-grenadier-rig-desc
   productEntity: ClothingBeltMilitaryWebbingGrenadeFilled
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.33, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 6
   cost:
     Telecrystal: 12
   categories:
@@ -347,7 +370,8 @@
   icon: { sprite: /Textures/Objects/Misc/pens.rsi, state: pen }
   productEntity: PenExplodingBox
   discountCategory: usualDiscounts
-  discountOptions: [ 0.25, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 2
   cost:
     Telecrystal: 4
   categories:
@@ -390,7 +414,8 @@
   description: uplink-cluster-grenade-desc
   productEntity: ClusterGrenade
   discountCategory: usualDiscounts
-  discountOptions: [ 0.25, 0.375 ]
+  discountDownUntil:
+    Telecrystal: 5
   cost:
     Telecrystal: 8
   categories:
@@ -402,7 +427,8 @@
   description: uplink-shrapnel-grenade-desc
   productEntity: GrenadeShrapnel
   discountCategory: rareDiscounts
-  discountOptions: [ 0.25, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 2
   cost:
     Telecrystal: 4
   categories:
@@ -414,7 +440,8 @@
   description: uplink-incendiary-grenade-desc
   productEntity: GrenadeIncendiary
   discountCategory: rareDiscounts
-  discountOptions: [ 0.25, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 2
   cost:
     Telecrystal: 4
   categories:
@@ -426,7 +453,8 @@
   description: uplink-emp-kit-desc
   productEntity: ElectricalDisruptionKit
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.16, 0.33 ]
+  discountDownUntil:
+    Telecrystal: 4
   cost:
     Telecrystal: 6
   categories:
@@ -441,7 +469,8 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi, state: red-icon }
   productEntity: MagazinePistol
   discountCategory: rareDiscounts
-  discountOptions: [ 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -455,7 +484,8 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag.rsi, state: red-icon }
   productEntity: MagazinePistolSubMachineGun
   discountCategory: rareDiscounts
-  discountOptions: [ 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -469,7 +499,8 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi, state: red-icon }
   productEntity: MagazinePistolCaselessRifle
   discountCategory: rareDiscounts
-  discountOptions: [ 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -483,7 +514,8 @@
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi, state: icon }
   productEntity: SpeedLoaderMagnumAP
   discountCategory: rareDiscounts
-  discountOptions: [ 0.66, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 3
   categories:
@@ -496,7 +528,8 @@
   description: uplink-mosin-ammo-desc
   productEntity: MagazineBoxLightRifle
   discountCategory: rareDiscounts
-  discountOptions: [ 0.66, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -509,7 +542,8 @@
   description: uplink-sniper-ammo-desc
   productEntity: MagazineBoxAntiMateriel
   discountCategory: rareDiscounts
-  discountOptions: [ 0.66, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -543,7 +577,8 @@
   icon: { sprite: /Textures/Objects/Misc/pens.rsi, state: pen }
   productEntity: HypopenBox
   discountCategory: rareDiscounts
-  discountOptions: [ 0.16, 0.33 ]
+  discountDownUntil:
+    Telecrystal: 4
   cost:
     Telecrystal: 6
   categories:
@@ -556,7 +591,8 @@
   icon: { sprite: /Textures/Objects/Fun/Darts/dart_red.rsi, state: icon }
   productEntity: HypoDartBox
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.5 ]
+  discountDownUntil:
+    Telecrystal: 1
   cost:
     Telecrystal: 2
   categories:
@@ -569,7 +605,8 @@
   icon: { sprite: /Textures/Objects/Storage/boxicons.rsi, state: vials }
   productEntity: ChemicalSynthesisKit
   discountCategory: usualDiscounts
-  discountOptions: [ 0.25 ]
+  discountDownUntil:
+    Telecrystal: 3
   cost:
     Telecrystal: 4
   categories:
@@ -601,7 +638,8 @@
   description: uplink-nocturine-chemistry-bottle-desc
   productEntity: NocturineChemistryBottle
   discountCategory: usualDiscounts
-  discountOptions: [ 0.16, 0.33, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 3
   cost:
     Telecrystal: 6
   categories:
@@ -613,7 +651,8 @@
   description: uplink-combat-medkit-desc
   productEntity: MedkitCombatFilled
   discountCategory: usualDiscounts
-  discountOptions: [ 0.2, 0.4, 0.6, 0.8 ]
+  discountDownUntil:
+    Telecrystal: 1
   cost:
     Telecrystal: 5
   categories:
@@ -625,7 +664,8 @@
   description: uplink-combat-medipen-desc
   productEntity: CombatMedipen
   discountCategory: usualDiscounts
-  discountOptions: [ 0.25, 0.5, 0.75 ]
+  discountDownUntil:
+    Telecrystal: 1
   cost:
     Telecrystal: 4
   categories:
@@ -637,7 +677,8 @@
   description: uplink-stimpack-desc
   productEntity: Stimpack
   discountCategory: usualDiscounts
-  discountOptions: [ 0.25, 0.5, 0.75 ]
+  discountDownUntil:
+    Telecrystal: 1
   cost:
     Telecrystal: 4
   categories:
@@ -659,7 +700,8 @@
   description: uplink-cigarettes-desc
   productEntity: CigPackSyndicate
   discountCategory: rareDiscounts
-  discountOptions: [ 0.5, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -671,7 +713,8 @@
   description: uplink-meds-bundle-desc
   productEntity: ClothingBackpackDuffelSyndicateMedicalBundleFilled
   discountCategory: rareDiscounts
-  discountOptions: [ 0.1, 0.2, 0.4 ]
+  discountDownUntil:
+    Telecrystal: 12
   cost:
     Telecrystal: 20
   categories:
@@ -694,7 +737,8 @@
   description: uplink-agent-id-card-desc
   productEntity: AgentIDCard
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.33, 0.66, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 3
   categories:
@@ -706,7 +750,8 @@
   description: uplink-stealth-box-desc
   productEntity: StealthBox
   discountCategory: usualDiscounts
-  discountOptions: [ 0.2, 0.4, 0.6 ]
+  discountDownUntil:
+    Telecrystal: 2
   cost:
     Telecrystal: 5
   categories:
@@ -729,7 +774,8 @@
   icon: { sprite: /Textures/Objects/Devices/encryption_keys.rsi, state: synd_label }
   productEntity: BoxEncryptionKeySyndie # Two for the price of one
   discountCategory: usualDiscounts
-  discountOptions: [ 0.5, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -742,7 +788,8 @@
   icon: { sprite: /Textures/Objects/Devices/encryption_keys.rsi, state: rd_label }
   productEntity: EncryptionKeyBinary
   discountCategory: rareDiscounts
-  discountOptions: [ 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -754,7 +801,8 @@
   description: uplink-cyberpen-desc
   productEntity: CyberPen
   discountCategory: usualDiscounts
-  discountOptions: [ 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -766,7 +814,8 @@
   description: uplink-decoy-disk-desc
   productEntity: NukeDiskFake
   discountCategory: usualDiscounts
-  discountOptions: [ 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -778,7 +827,8 @@
   description: uplink-ultrabright-lantern-desc
   productEntity: LanternFlash
   discountCategory: usualDiscounts
-  discountOptions: [ 0.5, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -790,7 +840,8 @@
   description: uplink-bribe-desc
   productEntity: BriefcaseSyndieLobbyingBundleFilled
   discountCategory: usualDiscounts
-  discountOptions: [ 0.5, 0.75, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 4
   categories:
@@ -813,7 +864,8 @@
   icon: { sprite: /Textures/Objects/Tools/Decoys/operative_decoy.rsi, state: folded }
   productEntity: ClothingBackpackDuffelSyndicateDecoyKitFilled
   discountCategory: usualDiscounts
-  discountOptions: [ 0.5, 0.83, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 6
   categories:
@@ -825,7 +877,8 @@
   description: uplink-exploding-syndicate-bomb-fake-desc
   productEntity: SyndicateBombFake
   discountCategory: usualDiscounts
-  discountOptions: [ 0.5, 0.75, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 4
   categories:
@@ -839,7 +892,8 @@
   description: uplink-emag-desc
   productEntity: Emag
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.125, 0.25, 0.375 ]
+  discountDownUntil:
+    Telecrystal: 5
   cost:
     Telecrystal: 8
   categories:
@@ -851,7 +905,8 @@
   description: uplink-radio-jammer-desc
   productEntity: RadioJammer
   discountCategory: usualDiscounts
-  discountOptions: [ 0.75, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 4
   categories:
@@ -863,7 +918,8 @@
   description: uplink-syndicate-weapon-module-desc
   productEntity: BorgModuleSyndicateWeapon
   discountCategory: usualDiscounts
-  discountOptions: [ 0.4, 0.6, 0.8 ]
+  discountDownUntil:
+    Telecrystal: 1
   cost:
     Telecrystal: 5
   categories:
@@ -886,7 +942,8 @@
   description: uplink-soap-desc
   productEntity: SoapSyndie
   discountCategory: rareDiscounts
-  discountOptions: [ 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -898,7 +955,8 @@
   description: uplink-slipocalypse-clustersoap-desc
   productEntity: SlipocalypseClusterSoap
   discountCategory: rareDiscounts
-  discountOptions: [ 0.66, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 3
   categories:
@@ -910,7 +968,8 @@
   description: uplink-toolbox-desc
   productEntity: ToolboxSyndicateFilled
   discountCategory: rareDiscounts
-  discountOptions: [ 0.5, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -922,7 +981,8 @@
   description: uplink-syndicate-jaws-of-life-desc
   productEntity: SyndicateJawsOfLife
   discountCategory: rareDiscounts
-  discountOptions: [ 0.5, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -934,7 +994,8 @@
   description: uplink-duffel-surgery-desc
   productEntity: ClothingBackpackDuffelSyndicateFilledMedical
   discountCategory: usualDiscounts
-  discountOptions: [ 0.5, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 4
   categories:
@@ -946,7 +1007,8 @@
   description: uplink-power-sink-desc
   productEntity: PowerSink
   discountCategory: usualDiscounts
-  discountOptions: [ 0.25, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 4
   cost:
     Telecrystal: 8
   categories:
@@ -1001,7 +1063,8 @@
   description: uplink-singularity-beacon-desc
   productEntity: SingularityBeacon
   discountCategory: usualDiscounts
-  discountOptions: [ 0.33, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 6
   cost:
     Telecrystal: 12
   categories:
@@ -1016,7 +1079,8 @@
   icon: { sprite: /Textures/Objects/Misc/guardian_info.rsi, state: icon }
   productEntity: BoxHoloparasite
   discountCategory: usualDiscounts
-  discountOptions: [ 0.28, 0.43 ]
+  discountDownUntil:
+    Telecrystal: 8
   cost:
     Telecrystal: 14
   categories:
@@ -1034,7 +1098,8 @@
   productEntity: ReinforcementRadioSyndicate
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio-urist }
   discountCategory: usualDiscounts
-  discountOptions: [ 0.25, 0.375, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 7
   cost:
     Telecrystal: 14
   categories:
@@ -1084,7 +1149,8 @@
   productEntity: ReinforcementRadioSyndicateAncestor
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio-ancestor }
   discountCategory: usualDiscounts
-  discountOptions: [ 0.16, 0.32 ]
+  discountDownUntil:
+    Telecrystal: 4
   cost:
     Telecrystal: 6
   categories:
@@ -1117,7 +1183,8 @@
   description: uplink-carp-dehydrated-desc
   productEntity: DehydratedSpaceCarp
   discountCategory: rareDiscounts
-  discountOptions: [ 0.5, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -1135,12 +1202,13 @@
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio-syndicat }
   productEntity: ReinforcementRadioSyndicateSyndiCat
   discountCategory: usualDiscounts
-  discountOptions: [ 0.2, 0.4, 0.6 ]
+  discountDownUntil:
+    Telecrystal: 2
   cost:
     Telecrystal: 6
   categories:
     - UplinkAllies
-  
+
 - type: listing
   id: UplinkSyndicatePersonalAI
   name: uplink-syndicate-pai-name
@@ -1148,7 +1216,8 @@
   icon: { sprite: /Textures/Objects/Fun/pai.rsi, state: syndicate-icon-pai-off }
   productEntity: SyndicatePersonalAI
   discountCategory: rareDiscounts
-  discountOptions: [ 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -1166,7 +1235,8 @@
   icon: { sprite: /Textures/Clothing/Back/Backpacks/backpack.rsi, state: icon }
   productEntity: StorageImplanter
   discountCategory: rareDiscounts
-  discountOptions: [ 0.25, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 4
   cost:
     Telecrystal: 8
   categories:
@@ -1184,7 +1254,8 @@
   icon: { sprite: /Textures/Actions/Implants/implants.rsi, state: freedom }
   productEntity: FreedomImplanter
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.2, 0.4 ]
+  discountDownUntil:
+    Telecrystal: 3
   cost:
     Telecrystal: 5
   categories:
@@ -1197,7 +1268,8 @@
   icon: { sprite: /Textures/Structures/Specific/anomaly.rsi, state: anom4 }
   productEntity: ScramImplanter
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.2, 0.4 ]
+  discountDownUntil:
+    Telecrystal: 4
   cost:
     Telecrystal: 6 # it's a gamble that may kill you easily so 6 TC per 2 uses, second one more of a backup
   categories:
@@ -1210,7 +1282,8 @@
   icon: { sprite: /Textures/Mobs/Species/Human/parts.rsi, state: full }
   productEntity: DnaScramblerImplanter
   discountCategory: usualDiscounts
-  discountOptions: [ 0.4, 0.6, 0.8, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 5
   categories:
@@ -1223,7 +1296,8 @@
   icon: { sprite: /Textures/Objects/Magic/magicactions.rsi, state: shield }
   productEntity: EmpImplanter
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.5, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -1292,7 +1366,8 @@
   icon: { sprite: /Textures/Objects/Devices/communication.rsi, state: old-radio }
   productEntity: UplinkImplanter
   discountCategory: usualDiscounts
-  discountOptions: [ 0.5, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -1330,7 +1405,8 @@
   description: uplink-black-jetpack-desc
   productEntity: JetpackBlackFilled
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.5, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -1342,7 +1418,8 @@
   description: uplink-voice-mask-desc
   productEntity: ClothingMaskGasVoiceChameleon
   discountCategory: usualDiscounts
-  discountOptions: [ 0.5, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -1354,7 +1431,8 @@
   description: uplink-holster-desc
   productEntity: ClothingBeltSyndieHolster
   discountCategory: rareDiscounts
-  discountOptions: [ 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -1377,7 +1455,8 @@
   productEntity: ClothingBackpackChameleonFill
   icon: { sprite: /Textures/Clothing/Uniforms/Jumpsuit/rainbow.rsi, state: icon }
   discountCategory: usualDiscounts
-  discountOptions: [ 0.25, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 2
   cost:
     Telecrystal: 4
   categories:
@@ -1389,7 +1468,8 @@
   description: uplink-clothing-no-slips-shoes-desc
   productEntity: ClothingShoesChameleonNoSlips
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.5 ]
+  discountDownUntil:
+    Telecrystal: 1
   cost:
     Telecrystal: 2
   categories:
@@ -1401,7 +1481,8 @@
   description: uplink-clothing-thieving-gloves-desc
   productEntity: ThievingGloves
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.25, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 2
   cost:
     Telecrystal: 4
   categories:
@@ -1413,7 +1494,8 @@
   description: uplink-clothing-outer-vest-web-desc
   productEntity: ClothingOuterVestWeb
   discountCategory: usualDiscounts
-  discountOptions: [ 0.33, 0.66 ]
+  discountDownUntil:
+    Telecrystal: 1
   cost:
     Telecrystal: 3
   categories:
@@ -1425,7 +1507,8 @@
   description: uplink-clothing-shoes-boots-mag-syndie-desc
   productEntity: ClothingShoesBootsMagSyndie
   discountCategory: usualDiscounts
-  discountOptions: [ 0.5, 0.75 ]
+  discountDownUntil:
+    Telecrystal: 1
   cost:
     Telecrystal: 4
   categories:
@@ -1438,7 +1521,8 @@
   icon: { sprite: /Textures/Clothing/OuterClothing/Suits/eva_syndicate.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateEVABundle
   discountCategory: rareDiscounts
-  discountOptions: [ 0.5 ]
+  discountDownUntil:
+    Telecrystal: 1
   cost:
     Telecrystal: 2
   categories:
@@ -1462,7 +1546,8 @@
   icon: { sprite: /Textures/Clothing/OuterClothing/Hardsuits/syndicate.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateHardsuitBundle
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.25, 0.375, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 4
   cost:
     Telecrystal: 8
   categories:
@@ -1475,7 +1560,8 @@
   icon: { sprite: /Textures/Clothing/OuterClothing/Hardsuits/syndieelite.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateEliteHardsuitBundle
   discountCategory: rareDiscounts
-  discountOptions: [ 0.2, 0.3, 0.4 ]
+  discountDownUntil:
+    Telecrystal: 7
   cost:
     Telecrystal: 12
   categories:
@@ -1488,7 +1574,8 @@
   icon: { sprite: /Textures/Structures/Storage/Crates/syndicate.rsi, state: icon }
   productEntity: CrateCybersunJuggernautBundle
   discountCategory: veryRareDiscounts
-  discountOptions: [ 0.16, 0.33 ]
+  discountDownUntil:
+    Telecrystal: 8
   cost:
     Telecrystal: 12
   categories:
@@ -1515,7 +1602,8 @@
   description: uplink-clothing-conducting-gloves-desc
   productEntity: ClothingHandsGlovesConducting
   discountCategory: usualDiscounts
-  discountOptions: [ 0.5, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -1527,7 +1615,8 @@
   description: uplink-backpack-syndicate-desc
   productEntity: ClothingBackpackSyndicate
   discountCategory: usualDiscounts
-  discountOptions: [ 0.5, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -1541,7 +1630,8 @@
   description: uplink-barber-scissors-desc
   productEntity: BarberScissors
   discountCategory: rareDiscounts
-  discountOptions: [ 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -1553,7 +1643,8 @@
   description: uplink-snack-box-desc
   productEntity: HappyHonkNukieSnacks
   discountCategory: rareDiscounts
-  discountOptions: [ 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -1565,7 +1656,8 @@
   description: uplink-revolver-cap-gun-desc
   productEntity: RevolverCapGun
   discountCategory: rareDiscounts
-  discountOptions: [ 0.25, 0.5, 0.75 ]
+  discountDownUntil:
+    Telecrystal: 1
   cost:
     Telecrystal: 4
   categories:
@@ -1577,7 +1669,8 @@
   description: uplink-syndicate-stamp-desc
   productEntity: RubberStampSyndicate
   discountCategory: rareDiscounts
-  discountOptions: [ 0.5, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -1701,7 +1794,8 @@
   description: uplink-gatfruit-seeds-desc
   productEntity: GatfruitSeeds
   discountCategory: usualDiscounts
-  discountOptions: [ 0.33, 0.66 ]
+  discountDownUntil:
+    Telecrystal: 2
   cost:
     Telecrystal: 6
   categories:
@@ -1717,7 +1811,8 @@
   description: uplink-rigged-boxing-gloves-desc
   productEntity: ClothingHandsGlovesBoxingRigged
   discountCategory: usualDiscounts
-  discountOptions: [ 0.33, 0.5, 0.66 ]
+  discountDownUntil:
+    Telecrystal: 2
   cost:
     Telecrystal: 6
   categories:
@@ -1733,7 +1828,8 @@
   description: uplink-rigged-boxing-gloves-desc
   productEntity: ClothingHandsGlovesBoxingRigged
   discountCategory: usualDiscounts
-  discountOptions: [ 0.33, 0.5, 0.66 ]
+  discountDownUntil:
+    Telecrystal: 1
   cost:
     Telecrystal: 4
   categories:
@@ -1749,7 +1845,8 @@
   description: uplink-necronomicon-desc
   productEntity: BibleNecronomicon
   discountCategory: usualDiscounts
-  discountOptions: [ 0.25, 0.5, 0.75 ]
+  discountDownUntil:
+    Telecrystal: 1
   cost:
     Telecrystal: 4
   categories:
@@ -1769,7 +1866,8 @@
   description: uplink-holy-hand-grenade-desc
   productEntity: HolyHandGrenade
   discountCategory: rareDiscounts
-  discountOptions: [ 0.1, 0.3 ]
+  discountDownUntil:
+    Telecrystal: 14
   cost:
     Telecrystal: 20
   categories:
@@ -1785,7 +1883,8 @@
   description: uplink-revolver-cap-gun-fake-desc
   productEntity: RevolverCapGunFake
   discountCategory: usualDiscounts
-  discountOptions: [ 0.5, 0.7 ]
+  discountDownUntil:
+    Telecrystal: 2
   cost:
     Telecrystal: 9
   categories:
@@ -1803,7 +1902,8 @@
   icon: { sprite: Objects/Specific/Hydroponics/banana.rsi, state: peel }
   productEntity: TrashBananaPeelExplosiveUnarmed
   discountCategory: rareDiscounts
-  discountOptions: [ 0.5, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -1819,7 +1919,8 @@
   description: uplink-cluster-banana-peel-desc
   productEntity: ClusterBananaPeel
   discountCategory: rareDiscounts
-  discountOptions: [ 0.33, 0.5, 0.66 ]
+  discountDownUntil:
+    Telecrystal: 2
   cost:
     Telecrystal: 6
   categories:
@@ -1836,7 +1937,8 @@
   icon: { sprite: /Textures/Objects/Fun/figurines.rsi, state: holoclown }
   productEntity: BoxHoloclown
   discountCategory: rareDiscounts
-  discountOptions: [ 0.16, 0.32, 0.48 ]
+  discountDownUntil:
+    Telecrystal: 6
   cost:
     Telecrystal: 12
   categories:
@@ -1851,7 +1953,8 @@
   name: uplink-hot-potato-name
   description: uplink-hot-potato-desc
   discountCategory: rareDiscounts
-  discountOptions: [ 0.25, 0.5 ]
+  discountDownUntil:
+    Telecrystal: 2
   productEntity: HotPotato
   cost:
     Telecrystal: 4
@@ -1871,7 +1974,8 @@
   description: uplink-chimp-upgrade-kit-desc
   productEntity: WeaponPistolCHIMPUpgradeKit
   discountCategory: rareDiscounts
-  discountOptions: [ 0.25, 0.5, 0.75, 1.0 ]
+  discountDownUntil:
+    Telecrystal: 0
   cost:
     Telecrystal: 4
   categories:
@@ -1887,7 +1991,8 @@
   description: uplink-proximity-mine-desc
   productEntity: WetFloorSignMineExplosive
   discountCategory: rareDiscounts
-  discountOptions: [ 0.2, 0.4, 0.6 ]
+  discountDownUntil:
+    Telecrystal: 2
   cost:
     Telecrystal: 5 # was 4, with my buff made it 5 to be closer to minibomb -panzer
   categories:
@@ -1907,7 +2012,8 @@
   description: uplink-syndicate-sponge-box-desc
   icon: { sprite:  Objects/Misc/monkeycube.rsi, state: box}
   discountCategory: rareDiscounts
-  discountOptions: [ 0.42,  0.71 ]
+  discountDownUntil:
+    Telecrystal: 2
   productEntity: SyndicateSpongeBox
   cost:
     Telecrystal: 7

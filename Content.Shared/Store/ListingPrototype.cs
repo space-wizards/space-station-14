@@ -39,8 +39,8 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// <summary>
     /// Options for discount - % of how much item costs can be cut by discount.
     /// </summary>
-    [DataField("discountOptions")]
-    public List<float>? DiscountOptions;
+    [DataField("discountDownUntil")]
+    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> DiscountDownUntil;
 
     /// <summary>
     /// The description of the listing. If empty, uses the entity's description (if present)
@@ -184,7 +184,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
             PurchaseAmount = PurchaseAmount,
             RestockTime = RestockTime,
             DiscountCategory = DiscountCategory,
-            DiscountOptions = DiscountOptions
+            DiscountDownUntil = DiscountDownUntil
         };
     }
 }
@@ -239,8 +239,8 @@ public sealed partial class StoreDiscountData
     public int Count;
 
     /// <summary>
-    /// Map of currencies to % value of discount.
+    /// Map of currencies to flat amount of discount.
     /// </summary>
-    [DataField("discountByCurrency")]
-    public Dictionary<string, float> DiscountByCurrency = new();
+    [DataField("discountAmountByCurrency", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, CurrencyPrototype>))]
+    public Dictionary<string, FixedPoint2> DiscountAmountByCurrency = new();
 }

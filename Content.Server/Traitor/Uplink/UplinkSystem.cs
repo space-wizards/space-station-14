@@ -65,7 +65,7 @@ namespace Content.Server.Traitor.Uplink
 
         private List<StoreDiscountData> InitializeDiscounts(IEnumerable<ListingData> storeComponent, DiscountSettings settings)
         {
-            var listingsByDiscountCategory = storeComponent.Where(x => x.DiscountOptions?.Count > 0)
+            var listingsByDiscountCategory = storeComponent.Where(x => x.DiscountDownUntil?.Count > 0)
                                                            .GroupBy(x => x.DiscountCategory)
                                                            .ToDictionary(
                                                                x => x.Key,
@@ -131,12 +131,24 @@ namespace Content.Server.Traitor.Uplink
                 var chosen = _random.GetItems(itemsForDiscount, itemsCount, allowDuplicates: false);
                 foreach (var listingData in chosen)
                 {
-                    var discount = _random.Pick(listingData.DiscountOptions!);
+                    var cost = listingData.Cost;
+                    var discountAmountByCurrencyId = new Dictionary<string, FixedPoint2>();
+                    foreach (var kvp in cost)
+                    {
+                        if (listingData.DiscountDownUntil.TryGetValue(kvp.Key, out var discountUntilValue))
+                        {
+                            var discountUntilRolledValue = _random.NextDouble(discountUntilValue.Double(), kvp.Value.Double());
+                            var leftover = discountUntilRolledValue % 1;
+                            FixedPoint2 discountedCost = kvp.Value - (discountUntilRolledValue - leftover);
+                            
+                            discountAmountByCurrencyId.Add(kvp.Key.Id, discountedCost);
+                        }
+                    }
                     var discountData = new StoreDiscountData
                     {
                         ListingId = listingData.ID,
                         Count = 1,
-                        DiscountByCurrency = new Dictionary<string, float> { [TelecrystalCurrencyPrototype] = discount }
+                        DiscountAmountByCurrency = discountAmountByCurrencyId
                     };
                     list.Add(discountData);
                 }

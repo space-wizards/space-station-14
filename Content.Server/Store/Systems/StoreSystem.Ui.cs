@@ -157,9 +157,9 @@ public sealed partial class StoreSystem
         foreach (var (currency, value) in listing.Cost)
         {
             var totalAmount = value;
-            if (discountData?.DiscountByCurrency.TryGetValue(currency, out var discount) == true)
+            if (discountData?.DiscountAmountByCurrency.TryGetValue(currency, out var discount) == true)
             {
-                totalAmount = Math.Round(totalAmount.Value * (1 - discount) / 100);
+                totalAmount -= discount;
             }
 
             if (!component.Balance.TryGetValue(currency, out var balance) || balance < totalAmount)
@@ -175,9 +175,9 @@ public sealed partial class StoreSystem
         foreach (var (currency, value) in listing.Cost)
         {
             var totalAmount = value;
-            if (discountData?.DiscountByCurrency.TryGetValue(currency, out var discount) == true)
+            if (discountData?.DiscountAmountByCurrency.TryGetValue(currency, out var discount) == true)
             {
-                totalAmount = Math.Round(totalAmount.Value * (1 - discount) / 100);
+                totalAmount -= discount;
                 discountData.Count--;
             }
 

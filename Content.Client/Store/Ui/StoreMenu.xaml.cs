@@ -17,7 +17,7 @@ namespace Content.Client.Store.Ui;
 public sealed partial class StoreMenu : DefaultWindow
 {
     private const string DiscountedCategoryPrototypeKey = "DiscountedItems";
-    
+
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -173,9 +173,9 @@ public sealed partial class StoreMenu : DefaultWindow
                 return false;
 
             var amount = value;
-            if (discountData != null && discountData.DiscountByCurrency.TryGetValue(currency, out var discount))
+            if (discountData != null && discountData.DiscountAmountByCurrency.TryGetValue(currency, out var discount))
             {
-                amount = Math.Round(amount.Value * (1 - discount) / 100);
+                amount -= discount;
             }
 
             if (currentBalance[currency] < amount)
@@ -197,10 +197,11 @@ public sealed partial class StoreMenu : DefaultWindow
             foreach (var (type, amount) in listing.Cost)
             {
                 var totalAmount = amount;
-                if (discountData?.DiscountByCurrency.TryGetValue(type, out var discountPercent) != null
-                    && discountPercent > 0)
+                if (discountData?.DiscountAmountByCurrency.TryGetValue(type, out var discountBy) != null
+                    && discountBy > 0)
                 {
-                    totalAmount = Math.Round(totalAmount.Value * (1 - discountPercent) / 100);
+                    var discountPercent = (float)discountBy.Value / totalAmount.Value;
+                    totalAmount -= discountBy;
                     maxDiscount = Math.Max(maxDiscount, discountPercent);
                 }
 
