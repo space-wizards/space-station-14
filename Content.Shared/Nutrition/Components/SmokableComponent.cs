@@ -14,7 +14,7 @@ namespace Content.Shared.Nutrition.Components
         ///     Solution inhale amount per second.
         /// </summary>
         [DataField("inhaleAmount"), ViewVariables(VVAccess.ReadWrite)]
-        public FixedPoint2 InhaleAmount { get; private set; } = FixedPoint2.New(0.05f);
+        public FixedPoint2 InhaleAmount { get; private set; } = FixedPoint2.New(0.1f);
 
         [DataField("state")]
         public SmokableState State { get; set; } = SmokableState.Unlit;
