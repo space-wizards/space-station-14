@@ -1713,6 +1713,14 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ReducedMotion =
             CVarDef.Create("accessibility.reduced_motion", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+        /// <summary>
+        /// Toggles the proximity warping effect on the singularity.
+        /// This option is for people who generally do not mind motion, but find
+        /// the singularity warping especially egregious.
+        /// </summary>
+        public static readonly CVarDef<bool> DisableSinguloWarping =
+            CVarDef.Create("accessibility.disable_singulo_warping", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
         public static readonly CVarDef<bool> ChatEnableColorName =
             CVarDef.Create("accessibility.enable_color_name", true, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles displaying names with individual colors.");
 
