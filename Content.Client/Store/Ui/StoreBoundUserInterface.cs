@@ -21,7 +21,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
     private HashSet<ListingData> _listings = new();
 
     [ViewVariables]
-    private List<StoreDiscountData> _discounts = default!;
+    private StoreDiscountData[] _discounts = default!;
 
     public StoreBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {

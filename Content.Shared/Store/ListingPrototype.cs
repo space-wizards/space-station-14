@@ -39,8 +39,8 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// <summary>
     /// Options for discount - % of how much item costs can be cut by discount.
     /// </summary>
-    [DataField("discountDownUntil")]
-    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> DiscountDownUntil;
+    [DataField("discountDownTo")]
+    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> DiscountDownTo;
 
     /// <summary>
     /// The description of the listing. If empty, uses the entity's description (if present)
@@ -184,7 +184,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
             PurchaseAmount = PurchaseAmount,
             RestockTime = RestockTime,
             DiscountCategory = DiscountCategory,
-            DiscountDownUntil = DiscountDownUntil
+            DiscountDownTo = DiscountDownTo
         };
     }
 }

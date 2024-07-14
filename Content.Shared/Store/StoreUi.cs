@@ -17,13 +17,13 @@ public sealed class StoreUpdateState : BoundUserInterfaceState
 
     public readonly Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Balance;
 
-    public readonly List<StoreDiscountData> Discounts;
+    public readonly StoreDiscountData[] Discounts;
 
     public readonly bool ShowFooter;
 
     public readonly bool AllowRefund;
 
-    public StoreUpdateState(HashSet<ListingData> listings, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance, List<StoreDiscountData> discounts, bool showFooter, bool allowRefund)
+    public StoreUpdateState(HashSet<ListingData> listings, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance, StoreDiscountData[] discounts, bool showFooter, bool allowRefund)
     {
         Listings = listings;
         Balance = balance;

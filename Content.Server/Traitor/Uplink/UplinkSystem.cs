@@ -15,7 +15,6 @@ namespace Content.Server.Traitor.Uplink
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly StoreSystem _store = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
 
         [ValidatePrototypeId<CurrencyPrototype>]
         public const string TelecrystalCurrencyPrototype = "Telecrystal";
@@ -46,10 +45,7 @@ namespace Content.Server.Traitor.Uplink
 
             EnsureComp<UplinkComponent>(uplinkEntity.Value);
             var store = EnsureComp<StoreComponent>(uplinkEntity.Value);
-            var availableListings = _store.GetAvailableListings(user, store.Listings, store.Categories, null);
-            store.Discounts = giveDiscounts
-                ? InitializeDiscounts(availableListings, new DiscountSettings())
-                : new List<StoreDiscountData>(0);
+
             store.AccountOwner = user;
             store.Balance.Clear();
             if (balance != null)
@@ -58,103 +54,13 @@ namespace Content.Server.Traitor.Uplink
                 _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance.Value } }, uplinkEntity.Value, store);
             }
 
+            var uplinkInitializedEvent = new StoreInitializedEvent(TargetUser: user,
+                Store: uplinkEntity.Value,
+                UseDiscounts: giveDiscounts);
+            RaiseLocalEvent(ref uplinkInitializedEvent);
             // TODO add BUI. Currently can't be done outside of yaml -_-
 
             return true;
-        }
-
-        private List<StoreDiscountData> InitializeDiscounts(IEnumerable<ListingData> storeComponent, DiscountSettings settings)
-        {
-            var listingsByDiscountCategory = storeComponent.Where(x => x.DiscountDownUntil?.Count > 0)
-                                                           .GroupBy(x => x.DiscountCategory)
-                                                           .ToDictionary(
-                                                               x => x.Key,
-                                                               x => x.ToArray()
-                                                           );
-            var chosenDiscounts = new Dictionary<DiscountCategory, int>
-            {
-                [DiscountCategory.RareDiscounts] = 0,
-                [DiscountCategory.UsualDiscounts] = 0,
-                [DiscountCategory.VeryRareDiscounts] = 0,
-            };
-            var veryRareDiscountCount = 0;
-            var rareDiscountCount = 0;
-            for (var i = 0; i < settings.TotalAvailableDiscounts; i++)
-            {
-                var roll = _random.Next(100);
-
-                switch (roll)
-                {
-                    case <= 2:
-                        chosenDiscounts[DiscountCategory.VeryRareDiscounts]++;
-                        if (veryRareDiscountCount >= settings.MaxVeryRareDiscounts)
-                        {
-                            chosenDiscounts[DiscountCategory.UsualDiscounts]++;
-                        }
-                        else
-                        {
-                            veryRareDiscountCount++;
-                        }
-
-                        break;
-                    case <= 20:
-                        if (rareDiscountCount <= settings.MaxRareDiscounts)
-                        {
-                            chosenDiscounts[DiscountCategory.RareDiscounts]++;
-                            rareDiscountCount++;
-                        }
-                        else
-                        {
-                            chosenDiscounts[DiscountCategory.UsualDiscounts]++;
-                        }
-
-                        break;
-                    default:
-                        chosenDiscounts[DiscountCategory.UsualDiscounts]++;
-                        break;
-                }
-            }
-
-            var list = new List<StoreDiscountData>();
-            foreach (var (discountCategory, itemsCount) in chosenDiscounts)
-            {
-                if (itemsCount == 0)
-                {
-                    continue;
-                }
-
-                if (!listingsByDiscountCategory.TryGetValue(discountCategory, out var itemsForDiscount))
-                {
-                    continue;
-                }
-
-                var chosen = _random.GetItems(itemsForDiscount, itemsCount, allowDuplicates: false);
-                foreach (var listingData in chosen)
-                {
-                    var cost = listingData.Cost;
-                    var discountAmountByCurrencyId = new Dictionary<string, FixedPoint2>();
-                    foreach (var kvp in cost)
-                    {
-                        if (listingData.DiscountDownUntil.TryGetValue(kvp.Key, out var discountUntilValue))
-                        {
-                            var discountUntilRolledValue = _random.NextDouble(discountUntilValue.Double(), kvp.Value.Double());
-                            var leftover = discountUntilRolledValue % 1;
-                            FixedPoint2 discountedCost = kvp.Value - (discountUntilRolledValue - leftover);
-                            
-                            discountAmountByCurrencyId.Add(kvp.Key.Id, discountedCost);
-                        }
-                    }
-                    var discountData = new StoreDiscountData
-                    {
-                        ListingId = listingData.ID,
-                        Count = 1,
-                        DiscountAmountByCurrency = discountAmountByCurrencyId
-                    };
-                    list.Add(discountData);
-                }
-            }
-
-            return list;
         }
 
         /// <summary>
@@ -187,24 +93,6 @@ namespace Content.Server.Traitor.Uplink
         }
     }
 
-    /// <summary>
-    /// Settings for discount initializations.
-    /// </summary>
-    public sealed class DiscountSettings
-    {
-        /// <summary>
-        /// Total count of discounts that can be attached to uplink.
-        /// </summary>
-        public int TotalAvailableDiscounts { get; set; } = 3;
-
-        /// <summary>
-        /// Maximum count of category 2 (not cheap stuff) items to be discounted.
-        /// </summary>
-        public int MaxVeryRareDiscounts { get; set; } = 1;
-
-        /// <summary>
-        /// Maximum count of category 0 (very low-costing stuff) items to be discounted.
-        /// </summary>
-        public int MaxRareDiscounts { get; set; } = 2;
-    }
+    [ByRefEvent]
+    public record struct StoreInitializedEvent(EntityUid TargetUser, EntityUid Store, bool UseDiscounts);
 }

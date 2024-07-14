@@ -33,7 +33,7 @@ public sealed partial class StoreMenu : DefaultWindow
     public string CurrentCategory = string.Empty;
 
     private List<ListingData> _cachedListings = new();
-    private List<StoreDiscountData> _cachedDiscounts = new();
+    private StoreDiscountData[] _cachedDiscounts = Array.Empty<StoreDiscountData>();
 
     public StoreMenu()
     {
@@ -71,7 +71,7 @@ public sealed partial class StoreMenu : DefaultWindow
         WithdrawButton.Disabled = disabled;
     }
 
-    public void UpdateListing(List<ListingData> listings, List<StoreDiscountData> discounts)
+    public void UpdateListing(List<ListingData> listings, StoreDiscountData[] discounts)
     {
         _cachedListings = listings;
         _cachedDiscounts = discounts;
@@ -247,7 +247,7 @@ public sealed partial class StoreMenu : DefaultWindow
         StoreListingsContainer.Children.Clear();
     }
 
-    public void PopulateStoreCategoryButtons(HashSet<ListingData> listings, List<StoreDiscountData> discounts)
+    public void PopulateStoreCategoryButtons(HashSet<ListingData> listings, StoreDiscountData[] discounts)
     {
         var allCategories = new List<StoreCategoryPrototype>();
         foreach (var listing in listings)
@@ -263,7 +263,6 @@ public sealed partial class StoreMenu : DefaultWindow
         if (discounts.Any(x => x.Count > 0))
         {
             var proto = _prototypeManager.Index<StoreCategoryPrototype>(DiscountedCategoryPrototypeKey);
-
             allCategories.Add(proto);
         }
 

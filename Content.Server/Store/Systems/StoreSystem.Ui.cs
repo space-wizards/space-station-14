@@ -11,6 +11,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Mind;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
+using Content.Shared.StoreDiscount.Components;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
@@ -109,7 +110,13 @@ public sealed partial class StoreSystem
 
         // only tell operatives to lock their uplink if it can be locked
         var showFooter = HasComp<RingerUplinkComponent>(store);
-        var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, component.Discounts, showFooter, component.RefundAllowed);
+
+        var discounts = Array.Empty<StoreDiscountData>();
+        if (TryComp<StoreDiscountComponent>(store, out var discountsComponent))
+        {
+            discounts = discountsComponent.Discounts;
+        }
+        var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, discounts, showFooter, component.RefundAllowed);
         _ui.SetUiState(store, StoreUiKey.Key, state);
     }
 
@@ -153,7 +160,12 @@ public sealed partial class StoreSystem
         }
 
         //check that we have enough money
-        var discountData = component.Discounts.FirstOrDefault(x => x.Count > 0 && x.ListingId == listing.ID);
+        var discounts = Array.Empty<StoreDiscountData>();
+        if (TryComp<StoreDiscountComponent>(uid, out var discountsComponent))
+        {
+            discounts = discountsComponent.Discounts;
+        }
+        var discountData = discounts.FirstOrDefault(x => x.Count > 0 && x.ListingId == listing.ID);
         foreach (var (currency, value) in listing.Cost)
         {
             var totalAmount = value;
