@@ -76,11 +76,19 @@ public sealed class RoundEndSummaryUIController : UIController,
 
         if (ToggleRoundEndSummaryWindowButton != null)
         {
+            ToggleRoundEndSummaryWindowButton.Pressed = true;
             ToggleRoundEndSummaryWindowButton.Visible = true;
         }
 
         _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText,
             message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, EntityManager);
+
+        // When the RoundEndSummary Window closes, make sure to remove the "pressed" attribute when the windows closes
+        _window.OnClose += () =>
+        {
+            if (ToggleRoundEndSummaryWindowButton != null)
+                ToggleRoundEndSummaryWindowButton.Pressed = false;
+        };
     }
 
     public void OnSystemLoaded(ClientGameTicker system)
