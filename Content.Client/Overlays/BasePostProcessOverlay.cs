@@ -57,21 +57,18 @@ public sealed class BasePostProcessOverlay : Overlay
         if (ScreenTexture == null)
             return;
 
+        if (args.Viewport.Eye == null)
+            return;
+
         var playerEntity = _playerManager.LocalSession?.AttachedEntity;
 
         var worldHandle = args.WorldHandle;
         var viewport = args.WorldBounds;
 
-        var zoom = 1.0f;
-        if (_entityManager.TryGetComponent<EyeComponent>(playerEntity, out var eyeComponent))
-        {
-            zoom = eyeComponent.Zoom.X;
-        }
-
         _basePostProcessShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         _basePostProcessShader.SetParameter("LIGHT_TEXTURE", args.Viewport.LightRenderTarget.Texture);
 
-        _basePostProcessShader.SetParameter("Zoom", zoom);
+        _basePostProcessShader.SetParameter("Zoom", args.Viewport.Eye.Zoom.X);
 
         worldHandle.UseShader(_basePostProcessShader);
         worldHandle.DrawRect(viewport, Color.White);
