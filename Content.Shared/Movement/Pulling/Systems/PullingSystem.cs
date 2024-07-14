@@ -752,12 +752,35 @@ public sealed class PullingSystem : EntitySystem
             if (puller.Comp.GrabStage == GrabStage.Hard && !_handsSystem.TryGetEmptyHand(puller, out _))
                 return false;
 
+            if (!puller.Comp.NeedsHands && puller.Comp.GrabStage == GrabStage.Soft)
+            {
+                if (_virtualSystem.TrySpawnVirtualItemInHand(pullable.Owner, puller.Owner, out var item2, true))
+                    puller.Comp.SuffocateVirtualItems.Add(item2.Value);
+                else
+                {
+                    _popup.PopupEntity(Loc.GetString("popup-grab-need-hand"), puller, puller, PopupType.Medium);
+                    return false;
+                }
+            }
+
+            if (puller.Comp.GrabStage == GrabStage.Hard)
+            {
+                if (_virtualSystem.TrySpawnVirtualItemInHand(pullable.Owner, puller.Owner, out var item2, true))
+                    puller.Comp.SuffocateVirtualItems.Add(item2.Value);
+                else
+                {
+                    _popup.PopupEntity(Loc.GetString("popup-grab-need-hand"), puller, puller, PopupType.Medium);
+                    return false;
+                }
+            }
+
             _audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg"), pullable);
             puller.Comp.NextStageChange = _timing.CurTime.Add(TimeSpan.FromSeconds(1.5f));
             pullable.Comp.NextEscapeAttempt = _timing.CurTime.Add(TimeSpan.FromSeconds(1f));
             _color.RaiseEffect(Color.Yellow, new List<EntityUid>() { pullable }, Filter.Pvs(pullable, entityManager: EntityManager));
             Dirty(pullable.Owner, pullable.Comp);
             Dirty(puller.Owner, puller.Comp);
+
 
             puller.Comp.GrabStage += 1;
             pullable.Comp.GrabStage = puller.Comp.GrabStage;
@@ -780,11 +803,6 @@ public sealed class PullingSystem : EntitySystem
                     _alertsSystem.ShowAlert(puller, puller.Comp.PullingAlert, 2);
                     _alertsSystem.ShowAlert(pullable, pullable.Comp.PulledAlert, 2);
                     popupType = PopupType.MediumCaution;
-                    if (!puller.Comp.NeedsHands)
-                    {
-                        if (_virtualSystem.TrySpawnVirtualItemInHand(pullable.Owner, puller.Owner, out var item2, true))
-                            puller.Comp.SuffocateVirtualItems.Add(item2.Value);
-                    }
                     break;
                 case GrabStage.Suffocate:
                     pullable.Comp.GrabEscapeChance = puller.Comp.SuffocateStageEscapeChance;
@@ -792,8 +810,6 @@ public sealed class PullingSystem : EntitySystem
                     _alertsSystem.ShowAlert(puller, puller.Comp.PullingAlert, 3);
                     _alertsSystem.ShowAlert(pullable, pullable.Comp.PulledAlert, 3);
                     popupType = PopupType.LargeCaution;
-                    if (_virtualSystem.TrySpawnVirtualItemInHand(pullable.Owner, puller.Owner, out var item, true))
-                        puller.Comp.SuffocateVirtualItems.Add(item.Value);
                     break;
                 default:
                     pullable.Comp.GrabEscapeChance = 1f;
@@ -940,12 +956,9 @@ public sealed class PullingSystem : EntitySystem
             }
 
             _modifierSystem.RefreshMovementSpeedModifiers(puller);
-            if (puller.Comp.GrabStage != GrabStage.No)
-            {
-                _popup.PopupEntity(Loc.GetString("popup-grab-" + puller.Comp.GrabStage.ToString().ToLower() + "-target", ("puller", Identity.Entity(puller, EntityManager))), pullable, pullable, popupType);
-                _popup.PopupEntity(Loc.GetString("popup-grab-" + puller.Comp.GrabStage.ToString().ToLower() + "-self", ("target", Identity.Entity(pullable, EntityManager))), pullable, puller, PopupType.Medium);
-                _popup.PopupEntity(Loc.GetString("popup-grab-" + puller.Comp.GrabStage.ToString().ToLower() + "-others", ("target", Identity.Entity(pullable, EntityManager)), ("puller", Identity.Entity(puller, EntityManager))), pullable, othersFilter, true, popupType);
-            }
+            _popup.PopupEntity(Loc.GetString("popup-grab-" + puller.Comp.GrabStage.ToString().ToLower() + "-target", ("puller", Identity.Entity(puller, EntityManager))), pullable, pullable, popupType);
+            _popup.PopupEntity(Loc.GetString("popup-grab-" + puller.Comp.GrabStage.ToString().ToLower() + "-self", ("target", Identity.Entity(pullable, EntityManager))), pullable, puller, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("popup-grab-" + puller.Comp.GrabStage.ToString().ToLower() + "-others", ("target", Identity.Entity(pullable, EntityManager)), ("puller", Identity.Entity(puller, EntityManager))), pullable, othersFilter, true, popupType);
 
             Dirty(pullable.Owner, pullable.Comp);
             Dirty(puller.Owner, puller.Comp);
