@@ -126,7 +126,7 @@ public sealed class SmartEquipSystem : EntitySystem
         }
 
         // case 2 (storage item):
-        if (TryComp<StorageComponent>(slotItem, out var storage)&&
+        if (TryComp<StorageComponent>(slotItem, out var storage) &&
             !HasComp<SmartEquipForceItemComponent>(slotItem))
         {
             switch (handItem)
