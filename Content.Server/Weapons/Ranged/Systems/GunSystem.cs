@@ -405,7 +405,7 @@ public sealed partial class GunSystem : SharedGunSystem
         // Forgive me for the shitcode I am about to do
         // Effects tempt me not
         var sprites = new List<(NetCoordinates coordinates, Angle angle, SpriteSpecifier sprite, float scale)>();
-        var gridUid = fromCoordinates.GetGridUid(EntityManager);
+        var gridUid = _transform.GetGrid(fromCoordinates);
         var angle = mapDirection;
 
         // We'll get the effects relative to the grid / map of the firer

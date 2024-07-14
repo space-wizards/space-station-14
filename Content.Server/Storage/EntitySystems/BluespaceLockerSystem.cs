@@ -164,7 +164,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
             return false;
 
         if (lockerComponent.PickLinksFromStationGrids &&
-            !HasComp<StationMemberComponent>(link.ToCoordinates().GetGridUid(EntityManager)))
+            !HasComp<StationMemberComponent>(_transformSystem.GetGrid(link.ToCoordinates())))
             return false;
 
         if (lockerComponent.PickLinksFromResistLockers &&
