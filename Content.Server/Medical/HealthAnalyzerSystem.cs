@@ -65,7 +65,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
 
             //Get distance between health analyzer and the scanned entity
             var patientCoordinates = Transform(patient).Coordinates;
-            if (!patientCoordinates.InRange(EntityManager, _transformSystem, transform.Coordinates, component.MaxScanRange))
+            if (!_transformSystem.InRange(patientCoordinates, transform.Coordinates, component.MaxScanRange))
             {
                 //Range too far, disable updates
                 StopAnalyzingEntity((uid, component), patient);
