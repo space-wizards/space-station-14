@@ -118,7 +118,7 @@ namespace Content.Server.Administration.Commands
                 }
 
                 var xform = _entManager.GetComponent<TransformComponent>(playerEntity);
-                xform.Coordinates = coords;
+                _entManager.System<SharedTransformSystem>().SetCoordinates(playerEntity, coords);
                 xform.AttachToGridOrMap();
                 if (_entManager.TryGetComponent(playerEntity, out PhysicsComponent? physics))
                 {
