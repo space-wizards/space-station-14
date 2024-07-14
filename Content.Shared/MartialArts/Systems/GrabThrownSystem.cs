@@ -56,7 +56,7 @@ public sealed class GrabThrownSystem : EntitySystem
             return;
         }
 
-        if (!args.OtherFixture.Hard)
+        if (!args.OurFixture.Hard || !args.OtherFixture.Hard)
             return;
 
         if (!EntityManager.HasComponent<DamageableComponent>(uid))
