@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Weax
-  changes:
-  - message: The CLF3 reaction now requires heating first before you can engulf chemistry
-      in fiery death.
-    type: Tweak
-  id: 6417
-  time: '2024-04-22T08:44:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27187
-- author: Potato1234_x
-  changes:
-  - message: Added Psicodine, Mannitol, Lipolicide and Happiness.
-    type: Add
-  id: 6418
-  time: '2024-04-22T08:45:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27134
 - author: Terraspark4941
   changes:
   - message: Updated the engineering section of the guidebook!
@@ -3813,3 +3798,17 @@
   id: 6916
   time: '2024-07-14T02:59:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29979
+- author: SlamBamActionman
+  changes:
+  - message: RGBee and Rainbow Carp plushies now cycle color when held/worn.
+    type: Fix
+  id: 6917
+  time: '2024-07-14T10:26:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30023
+- author: Winkarst-cpu
+  changes:
+  - message: Now grappling gun is clumsy proof.
+    type: Tweak
+  id: 6918
+  time: '2024-07-14T10:26:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29904
