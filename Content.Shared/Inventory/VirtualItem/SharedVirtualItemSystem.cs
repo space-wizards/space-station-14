@@ -99,7 +99,7 @@ public abstract class SharedVirtualItemSystem : EntitySystem
                 if (hand.HeldEntity is not { } held)
                     continue;
 
-                if (held == blockingEnt || HasComp<VirtualItemComponent>(held))
+                if (held == blockingEnt)
                     continue;
 
                 if (!_handsSystem.TryDrop(user, hand))
@@ -244,7 +244,7 @@ public abstract class SharedVirtualItemSystem : EntitySystem
         if (TerminatingOrDeleted(item))
             return;
 
-        _transformSystem.DetachParentToNull(item, Transform(item));
+        _transformSystem.DetachEntity(item, Transform(item));
         if (_netManager.IsServer)
             QueueDel(item);
     }

@@ -36,12 +36,22 @@
   - GlassesJensen
 
 - type: loadoutGroup
+  id: GroupTankHarness
+  name: loadout-group-tank-harness
+  minLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutTankHarness
+
+- type: loadoutGroup
   id: Survival
   name: loadout-group-survival-basic
+  minLimit: 3
   hidden: true
   loadouts:
   - EmergencyNitrogen
   - EmergencyOxygen
+  - LoadoutSpeciesEVANitrogen
 
 # Command
 - type: loadoutGroup
@@ -408,10 +418,12 @@
 - type: loadoutGroup
   id: SurvivalClown
   name: loadout-group-survival-clown
+  minLimit: 2
   hidden: true
   loadouts:
   - EmergencyNitrogenClown
   - EmergencyOxygenClown
+  - LoadoutSpeciesEVANitrogen
 
 - type: loadoutGroup
   id: MimeHead
@@ -729,10 +741,12 @@
 - type: loadoutGroup
   id: SurvivalExtended
   name: loadout-group-survival-extended
+  minLimit: 2
   hidden: true
   loadouts:
   - EmergencyNitrogenExtended
   - EmergencyOxygenExtended
+  - LoadoutSpeciesEVANitrogen
 
 # Science
 - type: loadoutGroup
@@ -1007,10 +1021,12 @@
 - type: loadoutGroup
   id: SurvivalSecurity
   name: loadout-group-survival-security
+  minLimit: 2
   hidden: true
   loadouts:
   - EmergencyNitrogenSecurity
   - EmergencyOxygenSecurity
+  - LoadoutSpeciesEVANitrogen
 
 # Medical
 - type: loadoutGroup
@@ -1187,10 +1203,12 @@
 - type: loadoutGroup
   id: SurvivalMedical
   name: loadout-group-survival-medical
+  minLimit: 2
   hidden: true
   loadouts:
   - EmergencyNitrogenMedical
   - EmergencyOxygenMedical
+  - LoadoutSpeciesEVANitrogen
 
 # Wildcards
 - type: loadoutGroup
@@ -1220,7 +1238,36 @@
 - type: loadoutGroup
   id: SurvivalSyndicate
   name: loadout-group-survival-syndicate
+  minLimit: 2
   hidden: true
   loadouts:
   - EmergencyNitrogenSyndicate
   - EmergencyOxygenSyndicate
+  - LoadoutSpeciesEVANitrogen
+
+- type: loadoutGroup
+  id: GroupSpeciesBreathTool
+  name: loadout-group-breath-tool
+  minLimit: 1
+  maxLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutSpeciesBreathTool
+
+- type: loadoutGroup
+  id: GroupSpeciesBreathToolMedical
+  name: loadout-group-breath-tool
+  minLimit: 1
+  maxLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutSpeciesBreathToolMedical
+
+- type: loadoutGroup
+  id: GroupSpeciesBreathToolSecurity
+  name: loadout-group-breath-tool
+  minLimit: 1
+  maxLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutSpeciesBreathToolSecurity

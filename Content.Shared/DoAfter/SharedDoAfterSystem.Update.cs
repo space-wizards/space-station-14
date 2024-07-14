@@ -166,7 +166,7 @@ public abstract partial class SharedDoAfterSystem
             if (!(!args.BreakOnWeightlessMove && _gravity.IsWeightless(args.User, xform: userXform)))
             {
                 // Whether the user has moved too much from their original position.
-                if (!_transform.InRange(doAfter.UserPosition, userXform.Coordinates, args.MovementThreshold))
+                if (!_transform.InRange(userXform.Coordinates, doAfter.UserPosition, args.MovementThreshold))
                     return true;
             }
             else
