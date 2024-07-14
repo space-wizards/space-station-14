@@ -1,27 +1,4 @@
 ﻿Entries:
-- author: eclips_e
-  changes:
-  - message: Slimepeople can now morph into a "geras"--a smaller slime form that can
-      pass under grilles, at the cost of dropping all of their inventory. They can
-      also be picked up with two hands and placed into duffelbags.
-    type: Add
-  - message: Slimepeople now have an internal 2x2 storage that they (and anyone around
-      them) can access. It is not dropped when morphing into a geras!
-    type: Add
-  - message: Slimepeople now have slightly increased regeneration and a slightly meatier
-      punch, but slower attacks.
-    type: Add
-  id: 6420
-  time: '2024-04-22T10:03:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/23425
-- author: FungiFellow
-  changes:
-  - message: Syndi-Cats are now 6TC, Insulated, Available to Syndies, Can Move in
-      Space, Open Doors, and Hit Harder
-    type: Tweak
-  id: 6421
-  time: '2024-04-22T12:18:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27222
 - author: Tayrtahn
   changes:
   - message: Ghosts can no longer trigger artifacts by examining them.
@@ -3814,3 +3791,17 @@
   id: 6919
   time: '2024-07-14T14:09:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30037
+- author: deltanedas
+  changes:
+  - message: Fixed ninja shoes not working as magboots.
+    type: Fix
+  id: 6920
+  time: '2024-07-14T15:11:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28586
+- author: lzk228
+  changes:
+  - message: Scarves are eatable again.
+    type: Fix
+  id: 6921
+  time: '2024-07-14T15:12:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29959
