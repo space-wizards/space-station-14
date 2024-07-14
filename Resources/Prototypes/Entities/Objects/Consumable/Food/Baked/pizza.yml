@@ -547,3 +547,56 @@
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes like stale crust, rancid cheese, mushroom.
+
+- type: entity
+  name: spicy rock pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaUranium
+  description: Spicy pizza covered in peppers and uranium.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - spicy
+    - cheesy
+    - oily
+    - bread
+  - type: Sprite
+    layers:
+    - state: uranium-pizza
+  - type: SliceableFood
+    slice: FoodPizzaUraniumSlice
+  - type: Tag
+    tags:
+    - Meat
+    - Pizza
+
+- type: entity
+  name: slice of spicy rock pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaUraniumSlice
+  description: A glowing slice of spicy rock pizza.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - spicy
+    - cheesy
+    - oily
+    - bread
+  - type: Sprite
+    layers:
+    - state: uranium-slice
+  - type: Tag
+    tags:
+    - Meat
+    - Pizza
+    - Slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 50
+        - ReagentId: Uranium
+          Quantity: 2
+# Tastes like crust, tomato, cheese, radiation.
