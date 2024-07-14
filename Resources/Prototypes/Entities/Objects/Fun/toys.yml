@@ -184,6 +184,19 @@
     energy: 2
   - type: RgbLightController
     layers: [ 0 ]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bee-inhand-left
+        shader: unshaded
+      right:
+      - state: bee-inhand-right
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: bee-equipped-HELMET
+        shader: unshaded
 
 - type: entity
   parent: BasePlushie
@@ -543,6 +556,15 @@
     energy: 2
   - type: RgbLightController
     layers: [ 0 ]
+  - type: Item
+    heldPrefix: rainbowcarpplush
+    inhandVisuals:
+      left:
+      - state: rainbowcarpplush-inhand-left
+        shader: unshaded
+      right:
+      - state: rainbowcarpplush-inhand-right
+        shader: unshaded
 
 - type: entity
   parent: PlushieCarp
