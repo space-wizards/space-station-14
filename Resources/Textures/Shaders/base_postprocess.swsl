@@ -23,8 +23,7 @@ void fragment() {
 	highp float circle = clamp(zCircleGradient(aspect, FRAGCOORD.xy, CircleMax, CircleRadius / actualZoom, CircleMinDist / actualZoom, CirclePow) * CircleMult, FalloffClampMin, FalloffClampMax);
 
 	highp vec3 lightsampleraw = texture2D(LIGHT_TEXTURE, Pos).rgb;
-	highp float rawgrayscale = zGrayscale(lightsampleraw);
-	highp float graylight = max(rawgrayscale - max((1.0 - circle)*FalloffStrength, 0.0), 0.0);
+	highp float graylight = max(zGrayscale(lightsampleraw) - max((1.0 - circle) * FalloffStrength, 0.0), 0.0);
 	graylight = pow(graylight, FalloffPow);
 
 	highp vec3 lightsample = lightsampleraw * vec3(graylight);
