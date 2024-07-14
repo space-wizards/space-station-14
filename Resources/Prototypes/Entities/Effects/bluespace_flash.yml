@@ -4,7 +4,7 @@
   components:
   - type: PointLight
     radius: 10.5
-    energy: 15
+    energy: 6
     color: "#18abf5"
   - type: TimedDespawn
     lifetime: 1

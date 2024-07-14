@@ -38,7 +38,7 @@
     - type: PointLight
       enabled: false
       radius: 3
-      energy: 2.5
+      energy: 2
       color: "#FFC458"
       netsync: false
     - type: Appearance
@@ -84,7 +84,7 @@
         visible: false
     - type: PointLight
       radius: 5
-      energy: 10
+      energy: 3
     - type: Flash
     - type: LimitedCharges
       maxCharges: 15

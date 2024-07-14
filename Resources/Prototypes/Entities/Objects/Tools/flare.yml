@@ -51,7 +51,7 @@
     enabled: false
     color: "#FF8080"
     radius: 1.0
-    energy: 9.0
+    energy: 4.0
     netsync: false
   - type: IgnitionSource
     temperature: 1000
@@ -67,8 +67,8 @@
         interpolate: Nearest
         minDuration: 0.001
         maxDuration: 0.001
-        startValue: 4.0
-        endValue: 8.0
+        startValue: 3.0
+        endValue: 4.0
         property: Energy
         isLooped: true
       - !type:FadeBehaviour # fade out radius as it burns out
