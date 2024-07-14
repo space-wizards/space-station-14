@@ -232,15 +232,44 @@ public sealed class PullingSystem : EntitySystem
             {
                 //var thrownPos = _transform.GetMapCoordinates(args.BlockingEntity);
                 var direction = args.Direction;
-                var distance = Math.Clamp(args.Direction.Length(), 1f, 3f);
+                var vecBetween = (Transform(args.BlockingEntity).Coordinates.ToMapPos(EntityManager, _transform) - Transform(uid).WorldPosition);
+
+                // Getting angle between us
+                var dirAngle = direction.ToWorldAngle().Degrees;
+                var betweenAngle = vecBetween.ToWorldAngle().Degrees;
+
+                var angle = dirAngle - betweenAngle;
+
+                if (angle < 0)
+                    angle = -angle;
+
+                var maxDistance = 3f;
+                var damageModifier = 1f;
+
+                if (angle < 30)
+                {
+                    damageModifier = 0.3f;
+                    maxDistance = 1f;
+                }
+                else if (angle < 90)
+                {
+                    damageModifier = 0.7f;
+                    maxDistance = 1.5f;
+                }
+                else
+                    maxDistance = 2.5f;
+
+                var distance = Math.Clamp(args.Direction.Length(), 0.5f, maxDistance);
                 direction *= distance / args.Direction.Length();
+
 
                 var damage = new DamageSpecifier();
                 damage.DamageDict.Add("Blunt", 5);
+                damage *= damageModifier;
 
                 TryStopPull(args.BlockingEntity, comp, uid, true);
                 _throwing.Throw(args.BlockingEntity, direction, 65f, damage * component.GrabThrowDamageModifier, damage * component.GrabThrowDamageModifier);
-                _throwing.Throw(uid, -direction * 0.25f);
+                _throwing.Throw(uid, -direction * 0.5f);
                 _audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg"), uid);
                 component.NextStageChange.Add(TimeSpan.FromSeconds(2f));  // To avoid grab and throw spamming
             }
@@ -722,6 +751,11 @@ public sealed class PullingSystem : EntitySystem
                     _alertsSystem.ShowAlert(puller, puller.Comp.PullingAlert, 2);
                     _alertsSystem.ShowAlert(pullable, pullable.Comp.PulledAlert, 2);
                     popupType = PopupType.MediumCaution;
+                    if (!puller.Comp.NeedsHands)
+                    {
+                        if (_virtualSystem.TrySpawnVirtualItemInHand(pullable.Owner, puller.Owner, out var item2, true))
+                            puller.Comp.SuffocateVirtualItems.Add(item2.Value);
+                    }
                     break;
                 case GrabStage.Suffocate:
                     pullable.Comp.GrabEscapeChance = puller.Comp.SuffocateStageEscapeChance;
@@ -731,12 +765,6 @@ public sealed class PullingSystem : EntitySystem
                     popupType = PopupType.LargeCaution;
                     if (_virtualSystem.TrySpawnVirtualItemInHand(pullable.Owner, puller.Owner, out var item, true))
                         puller.Comp.SuffocateVirtualItems.Add(item.Value);
-                    if (!puller.Comp.NeedsHands)
-                    {
-                        if (_virtualSystem.TrySpawnVirtualItemInHand(pullable.Owner, puller.Owner, out var item2, true))
-                            puller.Comp.SuffocateVirtualItems.Add(item2.Value);
-                    }
-
                     break;
                 default:
                     pullable.Comp.GrabEscapeChance = 1f;

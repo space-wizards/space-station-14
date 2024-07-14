@@ -17,6 +17,7 @@ using Content.Shared.Physics;
 using Robust.Shared.Physics;
 using System.Linq;
 using Content.Shared.Movement.Systems;
+using Robust.Shared.Network;
 
 namespace Content.Shared.MartialArts.Systems;
 
@@ -31,6 +32,7 @@ public sealed class GrabThrownSystem : EntitySystem
     [Dependency] private readonly StaminaSystem _stamina = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
 
     public override void Initialize()
     {
@@ -40,10 +42,14 @@ public sealed class GrabThrownSystem : EntitySystem
         SubscribeLocalEvent<GrabThrownComponent, ComponentShutdown>(OnShutdown);
 
         SubscribeLocalEvent<GrabThrownComponent, StartCollideEvent>(HandleCollide);
+        SubscribeLocalEvent<GrabThrownComponent, StopThrowEvent>(OnStopThrow);
     }
 
     private void HandleCollide(EntityUid uid, GrabThrownComponent component, ref StartCollideEvent args)
     {
+        if (_netMan.IsClient)
+            return;
+
         if (!HasComp<ThrownItemComponent>(uid))
         {
             RemComp<GrabThrownComponent>(uid);
@@ -76,8 +82,17 @@ public sealed class GrabThrownSystem : EntitySystem
         RemComp<GrabThrownComponent>(uid);
     }
 
+    private void OnStopThrow(EntityUid uid, GrabThrownComponent comp, StopThrowEvent args)
+    {
+        if (HasComp<GrabThrownComponent>(uid))
+            RemComp<GrabThrownComponent>(uid);
+    }
+
     public void OnStartup(EntityUid uid, GrabThrownComponent component, ComponentStartup args)
     {
+        if (_netMan.IsClient)
+            return;
+
         if (TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.FixtureCount >= 1)
         {
             var fixture = fixtures.Fixtures.First();
@@ -92,6 +107,9 @@ public sealed class GrabThrownSystem : EntitySystem
 
     public void OnShutdown(EntityUid uid, GrabThrownComponent component, ComponentShutdown args)
     {
+        if (_netMan.IsClient)
+            return;
+
         if (TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.FixtureCount >= 1)
         {
             var fixture = fixtures.Fixtures.First();
