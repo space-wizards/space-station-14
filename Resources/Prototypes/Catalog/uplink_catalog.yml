@@ -391,11 +391,11 @@
 
 # For the C20R
 - type: listing
-  id: UplinkMagazinePistolSubMachineGun
+  id: UplinkMagazineSubMachineGun
   name: uplink-pistol-magazine-c20r-name
   description: uplink-pistol-magazine-c20r-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag.rsi, state: red-icon }
-  productEntity: MagazinePistolSubMachineGun
+  productEntity: MagazineSubMachineGun
   cost:
     Telecrystal: 2
   categories:

@@ -189,7 +189,7 @@
     contents:
     - id: WeaponSubMachineGunDrozd
       amount: 2
-    - id: MagazinePistolSubMachineGun
+    - id: MagazineSubMachineGun
       amount: 4
 
 - type: entity
@@ -226,7 +226,7 @@
     contents:
     - id: WeaponSubMachineGunWt550
       amount: 2
-    - id: MagazinePistolSubMachineGunTopMounted
+    - id: MagazineSubMachineGunTopMounted
       amount: 4
 
 - type: entity

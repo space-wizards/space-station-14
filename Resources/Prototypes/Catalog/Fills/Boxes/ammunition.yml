@@ -82,12 +82,12 @@
 - type: entity
   name: box of WT550 .35 auto magazines
   parent: BoxMagazine
-  id: BoxMagazinePistolSubMachineGunTopMounted
+  id: BoxMagazineSubMachineGunTopMounted
   description: A box full of WT550 .35 auto magazines.
   components:
   - type: StorageFill
     contents:
-      - id: MagazinePistolSubMachineGunTopMounted
+      - id: MagazineSubMachineGunTopMounted
         amount: 3
 
 - type: entity
@@ -137,23 +137,23 @@
 - type: entity
   name: box of SMG .35 auto magazines
   parent: BoxMagazine
-  id: BoxMagazinePistolSubMachineGun
+  id: BoxMagazineSubMachineGun
   description: A box full of SMG .35 auto magazines.
   components:
   - type: StorageFill
     contents:
-      - id: MagazinePistolSubMachineGun
+      - id: MagazineSubMachineGun
         amount: 3
 
 - type: entity
   name: box of SMG .35 auto (practice) magazines
   parent: BoxMagazine
-  id: BoxMagazinePistolSubMachineGunPractice
+  id: BoxMagazineSubMachineGunPractice
   description: A box full of SMG .35 auto (practice) magazines.
   components:
   - type: StorageFill
     contents:
-      - id: MagazinePistolSubMachineGunPractice
+      - id: MagazineSubMachineGunPractice
         amount: 3
 
 # Shotgun

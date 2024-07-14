@@ -218,32 +218,32 @@
     Plastic: 120
 
 - type: latheRecipe
-  id: MagazinePistolSubMachineGunEmpty
-  result: MagazinePistolSubMachineGunEmpty
+  id: MagazineSubMachineGunEmpty
+  result: MagazineSubMachineGunEmpty
   category: Ammo
   completetime: 5
   materials:
     Steel: 30
 
 - type: latheRecipe
-  id: MagazinePistolSubMachineGun
-  result: MagazinePistolSubMachineGun
+  id: MagazineSubMachineGun
+  result: MagazineSubMachineGun
   category: Ammo
   completetime: 5
   materials:
     Steel: 300
 
 - type: latheRecipe
-  id: MagazinePistolSubMachineGunTopMountedEmpty
-  result: MagazinePistolSubMachineGunTopMountedEmpty
+  id: MagazineSubMachineGunTopMountedEmpty
+  result: MagazineSubMachineGunTopMountedEmpty
   category: Ammo
   completetime: 5
   materials:
     Steel: 30
 
 - type: latheRecipe
-  id: MagazinePistolSubMachineGunTopMounted
-  result: MagazinePistolSubMachineGunTopMounted
+  id: MagazineSubMachineGunTopMounted
+  result: MagazineSubMachineGunTopMounted
   category: Ammo
   completetime: 5
   materials:

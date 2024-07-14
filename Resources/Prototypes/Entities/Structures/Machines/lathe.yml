@@ -212,10 +212,10 @@
       - MagazineLightRifleEmpty
       - MagazinePistol
       - MagazinePistolEmpty
-      - MagazinePistolSubMachineGun
-      - MagazinePistolSubMachineGunEmpty
-      - MagazinePistolSubMachineGunTopMounted
-      - MagazinePistolSubMachineGunTopMountedEmpty
+      - MagazineSubMachineGun
+      - MagazineSubMachineGunEmpty
+      - MagazineSubMachineGunTopMounted
+      - MagazineSubMachineGunTopMountedEmpty
       - MagazineRifle
       - MagazineRifleEmpty
       - MagazineShotgun
@@ -729,10 +729,10 @@
       - MagazineLightRifleEmpty
       - MagazinePistol
       - MagazinePistolEmpty
-      - MagazinePistolSubMachineGun
-      - MagazinePistolSubMachineGunEmpty
-      - MagazinePistolSubMachineGunTopMounted
-      - MagazinePistolSubMachineGunTopMountedEmpty
+      - MagazineSubMachineGun
+      - MagazineSubMachineGunEmpty
+      - MagazineSubMachineGunTopMounted
+      - MagazineSubMachineGunTopMountedEmpty
       - MagazineRifle
       - MagazineRifleEmpty
       - MagazineShotgun
