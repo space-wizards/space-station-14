@@ -225,5 +225,5 @@
   objectType: Item
   description: You always must made Diamond hoe from your first or last diamonds. These are the rules.
   icon:
-    sprite: Objects/Tools/Hydroponics/Diamondhoe.rsi
+    sprite: Objects/Tools/Hydroponics/diamondhoe.rsi
     state: icon

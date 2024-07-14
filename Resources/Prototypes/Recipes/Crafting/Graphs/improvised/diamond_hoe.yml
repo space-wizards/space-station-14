@@ -4,12 +4,12 @@
   graph:
   - node: start
     edges:
-    - to: gauze
+    - to: DiamondHoe
       steps:
       - material: WoodPlank
         amount: 2
         doAfter: 10
-      - material: MaterialDiamond
+      - material: MaterialDiamond1
         amount: 2
         doAfter: 10
   - node: DiamondHoe

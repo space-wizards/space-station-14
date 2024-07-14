@@ -31,7 +31,7 @@
     - Hoe
     - BotanyHoe
   - type: Sprite
-    sprite: Objects/Tools/Hydroponics/Diamondhoe.rsi
+    sprite: Objects/Tools/Hydroponics/diamondhoe.rsi
     state: icon
   - type: MeleeWeapon
     wideAnimationRotation: 135
@@ -40,7 +40,7 @@
       types:
         Blunt: 10
   - type: Item
-    sprite: Objects/Tools/Hydroponics/Diamondhoe.rsi
+    sprite: Objects/Tools/Hydroponics/diamondhoe.rsi
 
 - type: entity
   name: plant clippers
