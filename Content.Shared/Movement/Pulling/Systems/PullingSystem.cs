@@ -197,7 +197,7 @@ public sealed class PullingSystem : EntitySystem
 
         if (EntityManager.TryGetComponent(args.BlockingEntity, out PullableComponent? comp))
         {
-            if (component.SuffocateVirtualItems.Count > 0)
+            if (component.SuffocateVirtualItems.Count > 0 && component.NextStageChange >= _timing.CurTime)
             {
                 if (!component.SuffocateVirtualItems.Contains(args.VirtualItem))
                 {
