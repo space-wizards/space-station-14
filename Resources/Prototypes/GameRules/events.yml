@@ -590,6 +590,7 @@
   components:
   - type: StationEvent
     weight: 8
+    maxOccurrences: 2 # can only happen 2 times per round
     reoccurrenceDelay: 20
-    duration: 1
+    duration: null # the rule has to last the whole round not 1 second
   - type: SpaceLawChangeRule

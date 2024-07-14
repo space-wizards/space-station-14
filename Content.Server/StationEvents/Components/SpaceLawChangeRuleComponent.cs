@@ -7,7 +7,7 @@ namespace Content.Server.StationEvents.Components
     public sealed partial class SpaceLawChangeRuleComponent : Component
     {
         /// <summary>
-        /// A random message selected for the current event
+        /// Localization key of a random message selected for the current event
         /// </summary>
         [DataField]
         public string? RandomMessage { get; set; }
