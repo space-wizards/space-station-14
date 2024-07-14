@@ -5,7 +5,6 @@ using Content.Server.PowerCell;
 using Content.Server.Traits.Assorted;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Damage;
-using Content.Shared.Electrocution;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Medical;
 using Content.Shared.Mind;
@@ -14,7 +13,6 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Medical;
 
