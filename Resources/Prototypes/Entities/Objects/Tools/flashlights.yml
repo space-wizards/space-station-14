@@ -73,7 +73,6 @@
     quickEquip: false
     slots:
       - Belt
-  - type: SmartEquipForceItem
 
 - type: entity
   name: seclite

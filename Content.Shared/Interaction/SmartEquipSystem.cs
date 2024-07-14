@@ -126,8 +126,7 @@ public sealed class SmartEquipSystem : EntitySystem
         }
 
         // case 2 (storage item):
-        if (TryComp<StorageComponent>(slotItem, out var storage) &&
-            !HasComp<SmartEquipForceItemComponent>(slotItem))
+        if (TryComp<StorageComponent>(slotItem, out var storage))
         {
             switch (handItem)
             {
@@ -159,11 +158,13 @@ public sealed class SmartEquipSystem : EntitySystem
         }
 
         // case 3 (itemslot item):
-        if (TryComp<ItemSlotsComponent>(slotItem, out var slots) &&
-            !HasComp<SmartEquipForceItemComponent>(slotItem))
+        if (TryComp<ItemSlotsComponent>(slotItem, out var slots))
         {
             if (handItem == null)
             {
+                if (!HasComp<SmartEquipItemSlotComponent>(slotItem))
+                    return;
+
                 ItemSlot? toEjectFrom = null;
 
                 foreach (var slot in slots.Slots.Values)

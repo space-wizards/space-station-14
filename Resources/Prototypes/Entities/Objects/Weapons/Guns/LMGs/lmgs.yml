@@ -61,7 +61,6 @@
     price: 500
   - type: UseDelay
     delay: 1
-  - type: SmartEquipForceItem
 
 - type: entity
   name: L6 SAW

@@ -45,7 +45,6 @@
       projectiles: !type:ContainerSlot
   - type: ContainerAmmoProvider
     container: projectiles
-  - type: SmartEquipForceItem
 
 - type: entity
   id: BowImprovised

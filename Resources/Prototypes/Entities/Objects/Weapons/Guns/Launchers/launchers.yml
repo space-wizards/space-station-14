@@ -19,7 +19,6 @@
     containers:
       ballistic-ammo: !type:Container
         ents: []
-  - type: SmartEquipForceItem
 
 - type: entity
   name: china lake
