@@ -1,4 +1,6 @@
 using Content.Shared.Singularity.Components;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Enums;
@@ -11,6 +13,7 @@ namespace Content.Client.Singularity
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
         private SharedTransformSystem? _xformSystem = null;
 
         /// <summary>
@@ -80,6 +83,8 @@ namespace Content.Client.Singularity
         protected override void Draw(in OverlayDrawArgs args)
         {
             if (ScreenTexture == null || args.Viewport.Eye == null)
+                return;
+            if (_configManager.GetCVar(CCVars.ReducedMotion))
                 return;
 
             _shader?.SetParameter("renderScale", args.Viewport.RenderScale * args.Viewport.Eye.Scale);
