@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Terraspark4941
-  changes:
-  - message: Updated the engineering section of the guidebook!
-    type: Tweak
-  id: 6419
-  time: '2024-04-22T08:58:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26851
 - author: eclips_e
   changes:
   - message: Slimepeople can now morph into a "geras"--a smaller slime form that can
@@ -3812,3 +3805,12 @@
   id: 6918
   time: '2024-07-14T10:26:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29904
+- author: HahayesSiH
+  changes:
+  - message: It is now possible to pet cyborgs.
+    type: Add
+  - message: Clicking on cyborgs and opening the strip menu no longer unlocks them.
+    type: Tweak
+  id: 6919
+  time: '2024-07-14T14:09:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30037
