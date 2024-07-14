@@ -55,7 +55,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
     [Dependency] private readonly SpeedModifierContactsSystem _speedModContacts = default!;
     [Dependency] private readonly TileFrictionController _tile = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     [ValidatePrototypeId<ReagentPrototype>]
     private const string Blood = "Blood";
@@ -606,7 +605,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return false;
         }
 
-        var gridUid = _transformSystem.GetGrid(coordinates);
+        var gridUid = coordinates.GetGridUid(EntityManager);
         if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
         {
             puddleUid = EntityUid.Invalid;

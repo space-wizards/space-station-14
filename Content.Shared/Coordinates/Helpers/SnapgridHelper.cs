@@ -11,7 +11,7 @@ namespace Content.Shared.Coordinates.Helpers
             IoCManager.Resolve(ref entMan, ref mapManager);
             var xformSys = entMan.System<SharedTransformSystem>();
 
-            var gridId = entMan.System<SharedTransformSystem>().GetGrid(coordinates);
+            var gridId = coordinates.GetGridUid(entMan);
 
             if (gridId == null)
             {
