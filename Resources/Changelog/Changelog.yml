@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Flaming mice no longer completely engulf people they touch.
-    type: Tweak
-  id: 6416
-  time: '2024-04-22T08:42:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27202
 - author: Weax
   changes:
   - message: The CLF3 reaction now requires heating first before you can engulf chemistry
@@ -3813,3 +3806,10 @@
   id: 6915
   time: '2024-07-13T12:15:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25750
+- author: coffeeware
+  changes:
+  - message: Lizards will no longer lose their snouts when equipping head bandanas
+    type: Fix
+  id: 6916
+  time: '2024-07-14T02:59:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29979
