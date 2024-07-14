@@ -16,6 +16,10 @@ popup-grab-no-others = {CAPITALIZE($puller)} stopped grabbing {CAPITALIZE($targe
 popup-grab-release-fail-self = You are trying to escape.
 popup-grab-release-success-self = You escaped from grab!
 popup-grab-release-success-puller = {CAPITALIZE($target)} escaped!
+popup-grab-retake-fail = {CAPITALIZE($puller)} is not letting you to pull {CAPITALIZE($pulled)}!
+popup-grab-retake-fail = {CAPITALIZE($puller)} is trying to release {CAPITALIZE($pulled)}!
+popup-grab-retake-success = You released {CAPITALIZE($pulled)} from {CAPITALIZE($puller)}'s grab!
+popup-grab-retake-success-puller = {CAPITALIZE($puller)} released {CAPITALIZE($pulled)} from your grab!
 
 popup-grabbed-cant-speak = You can't breathe!
 

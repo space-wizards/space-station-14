@@ -625,7 +625,31 @@ public sealed class PullingSystem : EntitySystem
                 return false;
 
             if (!TryStopPull(pullableUid, pullableComp, pullableComp.Puller))
+            {
+                _popup.PopupEntity(Loc.GetString("popup-grab-retake-fail",
+                    ("puller", Identity.Entity(pullableComp.Puller.Value, EntityManager)),
+                    ("pulled", Identity.Entity(pullableUid, EntityManager))),
+                    pullerUid, pullerUid, PopupType.MediumCaution);
+                _popup.PopupEntity(Loc.GetString("popup-grab-retake-fail-puller",
+                    ("puller", Identity.Entity(pullerUid, EntityManager)),
+                    ("pulled", Identity.Entity(pullableUid, EntityManager))),
+                    pullableComp.Puller.Value, pullableComp.Puller.Value, PopupType.MediumCaution);
+
                 return false;
+            }
+
+            else if (pullableComp.GrabStage != GrabStage.No)
+            {
+                _popup.PopupEntity(Loc.GetString("popup-grab-retake-success",
+                    ("puller", Identity.Entity(pullableComp.Puller.Value, EntityManager)),
+                    ("pulled", Identity.Entity(pullableUid, EntityManager))),
+                    pullerUid, pullerUid, PopupType.MediumCaution);
+                _popup.PopupEntity(Loc.GetString("popup-grab-retake-success-puller",
+                    ("puller", Identity.Entity(pullerUid, EntityManager)),
+                    ("pulled", Identity.Entity(pullableUid, EntityManager))),
+                    pullableComp.Puller.Value, pullableComp.Puller.Value, PopupType.MediumCaution);
+            }
+
         }
 
         var pullAttempt = new PullAttemptEvent(pullerUid, pullableUid);
