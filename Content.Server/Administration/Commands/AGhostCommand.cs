@@ -12,13 +12,12 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
-public sealed class AGhost : LocalizedCommands
+public sealed class AGhostCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     public override string Command => "aghost";
-    public override string Description => LocalizationManager.GetString("aghost-description");
     public override string Help => "aghost";
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
