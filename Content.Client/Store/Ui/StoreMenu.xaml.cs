@@ -188,7 +188,9 @@ public sealed partial class StoreMenu : DefaultWindow
     private (string Price, string Discount) GetListingPriceString(ListingData listing, StoreDiscountData? discountData)
     {
         var text = string.Empty;
-        var maxDiscount = 0f;
+        var discountMessage = string.Empty;
+
+        var discountMessageList = new List<(FixedPoint2 DiscountPercent, CurrencyPrototype CurrencyPrototype)>();
 
         if (listing.Cost.Count < 1)
             text = Loc.GetString("store-currency-free");
@@ -196,31 +198,45 @@ public sealed partial class StoreMenu : DefaultWindow
         {
             foreach (var (type, amount) in listing.Cost)
             {
+                var currency = _prototypeManager.Index<CurrencyPrototype>(type);
+
                 var totalAmount = amount;
                 if (discountData?.DiscountAmountByCurrency.TryGetValue(type, out var discountBy) != null
                     && discountBy > 0)
                 {
                     var discountPercent = (float)discountBy.Value / totalAmount.Value;
+                    discountMessageList.Add((discountPercent, currency));
+
                     totalAmount -= discountBy;
-                    maxDiscount = Math.Max(maxDiscount, discountPercent);
                 }
 
-                var currency = _prototypeManager.Index<CurrencyPrototype>(type);
                 text += Loc.GetString(
                     "store-ui-price-display",
                     ("amount", totalAmount),
                     ("currency", Loc.GetString(currency.DisplayName, ("amount", totalAmount)))
                 );
             }
-        }
 
-        var discountMessage = string.Empty;
-        if (maxDiscount > 0)
-        {
-            discountMessage = Loc.GetString(
-                "store-ui-discount-display",
-                ("amount", (maxDiscount * 100).ToString("####"))
-            );
+
+            if (discountMessageList.Count > 1)
+            {
+                var discountMessagesPerCurrency = discountMessageList.Select(
+                    x => Loc.GetString(
+                        "store-ui-discount-display-with-currency",
+                        ("amount", x.DiscountPercent.Value),
+                        ("currency", Loc.GetString(x.CurrencyPrototype.DisplayName))
+                    )
+                );
+                discountMessage = string.Join(',', discountMessagesPerCurrency);
+
+            }
+            else if (discountMessageList.Count == 1)
+            {
+                discountMessage = Loc.GetString(
+                    "store-ui-discount-display",
+                    ("amount", (discountMessageList[0].DiscountPercent.Value))
+                );
+            }
         }
 
         return (text.TrimEnd(), discountMessage);
