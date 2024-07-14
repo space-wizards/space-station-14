@@ -377,17 +377,37 @@
 
 - type: alert
   id: Pulled
-  icons: [ /Textures/Interface/Alerts/Pull/pulled.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/pull.rsi
+    state: pulled
+  - sprite: /Textures/Interface/Alerts/pull.rsi
+    state: grabbed-soft
+  - sprite: /Textures/Interface/Alerts/pull.rsi
+    state: grabbed-hard
+  - sprite: /Textures/Interface/Alerts/pull.rsi
+    state: grabbed-choke
   onClick: !type:StopBeingPulled  { }
   name: alerts-pulled-name
   description: alerts-pulled-desc
+  minSeverity: 0
+  maxSeverity: 3
 
 - type: alert
   id: Pulling
-  icons: [ /Textures/Interface/Alerts/Pull/pulling.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/pull.rsi
+    state: pulling
+  - sprite: /Textures/Interface/Alerts/pull.rsi
+    state: grab-soft
+  - sprite: /Textures/Interface/Alerts/pull.rsi
+    state: grab-hard
+  - sprite: /Textures/Interface/Alerts/pull.rsi
+    state: grab-choke
   onClick: !type:StopPulling  { }
   name: alerts-pulling-name
   description: alerts-pulling-desc
+  minSeverity: 0
+  maxSeverity: 3
 
 - type: alert
   id: Bleed

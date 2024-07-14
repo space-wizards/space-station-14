@@ -1,0 +1,45 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Original taken from https://github.com/space-wizards/space-station-14, grab icons edited by _kote",
+    "states": [
+        {
+            "name": "pulled",
+            "directions": 1
+        },
+        {
+            "name": "pulling",
+            "directions": 1
+        },
+        {
+            "name": "grab-soft",
+            "directions": 1
+        },
+        {
+            "name": "grab-hard",
+            "directions": 1
+        },
+        {
+            "name": "grabbed-soft",
+            "directions": 1
+        },
+        {
+            "name": "grabbed-hard",
+            "directions": 1
+        },
+        {
+            "name": "grab-choke",
+            "directions": 1,
+            "delays": [ [ 0.5, 0.5 ] ]
+        },
+        {
+            "name": "grabbed-choke",
+            "directions": 1,
+            "delays": [ [ 0.5, 0.5 ] ]
+        }
+    ]
+}

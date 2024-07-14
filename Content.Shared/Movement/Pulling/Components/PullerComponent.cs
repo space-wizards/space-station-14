@@ -64,4 +64,8 @@ public sealed partial class PullerComponent : Component
 
     [DataField]
     public float GrabThrowDamageModifier = 1f;
+
+    [ViewVariables]
+    public List<EntityUid> SuffocateVirtualItems = new();
+
 }

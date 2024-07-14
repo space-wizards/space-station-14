@@ -148,11 +148,28 @@ namespace Content.Shared.Hands
     {
         public EntityUid BlockingEntity;
         public EntityUid User;
+        public EntityUid VirtualItem;
 
-        public VirtualItemDeletedEvent(EntityUid blockingEntity, EntityUid user)
+        public VirtualItemDeletedEvent(EntityUid blockingEntity, EntityUid user, EntityUid virtualItem)
         {
             BlockingEntity = blockingEntity;
             User = user;
+            VirtualItem = virtualItem;
+        }
+    }
+
+    public sealed class VirtualItemThrownEvent : EntityEventArgs
+    {
+        public EntityUid BlockingEntity;
+        public EntityUid User;
+        public EntityUid VirtualItem;
+        public Vector2 Direction;
+        public VirtualItemThrownEvent(EntityUid blockingEntity, EntityUid user, EntityUid virtualItem, Vector2 direction)
+        {
+            BlockingEntity = blockingEntity;
+            User = user;
+            VirtualItem = virtualItem;
+            Direction = direction;
         }
     }
 

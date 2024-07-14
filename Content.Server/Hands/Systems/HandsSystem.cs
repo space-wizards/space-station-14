@@ -23,6 +23,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.Hands;
 
 namespace Content.Server.Hands.Systems
 {
@@ -215,6 +216,15 @@ namespace Content.Server.Hands.Systems
             // or the throw strength.
             var ev = new BeforeThrowEvent(throwEnt, direction, throwStrength, player);
             RaiseLocalEvent(player, ref ev);
+
+            if (TryComp<VirtualItemComponent>(throwEnt, out var virt))
+            {
+                var userEv = new VirtualItemThrownEvent(virt.BlockingEntity, player, throwEnt, direction);
+                RaiseLocalEvent(player, userEv);
+
+                var targEv = new VirtualItemThrownEvent(virt.BlockingEntity, player, throwEnt, direction);
+                RaiseLocalEvent(virt.BlockingEntity, targEv);
+            }
 
             if (ev.Cancelled)
                 return true;

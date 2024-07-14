@@ -20,7 +20,7 @@ namespace Content.Server.Alert.Click
             if (entManager.TryGetComponent(player, out PullerComponent? puller) &&
                 entManager.TryGetComponent(puller.Pulling, out PullableComponent? pullableComp))
             {
-                ps.TryStopPull(puller.Pulling.Value, pullableComp, user: player, ignoreGrab: true);
+                ps.TryLowerGrabStage(puller.Pulling.Value, player, true);
             }
         }
     }

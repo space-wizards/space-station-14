@@ -11,3 +11,7 @@ popup-grab-hard-others = {CAPITALIZE($puller)} grabbed {CAPITALIZE($target)} har
 popup-grab-suffocate-others = {CAPITALIZE($puller)} started to choke {CAPITALIZE($target)}!
 
 popup-grab-release-fail-self = You are trying to escape.
+popup-grab-release-success-self = You escaped from grab!
+popup-grab-release-success-puller = {CAPITALIZE($target)} escaped!
+
+popup-grabbed-cant-speak = You can't breathe!
