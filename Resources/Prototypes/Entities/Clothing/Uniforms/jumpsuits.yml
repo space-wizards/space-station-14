@@ -548,6 +548,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitQMBusiness
+  name: quartermasters's business shirt
+  description: A stylish combo of charcoal black pants and a delivery brown shirt, it practically shouts fast delivery.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/qmbusiness.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/qmbusiness.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitResearchDirector
   name: research director's turtleneck
   description: It's a turtleneck worn by those with the know-how to achieve the position of Research Director. Its fabric provides minor protection from biological contaminants.

@@ -86,6 +86,8 @@
       - id: ClothingNeckCloakQm
       - id: ClothingHeadHatBeretQM
       - id: ClothingUniformJumpsuitQMFormal
+      - id: ClothingUniformJumpsuitQMBusiness
+      - id: ClothingUniformJumpskirtQMBusiness
       - id: ClothingUniformJumpsuitQMTurtleneck
       - id: ClothingUniformJumpskirtQMTurtleneck
       - id: ClothingHandsGlovesColorBrown
