@@ -5,6 +5,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -16,6 +17,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly GridPreloaderSystem _gridPreloader = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     protected override void Added(EntityUid uid, LoadMapRuleComponent comp, GameRuleComponent rule, GameRuleAddedEvent args)
     {
@@ -54,7 +56,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
         else if (comp.PreloadedGrid != null && comp.PreloadedGrid.Count > 0)
         {
             // Choose random preloaded grid from the list
-            var preloaded = comp.PreloadedGrid[Random.Shared.Next(comp.PreloadedGrid.Count)];
+            var preloaded = _random.Pick(comp.PreloadedGrid);
 
             // TODO: If there are no preloaded grids left, any rule announcements will still go off!
             if (!_gridPreloader.TryGetPreloadedGrid(preloaded, out var loadedShuttle))
