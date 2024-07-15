@@ -598,5 +598,5 @@
         - ReagentId: Nutriment
           Quantity: 50
         - ReagentId: Uranium
-          Quantity: 2
+          Quantity: 20
 # Tastes like crust, tomato, cheese, radiation.

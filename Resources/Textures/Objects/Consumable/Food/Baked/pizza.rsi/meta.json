@@ -137,6 +137,12 @@
     {
       "name": "box-inhand-left",
       "directions": 4
+    },
+    {
+      "name": "uranium-pizza"
+    },
+    {
+      "name": "uranium-slice"
     }
   ]
 }
