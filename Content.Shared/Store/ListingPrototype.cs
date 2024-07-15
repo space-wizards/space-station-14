@@ -222,25 +222,3 @@ public enum DiscountCategory : byte
     /// </summary>
     VeryRareDiscounts
 }
-
-[Serializable, NetSerializable, DataDefinition]
-public sealed partial class StoreDiscountData
-{
-    /// <summary>
-    /// Id of listing item to be discounted.
-    /// </summary>
-    [DataField("listingId")]
-    public string ListingId = default!;
-
-    /// <summary>
-    /// Amount of discounted items. Each buy will decrement this counter.
-    /// </summary>
-    [DataField("count")]
-    public int Count;
-
-    /// <summary>
-    /// Map of currencies to flat amount of discount.
-    /// </summary>
-    [DataField("discountAmountByCurrency", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, CurrencyPrototype>))]
-    public Dictionary<string, FixedPoint2> DiscountAmountByCurrency = new();
-}

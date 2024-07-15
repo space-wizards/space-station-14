@@ -93,8 +93,6 @@ namespace Content.Server.Traitor.Uplink.Commands
                 }
             }
 
-            // Get TC count
-            Logger.Debug(_entManager.ToPrettyString(user));
             // Finally add uplink
             var uplinkSys = _entManager.System<UplinkSystem>();
             if (!uplinkSys.AddUplink(user, 20, uplinkEntity: uplinkEntity, giveDiscounts: isDiscounted))

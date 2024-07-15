@@ -1,4 +1,5 @@
 using Content.Shared.FixedPoint;
+using Content.Shared.StoreDiscount.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 

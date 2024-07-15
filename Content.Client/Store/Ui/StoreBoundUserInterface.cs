@@ -2,6 +2,7 @@ using Content.Shared.Store;
 using JetBrains.Annotations;
 using System.Linq;
 using Content.Shared.Store.Components;
+using Content.Shared.StoreDiscount.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Store.Ui;

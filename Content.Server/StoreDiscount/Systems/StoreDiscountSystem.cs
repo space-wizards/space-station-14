@@ -5,6 +5,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.StoreDiscount.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.StoreDiscount.Systems;
@@ -140,6 +141,56 @@ public sealed class StoreDiscountSystem : EntitySystem
         return list.ToArray();
     }
 
+    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> ApplyDiscount(
+        EntityUid storeEntityUid,
+        string purchaseId,
+        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> listingCost
+    )
+    {
+        var discounts = Array.Empty<StoreDiscountData>();
+        if (TryComp<StoreDiscountComponent>(storeEntityUid, out var discountsComponent))
+        {
+            discounts = discountsComponent.Discounts;
+        }
+
+        var discountData = discounts.FirstOrDefault(x => x.Count > 0 && x.ListingId == purchaseId);
+        if (discountData == null)
+        {
+            return listingCost;
+        }
+
+        var withDiscount = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>();
+        foreach (var (currency, amount) in listingCost)
+        {
+            var totalAmount = amount;
+            if (discountData?.DiscountAmountByCurrency.TryGetValue(currency, out var discount) == true)
+            {
+                totalAmount -= discount;
+            }
+
+            withDiscount.Add(currency, totalAmount);
+        }
+
+        return withDiscount;
+    }
+
+    public void TryMarkDiscountAsUsed(EntityUid storeEntityUid, string purchaseId)
+    {
+        var discounts = Array.Empty<StoreDiscountData>();
+        if (TryComp<StoreDiscountComponent>(storeEntityUid, out var discountsComponent))
+        {
+            discounts = discountsComponent.Discounts;
+        }
+
+        var discountData = discounts.FirstOrDefault(x => x.Count > 0 && x.ListingId == purchaseId);
+        if (discountData == null)
+        {
+            return;
+        }
+
+        discountData.Count--;
+    }
+
     /// <summary>
     /// Settings for discount initializations.
     /// </summary>
@@ -171,4 +222,5 @@ public sealed class StoreDiscountSystem : EntitySystem
         /// </summary>
         public int VeryRareDiscountChancePercent { get; set; } = 2;
     }
+
 }

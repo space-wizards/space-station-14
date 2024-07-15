@@ -48,7 +48,7 @@ public sealed partial class StoreComponent : Component
     /// </summary>
     [DataField]
     public HashSet<ListingData> Listings = new();
-    
+
     /// <summary>
     /// All available listings from the last time that it was checked.
     /// </summary>

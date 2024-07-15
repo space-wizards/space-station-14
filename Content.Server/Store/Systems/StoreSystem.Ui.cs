@@ -4,6 +4,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.PDA.Ringer;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
+using Content.Server.StoreDiscount.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -32,6 +33,7 @@ public sealed partial class StoreSystem
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly StoreDiscountSystem _discount = default!;
 
     private void InitializeUi()
     {
@@ -160,21 +162,11 @@ public sealed partial class StoreSystem
         }
 
         //check that we have enough money
-        var discounts = Array.Empty<StoreDiscountData>();
-        if (TryComp<StoreDiscountComponent>(uid, out var discountsComponent))
-        {
-            discounts = discountsComponent.Discounts;
-        }
-        var discountData = discounts.FirstOrDefault(x => x.Count > 0 && x.ListingId == listing.ID);
-        foreach (var (currency, value) in listing.Cost)
-        {
-            var totalAmount = value;
-            if (discountData?.DiscountAmountByCurrency.TryGetValue(currency, out var discount) == true)
-            {
-                totalAmount -= discount;
-            }
+        var cost = _discount.ApplyDiscount(uid, msg.Listing.ID, listing.Cost);
 
-            if (!component.Balance.TryGetValue(currency, out var balance) || balance < totalAmount)
+        foreach (var (currency, amount) in cost)
+        {
+            if (!component.Balance.TryGetValue(currency, out var balance) || balance < amount)
             {
                 return;
             }
@@ -184,21 +176,16 @@ public sealed partial class StoreSystem
             component.RefundAllowed = false;
 
         //subtract the cash
-        foreach (var (currency, value) in listing.Cost)
+        foreach (var (currency, amount) in cost)
         {
-            var totalAmount = value;
-            if (discountData?.DiscountAmountByCurrency.TryGetValue(currency, out var discount) == true)
-            {
-                totalAmount -= discount;
-                discountData.Count--;
-            }
-
-            component.Balance[currency] -= totalAmount;
+            component.Balance[currency] -= amount;
 
             component.BalanceSpent.TryAdd(currency, FixedPoint2.Zero);
 
-            component.BalanceSpent[currency] += totalAmount;
+            component.BalanceSpent[currency] += amount;
         }
+
+        _discount.TryMarkDiscountAsUsed(uid, msg.Listing.ID);
 
         //spawn entity
         if (listing.ProductEntity != null)
