@@ -9,20 +9,19 @@ using Robust.Shared.Prototypes;
 using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
 using Content.Shared.IdentityManagement;
 using Robust.Shared.Timing;
+using Robust.Client.UserInterface;
+using Content.Client.UserInterface.Controls;
 
 namespace Content.Client.VendingMachines.UI
 {
     [GenerateTypedNameReferences]
     public sealed partial class VendingMachineMenu : FancyWindow
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
 
         private readonly Dictionary<EntProtoId, EntityUid> _dummies = [];
 
-        public event Action<ItemList.ItemListSelectedEventArgs>? OnItemSelected;
-        public event Action<string>? OnSearchChanged;
+        public event Action<GUIBoundKeyEventArgs, ListData>? OnItemSelected;
 
         public VendingMachineMenu()
         {
@@ -30,15 +29,32 @@ namespace Content.Client.VendingMachines.UI
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
-            SearchBar.OnTextChanged += _ =>
-            {
-                OnSearchChanged?.Invoke(SearchBar.Text);
-            };
+            VendingContents.SearchBar = SearchBar;
+            VendingContents.DataFilterCondition += DataFilterCondition;
+            VendingContents.GenerateItem += GenerateButton;
+            VendingContents.ItemKeyBindDown += (args, data) => OnItemSelected?.Invoke(args, data);
+        }
 
-            VendingContents.OnItemSelected += args =>
-            {
-                OnItemSelected?.Invoke(args);
-            };
+        private bool DataFilterCondition(string filter, ListData data)
+        {
+            if (data is not VendorItemsListData { ItemName: var itemName })
+                return false;
+
+            if (string.IsNullOrEmpty(filter))
+                return true;
+
+            return itemName.Contains(filter, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        private void GenerateButton(ListData data, ListContainerButton button)
+        {
+            if (data is not VendorItemsListData { Dummy: var dummy, ItemName: var itemName })
+                return;
+
+            var entry = new VendingMachineItem(dummy, itemName);
+            button.ToolTip = itemName;
+
+            button.AddChild(entry);
         }
 
         protected override void Dispose(bool disposing)
@@ -61,37 +77,35 @@ namespace Content.Client.VendingMachines.UI
         /// Populates the list of available items on the vending machine interface
         /// and sets icons based on their prototypes
         /// </summary>
-        public void Populate(List<VendingMachineInventoryEntry> inventory, out List<int> filteredInventory,  string? filter = null)
+        public void Populate(List<VendingMachineInventoryEntry> inventory)
         {
-            filteredInventory = new();
-
-            if (inventory.Count == 0)
+            if (inventory.Count == 0 && VendingContents.Visible)
             {
-                VendingContents.Clear();
-                var outOfStockText = Loc.GetString("vending-machine-component-try-eject-out-of-stock");
-                VendingContents.AddItem(outOfStockText);
-                SetSizeAfterUpdate(outOfStockText.Length, VendingContents.Count);
+                SearchBar.Visible = false;
+                VendingContents.Visible = false;
+
+                var outOfStockLabel = new Label()
+                {
+                    Text = Loc.GetString("vending-machine-component-try-eject-out-of-stock"),
+                    Margin = new Thickness(4, 4),
+                    HorizontalExpand = true,
+                    VerticalAlignment = VAlignment.Stretch,
+                    HorizontalAlignment = HAlignment.Center
+                };
+
+                MainContainer.AddChild(outOfStockLabel);
+
+                SetSizeAfterUpdate(outOfStockLabel.Text.Length, 0);
+
                 return;
             }
 
-            while (inventory.Count != VendingContents.Count)
-            {
-                if (inventory.Count > VendingContents.Count)
-                    VendingContents.AddItem(string.Empty);
-                else
-                    VendingContents.RemoveAt(VendingContents.Count - 1);
-            }
-
             var longestEntry = string.Empty;
-            var spriteSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>();
+            var listData = new List<VendorItemsListData>();
 
-            var filterCount = 0;
             for (var i = 0; i < inventory.Count; i++)
             {
                 var entry = inventory[i];
-                var vendingItem = VendingContents[i - filterCount];
-                vendingItem.Text = string.Empty;
-                vendingItem.Icon = null;
 
                 if (!_dummies.TryGetValue(entry.ID, out var dummy))
                 {
@@ -100,28 +114,14 @@ namespace Content.Client.VendingMachines.UI
                 }
 
                 var itemName = Identity.Name(dummy, _entityManager);
-                Texture? icon = null;
-                if (_prototypeManager.TryIndex<EntityPrototype>(entry.ID, out var prototype))
-                {
-                    icon = spriteSystem.GetPrototypeIcon(prototype).Default;
-                }
-
-                // search filter
-                if (!string.IsNullOrEmpty(filter) &&
-                    !itemName.ToLowerInvariant().Contains(filter.Trim().ToLowerInvariant()))
-                {
-                    VendingContents.Remove(vendingItem);
-                    filterCount++;
-                    continue;
-                }
 
                 if (itemName.Length > longestEntry.Length)
                     longestEntry = itemName;
 
-                vendingItem.Text = $"{itemName} [{entry.Amount}]";
-                vendingItem.Icon = icon;
-                filteredInventory.Add(i);
+                listData.Add(new VendorItemsListData(dummy, $"{itemName} [{entry.Amount}]", i));
             }
+
+            VendingContents.PopulateList(listData);
 
             SetSizeAfterUpdate(longestEntry.Length, inventory.Count);
         }
@@ -133,3 +133,5 @@ namespace Content.Client.VendingMachines.UI
         }
     }
 }
+
+public record VendorItemsListData(EntityUid Dummy, string ItemName, int ItemIndex) : ListData;
