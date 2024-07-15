@@ -216,7 +216,7 @@
     state: icon
 
 - type: construction
-  name: Diamond hoe
+  name: diamond hoe
   id: DiamondHoe
   graph: DiamondHoe
   startNode: start
