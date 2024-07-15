@@ -326,7 +326,7 @@ public sealed partial class GameTicker
         {
             if (!_prototypeManager.HasIndex(rule))
             {
-                shell.WriteError($"Invalid game rule {rule} was passed.");
+                shell.WriteError($"Invalid game rule {rule} was skipped.");
 
                 continue;
             }
