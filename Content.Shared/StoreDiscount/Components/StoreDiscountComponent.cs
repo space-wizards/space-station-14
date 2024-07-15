@@ -6,6 +6,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.StoreDiscount.Components;
 
+/// <summary>
+/// Partner-component for adding discounts functionality to StoreSystem using StoreDiscountSystem.
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class StoreDiscountComponent : Component
 {
@@ -16,6 +19,9 @@ public sealed partial class StoreDiscountComponent : Component
     public StoreDiscountData[] Discounts = Array.Empty<StoreDiscountData>();
 }
 
+/// <summary>
+/// Container for listing item discount state.
+/// </summary>
 [Serializable, NetSerializable, DataDefinition]
 public sealed partial class StoreDiscountData
 {

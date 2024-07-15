@@ -33,7 +33,6 @@ public sealed partial class StoreSystem
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly StoreDiscountSystem _discount = default!;
 
     private void InitializeUi()
     {
@@ -162,7 +161,15 @@ public sealed partial class StoreSystem
         }
 
         //check that we have enough money
-        var cost = _discount.ApplyDiscount(uid, msg.Listing.ID, listing.Cost);
+        var storeBuyAttempt = new StoreBuyAttemptEvent(uid, listing.Cost, msg.Listing.ID);
+        RaiseLocalEvent(storeBuyAttempt);
+
+        var cost = storeBuyAttempt.Cost;
+
+        if (storeBuyAttempt.Cancelled)
+        {
+            return;
+        }
 
         foreach (var (currency, amount) in cost)
         {
@@ -184,8 +191,6 @@ public sealed partial class StoreSystem
 
             component.BalanceSpent[currency] += amount;
         }
-
-        _discount.TryMarkDiscountAsUsed(uid, msg.Listing.ID);
 
         //spawn entity
         if (listing.ProductEntity != null)
@@ -274,6 +279,13 @@ public sealed partial class StoreSystem
 
         listing.PurchaseAmount++; //track how many times something has been purchased
         _audio.PlayEntity(component.BuySuccessSound, msg.Actor, uid); //cha-ching!
+
+        var buyFinished = new StoreBuyFinishedEvent
+        {
+            PurchasingItemId = msg.Listing.ID,
+            StoreUid = uid
+        };
+        RaiseLocalEvent(ref buyFinished);
 
         UpdateUserInterface(buyer, uid, component);
     }
@@ -390,3 +402,40 @@ public sealed partial class StoreSystem
         component.RefundAllowed = false;
     }
 }
+
+/// <summary>
+/// Cancellable event of attempt of store buy. Can be used to modify cost of item in some way (apply discount or surcharge).
+/// </summary>
+public sealed class StoreBuyAttemptEvent : CancellableEntityEventArgs
+{
+    /// <inheritdoc />
+    public StoreBuyAttemptEvent(EntityUid storeUid, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> cost, string purchasingItemId)
+    {
+        StoreUid = storeUid;
+        Cost = cost;
+        PurchasingItemId = purchasingItemId;
+    }
+
+    /// <summary>
+    /// EntityUid on which store is placed.
+    /// </summary>
+    public EntityUid StoreUid { get; set; }
+
+    /// <summary>
+    /// <c>Modifiable</c> cost of item to be purchased.
+    /// </summary>
+    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Cost { get; set; }
+
+    /// <summary>
+    /// ListingItem that was attempted to be purchased.
+    /// </summary>
+    public string PurchasingItemId { get; set; }
+}
+
+/// <summary>
+/// Event of successfully finishing purchase in store (<see cref="StoreSystem"/>.
+/// </summary>
+/// <param name="StoreUid">EntityUid on which store is placed.</param>
+/// <param name="PurchasingItemId">Id of ListingItem that was purchased.</param>
+[ByRefEvent]
+public record struct StoreBuyFinishedEvent(EntityUid StoreUid, string PurchasingItemId);

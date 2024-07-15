@@ -23,6 +23,55 @@ public sealed class StoreDiscountSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<StoreInitializedEvent>(OnUplinkInitialized);
+        SubscribeLocalEvent<StoreBuyAttemptEvent>(OnBuyRequest);
+        SubscribeLocalEvent<StoreBuyFinishedEvent>(OnBuyFinished);
+    }
+
+    private void OnBuyFinished(ref StoreBuyFinishedEvent ev)
+    {
+        var (storeId, purchasedItemId) = ev;
+        var discounts = Array.Empty<StoreDiscountData>();
+        if (TryComp<StoreDiscountComponent>(storeId, out var discountsComponent))
+        {
+            discounts = discountsComponent.Discounts;
+        }
+
+        var discountData = discounts.FirstOrDefault(x => x.Count > 0 && x.ListingId == purchasedItemId);
+        if (discountData == null)
+        {
+            return;
+        }
+
+        discountData.Count--;
+    }
+
+    private void OnBuyRequest(StoreBuyAttemptEvent ev)
+    {
+        var discounts = Array.Empty<StoreDiscountData>();
+        if (TryComp<StoreDiscountComponent>(ev.StoreUid, out var discountsComponent))
+        {
+            discounts = discountsComponent.Discounts;
+        }
+
+        var discountData = discounts.FirstOrDefault(x => x.Count > 0 && x.ListingId == ev.PurchasingItemId);
+        if (discountData == null)
+        {
+            return;
+        }
+
+        var withDiscount = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>();
+        foreach (var (currency, amount) in ev.Cost)
+        {
+            var totalAmount = amount;
+            if (discountData?.DiscountAmountByCurrency.TryGetValue(currency, out var discount) == true)
+            {
+                totalAmount -= discount;
+            }
+
+            withDiscount.Add(currency, totalAmount);
+        }
+
+        ev.Cost = withDiscount;
     }
 
     private void OnUplinkInitialized(ref StoreInitializedEvent ev)
@@ -139,56 +188,6 @@ public sealed class StoreDiscountSystem : EntitySystem
         }
 
         return list.ToArray();
-    }
-
-    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> ApplyDiscount(
-        EntityUid storeEntityUid,
-        string purchaseId,
-        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> listingCost
-    )
-    {
-        var discounts = Array.Empty<StoreDiscountData>();
-        if (TryComp<StoreDiscountComponent>(storeEntityUid, out var discountsComponent))
-        {
-            discounts = discountsComponent.Discounts;
-        }
-
-        var discountData = discounts.FirstOrDefault(x => x.Count > 0 && x.ListingId == purchaseId);
-        if (discountData == null)
-        {
-            return listingCost;
-        }
-
-        var withDiscount = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>();
-        foreach (var (currency, amount) in listingCost)
-        {
-            var totalAmount = amount;
-            if (discountData?.DiscountAmountByCurrency.TryGetValue(currency, out var discount) == true)
-            {
-                totalAmount -= discount;
-            }
-
-            withDiscount.Add(currency, totalAmount);
-        }
-
-        return withDiscount;
-    }
-
-    public void TryMarkDiscountAsUsed(EntityUid storeEntityUid, string purchaseId)
-    {
-        var discounts = Array.Empty<StoreDiscountData>();
-        if (TryComp<StoreDiscountComponent>(storeEntityUid, out var discountsComponent))
-        {
-            discounts = discountsComponent.Discounts;
-        }
-
-        var discountData = discounts.FirstOrDefault(x => x.Count > 0 && x.ListingId == purchaseId);
-        if (discountData == null)
-        {
-            return;
-        }
-
-        discountData.Count--;
     }
 
     /// <summary>
