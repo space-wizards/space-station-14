@@ -325,7 +325,11 @@ public sealed partial class GameTicker
         foreach (var rule in args)
         {
             if (!_prototypeManager.HasIndex(rule))
+            {
+                shell.WriteError($"Invalid game rule {rule} was passed.");
+
                 continue;
+            }
 
             if (shell.Player != null)
             {
