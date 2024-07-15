@@ -1,4 +1,4 @@
-﻿using Content.Client.Changelog;
+using Content.Client.Changelog;
 using Content.Client.Credits;
 using Content.Shared.CCVar;
 using Robust.Client.UserInterface;
@@ -12,6 +12,8 @@ namespace Content.Client.Info
 {
     public sealed class DevInfoBanner : BoxContainer
     {
+        private CreditsWindow? _creditsWindow;
+
         public DevInfoBanner() {
             var buttons = new BoxContainer
             {
@@ -30,8 +32,24 @@ namespace Content.Client.Info
                 buttons.AddChild(reportButton);
             }
 
-            var creditsButton = new Button {Text = Loc.GetString("server-info-credits-button")};
-            creditsButton.OnPressed += args => new CreditsWindow().Open();
+            var creditsButton = new Button { Text = Loc.GetString("server-info-credits-button"), ToggleMode = true };
+
+            creditsButton.OnPressed += _ =>
+            {
+                if (_creditsWindow is { IsOpen: true })
+                {
+                    _creditsWindow.Close();
+
+                    return;
+                }
+
+                _creditsWindow = new CreditsWindow();
+
+                _creditsWindow.OnClose += () => creditsButton.Pressed = false;
+
+                _creditsWindow.OpenCentered();
+            };
+
             buttons.AddChild(creditsButton);
         }
     }
