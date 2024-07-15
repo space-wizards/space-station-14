@@ -1,0 +1,9 @@
+- type: cargoProduct
+  id: ServiceKendoKit
+  icon:
+    sprite: Nyanotrasen/Objects/Weapons/Melee/shinai.rsi
+    state: icon
+  product: CrateServiceKendo
+  cost: 560
+  category: cargoproduct-category-name-service
+  group: market
