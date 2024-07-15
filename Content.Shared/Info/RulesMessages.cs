@@ -37,11 +37,15 @@ public sealed class RulesAcceptedMessage : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.Command;
 
+    public bool FuckedRules { get; set; }
+
     public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
     {
+        FuckedRules = buffer.ReadBoolean();
     }
 
     public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
     {
+        buffer.Write(FuckedRules);
     }
 }

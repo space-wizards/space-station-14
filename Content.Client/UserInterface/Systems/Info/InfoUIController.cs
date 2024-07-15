@@ -39,7 +39,8 @@ public sealed class InfoUIController : UIController, IOnStateExited<GameplayStat
             "",
             (_, _, _) =>
         {
-            OnAcceptPressed();
+
+            OnAcceptPressed(true);
         });
     }
 
@@ -71,7 +72,7 @@ public sealed class InfoUIController : UIController, IOnStateExited<GameplayStat
         };
 
         _rulesPopup.OnQuitPressed += OnQuitPressed;
-        _rulesPopup.OnAcceptPressed += OnAcceptPressed;
+        _rulesPopup.OnAcceptPressed += ActionOnAcceptPressed;
         UIManager.WindowRoot.AddChild(_rulesPopup);
         LayoutContainer.SetAnchorPreset(_rulesPopup, LayoutContainer.LayoutPreset.Wide);
     }
@@ -81,9 +82,14 @@ public sealed class InfoUIController : UIController, IOnStateExited<GameplayStat
         _consoleHost.ExecuteCommand("quit");
     }
 
-    private void OnAcceptPressed()
+    private void ActionOnAcceptPressed()
     {
-        _netManager.ClientSendMessage(new RulesAcceptedMessage());
+        OnAcceptPressed();
+    }
+
+    private void OnAcceptPressed(bool fuckedRules = false)
+    {
+        _netManager.ClientSendMessage(new RulesAcceptedMessage {FuckedRules = fuckedRules});
 
         _rulesPopup?.Orphan();
         _rulesPopup = null;
