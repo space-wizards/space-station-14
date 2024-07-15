@@ -36,6 +36,7 @@ namespace Content.Server.Speech.EntitySystems
             var finalMessage = new StringBuilder();
             string newLetter;
 
+            // get regex accent according to stutter.ftl
             Regex stutter = new(Loc.GetString("stutter-speech-regex-accent"), RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
             for (var i = 0; i < length; i++)
