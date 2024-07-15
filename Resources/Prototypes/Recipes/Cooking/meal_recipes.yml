@@ -600,6 +600,7 @@
     FoodDoughFlat: 1
     FoodChiliPepper: 2
     FoodTomato: 2
+    SheetUranium1: 1
 
 #Italian
 - type: microwaveMealRecipe

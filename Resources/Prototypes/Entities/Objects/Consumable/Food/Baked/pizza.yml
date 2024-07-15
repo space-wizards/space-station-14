@@ -569,6 +569,20 @@
     tags:
     - Meat
     - Pizza
+  - type: PointLight
+    enabled: true
+    radius: 2
+
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 100
+        - ReagentId: Radium
+          Quantity: 80
+
 
 - type: entity
   name: slice of spicy rock pizza
@@ -590,6 +604,9 @@
     - Meat
     - Pizza
     - Slice
+  - type: PointLight
+    enabled: true
+    radius: 2
   - type: SolutionContainerManager
     solutions:
       food:
@@ -597,6 +614,7 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 50
-        - ReagentId: Uranium
-          Quantity: 20
+        - ReagentId: Radium
+          Quantity: 10
+
 # Tastes like crust, tomato, cheese, radiation.
