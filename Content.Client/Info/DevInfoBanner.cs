@@ -52,5 +52,15 @@ namespace Content.Client.Info
 
             buttons.AddChild(creditsButton);
         }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+
+            if (_creditsWindow is { IsOpen: true })
+            {
+                _creditsWindow.Close();
+            }
+        }
     }
 }
