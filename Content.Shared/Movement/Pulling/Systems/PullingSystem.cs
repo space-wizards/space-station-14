@@ -797,7 +797,7 @@ public sealed class PullingSystem : EntitySystem
                 else
                 {
                     _popup.PopupEntity(Loc.GetString("popup-grab-need-hand"), puller, puller, PopupType.Medium);
-                    return false;
+                    return true;
                 }
             }
 
@@ -808,7 +808,7 @@ public sealed class PullingSystem : EntitySystem
                 else
                 {
                     _popup.PopupEntity(Loc.GetString("popup-grab-need-hand"), puller, puller, PopupType.Medium);
-                    return false;
+                    return true;
                 }
             }
 
