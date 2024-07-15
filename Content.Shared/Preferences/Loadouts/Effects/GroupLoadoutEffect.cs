@@ -13,17 +13,20 @@ public sealed partial class GroupLoadoutEffect : LoadoutEffect
     [DataField(required: true)]
     public ProtoId<LoadoutEffectGroupPrototype> Proto;
 
-    public override bool Validate(HumanoidCharacterProfile profile, RoleLoadout loadout, ICommonSession session, IDependencyCollection collection, [NotNullWhen(false)] out FormattedMessage? reason)
+    public override bool Validate(HumanoidCharacterProfile profile, RoleLoadout loadout, ICommonSession? session, IDependencyCollection collection, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         var effectsProto = collection.Resolve<IPrototypeManager>().Index(Proto);
 
+        var reasons = new List<string>();
         foreach (var effect in effectsProto.Effects)
         {
-            if (!effect.Validate(profile, loadout, session, collection, out reason))
-                return false;
+            if (effect.Validate(profile, loadout, session, collection, out reason))
+                continue;
+
+            reasons.Add(reason.ToMarkup());
         }
 
-        reason = null;
-        return true;
+        reason = reasons.Count == 0 ? null : FormattedMessage.FromMarkup(string.Join('\n', reasons));
+        return reason == null;
     }
 }

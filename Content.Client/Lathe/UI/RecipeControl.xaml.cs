@@ -4,6 +4,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Lathe.UI;
 
@@ -13,12 +14,13 @@ public sealed partial class RecipeControl : Control
     public Action<string>? OnButtonPressed;
     public Func<string> TooltipTextSupplier;
 
-    public RecipeControl(LatheRecipePrototype recipe, Func<string> tooltipTextSupplier, bool canProduce, List<Texture> textures)
+    public RecipeControl(LatheRecipePrototype recipe, Func<string> tooltipTextSupplier, bool canProduce, EntityPrototype? entityPrototype = null)
     {
         RobustXamlLoader.Load(this);
 
         RecipeName.Text = recipe.Name;
-        RecipeTextures.Textures = textures;
+        if (entityPrototype != null)
+            RecipePrototype.SetPrototype(entityPrototype);
         Button.Disabled = !canProduce;
         TooltipTextSupplier = tooltipTextSupplier;
         Button.TooltipSupplier = SupplyTooltip;

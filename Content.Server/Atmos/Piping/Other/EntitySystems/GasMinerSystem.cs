@@ -24,56 +24,61 @@ namespace Content.Server.Atmos.Piping.Other.EntitySystems
         private void OnMinerUpdated(Entity<GasMinerComponent> ent, ref AtmosDeviceUpdateEvent args)
         {
             var miner = ent.Comp;
-            if (!CheckMinerOperation(ent, out var environment) || !miner.Enabled || !miner.SpawnGas.HasValue || miner.SpawnAmount <= 0f)
+
+            if (!GetValidEnvironment(ent, out var environment))
+            {
+                miner.Idle = true;
+                return;
+            }
+
+            // SpawnAmount is declared in mol/s so to get the amount of gas we hope to mine, we have to multiply this by
+            // how long we have been waiting to spawn it and further cap the number according to the miner's state.
+            var toSpawn = CapSpawnAmount(ent, miner.SpawnAmount * args.dt, environment);
+            miner.Idle = toSpawn == 0;
+            if (miner.Idle || !miner.Enabled || !miner.SpawnGas.HasValue)
                 return;
 
             // Time to mine some gas.
 
             var merger = new GasMixture(1) { Temperature = miner.SpawnTemperature };
-            merger.SetMoles(miner.SpawnGas.Value, miner.SpawnAmount);
+            merger.SetMoles(miner.SpawnGas.Value, toSpawn);
 
             _atmosphereSystem.Merge(environment, merger);
         }
 
-        private bool CheckMinerOperation(Entity<GasMinerComponent> ent, [NotNullWhen(true)] out GasMixture? environment)
+        private bool GetValidEnvironment(Entity<GasMinerComponent> ent, [NotNullWhen(true)] out GasMixture? environment)
         {
             var (uid, miner) = ent;
             var transform = Transform(uid);
-            environment = _atmosphereSystem.GetContainingMixture((uid, transform), true, true);
-
             var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
 
-            // Space.
+            // Treat space as an invalid environment
             if (_atmosphereSystem.IsTileSpace(transform.GridUid, transform.MapUid, position))
             {
-                miner.Broken = true;
+                environment = null;
                 return false;
             }
 
-            // Air-blocked location.
-            if (environment == null)
-            {
-                miner.Broken = true;
-                return false;
+            environment = _atmosphereSystem.GetContainingMixture((uid, transform), true, true);
+            return environment != null;
+        }
+
+        private float CapSpawnAmount(Entity<GasMinerComponent> ent, float toSpawnTarget, GasMixture environment)
+        {
+            var (uid, miner) = ent;
+
+            // How many moles could we theoretically spawn. Cap by pressure and amount.
+            var allowableMoles = Math.Min(
+                (miner.MaxExternalPressure - environment.Pressure) * environment.Volume / (miner.SpawnTemperature * Atmospherics.R),
+                miner.MaxExternalAmount - environment.TotalMoles);
+
+            var toSpawnReal = Math.Clamp(allowableMoles, 0f, toSpawnTarget);
+
+            if (toSpawnReal < Atmospherics.GasMinMoles) {
+                return 0f;
             }
 
-            // External pressure above threshold.
-            if (!float.IsInfinity(miner.MaxExternalPressure) &&
-                environment.Pressure > miner.MaxExternalPressure - miner.SpawnAmount * miner.SpawnTemperature * Atmospherics.R / environment.Volume)
-            {
-                miner.Broken = true;
-                return false;
-            }
-
-            // External gas amount above threshold.
-            if (!float.IsInfinity(miner.MaxExternalAmount) && environment.TotalMoles > miner.MaxExternalAmount)
-            {
-                miner.Broken = true;
-                return false;
-            }
-
-            miner.Broken = false;
-            return true;
+            return toSpawnReal;
         }
     }
 }
