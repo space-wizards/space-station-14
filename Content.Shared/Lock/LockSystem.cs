@@ -8,6 +8,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Content.Shared.UserInterface;
@@ -228,6 +229,10 @@ public sealed class LockSystem : EntitySystem
     public bool CanToggleLock(EntityUid uid, EntityUid user, bool quiet = true)
     {
         if (!HasComp<HandsComponent>(user))
+            return false;
+
+        // This disallows borgs from locking/unlocking themselves or other borgs
+        if (HasComp<BorgChassisComponent>(user) && HasComp<BorgChassisComponent>(uid))
             return false;
 
         var ev = new LockToggleAttemptEvent(user, quiet);
