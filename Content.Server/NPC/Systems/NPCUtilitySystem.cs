@@ -505,7 +505,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 foreach (var ent in entities)
                 {
-                    if (!TryComp<TransformComponent>(ent, out var xform))
+                    if (!TryComp(ent, out TransformComponent? xform))
                         continue;
 
                     if (xform.Anchored)
