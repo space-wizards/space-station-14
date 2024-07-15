@@ -34,13 +34,13 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// Discount category for listing item. This marker describes chance of how often will item be discounted.
     /// </summary>
     [DataField("discountCategory")]
-    public DiscountCategory DiscountCategory;
+    public DiscountCategory DiscountCategory = DiscountCategory.NoDiscounts;
 
     /// <summary>
     /// Options for discount - % of how much item costs can be cut by discount.
     /// </summary>
     [DataField("discountDownTo")]
-    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> DiscountDownTo;
+    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> DiscountDownTo = new();
 
     /// <summary>
     /// The description of the listing. If empty, uses the entity's description (if present)
