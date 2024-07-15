@@ -26,7 +26,7 @@ public sealed class ChangelogUIController : UIController
         _changeLogWindow = UIManager.CreateWindow<ChangelogWindow>();
     }
 
-    public void ToggleWindow()
+    public ChangelogWindow ToggleWindow()
     {
         EnsureWindow();
 
@@ -38,5 +38,7 @@ public sealed class ChangelogUIController : UIController
         {
             OpenWindow();
         }
+
+        return _changeLogWindow;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Content.Client.Changelog;
+using Content.Client.Changelog;
+using Content.Client.Guidebook.Controls;
 using Content.Client.UserInterface.Systems.EscapeMenu;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared.CCVar;
@@ -15,6 +16,10 @@ namespace Content.Client.Info
 
         private ValueList<(CVarDef<string> cVar, Button button)> _infoLinks;
 
+        private RulesAndInfoWindow? _rulesWindow;
+        private GuidebookWindow? _guidebookWindow;
+        private ChangelogWindow? _changelogWindow;
+
         public LinkBanner()
         {
             var buttons = new BoxContainer
@@ -26,8 +31,24 @@ namespace Content.Client.Info
             var uriOpener = IoCManager.Resolve<IUriOpener>();
             _cfg = IoCManager.Resolve<IConfigurationManager>();
 
-            var rulesButton = new Button() {Text = Loc.GetString("server-info-rules-button")};
-            rulesButton.OnPressed += args => new RulesAndInfoWindow().Open();
+            var rulesButton = new Button() { Text = Loc.GetString("server-info-rules-button"), ToggleMode = true };
+
+            rulesButton.OnPressed += args =>
+            {
+                if (_rulesWindow is { IsOpen: true })
+                {
+                    _rulesWindow.Close();
+
+                    return;
+                }
+
+                _rulesWindow = new RulesAndInfoWindow();
+
+                _rulesWindow.OnClose += () => rulesButton.Pressed = false;
+
+                _rulesWindow.OpenCentered();
+            };
+
             buttons.AddChild(rulesButton);
 
             AddInfoButton("server-info-discord-button", CCVars.InfoLinksDiscord);
@@ -36,15 +57,30 @@ namespace Content.Client.Info
             AddInfoButton("server-info-forum-button", CCVars.InfoLinksForum);
 
             var guidebookController = UserInterfaceManager.GetUIController<GuidebookUIController>();
-            var guidebookButton = new Button() { Text = Loc.GetString("server-info-guidebook-button") };
+            var guidebookButton = new Button() { Text = Loc.GetString("server-info-guidebook-button"), ToggleMode = true };
+
             guidebookButton.OnPressed += _ =>
             {
-                guidebookController.ToggleGuidebook();
+                _guidebookWindow = guidebookController.ToggleGuidebook();
+
+                if (_guidebookWindow is not { IsOpen: true })
+                    return;
+
+                _guidebookWindow.OnClose += () => guidebookButton.Pressed = false;
             };
+
             buttons.AddChild(guidebookButton);
 
-            var changelogButton = new ChangelogButton();
-            changelogButton.OnPressed += args => UserInterfaceManager.GetUIController<ChangelogUIController>().ToggleWindow();
+            var changelogController = UserInterfaceManager.GetUIController<ChangelogUIController>();
+            var changelogButton = new ChangelogButton() { ToggleMode = true };
+
+            changelogButton.OnPressed += args =>
+            {
+                _changelogWindow = changelogController.ToggleWindow();
+
+                _changelogWindow.OnClose += () => changelogButton.Pressed = false;
+            };
+
             buttons.AddChild(changelogButton);
 
             void AddInfoButton(string loc, CVarDef<string> cVar)
@@ -53,6 +89,26 @@ namespace Content.Client.Info
                 button.OnPressed += _ => uriOpener.OpenUri(_cfg.GetCVar(cVar));
                 buttons.AddChild(button);
                 _infoLinks.Add((cVar, button));
+            }
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+
+            if (_rulesWindow is { IsOpen: true })
+            {
+                _rulesWindow.Close();
+            }
+
+            if (_guidebookWindow is { IsOpen: true })
+            {
+                _guidebookWindow.Close();
+            }
+
+            if (_changelogWindow is { IsOpen: true })
+            {
+                _changelogWindow.Close();
             }
         }
 
