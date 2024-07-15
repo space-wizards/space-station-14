@@ -32,6 +32,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     private StorageContainer? _container;
 
     private Vector2? _lastContainerPosition;
+    private float? _lastContainerWidth;
 
     private HotbarGui? Hotbar => UIManager.GetActiveUIWidgetOrNull<HotbarGui>();
 
@@ -94,13 +95,20 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
             }
             else
             {
-                _container.Open();
-
                 var pos = !StaticStorageUIEnabled && _lastContainerPosition != null
                     ? _lastContainerPosition.Value
                     : Vector2.Zero;
 
-                LayoutContainer.SetPosition(_container, pos);
+                _container.Open();
+                if (_lastContainerWidth == null)
+                {
+                    LayoutContainer.SetPosition(_container, pos);
+                }
+                else
+                {
+                    LayoutContainer.SetPosition(_container, new Vector2(pos.X + _lastContainerWidth.Value / 2 - _container.Width / 2, pos.Y));
+                }
+                _lastContainerWidth = _container.Width;
             }
 
             if (StaticStorageUIEnabled)
@@ -109,13 +117,12 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
                 _container.Orphan();
                 Hotbar?.StorageContainer.AddChild(_container);
             }
-            _lastContainerPosition = _container.GlobalPosition;
         }
         else
         {
-            _lastContainerPosition = _container.GlobalPosition;
             _container.Close();
         }
+        _lastContainerPosition = _container.GlobalPosition;
     }
 
     private void OnStaticStorageChanged(bool obj)
