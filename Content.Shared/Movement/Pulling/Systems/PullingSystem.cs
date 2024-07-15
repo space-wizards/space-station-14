@@ -787,9 +787,6 @@ public sealed class PullingSystem : EntitySystem
                 return true;
             }
 
-            if (puller.Comp.GrabStage == GrabStage.Hard && !_handsSystem.TryGetEmptyHand(puller, out _))
-                return false;
-
             if (!puller.Comp.NeedsHands && puller.Comp.GrabStage == GrabStage.Soft)
             {
                 if (_virtualSystem.TrySpawnVirtualItemInHand(pullable.Owner, puller.Owner, out var item2, true))
