@@ -189,7 +189,6 @@ public sealed class PullingSystem : EntitySystem
 
     private void OnVirtualItemDropAttempt(EntityUid uid, PullerComponent component, VirtualItemDropAttemptEvent args)
     {
-        // If client deletes the virtual hand then stop the pull.
         if (component.Pulling == null)
             return;
 
@@ -198,7 +197,7 @@ public sealed class PullingSystem : EntitySystem
 
         if (_timing.CurTime < component.NextStageChange)
         {
-            args.Cancel();
+            args.Cancel();  // VirtualItem is NOT being deleted
             return;
         }
 
@@ -209,7 +208,7 @@ public sealed class PullingSystem : EntitySystem
                 if (EntityManager.TryGetComponent(args.BlockingEntity, out PullableComponent? comp))
                 {
                     TryLowerGrabStage(component.Pulling.Value, uid);
-                    args.Cancel();
+                    args.Cancel();  // VirtualItem is NOT being deleted
                 }
             }
         }
@@ -218,7 +217,7 @@ public sealed class PullingSystem : EntitySystem
             if (component.GrabStage <= GrabStage.Soft)
             {
                 TryLowerGrabStage(component.Pulling.Value, uid);
-                args.Cancel();
+                args.Cancel();  // VirtualItem is NOT being deleted
             }
         }
     }
@@ -239,7 +238,6 @@ public sealed class PullingSystem : EntitySystem
 
     private void OnVirtualItemThrown(EntityUid uid, PullerComponent component, VirtualItemThrownEvent args)
     {
-        // If client deletes the virtual hand then stop the pull.
         if (component.Pulling == null)
             return;
 
@@ -253,7 +251,6 @@ public sealed class PullingSystem : EntitySystem
                 !HasComp<GrabThrownComponent>(args.BlockingEntity) &&
                 component.GrabStage > GrabStage.Soft)
             {
-                //var thrownPos = _transform.GetMapCoordinates(args.BlockingEntity);
                 var direction = args.Direction;
                 var vecBetween = (Transform(args.BlockingEntity).Coordinates.ToMapPos(EntityManager, _transform) - Transform(uid).WorldPosition);
 
@@ -626,6 +623,7 @@ public sealed class PullingSystem : EntitySystem
 
             if (!TryStopPull(pullableUid, pullableComp, pullableComp.Puller))
             {
+                // Not succeed to retake grabbed entity
                 _popup.PopupEntity(Loc.GetString("popup-grab-retake-fail",
                     ("puller", Identity.Entity(pullableComp.Puller.Value, EntityManager)),
                     ("pulled", Identity.Entity(pullableUid, EntityManager))),
@@ -640,6 +638,7 @@ public sealed class PullingSystem : EntitySystem
 
             else if (pullableComp.GrabStage != GrabStage.No)
             {
+                // Successful retake
                 _popup.PopupEntity(Loc.GetString("popup-grab-retake-success",
                     ("puller", Identity.Entity(pullableComp.Puller.Value, EntityManager)),
                     ("pulled", Identity.Entity(pullableUid, EntityManager))),
@@ -725,6 +724,7 @@ public sealed class PullingSystem : EntitySystem
         if (msg.Cancelled)
             return false;
 
+        // There are some events that should ignore grab stages
         if (!ignoreGrab)
         {
             if (!AttemptGrabRelease(pullableUid))
@@ -745,6 +745,13 @@ public sealed class PullingSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Trying to grab the target
+    /// </summary>
+    /// <param name="pullable">Target that would be grabbed</param>
+    /// <param name="puller">Performer of the grab</param>
+    /// <param name="ignoreCombatMode">If true, will ignore disabled combat mode</param>
+    /// <returns></returns>
     public bool TryGrab(Entity<PullableComponent?> pullable, Entity<PullerComponent?> puller, bool ignoreCombatMode = false)
     {
         if (!Resolve(pullable.Owner, ref pullable.Comp) ||
@@ -762,6 +769,7 @@ public sealed class PullingSystem : EntitySystem
                 return false;
         }
 
+        // To avoid spamming
         if (_netManager.IsServer)
         {
             if (puller.Comp.GrabStage == GrabStage.Suffocate)
@@ -855,11 +863,16 @@ public sealed class PullingSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Attempts to release entity from grab
+    /// </summary>
+    /// <param name="pullable">Grabbed entity</param>
+    /// <returns></returns>
     public bool AttemptGrabRelease(Entity<PullableComponent?> pullable)
     {
         if (!Resolve(pullable.Owner, ref pullable.Comp))
             return false;
-        if (_timing.CurTime < pullable.Comp.NextEscapeAttempt)
+        if (_timing.CurTime < pullable.Comp.NextEscapeAttempt)  // No autoclickers! Mwa-ha-ha
         {
             return false;
         }
@@ -886,11 +899,18 @@ public sealed class PullingSystem : EntitySystem
         if (component.GrabStage != GrabStage.Suffocate)
             return;
 
-        _popup.PopupEntity(Loc.GetString("popup-grabbed-cant-speak"), uid, uid, PopupType.MediumCaution);
+        _popup.PopupEntity(Loc.GetString("popup-grabbed-cant-speak"), uid, uid, PopupType.MediumCaution);   // You cant speak while someone is choking you
 
         args.Cancel();
     }
 
+    /// <summary>
+    /// Tries to lower grab stage for target or release it
+    /// </summary>
+    /// <param name="pullable">Grabbed entity</param>
+    /// <param name="puller">Performer</param>
+    /// <param name="ignoreCombatMode">If true, will NOT release target if combat mode is off</param>
+    /// <returns></returns>
     public bool TryLowerGrabStage(Entity<PullableComponent?> pullable, Entity<PullerComponent?> puller, bool ignoreCombatMode = false)
     {
         if (!Resolve(pullable.Owner, ref pullable.Comp) ||

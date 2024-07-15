@@ -158,6 +158,10 @@ namespace Content.Shared.Hands
         }
     }
 
+    /// <summary>
+    ///     Raised directed on both the blocking entity and user when
+    ///     a virtual hand item is thrown (at least attempted to).
+    /// </summary>
     public sealed class VirtualItemThrownEvent : EntityEventArgs
     {
         public EntityUid BlockingEntity;
@@ -173,6 +177,11 @@ namespace Content.Shared.Hands
         }
     }
 
+    /// <summary>
+    ///     Raised directed on both the blocking entity and user when
+    ///     user tries to drop it by keybind.
+    ///     Cancellable.
+    /// </summary>
     public sealed class VirtualItemDropAttemptEvent : CancellableEntityEventArgs
     {
         public EntityUid BlockingEntity;
