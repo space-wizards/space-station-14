@@ -26,9 +26,9 @@
       collection: RadiationPulse
   - type: UseDelay
     delay: 2
-  - type: Tag
-    tags:
-    - ForceableFollow
+#  - type: Tag # GreyStation - No more walking solar systems
+#    tags:
+#    - ForceableFollow
   - type: AnomalyCore
     timeToDecay: 600
     startPrice: 10000
