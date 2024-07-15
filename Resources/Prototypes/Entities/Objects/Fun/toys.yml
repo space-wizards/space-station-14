@@ -84,7 +84,7 @@
       modifier: 0.1
     - type: Tag
       tags:
-        - ForceableFollow
+#        - ForceableFollow # GreyStation - Remove following ghosts
         - PlushieGhost
         - Payload
     - type: RandomWalk
