@@ -421,14 +421,21 @@ namespace Content.Server.Administration.Systems
             var escapedText = FormattedMessage.EscapeText(message.Text);
 
             string bwoinkText;
+            string adminPrefix = "";
+
+            //Getting an administrator position
+            if (senderAdmin is not null && senderAdmin.Title is not null)
+            {
+                adminPrefix = $"[bold]\\[{senderAdmin.Title}\\][/bold] ";
+            }
 
             if (senderAdmin is not null && senderAdmin.Flags == AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
             {
-                bwoinkText = $"[color=purple]{senderSession.Name}[/color]";
+                bwoinkText = $"[color=purple]{adminPrefix}{senderSession.Name}[/color]";
             }
             else if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
             {
-                bwoinkText = $"[color=red]{senderSession.Name}[/color]";
+                bwoinkText = $"[color=red]{adminPrefix}{senderSession.Name}[/color]";
             }
             else
             {
@@ -463,11 +470,11 @@ namespace Content.Server.Administration.Systems
                         // Doing the same thing as above, but with the override name. Theres probably a better way to do this.
                         if (senderAdmin is not null && senderAdmin.Flags == AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
                         {
-                            overrideMsgText = $"[color=purple]{_overrideClientName}[/color]";
+                            overrideMsgText = $"[color=purple]{adminPrefix}{_overrideClientName}[/color]";
                         }
                         else if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
                         {
-                            overrideMsgText = $"[color=red]{_overrideClientName}[/color]";
+                            overrideMsgText = $"[color=red]{adminPrefix}{_overrideClientName}[/color]";
                         }
                         else
                         {
