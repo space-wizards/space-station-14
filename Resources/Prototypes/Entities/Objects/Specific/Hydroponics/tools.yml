@@ -21,7 +21,7 @@
     sprite: Objects/Tools/Hydroponics/hoe.rsi
 
 - type: entity
-  name: Diamond hoe
+  name: diamond hoe
   parent: BaseItem
   id: HydroponicsToolDiamondHoe
   description: You always must made Diamond hoe from your first or last diamonds. These are the rules.
