@@ -30,5 +30,5 @@ public sealed partial class LoadMapRuleComponent : Component
     /// If there are no instances left nothing is done.
     /// </summary>
     [DataField]
-    public ProtoId<PreloadedGridPrototype>? PreloadedGrid;
+    public List<ProtoId<PreloadedGridPrototype>> PreloadedGrid { get; set; }
 }

@@ -19,7 +19,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
 
     protected override void Added(EntityUid uid, LoadMapRuleComponent comp, GameRuleComponent rule, GameRuleAddedEvent args)
     {
-        if (comp.PreloadedGrid != null && !_gridPreloader.PreloadingEnabled)
+        if (comp.PreloadedGrid != null && comp.PreloadedGrid.Count > 0 && !_gridPreloader.PreloadingEnabled)
         {
             // Preloading will never work if it's disabled, duh
             Log.Debug($"Immediately ending {ToPrettyString(uid):rule} as preloading grids is disabled by cvar.");
@@ -28,7 +28,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
         }
 
         // grid preloading needs map to init after moving it
-        var mapUid = _map.CreateMap(out var mapId, runMapInit: comp.PreloadedGrid == null);
+        var mapUid = _map.CreateMap(out var mapId, runMapInit: comp.PreloadedGrid == null || comp.PreloadedGrid.Count == 0);
 
         Log.Info($"Created map {mapId} for {ToPrettyString(uid):rule}");
 
@@ -51,8 +51,11 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
 
             grids = roots;
         }
-        else if (comp.PreloadedGrid is {} preloaded)
+        else if (comp.PreloadedGrid != null && comp.PreloadedGrid.Count > 0)
         {
+            // Choose random preloaded grid from the list
+            var preloaded = comp.PreloadedGrid[Random.Shared.Next(comp.PreloadedGrid.Count)];
+
             // TODO: If there are no preloaded grids left, any rule announcements will still go off!
             if (!_gridPreloader.TryGetPreloadedGrid(preloaded, out var loadedShuttle))
             {
