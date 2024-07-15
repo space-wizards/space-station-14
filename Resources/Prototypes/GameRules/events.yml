@@ -456,7 +456,8 @@
     duration: 1
   - type: RuleGrids
   - type: LoadMapRule
-    preloadedGrid: ShuttleStriker
+    preloadedGrid:
+    - ShuttleStriker
   - type: NukeopsRule
     roundEndBehavior: Nothing
   - type: AntagSelection
