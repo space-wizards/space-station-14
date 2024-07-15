@@ -624,14 +624,17 @@ public sealed class PullingSystem : EntitySystem
             if (!TryStopPull(pullableUid, pullableComp, pullableComp.Puller))
             {
                 // Not succeed to retake grabbed entity
-                _popup.PopupEntity(Loc.GetString("popup-grab-retake-fail",
-                    ("puller", Identity.Entity(pullableComp.Puller.Value, EntityManager)),
-                    ("pulled", Identity.Entity(pullableUid, EntityManager))),
-                    pullerUid, pullerUid, PopupType.MediumCaution);
-                _popup.PopupEntity(Loc.GetString("popup-grab-retake-fail-puller",
-                    ("puller", Identity.Entity(pullerUid, EntityManager)),
-                    ("pulled", Identity.Entity(pullableUid, EntityManager))),
-                    pullableComp.Puller.Value, pullableComp.Puller.Value, PopupType.MediumCaution);
+                if (_netManager.IsServer)
+                {
+                    _popup.PopupEntity(Loc.GetString("popup-grab-retake-fail",
+                        ("puller", Identity.Entity(pullableComp.Puller.Value, EntityManager)),
+                        ("pulled", Identity.Entity(pullableUid, EntityManager))),
+                        pullerUid, pullerUid, PopupType.MediumCaution);
+                    _popup.PopupEntity(Loc.GetString("popup-grab-retake-fail-puller",
+                        ("puller", Identity.Entity(pullerUid, EntityManager)),
+                        ("pulled", Identity.Entity(pullableUid, EntityManager))),
+                        pullableComp.Puller.Value, pullableComp.Puller.Value, PopupType.MediumCaution);
+                }
 
                 return false;
             }
@@ -639,14 +642,17 @@ public sealed class PullingSystem : EntitySystem
             else if (pullableComp.GrabStage != GrabStage.No)
             {
                 // Successful retake
-                _popup.PopupEntity(Loc.GetString("popup-grab-retake-success",
-                    ("puller", Identity.Entity(pullableComp.Puller.Value, EntityManager)),
-                    ("pulled", Identity.Entity(pullableUid, EntityManager))),
-                    pullerUid, pullerUid, PopupType.MediumCaution);
-                _popup.PopupEntity(Loc.GetString("popup-grab-retake-success-puller",
-                    ("puller", Identity.Entity(pullerUid, EntityManager)),
-                    ("pulled", Identity.Entity(pullableUid, EntityManager))),
-                    pullableComp.Puller.Value, pullableComp.Puller.Value, PopupType.MediumCaution);
+                if (_netManager.IsServer)
+                {
+                    _popup.PopupEntity(Loc.GetString("popup-grab-retake-success",
+                        ("puller", Identity.Entity(pullableComp.Puller.Value, EntityManager)),
+                        ("pulled", Identity.Entity(pullableUid, EntityManager))),
+                        pullerUid, pullerUid, PopupType.MediumCaution);
+                    _popup.PopupEntity(Loc.GetString("popup-grab-retake-success-puller",
+                        ("puller", Identity.Entity(pullerUid, EntityManager)),
+                        ("pulled", Identity.Entity(pullableUid, EntityManager))),
+                        pullableComp.Puller.Value, pullableComp.Puller.Value, PopupType.MediumCaution);
+                }
             }
 
         }
