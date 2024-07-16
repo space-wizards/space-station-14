@@ -22,6 +22,9 @@ namespace Content.Server.GameTicking.Rules;
 
 public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 {
+    private static readonly Color TraitorFallbackColor = Color.FromHex("#8f4a4b");
+    private static readonly string TraitorRadioChannel = "Syndicate";
+
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
@@ -99,12 +102,12 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         _antag.SendBriefing(traitor, GenerateBriefing(component.Codewords, code, issuer), null, component.GreetSoundNotification);
 
         // Send codewords to only the traitor client
-        var color = Color.FromHex("#8f4a4b"); // Falls back to a dark red Syndicate color if a prototype is not found
-        if (_prototypeManager.TryIndex("Syndicate", out RadioChannelPrototype? syndieChannel))
+        var color = TraitorFallbackColor; // Fall back to a dark red Syndicate color if a prototype is not found
+        if (_prototypeManager.TryIndex(TraitorRadioChannel, out RadioChannelPrototype? syndieChannel))
         {
             color = syndieChannel.Color;
         }
-        RaiseNetworkEvent(new RoleCodewordEvent(GetNetEntity(traitor), color, "traitor", component.Codewords.ToList()), traitor);
+        RaiseNetworkEvent(new RoleCodewordEvent(GetNetEntity(mindId), color, "traitor", component.Codewords.ToList()), traitor);
 
         component.TraitorMinds.Add(mindId);
 

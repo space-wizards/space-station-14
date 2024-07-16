@@ -12,9 +12,9 @@ public sealed class RoleCodewordSystem : EntitySystem
 
     private void SetRoleCodewords(RoleCodewordEvent args)
     {
-        EntityUid uid = GetEntity(args.Entity);
+        EntityUid mindId = GetEntity(args.Entity);
 
-        var comp = EnsureComp<RoleCodewordComponent>(uid);
+        var comp = EnsureComp<RoleCodewordComponent>(mindId);
         comp.RoleCodewords[args.RoleKey] = new CodewordsData(args.Color, args.Codewords);
     }
 }
