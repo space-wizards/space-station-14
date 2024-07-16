@@ -44,7 +44,7 @@
 - type: entity
   parent: BaseSpeciesDummy
   id: MobGingerbreadDummy
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: HumanoidAppearance
     species: Gingerbread

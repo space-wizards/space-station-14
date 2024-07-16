@@ -53,7 +53,7 @@
   id: ScrapDebrisSmall
   parent: BaseScrapDebris
   name: Scrap Debris Small
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: MapGrid
     - type: BlobFloorPlanBuilder
@@ -63,7 +63,7 @@
   id: ScrapDebrisMedium
   parent: BaseScrapDebris
   name: Scrap Debris Medium
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: MapGrid
     - type: BlobFloorPlanBuilder
@@ -73,7 +73,7 @@
   id: ScrapDebrisLarge
   parent: BaseScrapDebris
   name: Scrap Debris Large
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: MapGrid
     - type: BlobFloorPlanBuilder

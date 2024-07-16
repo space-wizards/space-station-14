@@ -106,7 +106,7 @@
 - type: entity
   parent: BaseSpeciesDummy
   id: MobVoxDummy
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: HumanoidAppearance
     species: Vox
