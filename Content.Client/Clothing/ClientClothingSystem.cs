@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
+using Content.Client.DisplacementMap;
 using Content.Client.Inventory;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
@@ -50,6 +51,7 @@ public sealed class ClientClothingSystem : ClothingSystem
     [Dependency] private readonly IResourceCache _cache = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly DisplacementMapSystem _displacement = default!;
 
     public override void Initialize()
     {
@@ -313,26 +315,7 @@ public sealed class ClientClothingSystem : ClothingSystem
             layer.Offset += slotDef.Offset;
 
             if (displacementData != null)
-            {
-                if (displacementData.ShaderOverride != null)
-                    sprite.LayerSetShader(index, displacementData.ShaderOverride);
-
-                var displacementKey = $"{key}-displacement";
-                if (!revealedLayers.Add(displacementKey))
-                {
-                    Log.Warning($"Duplicate key for clothing visuals DISPLACEMENT: {displacementKey}.");
-                    continue;
-                }
-
-                var displacementLayer = _serialization.CreateCopy(displacementData.Layer, notNullableOverride: true);
-                displacementLayer.CopyToShaderParameters!.LayerKey = key;
-
-                // Add before main layer for this item.
-                sprite.AddLayer(displacementLayer, index);
-                sprite.LayerMapSet(displacementKey, index);
-
-                revealedLayers.Add(displacementKey);
-            }
+                _displacement.TryAddDisplacement(displacementData, sprite, index, key, revealedLayers);
         }
 
         RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers), true);
