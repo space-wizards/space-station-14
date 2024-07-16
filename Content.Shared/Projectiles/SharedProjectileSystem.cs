@@ -125,7 +125,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             var projectilePosition = _transform.GetWorldPosition(uid);
             var targetPosition = _transform.GetWorldPosition(target);
             var direction = targetPosition - projectilePosition;
-            _transform.SetWorldPosition(uid, projectilePosition + direction * component.EmbedPercent);
+            _transform.SetWorldPosition(uid, projectilePosition + direction * Math.Clamp(component.EmbedPercent, 0.0f, 1.0f));
         }
 
         _audio.PlayPredicted(component.Sound, uid, null);
