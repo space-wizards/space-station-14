@@ -12,5 +12,5 @@
       - material: Diamond
         amount: 2
         doAfter: 10
-  - node: DiamondHoe
+  - node: Hoe
     entity: HydroponicsToolDiamondHoe
