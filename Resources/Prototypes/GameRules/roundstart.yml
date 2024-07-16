@@ -81,6 +81,12 @@
   - type: RuleGrids
   - type: AntagSelection
   - type: AntagLoadProfileRule
+    speciesOverride: Human
+    speciesOverrideBlacklist:
+    #Species that do not work with nukies should be included in this list.
+    #Once the issues are fixed the species should be removed from this list to be enabled.
+    #Balance concerns are not a valid reason to disable a species, except for high-impact Nukie-specific exploits.
+    - Vox
 
 - type: entity
   parent: BaseNukeopsRule
@@ -173,6 +179,9 @@
     - prefRoles: [ Traitor ]
       max: 8
       playerRatio: 10
+      blacklist:
+        components:
+        - AntagImmune
       lateJoinAdditional: true
       mindComponents:
       - type: TraitorRole
@@ -232,7 +241,7 @@
       blacklist:
         components:
         - ZombieImmune
-        - InitialInfectedExempt
+        - AntagImmune
       briefing:
         text: zombie-patientzero-role-greeting
         color: Plum
@@ -241,6 +250,7 @@
       - type: PendingZombie
       - type: ZombifyOnDeath
       - type: IncurableZombie
+      - type: InitialInfected
       mindComponents:
       - type: InitialInfectedRole
         prototype: InitialInfected

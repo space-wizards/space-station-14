@@ -906,7 +906,7 @@
   productEntity: ReinforcementRadioSyndicate
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio-urist }
   cost:
-    Telecrystal: 16
+    Telecrystal: 14
   categories:
   - UplinkAllies
   conditions:
@@ -922,7 +922,7 @@
   productEntity: ReinforcementRadioSyndicateNukeops
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio-urist }
   cost:
-    Telecrystal: 16
+    Telecrystal: 35
   categories:
   - UplinkAllies
   conditions:
@@ -1305,7 +1305,7 @@
   icon: { sprite: /Textures/Clothing/OuterClothing/Hardsuits/syndieelite.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateEliteHardsuitBundle
   cost:
-    Telecrystal: 10
+    Telecrystal: 12
   categories:
   - UplinkWearables
 

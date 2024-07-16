@@ -401,7 +401,7 @@
   name: Hawaiian pizza
   parent: FoodPizzaBase
   id: FoodPizzaPineapple
-  description: Makes people burst into tears. Tears of joy or sadness depends on the persons fondness for pineapple.
+  description: Makes people burst into tears. Tears of joy or sadness depends on the person's fondness for pineapple.
   components:
   - type: FlavorProfile
     flavors:
@@ -531,6 +531,9 @@
   - type: Sprite
     layers:
     - state: moldy-slice
+  - type: Tag
+    tags:
+    - Trash
   - type: SolutionContainerManager
     solutions:
       food:
