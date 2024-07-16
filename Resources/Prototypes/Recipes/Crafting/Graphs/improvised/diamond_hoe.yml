@@ -9,7 +9,7 @@
       - material: WoodPlank
         amount: 2
         doAfter: 10
-      - material: RawDiamond
+      - material: Diamond
         amount: 2
         doAfter: 10
   - node: DiamondHoe
