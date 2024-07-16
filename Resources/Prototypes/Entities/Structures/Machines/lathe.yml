@@ -198,6 +198,8 @@
       - ClothingHeadHatWelding
       - WetFloorSign
       - ClothingHeadHatCone
+      - CassetteTape
+      - TapeRecorder
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - BoxLethalshot

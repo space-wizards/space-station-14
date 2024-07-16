@@ -168,6 +168,10 @@
           prob: 0.20
         - id: DrinkSpaceLube
           prob: 0.20
+        - id: TapeRecorder
+          prob: 0.02
+        - id: CassetteTape
+          prob: 0.05
         - id: BarberScissors
           prob: 0.05
         - id: Wristwatch
