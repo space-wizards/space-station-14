@@ -233,7 +233,6 @@ public abstract class ClothingSystem : EntitySystem
         clothing.ClothingVisuals = otherClothing.ClothingVisuals;
         clothing.EquippedPrefix = otherClothing.EquippedPrefix;
         clothing.RsiPath = otherClothing.RsiPath;
-        clothing.UseDisplacementMaps = otherClothing.UseDisplacementMaps;
 
         _itemSys.VisualsChanged(uid);
         Dirty(uid, clothing);
