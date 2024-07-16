@@ -8,6 +8,17 @@
       department: Command
       time: 3600 # 1 hour
 
+# Decorations
+- type: loadout
+  id: FoodPoppy
+  equipment: FoodPoppy
+
+- type: startingGear
+  id: FoodPoppy
+  storage:
+    back:
+    - FoodPoppy
+
 # Plushies
 - type: loadout
   id: PlushieLizard
