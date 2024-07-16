@@ -38,9 +38,6 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
         {
             var gameMap = _prototypeManager.Index(comp.GameMap.Value);
             grids = GameTicker.LoadGameMap(gameMap, mapId, new MapLoadOptions());
-
-            if (comp.DeferMapUnpause == false)
-                _mapMan.SetMapPaused(mapId, false);
         }
         else if (comp.MapPath is {} path)
         {
@@ -54,9 +51,6 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
             }
 
             grids = roots;
-
-            if (comp.DeferMapUnpause == false)
-                _mapMan.SetMapPaused(mapId, false);
         }
         else if (comp.PreloadedGrid is {} preloaded)
         {

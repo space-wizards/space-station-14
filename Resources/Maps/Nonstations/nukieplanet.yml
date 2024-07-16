@@ -1630,7 +1630,6 @@ entities:
     - type: MetaData
     - type: Transform
     - type: Map
-      mapPaused: True
     - type: PhysicsMap
     - type: GridTree
     - type: MovedGrids

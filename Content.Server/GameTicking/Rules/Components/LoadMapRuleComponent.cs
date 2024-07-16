@@ -28,13 +28,6 @@ public sealed partial class LoadMapRuleComponent : Component
     public ResPath? MapPath;
 
     /// <summary>
-    /// Should the loaded map from prototype or path have unpausing deferred to the gamerule which is using it?
-    /// This should be true if the loaded map is a station so the <see cref="StationSystem"/> will handle it instead via <see cref="BecomesStationComponent"/>.
-    /// </summary>
-    [DataField]
-    public bool DeferMapUnpause = true;
-
-    /// <summary>
     /// A <see cref="PreloadedGridPrototype"/> to move to a new map.
     /// If there are no instances left nothing is done.
     /// </summary>
