@@ -21,6 +21,11 @@
           True: { visible: true }
           False: { visible: false }
   - type: Appearance
+  - type: AmbientSound
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/server_fans.ogg
   - type: WiresVisuals
   - type: Physics
     bodyType: Static

@@ -1,16 +1,21 @@
 using System.Linq;
+using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Audio;
 using Content.Shared.Research.Components;
 
 namespace Content.Server.Research.Systems;
 
 public sealed partial class ResearchSystem
 {
+    [Dependency] private readonly SharedAmbientSoundSystem _ambient = default!;
+
     private void InitializeServer()
     {
         SubscribeLocalEvent<ResearchServerComponent, ComponentStartup>(OnServerStartup);
         SubscribeLocalEvent<ResearchServerComponent, ComponentShutdown>(OnServerShutdown);
         SubscribeLocalEvent<ResearchServerComponent, TechnologyDatabaseModifiedEvent>(OnServerDatabaseModified);
+        SubscribeLocalEvent<ResearchServerComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
     private void OnServerStartup(EntityUid uid, ResearchServerComponent component, ComponentStartup args)
@@ -35,6 +40,11 @@ public sealed partial class ResearchSystem
         {
             RaiseLocalEvent(client, ref args);
         }
+    }
+
+    private void OnPowerChanged(EntityUid uid, ResearchServerComponent component, ref PowerChangedEvent args)
+    {
+        _ambient.SetAmbience(uid, args.Powered);
     }
 
     private bool CanRun(EntityUid uid)
