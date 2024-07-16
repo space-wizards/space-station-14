@@ -29,10 +29,6 @@
   id: HydroponicsToolDiamondHoe
   description: You always must made diamond hoe from your first or last diamonds. These are the rules.
   components:
-  - type: Tag
-    tags:
-    - Hoe
-    - BotanyHoe
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/diamondhoe.rsi
     state: icon
@@ -44,8 +40,9 @@
         Blunt: 10
   - type: Item
     sprite: Objects/Tools/Hydroponics/diamondhoe.rsi
-  - type: Item
-    sprite: Objects/Tools/Hydroponics/diamondhoe.rsi
+  - type: Construction
+    graph: DiamondHoe
+    node: Hoe
 
 - type: entity
   name: plant clippers
