@@ -22,5 +22,5 @@ public sealed partial class ExecutionComponent : Component
     /// True if it is currently executing for handlers.
     /// </summary>
     [DataField]
-    public bool Executing = true;
+    public bool Executing = false;
 }
