@@ -1,5 +1,4 @@
-﻿using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Server.Fluids.EntitySystems;
+﻿using Content.Server.Fluids.EntitySystems;
 using Content.Server.GameTicking;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
@@ -32,7 +31,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedBodySystem _body = default!; //bobby
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly StackSystem _stack = default!;
@@ -53,7 +52,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     }
     private void OnStartup(Entity<MaterialReclaimerComponent> entity, ref ComponentStartup args)
     {
-        _solutionContainer.EnsureSolution(entity.Owner, entity.Comp.SolutionContainerId);
+        _solutionContainer.EnsureSolution(entity.Owner, entity.Comp.SolutionContainerId, out _);
     }
 
     private void OnPowerChanged(Entity<MaterialReclaimerComponent> entity, ref PowerChangedEvent args)

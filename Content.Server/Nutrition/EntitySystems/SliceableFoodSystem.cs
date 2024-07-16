@@ -1,5 +1,5 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Nutrition.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
@@ -15,7 +15,7 @@ namespace Content.Server.Nutrition.EntitySystems
 {
     public sealed class SliceableFoodSystem : EntitySystem
     {
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly TransformSystem _xformSystem = default!;
@@ -160,7 +160,7 @@ namespace Content.Server.Nutrition.EntitySystems
             entity.Comp.Count = entity.Comp.TotalCount;
 
             var foodComp = EnsureComp<FoodComponent>(entity);
-            _solutionContainerSystem.EnsureSolution(entity.Owner, foodComp.Solution);
+            _solutionContainerSystem.EnsureSolution(entity.Owner, foodComp.Solution, out _);
         }
 
         private void OnExamined(Entity<SliceableFoodComponent> entity, ref ExaminedEvent args)

@@ -1,6 +1,5 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.EntityEffects.Effects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
@@ -51,7 +50,7 @@ public sealed class DrinkSystem : SharedDrinkSystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
     [Dependency] private readonly ForensicsSystem _forensics = default!;
 
@@ -129,7 +128,7 @@ public sealed class DrinkSystem : SharedDrinkSystem
         }
         else
         {
-            _solutionContainer.EnsureSolution(entity.Owner, entity.Comp.Solution);
+            _solutionContainer.EnsureSolution(entity.Owner, entity.Comp.Solution, out _);
         }
 
         UpdateAppearance(entity, entity.Comp);
@@ -193,12 +192,12 @@ public sealed class DrinkSystem : SharedDrinkSystem
             _popup.PopupEntity(Loc.GetString("drink-component-force-feed", ("user", userName)), user, target);
 
             // logging
-            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to drink {ToPrettyString(item):drink} {SolutionContainerSystem.ToPrettyString(drinkSolution)}");
+            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to drink {ToPrettyString(item):drink} {SharedSolutionContainerSystem.ToPrettyString(drinkSolution)}");
         }
         else
         {
             // log voluntary drinking
-            _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(target):target} is drinking {ToPrettyString(item):drink} {SolutionContainerSystem.ToPrettyString(drinkSolution)}");
+            _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(target):target} is drinking {ToPrettyString(item):drink} {SharedSolutionContainerSystem.ToPrettyString(drinkSolution)}");
         }
 
         var flavors = _flavorProfile.GetLocalizedFlavorsMessage(user, drinkSolution);
