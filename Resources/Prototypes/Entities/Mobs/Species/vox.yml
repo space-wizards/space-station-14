@@ -18,7 +18,7 @@
     speciesId: vox
     displacements:
       jumpsuit:
-        dataBySize:
+        sizeMaps:
           32:
             sprite: Mobs/Species/Vox/displacement.rsi
             state: jumpsuit
@@ -112,7 +112,7 @@
     speciesId: vox
     displacements:
       jumpsuit:
-        dataBySize:
+        sizeMaps:
           32:
             sprite: Mobs/Species/Vox/displacement.rsi
             state: jumpsuit

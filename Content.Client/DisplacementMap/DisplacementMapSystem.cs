@@ -21,7 +21,7 @@ public sealed class DisplacementMapSystem : EntitySystem
         }
 
         //allows you not to write it every time in the YML
-        foreach (var pair in data.DataBySize)
+        foreach (var pair in data.SizeMaps)
         {
             pair.Value.CopyToShaderParameters??= new()
             {
@@ -31,7 +31,7 @@ public sealed class DisplacementMapSystem : EntitySystem
             };
         }
 
-        if (!data.DataBySize.ContainsKey(32))
+        if (!data.SizeMaps.ContainsKey(32))
         {
             Log.Error($"DISPLACEMENT: {displacementKey} don't have 32x32 default displacement map");
             return false;
@@ -39,7 +39,7 @@ public sealed class DisplacementMapSystem : EntitySystem
 
         // We choose a displacement map from the possible ones, matching the size with the original layer size.
         // If there is no such a map, we use a standard 32 by 32 one
-        var displacementDataLayer = data.DataBySize[32];
+        var displacementDataLayer = data.SizeMaps[32];
         var actualRSI = sprite.LayerGetActualRSI(index);
         if (actualRSI is not null)
         {
@@ -47,8 +47,8 @@ public sealed class DisplacementMapSystem : EntitySystem
                 Log.Warning($"DISPLACEMENT: {displacementKey} has a resolution that is not 1:1, things can look crooked");
 
             var layerSize = actualRSI.Size.X;
-            if (data.DataBySize.ContainsKey(layerSize))
-                displacementDataLayer = data.DataBySize[layerSize];
+            if (data.SizeMaps.ContainsKey(layerSize))
+                displacementDataLayer = data.SizeMaps[layerSize];
         }
 
         var displacementLayer = _serialization.CreateCopy(displacementDataLayer, notNullableOverride: true);
