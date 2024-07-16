@@ -5,7 +5,6 @@
   description: Definition of a Classic. Keeping murder affordable since 200,000 BCE.
   components:
   - type: EmbeddableProjectile
-    embedPercent: 0.15
   - type: ThrowingAngle
     angle: 225
   - type: LandAtCursor
