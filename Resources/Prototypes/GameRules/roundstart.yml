@@ -93,7 +93,7 @@
   id: Nukeops
   components:
   - type: GameRule
-    minPlayers: 0 # Yell loudly if I forget to make this 20 again.
+    minPlayers: 20
   - type: LoadMapRule
     gameMap: NukieOutpost
     deferMapUnpause: false

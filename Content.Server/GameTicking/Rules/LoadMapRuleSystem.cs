@@ -42,7 +42,7 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
             if (comp.DeferMapUnpause == false)
                 _mapMan.SetMapPaused(mapId, false);
         }
-        else if (comp.MapPath is { } path)
+        else if (comp.MapPath is {} path)
         {
             var options = new MapLoadOptions { LoadMap = true };
             if (!_mapLoader.TryLoad(mapId, path.ToString(), out var roots, options))
