@@ -79,7 +79,7 @@ public sealed partial class HandsComponent : Component
     public TimeSpan ThrowCooldown = TimeSpan.FromSeconds(0.5f);
 
     [DataField]
-    public DisplacementData HandDisplacement = new();
+    public DisplacementData? HandDisplacement;
 }
 
 [Serializable, NetSerializable]

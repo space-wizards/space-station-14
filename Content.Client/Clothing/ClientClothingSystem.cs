@@ -67,9 +67,15 @@ public sealed class ClientClothingSystem : ClothingSystem
 
     private void OnAppearanceUpdate(EntityUid uid, InventoryComponent component, ref AppearanceChangeEvent args)
     {
-        // May need to update jumpsuit stencils if the sex changed. Also required to properly set the stencil on init
+        // May need to update displacement maps if the sex changed. Also required to properly set the stencil on init
         if (args.Sprite == null)
             return;
+
+        var enumerator = _inventorySystem.GetSlotEnumerator((uid, component));
+        while (enumerator.NextItem(out var item, out var slot))
+        {
+            RenderEquipment(uid, item, slot.Name, component);
+        }
 
         // No clothing equipped -> make sure the layer is hidden, though this should already be handled by on-unequip.
         if (args.Sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out var layer))
