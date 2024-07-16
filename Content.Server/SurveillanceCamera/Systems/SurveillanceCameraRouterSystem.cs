@@ -3,7 +3,6 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Audio;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.SurveillanceCamera;
 using Content.Shared.Verbs;
@@ -19,7 +18,6 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
-    [Dependency] private readonly SharedAmbientSoundSystem _ambient = default!;
 
     public override void Initialize()
     {
@@ -92,8 +90,6 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
     {
         component.MonitorRoutes.Clear();
         component.Active = args.Powered;
-
-        _ambient.SetAmbience(uid, args.Powered);
     }
 
     private void AddVerbs(EntityUid uid, SurveillanceCameraRouterComponent component, GetVerbsEvent<AlternativeVerb> verbs)

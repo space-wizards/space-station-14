@@ -21,6 +21,7 @@
           True: { visible: true }
           False: { visible: false }
   - type: Appearance
+  - type: AmbientOnPowered
   - type: AmbientSound
     volume: -9
     range: 5

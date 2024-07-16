@@ -2,8 +2,6 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Medical.SuitSensors;
-using Content.Server.Power.Components;
-using Content.Shared.Audio;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Medical.SuitSensor;
 using Robust.Shared.Timing;
@@ -16,7 +14,6 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly SingletonDeviceNetServerSystem _singletonServerSystem = default!;
-    [Dependency] private readonly SharedAmbientSoundSystem _ambient = default!;
 
     private const float UpdateRate = 3f;
     private float _updateDiff;
@@ -27,7 +24,6 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
         SubscribeLocalEvent<CrewMonitoringServerComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<CrewMonitoringServerComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<CrewMonitoringServerComponent, DeviceNetServerDisconnectedEvent>(OnDisconnected);
-        SubscribeLocalEvent<CrewMonitoringServerComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
     public override void Update(float frameTime)
@@ -112,10 +108,5 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
     private void OnDisconnected(EntityUid uid, CrewMonitoringServerComponent component, ref DeviceNetServerDisconnectedEvent _)
     {
         component.SensorStatus.Clear();
-    }
-
-    private void OnPowerChanged(EntityUid uid, CrewMonitoringServerComponent component, ref PowerChangedEvent args)
-    {
-        _ambient.SetAmbience(uid, args.Powered);
     }
 }
