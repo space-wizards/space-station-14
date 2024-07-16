@@ -110,3 +110,22 @@
   id: MimeWintercoat
   equipment:
     outerClothing: ClothingOuterWinterMime
+
+# Belt
+- type: loadout
+  id: MimeSuspendersRed
+  equipment: MimeSuspendersRed
+
+- type: startingGear
+  id: MimeSuspendersRed
+  equipment:
+    belt: ClothingBeltSuspendersRed
+
+- type: loadout
+  id: MimeSuspendersBlack
+  equipment: MimeSuspendersBlack
+
+- type: startingGear
+  id: MimeSuspendersBlack
+  equipment:
+    belt: ClothingBeltSuspendersBlack
