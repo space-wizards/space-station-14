@@ -94,6 +94,13 @@
     Wood: 100
 
 - type: latheRecipe
+  id: DeskBell
+  result: DeskBell
+  completetime: 1
+  materials:
+    Steel: 50
+
+- type: latheRecipe
   id: SynthesizerInstrument
   result: SynthesizerInstrument
   completetime: 4
