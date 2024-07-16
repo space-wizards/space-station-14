@@ -424,7 +424,7 @@ namespace Content.Server.Administration.Systems
             string adminPrefix = "";
 
             //Getting an administrator position
-            if (senderAdmin is not null && senderAdmin.Title is not null)
+            if (senderAdmin is not null && senderAdmin.Title is not null && _config.GetCVar(CCVars.AhelpAdminPrefix))
             {
                 adminPrefix = $"[bold]\\[{senderAdmin.Title}\\][/bold] ";
             }
@@ -458,6 +458,13 @@ namespace Content.Server.Administration.Systems
                 RaiseNetworkEvent(msg, channel);
             }
 
+            string adminPrefixWebhook = "";
+
+            if (senderAdmin is not null && senderAdmin.Title is not null && _config.GetCVar(CCVars.AhelpAdminPrefixWebhook))
+            {
+                adminPrefixWebhook = $"[bold]\\[{senderAdmin.Title}\\][/bold] ";
+            }
+
             // Notify player
             if (_playerManager.TryGetSessionById(message.UserId, out var session))
             {
@@ -470,11 +477,11 @@ namespace Content.Server.Administration.Systems
                         // Doing the same thing as above, but with the override name. Theres probably a better way to do this.
                         if (senderAdmin is not null && senderAdmin.Flags == AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
                         {
-                            overrideMsgText = $"[color=purple]{adminPrefix}{_overrideClientName}[/color]";
+                            overrideMsgText = $"[color=purple]{adminPrefixWebhook}{_overrideClientName}[/color]";
                         }
                         else if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
                         {
-                            overrideMsgText = $"[color=red]{adminPrefix}{_overrideClientName}[/color]";
+                            overrideMsgText = $"[color=red]{adminPrefixWebhook}{_overrideClientName}[/color]";
                         }
                         else
                         {
