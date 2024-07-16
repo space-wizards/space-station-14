@@ -19,6 +19,9 @@
         Slash: 6
   - type: Item
     sprite: Objects/Tools/Hydroponics/hoe.rsi
+  - type: Construction
+    graph: DiamondHoe
+    node: DiamondHoe
 
 - type: entity
   name: diamond hoe
@@ -39,6 +42,8 @@
     damage:
       types:
         Blunt: 10
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/diamondhoe.rsi
   - type: Item
     sprite: Objects/Tools/Hydroponics/diamondhoe.rsi
 
