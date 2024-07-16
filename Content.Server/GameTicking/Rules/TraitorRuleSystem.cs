@@ -97,6 +97,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
         _antag.SendBriefing(traitor, GenerateBriefing(component.Codewords, code, issuer), null, component.GreetSoundNotification);
 
+        // Send codewords to only the traitor client
+        RaiseNetworkEvent(new RoleCodewordEvent(GetNetEntity(traitor), component.Codewords.ToList()), traitor);
+
         component.TraitorMinds.Add(mindId);
 
         // Assign briefing

@@ -9,6 +9,7 @@ using Content.Client.Chat.UI;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Ghost;
+using Content.Client.Roles;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
@@ -817,6 +818,20 @@ public sealed class ChatUIController : UIController
             var grammar = _ent.GetComponentOrNull<GrammarComponent>(_ent.GetEntity(msg.SenderEntity));
             if (grammar != null && grammar.ProperNoun == true)
                 msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg, "Name", "color", GetNameColor(SharedChatSystem.GetStringInsideTag(msg, "Name")));
+        }
+
+        // Color any codewords for roles that use them
+        var player = _player.LocalEntity;
+        if (_ent.TryGetComponent(player, out RoleCodewordComponent? codewordComp))
+        {
+            var color = Color.FromHex("#8f4a4b"); // Falls back to a dark red Syndicate color if a prototype is not found
+            if (_prototypeManager.TryIndex("Syndicate", out RadioChannelPrototype? syndieChannel))
+            {
+                color = syndieChannel.Color;
+            }
+
+            foreach (string codeword in codewordComp.Codewords)
+                msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, codeword, "color", color.ToHex());
         }
 
         // Log all incoming chat to repopulate when filter is un-toggled
