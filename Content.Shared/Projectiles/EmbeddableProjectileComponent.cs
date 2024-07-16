@@ -41,7 +41,7 @@ public sealed partial class EmbeddableProjectileComponent : Component
     /// 1.0f sets the position directly onto the target
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float EmbedPercent = 0.0f;
+    public float EmbedPercent = 0.15f;
 
     /// <summary>
     /// Sound to play after embedding into a hit target.
