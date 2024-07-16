@@ -43,6 +43,7 @@ namespace Content.Server.Communications
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly EntityManager _entityManager = default!;
 
         private const float UIUpdateInterval = 5.0f;
 
@@ -262,8 +263,9 @@ namespace Content.Server.Communications
                     author = $"{id.Comp.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.Comp.JobTitle ?? string.Empty)})".Trim();
                 }
 
-                // User does not have an id and is a borg
-                if (HasComp<BorgChassisComponent>(mob) && TryComp<MetaDataComponent>(mob, out var meta))
+                // User does not have an id and is a borg, so use the borg's name
+                var meta = _entityManager.GetComponent<MetaDataComponent>(mob);
+                if (HasComp<BorgChassisComponent>(mob))
                 {
                     author = $"{meta.EntityName}".Trim();
                 }
