@@ -10,6 +10,7 @@ using Content.Shared.Mind;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Objectives.Components;
 using Content.Shared.PDA;
+using Content.Shared.Radio;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Prototypes;
@@ -98,7 +99,12 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         _antag.SendBriefing(traitor, GenerateBriefing(component.Codewords, code, issuer), null, component.GreetSoundNotification);
 
         // Send codewords to only the traitor client
-        RaiseNetworkEvent(new RoleCodewordEvent(GetNetEntity(traitor), component.Codewords.ToList()), traitor);
+        var color = Color.FromHex("#8f4a4b"); // Falls back to a dark red Syndicate color if a prototype is not found
+        if (_prototypeManager.TryIndex("Syndicate", out RadioChannelPrototype? syndieChannel))
+        {
+            color = syndieChannel.Color;
+        }
+        RaiseNetworkEvent(new RoleCodewordEvent(GetNetEntity(traitor), color, "traitor", component.Codewords.ToList()), traitor);
 
         component.TraitorMinds.Add(mindId);
 

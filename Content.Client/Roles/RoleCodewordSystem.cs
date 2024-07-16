@@ -14,7 +14,7 @@ public sealed class RoleCodewordSystem : EntitySystem
     {
         EntityUid uid = GetEntity(args.Entity);
 
-        RoleCodewordComponent comp = EnsureComp<RoleCodewordComponent>(uid);
-        comp.Codewords = args.Codewords;
+        var comp = EnsureComp<RoleCodewordComponent>(uid);
+        comp.RoleCodewords[args.RoleKey] = new CodewordsData(args.Color, args.Codewords);
     }
 }

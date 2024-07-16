@@ -824,14 +824,11 @@ public sealed class ChatUIController : UIController
         var player = _player.LocalEntity;
         if (_ent.TryGetComponent(player, out RoleCodewordComponent? codewordComp))
         {
-            var color = Color.FromHex("#8f4a4b"); // Falls back to a dark red Syndicate color if a prototype is not found
-            if (_prototypeManager.TryIndex("Syndicate", out RadioChannelPrototype? syndieChannel))
+            foreach (var (_, codewordData) in codewordComp.RoleCodewords)
             {
-                color = syndieChannel.Color;
+                foreach (string codeword in codewordData.Codewords)
+                    msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, codeword, "color", codewordData.Color.ToHex());
             }
-
-            foreach (string codeword in codewordComp.Codewords)
-                msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, codeword, "color", color.ToHex());
         }
 
         // Log all incoming chat to repopulate when filter is un-toggled
