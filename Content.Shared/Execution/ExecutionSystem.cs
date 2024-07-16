@@ -1,4 +1,3 @@
-using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
@@ -10,8 +9,6 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
-using Content.Shared.Weapons.Ranged.Components;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Shared.Execution;
