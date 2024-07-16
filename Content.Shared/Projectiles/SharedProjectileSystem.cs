@@ -118,10 +118,14 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         var xform = Transform(uid);
         _transform.SetParent(uid, xform, target);
 
-        if (component.Offset != Vector2.Zero)
+        if (component.EmbedPercent != 0.0f)
         {
-            _transform.SetLocalPosition(uid, xform.LocalPosition + xform.LocalRotation.RotateVec(component.Offset),
-                xform);
+            // Calculate the difference in position from one entity to the other
+            // and adjust the projectile's position by the embed percentage
+            var projectilePosition = _transform.GetWorldPosition(uid);
+            var targetPosition = _transform.GetWorldPosition(target);
+            var direction = targetPosition - projectilePosition;
+            _transform.SetWorldPosition(uid, projectilePosition + direction * component.EmbedPercent);
         }
 
         _audio.PlayPredicted(component.Sound, uid, null);

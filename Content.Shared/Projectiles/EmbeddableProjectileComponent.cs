@@ -36,10 +36,12 @@ public sealed partial class EmbeddableProjectileComponent : Component
     public bool EmbedOnThrow = true;
 
     /// <summary>
-    /// How far into the entity should we offset (0 is wherever we collided).
+    /// How deep to embed the projectile into the target
+    /// 0.0f is the point of initial collision,
+    /// 1.0f sets the position directly onto the target
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
-    public Vector2 Offset = Vector2.Zero;
+    [DataField, AutoNetworkedField]
+    public float EmbedPercent = 0.0f;
 
     /// <summary>
     /// Sound to play after embedding into a hit target.
