@@ -11,7 +11,7 @@ namespace Content.Client.Jittering
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
 
-        private readonly float[] _sign = { -1, 1 };
+        private readonly float[] _sign = [-1, 1];
         private readonly string _jitterAnimationKey = "jittering";
 
         public override void Initialize()
@@ -28,10 +28,12 @@ namespace Content.Client.Jittering
             if (!TryComp(uid, out SpriteComponent? sprite))
                 return;
 
-            var animationPlayer = EnsureComp<AnimationPlayerComponent>(uid);
+            if (_animationPlayer.HasRunningAnimation(uid, _jitterAnimationKey))
+                return;
 
             jittering.StartOffset = sprite.Offset;
-            _animationPlayer.Play(uid, animationPlayer, GetAnimation(jittering, sprite), _jitterAnimationKey);
+
+            _animationPlayer.Play(uid, GetAnimation(jittering, sprite), _jitterAnimationKey);
         }
 
         private void OnShutdown(EntityUid uid, JitteringComponent jittering, ComponentShutdown args)
@@ -51,9 +53,10 @@ namespace Content.Client.Jittering
             if (!args.Finished)
                 return;
 
-            if (TryComp(uid, out AnimationPlayerComponent? animationPlayer)
-                && TryComp(uid, out SpriteComponent? sprite))
-                _animationPlayer.Play(uid, animationPlayer, GetAnimation(jittering, sprite), _jitterAnimationKey);
+            if (HasComp<AnimationPlayerComponent>(uid)
+                && TryComp(uid, out SpriteComponent? sprite)
+                && !_animationPlayer.HasRunningAnimation(uid, _jitterAnimationKey))
+                _animationPlayer.Play(uid, GetAnimation(jittering, sprite), _jitterAnimationKey);
         }
 
         private Animation GetAnimation(JitteringComponent jittering, SpriteComponent sprite)
@@ -96,9 +99,9 @@ namespace Content.Client.Jittering
                         {
                             new AnimationTrackProperty.KeyFrame(sprite.Offset, 0f),
                             new AnimationTrackProperty.KeyFrame(jittering.StartOffset + offset, length),
-                        }
-                    }
-                }
+                        },
+                    },
+                },
             };
         }
     }
