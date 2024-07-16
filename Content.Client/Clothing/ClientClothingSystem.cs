@@ -181,14 +181,6 @@ public sealed class ClientClothingSystem : ClothingSystem
 
     private void OnDidUnequip(EntityUid uid, SpriteComponent component, DidUnequipEvent args)
     {
-        // Hide jumpsuit mask layer.
-        if (args.Slot == Jumpsuit
-            && TryComp(uid, out SpriteComponent? sprite)
-            && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out var maskLayer))
-        {
-                sprite.LayerSetVisible(maskLayer, false);
-        }
-
         if (!TryComp(uid, out InventorySlotsComponent? inventorySlots))
             return;
 
@@ -309,7 +301,7 @@ public sealed class ClientClothingSystem : ClothingSystem
                 index = sprite.LayerMapReserveBlank(key);
 
             if (sprite[index] is not Layer layer)
-                return;
+                continue;
 
             // In case no RSI is given, use the item's base RSI as a default. This cuts down on a lot of unnecessary yaml entries.
             if (layerData.RsiPath == null
@@ -320,17 +312,17 @@ public sealed class ClientClothingSystem : ClothingSystem
                 layer.SetRsi(clothingSprite.BaseRSI);
             }
 
-            // Another "temporary" fix for clothing stencil masks.
-            // Sprite layer redactor when
-            // Sprite "redactor" just a week away.
-            if (slot == Jumpsuit)
-                layerData.Shader ??= "StencilDraw";
-
             sprite.LayerSetData(index, layerData);
             layer.Offset += slotDef.Offset;
 
-            if (displacementData != null && clothingComponent.UseDisplacementMaps)
-                _displacement.TryAddDisplacement(displacementData, sprite, index, key, revealedLayers);
+            if (displacementData is null)
+                continue;
+
+            //Checking that the state is not tied to the current race. In this case we don't need to use the displacement maps.
+            if (layerData.State is not null && inventory.SpeciesId is not null && layerData.State.EndsWith(inventory.SpeciesId))
+                continue;
+
+            _displacement.TryAddDisplacement(displacementData, sprite, index, key, revealedLayers);
         }
 
         RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers), true);
