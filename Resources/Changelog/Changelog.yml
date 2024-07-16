@@ -1,63 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Flaming mice no longer completely engulf people they touch.
-    type: Tweak
-  id: 6416
-  time: '2024-04-22T08:42:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27202
-- author: Weax
-  changes:
-  - message: The CLF3 reaction now requires heating first before you can engulf chemistry
-      in fiery death.
-    type: Tweak
-  id: 6417
-  time: '2024-04-22T08:44:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27187
-- author: Potato1234_x
-  changes:
-  - message: Added Psicodine, Mannitol, Lipolicide and Happiness.
-    type: Add
-  id: 6418
-  time: '2024-04-22T08:45:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27134
-- author: Terraspark4941
-  changes:
-  - message: Updated the engineering section of the guidebook!
-    type: Tweak
-  id: 6419
-  time: '2024-04-22T08:58:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26851
-- author: eclips_e
-  changes:
-  - message: Slimepeople can now morph into a "geras"--a smaller slime form that can
-      pass under grilles, at the cost of dropping all of their inventory. They can
-      also be picked up with two hands and placed into duffelbags.
-    type: Add
-  - message: Slimepeople now have an internal 2x2 storage that they (and anyone around
-      them) can access. It is not dropped when morphing into a geras!
-    type: Add
-  - message: Slimepeople now have slightly increased regeneration and a slightly meatier
-      punch, but slower attacks.
-    type: Add
-  id: 6420
-  time: '2024-04-22T10:03:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/23425
-- author: FungiFellow
-  changes:
-  - message: Syndi-Cats are now 6TC, Insulated, Available to Syndies, Can Move in
-      Space, Open Doors, and Hit Harder
-    type: Tweak
-  id: 6421
-  time: '2024-04-22T12:18:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27222
-- author: Tayrtahn
-  changes:
-  - message: Ghosts can no longer trigger artifacts by examining them.
-    type: Fix
-  id: 6422
-  time: '2024-04-22T22:46:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27249
 - author: Tyzemol
   changes:
   - message: Slimes no longer absorb all items used on them
@@ -3813,3 +3754,54 @@
   id: 6915
   time: '2024-07-13T12:15:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25750
+- author: coffeeware
+  changes:
+  - message: Lizards will no longer lose their snouts when equipping head bandanas
+    type: Fix
+  id: 6916
+  time: '2024-07-14T02:59:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29979
+- author: SlamBamActionman
+  changes:
+  - message: RGBee and Rainbow Carp plushies now cycle color when held/worn.
+    type: Fix
+  id: 6917
+  time: '2024-07-14T10:26:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30023
+- author: Winkarst-cpu
+  changes:
+  - message: Now grappling gun is clumsy proof.
+    type: Tweak
+  id: 6918
+  time: '2024-07-14T10:26:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29904
+- author: HahayesSiH
+  changes:
+  - message: It is now possible to pet cyborgs.
+    type: Add
+  - message: Clicking on cyborgs and opening the strip menu no longer unlocks them.
+    type: Tweak
+  id: 6919
+  time: '2024-07-14T14:09:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30037
+- author: deltanedas
+  changes:
+  - message: Fixed ninja shoes not working as magboots.
+    type: Fix
+  id: 6920
+  time: '2024-07-14T15:11:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28586
+- author: lzk228
+  changes:
+  - message: Scarves are eatable again.
+    type: Fix
+  id: 6921
+  time: '2024-07-14T15:12:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29959
+- author: Winkarst-cpu
+  changes:
+  - message: Now addgamerule command processes only valid game rules.
+    type: Fix
+  id: 6922
+  time: '2024-07-15T19:18:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29912
