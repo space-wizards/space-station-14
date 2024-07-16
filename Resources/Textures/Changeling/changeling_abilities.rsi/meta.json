@@ -1,0 +1,113 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken and edited from Paradise Station wiki https://paradisestation.org/wiki/index.php/Changeling , sting_transform and sting_armblade retextures made by whateverusername0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "absorb_dna"
+        },
+        {
+            "name": "anatomic_panacea"
+        },
+        {
+            "name": "apex_predator"
+        },
+        {
+            "name": "armblade"
+        },
+        {
+            "name": "augmented_eyesight"
+        },
+        {
+            "name": "biodegrade"
+        },
+        {
+            "name": "bone_shard"
+        },
+        {
+            "name": "chameleon_skin"
+        },
+        {
+            "name": "chitinous_armor"
+        },
+        {
+            "name": "contort_body"
+        },
+        {
+            "name": "epinephrine_overdose"
+        },
+        {
+            "name": "evolution_menu"
+        },
+        {
+            "name": "fleshmend"
+        },
+        {
+            "name": "hivemind_access"
+        },
+        {
+            "name": "last_resort"
+        },
+        {
+            "name": "lesser_form"
+        },
+        {
+            "name": "organic_shield"
+        },
+        {
+            "name": "shriek_dissonant"
+        },
+        {
+            "name": "shriek_resonant"
+        },
+        {
+            "name": "space_adaptation"
+        },
+        {
+            "name": "stasis_enter"
+        },
+        {
+            "name": "stasis_exit"
+        },
+        {
+            "name": "sting_armblade"
+        },
+        {
+            "name": "sting_blind"
+        },
+        {
+            "name": "sting_cryo"
+        },
+        {
+            "name": "sting_extractdna"
+        },
+        {
+            "name": "sting_lethargic"
+        },
+        {
+            "name": "sting_mute"
+        },
+        {
+            "name": "sting_transform"
+        },
+        {
+            "name": "strained_muscles"
+        },
+        {
+            "name": "swap_forms"
+        },
+        {
+            "name": "tentacle"
+        },
+        {
+            "name": "transform"
+        },
+        {
+            "name": "transform_cycle"
+        }
+    ]
+}
