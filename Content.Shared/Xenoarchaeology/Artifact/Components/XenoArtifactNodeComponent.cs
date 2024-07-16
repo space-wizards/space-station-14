@@ -1,3 +1,4 @@
+using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.Components;
@@ -45,11 +46,23 @@ public sealed partial class XenoArtifactNodeComponent : Component
     /// <summary>
     /// The maximum amount of times a node can be generically activated before becoming useless
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public int MaxDurability = 5;
+
+    /// <summary>
+    /// The variance from MaxDurability present when a node is created.
+    /// </summary>
+    [DataField]
+    public MinMax InitialDurabilityVariation = new(0, 2);
     #endregion
 
     #region Research
+    /// <summary>
+    /// The amount of points a node is worth with no scaling
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float BasePointValue = 5000;
+
     [DataField, AutoNetworkedField]
     public int ResearchValue;
 

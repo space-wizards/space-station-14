@@ -23,7 +23,7 @@ public abstract partial class SharedXenoArtifactSystem
 
     private void OnNodeMapInit(Entity<XenoArtifactNodeComponent> ent, ref MapInitEvent args)
     {
-        ReplenishNodeDurability((ent, ent));
+        SetNodeDurability((ent, ent), ent.Comp.MaxDurability - ent.Comp.InitialDurabilityVariation.Next(RobustRandom));
     }
 
     public XenoArtifactNodeComponent XenoArtifactNode(EntityUid uid)
@@ -57,16 +57,6 @@ public abstract partial class SharedXenoArtifactSystem
     }
 
     /// <summary>
-    /// Resets a node's durability back to max.
-    /// </summary>
-    public void ReplenishNodeDurability(Entity<XenoArtifactNodeComponent?> ent)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return;
-        SetNodeDurability(ent, ent.Comp.MaxDurability);
-    }
-
-    /// <summary>
     /// Adds to the nodes durability by the specified value.
     /// </summary>
     /// <param name="ent"></param>
@@ -86,6 +76,7 @@ public abstract partial class SharedXenoArtifactSystem
         if (!Resolve(ent, ref ent.Comp))
             return;
         ent.Comp.Durability = Math.Clamp(durability, 0, ent.Comp.MaxDurability);
+        UpdateNodeResearchValue((ent, ent.Comp));
         Dirty(ent);
     }
 
@@ -311,6 +302,8 @@ public abstract partial class SharedXenoArtifactSystem
         }
 
         var artifact = _xenoArtifactQuery.Get(GetEntity(node.Comp.Attached.Value));
-        node.Comp.ResearchValue = (int) (Math.Pow(1.25, GetPredecessorNodes((artifact, artifact), node).Count) * 5000);
+
+        var durabilityPenalty = 1f - MathF.Pow((float) node.Comp.Durability / node.Comp.MaxDurability, 2);
+        node.Comp.ResearchValue = (int) (Math.Pow(1.25, GetPredecessorNodes((artifact, artifact), node).Count) * node.Comp.BasePointValue * durabilityPenalty);
     }
 }
