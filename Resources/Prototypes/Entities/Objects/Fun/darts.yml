@@ -7,7 +7,6 @@
   - type: EmbeddableProjectile
     minimumSpeed: 3
     removalTime: 0.5
-    offset: 0.0,0.0
   - type: ThrowingAngle
     angle: 315
   - type: LandAtCursor
