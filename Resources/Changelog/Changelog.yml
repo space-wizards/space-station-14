@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Rainbeon
-  changes:
-  - message: Suit sensor vitals now function again.
-    type: Fix
-  id: 6424
-  time: '2024-04-23T08:57:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27259
 - author: Ghagliiarghii
   changes:
   - message: Security can now find replacements for their trusty Combat Knife in the
@@ -3805,3 +3798,11 @@
   id: 6923
   time: '2024-07-16T22:50:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29731
+- author: K-Dynamic
+  changes:
+  - message: nerfed paraylze timer of all slippable objects (including soaps, water
+      puddles, and clown-related items)
+    type: Tweak
+  id: 6924
+  time: '2024-07-16T23:26:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27879
