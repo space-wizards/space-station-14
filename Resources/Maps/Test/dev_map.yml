@@ -5164,20 +5164,6 @@ entities:
     - type: Transform
       pos: -3.5,4.5
       parent: 179
-- proto: SpawnVehicleATV
-  entities:
-  - uid: 1176
-    components:
-    - type: Transform
-      pos: -7.5,1.5
-      parent: 179
-- proto: SpawnVehicleJanicart
-  entities:
-  - uid: 904
-    components:
-    - type: Transform
-      pos: 5.5,16.5
-      parent: 179
 - proto: Spear
   entities:
   - uid: 185
@@ -5808,20 +5794,6 @@ entities:
     components:
     - type: Transform
       pos: -7.5,4.5
-      parent: 179
-- proto: VehicleKeyATV
-  entities:
-  - uid: 1187
-    components:
-    - type: Transform
-      pos: -6.8905525,1.5128828
-      parent: 179
-- proto: VehicleKeyJanicart
-  entities:
-  - uid: 14
-    components:
-    - type: Transform
-      pos: 6.5,16.5
       parent: 179
 - proto: VendingMachineCigs
   entities:
