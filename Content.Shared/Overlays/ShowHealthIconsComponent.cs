@@ -15,4 +15,7 @@ public sealed partial class ShowHealthIconsComponent : Component
     /// </summary>
     [DataField("damageContainers", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageContainerPrototype>))]
     public List<string> DamageContainers = new();
+
+    [DataField("isVisible")]
+    public bool IsVisible = true;
 }

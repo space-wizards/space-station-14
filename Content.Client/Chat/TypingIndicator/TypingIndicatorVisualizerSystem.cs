@@ -3,6 +3,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Prototypes;
 using Content.Shared.Inventory;
+using Content.Client.Overlays;
 using Content.Shared.Overlays;
 using System.Numerics;
 
@@ -13,11 +14,7 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
-
-    /// <summary>
-    ///     How far the typing indicator should be offset when the entity is using a HUD.
-    /// </summary>
-    private const float TypingIndicatorVerticalOffset = -0.12f;
+    [Dependency] private readonly ShowHealthIconsSystem _showHealthIcons = default!;
 
     protected override void OnAppearanceChange(EntityUid uid, TypingIndicatorComponent component, ref AppearanceChangeEvent args)
     {
@@ -47,21 +44,44 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
         if (!layerExists)
             layer = args.Sprite.LayerMapReserveBlank(TypingIndicatorLayers.Base);
 
-        // If the entity is using eyewear that shows a HUD, offset the typing indicator slightly down so it's not obscured.
-        // TODO: Consider making the typing indicator an actual overlay instead of a sprite layer.
-        var verticalOffset = 0f;
-        if(_inventory.TryGetSlotEntity(uid, "eyes", out var slotEntity) &&
-            HasComp<ShowHealthBarsComponent>(slotEntity) && HasComp<ShowHealthIconsComponent>(slotEntity))
-        {
-            verticalOffset = TypingIndicatorVerticalOffset;
-        }
-
-        var offset = new Vector2(proto.Offset.X, proto.Offset.Y + verticalOffset);
+        if(GetShowHealthIconsComponent(uid, out var showHealthIconsComp) && showHealthIconsComp != null)
+            _showHealthIcons.UpdateComponentVisibility(showHealthIconsComp, !isTyping);
 
         args.Sprite.LayerSetRSI(layer, proto.SpritePath);
         args.Sprite.LayerSetState(layer, proto.TypingState);
         args.Sprite.LayerSetShader(layer, proto.Shader);
-        args.Sprite.LayerSetOffset(layer, offset);
+        args.Sprite.LayerSetOffset(layer, proto.Offset);
         args.Sprite.LayerSetVisible(layer, isTyping);
+    }
+
+    // Utility method to get the ShowHealthIconsComponent from an entity or any of its items
+    // StatusIconSystem has a very similar method I need to pick one place and make it shared
+    private bool GetShowHealthIconsComponent(EntityUid uid, out ShowHealthIconsComponent? result)
+    {
+        if (TryComp<ShowHealthIconsComponent>(uid, out var showHealthIconsComp))
+        {
+            result = showHealthIconsComp;
+            return true;
+        }
+
+        if (TryComp<InventoryComponent>(uid, out var inventoryComp))
+        {
+            foreach (var slot in inventoryComp.Slots)
+            {
+                if (slot == null)
+                    continue;
+
+                if (_inventory.TryGetSlotEntity(uid, slot.Name, out var slotEntity))
+                {
+                    if(TryComp<ShowHealthIconsComponent>(slotEntity, out var slotComponent) && slotComponent != null)
+                    {
+                        result = slotComponent;
+                        return true;
+                    }
+                }
+            }
+        }
+        result = null;
+        return false;
     }
 }

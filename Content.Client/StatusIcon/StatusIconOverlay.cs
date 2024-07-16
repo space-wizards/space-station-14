@@ -1,16 +1,20 @@
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
+using Content.Client.Overlays;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Client.Player;
+using Robust.Shared.Player;
 using System.Numerics;
 
 namespace Content.Client.StatusIcon;
 
 public sealed class StatusIconOverlay : Overlay
 {
+    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -73,6 +77,10 @@ public sealed class StatusIconOverlay : Overlay
             foreach (var proto in icons)
             {
                 if (!_statusIcon.IsVisible((uid, meta), proto))
+                    continue;
+
+                //you need to change this, this only works for the local player
+                if (uid == _player.LocalSession?.AttachedEntity && _statusIcon.ShouldHideIcon(uid))
                     continue;
 
                 var curTime = _timing.RealTime;

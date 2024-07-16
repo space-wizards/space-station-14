@@ -1,5 +1,6 @@
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Damage;
+using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Overlays;
@@ -16,7 +17,6 @@ namespace Content.Client.Overlays;
 public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
-
     public HashSet<string> DamageContainers = new();
 
     public override void Initialize()
@@ -24,6 +24,11 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
         base.Initialize();
 
         SubscribeLocalEvent<DamageableComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
+    }
+
+    public void UpdateComponentVisibility(ShowHealthIconsComponent component, bool visible)
+    {
+       component.IsVisible = visible;
     }
 
     protected override void UpdateInternal(RefreshEquipmentHudEvent<ShowHealthIconsComponent> component)

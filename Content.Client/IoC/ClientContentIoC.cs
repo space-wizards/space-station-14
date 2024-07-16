@@ -17,6 +17,7 @@ using Content.Shared.Administration.Logs;
 using Content.Client.Guidebook;
 using Content.Client.Lobby;
 using Content.Client.Replay;
+using Content.Client.Overlays;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Players.PlayTimeTracking;
 
@@ -50,6 +51,7 @@ namespace Content.Client.IoC
             collection.Register<ContentReplayPlaybackManager, ContentReplayPlaybackManager>();
             collection.Register<ISharedPlaytimeManager, JobRequirementsManager>();
             collection.Register<DebugMonitorManager>();
+            collection.Register<ShowHealthIconsSystem, ShowHealthIconsSystem>();
         }
     }
 }
