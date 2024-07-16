@@ -11,7 +11,6 @@ namespace Content.Server.GameTicking.Rules;
 public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IMapManager _mapMan = default!;
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
