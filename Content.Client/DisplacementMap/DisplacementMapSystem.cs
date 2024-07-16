@@ -13,10 +13,16 @@ public sealed class DisplacementMapSystem : EntitySystem
         if (data.ShaderOverride != null)
             sprite.LayerSetShader(index, data.ShaderOverride);
 
-        //allows you not to write it every time in the YML
-        if (data.Layer.CopyToShaderParameters == null)
+        var displacementKey = $"{key}-displacement";
+        if (!revealedLayers.Add(displacementKey))
         {
-            data.Layer.CopyToShaderParameters = new()
+            Log.Warning($"Duplicate key for DISPLACEMENT: {displacementKey}.");
+            return false;
+        }
+        //allows you not to write it every time in the YML
+        foreach (var pair in data.DataBySize)
+        {
+            pair.Value.CopyToShaderParameters??= new()
             {
                 LayerKey = "dummy",
                 ParameterTexture = "displacementMap",
@@ -24,14 +30,27 @@ public sealed class DisplacementMapSystem : EntitySystem
             };
         }
 
-        var displacementKey = $"{key}-displacement";
-        if (!revealedLayers.Add(displacementKey))
+        if (!data.DataBySize.ContainsKey(32))
         {
-            Log.Warning($"Duplicate key for DISPLACEMENT: {displacementKey}.");
+            Log.Error($"DISPLACEMENT: {displacementKey} don't have 32x32 default displacement map");
             return false;
         }
 
-        var displacementLayer = _serialization.CreateCopy(data.Layer, notNullableOverride: true);
+        // We choose a displacement map from the possible ones, matching the size with the original layer size.
+        // If there is no such a map, we use a standard 32 by 32 one
+        var displacementDataLayer = data.DataBySize[32];
+        var actualRSI = sprite.LayerGetActualRSI(index);
+        if (actualRSI is not null)
+        {
+            if (actualRSI.Size.X != actualRSI.Size.Y)
+                Log.Warning($"DISPLACEMENT: {displacementKey} has a resolution that is not 1:1, things can look crooked");
+
+            var layerSize = actualRSI.Size.X;
+            if (data.DataBySize.ContainsKey(layerSize))
+                displacementDataLayer = data.DataBySize[layerSize];
+        }
+
+        var displacementLayer = _serialization.CreateCopy(displacementDataLayer, notNullableOverride: true);
         displacementLayer.CopyToShaderParameters!.LayerKey = key;
 
         sprite.AddLayer(displacementLayer, index);

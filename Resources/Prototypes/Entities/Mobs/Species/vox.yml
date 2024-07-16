@@ -18,9 +18,10 @@
     speciesId: vox
     displacements:
       jumpsuit:
-        layer:
-          sprite: Mobs/Species/Vox/displacement.rsi
-          state: jumpsuit
+        dataBySize:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: jumpsuit
   - type: Speech
     speechVerb: Vox
     speechSounds: Vox
@@ -111,7 +112,8 @@
     speciesId: vox
     displacements:
       jumpsuit:
-        layer:
-          sprite: Mobs/Species/Vox/displacement.rsi
-          state: jumpsuit
+        dataBySize:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: jumpsuit
 
