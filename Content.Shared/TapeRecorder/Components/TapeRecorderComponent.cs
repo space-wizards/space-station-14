@@ -9,7 +9,6 @@ namespace Content.Shared.TapeRecorder.Components;
 [Access(typeof(SharedTapeRecorderSystem))]
 public sealed partial class TapeRecorderComponent : Component
 {
-
     /// <summary>
     /// The current tape recorder mode, controls what using the item will do
     /// </summary>

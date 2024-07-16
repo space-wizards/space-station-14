@@ -7,7 +7,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Timing;
 
-
 namespace Content.Client.TapeRecorder.Ui;
 
 [GenerateTypedNameReferences]
@@ -81,53 +80,26 @@ public sealed partial class TapeRecorderMenu : FancyWindow
         switch (state.Mode)
         {
             case TapeRecorderMode.Recording:
-                {
-                    RecordButton.Pressed = true;
-                    break;
-                }
+                RecordButton.Pressed = true;
+                break;
             case TapeRecorderMode.Rewinding:
-                {
-                    RewindButton.Pressed = true;
-                    break;
-                }
+                RewindButton.Pressed = true;
+                break;
             case TapeRecorderMode.Playing:
-                {
-                    PlaybackButton.Pressed = true;
-                    break;
-                }
+                PlaybackButton.Pressed = true;
+                break;
             default:
                 break;
         }
 
         // Checking all buttons to now overdisable them in future
-        if ((!state.HasCasette || state.Active || state.CurrentTime >= state.MaxTime) && state.Mode != TapeRecorderMode.Playing)
-            PlaybackButton.Disabled = true;
-        else
-            PlaybackButton.Disabled = false;
-        if ((!state.HasCasette || state.Active || state.CurrentTime <= float.Epsilon) && state.Mode != TapeRecorderMode.Rewinding)
-            RewindButton.Disabled = true;
-        else
-            RewindButton.Disabled = false;
-        if ((!state.HasCasette || state.Active || state.CurrentTime >= state.MaxTime) && state.Mode != TapeRecorderMode.Recording)
-            RecordButton.Disabled = true;
-        else
-            RecordButton.Disabled = false;
+        PlaybackButton.Disabled = (!state.HasCasette || state.Active || state.CurrentTime >= state.MaxTime) && state.Mode != TapeRecorderMode.Playing;
+        RewindButton.Disabled = (!state.HasCasette || state.Active || state.CurrentTime <= float.Epsilon) && state.Mode != TapeRecorderMode.Rewinding;
+        RecordButton.Disabled = (!state.HasCasette || state.Active || state.CurrentTime >= state.MaxTime) && state.Mode != TapeRecorderMode.Recording;
+        PrintButton.Disabled = !state.HasCasette || state.Active || !state.HasData || _onCooldown;
 
-        if (!state.HasCasette || state.Active || !state.HasData || _onCooldown)
-            PrintButton.Disabled = true;
-        else
-            PrintButton.Disabled = false;
-
-        if (!state.HasCasette)
-        {
-            PlayButton.Disabled = true;
-            StopButton.Disabled = true;
-        }
-        else
-        {
-            PlayButton.Disabled = false;
-            StopButton.Disabled = false;
-        }
+        PlayButton.Disabled = !state.HasCasette;
+        StopButton.Disabled = !state.HasCasette;
 
         if (state.Active)
             PlayButton.Pressed = true;

@@ -72,22 +72,16 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
             switch (tapeRecorderComponent.Mode)
             {
                 case TapeRecorderMode.Recording:
-                    {
-                        ProcessRecordingTapeRecorder((uid, tapeRecorderComponent), frameTime);
-                        break;
-                    }
+                    ProcessRecordingTapeRecorder((uid, tapeRecorderComponent), frameTime);
+                    break;
                 case TapeRecorderMode.Playing:
-                    {
-                        ProcessPlayingTapeRecorder((uid, tapeRecorderComponent), frameTime);
-                        break;
-                    }
+                    ProcessPlayingTapeRecorder((uid, tapeRecorderComponent), frameTime);
+                    break;
                 case TapeRecorderMode.Rewinding:
-                    {
-                        ProcessRewindingTapeRecorder((uid, tapeRecorderComponent), frameTime);
-                        break;
-                    }
+                    ProcessRewindingTapeRecorder((uid, tapeRecorderComponent), frameTime);
+                    break;
                 default:
-                    continue;
+                    break;
             }
         }
     }
@@ -123,7 +117,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
                 break;
 
             default:
-                return;
+                break;
         }
     }
 
@@ -298,24 +292,15 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
     {
         if (args.IsInDetailsRange)
         {
-            switch (tapeRecorder.Comp.Mode)
+            args.PushMarkup(Loc.GetString(tapeRecorder.Comp.Mode switch
             {
-                case TapeRecorderMode.Playing:
-                    args.PushMarkup(Loc.GetString(tapeRecorder.Comp.TextModePlaying));
-                    break;
-                case TapeRecorderMode.Stopped:
-                    args.PushMarkup(Loc.GetString(tapeRecorder.Comp.TextModeStopped));
-                    break;
-                case TapeRecorderMode.Recording:
-                    args.PushMarkup(Loc.GetString(tapeRecorder.Comp.TextModeRecording));
-                    break;
-                case TapeRecorderMode.Rewinding:
-                    args.PushMarkup(Loc.GetString(tapeRecorder.Comp.TextModeRewinding));
-                    break;
-                case TapeRecorderMode.Empty:
-                    args.PushMarkup(Loc.GetString(tapeRecorder.Comp.TextModeEmpty));
-                    break;
-            }
+                TapeRecorderMode.Playing => tapeRecorder.Comp.TextModePlaying,
+                TapeRecorderMode.Stopped => tapeRecorder.Comp.TextModeStopped,
+                TapeRecorderMode.Recording => tapeRecorder.Comp.TextModeRecording,
+                TapeRecorderMode.Rewinding => tapeRecorder.Comp.TextModeRewinding,
+                TapeRecorderMode.Empty => tapeRecorder.Comp.TextModeEmpty,
+                _ => ""
+            }));
 
             //Check if we have a tape cassette inserted
             if (!TryGetTapeCassette(tapeRecorder, out var tapeCassette))

@@ -14,7 +14,6 @@ namespace Content.Server.TapeRecorder;
 
 public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
 {
-
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly HandsSystem _handsSystem = default!;
