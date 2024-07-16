@@ -178,12 +178,7 @@ public sealed class NukeOpsTest
             }
         }
 
-        Assert.That(entMan.EntityExists(nukieStationEnt));
-        var nukieStation = entMan.GetComponent<StationMemberComponent>(nukieStationEnt!.Value);
-
-        Assert.That(entMan.EntityExists(nukieStation.Station));
-        Assert.That(nukieStation.Station, Is.Not.EqualTo(ruleComp.TargetStation));
-
+        Assert.That(!entMan.EntityExists(nukieStationEnt)); // its not supposed to be a station!
         Assert.That(server.MapMan.MapExists(gridsRule.Map));
         var nukieMap = mapSys.GetMap(gridsRule.Map!.Value);
 
@@ -193,7 +188,6 @@ public sealed class NukeOpsTest
         Assert.That(targetMap, Is.Not.EqualTo(nukieMap));
 
         Assert.That(entMan.GetComponent<TransformComponent>(player).MapUid, Is.EqualTo(nukieMap));
-        Assert.That(entMan.GetComponent<TransformComponent>(nukieStationEnt.Value).MapUid, Is.EqualTo(nukieMap));
         Assert.That(entMan.GetComponent<TransformComponent>(nukieShuttlEnt).MapUid, Is.EqualTo(nukieMap));
 
         // The maps are all map-initialized, including the player
@@ -207,7 +201,6 @@ public sealed class NukeOpsTest
         Assert.That(LifeStage(player), Is.GreaterThan(EntityLifeStage.Initialized));
         Assert.That(LifeStage(nukieMap), Is.GreaterThan(EntityLifeStage.Initialized));
         Assert.That(LifeStage(targetMap), Is.GreaterThan(EntityLifeStage.Initialized));
-        Assert.That(LifeStage(nukieStationEnt.Value), Is.GreaterThan(EntityLifeStage.Initialized));
         Assert.That(LifeStage(nukieShuttlEnt), Is.GreaterThan(EntityLifeStage.Initialized));
         Assert.That(LifeStage(ruleComp.TargetStation), Is.GreaterThan(EntityLifeStage.Initialized));
 
