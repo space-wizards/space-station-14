@@ -73,7 +73,7 @@
         state: narsian
 
 - type: entity
-  categories: [ HideSpawnMenu ]
+  categories: [ HideSpawnMenu, Spawner ]
   id: SpawnPointGhostNukeOperative
   name: ghost role spawn point
   suffix: nukeops
@@ -93,7 +93,7 @@
         state: radiation
 
 - type: entity
-  categories: [ HideSpawnMenu ]
+  categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner
   id: SpawnPointLoneNukeOperative
   components:
@@ -109,7 +109,7 @@
         state: radiation
 
 - type: entity
-  categories: [ HideSpawnMenu ]
+  categories: [ HideSpawnMenu, Spawner ]
   parent: SpawnPointLoneNukeOperative
   id: SpawnPointNukeopsCommander
   components:
@@ -118,7 +118,7 @@
     description: roles-antag-nuclear-operative-commander-objective
 
 - type: entity
-  categories: [ HideSpawnMenu ]
+  categories: [ HideSpawnMenu, Spawner ]
   parent: SpawnPointLoneNukeOperative
   id: SpawnPointNukeopsMedic
   components:
@@ -127,7 +127,7 @@
     description: roles-antag-nuclear-operative-agent-objective
 
 - type: entity
-  categories: [ HideSpawnMenu ]
+  categories: [ HideSpawnMenu, Spawner ]
   parent: SpawnPointLoneNukeOperative
   id: SpawnPointNukeopsOperative
   components:
@@ -136,7 +136,7 @@
     description: roles-antag-nuclear-operative-objective
 
 - type: entity
-  categories: [ HideSpawnMenu ]
+  categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner
   id: SpawnPointGhostDragon
   components:
@@ -151,7 +151,7 @@
       state: alive
 
 - type: entity
-  categories: [ HideSpawnMenu ]
+  categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner
   id: SpawnPointGhostSpaceNinja
   components:
