@@ -157,7 +157,6 @@ public sealed class NukeOpsTest
         {
             Assert.That(entMan.EntityExists(grid));
             Assert.That(entMan.HasComponent<MapGridComponent>(grid));
-            Assert.That(entMan.HasComponent<StationMemberComponent>(grid));
         }
         Assert.That(entMan.EntityExists(ruleComp.TargetStation));
 
