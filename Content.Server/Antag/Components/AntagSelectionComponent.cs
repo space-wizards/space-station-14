@@ -156,7 +156,7 @@ public partial struct AntagSelectionDefinition()
     public ProtoId<StartingGearPrototype>? StartingGear;
 
     /// <summary>
-    /// A list of role loadouts to be equipped to the player.
+    /// A list of role loadouts, from which a randomly selected one will be equipped.
     /// </summary>
     [DataField]
     public List<ProtoId<RoleLoadoutPrototype>>? RoleLoadout;
