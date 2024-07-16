@@ -19,6 +19,7 @@ public sealed class DisplacementMapSystem : EntitySystem
             Log.Warning($"Duplicate key for DISPLACEMENT: {displacementKey}.");
             return false;
         }
+
         //allows you not to write it every time in the YML
         foreach (var pair in data.DataBySize)
         {
