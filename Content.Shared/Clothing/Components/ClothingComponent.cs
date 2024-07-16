@@ -59,18 +59,6 @@ public sealed partial class ClothingComponent : Component
     [DataField("sprite")]
     public string? RsiPath;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("maleMask")]
-    public ClothingMask MaleMask = ClothingMask.UniformFull;
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("femaleMask")]
-    public ClothingMask FemaleMask = ClothingMask.UniformFull;
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("unisexMask")]
-    public ClothingMask UnisexMask = ClothingMask.UniformFull;
-
     /// <summary>
     /// Name of the inventory slot the clothing is in.
     /// </summary>

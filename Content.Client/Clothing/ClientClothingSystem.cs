@@ -6,6 +6,7 @@ using Content.Client.Inventory;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
@@ -69,13 +70,6 @@ public sealed class ClientClothingSystem : ClothingSystem
         // May need to update jumpsuit stencils if the sex changed. Also required to properly set the stencil on init
         if (args.Sprite == null)
             return;
-
-        if (_inventorySystem.TryGetSlotEntity(uid, Jumpsuit, out var suit, component)
-            && TryComp(suit, out ClothingComponent? clothing))
-        {
-            SetGenderedMask(uid, args.Sprite, clothing);
-            return;
-        }
 
         // No clothing equipped -> make sure the layer is hidden, though this should already be handled by on-unequip.
         if (args.Sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out var layer))
@@ -233,9 +227,6 @@ public sealed class ClientClothingSystem : ClothingSystem
             return;
         }
 
-        if (slot == Jumpsuit)
-            SetGenderedMask(equipee, sprite, clothingComponent);
-
         if (!_inventorySystem.TryGetSlot(equipee, slot, out var slotDef, inventory))
             return;
 
@@ -267,7 +258,25 @@ public sealed class ClientClothingSystem : ClothingSystem
         // temporary, until layer draw depths get added. Basically: a layer with the key "slot" is being used as a
         // bookmark to determine where in the list of layers we should insert the clothing layers.
         bool slotLayerExists = sprite.LayerMapTryGet(slot, out var index);
-        var displacementData = inventory.Displacements.GetValueOrDefault(slot);
+
+        // Select displacement maps
+        var displacementData = inventory.Displacements.GetValueOrDefault(slot); //Default unsexed map
+
+        var equipeeSex = CompOrNull<HumanoidAppearanceComponent>(equipee)?.Sex;
+        if (equipeeSex != null)
+        {
+            switch (equipeeSex)
+            {
+                case Sex.Male:
+                    if (inventory.MaleDisplacements.Count > 0)
+                        displacementData = inventory.MaleDisplacements.GetValueOrDefault(slot);
+                    break;
+                case Sex.Female:
+                    if (inventory.FemaleDisplacements.Count > 0)
+                        displacementData = inventory.FemaleDisplacements.GetValueOrDefault(slot);
+                    break;
+            }
+        }
 
         // add the new layers
         foreach (var (key, layerData) in ev.Layers)
@@ -319,45 +328,5 @@ public sealed class ClientClothingSystem : ClothingSystem
         }
 
         RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers), true);
-    }
-
-
-    /// <summary>
-    ///     Sets a sprite's gendered mask based on gender (obviously).
-    /// </summary>
-    /// <param name="sprite">Sprite to modify</param>
-    /// <param name="humanoid">Humanoid, to get gender from</param>
-    /// <param name="clothing">Clothing component, to get mask sprite type</param>
-    private void SetGenderedMask(EntityUid uid, SpriteComponent sprite, ClothingComponent clothing)
-    {
-        if (!sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out var layer))
-            return;
-
-        ClothingMask mask;
-        string prefix;
-
-        switch (CompOrNull<HumanoidAppearanceComponent>(uid)?.Sex)
-        {
-            case Sex.Male:
-                mask = clothing.MaleMask;
-                prefix = "male_";
-                break;
-            case Sex.Female:
-                mask = clothing.FemaleMask;
-                prefix = "female_";
-                break;
-            default:
-                mask = clothing.UnisexMask;
-                prefix = "unisex_";
-                break;
-        }
-
-        sprite.LayerSetState(layer, mask switch
-        {
-            ClothingMask.NoMask => $"{prefix}none",
-            ClothingMask.UniformTop => $"{prefix}top",
-            _ => $"{prefix}full",
-        });
-        sprite.LayerSetVisible(layer, true);
     }
 }

@@ -7,7 +7,7 @@ public sealed partial class DisplacementData
     /// allows you to attach different maps for layers of different sizes.
     /// </summary>
     [DataField(required: true)]
-    public Dictionary<int, PrototypeLayerData> SizeMaps = default!;
+    public Dictionary<int, PrototypeLayerData> SizeMaps = new();
 
     [DataField]
     public string? ShaderOverride = "DisplacedStencilDraw";
