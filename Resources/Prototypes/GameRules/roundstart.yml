@@ -95,7 +95,8 @@
   - type: GameRule
     minPlayers: 0 # Yell loudly if I forget to make this 20 again.
   - type: LoadMapRule
-    mapPath: Maps/Nonstations/nukieplanet.yml
+    gameMap: NukieOutpost
+    deferMapUnpause: false
   - type: AntagSelection
     selectionTime: PrePlayerSpawn
     definitions:

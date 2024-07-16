@@ -11,6 +11,7 @@ namespace Content.Server.GameTicking.Rules;
 public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IMapManager _mapMan = default!;
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
@@ -37,8 +38,11 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
         {
             var gameMap = _prototypeManager.Index(comp.GameMap.Value);
             grids = GameTicker.LoadGameMap(gameMap, mapId, new MapLoadOptions());
+
+            if (comp.DeferMapUnpause == false)
+                _mapMan.SetMapPaused(mapId, false);
         }
-        else if (comp.MapPath is {} path)
+        else if (comp.MapPath is { } path)
         {
             var options = new MapLoadOptions { LoadMap = true };
             if (!_mapLoader.TryLoad(mapId, path.ToString(), out var roots, options))
@@ -50,6 +54,9 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
             }
 
             grids = roots;
+
+            if (comp.DeferMapUnpause == false)
+                _mapMan.SetMapPaused(mapId, false);
         }
         else if (comp.PreloadedGrid is {} preloaded)
         {
