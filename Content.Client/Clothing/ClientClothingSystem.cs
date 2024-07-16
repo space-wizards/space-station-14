@@ -314,7 +314,7 @@ public sealed class ClientClothingSystem : ClothingSystem
             sprite.LayerSetData(index, layerData);
             layer.Offset += slotDef.Offset;
 
-            if (displacementData != null)
+            if (displacementData != null && clothingComponent.UseDisplacementMaps)
                 _displacement.TryAddDisplacement(displacementData, sprite, index, key, revealedLayers);
         }
 

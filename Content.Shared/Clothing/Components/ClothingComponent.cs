@@ -81,6 +81,12 @@ public sealed partial class ClothingComponent : Component
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan UnequipDelay = TimeSpan.Zero;
+
+    /// <summary>
+    /// allows you to disable the use of displacement maps on some clothes
+    /// </summary>
+    [DataField]
+    public bool UseDisplacementMaps = true;
 }
 
 [Serializable, NetSerializable]
