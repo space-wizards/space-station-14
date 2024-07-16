@@ -912,14 +912,14 @@ namespace Content.Shared.CCVar
         /// </summary>
         /// <seealso cref="AhelpRateLimitCount"/>
         public static readonly CVarDef<int> AhelpRateLimitPeriod =
-            CVarDef.Create("ahelp.rate_limit_period", 2, CVar.SERVERONLY);
+            CVarDef.Create("ahelp.rate_limit_period", 8, CVar.SERVERONLY);
 
         /// <summary>
         /// How many ahelp messages are allowed in a single rate limit period.
         /// </summary>
         /// <seealso cref="AhelpRateLimitPeriod"/>
         public static readonly CVarDef<int> AhelpRateLimitCount =
-            CVarDef.Create("ahelp.rate_limit_count", 10, CVar.SERVERONLY);
+            CVarDef.Create("ahelp.rate_limit_count", 3, CVar.SERVERONLY);
 
         /*
          * Explosions
@@ -1279,7 +1279,7 @@ namespace Content.Shared.CCVar
         /// Whether or not OOC chat should be enabled during a round.
         /// </summary>
         public static readonly CVarDef<bool> OocEnableDuringRound =
-            CVarDef.Create("ooc.enable_during_round", false, CVar.NOTIFY | CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ooc.enable_during_round", true, CVar.NOTIFY | CVar.REPLICATED | CVar.SERVER);
 
         public static readonly CVarDef<bool> ShowOocPatronColor =
             CVarDef.Create("ooc.show_ooc_patron_color", true, CVar.ARCHIVE | CVar.REPLICATED | CVar.CLIENT);
