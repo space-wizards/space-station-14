@@ -96,7 +96,6 @@
     minPlayers: 20
   - type: LoadMapRule
     gameMap: NukieOutpost
-    deferMapUnpause: false
   - type: AntagSelection
     selectionTime: PrePlayerSpawn
     definitions:
