@@ -25,7 +25,7 @@
   abstract: true
   components:
   - type: EmbeddableProjectile
-    offset: 0.3,0.0
+    offset: 0.3,-0.3
     removalTime: 0.0
   - type: ThrowingAngle
     angle: 315
