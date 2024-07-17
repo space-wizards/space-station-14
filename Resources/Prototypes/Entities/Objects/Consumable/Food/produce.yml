@@ -311,6 +311,8 @@
     sprite: Objects/Specific/Hydroponics/banana.rsi
     heldPrefix: peel
   - type: Slippery
+    paralyzeTime: 1
+    launchForwardsMultiplier: 2
   - type: StepTrigger
     intersectRatio: 0.2
   - type: CollisionWake
@@ -383,6 +385,8 @@
     sprite: Objects/Specific/Hydroponics/mimana.rsi
     heldPrefix: peel
   - type: Slippery
+    paralyzeTime: 1.5
+    launchForwardsMultiplier: 2.5
     slipSound:
       path: /Audio/Effects/slip.ogg
       params:
@@ -400,6 +404,8 @@
     sprite: Objects/Materials/materials.rsi
     heldPrefix: peel
   - type: Slippery
+    paralyzeTime: 2
+    launchForwardsMultiplier: 3
 
 - type: entity
   name: carrot
