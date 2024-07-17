@@ -33,6 +33,9 @@
   - type: Appearance
   - type: Extractable
     grindableSolutionName: food
+  - type: Tag
+    tags:
+      - MothFood
 
 # Subclasses
 
