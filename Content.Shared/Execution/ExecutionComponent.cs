@@ -17,16 +17,19 @@ public sealed partial class ExecutionComponent : Component
     [DataField, AutoNetworkedField]
     public float DamageModifier = 9f;
 
-    [DataField]
+    /// <summary>
+    /// Locale IDs for initialization/completion of an execution from an internal/external viewpoint.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public LocId DefaultInternalMeleeExecutionMessage = "execution-popup-melee-initial-internal";
 
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public LocId DefaultExternalMeleeExecutionMessage = "execution-popup-melee-initial-external";
 
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public LocId DefaultCompleteInternalMeleeExecutionMessage = "execution-popup-melee-complete-internal";
 
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public LocId DefaultCompleteExternalMeleeExecutionMessage = "execution-popup-melee-complete-external";
 
     // Not networked because this is transient inside of a tick.
