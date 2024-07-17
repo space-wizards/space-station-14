@@ -928,6 +928,9 @@
   id: MopBasic
 
 - type: Tag
+  id: MothFood
+
+- type: Tag
   id: Mouse
 
 - type: Tag
