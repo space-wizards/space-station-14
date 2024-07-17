@@ -9,6 +9,8 @@ using Robust.Shared.Utility;
 using System;
 using System.Linq;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Wieldable;
+using Content.Shared.Wieldable.Components;
 using JetBrains.Annotations;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
@@ -31,8 +33,11 @@ public partial class SharedGunSystem
 
     private void OnRevolverUse(EntityUid uid, RevolverAmmoProviderComponent component, UseInHandEvent args)
     {
-        if (!_useDelay.TryResetDelay(uid))
+        if (!_useDelay.TryResetDelay(uid) ||
+        args.Handled)
             return;
+
+        args.Handled = true;
 
         Cycle(component);
         UpdateAmmoCount(uid, prediction: false);
@@ -393,10 +398,14 @@ public partial class SharedGunSystem
                 args.Ammo.Add((spawned, EnsureComp<AmmoComponent>(spawned)));
 
                 if (cartridge.DeleteOnSpawn)
+                {
+                    component.AmmoSlots[index] = null;
                     component.Chambers[index] = null;
+                }
             }
             else
             {
+                component.AmmoSlots[index] = null;
                 component.Chambers[index] = null;
                 args.Ammo.Add((ent.Value, EnsureComp<AmmoComponent>(ent.Value)));
             }
