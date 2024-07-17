@@ -13,8 +13,6 @@ public abstract partial class SharedXenoArtifactSystem
 {
     private void InitializeXAT()
     {
-        base.Initialize();
-
         XATRelayLocalEvent<DamageChangedEvent>();
         XATRelayLocalEvent<InteractUsingEvent>();
         XATRelayLocalEvent<PullStartedMessage>();

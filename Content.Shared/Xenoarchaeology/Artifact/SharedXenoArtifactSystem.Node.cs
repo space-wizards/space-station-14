@@ -13,7 +13,7 @@ public abstract partial class SharedXenoArtifactSystem
     private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery;
     private EntityQuery<XenoArtifactNodeComponent> _nodeQuery;
 
-    public void InitializeNode()
+    private void InitializeNode()
     {
         SubscribeLocalEvent<XenoArtifactNodeComponent, MapInitEvent>(OnNodeMapInit);
 
@@ -111,6 +111,11 @@ public abstract partial class SharedXenoArtifactSystem
     public bool IsNodeActive(Entity<XenoArtifactComponent> ent, EntityUid node)
     {
         return ent.Comp.CachedActiveNodes.Contains(GetNetEntity(node));
+    }
+
+    public List<Entity<XenoArtifactNodeComponent>> GetActiveNodes(Entity<XenoArtifactComponent> ent)
+    {
+        return ent.Comp.CachedActiveNodes.Select(n => _nodeQuery.Get(GetEntity(n))).ToList();
     }
 
     public int GetResearchValue(Entity<XenoArtifactNodeComponent> ent)

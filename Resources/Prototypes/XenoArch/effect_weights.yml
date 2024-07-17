@@ -1,4 +1,5 @@
 - type: weightedRandomEntity
   id: XenoArtifactEffectsDefault
   weights:
-    XenoArtifactEffectTest: 1.0
+    XenoArtifactEffectCreationGasPlasma: 1.0
+    XenoArtifactEffectCreationGasTritium: 1.0
