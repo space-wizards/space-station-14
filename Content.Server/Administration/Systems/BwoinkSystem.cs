@@ -424,7 +424,7 @@ namespace Content.Server.Administration.Systems
             string adminPrefix = "";
 
             //Getting an administrator position
-            if (senderAdmin is not null && senderAdmin.Title is not null && _config.GetCVar(CCVars.AhelpAdminPrefix))
+            if (_config.GetCVar(CCVars.AhelpAdminPrefix) && senderAdmin is not null && senderAdmin.Title is not null)
             {
                 adminPrefix = $"[bold]\\[{senderAdmin.Title}\\][/bold] ";
             }
@@ -460,7 +460,7 @@ namespace Content.Server.Administration.Systems
 
             string adminPrefixWebhook = "";
 
-            if (senderAdmin is not null && senderAdmin.Title is not null && _config.GetCVar(CCVars.AhelpAdminPrefixWebhook))
+            if (_config.GetCVar(CCVars.AhelpAdminPrefixWebhook) && senderAdmin is not null && senderAdmin.Title is not null)
             {
                 adminPrefixWebhook = $"[bold]\\[{senderAdmin.Title}\\][/bold] ";
             }
