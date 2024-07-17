@@ -17,10 +17,14 @@ using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Visuals;
 using Content.Shared.Audio;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Content.Shared.Tools.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
@@ -34,7 +38,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly WeldableSystem _weldable = default!;
-
+        [Dependency] private readonly SharedToolSystem _toolSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -50,6 +56,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentPumpComponent, SignalReceivedEvent>(OnSignalReceived);
             SubscribeLocalEvent<GasVentPumpComponent, GasAnalyzerScanEvent>(OnAnalyzed);
             SubscribeLocalEvent<GasVentPumpComponent, WeldableChangedEvent>(OnWeldChanged);
+            SubscribeLocalEvent<GasVentPumpComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<GasVentPumpComponent, VentScrewedEvent>(OnVentScrewed);
         }
 
         private void OnGasVentPumpUpdated(EntityUid uid, GasVentPumpComponent vent, ref AtmosDeviceUpdateEvent args)
@@ -78,6 +86,11 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (environment == null)
             {
                 return;
+            }
+
+            if (vent.IsPressureLockoutManuallyDisabled && (_timing.CurTime - vent.ManualLockoutDisabledAt).TotalSeconds > vent.ManualLockoutDisabledDuration)
+            {
+                vent.IsPressureLockoutManuallyDisabled = false;
             }
 
             var timeDelta = args.dt;
@@ -114,7 +127,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 var transferMoles = pressureDelta * environment.Volume / (pipe.Air.Temperature * Atmospherics.R);
 
                 // Only run if the device is under lockout and not being overriden
-                if (vent.UnderPressureLockout & !vent.PressureLockoutOverride)
+                if (vent.UnderPressureLockout & !vent.PressureLockoutOverride & !vent.IsPressureLockoutManuallyDisabled)
                 {
                     // Leak only a small amount of gas as a proportion of supply pipe pressure.
                     var pipeDelta = pipe.Air.Pressure - environment.Pressure;
@@ -272,7 +285,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
             else if (vent.PumpDirection == VentPumpDirection.Releasing)
             {
-                if (vent.UnderPressureLockout & !vent.PressureLockoutOverride)
+                if (vent.UnderPressureLockout & !vent.PressureLockoutOverride & !vent.IsPressureLockoutManuallyDisabled)
                     _appearance.SetData(uid, VentPumpVisuals.State, VentPumpState.Lockout, appearance);
                 else
                     _appearance.SetData(uid, VentPumpVisuals.State, VentPumpState.Out, appearance);
@@ -289,7 +302,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             if (args.IsInDetailsRange)
             {
-                if (pumpComponent.PumpDirection == VentPumpDirection.Releasing & pumpComponent.UnderPressureLockout & !pumpComponent.PressureLockoutOverride)
+                if (pumpComponent.PumpDirection == VentPumpDirection.Releasing & pumpComponent.UnderPressureLockout & !pumpComponent.PressureLockoutOverride & !pumpComponent.IsPressureLockoutManuallyDisabled)
                 {
                     args.PushMarkup(Loc.GetString("gas-vent-pump-uvlo"));
                 }
@@ -324,5 +337,29 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         {
             UpdateState(uid, component);
         }
+        private void OnInteractUsing(EntityUid uid, GasVentPumpComponent component, InteractUsingEvent args)
+        {
+            if (args.Handled
+             || !_toolSystem.HasQuality(args.Used, "Screwing")
+             || component.UnderPressureLockout == false
+            )
+            {
+                return;
+            }
+
+            args.Handled = true;
+
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.ManualLockoutDisableDoAfter, new VentScrewedEvent(), uid, uid, args.Used)
+            {
+                DistanceThreshold = 1f
+            });
+        }
+        private void OnVentScrewed(EntityUid uid, GasVentPumpComponent component, VentScrewedEvent args)
+        {
+            component.ManualLockoutDisabledAt = _timing.CurTime;
+            component.IsPressureLockoutManuallyDisabled = true;
+        }
     }
+    [Serializable, NetSerializable]
+    public sealed partial class VentScrewedEvent : SimpleDoAfterEvent;
 }

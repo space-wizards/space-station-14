@@ -58,6 +58,30 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("underPressureLockoutLeaking")]
         public float UnderPressureLockoutLeaking = 0.0001f;
+        /// <summary>
+        /// Is the vent pressure lockout currently manually disabled?
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("forceLockoutDisabled")]
+        public bool IsPressureLockoutManuallyDisabled = false;
+        /// <summary>
+        /// The time when the manual pressure lockout override occured. 
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("manualLockoutDisabledAt")]
+        public TimeSpan ManualLockoutDisabledAt;
+        /// <summary>
+        /// How long the lockout should remain manually disabled after being interacted with (in seconds).
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("manualLockoutDisabledDuration")]
+        public float ManualLockoutDisabledDuration = 5.0f;
+        /// <summary>
+        /// How long the doAfter should take when attempting to manually disable the pressure lockout.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("manualLockoutDisableDoAfter")]
+        public float ManualLockoutDisableDoAfter = 2.0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("externalPressureBound")]
