@@ -119,7 +119,7 @@ public sealed partial class GunSystem : SharedGunSystem
             // pneumatic cannon doesn't shoot bullets it just throws them, ignore ammo handling
             if (throwItems && ent != null)
             {
-                ShootOrThrow(ent.Value, mapDirection, gunVelocity, gun, gunUid, user);
+                ShootOrThrow(ent.Value, mapDirection, gunVelocity, gun, gunUid, user, ent);
                 continue;
             }
 
@@ -140,14 +140,14 @@ public sealed partial class GunSystem : SharedGunSystem
                             for (var i = 0; i < cartridge.Count; i++)
                             {
                                 var uid = Spawn(cartridge.Prototype, fromEnt);
-                                ShootOrThrow(uid, angles[i].ToVec(), gunVelocity, gun, gunUid, user);
+                                ShootOrThrow(uid, angles[i].ToVec(), gunVelocity, gun, gunUid, user, ent);
                                 shotProjectiles.Add(uid);
                             }
                         }
                         else
                         {
                             var uid = Spawn(cartridge.Prototype, fromEnt);
-                            ShootOrThrow(uid, mapDirection, gunVelocity, gun, gunUid, user);
+                            ShootOrThrow(uid, mapDirection, gunVelocity, gun, gunUid, user, ent);
                             shotProjectiles.Add(uid);
                         }
 
@@ -180,7 +180,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     shotProjectiles.Add(ent!.Value);
                     MuzzleFlash(gunUid, newAmmo, mapDirection.ToAngle(), user);
                     Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
-                    ShootOrThrow(ent.Value, mapDirection, gunVelocity, gun, gunUid, user);
+                    ShootOrThrow(ent.Value, mapDirection, gunVelocity, gun, gunUid, user, ent);
                     break;
                 case HitscanPrototype hitscan:
 
@@ -297,7 +297,7 @@ public sealed partial class GunSystem : SharedGunSystem
         });
     }
 
-    private void ShootOrThrow(EntityUid uid, Vector2 mapDirection, Vector2 gunVelocity, GunComponent gun, EntityUid gunUid, EntityUid? user)
+    private void ShootOrThrow(EntityUid uid, Vector2 mapDirection, Vector2 gunVelocity, GunComponent gun, EntityUid gunUid, EntityUid? user, EntityUid? ammo)
     {
         if (gun.Target is { } target && !TerminatingOrDeleted(target))
         {
@@ -314,7 +314,8 @@ public sealed partial class GunSystem : SharedGunSystem
             ThrowingSystem.TryThrow(uid, mapDirection, gun.ProjectileSpeedModified, user);
             return;
         }
-
+        if (ammo is not null)
+            Comp<ProjectileComponent>(uid).AmmoSource = ammo;
         ShootProjectile(uid, mapDirection, gunVelocity, gunUid, user, gun.ProjectileSpeedModified);
     }
 

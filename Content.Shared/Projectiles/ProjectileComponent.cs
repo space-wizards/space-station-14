@@ -27,6 +27,12 @@ public sealed partial class ProjectileComponent : Component
     public EntityUid? Weapon;
 
     /// <summary>
+    ///     Ammo used to shoot this projectile.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityUid? AmmoSource;
+
+    /// <summary>
     ///     The projectile spawns inside the shooter most of the time, this prevents entities from shooting themselves.
     /// </summary>
     [DataField, AutoNetworkedField]
@@ -73,4 +79,12 @@ public sealed partial class ProjectileComponent : Component
     /// </summary>
     [DataField]
     public bool DamagedEntity;
+
+    /// <summary>
+    /// Sets the maximum range for a projectile fired with ShootAtFixedPointComponent.
+    /// This can be set on both the Projectile and ShootAtFixedPoint Components.
+    /// The default value is null for no cap. The minimum value between the two is used.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float? MaxFixedRange;
 }
