@@ -188,6 +188,56 @@
         prototype: Traitor
 
 - type: entity
+  id: TraitorVariations
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: SubGamemodes
+    rules:
+    - id: BloodBrotherSub
+      prob: 0.5
+
+- type: entity
+  id: BloodBrotherSub
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: GameRule
+    minPlayers: 10
+  - type: BloodBrotherRule
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ BloodBrother ]
+      maxRange:
+      min: 1
+      max: 1
+      playerRatio: 5
+      lateJoinAdditional: false
+      mindComponents:
+      - type: BloodBrotherRole
+        prototype: BloodBrother
+
+- type: entity
+  id: BloodBrother
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: GameRule
+    minPlayers: 10
+  - type: BloodBrotherRule
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ BloodBrother ]
+      maxRange:
+      min: 1
+      max: 3
+      playerRatio: 15
+      lateJoinAdditional: true
+      mindComponents:
+      - type: BloodBrotherRole
+        prototype: BloodBrother
+
+- type: entity
   id: Revolutionary
   parent: BaseGameRule
   components:

@@ -42,6 +42,46 @@
     RandomTraitorAliveObjective: 1
     RandomTraitorProgressObjective: 1
 
+# Blood brother
+- type: weightedRandom
+  id: BloodBrotherObjectiveGroups
+  weights:
+    BloodBrotherObjectiveGroupSteal: 1
+    BloodBrotherObjectiveGroupKill: 1
+    #HijackShuttleObjective: 0.1 # for the sake of it
+
+- type: weightedRandom
+  id: BloodBrotherObjectiveGroupSteal
+  weights:
+    BloodBrotherCaptainIDStealObjective: 1
+    BloodBrotherCMOHyposprayStealObjective: 1
+    BloodBrotherCMOCrewMonitorStealObjective: 1
+    BloodBrotherRDHardsuitStealObjective: 1
+    BloodBrotherNukeDiskStealObjective: 1
+    BloodBrotherMagbootsStealObjective: 1
+    BloodBrotherCorgiMeatStealObjective: 1
+    BloodBrotherClipboardStealObjective: 1
+    BloodBrotherCaptainGunStealObjective: 0.5
+    BloodBrotherCaptainJetpackStealObjective: 0.5
+    BloodBrotherHandTeleporterStealObjective: 0.5
+    BloodBrotherSecretDocumentsStealObjective: 0.5
+
+- type: weightedRandom
+  id: BloodBrotherObjectiveGroupKill
+  weights:
+    BloodBrotherKillRandomPersonObjective: 1
+
+- type: weightedRandom
+  id: BloodBrotherEscapeObjectiveGroup
+  weights:
+    EscapeShuttleObjective: 1
+
+- type: weightedRandom
+  id: BloodBrotherAliveObjectiveGroup
+  weights:
+    BloodbrotherAliveObjective: 1
+    
+
 #Thief groups
 - type: weightedRandom
   id: ThiefObjectiveGroups
