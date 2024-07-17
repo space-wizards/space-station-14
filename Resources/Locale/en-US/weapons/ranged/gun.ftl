@@ -16,9 +16,13 @@ gun-FullAuto = full-auto
 gun-ballistic-cycle = Cycle
 gun-ballistic-cycled = Cycled
 gun-ballistic-cycled-empty = Cycled (empty)
+gun-ballistic-cycle-delayed = You begin cycling {CAPITALIZE(THE($entity))}.
+gun-ballistic-cycle-delayed-cancelled = You stop cycling {CAPITALIZE(THE($entity))}.
+gun-ballistic-cycle-delayed-empty = {CAPITALIZE(THE($entity))} is already unloaded.
 gun-ballistic-transfer-invalid = {CAPITALIZE(THE($ammoEntity))} won't fit inside {THE($targetEntity)}!
 gun-ballistic-transfer-empty = {CAPITALIZE(THE($entity))} is empty.
 gun-ballistic-transfer-target-full = {CAPITALIZE(THE($entity))} is already fully loaded.
+gun-ballistic-transfer-cancelled = Your reload was interrupted!
 
 # CartridgeAmmo
 gun-cartridge-spent = It is [color=red]spent[/color].

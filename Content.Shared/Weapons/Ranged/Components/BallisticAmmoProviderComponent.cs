@@ -54,5 +54,24 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     /// DoAfter delay for filling a bullet into another ballistic ammo provider.
     /// </summary>
     [DataField]
-    public TimeSpan FillDelay = TimeSpan.FromSeconds(0.5);
+    public double FillDelay = 0.5;
+
+    /// <summary>
+    /// DoAfter delay for loading a ballistic ammo provider directly from an ammo component. Happens after FillDelay.
+    /// </summary>
+    [DataField]
+    public double InsertDelay = 0.0;
+
+    /// <summary>
+    /// DoAfter delay to cycle manually.
+    /// </summary>
+    [DataField]
+    public double CycleDelay = 0.0;
+
+    /// <summary>
+    /// Should this entity be deleted if it becomes empty while filling another ballistic ammo provider?
+    /// Use for things like handfuls of shotgun shells, not things that should stick around like shotgun shell boxes.
+    /// </summary>
+    [DataField]
+    public bool DeleteWhenEmpty = false;
 }
