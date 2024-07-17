@@ -162,6 +162,7 @@ public sealed class ExecutionSystem : EntitySystem
 
         var bonus = melee.Damage * execComp.DamageModifier - melee.Damage;
         args.Damage += bonus;
+        args.ResistanceBypass = true;
     }
 
     private void ShowExecutionInternalPopup(string locString,
