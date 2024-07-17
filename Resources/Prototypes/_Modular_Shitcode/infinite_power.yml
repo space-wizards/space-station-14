@@ -1,0 +1,33 @@
+- type: entity
+  id: InfiniteAPC
+  parent: BaseAPC
+  suffix: Infinite
+  components:
+  - type: Tag
+    tags:
+      - Debug
+  - type: Battery
+    maxCharge: 1000000000 # 1 billion
+    startingCharge: 1000000000
+  - type: PowerNetworkBattery
+    maxSupply: 1000000 # all 1 million
+    maxChargeRate: 1000000
+    supplyRampTolerance: 1000000
+    supplyRampRate: 1000000
+
+- type: entity
+  id: InfiniteSubstation
+  parent: BaseSubstation
+  suffix: Infinite
+  components:
+  - type: Tag
+    tags:
+      - Debug
+  - type: Battery
+    maxCharge: 1000000000 # 1 billion
+    startingCharge: 1000000000
+  - type: PowerNetworkBattery
+    maxSupply: 1000000 # all 1 million
+    maxChargeRate: 1000000
+    supplyRampTolerance: 1000000
+    supplyRampRate: 1000000
