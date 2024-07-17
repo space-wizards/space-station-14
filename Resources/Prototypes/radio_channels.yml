@@ -25,7 +25,7 @@
   name: chat-radio-engineering
   keycode: 'e'
   frequency: 1357
-  color: "#ff662a"
+  color: "#ff733c"
 
 - type: radioChannel
   id: Medical
@@ -46,7 +46,7 @@
   name: chat-radio-security
   keycode: 's'
   frequency: 1359
-  color: "#dd3535"
+  color: "#ff4242"
 
 - type: radioChannel
   id: Service
@@ -60,7 +60,7 @@
   name: chat-radio-supply
   keycode: 'u'
   frequency: 1347
-  color: "#b88646"
+  color: "#ae7f42"
 
 - type: radioChannel
   id: Syndicate
