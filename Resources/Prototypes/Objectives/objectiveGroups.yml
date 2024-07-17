@@ -8,6 +8,13 @@
     TraitorObjectiveGroupSocial: 1 #Involves helping/harming others without killing them or stealing their stuff
 
 - type: weightedRandom
+  id: TraitorObjectiveGroupsSpyVsSpy # A la The Ship
+  weights
+    KillRandomTraitorObjective: 1
+    RandomTraitorAliveObjective: 1
+    EscapeShuttleObjective: 1
+
+- type: weightedRandom
   id: TraitorObjectiveGroupSteal
   weights:
     CaptainIDStealObjective: 1
