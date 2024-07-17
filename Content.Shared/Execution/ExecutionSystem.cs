@@ -18,18 +18,12 @@ namespace Content.Shared.Execution;
 /// </summary>
 public sealed class ExecutionSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-    [Dependency] private readonly SharedCombatModeSystem _combatSystem = default!;
-    [Dependency] private readonly SharedMeleeWeaponSystem _meleeSystem = default!;
-
-    // TODO: Still needs more cleaning up.
-    private const string DefaultInternalMeleeExecutionMessage = "execution-popup-melee-initial-internal";
-    private const string DefaultExternalMeleeExecutionMessage = "execution-popup-melee-initial-external";
-    private const string DefaultCompleteInternalMeleeExecutionMessage = "execution-popup-melee-complete-internal";
-    private const string DefaultCompleteExternalMeleeExecutionMessage = "execution-popup-melee-complete-external";
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly SharedCombatModeSystem _combat = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -50,7 +44,7 @@ public sealed class ExecutionSystem : EntitySystem
         var weapon = args.Using.Value;
         var victim = args.Target;
 
-        if (!CanExecuteWithAny(victim, attacker))
+        if (!CanBeExecuted(victim, attacker))
             return;
 
         UtilityVerb verb = new()
@@ -66,12 +60,12 @@ public sealed class ExecutionSystem : EntitySystem
 
     private void TryStartExecutionDoAfter(EntityUid weapon, EntityUid victim, EntityUid attacker, ExecutionComponent comp)
     {
-        if (!CanExecuteWithAny(victim, attacker))
+        if (!CanBeExecuted(victim, attacker))
             return;
 
         // TODO: This should just be on the weapons as a single execution message.
-        var defaultExecutionInternal = DefaultInternalMeleeExecutionMessage;
-        var defaultExecutionExternal = DefaultExternalMeleeExecutionMessage;
+        var defaultExecutionInternal = comp.DefaultInternalMeleeExecutionMessage;
+        var defaultExecutionExternal = comp.DefaultExternalMeleeExecutionMessage;
 
         var internalMsg = defaultExecutionInternal;
         var externalMsg = defaultExecutionExternal;
@@ -86,18 +80,18 @@ public sealed class ExecutionSystem : EntitySystem
                 NeedHand = true
             };
 
-        _doAfterSystem.TryStartDoAfter(doAfter);
+        _doAfter.TryStartDoAfter(doAfter);
 
     }
 
-    private bool CanExecuteWithAny(EntityUid victim, EntityUid attacker)
+    private bool CanBeExecuted(EntityUid victim, EntityUid attacker)
     {
         // Use suicide.
         if (victim == attacker)
             return false;
 
         // No point executing someone if they can't take damage
-        if (!TryComp<DamageableComponent>(victim, out _))
+        if (!HasComp<DamageableComponent>(victim))
             return false;
 
         // You can't execute something that cannot die
@@ -105,15 +99,15 @@ public sealed class ExecutionSystem : EntitySystem
             return false;
 
         // You're not allowed to execute dead people (no fun allowed)
-        if (_mobStateSystem.IsDead(victim, mobState))
+        if (_mobState.IsDead(victim, mobState))
             return false;
 
         // You must be able to attack people to execute
-        if (!_actionBlockerSystem.CanAttack(attacker, victim))
+        if (!_actionBlocker.CanAttack(attacker, victim))
             return false;
 
         // The victim must be incapacitated to be executed
-        if (victim != attacker && _actionBlockerSystem.CanInteract(victim, null))
+        if (victim != attacker && _actionBlocker.CanInteract(victim, null))
             return false;
 
         // All checks passed
@@ -129,24 +123,24 @@ public sealed class ExecutionSystem : EntitySystem
         var victim = args.Target.Value;
         var weapon = args.Used.Value;
 
-        if (!CanExecuteWithAny(victim, attacker))
+        if (!CanBeExecuted(victim, attacker))
             return;
 
         // This is needed so the melee system does not stop it.
-        var prev = _combatSystem.IsInCombatMode(attacker);
-        _combatSystem.SetInCombatMode(attacker, true);
+        var prev = _combat.IsInCombatMode(attacker);
+        _combat.SetInCombatMode(attacker, true);
         component.Executing = true;
         string? internalMsg = null;
         string? externalMsg = null;
 
         if (TryComp(uid, out MeleeWeaponComponent? melee))
         {
-            _meleeSystem.AttemptLightAttack(attacker, weapon, melee, victim);
-            internalMsg = DefaultCompleteInternalMeleeExecutionMessage;
-            externalMsg = DefaultCompleteExternalMeleeExecutionMessage;
+            _melee.AttemptLightAttack(attacker, weapon, melee, victim);
+            internalMsg = component.DefaultCompleteInternalMeleeExecutionMessage;
+            externalMsg = component.DefaultCompleteExternalMeleeExecutionMessage;
         }
 
-        _combatSystem.SetInCombatMode(attacker, prev);
+        _combat.SetInCombatMode(attacker, prev);
         component.Executing = false;
         args.Handled = true;
 
@@ -171,33 +165,19 @@ public sealed class ExecutionSystem : EntitySystem
     }
 
     private void ShowExecutionInternalPopup(string locString,
-        EntityUid attacker, EntityUid victim, EntityUid weapon, bool predict = true)
+        EntityUid attacker, EntityUid victim, EntityUid weapon)
     {
-        if (predict)
-        {
-            _popupSystem.PopupClient(
-                Loc.GetString(locString, ("attacker", attacker), ("victim", victim), ("weapon", weapon)),
-                attacker,
-                attacker,
-                PopupType.Medium
-            );
-        }
-        else
-        {
-            _popupSystem.PopupEntity(
-                Loc.GetString(locString, ("attacker", attacker), ("victim", victim), ("weapon", weapon)),
-                attacker,
-                Filter.Entities(attacker),
-                true,
-                PopupType.Medium
-            );
-        }
-
+        _popup.PopupClient(
+            Loc.GetString(locString, ("attacker", attacker), ("victim", victim), ("weapon", weapon)),
+            attacker,
+            attacker,
+            PopupType.Medium
+        );
     }
 
     private void ShowExecutionExternalPopup(string locString, EntityUid attacker, EntityUid victim, EntityUid weapon)
     {
-        _popupSystem.PopupEntity(
+        _popup.PopupEntity(
             Loc.GetString(locString, ("attacker", attacker), ("victim", victim), ("weapon", weapon)),
             attacker,
             Filter.PvsExcept(attacker),

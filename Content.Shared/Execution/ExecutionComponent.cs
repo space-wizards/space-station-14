@@ -17,6 +17,18 @@ public sealed partial class ExecutionComponent : Component
     [DataField, AutoNetworkedField]
     public float DamageModifier = 9f;
 
+    [DataField]
+    public LocId DefaultInternalMeleeExecutionMessage = "execution-popup-melee-initial-internal";
+
+    [DataField]
+    public LocId DefaultExternalMeleeExecutionMessage = "execution-popup-melee-initial-external";
+
+    [DataField]
+    public LocId DefaultCompleteInternalMeleeExecutionMessage = "execution-popup-melee-complete-internal";
+
+    [DataField]
+    public LocId DefaultCompleteExternalMeleeExecutionMessage = "execution-popup-melee-complete-external";
+
     // Not networked because this is transient inside of a tick.
     /// <summary>
     /// True if it is currently executing for handlers.
