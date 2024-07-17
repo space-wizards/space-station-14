@@ -60,7 +60,7 @@
   name: chat-radio-supply
   keycode: 'u'
   frequency: 1347
-  color: "#ae7f42"
+  color: "#b48b57"
 
 - type: radioChannel
   id: Syndicate
