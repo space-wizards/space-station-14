@@ -36,7 +36,7 @@ public sealed class CharacterInfoSystem : EntitySystem
         if (_minds.TryGetMind(entity, out var mindId, out var mind))
         {
             // Get objectives
-            foreach (var objective in mind.AllObjectives)
+            foreach (var objective in mind.Objectives)
             {
                 var info = _objectives.GetInfo(objective, mindId, mind);
                 if (info == null)
