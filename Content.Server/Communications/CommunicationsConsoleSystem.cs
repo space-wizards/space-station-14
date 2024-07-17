@@ -266,8 +266,7 @@ namespace Content.Server.Communications
                 // User does not have an id and is a borg, so use the borg's name
                 if (HasComp<BorgChassisComponent>(mob))
                 {
-                    var meta = _entityManager.GetComponent<MetaDataComponent>(mob);
-                    author = $"{meta.EntityName}".Trim();
+                    author = Name(mob).Trim();
                 }
             }
 
