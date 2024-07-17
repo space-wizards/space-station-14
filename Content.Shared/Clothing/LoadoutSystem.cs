@@ -123,7 +123,7 @@ public sealed class LoadoutSystem : EntitySystem
         List<ProtoId<RoleLoadoutPrototype>>? loadoutGroups)
     {
         // Use starting gear if specified
-        if (startingGear != null)
+        if (startingGear != null && startingGear.Count > 0)
         {
             var gear = _protoMan.Index(_random.Pick(startingGear));
             _station.EquipStartingGear(uid, gear);
