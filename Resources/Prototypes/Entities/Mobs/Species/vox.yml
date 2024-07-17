@@ -26,6 +26,30 @@
             layerKey: dummy
             parameterTexture: displacementMap
             parameterUV: displacementUV
+      eyes:
+        layer:
+          sprite: Mobs/Species/Vox/displacement.rsi
+          state: eyes
+          copyToShaderParameters:
+            layerKey: dummy
+            parameterTexture: displacementMap
+            parameterUV: displacementUV
+      gloves:
+        layer:
+          sprite: Mobs/Species/Vox/displacement.rsi
+          state: hand
+          copyToShaderParameters:
+            layerKey: dummy
+            parameterTexture: displacementMap
+            parameterUV: displacementUV
+      back:
+        layer:
+          sprite: Mobs/Species/Vox/displacement.rsi
+          state: back
+          copyToShaderParameters:
+            layerKey: dummy
+            parameterTexture: displacementMap
+            parameterUV: displacementUV
   - type: Speech
     speechVerb: Vox
     speechSounds: Vox
@@ -121,6 +145,30 @@
           state: jumpsuit
           copyToShaderParameters:
             # Value required, provide a dummy. Gets overridden when applied.
+            layerKey: dummy
+            parameterTexture: displacementMap
+            parameterUV: displacementUV
+      eyes:
+        layer:
+          sprite: Mobs/Species/Vox/displacement.rsi
+          state: eyes
+          copyToShaderParameters:
+            layerKey: dummy
+            parameterTexture: displacementMap
+            parameterUV: displacementUV
+      gloves:
+        layer:
+          sprite: Mobs/Species/Vox/displacement.rsi
+          state: hand
+          copyToShaderParameters:
+            layerKey: dummy
+            parameterTexture: displacementMap
+            parameterUV: displacementUV
+      back:
+        layer:
+          sprite: Mobs/Species/Vox/displacement.rsi
+          state: back
+          copyToShaderParameters:
             layerKey: dummy
             parameterTexture: displacementMap
             parameterUV: displacementUV
