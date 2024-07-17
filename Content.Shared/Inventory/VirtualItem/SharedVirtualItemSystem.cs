@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Popups;
@@ -43,6 +44,7 @@ public abstract class SharedVirtualItemSystem : EntitySystem
         SubscribeLocalEvent<VirtualItemComponent, BeingUnequippedAttemptEvent>(OnBeingUnequippedAttempt);
 
         SubscribeLocalEvent<VirtualItemComponent, BeforeRangedInteractEvent>(OnBeforeRangedInteract);
+        SubscribeLocalEvent<VirtualItemComponent, GettingInteractedWithAttemptEvent>(OnGettingInteractedWithAttemptEvent);
     }
 
     /// <summary>
@@ -70,6 +72,12 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     {
         // No interactions with a virtual item, please.
         args.Handled = true;
+    }
+
+    private void OnGettingInteractedWithAttemptEvent(Entity<VirtualItemComponent> ent, ref GettingInteractedWithAttemptEvent args)
+    {
+        // No interactions with a virtual item, please.
+        args.Cancelled = true;
     }
 
     #region Hands
@@ -244,7 +252,7 @@ public abstract class SharedVirtualItemSystem : EntitySystem
         if (TerminatingOrDeleted(item))
             return;
 
-        _transformSystem.DetachParentToNull(item, Transform(item));
+        _transformSystem.DetachEntity(item, Transform(item));
         if (_netManager.IsServer)
             QueueDel(item);
     }
