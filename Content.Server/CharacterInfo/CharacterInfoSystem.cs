@@ -43,7 +43,7 @@ public sealed class CharacterInfoSystem : EntitySystem
                     continue;
 
                 // group objectives by their issuer
-                var issuer = Comp<ObjectiveComponent>(objective).Issuer;
+                var issuer = Comp<ObjectiveComponent>(objective).LocIssuer;
                 if (!objectives.ContainsKey(issuer))
                     objectives[issuer] = new List<ObjectiveInfo>();
                 objectives[issuer].Add(info.Value);

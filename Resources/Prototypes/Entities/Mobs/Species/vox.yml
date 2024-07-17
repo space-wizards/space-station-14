@@ -14,14 +14,6 @@
   - type:  HumanoidAppearance
     species: Vox
     #- type: VoxAccent # Not yet coded
-  - type: Inventory
-    speciesId: vox
-    displacements:
-      jumpsuit:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Vox/displacement.rsi
-            state: jumpsuit
   - type: Speech
     speechVerb: Vox
     speechSounds: Vox
@@ -98,6 +90,29 @@
       sprite: "Effects/creampie.rsi"
       state: "creampie_vox" # Not default
       visible: false
+  - type: Inventory
+    speciesId: vox
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: jumpsuit
+      eyes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: eyes
+      gloves:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: hand
+      back:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: back
 
 - type: entity
   parent: BaseSpeciesDummy
@@ -116,4 +131,18 @@
           32:
             sprite: Mobs/Species/Vox/displacement.rsi
             state: jumpsuit
-
+      eyes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: eyes
+      gloves:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: hand
+      back:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: back
