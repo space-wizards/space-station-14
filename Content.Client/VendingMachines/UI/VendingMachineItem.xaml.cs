@@ -6,14 +6,14 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.VendingMachines.UI;
 
 [GenerateTypedNameReferences]
-public sealed partial class VendingMachineItem : PanelContainer
+public sealed partial class VendingMachineItem : BoxContainer
 {
-    public VendingMachineItem(EntityUid entity, string name)
+    public VendingMachineItem(EntProtoId entProto, string text)
     {
         RobustXamlLoader.Load(this);
 
-        ItemPrototype.SetEntity(entity);
+        ItemPrototype.SetPrototype(entProto);
 
-        NameLabel.Text = name;
+        NameLabel.Text = text;
     }
 }

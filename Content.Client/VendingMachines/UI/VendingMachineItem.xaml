@@ -1,25 +1,16 @@
-<PanelContainer xmlns="https://spacestation14.io"
-                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-                xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
-                Name="BackgroundColorPanel">
-    <PanelContainer.PanelOverride>
-        <gfx:StyleBoxFlat
-            BackgroundColor="#464966"
-        />
-    </PanelContainer.PanelOverride>
-    <BoxContainer Orientation="Horizontal"
-                HorizontalExpand="True"
-                SeparationOverride="4">
-        <EntityPrototypeView
-                Name="ItemPrototype"
-                Margin="4 4"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                MinSize="32 32"
-                />
-        <Label Name="NameLabel"
-                SizeFlagsStretchRatio="3"
-                HorizontalExpand="True"
-                ClipText="True"/>
-    </BoxContainer>
-</PanelContainer>
+<BoxContainer xmlns="https://spacestation14.io"
+            Orientation="Horizontal"
+            HorizontalExpand="True"
+            SeparationOverride="4">
+    <EntityPrototypeView
+            Name="ItemPrototype"
+            Margin="4 4"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            MinSize="32 32"
+            />
+    <Label Name="NameLabel"
+            SizeFlagsStretchRatio="3"
+            HorizontalExpand="True"
+            ClipText="True"/>
+</BoxContainer>
