@@ -155,14 +155,14 @@ public sealed class MutationSystem : EntitySystem
 
         // Starting number of bits that are high, between 0 and bits.
         // In other words, it's val mapped linearly from range [min, max] to range [0, bits], and then rounded.
-        int valInt = (int) MathF.Round((val - min) / (max - min) * bits);
+        int valInt = (int)MathF.Round((val - min) / (max - min) * bits);
         // val may be outside the range of min/max due to starting prototype values, so clamp.
         valInt = Math.Clamp(valInt, 0, bits);
 
         // Probability that the bit flip increases n.
         // The higher the current value is, the lower the probability of increasing value is, and the higher the probability of decreasive it it.
         // In other words, it tends to go to the middle.
-        float probIncrease = 1 - (float) valInt / bits;
+        float probIncrease = 1 - (float)valInt / bits;
         int valIntMutated;
         if (Random(probIncrease))
         {
@@ -174,7 +174,7 @@ public sealed class MutationSystem : EntitySystem
         }
 
         // Set value based on mutated thermometer code.
-        float valMutated = Math.Clamp((float) valIntMutated / bits * (max - min) + min, min, max);
+        float valMutated = Math.Clamp((float)valIntMutated / bits * (max - min) + min, min, max);
         val = valMutated;
     }
 
@@ -189,7 +189,7 @@ public sealed class MutationSystem : EntitySystem
         // Probability that the bit flip increases n.
         // The higher the current value is, the lower the probability of increasing value is, and the higher the probability of decreasive it it.
         // In other words, it tends to go to the middle.
-        float probIncrease = 1 - (float) val / bits;
+        float probIncrease = 1 - (float)val / bits;
         int valMutated;
         if (Random(probIncrease))
         {
@@ -261,7 +261,7 @@ public sealed class MutationSystem : EntitySystem
         {
             var pick = _randomChems.Pick(_robustRandom);
             string chemicalId = pick.reagent;
-            int amount = _robustRandom.Next(1, (int) pick.quantity);
+            int amount = _robustRandom.Next(1, (int)pick.quantity);
             SeedChemQuantity seedChemQuantity = new SeedChemQuantity();
             if (chemicals.ContainsKey(chemicalId))
             {
@@ -274,7 +274,7 @@ public sealed class MutationSystem : EntitySystem
                 seedChemQuantity.Max = 1 + amount;
                 seedChemQuantity.Inherent = false;
             }
-            int potencyDivisor = (int) Math.Ceiling(100.0f / seedChemQuantity.Max);
+            int potencyDivisor = (int)Math.Ceiling(100.0f / seedChemQuantity.Max);
             seedChemQuantity.PotencyDivisor = potencyDivisor;
             chemicals[chemicalId] = seedChemQuantity;
         }
