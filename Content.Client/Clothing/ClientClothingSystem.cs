@@ -315,14 +315,14 @@ public sealed class ClientClothingSystem : ClothingSystem
             sprite.LayerSetData(index, layerData);
             layer.Offset += slotDef.Offset;
 
-            if (displacementData is null)
-                continue;
+            if (displacementData is not null)
+            {
+                //Checking that the state is not tied to the current race. In this case we don't need to use the displacement maps.
+                if (layerData.State is not null && inventory.SpeciesId is not null && layerData.State.EndsWith(inventory.SpeciesId))
+                    continue;
 
-            //Checking that the state is not tied to the current race. In this case we don't need to use the displacement maps.
-            if (layerData.State is not null && inventory.SpeciesId is not null && layerData.State.EndsWith(inventory.SpeciesId))
-                continue;
-
-            _displacement.TryAddDisplacement(displacementData, sprite, index, key, revealedLayers);
+                _displacement.TryAddDisplacement(displacementData, sprite, index, key, revealedLayers);
+            }
         }
 
         RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers), true);
