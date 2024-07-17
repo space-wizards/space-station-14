@@ -78,6 +78,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         {
             projectile.Shooter = null;
             projectile.Weapon = null;
+            projectile.AmmoSource = null;
             projectile.DamagedEntity = false;
         }
 
@@ -131,15 +132,15 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
     private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
     {
-        if (component.IgnoreShooter && (args.OtherEntity == component.Shooter || args.OtherEntity == component.Weapon))
+        if (component.IgnoreShooter && (args.OtherEntity == component.Shooter || args.OtherEntity == component.Weapon || args.OtherEntity == component.AmmoSource))
         {
             args.Cancelled = true;
         }
     }
 
-    public void SetShooter(EntityUid id, ProjectileComponent component, EntityUid shooterId)
+    public void SetShooter(EntityUid id, ProjectileComponent component, EntityUid? shooterId = null)
     {
-        if (component.Shooter == shooterId)
+        if (component.Shooter == shooterId || shooterId == null)
             return;
 
         component.Shooter = shooterId;
@@ -184,4 +185,4 @@ public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, Projectile
 /// Raised when a projectile hits an entity
 /// </summary>
 [ByRefEvent]
-public record struct ProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Shooter = null);
+public record struct ProjectileHitEvent(DamageSpecifier Damage, EntityUid Target, EntityUid? Shooter = null, bool Handled = false);
