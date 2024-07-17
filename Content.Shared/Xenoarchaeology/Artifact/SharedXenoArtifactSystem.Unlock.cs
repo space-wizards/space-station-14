@@ -35,6 +35,9 @@ public abstract partial class SharedXenoArtifactSystem
         if (!TryComp<XenoArtifactComponent>(artifact, out var artiComp))
             return false;
 
+        if (artiComp.Suppressed)
+            return false;
+
         if (!HasUnlockedPredecessor((artifact.Value, artiComp), ent))
             return false;
 

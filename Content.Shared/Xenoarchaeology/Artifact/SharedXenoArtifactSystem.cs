@@ -42,4 +42,12 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
     {
         ent.Comp.NodeContainer = _container.EnsureContainer<Container>(ent, XenoArtifactComponent.NodeContainerId);
     }
+
+    public void SetSuppressed(Entity<XenoArtifactComponent> ent, bool val)
+    {
+        if (ent.Comp.Suppressed == val)
+            return;
+        ent.Comp.Suppressed = val;
+        Dirty(ent);
+    }
 }

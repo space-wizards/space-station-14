@@ -1,12 +1,13 @@
-﻿using Content.Server.Xenoarchaeology.Equipment.Components;
-using Content.Server.Xenoarchaeology.XenoArtifacts;
+﻿using Content.Shared.Xenoarchaeology.Artifact;
+using Content.Shared.Xenoarchaeology.Artifact.Components;
+using Content.Shared.Xenoarchaeology.Equipment.Components;
 using Robust.Shared.Containers;
 
-namespace Content.Server.Xenoarchaeology.Equipment.Systems;
+namespace Content.Shared.Xenoarchaeology.Equipment;
 
 public sealed class SuppressArtifactContainerSystem : EntitySystem
 {
-    [Dependency] private readonly ArtifactSystem _artifact = default!;
+    [Dependency] private readonly SharedXenoArtifactSystem _xenoArtifact = default!;
 
     public override void Initialize()
     {
@@ -17,17 +18,17 @@ public sealed class SuppressArtifactContainerSystem : EntitySystem
 
     private void OnInserted(EntityUid uid, SuppressArtifactContainerComponent component, EntInsertedIntoContainerMessage args)
     {
-        if (!TryComp<ArtifactComponent>(args.Entity, out var artifact))
+        if (!TryComp<XenoArtifactComponent>(args.Entity, out var artifact))
             return;
 
-        _artifact.SetIsSuppressed(args.Entity, true, artifact);
+        _xenoArtifact.SetSuppressed((args.Entity, artifact), true);
     }
 
     private void OnRemoved(EntityUid uid, SuppressArtifactContainerComponent component, EntRemovedFromContainerMessage args)
     {
-        if (!TryComp<ArtifactComponent>(args.Entity, out var artifact))
+        if (!TryComp<XenoArtifactComponent>(args.Entity, out var artifact))
             return;
 
-        _artifact.SetIsSuppressed(args.Entity, false, artifact);
+        _xenoArtifact.SetSuppressed((args.Entity, artifact), false);
     }
 }

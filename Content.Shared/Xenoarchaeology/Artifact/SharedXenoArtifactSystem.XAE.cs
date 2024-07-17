@@ -50,6 +50,9 @@ public abstract partial class SharedXenoArtifactSystem
         if (TryComp<UseDelayComponent>(artifact, out var delay) && !_useDelay.TryResetDelay((artifact, delay), true))
             return false;
 
+        if (artifact.Comp.Suppressed)
+            return false;
+
         var success = false;
 
         foreach (var node in GetActiveNodes(artifact))
@@ -76,6 +79,7 @@ public abstract partial class SharedXenoArtifactSystem
         if (node.Comp.Degraded)
             return false;
 
+        //TODO: admin log my dear.
         if (consumeDurability)
         {
             AdjustNodeDurability((node, node.Comp), -1);

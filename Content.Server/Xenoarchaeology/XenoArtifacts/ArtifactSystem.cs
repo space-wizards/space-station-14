@@ -5,7 +5,6 @@ using Content.Server.GameTicking;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Xenoarchaeology.Equipment.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
-using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
 using JetBrains.Annotations;
@@ -205,24 +204,6 @@ public sealed partial class ArtifactSystem : EntitySystem
         Log.Debug($"our node: {currentNode.Id}");
         Log.Debug($"other nodes: {string.Join(", ", allNodes)}");
 
-        if (TryComp<BiasedArtifactComponent>(uid, out var bias) &&
-            TryComp<TraversalDistorterComponent>(bias.Provider, out var trav) &&
-            this.IsPowered(bias.Provider, EntityManager))
-        {
-            switch (trav.BiasDirection)
-            {
-                case BiasDirection.Up:
-                    var upNodes = allNodes.Where(x => GetNodeFromId(x, component).Depth < currentNode.Depth).ToHashSet();
-                    if (upNodes.Count != 0)
-                        allNodes = upNodes;
-                    break;
-                case BiasDirection.Down:
-                    var downNodes = allNodes.Where(x => GetNodeFromId(x, component).Depth > currentNode.Depth).ToHashSet();
-                    if (downNodes.Count != 0)
-                        allNodes = downNodes;
-                    break;
-            }
-        }
 
         var undiscoveredNodes = allNodes.Where(x => !GetNodeFromId(x, component).Discovered).ToList();
         Log.Debug($"Undiscovered nodes: {string.Join(", ", undiscoveredNodes)}");

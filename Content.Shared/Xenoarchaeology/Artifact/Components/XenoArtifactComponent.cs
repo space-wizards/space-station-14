@@ -33,6 +33,9 @@ public sealed partial class XenoArtifactComponent : Component
     [DataField, AutoNetworkedField]
     public List<List<NetEntity>> CachedSegments = new();
 
+    [DataField, AutoNetworkedField]
+    public bool Suppressed;
+
     #region Unlocking
     /// <summary>
     /// How long does the unlocking state last.

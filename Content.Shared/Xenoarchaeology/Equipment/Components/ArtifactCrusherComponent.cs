@@ -9,7 +9,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Xenoarchaeology.Equipment;
+namespace Content.Shared.Xenoarchaeology.Equipment.Components;
 
 /// <summary>
 /// This is an entity storage that, when activated, crushes the artifact inside of it and gives artifact fragments.
