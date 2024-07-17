@@ -39,6 +39,8 @@
         prob: 0.3
       - id: SprayPainter
         prob: 0.7
+      - id: MetalFoamGrenade
+        prob: 0.3
 
 - type: entity
   id: LockerElectricalSuppliesFilled
@@ -96,6 +98,8 @@
       - id: HolofanProjector
       - id: RCD
       - id: RCDAmmo
+      - id: MetalFoamGrenade
+        amount: 2
 
 - type: entity
   id: LockerAtmosphericsFilled
@@ -112,6 +116,8 @@
       - id: HolofanProjector
       - id: RCD
       - id: RCDAmmo
+      - id: MetalFoamGrenade
+        amount: 2
 
 - type: entity
   id: LockerEngineerFilledHardsuit
@@ -126,6 +132,8 @@
       - id: ClothingShoesBootsMag
       - id: RCD
       - id: RCDAmmo
+      - id: MetalFoamGrenade
+        amount: 2
 
 - type: entity
   id: LockerEngineerFilled
@@ -139,6 +147,8 @@
       - id: trayScanner
       - id: RCD
       - id: RCDAmmo
+      - id: MetalFoamGrenade
+        amount: 2
 
 - type: entity
   id: ClosetRadiationSuitFilled
