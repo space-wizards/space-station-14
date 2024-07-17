@@ -128,7 +128,7 @@
     fillBaseName: syndie-
   - type: Slippery
     paralyzeTime: 3
-    launchForwardsMultiplier: 3
+    launchForwardsMultiplier: 1 # Intentionally low for more combat viability
   - type: Item
     heldPrefix: syndie
   - type: FlavorProfile
@@ -218,8 +218,8 @@
   - type: SolutionContainerVisuals
     fillBaseName: omega-
   - type: Slippery
-    paralyzeTime: 5.0
-    launchForwardsMultiplier: 3.0
+    paralyzeTime: 3.0
+    launchForwardsMultiplier: 5.0
   - type: Item
     heldPrefix: omega
   - type: SolutionContainerManager
