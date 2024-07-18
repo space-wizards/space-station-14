@@ -33,6 +33,8 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.95
     sprintModifier: 0.85
+  - type: StaticPrice
+    price: 80
     
 - type: entity
   parent: ClothingOuterBase

@@ -14,4 +14,22 @@
         Blunt: 0.80
         Slash: 0.80
         Piercing: 0.80
-        
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHelmetKendoMen
+  name: men
+  description: The quintessential head armor of the kendo practitioner.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Head/Helmets/men.rsi
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Head/Helmets/men.rsi
+  - type: StaticPrice
+    price: 70
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.80
+        Slash: 0.95
+        Piercing: 0.95
