@@ -26,6 +26,11 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.DoAfter;
+using Content.Shared.Mobs.Components;
+using Robust.Shared.Random;
+using Content.Server.Hands.Systems;
+using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Ranged.Components;
 
 namespace Content.Server.MartialArts;
 
@@ -45,6 +50,8 @@ public sealed class ComboSystem : EntitySystem
     [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly HandsSystem _hands = default!;
 
     public override void Initialize()
     {
@@ -61,6 +68,7 @@ public sealed class ComboSystem : EntitySystem
         SubscribeLocalEvent<CQCKnowledgeComponent, MapInitEvent>(OnCQCMapInit);
         SubscribeLocalEvent<CQCKnowledgeComponent, ComponentShutdown>(OnCQCShutdown);
         SubscribeLocalEvent<CQCKnowledgeComponent, CheckGrabOverridesEvent>(CheckGrabStageOverride);
+        SubscribeLocalEvent<CQCKnowledgeComponent, ComboAttackPerformedEvent>(OnCQCAttackPerformed);
 
         SubscribeLocalEvent<CanPerformComboComponent, CQCSlamPerformedEvent>(OnCQCSlam);
         SubscribeLocalEvent<CanPerformComboComponent, CQCKickPerformedEvent>(OnCQCKick);
@@ -90,6 +98,9 @@ public sealed class ComboSystem : EntitySystem
 
     private void OnAttackPerformed(EntityUid uid, CanPerformComboComponent component, ComboAttackPerformedEvent args)
     {
+        if (!HasComp<MobStateComponent>(args.Target))
+            return;
+
         if (component.CurrentTarget != null && args.Target != component.CurrentTarget.Value)
         {
             component.LastAttacks.Clear();
@@ -200,6 +211,28 @@ public sealed class ComboSystem : EntitySystem
         }
     }
 
+    private void OnCQCAttackPerformed(EntityUid uid, CQCKnowledgeComponent component, ComboAttackPerformedEvent args)
+    {
+        if (!CheckCanUseCQC(uid))
+            return;
+
+        if (args.Type == ComboAttackType.Disarm)
+        {
+            if (_random.Prob(0.5f))
+            {
+                var item = _hands.GetActiveItem(args.Target);
+
+                if (item != null)
+                {
+                    if (!HasComp<MeleeWeaponComponent>(item.Value) && !HasComp<GunComponent>(item.Value))
+                        return;
+                    _hands.TryDrop(args.Target, item.Value);
+                    _hands.TryPickupAnyHand(uid, item.Value);
+                    _stamina.TakeStaminaDamage(args.Target, 10f);
+                }
+            }
+        }
+    }
     private void OnCQCSlam(EntityUid uid, CanPerformComboComponent component, CQCSlamPerformedEvent args)
     {
         if (component.CurrentTarget == null)
