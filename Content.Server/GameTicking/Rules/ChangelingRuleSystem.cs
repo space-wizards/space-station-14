@@ -5,7 +5,6 @@ using Content.Server.Objectives;
 using Content.Server.Roles;
 using Content.Shared.Changeling;
 using Content.Shared.NPC.Prototypes;
-using Content.Shared.NPC.Systems;
 using Content.Shared.Roles;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
@@ -20,7 +19,6 @@ public sealed partial class ChangelingRuleSystem : GameRuleSystem<ChangelingRule
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly SharedRoleSystem _role = default!;
-    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly ObjectivesSystem _objective = default!;
 
     public readonly SoundSpecifier BriefingSound = new SoundPathSpecifier("/Audio/Goobstation/Ambience/Antag/changeling_start.ogg");
@@ -32,6 +30,13 @@ public sealed partial class ChangelingRuleSystem : GameRuleSystem<ChangelingRule
     public readonly ProtoId<NpcFactionPrototype> NanotrasenFactionId = "NanoTrasen";
 
     public readonly ProtoId<CurrencyPrototype> Currency = "EvolutionPoint";
+
+    public readonly List<ProtoId<StoreCategoryPrototype>> StoreCategories = new()
+    {
+        "ChangelingAbilityCombat",
+        "ChangelingAbilitySting",
+        "ChangelingAbilityUtility"
+    };
 
     public override void Initialize()
     {
@@ -50,7 +55,7 @@ public sealed partial class ChangelingRuleSystem : GameRuleSystem<ChangelingRule
         if (!_mind.TryGetMind(target, out var mindId, out var mind))
             return false;
 
-        // briefing
+        // add briefing
         TryComp<MetaDataComponent>(target, out var metaData);
 
         var briefing = Loc.GetString("changeling-role-greeting", ("name", metaData?.EntityName ?? "Unknown"));
@@ -60,29 +65,23 @@ public sealed partial class ChangelingRuleSystem : GameRuleSystem<ChangelingRule
 
         _role.MindAddRole(mindId, new RoleBriefingComponent { Briefing = briefingShort }, mind, true);
 
-        // hivemind stuff
-        _npcFaction.RemoveFaction(target, NanotrasenFactionId, false);
-        _npcFaction.AddFaction(target, ChangelingFactionId);
-
         // make sure it's initial chems are set to max
         var lingComp = EnsureComp<ChangelingComponent>(target);
         lingComp.Chemicals = lingComp.MaxChemicals;
 
         // add store
         var store = EnsureComp<StoreComponent>(target);
-        foreach (var category in rule.StoreCategories)
+        foreach (var category in StoreCategories)
             store.Categories.Add(category);
         store.CurrencyWhitelist.Add(Currency);
         store.Balance.Add(Currency, 16);
 
-        rule.ChangelingMinds.Add(mindId);
-
-        foreach (var objective in rule.Objectives)
-            _mind.TryAddObjective(mindId, mind, objective);
-
         return true;
     }
 
+    /// <summary>
+    ///     Display people who absorbed the most and who stole the most DNA.
+    /// </summary>
     private void OnTextPrepend(EntityUid uid, ChangelingRuleComponent comp, ref ObjectivesTextPrependEvent args)
     {
         var mostAbsorbedName = string.Empty;
