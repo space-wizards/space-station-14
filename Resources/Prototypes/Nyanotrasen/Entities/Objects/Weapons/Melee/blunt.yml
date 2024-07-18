@@ -7,8 +7,6 @@
   - type: Sprite
     sprite: Nyanotrasen/Objects/Weapons/Melee/shinai.rsi
     state: icon
-  - type: StaticPrice
-    price: 22
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 1.25

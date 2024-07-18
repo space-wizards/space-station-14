@@ -25,8 +25,6 @@
     sprite: Nyanotrasen/Clothing/Head/Helmets/men.rsi
   - type: Clothing
     sprite: Nyanotrasen/Clothing/Head/Helmets/men.rsi
-  - type: StaticPrice
-    price: 70
   - type: Armor
     modifiers:
       coefficients:
