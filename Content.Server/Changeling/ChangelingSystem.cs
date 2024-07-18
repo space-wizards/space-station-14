@@ -336,20 +336,20 @@ public sealed partial class ChangelingSystem : EntitySystem
             var item = Spawn(proto, Transform(uid).Coordinates);
             if (clothingSlot != null && !_inventory.TryEquip(uid, item, clothingSlot, force: true))
             {
-                EntityManager.DeleteEntity(item);
+                QueueDel(item);
                 return false;
             }
             else if (!_hands.TryForcePickupAnyHand(uid, item))
             {
                 _popup.PopupEntity(Loc.GetString("changeling-fail-hands"), uid, uid);
-                EntityManager.DeleteEntity(item);
+                QueueDel(item);
                 return false;
             }
             outItem = item;
             return true;
         }
 
-        EntityManager.DeleteEntity(outItem);
+        QueueDel(outItem);
         outItem = null;
 
         return true;
@@ -520,12 +520,12 @@ public sealed partial class ChangelingSystem : EntitySystem
     public void RemoveAllChangelingEquipment(EntityUid target, ChangelingComponent comp)
     {
         // yanderedev type shit
-        EntityManager.DeleteEntity(comp.ShieldEntity);
-        EntityManager.DeleteEntity(comp.ArmbladeEntity);
-        EntityManager.DeleteEntity(comp.ArmorEntity);
-        EntityManager.DeleteEntity(comp.ArmorHelmetEntity);
-        EntityManager.DeleteEntity(comp.SpacesuitEntity);
-        EntityManager.DeleteEntity(comp.SpacesuitHelmetEntity);
+        QueueDel(comp.ShieldEntity);
+        QueueDel(comp.ArmbladeEntity);
+        QueueDel(comp.ArmorEntity);
+        QueueDel(comp.ArmorHelmetEntity);
+        QueueDel(comp.SpacesuitEntity);
+        QueueDel(comp.SpacesuitHelmetEntity);
         PlayMeatySound(target, comp);
     }
     #endregion
@@ -932,7 +932,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         var fakeArmblade = Spawn(FakeArmbladePrototype, Transform(target).Coordinates);
         if (!_hands.TryPickupAnyHand(target, fakeArmblade))
         {
-            EntityManager.DeleteEntity(fakeArmblade);
+            QueueDel(fakeArmblade);
             comp.Chemicals += Comp<ChangelingActionComponent>(args.Action).ChemicalCost;
             _popup.PopupEntity(Loc.GetString("changeling-sting-fail-simplemob"), uid, uid);
             return;
