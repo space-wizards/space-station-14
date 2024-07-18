@@ -58,6 +58,8 @@ using System.Numerics;
 using Content.Shared.Camera;
 using Robust.Shared.Timing;
 using Content.Shared.Gravity;
+using Content.Shared.Mindshield.Components;
+using Content.Shared.Rejuvenate;
 
 namespace Content.Server.Changeling;
 
@@ -331,7 +333,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     {
         if (outItem == null)
         {
-            var item = EntityManager.SpawnEntity(proto, Transform(uid).Coordinates);
+            var item = Spawn(proto, Transform(uid).Coordinates);
             if (clothingSlot != null && !_inventory.TryEquip(uid, item, clothingSlot, force: true))
             {
                 EntityManager.DeleteEntity(item);
@@ -477,6 +479,8 @@ public sealed partial class ChangelingSystem : EntitySystem
             EnsureComp<HeadRevolutionaryComponent>(newEnt);
         if (HasComp<RevolutionaryComponent>(uid))
             EnsureComp<RevolutionaryComponent>(newEnt);
+        if (HasComp<MindShieldComponent>(uid))
+            EnsureComp<MindShieldComponent>(newEnt);
 
         QueueDel(uid);
 
@@ -768,7 +772,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (!TryUseAbility(uid, comp, args))
             return;
 
-        var star = EntityManager.SpawnEntity(BoneShardPrototype, Transform(uid).Coordinates);
+        var star = Spawn(BoneShardPrototype, Transform(uid).Coordinates);
         _hands.TryPickupAnyHand(uid, star);
 
         PlayMeatySound(uid, comp);
@@ -873,7 +877,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (!TryComp<BlindableComponent>(target, out var blindable) || blindable.IsBlind)
             return;
 
-        _blindable.AdjustEyeDamage((target, blindable), 5);
+        _blindable.AdjustEyeDamage((target, blindable), 2);
         var timeSpan = TimeSpan.FromSeconds(5f);
         _statusEffect.TryAddStatusEffect(target, TemporaryBlindnessSystem.BlindingStatusEffect, timeSpan, false, TemporaryBlindnessSystem.BlindingStatusEffect);
     }
@@ -925,7 +929,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             return;
 
         var target = args.Target;
-        var fakeArmblade = EntityManager.SpawnEntity(FakeArmbladePrototype, Transform(target).Coordinates);
+        var fakeArmblade = Spawn(FakeArmbladePrototype, Transform(target).Coordinates);
         if (!_hands.TryPickupAnyHand(target, fakeArmblade))
         {
             EntityManager.DeleteEntity(fakeArmblade);
@@ -1008,6 +1012,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (HasComp<StealthComponent>(uid) && HasComp<StealthOnMoveComponent>(uid))
         {
             RemComp<StealthComponent>(uid);
+            RemComp<StealthOnMoveComponent>(uid);
             _popup.PopupEntity(Loc.GetString("changeling-chameleon-end"), uid, uid);
             return;
         }
