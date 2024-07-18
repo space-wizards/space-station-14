@@ -16,6 +16,8 @@
     shoes: ClothingShoesColorWhite
     id: ReporterPDA
     ears: ClothingHeadsetService
-  #storage:
-    #back:
-    #- Stuff
+  storage:
+    back:
+    - TapeRecorder
+    - CassetteTape
+    - CassetteTape
