@@ -182,7 +182,9 @@ namespace Content.Server.Lathe
         {
             if (!Resolve(uid, ref component))
                 return false;
-            if (component.CurrentRecipe != null || component.Queue.Count <= 0 || !this.IsPowered(uid, EntityManager))
+            if (component.CurrentRecipe != null || component.Queue.Count <= 0)
+                return false;
+            if (HasComp<ApcPowerReceiverComponent>(uid) && !this.IsPowered(uid, EntityManager))
                 return false;
 
             var recipe = component.Queue.First();
