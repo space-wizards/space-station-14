@@ -7,7 +7,7 @@
     - to: hempcloth
       steps:
       - material: Hemp
-        amount: 3
+        amount: 2
         doAfter: 3
   - node: hempcloth
     entity: MaterialHempCloth1

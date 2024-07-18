@@ -3806,3 +3806,39 @@
   id: 6924
   time: '2024-07-16T23:26:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27879
+- author: EmoGarbage404
+  changes:
+  - message: Resprited wall signs.
+    type: Tweak
+  id: 6925
+  time: '2024-07-17T04:35:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29806
+- author: lzk228
+  changes:
+  - message: Added health examine for caustic and cold damage.
+    type: Add
+  id: 6926
+  time: '2024-07-17T06:19:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29989
+- author: lzk228
+  changes:
+  - message: Surgery saws now are normal-sized (no more pocket circular saw).
+    type: Tweak
+  id: 6927
+  time: '2024-07-17T06:26:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29995
+- author: Winkarst-cpu
+  changes:
+  - message: The super door remote is now able to control Syndicate doors.
+    type: Fix
+  id: 6928
+  time: '2024-07-17T13:50:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30033
+- author: Errant
+  changes:
+  - message: Vox are temporarily removed from Space Ninjas and all Unknown Shuttle
+      ghostroles, until code supports giving them species-specific gear.
+    type: Tweak
+  id: 6929
+  time: '2024-07-17T22:04:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30099
