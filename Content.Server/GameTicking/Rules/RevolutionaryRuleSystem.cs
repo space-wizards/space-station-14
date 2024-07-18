@@ -53,10 +53,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!; // Add GameTicker dependency
-    [Dependency] private readonly PopupSystem _popupSystem = default!; // Add PopupSystem dependency
+    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IBanManager _banManager = default!;
-    [Dependency] private readonly AdminVerbSystem _adminVerbSystem = default!; // Add AdminVerbSystem dependency
+    [Dependency] private readonly AdminVerbSystem _adminVerbSystem = default!;
 
 
     //Used in OnPostFlash, no reference to the rule component is available
@@ -158,7 +158,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             if (antagBans != null && (antagBans.Contains(antagAllSelection) || antagBans.Contains(revolutionaryRoleId)))
             {
                 // Notify the player and trigger a random bad event
-                _popup.PopupEntity("You have been converted but are unable to play due to a ban for this role.", ev.Target, ev.Target, PopupType.LargeCaution);
+                _popup.PopupEntity(Loc.GetString("rev-banned"), ev.Target, ev.Target, PopupType.LargeCaution);
 
                 var randomDelay = new Random().Next(10000, 60000); // 10-60 seconds
                 var @event = ev;

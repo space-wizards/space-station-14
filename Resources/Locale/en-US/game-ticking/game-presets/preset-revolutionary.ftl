@@ -30,6 +30,7 @@ rev-role-greeting =
     Viva la revolución!
 
 rev-briefing = Help your head revolutionaries get rid of every head to take over the station.
+rev-banned = You have been converted but are unable to play due to a ban for this role.
 
 ## General
 

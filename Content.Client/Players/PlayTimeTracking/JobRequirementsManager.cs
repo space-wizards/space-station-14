@@ -57,6 +57,9 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     {
         _sawmill.Debug($"Received roleban info containing {message.Bans.Count} entries.");
 
+        if (_roleBans.Equals(message.Bans))
+            return;
+
         _roleBans.Clear();
         _roleBans.AddRange(message.Bans);
 
@@ -177,7 +180,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         return _roles;
     }
 
-    public bool IsRoleBanned(IEnumerable<string> roles, out string? banReason, out DateTime? expirationTime)
+    public bool IsRoleBanned(IEnumerable<string> roles, [NotNullWhen(true)] out string? banReason, [NotNullWhen(true)] out DateTime? expirationTime)
     {
         banReason = null;
         expirationTime = null;
@@ -187,13 +190,12 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
             var roleBan = _roleBans.FirstOrDefault(ban => ban.Role == role);
             if (roleBan != null)
             {
-                banReason = roleBan.Reason;
-                expirationTime = roleBan.ExpirationTime;
+                banReason = roleBan.Reason ?? string.Empty;
+                expirationTime = roleBan.ExpirationTime ?? DateTime.MinValue;
                 return true;
             }
         }
 
         return false;
     }
-
 }

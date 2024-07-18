@@ -142,7 +142,7 @@ public sealed partial class RequirementsSelector : BoxContainer
 
         var message = new FormattedMessage();
         message.AddText(Loc.GetString("role-banned-reason", ("reason", banReason)));
-        message.AddText("\n");
+        message.PushNewline();
 
         var expirationText = expirationTime.HasValue
             ? Loc.GetString("role-banned-expiration", ("expiration", expirationTime.Value.ToString("G")))

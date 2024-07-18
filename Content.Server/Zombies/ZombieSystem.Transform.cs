@@ -64,8 +64,8 @@ namespace Content.Server.Zombies
         [Dependency] private readonly MindSystem _mind = default!;
         [Dependency] private readonly SharedRoleSystem _roles = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly GameTicker _gameTicker = default!; // Add GameTicker dependency
-        [Dependency] private readonly PopupSystem _popupSystem = default!; // Add PopupSystem dependency
+        [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IBanManager _banManager = default!;
 
 

@@ -16,7 +16,6 @@ public sealed class MsgRoleBans : NetMessage
     public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
     {
         var count = buffer.ReadVariableInt32();
-        Bans.Clear();
         Bans.EnsureCapacity(count);
 
         for (var i = 0; i < count; i++)
