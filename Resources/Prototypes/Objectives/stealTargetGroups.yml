@@ -1,3 +1,9 @@
+# Strong recommendations for working with the stealTargetGroup id and name
+# If you are going to add a new stealTargetGroup, please follow these recommendations
+# If you are creating a target to steal one specific entity, please use the identity of the entity of this object as the id of stealTargetGroup
+# If you are creating a target for stealing some group of different things, please use localization keys in name stealTargetGroup
+# Failure to follow these recommendations will not result in any errors, but the localizers will thank you
+
 # Traitor single items
 
 - type: stealTargetGroup
@@ -88,42 +94,42 @@
 
 - type: stealTargetGroup
   id: Figurines
-  name: figurines (any)
+  name: objective-condition-steal-target-groups-figurines
   sprite:
     sprite: Objects/Fun/figurines.rsi
     state: figurine_spawner
 
 - type: stealTargetGroup
   id: HeadCloak
-  name: head's cloaks (any)
+  name: objective-condition-steal-target-groups-heads-cloaks
   sprite:
     sprite: Clothing/Neck/Cloaks/cap.rsi
     state: icon
 
 - type: stealTargetGroup
   id: HeadBedsheet
-  name: head's bedsheets (any)
+  name: objective-condition-steal-target-groups-heads-bedsheets
   sprite:
     sprite: Objects/Misc/bedsheets.rsi
     state: sheetNT
 
 - type: stealTargetGroup
   id: Stamp
-  name: stamps (any)
+  name: objective-condition-steal-target-groups-stamps
   sprite:
     sprite: Objects/Misc/stamps.rsi
     state: stamp-cap
 
 - type: stealTargetGroup
   id: DoorRemote
-  name: door remotes (any)
+  name: objective-condition-steal-target-groups-door-remote
   sprite:
     sprite: Objects/Devices/door_remote.rsi
     state: door_remotebase
 
 - type: stealTargetGroup
   id: EncryptionKey
-  name: encryption keys (any)
+  name: objective-condition-steal-target-groups-encryption-keys
   sprite:
     sprite: Objects/Devices/encryption_keys.rsi
     state: crypt_gray
@@ -137,16 +143,14 @@
 
 - type: stealTargetGroup
   id: IDCard
-  name: ID Cards (any)
+  name: objective-condition-steal-target-groups-id-cards
   sprite:
     sprite: Objects/Misc/id_cards.rsi
     state: default
 
-
-
 - type: stealTargetGroup
   id: LAMP
-  name: LAMPS
+  name: objective-condition-steal-target-groups-lamps
   sprite:
     sprite: Objects/Tools/lantern.rsi
     state: lantern
@@ -311,7 +315,7 @@
 
 - type: stealTargetGroup
   id: Teg
-  name: teg generator part
+  name: objective-condition-steal-target-groups-teg
   sprite:
     sprite: Structures/Power/Generation/teg.rsi
     state: teg
@@ -340,56 +344,56 @@
 # Thief Animal
 
 - type: stealTargetGroup
-  id: AnimalIan
+  id: MobCorgiIan
   name: Ian
   sprite:
     sprite: Mobs/Pets/corgi.rsi
     state: ian
 
 - type: stealTargetGroup
-  id: AnimalBingus
+  id: MobBingus
   name: Bingus
   sprite:
     sprite: Mobs/Pets/bingus.rsi
     state: bingus
 
 - type: stealTargetGroup
-  id: AnimalMcGriff
+  id: MobMcGriff
   name: McGriff
   sprite:
     sprite: Mobs/Pets/mcgriff.rsi
     state: mcgriff
 
 - type: stealTargetGroup
-  id: AnimalWalter
+  id: MobWalter
   name: Walter
   sprite:
     sprite: Mobs/Pets/walter.rsi
     state: walter
 
 - type: stealTargetGroup
-  id: AnimalMorty
+  id: MobPossumMorty
   name: Morty
   sprite:
     sprite: Mobs/Animals/possum.rsi
     state: possum
 
 - type: stealTargetGroup
-  id: AnimalRenault
+  id: MobFoxRenault
   name: Renault
   sprite:
     sprite: Mobs/Animals/fox.rsi
     state: fox
 
 - type: stealTargetGroup
-  id: AnimalShiva
+  id: MobSpiderShiva
   name: Shiva
   sprite:
     sprite: Mobs/Pets/shiva.rsi
     state: shiva
 
 - type: stealTargetGroup
-  id: AnimalTropico
+  id: MobCrabAtmos
   name: Tropico
   sprite:
     sprite: Mobs/Animals/crab.rsi

@@ -35,7 +35,7 @@
     - CannotSuicide
     - VimPilot
   - type: StealTarget
-    stealGroup: AnimalIan
+    stealGroup: MobCorgiIan
 
 - type: entity
   name: Old Ian
@@ -235,7 +235,7 @@
     - CannotSuicide
     - VimPilot
   - type: StealTarget
-    stealGroup: AnimalBingus
+    stealGroup: MobBingus
 
 - type: entity
   name: McGriff
@@ -294,7 +294,7 @@
     - CannotSuicide
     - VimPilot
   - type: StealTarget
-    stealGroup: AnimalMcGriff
+    stealGroup: MobMcGriff
 
 - type: entity
   name: Paperwork
@@ -387,7 +387,7 @@
     - CannotSuicide
     - VimPilot
   - type: StealTarget
-    stealGroup: AnimalWalter
+    stealGroup: MobWalter
 
 - type: entity
   name: Morty
@@ -411,7 +411,7 @@
     - CannotSuicide
     - VimPilot
   - type: StealTarget
-    stealGroup: AnimalMorty
+    stealGroup: MobPossumMorty
 
 - type: entity
   name: Morty
@@ -527,7 +527,7 @@
     - CannotSuicide
     - VimPilot
   - type: StealTarget
-    stealGroup: AnimalRenault
+    stealGroup: MobFoxRenault
 
 - type: entity
   name: Hamlet
@@ -641,7 +641,7 @@
     - DoorBumpOpener
     - FootstepSound
   - type: StealTarget
-    stealGroup: AnimalShiva
+    stealGroup: MobSpiderShiva
 
 - type: entity
   name: Willow
@@ -805,4 +805,4 @@
       gender: male
 #  - type: AlwaysRevolutionaryConvertible
   - type: StealTarget
-    stealGroup: AnimalTropico
+    stealGroup: MobCrabAtmos
