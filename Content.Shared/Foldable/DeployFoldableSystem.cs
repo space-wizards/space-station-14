@@ -32,5 +32,7 @@ public sealed class DeployFoldableSystem : EntitySystem
 
         if (!_foldable.TrySetFolded(ent, foldable, false))
             return;
+
+        args.Handled = true;
     }
 }
