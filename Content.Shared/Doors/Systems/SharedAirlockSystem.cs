@@ -12,6 +12,20 @@ public abstract class SharedAirlockSystem : EntitySystem
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly SharedWiresSystem _wiresSystem = default!;
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<AirlockComponent>();
+        while (query.MoveNext(out var uid, out var airlock))
+        {
+            if (!airlock.NukeRecentlyDisarmed)
+                continue;
+            else
+                AttemptRemoveNukeEmergencyAccess(uid, frameTime, airlock);
+        }
+
+    }
     public override void Initialize()
     {
         base.Initialize();
@@ -123,9 +137,9 @@ public abstract class SharedAirlockSystem : EntitySystem
         Appearance.SetData(uid, DoorVisuals.EmergencyLights, component.EmergencyAccess);
     }
 
-    public void ToggleEmergencyAccess(EntityUid uid, AirlockComponent component)
+    public void ToggleEmergencyAccess(EntityUid uid, AirlockComponent component, bool? forceState = null)
     {
-        component.EmergencyAccess = !component.EmergencyAccess;
+        component.EmergencyAccess = forceState ?? !component.EmergencyAccess;
         Dirty(uid, component); // This only runs on the server apparently so we need this.
         UpdateEmergencyLightStatus(uid, component);
     }
@@ -146,5 +160,29 @@ public abstract class SharedAirlockSystem : EntitySystem
     public bool CanChangeState(EntityUid uid, AirlockComponent component)
     {
         return component.Powered && !DoorSystem.IsBolted(uid);
+    }
+
+    private void AttemptRemoveNukeEmergencyAccess(EntityUid uid, float frameTime, AirlockComponent? airlock = null)
+    {
+        if (airlock == null) return;
+        airlock.PostNukeRemainingEmergencyAccessTimer -= frameTime;
+        if (airlock.PostNukeRemainingEmergencyAccessTimer <= 0)
+        {
+            ToggleEmergencyAccess(uid, airlock, airlock.PreNukeEmergencyAccessState);
+            UpdateEmergencyLightStatus(uid, airlock);
+            airlock.NukeRecentlyDisarmed = false;
+        }
+    }
+
+    public void NukeArm(EntityUid uid, AirlockComponent component)
+    {
+        component.PreNukeEmergencyAccessState = component.EmergencyAccess;
+        ToggleEmergencyAccess(uid, component, true);
+        UpdateEmergencyLightStatus(uid, component);
+    }
+    public void NukeDisarm(EntityUid uid, AirlockComponent component)
+    {
+        component.NukeRecentlyDisarmed = true;
+        component.PostNukeRemainingEmergencyAccessTimer = component.PostNukeEmergencyAccessTimer;
     }
 }

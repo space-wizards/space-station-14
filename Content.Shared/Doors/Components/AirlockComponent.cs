@@ -25,6 +25,35 @@ public sealed partial class AirlockComponent : Component
     public bool EmergencyAccess = false;
 
     /// <summary>
+    /// Used to hold the state of emergency access on the door prior to a nuke.  This allows us to return to the saved state
+    /// after the nuke is disarmed.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
+    public bool PreNukeEmergencyAccessState = false;
+
+    /// <summary>
+    ///     Time before nuke emergency access is reverted, in seconds, after a nuke is disarmed.
+    /// </summary>
+    [DataField("nukeemergencytimer")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public int PostNukeEmergencyAccessTimer = 10;
+
+    /// <summary>
+    ///     Time remaining until the door reverts its emergency access settings after a nuke is disarmed.
+    /// </summary>
+    [DataField("nukeemergencyaccesstimeremaining")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float PostNukeRemainingEmergencyAccessTimer;
+
+    /// <summary>
+    /// Tells us if the nuke was recently disarmed on this airlock's grid.
+    /// </summary>
+    [DataField("nukerecentlydisarmed")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool NukeRecentlyDisarmed;
+
+    /// <summary>
     /// Pry modifier for a powered airlock.
     /// Most anything that can pry powered has a pry speed bonus,
     /// so this default is closer to 6 effectively on e.g. jaws (9 seconds when applied to other default.)
