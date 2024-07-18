@@ -1,4 +1,41 @@
 ﻿Entries:
+- author: Ghagliiarghii
+  changes:
+  - message: Security can now find replacements for their trusty Combat Knife in the
+      SecVend, or craft them with the Sec Lathe.
+    type: Tweak
+  id: 6425
+  time: '2024-04-23T11:24:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27224
+- author: Whisper
+  changes:
+  - message: Fire stack limit reduced from 20 to 10. Fire transfers will be less effective,
+      and fires will not last as long.
+    type: Tweak
+  id: 6426
+  time: '2024-04-23T11:30:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27159
+- author: brainfood1183
+  changes:
+  - message: Directional Exit signs for maints!
+    type: Add
+  id: 6427
+  time: '2024-04-23T11:31:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26831
+- author: pigeonpeas
+  changes:
+  - message: Adds the ability to purchase emitters in cargo.
+    type: Add
+  id: 6428
+  time: '2024-04-23T11:34:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27229
+- author: EmoGarbage404
+  changes:
+  - message: Fixed cargo telepads not teleporting in orders from linked consoles.
+    type: Fix
+  id: 6429
+  time: '2024-04-23T12:07:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27255
 - author: Plykiya
   changes:
   - message: Do-after bars of other players are now shaded and harder to see in the
