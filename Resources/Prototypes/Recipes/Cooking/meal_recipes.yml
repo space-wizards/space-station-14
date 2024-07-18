@@ -590,6 +590,7 @@
     FoodDonkpocketWarm: 3
     FoodCheeseSlice: 1
     FoodTomato: 1
+
 - type: microwaveMealRecipe
   id: RecipeUraniumPizza
   name: spicy rock pizza recipe
@@ -599,7 +600,7 @@
     FoodDoughFlat: 1
     FoodChiliPepper: 2
     FoodTomato: 2
-    SheetUranium1: 1
+    SheetUranium1: 2
 
 #Italian
 - type: microwaveMealRecipe
