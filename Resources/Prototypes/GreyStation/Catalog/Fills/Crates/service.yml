@@ -12,11 +12,5 @@
       amount: 2
     - id: ClothingUniformKendoHakama
       amount: 2
-    - id: ClothingShoesGeta
-      amount: 4
-    - id: ClothingUniformMartialGi
-      amount: 2
-    - id: ClothingBeltMartialBlack
-      amount: 2
     - id: Shinai
-      amount: 4
+      amount: 2
