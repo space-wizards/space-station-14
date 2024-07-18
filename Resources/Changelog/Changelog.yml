@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Do-after bars of other players are now shaded and harder to see in the
-      dark.
-    type: Tweak
-  id: 6430
-  time: '2024-04-24T02:42:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27273
 - author: Blackern5000
   changes:
   - message: The cargo telepad is now tier 2 technology rather than tier 3.
@@ -3805,3 +3797,11 @@
   id: 6929
   time: '2024-07-17T22:04:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30099
+- author: Cojoke-dot
+  changes:
+  - message: You can no longer teleport objects that should not be in other objects
+      into other objects with the Quantum Spin Inverter
+    type: Fix
+  id: 6930
+  time: '2024-07-18T00:40:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29200
