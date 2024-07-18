@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Fixed cargo telepads not teleporting in orders from linked consoles.
-    type: Fix
-  id: 6429
-  time: '2024-04-23T12:07:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27255
-- author: Plykiya
-  changes:
-  - message: Do-after bars of other players are now shaded and harder to see in the
-      dark.
-    type: Tweak
-  id: 6430
-  time: '2024-04-24T02:42:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27273
-- author: Blackern5000
-  changes:
-  - message: The cargo telepad is now tier 2 technology rather than tier 3.
-    type: Tweak
-  id: 6431
-  time: '2024-04-24T13:21:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26270
 - author: FungiFellow
   changes:
   - message: Truncheon now fits in SecBelt
@@ -3804,3 +3782,26 @@
   id: 6928
   time: '2024-07-17T13:50:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30033
+- author: Errant
+  changes:
+  - message: Vox are temporarily removed from Space Ninjas and all Unknown Shuttle
+      ghostroles, until code supports giving them species-specific gear.
+    type: Tweak
+  id: 6929
+  time: '2024-07-17T22:04:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30099
+- author: Cojoke-dot
+  changes:
+  - message: You can no longer teleport objects that should not be in other objects
+      into other objects with the Quantum Spin Inverter
+    type: Fix
+  id: 6930
+  time: '2024-07-18T00:40:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29200
+- author: Plykiya
+  changes:
+  - message: Stun batons no longer use up charges when hitting objects without stamina.
+    type: Fix
+  id: 6931
+  time: '2024-07-18T00:48:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30136
