@@ -1,4 +1,7 @@
-﻿namespace Content.Shared.Foldable;
+﻿using Robust.Shared.GameStates;
 
-[RegisterComponent]
+namespace Content.Shared.Foldable;
+
+[RegisterComponent, NetworkedComponent]
+[Access(typeof(DeployFoldableSystem))]
 public sealed partial class DeployFoldableComponent : Component;
