@@ -189,7 +189,7 @@
 
 - type: entity
   parent: BaseTraitorRule
-  id: SyndicateSpyVsSpy
+  id: SpyVsSpy
   components:
   - type: GameRule
     minPlayers: 15
@@ -203,6 +203,7 @@
   - type: AntagSelection
     definitions:
     - prefRoles: [ Traitor ]
+      max: 100
       playerRatio: 1
       blacklist:
         components:
