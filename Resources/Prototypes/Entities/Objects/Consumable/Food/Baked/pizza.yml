@@ -580,9 +580,9 @@
         - ReagentId: Nutriment
           Quantity: 20
         - ReagentId: Radium
-          Quantity: 16
-        - ReagentId: Uranium
           Quantity: 4
+        - ReagentId: Uranium
+          Quantity: 16
 
 - type: entity
   name: slice of spicy rock pizza
@@ -615,8 +615,8 @@
         - ReagentId: Nutriment
           Quantity: 2.5
         - ReagentId: Radium
-          Quantity: 2
-        - ReagentId: Uranium
           Quantity: 0.5
+        - ReagentId: Uranium
+          Quantity: 2
 
 # Tastes like crust, tomato, cheese, radiation.
