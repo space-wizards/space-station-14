@@ -1,4 +1,5 @@
-﻿using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 
 namespace Content.Shared.Foldable;
@@ -23,11 +24,15 @@ public sealed class DeployFoldableSystem : EntitySystem
         if (!TryComp<FoldableComponent>(ent, out var foldable))
             return;
 
-        if (!_hands.TryDrop(args.User, args.Used, targetDropLocation: args.ClickLocation))
+        if (!TryComp(args.User, out HandsComponent? hands)
+            || !_hands.TryDrop(args.User, args.Used, targetDropLocation: args.ClickLocation, handsComp: hands))
             return;
 
         if (!_foldable.TrySetFolded(ent, foldable, false))
+        {
+            _hands.TryPickup(args.User, args.Used, handsComp: hands);
             return;
+        }
 
         args.Handled = true;
     }
