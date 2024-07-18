@@ -881,6 +881,16 @@
   categories:
     - UplinkDisruption
 
+- type: listing
+  id: UplinkCQCManual
+  name: uplink-cqc-manual-name
+  description: uplink-cqc-manual-desc
+  productEntity: BriefcaseSyndieCQCBundleFilled
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkDisruption
+
 # Allies
 
 - type: listing

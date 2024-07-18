@@ -122,3 +122,19 @@
   - type: Store
     balance:
       Telecrystal: 99999
+
+- type: entity
+  parent: BaseItem
+  id: CQCManual
+  name: CQC manual
+  description: An interesting book.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/cqc_manual.rsi
+    layers:
+    - state: icon
+  - type: Item
+    size: Small
+  - type: StaticPrice
+    price: 3000
+  - type: GrantCQC

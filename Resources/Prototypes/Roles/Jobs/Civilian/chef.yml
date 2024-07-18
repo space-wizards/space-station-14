@@ -17,7 +17,11 @@
   extendedAccess:
   - Hydroponics
   - Bar
-
+  special:
+  - !type:AddComponentSpecial
+    components:
+      - type: CQCKnowledge
+  
 - type: startingGear
   id: ChefGear
   equipment:

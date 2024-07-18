@@ -1,0 +1,35 @@
+- type: combo
+  id: CQCSlam
+  attacks:
+  - Grab
+  - Harm
+  event: !type:CQCSlamPerformedEvent {}
+
+- type: combo
+  id: CQCKick
+  attacks:
+  - Harm
+  - Harm
+  event: !type:CQCKickPerformedEvent {}
+
+- type: combo
+  id: CQCRestrain
+  attacks:
+  - Grab
+  - Grab
+  event: !type:CQCRestrainPerformedEvent {}
+
+- type: combo
+  id: CQCPressure
+  attacks:
+  - Disarm
+  - Grab
+  event: !type:CQCPressurePerformedEvent {}
+
+- type: combo
+  id: CQCConsecutive
+  attacks:
+  - Disarm
+  - Disarm
+  - Harm
+  event: !type:CQCConsecutivePerformedEvent {}

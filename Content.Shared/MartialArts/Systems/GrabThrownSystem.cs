@@ -93,7 +93,7 @@ public sealed class GrabThrownSystem : EntitySystem
     /// <param name="damageToWall">Damage to wall or anything that was hit by entity</param>
     public void Throw(EntityUid uid, Vector2 vector, float? staminaDamage = null, DamageSpecifier? damageToUid = null, DamageSpecifier? damageToWall = null)
     {
-        _throwing.TryThrow(uid, vector, 4f, animated: false);
+        _throwing.TryThrow(uid, vector, 5f, animated: false);
         
         var comp = EnsureComp<GrabThrownComponent>(uid);
         comp.StaminaDamageOnCollide = staminaDamage;

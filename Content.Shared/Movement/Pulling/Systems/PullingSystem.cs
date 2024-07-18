@@ -34,7 +34,7 @@ using Content.Shared.Mobs.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Network;
-using Content.Shared.Throwing;
+using Content.Shared.MartialArts;
 using Content.Shared.MartialArts;
 using Robust.Shared.Map;
 using System.Numerics;
@@ -778,6 +778,7 @@ public sealed class PullingSystem : EntitySystem
         // To avoid spamming
         if (_netManager.IsServer)
         {
+
             if (puller.Comp.GrabStage == GrabStage.Suffocate)
             {
                 _stamina.TakeStaminaDamage(pullable, puller.Comp.SuffocateGrabStaminaDamage);
@@ -787,7 +788,12 @@ public sealed class PullingSystem : EntitySystem
                 return true;
             }
 
-            if (!puller.Comp.NeedsHands && puller.Comp.GrabStage == GrabStage.Soft)
+            var nextStage = puller.Comp.GrabStage + 1;
+            var overrideEv = new CheckGrabOverridesEvent(nextStage);
+            RaiseLocalEvent(puller.Owner, overrideEv);
+            nextStage = overrideEv.Stage;
+
+            if (!puller.Comp.NeedsHands && nextStage == GrabStage.Hard)
             {
                 if (_virtualSystem.TrySpawnVirtualItemInHand(pullable.Owner, puller.Owner, out var item2, true))
                     puller.Comp.SuffocateVirtualItems.Add(item2.Value);
@@ -798,7 +804,7 @@ public sealed class PullingSystem : EntitySystem
                 }
             }
 
-            if (puller.Comp.GrabStage == GrabStage.Hard)
+            if (nextStage == GrabStage.Suffocate)
             {
                 if (_virtualSystem.TrySpawnVirtualItemInHand(pullable.Owner, puller.Owner, out var item2, true))
                     puller.Comp.SuffocateVirtualItems.Add(item2.Value);
@@ -808,6 +814,9 @@ public sealed class PullingSystem : EntitySystem
                     return true;
                 }
             }
+
+            var comboEv = new ComboAttackPerformedEvent(puller.Owner, pullable.Owner, puller.Owner, ComboAttackType.Grab);
+            RaiseLocalEvent(puller.Owner, comboEv);
 
             _audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg"), pullable);
             puller.Comp.NextStageChange = _timing.CurTime.Add(TimeSpan.FromSeconds(1.5f));
@@ -817,8 +826,8 @@ public sealed class PullingSystem : EntitySystem
             Dirty(puller.Owner, puller.Comp);
 
 
-            puller.Comp.GrabStage += 1;
-            pullable.Comp.GrabStage = puller.Comp.GrabStage;
+            puller.Comp.GrabStage = nextStage;
+            pullable.Comp.GrabStage = nextStage;
 
             var othersFilter = Filter.Empty().AddPlayersByPvs(Transform(puller)).RemovePlayerByAttachedEntity(puller.Owner).RemovePlayerByAttachedEntity(pullable.Owner);
             var popupType = PopupType.Small;
