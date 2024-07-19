@@ -122,7 +122,7 @@
 
 - type: stealTargetGroup
   id: DoorRemote
-  name: objective-condition-steal-target-groups-door-remote
+  name: objective-condition-steal-target-groups-door-remotes
   sprite:
     sprite: Objects/Devices/door_remote.rsi
     state: door_remotebase
