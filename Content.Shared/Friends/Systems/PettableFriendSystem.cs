@@ -42,6 +42,7 @@ public sealed class PettableFriendSystem : EntitySystem
             _popup.PopupClient(Loc.GetString(comp.SuccessString, ("target", uid)), user, user);
             _factionException.IgnoreEntity(exception, user);
             args.Handled = true;
+            return;
         }
 
         if (_useDelayQuery.TryComp(uid, out var useDelay) && !_useDelay.TryResetDelay((uid, useDelay), true))
