@@ -67,7 +67,7 @@
     - type: NukeOperative
     - type: RandomMetadata
       nameSegments:
-      - SyndicateNamesPrefix
+      - nukeops-role-operator
       - SyndicateNamesNormal
     - type: Loadout
       prototypes: [SyndicateOperativeGearNoUplink]
