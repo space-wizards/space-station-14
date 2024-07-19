@@ -1,0 +1,15 @@
+﻿- type: soundCollection
+  id: BrokenDevice
+  files:
+  - /Audio/Items/electrical_short_circuit.ogg
+
+- type: soundCollection
+  id: ShortCircuit
+  files:
+  - /Audio/Items/electrical_short_circuit2.ogg
+
+- type: soundCollection
+  id: Alarm
+  files:
+  - /Audio/Items/bibs.ogg
+

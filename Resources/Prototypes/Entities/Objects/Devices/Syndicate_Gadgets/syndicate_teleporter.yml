@@ -1,0 +1,26 @@
+- type: entity
+  parent: BaseItem
+  id: SyndicateTeleporter
+  name: syndicate teleporter
+  description: Personal syndicate teleporter
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/syndicate_teleporter.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Devices/syndicate_teleporter.rsi
+  - type: SyndicateTeleporter
+    RandomValue: 4
+    TeleportationValue: 4
+  - type: UseDelay
+    delay: 0.5
+  - type: LimitedCharges
+    charges: 411
+    maxcharges: 411
+  - type: AutoRecharge
+    rechargeDuration: 10
+  - type: EmitSoundOnUse
+    sound:
+      collection: BrokenDevice
+      params:
+        variation: 0.125

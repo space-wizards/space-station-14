@@ -1743,3 +1743,14 @@
     blacklist:
       components:
       - SurplusBundle
+
+- type: listing
+  id: UplinkTeleporter
+  name: uplink-syndicate-teleporter-name
+  description: uplink-syndicate-teleporter-desc
+  icon: { sprite:  Objects/Devices/syndicate_teleporter.rsi, state: icon}
+  productEntity: SyndicateTeleporter
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkDisruption

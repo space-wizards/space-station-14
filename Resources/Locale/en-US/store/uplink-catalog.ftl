@@ -436,3 +436,6 @@ uplink-barber-scissors-desc = A good tool to give your fellow agent a nice hairc
 
 uplink-backpack-syndicate-name = Syndicate backpack
 uplink-backpack-syndicate-desc = Lightweight explosion-proof а backpack for holding various traitor goods
+
+uplink-syndicate-teleporter-name = Hand syndicate teleporter
+uplink-syndicate-teleporter-desc = An experimental hand teleporting device. Teleports its owner forward in a small area. Be careful not to end up in the wall.
