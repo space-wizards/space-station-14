@@ -60,7 +60,6 @@ public sealed class PullingSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly HeldSpeedModifierSystem _clothingMoveSpeed = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
@@ -70,6 +69,7 @@ public sealed class PullingSystem : EntitySystem
     [Dependency] private readonly GrabThrownSystem _throwing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedVirtualItemSystem _virtualSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
