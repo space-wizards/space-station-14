@@ -239,14 +239,14 @@ public sealed partial class EncryptionKeySystem : EntitySystem
             {
                 var msg = Loc.GetString("examine-headset-default-channel",
                 ("prefix", SharedChatSystem.DefaultChannelPrefix),
-                ("channel", defaultChannel),
+                ("channel", Loc.GetString($"chat-radio-{defaultChannel.ToString().ToLower()}")),
                 ("color", proto.Color));
                 examineEvent.PushMarkup(msg);
             }
             if (HasComp<EncryptionKeyComponent>(examineEvent.Examined))
             {
                 var msg = Loc.GetString("examine-encryption-default-channel",
-                ("channel", defaultChannel),
+                ("channel", Loc.GetString($"chat-radio-{defaultChannel.ToString().ToLower()}")),
                 ("color", proto.Color));
                 examineEvent.PushMarkup(msg);
             }
