@@ -5,9 +5,9 @@ uniform highp vec2 renderScale;
 uniform highp float maxDistance;
 uniform lowp int count;
 
-uniform highp float[5] falloffPower;
-uniform highp float[5] intensity;
-uniform highp vec2[5] position;
+uniform highp float[32] falloffPower;
+uniform highp float[32] intensity;
+uniform highp vec2[32] position;
 // the `5`s in the array lengths correspond to the upper limit on the simultaneous distortion sources that can be present on screen at a time.
 // If you want to change this, make sure to change all of them here, in the for loop, and, in whatever overlay assigns the uniforms
 // (apparently #define is an unknown preprocessor directive)
@@ -21,7 +21,7 @@ void fragment() {
     lowp float brightnessFactor = 1.0;
     lowp float cumulativeBrightnessFactor = 1.0;
 
-    for (int i = 0; i < 5 && i < count; i++) {
+    for (int i = 0; i < 32 && i < count; i++) {
 
         delta = FRAGCOORD.xy - position[i];
         distance = length(delta / renderScale);

@@ -17,7 +17,7 @@ namespace Content.Client.Singularity
         ///     Maximum number of distortions that can be shown on screen at a time.
         ///     If this value is changed, the shader itself also needs to be updated.
         /// </summary>
-        public const int MaxCount = 5;
+        public const int MaxCount = 32;
 
         private const float MaxDistance = 20f;
 
