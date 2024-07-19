@@ -122,7 +122,7 @@ public sealed class LoadoutSystem : EntitySystem
     public void Equip(EntityUid uid, List<ProtoId<StartingGearPrototype>>? startingGear,
         List<ProtoId<RoleLoadoutPrototype>>? loadoutGroups)
     {
-        // Use starting gear if specified
+        // First, randomly pick a startingGear profile from those specified, and equip it.
         if (startingGear != null && startingGear.Count > 0)
         {
             var gear = _protoMan.Index(_random.Pick(startingGear));
@@ -135,7 +135,8 @@ public sealed class LoadoutSystem : EntitySystem
             return;
         }
 
-        // then equip from role loadout
+        // Then, randomly pick a RoleLoadout profile from those specified, and process/equip all LoadoutGroups from it.
+        // For non-roundstart mobs there is no SelectedLoadout data, so minValue must be set in each LoadoutGroup to force selection.
         var id = _random.Pick(loadoutGroups);
         var proto = _protoMan.Index(id);
         var loadout = new RoleLoadout(id);
@@ -147,6 +148,7 @@ public sealed class LoadoutSystem : EntitySystem
 
     public void GearEquipped(EntityUid uid)
     {
+        // Internals try to auto-activate on this event
         var ev = new StartingGearEquippedEvent(uid);
         RaiseLocalEvent(uid, ref ev);
     }
