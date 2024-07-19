@@ -51,6 +51,7 @@
     shoes: ClothingShoesBootsCombatFilled
     id: SyndiPDA
     pocket1: DoubleEmergencyOxygenTankFilled
+    pocket2: PlushieCarp
     belt: ClothingBeltMilitaryWebbing
   storage:
     back:
