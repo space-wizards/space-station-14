@@ -5,7 +5,7 @@
   name: trait-accentless-name
   description: trait-accentless-desc
   category: SpeechTraits
-  cost: 2
+  cost: 0
   components:
   - type: Accentless
     removes:
@@ -87,3 +87,13 @@
   cost: 2
   components:
     - type: FrontalLisp
+
+- type: trait
+  id: Mobster
+  name: trait-mobster-name
+  description: trait-mobster-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+    - type: ReplacementAccent
+    - type: Mobster
