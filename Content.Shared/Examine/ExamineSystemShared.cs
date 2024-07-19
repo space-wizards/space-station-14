@@ -266,6 +266,7 @@ namespace Content.Shared.Examine
             RaiseLocalEvent(entity, examinedEvent);
 
             var newMessage = examinedEvent.GetTotalMessage();
+            newMessage.TrimEnd();
 
             // pop color tag
             newMessage.Pop();
@@ -361,10 +362,12 @@ namespace Content.Shared.Examine
                 totalMessage.PushNewline();
             }
 
+            var lastPart = parts.Last();
+
             foreach (var part in parts)
             {
                 totalMessage.AddMessage(part.Message);
-                if (part.DoNewLine && parts.Last() != part)
+                if (part.DoNewLine && lastPart != part)
                     totalMessage.PushNewline();
             }
 
