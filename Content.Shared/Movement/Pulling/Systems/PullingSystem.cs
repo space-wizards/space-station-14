@@ -17,7 +17,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using Content.Shared.MartialArts.Components;
-using Content.Shared.MartialArts.Events;
 using Content.Shared.MartialArts.Systems;
 using Content.Shared.MartialArts;
 using Content.Shared.Mobs.Components;
