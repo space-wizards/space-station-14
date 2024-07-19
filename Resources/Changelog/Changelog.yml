@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SkaldetSkaeg
-  changes:
-  - message: The handheld radio no longer plays a message spoken into it.
-    type: Tweak
-  id: 6438
-  time: '2024-04-26T07:34:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27046
 - author: FungiFellow
   changes:
   - message: Added SecBelt whitelist to Sec webbing
@@ -3799,3 +3792,11 @@
   id: 6937
   time: '2024-07-19T09:42:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30112
+- author: ThatOneEnby1337
+  changes:
+  - message: News Reporters are now able to use markup tags in their reports without
+      bricking the PDAs of readers
+    type: Fix
+  id: 6938
+  time: '2024-07-19T14:18:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30169
