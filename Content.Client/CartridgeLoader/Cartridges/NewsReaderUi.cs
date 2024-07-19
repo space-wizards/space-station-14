@@ -26,7 +26,7 @@ public sealed partial class NewsReaderUi : UIFragment
         {
             SendNewsReaderMessage(NewsReaderUiAction.Prev, userInterface);
         };
-        _fragment.OnNotificationSwitchPressed += () =>
+        _fragment.OnNotificationSwithPressed += () =>
         {
             SendNewsReaderMessage(NewsReaderUiAction.NotificationSwitch, userInterface);
         };
