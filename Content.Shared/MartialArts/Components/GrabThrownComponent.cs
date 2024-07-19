@@ -7,7 +7,7 @@ using Content.Shared.Damage;
 using Content.Shared.Physics;
 using Robust.Shared.Physics;
 
-namespace Content.Shared.MartialArts.Components;    // Added a new category because im planning to make martials combat soon. And throwing is kinda... Martial-artistic?
+namespace Content.Shared.MartialArts.Components;
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class GrabThrownComponent : Component
@@ -17,8 +17,4 @@ public sealed partial class GrabThrownComponent : Component
     public DamageSpecifier? WallDamageOnCollide;
 
     public float? StaminaDamageOnCollide;
-
-    //public int? SavedCollisionMask;
-
-    //public int? SavedCollisionLayer;
 }

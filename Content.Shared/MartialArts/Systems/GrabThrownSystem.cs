@@ -1,37 +1,21 @@
-using Content.Shared.Stunnable;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
+using Content.Shared.Damage;
 using Content.Shared.Effects;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
+using Content.Shared.MartialArts.Components;
+using Content.Shared.Throwing;
+using Robust.Shared.Network;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
-using Robust.Shared.Timing;
-using Content.Shared.MartialArts.Components;
-using Content.Shared.Damage;
-using Content.Shared.Throwing;
-using Content.Shared.Damage.Systems;
 using System.Numerics;
-using Robust.Shared.Physics.Systems;
-using Content.Shared.Physics;
-using Robust.Shared.Physics;
-using System.Linq;
-using Content.Shared.Movement.Systems;
-using Robust.Shared.Network;
 
 namespace Content.Shared.MartialArts.Systems;
 
 public sealed class GrabThrownSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly INetManager _netMan = default!;
 
     public override void Initialize()
@@ -44,7 +28,7 @@ public sealed class GrabThrownSystem : EntitySystem
 
     private void HandleCollide(EntityUid uid, GrabThrownComponent component, ref StartCollideEvent args)
     {
-        if (_netMan.IsClient)
+        if (_netMan.IsClient)   // To avoid effect spam
             return;
 
         if (!HasComp<ThrownItemComponent>(uid))
@@ -56,14 +40,15 @@ public sealed class GrabThrownSystem : EntitySystem
         if (!args.OurFixture.Hard || !args.OtherFixture.Hard)
             return;
 
-        if (!EntityManager.HasComponent<DamageableComponent>(uid))
-            return;
+        if (!HasComp<DamageableComponent>(uid))
+            RemComp<GrabThrownComponent>(uid);
 
         var speed = args.OurBody.LinearVelocity.Length();
 
 
         if (component.StaminaDamageOnCollide != null)
             _stamina.TakeStaminaDamage(uid, component.StaminaDamageOnCollide.Value);
+
         var damageScale = speed;
 
         if (component.DamageOnCollide != null)
@@ -77,7 +62,7 @@ public sealed class GrabThrownSystem : EntitySystem
         RemComp<GrabThrownComponent>(uid);
     }
 
-    private void OnStopThrow(EntityUid uid, GrabThrownComponent comp, StopThrowEvent args)
+    private void OnStopThrow(EntityUid uid, GrabThrownComponent comp, StopThrowEvent args)  // We dont need this comp to exsist after fall
     {
         if (HasComp<GrabThrownComponent>(uid))
             RemComp<GrabThrownComponent>(uid);
@@ -91,7 +76,12 @@ public sealed class GrabThrownSystem : EntitySystem
     /// <param name="staminaDamage">Stamina damage on collide</param>
     /// <param name="damageToUid">Damage to entity on collide</param>
     /// <param name="damageToWall">Damage to wall or anything that was hit by entity</param>
-    public void Throw(EntityUid uid, Vector2 vector, float? staminaDamage = null, DamageSpecifier? damageToUid = null, DamageSpecifier? damageToWall = null)
+    public void Throw(
+        EntityUid uid,
+        Vector2 vector,
+        float? staminaDamage = null,
+        DamageSpecifier? damageToUid = null,
+        DamageSpecifier? damageToWall = null)
     {
         _throwing.TryThrow(uid, vector, 5f, animated: false);
         

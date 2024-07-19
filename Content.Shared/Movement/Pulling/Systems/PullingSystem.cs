@@ -1,50 +1,48 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
+using Content.Shared.Body.Events;
 using Content.Shared.Buckle.Components;
+using Content.Shared.CombatMode;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Damage.Systems;
+using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.Hands;
+using Content.Shared.Effects;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Hands;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
+using Content.Shared.MartialArts.Components;
+using Content.Shared.MartialArts.Events;
+using Content.Shared.MartialArts.Systems;
+using Content.Shared.MartialArts;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Events;
+using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Physics;
+using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Physics;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 using Robust.Shared.Random;
-using Content.Shared.Body.Events;
-using Content.Shared.CombatMode;
-using Content.Shared.Damage.Systems;
-using Content.Shared.Effects;
-using Content.Shared.Mobs.Components;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.Audio;
-using Robust.Shared.Network;
-using Content.Shared.MartialArts;
-using Content.Shared.MartialArts;
-using Robust.Shared.Map;
-using System.Numerics;
-using Content.Shared.Inventory.VirtualItem;
-using Content.Shared.MartialArts.Systems;
-using Content.Shared.MartialArts.Components;
-using Content.Shared.Damage;
-using Content.Shared.IdentityManagement;
+using Robust.Shared.Timing;
 using System.Linq;
-using Content.Shared.Speech;
 
 namespace Content.Shared.Movement.Pulling.Systems;
 
@@ -277,7 +275,7 @@ public sealed class PullingSystem : EntitySystem
                     maxDistance = 1.5f;
                 }
                 else
-                    maxDistance = 2.5f;
+                    maxDistance = 2.25f;
 
                 var distance = Math.Clamp(args.Direction.Length(), 0.5f, maxDistance);
                 direction *= distance / args.Direction.Length();
@@ -316,7 +314,7 @@ public sealed class PullingSystem : EntitySystem
             };
             args.Verbs.Add(verb);
 
-            Verb grabVerb = new()
+            Verb grabVerb = new()   // I'm not sure it is a good idea to add a button like this
             {
                 Text = Loc.GetString("pulling-verb-get-data-text-grab"),
                 Act = () => TryGrab(uid, component.Puller.Value, true),
@@ -765,7 +763,7 @@ public sealed class PullingSystem : EntitySystem
             pullable.Comp.Puller != puller.Owner ||
             puller.Comp.Pulling != pullable.Owner ||
             _timing.CurTime < puller.Comp.NextStageChange ||
-            !HasComp<MobStateComponent>(pullable))
+            !HasComp<MobStateComponent>(pullable))  // You can't choke crates
             return false;
 
 
@@ -789,9 +787,6 @@ public sealed class PullingSystem : EntitySystem
             }
 
             var nextStage = puller.Comp.GrabStage + 1;
-            var overrideEv = new CheckGrabOverridesEvent(nextStage);
-            RaiseLocalEvent(puller.Owner, overrideEv);
-            nextStage = overrideEv.Stage;
 
             if (!puller.Comp.NeedsHands && nextStage == GrabStage.Hard)
             {
@@ -814,9 +809,6 @@ public sealed class PullingSystem : EntitySystem
                     return true;
                 }
             }
-
-            var comboEv = new ComboAttackPerformedEvent(puller.Owner, pullable.Owner, puller.Owner, ComboAttackType.Grab);
-            RaiseLocalEvent(puller.Owner, comboEv);
 
             _audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg"), pullable);
             puller.Comp.NextStageChange = _timing.CurTime.Add(TimeSpan.FromSeconds(1.5f));
