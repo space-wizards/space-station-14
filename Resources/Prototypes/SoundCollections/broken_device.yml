@@ -6,10 +6,10 @@
 - type: soundCollection
   id: ShortCircuit
   files:
-  - /Audio/Items/electrical_short_circuit2.ogg
+  - /Audio/Effects/electrical_short_circuit2.ogg
 
 - type: soundCollection
   id: Alarm
   files:
-  - /Audio/Items/bibs.ogg
+  - /Audio/Effects/beeps.ogg
 
