@@ -105,6 +105,11 @@ namespace Content.Client.Singularity
         /// </summary>
         private void OnProjectFromScreenToMap(ref PixelToMapEvent args)
         {   // Mostly copypasta from the singularity shader.
+
+            // We don't gotta un-distort if we ain't distorting
+            if (_configManager.GetCVar(CCVars.ReducedMotion) || _configManager.GetCVar(CCVars.DisableSinguloWarping))
+                return;
+
             var maxDistance = MaxDistance * EyeManager.PixelsPerMeter;
             var finalCoords = args.VisiblePosition;
 
