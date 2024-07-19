@@ -9,10 +9,10 @@
 
 - type: weightedRandom
   id: TraitorObjectiveGroupsSpyVsSpy # A la The Ship
-  weights
-    KillRandomTraitorObjective: 1
-    RandomTraitorAliveObjective: 1
-    EscapeShuttleObjective: 1
+  weights:
+    SvSObjectiveGroupKill: 1
+    SvSObjectiveGroupSocial: 1
+    SvSObjectiveGroupState: 1
 
 - type: weightedRandom
   id: TraitorObjectiveGroupSteal
@@ -37,6 +37,11 @@
     KillRandomHeadObjective: 0.25
 
 - type: weightedRandom
+  id: SvSObjectiveGroupKill
+  weights:
+   KillRandomTraitorObjective: 1
+
+- type: weightedRandom
   id: TraitorObjectiveGroupState
   weights:
     EscapeShuttleObjective: 1
@@ -44,10 +49,20 @@
     #HijackShuttleObjective: 0.02
 
 - type: weightedRandom
+  id: SvSObjectiveGroupState
+  weights:
+    EscapeShuttleObjective: 1
+
+- type: weightedRandom
   id: TraitorObjectiveGroupSocial
   weights:
     RandomTraitorAliveObjective: 1
     RandomTraitorProgressObjective: 1
+
+- type: weightedRandom
+  id: SvSObjectiveGroupSocial
+  weights:
+    RandomTraitorAliveObjective: 1
 
 #Thief groups
 - type: weightedRandom
