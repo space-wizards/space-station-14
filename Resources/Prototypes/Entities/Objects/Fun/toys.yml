@@ -1134,6 +1134,9 @@
   description: Mass-produced by a sadistic corporate conglomerate!
   components:
   - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: singularitytoy
+    scale: 0, 0
   - type: SingularityDistortion
     intensity: 2000
     falloffPower: 2.6
