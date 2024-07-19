@@ -987,6 +987,8 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/asterade.rsi
+  - type: Item
+    size: Small
   - type: Sealable
   - type: SolutionContainerVisuals
     maxFillLevels: 6

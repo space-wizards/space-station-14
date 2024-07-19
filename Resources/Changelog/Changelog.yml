@@ -53,63 +53,6 @@
   url: https://github.com/space-wizards/space-station-14/pull/26270
 - author: FungiFellow
   changes:
-  - message: Truncheon now fits in SecBelt
-    type: Tweak
-  id: 6432
-  time: '2024-04-24T13:43:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27281
-- author: pigeonpeas
-  changes:
-  - message: Adds a trash bag to the advanced cleaning module.
-    type: Add
-  id: 6433
-  time: '2024-04-24T21:27:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27226
-- author: Beck Thompson
-  changes:
-  - message: Radio jammer now has 3 selectable power operating levels and a battery
-      level led indicator!
-    type: Tweak
-  id: 6434
-  time: '2024-04-25T02:19:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25912
-- author: cooldolphin
-  changes:
-  - message: Three variants of glasses are now available in the loadout menu.
-    type: Add
-  id: 6435
-  time: '2024-04-25T23:18:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27286
-- author: EmoGarbage404
-  changes:
-  - message: Traitors now have the correct number of objectives.
-    type: Fix
-  - message: Declaring war now gives TC again.
-    type: Fix
-  - message: Latejoining antagonists will now properly exclude command and security
-      staff.
-    type: Fix
-  id: 6436
-  time: '2024-04-26T00:25:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27319
-- author: Tayrtahn
-  changes:
-  - message: Fixed Bibles not healing.
-    type: Fix
-  - message: Fixed quick insert and area insert not working on ore/plant/trash bags.
-    type: Fix
-  id: 6437
-  time: '2024-04-26T02:25:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27234
-- author: SkaldetSkaeg
-  changes:
-  - message: The handheld radio no longer plays a message spoken into it.
-    type: Tweak
-  id: 6438
-  time: '2024-04-26T07:34:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27046
-- author: FungiFellow
-  changes:
   - message: Added SecBelt whitelist to Sec webbing
     type: Tweak
   - message: Added more Ammo holders to SecBelt whitelist
@@ -3842,3 +3785,70 @@
   id: 6929
   time: '2024-07-17T22:04:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30099
+- author: Cojoke-dot
+  changes:
+  - message: You can no longer teleport objects that should not be in other objects
+      into other objects with the Quantum Spin Inverter
+    type: Fix
+  id: 6930
+  time: '2024-07-18T00:40:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29200
+- author: Plykiya
+  changes:
+  - message: Stun batons no longer use up charges when hitting objects without stamina.
+    type: Fix
+  id: 6931
+  time: '2024-07-18T00:48:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30136
+- author: Sh18RW
+  changes:
+  - message: Moth can't eat boots with an item more
+    type: Fix
+  id: 6932
+  time: '2024-07-18T22:34:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30019
+- author: portfiend
+  changes:
+  - message: Reptilians display correct mask sprites in character customization screen.
+    type: Fix
+  id: 6933
+  time: '2024-07-18T22:36:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30095
+- author: Plykiya
+  changes:
+  - message: You no longer deal double damage to your first target when throwing an
+      item.
+    type: Fix
+  id: 6934
+  time: '2024-07-19T01:08:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30115
+- author: deepdarkdepths
+  changes:
+  - message: Removed the description about geras in the Slime guidebook section.
+    type: Remove
+  id: 6935
+  time: '2024-07-19T09:04:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30140
+- author: Blackern5000
+  changes:
+  - message: Nuclear operatives are now able to purchase durable armor which is NOT
+      space-proof.
+    type: Add
+  id: 6936
+  time: '2024-07-19T09:38:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29845
+- author: Plykiya, slarticodefast
+  changes:
+  - message: Explosive pens now correctly embed into their target.
+    type: Fix
+  id: 6937
+  time: '2024-07-19T09:42:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30112
+- author: ThatOneEnby1337
+  changes:
+  - message: News Reporters are now able to use markup tags in their reports without
+      bricking the PDAs of readers
+    type: Fix
+  id: 6938
+  time: '2024-07-19T14:18:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30169
