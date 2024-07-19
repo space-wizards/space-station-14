@@ -10,13 +10,11 @@
   - type: Item
     sprite: Objects/Devices/syndicate_teleporter.rsi
   - type: SyndicateTeleporter
-    RandomValue: 4
-    TeleportationValue: 4
   - type: UseDelay
     delay: 0.5
   - type: LimitedCharges
-    charges: 411
-    maxcharges: 411
+    charges: 4
+    maxCharges: 4
   - type: AutoRecharge
     rechargeDuration: 10
   - type: EmitSoundOnUse

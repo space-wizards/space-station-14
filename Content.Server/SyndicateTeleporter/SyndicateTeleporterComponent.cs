@@ -5,19 +5,19 @@ namespace Content.Server.SyndicateTeleporter;
 [RegisterComponent]
 public sealed partial class SyndicateTeleporterComponent : Component
 {
-    [DataField("RandomValue")]
+    [DataField("randomValue")]
     [ViewVariables(VVAccess.ReadWrite)]
     public int RandomValue = 4;
 
-    [DataField("TeleportationValue")]
+    [DataField("teleportationValue")]
     [ViewVariables(VVAccess.ReadWrite)]
     public float TeleportationValue = 4f;
 
-    [DataField("SaveAttempts")]
+    [DataField("saveAttempts")]
     [ViewVariables(VVAccess.ReadWrite)]
     public int SaveAttempts = 1;
 
-    [DataField("SaveDistance")]
+    [DataField("saveDistance")]
     [ViewVariables(VVAccess.ReadWrite)]
     public int SaveDistance = 3;
 
