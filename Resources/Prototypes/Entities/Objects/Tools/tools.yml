@@ -415,6 +415,13 @@
     - Airlock
     - AirlockGlass
     - Firelock
+    - TubeLight
+    - BulbLight
+    - LVCable
+    - MVCable
+    - HVCable
+    - CableTerminal
+    - Deconstruct
 
 - type: entity
   id: RCDRecharging
