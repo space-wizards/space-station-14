@@ -36,7 +36,7 @@ public sealed class PettableFriendSystem : EntitySystem
             return;
 
         var exception = (uid, exceptionComp);
-        if (_factionException.!IsIgnored(exception, user))
+        if (!_factionException.IsIgnored(exception, user))
         {
             // you have made a new friend :)
             _popup.PopupClient(Loc.GetString(comp.SuccessString, ("target", uid)), user, user);
