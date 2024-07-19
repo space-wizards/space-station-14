@@ -21,15 +21,4 @@ public sealed partial class MeteorSchedulerComponent : Component
     [DataField, AutoPausedField]
     public TimeSpan NextSwarmTime = TimeSpan.Zero;
 
-    /// <summary>
-    /// The minimum time between swarms
-    /// </summary>
-    [DataField]
-    public TimeSpan MinSwarmDelay = TimeSpan.FromMinutes(7.5f);
-
-    /// <summary>
-    /// The maximum time between swarms
-    /// </summary>
-    [DataField]
-    public TimeSpan MaxSwarmDelay = TimeSpan.FromMinutes(12.5f);
 }
