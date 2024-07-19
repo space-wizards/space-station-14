@@ -1543,9 +1543,10 @@
   - type: NpcFactionMember
     factions:
       - Mouse
-  - type: HTN
-    rootTask:
-      task: MouseCompound
+  #- type: HTN
+  #  rootTask:
+  #    task: MouseCompound
+  - type: NpcKnowledge
   - type: Physics
   - type: FaxableObject
     insertingState: inserting_mouse
