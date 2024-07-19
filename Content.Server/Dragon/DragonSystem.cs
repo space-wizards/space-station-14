@@ -24,7 +24,6 @@ public sealed partial class DragonSystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
     [Dependency] private readonly NpcFactionSystem _faction = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
