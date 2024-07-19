@@ -111,7 +111,6 @@
   showInVote: false #Admin Use
   rules:
     - SpyVsSpy
-    - SubGamemodesRule
     - BasicStationEventScheduler
     - GameRuleMeteorScheduler
     - BasicRoundstartVariation
@@ -126,7 +125,6 @@
   showInVote: false
   rules:
     - SpyVsSpy
-    - SubGamemodesRule
     - BasicStationEventScheduler
     - GameRuleMeteorScheduler
     - BasicRoundstartVariation
