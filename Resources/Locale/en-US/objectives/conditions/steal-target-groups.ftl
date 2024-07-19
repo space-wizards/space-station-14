@@ -8,6 +8,6 @@ objective-condition-steal-target-groups-encryption-keys = encryption keys (any)
 objective-condition-steal-target-groups-id-cards = ID Cards (any)
 objective-condition-steal-target-groups-lamps = lamps
 
-#Thief structures
+# Thief structures
 objective-condition-steal-target-groups-teg = teg generator part
 

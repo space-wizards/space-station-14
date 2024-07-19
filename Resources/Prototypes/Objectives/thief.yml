@@ -4,7 +4,7 @@
   id: BaseThiefObjective
   components:
   - type: Objective
-    issuer: thief
+    issuer: objective-issuer-thief
   - type: RoleRequirement
     roles:
       components:
