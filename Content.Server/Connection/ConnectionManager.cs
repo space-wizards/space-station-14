@@ -332,7 +332,7 @@ namespace Content.Server.Connection
 
             if (isTotalPlaytimeInvalid)
             {
-                _sawmill.Debug($"Baby jail will deny {userId} for playtime {overallTime.TimeSpent}"); // Remove on or after 2024-09
+                _sawmill.Debug($"Baby jail will deny {userId} for playtime {overallTime!.TimeSpent}"); // Remove on or after 2024-09
             }
 
             if (isTotalPlaytimeInvalid && showReason)
