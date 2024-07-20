@@ -96,4 +96,4 @@
   cost: 2
   components:
     - type: ReplacementAccent
-    - type: Mobster
+      accent: mobster
