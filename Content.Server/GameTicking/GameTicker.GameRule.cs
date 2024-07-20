@@ -73,12 +73,7 @@ public sealed partial class GameTicker
         _sawmill.Info($"Added game rule {ToPrettyString(ruleEntity)}");
         _adminLogger.Add(LogType.EventStarted, $"Added game rule {ToPrettyString(ruleEntity)}");
         var str = Loc.GetString("station-event-system-run-event", ("eventName", ToPrettyString(ruleEntity)));
-#if !TOOLS
-// Okay, best I can figure, this is something to do with thread pooling, and the LocalizationManager just kills itself when tests try to access it.
-// ***maybe*** it could be sorted by making tests use IoCManager.InitThread()
-// I have no fucking clue. It kills tests though and noone can see the alert in tests anyway, so here we are.
         _chatManager.SendAdminAlert(str);
-#endif
         Log.Info(str);
 
         var ev = new GameRuleAddedEvent(ruleEntity, ruleId);

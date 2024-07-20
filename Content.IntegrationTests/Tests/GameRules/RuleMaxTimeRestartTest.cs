@@ -29,8 +29,12 @@ namespace Content.IntegrationTests.Tests.GameRules
             var sGameTiming = server.ResolveDependency<IGameTiming>();
             var locManager = server.ResolveDependency<ILocalizationManager>();
 
-            sGameTicker.StartGameRule("MaxTimeRestart", out var ruleEntity);
-            Assert.That(entityManager.TryGetComponent<MaxTimeRestartRuleComponent>(ruleEntity, out var maxTime));
+            MaxTimeRestartRuleComponent maxTime = null;
+            await server.WaitPost(() =>
+            {
+                sGameTicker.StartGameRule("MaxTimeRestart", out var ruleEntity);
+                Assert.That(entityManager.TryGetComponent<MaxTimeRestartRuleComponent>(ruleEntity, out maxTime));
+            });
 
             Assert.That(server.EntMan.Count<GameRuleComponent>(), Is.EqualTo(1));
             Assert.That(server.EntMan.Count<ActiveGameRuleComponent>(), Is.EqualTo(1));
