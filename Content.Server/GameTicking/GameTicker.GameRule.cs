@@ -15,8 +15,6 @@ namespace Content.Server.GameTicking;
 
 public sealed partial class GameTicker
 {
-    [Dependency] private readonly IChatManager _chat = default!;
-
     [ViewVariables] private readonly List<(TimeSpan, string)> _allPreviousGameRules = new();
 
     /// <summary>
@@ -75,7 +73,7 @@ public sealed partial class GameTicker
         _sawmill.Info($"Added game rule {ToPrettyString(ruleEntity)}");
         _adminLogger.Add(LogType.EventStarted, $"Added game rule {ToPrettyString(ruleEntity)}");
         var str = Loc.GetString("station-event-system-run-event", ("eventName", ToPrettyString(ruleEntity)));
-        _chat.SendAdminAlert(str);
+        _chatManager.SendAdminAlert(str);
         Log.Info(str);
 
         var ev = new GameRuleAddedEvent(ruleEntity, ruleId);
