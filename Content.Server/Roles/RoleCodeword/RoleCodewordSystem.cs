@@ -1,7 +1,7 @@
-using Content.Shared.Roles;
 using Content.Shared.Roles.RoleCodeword;
 
-namespace Content.Client.Roles;
+namespace Content.Server.Roles.RoleCodeword;
+
 public sealed class RoleCodewordSystem : SharedRoleCodewordSystem
 {
 

@@ -13,6 +13,7 @@ using Content.Shared.PDA;
 using Content.Shared.Radio;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
+using Content.Shared.Roles.RoleCodeword;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
@@ -22,8 +23,7 @@ namespace Content.Server.GameTicking.Rules;
 
 public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 {
-    private static readonly Color TraitorFallbackColor = Color.FromHex("#8f4a4b");
-    private static readonly string TraitorRadioChannel = "Syndicate";
+    private static readonly Color TraitorCodewordColor = Color.FromHex("#cc3b3b");
 
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -101,13 +101,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
         _antag.SendBriefing(traitor, GenerateBriefing(component.Codewords, code, issuer), null, component.GreetSoundNotification);
 
-        // Send codewords to only the traitor client
-        var color = TraitorFallbackColor; // Fall back to a dark red Syndicate color if a prototype is not found
-        if (_prototypeManager.TryIndex(TraitorRadioChannel, out RadioChannelPrototype? syndieChannel))
-        {
-            color = syndieChannel.Color;
-        }
-        RaiseNetworkEvent(new RoleCodewordEvent(GetNetEntity(mindId), color, "traitor", component.Codewords.ToList()), traitor);
 
         component.TraitorMinds.Add(mindId);
 
@@ -116,6 +109,12 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         {
             Briefing = briefing
         }, mind, true);
+
+        // Send codewords to only the traitor client
+        var color = TraitorCodewordColor; // Fall back to a dark red Syndicate color if a prototype is not found
+
+        RoleCodewordComponent codewordComp = EnsureComp<RoleCodewordComponent>(mindId);
+        codewordComp.RoleCodewords["traitor"] = new CodewordsData(color, component.Codewords.ToList());
 
         // Change the faction
         _npcFaction.RemoveFaction(traitor, component.NanoTrasenFaction, false);
