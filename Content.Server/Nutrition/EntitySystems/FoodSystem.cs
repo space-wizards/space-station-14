@@ -10,7 +10,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
@@ -31,6 +30,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Containers.ItemSlots;
 using Robust.Server.GameObjects;
 using Content.Shared.Whitelist;
 
@@ -99,6 +99,9 @@ public sealed class FoodSystem : EntitySystem
         args.Handled = result.Handled;
     }
 
+    /// <summary>
+    /// Tries to feed the food item to the target entity
+    /// </summary>
     public (bool Success, bool Handled) TryFeed(EntityUid user, EntityUid target, EntityUid food, FoodComponent foodComp)
     {
         //Suppresses eating yourself and alive mobs
@@ -133,6 +136,16 @@ public sealed class FoodSystem : EntitySystem
         {
             _popup.PopupEntity(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
             return (false, true);
+        }
+
+        // Checks for used item slots
+        if (TryComp<ItemSlotsComponent>(food, out var itemSlots))
+        {
+            if (itemSlots.Slots.Any(slot => slot.Value.HasItem))
+            {
+                _popup.PopupEntity(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
+                return (false, true);
+            }
         }
 
         var flavors = _flavorProfile.GetLocalizedFlavorsMessage(food, user, foodSolution);
@@ -189,9 +202,9 @@ public sealed class FoodSystem : EntitySystem
             BreakOnDamage = true,
             MovementThreshold = 0.01f,
             DistanceThreshold = MaxFeedDistance,
-            // Mice and the like can eat without hands.
-            // TODO maybe set this based on some CanEatWithoutHands event or component?
-            NeedHand = forceFeed,
+            // do-after will stop if item is dropped when trying to feed someone else
+            // or if the item started out in the user's own hands
+            NeedHand = forceFeed || _hands.IsHolding(user, food),
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
