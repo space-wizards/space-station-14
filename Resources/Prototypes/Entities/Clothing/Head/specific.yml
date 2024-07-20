@@ -30,6 +30,8 @@
   - type: TriggerOnVoice
     keyPhrase: "go go gadget"
     listenRange: 1
+  - type: ActiveListener
+    range: 1
   - type: ItemSlotVoiceControl
   - type: ItemSlots
     slots:
@@ -44,7 +46,6 @@
         whitelist:
           tags:
           - CigPack
-          - Cigarette
         disableEject: true
       flashlight:
         name: Flashlight
@@ -66,3 +67,11 @@
         disableEject: true
       # Camera
       # Audio Recorder
+  - type: ContainerContainer
+    containers:
+      cigarette: !type:ContainerSlot
+      body_bag: !type:ContainerSlot
+      flashlight: !type:ContainerSlot
+      lighter: !type:ContainerSlot
+      forensic_scanner: !type:ContainerSlot
+
