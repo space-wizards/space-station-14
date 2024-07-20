@@ -1,69 +1,4 @@
 ﻿Entries:
-- author: cooldolphin
-  changes:
-  - message: Three variants of glasses are now available in the loadout menu.
-    type: Add
-  id: 6435
-  time: '2024-04-25T23:18:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27286
-- author: EmoGarbage404
-  changes:
-  - message: Traitors now have the correct number of objectives.
-    type: Fix
-  - message: Declaring war now gives TC again.
-    type: Fix
-  - message: Latejoining antagonists will now properly exclude command and security
-      staff.
-    type: Fix
-  id: 6436
-  time: '2024-04-26T00:25:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27319
-- author: Tayrtahn
-  changes:
-  - message: Fixed Bibles not healing.
-    type: Fix
-  - message: Fixed quick insert and area insert not working on ore/plant/trash bags.
-    type: Fix
-  id: 6437
-  time: '2024-04-26T02:25:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27234
-- author: SkaldetSkaeg
-  changes:
-  - message: The handheld radio no longer plays a message spoken into it.
-    type: Tweak
-  id: 6438
-  time: '2024-04-26T07:34:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27046
-- author: FungiFellow
-  changes:
-  - message: Added SecBelt whitelist to Sec webbing
-    type: Tweak
-  - message: Added more Ammo holders to SecBelt whitelist
-    type: Tweak
-  id: 6439
-  time: '2024-04-26T07:44:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27303
-- author: IlyaElDunaev
-  changes:
-  - message: Ammonia heal blood loss in the Rat King
-    type: Add
-  id: 6440
-  time: '2024-04-26T07:47:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26887
-- author: FungiFellow
-  changes:
-  - message: Added Quiver Recipe, go wild Robin Hood.
-    type: Add
-  id: 6441
-  time: '2024-04-26T07:48:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27198
-- author: Boaz1111
-  changes:
-  - message: Refactored Cluster's medbay, including cryo in the bottom left room
-    type: Tweak
-  id: 6442
-  time: '2024-04-26T08:01:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27293
 - author: metalgearsloth
   changes:
   - message: Add predicted UI opening for storage and PDAs.
@@ -3805,3 +3740,61 @@
   id: 6934
   time: '2024-07-19T01:08:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30115
+- author: deepdarkdepths
+  changes:
+  - message: Removed the description about geras in the Slime guidebook section.
+    type: Remove
+  id: 6935
+  time: '2024-07-19T09:04:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30140
+- author: Blackern5000
+  changes:
+  - message: Nuclear operatives are now able to purchase durable armor which is NOT
+      space-proof.
+    type: Add
+  id: 6936
+  time: '2024-07-19T09:38:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29845
+- author: Plykiya, slarticodefast
+  changes:
+  - message: Explosive pens now correctly embed into their target.
+    type: Fix
+  id: 6937
+  time: '2024-07-19T09:42:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30112
+- author: ThatOneEnby1337
+  changes:
+  - message: News Reporters are now able to use markup tags in their reports without
+      bricking the PDAs of readers
+    type: Fix
+  id: 6938
+  time: '2024-07-19T14:18:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30169
+- author: themias
+  changes:
+  - message: Mailing units are functional again
+    type: Fix
+  id: 6939
+  time: '2024-07-20T02:31:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30174
+- author: Ghagliiarghii
+  changes:
+  - message: Nuclear Operatives' Reinforcements now have a PDA!
+    type: Tweak
+  id: 6940
+  time: '2024-07-20T02:59:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28088
+- author: Plykiya
+  changes:
+  - message: Chameleon scarves now work again.
+    type: Fix
+  id: 6941
+  time: '2024-07-20T03:00:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30156
+- author: Aidenkrz
+  changes:
+  - message: The mass hallucinations event no longer affects non-humanoids.
+    type: Fix
+  id: 6942
+  time: '2024-07-20T05:53:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28748

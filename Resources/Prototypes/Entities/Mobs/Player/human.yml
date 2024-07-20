@@ -38,6 +38,8 @@
   id: MobHumanSyndicateAgentNukeops # Reinforcement exclusive to nukeops uplink
   suffix: Human, NukeOps
   components:
+    - type: Loadout
+      prototypes: [SyndicateOperativeGearReinforcementNukeOps]
     - type: NukeOperative
 
 # Nuclear Operative

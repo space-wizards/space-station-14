@@ -20,31 +20,36 @@ public sealed partial class RCDMenu : RadialMenu
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-    private readonly SpriteSystem _spriteSystem;
-    private readonly SharedPopupSystem _popup;
+    private SharedPopupSystem _popup;
+    private SpriteSystem _sprites;
 
     public event Action<ProtoId<RCDPrototype>>? SendRCDSystemMessageAction;
 
     private EntityUid _owner;
 
-    public RCDMenu(EntityUid owner, RCDMenuBoundUserInterface bui)
+    public RCDMenu()
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
 
-        _spriteSystem = _entManager.System<SpriteSystem>();
         _popup = _entManager.System<SharedPopupSystem>();
+        _sprites = _entManager.System<SpriteSystem>();
 
-        _owner = owner;
+        OnChildAdded += AddRCDMenuButtonOnClickActions;
+    }
 
+    public void SetEntity(EntityUid uid)
+    {
+        _owner = uid;
+    }
+
+    public void Refresh()
+    {
         // Find the main radial container
         var main = FindControl<RadialContainer>("Main");
 
-        if (main == null)
-            return;
-
         // Populate secondary radial containers
-        if (!_entManager.TryGetComponent<RCDComponent>(owner, out var rcd))
+        if (!_entManager.TryGetComponent<RCDComponent>(_owner, out var rcd))
             return;
 
         foreach (var protoId in rcd.AvailablePrototypes)
@@ -56,10 +61,6 @@ public sealed partial class RCDMenu : RadialMenu
                 continue;
 
             var parent = FindControl<RadialContainer>(proto.Category);
-
-            if (parent == null)
-                continue;
-
             var tooltip = Loc.GetString(proto.SetName);
 
             if ((proto.Mode == RcdMode.ConstructTile || proto.Mode == RcdMode.ConstructObject) &&
@@ -84,7 +85,7 @@ public sealed partial class RCDMenu : RadialMenu
                 {
                     VerticalAlignment = VAlignment.Center,
                     HorizontalAlignment = HAlignment.Center,
-                    Texture = _spriteSystem.Frame0(proto.Sprite),
+                    Texture = _sprites.Frame0(proto.Sprite),
                     TextureScale = new Vector2(2f, 2f),
                 };
 
@@ -112,11 +113,9 @@ public sealed partial class RCDMenu : RadialMenu
 
         // Set up menu actions
         foreach (var child in Children)
+        {
             AddRCDMenuButtonOnClickActions(child);
-
-        OnChildAdded += AddRCDMenuButtonOnClickActions;
-
-        SendRCDSystemMessageAction += bui.SendRCDSystemMessage;
+        }
     }
 
     private static string OopsConcat(string a, string b)
