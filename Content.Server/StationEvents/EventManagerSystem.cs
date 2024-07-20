@@ -46,7 +46,6 @@ public sealed class EventManagerSystem : EntitySystem
         }
 
         GameTicker.AddGameRule(randomEvent);
-        return;
     }
 
     /// <summary>
