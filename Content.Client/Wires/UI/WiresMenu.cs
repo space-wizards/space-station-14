@@ -1,4 +1,3 @@
-using System;
 using System.Numerics;
 using Content.Client.Examine;
 using Content.Client.Resources;
@@ -13,10 +12,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Animations;
 using Robust.Shared.Input;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using Robust.Shared.Random;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Wires.UI
@@ -24,8 +19,6 @@ namespace Content.Client.Wires.UI
     public sealed class WiresMenu : BaseWindow
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
-
-        public WiresBoundUserInterface Owner { get; }
 
         private readonly Control _wiresHBox;
         private readonly Control _topContainer;
@@ -36,11 +29,12 @@ namespace Content.Client.Wires.UI
 
         public TextureButton CloseButton { get; set; }
 
-        public WiresMenu(WiresBoundUserInterface owner)
+        public event Action<int, WiresAction>? OnAction;
+
+        public WiresMenu()
         {
             IoCManager.InjectDependencies(this);
 
-            Owner = owner;
             var rootContainer = new LayoutContainer {Name = "WireRoot"};
             AddChild(rootContainer);
 
@@ -258,12 +252,12 @@ namespace Content.Client.Wires.UI
 
                 control.WireClicked += () =>
                 {
-                    Owner.PerformAction(wire.Id, wire.IsCut ? WiresAction.Mend : WiresAction.Cut);
+                    OnAction?.Invoke(wire.Id, wire.IsCut ? WiresAction.Mend : WiresAction.Cut);
                 };
 
                 control.ContactsClicked += () =>
                 {
-                    Owner.PerformAction(wire.Id, WiresAction.Pulse);
+                    OnAction?.Invoke(wire.Id, WiresAction.Pulse);
                 };
             }
 

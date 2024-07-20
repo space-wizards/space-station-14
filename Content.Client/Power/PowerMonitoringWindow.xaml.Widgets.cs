@@ -135,7 +135,7 @@ public sealed partial class PowerMonitoringWindow
             subEntry.Button.OnButtonUp += args => { ButtonAction(subEntry, masterContainer); };
         }
 
-        if (!_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(_owner, out var console))
+        if (!_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(Entity, out var console))
             return;
 
         // Update all children
