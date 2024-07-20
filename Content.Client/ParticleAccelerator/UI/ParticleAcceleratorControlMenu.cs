@@ -19,7 +19,6 @@ namespace Content.Client.ParticleAccelerator.UI
     public sealed class ParticleAcceleratorControlMenu : BaseWindow
     {
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
-        [Dependency] private readonly IResourceCache _cache = default!;
 
         private readonly ShaderInstance _greyScaleShader;
 
@@ -58,14 +57,15 @@ namespace Content.Client.ParticleAccelerator.UI
         public ParticleAcceleratorControlMenu()
         {
             SetSize = new Vector2(400, 320);
-            _greyScaleShader = _protoManager.Index<ShaderPrototype>("Greyscale").Instance();
+            _greyScaleShader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("Greyscale").Instance();
 
             _drawNoiseGenerator = new();
             _drawNoiseGenerator.SetFractalType(FastNoiseLite.FractalType.FBm);
             _drawNoiseGenerator.SetFrequency(0.5f);
 
-            var font = _cache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
-            var panelTex = _cache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
+            var resourceCache = IoCManager.Resolve<IResourceCache>();
+            var font = resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
+            var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
 
             MouseFilter = MouseFilterMode.Stop;
 
@@ -336,7 +336,7 @@ namespace Content.Client.ParticleAccelerator.UI
 
             PASegmentControl Segment(string name)
             {
-                return new(this, _cache, name);
+                return new(this, resourceCache, name);
             }
 
             UpdateUI(false, false, false, false);
