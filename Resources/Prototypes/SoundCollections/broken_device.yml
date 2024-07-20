@@ -1,7 +1,7 @@
 ﻿- type: soundCollection
   id: BrokenDevice
   files:
-  - /Audio/Items/electrical_short_circuit.ogg
+  - /Audio/Effects/electrical_short_circuit.ogg
 
 - type: soundCollection
   id: ShortCircuit
