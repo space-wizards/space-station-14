@@ -1,4 +1,5 @@
 using Content.Shared.Radio;
+using Content.Shared.Radio.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -36,13 +37,8 @@ public sealed class IntercomBoundUserInterface : BoundUserInterface
         };
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    public void Update(Entity<IntercomComponent> ent)
     {
-        base.UpdateState(state);
-
-        if (state is not IntercomBoundUIState msg)
-            return;
-
-        _menu?.Update(msg);
+        _menu?.Update(ent);
     }
 }

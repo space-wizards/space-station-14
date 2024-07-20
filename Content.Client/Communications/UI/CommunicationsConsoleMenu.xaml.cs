@@ -129,7 +129,9 @@ namespace Content.Client.Communications.UI
             var diff = (CountdownEnd - _timing.CurTime) ?? TimeSpan.Zero;
 
             EmergencyShuttleButton.Text = Loc.GetString("comms-console-menu-recall-shuttle");
-            CountdownLabel.SetMessage($"Time remaining\n{diff.TotalSeconds.ToString(CultureInfo.CurrentCulture)}s");
+            var infoText = Loc.GetString($"comms-console-menu-time-remaining",
+            ("time", diff.TotalSeconds.ToString(CultureInfo.CurrentCulture)));
+            CountdownLabel.SetMessage(infoText);
         }
     }
 }

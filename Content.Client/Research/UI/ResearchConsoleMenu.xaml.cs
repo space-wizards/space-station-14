@@ -82,7 +82,7 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
     public void UpdateInformationPanel(ResearchConsoleBoundInterfaceState state)
     {
         var amountMsg = new FormattedMessage();
-        amountMsg.AddMarkup(Loc.GetString("research-console-menu-research-points-text",
+        amountMsg.AddMarkupOrThrow(Loc.GetString("research-console-menu-research-points-text",
             ("points", state.Points)));
         ResearchAmountLabel.SetMessage(amountMsg);
 
@@ -99,7 +99,7 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         }
 
         var msg = new FormattedMessage();
-        msg.AddMarkup(Loc.GetString("research-console-menu-main-discipline",
+        msg.AddMarkupOrThrow(Loc.GetString("research-console-menu-main-discipline",
             ("name", disciplineText), ("color", disciplineColor)));
         MainDisciplineLabel.SetMessage(msg);
 

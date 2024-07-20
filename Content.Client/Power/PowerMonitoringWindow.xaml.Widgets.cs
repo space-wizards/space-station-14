@@ -482,7 +482,7 @@ public sealed class PowerMonitoringButton : Button
         {
             HorizontalAlignment = HAlignment.Right,
             Align = Label.AlignMode.Right,
-            SetWidth = 72f,
+            SetWidth = 80f,
             Margin = new Thickness(10, 0, 0, 0),
             ClipText = true,
         };

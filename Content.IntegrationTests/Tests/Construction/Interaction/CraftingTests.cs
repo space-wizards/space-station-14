@@ -59,11 +59,6 @@ public sealed class CraftingTests : InteractionTest
         await AssertEntityLookup((Rod, 2), (Cable, 7), (ShardGlass, 2), (Spear, 1));
     }
 
-    // The following is wrapped in an if DEBUG. This is because of cursed state handling bugs. Tests don't (de)serialize
-    // net messages and just copy objects by reference. This means that the server will directly modify cached server
-    // states on the client's end. Crude fix at the moment is to used modified state handling while in debug mode
-    // Otherwise, this test cannot work.
-#if DEBUG
     /// <summary>
     /// Cancel crafting a complex recipe.
     /// </summary>
@@ -93,28 +88,22 @@ public sealed class CraftingTests : InteractionTest
         await RunTicks(1);
 
         // DoAfter is in progress. Entity not spawned, stacks have been split and someingredients are in a container.
-        Assert.Multiple(async () =>
-        {
-            Assert.That(ActiveDoAfters.Count(), Is.EqualTo(1));
-            Assert.That(sys.IsEntityInContainer(shard), Is.True);
-            Assert.That(sys.IsEntityInContainer(rods), Is.False);
-            Assert.That(sys.IsEntityInContainer(wires), Is.False);
-            Assert.That(rodStack, Has.Count.EqualTo(8));
-            Assert.That(wireStack, Has.Count.EqualTo(7));
+        Assert.That(ActiveDoAfters.Count(), Is.EqualTo(1));
+        Assert.That(sys.IsEntityInContainer(shard), Is.True);
+        Assert.That(sys.IsEntityInContainer(rods), Is.False);
+        Assert.That(sys.IsEntityInContainer(wires), Is.False);
+        Assert.That(rodStack, Has.Count.EqualTo(8));
+        Assert.That(wireStack, Has.Count.EqualTo(7));
 
-            await FindEntity(Spear, shouldSucceed: false);
-        });
+        await FindEntity(Spear, shouldSucceed: false);
 
         // Cancel the DoAfter. Should drop ingredients to the floor.
         await CancelDoAfters();
-        Assert.Multiple(async () =>
-        {
-            Assert.That(sys.IsEntityInContainer(rods), Is.False);
-            Assert.That(sys.IsEntityInContainer(wires), Is.False);
-            Assert.That(sys.IsEntityInContainer(shard), Is.False);
-            await FindEntity(Spear, shouldSucceed: false);
-            await AssertEntityLookup((Rod, 10), (Cable, 10), (ShardGlass, 1));
-        });
+        Assert.That(sys.IsEntityInContainer(rods), Is.False);
+        Assert.That(sys.IsEntityInContainer(wires), Is.False);
+        Assert.That(sys.IsEntityInContainer(shard), Is.False);
+        await FindEntity(Spear, shouldSucceed: false);
+        await AssertEntityLookup((Rod, 10), (Cable, 10), (ShardGlass, 1));
 
         // Re-attempt the do-after
 #pragma warning disable CS4014 // Legacy construction code uses DoAfterAwait. See above.
@@ -123,24 +112,17 @@ public sealed class CraftingTests : InteractionTest
         await RunTicks(1);
 
         // DoAfter is in progress. Entity not spawned, ingredients are in a container.
-        Assert.Multiple(async () =>
-        {
-            Assert.That(ActiveDoAfters.Count(), Is.EqualTo(1));
-            Assert.That(sys.IsEntityInContainer(shard), Is.True);
-            await FindEntity(Spear, shouldSucceed: false);
-        });
+        Assert.That(ActiveDoAfters.Count(), Is.EqualTo(1));
+        Assert.That(sys.IsEntityInContainer(shard), Is.True);
+        await FindEntity(Spear, shouldSucceed: false);
 
         // Finish the DoAfter
         await AwaitDoAfters();
 
         // Spear has been crafted. Rods and wires are no longer contained. Glass has been consumed.
-        Assert.Multiple(async () =>
-        {
-            await FindEntity(Spear);
-            Assert.That(sys.IsEntityInContainer(rods), Is.False);
-            Assert.That(sys.IsEntityInContainer(wires), Is.False);
-            Assert.That(SEntMan.Deleted(shard));
-        });
+        await FindEntity(Spear);
+        Assert.That(sys.IsEntityInContainer(rods), Is.False);
+        Assert.That(sys.IsEntityInContainer(wires), Is.False);
+        Assert.That(SEntMan.Deleted(shard));
     }
-#endif
 }
