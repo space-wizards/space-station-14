@@ -23,6 +23,11 @@ public sealed class IntercomBoundUserInterface : BoundUserInterface
 
         _menu = this.CreateWindow<IntercomMenu>();
 
+        if (EntMan.TryGetComponent(Owner, out IntercomComponent? intercom))
+        {
+            _menu.Update((Owner, intercom));
+        }
+
         _menu.OnMicPressed += enabled =>
         {
             SendMessage(new ToggleIntercomMicMessage(enabled));
