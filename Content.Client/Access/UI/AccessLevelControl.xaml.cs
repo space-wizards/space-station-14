@@ -21,6 +21,7 @@ public sealed partial class AccessLevelControl : GridContainer
     public AccessLevelControl()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
         _sawmill = _logManager.GetSawmill("accesslevelcontrol");
     }
