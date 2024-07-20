@@ -57,6 +57,7 @@ namespace Content.Client.ParticleAccelerator.UI
 
         public ParticleAcceleratorControlMenu()
         {
+            IoCManager.InjectDependencies(this);
             SetSize = new Vector2(400, 320);
             _greyScaleShader = _protoManager.Index<ShaderPrototype>("Greyscale").Instance();
 
