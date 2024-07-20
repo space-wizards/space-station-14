@@ -34,6 +34,7 @@ public sealed class DefibrillatorSystem : SharedDefibrillatorSystem
 
     public override void Zap(EntityUid uid, EntityUid target, EntityUid user, DefibrillatorComponent component, MobStateComponent? mob = null)
     {
+        // TODO : powercell should be rewritten to shared instead of strictly be on Server side
         if (!_powerCell.TryUseActivatableCharge(uid, user: user))
             return;
 
