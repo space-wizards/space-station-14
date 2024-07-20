@@ -1,5 +1,6 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Ghost;
+using Content.Shared.Interaction;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
@@ -42,6 +43,7 @@ public abstract class SharedPortalSystem : EntitySystem
         SubscribeLocalEvent<PortalComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<PortalComponent, EndCollideEvent>(OnEndCollide);
         SubscribeLocalEvent<PortalComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
+        SubscribeLocalEvent<PortalComponent, ActivateInWorldEvent>(OnActivate);
     }
 
     private void OnGetVerbs(EntityUid uid, PortalComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -81,13 +83,8 @@ public abstract class SharedPortalSystem : EntitySystem
         return ourId == PortalFixture && (other.Hard || otherId == ProjectileFixture);
     }
 
-    private void OnCollide(EntityUid uid, PortalComponent component, ref StartCollideEvent args)
+    private void EnterPortal(EntityUid portal, EntityUid subject, PortalComponent component)
     {
-        if (!ShouldCollide(args.OurFixtureId, args.OtherFixtureId, args.OurFixture, args.OtherFixture))
-            return;
-
-        var subject = args.OtherEntity;
-
         // best not.
         if (Transform(subject).Anchored)
             return;
@@ -104,13 +101,7 @@ public abstract class SharedPortalSystem : EntitySystem
             _pulling.TryStopPull(subject, subjectPulling);
         }
 
-        // if they came from another portal, just return and wait for them to exit the portal
-        if (HasComp<PortalTimeoutComponent>(subject))
-        {
-            return;
-        }
-
-        if (TryComp<LinkedEntityComponent>(uid, out var link))
+        if (TryComp<LinkedEntityComponent>(portal, out var link))
         {
             if (!link.LinkedEntities.Any())
                 return;
@@ -132,11 +123,11 @@ public abstract class SharedPortalSystem : EntitySystem
             {
                 // if target is a portal, signal that they shouldn't be immediately portaled back
                 var timeout = EnsureComp<PortalTimeoutComponent>(subject);
-                timeout.EnteredPortal = uid;
+                timeout.EnteredPortal = portal;
                 Dirty(subject, timeout);
             }
 
-            TeleportEntity(uid, subject, Transform(target).Coordinates, target);
+            TeleportEntity(portal, subject, Transform(target).Coordinates, target);
             return;
         }
 
@@ -145,7 +136,28 @@ public abstract class SharedPortalSystem : EntitySystem
 
         // no linked entity--teleport randomly
         if (component.RandomTeleport)
-            TeleportRandomly(uid, subject, component);
+            TeleportRandomly(portal, subject, component);
+    }
+
+    private void OnActivate(EntityUid uid, PortalComponent component, ActivateInWorldEvent args)
+    {
+        EnterPortal(uid, args.User, component);
+    }
+
+    private void OnCollide(EntityUid uid, PortalComponent component, ref StartCollideEvent args)
+    {
+        if (!ShouldCollide(args.OurFixtureId, args.OtherFixtureId, args.OurFixture, args.OtherFixture))
+            return;
+
+        var subject = args.OtherEntity;
+
+        // if they came from another portal, just return and wait for them to exit the portal
+        if (HasComp<PortalTimeoutComponent>(subject))
+        {
+            return;
+        }
+
+        EnterPortal(uid, subject, component);
     }
 
     private void OnEndCollide(EntityUid uid, PortalComponent component, ref EndCollideEvent args)
