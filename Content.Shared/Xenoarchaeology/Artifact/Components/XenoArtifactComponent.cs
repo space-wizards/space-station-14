@@ -36,6 +36,13 @@ public sealed partial class XenoArtifactComponent : Component
     [DataField, AutoNetworkedField]
     public bool Suppressed;
 
+    /// <summary>
+    /// A multiplier applied to the calculated point value
+    /// to determine the monetary value of the artifact
+    /// </summary>
+    [DataField]
+    public float PriceMultiplier = 0.10f;
+
     #region Unlocking
     /// <summary>
     /// How long does the unlocking state last.

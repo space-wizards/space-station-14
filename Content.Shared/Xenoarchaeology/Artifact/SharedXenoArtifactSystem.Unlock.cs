@@ -52,6 +52,7 @@ public abstract partial class SharedXenoArtifactSystem
             // TODO: animation
             SetNodeUnlocked((ent, ent.Comp2), node.Value);
             unlockMsg = "artifact-unlock-state-end-success";
+            ActivateNode((ent, ent.Comp2), node.Value, null, null, Transform(ent).Coordinates, false);
         }
         else
         {

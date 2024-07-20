@@ -1,4 +1,5 @@
 using Content.Server.Administration;
+using Content.Server.Cargo.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Whitelist;
 using Content.Shared.Xenoarchaeology.Artifact;
@@ -18,6 +19,7 @@ public sealed partial class XenoArtifactSystem : SharedXenoArtifactSystem
         base.Initialize();
 
         SubscribeLocalEvent<XenoArtifactComponent, MapInitEvent>(OnArtifactMapInit);
+        SubscribeLocalEvent<XenoArtifactComponent, PriceCalculationEvent>(OnCalculatePrice);
 
         // this isn't a toolshed command because apparently it doesn't support autocompletion.
         // and no, i'm not writing some complicated bullshit for a one-off testing command.
@@ -27,7 +29,6 @@ public sealed partial class XenoArtifactSystem : SharedXenoArtifactSystem
             UnlockNodeCommand,
             UnlockNodeCompletion);
     }
-
 
     [AdminCommand(AdminFlags.Debug)]
     private void UnlockNodeCommand(IConsoleShell shell, string argstr, string[] args)
@@ -74,5 +75,16 @@ public sealed partial class XenoArtifactSystem : SharedXenoArtifactSystem
     {
         if (ent.Comp.DoGeneration)
             GenerateArtifactStructure(ent);
+    }
+
+    private void OnCalculatePrice(Entity<XenoArtifactComponent> ent, ref PriceCalculationEvent args)
+    {
+        foreach (var node in GetAllNodes(ent))
+        {
+            if (node.Comp.Locked)
+                continue;
+
+            args.Price += node.Comp.ResearchValue * ent.Comp.PriceMultiplier;
+        }
     }
 }

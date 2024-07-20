@@ -47,14 +47,13 @@ public abstract partial class SharedXenoArtifactSystem
         EntityUid? target,
         EntityCoordinates coordinates)
     {
-        if (TryComp<UseDelayComponent>(artifact, out var delay) && !_useDelay.TryResetDelay((artifact, delay), true))
-            return false;
-
         if (artifact.Comp.Suppressed)
             return false;
 
-        var success = false;
+        if (TryComp<UseDelayComponent>(artifact, out var delay) && !_useDelay.TryResetDelay((artifact, delay), true))
+            return false;
 
+        var success = false;
         foreach (var node in GetActiveNodes(artifact))
         {
             success |= ActivateNode(artifact, node, user, target, coordinates);
@@ -62,7 +61,7 @@ public abstract partial class SharedXenoArtifactSystem
 
         if (!success)
         {
-            //TODO: sad popup about how nothing happened.
+            _popup.PopupClient(Loc.GetString("artifact-activation-fail"), artifact, user);
         }
 
         return true;

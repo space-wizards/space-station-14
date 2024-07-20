@@ -11,7 +11,6 @@ using Content.Server.Mind.Commands;
 using Content.Server.Prayer;
 using Content.Server.Station.Systems;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
-using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
@@ -385,29 +384,6 @@ namespace Content.Server.Administration.Systems
                     ConfirmationPopup = true
                 };
                 args.Verbs.Add(verb);
-            }
-
-            // XenoArcheology
-            if (_adminManager.IsAdmin(player) && TryComp<ArtifactComponent>(args.Target, out var artifact))
-            {
-                // make artifact always active (by adding timer trigger)
-                args.Verbs.Add(new Verb()
-                {
-                    Text = Loc.GetString("artifact-verb-make-always-active"),
-                    Category = VerbCategory.Debug,
-                    Act = () => EntityManager.AddComponent<ArtifactTimerTriggerComponent>(args.Target),
-                    Disabled = EntityManager.HasComponent<ArtifactTimerTriggerComponent>(args.Target),
-                    Impact = LogImpact.High
-                });
-
-                // force to activate artifact ignoring timeout
-                args.Verbs.Add(new Verb()
-                {
-                    Text = Loc.GetString("artifact-verb-activate"),
-                    Category = VerbCategory.Debug,
-                    Act = () => _artifactSystem.ForceActivateArtifact(args.Target, component: artifact),
-                    Impact = LogImpact.High
-                });
             }
 
             // Make Sentient verb

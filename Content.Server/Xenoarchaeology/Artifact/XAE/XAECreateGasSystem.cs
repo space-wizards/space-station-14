@@ -24,7 +24,7 @@ public sealed class XAECreateGasSystem : BaseXAESystem<XAECreateGasComponent>
         var tile = _map.LocalToTile(grid.Value, gridComp, args.Coordinates);
 
         var mixtures = new List<GasMixture>();
-        if (_atmosphere.GetTileMixture(grid.Value, map.Value, tile, true) is { } localMixture)
+        if (_atmosphere.GetTileMixture(grid.Value, map.Value, tile, excite: true) is { } localMixture)
             mixtures.Add(localMixture);
 
         if (_atmosphere.GetAdjacentTileMixtures(grid.Value, tile, excite: true) is var adjacentTileMixtures)
