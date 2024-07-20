@@ -152,6 +152,9 @@ public sealed class NpcKnowledgeSystem : SharedNpcKnowledgeSystem
 
             while (debugQuery.MoveNext(out var nUid, out var npc))
             {
+                if (!npc.Enabled)
+                    continue;
+
                 // I just like accessing struct elements by ref OKAY
                 var mobSpan = CollectionsMarshal.AsSpan(npc.HostileMobs);
 

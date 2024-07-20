@@ -77,6 +77,23 @@ public sealed partial class NpcGoalSystem : SharedNpcGoalSystem
         if (_debugSubscribers.Count > 0)
         {
             var debugQuery = EntityQueryEnumerator<NpcKnowledgeComponent>();
+            var ev = new NpcGoalsDebugEvent();
+
+            while (debugQuery.MoveNext(out var uid, out var knowledge))
+            {
+                if (!knowledge.Enabled)
+                    continue;
+
+                var data = new NpcGoalsData
+                {
+                    Generators = knowledge.GoalGenerators,
+                    Goals = knowledge.Goals,
+                };
+
+                ev.Data.Add(data);
+            }
+
+            RaiseNetworkEvent(ev, Filter.Empty().AddPlayers(_debugSubscribers));
         }
     }
 
