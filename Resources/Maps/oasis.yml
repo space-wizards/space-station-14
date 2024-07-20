@@ -2105,8 +2105,8 @@ entities:
             1356: 33,-6
             3596: 26,13
             3597: 26,14
-            3612: 33,13
-            3613: 33,14
+            3610: 33,13
+            3611: 33,14
         - node:
             color: '#4B709CFF'
             id: BrickTileWhiteLineE
@@ -2278,8 +2278,8 @@ entities:
             color: '#334E6DC8'
             id: BrickTileWhiteLineN
           decals:
-            3614: 30,16
-            3615: 31,16
+            3612: 30,16
+            3613: 31,16
         - node:
             color: '#4B709CFF'
             id: BrickTileWhiteLineN
@@ -2478,8 +2478,6 @@ entities:
             496: -26,-30
             516: -32,-30
             517: -31,-30
-            518: -30,-30
-            519: -30,-30
             564: -25,-42
             565: -26,-42
             566: -27,-42
@@ -2491,6 +2489,7 @@ entities:
             2378: 30,-42
             2379: 29,-42
             2380: 28,-42
+            3626: -30,-30
         - node:
             color: '#765428FF'
             id: BrickTileWhiteLineS
@@ -3593,8 +3592,8 @@ entities:
             808: -33,-9
             809: -29,-9
             2860: -23,-36
-            3616: 27,13
-            3617: 27,14
+            3614: 27,13
+            3615: 27,14
         - node:
             color: '#373737FF'
             id: FullTileOverlayGreyscale
@@ -5719,7 +5718,7 @@ entities:
             932: 20,-30
             2831: 41,23
             3066: 19,37
-            3618: 10,-19
+            3616: 10,-19
         - node:
             color: '#FFFFFFFF'
             id: WoodTrimThinCornerNw
@@ -5745,7 +5744,7 @@ entities:
             934: 19,-30
             2832: 39,23
             3067: 12,37
-            3619: 7,-19
+            3617: 7,-19
         - node:
             color: '#FFFFFFFF'
             id: WoodTrimThinCornerSe
@@ -5767,7 +5766,7 @@ entities:
             935: 17,-32
             936: 20,-32
             3077: 19,36
-            3621: 10,-21
+            3619: 10,-21
         - node:
             color: '#FFFFFFFF'
             id: WoodTrimThinCornerSw
@@ -5791,7 +5790,7 @@ entities:
             923: 42,-10
             937: 13,-32
             938: 19,-32
-            3620: 7,-21
+            3618: 7,-21
         - node:
             color: '#FFFFFFFF'
             id: WoodTrimThinEndE
@@ -5876,7 +5875,7 @@ entities:
             940: 17,-31
             2833: 41,22
             3068: 17,35
-            3627: 10,-20
+            3625: 10,-20
         - node:
             color: '#FFFFFFFF'
             id: WoodTrimThinLineN
@@ -5926,8 +5925,8 @@ entities:
             3074: 16,37
             3075: 17,37
             3076: 18,37
-            3625: 8,-19
-            3626: 9,-19
+            3623: 8,-19
+            3624: 9,-19
         - node:
             color: '#FFFFFFFF'
             id: WoodTrimThinLineS
@@ -5972,8 +5971,8 @@ entities:
             944: 15,-32
             945: 16,-32
             3078: 18,36
-            3622: 9,-21
-            3623: 8,-21
+            3620: 9,-21
+            3621: 8,-21
         - node:
             color: '#FFFFFFFF'
             id: WoodTrimThinLineW
@@ -6006,7 +6005,7 @@ entities:
             2834: 39,22
             3069: 12,35
             3070: 12,36
-            3624: 7,-20
+            3622: 7,-20
     - type: GridAtmosphere
       version: 2
       data:
@@ -14467,7 +14466,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -4458.0996
+      secondsUntilStateChange: -4701.3823
       state: Opening
   - uid: 6934
     components:
@@ -14479,7 +14478,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -4460.733
+      secondsUntilStateChange: -4704.0156
       state: Opening
   - uid: 6935
     components:
@@ -14491,7 +14490,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -4459.583
+      secondsUntilStateChange: -4702.8657
       state: Opening
   - uid: 6936
     components:
@@ -14502,7 +14501,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -4458.7993
+      secondsUntilStateChange: -4702.082
       state: Opening
 - proto: AirlockTheatreLocked
   entities:
@@ -49515,6 +49514,11 @@ entities:
     - type: Transform
       pos: -40.5,40.5
       parent: 2
+  - uid: 14151
+    components:
+    - type: Transform
+      pos: -40.5,32.5
+      parent: 2
   - uid: 14189
     components:
     - type: Transform
@@ -55259,6 +55263,76 @@ entities:
     components:
     - type: Transform
       pos: -31.5,9.5
+      parent: 2
+  - uid: 28908
+    components:
+    - type: Transform
+      pos: -41.5,32.5
+      parent: 2
+  - uid: 28909
+    components:
+    - type: Transform
+      pos: -42.5,32.5
+      parent: 2
+  - uid: 28910
+    components:
+    - type: Transform
+      pos: -43.5,32.5
+      parent: 2
+  - uid: 28911
+    components:
+    - type: Transform
+      pos: -44.5,32.5
+      parent: 2
+  - uid: 28912
+    components:
+    - type: Transform
+      pos: -44.5,31.5
+      parent: 2
+  - uid: 28913
+    components:
+    - type: Transform
+      pos: -44.5,30.5
+      parent: 2
+  - uid: 28914
+    components:
+    - type: Transform
+      pos: -44.5,29.5
+      parent: 2
+  - uid: 28915
+    components:
+    - type: Transform
+      pos: -44.5,28.5
+      parent: 2
+  - uid: 28916
+    components:
+    - type: Transform
+      pos: -44.5,27.5
+      parent: 2
+  - uid: 28917
+    components:
+    - type: Transform
+      pos: -44.5,33.5
+      parent: 2
+  - uid: 28918
+    components:
+    - type: Transform
+      pos: -44.5,34.5
+      parent: 2
+  - uid: 28919
+    components:
+    - type: Transform
+      pos: -44.5,35.5
+      parent: 2
+  - uid: 28920
+    components:
+    - type: Transform
+      pos: -44.5,36.5
+      parent: 2
+  - uid: 28921
+    components:
+    - type: Transform
+      pos: -44.5,37.5
       parent: 2
 - proto: CableApcStack1
   entities:
@@ -106353,17 +106427,6 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#0335FCFF'
-  - uid: 14151
-    components:
-    - type: Transform
-      anchored: False
-      pos: 32.5,-1.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#0335FCFF'
-    - type: Physics
-      canCollide: True
-      bodyType: Dynamic
   - uid: 14155
     components:
     - type: Transform
@@ -136111,7 +136174,7 @@ entities:
       pos: 36.5,-35.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -32613.93
+      secondsUntilStateChange: -32857.21
       state: Opening
   - uid: 5211
     components:
@@ -183851,7 +183914,7 @@ entities:
       pos: 24.5,2.5
       parent: 21002
     - type: Door
-      secondsUntilStateChange: -377818.53
+      secondsUntilStateChange: -378061.8
       state: Opening
   - uid: 28863
     components:
