@@ -5,18 +5,13 @@
   components:
   - type: RandomRule
     selectableGameRules:
-    # Make the probability sum to 1 or I will remove your fingernails with toothpicks.
     - id: UnknownShuttleCargoLost
-      prob: 0.25
       orGroup: Shuttles
     - id: UnknownShuttleTravelingCuisine
-      prob: 0.25
       orGroup: Shuttles
     - id: UnknownShuttleDisasterEvacPod
-      prob: 0.3
       orGroup: Shuttles
     - id: UnknownShuttleSyndieEvacPod
-      prob: 0.2
       orGroup: Shuttles
 
 - type: entity

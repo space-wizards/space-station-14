@@ -34,7 +34,7 @@ public sealed class EventManagerSystem : EntitySystem
     /// <summary>
     /// Randomly runs a valid event.
     /// </summary>
-    public string RunRandomEvent()
+    public void RunRandomEvent()
     {
         var randomEvent = PickRandomEvent();
 
@@ -42,78 +42,66 @@ public sealed class EventManagerSystem : EntitySystem
         {
             var errStr = Loc.GetString("station-event-system-run-random-event-no-valid-events");
             Log.Error(errStr);
-            return errStr;
+            return;
         }
 
-        var ent = GameTicker.AddGameRule(randomEvent);
-        var str = Loc.GetString("station-event-system-run-event", ("eventName", ToPrettyString(ent)));
-        _chat.SendAdminAlert(str);
-        Log.Info(str);
-        return str;
+        GameTicker.AddGameRule(randomEvent);
+        return;
     }
 
     /// <summary>
     /// Randomly runs an event from provided EntitySpawnCollection.
     /// </summary>
-    public string? RunRandomEvent(List<EntitySpawnEntry>? limitedEventsList)
+    public void RunRandomEvent(List<EntitySpawnEntry> limitedEventsList)
     {
-        if (limitedEventsList != null)
+        var availableEvents = AvailableEvents(); // handles the player counts and individual event restrictions
+
+        if (availableEvents.Count == 0)
         {
-            var availableEvents = AvailableEvents(); // handles the player counts and individual event restrictions
-
-            if (availableEvents.Count == 0)
-            {
-                Log.Warning("No events were available to run!");
-                return null;
-            }
-
-            var selectedEvents = EntitySpawnCollection.GetSpawns(limitedEventsList, _random); // storage function for game rules, smh my head.
-            // fuck it though, it works and gives us all the random selection utility we want.
-
-            Log.Info($"Picking from {limitedEventsList.Count} subsetted events");
-
-            var limitedEvents = new Dictionary<EntityPrototype, StationEventComponent>();
-            foreach (var eventid in selectedEvents)
-            {
-                if (!_prototype.TryIndex(eventid, out var eventproto))
-                {
-                    Log.Warning("An event ID has no prototype index!");
-                    continue;
-                }
-
-                if (eventproto.Abstract)
-                    continue;
-
-                if (!eventproto.TryGetComponent<StationEventComponent>(out var stationEvent, EntityManager.ComponentFactory))
-                    continue;
-
-                if (!availableEvents.ContainsKey(eventproto))
-                    continue;
-
-                limitedEvents.Add(eventproto, stationEvent);
-            }
-
-            var randomLimitedEvent = FindEvent(limitedEvents); // this picks the event, It might be better to use the GetSpawns to do it, but that will be a major rebalancing fuck.
-            if (randomLimitedEvent == null)
-            {
-                Log.Warning("The selected random event is null!");
-                return null;
-            }
-
-            if (!_prototype.TryIndex(randomLimitedEvent, out _))
-            {
-                Log.Warning("A requested event is not available!");
-                return null;
-            }
-
-            var ent = GameTicker.AddGameRule(randomLimitedEvent);
-            var str = Loc.GetString("station-event-system-run-event", ("eventName", ToPrettyString(ent)));
-            _chat.SendAdminAlert(str);
-            Log.Info(str);
-            return str;
+            Log.Warning("No events were available to run!");
+            return;
         }
-        Log.Warning("A scheduler has requested null as event!");
-        return null;
+
+        var selectedEvents = EntitySpawnCollection.GetSpawns(limitedEventsList, _random); // storage function for game rules, smh my head.
+                                                                                          // fuck it though, it works and gives us all the random selection utility we want.
+
+        Log.Info($"Picking from {limitedEventsList.Count} subsetted events");
+
+        var limitedEvents = new Dictionary<EntityPrototype, StationEventComponent>();
+        foreach (var eventid in selectedEvents)
+        {
+            if (!_prototype.TryIndex(eventid, out var eventproto))
+            {
+                Log.Warning("An event ID has no prototype index!");
+                continue;
+            }
+
+            if (eventproto.Abstract)
+                continue;
+
+            if (!eventproto.TryGetComponent<StationEventComponent>(out var stationEvent, EntityManager.ComponentFactory))
+                continue;
+
+            if (!availableEvents.ContainsKey(eventproto))
+                continue;
+
+            limitedEvents.Add(eventproto, stationEvent);
+        }
+
+        var randomLimitedEvent = FindEvent(limitedEvents); // this picks the event, It might be better to use the GetSpawns to do it, but that will be a major rebalancing fuck.
+        if (randomLimitedEvent == null)
+        {
+            Log.Warning("The selected random event is null!");
+            return;
+        }
+
+        if (!_prototype.TryIndex(randomLimitedEvent, out _))
+        {
+            Log.Warning("A requested event is not available!");
+            return;
+        }
+
+        GameTicker.AddGameRule(randomLimitedEvent);
     }
 
 

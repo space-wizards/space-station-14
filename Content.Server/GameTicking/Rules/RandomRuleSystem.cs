@@ -37,8 +37,6 @@ public sealed class RandomRuleSystem : GameRuleSystem<RandomRuleComponent>
 
         foreach (var rule in nRules)
         {
-            var ruleEnt = new EntityUid();
-
             if (!_prototypeManager.TryIndex(rule, out var ruleProto))
             {
                 Log.Warning("The selected random rule is missing a prototype!");
@@ -50,11 +48,7 @@ public sealed class RandomRuleSystem : GameRuleSystem<RandomRuleComponent>
                 Log.Warning("The selected random rule is not available!");
                 continue;
             }
-            GameTicker.StartGameRule(rule, out ruleEnt);
-
-            var str = Loc.GetString("station-event-system-run-event", ("eventName", ToPrettyString(ruleEnt)));
-            _chatManager.SendAdminAlert(str);
-            Log.Info(str);
+            GameTicker.StartGameRule(rule);
         }
     }
 

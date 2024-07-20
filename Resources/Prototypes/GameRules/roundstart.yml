@@ -255,36 +255,36 @@
   components:
   - type: BasicStationEventScheduler
     scheduledGameRules:
-    - id: ClosetSkeleton
-    - id: MouseMigration
-    - id: SlimesSpawn
+    - id: AnomalySpawn
     - id: BluespaceArtifact
+    - id: BluespaceLocker
+    - id: BreakerFlip
+    - id: BureaucraticError
     - id: ClericalError
-    - id: IonStorm
-    - id: KingRatMigration
+    - id: ClosetSkeleton
     - id: CockroachMigration
-    - id: SpiderClownSpawn
-    - id: VentClog
+    - id: DragonSpawn
     - id: GasLeak
     - id: ImmovableRodSpawn
-    - id: BreakerFlip
-    - id: PowerGridCheck
-    - id: BluespaceLocker
-    - id: NinjaSpawn
-    - id: BureaucraticError
-    - id: DragonSpawn
-    - id: SpiderSpawn
-    - id: MimicVendorRule
-    - id: LoneOpsSpawn
-    - id: RevenantSpawn
-    - id: MassHallucinations
-    - id: SleeperAgents
-    - id: AnomalySpawn
-    - id: SolarFlare
+    - id: IonStorm
+    - id: KingRatMigration
     - id: KudzuGrowth
-    - id: ZombieOutbreak
+    - id: LoneOpsSpawn
+    - id: MassHallucinations
+    - id: MimicVendorRule
+    - id: MouseMigration
+    - id: NinjaSpawn
+    - id: PowerGridCheck
     - id: RandomCargoGiftsRule
     - id: RandomUnknownShuttleRule
+    - id: RevenantSpawn
+    - id: SleeperAgents
+    - id: SlimesSpawn
+    - id: SolarFlare
+    - id: SpiderClownSpawn
+    - id: SpiderSpawn
+    - id: VentClog
+    - id: ZombieOutbreak
 
 - type: entity
   id: RampingStationEventScheduler
@@ -292,36 +292,36 @@
   components:
   - type: RampingStationEventScheduler
     scheduledGameRules:
-    - id: ClosetSkeleton
-    - id: MouseMigration
-    - id: SlimesSpawn
+    - id: AnomalySpawn
     - id: BluespaceArtifact
+    - id: BluespaceLocker
+    - id: BreakerFlip
+    - id: BureaucraticError
     - id: ClericalError
-    - id: IonStorm
-    - id: KingRatMigration
+    - id: ClosetSkeleton
     - id: CockroachMigration
-    - id: SpiderClownSpawn
-    - id: VentClog
+    - id: DragonSpawn
     - id: GasLeak
     - id: ImmovableRodSpawn
-    - id: BreakerFlip
-    - id: PowerGridCheck
-    - id: BluespaceLocker
-    - id: NinjaSpawn
-    - id: BureaucraticError
-    - id: DragonSpawn
-    - id: SpiderSpawn
-    - id: MimicVendorRule
-    - id: LoneOpsSpawn
-    - id: RevenantSpawn
-    - id: MassHallucinations
-    - id: SleeperAgents
-    - id: AnomalySpawn
-    - id: SolarFlare
+    - id: IonStorm
+    - id: KingRatMigration
     - id: KudzuGrowth
-    - id: ZombieOutbreak
+    - id: LoneOpsSpawn
+    - id: MassHallucinations
+    - id: MimicVendorRule
+    - id: MouseMigration
+    - id: NinjaSpawn
+    - id: PowerGridCheck
     - id: RandomCargoGiftsRule
     - id: RandomUnknownShuttleRule
+    - id: RevenantSpawn
+    - id: SleeperAgents
+    - id: SlimesSpawn
+    - id: SolarFlare
+    - id: SpiderClownSpawn
+    - id: SpiderSpawn
+    - id: VentClog
+    - id: ZombieOutbreak
 
 # variation passes
 - type: entity

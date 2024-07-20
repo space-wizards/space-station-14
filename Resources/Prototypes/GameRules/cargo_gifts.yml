@@ -5,38 +5,27 @@
   components:
   - type: RandomRule
     selectableGameRules:
-    # Make the probability sum to 1 or I will remove your fingernails with toothpicks.
-    - id: GiftsPizzaPartySmall
-      prob: 0.1
-      orGroup: Gifts
-    - id: GiftsPizzaPartyLarge
-      prob: 0.1
-      orGroup: Gifts
     - id: GiftsEngineering
-      prob: 0.1
-      orGroup: Gifts
-    - id: GiftsVendingRestock
-      prob: 0.1
-      orGroup: Gifts
-    - id: GiftsJanitor
-      prob: 0.1
-      orGroup: Gifts
-    - id: GiftsMedical
-      prob: 0.1
-      orGroup: Gifts
-    - id: GiftsSpacingSupplies
-      prob: 0.1
       orGroup: Gifts
     - id: GiftsFireProtection
-      prob: 0.1
+      orGroup: Gifts
+    - id: GiftsJanitor
+      orGroup: Gifts
+    - id: GiftsMedical
+      orGroup: Gifts
+    - id: GiftsPizzaPartyLarge
+      orGroup: Gifts
+    - id: GiftsPizzaPartySmall
       orGroup: Gifts
     - id: GiftsSecurityGuns
-      prob: 0.1
       orGroup: Gifts
     - id: GiftsSecurityRiot
-      prob: 0.1
       orGroup: Gifts
-
+    - id: GiftsSpacingSupplies
+      orGroup: Gifts
+    - id: GiftsVendingRestock
+      orGroup: Gifts
+    
 - type: entity
   id: CargoGiftsBase
   parent: BaseGameRule
