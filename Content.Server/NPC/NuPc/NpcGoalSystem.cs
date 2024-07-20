@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+using Content.Server.Administration.Managers;
 using Content.Shared.NPC.NuPC;
 using Robust.Shared.Collections;
 using Robust.Shared.Player;
@@ -9,6 +10,7 @@ namespace Content.Server.NPC.NuPc;
 
 public sealed partial class NpcGoalSystem : SharedNpcGoalSystem
 {
+    [Dependency] private readonly IAdminManager _admins = default!;
     [Dependency] private readonly IParallelManager _parallel = default!;
 
     private NpcGoalJob _goalJob = new();
@@ -24,8 +26,28 @@ public sealed partial class NpcGoalSystem : SharedNpcGoalSystem
         _goalJob.System = this;
         _goalJob.Npcs = _npcs;
 
+        SubscribeNetworkEvent<RequestNpcGoalsEvent>(OnGoalsRequest);
+
         // If an NPC updates on Tick 0 then we update goals on Tick 1.
         UpdatesBefore.Add(typeof(NpcKnowledgeSystem));
+    }
+
+    private void OnGoalsRequest(RequestNpcGoalsEvent ev, EntitySessionEventArgs args)
+    {
+        if (!_admins.IsAdmin(args.SenderSession))
+            return;
+
+        if (ev.Enabled)
+        {
+            if (!_debugSubscribers.Contains(args.SenderSession))
+                return;
+
+            _debugSubscribers.Add(args.SenderSession);
+        }
+        else
+        {
+            _debugSubscribers.Remove(args.SenderSession);
+        }
     }
 
     public override void Update(float frameTime)
@@ -54,7 +76,7 @@ public sealed partial class NpcGoalSystem : SharedNpcGoalSystem
 
         if (_debugSubscribers.Count > 0)
         {
-
+            var debugQuery = EntityQueryEnumerator<NpcKnowledgeComponent>();
         }
     }
 
