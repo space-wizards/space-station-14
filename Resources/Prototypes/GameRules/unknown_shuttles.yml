@@ -10,6 +10,7 @@
     - id: UnknownShuttleTravelingCuisine
       orGroup: Shuttles
     - id: UnknownShuttleDisasterEvacPod
+      prob: 1.2
       orGroup: Shuttles
     - id: UnknownShuttleSyndieEvacPod
       orGroup: Shuttles
