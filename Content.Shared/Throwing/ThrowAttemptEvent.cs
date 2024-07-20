@@ -13,6 +13,9 @@
         public EntityUid ItemUid { get; }
     }
 
+    [ByRefEvent]
+    public record struct ThrowItemAttemptEvent(EntityUid User, bool Cancelled = false);
+
     /// <summary>
     /// Raised when we try to pushback an entity from throwing
     /// </summary>
