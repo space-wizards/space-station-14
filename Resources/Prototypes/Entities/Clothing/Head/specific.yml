@@ -23,7 +23,7 @@
   parent: ClothingHeadHatFedoraBrown
   id: ClothingHeadHatDetGadget
   name: DetGadget hat
-  description:
+  description: GO GO GADGET!!!
   components:
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
