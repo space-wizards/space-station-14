@@ -126,6 +126,20 @@ namespace Content.Shared.Roles
                     }
 
                     var deptDiff = deptRequirement.Time.TotalMinutes - playtime.TotalMinutes;
+                    var nameDepartment = Loc.GetString("role-timer-department-unknown");
+
+                    if (!prototypes.TryIndex<DepartmentPrototype>(deptRequirement.Department, out var departmentName))
+                    {
+                        Logger.Error($"Department not found.");
+                    }
+                    else if (!string.IsNullOrEmpty(departmentName.Name))
+                    {
+                        nameDepartment = departmentName.Name;
+                    }
+                    else
+                    {
+                        Logger.Error($"The name of the department prototype with the ID {deptRequirement.Department} null or empty.");
+                    }
 
                     if (!deptRequirement.Inverted)
                     {
@@ -135,7 +149,7 @@ namespace Content.Shared.Roles
                         reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
                             "role-timer-department-insufficient",
                             ("time", Math.Ceiling(deptDiff)),
-                            ("department", Loc.GetString(deptRequirement.Department)),
+                            ("department", Loc.GetString(nameDepartment)),
                             ("departmentColor", department.Color.ToHex())));
                         return false;
                     }
@@ -146,7 +160,7 @@ namespace Content.Shared.Roles
                             reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
                                 "role-timer-department-too-high",
                                 ("time", -deptDiff),
-                                ("department", Loc.GetString(deptRequirement.Department)),
+                                ("department", Loc.GetString(nameDepartment)),
                                 ("departmentColor", department.Color.ToHex())));
                             return false;
                         }
