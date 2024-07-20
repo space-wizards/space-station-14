@@ -4,9 +4,16 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Roles.RoleCodeword;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+/// <summary>
+/// Used to display and highlight codewords in chat messages on the client.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedRoleCodewordSystem), Other = AccessPermissions.Read)]
 public sealed partial class RoleCodewordComponent : Component
 {
+    /// <summary>
+    /// Contains the codewords tied to a role.
+    /// Key string should be unique for the role.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<string, CodewordsData> RoleCodewords = new();
 
