@@ -8,6 +8,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Timing;
+using System.Management;
 
 namespace Content.IntegrationTests.Tests.GameRules
 {
