@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: IlyaElDunaev
-  changes:
-  - message: Ammonia heal blood loss in the Rat King
-    type: Add
-  id: 6440
-  time: '2024-04-26T07:47:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26887
-- author: FungiFellow
-  changes:
-  - message: Added Quiver Recipe, go wild Robin Hood.
-    type: Add
-  id: 6441
-  time: '2024-04-26T07:48:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27198
 - author: Boaz1111
   changes:
   - message: Refactored Cluster's medbay, including cryo in the bottom left room
@@ -3798,3 +3784,17 @@
   id: 6939
   time: '2024-07-20T02:31:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30174
+- author: Ghagliiarghii
+  changes:
+  - message: Nuclear Operatives' Reinforcements now have a PDA!
+    type: Tweak
+  id: 6940
+  time: '2024-07-20T02:59:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28088
+- author: Plykiya
+  changes:
+  - message: Chameleon scarves now work again.
+    type: Fix
+  id: 6941
+  time: '2024-07-20T03:00:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30156
