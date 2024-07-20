@@ -9,6 +9,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Robust.Shared.Audio.Systems;
 using System.Threading.Tasks;
+using Robust.Shared.Random;
 
 namespace Content.Server.SyndicateTeleporter;
 
@@ -20,6 +21,7 @@ public sealed class SyndicateTeleporterSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapMan = default!;
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] protected readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
 
     public const string TeleportEffectPrototype = "TeleportEffect";
@@ -47,8 +49,7 @@ public sealed class SyndicateTeleporterSystem : EntitySystem
 
     private async Task Teleportation(EntityUid uid, EntityUid user, SyndicateTeleporterComponent comp)
     {
-        Random rnd = new Random();
-        float random = rnd.Next(0, comp.RandomValue);
+        float random = _random.Next(0, comp.RandomDistanceValue);
         var multiplaer = new Vector2(comp.TeleportationValue + random, comp.TeleportationValue + random); //make random for teleport distance value
 
         EntityUid? tuser = null;
@@ -79,10 +80,10 @@ public sealed class SyndicateTeleporterSystem : EntitySystem
                 return;
 
 
-            if (saveattempts > 0) // if we have chnce to survive then teleport in random side away
+            if (saveattempts > 0) // if we have chance to survive then teleport in random side away
             {
                 await Task.Delay(400);
-                double side = rnd.Next(-180, 180);
+                double side = _random.Next(-180, 180);
                 offsetValue = Angle.FromDegrees(side).ToWorldVec() * savedistance; //averages the resulting direction, turning it into one of 8 directions, (N, NE, E...)
                 coords = transform.Coordinates.Offset(offsetValue);
                 _transformSystem.SetCoordinates(user, coords);

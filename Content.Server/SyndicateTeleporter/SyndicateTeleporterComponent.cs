@@ -9,7 +9,7 @@ public sealed partial class SyndicateTeleporterComponent : Component
     /// adds a random value to which you teleport, which is added to the guaranteed teleport value. from 0 to the set number. set 0 if you don't need randomness when teleporting
     /// </summary>
     [DataField]
-    public int RandomValue = 4;
+    public int RandomDistanceValue = 4;
     /// <summary>
     /// this is the guaranteed number of tiles that you teleport to.
     /// </summary>
