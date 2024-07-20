@@ -15,7 +15,7 @@ public sealed partial class NpcGoalSystem : SharedNpcGoalSystem
 
     private NpcGoalJob _goalJob = new();
 
-    private readonly List<Entity<NpcKnowledgeComponent, NuPcComponent>> _npcs = new();
+    private readonly List<Entity<NpcKnowledgeComponent>> _npcs = new();
 
     private List<ICommonSession> _debugSubscribers = new();
 
@@ -39,7 +39,7 @@ public sealed partial class NpcGoalSystem : SharedNpcGoalSystem
 
         if (ev.Enabled)
         {
-            if (!_debugSubscribers.Contains(args.SenderSession))
+            if (_debugSubscribers.Contains(args.SenderSession))
                 return;
 
             _debugSubscribers.Add(args.SenderSession);
@@ -53,10 +53,10 @@ public sealed partial class NpcGoalSystem : SharedNpcGoalSystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        var query = EntityQueryEnumerator<NpcKnowledgeComponent, NuPcComponent>();
+        var query = EntityQueryEnumerator<NpcKnowledgeComponent>();
         _npcs.Clear();
 
-        while (query.MoveNext(out var uid, out var knowledge, out var npc))
+        while (query.MoveNext(out var uid, out var knowledge))
         {
             // If knowledge hasn't updated then can't update goals.
             if (!knowledge.CanUpdate ||
@@ -65,7 +65,7 @@ public sealed partial class NpcGoalSystem : SharedNpcGoalSystem
                 continue;
             }
 
-            _npcs.Add((uid, knowledge, npc));
+            _npcs.Add((uid, knowledge));
         }
 
         // Yippee
@@ -86,6 +86,7 @@ public sealed partial class NpcGoalSystem : SharedNpcGoalSystem
 
                 var data = new NpcGoalsData
                 {
+                    Owner = GetNetEntity(uid),
                     Generators = knowledge.GoalGenerators,
                     Goals = knowledge.Goals,
                 };
@@ -104,16 +105,16 @@ public sealed partial class NpcGoalSystem : SharedNpcGoalSystem
     {
         public NpcGoalSystem System;
 
-        public List<Entity<NpcKnowledgeComponent, NuPcComponent>> Npcs;
+        public List<Entity<NpcKnowledgeComponent>> Npcs;
 
         public void Execute(int index)
         {
             var npc = Npcs[index];
-            npc.Comp1.CanUpdate = false;
+            npc.Comp.CanUpdate = false;
 
             // Block so we don't accidentally re-use the span.
             {
-                var goalSpan = CollectionsMarshal.AsSpan(npc.Comp1.Goals);
+                var goalSpan = CollectionsMarshal.AsSpan(npc.Comp.Goals);
 
                 for (var i = 0; i < goalSpan.Length; i++)
                 {
@@ -126,7 +127,7 @@ public sealed partial class NpcGoalSystem : SharedNpcGoalSystem
             var goals = new ValueList<INpcGoal>();
 
             // Run generators and get new goals.
-            foreach (var generator in npc.Comp1.GoalGenerators)
+            foreach (var generator in npc.Comp.GoalGenerators)
             {
                 // TODO: Check if generators supposed to be 1-1
 
@@ -135,10 +136,10 @@ public sealed partial class NpcGoalSystem : SharedNpcGoalSystem
                 switch (generator)
                 {
                     case NpcChaseGoalGenerator chase:
-                        System.GetGoal(ref goals, npc.Comp1, chase);
+                        System.GetGoal(ref goals, npc.Comp, chase);
                         break;
                     case NpcCombatGoalGenerator combat:
-                        System.GetGoal(ref goals, npc.Comp1, combat);
+                        System.GetGoal(ref goals, npc.Comp, combat);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -147,21 +148,21 @@ public sealed partial class NpcGoalSystem : SharedNpcGoalSystem
 
             foreach (var nuGoal in goals)
             {
-                if (npc.Comp1.Goals.Contains(nuGoal))
+                if (npc.Comp.Goals.Contains(nuGoal))
                     continue;
 
-                npc.Comp1.Goals.Add(nuGoal);
+                npc.Comp.Goals.Add(nuGoal);
             }
 
             // Remove stale goals.
             {
-                for (var i = 0; i < npc.Comp1.Goals.Count; i++)
+                for (var i = 0; i < npc.Comp.Goals.Count; i++)
                 {
-                    var goal = npc.Comp1.Goals[i];
+                    var goal = npc.Comp.Goals[i];
 
                     if (!goal.Updated)
                     {
-                        npc.Comp1.Goals.RemoveSwap(i--);
+                        npc.Comp.Goals.RemoveSwap(i--);
                     }
                 }
             }

@@ -22,6 +22,8 @@ public sealed class NpcGoalsDebugEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public record struct NpcGoalsData
 {
+    public NetEntity Owner;
+
     public List<INpcGoalGenerator> Generators;
 
     public List<INpcGoal> Goals;
@@ -30,6 +32,7 @@ public record struct NpcGoalsData
 /// <summary>
 /// Generates a combat goal to attack hostile mobs.
 /// </summary>
+[Serializable, NetSerializable]
 public partial record struct NpcCombatGoalGenerator : INpcGoalGenerator
 {
 
@@ -38,6 +41,7 @@ public partial record struct NpcCombatGoalGenerator : INpcGoalGenerator
 /// <summary>
 /// Generates a goal to investigate a last known hostile mob position.
 /// </summary>
+[Serializable, NetSerializable]
 public partial record struct NpcChaseGoalGenerator : INpcGoalGenerator;
 
 /// <summary>
@@ -63,12 +67,12 @@ public partial interface INpcGoal
 public partial record struct NpcCombatGoal : INpcGoal
 {
     /// <inheritdoc />
-    public bool Updated { get; set; }
+    public bool Updated { get; set; } = true;
 }
 
 [Serializable, NetSerializable]
 public partial record struct NpcChaseGoal : INpcGoal
 {
     /// <inheritdoc />
-    public bool Updated { get; set; }
+    public bool Updated { get; set; } = true;
 }
