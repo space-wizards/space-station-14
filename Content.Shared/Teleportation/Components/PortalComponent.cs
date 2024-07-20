@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Audio;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Teleportation.Components;
@@ -53,4 +53,29 @@ public sealed partial class PortalComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public bool RandomTeleport = true;
+
+    /// <summary>
+    /// Delay from trying to enter the portal ourselves.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float EntryDelay = 0.5f;
+
+    /// <summary>
+    /// Delay from trying to shove someone else into the portal.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float DraggedEntryDelay = 2.0f;
+
+    /// <summary>
+    /// If true then entities will be teleported upon colliding with the portal.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool TeleportOnCollision = true;
+
+    /// <summary>
+    /// If true then entities can be dragged and dropped onto the portal to
+    /// teleport them.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool TeleportOnDragDrop = true;
 }
