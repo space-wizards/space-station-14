@@ -1,4 +1,4 @@
-﻿<Document>
+<Document>
   # Space Law: Crime Listing
   Crime codes are organized by a Category Code (_-xx) which is a collection of non-stackable crimes on a row, prefixed
   by the Severity Number (X-__).
@@ -321,7 +321,7 @@
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Combat enhancing drugs are those that benefit stun times, or movement speed, and are restricted. Poisons are
-        restricted. Substances such as Ephedrine, Desoxyephedrine, and stimulants are restricted. The captain or highest
+        restricted. Substances such as Ephedrine, Desoxyephedrine, and Hyperzine are restricted. The captain or highest
         standing command staff may publicly restrict other harmful substances.
       </Box>
     </ColorBox>
