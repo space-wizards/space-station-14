@@ -87,6 +87,9 @@
     netsync: false
     radius: 1.1 #smallest possible
     color: orange
+  - type: Tag
+    tags:
+      - Lighter
 
 - type: entity
   name: cheap lighter
@@ -208,6 +211,9 @@
   - type: UseDelay
   - type: IgnitionSource
     ignited: false
+  - type: Tag
+    tags:
+    - Lighter
 
 - type: entity
   name: flippo engraved lighter

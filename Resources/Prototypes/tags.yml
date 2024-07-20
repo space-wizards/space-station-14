@@ -545,7 +545,7 @@
 - type: Tag
   id: DrinkSpaceGlue
 
-- type: Tag 
+- type: Tag
   id: Dropper
 
 - type: Tag
@@ -613,6 +613,9 @@
 
 - type: Tag
   id: ForceNoFixRotations # fixrotations command WON'T target this
+
+- type: Tag
+  id: ForensicScanner
 
 - type: Tag
   id: Fruit
@@ -802,6 +805,9 @@
 
 - type: Tag
   id: Lemon
+
+- type: Tag
+  id: Lighter
 
 - type: Tag
   id: Lime
