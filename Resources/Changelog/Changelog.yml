@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: WarMechanic
-  changes:
-  - message: Fixed unwielding overruling gun cycling
-    type: Fix
-  id: 6445
-  time: '2024-04-26T12:31:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27307
 - author: wafehling
   changes:
   - message: You can now reopen the end of round summary window with F9.
@@ -3797,3 +3790,10 @@
   id: 6944
   time: '2024-07-21T05:27:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28750
+- author: CroilBird
+  changes:
+  - message: 6-pack of cola displays correctly when not being handled
+    type: Fix
+  id: 6945
+  time: '2024-07-21T05:49:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29309
