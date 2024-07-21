@@ -198,8 +198,7 @@ public sealed class SwapTeleporterSystem : EntitySystem
     private (EntityUid, BaseContainer?) GetTeleportingEntity(Entity<TransformComponent> ent)
     {
         var parent = ent.Comp.ParentUid;
-        if (_container.TryGetOuterContainer(ent, ent, out var container))
-            parent = container.Owner;
+        _container.TryGetOuterContainer(ent, ent, out var container);
 
         if (HasComp<MapGridComponent>(parent) || HasComp<MapComponent>(parent))
             return (ent, container);
