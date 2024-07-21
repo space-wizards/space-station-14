@@ -10,6 +10,9 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StoreDiscount.Systems;
 
+/// <summary>
+/// Discount system that is part of <see cref="StoreSystem"/>.
+/// </summary>
 public sealed class StoreDiscountSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -22,11 +25,12 @@ public sealed class StoreDiscountSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StoreInitializedEvent>(OnUplinkInitialized);
+        SubscribeLocalEvent<StoreInitializedEvent>(OnStoreInitialized);
         SubscribeLocalEvent<StoreBuyAttemptEvent>(OnBuyRequest);
         SubscribeLocalEvent<StoreBuyFinishedEvent>(OnBuyFinished);
     }
 
+    /// <summary> Decrements discounted item count. </summary>
     private void OnBuyFinished(ref StoreBuyFinishedEvent ev)
     {
         var (storeId, purchasedItemId) = ev;
@@ -45,6 +49,7 @@ public sealed class StoreDiscountSystem : EntitySystem
         discountData.Count--;
     }
 
+    /// <summary> Refine listing item cost using discounts. </summary>
     private void OnBuyRequest(StoreBuyAttemptEvent ev)
     {
         var discounts = Array.Empty<StoreDiscountData>();
@@ -74,7 +79,8 @@ public sealed class StoreDiscountSystem : EntitySystem
         ev.Cost = withDiscount;
     }
 
-    private void OnUplinkInitialized(ref StoreInitializedEvent ev)
+    /// <summary> Initialized discounts if required. </summary>
+    private void OnStoreInitialized(ref StoreInitializedEvent ev)
     {
         if (!TryComp<StoreComponent>(ev.Store, out var store))
         {
