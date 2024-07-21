@@ -344,5 +344,28 @@ Entries:
   id: 42
   time: '2024-06-26T13:43:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29405
+- author: Repo
+  changes:
+  - message: Changed admin object tab from auto to manual refresh on tab change or
+      button press so that entries don't shift around when selecting an object.
+    type: Tweak
+  id: 43
+  time: '2024-06-28T03:32:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28681
+- author: Chief-Engineer
+  changes:
+  - message: Admin alert for unsafe AME injection rate was disabled.
+    type: Remove
+  id: 44
+  time: '2024-06-30T12:26:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29582
+- author: Chief-Engineer
+  changes:
+  - message: Baby jail no longer prevents accounts with no prior connections from
+      connecting
+    type: Fix
+  id: 45
+  time: '2024-07-11T05:14:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29896
 Name: Admin
 Order: 1
