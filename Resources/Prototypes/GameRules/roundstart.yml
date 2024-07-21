@@ -196,10 +196,13 @@
     delay:
       min: 240
       max: 420
+  - type: AntagObjectives
+    objectives:
+    - KillRandomTraitorSvSObjective
+    - RandomTraitorAliveSvSObjective
+    - EscapeShuttleObjective
   - type: AntagRandomObjectives
-    sets:
-    - groups: TraitorObjectiveGroupsSpyVsSpy
-    maxDifficulty: 5
+    maxDifficulty: 0
   - type: AntagSelection
     definitions:
     - prefRoles: [ Traitor ]
