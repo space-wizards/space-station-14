@@ -51,7 +51,6 @@ public partial class NanotrasenStylesheet : CommonStylesheet
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#757575")),
             ],
             // Finally, load all the other sheetlets.
-            GetAllSheetletRules<PalettedStylesheet, CommonSheetletAttribute>(),
             GetAllSheetletRules<NanotrasenStylesheet, CommonSheetletAttribute>(),
         };
 

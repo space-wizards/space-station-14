@@ -45,7 +45,6 @@ public partial class SystemStylesheet : CommonStylesheet
                 Element().Prop(Label.StylePropertyFont, BaseFont.GetFont(PrimaryFontSize)),
             ],
             // Finally, load all the other sheetlets.
-            GetAllSheetletRules<PalettedStylesheet, CommonSheetletAttribute>(),
             GetAllSheetletRules<SystemStylesheet, CommonSheetletAttribute>(),
         };
 
