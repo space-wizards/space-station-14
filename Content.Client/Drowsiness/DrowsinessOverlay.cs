@@ -23,7 +23,8 @@ public sealed class DrowsinessOverlay : Overlay
     public float CurrentPower = 0.0f;
 
     private const float PowerDivisor = 250.0f;
-    private float _visualScale = 0;
+    private const float Intensity = 0.2f; // for adjusting the visual scale
+    private float _visualScale = 0; // between 0 and 1
 
     public DrowsinessOverlay()
     {
@@ -47,7 +48,7 @@ public sealed class DrowsinessOverlay : Overlay
             return;
 
         var curTime = _timing.CurTime;
-        var timeLeft = (float) (time.Value.Item2 - curTime).TotalSeconds;
+        var timeLeft = (float)(time.Value.Item2 - curTime).TotalSeconds;
 
         CurrentPower += 8f * (0.5f * timeLeft - CurrentPower) * args.DeltaSeconds / (timeLeft + 1);
     }
@@ -71,7 +72,7 @@ public sealed class DrowsinessOverlay : Overlay
 
         var handle = args.WorldHandle;
         _drowsinessShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-        _drowsinessShader.SetParameter("VisualScale", _visualScale);
+        _drowsinessShader.SetParameter("Strength", _visualScale * Intensity);
         handle.UseShader(_drowsinessShader);
         handle.DrawRect(args.WorldBounds, Color.White);
         handle.UseShader(null);
