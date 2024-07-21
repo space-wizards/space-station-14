@@ -1,7 +1,5 @@
 ﻿using System.Linq;
 using Content.Client.Stylesheets.Redux.Fonts;
-using Content.Client.Stylesheets.Redux.NTSheetlets;
-using Content.Client.Stylesheets.Redux.Sheetlets;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -11,7 +9,7 @@ using static Robust.Client.UserInterface.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Redux.Stylesheets;
 
 [Virtual]
-public partial class NanotrasenStylesheet : PalettedStylesheet
+public partial class NanotrasenStylesheet : CommonStylesheet
 {
     public override FontStack BaseFont { get; }
 

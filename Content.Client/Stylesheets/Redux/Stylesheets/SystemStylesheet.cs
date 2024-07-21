@@ -10,7 +10,7 @@ using static Robust.Client.UserInterface.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Redux.Stylesheets;
 
 [Virtual]
-public partial class SystemStylesheet : PalettedStylesheet
+public partial class SystemStylesheet : CommonStylesheet
 {
     public override FontStack BaseFont { get; }
 
