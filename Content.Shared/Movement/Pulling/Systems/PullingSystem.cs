@@ -8,6 +8,7 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Events;
@@ -42,7 +43,7 @@ public sealed class PullingSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly HeldSpeedModifierSystem _clothingMoveSpeed = default!;
 
     public override void Initialize()
     {
@@ -192,6 +193,14 @@ public sealed class PullingSystem : EntitySystem
 
     private void OnRefreshMovespeed(EntityUid uid, PullerComponent component, RefreshMovementSpeedModifiersEvent args)
     {
+        if (TryComp<HeldSpeedModifierComponent>(component.Pulling, out var heldMoveSpeed) && component.Pulling.HasValue)
+        {
+            var (walkMod, sprintMod) =
+                _clothingMoveSpeed.GetHeldMovementSpeedModifiers(component.Pulling.Value, heldMoveSpeed);
+            args.ModifySpeed(walkMod, sprintMod);
+            return;
+        }
+
         args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
     }
 
@@ -300,7 +309,7 @@ public sealed class PullingSystem : EntitySystem
 
     private void OnReleasePulledObject(ICommonSession? session)
     {
-        if (session?.AttachedEntity is not {Valid: true} player)
+        if (session?.AttachedEntity is not { Valid: true } player)
         {
             return;
         }
@@ -437,6 +446,9 @@ public sealed class PullingSystem : EntitySystem
         pullerComp.Pulling = pullableUid;
         pullableComp.Puller = pullerUid;
 
+        // store the pulled entity's physics FixedRotation setting in case we change it
+        pullableComp.PrevFixedRotation = pullablePhysics.FixedRotation;
+
         // joint state handling will manage its own state
         if (!_timing.ApplyingState)
         {
@@ -455,10 +467,9 @@ public sealed class PullingSystem : EntitySystem
             _physics.SetFixedRotation(pullableUid, pullableComp.FixedRotationOnPull, body: pullablePhysics);
         }
 
-        pullableComp.PrevFixedRotation = pullablePhysics.FixedRotation;
-
         // Messaging
         var message = new PullStartedMessage(pullerUid, pullableUid);
+        _modifierSystem.RefreshMovementSpeedModifiers(pullerUid);
         _alertsSystem.ShowAlert(pullerUid, pullerComp.PullingAlert);
         _alertsSystem.ShowAlert(pullableUid, pullableComp.PulledAlert);
 

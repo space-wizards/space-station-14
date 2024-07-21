@@ -18,9 +18,10 @@ namespace Content.Client.ParticleAccelerator.UI
 {
     public sealed class ParticleAcceleratorControlMenu : BaseWindow
     {
-        private readonly ShaderInstance _greyScaleShader;
+        [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private readonly IResourceCache _cache = default!;
 
-        private readonly ParticleAcceleratorBoundUserInterface _owner;
+        private readonly ShaderInstance _greyScaleShader;
 
         private readonly Label _drawLabel;
         private readonly FastNoiseLite _drawNoiseGenerator;
@@ -50,19 +51,22 @@ namespace Content.Client.ParticleAccelerator.UI
         private bool _shouldContinueAnimating;
         private int _maxStrength = 3;
 
-        public ParticleAcceleratorControlMenu(ParticleAcceleratorBoundUserInterface owner)
-        {
-            SetSize = new Vector2(400, 320);
-            _greyScaleShader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("Greyscale").Instance();
+        public event Action<bool>? OnOverallState;
+        public event Action<ParticleAcceleratorPowerState>? OnPowerState;
+        public event Action? OnScanPartsRequested;
 
-            _owner = owner;
+        public ParticleAcceleratorControlMenu()
+        {
+            IoCManager.InjectDependencies(this);
+            SetSize = new Vector2(400, 320);
+            _greyScaleShader = _protoManager.Index<ShaderPrototype>("Greyscale").Instance();
+
             _drawNoiseGenerator = new();
             _drawNoiseGenerator.SetFractalType(FastNoiseLite.FractalType.FBm);
             _drawNoiseGenerator.SetFrequency(0.5f);
 
-            var resourceCache = IoCManager.Resolve<IResourceCache>();
-            var font = resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
-            var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
+            var font = _cache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
+            var panelTex = _cache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
 
             MouseFilter = MouseFilterMode.Stop;
 
@@ -112,7 +116,8 @@ namespace Content.Client.ParticleAccelerator.UI
                 Text = Loc.GetString("particle-accelerator-control-menu-off-button"),
                 StyleClasses = { StyleBase.ButtonOpenRight },
             };
-            _offButton.OnPressed += args => owner.SendEnableMessage(false);
+
+            _offButton.OnPressed += args => OnOverallState?.Invoke(false);
 
             _onButton = new Button
             {
@@ -120,7 +125,7 @@ namespace Content.Client.ParticleAccelerator.UI
                 Text = Loc.GetString("particle-accelerator-control-menu-on-button"),
                 StyleClasses = { StyleBase.ButtonOpenLeft },
             };
-            _onButton.OnPressed += args => owner.SendEnableMessage(true);
+            _onButton.OnPressed += args => OnOverallState?.Invoke(true);
 
             var closeButton = new TextureButton
             {
@@ -316,7 +321,7 @@ namespace Content.Client.ParticleAccelerator.UI
                 }
             });
 
-            _scanButton.OnPressed += args => _owner.SendScanPartsMessage();
+            _scanButton.OnPressed += args => OnScanPartsRequested?.Invoke();
 
             _alarmControl.AnimationCompleted += s =>
             {
@@ -332,7 +337,7 @@ namespace Content.Client.ParticleAccelerator.UI
 
             PASegmentControl Segment(string name)
             {
-                return new(this, resourceCache, name);
+                return new(this, _cache, name);
             }
 
             UpdateUI(false, false, false, false);
@@ -368,7 +373,7 @@ namespace Content.Client.ParticleAccelerator.UI
             }
 
             _stateSpinBox.SetButtonDisabled(true);
-            _owner.SendPowerStateMessage(newState);
+            OnPowerState?.Invoke(newState);
         }
 
         protected override DragMode GetDragModeFor(Vector2 relativeMousePos)

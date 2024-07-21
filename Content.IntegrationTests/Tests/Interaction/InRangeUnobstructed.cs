@@ -39,10 +39,11 @@ namespace Content.IntegrationTests.Tests.Interaction
             EntityUid other = default;
             MapCoordinates mapCoordinates = default;
 
+            var map = await pair.CreateTestMap();
+
             await server.WaitAssertion(() =>
             {
-                var mapId = mapManager.CreateMap();
-                var coordinates = new MapCoordinates(Vector2.Zero, mapId);
+                var coordinates = map.MapCoords;
 
                 origin = sEntities.SpawnEntity(HumanId, coordinates);
                 other = sEntities.SpawnEntity(HumanId, coordinates);
