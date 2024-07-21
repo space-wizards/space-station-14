@@ -8,7 +8,7 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Server.Explosion.EntitySystems;
 
-public sealed partial class ExplosionSystem : EntitySystem
+public sealed partial class ExplosionSystem
 {
     [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
 

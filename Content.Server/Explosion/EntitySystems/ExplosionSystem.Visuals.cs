@@ -8,7 +8,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Explosion.EntitySystems;
 
 // This part of the system handled send visual / overlay data to clients.
-public sealed partial class ExplosionSystem : EntitySystem
+public sealed partial class ExplosionSystem
 {
     public void InitVisuals()
     {
