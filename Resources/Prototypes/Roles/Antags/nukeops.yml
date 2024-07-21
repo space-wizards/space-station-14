@@ -39,7 +39,7 @@
   guides: [ NuclearOperatives ]
 
 - type: startingGear
-  id: SyndicateOperativeGearNoUplink
+  id: SyndicateOperativeGearFullNoUplink
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
     back: ClothingBackpackDuffelSyndicate
