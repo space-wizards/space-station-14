@@ -130,6 +130,20 @@
   maxGroupSize: 10
   radius: 4
 
+- type: biomeMarkerLayer
+  id: OreDiamond
+  entityMask:
+    AsteroidRock: AsteroidRockDiamond
+    WallRock: WallRockDiamond
+    WallRockBasalt: WallRockBasaltDiamond
+    WallRockChromite: WallRockChromiteDiamond
+    WallRockSand: WallRockSandDiamond
+    WallRockSnow: WallRockSnowDiamond
+  maxCount: 6
+  minGroupSize: 1
+  maxGroupSize: 2
+  radius: 4
+
 # Artifact Fragment
 - type: biomeMarkerLayer
   id: OreArtifactFragment
