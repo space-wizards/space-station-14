@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Monkey reinforcement teleporters can now select between kobold and monkey
-      operative with a verb.
-    type: Tweak
-  - message: Monkey reinforcement teleporters have been renamed to "genetic ancestor
-      reinforcement teleporter".
-    type: Tweak
-  id: 6448
-  time: '2024-04-26T13:06:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25982
 - author: fujiwaranao
   changes:
   - message: Players may now select the Creepy Long hairstyle and an appropriately
@@ -3797,3 +3786,12 @@
   id: 6947
   time: '2024-07-21T06:13:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30164
+- author: metalgearsloth
+  changes:
+  - message: Reset the scroll bar in the ghost warp menu whenever you search for a
+      role. Previously it remained at your previous position and you would have to
+      scroll up to see the first entry.
+    type: Tweak
+  id: 6948
+  time: '2024-07-21T06:38:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30159
