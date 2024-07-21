@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: VigersRay
-  changes:
-  - message: Angered NPC now can unbuckle, unpull and escape from containers.
-    type: Fix
-  id: 6454
-  time: '2024-04-27T05:58:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26868
 - author: Lukasz825700516
   changes:
   - message: Fixed undeconstructable objects showing deconstruct verb.
@@ -3796,3 +3789,10 @@
   id: 6953
   time: '2024-07-21T07:24:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27270
+- author: osjarw
+  changes:
+  - message: NPCs no longer get stuck trying to pick up anchored pipes.
+    type: Fix
+  id: 6954
+  time: '2024-07-21T07:28:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30061
