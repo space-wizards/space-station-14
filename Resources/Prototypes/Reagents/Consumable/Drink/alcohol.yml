@@ -1931,3 +1931,60 @@
           reagent: Theobromine
           amount: 0.05
   fizziness: 0.25
+
+- type: reagent
+  id: UAP
+  name: reagent-name-uap
+  parent: BaseAlcohol
+  desc: reagent-desc-uap
+  physicalDesc: reagent-physical-desc-threat
+  flavor: uap
+  color: "#B9FF66"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/uap.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+        - !type:GenericStatusEffect
+          key: GrayAccent
+          component: GrayAccent
+        - !type:SatiateThirst
+          factor: 2
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.20
+      - !type:AdjustReagent
+        reagent: Uranium
+        amount: 0.05
+      - !type:AdjustReagent
+        reagent: Radium
+        amount: 0.05
+        - !type:PopupMessage
+          Conditions:
+          - !type:ReagentThreshold
+            reagent: UAP
+            min: 1
+            max: 10
+          visualType: LowCaution
+          type: Local
+          messages: [ "uap-effect-n1"]
+          probability: 0.1
+          - !type:ReagentThreshold
+            reagent: UAP
+            min: 10
+            max: 20
+          visualType: MediumCaution
+          type: Local
+          messages: [ "uap-effect-n2" ]
+          probability: 0.1
+          - !type:ReagentThreshold
+            reagent: UAP
+            min: 20
+          visualType: HighCaution
+          type: Local
+          messages: [ "uap-effect-med" ]
+          probability: 0.1
