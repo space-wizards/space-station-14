@@ -28,7 +28,7 @@ public sealed partial class DrainComponent : Component
 
     /// <summary>
     /// Does this drain automatically absorb surrouding puddles? Or is it a drain designed to empty
-    /// solutions in it manually?
+    /// solutions in it manually? 
     /// </summary>
     [DataField]
     public bool AutoDrain = true;
