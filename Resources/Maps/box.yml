@@ -11429,63 +11429,63 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -81.5,9.5
       parent: 8364
-    - type: DeviceLinkSink
-      links:
-      - 655
     - type: DeviceLinkSource
       linkedPorts:
         655:
         - DoorStatus: Close
+    - type: DeviceLinkSink
+      links:
+      - 655
   - uid: 1110
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -79.5,-13.5
       parent: 8364
-    - type: DeviceLinkSink
-      links:
-      - 12466
     - type: DeviceLinkSource
       linkedPorts:
         12466:
         - DoorStatus: Close
+    - type: DeviceLinkSink
+      links:
+      - 12466
   - uid: 12469
     components:
     - type: Transform
       pos: -75.5,-17.5
       parent: 8364
-    - type: DeviceLinkSink
-      links:
-      - 12468
     - type: DeviceLinkSource
       linkedPorts:
         12468:
         - DoorStatus: Close
+    - type: DeviceLinkSink
+      links:
+      - 12468
   - uid: 12470
     components:
     - type: Transform
       pos: -68.5,-17.5
       parent: 8364
-    - type: DeviceLinkSink
-      links:
-      - 12467
     - type: DeviceLinkSource
       linkedPorts:
         12467:
         - DoorStatus: Close
+    - type: DeviceLinkSink
+      links:
+      - 12467
   - uid: 12486
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -81.5,-4.5
       parent: 8364
-    - type: DeviceLinkSink
-      links:
-      - 610
     - type: DeviceLinkSource
       linkedPorts:
         610:
         - DoorStatus: Close
+    - type: DeviceLinkSink
+      links:
+      - 610
 - proto: AirlockFreezer
   entities:
   - uid: 25720
@@ -11541,7 +11541,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -354.4333
+      secondsUntilStateChange: -706.3356
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11880,21 +11880,24 @@ entities:
       rot: 3.141592653589793 rad
       pos: -66.5,21.5
       parent: 8364
-    - type: Docking
-      dockJointId: docking46345
-      dockedWith: 21828
     - type: Door
       changeAirtight: False
       state: Open
+    - type: Docking
+      dockJointId: docking46345
+      dockedWith: 21828
+    - type: DeviceLinkSource
+      linkedPorts:
+        1495:
+        - DoorStatus: Close
+      lastSignals:
+        DoorStatus: False
+        DockStatus: True
     - type: Physics
       canCollide: False
     - type: DeviceLinkSink
       links:
       - 1495
-    - type: DeviceLinkSource
-      linkedPorts:
-        1495:
-        - DoorStatus: Close
   - uid: 5209
     components:
     - type: Transform
@@ -11912,12 +11915,16 @@ entities:
     - type: Transform
       pos: -0.5,-0.5
       parent: 11906
-    - type: Docking
-      dockJointId: docking46345
-      dockedWith: 562
     - type: Door
       changeAirtight: False
       state: Open
+    - type: Docking
+      dockJointId: docking46345
+      dockedWith: 562
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: False
+        DockStatus: True
     - type: Physics
       canCollide: False
 - proto: AirlockHeadOfPersonnelGlassLocked
@@ -12764,10 +12771,10 @@ entities:
     - type: Transform
       pos: 41.5,-21.5
       parent: 8364
+- proto: AirlockMedicalMorgueLocked
+  entities:
   - uid: 18321
     components:
-    - type: MetaData
-      name: Morgue
     - type: Transform
       pos: 44.5,-15.5
       parent: 8364
@@ -64138,23 +64145,6 @@ entities:
     - type: Transform
       pos: 14.5,10.5
       parent: 8364
-- proto: chem_master
-  entities:
-  - uid: 18770
-    components:
-    - type: Transform
-      pos: 22.5,-20.5
-      parent: 8364
-  - uid: 18771
-    components:
-    - type: Transform
-      pos: 22.5,-16.5
-      parent: 8364
-  - uid: 18775
-    components:
-    - type: Transform
-      pos: 18.5,-16.5
-      parent: 8364
 - proto: ChemDispenser
   entities:
   - uid: 18610
@@ -64178,6 +64168,23 @@ entities:
     components:
     - type: Transform
       pos: 18.5,-17.5
+      parent: 8364
+- proto: ChemMaster
+  entities:
+  - uid: 18770
+    components:
+    - type: Transform
+      pos: 22.5,-20.5
+      parent: 8364
+  - uid: 18771
+    components:
+    - type: Transform
+      pos: 22.5,-16.5
+      parent: 8364
+  - uid: 18775
+    components:
+    - type: Transform
+      pos: 18.5,-16.5
       parent: 8364
 - proto: ChessBoard
   entities:
@@ -69520,12 +69527,6 @@ entities:
     - type: Transform
       pos: -6.5,-6.5
       parent: 8364
-  - uid: 6491
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 71.5,-34.5
-      parent: 8364
   - uid: 19091
     components:
     - type: Transform
@@ -69672,6 +69673,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 37.5,-41.5
       parent: 8364
+  - uid: 20698
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 46.5,-25.5
+      parent: 8364
 - proto: ComputerCriminalRecords
   entities:
   - uid: 9075
@@ -69774,12 +69781,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 28.5,-21.5
       parent: 8364
-  - uid: 26738
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 46.5,-25.5
-      parent: 8364
 - proto: ComputerPowerMonitoring
   entities:
   - uid: 595
@@ -69872,6 +69873,14 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 69.5,-20.5
+      parent: 8364
+- proto: ComputerRoboticsControl
+  entities:
+  - uid: 6491
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 71.5,-34.5
       parent: 8364
 - proto: ComputerSalvageExpedition
   entities:
@@ -96651,14 +96660,6 @@ entities:
       parent: 8364
     - type: AtmosPipeColor
       color: '#FF1212FF'
-  - uid: 23915
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 76.5,-6.5
-      parent: 8364
-    - type: AtmosPipeColor
-      color: '#FF1212FF'
   - uid: 23916
     components:
     - type: Transform
@@ -105733,11 +105734,15 @@ entities:
   - uid: 25784
     components:
     - type: Transform
+      anchored: False
       rot: -1.5707963267948966 rad
       pos: 14.5,31.5
       parent: 8364
     - type: AtmosPipeColor
       color: '#0335FCFF'
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
   - uid: 25785
     components:
     - type: Transform
@@ -141475,7 +141480,7 @@ entities:
     - type: Transform
       pos: 10.464365,-22.554323
       parent: 8364
-- proto: soda_dispenser
+- proto: SodaDispenser
   entities:
   - uid: 7256
     components:

@@ -15,9 +15,10 @@ namespace Content.Client.ParticleAccelerator.UI
         {
             base.Open();
 
-            _menu = new ParticleAcceleratorControlMenu(this);
-            _menu.OnClose += Close;
-            _menu.OpenCentered();
+            _menu = this.CreateWindow<ParticleAcceleratorControlMenu>();
+            _menu.OnOverallState += SendEnableMessage;
+            _menu.OnPowerState += SendPowerStateMessage;
+            _menu.OnScanPartsRequested += SendScanPartsMessage;
         }
 
         public void SendEnableMessage(bool enable)
@@ -38,14 +39,6 @@ namespace Content.Client.ParticleAccelerator.UI
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             _menu?.DataUpdate((ParticleAcceleratorUIState) state);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            _menu?.Dispose();
-            _menu = null;
         }
     }
 }
