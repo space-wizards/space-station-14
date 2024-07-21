@@ -3,6 +3,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Tag;
+using Content.Shared.Interaction.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 
@@ -129,6 +130,7 @@ public abstract partial class SharedHandsSystem
         if (targetDropLocation == null || isInContainer)
         {
             TransformSystem.DropNextTo((entity, itemXform), (uid, userXform));
+            RaiseLocalEvent(entity, new DroppedEvent(uid), true);
             return true;
         }
 
