@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Added tomato killers in floral anomaly berries
-    type: Add
-  - message: tweak size and damage of killer tomatoes
-    type: Tweak
-  id: 6459
-  time: '2024-04-27T10:35:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27265
 - author: Plykiya
   changes:
   - message: You can no longer print singular bullets at the security techfab.
@@ -3800,3 +3791,10 @@
   id: 6958
   time: '2024-07-21T16:20:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30232
+- author: Sphiral&Kezu
+  changes:
+  - message: 'Added a variety of new wall based storages: Shelfs! Build some today!'
+    type: Add
+  id: 6959
+  time: '2024-07-21T17:16:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27858
