@@ -18,6 +18,7 @@ public sealed class GhostRoleRadioBoundUserInterface : BoundUserInterface
         base.Open();
 
         _ghostRoleRadioMenu = this.CreateWindow<GhostRoleRadioMenu>();
+        _ghostRoleRadioMenu.SetEntity(Owner);
         _ghostRoleRadioMenu.SendGhostRoleRadioMessageAction += SendGhostRoleRadioMessage;
     }
 

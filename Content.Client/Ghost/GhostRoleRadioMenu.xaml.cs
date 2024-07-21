@@ -23,7 +23,16 @@ public sealed partial class GhostRoleRadioMenu : RadialMenu
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
+    }
 
+    public void SetEntity(EntityUid uid)
+    {
+        Entity = uid;
+        RefreshUI();
+    }
+
+    private void RefreshUI()
+    {
         // The main control that will contain all of the clickable options
         var main = FindControl<RadialContainer>("Main");
 
