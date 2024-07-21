@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: fujiwaranao
-  changes:
-  - message: Players may now select the Creepy Long hairstyle and an appropriately
-      creepy dress to go with it can be found in theatrical performances crates.
-    type: Add
-  id: 6449
-  time: '2024-04-26T18:51:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27333
 - author: Pgriha
   changes:
   - message: Increase limit of characters 10 -> 30.
@@ -3795,3 +3787,11 @@
   id: 6948
   time: '2024-07-21T06:38:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30159
+- author: Blackern5000
+  changes:
+  - message: The syndicate agent's cyborg weapons module now uses syndicate weaponry
+      rather than NT weaponry.
+    type: Tweak
+  id: 6949
+  time: '2024-07-21T07:04:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26947
