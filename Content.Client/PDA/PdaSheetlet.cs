@@ -1,4 +1,5 @@
-﻿using Content.Client.PDA;
+using Content.Client.PDA;
+using Content.Client.Stylesheets.Redux;
 using Content.Client.Stylesheets.Redux.SheetletConfigs;
 using Content.Client.Stylesheets.Redux.Stylesheets;
 using Robust.Client.Graphics;
@@ -6,11 +7,10 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 
-namespace Content.Client.Stylesheets.Redux.NTSheetlets;
+namespace Content.Client.PDA;
 
-// ReSharper disable once InconsistentNaming
 [CommonSheetlet]
-public sealed class NTPdaSheetlet : Sheetlet<NanotrasenStylesheet>
+public sealed class PdaSheetlet : Sheetlet<NanotrasenStylesheet>
 {
     public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
     {
@@ -93,3 +93,4 @@ public sealed class NTPdaSheetlet : Sheetlet<NanotrasenStylesheet>
         ];
     }
 }
+
