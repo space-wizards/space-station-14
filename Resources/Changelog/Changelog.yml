@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: AllenTheGreat
-  changes:
-  - message: The Agent ID card will no longer reset the selected job icon between
-      UI loads
-    type: Fix
-  id: 6451
-  time: '2024-04-27T05:13:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27379
-- author: Slava0135
-  changes:
-  - message: added cancer mouse! (for real this time)
-    type: Add
-  id: 6452
-  time: '2024-04-27T05:46:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26768
-- author: EmoGarbage404
-  changes:
-  - message: Added the welding gas mask to salvage equipment research.
-    type: Add
-  id: 6453
-  time: '2024-04-27T05:47:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27108
 - author: VigersRay
   changes:
   - message: Angered NPC now can unbuckle, unpull and escape from containers.
@@ -3797,3 +3775,24 @@
   id: 6950
   time: '2024-07-21T07:22:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30091
+- author: Scott Dimeling
+  changes:
+  - message: Reduced the number of botanists in some stations, for optimal _workflow_
+    type: Tweak
+  id: 6951
+  time: '2024-07-21T07:23:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29581
+- author: metalgearsloth
+  changes:
+  - message: Escape pods won't show up on shuttle map anymore.
+    type: Tweak
+  id: 6952
+  time: '2024-07-21T07:23:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29758
+- author: IProduceWidgets
+  changes:
+  - message: an arabian lamp!
+    type: Add
+  id: 6953
+  time: '2024-07-21T07:24:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27270
