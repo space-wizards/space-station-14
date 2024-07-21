@@ -15,12 +15,11 @@ public sealed partial class PlayerPanel : DefaultWindow
 
     public event Action<NetUserId?>? OnOpenNotes;
     public event Action<NetUserId?>? OnOpenBans;
-    public event Action<NetUserId?>? OnOpenAhelp;
-    public event Action<NetUserId?>? OnFreezeAndMute;
-    public event Action<NetUserId?>? OnUnfreeze;
     public event Action<String?>? OnKick;
+    public event Action<NetUserId?>? OnAhelp;
     public event Action<NetUserId?>? OnOpenBanPanel;
     public event Action<NetUserId?, bool>? OnWhitelistToggle;
+    public event Action? OnFreezeToggle;
 
     public NetUserId? TargetPlayer;
     public string? TargetUsername;
@@ -35,11 +34,13 @@ public sealed partial class PlayerPanel : DefaultWindow
             KickButton.OnPressed += _ => OnKick?.Invoke(TargetUsername);
             NotesButton.OnPressed += _ => OnOpenNotes?.Invoke(TargetPlayer);
             ShowBansButton.OnPressed += _ => OnOpenBans?.Invoke(TargetPlayer);
+            AhelpButton.OnPressed += _ => OnAhelp?.Invoke(TargetPlayer);
             WhitelistToggle.OnPressed += _ =>
             {
                 OnWhitelistToggle?.Invoke(TargetPlayer, _isWhitelisted);
                 SetWhitelisted(!_isWhitelisted);
             };
+            FreezeToggleButton.OnPressed += _ => OnFreezeToggle?.Invoke();
     }
 
     public void SetTitle(string player)
@@ -107,6 +108,18 @@ public sealed partial class PlayerPanel : DefaultWindow
             ("minutes", playtime.Minutes % (24 * 60)));
     }
 
+    public void SetFrozen(bool canFreeze, bool frozen)
+    {
+        FreezeToggleButton.Disabled = !canFreeze;
+
+        FreezeToggleButton.Text = Loc.GetString(!frozen ? "player-panel-freeze" : "player-panel-unfreeze");
+    }
+
+    public void SetAhelp(bool canAhelp)
+    {
+        AhelpButton.Disabled = !canAhelp;
+    }
+
     public void SetButtons()
     {
         BanButton.Disabled = !_adminManager.CanCommand("banpanel");
@@ -115,8 +128,6 @@ public sealed partial class PlayerPanel : DefaultWindow
         ShowBansButton.Disabled = !_adminManager.CanCommand("banlist");
         WhitelistToggle.Disabled =
             !(_adminManager.CanCommand("addwhitelist") && _adminManager.CanCommand("removewhitelist"));
-        FreezeToggleButton.Disabled = !_adminManager.IsAdmin();
-        AhelpButton.Disabled = !_adminManager.IsAdmin();
 
     }
 }

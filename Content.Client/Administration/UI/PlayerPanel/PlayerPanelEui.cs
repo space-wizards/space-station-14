@@ -26,6 +26,7 @@ public sealed class PlayerPanelEui : BaseEui
         PlayerPanel.OnOpenBanPanel += id => _console.ExecuteCommand($"banpanel {id}");
         PlayerPanel.OnOpenBans += id => _console.ExecuteCommand($"banlist {id}");
         PlayerPanel.OnOpenNotes += id => _console.ExecuteCommand($"adminnotes {id}");
+        PlayerPanel.OnAhelp += id => _console.ExecuteCommand($"openahelp {id}");
         PlayerPanel.OnWhitelistToggle += (id, whitelisted) =>
         {
             if (whitelisted)
@@ -35,6 +36,7 @@ public sealed class PlayerPanelEui : BaseEui
                 _console.ExecuteCommand($"whitelistadd {id}");
             }
         };
+        PlayerPanel.OnFreezeToggle += () => SendMessage(new PlayerPanelFreezeMessage());
 
         PlayerPanel.OnClose += () => SendMessage(new CloseEuiMessage());
     }
@@ -61,6 +63,8 @@ public sealed class PlayerPanelEui : BaseEui
         PlayerPanel.SetBans(s.TotalBans, s.TotalRoleBans);
         PlayerPanel.SetNotes(s.TotalNotes);
         PlayerPanel.SetWhitelisted(s.Whitelisted);
+        PlayerPanel.SetFrozen(s.CanFreeze, s.Frozen);
+        PlayerPanel.SetAhelp(s.CanAhelp);
         PlayerPanel.SetButtons();
     }
 }
