@@ -203,20 +203,6 @@ public sealed partial class AnomalyComponent : Component
     #endregion
 
     /// <summary>
-    /// The amount of damage dealt when either a player touches the anomaly
-    /// directly or by hitting the anomaly.
-    /// </summary>
-    [DataField(required: true)]
-    public DamageSpecifier AnomalyContactDamage = default!;
-
-    /// <summary>
-    /// The sound effect played when a player
-    /// burns themselves on an anomaly via contact.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier AnomalyContactDamageSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
-
-    /// <summary>
     /// A prototype entity that appears when an anomaly supercrit collapse.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]

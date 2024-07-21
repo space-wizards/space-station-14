@@ -30,7 +30,6 @@ public abstract class SharedAnomalySystem : EntitySystem
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] protected readonly ISharedAdminLogManager AdminLog = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -42,24 +41,8 @@ public abstract class SharedAnomalySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AnomalyComponent, InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<AnomalyComponent, AttackedEvent>(OnAttacked);
         SubscribeLocalEvent<AnomalyComponent, MeleeThrowOnHitStartEvent>(OnAnomalyThrowStart);
         SubscribeLocalEvent<AnomalyComponent, MeleeThrowOnHitEndEvent>(OnAnomalyThrowEnd);
-    }
-
-    private void OnInteractHand(EntityUid uid, AnomalyComponent component, InteractHandEvent args)
-    {
-        DoAnomalyBurnDamage(uid, args.User, component);
-        args.Handled = true;
-    }
-
-    private void OnAttacked(EntityUid uid, AnomalyComponent component, AttackedEvent args)
-    {
-        if (HasComp<CorePoweredThrowerComponent>(args.Used))
-            return;
-
-        DoAnomalyBurnDamage(uid, args.User, component);
     }
 
     private void OnAnomalyThrowStart(Entity<AnomalyComponent> ent, ref MeleeThrowOnHitStartEvent args)
@@ -73,15 +56,6 @@ public abstract class SharedAnomalySystem : EntitySystem
     private void OnAnomalyThrowEnd(Entity<AnomalyComponent> ent, ref MeleeThrowOnHitEndEvent args)
     {
         _physics.SetBodyType(ent, BodyType.Static);
-    }
-
-    public void DoAnomalyBurnDamage(EntityUid source, EntityUid target, AnomalyComponent component)
-    {
-        _damageable.TryChangeDamage(target, component.AnomalyContactDamage, true);
-        if (!Timing.IsFirstTimePredicted || _net.IsServer)
-            return;
-        Audio.PlayPvs(component.AnomalyContactDamageSound, source);
-        Popup.PopupEntity(Loc.GetString("anomaly-component-contact-damage"), target, target);
     }
 
     public void DoAnomalyPulse(EntityUid uid, AnomalyComponent? component = null)
