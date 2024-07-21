@@ -153,7 +153,7 @@ public sealed partial class RCDMenu : RadialMenu
                         var name = Loc.GetString(proto.SetName);
 
                         if (proto.Prototype != null &&
-                            _protoManager.TryIndex(proto.Prototype, out var entProto))
+                            _protoManager.TryIndex(proto.Prototype, out var entProto, logError: false))
                             name = entProto.Name;
 
                         msg = Loc.GetString("rcd-component-change-build-mode", ("name", name));
