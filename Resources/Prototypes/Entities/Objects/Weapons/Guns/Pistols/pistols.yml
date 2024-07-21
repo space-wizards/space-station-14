@@ -127,7 +127,7 @@
     containers:
       ballistic-ammo: !type:Container
   - type: ProjectileBatteryAmmoProvider
-    proto: CartridgePistolCaseless #So that borgs don't litter the ground with infinite bullet casings
+    proto: BulletPistol
     fireCost: 100
   - type: Battery
     maxCharge: 1000
