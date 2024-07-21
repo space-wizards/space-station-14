@@ -68,7 +68,7 @@
       - nukeops-role-operator
       - SyndicateNamesNormal
     - type: Loadout
-      prototypes: [SyndicateOperativeGearNoUplink]
+      prototypes: [SyndicateOperativeGearFullNoUplink]
 
 # Nuclear Operative
 - type: entity
