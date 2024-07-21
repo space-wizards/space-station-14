@@ -1,6 +1,5 @@
 using Content.Client.Administration.Managers;
 using Content.Client.Eui;
-using Content.Client.Info.PlaytimeStats;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
@@ -11,7 +10,6 @@ namespace Content.Client.Administration.UI.PlayerPanel;
 [UsedImplicitly]
 public sealed class PlayerPanelEui : BaseEui
 {
-    [Dependency] private readonly EuiManager _eui = default!;
     [Dependency] private readonly IClientConsoleHost _console = default!;
     [Dependency] private readonly IClientAdminManager _adminManager = default!;
 
@@ -29,12 +27,7 @@ public sealed class PlayerPanelEui : BaseEui
         PlayerPanel.OnAhelp += id => _console.ExecuteCommand($"openahelp {id}");
         PlayerPanel.OnWhitelistToggle += (id, whitelisted) =>
         {
-            if (whitelisted)
-                _console.ExecuteCommand($"whitelistremove {id}");
-            else
-            {
-                _console.ExecuteCommand($"whitelistadd {id}");
-            }
+            _console.ExecuteCommand(whitelisted ? $"whitelistremove {id}" : $"whitelistadd {id}");
         };
         PlayerPanel.OnFreezeToggle += () => SendMessage(new PlayerPanelFreezeMessage());
 

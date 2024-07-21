@@ -1,5 +1,7 @@
+using System.Linq;
 using Content.Server.EUI;
 using Content.Shared.Administration;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
@@ -9,6 +11,7 @@ public sealed class PlayerPanelCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerLocator _locator = default!;
     [Dependency] private readonly EuiManager _euis = default!;
+    [Dependency] private readonly IPlayerManager _players = default!;
 
     public override string Command => "playerpanel";
 
@@ -37,5 +40,17 @@ public sealed class PlayerPanelCommand : LocalizedCommands
         var ui = new PlayerPanelEui(queriedPlayer);
         _euis.OpenEui(ui, admin);
         ui.SetPlayerState();
+    }
+
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            var options = _players.Sessions.OrderBy(c => c.Name).Select(c => c.Name).ToArray();
+
+            return CompletionResult.FromHintOptions(options, "<PlayerIndex>");
+        }
+
+        return CompletionResult.Empty;
     }
 }
