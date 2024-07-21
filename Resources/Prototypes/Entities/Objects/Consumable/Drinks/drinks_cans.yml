@@ -432,7 +432,7 @@
     whitelist:
       tags:
         - Cola
-    hideClosedStackVisuals: false
+    hideStackVisualsWhenClosed: false
   - type: StorageFill
     contents:
       - id: DrinkColaCan

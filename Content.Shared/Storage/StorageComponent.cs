@@ -129,7 +129,7 @@ namespace Content.Shared.Storage
         /// when it is closed
         /// </summary>
         [DataField]
-        public bool HideClosedStackVisuals = true;
+        public bool HideStackVisualsWhenClosed = true;
 
         [Serializable, NetSerializable]
         public enum StorageUiKey : byte
