@@ -1,116 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Add predicted UI opening for storage and PDAs.
-    type: Add
-  id: 6443
-  time: '2024-04-26T08:16:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27214
-- author: DrSmugleaf
-  changes:
-  - message: Fixed mobs that are able to pry doors not being able to do so by just
-      left clicking on them.
-    type: Fix
-  id: 6444
-  time: '2024-04-26T12:17:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27349
-- author: WarMechanic
-  changes:
-  - message: Fixed unwielding overruling gun cycling
-    type: Fix
-  id: 6445
-  time: '2024-04-26T12:31:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27307
-- author: wafehling
-  changes:
-  - message: You can now reopen the end of round summary window with F9.
-    type: Tweak
-  id: 6446
-  time: '2024-04-26T12:39:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25884
-- author: DrSmugleaf
-  changes:
-  - message: Fixed the game never starting again if it fails to start once.
-    type: Fix
-  id: 6447
-  time: '2024-04-26T13:02:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27359
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Monkey reinforcement teleporters can now select between kobold and monkey
-      operative with a verb.
-    type: Tweak
-  - message: Monkey reinforcement teleporters have been renamed to "genetic ancestor
-      reinforcement teleporter".
-    type: Tweak
-  id: 6448
-  time: '2024-04-26T13:06:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25982
-- author: fujiwaranao
-  changes:
-  - message: Players may now select the Creepy Long hairstyle and an appropriately
-      creepy dress to go with it can be found in theatrical performances crates.
-    type: Add
-  id: 6449
-  time: '2024-04-26T18:51:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27333
-- author: Pgriha
-  changes:
-  - message: Increase limit of characters 10 -> 30.
-    type: Tweak
-  id: 6450
-  time: '2024-04-26T22:58:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27361
-- author: AllenTheGreat
-  changes:
-  - message: The Agent ID card will no longer reset the selected job icon between
-      UI loads
-    type: Fix
-  id: 6451
-  time: '2024-04-27T05:13:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27379
-- author: Slava0135
-  changes:
-  - message: added cancer mouse! (for real this time)
-    type: Add
-  id: 6452
-  time: '2024-04-27T05:46:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26768
-- author: EmoGarbage404
-  changes:
-  - message: Added the welding gas mask to salvage equipment research.
-    type: Add
-  id: 6453
-  time: '2024-04-27T05:47:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27108
-- author: VigersRay
-  changes:
-  - message: Angered NPC now can unbuckle, unpull and escape from containers.
-    type: Fix
-  id: 6454
-  time: '2024-04-27T05:58:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26868
-- author: Lukasz825700516
-  changes:
-  - message: Fixed undeconstructable objects showing deconstruct verb.
-    type: Fix
-  id: 6455
-  time: '2024-04-27T06:30:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27387
-- author: ps3moira
-  changes:
-  - message: Added Canes to the CuraDrobe and Cane Blades for Syndicate Librarians
-    type: Add
-  id: 6456
-  time: '2024-04-27T10:22:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25873
-- author: Lukasz825700516
-  changes:
-  - message: Fixed books containing localization keys.
-    type: Fix
-  id: 6457
-  time: '2024-04-27T10:23:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27390
 - author: Errant
   changes:
   - message: Vox now take significant damage over time while inhaling oxygen.
@@ -3798,3 +3686,117 @@
   id: 6942
   time: '2024-07-20T05:53:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28748
+- author: buntobaggins
+  changes:
+  - message: Increased light radius on the Spationaut Hardsuit
+    type: Tweak
+  id: 6943
+  time: '2024-07-21T03:29:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30049
+- author: EmoGarbage404
+  changes:
+  - message: Fixed wires not updating UI on the Particle Accelerator.
+    type: Fix
+  id: 6944
+  time: '2024-07-21T05:27:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28750
+- author: CroilBird
+  changes:
+  - message: 6-pack of cola displays correctly when not being handled
+    type: Fix
+  id: 6945
+  time: '2024-07-21T05:49:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29309
+- author: metalgearsloth
+  changes:
+  - message: Fix muzzle flashes not tracking properly.
+    type: Fix
+  id: 6946
+  time: '2024-07-21T06:09:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30163
+- author: metalgearsloth
+  changes:
+  - message: Fix being able to throw items while your cursor is off-screen.
+    type: Fix
+  id: 6947
+  time: '2024-07-21T06:13:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30164
+- author: metalgearsloth
+  changes:
+  - message: Reset the scroll bar in the ghost warp menu whenever you search for a
+      role. Previously it remained at your previous position and you would have to
+      scroll up to see the first entry.
+    type: Tweak
+  id: 6948
+  time: '2024-07-21T06:38:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30159
+- author: Blackern5000
+  changes:
+  - message: The syndicate agent's cyborg weapons module now uses syndicate weaponry
+      rather than NT weaponry.
+    type: Tweak
+  id: 6949
+  time: '2024-07-21T07:04:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26947
+- author: Winkarst-cpu
+  changes:
+  - message: Added ambience to the camera routers and telecommunication servers.
+    type: Add
+  - message: Now server's and router's ambience stops once they are unpowered.
+    type: Fix
+  id: 6950
+  time: '2024-07-21T07:22:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30091
+- author: Scott Dimeling
+  changes:
+  - message: Reduced the number of botanists in some stations, for optimal _workflow_
+    type: Tweak
+  id: 6951
+  time: '2024-07-21T07:23:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29581
+- author: metalgearsloth
+  changes:
+  - message: Escape pods won't show up on shuttle map anymore.
+    type: Tweak
+  id: 6952
+  time: '2024-07-21T07:23:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29758
+- author: IProduceWidgets
+  changes:
+  - message: an arabian lamp!
+    type: Add
+  id: 6953
+  time: '2024-07-21T07:24:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27270
+- author: osjarw
+  changes:
+  - message: NPCs no longer get stuck trying to pick up anchored pipes.
+    type: Fix
+  id: 6954
+  time: '2024-07-21T07:28:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30061
+- author: The Hands Leader - JoJo cat
+  changes:
+  - message: Train map is back into rotation
+    type: Tweak
+  id: 6955
+  time: '2024-07-21T07:44:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30145
+- author: Plykiya
+  changes:
+  - message: Syndicate traitor reinforcements are now specialized to be medics, spies,
+      or thieves.
+    type: Add
+  - message: Reinforcement radios with options now have a radial menu, similar to
+      RCDs.
+    type: Tweak
+  id: 6956
+  time: '2024-07-21T10:32:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29853
+- author: Cojoke-dot
+  changes:
+  - message: Dead Space Dragons no long despawn
+    type: Fix
+  id: 6957
+  time: '2024-07-21T10:46:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29842
