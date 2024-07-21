@@ -258,6 +258,13 @@ public sealed partial class ChatSystem : SharedChatSystem
                 SendEntityEmote(source, message, range, nameOverride, hideLog: hideLog, ignoreActionBlocker: ignoreActionBlocker);
                 break;
         }
+
+        var lastMessageSystem = LastMessageBeforeDeath.Instance;
+
+        if (player != null)
+        {
+            lastMessageSystem.AddMessage(Name(source), source, message);
+        }
     }
 
     public void TrySendInGameOOCMessage(
