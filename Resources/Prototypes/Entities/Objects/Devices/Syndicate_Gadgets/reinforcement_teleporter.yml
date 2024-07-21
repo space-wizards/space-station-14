@@ -9,10 +9,12 @@
     sprite: Objects/Devices/communication.rsi
     layers:
     - state: old-radio
-  - type: EmitSoundOnUse
-    sound: /Audio/Effects/Emotes/parp1.ogg
-  - type: UseDelay
-    delay: 300
+  - type: UserInterface
+    interfaces:
+      enum.GhostRoleRadioUiKey.Key:
+        type: GhostRoleRadioBoundUserInterface
+  - type: ActivatableUI
+    key: enum.GhostRoleRadioUiKey.Key
 
 - type: entity
   parent: ReinforcementRadio

@@ -32,6 +32,7 @@
   description: ghost-role-information-syndicate-reinforcement-medic-description
   rules: ghost-role-information-syndicate-monkey-reinforcement-rules
   entityPrototype: MobHumanSyndicateAgentMedic
+  iconPrototype: MedkitCombat
 
 - type: ghostRole
   id: SyndicateAgentSpy
@@ -39,6 +40,7 @@
   description: ghost-role-information-syndicate-reinforcement-spy-description
   rules: ghost-role-information-syndicate-monkey-reinforcement-rules
   entityPrototype: MobHumanSyndicateAgentSpy
+  iconPrototype: ClothingMaskGasVoiceChameleon
 
 - type: ghostRole
   id: SyndicateAgentThief
@@ -46,3 +48,4 @@
   description: ghost-role-information-syndicate-reinforcement-thief-description
   rules: ghost-role-information-syndicate-monkey-reinforcement-rules
   entityPrototype: MobHumanSyndicateAgentThief
+  iconPrototype: SyndicateJawsOfLife
