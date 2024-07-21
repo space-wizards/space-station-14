@@ -43,6 +43,8 @@
     name: ghost-role-information-nukeop-reinforcement-name
     description: ghost-role-information-nukeop-reinforcement-description
     rules: ghost-role-information-nukeop-reinforcement-rules
+    raffle:
+      settings: default
   - type: GhostRoleMobSpawner
     prototype: MobHumanSyndicateAgentNukeops
 
