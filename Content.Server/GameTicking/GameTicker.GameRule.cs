@@ -73,7 +73,14 @@ public sealed partial class GameTicker
         _sawmill.Info($"Added game rule {ToPrettyString(ruleEntity)}");
         _adminLogger.Add(LogType.EventStarted, $"Added game rule {ToPrettyString(ruleEntity)}");
         var str = Loc.GetString("station-event-system-run-event", ("eventName", ToPrettyString(ruleEntity)));
+#if DEBUG
         _chatManager.SendAdminAlert(str);
+#else
+        if (RunLevel == GameRunLevel.InRound) // avoids telling admins the round type before it starts so that can be handled elsewhere.
+        {
+            _chatManager.SendAdminAlert(str);
+        }
+#endif
         Log.Info(str);
 
         var ev = new GameRuleAddedEvent(ruleEntity, ruleId);
