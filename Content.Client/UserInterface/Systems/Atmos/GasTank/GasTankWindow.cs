@@ -28,6 +28,7 @@ public sealed class GasTankWindow
 
     public GasTankWindow()
     {
+        IoCManager.InjectDependencies(this);
         Control contentContainer;
         BoxContainer topContainer;
         TextureButton btnClose;
