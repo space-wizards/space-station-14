@@ -139,7 +139,6 @@
     tags:
     - CannotSuicide
     - DoorBumpOpener
-  - type: Unrevivable
 
 - type: entity
   parent: BaseMobDragon
