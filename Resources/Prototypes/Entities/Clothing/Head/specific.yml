@@ -29,9 +29,9 @@
     tags: [] # ignore "WhitelistChameleon" tag
   - type: TriggerOnVoice
     keyPhrase: "go go gadget"
-    listenRange: 1
+    listenRange: 0
   - type: ActiveListener
-    range: 1
+    range: 0
   - type: ItemSlotVoiceControl
   - type: ItemSlots
     slots:
