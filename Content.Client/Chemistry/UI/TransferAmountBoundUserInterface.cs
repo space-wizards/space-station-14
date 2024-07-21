@@ -18,7 +18,6 @@ namespace Content.Client.Chemistry.UI
         public TransferAmountBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
           _owner = owner;
-          Logger.Warning($"{owner}"); 
           _entManager = IoCManager.Resolve<IEntityManager>();
         }
 
