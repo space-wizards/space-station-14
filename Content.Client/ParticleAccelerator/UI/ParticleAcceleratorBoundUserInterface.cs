@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Singularity.Components;
 using Robust.Client.GameObjects;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.ParticleAccelerator.UI
 {
@@ -17,10 +16,9 @@ namespace Content.Client.ParticleAccelerator.UI
         {
             base.Open();
 
-            _menu = this.CreateWindow<ParticleAcceleratorControlMenu>();
-            _menu.OnOverallState += SendEnableMessage;
-            _menu.OnPowerState += SendPowerStateMessage;
-            _menu.OnScanPartsRequested += SendScanPartsMessage;
+            _menu = new ParticleAcceleratorControlMenu(this);
+            _menu.OnClose += Close;
+            _menu.OpenCentered();
         }
 
         public void SendEnableMessage(bool enable)
@@ -41,6 +39,14 @@ namespace Content.Client.ParticleAccelerator.UI
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             _menu?.DataUpdate((ParticleAcceleratorUIState) state);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            _menu?.Dispose();
+            _menu = null;
         }
     }
 }

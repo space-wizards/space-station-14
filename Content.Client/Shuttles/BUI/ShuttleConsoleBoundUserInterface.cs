@@ -2,7 +2,6 @@ using Content.Client.Shuttles.UI;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
 using JetBrains.Annotations;
-using Robust.Client.UserInterface;
 using Robust.Shared.Map;
 
 namespace Content.Client.Shuttles.BUI;
@@ -20,7 +19,9 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-        _window = this.CreateWindow<ShuttleConsoleWindow>();
+        _window = new ShuttleConsoleWindow();
+        _window.OpenCentered();
+        _window.OnClose += Close;
 
         _window.RequestFTL += OnFTLRequest;
         _window.RequestBeaconFTL += OnFTLBeaconRequest;

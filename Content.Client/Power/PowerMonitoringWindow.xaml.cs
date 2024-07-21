@@ -15,12 +15,13 @@ namespace Content.Client.Power;
 [GenerateTypedNameReferences]
 public sealed partial class PowerMonitoringWindow : FancyWindow
 {
-    [Dependency] private IEntityManager _entManager = default!;
+    private readonly IEntityManager _entManager;
     private readonly SpriteSystem _spriteSystem;
-    [Dependency] private IGameTiming _gameTiming = default!;
+    private readonly IGameTiming _gameTiming;
 
     private const float BlinkFrequency = 1f;
 
+    private EntityUid? _owner;
     private NetEntity? _focusEntity;
 
     public event Action<NetEntity?, PowerMonitoringConsoleGroup>? SendPowerMonitoringConsoleMessageAction;
@@ -33,14 +34,40 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         { PowerMonitoringConsoleGroup.APC, (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_triangle.png")), Color.LimeGreen) },
     };
 
-    public EntityUid Entity;
-
-    public PowerMonitoringWindow()
+    public PowerMonitoringWindow(PowerMonitoringConsoleBoundUserInterface userInterface, EntityUid? owner)
     {
         RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
+        _entManager = IoCManager.Resolve<IEntityManager>();
+        _gameTiming = IoCManager.Resolve<IGameTiming>();
 
         _spriteSystem = _entManager.System<SpriteSystem>();
+        _owner = owner;
+
+        // Pass owner to nav map
+        NavMap.Owner = _owner;
+
+        // Set nav map grid uid
+        var stationName = Loc.GetString("power-monitoring-window-unknown-location");
+
+        if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
+        {
+            NavMap.MapUid = xform.GridUid;
+
+            // Assign station name      
+            if (_entManager.TryGetComponent<MetaDataComponent>(xform.GridUid, out var stationMetaData))
+                stationName = stationMetaData.EntityName;
+
+            var msg = new FormattedMessage();
+            msg.AddMarkup(Loc.GetString("power-monitoring-window-station-name", ("stationName", stationName)));
+
+            StationName.SetMessage(msg);
+        }
+
+        else
+        {
+            StationName.SetMessage(stationName);
+            NavMap.Visible = false;
+        }
 
         // Set trackable entity selected action
         NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
@@ -61,37 +88,9 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         ShowHVCable.OnToggled += _ => OnShowCableToggled(PowerMonitoringConsoleLineGroup.HighVoltage);
         ShowMVCable.OnToggled += _ => OnShowCableToggled(PowerMonitoringConsoleLineGroup.MediumVoltage);
         ShowLVCable.OnToggled += _ => OnShowCableToggled(PowerMonitoringConsoleLineGroup.Apc);
-    }
 
-    public void SetEntity(EntityUid uid)
-    {
-        Entity = uid;
-
-        // Pass owner to nav map
-        NavMap.Owner = uid;
-
-        // Set nav map grid uid
-        var stationName = Loc.GetString("power-monitoring-window-unknown-location");
-
-        if (_entManager.TryGetComponent<TransformComponent>(uid, out var xform))
-        {
-            NavMap.MapUid = xform.GridUid;
-
-            // Assign station name
-            if (_entManager.TryGetComponent<MetaDataComponent>(xform.GridUid, out var stationMetaData))
-                stationName = stationMetaData.EntityName;
-
-            var msg = new FormattedMessage();
-            msg.AddMarkupOrThrow(Loc.GetString("power-monitoring-window-station-name", ("stationName", stationName)));
-
-            StationName.SetMessage(msg);
-        }
-
-        else
-        {
-            StationName.SetMessage(stationName);
-            NavMap.Visible = false;
-        }
+        // Set power monitoring message action
+        SendPowerMonitoringConsoleMessageAction += userInterface.SendPowerMonitoringConsoleMessage;
     }
 
     private void OnTabChanged(int tab)
@@ -114,7 +113,10 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         PowerMonitoringConsoleEntry[] focusLoads,
         EntityCoordinates? monitorCoords)
     {
-        if (!_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(Entity, out var console))
+        if (_owner == null)
+            return;
+
+        if (!_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(_owner.Value, out var console))
             return;
 
         // Update power status text
@@ -159,13 +161,13 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         }
 
         // Show monitor location
-        var mon = _entManager.GetNetEntity(Entity);
+        var mon = _entManager.GetNetEntity(_owner);
 
-        if (monitorCoords != null && mon.IsValid())
+        if (monitorCoords != null && mon != null)
         {
             var texture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_circle.png")));
             var blip = new NavMapBlip(monitorCoords.Value, texture, Color.Cyan, true, false);
-            NavMap.TrackedEntities[mon] = blip;
+            NavMap.TrackedEntities[mon.Value] = blip;
         }
 
         // If the entry group doesn't match the current tab, the data is out dated, do not use it
@@ -237,7 +239,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
         if (netEntity == null)
             return;
 
-        if (!_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(Entity, out var console))
+        if (!_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(_owner, out var console))
             return;
 
         if (!console.PowerMonitoringDeviceMetaData.TryGetValue(netEntity.Value, out var metaData))
@@ -264,7 +266,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
     {
         AutoScrollToFocus();
 
-        // Warning sign pulse
+        // Warning sign pulse        
         var lit = _gameTiming.RealTime.TotalSeconds % BlinkFrequency > BlinkFrequency / 2f;
         SystemWarningPanel.Modulate = lit ? Color.White : new Color(178, 178, 178);
     }

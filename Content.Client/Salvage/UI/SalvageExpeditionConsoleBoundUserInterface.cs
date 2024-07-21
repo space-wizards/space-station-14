@@ -30,9 +30,17 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
     protected override void Open()
     {
         base.Open();
-        _window = this.CreateWindow<OfferingWindow>();
+        _window = new OfferingWindow();
         _window.Title = Loc.GetString("salvage-expedition-window-title");
-        _window.OpenCenteredLeft();
+        _window.OnClose += Close;
+        _window?.OpenCenteredLeft();
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        _window?.Dispose();
+        _window = null;
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

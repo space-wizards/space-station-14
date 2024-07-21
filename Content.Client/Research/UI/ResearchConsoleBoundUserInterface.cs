@@ -1,8 +1,5 @@
 using Content.Shared.Research.Components;
-using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
-using Robust.Client.UserInterface;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Research.UI;
 
@@ -22,8 +19,7 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
 
         var owner = Owner;
 
-        _consoleMenu = this.CreateWindow<ResearchConsoleMenu>();
-        _consoleMenu.SetEntity(owner);
+        _consoleMenu = new ResearchConsoleMenu(owner);
 
         _consoleMenu.OnTechnologyCardPressed += id =>
         {
@@ -34,20 +30,10 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
         {
             SendMessage(new ConsoleServerSelectionMessage());
         };
-    }
 
-    public override void OnProtoReload(PrototypesReloadedEventArgs args)
-    {
-        base.OnProtoReload(args);
+        _consoleMenu.OnClose += Close;
 
-        if (!args.WasModified<TechnologyPrototype>())
-            return;
-
-        if (State is not ResearchConsoleBoundInterfaceState rState)
-            return;
-
-        _consoleMenu?.UpdatePanels(rState);
-        _consoleMenu?.UpdateInformationPanel(rState);
+        _consoleMenu.OpenCentered();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -58,5 +44,13 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
             return;
         _consoleMenu?.UpdatePanels(castState);
         _consoleMenu?.UpdateInformationPanel(castState);
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (!disposing)
+            return;
+        _consoleMenu?.Dispose();
     }
 }

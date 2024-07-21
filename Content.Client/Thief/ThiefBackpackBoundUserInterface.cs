@@ -1,7 +1,6 @@
 using Content.Shared.Thief;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.Thief;
 
@@ -16,9 +15,21 @@ public sealed class ThiefBackpackBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _window = this.CreateWindow<ThiefBackpackMenu>();
-        _window.OnApprove += SendApprove;
-        _window.OnSetChange += SendChangeSelected;
+        _window = new ThiefBackpackMenu(this);
+        _window.OnClose += Close;
+        _window.OpenCentered();
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (!disposing)
+            return;
+
+        if (_window != null)
+            _window.OnClose -= Close;
+
+        _window?.Dispose();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

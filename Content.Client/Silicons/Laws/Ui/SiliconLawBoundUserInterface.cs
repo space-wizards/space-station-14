@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
 using JetBrains.Annotations;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.Silicons.Laws.Ui;
 
@@ -23,7 +22,18 @@ public sealed class SiliconLawBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _menu = this.CreateWindow<SiliconLawMenu>();
+        _menu = new();
+
+        _menu.OnClose += Close;
+        _menu.OpenCentered();
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (!disposing)
+            return;
+        _menu?.Close();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

@@ -3,7 +3,6 @@ using Content.Shared.Chemistry;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.Chemistry.UI
 {
@@ -15,6 +14,9 @@ namespace Content.Client.Chemistry.UI
     {
         [ViewVariables]
         private ReagentDispenserWindow? _window;
+
+        [ViewVariables]
+        private ReagentDispenserBoundUserInterfaceState? _lastState;
 
         public ReagentDispenserBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -30,9 +32,14 @@ namespace Content.Client.Chemistry.UI
             base.Open();
 
             // Setup window layout/elements
-            _window = this.CreateWindow<ReagentDispenserWindow>();
-            _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
-            _window.HelpGuidebookIds = EntMan.GetComponent<GuideHelpComponent>(Owner).Guides;
+            _window = new()
+            {
+                Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName,
+                HelpGuidebookIds = EntMan.GetComponent<GuideHelpComponent>(Owner).Guides
+            };
+
+            _window.OpenCentered();
+            _window.OnClose += Close;
 
             // Setup static button actions.
             _window.EjectButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(SharedReagentDispenser.OutputSlotName));
@@ -56,7 +63,19 @@ namespace Content.Client.Chemistry.UI
             base.UpdateState(state);
 
             var castState = (ReagentDispenserBoundUserInterfaceState) state;
+            _lastState = castState;
+
             _window?.UpdateState(castState); //Update window state
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                _window?.Dispose();
+            }
         }
     }
 }

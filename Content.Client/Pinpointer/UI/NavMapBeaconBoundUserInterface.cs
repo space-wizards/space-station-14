@@ -1,6 +1,5 @@
 using Content.Shared.Pinpointer;
 using JetBrains.Annotations;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -17,16 +16,19 @@ public sealed class NavMapBeaconBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-        _window = this.CreateWindow<NavMapBeaconWindow>();
-
-        if (EntMan.TryGetComponent(Owner, out NavMapBeaconComponent? beacon))
-        {
-            _window.SetEntity(Owner, beacon);
-        }
+        _window = new NavMapBeaconWindow(Owner);
+        _window.OpenCentered();
+        _window.OnClose += Close;
 
         _window.OnApplyButtonPressed += (label, enabled, color) =>
         {
             SendMessage(new NavMapBeaconConfigureBuiMessage(label, enabled, color));
         };
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        _window?.Dispose();
     }
 }

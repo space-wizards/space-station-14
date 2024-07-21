@@ -1,6 +1,5 @@
 using Content.Shared.Ame.Components;
 using JetBrains.Annotations;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.Ame.UI
 {
@@ -17,8 +16,9 @@ namespace Content.Client.Ame.UI
         {
             base.Open();
 
-            _window = this.CreateWindow<AmeWindow>();
-            _window.OnAmeButton += ButtonPressed;
+            _window = new AmeWindow(this);
+            _window.OnClose += Close;
+            _window.OpenCentered();
         }
 
         /// <summary>
@@ -39,6 +39,16 @@ namespace Content.Client.Ame.UI
         public void ButtonPressed(UiButton button)
         {
             SendMessage(new UiButtonPressedMessage(button));
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                _window?.Dispose();
+            }
         }
     }
 }

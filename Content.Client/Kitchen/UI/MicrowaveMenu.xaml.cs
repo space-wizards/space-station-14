@@ -9,20 +9,22 @@ namespace Content.Client.Kitchen.UI
     [GenerateTypedNameReferences]
     public sealed partial class MicrowaveMenu : FancyWindow
     {
-        [Dependency] private readonly IGameTiming _timing = default!;
+        public sealed class MicrowaveCookTimeButton : Button
+        {
+            public uint CookTime;
+        }
 
         public event Action<BaseButton.ButtonEventArgs, int>? OnCookTimeSelected;
 
         public ButtonGroup CookTimeButtonGroup { get; }
+        private readonly MicrowaveBoundUserInterface _owner;
 
-        public bool IsBusy;
-        public TimeSpan CurrentCooktimeEnd;
-
-        public MicrowaveMenu()
+        public MicrowaveMenu(MicrowaveBoundUserInterface owner)
         {
             RobustXamlLoader.Load(this);
             CookTimeButtonGroup = new ButtonGroup();
             InstantCookButton.Group = CookTimeButtonGroup;
+            _owner = owner;
             InstantCookButton.OnPressed += args =>
             {
                 OnCookTimeSelected?.Invoke(args, 0);
@@ -63,20 +65,14 @@ namespace Content.Client.Kitchen.UI
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
-
-            if (!IsBusy)
+            if(!_owner.currentState.IsMicrowaveBusy)
                 return;
 
-            if (CurrentCooktimeEnd > _timing.CurTime)
+            if(_owner.currentState.CurrentCookTimeEnd > _owner.GetCurrentTime())
             {
                 CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
-                ("time", CurrentCooktimeEnd.Subtract(_timing.CurTime).Seconds));
+                ("time",_owner.currentState.CurrentCookTimeEnd.Subtract(_owner.GetCurrentTime()).Seconds)); 
             }
-        }
-
-        public sealed class MicrowaveCookTimeButton : Button
-        {
-            public uint CookTime;
         }
     }
 }

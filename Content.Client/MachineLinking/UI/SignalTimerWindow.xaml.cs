@@ -9,44 +9,42 @@ namespace Content.Client.MachineLinking.UI;
 [GenerateTypedNameReferences]
 public sealed partial class SignalTimerWindow : DefaultWindow
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-
     private const int MaxTextLength = 5;
 
     public event Action<string>? OnCurrentTextChanged;
     public event Action<string>? OnCurrentDelayMinutesChanged;
     public event Action<string>? OnCurrentDelaySecondsChanged;
 
+    private readonly SignalTimerBoundUserInterface _owner;
+
     private TimeSpan? _triggerTime;
 
     private bool _timerStarted;
 
-    public event Action? OnStartTimer;
-
-    public SignalTimerWindow()
+    public SignalTimerWindow(SignalTimerBoundUserInterface owner)
     {
         RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
+
+        _owner = owner;
 
         CurrentTextEdit.OnTextChanged += e => OnCurrentTextChange(e.Text);
         CurrentDelayEditMinutes.OnTextChanged += e => OnCurrentDelayMinutesChange(e.Text);
         CurrentDelayEditSeconds.OnTextChanged += e => OnCurrentDelaySecondsChange(e.Text);
-        StartTimer.OnPressed += _ => StartTimerWeh();
+        StartTimer.OnPressed += _ => OnStartTimer();
     }
 
-    private void StartTimerWeh()
+    public void OnStartTimer()
     {
         if (!_timerStarted)
         {
             _timerStarted = true;
-            _triggerTime = _timing.CurTime + GetDelay();
+            _triggerTime = _owner.GetCurrentTime() + GetDelay();
         }
         else
         {
             SetTimerStarted(false);
         }
-
-        OnStartTimer?.Invoke();
+        _owner.OnStartTimer();
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -56,9 +54,9 @@ public sealed partial class SignalTimerWindow : DefaultWindow
         if (!_timerStarted || _triggerTime == null)
             return;
 
-        if (_timing.CurTime < _triggerTime.Value)
+        if (_owner.GetCurrentTime() < _triggerTime.Value)
         {
-            StartTimer.Text = TextScreenSystem.TimeToString(_triggerTime.Value - _timing.CurTime);
+            StartTimer.Text = TextScreenSystem.TimeToString(_triggerTime.Value - _owner.GetCurrentTime());
         }
         else
         {

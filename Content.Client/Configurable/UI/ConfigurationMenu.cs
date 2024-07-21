@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
-using System.Text.RegularExpressions;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -14,25 +13,23 @@ namespace Content.Client.Configurable.UI
 {
     public sealed class ConfigurationMenu : DefaultWindow
     {
+        public ConfigurationBoundUserInterface Owner { get; }
+
         private readonly BoxContainer _column;
         private readonly BoxContainer _row;
 
         private readonly List<(string  name, LineEdit input)> _inputs;
 
-        [ViewVariables]
-        public Regex? Validation { get; internal set; }
-
-        public event Action<Dictionary<string, string>>? OnConfiguration;
-
-        public ConfigurationMenu()
+        public ConfigurationMenu(ConfigurationBoundUserInterface owner)
         {
             MinSize = SetSize = new Vector2(300, 250);
+            Owner = owner;
 
             _inputs = new List<(string name, LineEdit input)>();
 
             Title = Loc.GetString("configuration-menu-device-title");
 
-            var baseContainer = new BoxContainer
+            BoxContainer baseContainer = new BoxContainer
             {
                 Orientation = LayoutOrientation.Vertical,
                 VerticalExpand = true,
@@ -119,13 +116,14 @@ namespace Content.Client.Configurable.UI
         private void OnConfirm(ButtonEventArgs args)
         {
             var config = GenerateDictionary(_inputs, "Text");
-            OnConfiguration?.Invoke(config);
+
+            Owner.SendConfiguration(config);
             Close();
         }
 
         private bool Validate(string value)
         {
-            return Validation?.IsMatch(value) != false;
+            return Owner.Validation == null || Owner.Validation.IsMatch(value);
         }
 
         private Dictionary<string, string> GenerateDictionary(IEnumerable<(string name, LineEdit input)> inputs, string propertyName)

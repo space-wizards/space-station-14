@@ -18,13 +18,15 @@ public sealed partial class IntercomMenu : FancyWindow
 
     private readonly List<string> _channels = new();
 
-    public IntercomMenu()
+    public IntercomMenu(Entity<IntercomComponent> entity)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
         MicButton.OnPressed += args => OnMicPressed?.Invoke(args.Button.Pressed);
         SpeakerButton.OnPressed += args => OnSpeakerPressed?.Invoke(args.Button.Pressed);
+
+        Update(entity);
     }
 
     public void Update(Entity<IntercomComponent> entity)

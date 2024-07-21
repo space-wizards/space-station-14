@@ -22,7 +22,7 @@ public sealed partial class GatewayWindow : FancyWindow,
     public event Action<NetEntity>? OpenPortal;
     private List<GatewayDestinationData> _destinations = new();
 
-    public NetEntity Owner;
+    public readonly NetEntity Owner;
 
     private NetEntity? _current;
     private TimeSpan _nextReady;
@@ -46,18 +46,14 @@ public sealed partial class GatewayWindow : FancyWindow,
     /// </summary>
     private bool _isCooldownPending = true;
 
-    public GatewayWindow()
+    public GatewayWindow(NetEntity netEntity)
     {
         RobustXamlLoader.Load(this);
         var dependencies = IoCManager.Instance!;
         _timing = dependencies.Resolve<IGameTiming>();
+        Owner = netEntity;
 
         NextUnlockBar.ForegroundStyleBoxOverride = new StyleBoxFlat(Color.FromHex("#C74EBD"));
-    }
-
-    public void SetEntity(NetEntity entity)
-    {
-
     }
 
     public void UpdateState(GatewayBoundUserInterfaceState state)
