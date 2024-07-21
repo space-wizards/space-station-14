@@ -1,7 +1,7 @@
 <DefaultWindow
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-    Title="{Loc ban-panel-title}" MinSize="350 280">
+    Title="{Loc ban-panel-title}" MinSize="300 300">
     <BoxContainer Orientation="Vertical">
        <Label Name="PlayerName"/>
        <BoxContainer Orientation="Horizontal">
@@ -13,13 +13,12 @@
        <Label Name="Bans"/>
        <Label Name="RoleBans"/>
        <GridContainer Rows="3">
-        <Button Name="NotesButton" Text="ShowNotes" Disabled="True"/>
-        <Button Name="ShowBansButton" Text="ShowBans" Disabled="True"/>
-        <Button Name="AhelpButton" Text="Ahelp" Disabled="True"/>
-        <Button Name="FreezeToggleButton" Text="Freeze And Mute" Disabled="True"/>
+        <Button Name="NotesButton" Text="{Loc player-panel-show-notes}" Disabled="True"/>
+        <Button Name="ShowBansButton" Text="{Loc player-panel-show-bans}" Disabled="True"/>
+        <Button Name="AhelpButton" Text="{Loc player-panel-help}"/>
+        <Button Name="FreezeToggleButton" Text="{Loc player-panel-freeze}" Disabled="True"/>
         <controls:ConfirmButton Name="KickButton" Text="Kick" Disabled="True"/>
-        <Button Name="BanButton" Text="Ban" Disabled="True"/>
+        <Button Name="BanButton" Text="{Loc player-panel-ban}" Disabled="True"/>
        </GridContainer>
     </BoxContainer>
-
 </DefaultWindow>
