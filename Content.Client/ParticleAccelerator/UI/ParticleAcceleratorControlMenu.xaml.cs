@@ -19,7 +19,7 @@ namespace Content.Client.ParticleAccelerator.UI;
 [GenerateTypedNameReferences]
 public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
 {
-    private readonly ParticleAcceleratorBoundUserInterface _owner;
+    [Dependency] private readonly IResourceCache _cache = default!;
 
     private readonly FastNoiseLite _drawNoiseGenerator;
 
@@ -33,17 +33,22 @@ public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
     private bool _shouldContinueAnimating;
     private int _maxStrength = 3;
 
-    public ParticleAcceleratorControlMenu(ParticleAcceleratorBoundUserInterface owner)
+    public event Action<bool>? OnOverallState;
+    public event Action? OnScan;
+    public event Action<ParticleAcceleratorPowerState>? OnPowerState;
+
+    private EntityUid _entity;
+
+    public ParticleAcceleratorControlMenu()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
-        _owner = owner;
         _drawNoiseGenerator = new();
         _drawNoiseGenerator.SetFractalType(FastNoiseLite.FractalType.FBm);
         _drawNoiseGenerator.SetFrequency(0.5f);
 
-        var resourceCache = IoCManager.Resolve<IResourceCache>();
-        var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
+        var panelTex = _cache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
 
         MouseFilter = MouseFilterMode.Stop;
 
@@ -80,9 +85,20 @@ public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
         StateSpinBox.ValueChanged += PowerStateChanged;
         StateSpinBox.LineEditDisabled = true;
 
-        OffButton.OnPressed += _ => owner.SendEnableMessage(false);
-        OnButton.OnPressed += _ => owner.SendEnableMessage(true);
-        ScanButton.OnPressed += _ => _owner.SendScanPartsMessage();
+        OffButton.OnPressed += _ =>
+        {
+            OnOverallState?.Invoke(false);
+        };
+
+        OnButton.OnPressed += _ =>
+        {
+            OnOverallState?.Invoke(true);
+        };
+
+        ScanButton.OnPressed += _ =>
+        {
+            OnScan?.Invoke();
+        };
 
         AlarmControl.AnimationCompleted += _ =>
         {
@@ -97,6 +113,11 @@ public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
         };
 
         UpdateUI(false, false, false, false);
+    }
+
+    public void SetEntity(EntityUid uid)
+    {
+        _entity = uid;
     }
 
     private void PowerStateChanged(ValueChangedEventArgs e)
@@ -124,7 +145,7 @@ public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
         }
 
         StateSpinBox.SetButtonDisabled(true);
-        _owner.SendPowerStateMessage(newState);
+        OnPowerState?.Invoke(newState);
     }
 
     private bool StrengthSpinBoxValid(int n)
