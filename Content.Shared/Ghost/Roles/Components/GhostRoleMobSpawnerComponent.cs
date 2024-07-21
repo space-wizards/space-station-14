@@ -1,12 +1,11 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 
-namespace Content.Server.Ghost.Roles.Components
+namespace Content.Shared.Ghost.Roles.Components
 {
     /// <summary>
     ///     Allows a ghost to take this role, spawning a new entity.
     /// </summary>
     [RegisterComponent, EntityCategory("Spawner")]
-    [Access(typeof(GhostRoleSystem))]
     public sealed partial class GhostRoleMobSpawnerComponent : Component
     {
         [DataField]
