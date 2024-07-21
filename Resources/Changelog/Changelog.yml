@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pgriha
-  changes:
-  - message: Increase limit of characters 10 -> 30.
-    type: Tweak
-  id: 6450
-  time: '2024-04-26T22:58:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27361
 - author: AllenTheGreat
   changes:
   - message: The Agent ID card will no longer reset the selected job icon between
@@ -3795,3 +3788,12 @@
   id: 6949
   time: '2024-07-21T07:04:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26947
+- author: Winkarst-cpu
+  changes:
+  - message: Added ambience to the camera routers and telecommunication servers.
+    type: Add
+  - message: Now server's and router's ambience stops once they are unpowered.
+    type: Fix
+  id: 6950
+  time: '2024-07-21T07:22:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30091
