@@ -202,9 +202,14 @@ public sealed partial class ShuttleSystem
 
         component = EnsureComp<FTLDestinationComponent>(mapUid);
 
-        component.Enabled = enabled;
-        component.RequireCoordinateDisk = requireDisk;
-        component.BeaconsOnly = beaconsOnly;
+        if (component.Enabled == enabled && component.RequireCoordinateDisk == requireDisk && component.BeaconsOnly == beaconsOnly)
+        {
+            component.Enabled = enabled;
+            component.RequireCoordinateDisk = requireDisk;
+            component.BeaconsOnly = beaconsOnly;
+            return true;
+        }
+
         _console.RefreshShuttleConsoles();
         Dirty(mapUid, component);
         return true;
