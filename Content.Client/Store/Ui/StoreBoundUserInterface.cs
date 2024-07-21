@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using System.Linq;
 using Content.Shared.Store.Components;
 using Content.Shared.StoreDiscount.Components;
+using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Store.Ui;
@@ -30,12 +31,9 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
     protected override void Open()
     {
-        _menu = new StoreMenu();
+        _menu = this.CreateWindow<StoreMenu>();
         if (EntMan.TryGetComponent<StoreComponent>(Owner, out var store))
             _menu.Title = Loc.GetString(store.Name);
-
-        _menu.OpenCentered();
-        _menu.OnClose += Close;
 
         _menu.OnListingButtonPressed += (_, listing) =>
         {
@@ -81,15 +79,6 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
                 _menu?.UpdateRefund(msg.AllowRefund);
                 break;
         }
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-        _menu?.Close();
-        _menu?.Dispose();
     }
 
     private void UpdateListingsWithSearchFilter()
