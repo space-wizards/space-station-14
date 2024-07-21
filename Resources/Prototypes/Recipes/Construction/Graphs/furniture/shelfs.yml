@@ -1,0 +1,268 @@
+- type: constructionGraph
+  id: Shelf
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DeleteEntity {}
+      edges:
+# Normal
+        - to: ShelfWood
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: WoodPlank
+              amount: 4
+              doAfter: 2
+        - to: ShelfMetal
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 3
+        - to: ShelfGlass
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Glass
+              amount: 4
+              doAfter: 2
+# Reinforced
+        - to: ShelfRWood
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: WoodPlank
+              amount: 8
+              doAfter: 3
+            - material: Cable
+              amount: 2
+              doAfter: 1
+        - to: ShelfRMetal
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Plasteel
+              amount: 5
+              doAfter: 3
+            - material: ReinforcedGlass
+              amount: 5
+              doAfter: 2
+            - material: Cable
+              amount: 3
+              doAfter: 1
+        - to: ShelfRGlass
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Plastic
+              amount: 5
+              doAfter: 2
+            - material: ReinforcedGlass
+              amount: 5
+              doAfter: 3
+            - material: Cable
+              amount: 2
+              doAfter: 1
+# Departmental
+        - to: ShelfBar
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: WoodPlank
+              amount: 6
+              doAfter: 2
+        - to: ShelfKitchen
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: MetalRod
+              amount: 2
+              doAfter: 1
+            - material: Steel
+              amount: 5
+            - material: WoodPlank
+              amount: 3
+              doAfter: 2
+        - to: ShelfChemistry
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Plasteel
+              amount: 2
+              doAfter: 2
+            - material: ReinforcedGlass
+              amount: 5
+              doAfter: 2
+            - material: Plastic
+              amount: 5
+              doAfter: 2
+            - material: Cable
+              amount: 2
+              doAfter: 1
+
+# Normal deconstructs
+    - node: ShelfWood
+      entity: ShelfWood
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+                prototype: MaterialWoodPlank1
+                amount: 4
+          steps:
+            - tool: Prying
+              doAfter: 2
+
+    - node: ShelfMetal
+      entity: ShelfMetal
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 5
+          steps:
+            - tool: Screwing
+              doAfter: 5
+
+    - node: ShelfGlass
+      entity: ShelfGlass
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+                prototype: SheetGlass1
+                amount: 4
+          steps:
+            - tool: Screwing
+              doAfter: 2
+# Reinforced deconstructs
+    - node: ShelfRWood
+      entity: ShelfRWood
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+                prototype: MaterialWoodPlank1
+                amount: 8
+            - !type:SpawnPrototype
+                prototype: CableApcStack1
+                amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 5
+            - tool: Prying
+              doAfter: 2
+
+    - node: ShelfRMetal
+      entity: ShelfRMetal
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+                prototype: SheetPlasteel1
+                amount: 5
+            - !type:SpawnPrototype
+                prototype: SheetRGlass1
+                amount: 5
+            - !type:SpawnPrototype
+                prototype: CableApcStack1
+                amount: 3
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Welding
+              doAfter: 5
+
+    - node: ShelfRGlass
+      entity: ShelfRGlass
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+                prototype: SheetPlastic1
+                amount: 5
+            - !type:SpawnPrototype
+                prototype: SheetRGlass1
+                amount: 5
+            - !type:SpawnPrototype
+                prototype: CableApcStack1
+                amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 2
+            - tool: Screwing
+              doAfter: 4
+
+# Departmental deconstructs
+    - node: ShelfBar
+      entity: ShelfBar
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+                prototype: MaterialWoodPlank1
+                amount: 6
+          steps:
+            - tool: Prying
+              doAfter: 3
+
+    - node: ShelfKitchen
+      entity: ShelfKitchen
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+                prototype: PartRodMetal
+                amount: 2
+            - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 5
+            - !type:SpawnPrototype
+                prototype: MaterialWoodPlank1
+                amount: 3
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Welding
+              doAfter: 2
+            - tool: Prying
+              doAfter: 1
+
+    - node: ShelfChemistry
+      entity: ShelfChemistry
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+                prototype: SheetPlasteel1
+                amount: 2
+            - !type:SpawnPrototype
+                prototype: SheetPlastic1
+                amount: 5
+            - !type:SpawnPrototype
+                prototype: SheetRGlass1
+                amount: 5
+            - !type:SpawnPrototype
+                prototype: CableApcStack1
+                amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 2
+            - tool: Screwing
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 2
+            - tool: Prying
+              doAfter: 4
