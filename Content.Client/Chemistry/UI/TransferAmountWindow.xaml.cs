@@ -22,8 +22,8 @@ namespace Content.Client.Chemistry.UI
         {
           _min = min/100;
           _max = max/100;
-          MinimumAmount.Text = $"Min: {_min}";
-          MaximumAmount.Text = $"Max: {_max}";
+          MinimumAmount.Text = Loc.GetString("comp-solution-transfer-set-amount-min", ("amount", _min));
+          MaximumAmount.Text = Loc.GetString("comp-solution-transfer-set-amount-max", ("amount", _max));
         }
 
         private void OnValueChanged(LineEdit.LineEditEventArgs args)
