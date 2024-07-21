@@ -342,6 +342,7 @@ namespace Content.Server.GameTicking
 
             ShowRoundEndScoreboard(text);
             SendRoundEndDiscordMessage();
+            // Call the OnEndRound to send the message through Last Message Before Death Webhook.
             var lastMessageSystem = LastMessageBeforeDeath.Instance;
             lastMessageSystem.OnRoundEnd(_webhookIdentifierLastMessage);
         }

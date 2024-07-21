@@ -5,7 +5,6 @@ using Content.Shared.Mobs.Systems;
 
 namespace Content.Server.Chat
 {
-    //TODO: Remove all Console.Writeline's and get sawmill
     internal class LastMessageBeforeDeath
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -59,13 +58,12 @@ namespace Content.Server.Chat
         }
 
 
-
+        // Send the messages through the webhook.
         public async void OnRoundEnd(WebhookIdentifier? webhookId)
         {
             if (!webhookId.HasValue)
                 return;
 
-            // Now it's safe to access webhookId.Value
             var id = webhookId.Value;
 
             StringBuilder allMessagesString = new StringBuilder();
@@ -84,7 +82,6 @@ namespace Content.Server.Chat
             {
                 allMessagesString.AppendLine($"No messages found.");
             }
-            // Get this info from config later.
 
             var payload = new WebhookPayload
             {

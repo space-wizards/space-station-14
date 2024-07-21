@@ -259,6 +259,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 break;
         }
 
+        //Last Message Before Death Webhook
         var lastMessageSystem = LastMessageBeforeDeath.Instance;
 
         if (player != null)

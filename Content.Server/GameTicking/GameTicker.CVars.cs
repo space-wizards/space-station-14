@@ -77,6 +77,7 @@ namespace Content.Server.GameTicking
                     DiscordRoundEndRole = null;
                 }
             }, true);
+            //CCVar for DiscordLastMessageBeforeDeathWebhook
             Subs.CVar(_configurationManager, CCVars.DiscordLastMessageBeforeDeathWebhook, value =>
             {
                 if (!string.IsNullOrWhiteSpace(value))
