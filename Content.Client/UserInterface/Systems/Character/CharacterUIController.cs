@@ -1,11 +1,13 @@
 using System.Linq;
 using Content.Client.CharacterInfo;
 using Content.Client.Gameplay;
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Character.Controls;
 using Content.Client.UserInterface.Systems.Character.Windows;
 using Content.Client.UserInterface.Systems.Objectives.Controls;
 using Content.Shared.Input;
+using Content.Shared.Objectives.Systems;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -121,11 +123,17 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
                 Modulate = Color.Gray
             };
 
-            objectiveControl.AddChild(new Label
+
+            var objectiveText = new FormattedMessage();
+            objectiveText.TryAddMarkup(groupId, out _);
+
+            var objectiveLabel = new RichTextLabel
             {
-                Text = groupId,
-                Modulate = Color.LightSkyBlue
-            });
+                StyleClasses = {StyleNano.StyleClassTooltipActionTitle}
+            };
+            objectiveLabel.SetMessage(objectiveText);
+
+            objectiveControl.AddChild(objectiveLabel);
 
             foreach (var condition in conditions)
             {
