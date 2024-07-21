@@ -35,7 +35,8 @@ public sealed class PlayerPanelEui : BaseEui
         if (state is not PlayerPanelEuiState s)
             return;
 
-        PlayerPanel.Name = s.Username;
+        PlayerPanel.TargetPlayer = s.Guid;
+        PlayerPanel.TargetUsername = s.Username;
         PlayerPanel.SetTitle(s.Username);
         PlayerPanel.SetPlaytime(s.Playtime);
         PlayerPanel.SetBans(s.TotalBans, s.TotalRoleBans);

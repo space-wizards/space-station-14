@@ -41,7 +41,7 @@ public sealed class PlayerPanelEui : BaseEui
 
     public override EuiStateBase GetNewState()
     {
-        return new PlayerPanelEuiState(_targetPlayer.Username, _playtime, _notes, _bans, _roleBans, _whitelisted);
+        return new PlayerPanelEuiState(_targetPlayer.UserId, _targetPlayer.Username, _playtime, _notes, _bans, _roleBans, _whitelisted);
     }
 
     private void OnPermsChanged(AdminPermsChangedEventArgs args)

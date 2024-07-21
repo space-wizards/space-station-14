@@ -15,6 +15,8 @@ public sealed partial class PlayerPanel : DefaultWindow
     public event Action<ICommonSession>? OnUnfreeze;
     public event Action<ICommonSession>? OnKick;
     public event Action<ICommonSession>? OnOpenBanPanel;
+    public NetUserId? TargetPlayer;
+    public string? TargetUsername;
 
     public void SetTitle(string player)
     {
