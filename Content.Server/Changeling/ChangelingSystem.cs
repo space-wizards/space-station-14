@@ -84,7 +84,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;1
 
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly FlashSystem _flash = default!;
@@ -238,7 +238,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         return false;
     }
 
-    private void UpdateChemicals(EntityUid uid, ChangelingComponent comp, float? amount = null)
+    public void UpdateChemicals(EntityUid uid, ChangelingComponent comp, float? amount = null)
     {
         var chemicals = comp.Chemicals;
 
@@ -620,17 +620,12 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         var popup = Loc.GetString("changeling-absorb-end-self-ling");
         var bonusChemicals = 0;
-        var bonusEvolutionPoints = 0;
         if (HasComp<ChangelingComponent>(target))
-        {
             bonusChemicals += 60;
-            bonusEvolutionPoints += 10;
-        }
         else
         {
             popup = Loc.GetString("changeling-absorb-end-self", ("target", Identity.Entity(target, EntityManager)));
             bonusChemicals += 10;
-            bonusEvolutionPoints += 2;
         }
         TryStealDNA(uid, target, comp, true);
         comp.TotalAbsorbedEntities++;
@@ -641,8 +636,15 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         if (TryComp<StoreComponent>(args.User, out var store))
         {
-            _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { "EvolutionPoint", bonusEvolutionPoints } }, args.User, store);
+            // total reset
+            store.Balance["EvolutionPoint"] = 20;
             _store.UpdateUserInterface(args.User, args.User, store);
+
+            foreach (var action in _actions.GetActions(uid))
+            {
+                if (HasComp<ChangelingActionComponent>(uid))
+                    _actions.RemoveAction(uid, action.Id);
+            }
         }
 
         if (_mind.TryGetMind(uid, out var mindId, out var mind))

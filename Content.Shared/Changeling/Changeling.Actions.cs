@@ -1,20 +1,58 @@
 using Content.Shared.Actions;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Changeling;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ChangelingActionComponent : Component
+public abstract partial class ChangelingActionComponent : Component
 {
-    [DataField("chemicalCost")]
-    public float ChemicalCost = 0;
+    [DataField] public float ChemicalCost = 0;
 
-    [DataField("useInLesserForm")]
-    public bool UseWhileLesserForm = false;
+    /// <summary>
+    ///     If a changeling can use the action while being in lesser form (a monkey)
+    /// </summary>
+    [DataField] public bool UseWhileLesserForm = false;
 
-    [DataField("requireAbsorbed")]
-    public float RequireAbsorbed = 0;
+    /// <summary>
+    ///     How many humanoids does a changeling have to absorb to unlock the ability
+    /// </summary>
+    [DataField] public float RequireAbsorbed = 0;
+
+    /// <summary>
+    ///     If a squelch is to be played
+    /// </summary>
+    [DataField] public bool Audible = false;
+
+    [DataField] public BaseActionEvent? Event = null;
 }
+
+[RegisterComponent, NetworkedComponent]
+public abstract partial class ChangelingActionStingComponent : ChangelingActionComponent
+{
+    /// <summary>
+    ///     Indicates if a changeling must use the sting on himself
+    /// </summary>
+    [DataField] public bool UseOnSelf = false;
+}
+
+[RegisterComponent, NetworkedComponent]
+public sealed partial class ChangelingActionReagentStingComponent : ChangelingActionStingComponent
+{
+    [DataField] public Dictionary<EntProtoId, FixedPoint2>? Reagents;
+}
+
+[RegisterComponent, NetworkedComponent]
+public sealed partial class ChangelingActionEquipComponent : ChangelingActionComponent
+{
+    [DataField] public List<EntProtoId> Entities;
+}
+
+public abstract partial class ChangelingActionEvent : InstantActionEvent { }
+public abstract partial class ChangelingStingEvent : EntityTargetActionEvent { }
+public abstract partial class ChangelingReagentStingEvent : EntityTargetActionEvent { }
+public abstract partial class ChangelingEquipEvent : InstantActionEvent { }
 
 #region Events - Basic
 

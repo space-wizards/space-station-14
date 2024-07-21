@@ -5,7 +5,7 @@
   components:
   - type: Objective
     difficulty: 1.5 # unused but necessary i guess
-    issuer: hivemind
+    issuer: objective-issuer-hivemind
   - type: RoleRequirement
     roles:
       components:
