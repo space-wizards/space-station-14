@@ -63,7 +63,7 @@
 #Nuclear Operative Gear
 - type: startingGear
   id: SyndicateOperativeGearFull
-  parent: SyndicateOperativeGearNoUplink
+  parent: SyndicateOperativeGearFullNoUplink
   equipment:
     pocket2: BaseUplinkRadio40TC
 
