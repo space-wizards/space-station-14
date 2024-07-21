@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Fixed mobs that are able to pry doors not being able to do so by just
-      left clicking on them.
-    type: Fix
-  id: 6444
-  time: '2024-04-26T12:17:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27349
 - author: WarMechanic
   changes:
   - message: Fixed unwielding overruling gun cycling
@@ -3798,3 +3790,10 @@
   id: 6943
   time: '2024-07-21T03:29:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30049
+- author: EmoGarbage404
+  changes:
+  - message: Fixed wires not updating UI on the Particle Accelerator.
+    type: Fix
+  id: 6944
+  time: '2024-07-21T05:27:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28750
