@@ -9,17 +9,18 @@ namespace Content.Client.Pinpointer.UI;
 [GenerateTypedNameReferences]
 public sealed partial class StationMapWindow : FancyWindow
 {
-    public StationMapWindow()
+    public StationMapWindow(EntityUid? mapUid, EntityUid? trackedEntity)
     {
         RobustXamlLoader.Load(this);
-    }
-
-    public void Set(EntityUid? mapUid, EntityUid? trackedEntity)
-    {
         NavMapScreen.MapUid = mapUid;
 
         if (trackedEntity != null)
             NavMapScreen.TrackedCoordinates.Add(new EntityCoordinates(trackedEntity.Value, Vector2.Zero), (true, Color.Cyan));
+
+        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MetaDataComponent>(mapUid, out var metadata))
+        {
+            Title = metadata.EntityName;
+        }
 
         NavMapScreen.ForceNavMapUpdate();
     }

@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Atmos.Piping.Binary.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.UI
 {
@@ -22,8 +21,14 @@ namespace Content.Client.Atmos.UI
         {
             base.Open();
 
-            _window = this.CreateWindow<GasCanisterWindow>();
+            _window = new GasCanisterWindow();
 
+            if (State != null)
+                UpdateState(State);
+
+            _window.OpenCentered();
+
+            _window.OnClose += Close;
             _window.ReleaseValveCloseButtonPressed += OnReleaseValveClosePressed;
             _window.ReleaseValveOpenButtonPressed += OnReleaseValveOpenPressed;
             _window.ReleasePressureSet += OnReleasePressureSet;

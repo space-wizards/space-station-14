@@ -9,20 +9,17 @@ namespace Content.Client.NetworkConfigurator;
 [GenerateTypedNameReferences]
 public sealed partial class NetworkConfiguratorListMenu : FancyWindow
 {
-    public event Action<string>? OnRemoveAddress;
-
-    public NetworkConfiguratorListMenu()
+    private readonly NetworkConfiguratorBoundUserInterface _ui;
+    public NetworkConfiguratorListMenu(NetworkConfiguratorBoundUserInterface ui)
     {
         RobustXamlLoader.Load(this);
-        DeviceList.OnRemoveAddress += args =>
-        {
-            OnRemoveAddress?.Invoke(args);
-        };
+
+        _ui = ui;
     }
 
     public void UpdateState(NetworkConfiguratorUserInterfaceState state)
     {
         DeviceCountLabel.Text = Loc.GetString("network-configurator-ui-count-label", ("count", state.DeviceList.Count));
-        DeviceList.UpdateState(state.DeviceList, true);
+        DeviceList.UpdateState(_ui, state.DeviceList);
     }
 }

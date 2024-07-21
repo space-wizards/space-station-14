@@ -7,19 +7,17 @@ namespace Content.Client.NetworkConfigurator;
 [GenerateTypedNameReferences]
 public sealed partial class NetworkConfiguratorDeviceList : ScrollContainer
 {
-    public event Action<string>? OnRemoveAddress;
-
-    public void UpdateState(HashSet<(string address, string name)> devices, bool ui)
+    public void UpdateState(NetworkConfiguratorBoundUserInterface? ui, HashSet<(string address, string name)> devices)
     {
         DeviceList.RemoveAllChildren();
 
         foreach (var device in devices)
         {
-            DeviceList.AddChild(BuildDeviceListRow(device, ui));
+            DeviceList.AddChild(BuildDeviceListRow(ui, device));
         }
     }
 
-    private BoxContainer BuildDeviceListRow((string address, string name) savedDevice, bool ui)
+    private static BoxContainer BuildDeviceListRow(NetworkConfiguratorBoundUserInterface? ui, (string address, string name) savedDevice)
     {
         var row = new BoxContainer()
         {
@@ -50,10 +48,10 @@ public sealed partial class NetworkConfiguratorDeviceList : ScrollContainer
         row.AddChild(name);
         row.AddChild(address);
 
-        if (ui)
+        if (ui != null)
         {
             row.AddChild(removeButton);
-            removeButton.OnPressed += _ => OnRemoveAddress?.Invoke(savedDevice.address);
+            removeButton.OnPressed += _ => ui.OnRemoveButtonPressed(savedDevice.address);
         }
 
         return row;

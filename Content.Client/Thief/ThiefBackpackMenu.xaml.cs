@@ -12,42 +12,46 @@ public sealed partial class ThiefBackpackMenu : FancyWindow
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
     private readonly SpriteSystem _spriteSystem;
 
-    public event Action? OnApprove;
-    public event Action<int>? OnSetChange;
+    private readonly ThiefBackpackBoundUserInterface _owner;
 
-    public ThiefBackpackMenu()
+    public ThiefBackpackMenu(ThiefBackpackBoundUserInterface owner)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
         _spriteSystem = _sysMan.GetEntitySystem<SpriteSystem>();
 
-        ApproveButton.OnPressed += args =>
+        _owner = owner;
+
+        ApproveButton.OnButtonDown += (args) =>
         {
-            OnApprove?.Invoke();
+            _owner.SendApprove();
         };
     }
 
     public void UpdateState(ThiefBackpackBoundUserInterfaceState state)
     {
-        SetsGrid.DisposeAllChildren();
-        var selectedNumber = 0;
-        foreach (var (set, info) in state.Sets)
+        SetsGrid.RemoveAllChildren();
+        int count = 0;
+        int selectedNumber = 0;
+        foreach (var set in state.Sets)
         {
-            var child = new ThiefBackpackSet(info, _spriteSystem);
+            var child = new ThiefBackpackSet(set.Value, _spriteSystem);
 
             child.SetButton.OnButtonDown += (args) =>
             {
-                OnSetChange?.Invoke(set);
+                _owner.SendChangeSelected(set.Key);
             };
 
             SetsGrid.AddChild(child);
 
-            if (info.Selected)
+            count++;
+
+            if (set.Value.Selected)
                 selectedNumber++;
         }
 
         Description.Text = Loc.GetString("thief-backpack-window-description", ("maxCount", state.MaxSelectedSets));
         SelectedSets.Text = Loc.GetString("thief-backpack-window-selected", ("selectedCount", selectedNumber), ("maxCount", state.MaxSelectedSets));
-        ApproveButton.Disabled = selectedNumber != state.MaxSelectedSets;
+        ApproveButton.Disabled = selectedNumber == state.MaxSelectedSets ? false : true;
     }
 }

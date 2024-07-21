@@ -24,6 +24,8 @@ namespace Content.Client.Instruments.UI
         [ViewVariables] private BandMenu? _bandMenu;
         [ViewVariables] private ChannelsMenu? _channelsMenu;
 
+        [ViewVariables] public InstrumentComponent? Instrument { get; private set; }
+
         public InstrumentBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
             IoCManager.InjectDependencies(this);
@@ -41,20 +43,14 @@ namespace Content.Client.Instruments.UI
 
         protected override void Open()
         {
-            _instrumentMenu = this.CreateWindow<InstrumentMenu>();
-            _instrumentMenu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+            if (!EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
+                return;
 
-            _instrumentMenu.OnOpenBand += OpenBandMenu;
-            _instrumentMenu.OnOpenChannels += OpenChannelsMenu;
-            _instrumentMenu.OnCloseChannels += CloseChannelsMenu;
-            _instrumentMenu.OnCloseBands += CloseBandMenu;
+            Instrument = instrument;
+            _instrumentMenu = new InstrumentMenu(this);
+            _instrumentMenu.OnClose += Close;
 
-            _instrumentMenu.SetMIDI(MidiManager.IsAvailable);
-
-            if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
-            {
-                _instrumentMenu.SetInstrument((Owner, instrument));
-            }
+            _instrumentMenu.OpenCentered();
         }
 
         protected override void Dispose(bool disposing)
@@ -62,12 +58,7 @@ namespace Content.Client.Instruments.UI
             base.Dispose(disposing);
             if (!disposing)
                 return;
-
-            if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
-            {
-                _instrumentMenu?.RemoveInstrument(instrument);
-            }
-
+            _instrumentMenu?.Dispose();
             _bandMenu?.Dispose();
             _channelsMenu?.Dispose();
         }
@@ -80,11 +71,6 @@ namespace Content.Client.Instruments.UI
         public void OpenBandMenu()
         {
             _bandMenu ??= new BandMenu(this);
-
-            if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
-            {
-                _bandMenu.Master = instrument.Master;
-            }
 
             // Refresh cache...
             RefreshBands();
@@ -101,9 +87,7 @@ namespace Content.Client.Instruments.UI
         public void OpenChannelsMenu()
         {
             _channelsMenu ??= new ChannelsMenu(this);
-            EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument);
-
-            _channelsMenu.Populate(instrument);
+            _channelsMenu.Populate();
             _channelsMenu.OpenCenteredRight();
         }
 

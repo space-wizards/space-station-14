@@ -1,6 +1,5 @@
 ﻿using System.Text.RegularExpressions;
 using Robust.Client.GameObjects;
-using Robust.Client.UserInterface;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Client.Configurable.UI
@@ -10,6 +9,9 @@ namespace Content.Client.Configurable.UI
         [ViewVariables]
         private ConfigurationMenu? _menu;
 
+        [ViewVariables]
+        public Regex? Validation { get; internal set; }
+
         public ConfigurationBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
@@ -17,8 +19,10 @@ namespace Content.Client.Configurable.UI
         protected override void Open()
         {
             base.Open();
-            _menu = this.CreateWindow<ConfigurationMenu>();
-            _menu.OnConfiguration += SendConfiguration;
+            _menu = new ConfigurationMenu(this);
+
+            _menu.OnClose += Close;
+            _menu.OpenCentered();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -26,7 +30,9 @@ namespace Content.Client.Configurable.UI
             base.UpdateState(state);
 
             if (state is not ConfigurationBoundUserInterfaceState configurationState)
+            {
                 return;
+            }
 
             _menu?.Populate(configurationState);
         }
@@ -35,18 +41,26 @@ namespace Content.Client.Configurable.UI
         {
             base.ReceiveMessage(message);
 
-            if (_menu == null)
-                return;
-
             if (message is ValidationUpdateMessage msg)
             {
-                _menu.Validation = new Regex(msg.ValidationString, RegexOptions.Compiled);
+                Validation = new Regex(msg.ValidationString, RegexOptions.Compiled);
             }
         }
 
         public void SendConfiguration(Dictionary<string, string> config)
         {
             SendMessage(new ConfigurationUpdatedMessage(config));
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing && _menu != null)
+            {
+                _menu.OnClose -= Close;
+                _menu.Close();
+            }
         }
     }
 }

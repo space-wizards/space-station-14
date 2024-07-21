@@ -1,6 +1,4 @@
 using Content.Shared.Research.Components;
-using Robust.Client.GameObjects;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.Research.UI
 {
@@ -17,9 +15,10 @@ namespace Content.Client.Research.UI
         protected override void Open()
         {
             base.Open();
-            _menu = this.CreateWindow<ResearchClientServerSelectionMenu>();
-            _menu.OnServerSelected += SelectServer;
-            _menu.OnServerDeselected += DeselectServer;
+
+            _menu = new ResearchClientServerSelectionMenu(this);
+            _menu.OnClose += Close;
+            _menu.OpenCentered();
         }
 
         public void SelectServer(int serverId)
@@ -37,6 +36,13 @@ namespace Content.Client.Research.UI
             base.UpdateState(state);
             if (state is not ResearchClientBoundInterfaceState rState) return;
             _menu?.Populate(rState.ServerCount, rState.ServerNames, rState.ServerIds, rState.SelectedServerId);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (!disposing) return;
+            _menu?.Dispose();
         }
     }
 }

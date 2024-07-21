@@ -1,7 +1,6 @@
 using Content.Shared.Gateway;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.Gateway.UI;
 
@@ -18,13 +17,24 @@ public sealed class GatewayBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _window = this.CreateWindow<GatewayWindow>();
-        _window.SetEntity(EntMan.GetNetEntity(Owner));
+        _window = new GatewayWindow(EntMan.GetNetEntity(Owner));
 
         _window.OpenPortal += destination =>
         {
             SendMessage(new GatewayOpenPortalMessage(destination));
         };
+        _window.OnClose += Close;
+        _window?.OpenCentered();
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (disposing)
+        {
+            _window?.Dispose();
+            _window = null;
+        }
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

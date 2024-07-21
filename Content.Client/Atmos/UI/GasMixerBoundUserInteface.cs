@@ -2,7 +2,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Trinary.Components;
 using Content.Shared.Localizations;
 using JetBrains.Annotations;
-using Robust.Client.UserInterface;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.Atmos.UI
 {
@@ -26,7 +26,14 @@ namespace Content.Client.Atmos.UI
         {
             base.Open();
 
-            _window = this.CreateWindow<GasMixerWindow>();
+            _window = new GasMixerWindow();
+
+            if (State != null)
+                UpdateState(State);
+
+            _window.OpenCentered();
+
+            _window.OnClose += Close;
 
             _window.ToggleStatusButtonPressed += OnToggleStatusButtonPressed;
             _window.MixerOutputPressureChanged += OnMixerOutputPressurePressed;
@@ -75,6 +82,13 @@ namespace Content.Client.Atmos.UI
             _window.SetMixerStatus(cast.Enabled);
             _window.SetOutputPressure(cast.OutputPressure);
             _window.SetNodePercentages(cast.NodeOne);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (!disposing) return;
+            _window?.Dispose();
         }
     }
 }

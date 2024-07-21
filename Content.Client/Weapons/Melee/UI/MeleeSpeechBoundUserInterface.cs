@@ -1,6 +1,5 @@
 using Robust.Client.GameObjects;
 using Content.Shared.Speech.Components;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.Weapons.Melee.UI;
 
@@ -20,9 +19,16 @@ public sealed class MeleeSpeechBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _window = this.CreateWindow<MeleeSpeechWindow>();
+        _window = new MeleeSpeechWindow();
+        if (State != null)
+            UpdateState(State);
+
+        _window.OpenCentered();
+
+        _window.OnClose += Close;
         _window.OnBattlecryEntered += OnBattlecryChanged;
     }
+
 
     private void OnBattlecryChanged(string newBattlecry)
     {

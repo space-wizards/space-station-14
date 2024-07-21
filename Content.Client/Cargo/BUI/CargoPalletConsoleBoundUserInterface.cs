@@ -2,7 +2,6 @@ using Content.Client.Cargo.UI;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Events;
 using Robust.Client.GameObjects;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.Cargo.BUI;
 
@@ -19,9 +18,21 @@ public sealed class CargoPalletConsoleBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _menu = this.CreateWindow<CargoPalletMenu>();
+        _menu = new CargoPalletMenu();
         _menu.AppraiseRequested += OnAppraisal;
         _menu.SellRequested += OnSell;
+        _menu.OnClose += Close;
+
+        _menu.OpenCentered();
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (disposing)
+        {
+            _menu?.Dispose();
+        }
     }
 
     private void OnAppraisal()

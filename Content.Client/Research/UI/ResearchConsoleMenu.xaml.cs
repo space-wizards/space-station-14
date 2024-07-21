@@ -25,13 +25,14 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    private readonly TechnologyDatabaseComponent? _technologyDatabase;
     private readonly ResearchSystem _research;
     private readonly SpriteSystem _sprite;
     private readonly AccessReaderSystem _accessReader;
 
-    public EntityUid Entity;
+    public readonly EntityUid Entity;
 
-    public ResearchConsoleMenu()
+    public ResearchConsoleMenu(EntityUid entity)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
@@ -39,23 +40,21 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         _research = _entity.System<ResearchSystem>();
         _sprite = _entity.System<SpriteSystem>();
         _accessReader = _entity.System<AccessReaderSystem>();
+        Entity = entity;
 
         ServerButton.OnPressed += _ => OnServerButtonPressed?.Invoke();
+
+        _entity.TryGetComponent(entity, out _technologyDatabase);
     }
 
-    public void SetEntity(EntityUid entity)
-    {
-        Entity = entity;
-    }
-
-    public void UpdatePanels(ResearchConsoleBoundInterfaceState state)
+    public void  UpdatePanels(ResearchConsoleBoundInterfaceState state)
     {
         TechnologyCardsContainer.Children.Clear();
 
         var availableTech = _research.GetAvailableTechnologies(Entity);
         SyncTechnologyList(AvailableCardsContainer, availableTech);
 
-        if (!_entity.TryGetComponent(Entity, out TechnologyDatabaseComponent? database))
+        if (_technologyDatabase == null)
             return;
 
         // i can't figure out the spacing so here you go
@@ -67,7 +66,7 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         var hasAccess = _player.LocalEntity is not { } local ||
                         !_entity.TryGetComponent<AccessReaderComponent>(Entity, out var access) ||
                         _accessReader.IsAllowed(local, Entity, access);
-        foreach (var techId in database.CurrentTechnologyCards)
+        foreach (var techId in _technologyDatabase.CurrentTechnologyCards)
         {
             var tech = _prototype.Index<TechnologyPrototype>(techId);
             var cardControl = new TechnologyCardControl(tech, _prototype, _sprite, _research.GetTechnologyDescription(tech, includeTier: false), state.Points, hasAccess);
@@ -75,7 +74,7 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
             TechnologyCardsContainer.AddChild(cardControl);
         }
 
-        var unlockedTech = database.UnlockedTechnologies.Select(x => _prototype.Index<TechnologyPrototype>(x));
+        var unlockedTech = _technologyDatabase.UnlockedTechnologies.Select(x => _prototype.Index<TechnologyPrototype>(x));
         SyncTechnologyList(UnlockedCardsContainer, unlockedTech);
     }
 
@@ -86,14 +85,14 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
             ("points", state.Points)));
         ResearchAmountLabel.SetMessage(amountMsg);
 
-        if (!_entity.TryGetComponent(Entity, out TechnologyDatabaseComponent? database))
+        if (_technologyDatabase == null)
             return;
 
         var disciplineText = Loc.GetString("research-discipline-none");
         var disciplineColor = Color.Gray;
-        if (database.MainDiscipline != null)
+        if (_technologyDatabase.MainDiscipline != null)
         {
-            var discipline = _prototype.Index<TechDisciplinePrototype>(database.MainDiscipline);
+            var discipline = _prototype.Index<TechDisciplinePrototype>(_technologyDatabase.MainDiscipline);
             disciplineText = Loc.GetString(discipline.Name);
             disciplineColor = discipline.Color;
         }
@@ -104,10 +103,10 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         MainDisciplineLabel.SetMessage(msg);
 
         TierDisplayContainer.Children.Clear();
-        foreach (var disciplineId in database.SupportedDisciplines)
+        foreach (var disciplineId in _technologyDatabase.SupportedDisciplines)
         {
             var discipline = _prototype.Index<TechDisciplinePrototype>(disciplineId);
-            var tier = _research.GetHighestDisciplineTier(database, discipline);
+            var tier = _research.GetHighestDisciplineTier(_technologyDatabase, discipline);
 
             // don't show tiers with no available tech
             if (tier == 0)

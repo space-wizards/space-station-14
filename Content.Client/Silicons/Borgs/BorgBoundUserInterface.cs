@@ -1,7 +1,6 @@
 using Content.Shared.Silicons.Borgs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.Silicons.Borgs;
 
@@ -19,8 +18,9 @@ public sealed class BorgBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _menu = this.CreateWindow<BorgMenu>();
-        _menu.SetEntity(Owner);
+        var owner = Owner;
+
+        _menu = new BorgMenu(owner);
 
         _menu.BrainButtonPressed += () =>
         {
@@ -41,6 +41,10 @@ public sealed class BorgBoundUserInterface : BoundUserInterface
         {
             SendMessage(new BorgRemoveModuleBuiMessage(EntMan.GetNetEntity(module)));
         };
+
+        _menu.OnClose += Close;
+
+        _menu.OpenCentered();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -50,5 +54,13 @@ public sealed class BorgBoundUserInterface : BoundUserInterface
         if (state is not BorgBuiState msg)
             return;
         _menu?.UpdateState(msg);
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (!disposing)
+            return;
+        _menu?.Dispose();
     }
 }

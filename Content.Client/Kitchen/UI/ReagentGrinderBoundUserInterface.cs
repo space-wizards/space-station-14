@@ -1,7 +1,6 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Kitchen;
 using Robust.Client.GameObjects;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Prototypes;
 
@@ -9,6 +8,8 @@ namespace Content.Client.Kitchen.UI
 {
     public sealed class ReagentGrinderBoundUserInterface : BoundUserInterface
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         [ViewVariables]
         private GrinderMenu? _menu;
 
@@ -20,13 +21,20 @@ namespace Content.Client.Kitchen.UI
         {
             base.Open();
 
-            _menu = this.CreateWindow<GrinderMenu>();
-            _menu.OnToggleAuto += ToggleAutoMode;
-            _menu.OnGrind += StartGrinding;
-            _menu.OnJuice += StartJuicing;
-            _menu.OnEjectAll += EjectAll;
-            _menu.OnEjectBeaker += EjectBeaker;
-            _menu.OnEjectChamber += EjectChamberContent;
+            _menu = new GrinderMenu(this, EntMan, _prototypeManager);
+            _menu.OpenCentered();
+            _menu.OnClose += Close;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (!disposing)
+            {
+                return;
+            }
+
+            _menu?.Dispose();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -44,27 +52,27 @@ namespace Content.Client.Kitchen.UI
             _menu?.HandleMessage(message);
         }
 
-        public void ToggleAutoMode()
+        public void ToggleAutoMode(BaseButton.ButtonEventArgs args)
         {
             SendMessage(new ReagentGrinderToggleAutoModeMessage());
         }
 
-        public void StartGrinding()
+        public void StartGrinding(BaseButton.ButtonEventArgs? _ = null)
         {
             SendMessage(new ReagentGrinderStartMessage(GrinderProgram.Grind));
         }
 
-        public void StartJuicing()
+        public void StartJuicing(BaseButton.ButtonEventArgs? _ = null)
         {
             SendMessage(new ReagentGrinderStartMessage(GrinderProgram.Juice));
         }
 
-        public void EjectAll()
+        public void EjectAll(BaseButton.ButtonEventArgs? _ = null)
         {
             SendMessage(new ReagentGrinderEjectChamberAllMessage());
         }
 
-        public void EjectBeaker()
+        public void EjectBeaker(BaseButton.ButtonEventArgs? _ = null)
         {
             SendMessage(new ItemSlotButtonPressedEvent(SharedReagentGrinder.BeakerSlotId));
         }

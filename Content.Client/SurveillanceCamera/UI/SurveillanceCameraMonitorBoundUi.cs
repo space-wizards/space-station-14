@@ -1,7 +1,6 @@
 using Content.Client.Eye;
 using Content.Shared.SurveillanceCamera;
 using Robust.Client.GameObjects;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.SurveillanceCamera.UI;
 
@@ -26,12 +25,20 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
     {
         base.Open();
 
-        _window = this.CreateWindow<SurveillanceCameraMonitorWindow>();
+        _window = new SurveillanceCameraMonitorWindow();
+
+        if (State != null)
+        {
+            UpdateState(State);
+        }
+
+        _window.OpenCentered();
 
         _window.CameraSelected += OnCameraSelected;
         _window.SubnetOpened += OnSubnetRequest;
         _window.CameraRefresh += OnCameraRefresh;
         _window.SubnetRefresh += OnSubnetRefresh;
+        _window.OnClose += Close;
         _window.CameraSwitchTimer += OnCameraSwitchTimer;
         _window.CameraDisconnect += OnCameraDisconnect;
     }

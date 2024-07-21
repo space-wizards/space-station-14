@@ -13,24 +13,26 @@ namespace Content.Client.Access.UI
     [GenerateTypedNameReferences]
     public sealed partial class AccessOverriderWindow : DefaultWindow
     {
+        [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+        private readonly AccessOverriderBoundUserInterface _owner;
         private readonly Dictionary<string, Button> _accessButtons = new();
 
-        public event Action<List<ProtoId<AccessLevelPrototype>>>? OnSubmit;
-
-        public AccessOverriderWindow()
+        public AccessOverriderWindow(AccessOverriderBoundUserInterface owner, IPrototypeManager prototypeManager,
+            List<ProtoId<AccessLevelPrototype>> accessLevels)
         {
             RobustXamlLoader.Load(this);
-        }
+            IoCManager.InjectDependencies(this);
+            var logMill = _logManager.GetSawmill(SharedAccessOverriderSystem.Sawmill);
 
-        public void SetAccessLevels(IPrototypeManager protoManager, List<ProtoId<AccessLevelPrototype>> accessLevels)
-        {
-            _accessButtons.Clear();
-            AccessLevelGrid.DisposeAllChildren();
+            _owner = owner;
 
             foreach (var access in accessLevels)
             {
-                if (!protoManager.TryIndex(access, out var accessLevel))
+                if (!prototypeManager.TryIndex(access, out var accessLevel))
                 {
+                    logMill.Error($"Unable to find accesslevel for {access}");
                     continue;
                 }
 
@@ -42,16 +44,11 @@ namespace Content.Client.Access.UI
 
                 AccessLevelGrid.AddChild(newButton);
                 _accessButtons.Add(accessLevel.ID, newButton);
-                newButton.OnPressed += _ =>
-                {
-                    OnSubmit?.Invoke(
-                        // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair
-                        _accessButtons.Where(x => x.Value.Pressed).Select(x => new ProtoId<AccessLevelPrototype>(x.Key)).ToList());
-                };
+                newButton.OnPressed += _ => SubmitData();
             }
         }
 
-        public void UpdateState(IPrototypeManager protoManager, AccessOverriderBoundUserInterfaceState state)
+        public void UpdateState(AccessOverriderBoundUserInterfaceState state)
         {
             PrivilegedIdLabel.Text = state.PrivilegedIdName;
             PrivilegedIdButton.Text = state.IsPrivilegedIdPresent
@@ -69,11 +66,11 @@ namespace Content.Client.Access.UI
 
             if (state.MissingPrivilegesList != null && state.MissingPrivilegesList.Any())
             {
-                var missingPrivileges = new List<string>();
+                List<string> missingPrivileges = new List<string>();
 
                 foreach (string tag in state.MissingPrivilegesList)
                 {
-                    var privilege = Loc.GetString(protoManager.Index<AccessLevelPrototype>(tag)?.Name ?? "generic-unknown");
+                    string privilege = Loc.GetString(_prototypeManager.Index<AccessLevelPrototype>(tag)?.Name ?? "generic-unknown");
                     missingPrivileges.Add(privilege);
                 }
 
@@ -92,6 +89,14 @@ namespace Content.Client.Access.UI
                     button.Disabled = (!state.AllowedModifyAccessList?.Contains(accessName)) ?? true;
                 }
             }
+        }
+
+        private void SubmitData()
+        {
+            _owner.SubmitData(
+
+                // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair
+                _accessButtons.Where(x => x.Value.Pressed).Select(x => new ProtoId<AccessLevelPrototype>(x.Key)).ToList());
         }
     }
 }

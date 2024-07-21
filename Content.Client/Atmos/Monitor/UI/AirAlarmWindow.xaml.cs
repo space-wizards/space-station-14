@@ -47,7 +47,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
 
     private CheckBox _autoMode => AutoModeCheckBox;
 
-    public AirAlarmWindow()
+    public AirAlarmWindow(BoundUserInterface owner)
     {
         RobustXamlLoader.Load(this);
 
@@ -95,11 +95,8 @@ public sealed partial class AirAlarmWindow : FancyWindow
             _sensors.Clear();
             ResyncAllRequested!.Invoke();
         };
-    }
 
-    public void SetEntity(EntityUid uid)
-    {
-        EntityView.SetEntity(uid);
+        EntityView.SetEntity(owner.Owner);
     }
 
     public void UpdateState(AirAlarmUIState state)

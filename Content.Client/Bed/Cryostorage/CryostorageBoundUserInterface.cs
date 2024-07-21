@@ -1,6 +1,5 @@
 using Content.Shared.Bed.Cryostorage;
 using JetBrains.Annotations;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.Bed.Cryostorage;
 
@@ -18,7 +17,9 @@ public sealed class CryostorageBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _menu = this.CreateWindow<CryostorageMenu>();
+        _menu = new();
+
+        _menu.OnClose += Close;
 
         _menu.SlotRemoveButtonPressed += (ent, slot) =>
         {
@@ -29,6 +30,8 @@ public sealed class CryostorageBoundUserInterface : BoundUserInterface
         {
             SendMessage(new CryostorageRemoveItemBuiMessage(ent, hand, CryostorageRemoveItemBuiMessage.RemovalType.Hand));
         };
+
+        _menu.OpenCentered();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -41,5 +44,13 @@ public sealed class CryostorageBoundUserInterface : BoundUserInterface
                 _menu?.UpdateState(msg);
                 break;
         }
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (!disposing)
+            return;
+        _menu?.Dispose();
     }
 }

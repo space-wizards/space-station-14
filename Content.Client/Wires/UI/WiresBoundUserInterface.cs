@@ -1,6 +1,5 @@
 using Content.Shared.Wires;
 using Robust.Client.GameObjects;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.Wires.UI
 {
@@ -16,8 +15,10 @@ namespace Content.Client.Wires.UI
         protected override void Open()
         {
             base.Open();
-            _menu = this.CreateWindow<WiresMenu>();
-            _menu.OnAction += PerformAction;
+
+            _menu = new WiresMenu(this);
+            _menu.OnClose += Close;
+            _menu.OpenCenteredLeft();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

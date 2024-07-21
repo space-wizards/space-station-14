@@ -15,23 +15,22 @@ namespace Content.Client.Doors.Electronics;
 [GenerateTypedNameReferences]
 public sealed partial class DoorElectronicsConfigurationMenu : FancyWindow
 {
-    private readonly AccessLevelControl _buttonsList = new();
+    private readonly DoorElectronicsBoundUserInterface _owner;
+    private AccessLevelControl _buttonsList = new();
 
-    public event Action<List<ProtoId<AccessLevelPrototype>>>? OnAccessChanged;
-
-    public DoorElectronicsConfigurationMenu()
+    public DoorElectronicsConfigurationMenu(DoorElectronicsBoundUserInterface ui, List<ProtoId<AccessLevelPrototype>> accessLevels, IPrototypeManager prototypeManager)
     {
         RobustXamlLoader.Load(this);
+
+        _owner = ui;
+
+        _buttonsList.Populate(accessLevels, prototypeManager);
         AccessLevelControlContainer.AddChild(_buttonsList);
-    }
 
-    public void Reset(IPrototypeManager protoManager, List<ProtoId<AccessLevelPrototype>> accessLevels)
-    {
-        _buttonsList.Populate(accessLevels, protoManager);
-
-        foreach (var button in _buttonsList.ButtonsList.Values)
+        foreach (var (id, button) in _buttonsList.ButtonsList)
         {
-            button.OnPressed += _ => OnAccessChanged?.Invoke(_buttonsList.ButtonsList.Where(x => x.Value.Pressed).Select(x => x.Key).ToList());
+            button.OnPressed += _ => _owner.UpdateConfiguration(
+                _buttonsList.ButtonsList.Where(x => x.Value.Pressed).Select(x => x.Key).ToList());
         }
     }
 

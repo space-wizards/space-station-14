@@ -11,9 +11,7 @@ public sealed partial class BandMenu : DefaultWindow
 {
     private readonly InstrumentBoundUserInterface _owner;
 
-    public EntityUid? Master;
-
-    public BandMenu(InstrumentBoundUserInterface owner)
+    public BandMenu(InstrumentBoundUserInterface owner) : base()
     {
         RobustXamlLoader.Load(this);
 
@@ -42,7 +40,7 @@ public sealed partial class BandMenu : DefaultWindow
         {
             var uid = entManager.GetEntity(nent);
             var item = BandList.AddItem(name, null, true, uid);
-            item.Selected = Master == uid;
+            item.Selected = _owner.Instrument?.Master == uid;
         }
     }
 }

@@ -23,18 +23,20 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
     public Action<string>? OnDisablePressed;
     public Action<string>? OnDestroyPressed;
 
+    private Entity<RoboticsConsoleComponent, LockComponent?> _console;
     private string? _selected;
     private Dictionary<string, CyborgControlData> _cyborgs = new();
 
-    public EntityUid Entity;
-
-    public RoboticsConsoleWindow()
+    public RoboticsConsoleWindow(EntityUid console)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
         _lock = _entMan.System<LockSystem>();
         _sprite = _entMan.System<SpriteSystem>();
+
+        _console = (console, _entMan.GetComponent<RoboticsConsoleComponent>(console), null);
+        _entMan.TryGetComponent(_console, out _console.Comp2);
 
         Cyborgs.OnItemSelected += args =>
         {
@@ -64,11 +66,6 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
         DestroyButton.StyleClasses.Add(StyleBase.ButtonCaution);
     }
 
-    public void SetEntity(EntityUid uid)
-    {
-        Entity = uid;
-    }
-
     public void UpdateState(RoboticsConsoleState state)
     {
         _cyborgs = state.Cyborgs;
@@ -84,7 +81,7 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
 
         PopulateData();
 
-        var locked = _lock.IsLocked(Entity);
+        var locked = _lock.IsLocked((_console, _console.Comp2));
         DangerZone.Visible = !locked;
         LockedMessage.Visible = locked;
     }
@@ -138,19 +135,13 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
 
         // how the turntables
         DisableButton.Disabled = !(data.HasBrain && data.CanDisable);
+        DestroyButton.Disabled = _timing.CurTime < _console.Comp1.NextDestroy;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
 
-        if (_entMan.TryGetComponent(Entity, out RoboticsConsoleComponent? console))
-        {
-            DestroyButton.Disabled = _timing.CurTime < console.NextDestroy;
-        }
-        else
-        {
-            DestroyButton.Disabled = true;
-        }
+        DestroyButton.Disabled = _timing.CurTime < _console.Comp1.NextDestroy;
     }
 }

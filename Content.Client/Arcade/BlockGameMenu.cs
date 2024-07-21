@@ -28,6 +28,8 @@ namespace Content.Client.Arcade
 
         private static readonly Vector2 BlockSize = new(15, 15);
 
+        private readonly BlockGameBoundUserInterface _owner;
+
         private readonly PanelContainer _mainPanel;
 
         private readonly BoxContainer _gameRootContainer;
@@ -56,11 +58,10 @@ namespace Content.Client.Arcade
         private bool _isPlayer = false;
         private bool _gameOver = false;
 
-        public event Action<BlockGamePlayerAction>? OnAction;
-
-        public BlockGameMenu()
+        public BlockGameMenu(BlockGameBoundUserInterface owner)
         {
             Title = Loc.GetString("blockgame-menu-title");
+            _owner = owner;
 
             MinSize = SetSize = new Vector2(410, 490);
 
@@ -175,7 +176,7 @@ namespace Content.Client.Arcade
             };
             _newGameButton.OnPressed += (e) =>
             {
-                OnAction?.Invoke(BlockGamePlayerAction.NewGame);
+                _owner.SendAction(BlockGamePlayerAction.NewGame);
             };
             pauseMenuContainer.AddChild(_newGameButton);
             pauseMenuContainer.AddChild(new Control { MinSize = new Vector2(1, 10) });
@@ -185,10 +186,7 @@ namespace Content.Client.Arcade
                 Text = Loc.GetString("blockgame-menu-button-scoreboard"),
                 TextAlign = Label.AlignMode.Center
             };
-            _scoreBoardButton.OnPressed += (e) =>
-            {
-                OnAction?.Invoke(BlockGamePlayerAction.ShowHighscores);
-            };
+            _scoreBoardButton.OnPressed += (e) => _owner.SendAction(BlockGamePlayerAction.ShowHighscores);
             pauseMenuContainer.AddChild(_scoreBoardButton);
             _unpauseButtonMargin = new Control { MinSize = new Vector2(1, 10), Visible = false };
             pauseMenuContainer.AddChild(_unpauseButtonMargin);
@@ -201,7 +199,7 @@ namespace Content.Client.Arcade
             };
             _unpauseButton.OnPressed += (e) =>
             {
-                OnAction?.Invoke(BlockGamePlayerAction.Unpause);
+                _owner.SendAction(BlockGamePlayerAction.Unpause);
             };
             pauseMenuContainer.AddChild(_unpauseButton);
 
@@ -259,7 +257,7 @@ namespace Content.Client.Arcade
             };
             _finalNewGameButton.OnPressed += (e) =>
             {
-                OnAction?.Invoke(BlockGamePlayerAction.NewGame);
+                _owner.SendAction(BlockGamePlayerAction.NewGame);
             };
             gameOverMenuContainer.AddChild(_finalNewGameButton);
 
@@ -329,10 +327,7 @@ namespace Content.Client.Arcade
                 Text = Loc.GetString("blockgame-menu-button-back"),
                 TextAlign = Label.AlignMode.Center
             };
-            _highscoreBackButton.OnPressed += (e) =>
-            {
-                OnAction?.Invoke(BlockGamePlayerAction.Pause);
-            };
+            _highscoreBackButton.OnPressed += (e) => _owner.SendAction(BlockGamePlayerAction.Pause);
             menuContainer.AddChild(_highscoreBackButton);
 
             menuInnerPanel.AddChild(menuContainer);
@@ -478,7 +473,7 @@ namespace Content.Client.Arcade
 
         private void TryPause()
         {
-            OnAction?.Invoke(BlockGamePlayerAction.Pause);
+            _owner.SendAction(BlockGamePlayerAction.Pause);
         }
 
         public void SetStarted()
@@ -581,19 +576,19 @@ namespace Content.Client.Arcade
                 return;
 
             else if (args.Function == ContentKeyFunctions.ArcadeLeft)
-                OnAction?.Invoke(BlockGamePlayerAction.StartLeft);
+                _owner.SendAction(BlockGamePlayerAction.StartLeft);
             else if (args.Function == ContentKeyFunctions.ArcadeRight)
-                OnAction?.Invoke(BlockGamePlayerAction.StartRight);
+                _owner.SendAction(BlockGamePlayerAction.StartRight);
             else if (args.Function == ContentKeyFunctions.ArcadeUp)
-                OnAction?.Invoke(BlockGamePlayerAction.Rotate);
+                _owner.SendAction(BlockGamePlayerAction.Rotate);
             else if (args.Function == ContentKeyFunctions.Arcade3)
-                OnAction?.Invoke(BlockGamePlayerAction.CounterRotate);
+                _owner.SendAction(BlockGamePlayerAction.CounterRotate);
             else if (args.Function == ContentKeyFunctions.ArcadeDown)
-                OnAction?.Invoke(BlockGamePlayerAction.SoftdropStart);
+                _owner.SendAction(BlockGamePlayerAction.SoftdropStart);
             else if (args.Function == ContentKeyFunctions.Arcade2)
-                OnAction?.Invoke(BlockGamePlayerAction.Hold);
+                _owner.SendAction(BlockGamePlayerAction.Hold);
             else if (args.Function == ContentKeyFunctions.Arcade1)
-                OnAction?.Invoke(BlockGamePlayerAction.Harddrop);
+                _owner.SendAction(BlockGamePlayerAction.Harddrop);
         }
 
         protected override void KeyBindUp(GUIBoundKeyEventArgs args)
@@ -604,11 +599,11 @@ namespace Content.Client.Arcade
                 return;
 
             else if (args.Function == ContentKeyFunctions.ArcadeLeft)
-                OnAction?.Invoke(BlockGamePlayerAction.EndLeft);
+                _owner.SendAction(BlockGamePlayerAction.EndLeft);
             else if (args.Function == ContentKeyFunctions.ArcadeRight)
-                OnAction?.Invoke(BlockGamePlayerAction.EndRight);
+                _owner.SendAction(BlockGamePlayerAction.EndRight);
             else if (args.Function == ContentKeyFunctions.ArcadeDown)
-                OnAction?.Invoke(BlockGamePlayerAction.SoftdropEnd);
+                _owner.SendAction(BlockGamePlayerAction.SoftdropEnd);
         }
 
         public void UpdateNextBlock(BlockGameBlock[] blocks)

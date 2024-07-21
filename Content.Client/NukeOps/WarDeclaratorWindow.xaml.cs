@@ -11,8 +11,7 @@ namespace Content.Client.NukeOps;
 [GenerateTypedNameReferences]
 public sealed partial class WarDeclaratorWindow : FancyWindow
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly ILocalizationManager _localizationManager = default!;
+    private readonly IGameTiming _gameTiming;
 
     public event Action<string>? OnActivated;
 
@@ -20,13 +19,15 @@ public sealed partial class WarDeclaratorWindow : FancyWindow
     private TimeSpan _shuttleDisabledTime;
     private WarConditionStatus _status;
 
-    public WarDeclaratorWindow()
+    public WarDeclaratorWindow(IGameTiming gameTiming, ILocalizationManager localizationManager)
     {
         RobustXamlLoader.Load(this);
 
+        _gameTiming = gameTiming;
+
         WarButton.OnPressed += (_) => OnActivated?.Invoke(Rope.Collapse(MessageEdit.TextRope));
 
-        MessageEdit.Placeholder = new Rope.Leaf(_localizationManager.GetString("war-declarator-message-placeholder"));
+        MessageEdit.Placeholder = new Rope.Leaf(localizationManager.GetString("war-declarator-message-placeholder"));
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

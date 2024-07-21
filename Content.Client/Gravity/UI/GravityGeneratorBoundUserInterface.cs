@@ -1,6 +1,6 @@
 using Content.Shared.Gravity;
 using JetBrains.Annotations;
-using Robust.Client.UserInterface;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.Gravity.UI
 {
@@ -18,8 +18,17 @@ namespace Content.Client.Gravity.UI
         {
             base.Open();
 
-            _window = this.CreateWindow<GravityGeneratorWindow>();
-            _window.SetEntity(Owner);
+            _window = new GravityGeneratorWindow(this);
+
+            /*
+            _window.Switch.OnPressed += _ =>
+            {
+                SendMessage(new SharedGravityGeneratorComponent.SwitchGeneratorMessage(!IsOn));
+            };
+            */
+
+            _window.OpenCentered();
+            _window.OnClose += Close;
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -28,6 +37,14 @@ namespace Content.Client.Gravity.UI
 
             var castState = (SharedGravityGeneratorComponent.GeneratorState) state;
             _window?.UpdateState(castState);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (!disposing) return;
+
+            _window?.Dispose();
         }
 
         public void SetPowerSwitch(bool on)
