@@ -29,6 +29,7 @@ public sealed class PaperSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, 
 
         return
         [
+            // TODO: this stylesheet should probably go with wherever the paper UI is
             E<PanelContainer>().Class("PaperContainer").Panel(borderedTransparentWindowBackground),
 
             E<PanelContainer>()
