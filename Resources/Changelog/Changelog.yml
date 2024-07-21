@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ps3moira
-  changes:
-  - message: Added Canes to the CuraDrobe and Cane Blades for Syndicate Librarians
-    type: Add
-  id: 6456
-  time: '2024-04-27T10:22:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25873
 - author: Lukasz825700516
   changes:
   - message: Fixed books containing localization keys.
@@ -3796,3 +3789,14 @@
   id: 6955
   time: '2024-07-21T07:44:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30145
+- author: Plykiya
+  changes:
+  - message: Syndicate traitor reinforcements are now specialized to be medics, spies,
+      or thieves.
+    type: Add
+  - message: Reinforcement radios with options now have a radial menu, similar to
+      RCDs.
+    type: Tweak
+  id: 6956
+  time: '2024-07-21T10:32:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29853
