@@ -34,6 +34,12 @@ public sealed partial class DrainComponent : Component
     public bool AutoDrain = true;
 
     /// <summary>
+    /// Does examining this drain show available volume?
+    /// </summary>
+    [DataField("examineAvailableVolume"), ViewVariables(VVAccess.ReadOnly)]
+    public bool ExamineAvailableVolume = true;
+
+    /// <summary>
     /// How many units per second the drain can absorb from the surrounding puddles.
     /// Divided by puddles, so if there are 5 puddles this will take 1/5 from each puddle.
     /// This will stay fixed to 1 second no matter what DrainFrequency is.

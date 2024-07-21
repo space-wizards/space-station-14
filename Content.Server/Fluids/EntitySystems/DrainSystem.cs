@@ -212,9 +212,11 @@ public sealed class DrainSystem : SharedDrainSystem
         }
     }
 
-    private void OnExamined(Entity<DrainComponent> entity, ref ExaminedEvent args)
+private void OnExamined(Entity<DrainComponent> entity, ref ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange ||
+        if (!TryComp(args.Examined, out DrainComponent? drain) ||
+            !drain.ExamineAvailableVolume ||
+            !args.IsInDetailsRange ||
             !HasComp<SolutionContainerManagerComponent>(entity) ||
             !_solutionContainerSystem.ResolveSolution(entity.Owner, DrainComponent.SolutionName, ref entity.Comp.Solution, out var drainSolution))
         {
