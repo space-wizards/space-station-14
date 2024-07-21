@@ -20,6 +20,7 @@ namespace Content.Client.Kitchen.UI
 
         public MicrowaveMenu()
         {
+            IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
             CookTimeButtonGroup = new ButtonGroup();
             InstantCookButton.Group = CookTimeButtonGroup;
