@@ -17,7 +17,9 @@ public sealed partial class GhostRoleRadioMenu : RadialMenu
 
     public event Action<ProtoId<GhostRolePrototype>>? SendGhostRoleRadioMessageAction;
 
-    public GhostRoleRadioMenu(EntityUid owner, GhostRoleRadioBoundUserInterface bui)
+    public EntityUid Entity { get; set; }
+
+    public GhostRoleRadioMenu()
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
@@ -25,13 +27,10 @@ public sealed partial class GhostRoleRadioMenu : RadialMenu
         // The main control that will contain all of the clickable options
         var main = FindControl<RadialContainer>("Main");
 
-        if (main == null)
-            return;
-
         // The purpose of this radial UI is for ghost role radios that allow you to select
         // more than one potential option, such as with kobolds/lizards.
         // This means that it won't show anything if SelectablePrototypes is empty.
-        if (!_entityManager.TryGetComponent<GhostRoleMobSpawnerComponent>(owner, out var comp))
+        if (!_entityManager.TryGetComponent<GhostRoleMobSpawnerComponent>(Entity, out var comp))
             return;
 
         foreach (var ghostRoleProtoString in comp.SelectablePrototypes)
@@ -40,7 +39,7 @@ public sealed partial class GhostRoleRadioMenu : RadialMenu
             // as the hover tooltip, and the icon is taken from either the ghost role entityprototype
             // or the indicated icon entityprototype.
             if (!_prototypeManager.TryIndex<GhostRolePrototype>(ghostRoleProtoString, out var ghostRoleProto))
-                return;
+                continue;
 
             var button = new GhostRoleRadioMenuButton()
             {
@@ -67,8 +66,6 @@ public sealed partial class GhostRoleRadioMenu : RadialMenu
             button.AddChild(entProtoView);
             main.AddChild(button);
             AddGhostRoleRadioMenuButtonOnClickActions(main);
-
-            SendGhostRoleRadioMessageAction += bui.SendGhostRoleRadioMessage;
         }
     }
 
@@ -98,9 +95,4 @@ public sealed partial class GhostRoleRadioMenu : RadialMenu
 public sealed class GhostRoleRadioMenuButton : RadialMenuTextureButton
 {
     public ProtoId<GhostRolePrototype> ProtoId { get; set; }
-
-    public GhostRoleRadioMenuButton()
-    {
-
-    }
 }

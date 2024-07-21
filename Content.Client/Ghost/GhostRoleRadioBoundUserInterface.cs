@@ -1,4 +1,5 @@
 using Content.Shared.Ghost.Roles;
+using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Ghost;
@@ -16,23 +17,12 @@ public sealed class GhostRoleRadioBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _ghostRoleRadioMenu = new GhostRoleRadioMenu(Owner, this);
-        _ghostRoleRadioMenu.OnClose += Close;
-
-        // Open menu centered wherever the mouse currently is
-        _ghostRoleRadioMenu.OpenCentered();
+        _ghostRoleRadioMenu = this.CreateWindow<GhostRoleRadioMenu>();
+        _ghostRoleRadioMenu.SendGhostRoleRadioMessageAction += SendGhostRoleRadioMessage;
     }
 
     public void SendGhostRoleRadioMessage(ProtoId<GhostRolePrototype> protoId)
     {
         SendMessage(new GhostRoleRadioMessage(protoId));
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing) return;
-
-        _ghostRoleRadioMenu?.Dispose();
     }
 }
