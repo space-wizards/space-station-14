@@ -146,7 +146,7 @@ public sealed partial class DragonSystem : EntitySystem
         // cant stack rifts near eachother
         foreach (var (_, riftXform) in EntityQuery<DragonRiftComponent, TransformComponent>(true))
         {
-            if (riftXform.Coordinates.InRange(EntityManager, _transform, xform.Coordinates, RiftRange))
+            if (_transform.InRange(riftXform.Coordinates, xform.Coordinates, RiftRange))
             {
                 _popup.PopupEntity(Loc.GetString("carp-rift-proximity", ("proximity", RiftRange)), uid, uid);
                 return;
@@ -225,7 +225,7 @@ public sealed partial class DragonSystem : EntitySystem
             return;
 
         var mind = Comp<MindComponent>(mindContainer.Mind.Value);
-        foreach (var objId in mind.AllObjectives)
+        foreach (var objId in mind.Objectives)
         {
             if (_objQuery.TryGetComponent(objId, out var obj))
             {
@@ -247,7 +247,7 @@ public sealed partial class DragonSystem : EntitySystem
             return;
 
         var mind = Comp<MindComponent>(mindContainer.Mind.Value);
-        foreach (var objId in mind.AllObjectives)
+        foreach (var objId in mind.Objectives)
         {
             if (_objQuery.TryGetComponent(objId, out var obj))
             {
