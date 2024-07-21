@@ -11,13 +11,14 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
 
 [CommonSheetlet]
-public sealed class WindowSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class WindowSheetlet<T> : Sheetlet<T>
+    where T : PalettedStylesheet, IButtonConfig, IWindowConfig, IIconConfig
 {
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public override StyleRule[] GetRules(T sheet, object config)
     {
-        var buttonCfg = (IButtonConfig) sheet;
-        var windowCfg = (IWindowConfig) sheet;
-        var iconCfg = (IIconConfig) sheet;
+        var buttonCfg = (IButtonConfig)sheet;
+        var windowCfg = (IWindowConfig)sheet;
+        var iconCfg = (IIconConfig)sheet;
 
         var boxFont = new SingleFont(ResCache, "/Fonts/Boxfont-round/Boxfont Round.ttf");
 
@@ -115,7 +116,7 @@ public sealed class WindowSheetlet : Sheetlet<PalettedStylesheet>
                 .Prop(Label.StylePropertyFontColor, Color.FromHex("#757575")),
         };
 
-        ButtonSheetlet.MakeButtonRules(buttonCfg,
+        ButtonSheetlet<T>.MakeButtonRules(buttonCfg,
             rules,
             buttonCfg.NegativeButtonPalette,
             DefaultWindow.StyleClassWindowCloseButton);

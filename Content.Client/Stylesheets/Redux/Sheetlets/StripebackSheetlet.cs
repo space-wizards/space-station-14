@@ -8,21 +8,22 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
 
 [CommonSheetlet]
-public sealed class StripebackSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class StripebackSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, IStripebackConfig
 {
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public override StyleRule[] GetRules(T sheet, object config)
     {
-        var stripebackCfg = (IStripebackConfig) sheet;
+        var stripebackCfg = (IStripebackConfig)sheet;
+
         var stripeBack = new StyleBoxTexture
         {
             Texture = sheet.GetTextureOr(stripebackCfg.StripebackPath, NanotrasenStylesheet.TextureRoot),
             Mode = StyleBoxTexture.StretchMode.Tile,
         };
 
-        return new StyleRule[]
-        {
+        return
+        [
             E<StripeBack>()
                 .Prop(StripeBack.StylePropertyBackground, stripeBack),
-        };
+        ];
     }
 }

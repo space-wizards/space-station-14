@@ -13,7 +13,8 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Redux.Sheetlets.Hud;
 
 [CommonSheetlet]
-public sealed class ContextMenuSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class ContextMenuSheetlet<T> : Sheetlet<T>
+    where T : PalettedStylesheet, IWindowConfig, IButtonConfig, IIconConfig
 {
     // TODO: make this note hardcoded (I am too scared to change the context menu colors)
     public static readonly ColorPalette ContextButtonPalette = new(Color.Black)
@@ -23,10 +24,10 @@ public sealed class ContextMenuSheetlet : Sheetlet<PalettedStylesheet>
         PressedElement = Color.LightSlateGray,
     };
 
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public override StyleRule[] GetRules(T sheet, object config)
     {
-        var windowCfg = (IWindowConfig) sheet;
-        var btnCfg = (IButtonConfig) sheet;
+        var windowCfg = (IWindowConfig)sheet;
+        var btnCfg = (IButtonConfig)sheet;
 
         var borderedWindowBackground = new StyleBoxTexture
         {
@@ -75,11 +76,11 @@ public sealed class ContextMenuSheetlet : Sheetlet<PalettedStylesheet>
                 .Prop(ContainerButton.StylePropertyStyleBox, buttonContext),
         };
 
-        ButtonSheetlet.MakeButtonRules<ContextMenuElement>(btnCfg,
+        ButtonSheetlet<T>.MakeButtonRules<ContextMenuElement>(btnCfg,
             rules,
             ContextButtonPalette,
             ContextMenuElement.StyleClassContextMenuButton);
-        ButtonSheetlet.MakeButtonRules<ContextMenuElement>(btnCfg,
+        ButtonSheetlet<T>.MakeButtonRules<ContextMenuElement>(btnCfg,
             rules,
             sheet.NegativePalette,
             ConfirmationMenuElement.StyleClassConfirmationContextMenuButton);

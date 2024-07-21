@@ -12,6 +12,7 @@ public sealed class ScrollbarSheetlet : Sheetlet<PalettedStylesheet>
 
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
+        // TODO: hardcoded colors!!!
         var vScrollBarGrabberNormal = new StyleBoxFlat
         {
             BackgroundColor = Color.Gray.WithAlpha(0.35f), ContentMarginLeftOverride = DefaultGrabberSize,
@@ -44,7 +45,6 @@ public sealed class ScrollbarSheetlet : Sheetlet<PalettedStylesheet>
             BackgroundColor = new Color(160, 160, 160).WithAlpha(0.35f), ContentMarginTopOverride = DefaultGrabberSize
         };
 
-        // TODO: hardcoded colors!!!
         return
         [
             E<VScrollBar>().Prop(ScrollBar.StylePropertyGrabber, vScrollBarGrabberNormal),

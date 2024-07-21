@@ -7,9 +7,9 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
 
 [CommonSheetlet]
-public sealed class OptionButtonSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class OptionButtonSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, IIconConfig
 {
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public override StyleRule[] GetRules(T sheet, object config)
     {
         var iconCfg = (IIconConfig) sheet;
 

@@ -9,9 +9,9 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
 
 [CommonSheetlet]
-public sealed class PaperSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class PaperSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, IWindowConfig
 {
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public override StyleRule[] GetRules(T sheet, object config)
     {
         var windowCfg = (IWindowConfig) sheet;
 

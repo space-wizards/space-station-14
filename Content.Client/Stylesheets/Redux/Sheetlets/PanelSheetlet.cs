@@ -7,9 +7,9 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
 
 [CommonSheetlet]
-public sealed class PanelSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class PanelSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, IButtonConfig
 {
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public override StyleRule[] GetRules(T sheet, object config)
     {
         var buttonCfg = (IButtonConfig) sheet;
 

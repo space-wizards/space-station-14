@@ -11,9 +11,9 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Redux.Sheetlets.Hud;
 
 [CommonSheetlet]
-public sealed class TooltipSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class TooltipSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, ITooltipConfig
 {
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public override StyleRule[] GetRules(T sheet, object config)
     {
         var tooltipCfg = (ITooltipConfig) sheet;
 

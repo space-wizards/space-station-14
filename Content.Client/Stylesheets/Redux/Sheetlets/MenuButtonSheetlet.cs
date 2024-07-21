@@ -11,16 +11,16 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
 
 [CommonSheetlet]
-public sealed class MenuButtonSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class MenuButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, IButtonConfig, IIconConfig
 {
     private static MutableSelectorElement CButton()
     {
         return E<MenuButton>();
     }
 
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public override StyleRule[] GetRules(T sheet, object config)
     {
-        var cfg = (IButtonConfig) sheet;
+        var cfg = (IButtonConfig)sheet;
 
         var buttonTex = sheet.GetTextureOr(cfg.BaseButtonPath, NanotrasenStylesheet.TextureRoot);
         var topButtonBase = new StyleBoxTexture
@@ -73,7 +73,7 @@ public sealed class MenuButtonSheetlet : Sheetlet<PalettedStylesheet>
             // new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
         };
 
-        ButtonSheetlet.MakeButtonRules<MenuButton>(cfg, rules, cfg.ButtonPalette, null);
+        ButtonSheetlet<T>.MakeButtonRules<MenuButton>(cfg, rules, cfg.ButtonPalette, null);
 
         return rules.ToArray();
     }

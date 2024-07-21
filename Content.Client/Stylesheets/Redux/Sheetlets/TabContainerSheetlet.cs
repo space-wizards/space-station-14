@@ -8,9 +8,9 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
 
 [CommonSheetlet]
-public sealed class TabContainerSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class TabContainerSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, ITabContainerConfig
 {
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public override StyleRule[] GetRules(T sheet, object config)
     {
         var tabCfg = (ITabContainerConfig) sheet;
 
@@ -22,12 +22,12 @@ public sealed class TabContainerSheetlet : Sheetlet<PalettedStylesheet>
         var tabContainerBoxInactive = new StyleBoxFlat(sheet.SecondaryPalette.Background);
         tabContainerBoxInactive.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
-        return new StyleRule[]
-        {
+        return
+        [
             E<TabContainer>()
                 .Prop(TabContainer.StylePropertyPanelStyleBox, tabContainerPanel)
                 .Prop(TabContainer.StylePropertyTabStyleBox, tabContainerBoxActive)
-                .Prop(TabContainer.StylePropertyTabStyleBoxInactive, tabContainerBoxInactive)
-        };
+                .Prop(TabContainer.StylePropertyTabStyleBoxInactive, tabContainerBoxInactive),
+        ];
     }
 }
