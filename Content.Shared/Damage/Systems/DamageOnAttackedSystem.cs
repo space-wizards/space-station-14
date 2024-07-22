@@ -65,10 +65,13 @@ public sealed class DamageOnAttackedSystem : EntitySystem
         {
             _adminLogger.Add(LogType.Damaged, $"{ToPrettyString(args.User):user} injured themselves by attacking {ToPrettyString(entity):target} and received {totalDamage.GetTotal():damage} damage");
 
-            if (!_gameTiming.IsFirstTimePredicted || _net.IsServer)
+            if (!_gameTiming.IsFirstTimePredicted)
                 return;
 
             _audioSystem.PlayPredicted(entity.Comp.InteractSound, entity, args.User);
+
+            if (_net.IsServer)
+                return;
 
             if (entity.Comp.PopupText != null)
                 _popupSystem.PopupClient(Loc.GetString(entity.Comp.PopupText), args.User, args.User);

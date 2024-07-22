@@ -66,10 +66,13 @@ public sealed class DamageOnInteractSystem : EntitySystem
             _adminLogger.Add(LogType.Damaged, $"{ToPrettyString(args.User):user} injured their hand by interacting with {ToPrettyString(args.Target):target} and received {totalDamage.GetTotal():damage} damage");
             args.Handled = true;
 
-            if (!_gameTiming.IsFirstTimePredicted || _net.IsServer)
+            if (!_gameTiming.IsFirstTimePredicted)
                 return;
 
             _audioSystem.PlayPredicted(entity.Comp.InteractSound, args.Target, args.User);
+
+            if (_net.IsServer)
+                return;
 
             if (entity.Comp.PopupText != null)
                 _popupSystem.PopupClient(Loc.GetString(entity.Comp.PopupText), args.User, args.User);
