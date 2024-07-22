@@ -1,7 +1,6 @@
 ﻿using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Xenoarchaeology.Equipment.Components;
 
@@ -21,8 +20,8 @@ public sealed partial class AnalysisConsoleComponent : Component
     /// <summary>
     /// The machine linking port for the analyzer
     /// </summary>
-    [DataField("linkingPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
-    public string LinkingPort = "ArtifactAnalyzerSender";
+    [DataField]
+    public ProtoId<SourcePortPrototype> LinkingPort = "ArtifactAnalyzerSender";
 
     /// <summary>
     /// The sound played when an artifact has points extracted.
@@ -33,6 +32,6 @@ public sealed partial class AnalysisConsoleComponent : Component
     /// <summary>
     /// The entity spawned by a report.
     /// </summary>
-    [DataField("reportEntityId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ReportEntityId = "Paper";
+    [DataField]
+    public EntProtoId ReportEntityId = "Paper";
 }

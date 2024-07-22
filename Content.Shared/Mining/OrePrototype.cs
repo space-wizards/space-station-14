@@ -13,8 +13,8 @@ public sealed partial class OrePrototype : IPrototype
     [IdDataField]
     public string ID { get; private set; } = default!;
 
-    [DataField("oreEntity", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? OreEntity;
+    [DataField]
+    public EntProtoId? OreEntity;
 
     [DataField("minOreYield")]
     public int MinOreYield = 1;

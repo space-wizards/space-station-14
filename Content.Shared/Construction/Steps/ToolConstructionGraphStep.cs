@@ -1,15 +1,14 @@
 using Content.Shared.Examine;
 using Content.Shared.Tools;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
     public sealed partial class ToolConstructionGraphStep : ConstructionGraphStep
     {
-        [DataField("tool", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-        public string Tool { get; private set; } = string.Empty;
+        [DataField(required:true)]
+        public ProtoId<ToolQualityPrototype> Tool { get; private set; } = string.Empty;
 
         [DataField("fuel")] public float Fuel { get; private set; } = 10;
 

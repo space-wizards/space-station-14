@@ -1,13 +1,12 @@
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Engineering.Components
 {
     [RegisterComponent]
     public sealed partial class SpawnAfterInteractComponent : Component
     {
-        [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? Prototype { get; private set; }
+        [DataField]
+        public EntProtoId? Prototype { get; private set; }
 
         [DataField("ignoreDistance")]
         public bool IgnoreDistance { get; private set; }

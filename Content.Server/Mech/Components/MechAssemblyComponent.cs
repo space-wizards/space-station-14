@@ -3,7 +3,6 @@ using Content.Shared.Tag;
 using Content.Shared.Tools;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Mech.Components;
@@ -31,8 +30,8 @@ public sealed partial class MechAssemblyComponent : Component
     /// <summary>
     /// The prototype spawned when the assembly is finished
     /// </summary>
-    [DataField("finishedPrototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string FinishedPrototype = default!;
+    [DataField(required: true)]
+    public EntProtoId FinishedPrototype = default!;
 
     /// <summary>
     /// The container that stores all of the parts when
@@ -45,6 +44,6 @@ public sealed partial class MechAssemblyComponent : Component
     /// The quality of tool needed to remove all the parts
     /// from the parts container.
     /// </summary>
-    [DataField("qualityNeeded", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-    public string QualityNeeded = "Prying";
+    [DataField]
+    public ProtoId<ToolQualityPrototype> QualityNeeded = "Prying";
 }

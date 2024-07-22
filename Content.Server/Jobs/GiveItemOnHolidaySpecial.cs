@@ -3,7 +3,6 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Jobs
 {
@@ -11,11 +10,11 @@ namespace Content.Server.Jobs
     [DataDefinition]
     public sealed partial class GiveItemOnHolidaySpecial : JobSpecial
     {
-        [DataField("holiday", customTypeSerializer:typeof(PrototypeIdSerializer<HolidayPrototype>))]
-        public string Holiday { get; private set; } = string.Empty;
+        [DataField]
+        public ProtoId<HolidayPrototype> Holiday { get; private set; } = string.Empty;
 
-        [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string Prototype { get; private set; } = string.Empty;
+        [DataField]
+        public EntProtoId Prototype { get; private set; } = string.Empty;
 
         public override void AfterEquip(EntityUid mob)
         {

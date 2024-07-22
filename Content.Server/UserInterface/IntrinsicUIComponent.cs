@@ -1,5 +1,4 @@
 ﻿using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.UserInterface;
 
@@ -15,8 +14,8 @@ public sealed partial class IntrinsicUIComponent : Component
 [DataDefinition]
 public sealed partial class IntrinsicUIEntry
 {
-    [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
-    public string? ToggleAction;
+    [DataField(required: true)]
+    public EntProtoId? ToggleAction;
 
     /// <summary>
     /// The action used for this BUI.

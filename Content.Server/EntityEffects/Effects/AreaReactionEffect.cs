@@ -12,7 +12,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.EntityEffects.Effects;
 
@@ -36,8 +35,8 @@ public sealed partial class AreaReactionEffect : EntityEffect
     /// <summary>
     /// The entity prototype that will be spawned as the effect.
     /// </summary>
-    [DataField("prototypeId", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    private string _prototypeId = default!;
+    [DataField("prototypeId", required: true)]
+    private EntProtoId<EdgeSpreaderComponent> _prototypeId = default!;
 
     /// <summary>
     /// Sound that will get played when this reaction effect occurs.

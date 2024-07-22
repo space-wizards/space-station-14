@@ -24,8 +24,8 @@ namespace Content.Shared.Research.Prototypes
         /// <summary>
         ///     The prototype name of the resulting entity when the recipe is printed.
         /// </summary>
-        [DataField("result", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string Result = string.Empty;
+        [DataField(required: true)]
+        public EntProtoId Result = string.Empty;
 
         /// <summary>
         ///     An entity whose sprite is displayed in the ui in place of the actual recipe result.

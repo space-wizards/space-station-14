@@ -4,7 +4,6 @@ using Content.Shared.Roles.Jobs;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Roles
@@ -23,8 +22,8 @@ namespace Content.Shared.Roles
         /// <summary>
         /// Which department needs the required amount of time.
         /// </summary>
-        [DataField("department", customTypeSerializer: typeof(PrototypeIdSerializer<DepartmentPrototype>))]
-        public string Department = default!;
+        [DataField]
+        public ProtoId<DepartmentPrototype> Department = default!;
 
         /// <summary>
         /// How long (in seconds) this requirement is.
@@ -48,8 +47,8 @@ namespace Content.Shared.Roles
         /// <summary>
         /// What particular role they need the time requirement with.
         /// </summary>
-        [DataField("role", customTypeSerializer: typeof(PrototypeIdSerializer<PlayTimeTrackerPrototype>))]
-        public string Role = default!;
+        [DataField]
+        public ProtoId<PlayTimeTrackerPrototype> Role = default!;
 
         /// <inheritdoc cref="DepartmentTimeRequirement.Time"/>
         [DataField("time")] public TimeSpan Time;

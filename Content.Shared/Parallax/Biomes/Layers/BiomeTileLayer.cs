@@ -1,7 +1,7 @@
 using Content.Shared.Maps;
 using Robust.Shared.Noise;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Parallax.Biomes.Layers;
 
@@ -23,6 +23,6 @@ public sealed partial class BiomeTileLayer : IBiomeLayer
     [DataField("variants")]
     public List<byte>? Variants = null;
 
-    [DataField("tile", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<ContentTileDefinition>))]
-    public string Tile = string.Empty;
+    [DataField(required: true)]
+    public ProtoId<ContentTileDefinition> Tile = string.Empty;
 }

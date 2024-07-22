@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Atmos.Prototypes
 {
@@ -76,8 +75,8 @@ namespace Content.Shared.Atmos.Prototypes
         /// <summary>
         /// The reagent that this gas will turn into when inhaled.
         /// </summary>
-        [DataField("reagent", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
-        public string? Reagent { get; private set; } = default!;
+        [DataField]
+        public ProtoId<ReagentPrototype>? Reagent { get; private set; } = default!;
 
         [DataField("color")] public string Color { get; private set; } = string.Empty;
 

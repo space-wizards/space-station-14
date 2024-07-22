@@ -55,7 +55,7 @@ namespace Content.Client.Access.UI
 
             _window.SetCurrentName(cast.CurrentName);
             _window.SetCurrentJob(cast.CurrentJob);
-            _window.SetAllowedIcons(cast.Icons, cast.CurrentJobIconId);
+            _window.SetAllowedIcons(cast.Icons, cast.CurrentJobIconId ?? "");
         }
     }
 }

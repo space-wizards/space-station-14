@@ -1,6 +1,6 @@
 using Content.Shared.Damage;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Content.Shared.Damage.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Destructible.Thresholds.Triggers
 {
@@ -12,8 +12,8 @@ namespace Content.Server.Destructible.Thresholds.Triggers
     [DataDefinition]
     public sealed partial class DamageTypeTrigger : IThresholdTrigger
     {
-        [DataField("damageType", required:true, customTypeSerializer: typeof(PrototypeIdSerializer<DamageTypePrototype>))]
-        public string DamageType { get; set; } = default!;
+        [DataField(required: true)]
+        public ProtoId<DamageTypePrototype> DamageType { get; set; } = default!;
 
         [DataField("damage", required: true)]
         public int Damage { get; set; } = default!;
