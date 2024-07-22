@@ -1,9 +1,9 @@
-﻿using Robust.Shared.Utility;
+﻿using Robust.Shared.GameStates;
+using Robust.Shared.Utility;
 
-namespace Content.Shared.Chemistry.Components;
+namespace Content.Shared.Chemistry.Components.Reagents;
 
-
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class ReagentMetamorphicSpriteComponent : Component
 {
     [DataField]

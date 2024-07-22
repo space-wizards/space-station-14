@@ -1,12 +1,12 @@
 ﻿using Content.Shared.Chemistry.Reaction;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Chemistry.Components;
+namespace Content.Shared.Chemistry.Components.Reagents;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class RequiresReactionMixingComponent : Component
 {
-
     /// <summary>
     ///     The required mixing categories for an entity to mix the solution with for the reaction to occur
     /// </summary>

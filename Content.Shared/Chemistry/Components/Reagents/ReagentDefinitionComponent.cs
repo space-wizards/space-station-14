@@ -6,13 +6,17 @@ using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Chemistry.Components;
+namespace Content.Shared.Chemistry.Components.Reagents;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class ReagentDefinitionComponent : Component
 {
+    [DataField(required: true)]
+    public string Id = string.Empty;
+
     [DataField("Name",required: true)]
     public LocId NameLocId { get; set; }
 

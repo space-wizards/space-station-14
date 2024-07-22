@@ -1,13 +1,15 @@
-﻿namespace Content.Shared.Chemistry.Components;
+﻿using Robust.Shared.GameStates;
 
-[RegisterComponent]
+namespace Content.Shared.Chemistry.Components.Reagents;
+
+[RegisterComponent, NetworkedComponent]
 public sealed partial class RequiresReactionTemperatureComponent : Component
 {
     /// <summary>
     ///     The minimum temperature the reaction can occur at.
     /// </summary>
     [DataField("minTemp")]
-    public float MinimumTemperature = 0.0f;
+    public float MinimumTemperature;
 
     /// <summary>
     ///     The maximum temperature the reaction can occur at.
