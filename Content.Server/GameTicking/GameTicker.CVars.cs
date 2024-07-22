@@ -27,7 +27,6 @@ namespace Content.Server.GameTicking
         private WebhookIdentifier? _webhookIdentifier;
 
         [ViewVariables]
-        private string? DiscordLastMessageBeforeDeathWebhook { get; set; }
 
         private WebhookIdentifier? _webhookIdentifierLastMessage;
 
