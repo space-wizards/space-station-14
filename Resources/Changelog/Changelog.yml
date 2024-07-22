@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You can no longer print singular bullets at the security techfab.
-    type: Remove
-  - message: The security techfab now has recipes for ammunition boxes and pre-filled
-      magazines of every type of ammo.
-    type: Add
-  - message: You can now print empty magazines at the security techfab.
-    type: Add
-  - message: Material costs for printing all ammo and mags were rebalanced.
-    type: Tweak
-  id: 6460
-  time: '2024-04-27T10:38:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26178
 - author: Ramlik
   changes:
   - message: Added security walkie talkies to the vendor.
@@ -3798,3 +3784,10 @@
   id: 6959
   time: '2024-07-21T17:16:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27858
+- author: valquaint, slarticodefast
+  changes:
+  - message: Fixed borgs being unable to state laws with an activated flashlight.
+    type: Fix
+  id: 6960
+  time: '2024-07-22T03:55:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30183
