@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix a lot of UI bugs.
-    type: Fix
-  id: 6464
-  time: '2024-04-27T16:32:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27401
 - author: RiceMar1244
   changes:
   - message: Resprited the captain's antique laser pistol.
@@ -3786,3 +3779,11 @@
   id: 6963
   time: '2024-07-22T09:33:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30237
+- author: Plykiya
+  changes:
+  - message: Bag sounds can now only be heard from half the distance and is quieter
+      in general.
+    type: Tweak
+  id: 6964
+  time: '2024-07-22T09:54:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30225
