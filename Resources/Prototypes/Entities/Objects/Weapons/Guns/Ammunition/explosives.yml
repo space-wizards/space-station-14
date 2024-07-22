@@ -3,16 +3,17 @@
 - type: entity
   id: CartridgeRocket
   name: PG-7VL grenade
+  suffix: fugas
   parent: BaseItem
-  description: A 1.5 warhead designed for the RPG-7 launcher. Has tubular shape.
+  description: The PG-7VL anti-tank grenade round is equipped with a shaped-charge warhead, which allows effective combat against modern armored targets, fortifications and enemy manpower in brick, reinforced concrete and wood-and-earth shelters. The use of this round turns a simple infantryman into an armored vehicle fighter.   # VXS
   components:
   - type: Tag
     tags:
       - CartridgeRocket
   - type: Item
-    size: Small
+    size: Large # VXS
   - type: CartridgeAmmo
-    proto: BulletRocket
+    proto: BulletRocketFugas # VXS
     deleteOnSpawn: true
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
@@ -23,6 +24,7 @@
 - type: entity
   id: CartridgeRocketSlow
   name: PG-7VL grenade "Snail-Rocket"
+  suffix: DEBUG
   parent: BaseItem
   description: A 1.5 warhead designed for the RPG-7 launcher. It's unusually slow.
   components:
@@ -122,7 +124,7 @@
   - type: SpentAmmoVisuals
     state: frag
     suffix: false
-    
+
 - type: entity
   id: GrenadeEMP
   name: EMP grenade
@@ -154,7 +156,7 @@
   - type: Item
     size: Small
   - type: Sprite
-  
+
 - type: entity
   id: CannonBall
   name: cannonball
