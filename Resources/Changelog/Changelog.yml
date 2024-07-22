@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Hardsuits and other helmets/hoods should no longer make you bald after
-      toggling.
-    type: Fix
-  id: 6466
-  time: '2024-04-27T19:10:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27404
 - author: Plykiya
   changes:
   - message: Max amount of traitors dropped from 12 to 8.
@@ -3787,3 +3779,10 @@
   id: 6965
   time: '2024-07-22T10:20:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29825
+- author: Errant
+  changes:
+  - message: Replay observers now always spawn on the station.
+    type: Fix
+  id: 6966
+  time: '2024-07-22T19:32:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30252
