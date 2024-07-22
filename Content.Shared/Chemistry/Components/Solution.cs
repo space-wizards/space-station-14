@@ -106,19 +106,6 @@ namespace Content.Shared.Chemistry.Components
             _heatCapacityUpdateCounter = 0;
         }
 
-        public void UpdateHeadCapacity(SharedChemistryRegistrySystem? chemRegistry)
-        {
-            chemRegistry ??= IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedChemistryRegistrySystem>();
-            DebugTools.Assert(_heatCapacityDirty);
-            _heatCapacityDirty = false;
-            _heatCapacity = 0;
-            foreach (var (reagent, quantity) in Contents)
-            {
-                _heatCapacity += (float) quantity * chemRegistry.Index(reagent.Prototype).Comp.SpecificHeat;
-            }
-            _heatCapacityUpdateCounter = 0;
-        }
-
         public float GetHeatCapacity(IPrototypeManager? protoMan)
         {
             if (_heatCapacityDirty)
