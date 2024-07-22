@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client.Chemistry.EntitySystems;
 using Content.Client.Message;
 using Content.Client.UserInterface.ControlExtensions;
 using Content.Shared.Atmos.Prototypes;
@@ -35,7 +36,7 @@ public sealed partial class GuideReagentReaction : BoxContainer, ISearchableCont
     public GuideReagentReaction(ReactionPrototype prototype, IPrototypeManager protoMan, IEntitySystemManager sysMan) : this(protoMan)
     {
         var reactantsLabel = ReactantsLabel;
-        SetReagents(prototype.Reactants, ref reactantsLabel, protoMan);
+        SetReagents(prototype.Reactants, ref reactantsLabel, protoMan, sysMan.GetEntitySystem<ChemistryRegistrySystem>());
         var productLabel = ProductsLabel;
         var products = new Dictionary<string, FixedPoint2>(prototype.Products);
         foreach (var (reagent, reactantProto) in prototype.Reactants)
@@ -43,7 +44,7 @@ public sealed partial class GuideReagentReaction : BoxContainer, ISearchableCont
             if (reactantProto.Catalyst)
                 products.Add(reagent, reactantProto.Amount);
         }
-        SetReagents(products, ref productLabel, protoMan);
+        SetReagents(products, ref productLabel, protoMan, sysMan.GetEntitySystem<ChemistryRegistrySystem>());
 
         var mixingCategories = new List<MixingCategoryPrototype>();
         if (prototype.MixingCategories != null)
@@ -86,7 +87,7 @@ public sealed partial class GuideReagentReaction : BoxContainer, ISearchableCont
         ReactantsContainer.AddChild(entContainer);
 
         var productLabel = ProductsLabel;
-        SetReagents(solution.Contents, ref productLabel, protoMan);
+        SetReagents(solution.Contents, ref productLabel, protoMan, sysMan.GetEntitySystem<ChemistryRegistrySystem>());
         SetMixingCategory(categories, null, sysMan);
     }
 
@@ -106,49 +107,53 @@ public sealed partial class GuideReagentReaction : BoxContainer, ISearchableCont
                 { prototype.Reagent, FixedPoint2.New(0.21f) }
             };
             var productLabel = ProductsLabel;
-            SetReagents(quantity, ref productLabel, protoMan);
+            SetReagents(quantity, ref productLabel, protoMan, sysMan.GetEntitySystem<ChemistryRegistrySystem>());
         }
         SetMixingCategory(categories, null, sysMan);
     }
 
-    private void SetReagents(List<ReagentQuantity> reagents, ref RichTextLabel label, IPrototypeManager protoMan)
+    private void SetReagents(List<ReagentQuantity> reagents, ref RichTextLabel label, IPrototypeManager protoMan,
+        ChemistryRegistrySystem chemRegistry)
     {
         var amounts = new Dictionary<string, FixedPoint2>();
         foreach (var (reagent, quantity) in reagents)
         {
             amounts.Add(reagent.Prototype, quantity);
         }
-        SetReagents(amounts, ref label, protoMan);
+        SetReagents(amounts, ref label, protoMan, chemRegistry);
     }
 
     private void SetReagents(
         Dictionary<string, ReactantPrototype> reactants,
         ref RichTextLabel label,
-        IPrototypeManager protoMan)
+        IPrototypeManager protoMan,
+        ChemistryRegistrySystem chemRegistry)
     {
         var amounts = new Dictionary<string, FixedPoint2>();
         foreach (var (reagent, reactantPrototype) in reactants)
         {
             amounts.Add(reagent, reactantPrototype.Amount);
         }
-        SetReagents(amounts, ref label, protoMan);
+        SetReagents(amounts, ref label, protoMan, chemRegistry);
     }
 
     [PublicAPI]
     private void SetReagents(
         Dictionary<ProtoId<MixingCategoryPrototype>, ReactantPrototype> reactants,
         ref RichTextLabel label,
-        IPrototypeManager protoMan)
+        IPrototypeManager protoMan,
+        ChemistryRegistrySystem chemRegistry)
     {
         var amounts = new Dictionary<string, FixedPoint2>();
         foreach (var (reagent, reactantPrototype) in reactants)
         {
             amounts.Add(reagent, reactantPrototype.Amount);
         }
-        SetReagents(amounts, ref label, protoMan);
+        SetReagents(amounts, ref label, protoMan, chemRegistry);
     }
 
-    private void SetReagents(Dictionary<string, FixedPoint2> reagents, ref RichTextLabel label, IPrototypeManager protoMan)
+    private void SetReagents(Dictionary<string, FixedPoint2> reagents, ref RichTextLabel label, IPrototypeManager protoMan,
+        ChemistryRegistrySystem chemRegistry)
     {
         var msg = new FormattedMessage();
         var reagentCount = reagents.Count;
@@ -156,7 +161,7 @@ public sealed partial class GuideReagentReaction : BoxContainer, ISearchableCont
         foreach (var (product, amount) in reagents.OrderByDescending(p => p.Value))
         {
             msg.AddMarkup(Loc.GetString("guidebook-reagent-recipes-reagent-display",
-                ("reagent", protoMan.Index<ReagentPrototype>(product).LocalizedName), ("ratio", amount)));
+                ("reagent", chemRegistry.Index(product).Comp.LocalizedName), ("ratio", amount)));
             i++;
             if (i < reagentCount)
                 msg.PushNewline();

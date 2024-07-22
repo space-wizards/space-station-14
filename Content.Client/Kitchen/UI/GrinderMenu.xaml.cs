@@ -1,3 +1,4 @@
+using Content.Client.Chemistry.EntitySystems;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Kitchen;
@@ -15,6 +16,7 @@ namespace Content.Client.Kitchen.UI
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
+        private readonly ChemistryRegistrySystem _chemRegistry = default!;
         private readonly Dictionary<int, EntityUid> _chamberVisualContents = new();
 
         public event Action? OnToggleAuto;
@@ -28,6 +30,7 @@ namespace Content.Client.Kitchen.UI
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
+            _chemRegistry = _entityManager.System<ChemistryRegistrySystem>();
             AutoModeButton.OnPressed += _ => OnToggleAuto?.Invoke();
             GrindButton.OnPressed += _ => OnGrind?.Invoke();
             JuiceButton.OnPressed += _ => OnJuice?.Invoke();
@@ -126,8 +129,8 @@ namespace Content.Client.Kitchen.UI
             {
                 foreach (var (reagent, quantity) in reagents)
                 {
-                    var reagentName = _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto)
-                        ? Loc.GetString($"{quantity} {proto.LocalizedName}")
+                    var reagentName = _chemRegistry.TryIndex(reagent.Prototype, out var reagentDef)
+                        ? $"{quantity} {reagentDef.Comp.LocalizedName}"
                         : "???";
                     BeakerContentBox.BoxContents.AddItem(reagentName);
                 }

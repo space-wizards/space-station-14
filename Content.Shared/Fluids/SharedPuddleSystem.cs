@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Examine;
@@ -18,6 +19,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedChemistryRegistrySystem _chemRegistry = default!;
 
     /// <summary>
     /// The lowest threshold to be considered for puddle sprite states as well as slipperiness of a puddle.
@@ -79,9 +81,9 @@ public abstract partial class SharedPuddleSystem : EntitySystem
 
         var reagentId = solution.GetPrimaryReagentId();
         if (!string.IsNullOrWhiteSpace(reagentId?.Prototype)
-            && _prototypeManager.TryIndex(reagentId.Value.Prototype, out ReagentPrototype? proto))
+            && _chemRegistry.TryIndex(reagentId.Value.Prototype, out var reagentDef))
         {
-            args.Sound = proto.FootstepSound;
+            args.Sound = reagentDef.Comp.FootstepSound;
         }
     }
 

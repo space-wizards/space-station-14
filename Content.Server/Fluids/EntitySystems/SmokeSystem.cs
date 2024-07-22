@@ -22,7 +22,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Linq;
-
+using Content.Server.Chemistry.EntitySystems;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Fluids.EntitySystems;
@@ -45,6 +45,7 @@ public sealed class SmokeSystem : EntitySystem
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly ChemistryRegistrySystem _chemRegistry = default!;
 
     private EntityQuery<SmokeComponent> _smokeQuery;
     private EntityQuery<SmokeAffectedComponent> _smokeAffectedQuery;
@@ -279,11 +280,11 @@ public sealed class SmokeSystem : EntitySystem
         {
             if (reagentQuantity.Quantity == FixedPoint2.Zero)
                 continue;
-            var reagentProto = _prototype.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
+            var reagentDef = _chemRegistry.Index(reagentQuantity.Reagent.Prototype);
 
-            _reactive.ReactionEntity(entity, ReactionMethod.Touch, reagentProto, reagentQuantity, transferSolution);
+            _reactive.ReactionEntity(entity, ReactionMethod.Touch, reagentDef, reagentQuantity, transferSolution);
             if (!blockIngestion)
-                _reactive.ReactionEntity(entity, ReactionMethod.Ingestion, reagentProto, reagentQuantity, transferSolution);
+                _reactive.ReactionEntity(entity, ReactionMethod.Ingestion, reagentDef, reagentQuantity, transferSolution);
         }
 
         if (blockIngestion)
@@ -314,8 +315,8 @@ public sealed class SmokeSystem : EntitySystem
             if (reagentQuantity.Quantity == FixedPoint2.Zero)
                 continue;
 
-            var reagent = _prototype.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
-            reagent.ReactionTile(tile, reagentQuantity.Quantity, EntityManager);
+            var reagentDef = _chemRegistry.Index(reagentQuantity.Reagent.Prototype);
+            reagentDef.Comp.ReactionTile(tile, reagentQuantity.Quantity, EntityManager);
         }
     }
 

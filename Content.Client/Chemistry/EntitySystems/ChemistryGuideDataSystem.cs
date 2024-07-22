@@ -17,6 +17,7 @@ namespace Content.Client.Chemistry.EntitySystems;
 public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly ChemistryRegistrySystem _chemistryRegistry = default!;
 
     [ValidatePrototypeId<MixingCategoryPrototype>]
     private const string DefaultMixingCategory = "DummyMix";
@@ -57,9 +58,9 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
     {
         // this doesn't check what prototypes are being reloaded because, to be frank, we use a lot of them.
         _reagentSources.Clear();
-        foreach (var reagent in PrototypeManager.EnumeratePrototypes<ReagentPrototype>())
+        foreach (var reagent in _chemistryRegistry.EnumerateReagents())
         {
-            _reagentSources.Add(reagent.ID, new());
+            _reagentSources.Add(reagent.Comp.Id, new());
         }
 
         foreach (var reaction in PrototypeManager.EnumeratePrototypes<ReactionPrototype>())

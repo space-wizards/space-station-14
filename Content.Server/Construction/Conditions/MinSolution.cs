@@ -1,4 +1,5 @@
 using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
@@ -76,8 +77,8 @@ public sealed partial class MinSolution : IGraphCondition
 
     private string Name()
     {
-        var protoMan = IoCManager.Resolve<IPrototypeManager>();
-        var proto = protoMan.Index<ReagentPrototype>(Reagent.Prototype);
-        return proto.LocalizedName;
+        var chemRegistry = IoCManager.Resolve<IEntityManager>().System<ChemistryRegistrySystem>();
+        var proto = chemRegistry.Index(Reagent.Prototype);
+        return proto.Comp.LocalizedName;
     }
 }

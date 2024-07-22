@@ -11,6 +11,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
+using Content.Client.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -23,6 +24,8 @@ namespace Content.Client.Chemistry.UI
     public sealed partial class ChemMasterWindow : FancyWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        private readonly ChemistryRegistrySystem _chemistryRegistry;
         public event Action<BaseButton.ButtonEventArgs, ReagentButton>? OnReagentButtonPressed;
         public readonly Button[] PillTypeButtons;
 
@@ -36,6 +39,8 @@ namespace Content.Client.Chemistry.UI
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
+
+            _chemistryRegistry = _entityManager.System<ChemistryRegistrySystem>();
 
             // Pill type selection buttons, in total there are 20 pills.
             // Pill rsi file should have states named as pill1, pill2, and so on.
@@ -142,8 +147,8 @@ namespace Content.Client.Chemistry.UI
                 return "";
 
             var reagent = state.BufferReagents.OrderBy(r => r.Quantity).First().Reagent;
-            _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
-            return proto?.LocalizedName ?? "";
+            _chemistryRegistry.TryIndex(reagent.Prototype, out var reagentDef);
+            return reagentDef.Comp.LocalizedName;
         }
 
         /// <summary>
@@ -185,11 +190,9 @@ namespace Content.Client.Chemistry.UI
             foreach (var (reagent, quantity) in state.BufferReagents)
             {
                 // Try to get the prototype for the given reagent. This gives us its name.
-                _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
-                var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
-
-                if (proto != null)
+                if (_chemistryRegistry.TryIndex(reagent.Prototype, out var reagentDef))
                 {
+                    var name = reagentDef.Comp.LocalizedName;
                     BufferInfo.Children.Add(new BoxContainer
                     {
                         Orientation = LayoutOrientation.Horizontal,
@@ -256,9 +259,9 @@ namespace Content.Client.Chemistry.UI
                 {
                     contents = info.Reagents.Select(x =>
                         {
-                            _prototypeManager.TryIndex(x.Reagent.Prototype, out ReagentPrototype? proto);
-                            var name = proto?.LocalizedName
-                                       ?? Loc.GetString("chem-master-window-unknown-reagent-text");
+                            var name = _chemistryRegistry.TryIndex(x.Reagent.Prototype, out var reagentDef)
+                            ? reagentDef.Comp.LocalizedName
+                            : Loc.GetString("chem-master-window-unknown-reagent-text");
 
                             return (name, Id: x.Reagent, x.Quantity);
                         })

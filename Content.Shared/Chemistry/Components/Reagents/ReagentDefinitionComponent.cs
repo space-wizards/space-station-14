@@ -22,6 +22,10 @@ public sealed partial class ReagentDefinitionComponent : Component
 
     [ViewVariables(VVAccess.ReadOnly)]
     public string LocalizedName => Loc.GetString(NameLocId);
+
+    [DataField]
+    public string Group { get; set; } = "Unknown";
+
     /// <summary>
     ///     Is this reagent recognizable to the average spaceman (water, welding fuel, ketchup, etc)?
     /// </summary>

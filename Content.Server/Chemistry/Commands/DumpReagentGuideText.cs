@@ -1,4 +1,5 @@
 ﻿using Content.Server.Administration;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Console;
@@ -24,19 +25,19 @@ public sealed class DumpReagentGuideText : IConsoleCommand
             return;
         }
 
-        if (!_prototype.TryIndex<ReagentPrototype>(args[0], out var reagent))
+        if (!_entSys.GetEntitySystem<ChemistryRegistrySystem>().TryIndex(args[0], out var reagent))
         {
             shell.WriteError($"Invalid prototype: {args[0]}");
             return;
         }
 
-        if (reagent.Metabolisms is null)
+        if (reagent.Comp.Metabolisms is null)
         {
             shell.WriteLine("Nothing to dump.");
             return;
         }
 
-        foreach (var entry in reagent.Metabolisms.Values)
+        foreach (var entry in reagent.Comp.Metabolisms.Values)
         {
             foreach (var effect in entry.Effects)
             {

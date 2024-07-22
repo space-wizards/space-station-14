@@ -141,6 +141,7 @@ public sealed class ChemistryRegistrySystem : SharedChemistryRegistrySystem
             var reagentDef = AddComp<ReagentDefinitionComponent>(newEnt);
 
             reagentDef.Id = reagentProto.ID;
+            reagentDef.Group = reagentProto.Group;
             reagentDef.NameLocId = reagentProto.NameLocId;
             reagentDef.MolarMass = DefaultMolarMass;
             reagentDef.Recognizable = reagentProto.Recognizable;

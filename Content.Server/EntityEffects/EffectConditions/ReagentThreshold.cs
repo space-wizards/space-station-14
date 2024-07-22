@@ -28,7 +28,7 @@ public sealed partial class ReagentThreshold : EntityEffectCondition
     {
         if (args is EntityEffectReagentArgs reagentArgs)
         {
-            var reagent = Reagent ?? reagentArgs.Reagent?.ID;
+            var reagent = Reagent ?? reagentArgs.Reagent?.Comp.Id;
             if (reagent == null)
                 return true; // No condition to apply.
 

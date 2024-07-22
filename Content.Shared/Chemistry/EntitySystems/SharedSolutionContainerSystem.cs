@@ -14,6 +14,7 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Map;
@@ -68,6 +69,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
     [Dependency] protected readonly INetManager NetManager = default!;
+    [Dependency] protected readonly SharedChemistryRegistrySystem ChemistryRegistry = default!;
 
     public override void Initialize()
     {
@@ -435,8 +437,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
         else
         {
-            var proto = PrototypeManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
-            solution.AddReagent(proto, acceptedQuantity, temperature.Value, PrototypeManager);
+            var reagentDef = ChemistryRegistry.Index(reagentQuantity.Reagent.Prototype);
+            solution.AddReagent(reagentDef, acceptedQuantity, temperature.Value, PrototypeManager);
         }
 
         UpdateChemicals(soln);

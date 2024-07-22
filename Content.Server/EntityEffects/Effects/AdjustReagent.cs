@@ -1,3 +1,4 @@
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
@@ -47,11 +48,11 @@ namespace Content.Server.EntityEffects.Effects
                 }
                 else if (Group != null)
                 {
-                    var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
+                    var chemRegistry = IoCManager.Resolve<IEntityManager>().System<ChemistryRegistrySystem>();
                     foreach (var quant in reagentArgs.Source.Contents.ToArray())
                     {
-                        var proto = prototypeMan.Index<ReagentPrototype>(quant.Reagent.Prototype);
-                        if (proto.Metabolisms != null && proto.Metabolisms.ContainsKey(Group))
+                        var reagentDef = chemRegistry.Index(quant.Reagent.Prototype);
+                        if (reagentDef.Comp.Metabolisms != null && reagentDef.Comp.Metabolisms.ContainsKey(Group))
                         {
                             if (amount < 0)
                                 reagentArgs.Source.RemoveReagent(quant.Reagent, amount);
@@ -69,12 +70,12 @@ namespace Content.Server.EntityEffects.Effects
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         {
-            if (Reagent is not null && prototype.TryIndex(Reagent, out ReagentPrototype? reagentProto))
+            if (Reagent is not null && entSys.GetEntitySystem<ChemistryRegistrySystem>().TryIndex(Reagent, out var reagentDef))
             {
                 return Loc.GetString("reagent-effect-guidebook-adjust-reagent-reagent",
                     ("chance", Probability),
                     ("deltasign", MathF.Sign(Amount.Float())),
-                    ("reagent", reagentProto.LocalizedName),
+                    ("reagent", reagentDef.Comp.LocalizedName),
                     ("amount", MathF.Abs(Amount.Float())));
             }
             else if (Group is not null && prototype.TryIndex(Group, out MetabolismGroupPrototype? groupProto))

@@ -171,26 +171,7 @@ namespace Content.Shared.Chemistry.Reagent
 
         public void ReactionPlant(EntityUid? plantHolder, ReagentQuantity amount, Solution solution)
         {
-            if (plantHolder == null)
-                return;
 
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var random = IoCManager.Resolve<IRobustRandom>();
-            var args = new EntityEffectReagentArgs(plantHolder.Value, entMan, null, solution, amount.Quantity, this, null, 1f);
-            foreach (var plantMetabolizable in PlantMetabolisms)
-            {
-                if (!plantMetabolizable.ShouldApply(args, random))
-                    continue;
-
-                if (plantMetabolizable.ShouldLog)
-                {
-                    var entity = args.TargetEntity;
-                    entMan.System<SharedAdminLogSystem>().Add(LogType.ReagentEffect, plantMetabolizable.LogImpact,
-                        $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID:reagent} applied on entity {entMan.ToPrettyString(entity):entity} at {entMan.GetComponent<TransformComponent>(entity).Coordinates:coordinates}");
-                }
-
-                plantMetabolizable.Effect(args);
-            }
         }
     }
 

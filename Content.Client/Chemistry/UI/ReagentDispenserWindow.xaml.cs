@@ -1,3 +1,4 @@
+using Content.Client.Chemistry.EntitySystems;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Chemistry;
@@ -18,6 +19,7 @@ namespace Content.Client.Chemistry.UI
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        private readonly ChemistryRegistrySystem _chemistryRegistry;
         public event Action<string>? OnDispenseReagentButtonPressed;
         public event Action<string>? OnEjectJugButtonPressed;
 
@@ -29,6 +31,7 @@ namespace Content.Client.Chemistry.UI
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
+            _chemistryRegistry = _entityManager.System<ChemistryRegistrySystem>();
         }
 
         /// <summary>
@@ -98,8 +101,8 @@ namespace Content.Client.Chemistry.UI
             foreach (var (reagent, quantity) in state.OutputContainer.Reagents!)
             {
                 // Try get to the prototype for the given reagent. This gives us its name.
-                var localizedName = _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? p)
-                    ? p.LocalizedName
+                var localizedName = _chemistryRegistry.TryIndex(reagent.Prototype, out var reagentDef)
+                    ? reagentDef.Comp.LocalizedName
                     : Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text");
 
                 var nameLabel = new Label { Text = $"{localizedName}: " };

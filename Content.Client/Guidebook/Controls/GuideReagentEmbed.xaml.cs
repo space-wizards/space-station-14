@@ -5,6 +5,7 @@ using Content.Client.Guidebook.Richtext;
 using Content.Client.Message;
 using Content.Client.UserInterface.ControlExtensions;
 using Content.Shared.Body.Prototypes;
+using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
@@ -28,21 +29,23 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     private readonly ChemistryGuideDataSystem _chemistryGuideData;
+    private readonly ChemistryRegistrySystem _chemistryRegistry;
 
     public GuideReagentEmbed()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
         _chemistryGuideData = _systemManager.GetEntitySystem<ChemistryGuideDataSystem>();
+        _chemistryRegistry = _systemManager.GetEntitySystem<ChemistryRegistrySystem>();
         MouseFilter = MouseFilterMode.Stop;
     }
 
     public GuideReagentEmbed(string reagent) : this()
     {
-        GenerateControl(_prototype.Index<ReagentPrototype>(reagent));
+        GenerateControl(_chemistryRegistry.Index(reagent));
     }
 
-    public GuideReagentEmbed(ReagentPrototype reagent) : this()
+    public GuideReagentEmbed(Entity<ReagentDefinitionComponent> reagent) : this()
     {
         GenerateControl(reagent);
     }
@@ -62,13 +65,13 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
         control = null;
         if (!args.TryGetValue("Reagent", out var id))
         {
-            Logger.Error("Reagent embed tag is missing reagent prototype argument");
+            Logger.Error("Reagent embed tag is missing reagent argument");
             return false;
         }
 
-        if (!_prototype.TryIndex<ReagentPrototype>(id, out var reagent))
+        if (!_chemistryRegistry.TryIndex(id, out var reagent))
         {
-            Logger.Error($"Specified reagent prototype \"{id}\" is not a valid reagent prototype");
+            Logger.Error($"Specified reagent \"{id}\" is not a valid reagent");
             return false;
         }
 
@@ -78,27 +81,27 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
         return true;
     }
 
-    private void GenerateControl(ReagentPrototype reagent)
+    private void GenerateControl(Entity<ReagentDefinitionComponent> reagent)
     {
         NameBackground.PanelOverride = new StyleBoxFlat
         {
-            BackgroundColor = reagent.SubstanceColor
+            BackgroundColor = reagent.Comp.SubstanceColor
         };
 
-        var r = reagent.SubstanceColor.R;
-        var g = reagent.SubstanceColor.G;
-        var b = reagent.SubstanceColor.B;
+        var r = reagent.Comp.SubstanceColor.R;
+        var g = reagent.Comp.SubstanceColor.G;
+        var b = reagent.Comp.SubstanceColor.B;
 
         var textColor = 0.2126f * r + 0.7152f * g + 0.0722f * b > 0.5
             ? Color.Black
             : Color.White;
 
         ReagentName.SetMarkup(Loc.GetString("guidebook-reagent-name",
-            ("color", textColor), ("name", reagent.LocalizedName)));
+            ("color", textColor), ("name", reagent.Comp.LocalizedName)));
 
         #region Recipe
         var reactions = _prototype.EnumeratePrototypes<ReactionPrototype>()
-            .Where(p => !p.Source && p.Products.ContainsKey(reagent.ID))
+            .Where(p => !p.Source && p.Products.ContainsKey(reagent.Comp.Id))
             .OrderBy(p => p.Priority)
             .ThenBy(p => p.Products.Count)
             .ToList();
@@ -117,7 +120,7 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
         #endregion
 
         #region Effects
-        if (_chemistryGuideData.ReagentGuideRegistry.TryGetValue(reagent.ID, out var guideEntryRegistry) &&
+        if (_chemistryGuideData.ReagentGuideRegistry.TryGetValue(reagent.Comp.Id, out var guideEntryRegistry) &&
             guideEntryRegistry.GuideEntries != null &&
             guideEntryRegistry.GuideEntries.Values.Any(pair => pair.EffectDescriptions.Any()))
         {
@@ -158,7 +161,7 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
         #endregion
 
         #region PlantMetabolisms
-        if (_chemistryGuideData.ReagentGuideRegistry.TryGetValue(reagent.ID, out var guideEntryRegistryPlant) &&
+        if (_chemistryGuideData.ReagentGuideRegistry.TryGetValue(reagent.Comp.Id, out var guideEntryRegistryPlant) &&
             guideEntryRegistryPlant.PlantMetabolisms != null &&
             guideEntryRegistryPlant.PlantMetabolisms.Count > 0)
         {
@@ -193,16 +196,16 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
         GenerateSources(reagent);
 
         FormattedMessage description = new();
-        description.AddText(reagent.LocalizedDescription);
+        description.AddText(reagent.Comp.LocalizedDescription);
         description.PushNewline();
         description.AddMarkup(Loc.GetString("guidebook-reagent-physical-description",
-            ("description", reagent.LocalizedPhysicalDescription)));
+            ("description", reagent.Comp.LocalizedPhysicalDescription)));
         ReagentDescription.SetMessage(description);
     }
 
-    private void GenerateSources(ReagentPrototype reagent)
+    private void GenerateSources(Entity<ReagentDefinitionComponent> reagent)
     {
-        var sources = _chemistryGuideData.GetReagentSources(reagent.ID);
+        var sources = _chemistryGuideData.GetReagentSources(reagent.Comp.Id);
         if (sources.Count == 0)
         {
             SourcesContainer.Visible = false;

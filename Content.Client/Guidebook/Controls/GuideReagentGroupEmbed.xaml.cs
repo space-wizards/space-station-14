@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Client.Chemistry.EntitySystems;
 using Content.Client.Guidebook.Richtext;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
@@ -18,19 +19,24 @@ namespace Content.Client.Guidebook.Controls;
 public sealed partial class GuideReagentGroupEmbed : BoxContainer, IDocumentTag
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+
+    private readonly ChemistryRegistrySystem _chemistryRegistry;
 
     public GuideReagentGroupEmbed()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+        _chemistryRegistry = _entityManager.System<ChemistryRegistrySystem>();
         MouseFilter = MouseFilterMode.Stop;
     }
 
     public GuideReagentGroupEmbed(string group) : this()
     {
-        var prototypes = _prototype.EnumeratePrototypes<ReagentPrototype>()
-            .Where(p => p.Group.Equals(group)).OrderBy(p => p.LocalizedName);
-        foreach (var reagent in prototypes)
+        var reagentDefs = _chemistryRegistry.EnumerateReagents()
+            .Where(r => r.Comp.Group.Equals(group))
+            .OrderBy(r => r.Comp.LocalizedName);
+        foreach (var reagent in reagentDefs)
         {
             var embed = new GuideReagentEmbed(reagent);
             GroupContainer.AddChild(embed);
@@ -46,8 +52,9 @@ public sealed partial class GuideReagentGroupEmbed : BoxContainer, IDocumentTag
             return false;
         }
 
-        var prototypes = _prototype.EnumeratePrototypes<ReagentPrototype>()
-            .Where(p => p.Group.Equals(group)).OrderBy(p => p.LocalizedName);
+        var prototypes = _chemistryRegistry.EnumerateReagents()
+            .Where(r => r.Comp.Group.Equals(group))
+            .OrderBy(r => r.Comp.LocalizedName);
         foreach (var reagent in prototypes)
         {
             var embed = new GuideReagentEmbed(reagent);

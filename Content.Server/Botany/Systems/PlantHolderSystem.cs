@@ -2,15 +2,19 @@ using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Content.Shared.Botany;
 using Content.Shared.Burial.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
+using Content.Shared.Database;
+using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
@@ -44,6 +48,8 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ChemistryRegistrySystem _chemistryRegistry = default!;
+    [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
 
 
     public const float HydroponicsSpeedMultiplier = 1f;
@@ -869,10 +875,32 @@ public sealed class PlantHolderSystem : EntitySystem
         if (solution.Volume > 0 && component.MutationLevel < 25)
         {
             var amt = FixedPoint2.New(1);
-            foreach (var entry in _solutionContainerSystem.RemoveEachReagent(component.SoilSolution.Value, amt))
+            foreach (var quantity in _solutionContainerSystem.RemoveEachReagent(component.SoilSolution.Value, amt))
             {
-                var reagentProto = _prototype.Index<ReagentPrototype>(entry.Reagent.Prototype);
-                reagentProto.ReactionPlant(uid, entry, solution);
+                var reagentDef = _chemistryRegistry.Index(quantity.Reagent.Prototype);
+                var args = new EntityEffectReagentArgs(uid,
+                    EntityManager,
+                    null,
+                    solution,
+                    quantity.Quantity,
+                    reagentDef,
+                    null,
+                    1f);
+                foreach (var plantMetabolizable in reagentDef.Comp.PlantMetabolisms)
+                {
+                    if (!plantMetabolizable.ShouldApply(args, _random))
+                        continue;
+
+                    if (plantMetabolizable.ShouldLog)
+                    {
+                        var entity = args.TargetEntity;
+                        _adminLogSystem.Add(LogType.ReagentEffect,
+                            plantMetabolizable.LogImpact,
+                            $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent " +
+                            $"{reagentDef.Comp.Id} applied on entity {ToPrettyString(entity):entity} at {Transform(entity).Coordinates:coordinates}");
+                    }
+                    plantMetabolizable.Effect(args);
+                }
             }
         }
 

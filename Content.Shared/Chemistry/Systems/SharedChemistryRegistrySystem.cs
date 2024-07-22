@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chemistry.Components;
+﻿using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.Reagents;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -94,6 +95,25 @@ public abstract class SharedChemistryRegistrySystem : EntitySystem
         }
 
         reagent = (reagentId, reagentComp);
+        return true;
+    }
+
+    public Entity<ReagentDefinitionComponent> Index(string id)
+    {
+        if (!TryIndex(id, out var result))
+            throw new KeyNotFoundException($"{id} is not registered as a reagent!");
+        return result;
+    }
+
+    public bool TryIndex(string id, out Entity<ReagentDefinitionComponent> reagentDefinition)
+    {
+        reagentDefinition = default;
+        if (!TryEnsureRegistry(out var registry))
+            return false;
+        if (!registry.Comp.Reagents.TryGetValue(id, out var reagentId) ||
+            !_reagentDefinitionQuery.TryComp(reagentId, out var reagentComp))
+            return false;
+        reagentDefinition = (reagentId, reagentComp);
         return true;
     }
 }

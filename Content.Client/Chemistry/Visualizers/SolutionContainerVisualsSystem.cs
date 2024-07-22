@@ -1,6 +1,8 @@
+using Content.Client.Chemistry.EntitySystems;
 using Content.Client.Items.Systems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Hands;
 using Content.Shared.Item;
@@ -14,6 +16,7 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ItemSystem _itemSystem = default!;
+    [Dependency] private readonly ChemistryRegistrySystem _chemRegistry = default!;
 
     public override void Initialize()
     {
@@ -73,18 +76,17 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
                         out var baseOverride,
                         args.Component))
                 {
-                    _prototype.TryIndex<ReagentPrototype>(baseOverride, out var reagentProto);
-
-                    if (reagentProto?.MetamorphicSprite is { } sprite)
+                    if (_chemRegistry.TryIndex(baseOverride, out var reagentDef)
+                        && TryComp<ReagentMetamorphicSpriteComponent>(reagentDef, out var metamorphicSpriteComp))
                     {
-                        args.Sprite.LayerSetSprite(baseLayer, sprite);
-                        if (reagentProto.MetamorphicMaxFillLevels > 0)
+                        args.Sprite.LayerSetSprite(baseLayer, metamorphicSpriteComp.MetamorphicSprite);
+                        if (metamorphicSpriteComp.MetamorphicMaxFillLevels > 0)
                         {
                             args.Sprite.LayerSetVisible(fillLayer, true);
-                            maxFillLevels = reagentProto.MetamorphicMaxFillLevels;
-                            fillBaseName = reagentProto.MetamorphicFillBaseName;
-                            changeColor = reagentProto.MetamorphicChangeColor;
-                            fillSprite = sprite;
+                            maxFillLevels = metamorphicSpriteComp.MetamorphicMaxFillLevels;
+                            fillBaseName = metamorphicSpriteComp.MetamorphicFillBaseName;
+                            changeColor = metamorphicSpriteComp.MetamorphicChangeColor;
+                            fillSprite = metamorphicSpriteComp.MetamorphicSprite;
                         }
                         else
                             args.Sprite.LayerSetVisible(fillLayer, false);
