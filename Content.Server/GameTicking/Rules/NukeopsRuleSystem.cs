@@ -483,7 +483,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         if (!Resolve(ent, ref ent.Comp, false))
             return null;
 
-        return ent.Comp.MapGrids.Where(e => HasComp<StationMemberComponent>(e) && !HasComp<NukeOpsShuttleComponent>(e)).FirstOrNull();
+        return ent.Comp.MapGrids.Where(e => !HasComp<NukeOpsShuttleComponent>(e)).FirstOrNull();
     }
 
     /// <remarks>

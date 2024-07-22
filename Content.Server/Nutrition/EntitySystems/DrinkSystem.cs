@@ -211,6 +211,7 @@ public sealed class DrinkSystem : SharedDrinkSystem
             target: target,
             used: item)
         {
+            BreakOnHandChange = false,
             BreakOnMove = forceDrink,
             BreakOnDamage = true,
             MovementThreshold = 0.01f,
