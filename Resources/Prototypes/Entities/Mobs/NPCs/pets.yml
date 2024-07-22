@@ -146,6 +146,9 @@
   parent: MobCatCaracal
   description: He out here.
   components:
+  - type: NpcFactionMember
+    factions:
+      - PetsNT
   - type: Fixtures
     fixtures:
       fix1:

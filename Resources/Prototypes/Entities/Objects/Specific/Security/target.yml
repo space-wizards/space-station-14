@@ -123,6 +123,12 @@
     TimeUntilFactionChange: 5.0
     TimeAsFaction: 5.0
     faction: Mouse
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      40: Critical
+      60: Dead
 
 - type: entity
   name: cat tree always mouse

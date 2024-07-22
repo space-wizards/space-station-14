@@ -2702,7 +2702,7 @@
 
 - type: entity
   name: cat
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [SimpleMobBase, StripableInventoryBase, MobCombat]
   id: MobCat
   description: Feline pet, very funny.
   components:
@@ -2736,6 +2736,12 @@
   - type: Speech
     speechSounds: Cat
     speechVerb: SmallMob
+  - type: NpcFactionMember
+    addHostileFactions: 
+      - Mouse
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
   - type: Butcherable
     spawned:
     - id: FoodMeat
