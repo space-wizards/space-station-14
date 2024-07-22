@@ -37,6 +37,9 @@ public sealed class DamageOnInteractSystem : EntitySystem
     /// <param name="args">Contains the user that interacted with the entity</param>
     private void OnHandInteract(Entity<DamageOnInteractComponent> entity, ref InteractHandEvent args)
     {
+        if (!entity.Comp.IsDamageActive)
+            return;
+
         var totalDamage = entity.Comp.Damage;
 
         if (!entity.Comp.IgnoreResistances)
@@ -77,5 +80,14 @@ public sealed class DamageOnInteractSystem : EntitySystem
             if (entity.Comp.PopupText != null)
                 _popupSystem.PopupClient(Loc.GetString(entity.Comp.PopupText), args.User, args.User);
         }
+    }
+
+    public void SetIsDamageActiveTo(Entity<DamageOnInteractComponent> entity, bool mode)
+    {
+        if (entity.Comp.IsDamageActive == mode)
+            return;
+
+        entity.Comp.IsDamageActive = mode;
+        Dirty(entity);
     }
 }

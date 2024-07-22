@@ -10,13 +10,13 @@ namespace Content.Shared.Damage.Components;
 /// a hot light bulb or an anomaly. This damage can be cancelled if the user
 /// has a component that protects them from this.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DamageOnInteractComponent : Component
 {
     /// <summary>
     /// How much damage to apply to the person making contact
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public DamageSpecifier Damage = default!;
 
     /// <summary>
@@ -37,4 +37,11 @@ public sealed partial class DamageOnInteractComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier InteractSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
+
+    /// <summary>
+    /// Generic boolean to toggle the damage application on and off
+    /// This is useful for things that can be toggled on or off, like a stovetop
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool IsDamageActive = true;
 }

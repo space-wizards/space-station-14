@@ -37,6 +37,9 @@ public sealed class DamageOnAttackedSystem : EntitySystem
     /// <param name="args">Contains the user that hit the entity</param>
     private void OnAttacked(Entity<DamageOnAttackedComponent> entity, ref AttackedEvent args)
     {
+        if (!entity.Comp.IsDamageActive)
+            return;
+
         var totalDamage = entity.Comp.Damage;
 
         if (!entity.Comp.IgnoreResistances)
@@ -77,5 +80,14 @@ public sealed class DamageOnAttackedSystem : EntitySystem
                 _popupSystem.PopupClient(Loc.GetString(entity.Comp.PopupText), args.User, args.User);
 
         }
+    }
+
+    public void SetIsDamageActiveTo(Entity<DamageOnAttackedComponent> entity, bool mode)
+    {
+        if (entity.Comp.IsDamageActive == mode)
+            return;
+
+        entity.Comp.IsDamageActive = mode;
+        Dirty(entity);
     }
 }
