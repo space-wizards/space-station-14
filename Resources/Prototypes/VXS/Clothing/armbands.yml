@@ -1,0 +1,47 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckArmbandBlue
+  suffix: Blue
+  name: blue armband
+  description: Thats blue armband. You also can attach that to your helmet, ur mates will know what you are not their enemy. Yup.
+  components:
+  - type: Sprite
+    sprite: VXS/Clothing/Armbands/blue.rsi
+  - type: Clothing
+    sprite: VXS/Clothing/Armbands/blue.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckArmbandGreen
+  suffix: Green
+  name: green armband
+  description: Thats green armband. You also can attach that to your helmet, ur mates will know what you are not their enemy. Yup.
+  components:
+  - type: Sprite
+    sprite: VXS/Clothing/Armbands/green.rsi
+  - type: Clothing
+    sprite: VXS/Clothing/Armbands/green.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckArmbandRed
+  suffix: Red
+  name: red armband
+  description: Thats red armband. You also can attach that to your helmet, ur mates will know what you are not their enemy. Yup.
+  components:
+  - type: Sprite
+    sprite: VXS/Clothing/Armbands/red.rsi
+  - type: Clothing
+    sprite: VXS/Clothing/Armbands/red.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckArmbandYellow
+  suffix: Yellow
+  name: yellow armband
+  description: Thats yellow armband. You also can attach that to your helmet, ur mates will know what you are not their enemy. Yup.
+  components:
+  - type: Sprite
+    sprite: VXS/Clothing/Armbands/yellow.rsi
+  - type: Clothing
+    sprite: VXS/Clothing/Armbands/yellow.rsi
