@@ -20,8 +20,8 @@ namespace Content.Client.Chemistry.UI
 
         public void SetBounds(int min, int max)
         {
-          _min = min/100;
-          _max = max/100;
+          _min = min;
+          _max = max;
           MinimumAmount.Text = Loc.GetString("comp-solution-transfer-set-amount-min", ("amount", _min));
           MaximumAmount.Text = Loc.GetString("comp-solution-transfer-set-amount-max", ("amount", _max));
         }
