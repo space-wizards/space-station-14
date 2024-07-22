@@ -56,6 +56,17 @@
     heldPrefix: o2kit
 
 - type: entity
+  name: nitrogen deprivation treatment kit
+  description: "A box full of nitrogen goodies."
+  parent: Medkit
+  id: MedkitN2
+  components:
+  - type: Sprite
+    state: n2kit
+  - type: Item
+    heldPrefix: n2kit
+
+- type: entity
   name: brute trauma treatment kit
   description: "A first aid kit for when you get toolboxed."
   parent: Medkit
