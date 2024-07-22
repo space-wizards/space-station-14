@@ -30,7 +30,7 @@ public sealed partial class DamageOnInteractComponent : Component
     /// What kind of localized text should pop up when they interact with the entity
     /// </summary>
     [DataField]
-    public string? PopupText;
+    public LocId? PopupText;
 
     /// <summary>
     /// The sound that should be made when interacting with the entity
