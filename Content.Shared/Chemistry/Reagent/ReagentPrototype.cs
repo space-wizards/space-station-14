@@ -14,7 +14,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
 
@@ -30,6 +29,8 @@ namespace Content.Shared.Chemistry.Reagent
 
         [DataField(required: true)]
         private LocId Name { get; set; }
+
+        public LocId NameLocId => Name;
 
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedName => Loc.GetString(Name);
@@ -47,11 +48,15 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("desc", required: true)]
         private LocId Description { get; set; }
 
+        public LocId DescriptionLocId => Description;
+
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedDescription => Loc.GetString(Description);
 
         [DataField("physicalDesc", required: true)]
         private LocId PhysicalDescription { get; set; } = default!;
+
+        public LocId PhysicalDescriptionLocId => PhysicalDescription;
 
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedPhysicalDescription => Loc.GetString(PhysicalDescription);
