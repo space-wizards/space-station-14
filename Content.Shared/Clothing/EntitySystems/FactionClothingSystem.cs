@@ -18,25 +18,32 @@ public sealed class FactionClothingSystem : EntitySystem
 
         SubscribeLocalEvent<FactionClothingComponent, GotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<FactionClothingComponent, GotUnequippedEvent>(OnUnequipped);
+        SubscribeLocalEvent<FactionClothingComponent, NpcFactionSystem.TryRemoveFactionAttemptEvent>(OnTryRemoveFaction);
     }
 
     private void OnEquipped(Entity<FactionClothingComponent> ent, ref GotEquippedEvent args)
     {
-        TryComp<NpcFactionMemberComponent>(args.Equipee, out var factionComp);
+        EnsureComp<NpcFactionMemberComponent>(args.Equipee, out var factionComp);
         var faction = (args.Equipee, factionComp);
-        ent.Comp.AlreadyMember = _faction.IsMember(faction, ent.Comp.Faction);
-
         _faction.AddFaction(faction, ent.Comp.Faction);
     }
 
     private void OnUnequipped(Entity<FactionClothingComponent> ent, ref GotUnequippedEvent args)
     {
-        if (ent.Comp.AlreadyMember)
-        {
-            ent.Comp.AlreadyMember = false;
+        if (!TryComp<NpcFactionMemberComponent>(args.Equipee, out var factionComp))
             return;
+        var faction = (args.Equipee, factionComp);
+        if (!_faction.IsStartingMember(faction, ent.Comp.Faction))
+        {
+            _faction.RemoveFaction(args.Equipee, ent.Comp.Faction);
         }
+    }
 
-        _faction.RemoveFaction(args.Equipee, ent.Comp.Faction);
+    private void OnTryRemoveFaction(Entity<FactionClothingComponent> ent, ref NpcFactionSystem.TryRemoveFactionAttemptEvent args)
+    {
+        if (ent.Comp.Faction == args.Faction)
+        {
+            args.Cancel();
+        }
     }
 }

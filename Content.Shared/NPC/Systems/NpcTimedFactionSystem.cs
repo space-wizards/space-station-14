@@ -4,13 +4,12 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Shared.NPC.Prototypes;
 
-
 namespace Content.Shared.NPC.Systems;
 
 /// <summary>
 /// Handles <see cref="NpcTimedFactionComponent"/> faction adding and removal.
 /// </summary>
-public sealed partial class NpcTimedFactionSystem : EntitySystem
+public sealed class NpcTimedFactionSystem : EntitySystem
 {
     //[Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -21,8 +20,7 @@ public sealed partial class NpcTimedFactionSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<NpcTimedFactionComponent, MapInitEvent>(OnNpcTimedFactionMapInit);
-    //    SubscribeLocalEvent<NpcTimedFactionComponent, FactionChangeEvent>(OnFactionChange);
-
+        SubscribeLocalEvent<NpcTimedFactionComponent, NpcFactionSystem.TryRemoveFactionAttemptEvent>(OnTryRemoveFaction);
 
     }
 
@@ -39,23 +37,31 @@ public sealed partial class NpcTimedFactionSystem : EntitySystem
         var timedFactionQuery = EntityQueryEnumerator<NpcTimedFactionComponent>();
         while (timedFactionQuery.MoveNext(out var uid, out var component))
         {
-            if (!TryComp<NpcFactionMemberComponent>(uid, out var facComp) || facComp == null)
-                continue;
+            EnsureComp<NpcFactionMemberComponent>(uid, out var facComp);
             var faction = (uid, facComp);
 
-            if (_timing.CurTime >= component.TimeFactionChange)
+            if (_timing.CurTime > component.TimeFactionChange)
             {
-                // TODO: change the faction to faction A via event
                 _faction.AddFaction(faction, component.Faction);
                 component.TimeFactionChange = component.TimeFactionChangeBack + component.TimeUntilFactionChange;
             }
 
-            if (_timing.CurTime >= component.TimeFactionChangeBack)
+            if (_timing.CurTime > component.TimeFactionChangeBack)
             {
-                // TODO: change the faction back via event
-                _faction.RemoveFaction(faction, component.Faction);
+                if (!_faction.IsStartingMember(faction, component.Faction))
+                {
+                    _faction.RemoveFaction(faction, component.Faction);
+                }
                 component.TimeFactionChangeBack = component.TimeFactionChange + component.TimeAsFaction;
             }
+        }
+    }
+
+    private void OnTryRemoveFaction(Entity<NpcTimedFactionComponent> ent, ref NpcFactionSystem.TryRemoveFactionAttemptEvent args)
+    {
+        if (args.Faction == ent.Comp.Faction && ent.Comp.TimeFactionChangeBack <= ent.Comp.TimeFactionChange)
+        {
+            args.Cancel();
         }
     }
 }

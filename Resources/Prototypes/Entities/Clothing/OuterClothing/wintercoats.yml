@@ -540,3 +540,13 @@
           Quantity: 20
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterWeb
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterCoatCatnip
+  suffix: Admeme
+  name: winter coat laced with catnip
+  description: A heavy jacket made from 'synthetic' animal furs, sure does smell funny.
+  components:
+  - type: FactionClothing
+    faction: Mouse

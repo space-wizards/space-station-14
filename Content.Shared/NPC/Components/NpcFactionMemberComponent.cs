@@ -15,6 +15,12 @@ public sealed partial class NpcFactionMemberComponent : Component
     public HashSet<ProtoId<NpcFactionPrototype>> Factions = new();
 
     /// <summary>
+    /// Cached factions this entity was initialized with.
+    /// </summary>
+    [ViewVariables]
+    public readonly HashSet<ProtoId<NpcFactionPrototype>> StartingFactions = new();
+
+    /// <summary>
     /// Cached friendly factions.
     /// </summary>
     [ViewVariables]

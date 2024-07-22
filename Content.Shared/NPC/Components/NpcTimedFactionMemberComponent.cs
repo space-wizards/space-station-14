@@ -14,28 +14,36 @@ namespace Content.Shared.NPC.Components;
 public sealed partial class NpcTimedFactionComponent : Component
 {
     /// <summary>
-    /// How long to wait before changing the faction
+    /// When the toggled faction will be added.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
     public TimeSpan TimeFactionChange = TimeSpan.Zero;
 
     /// <summary>
-    /// How long to remain as the new faction
+    /// When the toggled faction will be removed.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
     public TimeSpan TimeFactionChangeBack = TimeSpan.Zero;
 
-
+    /// <summary>
+    /// When the next faction change will occur.
+    /// </summary>
     [DataField]
-    public TimeSpan TimeUntilFactionChange = TimeSpan.FromSeconds(300);
+    public TimeSpan TimeUntilFactionChange = TimeSpan.FromSeconds(30); // Change to 300
 
+    /// <summary>
+    /// How long to remain as the new faction.
+    /// </summary>
     [DataField]
     public TimeSpan TimeAsFaction = TimeSpan.FromSeconds(30);
 
+    /// <summary>
+    /// The faction to be toggled on and off.
+    /// </summary>
     [DataField(required: true)]
-    public ProtoId<NpcFactionPrototype> Faction = string.Empty;
+    public ProtoId<NpcFactionPrototype> Faction = "Mouse"; //string.Empty;
 }
 
 
