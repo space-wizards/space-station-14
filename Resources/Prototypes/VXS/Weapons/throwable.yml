@@ -1,0 +1,26 @@
+# Grenades
+
+- type: entity
+  name: thermobaric grenade
+  description: Hand-held thermobaric assault grenade designed for assaulting or smoking out enemy infantry from engineering structures.
+  parent: GrenadeBase
+  id: GrenadeThermobar
+  components:
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: FireBomb
+    maxIntensity: 100
+    intensitySlope: 2
+    totalIntensity: 100
+  - type: OnUseTimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 2
+  - type: Sprite
+    sprite: VXS/Weapons/Throwable/Grenades/thermobar.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
