@@ -25,6 +25,7 @@
   name: minigun
   id: WeaponMinigun
   parent: BaseWeaponHeavyMachineGun
+  suffix: DEBUG
   description: Vzzzzzt! Rahrahrahrah! Vrrrrr! Uses .10 rifle ammo.
   components:
   - type: Sprite

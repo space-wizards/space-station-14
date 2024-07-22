@@ -20,12 +20,14 @@
     - suitStorage
   - type: AmmoCounter
   - type: Gun
+    cameraRecoilScalar: 2
+    projectileSpeed: 25 # VXS
     fireRate: 2
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+      path: /Audio/VXS/Gunshots/Shotgun/shotgun2.ogg # VXS
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
@@ -68,12 +70,14 @@
   - type: AmmoCounter
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
+    cameraRecoilScalar: 2
+    projectileSpeed: 25 # VXS
     fireRate: 2
     selectedMode: FullAuto
     availableModes:
     - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+      path: /Audio/VXS/Gunshots/Shotgun/shotgun1.ogg # VXS
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: ItemSlots
@@ -192,6 +196,7 @@
     size: Small
     sprite: Objects/Weapons/Guns/Shotguns/sawn_inhands_64x.rsi
   - type: Gun
+    cameraRecoilScalar: 2
     fireRate: 4
   - type: BallisticAmmoProvider
     capacity: 2

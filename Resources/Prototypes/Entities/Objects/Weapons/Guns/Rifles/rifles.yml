@@ -16,12 +16,14 @@
     - suitStorage
   - type: AmmoCounter
   - type: Gun
+    cameraRecoilScalar: 2
+    projectileSpeed: 35 # VXS
     fireRate: 5
     selectedMode: FullAuto
     availableModes:
       - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
+      path: /Audio/VXS/Gunshots/Rifle/rifle1.ogg # VXS
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
@@ -51,7 +53,7 @@
     price: 500
 
 - type: entity
-  name: AKMS
+  name: AKM # VXS
   parent: BaseWeaponRifle
   id: WeaponRifleAk
   description: An iconic weapon of war. Uses .30 rifle ammo.
@@ -64,9 +66,11 @@
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
+    cameraRecoilScalar: 2
+    projectileSpeed: 35 # VXS
     fireRate: 5
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
+      path: /Audio/VXS/Gunshots/Rifle/rifle1.ogg # VXS
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
@@ -104,6 +108,11 @@
   id: WeaponRifleM90GrenadeLauncher
   description: An older bullpup carbine model, with an attached underbarrel grenade launcher. Uses .20 rifle ammo.
   components:
+  - type: Gun
+    cameraRecoilScalar: 1
+    projectileSpeed: 45 # VXS
+    soundGunshot:
+      path: /Audio/VXS/Gunshots/Rifle/rifle2.ogg # VXS
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
     layers:
@@ -157,8 +166,10 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
   - type: Gun
+    cameraRecoilScalar: 2
+    projectileSpeed: 45 # VXS
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
+      path: /Audio/VXS/Gunshots/Rifle/rifle3.ogg # VXS
   - type: ItemSlots
     slots:
       gun_magazine:

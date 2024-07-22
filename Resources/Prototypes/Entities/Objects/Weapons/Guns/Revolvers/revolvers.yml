@@ -23,12 +23,13 @@
     - Belt
   - type: AmmoCounter
   - type: Gun
+    projectileSpeed: 35 # VXS
     selectedMode: SemiAuto
     fireRate: 1.5
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+      path: /Audio/VXS/Gunshots/Revolver/revolver1.ogg # VXS
   - type: UseDelay
     delay: 0.66
   - type: ContainerContainer
@@ -65,6 +66,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Gun
+    projectileSpeed: 35 # VXS
     fireRate: 2
   - type: RevolverAmmoProvider
     capacity: 5
@@ -104,9 +106,10 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Gun
+    projectileSpeed: 35 # VXS
     fireRate: 3
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
+      path: /Audio/VXS/Gunshots/Revolver/revolver2.ogg # VXS
 
 - type: entity
   name: Python
@@ -119,12 +122,13 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
   - type: Gun
+    projectileSpeed: 35 # VXS
     selectedMode: SemiAuto
     fireRate: 2
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+      path: /Audio/VXS/Gunshots/Revolver/revolver1.ogg # VXS
       params:
         volume: 2.25
 

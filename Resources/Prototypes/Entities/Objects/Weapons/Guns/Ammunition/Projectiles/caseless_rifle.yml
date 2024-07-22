@@ -7,7 +7,10 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 19
+        Piercing: 13 # VXS
+        Blunt: 14 # VXS
+  - type: StaminaDamageOnCollide
+    damage: 9
 
 - type: entity
   id: BulletCaselessRiflePractice

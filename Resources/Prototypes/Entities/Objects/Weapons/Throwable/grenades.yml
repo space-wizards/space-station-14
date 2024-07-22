@@ -87,11 +87,11 @@
   components:
     - type: PointLight
       enabled: true
-      radius: 5
-      energy: 8
+      radius: 7 # VXS
+      energy: 18 # VXS
       netsync: false
     - type: LightFade
-      duration: 0.5
+      duration: 0.2 # VXS
     - type: TimedDespawn
       lifetime: 0.5
 

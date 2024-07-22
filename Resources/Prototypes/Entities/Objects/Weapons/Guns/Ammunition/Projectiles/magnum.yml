@@ -8,6 +8,9 @@
     damage:
       types:
         Piercing: 35
+        Blunt: 12 # VXS
+  - type: StaminaDamageOnCollide
+    damage: 17
 
 - type: entity
   id: BulletMagnumPractice
@@ -30,7 +33,7 @@
     damage:
       types:
         Blunt: 3
-        Heat: 32
+        Heat: 13 # VXS
 
 - type: entity
   id: BulletMagnumAP
@@ -41,8 +44,10 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 26 # 20% decrease
-    ignoreResistances: true
+        Piercing: 16 # VXS
+        Blunt: 19 # VXS
+  - type: StaminaDamageOnCollide
+    damage: 8
 
 - type: entity
   id: BulletMagnumUranium
@@ -53,5 +58,7 @@
   - type: Projectile
     damage:
       types:
-        Radiation: 15
-        Piercing: 20
+        Radiation: 1 # VXS
+        Piercing: 35 # VXS
+  - type: StaminaDamageOnCollide
+    damage: 4

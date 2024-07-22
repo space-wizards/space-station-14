@@ -19,6 +19,7 @@
     minAngle: -20
     maxAngle: -20
   - type: Gun
+    projectileSpeed: 35 # VXS
     minAngle: 24
     maxAngle: 45
     angleIncrease: 4
@@ -28,7 +29,7 @@
     availableModes:
       - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
+      path: /Audio/VXS/Gunshots/Rifle/rifle4.ogg # VXS
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
   - type: ChamberMagazineAmmoProvider
@@ -88,6 +89,7 @@
   description: A L6 SAW for use by cyborgs. Creates .30 rifle ammo on the fly from an internal ammo fabricator, which slowly self-charges.
   components:
     - type: Gun
+      projectileSpeed: 35 # VXS
       minAngle: 4
       maxAngle: 25
       angleIncrease: 4
@@ -97,7 +99,7 @@
       availableModes:
         - FullAuto
       soundGunshot:
-        path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
+        path: /Audio/VXS/Gunshots/Rifle/rifle4.ogg # VXS
       soundEmpty:
         path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
     - type: Sprite

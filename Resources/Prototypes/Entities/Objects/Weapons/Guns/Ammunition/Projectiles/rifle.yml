@@ -7,7 +7,10 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 17
+        Piercing: 28 # VXS
+        Blunt: 10 # VXS
+  - type: StaminaDamageOnCollide
+    damage: 12
 
 - type: entity
   id: BulletRiflePractice
@@ -18,7 +21,7 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 2
+        Blunt: 7
 
 - type: entity
   id: BulletRifleIncendiary
@@ -30,7 +33,7 @@
     damage:
       types:
         Blunt: 2
-        Heat: 15
+        Heat: 7
 
 - type: entity
   id: BulletRifleUranium
@@ -41,6 +44,7 @@
   - type: Projectile
     damage:
       types:
-        Radiation: 7
-        Piercing: 8
-
+        Radiation: 1
+        Piercing: 36
+  - type: StaminaDamageOnCollide
+    damage: 9

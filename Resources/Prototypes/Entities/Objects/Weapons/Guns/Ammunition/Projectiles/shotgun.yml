@@ -11,6 +11,8 @@
     damage:
       types:
         Piercing: 28
+  - type: StaminaDamageOnCollide
+    damage: 25 # VXS
 
 - type: entity
   id: PelletShotgunBeanbag
@@ -24,9 +26,9 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 10
+        Blunt: 15 # VXS
   - type: StaminaDamageOnCollide
-    damage: 40 # 3 hits to stun
+    damage: 30 # VXS
 
 - type: entity
   id: PelletShotgun
@@ -40,7 +42,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 10
+        Piercing: 7
 
 - type: entity
   id: PelletShotgunIncendiary
@@ -55,7 +57,7 @@
     damage:
       types:
         Blunt: 3
-        Heat: 7
+        Heat: 3 # VXS
   - type: IgnitionSource
     ignited: true
 
@@ -101,7 +103,7 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 1
+        Blunt: 3 # VXS
   - type: SolutionContainerManager
     solutions:
       ammo:

@@ -32,7 +32,7 @@
       - SemiAuto
       - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
+      path: /Audio/VXS/Gunshots/Pistol/pistol1.ogg # VXS
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
@@ -115,7 +115,7 @@
       - SemiAuto
       - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
+      path: /Audio/VXS/Gunshots/Pistol/pistol1.ogg # VXS
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
     layers:
@@ -157,9 +157,9 @@
   - type: Gun
     fireRate: 4
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
+      path: /Audio/VXS/Gunshots/Pistol/pistolSupressed.ogg # VXS
       params:
-        volume: -14
+        volume: -2
     availableModes:
     - SemiAuto
   - type: ItemSlots
@@ -205,7 +205,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
+      path: /Audio/VXS/Gunshots/Pistol/pistol2.ogg # VXS
 
 - type: entity
   name: N1984
@@ -231,7 +231,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
+      path: /Audio/VXS/Gunshots/Pistol/pistol2.ogg # VXS
   - type: ItemSlots
     slots:
       gun_magazine:

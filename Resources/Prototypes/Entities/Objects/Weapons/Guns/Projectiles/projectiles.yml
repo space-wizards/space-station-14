@@ -3,7 +3,7 @@
   noSpawn: true
   components:
   - type: TimedDespawn
-    lifetime: 0.4
+    lifetime: 0.1 # VXS
   - type: Sprite
     drawdepth: Effects
     layers:
