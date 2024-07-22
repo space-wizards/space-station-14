@@ -160,7 +160,6 @@
     - Write
   - type: DisarmMalus
     malus: 0
-  - type: Cauterizer
 
 - type: entity
   parent: BaseItem
