@@ -1,0 +1,19 @@
+﻿
+- type: constructionGraph
+  id: FabricScrap
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: scrap
+          steps:
+            - material: Cloth
+              amount: 2
+              doAfter: 5
+            - material: Bowl
+              amount: 1
+              doAfter: 5
+    - node: scrap
+      entity: FabricScrap
+
+
