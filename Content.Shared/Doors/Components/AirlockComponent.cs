@@ -25,33 +25,62 @@ public sealed partial class AirlockComponent : Component
     public bool EmergencyAccess = false;
 
     /// <summary>
-    /// Used to hold the state of emergency access on the door prior to a nuke.  This allows us to return to the saved state
-    /// after the nuke is disarmed.
+    /// Used to hold the state of emergency access on the door prior to a station-destroying event.  This allows us to return to the saved state
+    /// after the station-destroying threat is eliminated.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
-    public bool PreNukeEmergencyAccessState = false;
+    public bool PreDeltaAlertEmergencyAccessState = false;
 
     /// <summary>
-    ///     Time before nuke emergency access is reverted, in seconds, after a nuke is disarmed.
+    ///     Time before delta alert emergency access is reverted, in seconds, after a station-destroying threat is averted.
     /// </summary>
-    [DataField("nukeemergencytimer")]
+    [DataField("deltaemergencytimer")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public int PostNukeEmergencyAccessTimer = 10;
+    public int PostDeltaAlertEmergencyAccessTimer = 10;
 
     /// <summary>
-    ///     Time remaining until the door reverts its emergency access settings after a nuke is disarmed.
+    ///     Time remaining until the door reverts its emergency access settings after a station-destroying threat is averted.
     /// </summary>
-    [DataField("nukeemergencyaccesstimeremaining")]
+    [DataField("deltaemergencyaccesstimeremaining")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public float PostNukeRemainingEmergencyAccessTimer;
+    public float PostDeltaAlertRemainingEmergencyAccessTimer;
 
     /// <summary>
-    /// Tells us if the nuke was recently disarmed on this airlock's grid.
+    /// Tells us if the a station-destroying threat was recently averted on this airlock's grid.
     /// </summary>
-    [DataField("nukerecentlydisarmed")]
+    [DataField("deltarecentlyended")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public bool NukeRecentlyDisarmed;
+    public bool DeltaAlertRecentlyEnded;
+
+    /// <summary>
+    /// Tells us if the a station-destroying threat is currently ongoing.
+    /// </summary>
+    [DataField("deltaongoing")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool DeltaAlertOngoing;
+
+    /// <summary>
+    /// Determines how long to wait during a delta-level event before triggering emergency access.
+    /// </summary>
+    [DataField("deltaeadelaytime")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public int DeltaAlertEmergencyAccessDelayTime = 180;
+
+    /// <summary>
+    /// Timer that keeps track of how long until the door enters emergency access.
+    /// </summary>
+    [DataField("deltaeadelaytimetimer")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float DeltaAlertRemainingEmergencyAccessTimer;
+    /// <summary>
+    /// Determines if the door is currently under delta-level emergency access rules.
+    /// </summary>
+    [DataField("deltaeaenabled")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool DeltaEmergencyAccessEnabled;
+
+
 
     /// <summary>
     /// Pry modifier for a powered airlock.

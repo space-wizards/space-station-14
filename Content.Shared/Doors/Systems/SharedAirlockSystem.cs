@@ -19,10 +19,20 @@ public abstract class SharedAirlockSystem : EntitySystem
         var query = EntityQueryEnumerator<AirlockComponent>();
         while (query.MoveNext(out var uid, out var airlock))
         {
-            if (!airlock.NukeRecentlyDisarmed)
+            if (airlock.DeltaAlertOngoing)
+            {
+                airlock.DeltaAlertRemainingEmergencyAccessTimer -= frameTime;
+                if (airlock.DeltaAlertRemainingEmergencyAccessTimer <= 0 && !airlock.DeltaEmergencyAccessEnabled)
+                {
+                    SetDeltaEmergencyAccessOn(uid, airlock);
+                }
+            }
+            if (!airlock.DeltaAlertRecentlyEnded)
                 continue;
             else
-                AttemptRemoveNukeEmergencyAccess(uid, frameTime, airlock);
+            {
+                AttemptRemoveDeltaEmergencyAccess(uid, frameTime, airlock);
+            }
         }
 
     }
@@ -162,27 +172,24 @@ public abstract class SharedAirlockSystem : EntitySystem
         return component.Powered && !DoorSystem.IsBolted(uid);
     }
 
-    private void AttemptRemoveNukeEmergencyAccess(EntityUid uid, float frameTime, AirlockComponent? airlock = null)
+    private void AttemptRemoveDeltaEmergencyAccess(EntityUid uid, float frameTime, AirlockComponent? airlock = null)
     {
         if (airlock == null) return;
-        airlock.PostNukeRemainingEmergencyAccessTimer -= frameTime;
-        if (airlock.PostNukeRemainingEmergencyAccessTimer <= 0)
+        airlock.PostDeltaAlertRemainingEmergencyAccessTimer -= frameTime;
+        if (airlock.PostDeltaAlertRemainingEmergencyAccessTimer <= 0)
         {
-            ToggleEmergencyAccess(uid, airlock, airlock.PreNukeEmergencyAccessState);
+            ToggleEmergencyAccess(uid, airlock, airlock.PreDeltaAlertEmergencyAccessState);
             UpdateEmergencyLightStatus(uid, airlock);
-            airlock.NukeRecentlyDisarmed = false;
+            airlock.DeltaAlertRecentlyEnded = false;
+            airlock.DeltaEmergencyAccessEnabled = false;
         }
     }
 
-    public void NukeArm(EntityUid uid, AirlockComponent component)
+    public void SetDeltaEmergencyAccessOn(EntityUid uid, AirlockComponent component)
     {
-        component.PreNukeEmergencyAccessState = component.EmergencyAccess;
+        component.DeltaEmergencyAccessEnabled = true;
+        component.PreDeltaAlertEmergencyAccessState = component.EmergencyAccess;
         ToggleEmergencyAccess(uid, component, true);
         UpdateEmergencyLightStatus(uid, component);
-    }
-    public void NukeDisarm(EntityUid uid, AirlockComponent component)
-    {
-        component.NukeRecentlyDisarmed = true;
-        component.PostNukeRemainingEmergencyAccessTimer = component.PostNukeEmergencyAccessTimer;
     }
 }

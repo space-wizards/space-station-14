@@ -22,8 +22,6 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Content.Shared.Doors.Components;
-using Content.Shared.Doors.Systems;
 
 namespace Content.Server.Nuke;
 
@@ -298,17 +296,6 @@ public sealed class NukeSystem : EntitySystem
         {
             _sound.DispatchStationEventMusic(uid, _selectedNukeSong, StationEventMusicType.Nuke);
             nuke.PlayedNukeSong = true;
-
-            // Play a station-wide announcement indicating that all doors have had their locks disabled and urge the players to 'evacuate'.
-            var nukeXform = Transform(uid);
-            var stationUid = _station.GetStationInMap(nukeXform.MapID);
-            var announcement = Loc.GetString("nuke-component-announcement-emergencyaccess",
-                ("time", (int) nuke.RemainingTime));
-            var sender = Loc.GetString("nuke-component-announcement-sender");
-            _chatSystem.DispatchStationAnnouncement(stationUid ?? uid, announcement, sender, false, null, Color.Yellow);
-
-
-            ToggleNukeAirlockEA(stationUid, true);
         }
 
         // play alert sound if time is running out
@@ -537,7 +524,6 @@ public sealed class NukeSystem : EntitySystem
         component.Status = NukeStatus.COOLDOWN;
         component.CooldownTime = component.Cooldown;
 
-        ToggleNukeAirlockEA(stationUid, false);
         UpdateUserInterface(uid, component);
         UpdateAppearance(uid, component);
     }
@@ -645,23 +631,7 @@ public sealed class NukeSystem : EntitySystem
             args.PushMarkup(Loc.GetString("examinable-unanchored"));
     }
 
-    private void ToggleNukeAirlockEA(EntityUid? stationUid, bool nukeEnabled)
-    {
-        var enumerator = _entMan.AllEntityQueryEnumerator<AirlockComponent>();
 
-        var airlockSystem = EntityManager.System<SharedAirlockSystem>();
-        while (enumerator.MoveNext(out var airlockUid, out var airlock))
-        {
-            if (_station.GetStationInMap(Transform(airlockUid).MapID) != stationUid) continue;
-            if (!Resolve(airlockUid, ref airlock)) continue;
-
-            if (nukeEnabled)
-                airlockSystem.NukeArm(airlockUid, airlock);
-            else
-                airlockSystem.NukeDisarm(airlockUid, airlock);
-
-        }
-    }
 }
 
 public sealed class NukeExplodedEvent : EntityEventArgs
