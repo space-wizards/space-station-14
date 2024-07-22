@@ -94,6 +94,16 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         _entityManager.TryGetComponent<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
         var radioChannels = intrinsicRadio?.Channels;
 
+
+        HashSet<string>? radioChannels = intrinsicRadio?.Channels ?? new HashSet<string> { "Common" };
+        _inventory.TryGetSlotEntity(uid, "ears", out var borgRadioID);
+        EncryptionKeyHolderComponent borgRadio;
+        if (borgRadioID != null)
+        {
+            borgRadio = _entityManager.GetComponent<EncryptionKeyHolderComponent>((EntityUid) borgRadioID);
+            radioChannels.UnionWith(borgRadio.Channels);
+        }
+        // borgRadio.Channels = radioChannels ?? new HashSet<string> { "Common" };
         var state = new SiliconLawBuiState(GetLaws(uid).Laws, radioChannels);
         _userInterface.SetUiState(args.Entity, SiliconLawsUiKey.Key, state);
     }
