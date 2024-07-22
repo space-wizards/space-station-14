@@ -1,22 +1,22 @@
 using System.Text;
 using Content.Server.Discord;
-using Robust.Shared.Timing;
 using Content.Shared.Mobs.Systems;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
 using System.Collections;
+using Content.Server.GameTicking;
 
 namespace Content.Server.Chat
 {
     internal class LastMessageBeforeDeath
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
 #if DEBUG
         [Dependency] private readonly ILogManager _logManager = default!;
         private ISawmill _sawmill = default!;
 #endif
         private readonly MobStateSystem _mobStateSystem;
+        private readonly GameTicker _gameTicker;
 
         private OrderedDictionary _playerData = new OrderedDictionary();
 
@@ -35,10 +35,11 @@ namespace Content.Server.Chat
         {
             IoCManager.InjectDependencies(this);
             _mobStateSystem = IoCManager.Resolve<IEntityManager>().System<MobStateSystem>();
+            _gameTicker = IoCManager.Resolve<IEntityManager>().System<GameTicker>();
 #if DEBUG
             _sawmill = _logManager.GetSawmill("lastDeathMsgWebhook");
 #endif
-        }
+    }
 
         // Public property to get the singleton instance
         public static LastMessageBeforeDeath Instance
@@ -59,10 +60,6 @@ namespace Content.Server.Chat
         // Method to add a message for a player
         public async void AddMessage(string playerName, EntityUid player, string message)
         {
-            if (_gameTiming == null)
-            {
-                throw new InvalidOperationException("GameTiming is not initialized.");
-            }
 
             if (message.Length > MaxICLength)
             {
@@ -72,7 +69,7 @@ namespace Content.Server.Chat
                 message = message[..randomLength] + "-";
             }
 
-            var currentTime = _gameTiming.CurTime;
+            var currentTime = _gameTicker.RoundDuration();
             string truncatedTime = $"{currentTime.Hours:D2}:{currentTime.Minutes:D2}:{currentTime.Seconds:D2}";
             string formattedMessage = $"[{truncatedTime}] {playerName}: {message}";
 
