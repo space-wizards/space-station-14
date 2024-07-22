@@ -26,8 +26,6 @@ namespace Content.Server.GameTicking
 
         private WebhookIdentifier? _webhookIdentifier;
 
-        [ViewVariables]
-
         private WebhookIdentifier? _webhookIdentifierLastMessage;
 
         [ViewVariables]
