@@ -6,11 +6,11 @@ connecting-retry = Retry
 connecting-reconnect = Reconnect
 connecting-redial = Relaunch
 connecting-redial-wait = Please wait: { TOSTRING($time, "G3") }
-connecting-in-progress = Connecting to server...
+connecting-in-progress = Connecting to server
 connecting-disconnected = Disconnected from server:
-connecting-tip = Don't die!
+connecting-tip = Don't be gay
 connecting-window-tip = Tip { $numberTip }
-connecting-version = ver 0.1
+connecting-version = VXS4
 connecting-fail-reason = Failed to connect to server:
                          { $reason }
 connecting-state-NotConnecting = Not connecting
