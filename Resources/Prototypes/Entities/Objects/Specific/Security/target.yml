@@ -113,9 +113,10 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  name: cat tree
+  name: HTN timed debug cat tree
   id: TargetCatTree
   parent: TargetSyndicate
+  suffix: DEBUG
   description: A cat tree. This one is a syndicate agent.
   components:
   - type: NpcFactionMember
@@ -127,13 +128,13 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      40: Critical
-      60: Dead
+      500: Dead
 
 - type: entity
-  name: cat tree always mouse
+  name: HTN debug cat tree
   id: TargetCatTreeAlwaysMouse
   parent: TargetSyndicate
+  suffix: DEBUG
   description: A cat tree. This one is a syndicate agent.
   components:
   - type: NpcFactionMember
@@ -143,6 +144,5 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      40: Critical
-      60: Dead
+      500: Dead
 
