@@ -1938,7 +1938,7 @@
   parent: BaseAlcohol
   desc: reagent-desc-uap
   physicalDesc: reagent-physical-desc-threat
-  flavor: uap
+  flavor: radiation
   color: "#B9FF66"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/uap.rsi
@@ -1995,7 +1995,7 @@
   parent: BaseAlcohol
   desc: reagent-desc-theehorsepussy
   physicalDesc: reagent-physical-desc-volatile
-  flavor: theehorsepusssy
+  flavor: apple
   color: "#72d585"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/thee_horsepussy.rsi
