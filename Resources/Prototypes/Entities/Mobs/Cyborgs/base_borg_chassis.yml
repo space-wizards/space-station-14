@@ -222,6 +222,10 @@
     guides:
       - Cyborgs
   - type: StepTriggerImmune
+  - type: DamageOnInteractProtection
+    damageProtection:
+      types:
+        Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
 
 - type: entity
   abstract: true
