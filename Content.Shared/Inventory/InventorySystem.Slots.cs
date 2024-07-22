@@ -30,7 +30,7 @@ public partial class InventorySystem : EntitySystem
     /// <summary>
     /// Tries to find an entity in the specified slot with the specified component.
     /// </summary>
-    public bool TryGetInventoryEntity<T>(Entity<InventoryComponent?> entity, out Entity<T?> targetUid)
+    public bool TryGetInventoryEntity<T>(Entity<InventoryComponent?> entity, out Entity<T?> target)
         where T : IComponent, IClothingSlots
     {
         if (TryGetContainerSlotEnumerator(entity.Owner, out var containerSlotEnumerator))
