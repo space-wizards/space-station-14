@@ -110,14 +110,21 @@
         collection: BananiumHorn
         params:
           volume: 5
-      anomalyContactDamage:
-        types:
-          Radiation: 10
     - type: Input
       context: "human"
     - type: Bloodstream
       bloodMaxVolume: 300
       bloodReagent: Laughter
+    - type: DamageOnInteract
+      damage:
+        types:
+          Radiation: 10
+      popupText: powered-light-component-burn-hand
+    - type: DamageOnAttacked
+      damage:
+        types:
+          Radiation: 10
+      popupText: powered-light-component-burn-hand
 
 - type: entity
   name: behonker
@@ -158,9 +165,6 @@
   suffix: "Ice"
   components:
   - type: Anomaly
-    anomalyContactDamage:
-      types:
-        Cold: 10
   - type: ExplosionAnomaly
     supercriticalExplosion: Cryo
     explosionTotalIntensity: 1000
@@ -175,3 +179,13 @@
     releasedGas: 8 # Frezon. Please replace if there is a better way to specify this
     releaseOnMaxSeverity: true
     spawnRadius: 0
+  - type: DamageOnInteract
+    damage:
+      types:
+        Cold: 10
+    popupText: powered-light-component-burn-hand
+  - type: DamageOnAttacked
+    damage:
+      types:
+        Cold: 10
+    popupText: powered-light-component-burn-hand
