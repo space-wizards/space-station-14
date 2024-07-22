@@ -11,6 +11,7 @@ namespace Content.Server.Chat
     internal class LastMessageBeforeDeath
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+
 #if DEBUG
         [Dependency] private readonly ILogManager _logManager = default!;
         private ISawmill _sawmill = default!;
@@ -19,8 +20,15 @@ namespace Content.Server.Chat
 
         private OrderedDictionary _playerData = new OrderedDictionary();
 
+        // I don't think Chat needs it's own CVar file because of these two, so I'll leave them here...
+        private const int MessageDelayMilliseconds = 2000;
+        private const int MaxMessagesPerBatch = 15;
+        private const int MaxICLength = 128;
+
         private static LastMessageBeforeDeath? _instance;
         private static readonly object _lock = new object();
+
+        private static readonly Random _random = new Random();
 
         // Private constructor to prevent instantiation
         private LastMessageBeforeDeath()
@@ -54,6 +62,14 @@ namespace Content.Server.Chat
             if (_gameTiming == null)
             {
                 throw new InvalidOperationException("GameTiming is not initialized.");
+            }
+
+            if (message.Length > MaxICLength)
+            {
+                // if the message is bigger than the message length limit, we make it cut off at a random iterval.
+                // Example: Someone was giving a speech and got blown to bits.
+                int randomLength = _random.Next(1, MaxICLength);
+                message = message[..randomLength] + "-";
             }
 
             var currentTime = _gameTiming.CurTime;
@@ -103,7 +119,7 @@ namespace Content.Server.Chat
             int messageCount = 0;
             foreach (var message in messages)
             {
-                if (messageCount >= 30)
+                if (messageCount >= MaxMessagesPerBatch)
                 {
                     await Task.Delay(60000); // Wait for 1 minute
                     messageCount = 0;
@@ -111,6 +127,9 @@ namespace Content.Server.Chat
                 var payload = new WebhookPayload { Content = message };
                 var response = await discordWebhook.CreateMessage(id, payload);
                 messageCount++;
+
+                // Insert a small delay between each message
+                await Task.Delay(MessageDelayMilliseconds);
 
                 // Response still can be handled if needed.
 #if DEBUG
@@ -131,10 +150,31 @@ namespace Content.Server.Chat
         private List<string> SplitMessage(string message, int chunkSize)
         {
             var messages = new List<string>();
-            for (int i = 0; i < message.Length; i += chunkSize)
+            int start = 0;
+
+            while (start < message.Length)
             {
-                messages.Add(message.Substring(i, Math.Min(chunkSize, message.Length - i)));
+                int end = start + chunkSize;
+
+                if (end >= message.Length)
+                {
+                    messages.Add(message.Substring(start));
+                    break;
+                }
+
+                int lastNewLine = message.LastIndexOf('\n', end);
+                if (lastNewLine > start)
+                {
+                    messages.Add(message.Substring(start, lastNewLine - start));
+                    start = lastNewLine + 1;
+                }
+                else
+                {
+                    messages.Add(message.Substring(start, chunkSize));
+                    start += chunkSize;
+                }
             }
+
             return messages;
         }
 
