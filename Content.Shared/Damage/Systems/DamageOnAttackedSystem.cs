@@ -68,7 +68,7 @@ public sealed class DamageOnAttackedSystem : EntitySystem
             if (!_gameTiming.IsFirstTimePredicted || _net.IsServer)
                 return;
 
-            _audioSystem.PlayPvs(entity.Comp.InteractSound, entity);
+            _audioSystem.PlayPredicted(entity.Comp.InteractSound, entity, args.User);
 
             if (entity.Comp.PopupText != null)
                 _popupSystem.PopupClient(Loc.GetString(entity.Comp.PopupText), args.User, args.User);
