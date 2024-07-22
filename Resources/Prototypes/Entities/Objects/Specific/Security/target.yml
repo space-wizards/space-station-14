@@ -111,3 +111,32 @@
           collection: MetalBreak
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
+- type: entity
+  name: cat tree
+  id: TargetCatTree
+  parent: TargetSyndicate
+  description: A cat tree. This one is a syndicate agent.
+  components:
+  - type: NpcFactionMember
+  - type: NpcTimedFaction
+    TimeUntilFactionChange: 5.0
+    TimeAsFaction: 5.0
+    faction: Mouse
+
+- type: entity
+  name: cat tree always mouse
+  id: TargetCatTreeAlwaysMouse
+  parent: TargetSyndicate
+  description: A cat tree. This one is a syndicate agent.
+  components:
+  - type: NpcFactionMember
+    factions:
+      - Mouse
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      40: Critical
+      60: Dead
+
