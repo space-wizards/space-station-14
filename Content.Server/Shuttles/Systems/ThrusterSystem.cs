@@ -18,6 +18,7 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.Localizations;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -67,8 +68,9 @@ public sealed class ThrusterSystem : EntitySystem
                 EntityManager.TryGetComponent(uid, out TransformComponent? xform) &&
                 xform.Anchored)
             {
+                var nozzleLocalization = ContentLocalizationManager.FormatDirection(xform.LocalRotation.Opposite().ToWorldVec().GetDir()).ToLower();
                 var nozzleDir = Loc.GetString("thruster-comp-nozzle-direction",
-                    ("direction", xform.LocalRotation.Opposite().ToWorldVec().GetDir().ToString().ToLowerInvariant()));
+                    ("direction", nozzleLocalization));
 
                 args.PushMarkup(nozzleDir);
 
