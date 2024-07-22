@@ -108,12 +108,12 @@
   - type: DamageOnInteract
     damage:
       types:
-        Burn: 10
+        Heat: 10
     popupText: anomaly-component-contact-damage
   - type: DamageOnAttacked
     damage:
       types:
-        Burn: 10
+        Heat: 10
 
 - type: entity
   id: AnomalyGravity
