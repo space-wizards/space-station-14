@@ -436,3 +436,6 @@ uplink-barber-scissors-desc = A good tool to give your fellow agent a nice hairc
 
 uplink-backpack-syndicate-name = Syndicate backpack
 uplink-backpack-syndicate-desc = Lightweight explosion-proof а backpack for holding various traitor goods
+
+uplink-cameraBug-name = Camera bug
+uplink-cameraBug-desc = A portable device that allows you to view the station's cameras
