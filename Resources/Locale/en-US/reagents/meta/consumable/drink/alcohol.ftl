@@ -283,3 +283,5 @@ reagent-desc-rubberneck = A popular drink amongst those adhering to an all synth
 reagent-name-uap = U.A.P
 reagent-desc-uap = An unidentified alcoholic product...
 
+reagent-name-theehorsepussy = The Horsepussy
+reagent-desc-theehorsepussy = They are going this drink after me when i die

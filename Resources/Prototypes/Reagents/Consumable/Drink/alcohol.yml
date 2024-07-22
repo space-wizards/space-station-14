@@ -1988,3 +1988,37 @@
           type: Local
           messages: [ "uap-effect-med" ]
           probability: 0.1
+
+- type: reagent
+  id: TheeHorsepussy
+  name: reagent-name-theehorsepussy
+  parent: BaseAlcohol
+  desc: reagent-desc-theehorsepussy
+  physicalDesc: reagent-physical-desc-volatile
+  flavor: theehorsepusssy
+  color: "#72d585"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/thee_horsepussy.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15    
+     Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: 100
+        conditions:
+        - !type:ReagentThreshold
+          min: 25
+        - !type:MobStateCondition
+          mobstate: Alive
