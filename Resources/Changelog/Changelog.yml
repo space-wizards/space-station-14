@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Plykiya
   changes:
-  - message: Max amount of traitors dropped from 12 to 8.
-    type: Tweak
-  id: 6467
-  time: '2024-04-28T02:25:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27415
-- author: Plykiya
-  changes:
   - message: The emagged autolathe now has recipes for ammunition boxes and pre-filled
       magazines of every type of ammo.
     type: Add
@@ -3786,3 +3779,10 @@
   id: 6966
   time: '2024-07-22T19:32:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30252
+- author: Cojoke-dot
+  changes:
+  - message: You can now read the volume of a gas tank in its examine text
+    type: Tweak
+  id: 6967
+  time: '2024-07-22T21:41:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29771
