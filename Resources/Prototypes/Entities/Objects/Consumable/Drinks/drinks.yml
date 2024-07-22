@@ -2343,3 +2343,35 @@
     - type: Icon
       sprite: Objects/Consumable/Drinks/bloodglass.rsi
       state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkUapGlass
+  suffix: uap
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Uap
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/uap.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkTheeHorsePussyGlass
+  suffix: horsepussy
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: TheeHorsepussy
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/thee_horsepussy.rsi
+    state: icon
