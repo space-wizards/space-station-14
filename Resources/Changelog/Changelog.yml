@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: RiceMar1244
-  changes:
-  - message: Resprited the captain's antique laser pistol.
-    type: Tweak
-  id: 6465
-  time: '2024-04-27T19:08:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27037
 - author: SlamBamActionman
   changes:
   - message: Hardsuits and other helmets/hoods should no longer make you bald after
@@ -3787,3 +3780,10 @@
   id: 6964
   time: '2024-07-22T09:54:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30225
+- author: osjarw
+  changes:
+  - message: Syringes are now 0.5 seconds faster.
+    type: Tweak
+  id: 6965
+  time: '2024-07-22T10:20:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29825
