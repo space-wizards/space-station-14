@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: MilenVolf
-  changes:
-  - message: Glass Box now can be constructed and deconstructed!
-    type: Add
-  - message: Glass Box now makes an alarm sound on destruction.
-    type: Tweak
-  - message: Now Antique Laser can be put back in the Glass Box.
-    type: Fix
-  id: 6463
-  time: '2024-04-27T13:53:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25365
 - author: metalgearsloth
   changes:
   - message: Fix a lot of UI bugs.
@@ -3790,3 +3779,10 @@
   id: 6962
   time: '2024-07-22T09:17:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30060
+- author: IProduceWidgets
+  changes:
+  - message: Zookeepers can now possess Nonlethal shotguns according to spacelaw.
+    type: Tweak
+  id: 6963
+  time: '2024-07-22T09:33:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30237
