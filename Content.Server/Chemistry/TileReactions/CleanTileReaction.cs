@@ -7,6 +7,7 @@ using Content.Shared.Fluids.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using System.Linq;
+using Content.Shared.Chemistry.Components.Reagents;
 
 namespace Content.Server.Chemistry.TileReactions;
 
@@ -32,7 +33,7 @@ public sealed partial class CleanTileReaction : ITileReaction
     public string ReplacementReagent = "Water";
 
     FixedPoint2 ITileReaction.TileReact(TileRef tile,
-        ReagentPrototype reagent,
+        Entity<ReagentDefinitionComponent> reagent,
         FixedPoint2 reactVolume,
         IEntityManager entityManager)
     {
@@ -50,7 +51,8 @@ public sealed partial class CleanTileReaction : ITileReaction
                 continue;
             }
 
-            var purgeable = solutionContainerSystem.SplitSolutionWithout(puddleSolution.Value, purgeAmount, ReplacementReagent, reagent.ID);
+            var purgeable = solutionContainerSystem.SplitSolutionWithout(puddleSolution.Value, purgeAmount,
+                ReplacementReagent, reagent.Comp.Id);
 
             purgeAmount -= purgeable.Volume;
 

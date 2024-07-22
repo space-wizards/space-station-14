@@ -714,8 +714,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         for (var i = solution.Contents.Count - 1; i >= 0; i--)
         {
             var (reagent, quantity) = solution.Contents[i];
-            var proto = _chemistryRegistry.Index(reagent.Prototype);
-            var removed = proto.Comp.ReactionTile(tileRef, quantity, EntityManager);
+            var reagentDef = _chemistryRegistry.Index(reagent.Prototype);
+            var removed = _reactive.ReactionTile(tileRef, reagentDef ,quantity, EntityManager);
             if (removed <= FixedPoint2.Zero)
                 continue;
 

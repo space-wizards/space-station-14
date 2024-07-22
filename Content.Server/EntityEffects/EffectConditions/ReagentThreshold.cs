@@ -1,3 +1,5 @@
+using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
@@ -45,12 +47,15 @@ public sealed partial class ReagentThreshold : EntityEffectCondition
 
     public override string GuidebookExplanation(IPrototypeManager prototype)
     {
-        ReagentPrototype? reagentProto = null;
-        if (Reagent is not null)
-            prototype.TryIndex(Reagent, out reagentProto);
+        var reagentDisplayText = Loc.GetString("reagent-effect-condition-guidebook-this-reagent");
+        if (Reagent is not null && //TODO: don't use resolve. Possibly pass in system manager in addition to prototype manager
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChemistryRegistrySystem>().TryIndexPrototype(Reagent, out var reagentDef))
+        {
+            reagentDisplayText = reagentDef.ReagentDefinition.LocalizedName;
+        }
 
         return Loc.GetString("reagent-effect-condition-guidebook-reagent-threshold",
-            ("reagent", reagentProto?.LocalizedName ?? Loc.GetString("reagent-effect-condition-guidebook-this-reagent")),
+            ("reagent", reagentDisplayText),
             ("max", Max == FixedPoint2.MaxValue ? (float) int.MaxValue : Max.Float()),
             ("min", Min.Float()));
     }

@@ -19,7 +19,7 @@ public sealed partial class ChemCleanBloodstream : EntityEffect
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        
+
         var cleanseRate = CleanseRate;
 
         var bloodstreamSys = args.EntityManager.System<BloodstreamSystem>();
@@ -30,7 +30,7 @@ public sealed partial class ChemCleanBloodstream : EntityEffect
                 return;
 
             cleanseRate *= reagentArgs.Scale.Float();
-            bloodstreamSys.FlushChemicals(args.TargetEntity, reagentArgs.Reagent.ID, cleanseRate);
+            bloodstreamSys.FlushChemicals(args.TargetEntity, reagentArgs.Reagent.Value.Comp.Id, cleanseRate);
         }
         else
         {

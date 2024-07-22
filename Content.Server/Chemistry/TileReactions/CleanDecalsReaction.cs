@@ -6,6 +6,7 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using System.Numerics;
+using Content.Shared.Chemistry.Components.Reagents;
 
 namespace Content.Server.Chemistry.TileReactions;
 
@@ -22,7 +23,7 @@ public sealed partial class CleanDecalsReaction : ITileReaction
     public FixedPoint2 CleanCost { get; private set; } = FixedPoint2.New(0.25f);
 
     public FixedPoint2 TileReact(TileRef tile,
-        ReagentPrototype reagent,
+        Entity<ReagentDefinitionComponent> reagent,
         FixedPoint2 reactVolume,
         IEntityManager entityManager)
     {

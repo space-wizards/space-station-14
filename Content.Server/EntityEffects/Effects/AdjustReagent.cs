@@ -70,12 +70,12 @@ namespace Content.Server.EntityEffects.Effects
 
         protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         {
-            if (Reagent is not null && entSys.GetEntitySystem<ChemistryRegistrySystem>().TryIndex(Reagent, out var reagentDef))
+            if (Reagent is not null && entSys.GetEntitySystem<ChemistryRegistrySystem>().TryIndexPrototype(Reagent, out var reagentDef))
             {
                 return Loc.GetString("reagent-effect-guidebook-adjust-reagent-reagent",
                     ("chance", Probability),
                     ("deltasign", MathF.Sign(Amount.Float())),
-                    ("reagent", reagentDef.Comp.LocalizedName),
+                    ("reagent", reagentDef.ReagentDefinition.LocalizedName),
                     ("amount", MathF.Abs(Amount.Float())));
             }
             else if (Group is not null && prototype.TryIndex(Group, out MetabolismGroupPrototype? groupProto))

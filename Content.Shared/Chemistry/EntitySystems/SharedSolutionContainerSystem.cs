@@ -14,6 +14,7 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -790,9 +791,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
         }
 
-        if (!PrototypeManager.TryIndex(primaryReagent.Value.Prototype, out ReagentPrototype? primary))
+        if (!ChemistryRegistry.TryIndex(primaryReagent.Value.Prototype, out var primary))
         {
-            Log.Error($"{nameof(Solution)} could not find the prototype associated with {primaryReagent}.");
+            Log.Error($"{nameof(Solution)} could not find the reagent {primaryReagent} in the chemical registry.");
             return;
         }
 
@@ -807,26 +808,23 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                 ("wordedAmount", Loc.GetString(solution.Contents.Count == 1
                     ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"
                     : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
-                ("desc", primary.LocalizedPhysicalDescription)));
-
-            var reagentPrototypes = solution.GetReagentPrototypes(PrototypeManager);
-
+                ("desc", primary.Comp.LocalizedPhysicalDescription)));
             // Sort the reagents by amount, descending then alphabetically
-            var sortedReagentPrototypes = reagentPrototypes
+            var sortedReagentDefs =  solution.GetReagents(ChemistryRegistry)
                 .OrderByDescending(pair => pair.Value.Value)
-                .ThenBy(pair => pair.Key.LocalizedName);
+                .ThenBy(pair => pair.Key.Comp.LocalizedName);
 
             // Add descriptions of immediately recognizable reagents, like water or beer
-            var recognized = new List<ReagentPrototype>();
-            foreach (var keyValuePair in sortedReagentPrototypes)
+            var recognized = new List<Entity<ReagentDefinitionComponent>>();
+            foreach (var keyValuePair in sortedReagentDefs)
             {
-                var proto = keyValuePair.Key;
-                if (!proto.Recognizable)
+                var reagentDef = keyValuePair.Key;
+                if (!reagentDef.Comp.Recognizable)
                 {
                     continue;
                 }
 
-                recognized.Add(proto);
+                recognized.Add(reagentDef);
             }
 
             // Skip if there's nothing recognizable
@@ -852,8 +850,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                     part = "examinable-solution-recognized-next";
                 }
 
-                msg.Append(Loc.GetString(part, ("color", reagent.SubstanceColor.ToHexNoAlpha()),
-                    ("chemical", reagent.LocalizedName)));
+                msg.Append(Loc.GetString(part, ("color", reagent.Comp.SubstanceColor.ToHexNoAlpha()),
+                    ("chemical", reagent.Comp.LocalizedName)));
             }
 
             args.PushMarkup(Loc.GetString("examinable-solution-has-recognizable-chemicals",
@@ -911,19 +909,19 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         msg.AddMarkup(Loc.GetString("scannable-solution-main-text"));
 
-        var reagentPrototypes = solution.GetReagentPrototypes(PrototypeManager);
+        var reagentDefs = solution.GetReagents(ChemistryRegistry);
 
         // Sort the reagents by amount, descending then alphabetically
-        var sortedReagentPrototypes = reagentPrototypes
+        var sortedReagentPrototypes = reagentDefs
             .OrderByDescending(pair => pair.Value.Value)
-            .ThenBy(pair => pair.Key.LocalizedName);
+            .ThenBy(pair => pair.Key.Comp.LocalizedName);
 
         foreach (var (proto, quantity) in sortedReagentPrototypes)
         {
             msg.PushNewline();
             msg.AddMarkup(Loc.GetString("scannable-solution-chemical"
-                , ("type", proto.LocalizedName)
-                , ("color", proto.SubstanceColor.ToHexNoAlpha())
+                , ("type", proto.Comp.LocalizedName)
+                , ("color", proto.Comp.SubstanceColor.ToHexNoAlpha())
                 , ("amount", quantity)));
         }
 

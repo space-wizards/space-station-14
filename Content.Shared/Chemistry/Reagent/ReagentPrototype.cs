@@ -1,18 +1,16 @@
 using System.Collections.Frozen;
 using System.Linq;
 using System.Text.Json.Serialization;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
-using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.EntityEffects;
-using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
@@ -148,30 +146,15 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));
 
+        [Obsolete("Use ReactionTile() in Shared.Chemistry.ReactiveSystem instead")]
         public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume, IEntityManager entityManager)
         {
-            var removed = FixedPoint2.Zero;
-
-            if (tile.Tile.IsEmpty)
-                return removed;
-
-            foreach (var reaction in TileReactions)
-            {
-                removed += reaction.TileReact(tile, this, reactVolume - removed, entityManager);
-
-                if (removed > reactVolume)
-                    throw new Exception("Removed more than we have!");
-
-                if (removed == reactVolume)
-                    break;
-            }
-
-            return removed;
-        }
-
-        public void ReactionPlant(EntityUid? plantHolder, ReagentQuantity amount, Solution solution)
-        {
-
+            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
+            return sysMan.GetEntitySystem<ReactiveSystem>()
+                .ReactionTile(tile,
+                    sysMan.GetEntitySystem<SharedChemistryRegistrySystem>().Index(this.ID),
+                    reactVolume,
+                    entityManager);
         }
     }
 
@@ -184,15 +167,15 @@ namespace Content.Shared.Chemistry.Reagent
 
         public List<string>? PlantMetabolisms = null;
 
-        public ReagentGuideEntry(ReagentPrototype proto, IPrototypeManager prototype, IEntitySystemManager entSys)
+        public ReagentGuideEntry(ReagentDefinitionComponent reagentDef, IPrototypeManager prototype, IEntitySystemManager entSys)
         {
-            ReagentPrototype = proto.ID;
-            GuideEntries = proto.Metabolisms?
+            ReagentPrototype = reagentDef.Id;
+            GuideEntries = reagentDef.Metabolisms?
                 .Select(x => (x.Key, x.Value.MakeGuideEntry(prototype, entSys)))
                 .ToDictionary(x => x.Key, x => x.Item2);
-            if (proto.PlantMetabolisms.Count > 0)
+            if (reagentDef.PlantMetabolisms.Count > 0)
             {
-                PlantMetabolisms = new List<string> (proto.PlantMetabolisms
+                PlantMetabolisms = new List<string> (reagentDef.PlantMetabolisms
                     .Select(x => x.GuidebookEffectDescription(prototype, entSys))
                     .Where(x => x is not null)
                     .Select(x => x!)

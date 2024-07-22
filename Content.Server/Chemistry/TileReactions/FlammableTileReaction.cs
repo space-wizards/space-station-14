@@ -1,4 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -14,7 +15,7 @@ namespace Content.Server.Chemistry.TileReactions
         [DataField("temperatureMultiplier")] private float _temperatureMultiplier = 1.15f;
 
         public FixedPoint2 TileReact(TileRef tile,
-            ReagentPrototype reagent,
+            Entity<ReagentDefinitionComponent> reagent,
             FixedPoint2 reactVolume,
             IEntityManager entityManager)
         {

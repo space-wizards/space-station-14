@@ -160,8 +160,11 @@ public sealed partial class GuideReagentReaction : BoxContainer, ISearchableCont
         var i = 0;
         foreach (var (product, amount) in reagents.OrderByDescending(p => p.Value))
         {
+            if (chemRegistry.TryIndexPrototype(product, out var protoData))
+                continue;
+
             msg.AddMarkup(Loc.GetString("guidebook-reagent-recipes-reagent-display",
-                ("reagent", chemRegistry.Index(product).Comp.LocalizedName), ("ratio", amount)));
+                ("reagent", protoData.ReagentDefinition.LocalizedName), ("ratio", amount)));
             i++;
             if (i < reagentCount)
                 msg.PushNewline();

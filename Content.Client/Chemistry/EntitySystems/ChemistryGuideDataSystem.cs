@@ -58,9 +58,9 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
     {
         // this doesn't check what prototypes are being reloaded because, to be frank, we use a lot of them.
         _reagentSources.Clear();
-        foreach (var reagent in _chemistryRegistry.EnumerateReagents())
+        foreach (var reagent in _chemistryRegistry.EnumeratePrototypes())
         {
-            _reagentSources.Add(reagent.Comp.Id, new());
+            _reagentSources.Add(reagent.ReagentDefinition.Id, new());
         }
 
         foreach (var reaction in PrototypeManager.EnumeratePrototypes<ReactionPrototype>())

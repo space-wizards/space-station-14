@@ -9,6 +9,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Collections.Frozen;
 using System.Linq;
+using Content.Shared.Chemistry.Components.Reagents;
 
 
 namespace Content.Shared.Chemistry.Reaction
@@ -196,7 +197,7 @@ namespace Content.Shared.Chemistry.Reaction
             return products;
         }
 
-        private void OnReaction(Entity<SolutionComponent> soln, ReactionPrototype reaction, ReagentPrototype? reagent, FixedPoint2 unitReactions)
+        private void OnReaction(Entity<SolutionComponent> soln, ReactionPrototype reaction, Entity<ReagentDefinitionComponent>? reagent, FixedPoint2 unitReactions)
         {
             var args = new EntityEffectReagentArgs(soln, EntityManager, null, soln.Comp.Solution, unitReactions, reagent, null, 1f);
 

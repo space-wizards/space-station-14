@@ -22,8 +22,8 @@ namespace Content.Server.EntityEffects.Effects
                 if (!solutionContainerSystem.TryGetSolution(reagentArgs.TargetEntity, _solution, out var solutionContainer))
                     return;
 
-                if (solutionContainerSystem.TryAddReagent(solutionContainer.Value, reagentArgs.Reagent.ID, reagentArgs.Quantity, out var accepted))
-                    reagentArgs.Source?.RemoveReagent(reagentArgs.Reagent.ID, accepted);
+                if (solutionContainerSystem.TryAddReagent(solutionContainer.Value, reagentArgs.Reagent.Value.Comp.Id, reagentArgs.Quantity, out var accepted))
+                    reagentArgs.Source?.RemoveReagent(reagentArgs.Reagent.Value.Comp.Id, accepted);
 
                 return;
             }

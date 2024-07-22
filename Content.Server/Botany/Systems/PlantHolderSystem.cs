@@ -49,7 +49,7 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChemistryRegistrySystem _chemistryRegistry = default!;
-    [Dependency] private readonly SharedAdminLogSystem _adminLogSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogManager = default!;
 
 
     public const float HydroponicsSpeedMultiplier = 1f;
@@ -894,7 +894,7 @@ public sealed class PlantHolderSystem : EntitySystem
                     if (plantMetabolizable.ShouldLog)
                     {
                         var entity = args.TargetEntity;
-                        _adminLogSystem.Add(LogType.ReagentEffect,
+                        _adminLogManager.Add(LogType.ReagentEffect,
                             plantMetabolizable.LogImpact,
                             $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent " +
                             $"{reagentDef.Comp.Id} applied on entity {ToPrettyString(entity):entity} at {Transform(entity).Coordinates:coordinates}");

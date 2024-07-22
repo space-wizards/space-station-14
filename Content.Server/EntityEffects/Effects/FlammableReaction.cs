@@ -35,7 +35,7 @@ namespace Content.Server.EntityEffects.Effects
                 quantity = reagentArgs.Quantity.Float();
                 reagentArgs.EntityManager.System<FlammableSystem>().AdjustFireStacks(args.TargetEntity, quantity * multiplier, flammable);
                 if (reagentArgs.Reagent != null)
-                    reagentArgs.Source?.RemoveReagent(reagentArgs.Reagent.ID, reagentArgs.Quantity);
+                    reagentArgs.Source?.RemoveReagent(reagentArgs.Reagent.Value.Comp.Id, reagentArgs.Quantity);
             } else
             {
                 args.EntityManager.System<FlammableSystem>().AdjustFireStacks(args.TargetEntity, multiplier, flammable);

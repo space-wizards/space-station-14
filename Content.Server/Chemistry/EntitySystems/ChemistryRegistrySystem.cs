@@ -20,8 +20,6 @@ public sealed class ChemistryRegistrySystem : SharedChemistryRegistrySystem
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
 
-    private const float DefaultMolarMass = 18;
-
     private EntityQuery<ReactionDefinitionComponent> _reactionDefinitionQuery;
     private EntityQuery<ReagentDefinitionComponent> _reagentDefinitionQuery;
 
@@ -138,41 +136,9 @@ public sealed class ChemistryRegistrySystem : SharedChemistryRegistrySystem
         foreach (var reagentProto in _prototypes.EnumeratePrototypes<ReagentPrototype>())
         {
             var newEnt = Spawn();
-            var reagentDef = AddComp<ReagentDefinitionComponent>(newEnt);
-
-            reagentDef.Id = reagentProto.ID;
-            reagentDef.Group = reagentProto.Group;
-            reagentDef.NameLocId = reagentProto.NameLocId;
-            reagentDef.MolarMass = DefaultMolarMass;
-            reagentDef.Recognizable = reagentProto.Recognizable;
-            reagentDef.PricePerUnit = reagentProto.PricePerUnit;
-            reagentDef.Flavor = reagentProto.Flavor;
-            reagentDef.DescriptionLocId = reagentProto.DescriptionLocId;
-            reagentDef.PhysicalDescriptionLocId = reagentProto.PhysicalDescriptionLocId;
-            reagentDef.FlavorMinimum = reagentProto.FlavorMinimum;
-            reagentDef.SubstanceColor = reagentProto.SubstanceColor;
-            reagentDef.SpecificHeat = reagentProto.SpecificHeat;
-            reagentDef.BoilingPoint = reagentProto.BoilingPoint;
-            reagentDef.MeltingPoint = reagentProto.MeltingPoint;
-            reagentDef.Slippery = reagentProto.Slippery;
-            reagentDef.Fizziness = reagentProto.Fizziness;
-            reagentDef.Viscosity = reagentProto.Viscosity;
-            reagentDef.FootstepSound = reagentProto.FootstepSound;
-            reagentDef.WorksOnTheDead = reagentProto.WorksOnTheDead;
-            reagentDef.Metabolisms = reagentProto.Metabolisms;
-            reagentDef.ReactiveEffects = reagentProto.ReactiveEffects;
-            reagentDef.TileReactions = reagentProto.TileReactions;
-            reagentDef.PlantMetabolisms = reagentProto.PlantMetabolisms;
-
-            if (reagentProto.MetamorphicSprite != null)
-            {
-                var reagentMetaMorph = AddComp<ReagentMetamorphicSpriteComponent>(newEnt);
-                reagentMetaMorph.MetamorphicSprite = reagentProto.MetamorphicSprite;
-                reagentMetaMorph.MetamorphicMaxFillLevels = reagentProto.MetamorphicMaxFillLevels;
-                reagentMetaMorph.MetamorphicFillBaseName = reagentProto.MetamorphicFillBaseName;
-                reagentMetaMorph.MetamorphicChangeColor = reagentProto.MetamorphicChangeColor;
-            }
-
+            AddComp(newEnt, CreateReagentDefFromLegacyProto(reagentProto));
+            if (TryCreateReagentMetaSpriteFromLegacyProto(reagentProto, out var metaSpriteComp))
+                AddComp(newEnt, metaSpriteComp);
             _metaData.SetEntityName(newEnt, reagentProto.ID);
             _metaData.SetEntityDescription(newEnt, reagentProto.LocalizedDescription);
             _container.Insert(newEnt, container);
