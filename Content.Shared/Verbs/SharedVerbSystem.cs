@@ -170,7 +170,7 @@ namespace Content.Shared.Verbs
 
             // Perform any contact interactions
             if (verb.DoContactInteraction ?? (verb.DefaultDoContactInteraction && _interactionSystem.InRangeUnobstructed(user, target)))
-                _interactionSystem.DoContactInteraction(user, target);
+                _interactionSystem.DoContactInteraction(user, target, handContact: true);
         }
     }
 }
