@@ -1194,6 +1194,8 @@
 
 - type: reaction
   id: TheeHorsepussy
+    requiredMixerCategories:
+  - Stir
   reactants:
     Martini:
       amount: 1
