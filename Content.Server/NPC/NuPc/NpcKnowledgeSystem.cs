@@ -1,6 +1,7 @@
 using System.Runtime.InteropServices;
 using Content.Server.Administration.Managers;
 using Content.Server.Examine;
+using Content.Server.NPC.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -9,6 +10,7 @@ using Robust.Shared.Collections;
 using Robust.Shared.ComponentTrees;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
@@ -374,8 +376,30 @@ public sealed partial class NpcKnowledgeComponent : Component
     public List<INpcGoal> Goals = new();
 }
 
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class NuPcComponent : Component
 {
+    [DataField]
+    public bool Enabled = true;
 
+    /// <summary>
+    /// Cooldown for trying to get better behaviors.
+    /// </summary>
+    [DataField]
+    public TimeSpan UpdateCooldown = TimeSpan.FromSeconds(0.5);
+
+    [DataField, AutoPausedField]
+    public TimeSpan NextUpdate;
+
+    /// <summary>
+    /// Available behaviors this NPC can select from. Not ordered.
+    /// </summary>
+    [DataField(required: true)]
+    public List<ProtoId<NpcBehaviorGroupPrototype>> Behaviors = new();
+
+    /// <summary>
+    /// The behavior currently running.
+    /// </summary>
+    [DataField]
+    public NpcRunningBehavior? CurrentBehavior;
 }

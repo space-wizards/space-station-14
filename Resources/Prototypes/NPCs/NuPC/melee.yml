@@ -1,0 +1,14 @@
+- type: npcBehavior
+  id: Melee
+  preconditions:
+  - !type:RequiresGoal
+    goal: NpcCombatGoal
+  score:
+  - !type:StaticScore
+    score: 10
+  data:
+    entities:
+      target: NpcMeleeUtilityQuery
+  sequence:
+  - !type:NpcMoveTo (this wraps the component)
+  - !type:NpcMelee (this wraps the component)
