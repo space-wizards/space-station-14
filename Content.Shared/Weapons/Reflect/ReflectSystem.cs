@@ -104,6 +104,13 @@ public sealed class ReflectSystem : EntitySystem
             return false;
         }
 
+        // if the item has a designated inventory slot it has to be equipped into, for it to reflect
+        // check the user's inventory to see if the item is in the proper slot
+        if (reflect.Slots != SlotFlags.NONE &&
+            TryComp<InventoryComponent>(user, out var inventoryComp) &&
+            !_inventorySystem.TryGetInventoryEntity<ReflectComponent>((user, inventoryComp), out _))
+            return false;
+
         var rotation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2).Opposite();
         var existingVelocity = _physics.GetMapLinearVelocity(projectile, component: physics);
         var relativeVelocity = existingVelocity - _physics.GetMapLinearVelocity(user);
@@ -166,6 +173,16 @@ public sealed class ReflectSystem : EntitySystem
         if (!TryComp<ReflectComponent>(reflector, out var reflect) ||
             !_toggle.IsActivated(reflector) ||
             !_random.Prob(reflect.ReflectProb))
+        {
+            newDirection = null;
+            return false;
+        }
+
+        // if the item has a designated inventory slot it has to be equipped into, for it to reflect
+        // check the user's inventory to see if the item is in the proper slot
+        if (reflect.Slots != SlotFlags.NONE &&
+            TryComp<InventoryComponent>(user, out var inventoryComp) &&
+            !_inventorySystem.TryGetInventoryEntity<ReflectComponent>((user, inventoryComp), out _))
         {
             newDirection = null;
             return false;

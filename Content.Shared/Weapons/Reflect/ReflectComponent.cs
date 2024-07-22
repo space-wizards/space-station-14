@@ -1,3 +1,4 @@
+using Content.Shared.Inventory;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
@@ -8,25 +9,32 @@ namespace Content.Shared.Weapons.Reflect;
 /// Uses <c>ItemToggleComponent</c> to control reflection.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class ReflectComponent : Component
+public sealed partial class ReflectComponent : Component, IClothingSlots
 {
     /// <summary>
     /// What we reflect.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("reflects")]
+    [DataField]
     public ReflectType Reflects = ReflectType.Energy | ReflectType.NonEnergy;
 
     /// <summary>
     /// Probability for a projectile to be reflected.
     /// </summary>
-    [DataField("reflectProb"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float ReflectProb = 0.25f;
 
-    [DataField("spread"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public Angle Spread = Angle.FromDegrees(45);
 
-    [DataField("soundOnReflect")]
+    [DataField]
     public SoundSpecifier? SoundOnReflect = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
+
+    /// <summary>
+    /// The reflect component only works if the item is equipped
+    /// in this inventory slot
+    /// </summary>
+    [DataField]
+    public SlotFlags Slots { get; set; } = SlotFlags.NONE;
 }
 
 [Flags]
