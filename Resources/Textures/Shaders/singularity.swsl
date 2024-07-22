@@ -34,9 +34,13 @@ void fragment() {
             deformation = 0.0;
         } else {
             deformation *= (1.0 - pow(distance / maxDistance, 4.0));
-            brightnessFactor = clamp(1.0 - pow(deformation / 2.0, 4.0), 0.0, 1.0);
 
+            brightnessFactor = clamp(1.0 - pow(deformation / 16.0, 4.0), 0.0, 1.0);
             cumulativeBrightnessFactor *= brightnessFactor;
+
+            if (deformation > 1.0) {
+                deformation = sqrt(deformation);
+            }
         }
 
         finalCoords -= deformation * delta;
