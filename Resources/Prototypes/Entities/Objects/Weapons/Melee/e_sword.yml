@@ -36,19 +36,19 @@
       params:
         variation: 0.125
     activatedDamage:
-        types:
-            Slash: 15
-            Heat: 15
-            Structural: 20
+      types:
+        Slash: 15
+        Heat: 15
+        Structural: 20
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
     layers:
-      - state: e_sword
-      - state: e_sword_blade
-        color: "#FFFFFF"
-        visible: false
-        shader: unshaded
-        map: [ "blade" ]
+    - state: e_sword
+    - state: e_sword_blade
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 1
@@ -82,51 +82,50 @@
   - type: Cauterizer
 
 - type: entity
-  name: pen
+  name: energy dagger
   parent: EnergySword
-  id: EnergyDagger
-  suffix: E-Dagger
-  description: 'A dark ink pen.'
+  id: EnergyDaggerLoud
+  description: A not as loud and dangerous dagger with a beam made of pure, concentrated plasma. This one is completely undisguised.
   components:
   - type: ItemToggle
     soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
       params:
-        volume: -6
+        volume: -3
     soundDeactivate:
       path: /Audio/Weapons/ebladeoff.ogg
       params:
-        volume: -6
+        volume: -3
   - type: ItemToggleMeleeWeapon
     activatedSoundOnSwing:
       path: /Audio/Weapons/eblademiss.ogg
       params:
-        volume: -6
+        volume: -3
         variation: 0.250
     activatedDamage:
-        types:
-            Slash: 10
-            Heat: 10
+      types:
+        Slash: 10
+        Heat: 10
     deactivatedSecret: true
   - type: ItemToggleActiveSound
     activeSound:
       path: /Audio/Weapons/ebladehum.ogg
       params:
-        volume: -6
+        volume: -3
   - type: ComponentToggler
     components:
     - type: Sharp
     - type: DisarmMalus
       malus: 0.4
   - type: Sprite
-    sprite: Objects/Weapons/Melee/e_dagger.rsi
+    sprite: Objects/Weapons/Melee/e_dagger_loud.rsi
     layers:
-      - state: e_sword
-      - state: e_sword_blade
-        color: "#FFFFFF"
-        visible: false
-        shader: unshaded
-        map: [ "blade" ]
+    - state: e_sword
+    - state: e_sword_blade
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
   - type: MeleeWeapon
     wideAnimationRotation: 145
     attackRate: 1
@@ -136,7 +135,7 @@
         Blunt: 1
   - type: Item
     size: Tiny
-    sprite: Objects/Weapons/Melee/e_dagger.rsi
+    sprite: Objects/Weapons/Melee/e_dagger_loud.rsi
   - type: UseDelay
     delay: 1.0
   - type: PointLight
@@ -155,11 +154,45 @@
       right:
       - state: inhand-right-blade
         shader: unshaded
+  - type: DisarmMalus
+    malus: 0
+
+- type: entity
+  name: pen
+  parent: EnergyDaggerLoud
+  id: EnergyDagger
+  suffix: E-Dagger
+  description: 'A dark ink pen.'
+  components:
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Weapons/ebladeon.ogg
+      params:
+        volume: -6
+    soundDeactivate:
+      path: /Audio/Weapons/ebladeoff.ogg
+      params:
+        volume: -6
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+      params:
+        volume: -6
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_dagger.rsi
+    layers:
+    - state: e_sword
+    - state: e_sword_blade
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
+  - type: Item
+    size: Tiny
+    sprite: Objects/Weapons/Melee/e_dagger.rsi
   - type: Tag
     tags:
     - Write
-  - type: DisarmMalus
-    malus: 0
 
 - type: entity
   parent: BaseItem
@@ -187,19 +220,19 @@
   components:
   - type: ItemToggleMeleeWeapon
     activatedDamage:
-        types:
-            Slash: 10
-            Heat: 12
+      types:
+        Slash: 10
+        Heat: 12
     deactivatedSecret: true
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
     layers:
-      - state: e_cutlass
-      - state: e_cutlass_blade
-        color: "#e95151"
-        visible: false
-        shader: unshaded
-        map: [ "blade" ]
+    - state: e_cutlass
+    - state: e_cutlass_blade
+      color: "#e95151"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
   - type: Item
     size: Small
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
@@ -236,10 +269,10 @@
         volume: 3
         variation: 0.250
     activatedDamage:
-        types:
-            Slash: 12
-            Heat: 12
-            Structural: 15
+      types:
+        Slash: 12
+        Heat: 12
+        Structural: 15
   - type: ItemToggleActiveSound
     activeSound:
       path: /Audio/Weapons/ebladehum.ogg
@@ -262,12 +295,12 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword_double.rsi
     layers:
-      - state: e_sword_double
-      - state: e_sword_double_blade
-        color: "#FFFFFF"
-        visible: false
-        shader: unshaded
-        map: [ "blade" ]
+    - state: e_sword_double
+    - state: e_sword_double_blade
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
   - type: Item
     size: Small
     sprite: Objects/Weapons/Melee/e_sword_double-inhands.rsi
