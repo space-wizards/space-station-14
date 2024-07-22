@@ -1,0 +1,34 @@
+- type: entity
+  name: assault axe
+  parent: BaseKnife
+  id: AssaultAxe
+  description: Take the cover off a radio-controlled car, dig a trench, break down a door, open a MRE, rip open someone's skull, or chop down a tree? Very easy. And most importantly - compact!
+  components:
+  - type: Tag
+    tags:
+    - Knife
+  - type: Sprite
+    sprite: VXS/Weapons/Melee/axe.rsi
+    state: icon
+  - type: Clothing
+    sprite: VXS/Weapons/Melee/axe.rsi
+    quickEquip: true
+    slots:
+    - Belt
+  - type: MeleeWeapon
+    wideAnimationRotation: -165
+    attackRate: 1.2
+    damage:
+      types:
+        Slash: 15
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 20
+  - type: Item
+    size: Normal
+    sprite: VXS/Weapons/Melee/axe.rsi
+  - type: DisarmMalus
+    malus: 0.225
