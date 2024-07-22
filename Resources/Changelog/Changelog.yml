@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: brainfood1183
-  changes:
-  - message: Centcom advises all crewmembers to please stop putting rodents in the
-      fax machines (rodents can now be inserted into fax machine).
-    type: Add
-  id: 6462
-  time: '2024-04-27T13:50:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/21461
 - author: MilenVolf
   changes:
   - message: Glass Box now can be constructed and deconstructed!
@@ -3791,3 +3783,10 @@
   id: 6961
   time: '2024-07-22T05:38:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30088
+- author: Plykiya
+  changes:
+  - message: You can now eat or drink and swap hands without it being interrupted.
+    type: Tweak
+  id: 6962
+  time: '2024-07-22T09:17:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30060
