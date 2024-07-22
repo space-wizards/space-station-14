@@ -2,6 +2,7 @@
 using System.Numerics;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.GameTicking;
 using Content.Shared.Prototypes;
 using Robust.Shared.Network;
@@ -221,5 +222,26 @@ public sealed partial class ChemistryRegistrySystem : EntitySystem
         }
         SyncLookup();
         return true;
+    }
+
+    public Entity<ReagentDefinitionComponent> GetReagentEntity(string reagentName)
+    {
+        var ent = _reagents[reagentName];
+        return (ent, Comp<ReagentDefinitionComponent>(ent));
+    }
+
+    public Entity<ReagentDefinitionComponent> GetReagentEntity(ReagentId reagentId)
+    {
+        return GetReagentEntity(reagentId.Prototype);
+    }
+
+    public ReagentDefinitionComponent GetReagent(string reagentName)
+    {
+        return GetReagentEntity(reagentName);
+    }
+
+    public ReagentDefinitionComponent GetReagent(ReagentId reagentId)
+    {
+        return GetReagent(reagentId.Prototype);
     }
 }
