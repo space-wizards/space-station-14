@@ -9,7 +9,7 @@ namespace Content.Client.Chemistry.UI
     public sealed partial class TransferAmountWindow : DefaultWindow
     {
         private int _max = Int32.MaxValue;
-        private int _min = 0;
+        private int _min = 1;
 
         public TransferAmountWindow()
         {
