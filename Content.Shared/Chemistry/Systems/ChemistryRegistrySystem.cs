@@ -18,6 +18,8 @@ public sealed partial class ChemistryRegistrySystem : EntitySystem
     [Dependency] private readonly IComponentFactory _compFactory = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
 
+    private const float DefaultMolarMass = 18;
+
     private FrozenDictionary<string, EntityUid> _reagentLookup =
         FrozenDictionary<string, EntityUid>.Empty;
     private Dictionary<string, EntityUid> _reagents = new ();

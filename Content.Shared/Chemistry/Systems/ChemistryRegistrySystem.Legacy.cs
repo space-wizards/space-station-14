@@ -6,7 +6,6 @@ namespace Content.Shared.Chemistry.Systems;
 
 public sealed partial class ChemistryRegistrySystem
 {
-    private const float DefaultMolarMass = 18;
     private void ConvertLegacyReagentPrototypes(ref Dictionary<string, EntityUid> pendingReagents)
     {
         var i = 0;
