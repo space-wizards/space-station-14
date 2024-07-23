@@ -4,7 +4,7 @@
   id: BaseTraitorObjective
   components:
   - type: Objective
-    issuer: syndicate
+    issuer: objective-issuer-syndicate
   - type: RoleRequirement
     roles:
       components:
@@ -110,6 +110,18 @@
     # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
     # if ce flies a shittle to centcom you better find a way onto it
     requireDead: true
+
+- type: entity
+  parent: [BaseTraitorObjective, BaseKillObjective]
+  id: KillRandomTraitorObjective
+  description: Do it however you like, just make sure they don't make it to centcom.
+  components:
+  - type: Objective
+    difficulty: 1.75
+    unique: true
+  - type: TargetObjective
+    title: objective-condition-kill-person-title
+  - type: PickRandomTraitor
 
 # social
 

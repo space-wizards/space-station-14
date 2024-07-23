@@ -19,6 +19,7 @@ chat-manager-no-such-channel = There is no channel with key '{$key}'!
 chat-manager-whisper-headset-on-message = You can't whisper on the radio!
 
 chat-manager-server-wrap-message = [bold]{$message}[/bold]
+chat-manager-sender-announcement = Central Command
 chat-manager-sender-announcement-wrap-message = [font size=14][bold]{$sender} Announcement:[/font][font size=12]
                                                 {$message}[/bold][/font]
 chat-manager-entity-say-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent]{$message}[/BubbleContent]"[/font]
@@ -151,11 +152,15 @@ chat-speech-verb-electricity-1 = crackles
 chat-speech-verb-electricity-2 = buzzes
 chat-speech-verb-electricity-3 = screeches
 
+# who put so much detail into finfins speech patterns lol
 chat-speech-verb-name-finfin = Finfin
 chat-speech-verb-finfin-1 = chirps
 chat-speech-verb-finfin-2 = warbles
+chat-speech-verb-name-finfin-exclamation = Finfin Exclaiming
 chat-speech-verb-finfin-exclamation-1 = calls
 chat-speech-verb-finfin-exclamation-2 = trills
+chat-speech-verb-name-finfin-stutter = Finfin Stuttering
 chat-speech-verb-finfin-stutter-1 = falters
 chat-speech-verb-finfin-stutter-2 = squeaks
+chat-speech-verb-name-finfin-mumble = Finfin Mumbling
 chat-speech-verb-finfin-mumble-1 = quavers

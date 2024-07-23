@@ -184,6 +184,19 @@
     energy: 2
   - type: RgbLightController
     layers: [ 0 ]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bee-inhand-left
+        shader: unshaded
+      right:
+      - state: bee-inhand-right
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: bee-equipped-HELMET
+        shader: unshaded
 
 - type: entity
   parent: BasePlushie
@@ -579,6 +592,15 @@
     energy: 2
   - type: RgbLightController
     layers: [ 0 ]
+  - type: Item
+    heldPrefix: rainbowcarpplush
+    inhandVisuals:
+      left:
+      - state: rainbowcarpplush-inhand-left
+        shader: unshaded
+      right:
+      - state: rainbowcarpplush-inhand-right
+        shader: unshaded
 
 - type: entity
   parent: PlushieCarp
@@ -810,6 +832,24 @@
     useSound:
       path: /Audio/Voice/Moth/moth_chitter.ogg
 
+- type: entity
+  parent: BasePlushie
+  id: FabricScrap
+  name: fabric scrap salad
+  description: Who's clothes are these? 
+  components:
+  - type: Sprite
+    state: scrap
+
+- type: entity
+  parent: BasePlushie
+  id: Yarn
+  name: yarn noodles
+  description: Looks like someone's failed knitting project.
+  components:
+  - type: Sprite
+    state: yarn
+
 ## Cheapo Figurines
 
 - type: entity
@@ -905,6 +945,7 @@
   - type: Sprite
   - type: Item
     size: Normal
+  - type: PacifismAllowedGun
 
 - type: entity
   parent: FoamWeaponBase

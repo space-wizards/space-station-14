@@ -8,6 +8,13 @@
     TraitorObjectiveGroupSocial: 1 #Involves helping/harming others without killing them or stealing their stuff
 
 - type: weightedRandom
+  id: TraitorObjectiveGroupsSpyVsSpy # A la The Ship
+  weights:
+    SvSObjectiveGroupKill: 1
+    SvSObjectiveGroupSocial: 1
+    SvSObjectiveGroupState: 1
+
+- type: weightedRandom
   id: TraitorObjectiveGroupSteal
   weights:
     CaptainIDStealObjective: 1
@@ -30,6 +37,11 @@
     KillRandomHeadObjective: 0.25
 
 - type: weightedRandom
+  id: SvSObjectiveGroupKill
+  weights:
+   KillRandomTraitorObjective: 1
+
+- type: weightedRandom
   id: TraitorObjectiveGroupState
   weights:
     EscapeShuttleObjective: 1
@@ -37,10 +49,20 @@
     #HijackShuttleObjective: 0.02
 
 - type: weightedRandom
+  id: SvSObjectiveGroupState
+  weights:
+    EscapeShuttleObjective: 1
+
+- type: weightedRandom
   id: TraitorObjectiveGroupSocial
   weights:
     RandomTraitorAliveObjective: 1
     RandomTraitorProgressObjective: 1
+
+- type: weightedRandom
+  id: SvSObjectiveGroupSocial
+  weights:
+    RandomTraitorAliveObjective: 1
 
 #Thief groups
 - type: weightedRandom

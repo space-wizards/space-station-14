@@ -1,4 +1,4 @@
-﻿- type: cargoBounty
+- type: cargoBounty
   id: BountyArtifact
   reward: 2500
   description: bounty-description-artifact
@@ -511,6 +511,8 @@
     whitelist:
       components:
       - TemperatureProtection
+      tags:
+      - Scarf
 
 - type: cargoBounty
   id: BountyBattery

@@ -168,6 +168,7 @@
       - MopItem
       - Holoprojector
       - Mousetrap
+      - DeskBell
       - LightReplacer
       - TrashBag
       - PowerCellSmall
@@ -1175,6 +1176,7 @@
         - IngotGold30
         - IngotSilver30
         - MaterialBananium10
+        - MaterialDiamond
 
 - type: entity
   parent: OreProcessor

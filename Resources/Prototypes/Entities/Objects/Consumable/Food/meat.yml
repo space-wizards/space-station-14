@@ -683,7 +683,7 @@
   description: A slab of raw finfin. He was your best friend!
   components:
   - type: Sprite
-    state: bird
+    state: finfin
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1105,7 +1105,7 @@
     - Meat
   - type: Sprite
     layers:
-    - state: bird-cooked
+    - state: finfin-cooked
   - type: SolutionContainerManager
     solutions:
       food:

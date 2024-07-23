@@ -174,12 +174,12 @@
 
 - type: speechVerb
   id: FinfinExclamationStrong
-  name: chat-speech-verb-name-finfin-exclamation-strong
+  name: chat-speech-verb-name-finfin-exclamation
   bold: true
   speechVerbStrings:
   - chat-speech-verb-finfin-exclamation-1
   - chat-speech-verb-finfin-exclamation-2
-  
+
 - type: speechVerb
   id: FinfinStutter
   name: chat-speech-verb-name-finfin-stutter

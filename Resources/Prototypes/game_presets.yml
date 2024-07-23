@@ -103,6 +103,33 @@
     - BasicRoundstartVariation
 
 - type: gamePreset
+  id: SecretSpyVsSpy #For Admin Use: Runs SpyVsSpy but shows "Secret" in lobby.
+  alias:
+    - secretsvs
+  name: secret-title
+  description: secret-description
+  showInVote: false #Admin Use
+  rules:
+    - SpyVsSpy
+    - BasicStationEventScheduler
+    - GameRuleMeteorScheduler
+    - BasicRoundstartVariation
+
+- type: gamePreset
+  id: SpyVsSpy
+  alias:
+    - svs
+    - theship
+  name: traitor-title
+  description: traitor-description
+  showInVote: false
+  rules:
+    - SpyVsSpy
+    - BasicStationEventScheduler
+    - GameRuleMeteorScheduler
+    - BasicRoundstartVariation
+
+- type: gamePreset
   id: Deathmatch
   alias:
     - deathmatch
