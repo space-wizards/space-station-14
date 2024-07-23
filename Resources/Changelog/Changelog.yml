@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Dezzzix
-  changes:
-  - message: Added bar spoon, jigger and ice bucket
-    type: Add
-  - message: Bartender tools added in boozeomat
-    type: Add
-  - message: Jigger added in Bartender guidebook
-    type: Add
-  id: 6471
-  time: '2024-04-28T04:40:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27406
 - author: KrasnoshchekovPavel
   changes:
   - message: Included damage type/group, metabolism type/group localization for weapon
@@ -3784,3 +3773,10 @@
   id: 6970
   time: '2024-07-23T02:33:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30260
+- author: Cojoke-dot
+  changes:
+  - message: Fix one of the QSI popups
+    type: Fix
+  id: 6971
+  time: '2024-07-23T03:23:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30265
