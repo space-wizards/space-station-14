@@ -25,10 +25,7 @@ public sealed class FaxBoundUi : BoundUserInterface
     {
         base.Open();
 
-        _window = new FaxWindow();
-        _window.OpenCentered();
-
-        _window.OnClose += Close;
+        _window = this.CreateWindow<FaxWindow>();
         _window.FileButtonPressed += OnFileButtonPressed;
         _window.CopyButtonPressed += OnCopyButtonPressed;
         _window.SendButtonPressed += OnSendButtonPressed;
@@ -40,7 +37,7 @@ public sealed class FaxBoundUi : BoundUserInterface
     {
         if (_dialogIsOpen)
             return;
-            
+
         _dialogIsOpen = true;
         var filters = new FileDialogFilters(new FileDialogFilters.Group("txt"));
         await using var file = await _fileDialogManager.OpenFile(filters);
@@ -52,8 +49,27 @@ public sealed class FaxBoundUi : BoundUserInterface
         }
 
         using var reader = new StreamReader(file);
+
+        var firstLine = await reader.ReadLineAsync();
+        string? label = null;
         var content = await reader.ReadToEndAsync();
-        SendMessage(new FaxFileMessage(content[..Math.Min(content.Length, FaxFileMessageValidation.MaxContentSize)], _window.OfficePaper));
+
+        if (firstLine is { })
+        {
+            if (firstLine.StartsWith('#'))
+            {
+                label = firstLine[1..].Trim();
+            }
+            else
+            {
+                content = firstLine + "\n" + content;
+            }
+        }
+
+        SendMessage(new FaxFileMessage(
+            label?[..Math.Min(label.Length, FaxFileMessageValidation.MaxLabelSize)],
+            content[..Math.Min(content.Length, FaxFileMessageValidation.MaxContentSize)],
+            _window.OfficePaper));
     }
 
     private void OnSendButtonPressed()
@@ -84,12 +100,5 @@ public sealed class FaxBoundUi : BoundUserInterface
             return;
 
         _window.UpdateState(cast);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (disposing)
-            _window?.Dispose();
     }
 }

@@ -25,5 +25,9 @@
                 </PanelContainer>
             </ScrollContainer>
         </PanelContainer>
+        <!-- Bottom buttons for editing -->
+        <BoxContainer Name="EditButtons" Orientation="Horizontal" HorizontalAlignment="Right" Margin="6">
+            <Button Name="SaveButton" />
+        </BoxContainer>
     </BoxContainer>
 </paper:PaperWindow>

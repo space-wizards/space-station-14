@@ -11,6 +11,9 @@
     - HEAD
     unfoldedSlots:
     - MASK
+    foldedHideLayers: []
+    unfoldedHideLayers:
+    - Snout
   - type: Mask
   - type: IngestionBlocker
   - type: IdentityBlocker
@@ -22,6 +25,13 @@
     - state: icon
       map: ["foldedLayer"]
       visible: false
+  - type: Tag
+    tags:
+    - Bandana
+  - type: HideLayerClothing
+    slots:
+    - Snout
+    hideOnToggle: true
 
 - type: entity
   parent: ClothingMaskBandanaBase

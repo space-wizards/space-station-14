@@ -14,7 +14,13 @@
         maxVol: 50 # enough to make cheese in.
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
-    state: bowl
+    layers:
+    - state: bowl
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+  - type: MixableSolution
+    solution: food
   - type: DamageOnLand
     damage:
       types:
@@ -23,12 +29,16 @@
     damage:
       types:
         Blunt: 5
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill-
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Destructible
     thresholds:
     - trigger:
@@ -76,4 +86,9 @@
   description: A fancy bowl, used for SPECIAL soups and salads.
   components:
   - type: Sprite
-    state: bowl2
+    sprite: Objects/Consumable/Food/bowl.rsi
+    layers:
+    - state: bowl2
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false

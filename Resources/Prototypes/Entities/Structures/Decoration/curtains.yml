@@ -1,16 +1,13 @@
 ﻿- type: entity
-  id: HospitalCurtains
+  id: BaseCurtains
   parent: BaseStructure
   name: curtains
-  description: Contains less than 1% mercury.
+  description: Hides what others shouldn't see.
+  abstract: true
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Occluder
-  - type: Sprite
-    snapCardinals: true
-    sprite: Structures/Decoration/curtains.rsi
-    layers:
-    - state: closed
-      map: ["enum.DoorVisualLayers.Base"]
   - type: AnimationPlayer
   - type: Fixtures
     fixtures:
@@ -39,10 +36,7 @@
   - type: Appearance
   - type: Damageable
     damageContainer: Inorganic
-    damageModifierSet: Wood
-  - type: Construction
-    graph: Curtains
-    node: Curtains
+    damageModifierSet: Wood  
   - type: Destructible
     thresholds:
     - trigger:
@@ -56,20 +50,306 @@
           MaterialCloth1:
             min: 1
             max: 2
-  placement:
-    mode: SnapgridCenter
+  - type: WallMount
+    arc: 360
+        
+- type: entity
+  id: HospitalCurtains
+  parent: BaseCurtains
+  suffix: Hospital
+  description: Contains less than 1% mercury.
+  components:
+  - type: Sprite
+    snapCardinals: true
+    sprite: Structures/Decoration/Curtains/hospital.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: Curtains
+    node: Curtains
 
 - type: entity
   id: HospitalCurtainsOpen
   parent: HospitalCurtains
-  suffix: Open
+  suffix: Open, Hospital
   components:
   - type: Door
     state: Open
   - type: Occluder
     enabled: false
-  - type: Physics
-    canCollide: false
   - type: Construction
     graph: Curtains
     node: CurtainsOpen
+  - type: Physics
+    canCollide: false
+
+- type: entity
+  id: CurtainsBlack
+  parent: BaseCurtains
+  suffix: Fancy black
+  components:
+  - type: Sprite
+    snapCardinals: true
+    sprite: Structures/Decoration/Curtains/black.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: Curtains
+    node: CurtainsBlack
+
+- type: entity
+  id: CurtainsBlackOpen
+  parent: CurtainsBlack
+  suffix: Open, Fancy black
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Construction
+    graph: Curtains
+    node: CurtainsBlackOpen
+  - type: Physics
+    canCollide: false
+
+- type: entity
+  id: CurtainsBlue
+  parent: BaseCurtains
+  suffix: Fancy blue
+  components:
+  - type: Sprite
+    snapCardinals: true
+    sprite: Structures/Decoration/Curtains/blue.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: Curtains
+    node: CurtainsBlue
+
+- type: entity
+  id: CurtainsBlueOpen
+  parent: CurtainsBlue
+  suffix: Open, Fancy blue
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Construction
+    graph: Curtains
+    node: CurtainsBlueOpen
+  - type: Physics
+    canCollide: false
+
+- type: entity
+  id: CurtainsCyan
+  parent: BaseCurtains
+  suffix: Fancy cyan
+  components:
+  - type: Sprite
+    snapCardinals: true
+    sprite: Structures/Decoration/Curtains/cyan.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: Curtains
+    node: CurtainsCyan
+
+- type: entity
+  id: CurtainsCyanOpen
+  parent: CurtainsCyan
+  suffix: Open, Fancy cyan
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Construction
+    graph: Curtains
+    node: CurtainsCyanOpen
+  - type: Physics
+    canCollide: false
+
+- type: entity
+  id: CurtainsGreen
+  parent: BaseCurtains
+  suffix: Fancy green
+  components:
+  - type: Sprite
+    snapCardinals: true
+    sprite: Structures/Decoration/Curtains/green.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: Curtains
+    node: CurtainsGreen
+
+- type: entity
+  id: CurtainsGreenOpen
+  parent: CurtainsGreen
+  suffix: Open, Fancy green
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Construction
+    graph: Curtains
+    node: CurtainsGreenOpen
+  - type: Physics
+    canCollide: false
+
+- type: entity
+  id: CurtainsOrange
+  parent: BaseCurtains
+  suffix: Fancy orange
+  components:
+  - type: Sprite
+    snapCardinals: true
+    sprite: Structures/Decoration/Curtains/orange.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: Curtains
+    node: CurtainsOrange
+
+- type: entity
+  id: CurtainsOrangeOpen
+  parent: CurtainsOrange
+  suffix: Open, Fancy orange
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Construction
+    graph: Curtains
+    node: CurtainsOrangeOpen
+  - type: Physics
+    canCollide: false
+
+- type: entity
+  id: CurtainsPink
+  parent: BaseCurtains
+  suffix: Fancy pink
+  components:
+  - type: Sprite
+    snapCardinals: true
+    sprite: Structures/Decoration/Curtains/pink.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: Curtains
+    node: CurtainsPink
+
+- type: entity
+  id: CurtainsPinkOpen
+  parent: CurtainsPink
+  suffix: Open, Fancy pink
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Construction
+    graph: Curtains
+    node: CurtainsPinkOpen
+  - type: Physics
+    canCollide: false
+
+- type: entity
+  id: CurtainsPurple
+  parent: BaseCurtains
+  suffix: Fancy purple
+  components:
+  - type: Sprite
+    snapCardinals: true
+    sprite: Structures/Decoration/Curtains/purple.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: Curtains
+    node: CurtainsPurple
+
+- type: entity
+  id: CurtainsPurpleOpen
+  parent: CurtainsPurple
+  suffix: Open, Fancy purple
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Construction
+    graph: Curtains
+    node: CurtainsPurpleOpen
+  - type: Physics
+    canCollide: false
+
+- type: entity
+  id: CurtainsRed
+  parent: BaseCurtains
+  suffix: Fancy red
+  components:
+  - type: Sprite
+    snapCardinals: true
+    sprite: Structures/Decoration/Curtains/red.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: Curtains
+    node: CurtainsRed
+
+- type: entity
+  id: CurtainsRedOpen
+  parent: CurtainsRed
+  suffix: Open, Fancy red
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Construction
+    graph: Curtains
+    node: CurtainsRedOpen
+  - type: Physics
+    canCollide: false
+
+- type: entity
+  id: CurtainsWhite
+  parent: BaseCurtains
+  suffix: Fancy white
+  components:
+  - type: Sprite
+    snapCardinals: true
+    sprite: Structures/Decoration/Curtains/white.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: Curtains
+    node: CurtainsWhite
+
+- type: entity
+  id: CurtainsWhiteOpen
+  parent: CurtainsWhite
+  suffix: Open, Fancy white
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Construction
+    graph: Curtains
+    node: CurtainsWhiteOpen
+  - type: Physics
+    canCollide: false

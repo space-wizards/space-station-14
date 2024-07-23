@@ -26,6 +26,12 @@ public sealed partial class ExplosionPrototype : IPrototype
     public DamageSpecifier DamagePerIntensity = default!;
 
     /// <summary>
+    ///     Amount of firestacks to apply in addition to igniting.
+    /// </summary>
+    [DataField]
+    public float? FireStacks;
+
+    /// <summary>
     ///     This set of points, together with <see cref="_tileBreakIntensity"/> define a function that maps the
     ///     explosion intensity to a tile break chance via linear interpolation.
     /// </summary>
@@ -70,6 +76,13 @@ public sealed partial class ExplosionPrototype : IPrototype
     /// </remarks>
     [DataField("smallSoundIterationThreshold")]
     public int SmallSoundIterationThreshold = 6;
+
+    /// <summary>
+    /// How far away another explosion in the same tick can be and be combined.
+    /// Total intensity is added to the original queued explosion.
+    /// </summary>
+    [DataField]
+    public float MaxCombineDistance = 1f;
 
     [DataField("sound")]
     public SoundSpecifier Sound = new SoundCollectionSpecifier("Explosion");

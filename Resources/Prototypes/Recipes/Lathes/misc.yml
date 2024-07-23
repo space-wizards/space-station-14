@@ -8,6 +8,15 @@
     Glass: 50
 
 - type: latheRecipe
+  id: LedLightTube
+  result: LedLightTube
+  category: Lights
+  completetime: 2
+  materials:
+    Steel: 50
+    Glass: 50
+
+- type: latheRecipe
   id: SodiumLightTube
   result: SodiumLightTube
   category: Lights
@@ -28,6 +37,15 @@
 - type: latheRecipe
   id: LightBulb
   result: LightBulb
+  category: Lights
+  completetime: 2
+  materials:
+    Steel: 50
+    Glass: 50
+
+- type: latheRecipe
+  id: LedLightBulb
+  result: LedLightBulb
   category: Lights
   completetime: 2
   materials:
@@ -109,6 +127,13 @@
     Plastic: 500
 
 - type: latheRecipe
+  id: ClothingShoesBootsMoon
+  result: ClothingShoesBootsMoon
+  completetime: 2
+  materials:
+    Steel: 600
+
+- type: latheRecipe
   id: ClothingShoesBootsSpeed
   result: ClothingShoesBootsSpeed
   completetime: 2
@@ -133,8 +158,29 @@
     Plastic: 100
 
 - type: latheRecipe
+  id: FauxTileMowedAstroGrass
+  result: FloorTileItemMowedAstroGrass
+  completetime: 1
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
+  id: FauxTileJungleAstroGrass
+  result: FloorTileItemJungleAstroGrass
+  completetime: 1
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
   id: FauxTileAstroIce
   result: FloorTileItemAstroIce
+  completetime: 1
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
+  id: FauxTileAstroSnow
+  result: FloorTileItemAstroSnow
   completetime: 1
   materials:
     Plastic: 100
@@ -152,3 +198,26 @@
   completetime: 2
   materials:
     Steel: 100
+
+- type: latheRecipe
+  id: HandheldStationMap
+  result: HandheldStationMapEmpty
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 100
+
+- type: latheRecipe
+  id: ClothingHeadHatWelding
+  result: ClothingHeadHatWelding
+  completetime: 2
+  materials:
+    Steel: 400
+    Glass: 200
+
+- type: latheRecipe
+  id: ClothingHeadHatCone
+  result: ClothingHeadHatCone
+  completetime: 3
+  materials:
+    Plastic: 200

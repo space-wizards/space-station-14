@@ -49,6 +49,13 @@
   materials:
     Glass: 100
 
+- type: latheRecipe 
+  id: CustomDrinkJug 
+  result: CustomDrinkJug 
+  completetime: 2 
+  materials: 
+    Plastic: 200
+    
 - type: latheRecipe
   id: FoodPlate
   result: FoodPlate

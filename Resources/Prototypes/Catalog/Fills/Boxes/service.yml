@@ -1,0 +1,14 @@
+- type: entity
+  name: cleanades box
+  parent: BoxCardboard
+  id: BoxCleanerGrenades
+  description: A box full of cleanades.
+  components:
+  - type: StorageFill
+    contents:
+      - id: CleanerGrenade
+        amount: 4
+  - type: Sprite
+    layers:
+      - state: box
+      - state: flashbang

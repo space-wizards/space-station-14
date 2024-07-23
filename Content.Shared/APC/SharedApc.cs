@@ -65,7 +65,7 @@ namespace Content.Shared.APC
         /// Bitmask for the full state for a given APC lock indicator.
         /// </summary>
         All = (Lock),
-        
+
         /// <summary>
         /// The log 2 width in bits of the bitfields indicating the status of an APC lock indicator.
         /// Used for bit shifting operations (Mask for the state for indicator i is (All << (i << LogWidth))).
@@ -175,7 +175,7 @@ namespace Content.Shared.APC
     }
 
     [Serializable, NetSerializable]
-    public sealed class ApcBoundInterfaceState : BoundUserInterfaceState
+    public sealed class ApcBoundInterfaceState : BoundUserInterfaceState, IEquatable<ApcBoundInterfaceState>
     {
         public readonly bool MainBreaker;
         public readonly bool HasAccess;
@@ -191,6 +191,27 @@ namespace Content.Shared.APC
             ApcExternalPower = apcExternalPower;
             Charge = charge;
         }
+
+        public bool Equals(ApcBoundInterfaceState? other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return MainBreaker == other.MainBreaker &&
+                   HasAccess == other.HasAccess &&
+                   Power == other.Power &&
+                   ApcExternalPower == other.ApcExternalPower &&
+                   MathHelper.CloseTo(Charge, other.Charge);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return ReferenceEquals(this, obj) || obj is ApcBoundInterfaceState other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(MainBreaker, HasAccess, Power, (int) ApcExternalPower, Charge);
+        }
     }
 
     [Serializable, NetSerializable]
@@ -198,7 +219,7 @@ namespace Content.Shared.APC
     {
     }
 
-    public enum ApcExternalPowerState
+    public enum ApcExternalPowerState : byte
     {
         None,
         Low,
@@ -206,7 +227,7 @@ namespace Content.Shared.APC
     }
 
     [NetSerializable, Serializable]
-    public enum ApcUiKey
+    public enum ApcUiKey : byte
     {
         Key,
     }

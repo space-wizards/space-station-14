@@ -33,6 +33,24 @@
               amount: 1
             - material: MetalRod
               amount: 1
+        - to: SheetRPGlass0
+          completed:
+            - !type:SetStackCount
+              amount: 1
+          steps:
+            - material: PlasmaGlass
+              amount: 1
+            - material: MetalRod
+              amount: 1
+        - to: SheetRPGlass1
+          completed:
+            - !type:SetStackCount
+              amount: 1
+          steps:
+            - material: ReinforcedGlass
+              amount: 1
+            - material: Plasma
+              amount: 1
         - to: SheetUGlass
           completed:
             - !type:SetStackCount
@@ -54,6 +72,36 @@
             - material: MetalRod
               amount: 1
 
+        - to: SheetClockworkGlass
+          completed:
+            - !type:SetStackCount
+              amount: 1
+          steps:
+            - material: Glass
+              amount: 1
+            - material: Brass
+              amount: 1
+
+        - to: SheetRUGlass0
+          completed:
+            - !type:SetStackCount
+              amount: 1
+          steps:
+            - material: UraniumGlass
+              amount: 1
+            - material: MetalRod
+              amount: 1
+
+        - to: SheetRUGlass1
+          completed:
+            - !type:SetStackCount
+              amount: 1
+          steps:
+            - material: ReinforcedGlass
+              amount: 1
+            - material: Uranium
+              amount: 1
+
     - node: SheetGlass
       entity: SheetGlass
 
@@ -66,9 +114,23 @@
     - node: SheetRPGlass
       entity: SheetRPGlass
 
+    - node: SheetRPGlass0
+      entity: SheetRPGlass
+
+    - node: SheetRPGlass1
+      entity: SheetRPGlass
+
     - node: SheetUGlass
       entity: SheetUGlass
 
     - node: SheetRUGlass
       entity: SheetRUGlass
+      
+    - node: SheetClockworkGlass
+      entity: SheetClockworkGlass
 
+    - node: SheetRUGlass0
+      entity: SheetRUGlass
+
+    - node: SheetRUGlass1
+      entity: SheetRUGlass

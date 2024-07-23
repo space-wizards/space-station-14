@@ -21,6 +21,7 @@
     anchored: false
   - type: Physics
     bodyType: Static
+    bodyStatus: InAir
   - type: Fixtures
     fixtures:
       fix1:
@@ -47,6 +48,9 @@
   - type: EmitSoundOnSpawn
     sound:
       path: /Audio/Effects/teleport_arrival.ogg
+  - type: SecretDataAnomaly
+    randomStartSecretMin: 0
+    randomStartSecretMax: 2
 
 - type: entity
   id: AnomalyPyroclastic
@@ -86,7 +90,6 @@
     tempChange: 420
   - type: ProjectileAnomaly
     projectilePrototype: ProjectileAnomalyFireball
-    targetNonSentientChance: 0.6
     projectileSpeed: 0.5
     minProjectiles: 3
     maxProjectiles: 6
@@ -160,6 +163,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreFlesh
     coreInertPrototype: AnomalyCoreFleshInert
+    minPulseLength: 180
+    maxPulseLength: 300
   - type: Sprite
     layers:
     - state: anom5
@@ -324,7 +329,6 @@
     explosionMaxTileIntensity: 20
   - type: ProjectileAnomaly
     projectilePrototype: ProjectileIcicle
-    targetNonSentientChance: 0.1
   - type: EntitySpawnAnomaly
     entries:
     - settings:
@@ -351,6 +355,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreRock
     coreInertPrototype: AnomalyCoreRockInert
+    minPulseLength: 180
+    maxPulseLength: 300
   - type: Sprite
     layers:
     - state: anom6
@@ -441,7 +447,7 @@
     color: "#fb4747"
   - type: EntitySpawnAnomaly
     entries:
-    - settings:  
+    - settings:
         spawnOnPulse: true
         minAmount: 8
         maxAmount: 15
@@ -559,7 +565,7 @@
         maxRange: 4.5
       spawns:
       - CrystalOrange
-    - settings: 
+    - settings:
         spawnOnSuperCritical: true
         minAmount: 30
         maxAmount: 40
@@ -598,9 +604,11 @@
     color: "#6270bb"
   - type: Anomaly
     animationTime: 6
-    offset: 0.05, 0
+    offset: 0, 0
     corePrototype: AnomalyCoreFlora
     coreInertPrototype: AnomalyCoreFloraInert
+    minPulseLength: 60
+    maxPulseLength: 120
     anomalyContactDamage:
       types:
         Slash: 0
@@ -625,21 +633,21 @@
         minAmount: 2
         maxAmount: 5
         maxRange: 2
-      spawns: 
+      spawns:
       - KudzuFlowerFriendly
     - settings:
         spawnOnSuperCritical: true
         minAmount: 5
         maxAmount: 10
         maxRange: 6
-      spawns: 
+      spawns:
       - KudzuFlowerAngry
 
 - type: entity
   id: AnomalyFloraBulb
   name: strange glowing berry
   parent: BaseStructure
-  description: It's a beautiful strange glowing berry. It seems to have something growing inside it... 
+  description: It's a beautiful strange glowing berry. It seems to have something growing inside it...
   suffix: Flora Anomaly
   components:
   - type: Transform
@@ -705,6 +713,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreLiquid
     coreInertPrototype: AnomalyCoreLiquidInert
+    minPulseLength: 60
+    maxPulseLength: 120
     anomalyContactDamage:
       types:
         Slash: 1
@@ -765,7 +775,6 @@
     - Desoxyephedrine
     - Ephedrine
     - THC
-    - THCOil
     - SpaceDrugs
     - Nocturine
     - MuteToxin
@@ -779,6 +788,7 @@
     - CogChamp
     - Honk
     - Carpetium
+    - JuiceThatMakesYouWeh
   - type: Drink
     solution: anomaly
   - type: DrainableSolution
@@ -796,7 +806,7 @@
   id: AnomalyShadow
   parent: BaseAnomaly
   suffix: Shadow
-  components:  
+  components:
   - type: Sprite
     sprite: Structures/Specific/Anomalies/shadow_anom.rsi
     layers:
@@ -817,6 +827,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreShadow
     coreInertPrototype: AnomalyCoreShadowInert
+    minPulseLength: 60
+    maxPulseLength: 120
     anomalyContactDamage:
       types:
         Cold: 10
@@ -830,14 +842,14 @@
         minAmount: 10
         maxAmount: 20
         maxRange: 4
-      spawns: 
+      spawns:
       - ShadowKudzuWeak
     - settings:
         spawnOnSuperCritical: true
         minAmount: 30
         maxAmount: 40
         maxRange: 50
-      spawns: 
+      spawns:
       - ShadowKudzu
   - type: Portal
     arrivalSound: /Audio/Items/hiss.ogg

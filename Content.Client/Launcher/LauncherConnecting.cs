@@ -54,6 +54,7 @@ namespace Content.Client.Launcher
         public event Action<Page>? PageChanged;
         public event Action<string?>? ConnectFailReasonChanged;
         public event Action<ClientConnectionState>? ConnectionStateChanged;
+        public event Action<NetConnectFailArgs>? ConnectFailed;
 
         protected override void Startup()
         {
@@ -85,6 +86,7 @@ namespace Content.Client.Launcher
             }
             ConnectFailReason = args.Reason;
             CurrentPage = Page.ConnectFailed;
+            ConnectFailed?.Invoke(args);
         }
 
         private void OnConnectStateChanged(ClientConnectionState state)

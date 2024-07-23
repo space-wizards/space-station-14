@@ -1,5 +1,5 @@
 - type: entity
-  id: Intercom
+  id: BaseIntercom
   name: intercom
   description: An intercom. For when the station just needs to know something.
   abstract: true
@@ -9,6 +9,10 @@
   - type: Electrified
     enabled: false
     usesApcPower: true
+  - type: TelecomExempt
+  - type: EncryptionKeyHolder
+    keySlots: 3
+    keysExtractionMethod: Prying
   - type: RadioMicrophone
     powerRequired: true
     unobstructedRequired: true
@@ -24,12 +28,14 @@
   - type: InteractionOutline
   - type: Appearance
   - type: WiresVisuals
+  - type: WiresPanelSecurity
   - type: ContainerFill
     containers:
       board: [ IntercomElectronics ]
   - type: ContainerContainer
     containers:
       board: !type:Container
+      key_slots: !type:Container
   - type: Sprite
     noRot: false
     drawdepth: SmallObjects
@@ -49,7 +55,6 @@
       visible: false
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-      shader: unshaded
       visible: false
   - type: Transform
     noRot: false
@@ -61,11 +66,12 @@
   - type: ActivatableUIRequiresPower
   - type: ActivatableUI
     key: enum.IntercomUiKey.Key
+    singleUser: true
   - type: UserInterface
     interfaces:
-      - key: enum.IntercomUiKey.Key
+      enum.IntercomUiKey.Key:
         type: IntercomBoundUserInterface
-      - key: enum.WiresUiKey.Key
+      enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Construction
     graph: Intercom
@@ -116,7 +122,7 @@
     - Wallmount
 
 - type: entity
-  id: IntercomAssesmbly
+  id: IntercomAssembly
   name: intercom assembly
   description: An intercom. It doesn't seem very helpful right now.
   components:
@@ -126,7 +132,18 @@
   - type: Sprite
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/intercom.rsi
-    state: build
+    layers:
+    - state: build
+    - state: panel
+      visible: false
+      map: [ "wires" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Layer:
+        wires:
+          0: { visible: false }
+          1: { visible: true }
   - type: Construction
     graph: Intercom
     node: assembly
@@ -137,97 +154,176 @@
     snap:
     - Wallmount
 
+# this weird inheritance BS exists for construction shitcode
+- type: entity
+  id: IntercomConstructed
+  parent: BaseIntercom
+  suffix: Empty, Panel Open
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+    - state: broadcasting
+      map: ["enum.RadioDeviceVisualLayers.Broadcasting"]
+      shader: unshaded
+      visible: false
+    - state: speaker
+      map: ["enum.RadioDeviceVisualLayers.Speaker"]
+      shader: unshaded
+      visible: false
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      visible: true
+  - type: WiresPanel
+    open: true
+
+- type: entity
+  id: Intercom
+  parent: IntercomConstructed
+  suffix: ""
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+    - state: broadcasting
+      map: ["enum.RadioDeviceVisualLayers.Broadcasting"]
+      shader: unshaded
+      visible: false
+    - state: speaker
+      map: ["enum.RadioDeviceVisualLayers.Speaker"]
+      shader: unshaded
+      visible: false
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: WiresPanel
+    open: false
+
 - type: entity
   id: IntercomCommon
   parent: Intercom
   suffix: Common
   components:
-  - type: Intercom
-    supportedChannels:
-    - Common
+  - type: ContainerFill
+    containers:
+      board:
+      - IntercomElectronics
+      key_slots:
+      - EncryptionKeyCommon
 
 - type: entity
   id: IntercomCommand
   parent: Intercom
   suffix: Command
   components:
-  - type: Intercom
-    supportedChannels:
-    - Common
-    - Command
+  - type: ContainerFill
+    containers:
+      board:
+      - IntercomElectronics
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyCommand
 
 - type: entity
   id: IntercomEngineering
   parent: Intercom
   suffix: Engineering
   components:
-  - type: Intercom
-    supportedChannels:
-    - Common
-    - Engineering
+  - type: ContainerFill
+    containers:
+      board:
+      - IntercomElectronics
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyEngineering
 
 - type: entity
   id: IntercomMedical
   parent: Intercom
   suffix: Medical
   components:
-  - type: Intercom
-    supportedChannels:
-    - Common
-    - Medical
+  - type: ContainerFill
+    containers:
+      board:
+      - IntercomElectronics
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyMedical
 
 - type: entity
   id: IntercomScience
   parent: Intercom
   suffix: Science
   components:
-  - type: Intercom
-    supportedChannels:
-    - Common
-    - Science
+  - type: ContainerFill
+    containers:
+      board:
+      - IntercomElectronics
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyScience
 
 - type: entity
   id: IntercomSecurity
   parent: Intercom
   suffix: Security
+  description: An intercom. It's been reinforced with metal from security helmets, making it a bitch-and-a-half to open.
   components:
-  - type: Intercom
-    supportedChannels:
-    - Common
-    - Security
+  - type: WiresPanel
+    openDelay: 5
+  - type: WiresPanelSecurity
+    examine: wires-panel-component-on-examine-security-level2
+    wiresAccessible: false
+  - type: Construction
+    node: intercomReinforced
+  - type: ContainerFill
+    containers:
+      board:
+      - IntercomElectronics
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeySecurity
 
 - type: entity
   id: IntercomService
   parent: Intercom
   suffix: Service
   components:
-  - type: Intercom
-    supportedChannels:
-    - Common
-    - Service
+  - type: ContainerFill
+    containers:
+      board:
+      - IntercomElectronics
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyService
 
 - type: entity
   id: IntercomSupply
   parent: Intercom
   suffix: Supply
   components:
-  - type: Intercom
-    supportedChannels:
-    - Common
-    - Supply
+  - type: ContainerFill
+    containers:
+      board:
+      - IntercomElectronics
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyCargo
 
 - type: entity
   id: IntercomAll
   parent: Intercom
   suffix: All
   components:
-  - type: Intercom
-    supportedChannels:
-    - Common
-    - Command
-    - Engineering
-    - Medical
-    - Science
-    - Security
-    - Service
-    - Supply
+  - type: ContainerFill
+    containers:
+      board:
+      - IntercomElectronics
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyStationMaster

@@ -12,13 +12,17 @@
   - type: EyeProtection
   - type: PhysicalComposition
     materialComposition:
-      Steel: 500
+      Steel: 200
       Glass: 100
   - type: StaticPrice
     price: 50
   - type: Tag
     tags:
     - WhitelistChameleon
+    - WeldingMask
+  - type: HideLayerClothing
+    slots:
+    - Snout
 
 - type: entity
   parent: WeldingMaskBase
@@ -34,6 +38,7 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+    - WeldingMask
 
 - type: entity
   parent: WeldingMaskBase

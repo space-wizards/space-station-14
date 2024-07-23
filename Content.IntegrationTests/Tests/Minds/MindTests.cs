@@ -341,7 +341,6 @@ public sealed partial class MindTests
         var playerMan = server.ResolveDependency<IPlayerManager>();
 
         var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
-        var ghostSystem = entMan.EntitySysManager.GetEntitySystem<GhostSystem>();
 
         EntityUid entity = default!;
         EntityUid mindId = default!;
@@ -381,7 +380,7 @@ public sealed partial class MindTests
 
             mob = entMan.SpawnEntity(null, new MapCoordinates());
 
-            MakeSentientCommand.MakeSentient(mob, IoCManager.Resolve<IEntityManager>());
+            MakeSentientCommand.MakeSentient(mob, entMan);
             mobMindId = mindSystem.CreateMind(player.UserId, "Mindy McThinker the Second");
             mobMind = entMan.GetComponent<MindComponent>(mobMindId);
 

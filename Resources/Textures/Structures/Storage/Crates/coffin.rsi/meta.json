@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/32c8d0abc573d7370eb145d8ce74176d59b7eea3",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/32c8d0abc573d7370eb145d8ce74176d59b7eea3. Label sprites by Vermidia.",
   "size": {
     "x": 32,
     "y": 32
@@ -15,6 +15,18 @@
     },
     {
       "name": "closed"
+    },
+    {
+      "name": "paper"
+    },
+    {
+      "name": "bounty"
+    },
+    {
+      "name": "captains_paper"
+    },
+    {
+      "name": "invoice"
     }
   ]
 }

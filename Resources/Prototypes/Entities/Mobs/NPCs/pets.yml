@@ -182,7 +182,7 @@
 
 - type: entity
   name: Bingus
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, StripableInventoryBase]
   id: MobBingus
   description: Bingus my beloved...
   components:
@@ -207,12 +207,6 @@
   - type: Inventory
     speciesId: cat
     templateId: pet
-  - type: InventorySlots
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -245,7 +239,7 @@
 
 - type: entity
   name: McGriff
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, StripableInventoryBase]
   id: MobMcGriff
   description: This dog can tell something smells around here, and that something is CRIME!
   components:
@@ -270,12 +264,6 @@
   - type: Inventory
     speciesId: puppy
     templateId: pet
-  - type: InventorySlots
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -344,7 +332,7 @@
 
 - type: entity
   name: Walter
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, StripableInventoryBase]
   id: MobWalter
   description: He likes chems and treats. Walter.
   components:
@@ -369,12 +357,6 @@
   - type: Inventory
     speciesId: dog
     templateId: pet
-  - type: InventorySlots
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -529,7 +511,7 @@
     interactFailureString: petting-failure-generic
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
-      path: /Audio/Animals/fox_squeak.ogg
+      collection: Fox
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -572,6 +554,7 @@
     allowMovement: true
     name: ghost-role-information-hamlet-name
     description: ghost-role-information-hamlet-description
+    rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
   - type: InteractionPopup
     successChance: 1
@@ -593,8 +576,7 @@
     - CannotSuicide
     - Hamster
     - VimPilot
-  - type: StealTarget
-    stealGroup: AnimalHamlet
+    - ChefPilot
 
 - type: entity
   name: Shiva
@@ -687,6 +669,7 @@
     prob: 0.25
     name: ghost-role-information-willow-name
     description: ghost-role-information-willow-description
+    rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [ BoxingKangarooGear ]
@@ -747,6 +730,9 @@
       types:
         Blunt: 1
         Caustic: 1
+  - type: MultiHandedItem
+  - type: Item
+    size: Huge
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-slime
   - type: MobPrice
@@ -754,12 +740,11 @@
   - type: GhostRole
     name: ghost-role-information-smile-name
     description: ghost-role-information-smile-description
+    rules: ghost-role-information-nonantagonist-rules
   - type: Grammar
     attributes:
       proper: true
       gender: female
-  - type: StealTarget
-    stealGroup: AnimalSmile
 
 - type: entity
   name: Pun Pun
@@ -774,6 +759,7 @@
     allowMovement: true
     name: ghost-role-information-punpun-name
     description: ghost-role-information-punpun-description
+    rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
   - type: Butcherable
     butcheringType: Spike
@@ -782,7 +768,6 @@
       amount: 3
     - id: DrinkTequilaBottleFull
       amount: 1
-  - type: Flashable
   - type: Tag
     tags:
     - CannotSuicide
@@ -794,8 +779,6 @@
     attributes:
       proper: true
       gender: male
-  - type: StealTarget
-    stealGroup: AnimalPunPun
 
 - type: entity
   name: Tropico
@@ -810,8 +793,8 @@
 #    allowMovement: true
 #    name: ghost-role-information-tropico-name
 #    description: ghost-role-information-tropico-description
+#    rules: ghost-role-information-nonantagonist-rules
 #  - type: GhostTakeoverAvailable
-#  - type: Flashable
   - type: Tag
     tags:
     - VimPilot

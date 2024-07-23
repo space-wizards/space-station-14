@@ -12,13 +12,14 @@ namespace Content.Server.Anomaly.Components;
 /// This is used for a machine that is able to generate
 /// anomalies randomly on the station.
 /// </summary>
-[RegisterComponent, Access(typeof(SharedAnomalySystem))]
+[RegisterComponent, Access(typeof(SharedAnomalySystem)), AutoGenerateComponentPause]
 public sealed partial class AnomalyGeneratorComponent : Component
 {
     /// <summary>
     /// The time at which the cooldown for generating another anomaly will be over
     /// </summary>
     [DataField("cooldownEndTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [AutoPausedField]
     public TimeSpan CooldownEndTime = TimeSpan.Zero;
 
     /// <summary>

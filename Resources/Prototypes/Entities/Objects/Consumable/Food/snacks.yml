@@ -273,6 +273,46 @@
     trash: FoodPacketSyndiTrash
 
 - type: entity
+  parent: FoodSnackBase
+  id: DrinkRamen
+  name: cup ramen
+  description: A cheap food with a taste that reminds you of your school years.
+  components:
+  - type: RefillableSolution
+    solution: food
+  - type: InjectableSolution
+    solution: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50 #big cup
+        reagents:
+        - ReagentId: DryRamen
+          Quantity: 30
+        - ReagentId: Soysauce
+          Quantity: 5
+  - type: Sprite
+    state: ramen
+  - type: Food
+    trash: FoodPacketCupRamenTrash
+
+- type: entity
+  parent: DrinkRamen
+  id: DrinkHellRamen
+  name: hell ramen
+  description: Super spicy flavor!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: DryRamen
+          Quantity: 30
+        - ReagentId: CapsaicinOil
+          Quantity: 5
+
+- type: entity
   name: chow mein
   parent: FoodSnackBase
   id: FoodSnackChowMein
@@ -383,16 +423,19 @@
       - nutribrick
   - type: Item
     size: Small
+  - type: Tag
+    tags:
+      - ReptilianFood
   - type: Sprite
     state: nutribrick-open
   - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 25
+          Quantity: 20
 
 - type: entity
   id: FoodSnackMREBrownie
@@ -573,6 +616,15 @@
 - type: entity
   noSpawn: true
   parent: FoodPacketTrash
+  id: FoodPacketCupRamenTrash
+  name: empty cup ramen
+  components:
+  - type: Sprite
+    state: ramen
+
+- type: entity
+  noSpawn: true
+  parent: FoodPacketTrash
   id: FoodPacketChowMeinTrash
   name: empty chow mein box
   components:
@@ -608,5 +660,18 @@
   name: MRE wrapper
   description: A general purpose wrapper for a variety of military food goods.
   components:
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 40
+  - type: Tag
+    tags:
+    - ClothMade
+    - Trash
   - type: Sprite
     state: mre-wrapper

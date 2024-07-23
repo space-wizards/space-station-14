@@ -4,6 +4,7 @@ using Content.Shared.Administration;
 using Content.Shared.Maps;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Interaction
 {
@@ -46,7 +47,7 @@ namespace Content.Server.Interaction
             var xform = _entities.GetComponent<TransformComponent>(attached);
             var playerGrid = xform.GridUid;
 
-            if (!mapManager.TryGetGrid(playerGrid, out var mapGrid))
+            if (!_entities.TryGetComponent<MapGridComponent>(playerGrid, out var mapGrid))
                 return;
 
             var playerPosition = xform.Coordinates;

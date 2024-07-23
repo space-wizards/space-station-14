@@ -163,6 +163,7 @@
   - type: AutoRecharge
     rechargeDuration: 30
   - type: MeleeWeapon
+    wideAnimationRotation: 180
     damage:
       types:
         Blunt: 0 # melee weapon to allow flashing individual targets
@@ -211,6 +212,11 @@
     enabled: false
     radius: 8
     energy: 5
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
   - type: Anchorable
   - type: Damageable
     damageContainer: Inorganic

@@ -1,7 +1,7 @@
 - type: entity
   id: PlasmaWindow
   name: plasma window
-  parent: Window
+  parent: WindowRCDResistant
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -55,7 +55,7 @@
 
 - type: entity
   id: PlasmaWindowDirectional
-  parent: WindowDirectional
+  parent: WindowDirectionalRCDResistant
   name: directional plasma window
   description: Don't smudge up the glass down there.
   placement:
@@ -131,6 +131,11 @@
         - FullTileMask
         layer:
         - GlassLayer
+  - type: Airtight
+    noAirWhenFullyAirBlocked: false
+    airBlockedDirection:
+    - South
+    - East
   - type: DamageVisuals
     damageOverlay:
       sprite: Structures/Windows/cracks_diagonal.rsi
