@@ -319,7 +319,7 @@
         shader: unshaded
 
 - type: entity
-  name: borg double-bladed energy sword # could improve name
+  suffix: One-Handed, For Borgs
   parent: EnergySwordDouble
   id: CyborgEnergySwordDouble # why is this invalid if ID is BorgEnergySwordDouble
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. Specially designed for syndicate cyborgs.
