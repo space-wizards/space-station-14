@@ -1,6 +1,7 @@
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
+using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
@@ -19,6 +20,8 @@ public sealed class FlippableCoinSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
 
     public override void Initialize()
     {
@@ -82,6 +85,9 @@ public sealed class FlippableCoinSystem : EntitySystem
         {
             comp.Flipped = _random.Prob(0.5f);
             Dirty(uid, comp);
+
+            _transform.AttachToGridOrMap(uid);
+            _throwing.TryThrow(uid, _random.NextVector2(), baseThrowSpeed: 1f, playSound: false, doSpin: false);
         }
     }
 }
