@@ -235,6 +235,7 @@
     damage:
       types:
         Heat: 5
+        Asphyxiation: 5
     soundHit:
       collection: WeakHit
     forceSound: true
