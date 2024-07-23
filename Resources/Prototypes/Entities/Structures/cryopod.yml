@@ -17,7 +17,6 @@
   - type: ActivatableUI
     key: enum.CryostorageUIKey.Key
   - type: AccessReader
-    breakOnEmag: false
     access: [["Cryogenics"]]
   - type: InteractionOutline
   - type: Cryostorage
