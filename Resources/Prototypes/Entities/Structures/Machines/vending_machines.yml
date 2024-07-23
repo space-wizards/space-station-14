@@ -791,7 +791,6 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-    ejectDelay: 0.6
   - type: Advertise
     pack: NanoMedAds
   - type: SpeakOnUIClosed
