@@ -87,7 +87,7 @@ public sealed class FlippableCoinSystem : EntitySystem
             Dirty(uid, comp);
 
             _transform.AttachToGridOrMap(uid);
-            _throwing.TryThrow(uid, _random.NextVector2(), baseThrowSpeed: 1f, playSound: false, doSpin: false);
+            _throwing.TryThrow(uid, _random.NextVector2(), baseThrowSpeed: 1f, playSound: false);
         }
     }
 }
