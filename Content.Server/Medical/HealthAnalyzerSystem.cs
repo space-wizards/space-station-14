@@ -96,7 +96,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
           return;
 
         var msg = Loc.GetString("health-analyzer-popup-scan-target", ("user", Identity.Entity(args.User, EntityManager)));
-          _popupSystem.PopupEntity(msg, args.Target.Value, args.Target.Value, PopupType.Medium);
+        _popupSystem.PopupEntity(msg, args.Target.Value, args.Target.Value, PopupType.Medium);
     }
 
     private void OnDoAfter(Entity<HealthAnalyzerComponent> uid, ref HealthAnalyzerDoAfterEvent args)
