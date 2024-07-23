@@ -4,6 +4,6 @@
     sprite: Nyanotrasen/Objects/Weapons/Melee/shinai.rsi
     state: icon
   product: CrateServiceKendo
-  cost: 500
+  cost: 700
   category: cargoproduct-category-name-service
   group: market
