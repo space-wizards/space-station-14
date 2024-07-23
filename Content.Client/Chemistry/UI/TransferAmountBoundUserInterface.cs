@@ -27,7 +27,7 @@ namespace Content.Client.Chemistry.UI
             _window = this.CreateWindow<TransferAmountWindow>();
 
             if(_entManager.TryGetComponent<SolutionTransferComponent>(_owner, out var comp))
-              _window.SetBounds(comp.MinimumTransferAmount.Value/100, comp.MaximumTransferAmount.Value/100);
+              _window.SetBounds(comp.MinimumTransferAmount.Int(), comp.MaximumTransferAmount.Int());
 
             _window.ApplyButton.OnPressed += _ =>
             {
