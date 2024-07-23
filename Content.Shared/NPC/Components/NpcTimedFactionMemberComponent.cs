@@ -28,10 +28,16 @@ public sealed partial class NpcTimedFactionComponent : Component
     public TimeSpan TimeFactionChangeBack = TimeSpan.Zero;
 
     /// <summary>
-    /// When the next faction change will occur.
+    /// How long to wait between the faction toggling on.
     /// </summary>
     [DataField]
-    public TimeSpan TimeUntilFactionChange = TimeSpan.FromSeconds(30); // Change to 300
+    public TimeSpan TimeUntilFactionChange = TimeSpan.FromSeconds(300);
+
+    /// <summary>
+    /// Random extra seconds of waiting up to:.
+    /// </summary>
+    [DataField]
+    public int RandomBonusTimeUntilFactionChange = 0;
 
     /// <summary>
     /// How long to remain as the new faction.
@@ -40,15 +46,17 @@ public sealed partial class NpcTimedFactionComponent : Component
     public TimeSpan TimeAsFaction = TimeSpan.FromSeconds(30);
 
     /// <summary>
+    /// Random extra seconds as new faction up to:.
+    /// </summary>
+    [DataField]
+    public int RandomBonusTimeAsFaction = 0;
+
+    /// <summary>
     /// The faction to be toggled on and off.
     /// </summary>
     [DataField(required: true)]
     public ProtoId<NpcFactionPrototype> Faction = "Mouse"; //string.Empty;
+
+    [DataField]
+    public bool HasChangedOnce = false;
 }
-
-
-
-// Wait X seconds
-// Swap faction to B
-// Wait Y seconds
-// Swap faction back to A

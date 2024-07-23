@@ -11,7 +11,7 @@ namespace Content.Shared.NPC.Systems;
 /// </summary>
 public sealed class NpcTimedFactionSystem : EntitySystem
 {
-    //[Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly NpcFactionSystem _faction = default!;
 
@@ -43,7 +43,12 @@ public sealed class NpcTimedFactionSystem : EntitySystem
             if (_timing.CurTime > component.TimeFactionChange)
             {
                 _faction.AddFaction(faction, component.Faction);
-                component.TimeFactionChange = component.TimeFactionChangeBack + component.TimeUntilFactionChange;
+                component.TimeFactionChange = component.TimeFactionChangeBack + component.TimeUntilFactionChange + TimeSpan.FromSeconds(_random.Next(component.RandomBonusTimeUntilFactionChange + 1));
+
+                if (!component.HasChangedOnce)
+                {
+                    component.HasChangedOnce = true; // Used to prevent event cancellations before the component has triggered.
+                }
             }
 
             if (_timing.CurTime > component.TimeFactionChangeBack)
@@ -52,14 +57,16 @@ public sealed class NpcTimedFactionSystem : EntitySystem
                 {
                     _faction.RemoveFaction(faction, component.Faction);
                 }
-                component.TimeFactionChangeBack = component.TimeFactionChange + component.TimeAsFaction;
+                component.TimeFactionChangeBack = component.TimeFactionChange + component.TimeAsFaction + TimeSpan.FromSeconds(_random.Next(component.RandomBonusTimeAsFaction + 1));
             }
         }
     }
 
     private void OnTryRemoveFaction(Entity<NpcTimedFactionComponent> ent, ref NpcFactionSystem.TryRemoveFactionAttemptEvent args)
     {
-        if (args.Faction == ent.Comp.Faction && ent.Comp.TimeFactionChangeBack <= ent.Comp.TimeFactionChange)
+        var beforeNextChange = ent.Comp.TimeFactionChange >= _timing.CurTime;
+        var afterChangeBack = _timing.CurTime >= ent.Comp.TimeFactionChangeBack;
+        if (ent.Comp.HasChangedOnce && args.Faction == ent.Comp.Faction && beforeNextChange && !afterChangeBack)
         {
             args.Cancel();
         }
