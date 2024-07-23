@@ -7,5 +7,5 @@ namespace Content.Server.Explosion.Components;
 public sealed partial class SpawnOnTriggerComponent : Component
 {
     [DataField(required: true)]
-    public EntProtoId Proto = string.Empty;
+    public EntProtoId Proto;
 }

@@ -14,7 +14,7 @@ namespace Content.Shared.VendingMachines
         /// PrototypeID for the vending machine's inventory, see <see cref="VendingMachineInventoryPrototype"/>
         /// </summary>
         [DataField("pack", required: true)]
-        public ProtoId<VendingMachineInventoryPrototype> PackPrototypeId = string.Empty;
+        public ProtoId<VendingMachineInventoryPrototype> PackPrototypeId;
 
         /// <summary>
         /// Used by the server to determine how long the vending machine stays in the "Deny" state.

@@ -13,7 +13,7 @@ public sealed partial class AutoEmotePrototype : IPrototype
     /// The ID of the emote prototype.
     /// </summary>
     [DataField("emote", required: true)]
-    public ProtoId<EmotePrototype> EmoteId = String.Empty;
+    public ProtoId<EmotePrototype> EmoteId;
 
     /// <summary>
     /// How often an attempt at the emote will be made.

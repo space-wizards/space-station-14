@@ -23,5 +23,5 @@ public sealed partial class SalvageDungeonModPrototype : IPrototype, IBiomeSpeci
     /// The config to use for spawning the dungeon.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<DungeonConfigPrototype> Proto = string.Empty;
+    public ProtoId<DungeonConfigPrototype> Proto;
 }

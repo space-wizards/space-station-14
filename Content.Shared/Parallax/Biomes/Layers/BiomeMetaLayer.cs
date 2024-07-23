@@ -23,5 +23,5 @@ public sealed partial class BiomeMetaLayer : IBiomeLayer
     public bool Invert { get; private set; }
 
     [DataField(required: true)]
-    public ProtoId<BiomeTemplatePrototype> Template = string.Empty;
+    public ProtoId<BiomeTemplatePrototype> Template;
 }

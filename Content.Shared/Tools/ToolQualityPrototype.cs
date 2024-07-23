@@ -33,6 +33,6 @@ namespace Content.Shared.Tools
         ///     The default entity prototype for this tool type.
         /// </summary>
         [DataField(required: true)]
-        public EntProtoId Spawn { get; private set; } = string.Empty;
+        public EntProtoId Spawn { get; private set; }
     }
 }

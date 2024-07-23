@@ -9,5 +9,5 @@ namespace Content.Shared.Procedural.Loot;
 public sealed partial class BiomeTemplateLoot : IDungeonLoot
 {
     [DataField("proto", required: true)]
-    public ProtoId<BiomeTemplatePrototype> Prototype = string.Empty;
+    public ProtoId<BiomeTemplatePrototype> Prototype;
 }

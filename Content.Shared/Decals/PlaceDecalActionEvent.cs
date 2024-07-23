@@ -6,7 +6,7 @@ namespace Content.Shared.Decals;
 public sealed partial class PlaceDecalActionEvent : WorldTargetActionEvent
 {
     [DataField(required:true)]
-    public ProtoId<DecalPrototype> DecalId = string.Empty;
+    public ProtoId<DecalPrototype> DecalId;
 
     [DataField("color")]
     public Color Color;

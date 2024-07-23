@@ -10,7 +10,7 @@ namespace Content.Shared.NameIdentifier;
 public sealed partial class NameIdentifierComponent : Component
 {
     [DataField(required: true)]
-    public ProtoId<NameIdentifierGroupPrototype> Group = string.Empty;
+    public ProtoId<NameIdentifierGroupPrototype> Group;
 
     /// <summary>
     /// The randomly generated ID for this entity.

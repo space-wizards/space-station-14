@@ -24,7 +24,7 @@ public sealed partial class UtilityOperator : HTNOperator
     public string KeyCoordinates = "TargetCoordinates";
 
     [DataField("proto", required: true)]
-    public ProtoId<UtilityQueryPrototype> Prototype = string.Empty;
+    public ProtoId<UtilityQueryPrototype> Prototype;
 
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
         CancellationToken cancelToken)

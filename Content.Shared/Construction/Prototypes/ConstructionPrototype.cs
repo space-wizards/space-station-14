@@ -32,7 +32,7 @@ public sealed partial class ConstructionPrototype : IPrototype
     ///     The <see cref="ConstructionGraphPrototype"/> this construction will be using.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<ConstructionGraphPrototype> Graph = string.Empty;
+    public ProtoId<ConstructionGraphPrototype> Graph;
 
     /// <summary>
     ///     The target <see cref="ConstructionGraphNode"/> this construction will guide the user to.

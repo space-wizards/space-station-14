@@ -25,7 +25,7 @@ namespace Content.Shared.Kitchen
         private Dictionary<string, FixedPoint2> _ingsSolids = new ();
 
         [DataField]
-        public EntProtoId Result { get; private set; } = string.Empty;
+        public EntProtoId Result { get; private set; }
 
         [DataField("time")]
         public uint CookTime { get; private set; } = 5;

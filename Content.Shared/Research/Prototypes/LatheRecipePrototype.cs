@@ -25,7 +25,7 @@ namespace Content.Shared.Research.Prototypes
         ///     The prototype name of the resulting entity when the recipe is printed.
         /// </summary>
         [DataField(required: true)]
-        public EntProtoId Result = string.Empty;
+        public EntProtoId Result;
 
         /// <summary>
         ///     An entity whose sprite is displayed in the ui in place of the actual recipe result.

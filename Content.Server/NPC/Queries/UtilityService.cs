@@ -18,7 +18,7 @@ public sealed partial class UtilityService
     /// Prototype of the utility query.
     /// </summary>
     [DataField("proto", required: true)]
-    public ProtoId<UtilityQueryPrototype> Prototype = string.Empty;
+    public ProtoId<UtilityQueryPrototype> Prototype;
 
     [DataField("minCooldown")]
     public float MinCooldown = 0.25f;

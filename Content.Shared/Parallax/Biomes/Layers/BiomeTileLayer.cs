@@ -24,5 +24,5 @@ public sealed partial class BiomeTileLayer : IBiomeLayer
     public List<byte>? Variants = null;
 
     [DataField(required: true)]
-    public ProtoId<ContentTileDefinition> Tile = string.Empty;
+    public ProtoId<ContentTileDefinition> Tile;
 }

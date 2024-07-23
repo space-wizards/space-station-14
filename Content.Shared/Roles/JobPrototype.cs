@@ -17,7 +17,7 @@ namespace Content.Shared.Roles
         public string ID { get; private set; } = default!;
 
         [DataField(required: true)]
-        public ProtoId<PlayTimeTrackerPrototype> PlayTimeTracker { get; private set; } = string.Empty;
+        public ProtoId<PlayTimeTrackerPrototype> PlayTimeTracker { get; private set; }
 
         [DataField("supervisors")]
         public string Supervisors { get; private set; } = "nobody";

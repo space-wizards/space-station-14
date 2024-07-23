@@ -11,10 +11,10 @@ namespace Content.Server.Jobs
     public sealed partial class GiveItemOnHolidaySpecial : JobSpecial
     {
         [DataField]
-        public ProtoId<HolidayPrototype> Holiday { get; private set; } = string.Empty;
+        public ProtoId<HolidayPrototype> Holiday { get; private set; }
 
         [DataField]
-        public EntProtoId Prototype { get; private set; } = string.Empty;
+        public EntProtoId Prototype { get; private set; }
 
         public override void AfterEquip(EntityUid mob)
         {

@@ -12,7 +12,7 @@ namespace Content.Server.Construction.Completions
     public sealed partial class SpawnPrototype : IGraphAction
     {
         [DataField]
-        public EntProtoId Prototype { get; private set; } = string.Empty;
+        public EntProtoId Prototype { get; private set; }
 
         [DataField("amount")]
         public int Amount { get; private set; } = 1;

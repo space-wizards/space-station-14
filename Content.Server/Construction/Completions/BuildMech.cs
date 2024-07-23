@@ -17,7 +17,7 @@ namespace Content.Server.Construction.Completions;
 public sealed partial class BuildMech : IGraphAction
 {
     [DataField(required: true)]
-    public EntProtoId MechPrototype = string.Empty;
+    public EntProtoId MechPrototype;
 
     [DataField("container")]
     public string Container = "battery-container";

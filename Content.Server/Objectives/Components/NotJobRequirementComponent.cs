@@ -13,5 +13,5 @@ public sealed partial class NotJobRequirementComponent : Component
     /// ID of the job to ban from having this objective.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<JobPrototype> Job = string.Empty;
+    public ProtoId<JobPrototype> Job;
 }

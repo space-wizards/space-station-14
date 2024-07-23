@@ -8,7 +8,7 @@ namespace Content.Shared.Construction.Steps
     public sealed partial class ToolConstructionGraphStep : ConstructionGraphStep
     {
         [DataField(required:true)]
-        public ProtoId<ToolQualityPrototype> Tool { get; private set; } = string.Empty;
+        public ProtoId<ToolQualityPrototype> Tool { get; private set; }
 
         [DataField("fuel")] public float Fuel { get; private set; } = 10;
 

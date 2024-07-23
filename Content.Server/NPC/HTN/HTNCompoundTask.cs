@@ -11,5 +11,5 @@ namespace Content.Server.NPC.HTN;
 public sealed partial class HTNCompoundTask : HTNTask, IHTNCompound
 {
     [DataField(required: true)]
-    public ProtoId<HTNCompoundPrototype> Task = string.Empty;
+    public ProtoId<HTNCompoundPrototype> Task;
 }

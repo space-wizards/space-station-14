@@ -8,7 +8,7 @@ namespace Content.Server.Construction.Components
     public sealed partial class ConstructionComponent : Component
     {
         [DataField(required: true)]
-        public ProtoId<ConstructionGraphPrototype> Graph { get; set; } = string.Empty;
+        public ProtoId<ConstructionGraphPrototype> Graph { get; set; }
 
         [DataField("node", required:true)]
         public string Node { get; set; } = default!;
