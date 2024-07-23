@@ -3,6 +3,7 @@ using Content.Shared.RCD.Components;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
+using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.RCD;
@@ -24,8 +25,9 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _menu = new(Owner, this);
-        _menu.OnClose += Close;
+        _menu = this.CreateWindow<RCDMenu>();
+        _menu.SetEntity(Owner);
+        _menu.SendRCDSystemMessageAction += SendRCDSystemMessage;
 
         // Open the menu, centered on the mouse
         var vpSize = _displayManager.ScreenSize;
@@ -34,16 +36,8 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
 
     public void SendRCDSystemMessage(ProtoId<RCDPrototype> protoId)
     {
-        // A predicted message cannot be used here as the RCD UI is closed immediately 
+        // A predicted message cannot be used here as the RCD UI is closed immediately
         // after this message is sent, which will stop the server from receiving it
         SendMessage(new RCDSystemMessage(protoId));
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing) return;
-
-        _menu?.Dispose();
     }
 }
