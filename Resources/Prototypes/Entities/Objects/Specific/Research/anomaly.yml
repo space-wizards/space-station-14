@@ -147,3 +147,9 @@
   - type: ContainerContainer
     containers:
       core_slot: !type:ContainerSlot
+  - type: DamageOnAttackedProtection
+    damageProtection:
+      groups:
+        Brute: 100 
+        Burn: 100
+        Toxin: 100

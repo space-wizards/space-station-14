@@ -23,6 +23,7 @@ public sealed partial class DamageOnAttackedProtectionComponent : Component, ICl
     /// <summary>
     /// Only protects if the item is in the correct slot
     /// i.e. having gloves in your pocket doesn't protect you, it has to be on your hands
+    /// Set slots to NONE if it works while you hold the item in your main hand
     /// </summary>
     [DataField]
     public SlotFlags Slots { get; set; } = SlotFlags.WITHOUT_POCKET;
