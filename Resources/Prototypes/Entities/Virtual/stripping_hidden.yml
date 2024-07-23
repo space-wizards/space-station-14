@@ -3,7 +3,7 @@
 
 - type: entity
   id: StrippingHiddenEntity
-  name: Hidden Entity
+  name: hidden entity
   description: There is something in this pocket. #Or maybe they ar... nah... too obvious a joke.
   categories: [ HideSpawnMenu ]
   components:
