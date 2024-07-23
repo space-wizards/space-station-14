@@ -17,14 +17,12 @@
         - type: StationCargoShuttle
           path: /Maps/Shuttles/cargo_fland.yml
         - type: StationJobs
-          overflowJobs:
-            - Passenger
           availableJobs:
             #service
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             Bartender: [ 2, 2 ]
-            Botanist: [ 4, 4 ]
+            Botanist: [ 3, 3 ]
             Chef: [ 2, 2 ]
             Janitor: [ 3, 3 ]
             Chaplain: [ 1, 1 ]

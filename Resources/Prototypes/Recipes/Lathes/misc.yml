@@ -127,6 +127,13 @@
     Plastic: 500
 
 - type: latheRecipe
+  id: ClothingShoesBootsMoon
+  result: ClothingShoesBootsMoon
+  completetime: 2
+  materials:
+    Steel: 600
+
+- type: latheRecipe
   id: ClothingShoesBootsSpeed
   result: ClothingShoesBootsSpeed
   completetime: 2
@@ -207,3 +214,10 @@
   materials:
     Steel: 400
     Glass: 200
+
+- type: latheRecipe
+  id: ClothingHeadHatCone
+  result: ClothingHeadHatCone
+  completetime: 3
+  materials:
+    Plastic: 200

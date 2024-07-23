@@ -285,19 +285,21 @@ public sealed class ActionButton : Control, IEntityControl
 
         _controller ??= UserInterfaceManager.GetUIController<ActionUIController>();
         _spriteSys ??= _entities.System<SpriteSystem>();
+        var icon = action.Comp.Icon;
         if (_controller.SelectingTargetFor == action || action.Comp.Toggled)
         {
-            if (action.Comp.IconOn is {} icon)
-                SetActionIcon(_spriteSys.Frame0(icon));
+            if (action.Comp.IconOn is {} iconOn)
+                icon = iconOn;
 
             if (action.Comp.BackgroundOn is {} background)
                 _buttonBackgroundTexture = _spriteSys.Frame0(background);
         }
         else
         {
-            SetActionIcon(action.Comp.Icon != null ? _spriteSys.Frame0(action.Comp.Icon) : null);
             _buttonBackgroundTexture = Theme.ResolveTexture("SlotBackground");
         }
+
+        SetActionIcon(icon != null ? _spriteSys.Frame0(icon) : null);
     }
 
     public void UpdateBackground()

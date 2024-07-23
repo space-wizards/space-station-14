@@ -73,7 +73,12 @@
   name: Toggle Light
   description: Turn the light on and off.
   components:
+<<<<<<< HEAD
   - type: Action
+=======
+  - type: InstantAction
+    useDelay: 1
+>>>>>>> 918709cb4742d02e9822a651cf8e74727ba997de
     icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
     iconOn: { sprite: Objects/Tools/flashlight.rsi, state: flashlight-on }
 

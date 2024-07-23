@@ -1,7 +1,7 @@
 ﻿- type: entity
   parent: BaseAction
   id: ActionForceWall
-  name: Forcewall
+  name: forcewall
   description: Creates a magical barrier.
   components:
   - type: Action

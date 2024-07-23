@@ -29,7 +29,6 @@ public abstract class SharedActionsSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly RotateToFaceSystem _rotateToFace = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -243,7 +242,11 @@ public abstract class SharedActionsSystem : EntitySystem
     }
 
     #region ComponentStateManagement
+<<<<<<< HEAD
     protected virtual void UpdateAction(EntityUid? actionId, ActionComponent? action = null)
+=======
+    public virtual void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
+>>>>>>> 918709cb4742d02e9822a651cf8e74727ba997de
     {
         // See client-side code.
     }
@@ -395,6 +398,7 @@ public abstract class SharedActionsSystem : EntitySystem
         var provider = action.Container ?? user;
         var validateEv = new ActionValidateEvent()
         {
+<<<<<<< HEAD
             Input = ev,
             User = user,
             Provider = provider
@@ -404,6 +408,67 @@ public abstract class SharedActionsSystem : EntitySystem
         {
             Log.Error($"{ToPrettyString(user):user} attempted to perform an action {name} with invalid input!");
             return;
+=======
+            case EntityTargetActionComponent entityAction:
+                if (ev.EntityTarget is not { Valid: true } netTarget)
+                {
+                    Log.Error($"Attempted to perform an entity-targeted action without a target! Action: {name}");
+                    return;
+                }
+
+                var entityTarget = GetEntity(netTarget);
+
+                var targetWorldPos = _transformSystem.GetWorldPosition(entityTarget);
+                _rotateToFaceSystem.TryFaceCoordinates(user, targetWorldPos);
+
+                if (!ValidateEntityTarget(user, entityTarget, (actionEnt, entityAction)))
+                    return;
+
+                _adminLogger.Add(LogType.Action,
+                    $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(action.Container ?? user):provider}) targeted at {ToPrettyString(entityTarget):target}.");
+
+                if (entityAction.Event != null)
+                {
+                    entityAction.Event.Target = entityTarget;
+                    Dirty(actionEnt, entityAction);
+                    performEvent = entityAction.Event;
+                }
+
+                break;
+            case WorldTargetActionComponent worldAction:
+                if (ev.EntityCoordinatesTarget is not { } netCoordinatesTarget)
+                {
+                    Log.Error($"Attempted to perform a world-targeted action without a target! Action: {name}");
+                    return;
+                }
+
+                var entityCoordinatesTarget = GetCoordinates(netCoordinatesTarget);
+                _rotateToFaceSystem.TryFaceCoordinates(user, _transformSystem.ToMapCoordinates(entityCoordinatesTarget).Position);
+
+                if (!ValidateWorldTarget(user, entityCoordinatesTarget, (actionEnt, worldAction)))
+                    return;
+
+                _adminLogger.Add(LogType.Action,
+                    $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(action.Container ?? user):provider}) targeted at {entityCoordinatesTarget:target}.");
+
+                if (worldAction.Event != null)
+                {
+                    worldAction.Event.Target = entityCoordinatesTarget;
+                    Dirty(actionEnt, worldAction);
+                    performEvent = worldAction.Event;
+                }
+
+                break;
+            case InstantActionComponent instantAction:
+                if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
+                    return;
+
+                _adminLogger.Add(LogType.Action,
+                    $"{ToPrettyString(user):user} is performing the {name:action} action provided by {ToPrettyString(action.Container ?? user):provider}.");
+
+                performEvent = instantAction.Event;
+                break;
+>>>>>>> 918709cb4742d02e9822a651cf8e74727ba997de
         }
 
         if (validateEv.Event is not {} performEvent)
@@ -529,9 +594,22 @@ public abstract class SharedActionsSystem : EntitySystem
     {
         if (args.Event is InstantActionEvent ev)
         {
+<<<<<<< HEAD
             ent.Comp.Event = ev;
             Dirty(ent, ent.Comp);
             args.Handled = true;
+=======
+            // even if we don't check for obstructions, we may still need to check the range.
+            var xform = Transform(user);
+
+            if (xform.MapID != coords.GetMapId(EntityManager))
+                return false;
+
+            if (action.Range <= 0)
+                return true;
+
+            return _transformSystem.InRange(coords, Transform(user).Coordinates, action.Range);
+>>>>>>> 918709cb4742d02e9822a651cf8e74727ba997de
         }
     }
 

@@ -6,9 +6,11 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Actions.Components;
 
 /// <summary>
-/// An action that targets an entity.
-/// Requires <see cref="TargetActionComponent"/>.
+/// Used on action entities to define an action that triggers when targeting an entity.
 /// </summary>
+/// <remarks>
+/// Requires <see cref="TargetActionComponent"/>.
+/// </remarks>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedActionsSystem))]
 [EntityCategory("Actions")]
 public sealed partial class EntityTargetActionComponent : Component
@@ -19,9 +21,16 @@ public sealed partial class EntityTargetActionComponent : Component
     [DataField(required: true), NonSerialized]
     public EntityTargetActionEvent? Event;
 
+    /// <summary>
+    /// Determines which entities are valid targets for this action.
+    /// </summary>
+    /// <remarks>No whitelist check when null.</remarks>
     [DataField]
     public EntityWhitelist? Whitelist;
 
+    /// <summary>
+    /// Whether this action considers the user as a valid target entity when using this action.
+    /// </summary>
     [DataField]
     public bool CanTargetSelf = true;
 }

@@ -18,7 +18,7 @@ namespace Content.Client.Administration.UI.Bwoink
             {
                 if (sel is null)
                 {
-                    Title = Loc.GetString("bwoink-none-selected");
+                    Title = Loc.GetString("bwoink-title-none-selected");
                     return;
                 }
 

@@ -5,9 +5,11 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Actions.Components;
 
 /// <summary>
-/// An action targeting a position in the world.
-/// Requires <see cref="TargetActionComponent"/>.
+/// Used on action entities to define an action that triggers when targeting an entity coordinate.
 /// </summary>
+/// <remarks>
+/// Requires <see cref="TargetActionComponent"/>.
+/// </remarks>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedActionsSystem))]
 [EntityCategory("Actions")]
 public sealed partial class WorldTargetActionComponent : Component

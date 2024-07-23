@@ -3,7 +3,7 @@
   parent: BaseToggleAction
   id: ActionToggleNinjaGloves
   name: Toggle ninja gloves
-  description: Toggles all glove actions on left click. Includes your doorjack, draining power, stunning enemies, downloading research and calling in a threat.
+  description: Toggles all glove actions on left click. Includes your doorjack, draining power, stunning enemies and hacking certain computers.
   components:
   - type: Action
     priority: -13
@@ -23,7 +23,7 @@
     itemIconStyle: NoItem
     priority: -10
   - type: InstantAction
-    event: !type:CreateThrowingStarEvent {}
+    event: !type:CreateItemEvent {}
 
 - type: entity
   parent: BaseAction
@@ -67,7 +67,7 @@
     useDelay: 5
     priority: -9
   - type: InstantAction
-    event: !type:ToggleStealthEvent
+    event: !type:ToggleActionEvent
 
 # katana
 - type: entity
@@ -81,6 +81,10 @@
       sprite: Objects/Magic/magicactions.rsi
       state: blink
     itemIconStyle: NoItem
+    sound:
+      path: /Audio/Magic/blink.ogg
+      params:
+        volume: 5
     priority: -12
   - type: TargetAction
     checkCanAccess: false
