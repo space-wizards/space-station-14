@@ -1,6 +1,7 @@
 using Content.Server.GameTicking;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
@@ -9,9 +10,9 @@ using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
-using Content.Server.GameTicking.Components;
 using System.Text;
 using Robust.Server.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives;
 
@@ -128,12 +129,12 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             var agentSummary = new StringBuilder();
             agentSummary.AppendLine(Loc.GetString("objectives-with-objectives", ("custody", custody), ("title", title), ("agent", agent)));
 
-            foreach (var objectiveGroup in objectives.GroupBy(o => Comp<ObjectiveComponent>(o).Issuer))
+            foreach (var objectiveGroup in objectives.GroupBy(o => Comp<ObjectiveComponent>(o).LocIssuer))
             {
                 //TO DO:
                 //check for the right group here. Getting the target issuer is easy: objectiveGroup.Key
                 //It should be compared to the type of the group's issuer.
-                agentSummary.AppendLine(Loc.GetString($"objective-issuer-{objectiveGroup.Key}"));
+                agentSummary.AppendLine(objectiveGroup.Key);
 
                 foreach (var objective in objectiveGroup)
                 {
@@ -180,33 +181,32 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
         }
     }
 
-    public EntityUid? GetRandomObjective(EntityUid mindId, MindComponent mind, string objectiveGroupProto)
+    public EntityUid? GetRandomObjective(EntityUid mindId, MindComponent mind, ProtoId<WeightedRandomPrototype> objectiveGroupProto, float maxDifficulty)
     {
-        if (!_prototypeManager.TryIndex<WeightedRandomPrototype>(objectiveGroupProto, out var groups))
+        if (!_prototypeManager.TryIndex(objectiveGroupProto, out var groupsProto))
         {
             Log.Error($"Tried to get a random objective, but can't index WeightedRandomPrototype {objectiveGroupProto}");
             return null;
         }
 
-        // TODO replace whatever the fuck this is with a proper objective selection system
-        // yeah the old 'preventing infinite loops' thing wasn't super elegant either and it mislead people on what exactly it did
-        var tries = 0;
-        while (tries < 20)
-        {
-            var groupName = groups.Pick(_random);
+        // Make a copy of the weights so we don't trash the prototype by removing entries
+        var groups = groupsProto.Weights.ShallowClone();
 
+        while (_random.TryPickAndTake(groups, out var groupName))
+        {
             if (!_prototypeManager.TryIndex<WeightedRandomPrototype>(groupName, out var group))
             {
                 Log.Error($"Couldn't index objective group prototype {groupName}");
                 return null;
             }
 
-            var proto = group.Pick(_random);
-            var objective = TryCreateObjective(mindId, mind, proto);
-            if (objective != null)
-                return objective;
-
-            tries++;
+            var objectives = group.Weights.ShallowClone();
+            while (_random.TryPickAndTake(objectives, out var objectiveProto))
+            {
+                if (TryCreateObjective((mindId, mind), objectiveProto, out var objective)
+                    && Comp<ObjectiveComponent>(objective.Value).Difficulty <= maxDifficulty)
+                    return objective;
+            }
         }
 
         return null;

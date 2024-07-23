@@ -52,6 +52,10 @@
           Quantity: 1.2
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Pie
+    - Slice
 
 # Pie
 
@@ -94,6 +98,7 @@
     tags:
     - Fruit
     - Pie
+    - Slice
 # Tastes like pie, apple.
 
 - type: entity
@@ -143,6 +148,9 @@
     - state: tin
     - state: plain
   - type: CreamPie
+  - type: ThrowingAngle
+    angle: 180
+  - type: LandAtCursor
   - type: ContainerContainer
     containers:
       payloadSlot: !type:ContainerSlot
@@ -182,6 +190,7 @@
     tags:
     - Fruit
     - Pie
+    - Slice
 # Tastes like pie, cream, banana.
 
 - type: entity
@@ -224,6 +233,7 @@
     tags:
     - Fruit
     - Pie
+    - Slice
 # Tastes like pie, blackberries.
 
 - type: entity
@@ -263,6 +273,7 @@
     tags:
     - Fruit
     - Pie
+    - Slice
 # Tastes like pie, cherries.
 
 - type: entity
@@ -302,6 +313,7 @@
     tags:
     - Meat
     - Pie
+    - Slice
 # Tastes like pie, meat.
 
 - type: entity
@@ -342,6 +354,7 @@
     tags:
     - Meat
     - Pie
+    - Slice
 # Tastes like pie, meat, acid.
 
 - type: entity

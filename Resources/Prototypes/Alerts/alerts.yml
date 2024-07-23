@@ -24,11 +24,10 @@
     - category: Thirst
     - alertType: Magboots
     - alertType: Pacified
-    - alertType: Deflecting
 
 - type: entity
   id: AlertSpriteView
-  categories: [ hideSpawnMenu ]
+  categories: [ HideSpawnMenu  ]
   components:
   - type: Sprite
     layers:
@@ -475,11 +474,3 @@
     state: critical
   name: Debug6
   description: Debug
-
-- type: alert
-  id: Deflecting
-  icons:
-  - sprite: /Textures/Interface/Alerts/deflecting.rsi
-    state: deflecting0
-  name: alerts-deflecting-name
-  description: alerts-deflecting-desc

@@ -4,6 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
@@ -24,6 +25,7 @@ public sealed class SwapTeleporterSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -51,8 +53,8 @@ public sealed class SwapTeleporterSystem : EntitySystem
         if (!TryComp<SwapTeleporterComponent>(target, out var targetComp))
             return;
 
-        if (!comp.TeleporterWhitelist.IsValid(target, EntityManager) ||
-            !targetComp.TeleporterWhitelist.IsValid(uid, EntityManager))
+        if (_whitelistSystem.IsWhitelistFail(comp.TeleporterWhitelist, target) ||
+            _whitelistSystem.IsWhitelistFail(targetComp.TeleporterWhitelist, uid))
         {
             return;
         }
@@ -101,6 +103,9 @@ public sealed class SwapTeleporterSystem : EntitySystem
 
     private void OnActivateInWorld(Entity<SwapTeleporterComponent> ent, ref ActivateInWorldEvent args)
     {
+        if (args.Handled || !args.Complex)
+            return;
+
         var (uid, comp) = ent;
         var user = args.User;
         if (comp.TeleportTime != null)
@@ -130,6 +135,7 @@ public sealed class SwapTeleporterSystem : EntitySystem
         comp.NextTeleportUse = _timing.CurTime + comp.Cooldown;
         comp.TeleportTime = _timing.CurTime + comp.TeleportDelay;
         Dirty(uid, comp);
+        args.Handled = true;
     }
 
     public void DoTeleport(Entity<SwapTeleporterComponent, TransformComponent> ent)
@@ -144,12 +150,23 @@ public sealed class SwapTeleporterSystem : EntitySystem
             return;
         }
 
-        var teleEnt = GetTeleportingEntity((uid, xform));
-        var otherTeleEnt = GetTeleportingEntity((linkedEnt, Transform(linkedEnt)));
+        var (teleEnt, cont) = GetTeleportingEntity((uid, xform));
+        var (otherTeleEnt, otherCont) = GetTeleportingEntity((linkedEnt, Transform(linkedEnt)));
 
-        _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-teleport-other",
+        if (otherCont != null && !_container.CanInsert(teleEnt, otherCont) ||
+            cont != null && !_container.CanInsert(otherTeleEnt, cont))
+        {
+            _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-teleport-fail",
+                ("entity", Identity.Entity(linkedEnt, EntityManager))),
+                teleEnt,
+                teleEnt,
+                PopupType.MediumCaution);
+            return;
+        }
+
+        _popup.PopupClient(Loc.GetString("swap-teleporter-popup-teleport-other",
             ("entity", Identity.Entity(linkedEnt, EntityManager))),
-            otherTeleEnt,
+            teleEnt,
             otherTeleEnt,
             PopupType.MediumCaution);
         _transform.SwapPositions(teleEnt, otherTeleEnt);
@@ -178,20 +195,20 @@ public sealed class SwapTeleporterSystem : EntitySystem
             DestroyLink(linked, user); // the linked one is shown globally
     }
 
-    private EntityUid GetTeleportingEntity(Entity<TransformComponent> ent)
+    private (EntityUid, BaseContainer?) GetTeleportingEntity(Entity<TransformComponent> ent)
     {
         var parent = ent.Comp.ParentUid;
         if (_container.TryGetOuterContainer(ent, ent, out var container))
             parent = container.Owner;
 
         if (HasComp<MapGridComponent>(parent) || HasComp<MapComponent>(parent))
-            return ent;
+            return (ent, container);
 
         if (!_xformQuery.TryGetComponent(parent, out var parentXform) || parentXform.Anchored)
-            return ent;
+            return (ent, container);
 
         if (!TryComp<PhysicsComponent>(parent, out var body) || body.BodyType == BodyType.Static)
-            return ent;
+            return (ent, container);
 
         return GetTeleportingEntity((parent, parentXform));
     }

@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseMob
+  parent: [BaseMob, StripableInventoryBase]
   id: BaseBorgChassis
   name: cyborg
   description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
@@ -77,13 +77,12 @@
   - type: SiliconLawProvider
     laws: Crewsimov
   - type: IonStormTarget
-  - type: Strippable
-  - type: InventorySlots
   - type: Inventory
     templateId: borg
   - type: Hands
     showInHands: false
     disableExplosionRecursion: true
+  - type: ComplexInteraction
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
@@ -113,6 +112,11 @@
   - type: PowerCellSlot
     cellSlotId: cell_slot
     fitsInCharger: true
+  - type: ItemToggle
+    onUse: false # no item-borg toggling sorry
+  - type: AccessToggle
+  # TODO: refactor movement to just be based on toggle like speedboots but for the boots themselves
+  # TODO: or just have sentient speedboots be fast idk
   - type: PowerCellDraw
     drawRate: 0.6
   - type: ItemSlots
@@ -125,6 +129,7 @@
     - Stun
     - KnockedDown
     - SlowedDown
+    - Flashed
   - type: TypingIndicator
     proto: robot
   - type: Speech
@@ -144,9 +149,10 @@
     - cell_slot
   - type: Lock
     locked: true
+    breakOnEmag: false
+    unlockOnClick: false
   - type: ActivatableUIRequiresLock
   - type: LockedWiresPanel
-  - type: Flashable
   - type: Damageable
     damageContainer: Silicon
   - type: Destructible
@@ -226,9 +232,20 @@
     deviceNetId: Wireless
     receiveFrequencyId: CyborgControl
     transmitFrequencyId: RoboticsConsole
+  - type: OnUseTimerTrigger
+    delay: 10
+    examinable: false
+    beepSound:
+      path: /Audio/Effects/Cargo/buzz_two.ogg
+      params:
+        volume: -4
+  # prevent any funnies if someone makes a cyborg item...
+  - type: AutomatedTimer
+  - type: ExplodeOnTrigger
   # explosion does most of its damage in the center and less at the edges
   - type: Explosive
     explosionType: Minibomb
+    deleteAfterExplosion: false # let damage threshold gib the borg
     totalIntensity: 30
     intensitySlope: 20
     maxIntensity: 20
@@ -281,3 +298,5 @@
   - type: Vocal
     sounds:
       Unsexed: UnisexSiliconSyndicate
+  - type: PointLight
+    color: "#dd200b"

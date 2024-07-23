@@ -53,7 +53,7 @@
 - type: startingGear
   id: BotanistBackpack
   equipment:
-    back: ClothingBackpackHydroponicsFilled
+    back: ClothingBackpackHydroponics
 
 - type: loadout
   id: BotanistSatchel
@@ -62,7 +62,7 @@
 - type: startingGear
   id: BotanistSatchel
   equipment:
-    back: ClothingBackpackSatchelHydroponicsFilled
+    back: ClothingBackpackSatchelHydroponics
 
 - type: loadout
   id: BotanistDuffel
@@ -71,7 +71,7 @@
 - type: startingGear
   id: BotanistDuffel
   equipment:
-    back: ClothingBackpackDuffelHydroponicsFilled
+    back: ClothingBackpackDuffelHydroponics
 
 # Outer clothing
 - type: loadout

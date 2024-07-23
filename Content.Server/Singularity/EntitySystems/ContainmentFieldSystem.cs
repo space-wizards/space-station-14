@@ -26,7 +26,7 @@ public sealed class ContainmentFieldSystem : EntitySystem
     {
         var otherBody = args.OtherEntity;
 
-        if (HasComp<SpaceGarbageComponent>(otherBody))
+        if (component.DestroyGarbage && HasComp<SpaceGarbageComponent>(otherBody))
         {
             _popupSystem.PopupEntity(Loc.GetString("comp-field-vaporized", ("entity", otherBody)), uid, PopupType.LargeCaution);
             QueueDel(otherBody);
@@ -37,7 +37,7 @@ public sealed class ContainmentFieldSystem : EntitySystem
             var fieldDir = Transform(uid).WorldPosition;
             var playerDir = Transform(otherBody).WorldPosition;
 
-            _throwing.TryThrow(otherBody, playerDir-fieldDir, strength: component.ThrowForce);
+            _throwing.TryThrow(otherBody, playerDir-fieldDir, baseThrowSpeed: component.ThrowForce);
         }
     }
 

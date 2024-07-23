@@ -19,6 +19,7 @@
     changeSlotTime: 0
   - type: ActivatableUI
     key: enum.MagicMirrorUiKey.Key
+    singleUser: true
   - type: UserInterface
     interfaces:
       enum.MagicMirrorUiKey.Key:
