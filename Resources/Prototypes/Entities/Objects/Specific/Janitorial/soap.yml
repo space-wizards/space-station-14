@@ -126,9 +126,14 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerVisuals
     fillBaseName: syndie-
+  - type: TriggerOnStepTrigger
+  - type: DamageUserOnTrigger
+    damage:
+      types:
+        Blunt: 10 # Special trait to make it more distinct and viable while avoiding balancing it entirely through stun duration
   - type: Slippery
     paralyzeTime: 3
-    launchForwardsMultiplier: 1 # Intentionally low for more combat viability
+    launchForwardsMultiplier: 0.5 # Intentionally low for more combat viability
   - type: Item
     heldPrefix: syndie
   - type: FlavorProfile
