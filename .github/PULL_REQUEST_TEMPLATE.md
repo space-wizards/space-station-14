@@ -23,6 +23,9 @@ Check the box below to confirm that you have in fact seen this (put an X in the 
 
 - [ ] I have added screenshots/videos to this PR showcasing its changes ingame, **or** this PR does not require an ingame showcase
 
+## Requirements
+- [ ] I have read and I am following the [Pull Request Guidelines](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html). I understand that not doing so may get my pr closed at maintainer’s discretion
+
 ## Breaking changes
 <!--
 List any breaking changes, including namespace, public class/method/field changes, prototype renames; and provide instructions for fixing them. This will be pasted in #codebase-changes.
