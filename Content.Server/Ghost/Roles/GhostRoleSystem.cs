@@ -7,6 +7,7 @@ using Content.Shared.Ghost.Roles.Raffles;
 using Content.Server.Ghost.Roles.UI;
 using Content.Server.Mind.Commands;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Follower;
 using Content.Shared.GameTicking;
@@ -20,6 +21,7 @@ using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
@@ -37,6 +39,8 @@ namespace Content.Server.Ghost.Roles
     [UsedImplicitly]
     public sealed class GhostRoleSystem : EntitySystem
     {
+      
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
@@ -452,7 +456,7 @@ namespace Content.Server.Ghost.Roles
             if (!_ghostRoles.TryGetValue(identifier, out var roleEnt))
                 return;
 
-            if (roleEnt.Comp.RaffleConfig is not null)
+            if (roleEnt.Comp.RaffleConfig is not null && _cfg.GetCVar(CCVars.RafflesEnabled))
             {
                 JoinRaffle(player, identifier);
             }
