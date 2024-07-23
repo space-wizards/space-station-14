@@ -148,6 +148,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     private void RemoveConnections(Entity<ContainmentFieldGeneratorComponent> generator)
     {
         var (uid, component) = generator;
+        var WasConnected = component.Connections.Count > 0;
         foreach (var (direction, value) in component.Connections)
         {
             foreach (var field in value.Item2)
@@ -169,8 +170,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         ChangeOnLightVisualizer(generator);
         ChangeFieldVisualizer(generator);
         _adminLogger.Add(LogType.FieldGeneration, LogImpact.Medium, $"{ToPrettyString(uid)} lost field connections"); // Ideally LogImpact would depend on if there is a singulo nearby
-
-        if(component.Connections.Count > 0)
+        if(WasConnected)
           _popupSystem.PopupEntity(Loc.GetString("comp-containment-disconnected"), uid, PopupType.LargeCaution);
     }
 
