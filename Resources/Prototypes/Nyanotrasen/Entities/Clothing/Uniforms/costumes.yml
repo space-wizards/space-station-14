@@ -53,7 +53,7 @@
   - type: Clothing
     sprite: Nyanotrasen/Clothing/Uniforms/Costume/bunny.rsi
     # TODO: Remove the line below when the sprite accounts for FemaleMask.
-    femaleMask: NoMask
+#    femaleMask: NoMask
 
 - type: entity
   parent: ClothingUniformSkirtBase
