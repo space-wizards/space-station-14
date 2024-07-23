@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: icekot8
-  changes:
-  - message: T3 Portable Microfusion Weaponry research now have a portable charger
-    type: Add
-  id: 6469
-  time: '2024-04-28T03:19:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26655
 - author: osjarw
   changes:
   - message: Putting a hand labeler in a belt is now predicted correctly.
@@ -3783,3 +3776,11 @@
   id: 6968
   time: '2024-07-22T22:24:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30223
+- author: Flareguy
+  changes:
+  - message: Added vox sprites for a few headwear items, including radiation suits
+      and the paramedic helmet.
+    type: Add
+  id: 6969
+  time: '2024-07-23T02:18:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30150
