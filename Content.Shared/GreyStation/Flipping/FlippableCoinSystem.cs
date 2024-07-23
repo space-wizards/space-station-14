@@ -65,6 +65,9 @@ public sealed class FlippableCoinSystem : EntitySystem
     private void OnActivate(Entity<FlippableCoinComponent> ent, ref ActivateInWorldEvent args)
     {
         TryFlip(ent, args.User);
+
+        _transform.AttachToGridOrMap(ent);
+        _throwing.TryThrow(ent, _random.NextVector2(), baseThrowSpeed: 1f, playSound: false);
     }
 
     public void TryFlip(Entity<FlippableCoinComponent> ent, EntityUid user)
@@ -80,14 +83,11 @@ public sealed class FlippableCoinSystem : EntitySystem
 
         _appearance.SetData(uid, FlippableCoinVisuals.Flipping, true);
 
-        // rolled down and not at the end so clients with reasonable ping can fully predict it
-        if (_net.IsServer)
-        {
-            comp.Flipped = _random.Prob(0.5f);
-            Dirty(uid, comp);
+        if (!_net.IsServer)
+            return;
 
-            _transform.AttachToGridOrMap(uid);
-            _throwing.TryThrow(uid, _random.NextVector2(), baseThrowSpeed: 1f, playSound: false);
-        }
+        // rolled here and not at the end so clients with reasonable ping can fully predict it
+        comp.Flipped = _random.Prob(0.5f);
+        Dirty(uid, comp);
     }
 }
