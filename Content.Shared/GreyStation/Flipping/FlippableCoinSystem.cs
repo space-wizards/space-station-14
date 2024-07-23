@@ -59,22 +59,28 @@ public sealed class FlippableCoinSystem : EntitySystem
 
     private void OnUse(Entity<FlippableCoinComponent> ent, ref UseInHandEvent args)
     {
-        TryFlip(ent, args.User);
+        if (args.Handled)
+            return;
+
+        args.Handled = TryFlip(ent, args.User);
     }
 
     private void OnActivate(Entity<FlippableCoinComponent> ent, ref ActivateInWorldEvent args)
     {
-        TryFlip(ent, args.User);
+        if (args.Handled)
+            return;
+
+        args.Handled = TryFlip(ent, args.User);
 
         _transform.AttachToGridOrMap(ent);
         _throwing.TryThrow(ent, _random.NextVector2(), baseThrowSpeed: 1f, playSound: false);
     }
 
-    public void TryFlip(Entity<FlippableCoinComponent> ent, EntityUid user)
+    public bool TryFlip(Entity<FlippableCoinComponent> ent, EntityUid user)
     {
         var (uid, comp) = ent;
         if (HasComp<FlippingCoinComponent>(uid))
-            return;
+            return false;
 
         _audio.PlayPredicted(comp.Sound, uid, user);
         var flipping = EnsureComp<FlippingCoinComponent>(uid);
@@ -83,11 +89,13 @@ public sealed class FlippableCoinSystem : EntitySystem
 
         _appearance.SetData(uid, FlippableCoinVisuals.Flipping, true);
 
-        if (!_net.IsServer)
-            return;
+        if (_net.IsServer)
+        {
+            // rolled here and not at the end so clients with reasonable ping can fully predict it
+            comp.Flipped = _random.Prob(0.5f);
+            Dirty(uid, comp);
+        }
 
-        // rolled here and not at the end so clients with reasonable ping can fully predict it
-        comp.Flipped = _random.Prob(0.5f);
-        Dirty(uid, comp);
+        return true;
     }
 }
