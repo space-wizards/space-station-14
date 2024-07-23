@@ -74,6 +74,12 @@ public sealed partial class InjectorComponent : Component
     public TimeSpan Delay = TimeSpan.FromSeconds(5);
 
     /// <summary>
+    /// Each additional 1u after first 5u increases the delay by X seconds.
+    /// </summary>
+    [DataField]
+    public TimeSpan DelayPerVolume = TimeSpan.FromSeconds(0.1);
+
+    /// <summary>
     /// The state of the injector. Determines it's attack behavior. Containers must have the
     /// right SolutionCaps to support injection/drawing. For InjectOnly injectors this should
     /// only ever be set to Inject
