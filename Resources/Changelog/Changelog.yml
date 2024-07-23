@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Lockers can now be deconstructed again.
-    type: Fix
-  id: 6474
-  time: '2024-04-28T05:26:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27431
 - author: SlamBamActionman
   changes:
   - message: "Removed Exterminators pending redesign. \U0001F525\U0001F44D\U0001F525"
@@ -3780,3 +3773,10 @@
   id: 6973
   time: '2024-07-23T08:13:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30229
+- author: Scribbles0
+  changes:
+  - message: Handless mobs can no longer wipe devices like positronic brains or pAIs.
+    type: Fix
+  id: 6974
+  time: '2024-07-23T17:47:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30149
