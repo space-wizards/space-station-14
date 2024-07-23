@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: KrasnoshchekovPavel
-  changes:
-  - message: Included damage type/group, metabolism type/group localization for weapon
-      damage examination and guidebook reagent effects
-    type: Fix
-  id: 6472
-  time: '2024-04-28T04:48:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27368
 - author: Keer-Sar
   changes:
   - message: Medal Cases now only hold medals
@@ -3780,3 +3772,11 @@
   id: 6971
   time: '2024-07-23T03:23:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30265
+- author: Errant
+  changes:
+  - message: Players are now notified when trying to insert an incompatible magazine
+      into a gun.
+    type: Add
+  id: 6972
+  time: '2024-07-23T06:36:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29046
