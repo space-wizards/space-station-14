@@ -779,7 +779,7 @@ namespace Content.Shared.CCVar
         /// Should the server play a quick sound to the active admins whenever a new player joins?
         /// </summary>
         public static readonly CVarDef<bool> AdminNewPlayerJoinSound =
-            CVarDef.Create("admin.new_player_join_sound", false, CVar.SERVERONLY);
+            CVarDef.Create("admin.new_player_join_sound", true, CVar.SERVERONLY);
 
         /// <summary>
         /// The amount of days before the note starts fading. It will slowly lose opacity until it reaches stale. Set to 0 to disable.
@@ -1636,7 +1636,7 @@ namespace Content.Shared.CCVar
         ///     Disabled: Cloning has full biomass cost and reclaimer can reclaim corpses with souls. (Playtested and balanced for MRP+).
         /// </summary>
         public static readonly CVarDef<bool> BiomassEasyMode =
-            CVarDef.Create("biomass.easy_mode", true, CVar.SERVERONLY);
+            CVarDef.Create("biomass.easy_mode", false, CVar.SERVERONLY);
 
         /*
          * Anomaly
@@ -1818,7 +1818,7 @@ namespace Content.Shared.CCVar
         /// Allows flavor text (character descriptions)
         /// </summary>
         public static readonly CVarDef<bool> FlavorText =
-            CVarDef.Create("ic.flavor_text", false, CVar.SERVER | CVar.REPLICATED);
+            CVarDef.Create("ic.flavor_text", true, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
         /// Adds a period at the end of a sentence if the sentence ends in a letter.
