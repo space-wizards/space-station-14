@@ -1941,7 +1941,7 @@
   flavor: radiation
   color: "#B9FF66"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/uap.rsi
+    sprite: Objects/Consumable/Drinks/uapglass.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
@@ -1957,34 +1957,38 @@
         - !type:AdjustReagent
           reagent: Ethanol
           amount: 0.20
-      - !type:AdjustReagent
-        reagent: Uranium
-        amount: 0.05
-      - !type:AdjustReagent
-        reagent: Radium
-        amount: 0.05
+        - !type:AdjustReagent
+          reagent: Uranium
+          amount: 0.05
+        - !type:AdjustReagent
+          reagent: Radium
+          amount: 0.05
         - !type:PopupMessage
           Conditions:
-          - !type:ReagentThreshold
-            reagent: UAP
-            min: 1
-            max: 10
-          visualType: LowCaution
+            - !type:ReagentThreshold
+              reagent: UAP
+              min: 1
+              max: 10
+          visualType: SmallCaution
           type: Local
           messages: [ "uap-effect-n1"]
           probability: 0.1
-          - !type:ReagentThreshold
-            reagent: UAP
-            min: 10
-            max: 20
+        - !type:PopupMessage
+          Conditions:
+            - !type:ReagentThreshold
+              reagent: UAP
+              min: 10
+              max: 20
           visualType: MediumCaution
           type: Local
           messages: [ "uap-effect-n2" ]
           probability: 0.1
-          - !type:ReagentThreshold
-            reagent: UAP
-            min: 20
-          visualType: HighCaution
+        - !type:PopupMessage
+          Conditions:
+            - !type:ReagentThreshold
+              reagent: UAP
+              min: 20
+          visualType: LargeCaution
           type: Local
           messages: [ "uap-effect-med" ]
           probability: 0.1
@@ -2011,7 +2015,7 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.15    
-     Medicine:
+    Medicine:
       effects:
       - !type:HealthChange
         damage:

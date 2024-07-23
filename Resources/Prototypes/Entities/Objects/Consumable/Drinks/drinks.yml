@@ -2349,7 +2349,7 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkUapGlass
+  id: DrinkUAPGlass
   suffix: uap
   components:
   - type: SolutionContainerManager
@@ -2357,10 +2357,10 @@
       drink:
         maxVol: 30
         reagents:
-        - ReagentId: Uap
+        - ReagentId: UAP
           Quantity: 30
   - type: Icon
-    sprite: Objects/Consumable/Drinks/uap.rsi
+    sprite: Objects/Consumable/Drinks/uapglass.rsi
     state: icon
 
 - type: entity
