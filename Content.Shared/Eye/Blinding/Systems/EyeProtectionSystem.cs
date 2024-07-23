@@ -57,6 +57,7 @@ namespace Content.Shared.Eye.Blinding.Systems
         private void OnWelderToggled(EntityUid uid, RequiresEyeProtectionComponent component, ItemToggledEvent args)
         {
             component.Toggled = args.Activated;
+            Dirty(uid, component);
         }
     }
 }
