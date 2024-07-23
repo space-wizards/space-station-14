@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: osjarw
-  changes:
-  - message: Putting a hand labeler in a belt is now predicted correctly.
-    type: Fix
-  id: 6470
-  time: '2024-04-28T04:19:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26660
 - author: Dezzzix
   changes:
   - message: Added bar spoon, jigger and ice bucket
@@ -3784,3 +3777,10 @@
   id: 6969
   time: '2024-07-23T02:18:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30150
+- author: Cojoke-dot
+  changes:
+  - message: You can no longer use telescreens and televisions while blind or asleep.
+    type: Fix
+  id: 6970
+  time: '2024-07-23T02:33:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30260
