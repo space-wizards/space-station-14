@@ -53,7 +53,8 @@ public sealed class DamageOnAttackedSystem : EntitySystem
             if (protectiveEntity.Comp == null && TryComp<HandsComponent>(args.User, out var handsComp))
             {
                 if (_handsSystem.TryGetActiveItem((args.User, handsComp), out var itemInHand) &&
-                    TryComp<DamageOnAttackedProtectionComponent>(itemInHand, out var itemProtectComp))
+                    TryComp<DamageOnAttackedProtectionComponent>(itemInHand, out var itemProtectComp)
+                    && itemProtectComp.Slots == SlotFlags.NONE)
                 {
                     protectiveEntity = (itemInHand.Value, itemProtectComp);
                 }
@@ -62,8 +63,7 @@ public sealed class DamageOnAttackedSystem : EntitySystem
             // if comp is null, that means both the inventory and hands had nothing to protect them
             // let's check if the entity itself has the protective comp, like with borgs
             if (protectiveEntity.Comp == null &&
-                TryComp<DamageOnAttackedProtectionComponent>(args.User, out var protectiveComp) &&
-                protectiveComp.Slots == SlotFlags.NONE)
+                TryComp<DamageOnAttackedProtectionComponent>(args.User, out var protectiveComp))
             {
                 protectiveEntity = (args.User, protectiveComp);
             }
