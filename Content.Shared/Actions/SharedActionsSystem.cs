@@ -521,7 +521,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (comp.Range <= 0)
             return true;
 
-        return coords.InRange(EntityManager, _transform, xform.Coordinates, comp.Range);
+        return _transform.InRange(coords, xform.Coordinates, comp.Range);
     }
 
     private void OnInstantSetEvent(Entity<InstantActionComponent> ent, ref ActionSetEventEvent args)
