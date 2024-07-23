@@ -210,7 +210,6 @@
     sprite: Clothing/Uniforms/Jumpsuit/clown.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/clown.rsi
-    femaleMask: UniformTop
   - type: Tag
     tags:
     - ClownSuit
@@ -224,7 +223,6 @@
     sprite: Clothing/Uniforms/Jumpsuit/clown_banana.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/clown_banana.rsi
-    femaleMask: UniformTop
   - type: Construction
     graph: BananaClownJumpsuit
     node: jumpsuit
