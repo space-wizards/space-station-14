@@ -148,7 +148,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     private void RemoveConnections(Entity<ContainmentFieldGeneratorComponent> generator)
     {
         var (uid, component) = generator;
-        var WasConnected = component.Connections.Count > 0;
+        var WasConnected = component.IsConnected;
         foreach (var (direction, value) in component.Connections)
         {
             foreach (var field in value.Item2)
