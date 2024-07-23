@@ -369,6 +369,12 @@
     {
       "name": "beachb-inhand-right",
       "directions": 4
+    },
+    {
+      "name": "yarn"
+    },
+    {
+      "name": "scrap"
     }
   ]
 }
