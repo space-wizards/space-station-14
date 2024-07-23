@@ -24,7 +24,7 @@ public sealed class ActivatableUIRequiresVisionSystem : EntitySystem
 
         if (TryComp<BlindableComponent>(args.User, out var blindable) && blindable.IsBlind)
         {
-            _popupSystem.PopupCursor(Loc.GetString("blindness-fail-attempt"), args.User, Shared.Popups.PopupType.MediumCaution);
+            _popupSystem.PopupClient(Loc.GetString("blindness-fail-attempt"), args.User, Shared.Popups.PopupType.MediumCaution);
             args.Cancel();
         }
     }
