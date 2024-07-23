@@ -22,7 +22,7 @@
   parent: GasTankBase
   abstract: true
   id: BaseJetpack
-  name: Jetpack
+  name: jetpack
   description: It's a jetpack. It can hold 5 L of gas.
   components:
     - type: InputMover
