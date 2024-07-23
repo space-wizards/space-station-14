@@ -58,16 +58,16 @@ namespace Content.Shared.DrawDepth
         Objects = DrawDepthTag.Default,
 
         /// <summary>
+        ///     Posters, APCs, air alarms, etc. This also includes most lights & lamps.
+        /// </summary>
+        WallMountedItems = DrawDepthTag.Default + 1,
+
+        /// <summary>
         ///     In-between an furniture and an item. Useful for entities that need to appear on top of tables, but are
         ///     not items. E.g., power cell chargers. Also useful for pizza boxes, which appear above crates, but not
         ///     above the pizza itself.
         /// </summary>
-        SmallObjects = DrawDepthTag.Default + 1,
-
-        /// <summary>
-        ///     Posters, APCs, air alarms, etc. This also includes most lights & lamps.
-        /// </summary>
-        WallMountedItems = DrawDepthTag.Default + 2,
+        SmallObjects = DrawDepthTag.Default + 2,
 
         /// <summary>
         ///     Generic items. Things that should be above crates & tables, but underneath mobs.
