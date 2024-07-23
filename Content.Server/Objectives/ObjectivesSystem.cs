@@ -129,12 +129,12 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             var agentSummary = new StringBuilder();
             agentSummary.AppendLine(Loc.GetString("objectives-with-objectives", ("custody", custody), ("title", title), ("agent", agent)));
 
-            foreach (var objectiveGroup in objectives.GroupBy(o => Comp<ObjectiveComponent>(o).Issuer))
+            foreach (var objectiveGroup in objectives.GroupBy(o => Comp<ObjectiveComponent>(o).LocIssuer))
             {
                 //TO DO:
                 //check for the right group here. Getting the target issuer is easy: objectiveGroup.Key
                 //It should be compared to the type of the group's issuer.
-                agentSummary.AppendLine(Loc.GetString($"objective-issuer-{objectiveGroup.Key}"));
+                agentSummary.AppendLine(objectiveGroup.Key);
 
                 foreach (var objective in objectiveGroup)
                 {
