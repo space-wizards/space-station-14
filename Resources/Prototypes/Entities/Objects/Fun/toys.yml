@@ -1136,7 +1136,7 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: singularitytoy
-    scale: 0, 0
+    color: transparent
   - type: SingularityDistortion
     intensity: 2000
     falloffPower: 2.6
