@@ -14,7 +14,7 @@ namespace Content.Client.Chemistry.UI
         private EntityUid _owner;
         [ViewVariables]
         private TransferAmountWindow? _window;
-        
+
         public TransferAmountBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
           _owner = owner;
