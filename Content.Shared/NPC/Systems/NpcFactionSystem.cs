@@ -1,3 +1,5 @@
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Prototypes;
 using Robust.Shared.Prototypes;
@@ -304,12 +306,14 @@ public sealed partial class NpcFactionSystem : EntitySystem
     /// <summary>
     ///     Raised at an entity to see if something is keeping it inside a faction.
     /// </summary>
-    public sealed class TryRemoveFactionAttemptEvent : CancellableEntityEventArgs
+    public sealed class TryRemoveFactionAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
     {
         public readonly ProtoId<NpcFactionPrototype>? Faction;
         public TryRemoveFactionAttemptEvent(ProtoId<NpcFactionPrototype>? faction)
         {
             Faction = faction;
         }
+
+        public SlotFlags TargetSlots => SlotFlags.OUTERCLOTHING; // I guess you gotta add more if you want anything else :shrugs:
     }
 }

@@ -1,4 +1,5 @@
 using Content.Shared.Clothing.Components;
+using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
@@ -18,7 +19,7 @@ public sealed class FactionClothingSystem : EntitySystem
 
         SubscribeLocalEvent<FactionClothingComponent, GotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<FactionClothingComponent, GotUnequippedEvent>(OnUnequipped);
-        SubscribeLocalEvent<FactionClothingComponent, NpcFactionSystem.TryRemoveFactionAttemptEvent>(OnTryRemoveFaction);
+        SubscribeLocalEvent<FactionClothingComponent, InventoryRelayedEvent<NpcFactionSystem.TryRemoveFactionAttemptEvent>>(OnTryRemoveFaction);
     }
 
     private void OnEquipped(Entity<FactionClothingComponent> ent, ref GotEquippedEvent args)
@@ -39,11 +40,11 @@ public sealed class FactionClothingSystem : EntitySystem
         }
     }
 
-    private void OnTryRemoveFaction(Entity<FactionClothingComponent> ent, ref NpcFactionSystem.TryRemoveFactionAttemptEvent args)
+    private void OnTryRemoveFaction(Entity<FactionClothingComponent> ent, ref InventoryRelayedEvent<NpcFactionSystem.TryRemoveFactionAttemptEvent> args)
     {
-        if (ent.Comp.Faction == args.Faction)
+        if (ent.Comp.Faction == args.Args.Faction)
         {
-            args.Cancel();
+            args.Args.Cancel();
         }
     }
 }
