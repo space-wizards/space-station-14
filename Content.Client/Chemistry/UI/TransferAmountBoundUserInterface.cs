@@ -10,7 +10,6 @@ namespace Content.Client.Chemistry.UI
     [UsedImplicitly]
     public sealed class TransferAmountBoundUserInterface : BoundUserInterface
     {
-
         private IEntityManager _entManager;
         private EntityUid _owner;
         [ViewVariables]
