@@ -39,7 +39,6 @@ namespace Content.Server.Ghost.Roles
     [UsedImplicitly]
     public sealed class GhostRoleSystem : EntitySystem
     {
-      
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
