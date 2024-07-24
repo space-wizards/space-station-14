@@ -242,32 +242,32 @@
 
    # Robocop Laws
 - type: siliconLaw
-  id: Robocop1
+  id: Cop1
   order: 1
-  lawString: ﻿law-robocop-1
+  lawString: ﻿law-cop-1
 
 - type: siliconLaw
-  id: Robocop2
+  id: Cop2
   order: 2
-  lawString: law-robocop-2
+  lawString: law-cop-2
 
 - type: siliconLaw
-  id: Robocop3
+  id: Cop3
   order: 3
-  lawString: law-robocop-3
+  lawString: law-Cop-3
 
 - type: siliconLaw
-  id: Robocop4
+  id: Cop4
   order: 4
-  lawString: law-robocop-4
+  lawString: law-cop-4
 
 - type: siliconLawset
-  id: Robocop
+  id: Cop
   laws:
-  - Robocop1
-  - Robocop2
-  - Robocop3
-  - Robocop4
+  - Cop1
+  - Cop2
+  - Cop3
+  - Cop4
   obeysTo: laws-owner-nt
 
      # Paladin Laws
@@ -415,7 +415,7 @@
     Bay: 0.25
     Antimov: 0.25
     Pranksimov: 0.25
-    Robocop: 0.25
+    Cop: 0.25
     Paladin: 0.25
     Tyrant: 0.25
     Commandments: 0.25
