@@ -7,6 +7,7 @@
   - type: Tag
     tags:
     - Knife
+  - type: Sharp
   - type: Sprite
     sprite: VXS/Weapons/Melee/axe.rsi
     state: icon
@@ -21,6 +22,11 @@
     damage:
       types:
         Slash: 15
+  - type: StaminaDamageOnHit
+    damage: 10
+  - type: Tool
+    qualities:
+      - Prying
   - type: EmbeddableProjectile
     sound: /Audio/Weapons/star_hit.ogg
   - type: DamageOtherOnHit
