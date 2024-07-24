@@ -9,8 +9,6 @@ namespace Content.Client.Audio.Jukebox;
 [GenerateTypedNameReferences]
 public sealed partial class JukeboxEntry : BoxContainer
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-
     private JukeboxPrototype? _song;
     private bool _playPauseState = true;
     public bool PlayPauseState
