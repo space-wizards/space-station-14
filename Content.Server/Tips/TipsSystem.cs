@@ -189,9 +189,9 @@ public sealed class TipsSystem : EntitySystem
             return;
 
         var tip = _random.Pick(tips.Values);
-        var parts = tip.Split('-');
 
-        if (Int32.TryParse(parts[^1], out int index))
+        // Corrects for an off-by-one error
+        if (Int32.TryParse(tip.Split('-')[^1], out int index))
             tip = tip[..tip.LastIndexOf('-')] + (index - 1);
 
         var msg = Loc.GetString("tips-system-chat-message-wrap", ("tip", Loc.GetString(tip)));
