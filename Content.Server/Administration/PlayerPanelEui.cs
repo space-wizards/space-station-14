@@ -89,17 +89,16 @@ public sealed class PlayerPanelEui : BaseEui
                 if (_entity.HasComponent<AdminFrozenComponent>(session.AttachedEntity))
                 {
                     _entity.RemoveComponent<AdminFrozenComponent>(session.AttachedEntity.Value);
+                    return;
+                }
+
+                if (freezeMsg.Mute)
+                {
+                    frozenSystem.FreezeAndMute(session.AttachedEntity.Value);
                 }
                 else
                 {
-                    if (freezeMsg.Mute)
-                    {
-                        frozenSystem.FreezeAndMute(session.AttachedEntity.Value);
-                    }
-                    else
-                    {
-                        _entity.EnsureComponent<AdminFrozenComponent>(session.AttachedEntity.Value);
-                    }
+                    _entity.EnsureComponent<AdminFrozenComponent>(session.AttachedEntity.Value);
                 }
                 SetPlayerState();
                 break;
@@ -107,7 +106,6 @@ public sealed class PlayerPanelEui : BaseEui
             case PlayerPanelLogsMessage:
                 if (!_admins.HasAdminFlag(Player, AdminFlags.Logs))
                     return;
-
 
                 var ui = new AdminLogsEui();
                 _eui.OpenEui(ui, Player);

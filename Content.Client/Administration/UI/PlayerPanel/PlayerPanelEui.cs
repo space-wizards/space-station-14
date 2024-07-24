@@ -12,14 +12,14 @@ namespace Content.Client.Administration.UI.PlayerPanel;
 public sealed class PlayerPanelEui : BaseEui
 {
     [Dependency] private readonly IClientConsoleHost _console = default!;
-    [Dependency] private readonly IClientAdminManager _adminManager = default!;
+    [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IClipboardManager _clipboard = default!;
 
     private PlayerPanel PlayerPanel { get;  }
 
     public PlayerPanelEui()
     {
-        PlayerPanel = new PlayerPanel(_adminManager);
+        PlayerPanel = new PlayerPanel(_admin);
 
         PlayerPanel.OnUsernameCopy += username => _clipboard.SetText(username);
         PlayerPanel.OnOpenNotes += id => _console.ExecuteCommand($"adminnotes \"{id}\"");
