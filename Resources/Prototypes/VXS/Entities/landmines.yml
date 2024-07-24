@@ -1,0 +1,18 @@
+- type: entity
+  name: AIL-2M
+  parent: BaseLandMine
+  id: LandMineInfantryAIL
+  components:
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 25
+    intensitySlope: 3
+    totalIntensity: 15
+    canCreateVacuum: false
+  - type: Sprite
+    drawdepth: Items
+    sprite: VXS/Objects/landmine.rsi
+    state: landmine
+  - type: StepTrigger
+    stepOn: false
