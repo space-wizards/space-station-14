@@ -155,6 +155,7 @@
       coefficients:
         Heat: 0.95
         Radiation: 0.65
+  - type: IdentityBlocker
   - type: BreathMask
   - type: HideLayerClothing
     slots:
