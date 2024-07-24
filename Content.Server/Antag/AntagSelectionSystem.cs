@@ -333,7 +333,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         EntityManager.AddComponents(player, def.Components);
 
         // Equip the entity's RoleLoadout and LoadoutGroup
-        List<ProtoId<StartingGearPrototype>>? gear = new(); // TODO: Just make this a list on AntagSelectionComponent, and update every antag prototype
+        List<ProtoId<StartingGearPrototype>>? gear = new();
         if (def.StartingGear is not null)
             gear.Add(def.StartingGear.Value);
 
