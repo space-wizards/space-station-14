@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: Circuit imprinter recipes now cost less glass
-    type: Tweak
-  id: 6476
-  time: '2024-04-28T05:46:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27310
 - author: Piksqu & Boaz1111
   changes:
   - message: Added the hyperconvection circuit imprinter
@@ -3780,3 +3773,10 @@
   id: 6975
   time: '2024-07-23T21:02:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30267
+- author: BombasterDS
+  changes:
+  - message: Fixed items disappearing after shelfs and mannequin disassembling
+    type: Fix
+  id: 6976
+  time: '2024-07-24T08:57:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30313
