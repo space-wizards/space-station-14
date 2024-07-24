@@ -1,0 +1,38 @@
+- type: entity
+  parent: BaseItem
+  id: ImportantDocument
+  name: important document
+  description: Looks highly classified!
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Syndicate/document.rsi
+      layers:
+      - state: background_messy
+        map: [ "background" ]
+      - state: bribe
+        map: [ "bribe" ]
+      - state: document
+      - state: line
+        map: [ "label" ]
+    - type: Tag
+      tags:
+        - Document
+        - HighRiskItem
+    - type: StealTarget
+      stealGroup: ""
+    - type: RandomStealTarget
+      stealTargetNames: [ArrestLogs, RadioLogs, StationMaintenceReport, ResesarchReport, MedicalLogs, SupplyReport, CentralCommandReport, CentralCommandAudit, NuclearDeviceMaintainceReport, ArmoryInspectionReport, VaultInspectionReport]
+    - type: RenameItemToStealTarget
+    - type: RandomSprite
+      getAllGroups: true
+      available:
+        - background:
+            background_messy: ""
+            background_clean: ""
+            background_large: ""
+        - bribe:
+            bribe: ""
+            empty: ""
+        - label:
+            line: DepartmentalSpecialPick
+            stamp: DepartmentalSpecialPick

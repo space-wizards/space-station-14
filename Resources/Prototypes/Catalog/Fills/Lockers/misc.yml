@@ -209,6 +209,9 @@
         - id: WeaponSniperMosin
           prob: 0.0010
           orGroup: syndiemaintloot
+        - id: ImportantDocument
+          prob:  0.012
+          onGroup: syndiemaintloot
 
 - type: entity
   id: ClosetWallMaintenanceFilledRandom
