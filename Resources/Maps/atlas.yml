@@ -2919,8 +2919,6 @@ entities:
       pos: -34.5,1.5
       parent: 30
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 5914
       - 1087
@@ -2987,8 +2985,6 @@ entities:
       pos: 15.5,20.5
       parent: 30
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 1401
       - 1421
@@ -3036,8 +3032,6 @@ entities:
       pos: -59.5,3.5
       parent: 30
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 6799
       - 7235
@@ -3051,8 +3045,6 @@ entities:
       pos: -4.5,12.5
       parent: 30
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 1989
       - 845
@@ -3369,8 +3361,6 @@ entities:
       pos: 1.5,8.5
       parent: 30
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 8668
       - 8669
