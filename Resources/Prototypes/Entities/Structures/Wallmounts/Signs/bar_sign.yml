@@ -11,7 +11,7 @@
   - type: WallMount
     arc: 360
   - type: Sprite
-    drawdepth: Objects
+    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/barsign.rsi
     state: empty
   - type: ApcPowerReceiver
