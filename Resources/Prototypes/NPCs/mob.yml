@@ -10,16 +10,6 @@
           task: IdleCompound
 
 - type: htnCompound
-  id: SimpleHostileSyringeCompound
-  branches:
-    - tasks:
-        - !type:HTNCompoundTask
-          task: MeleeCombatSyringeCompound
-    - tasks:
-        - !type:HTNCompoundTask
-          task: IdleCompound
-
-- type: htnCompound
   id: RatServantTargetAttackCompound
   branches:
     - tasks:

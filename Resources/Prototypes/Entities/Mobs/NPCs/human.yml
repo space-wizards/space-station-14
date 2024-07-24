@@ -30,15 +30,6 @@
         task: SimpleHumanoidHostileCompound
 
 - type: entity
-  parent: MobSalvager
-  id: MobSalvagerSyringe
-  suffix: syringe
-  components:
-    - type: HTN
-      rootTask:
-        task: SimpleHostileSyringeCompound
-
-- type: entity
   name: spirate
   parent: BaseMobHuman
   id: MobSpirate
