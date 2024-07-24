@@ -576,19 +576,15 @@
     },
 	{
       "name": "WARDEN-ARMORED-icon",
-      "directions": 4
     },
 	{
       "name": "HOS-ARMORED-icon",
-      "directions": 4
     },
 	{
       "name": "SYNDIE-ARMORED-icon",
-      "directions": 4
     },
 	{
       "name": "ARMOR-icon",
-      "directions": 4
     }
   ]
 }
