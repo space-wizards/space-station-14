@@ -1,5 +1,4 @@
-﻿using Content.Server.GameTicking.Events;
-using Content.Shared.Chemistry.Components;
+﻿using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -33,14 +32,13 @@ public sealed class ChemistryRegistrySystem : SharedChemistryRegistrySystem
         SubscribeLocalEvent<ChemistryRegistryComponent, MapInitEvent>(OnRegistryMapInit);
         SubscribeLocalEvent<ChemistryRegistryComponent, EntInsertedIntoContainerMessage>(OnRegistryInserted);
         SubscribeLocalEvent<ChemistryRegistryComponent, EntRemovedFromContainerMessage>(OnRegistryRemoved);
-
-        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
     }
 
     private void OnRegistryMapInit(Entity<ChemistryRegistryComponent> ent, ref MapInitEvent args)
     {
         _pvsOverride.AddGlobalOverride(ent);
         _container.EnsureContainer<Container>(ent, ent.Comp.ContainerId);
+        LoadData();
     }
 
     private void OnRegistryInserted(Entity<ChemistryRegistryComponent> registry, ref EntInsertedIntoContainerMessage args)
@@ -73,11 +71,6 @@ public sealed class ChemistryRegistrySystem : SharedChemistryRegistrySystem
             registry.Comp.Reagents.Remove(reagent.Id);
             Dirty(registry);
         }
-    }
-
-    private void OnRoundStarting(RoundStartingEvent ev)
-    {
-        LoadData();
     }
 
     private Entity<ChemistryRegistryComponent> EnsureRegistry()
