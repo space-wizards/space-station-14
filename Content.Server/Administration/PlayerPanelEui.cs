@@ -89,6 +89,7 @@ public sealed class PlayerPanelEui : BaseEui
                 if (_entity.HasComponent<AdminFrozenComponent>(session.AttachedEntity))
                 {
                     _entity.RemoveComponent<AdminFrozenComponent>(session.AttachedEntity.Value);
+                    SetPlayerState();
                     return;
                 }
 
