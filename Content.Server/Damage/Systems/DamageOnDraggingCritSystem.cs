@@ -9,6 +9,8 @@ using Content.Shared.Damage;
 using Content.Server.Damage.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Effects;
+using Content.Shared.Inventory;
+using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
@@ -23,6 +25,8 @@ public sealed class DamageOnDraggingCritSystem : EntitySystem
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
     //[Dependency] private readonly SharedAudioSystem _audio = default!;
 
     private EntityQuery<PullableComponent> _pullableQuery;
@@ -96,6 +100,11 @@ public sealed class DamageOnDraggingCritSystem : EntitySystem
 
         // Check that we are not weightless
         if(_gravity.IsWeightless(uid))
+            return;
+        
+        // Check that we're not wearing a hardsuit
+        // We don't want to make salvage's job harder
+        if(_inventory.TryGetSlotEntity(uid, "outerClothing", out var suit) && _tag.HasTag(suit.Value, "Hardsuit"))
             return;
 
         var adjustedThreshold = comp.DistanceThreshold * comp.Interval.TotalSeconds;
