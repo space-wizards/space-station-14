@@ -193,7 +193,7 @@ public sealed class TipsSystem : EntitySystem
 
         // Corrects for an off-by-one error
         if (Int32.TryParse(tip.Split('-')[^1], out int index))
-            tip = tip[..tip.LastIndexOf('-')] + (index + 1);
+            tip = tip[..tip.LastIndexOf('-')] + (index - 1);
 
         if (_random.Prob(_tipTippyChance))
         {
