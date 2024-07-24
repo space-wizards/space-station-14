@@ -22,8 +22,8 @@ public sealed partial class JukeboxEntry : BoxContainer
         }
     }
 
-    private Type _entryType;
-    public Type EntryType
+    private JukeboxEntryType _entryType;
+    public JukeboxEntryType EntryType
     {
         get {return _entryType;}
         set {
@@ -67,7 +67,7 @@ public sealed partial class JukeboxEntry : BoxContainer
             return;
 
         PlayButton.OnPressed += args => {
-            if (_entryType == Type.Current)
+            if (_entryType == JukeboxEntryType.Current)
             {
                 _playPauseState = !_playPauseState;
                 UpdateLabel();
@@ -104,10 +104,10 @@ public sealed partial class JukeboxEntry : BoxContainer
 
     private void Buttons()
     {
-        PlayButton.Visible = _song != null && (_entryType == Type.List || _entryType == Type.Current);
-        StopButton.Visible = _song != null && _entryType == Type.Current;
-        RemoveButton.Visible = _song != null && _entryType == Type.Queue;
-        QueueButton.Visible = _song != null && _entryType == Type.List;
+        PlayButton.Visible = _song != null && (_entryType == JukeboxEntryType.List || _entryType == JukeboxEntryType.Current);
+        StopButton.Visible = _song != null && _entryType == JukeboxEntryType.Current;
+        RemoveButton.Visible = _song != null && _entryType == JukeboxEntryType.Queue;
+        QueueButton.Visible = _song != null && _entryType == JukeboxEntryType.List;
     }
 
     private void UpdateLabel()
@@ -122,7 +122,7 @@ public sealed partial class JukeboxEntry : BoxContainer
         }
     }
 
-    public enum Type
+    public enum JukeboxEntryType
     {
         List,
         Queue,

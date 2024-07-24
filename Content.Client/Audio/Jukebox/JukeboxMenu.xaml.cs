@@ -74,7 +74,7 @@ public sealed partial class JukeboxMenu : FancyWindow
         foreach (var entry in jukeboxProtos)
         {
             // MusicList.AddItem(entry.Name, metadata: entry.ID);
-            var songControl = new JukeboxEntry(entry) {EntryType = JukeboxEntry.Type.List};
+            var songControl = new JukeboxEntry(entry) {EntryType = JukeboxEntry.JukeboxEntryType.List};
             songControl.SetOnPressedPlay((song, _, args) =>
             {
                 if (song == null)
@@ -155,7 +155,7 @@ public sealed partial class JukeboxMenu : FancyWindow
                 continue;
 
             i += 1;
-            var songControl = new JukeboxEntry(songProto) {EntryType = JukeboxEntry.Type.Queue};
+            var songControl = new JukeboxEntry(songProto) {EntryType = JukeboxEntry.JukeboxEntryType.Queue};
             MusicListQueue.AddChild(songControl);
 
             songControl.SetOnPressedRemove((source, args) =>
