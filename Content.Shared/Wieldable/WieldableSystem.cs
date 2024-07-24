@@ -121,7 +121,6 @@ public sealed class WieldableSystem : EntitySystem
     {
         if(entity.Comp.WieldRequiresExamineMessage != null)
             args.PushText(Loc.GetString(entity.Comp.WieldRequiresExamineMessage));
-
     }
 
     private void OnExamine(EntityUid uid, GunWieldBonusComponent component, ref ExaminedEvent args)
