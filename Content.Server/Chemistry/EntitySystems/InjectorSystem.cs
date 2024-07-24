@@ -201,7 +201,7 @@ public sealed class InjectorSystem : SharedInjectorSystem
             BreakOnDamage = true,
             NeedHand = injector.Comp.NeedHand,
             BreakOnHandChange = injector.Comp.BreakOnHandChange,
-            MovementThreshold = 0.1f,
+            MovementThreshold = injector.Comp.MovementThreshold,
         });
     }
 
