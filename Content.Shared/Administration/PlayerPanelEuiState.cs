@@ -24,4 +24,6 @@ public sealed class PlayerPanelEuiState(NetUserId guid, string username, TimeSpa
 [Serializable, NetSerializable]
 public sealed class PlayerPanelFreezeMessage : EuiMessageBase;
 
+[Serializable, NetSerializable]
+public sealed class PlayerPanelLogsMessage : EuiMessageBase;
 

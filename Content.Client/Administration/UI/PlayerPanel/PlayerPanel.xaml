@@ -12,13 +12,14 @@
        <Label Name="Notes"/>
        <Label Name="Bans"/>
        <Label Name="RoleBans"/>
-       <GridContainer Rows="3">
+       <GridContainer Rows="4">
         <Button Name="NotesButton" Text="{Loc player-panel-show-notes}" Disabled="True"/>
         <Button Name="ShowBansButton" Text="{Loc player-panel-show-bans}" Disabled="True"/>
-        <Button Name="AhelpButton" Text="{Loc player-panel-help}"/>
+        <Button Name="AhelpButton" Text="{Loc player-panel-help}" Disabled="True"/>
         <Button Name="FreezeToggleButton" Text="{Loc player-panel-freeze}" Disabled="True"/>
         <controls:ConfirmButton Name="KickButton" Text="Kick" Disabled="True"/>
         <Button Name="BanButton" Text="{Loc player-panel-ban}" Disabled="True"/>
+        <Button Name="LogsButton" Text="{Loc player-panel-logs}" Disabled="True"/>
        </GridContainer>
     </BoxContainer>
 </DefaultWindow>

@@ -29,7 +29,9 @@ public sealed class PlayerPanelEui : BaseEui
         {
             _console.ExecuteCommand(whitelisted ? $"whitelistremove \"{id}\"" : $"whitelistadd \"{id}\"");
         };
+
         PlayerPanel.OnFreezeToggle += () => SendMessage(new PlayerPanelFreezeMessage());
+        PlayerPanel.OnLogs += () => SendMessage(new PlayerPanelLogsMessage());
 
         PlayerPanel.OnClose += () => SendMessage(new CloseEuiMessage());
     }

@@ -12,3 +12,4 @@ player-panel-freeze = Freeze & Mute
 player-panel-unfreeze = Unfreeze
 player-panel-kick = Kick
 player-panel-ban = Ban
+player-panel-logs = Logs

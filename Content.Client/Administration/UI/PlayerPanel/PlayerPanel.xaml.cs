@@ -19,6 +19,7 @@ public sealed partial class PlayerPanel : DefaultWindow
     public event Action<NetUserId?>? OnOpenBanPanel;
     public event Action<NetUserId?, bool>? OnWhitelistToggle;
     public event Action? OnFreezeToggle;
+    public event Action? OnLogs;
 
     public NetUserId? TargetPlayer;
     public string? TargetUsername;
@@ -40,6 +41,7 @@ public sealed partial class PlayerPanel : DefaultWindow
                 SetWhitelisted(!_isWhitelisted);
             };
             FreezeToggleButton.OnPressed += _ => OnFreezeToggle?.Invoke();
+            LogsButton.OnPressed += _ => OnLogs?.Invoke();
     }
 
     public void SetTitle(string player)
@@ -106,5 +108,6 @@ public sealed partial class PlayerPanel : DefaultWindow
         ShowBansButton.Disabled = !_adminManager.CanCommand("banlist");
         WhitelistToggle.Disabled =
             !(_adminManager.CanCommand("addwhitelist") && _adminManager.CanCommand("removewhitelist"));
+        LogsButton.Disabled = !_adminManager.CanCommand("adminlogs");
     }
 }

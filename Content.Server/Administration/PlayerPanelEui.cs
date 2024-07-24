@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Notes;
 using Content.Server.Administration.Systems;
@@ -17,6 +18,8 @@ public sealed class PlayerPanelEui : BaseEui
     [Dependency] private readonly IAdminNotesManager _notesMan = default!;
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly EuiManager _eui = default!;
+
 
     private readonly LocatedPlayerData _targetPlayer;
     private int? _notes;
@@ -63,22 +66,35 @@ public sealed class PlayerPanelEui : BaseEui
     {
         base.HandleMessage(msg);
 
-        // Not sure if it's even possible for them to not be an admin at this point as the bui is set to close when they lose persm
-        // I have this just in case tho.
-        if (msg is not PlayerPanelFreezeMessage _ || !_admins.IsAdmin(Player) || !_entity.TrySystem<AdminFrozenSystem>(out var frozenSystem))
-            return;
-
-        if (_player.TryGetSessionById(_targetPlayer.UserId, out var session) && session.AttachedEntity != null)
+        switch (msg)
         {
-            if (_entity.HasComponent<AdminFrozenComponent>(session.AttachedEntity))
-            {
-                _entity.RemoveComponent<AdminFrozenComponent>(session.AttachedEntity.Value);
-            }
-            else
-            {
-                frozenSystem.FreezeAndMute(session.AttachedEntity.Value);
-            }
-            SetPlayerState();
+            case PlayerPanelFreezeMessage:
+                if (!_admins.IsAdmin(Player) ||
+                    !_entity.TrySystem<AdminFrozenSystem>(out var frozenSystem) ||
+                    !_player.TryGetSessionById(_targetPlayer.UserId, out var session) ||
+                    session.AttachedEntity == null)
+                    return;
+
+                if (_entity.HasComponent<AdminFrozenComponent>(session.AttachedEntity))
+                {
+                    _entity.RemoveComponent<AdminFrozenComponent>(session.AttachedEntity.Value);
+                }
+                else
+                {
+                    frozenSystem.FreezeAndMute(session.AttachedEntity.Value);
+                }
+                SetPlayerState();
+                break;
+
+            case PlayerPanelLogsMessage:
+                if (!_admins.HasAdminFlag(Player, AdminFlags.Logs))
+                    return;
+
+
+                var ui = new AdminLogsEui();
+                _eui.OpenEui(ui, Player);
+                ui.SetLogFilter(search: _targetPlayer.Username);
+                break;
         }
     }
 
