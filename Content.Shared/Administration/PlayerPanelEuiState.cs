@@ -22,7 +22,15 @@ public sealed class PlayerPanelEuiState(NetUserId guid, string username, TimeSpa
 
 
 [Serializable, NetSerializable]
-public sealed class PlayerPanelFreezeMessage : EuiMessageBase;
+public sealed class PlayerPanelFreezeMessage : EuiMessageBase
+{
+    public readonly bool Mute;
+
+    public PlayerPanelFreezeMessage(bool mute = false)
+    {
+        Mute = mute;
+    }
+}
 
 [Serializable, NetSerializable]
 public sealed class PlayerPanelLogsMessage : EuiMessageBase;

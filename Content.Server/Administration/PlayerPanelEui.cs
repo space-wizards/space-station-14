@@ -68,7 +68,7 @@ public sealed class PlayerPanelEui : BaseEui
 
         switch (msg)
         {
-            case PlayerPanelFreezeMessage:
+            case PlayerPanelFreezeMessage freezeMsg:
                 if (!_admins.IsAdmin(Player) ||
                     !_entity.TrySystem<AdminFrozenSystem>(out var frozenSystem) ||
                     !_player.TryGetSessionById(_targetPlayer.UserId, out var session) ||
@@ -81,7 +81,14 @@ public sealed class PlayerPanelEui : BaseEui
                 }
                 else
                 {
-                    frozenSystem.FreezeAndMute(session.AttachedEntity.Value);
+                    if (freezeMsg.Mute)
+                    {
+                        frozenSystem.FreezeAndMute(session.AttachedEntity.Value);
+                    }
+                    else
+                    {
+                        _entity.EnsureComponent<AdminFrozenComponent>(session.AttachedEntity.Value);
+                    }
                 }
                 SetPlayerState();
                 break;

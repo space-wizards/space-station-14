@@ -18,7 +18,8 @@ public sealed partial class PlayerPanel : DefaultWindow
     public event Action<string?>? OnKick;
     public event Action<NetUserId?>? OnOpenBanPanel;
     public event Action<NetUserId?, bool>? OnWhitelistToggle;
-    public event Action? OnFreezeToggle;
+    public event Action? OnFreezeAndMuteToggle;
+    public event Action? OnFreeze;
     public event Action? OnLogs;
 
     public NetUserId? TargetPlayer;
@@ -40,7 +41,8 @@ public sealed partial class PlayerPanel : DefaultWindow
                 OnWhitelistToggle?.Invoke(TargetPlayer, _isWhitelisted);
                 SetWhitelisted(!_isWhitelisted);
             };
-            FreezeToggleButton.OnPressed += _ => OnFreezeToggle?.Invoke();
+            FreezeButton.OnPressed += _ => OnFreeze?.Invoke();
+            FreezeAndMuteToggleButton.OnPressed += _ => OnFreezeAndMuteToggle?.Invoke();
             LogsButton.OnPressed += _ => OnLogs?.Invoke();
     }
 
@@ -90,9 +92,10 @@ public sealed partial class PlayerPanel : DefaultWindow
 
     public void SetFrozen(bool canFreeze, bool frozen)
     {
-        FreezeToggleButton.Disabled = !canFreeze;
+        FreezeAndMuteToggleButton.Disabled = !canFreeze;
+        FreezeButton.Disabled = !canFreeze || frozen;
 
-        FreezeToggleButton.Text = Loc.GetString(!frozen ? "player-panel-freeze" : "player-panel-unfreeze");
+        FreezeAndMuteToggleButton.Text = Loc.GetString(!frozen ? "player-panel-freeze-and-mute" : "player-panel-unfreeze");
     }
 
     public void SetAhelp(bool canAhelp)
