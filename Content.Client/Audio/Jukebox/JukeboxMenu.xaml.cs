@@ -150,15 +150,12 @@ public sealed partial class JukeboxMenu : FancyWindow
     /// <summary>
     /// Re-populates the queue with avaiable jukebox prototypes.
     /// </summary>
-    public void PopulateQueue(IEnumerable<ProtoId<JukeboxPrototype>> queue, HashSet<String>? removed = null)
+    public void PopulateQueue(IEnumerable<ProtoId<JukeboxPrototype>> queue)
     {
         MusicListQueue.RemoveAllChildren();
         int i = 0;
         foreach (var song in queue)
         {
-            if (removed?.Contains(song) ?? false)
-                continue;
-
             if (!_prototype.TryIndex(song, out var songProto))
                 continue;
 
