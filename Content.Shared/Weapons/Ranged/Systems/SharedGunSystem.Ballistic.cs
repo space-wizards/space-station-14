@@ -134,7 +134,9 @@ public abstract partial class SharedGunSystem
 
         TimeSpan fillDelayConverted = TimeSpan.FromSeconds(component.FillDelay);
 
+        // Continuous loading
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, fillDelayConverted, new AmmoFillDoAfterEvent(), used: uid, target: args.Target, eventTarget: uid)
+
         {
             BreakOnMove = true,
             BreakOnDamage = false,
