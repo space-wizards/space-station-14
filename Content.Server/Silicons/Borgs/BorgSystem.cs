@@ -285,7 +285,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
         Popup.PopupEntity(Loc.GetString("borg-mind-added", ("name", Identity.Name(uid, EntityManager))), uid);
         Toggle.TryActivate(uid);
         _appearance.SetData(uid, BorgVisuals.HasPlayer, true);
-        if ( _mind.TryGetMind(uid, out _, out var mind))
+        if (_mind.TryGetMind(uid, out _, out var mind))
             _powerCell.SetDrawEnabled(uid, true);
     }
 
