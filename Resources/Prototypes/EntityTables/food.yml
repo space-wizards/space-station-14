@@ -323,6 +323,7 @@
     FoodMeatSnakeKebab: 1
     FoodPizzaArnoldSlice: 1
     FoodTacoRat: 1
+    FoodPizzaUraniumSlice: 1
 
 - type: weightedRandomEntity
   id: FoodSnacksEntityTable
