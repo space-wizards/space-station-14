@@ -1,6 +1,7 @@
 using Content.Shared.Eui;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
+using YamlDotNet.Serialization.Callbacks;
 
 namespace Content.Shared.Administration;
 
@@ -46,3 +47,8 @@ public sealed class PlayerPanelFreezeMessage : EuiMessageBase
 [Serializable, NetSerializable]
 public sealed class PlayerPanelLogsMessage : EuiMessageBase;
 
+[Serializable, NetSerializable]
+public sealed class PlayerPanelDeleteMessage : EuiMessageBase;
+
+[Serializable, NetSerializable]
+public sealed class PlayerPanelRejuvenationMessage: EuiMessageBase;

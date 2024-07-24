@@ -8,6 +8,7 @@ using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
 using Robust.Server.Player;
+using Robust.Shared.Player;
 
 namespace Content.Server.Administration;
 
@@ -77,12 +78,14 @@ public sealed class PlayerPanelEui : BaseEui
     {
         base.HandleMessage(msg);
 
+        ICommonSession? session = null;
+
         switch (msg)
         {
             case PlayerPanelFreezeMessage freezeMsg:
                 if (!_admins.IsAdmin(Player) ||
                     !_entity.TrySystem<AdminFrozenSystem>(out var frozenSystem) ||
-                    !_player.TryGetSessionById(_targetPlayer.UserId, out var session) ||
+                    !_player.TryGetSessionById(_targetPlayer.UserId, out session) ||
                     session.AttachedEntity == null)
                     return;
 
@@ -111,6 +114,25 @@ public sealed class PlayerPanelEui : BaseEui
                 var ui = new AdminLogsEui();
                 _eui.OpenEui(ui, Player);
                 ui.SetLogFilter(search: _targetPlayer.Username);
+                break;
+            case PlayerPanelDeleteMessage:
+            case PlayerPanelRejuvenationMessage:
+                if (!_admins.HasAdminFlag(Player, AdminFlags.Debug) ||
+                    !_player.TryGetSessionById(_targetPlayer.UserId, out session) ||
+                    session.AttachedEntity == null)
+                    return;
+
+                if (msg is PlayerPanelRejuvenationMessage)
+                {
+                    if (!_entity.TrySystem<RejuvenateSystem>(out var rejuvenate))
+                        return;
+
+                    rejuvenate.PerformRejuvenate(session.AttachedEntity.Value);
+                }
+                else
+                {
+                    _entity.DeleteEntity(session.AttachedEntity);
+                }
                 break;
         }
     }

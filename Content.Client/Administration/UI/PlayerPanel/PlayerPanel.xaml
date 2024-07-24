@@ -17,15 +17,17 @@
        <Label Name="RoleBans"/>
        <Label Name="SharedConnections"/>
 
-       <GridContainer Rows="4">
+       <GridContainer Rows="5">
         <Button Name="NotesButton" Text="{Loc player-panel-show-notes}" Disabled="True"/>
         <Button Name="AhelpButton" Text="{Loc player-panel-help}" Disabled="True"/>
         <Button Name="FreezeButton" Text = "{Loc player-panel-freeze}" Disabled="True"/>
-        <controls:ConfirmButton Name="KickButton" Text="Kick" Disabled="True"/>
+        <controls:ConfirmButton Name="KickButton" Text="{Loc player-panel-kick}" Disabled="True"/>
+        <controls:ConfirmButton Name="DeleteButton" Text="{Loc player-panel-delete}" Disabled="True"/>
         <Button Name="ShowBansButton" Text="{Loc player-panel-show-bans}" Disabled="True"/>
         <Button Name="LogsButton" Text="{Loc player-panel-logs}" Disabled="True"/>
         <Button Name="FreezeAndMuteToggleButton" Text="{Loc player-panel-freeze-and-mute}" Disabled="True"/>
         <Button Name="BanButton" Text="{Loc player-panel-ban}" Disabled="True"/>
+        <controls:ConfirmButton Name="RejuvenateButton" Text="{Loc player-panel-rejuvenate}" Disabled="True"/>
        </GridContainer>
     </BoxContainer>
 </DefaultWindow>
