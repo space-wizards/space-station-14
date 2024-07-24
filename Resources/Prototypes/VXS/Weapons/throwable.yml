@@ -11,7 +11,7 @@
     explosionType: FireBomb
     maxIntensity: 100
     intensitySlope: 3
-    totalIntensity: 200
+    totalIntensity: 150
   - type: OnUseTimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
