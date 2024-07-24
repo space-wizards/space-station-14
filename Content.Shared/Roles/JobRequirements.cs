@@ -130,7 +130,7 @@ namespace Content.Shared.Roles
 
                     if (!prototypes.TryIndex<DepartmentPrototype>(deptRequirement.Department, out var departmentName))
                     {
-                        Logger.Error($"Department not found.");
+                        throw new Exception($"DepartmentPrototype not found in JobRequirement.");
                     }
                     else if (!string.IsNullOrEmpty(departmentName.Name))
                     {
@@ -138,7 +138,7 @@ namespace Content.Shared.Roles
                     }
                     else
                     {
-                        Logger.Error($"The name of the department prototype with the ID {deptRequirement.Department} null or empty.");
+                        Logger.Error($"Name of the DepartmentPrototype with the uid {deptRequirement.Department} null or empty in JobRequirement.");
                     }
 
                     if (!deptRequirement.Inverted)
