@@ -143,6 +143,9 @@ public sealed class NPCJukeSystem : EntitySystem
                 if (!_melee.TryGetWeapon(uid, out var weaponUid, out var weapon))
                     return;
 
+                if (!HasComp<TransformComponent>(melee.Target))
+                    return;
+
                 var cdRemaining = weapon.NextAttack - _timing.CurTime;
                 var attackCooldown = TimeSpan.FromSeconds(1f / _melee.GetAttackRate(weaponUid, uid, weapon));
 
