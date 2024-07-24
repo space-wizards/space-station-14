@@ -41,7 +41,14 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             if (!_uiSystem.TryGetOpenUi<JukeboxBoundUserInterface>((uid, ui), JukeboxUiKey.Key, out var bui))
                 continue;
 
-            bui.PopulateMusic();
+            if (obj.Removed?.TryGetValue(typeof(JukeboxPrototype), out var removed) ?? false)
+            {
+                bui.PopulateMusic(removed);
+            }
+            else
+            {
+                bui.PopulateMusic(null);
+            }
         }
     }
 

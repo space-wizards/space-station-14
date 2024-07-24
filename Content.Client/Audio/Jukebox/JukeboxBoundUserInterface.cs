@@ -85,9 +85,13 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         _menu.SetIsPlaying(EntMan.System<AudioSystem>().IsPlaying(jukebox.AudioStream));
     }
 
-    public void PopulateMusic()
+    public void PopulateMusic(HashSet<String>? removed = null)
     {
-        _menu?.Populate(_protoManager.EnumeratePrototypes<JukeboxPrototype>());
+        if (_menu == null || !EntMan.TryGetComponent(Owner, out JukeboxComponent? jukebox))
+            return;
+
+        _menu.Populate(_protoManager.EnumeratePrototypes<JukeboxPrototype>());
+        _menu.PopulateQueue(jukebox.SongIdQueue, removed);
     }
 
     public void SelectSong(ProtoId<JukeboxPrototype> songid)

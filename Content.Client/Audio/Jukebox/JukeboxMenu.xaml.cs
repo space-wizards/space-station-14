@@ -71,6 +71,8 @@ public sealed partial class JukeboxMenu : FancyWindow
     /// </summary>
     public void Populate(IEnumerable<JukeboxPrototype> jukeboxProtos)
     {
+        MusicList.RemoveAllChildren();
+
         foreach (var entry in jukeboxProtos)
         {
             // MusicList.AddItem(entry.Name, metadata: entry.ID);
@@ -145,12 +147,18 @@ public sealed partial class JukeboxMenu : FancyWindow
         }
     }
 
-    public void PopulateQueue(IEnumerable<ProtoId<JukeboxPrototype>> queue)
+    /// <summary>
+    /// Re-populates the queue with avaiable jukebox prototypes.
+    /// </summary>
+    public void PopulateQueue(IEnumerable<ProtoId<JukeboxPrototype>> queue, HashSet<String>? removed = null)
     {
         MusicListQueue.RemoveAllChildren();
         int i = 0;
         foreach (var song in queue)
         {
+            if (removed?.Contains(song) ?? false)
+                continue;
+
             if (!_prototype.TryIndex(song, out var songProto))
                 continue;
 
