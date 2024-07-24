@@ -223,7 +223,7 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  name: Reagent slime
+  name: reagent slime
   id: ReagentSlime
   suffix: Water
   parent: [ MobAdultSlimes, MobCombat ]

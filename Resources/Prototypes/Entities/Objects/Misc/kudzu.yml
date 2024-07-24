@@ -278,7 +278,7 @@
           data: { state: spookysmoke_static }
 
 - type: entity
-  name: Haze
+  name: haze
   id: ShadowKudzuWeak
   parent: ShadowKudzu
   components:

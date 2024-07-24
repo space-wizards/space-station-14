@@ -7,6 +7,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Procedural;
 using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Station.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Random;

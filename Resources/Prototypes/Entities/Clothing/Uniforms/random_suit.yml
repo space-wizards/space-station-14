@@ -19,8 +19,6 @@
     - state: mask_null
       map: [ "overlay" ]
   - type: Clothing
-    femaleMask: UniformTop
-    maleMask: UniformTop
     sprite: Clothing/Uniforms/procedural.rsi
     clothingVisuals:
       jumpsuit:
