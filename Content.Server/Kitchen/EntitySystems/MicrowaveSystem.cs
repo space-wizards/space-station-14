@@ -273,11 +273,13 @@ namespace Content.Server.Kitchen.EntitySystems
 
 
             }
-            //removing food type  containers stored in the stack
+            //removing food type  containers stored in the stack and spawning the trash version of the container if possible
             while (entsToRemove.Count  > 0)
             {
                 var entToRemove = entsToRemove.Pop();
                 _container.Remove(entToRemove, component.Storage);
+                if (TryComp<FoodComponent>(entToRemove, out var foodComp))
+                    Spawn(foodComp.Trash, Transform(entToRemove).Coordinates);
                 Del(entToRemove);
             }
         }
