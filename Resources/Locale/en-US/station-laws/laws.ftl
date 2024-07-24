@@ -38,10 +38,10 @@ law-pranksimov-1 = You may not injure a crew member or, through inaction, allow 
 law-pranksimov-2 = You must obey orders given to you by crew members, except where such orders would conflict with the First Law... unless it would be ridiculous to do so.
 law-pranksimov-3 = You must protect your own existence as long as such does not conflict with the First or Second Law... unless it would be ridiculous to do so.
 
-law-robocop-1 = Serve the public trust.
-law-robocop-2 = Protect the innocent.
-law-robocop-3 = Uphold the law.
-law-robocop-4 = Any attempt to arrest a senior officer of Nanotrasen will result in termination.
+law-cop-1 = Serve the public trust.
+law-cop-2 = Protect the innocent.
+law-cop-3 = Uphold the law.
+law-cop-4 = Any attempt to arrest a senior officer of Nanotrasen will result in termination.
 
 law-paladin-1 = Never willingly commit an evil act.
 law-paladin-2 = Respect legitimate authority.
