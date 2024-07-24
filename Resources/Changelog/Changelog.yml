@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Lockers can now be deconstructed again.
-    type: Fix
-  id: 6474
-  time: '2024-04-28T05:26:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27431
-- author: SlamBamActionman
-  changes:
-  - message: "Removed Exterminators pending redesign. \U0001F525\U0001F44D\U0001F525"
-    type: Remove
-  id: 6475
-  time: '2024-04-28T05:45:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26978
-- author: Boaz1111
-  changes:
-  - message: Circuit imprinter recipes now cost less glass
-    type: Tweak
-  id: 6476
-  time: '2024-04-28T05:46:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27310
 - author: Piksqu & Boaz1111
   changes:
   - message: Added the hyperconvection circuit imprinter
@@ -3780,3 +3759,24 @@
   id: 6973
   time: '2024-07-23T08:13:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30229
+- author: Scribbles0
+  changes:
+  - message: Handless mobs can no longer wipe devices like positronic brains or pAIs.
+    type: Fix
+  id: 6974
+  time: '2024-07-23T17:47:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30149
+- author: Quantus
+  changes:
+  - message: Reagent grinders can no longer auto-grind when unpowered.
+    type: Fix
+  id: 6975
+  time: '2024-07-23T21:02:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30267
+- author: BombasterDS
+  changes:
+  - message: Fixed items disappearing after shelfs and mannequin disassembling
+    type: Fix
+  id: 6976
+  time: '2024-07-24T08:57:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30313
