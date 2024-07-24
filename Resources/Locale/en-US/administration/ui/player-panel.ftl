@@ -1,4 +1,5 @@
 player-panel-title = information for {$player}
+player-panel-username = Username: {$player}
 player-panel-whitelisted = Whitelisted:
 player-panel-bans = Total Bans: {$totalBans}
 player-panel-rolebans = Total Bans: {$totalRoleBans}
@@ -6,6 +7,7 @@ player-panel-notes = Total Notes: {$totalNotes}
 player-panel-playtime = Total Playtime: {$days}d:{$hours}h:{$minutes}m
 player-panel-shared-connections = Shared Connections: {$sharedConnections}
 
+player-panel-copy-username = Copy
 player-panel-show-notes = Notes
 player-panel-show-bans = Show Bans
 player-panel-help = Ahelp

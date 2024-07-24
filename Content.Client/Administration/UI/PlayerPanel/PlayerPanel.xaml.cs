@@ -12,6 +12,7 @@ public sealed partial class PlayerPanel : DefaultWindow
 {
     private readonly IClientAdminManager _adminManager;
 
+    public event Action<string>? OnUsernameCopy;
     public event Action<NetUserId?>? OnOpenNotes;
     public event Action<NetUserId?>? OnOpenBans;
     public event Action<NetUserId?>? OnAhelp;
@@ -31,6 +32,7 @@ public sealed partial class PlayerPanel : DefaultWindow
             RobustXamlLoader.Load(this);
             _adminManager = adminManager;
 
+            UsernameCopyButton.OnPressed += _ => OnUsernameCopy?.Invoke(PlayerName.Text ?? "");
             BanButton.OnPressed += _ => OnOpenBanPanel?.Invoke(TargetPlayer);
             KickButton.OnPressed += _ => OnKick?.Invoke(TargetUsername);
             NotesButton.OnPressed += _ => OnOpenNotes?.Invoke(TargetPlayer);
@@ -46,9 +48,10 @@ public sealed partial class PlayerPanel : DefaultWindow
             LogsButton.OnPressed += _ => OnLogs?.Invoke();
     }
 
-    public void SetTitle(string player)
+    public void SetUsername(string player)
     {
         Title = Loc.GetString("player-panel-title", ("player", player));
+        PlayerName.Text = Loc.GetString("player-panel-username", ("player", player));
     }
 
     public void SetWhitelisted(bool? whitelisted)

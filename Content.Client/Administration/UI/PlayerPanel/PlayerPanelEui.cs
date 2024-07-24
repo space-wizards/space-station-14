@@ -4,6 +4,7 @@ using Content.Shared.Administration;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
 using Robust.Client.Console;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Administration.UI.PlayerPanel;
 
@@ -12,12 +13,15 @@ public sealed class PlayerPanelEui : BaseEui
 {
     [Dependency] private readonly IClientConsoleHost _console = default!;
     [Dependency] private readonly IClientAdminManager _adminManager = default!;
+    [Dependency] private readonly IClipboardManager _clipboard = default!;
 
     private PlayerPanel PlayerPanel { get;  }
 
     public PlayerPanelEui()
     {
         PlayerPanel = new PlayerPanel(_adminManager);
+
+        PlayerPanel.OnUsernameCopy += username => _clipboard.SetText(username);
         PlayerPanel.OnOpenNotes += id => _console.ExecuteCommand($"adminnotes \"{id}\"");
         // Kick command does not support GUIDs
         PlayerPanel.OnKick += username => _console.ExecuteCommand($"kick \"{username}\"");
@@ -54,7 +58,7 @@ public sealed class PlayerPanelEui : BaseEui
 
         PlayerPanel.TargetPlayer = s.Guid;
         PlayerPanel.TargetUsername = s.Username;
-        PlayerPanel.SetTitle(s.Username);
+        PlayerPanel.SetUsername(s.Username);
         PlayerPanel.SetPlaytime(s.Playtime);
         PlayerPanel.SetBans(s.TotalBans, s.TotalRoleBans);
         PlayerPanel.SetNotes(s.TotalNotes);
