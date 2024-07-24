@@ -60,7 +60,7 @@
     explosionType: FireBomb
     maxIntensity: 45
     intensitySlope: 1
-    totalIntensity: 250
+    totalIntensity: 300
     maxTileBreak: 1
   - type: SmokeOnTrigger
     duration: 4
