@@ -44,8 +44,6 @@
         Blunt: 0.9
         Slash: 0.9
         Piercing: 0.95
-  - type: ExplosionResistance
-    damageCoefficient: 0.05
 
 #SWAT Helmet
 - type: entity
