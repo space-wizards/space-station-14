@@ -17,6 +17,7 @@ entities:
       name: Map Entity
     - type: Transform
     - type: Map
+      mapPaused: True
     - type: PhysicsMap
     - type: GridTree
     - type: MovedGrids
@@ -697,6 +698,8 @@ entities:
       rot: 3.141592653589793 rad
       pos: -0.22898674,-5.914821
       parent: 82
+    - type: AtmosPipeColor
+      color: '#990000FF'
     - type: Physics
       canCollide: True
       bodyType: Dynamic
