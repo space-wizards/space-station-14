@@ -205,7 +205,7 @@ public sealed class InjectorSystem : SharedInjectorSystem
             BreakOnDamage = true,
             NeedHand = true,
             BreakOnHandChange = true,
-            MovementThreshold = 0.1f,
+            MovementThreshold = 0.3f,
         });
     }
 
