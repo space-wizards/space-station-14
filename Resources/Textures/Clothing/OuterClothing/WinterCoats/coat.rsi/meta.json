@@ -561,6 +561,34 @@
     {
       "name": "winterbits-inhand-right",
       "directions": 4
+    },
+	{
+      "name": "ARMOR-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+	{
+      "name": "ARMOR-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "ARMOR-inhand-left",
+      "directions": 4
+    },
+	{
+      "name": "WARDEN-ARMORED-icon",
+      "directions": 4
+    },
+	{
+      "name": "HOS-ARMORED-icon",
+      "directions": 4
+    },
+	{
+      "name": "SYNDIE-ARMORED-icon",
+      "directions": 4
+    },
+	{
+      "name": "ARMOR-icon",
+      "directions": 4
     }
   ]
 }
