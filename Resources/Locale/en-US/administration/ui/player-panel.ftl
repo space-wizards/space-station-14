@@ -5,7 +5,7 @@ player-panel-rolebans = Total Bans: {$totalRoleBans}
 player-panel-notes = Total Notes: {$totalNotes}
 player-panel-playtime = Total Playtime: {$days}:{$hours}:{$minutes}
 
-player-panel-show-notes = Show Notes
+player-panel-show-notes = Notes
 player-panel-show-bans = Show Bans
 player-panel-help = Ahelp
 player-panel-freeze = Freeze & Mute

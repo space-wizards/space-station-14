@@ -6,7 +6,7 @@
        <Label Name="PlayerName"/>
        <BoxContainer Orientation="Horizontal">
            <Label Name="Whitelisted"/>
-           <Button Name="WhitelistToggle" Text="False" Visible="False"></Button>
+           <controls:ConfirmButton Name="WhitelistToggle" Text="False" Visible="False"></controls:ConfirmButton>
        </BoxContainer>
        <Label Name="Playtime"/>
        <Label Name="Notes"/>
