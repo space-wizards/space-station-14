@@ -28,6 +28,9 @@
     - FullAuto
     soundGunshot:
       path: /Audio/VXS/Gunshots/SMG/smg3.ogg # VXS
+      params: # VXS
+        maxDistance: 55
+        volume: 2
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
@@ -75,6 +78,9 @@
     fireRate: 10
     soundGunshot:
       path: /Audio/VXS/Gunshots/SMG/smg1.ogg # VXS
+      params: # VXS
+        maxDistance: 55
+        volume: 2
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -112,6 +118,9 @@
     - FullAuto
     soundGunshot:
       path: /Audio/VXS/Gunshots/SMG/smg2.ogg # VXS
+      params: # VXS
+        maxDistance: 55
+        volume: 2
   - type: ChamberMagazineAmmoProvider
     autoEject: true
   - type: MagazineVisuals
@@ -148,6 +157,9 @@
       selectedMode: FullAuto
       soundGunshot:
         path: /Audio/VXS/Gunshots/SMG/smg1.ogg # VXS
+      params: # VXS
+        maxDistance: 55
+        volume: 2
       availableModes:
         - FullAuto
     - type: ItemSlots
@@ -178,6 +190,7 @@
 - type: entity
   name: Vector
   parent: BaseWeaponSubMachineGun
+  suffix: ERT Only
   id: WeaponSubMachineGunVector
   description: An excellent fully automatic Heavy SMG. Uses .45 magnum ammo.
   components:
@@ -196,6 +209,9 @@
     selectedMode: FullAuto
     soundGunshot:
       path: /Audio/VXS/Gunshots/SMG/smg3.ogg # VXS
+      params: # VXS
+        maxDistance: 60
+        volume: 2
     availableModes:
     - FullAuto
   - type: ItemSlots
