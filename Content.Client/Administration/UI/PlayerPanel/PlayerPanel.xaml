@@ -12,6 +12,7 @@
        <Label Name="Notes"/>
        <Label Name="Bans"/>
        <Label Name="RoleBans"/>
+       <Label Name="SharedConnections"/>
        <GridContainer Rows="4">
         <Button Name="NotesButton" Text="{Loc player-panel-show-notes}" Disabled="True"/>
         <Button Name="ShowBansButton" Text="{Loc player-panel-show-bans}" Disabled="True"/>

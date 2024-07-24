@@ -59,6 +59,7 @@ public sealed class PlayerPanelEui : BaseEui
         PlayerPanel.SetBans(s.TotalBans, s.TotalRoleBans);
         PlayerPanel.SetNotes(s.TotalNotes);
         PlayerPanel.SetWhitelisted(s.Whitelisted);
+        PlayerPanel.SetSharedConnections(s.SharedConnections);
         PlayerPanel.SetFrozen(s.CanFreeze, s.Frozen);
         PlayerPanel.SetAhelp(s.CanAhelp);
         PlayerPanel.SetButtons();

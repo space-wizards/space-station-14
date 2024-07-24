@@ -25,6 +25,7 @@ public sealed class PlayerPanelEui : BaseEui
     private int? _notes;
     private int? _bans;
     private int? _roleBans;
+    private int _sharedConnections;
     private bool? _whitelisted;
     private TimeSpan _playtime;
     private bool _frozen;
@@ -51,7 +52,17 @@ public sealed class PlayerPanelEui : BaseEui
 
     public override EuiStateBase GetNewState()
     {
-        return new PlayerPanelEuiState(_targetPlayer.UserId, _targetPlayer.Username, _playtime, _notes, _bans, _roleBans, _whitelisted, _canFreeze, _frozen, _canAhelp);
+        return new PlayerPanelEuiState(_targetPlayer.UserId,
+            _targetPlayer.Username,
+            _playtime,
+            _notes,
+            _bans,
+            _roleBans,
+            _sharedConnections,
+            _whitelisted,
+            _canFreeze,
+            _frozen,
+            _canAhelp);
     }
 
     private void OnPermsChanged(AdminPermsChangedEventArgs args)
@@ -127,8 +138,10 @@ public sealed class PlayerPanelEui : BaseEui
             _notes = null;
         }
 
-        // Apparently the Bans flag is also used for whitelists
-        if (_admins.HasAdminFlag(Player, AdminFlags.Ban))
+        _sharedConnections = _player.Sessions.Count(s => s.Channel.RemoteEndPoint.Address.Equals(_targetPlayer.LastAddress) && s.UserId != _targetPlayer.UserId);
+
+    // Apparently the Bans flag is also used for whitelists
+    if (_admins.HasAdminFlag(Player, AdminFlags.Ban))
         {
             _whitelisted = await _db.GetWhitelistStatusAsync(_targetPlayer.UserId);
             // This won't get associated ip or hwid bans but they were not placed on this account anyways

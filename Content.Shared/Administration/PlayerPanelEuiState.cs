@@ -5,7 +5,17 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Administration;
 
 [Serializable, NetSerializable]
-public sealed class PlayerPanelEuiState(NetUserId guid, string username, TimeSpan playtime, int? totalNotes, int? totalBans, int? totalRoleBans, bool? whitelisted, bool canFreeze, bool frozen, bool canAhelp)
+public sealed class PlayerPanelEuiState(NetUserId guid,
+    string username,
+    TimeSpan playtime,
+    int? totalNotes,
+    int? totalBans,
+    int? totalRoleBans,
+    int sharedConnections,
+    bool? whitelisted,
+    bool canFreeze,
+    bool frozen,
+    bool canAhelp)
     : EuiStateBase
 {
     public readonly NetUserId Guid = guid;
@@ -14,6 +24,7 @@ public sealed class PlayerPanelEuiState(NetUserId guid, string username, TimeSpa
     public readonly int? TotalNotes = totalNotes;
     public readonly int? TotalBans = totalBans;
     public readonly int? TotalRoleBans = totalRoleBans;
+    public readonly int SharedConnections = sharedConnections;
     public readonly bool? Whitelisted = whitelisted;
     public readonly bool CanFreeze = canFreeze;
     public readonly bool Frozen = frozen;

@@ -4,6 +4,7 @@ player-panel-bans = Total Bans: {$totalBans}
 player-panel-rolebans = Total Bans: {$totalRoleBans}
 player-panel-notes = Total Notes: {$totalNotes}
 player-panel-playtime = Total Playtime: {$days}:{$hours}:{$minutes}
+player-panel-shared-connections = Shared Connections: {$sharedConnections}
 
 player-panel-show-notes = Notes
 player-panel-show-bans = Show Bans

@@ -82,6 +82,11 @@ public sealed partial class PlayerPanel : DefaultWindow
         Notes.Text = totalNotes != null ? Loc.GetString("player-panel-notes", ("totalNotes", totalNotes)) : null;
     }
 
+    public void SetSharedConnections(int sharedConnections)
+    {
+        SharedConnections.Text = Loc.GetString("player-panel-shared-connections", ("sharedConnections", sharedConnections));
+    }
+
     public void SetPlaytime(TimeSpan playtime)
     {
         Playtime.Text = Loc.GetString("player-panel-playtime",
