@@ -1,6 +1,8 @@
 using System.Linq;
 using System.Numerics;
+using Content.Server.Administration.Logs;
 using Content.Server.Cargo.Systems;
+using Content.Server.Explosion.Components;
 using Content.Server.Interaction;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stunnable;
@@ -18,9 +20,11 @@ using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Weapons.Reflect;
 using Content.Shared.Damage.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -30,6 +34,7 @@ namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem : SharedGunSystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
@@ -39,7 +44,6 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StaminaSystem _stamina = default!;
     [Dependency] private readonly StunSystem _stun = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     private const float DamagePitchVariation = 0.05f;
     public const float GunClumsyChance = 0.5f;
@@ -88,6 +92,8 @@ public sealed partial class GunSystem : SharedGunSystem
                     Audio.PlayPvs(clumsy.ClumsySound, gunUid);
 
                     PopupSystem.PopupEntity(Loc.GetString("gun-clumsy"), user.Value);
+                    _adminLogger.Add(LogType.EntityDelete, LogImpact.Medium, $"Clumsy fire by {ToPrettyString(user.Value)} deleted {ToPrettyString(gunUid)}");
+                    Del(gunUid);
                     userImpulse = false;
                     return;
                 }
@@ -108,7 +114,7 @@ public sealed partial class GunSystem : SharedGunSystem
         // Update shot based on the recoil
         toMap = fromMap.Position + angle.ToVec() * mapDirection.Length();
         mapDirection = toMap - fromMap.Position;
-        var gunVelocity = Physics.GetMapLinearVelocity(fromEnt);
+        var gunVelocity = Physics.GetMapLinearVelocity(gunUid);
 
         // I must be high because this was getting tripped even when true.
         // DebugTools.Assert(direction != Vector2.Zero);
@@ -149,6 +155,13 @@ public sealed partial class GunSystem : SharedGunSystem
                             var uid = Spawn(cartridge.Prototype, fromEnt);
                             ShootOrThrow(uid, mapDirection, gunVelocity, gun, gunUid, user);
                             shotProjectiles.Add(uid);
+
+                            // Stores spawn and aim coordinates for projectiles needing to trigger at aim location
+                            if (TryComp<TriggerWhenReachingCoordinatesComponent>(uid, out var comp))
+                            {
+                                comp.Destination = toMap;
+                                comp.Origin = fromMap;
+                            }
                         }
 
                         RaiseLocalEvent(ent!.Value, new AmmoShotEvent()
@@ -190,9 +203,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     // can't use map coords above because funny FireEffects
                     var fromEffect = fromCoordinates;
                     var dir = mapDirection.Normalized();
-
-                    //in the situation when user == null, means that the cannon fires on its own (via signals). And we need the gun to not fire by itself in this case
-                    var lastUser = user ?? gunUid;
+                    var lastUser = user;
 
                     if (hitscan.Reflective != ReflectType.None)
                     {
@@ -205,24 +216,6 @@ public sealed partial class GunSystem : SharedGunSystem
                                 break;
 
                             var result = rayCastResults[0];
-
-                            // Check if laser is shot from in a container
-                            if (!_container.IsEntityOrParentInContainer(lastUser))
-                            {
-                                // Checks if the laser should pass over unless targeted by its user
-                                foreach (var collide in rayCastResults)
-                                {
-                                    if (collide.HitEntity != gun.Target &&
-                                        CompOrNull<RequireProjectileTargetComponent>(collide.HitEntity)?.Active == true)
-                                    {
-                                        continue;
-                                    }
-
-                                    result = collide;
-                                    break;
-                                }
-                            }
-
                             var hit = result.HitEntity;
                             lastHit = hit;
 
@@ -284,7 +277,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         FireEffects(fromEffect, hitscan.MaxLength, dir.ToAngle(), hitscan);
                     }
 
-                    Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
+                    Audio.PlayPredicted(gun.SoundGunshot, gunUid, user);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -299,6 +292,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
     private void ShootOrThrow(EntityUid uid, Vector2 mapDirection, Vector2 gunVelocity, GunComponent gun, EntityUid gunUid, EntityUid? user)
     {
+
         if (gun.Target is { } target && !TerminatingOrDeleted(target))
         {
             var targeted = EnsureComp<TargetedProjectileComponent>(uid);
@@ -311,11 +305,31 @@ public sealed partial class GunSystem : SharedGunSystem
         {
             RemoveShootable(uid);
             // TODO: Someone can probably yeet this a billion miles so need to pre-validate input somewhere up the call stack.
-            ThrowingSystem.TryThrow(uid, mapDirection, gun.ProjectileSpeedModified, user);
+            ThrowingSystem.TryThrow(uid, mapDirection, gun.ProjectileSpeed, user);
             return;
         }
 
-        ShootProjectile(uid, mapDirection, gunVelocity, gunUid, user, gun.ProjectileSpeedModified);
+        ShootProjectile(uid, mapDirection, gunVelocity, gunUid, user, gun.ProjectileSpeed);
+    }
+
+    public void ShootProjectile(EntityUid uid, Vector2 direction, Vector2 gunVelocity, EntityUid gunUid, EntityUid? user = null, float speed = 20f)
+    {
+        var physics = EnsureComp<PhysicsComponent>(uid);
+        Physics.SetBodyStatus(physics, BodyStatus.InAir);
+
+        var targetMapVelocity = gunVelocity + direction.Normalized() * speed;
+        var currentMapVelocity = Physics.GetMapLinearVelocity(uid, physics);
+        var finalLinear = physics.LinearVelocity + targetMapVelocity - currentMapVelocity;
+        Physics.SetLinearVelocity(uid, finalLinear, body: physics);
+
+        if (user != null)
+        {
+            var projectile = EnsureComp<ProjectileComponent>(uid);
+            Projectiles.SetShooter(uid, projectile, user.Value);
+            projectile.Weapon = gunUid;
+        }
+
+        TransformSystem.SetWorldRotation(uid, direction.ToWorldAngle());
     }
 
     /// <summary>
@@ -354,9 +368,9 @@ public sealed partial class GunSystem : SharedGunSystem
 
     protected override void Popup(string message, EntityUid? uid, EntityUid? user) { }
 
-    protected override void CreateEffect(EntityUid gunUid, MuzzleFlashEvent message, EntityUid? user = null)
+    protected override void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null)
     {
-        var filter = Filter.Pvs(gunUid, entityManager: EntityManager);
+        var filter = Filter.Pvs(uid, entityManager: EntityManager);
 
         if (TryComp<ActorComponent>(user, out var actor))
             filter.RemovePlayer(actor.PlayerSession);

@@ -1,8 +1,20 @@
 # Rockets / Grenades
 - type: entity
+  id: BaseBulletGrenade
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Transform
+  - type: TriggerWhenReachingCoordinates
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 60
+
+- type: entity
   id: BulletRocketFugas
   name: rocket
-  parent: BaseBulletTrigger
+  parent: BaseBulletGrenade
   noSpawn: true
   components:
   - type: Sprite
