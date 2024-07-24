@@ -130,7 +130,7 @@ namespace Content.Shared.Roles
 
                     if (!prototypes.TryIndex<DepartmentPrototype>(deptRequirement.Department, out var departmentName))
                     {
-                        throw new Exception($"DepartmentPrototype not found in JobRequirement.");
+                        Logger.Error($"DepartmentPrototype not found in JobRequirement.");
                     }
                     else if (!string.IsNullOrEmpty(departmentName.Name))
                     {
