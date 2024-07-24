@@ -1,361 +1,284 @@
+# Base configs
 - type: dungeonConfig
-  id: Experiment
-  generator: !type:PrefabDunGen
-    roomWhitelist:
-      - SalvageExperiment
-    presets:
-      - Bucket
-      - Wow
-      - SpaceShip
-      - Tall
-  postGeneration:
-    - !type:CorridorPostGen
-      width: 3
-
-    - !type:DungeonEntrancePostGen
-      count: 2
-
-    - !type:RoomEntrancePostGen
-      entities:
-        - CableApcExtension
-        - AirlockGlass
-
-    - !type:EntranceFlankPostGen
-      entities:
-        - Grille
-        - Window
-
-    - !type:ExternalWindowPostGen
-      entities:
-        - Grille
-        - Window
-
-    - !type:WallMountPostGen
-      spawns:
-        # Posters
-        - id: RandomPosterLegit
-          orGroup: content
-        - id: ExtinguisherCabinetFilled
-          prob: 0.2
-          orGroup: content
-        - id: RandomPainting
-          prob: 0.05
-          orGroup: content
-        - id: IntercomCommon
-          prob: 0.1
-          orGroup: content
-
-    - !type:BoundaryWallPostGen
-      tile: FloorSteel
-      wall: WallSolid
-      cornerWall: WallReinforced
-
-    - !type:JunctionPostGen
-      width: 1
-
-    - !type:JunctionPostGen
-
-    - !type:AutoCablingPostGen
-
-    - !type:CornerClutterPostGen
-      contents:
-        - id: PottedPlantRandom
-          amount: 1
-
-    - !type:CorridorDecalSkirtingPostGen
-      color: "#D381C996"
-      cardinalDecals:
-        South: BrickTileWhiteLineS
-        East: BrickTileWhiteLineE
-        North: BrickTileWhiteLineN
-        West: BrickTileWhiteLineW
-      cornerDecals:
-        SouthEast: BrickTileWhiteCornerSe
-        SouthWest: BrickTileWhiteCornerSw
-        NorthEast: BrickTileWhiteCornerNe
-        NorthWest: BrickTileWhiteCornerNw
-      pocketDecals:
-        SouthWest: BrickTileWhiteInnerSw
-        SouthEast: BrickTileWhiteInnerSe
-        NorthWest: BrickTileWhiteInnerNw
-        NorthEast: BrickTileWhiteInnerNe
-
-
-- type: dungeonConfig
-  id: LavaBrig
-  generator: !type:PrefabDunGen
-    roomWhitelist:
-      - LavaBrig
-    presets:
-      - Bucket
-      - Wow
-      - SpaceShip
-      - Tall
-  postGeneration:
-    - !type:CorridorPostGen
-      width: 3
-
-    - !type:DungeonEntrancePostGen
-      count: 2
-
-    - !type:RoomEntrancePostGen
-      entities:
-        - CableApcExtension
-        - AirlockSecurityGlassLocked
-
-    - !type:EntranceFlankPostGen
-      entities:
-        - Grille
-        - Window
-
-    - !type:ExternalWindowPostGen
-      entities:
-        - Grille
-        - Window
-
-    - !type:WallMountPostGen
-      spawns:
-        # Posters
-        - id: RandomPosterLegit
-          orGroup: content
-        - id: ExtinguisherCabinetFilled
-          prob: 0.2
-          orGroup: content
-        - id: RandomPainting
-          prob: 0.05
-          orGroup: content
-        - id: IntercomCommon
-          prob: 0.1
-          orGroup: content
-
-    - !type:BoundaryWallPostGen
-      tile: FloorSteel
-      wall: WallSolid
-      cornerWall: WallReinforced
-
-    - !type:JunctionPostGen
-      width: 1
-
-    - !type:JunctionPostGen
-
-    - !type:AutoCablingPostGen
-
-    - !type:CornerClutterPostGen
-      contents:
-        - id: PottedPlantRandom
-          amount: 1
-
-    - !type:CorridorDecalSkirtingPostGen
-      color: "#DE3A3A96"
-      cardinalDecals:
-        South: BrickTileWhiteLineS
-        East: BrickTileWhiteLineE
-        North: BrickTileWhiteLineN
-        West: BrickTileWhiteLineW
-      cornerDecals:
-        SouthEast: BrickTileWhiteCornerSe
-        SouthWest: BrickTileWhiteCornerSw
-        NorthEast: BrickTileWhiteCornerNe
-        NorthWest: BrickTileWhiteCornerNw
-      pocketDecals:
-        SouthWest: BrickTileWhiteInnerSw
-        SouthEast: BrickTileWhiteInnerSe
-        NorthWest: BrickTileWhiteInnerNw
-        NorthEast: BrickTileWhiteInnerNe
-
-- type: dungeonConfig
-  id: Mineshaft
-  generator: !type:PrefabDunGen
-    tile: FloorCaveDrought
-    roomWhitelist:
-      - Mineshaft
-    presets:
-      - Bucket
-      - Wow
-      - SpaceShip
-      - Tall
-  postGeneration:
-
-  - !type:CorridorPostGen
-      tile: FloorCaveDrought
-      width: 3
-
-  - !type:DungeonEntrancePostGen
-      count: 5
-      tile: FloorCaveDrought
-      entities:
-        - RandomWoodenWall
-
-  - !type:RoomEntrancePostGen
-      tile: FloorCaveDrought
-      entities:
-        - RandomWoodenWall
-
-  - !type:EntranceFlankPostGen
-      tile: FloorCaveDrought
-      entities:
-        - RandomWoodenWall
-
-  - !type:ExternalWindowPostGen
-      tile: FloorCaveDrought
-      entities:
-        - RandomWoodenWall
-
-  - !type:WallMountPostGen
-      tile: FloorCaveDrought
-      spawns:
-        # Ore
-        - id: WallRockSalt
-          prob: 0.6
-          orGroup: content
-        - id: WallRockCoal
-          prob: 0.6
-          orGroup: content
-        - id: WallRockTin
-          prob: 0.4
-          orGroup: content
-        - id: WallMining
-          prob: 0.8
-          orGroup: content
-
-  - !type:BoundaryWallPostGen
-      tile: FloorCaveDrought
-      wall: WallRock
-      cornerWall: WallRock
-
-  - !type:AutoCablingPostGen
-      entity: Catwalk
-
-  - !type:JunctionPostGen
-      tile: FloorCaveDrought
-      width: 3
-      entities:
-        - RandomWoodenSupport
-
-  - !type:CornerClutterPostGen
-      contents:
-        - id: RandomStalagmiteOrCrystal
-          amount: 1
-
-- type: dungeonConfig
-  id: SnowyLabs
-  generator: !type:PrefabDunGen
-    roomWhitelist:
-      - SnowyLabs
-    presets:
-      - Bucket
-      - Wow
-      - SpaceShip
-      - Tall
-  postGeneration:
-    - !type:CorridorPostGen
-      width: 3
-
-    - !type:DungeonEntrancePostGen
-      count: 2
-
-    - !type:RoomEntrancePostGen
-      entities:
-        - CableApcExtension
-        - AirlockFreezerHydroponicsLocked
-
-    - !type:EntranceFlankPostGen
-      entities:
-        - Grille
-        - Window
-
-    - !type:ExternalWindowPostGen
-      entities:
-        - Grille
-        - Window
-
-    - !type:WallMountPostGen
-      spawns:
-        # Posters
-        - id: RandomPosterLegit
-          orGroup: content
-        - id: ExtinguisherCabinetFilled
-          prob: 0.2
-          orGroup: content
-        - id: RandomPainting
-          prob: 0.05
-          orGroup: content
-        - id: IntercomScience
-          prob: 0.1
-          orGroup: content
-
-    - !type:BoundaryWallPostGen
-        tile: FloorSteel
-        wall: WallSilver
-        cornerWall: WallSilver
-
-    - !type:JunctionPostGen
-      width: 1
-      entities:
-        - AirlockGlass
-
-    - !type:JunctionPostGen
-      entities:
-        - AirlockGlass
-
-    - !type:AutoCablingPostGen
-
-    - !type:CornerClutterPostGen
-      contents:
-        - id: PottedPlantRandom
-          amount: 1
-
-    - !type:CorridorDecalSkirtingPostGen
-      color: "#4cc7aa96"
-      cardinalDecals:
-        South: BrickTileWhiteLineS
-        East: BrickTileWhiteLineE
-        North: BrickTileWhiteLineN
-        West: BrickTileWhiteLineW
-      cornerDecals:
-        SouthEast: BrickTileWhiteCornerSe
-        SouthWest: BrickTileWhiteCornerSw
-        NorthEast: BrickTileWhiteCornerNe
-        NorthWest: BrickTileWhiteCornerNw
-      pocketDecals:
-        SouthWest: BrickTileWhiteInnerSw
-        SouthEast: BrickTileWhiteInnerSe
-        NorthWest: BrickTileWhiteInnerNw
-        NorthEast: BrickTileWhiteInnerNe
-
-# todo: Add a biome dungeon generator
-# Add corridor first gens that place rooms on top
-# Add a worm corridor gen (place subsequent corridors somewhere randomly along the path)
-# Place room entrances on ends of corridors touching a tile
-# Remove all room tiles from corridors
-# Fix paths up and try to reconnect all corridor tiles
-# Add a postgen step to spread rooms out, though it shouldn't spread into corridor exteriors
-
-- type: dungeonConfig
-  id: Haunted
-  generator: !type:PrefabDunGen
-    tile: FloorCaveDrought
-    roomWhitelist:
-    - Mineshaft
+  id: PlanetBase
+  layers:
+  - !type:PrefabDunGen
     presets:
     - Bucket
     - Wow
     - SpaceShip
     - Tall
-  postGeneration:
-    - !type:WormCorridorPostGen
-      width: 3
-      tile: FloorCaveDrought
 
-    - !type:CorridorClutterPostGen
-      contents:
-      - id: FloraStalagmite1
-      - id: FloraStalagmite2
-      - id: FloraStalagmite3
-      - id: FloraStalagmite4
-      - id: FloraStalagmite5
-      - id: FloraStalagmite6
+  - !type:CorridorDunGen
+    width: 3
 
-    - !type:BoundaryWallPostGen
-      tile: FloorCaveDrought
-      wall: WallRock
+  - !type:DungeonEntranceDunGen
+    count: 2
+
+  - !type:RoomEntranceDunGen
+
+  - !type:EntranceFlankDunGen
+
+  - !type:ExternalWindowDunGen
+
+  - !type:WallMountDunGen
+
+  - !type:BoundaryWallDunGen
+
+  - !type:JunctionDunGen
+    width: 1
+
+  - !type:JunctionDunGen
+
+  - !type:AutoCablingDunGen
+
+  - !type:CornerClutterDunGen
+
+  - !type:CorridorDecalSkirtingDunGen
+    cardinalDecals:
+      South: BrickTileWhiteLineS
+      East: BrickTileWhiteLineE
+      North: BrickTileWhiteLineN
+      West: BrickTileWhiteLineW
+    cornerDecals:
+      SouthEast: BrickTileWhiteCornerSe
+      SouthWest: BrickTileWhiteCornerSw
+      NorthEast: BrickTileWhiteCornerNe
+      NorthWest: BrickTileWhiteCornerNw
+    pocketDecals:
+      SouthWest: BrickTileWhiteInnerSw
+      SouthEast: BrickTileWhiteInnerSe
+      NorthWest: BrickTileWhiteInnerNw
+      NorthEast: BrickTileWhiteInnerNe
+
+# Setups
+- type: dungeonConfig
+  id: Experiment
+  data:
+    colors:
+      Decals: "#D381C996"
+    entities:
+      Cabling: CableApcExtension
+      CornerWalls: WallReinforced
+      Walls: WallSolid
+    spawnGroups:
+      CornerClutter: BaseClutter
+      Entrance: BaseAirlock
+      EntranceFlank: BaseWindow
+      Junction: BaseAirlock
+      WallMounts: ScienceLabsWalls
+      Window: BaseWindow
+    tiles:
+      FallbackTile: FloorSteel
+    whitelists:
+      Rooms:
+        tags:
+        - SalvageExperiment
+  layers:
+  - !type:PrototypeDunGen
+    proto: PlanetBase
+
+- type: dungeonConfig
+  id: Haunted
+  data:
+    entities:
+      Walls: WallRock
+    tiles:
+      FallbackTile: FloorCaveDrought
+    whitelists:
+      Rooms:
+        tags:
+        - Mineshaft
+  layers:
+  - !type:PrefabDunGen
+    presets:
+    - Bucket
+    - Wow
+    - SpaceShip
+    - Tall
+
+  - !type:WormCorridorDunGen
+    width: 3
+
+  - !type:CorridorClutterDunGen
+    contents:
+    - id: FloraStalagmite1
+    - id: FloraStalagmite2
+    - id: FloraStalagmite3
+    - id: FloraStalagmite4
+    - id: FloraStalagmite5
+    - id: FloraStalagmite6
+
+  - !type:BoundaryWallDunGen
+
+- type: dungeonConfig
+  id: LavaBrig
+  data:
+    colors:
+      Decals: "#DE3A3A96"
+    entities:
+      Cabling: CableApcExtension
+      CornerWalls: WallReinforced
+      Walls: WallSolid
+    spawnGroups:
+      CornerClutter: BaseClutter
+      Entrance: LavaBrigEntrance
+      EntranceFlank: BaseWindow
+      Junction: BaseAirlock
+      WallMounts: ScienceLabsWalls
+      Window: BaseWindow
+    whitelists:
+      Rooms:
+        tags:
+        - LavaBrig
+  layers:
+  - !type:PrototypeDunGen
+    proto: PlanetBase
+
+- type: dungeonConfig
+  id: Mineshaft
+  data:
+    entities:
+      Cabling: Catwalk
+    spawnGroups:
+      CornerClutter: MineshaftClutter
+      Entrance: BaseWoodWall
+      EntranceFlank: BaseWoodWall
+      Junction: BaseWoodSupport
+      Window: BaseWoodWall
+    tiles:
+      FallbackTile: FloorCaveDrought
+    whitelists:
+      Rooms:
+        tags:
+        - Mineshaft
+  layers:
+  - !type:PrototypeDunGen
+    proto: PlanetBase
+
+- type: dungeonConfig
+  id: SnowyLabs
+  data:
+    colors:
+      Decals: "#4cc7aa96"
+    entities:
+      Cabling: CableApcExtension
+      CornerWalls: WallSilver
+      Walls: WallSilver
+    spawnGroups:
+      CornerClutter: BaseClutter
+      Entrance: SnowyLabsEntrance
+      EntranceFlank: BaseWindow
+      Junction: BaseAirlock
+      WallMounts: SnowyLabsWalls
+      Window: BaseWindow
+    tiles:
+      FallbackTile: FloorSteel
+    whitelists:
+      Rooms:
+        tags:
+        - SnowyLabs
+  layers:
+  - !type:PrototypeDunGen
+    proto: PlanetBase
+
+# Spawn groups
+# Basic
+- type: entitySpawnEntry
+  id: BaseClutter
+  entries:
+  - id: PottedPlantRandom
+    amount: 1
+
+- type: entitySpawnEntry
+  id: BaseAirlock
+  entries:
+  - id: CableApcExtension
+  - id: AirlockGlass
+
+- type: entitySpawnEntry
+  id: BaseWindow
+  entries:
+  - id: Grille
+  - id: Window
+
+# Lava brig
+- type: entitySpawnEntry
+  id: LavaBrigEntrance
+  entries:
+  - id: CableApcExtension
+  - id: AirlockSecurityGlassLocked
+
+# Mineshaft
+- type: entitySpawnEntry
+  id: BaseWoodWall
+  entries:
+  - id: RandomWoodenWall
+
+- type: entitySpawnEntry
+  id: BaseWoodSupport
+  entries:
+  - id: RandomWoodenSupport
+
+- type: entitySpawnEntry
+  id: MineshaftClutter
+  entries:
+  - id: RandomStalagmiteOrCrystal
+    amount: 1
+
+- type: entitySpawnEntry
+  id: MineshaftWalls
+  entries:
+  # Ore
+  - id: WallRockSalt
+    prob: 0.6
+    orGroup: content
+  - id: WallRockCoal
+    prob: 0.6
+    orGroup: content
+  - id: WallRockTin
+    prob: 0.4
+    orGroup: content
+  - id: WallMining
+    prob: 0.8
+    orGroup: content
+
+# Science lab
+- type: entitySpawnEntry
+  id: ScienceLabsWalls
+  entries:
+  # Posters
+  - id: RandomPosterLegit
+    orGroup: content
+  - id: ExtinguisherCabinetFilled
+    prob: 0.2
+    orGroup: content
+  - id: RandomPainting
+    prob: 0.05
+    orGroup: content
+  - id: IntercomCommon
+    prob: 0.1
+    orGroup: content
+
+# Snowy labs
+- type: entitySpawnEntry
+  id: SnowyLabsEntrance
+  entries:
+  - id: CableApcExtension
+  - id: AirlockFreezerHydroponicsLocked
+
+- type: entitySpawnEntry
+  id: SnowyLabsWalls
+  entries:
+  # Posters
+  - id: RandomPosterLegit
+    orGroup: content
+  - id: ExtinguisherCabinetFilled
+    prob: 0.2
+    orGroup: content
+  - id: RandomPainting
+    prob: 0.05
+    orGroup: content
+  - id: IntercomScience
+    prob: 0.1
+    orGroup: content

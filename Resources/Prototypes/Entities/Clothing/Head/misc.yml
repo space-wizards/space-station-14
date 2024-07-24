@@ -88,6 +88,17 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadMirror
+  name: head mirror
+  description: I doubt even the CMO knows how to use this thing.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/head_mirror.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/head_mirror.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatRichard
   name: richard
   description: 'Do you like hurting people?'
@@ -171,6 +182,36 @@
     sprite: Clothing/Head/Hats/catears.rsi
   - type: AddAccentClothing
     accent: OwOAccent
+
+- type: entity
+  parent: [ClothingHeadHatCatEars, BaseToggleClothing]
+  id: ClothingHeadHatCatEarsValid
+  suffix: Valid, DO NOT MAP
+  components:
+  - type: ToggleClothing
+    action: ActionBecomeValid
+    disableOnUnequip: true
+  - type: ComponentToggler
+    parent: true
+    components:
+    - type: KillSign
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: Sprite
+    sprite: Clothing/Head/Hats/catears.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/catears.rsi
+  - type: AddAccentClothing
+    accent: OwOAccent
+
+- type: entity
+  noSpawn: true
+  id: ActionBecomeValid
+  name: Become Valid
+  description: "*notices your killsign* owo whats this"
+  components:
+  - type: InstantAction
+    event: !type:ToggleActionEvent
 
 - type: entity
   parent: ClothingHeadBase

@@ -7,13 +7,15 @@ namespace Content.Server.GameTicking.Commands
     [AdminCommand(AdminFlags.Round)]
     sealed class DelayStartCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _e = default!;
+
         public string Command => "delaystart";
         public string Description => "Delays the round start.";
         public string Help => $"Usage: {Command} <seconds>\nPauses/Resumes the countdown if no argument is provided.";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var ticker = EntitySystem.Get<GameTicker>();
+            var ticker = _e.System<GameTicker>();
             if (ticker.RunLevel != GameRunLevel.PreRoundLobby)
             {
                 shell.WriteLine("This can only be executed while the game is in the pre-round lobby.");

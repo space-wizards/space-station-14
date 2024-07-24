@@ -19,6 +19,21 @@
     - type: Geiger
       attachedToSuit: true
 
+- type: entity
+  abstract: true
+  id: AllowSuitStorageClothing
+  components:
+  - type: AllowSuitStorage
+
+- type: entity
+  abstract: true
+  id: AllowSuitStorageClothingGasTanks
+  components:
+  - type: AllowSuitStorage
+    whitelist:
+      tags:
+      - GasTank
+
 # for clothing that has a single item slot to insert and alt click out.
 # inheritors add a whitelisted slot named item
 - type: entity
@@ -42,3 +57,12 @@
   - type: GroupExamine
   - type: Armor
     modifiers: {}
+
+# for clothing that can be toggled, like magboots
+- type: entity
+  abstract: true
+  id: BaseToggleClothing
+  components:
+  - type: ItemToggle
+    onUse: false # can't really wear it like that
+  - type: ToggleClothing

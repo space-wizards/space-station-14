@@ -27,7 +27,7 @@
     guides:
     - Security
   - type: UseDelay
-    delay: 6
+    delay: 3
 
 - type: entity
   name: makeshift handcuffs

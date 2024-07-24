@@ -1,5 +1,6 @@
 using Content.Server.Gravity;
 using Content.Shared.Alert;
+using Content.Shared.Gravity;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Gravity
@@ -38,6 +39,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             var entityManager = server.ResolveDependency<IEntityManager>();
             var alertsSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AlertsSystem>();
+            var weightlessAlert = SharedGravitySystem.WeightlessAlert;
 
             EntityUid human = default;
 
@@ -56,7 +58,7 @@ namespace Content.IntegrationTests.Tests.Gravity
             await server.WaitAssertion(() =>
             {
                 // No gravity without a gravity generator
-                Assert.That(alertsSystem.IsShowingAlert(human, AlertType.Weightless));
+                Assert.That(alertsSystem.IsShowingAlert(human, weightlessAlert));
 
                 generatorUid = entityManager.SpawnEntity("WeightlessGravityGeneratorDummy", entityManager.GetComponent<TransformComponent>(human).Coordinates);
             });
@@ -66,7 +68,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(alertsSystem.IsShowingAlert(human, AlertType.Weightless), Is.False);
+                Assert.That(alertsSystem.IsShowingAlert(human, weightlessAlert), Is.False);
 
                 // This should kill gravity
                 entityManager.DeleteEntity(generatorUid);
@@ -76,7 +78,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(alertsSystem.IsShowingAlert(human, AlertType.Weightless));
+                Assert.That(alertsSystem.IsShowingAlert(human, weightlessAlert));
             });
 
             await pair.RunTicksSync(10);

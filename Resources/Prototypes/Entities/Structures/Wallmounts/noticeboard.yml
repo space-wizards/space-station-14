@@ -7,6 +7,7 @@
   components:
   - type: WallMount
   - type: Sprite
+    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/noticeboard.rsi
     layers:
       - state: noticeboard
@@ -50,8 +51,8 @@
         - Write
   - type: UserInterface
     interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

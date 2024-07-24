@@ -22,6 +22,8 @@
       tags:
         - Cartridge
         - Trash
+  - type: UseDelay
+    delay: 0.5
   - type: Tag
     tags:
     - TrashBag

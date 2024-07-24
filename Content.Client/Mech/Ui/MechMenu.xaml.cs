@@ -16,14 +16,15 @@ public sealed partial class MechMenu : FancyWindow
 
     public event Action<EntityUid>? OnRemoveButtonPressed;
 
-    public MechMenu(EntityUid mech)
+    public MechMenu()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+    }
 
-        _mech = mech;
-
-        MechView.SetEntity(mech);
+    public void SetEntity(EntityUid uid)
+    {
+        MechView.SetEntity(uid);
     }
 
     public void UpdateMechStats()
@@ -35,9 +36,17 @@ public sealed partial class MechMenu : FancyWindow
         IntegrityDisplayBar.Value = integrityPercent.Float();
         IntegrityDisplay.Text = Loc.GetString("mech-integrity-display", ("amount", (integrityPercent*100).Int()));
 
-        var energyPercent = mechComp.Energy / mechComp.MaxEnergy;
-        EnergyDisplayBar.Value = energyPercent.Float();
-        EnergyDisplay.Text = Loc.GetString("mech-energy-display", ("amount", (energyPercent*100).Int()));
+        if (mechComp.MaxEnergy != 0f)
+        {
+            var energyPercent = mechComp.Energy / mechComp.MaxEnergy;
+            EnergyDisplayBar.Value = energyPercent.Float();
+            EnergyDisplay.Text = Loc.GetString("mech-energy-display", ("amount", (energyPercent*100).Int()));
+        }
+        else
+        {
+            EnergyDisplayBar.Value = 0f;
+            EnergyDisplay.Text = Loc.GetString("mech-energy-missing");
+        }
 
         SlotDisplay.Text = Loc.GetString("mech-slot-display",
             ("amount", mechComp.MaxEquipmentAmount - mechComp.EquipmentContainer.ContainedEntities.Count));

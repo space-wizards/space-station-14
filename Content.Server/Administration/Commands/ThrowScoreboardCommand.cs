@@ -7,6 +7,8 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.VarEdit)]
 public sealed class ThrowScoreboardCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntityManager _e = default!;
+
     public string Command => "throwscoreboard";
 
     public string Description => Loc.GetString("throw-scoreboard-command-description");
@@ -20,6 +22,6 @@ public sealed class ThrowScoreboardCommand : IConsoleCommand
             shell.WriteLine(Help);
             return;
         }
-        EntitySystem.Get<GameTicker>().ShowRoundEndScoreboard();
+        _e.System<GameTicker>().ShowRoundEndScoreboard();
     }
 }

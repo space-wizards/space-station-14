@@ -346,7 +346,7 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/tequillaglass.rsi
     state: icon_empty
-  metamorphicMaxFillLevels: 4
+  metamorphicMaxFillLevels: 3
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   metabolisms:
@@ -1289,6 +1289,12 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: moonshine
   color: "#d1d7d155"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/moonshineglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -1763,3 +1769,165 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.15
+
+- type: reagent
+  id: VodkaRedBool
+  name: reagent-name-vodka-red-bool
+  parent: BaseAlcohol
+  desc: reagent-desc-vodka-red-bool
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: vodkaredbool
+  color: "#c4c27655"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.10
+        - !type:AdjustReagent
+          reagent: Theobromine
+          amount: 0.05
+  fizziness: 0.25
+
+- type: reagent
+  id: XenoBasher
+  name: reagent-name-xeno-basher
+  parent: BaseAlcohol
+  desc: reagent-desc-xeno-basher
+  physicalDesc: reagent-physical-desc-fizzy-and-creamy
+  flavor: xenobasher
+  color: "#4d6600"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/xenobasher.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 2
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.15
+        - !type:AdjustReagent
+          reagent: Theobromine
+          amount: 0.05
+  fizziness: 0.15
+
+- type: reagent
+  id: IrishBool
+  name: reagent-name-irish-bool
+  parent: BaseAlcohol
+  desc: reagent-desc-irish-bool
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: irishbool
+  color: "#71672e99"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/beerglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.10
+        - !type:AdjustReagent
+          reagent: Theobromine
+          amount: 0.05
+  fizziness: 0.15
+
+- type: reagent
+  id: BudgetInsulsDrink
+  name: reagent-name-budget-insuls
+  parent: BaseAlcohol
+  desc: reagent-desc-budget-insuls
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: budgetinsulsdrink
+  color: "#dede73"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/budgetinsulsdrink.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.15
+        - !type:AdjustReagent
+          reagent: Theobromine
+          amount: 0.05
+  fizziness: 0.25
+
+- type: reagent
+  id: WatermelonWakeup
+  name: reagent-name-watermelon-wakeup
+  parent: BaseAlcohol
+  desc: reagent-desc-watermelon-wakeup
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: watermelonwakeup
+  color: "#d49dca"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/champagneglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.07
+        - !type:AdjustReagent
+          reagent: Theobromine
+          amount: 0.05
+  fizziness: 0.15
+
+- type: reagent
+  id: Rubberneck
+  name: reagent-name-rubberneck
+  parent: BaseAlcohol
+  desc: reagent-desc-rubberneck
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: rubberneck
+  color: "#f0d74a"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/rubberneck.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.15
+        - !type:AdjustReagent
+          reagent: Theobromine
+          amount: 0.05
+  fizziness: 0.25

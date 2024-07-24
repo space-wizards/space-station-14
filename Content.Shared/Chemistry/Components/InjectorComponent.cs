@@ -24,7 +24,8 @@ public sealed partial class InjectorDoAfterEvent : SimpleDoAfterEvent
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class InjectorComponent : Component
 {
-    public const string SolutionName = "injector";
+    [DataField]
+    public string SolutionName = "injector";
 
     /// <summary>
     /// Whether or not the injector is able to draw from containers or if it's a single use
@@ -71,6 +72,12 @@ public sealed partial class InjectorComponent : Component
     /// </remarks>
     [DataField]
     public TimeSpan Delay = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    /// Each additional 1u after first 5u increases the delay by X seconds.
+    /// </summary>
+    [DataField]
+    public TimeSpan DelayPerVolume = TimeSpan.FromSeconds(0.1);
 
     /// <summary>
     /// The state of the injector. Determines it's attack behavior. Containers must have the

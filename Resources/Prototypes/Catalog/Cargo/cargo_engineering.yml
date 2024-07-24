@@ -29,6 +29,16 @@
   group: market
 
 - type: cargoProduct
+  id: EngineeringFoamGrenade
+  icon:
+    sprite: Objects/Weapons/Grenades/metalfoam.rsi
+    state: icon
+  product: CrateEngineeringFoamGrenade
+  cost: 2500
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
   id: EngineeringCableBulk
   icon:
     sprite: Objects/Tools/cable-coils.rsi
@@ -133,7 +143,7 @@
   icon:
     sprite: Structures/Piping/Atmospherics/Portable/portable_sheater.rsi
     state: sheaterOff
-  product: SpaceHeaterAnchored
+  product: CrateEngineeringSpaceHeater
   cost: 300
   category: cargoproduct-category-name-engineering
   group: market

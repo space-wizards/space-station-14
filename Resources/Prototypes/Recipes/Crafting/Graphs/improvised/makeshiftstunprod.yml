@@ -8,24 +8,23 @@
           steps:
             - material: MetalRod
               amount: 1
-            - material: Cable
-              amount: 15
-            - tag: DrinkSpaceGlue
-              name: Drink Space Glue
-              icon:
-                sprite: Objects/Consumable/Drinks/glue-tube.rsi
-                state: icon
             - tag: PowerCellSmall
-              name: Power Cell Small
+              name: power cell small
               icon:
                 sprite: Objects/Power/power_cells.rsi
                 state: small
-            - tag: CapacitorStockPart
-              name: Capacitor Stock Part
+            - tag: Handcuffs
               icon:
-                sprite: Objects/Misc/stock_parts.rsi
-                state: capacitor
-              doAfter: 20
+                sprite: Objects/Misc/cablecuffs.rsi
+                state: cuff
+                color: red
+              name: cuffs
+            - tag: Igniter
+              name: igniter
+              icon:
+                sprite: Objects/Devices/igniter.rsi
+                state: icon
+              doAfter: 15
     - node: msstunprod
       entity: Stunprod
       

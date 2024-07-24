@@ -87,14 +87,12 @@ namespace Content.Client.Changelog
                 if (!tab.AdminOnly || isAdmin)
                 {
                     Tabs.SetTabVisible(i, true);
-                    tab.Visible = true;
                     visibleTabs++;
                     firstVisible ??= i;
                 }
                 else
                 {
                     Tabs.SetTabVisible(i, false);
-                    tab.Visible = false;
                 }
             }
 

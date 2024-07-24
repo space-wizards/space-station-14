@@ -1,6 +1,6 @@
 - type: entity
   id: PortableScrubber
-  parent: [BaseMachinePowered, ConstructibleMachine, StructureWheeled]
+  parent: [BaseMachinePowered, SmallConstructibleMachine, StructureWheeled]
   name: portable scrubber
   description: It scrubs, portably!
   components:
@@ -120,7 +120,7 @@
         layer:
         - MachineLayer
   - type: ApcPowerReceiver
-    powerDisabled: true #starts off 
+    powerDisabled: true #starts off
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/Portable/portable_sheater.rsi
     noRot: true
@@ -144,8 +144,8 @@
   - type: WiresVisuals
   - type: UserInterface
     interfaces:
-    - key: enum.SpaceHeaterUiKey.Key
-      type: SpaceHeaterBoundUserInterface
+      enum.SpaceHeaterUiKey.Key:
+        type: SpaceHeaterBoundUserInterface
   - type: ActivatableUI
     inHandsOnly: false
     key: enum.SpaceHeaterUiKey.Key

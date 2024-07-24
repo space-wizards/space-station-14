@@ -1,26 +1,25 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13 at 02ff588d59b3c560c685d9ca75e882d32a72d8cb",
+  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13 at 02ff588d59b3c560c685d9ca75e882d32a72d8cb, and modified by Bhijn, Errant and Flareguy",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "groin_f",
+      "name": "eyes",
       "directions": 4
     },
     {
-      "name": "groin_m",
+      "name": "full"
+    },
+    {
+      "name": "groin",
       "directions": 4
     },
     {
-      "name": "head_f",
-      "directions": 4
-    },
-    {
-      "name": "head_m",
+      "name": "head",
       "directions": 4
     },
     {
@@ -60,11 +59,7 @@
       "directions": 4
     },
     {
-      "name": "torso_f",
-      "directions": 4
-    },
-    {
-      "name": "torso_m",
+      "name": "torso",
       "directions": 4
     },
     {

@@ -163,7 +163,7 @@ public sealed class SpaceHeaterSystem : EntitySystem
         {
             return;
         }
-        _userInterfaceSystem.TrySetUiState(uid, SpaceHeaterUiKey.Key,
+        _userInterfaceSystem.SetUiState(uid, SpaceHeaterUiKey.Key,
             new SpaceHeaterBoundUserInterfaceState(spaceHeater.MinTemperature, spaceHeater.MaxTemperature, thermoMachine.TargetTemperature, !powerReceiver.PowerDisabled, spaceHeater.Mode, spaceHeater.PowerLevel));
     }
 

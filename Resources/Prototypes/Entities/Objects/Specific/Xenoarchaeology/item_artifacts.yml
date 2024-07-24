@@ -45,14 +45,14 @@
         ano01_on: Rainbow
   - type: UserInterface #needs to be here for certain effects
     interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
-    - key: enum.InstrumentUiKey.Key
-      type: InstrumentBoundUserInterface
-    - key: enum.IntercomUiKey.Key
-      type: IntercomBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+      enum.InstrumentUiKey.Key:
+        type: InstrumentBoundUserInterface
+      enum.IntercomUiKey.Key:
+        type: IntercomBoundUserInterface
   - type: Appearance
   - type: Item
     size: Normal

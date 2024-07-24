@@ -76,7 +76,7 @@
           scaleByQuantity: true
           damage:
             types:
-              Heat: 10
+              Heat: 0.5
     - type: AtmosExposed
     - type: Kudzu
       growthTickChance: 0.3
@@ -298,7 +298,7 @@
           data: { state: spookysmoke_static }
 
 - type: entity
-  name: Haze
+  name: haze
   id: ShadowKudzuWeak
   parent: ShadowKudzu
   components:

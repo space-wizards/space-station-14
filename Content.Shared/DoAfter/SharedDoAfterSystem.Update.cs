@@ -104,6 +104,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             doAfter.AttemptEvent = _factory.CreateInstance(evType, new object[] { doAfter, args.Event });
         }
 
+        args.Event.DoAfter = doAfter;
         if (args.EventTarget != null)
             RaiseLocalEvent(args.EventTarget.Value, doAfter.AttemptEvent, args.Broadcast);
         else
@@ -169,7 +170,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.BreakOnMove && !(!args.BreakOnWeightlessMove && _gravity.IsWeightless(args.User, xform: userXform)))
         {
             // Whether the user has moved too much from their original position.
-            if (!userXform.Coordinates.InRange(EntityManager, _transform, doAfter.UserPosition, args.MovementThreshold))
+            if (!_transform.InRange(userXform.Coordinates, doAfter.UserPosition, args.MovementThreshold))
                 return true;
 
             // Whether the distance between the user and target(if any) has changed too much.
