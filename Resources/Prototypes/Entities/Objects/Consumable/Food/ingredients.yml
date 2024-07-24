@@ -477,8 +477,6 @@
   - type: Sprite
     state: butter
   - type: Slippery
-    paralyzeTime: 1.5
-    launchForwardsMultiplier: 1.2
   - type: StepTrigger
     intersectRatio: 0.2
   - type: CollisionWake
