@@ -11408,7 +11408,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -1003.90155
+      secondsUntilStateChange: -1062.2448
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14671,6 +14671,17 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 87.5,-3.5
       parent: 8364
+  - uid: 7209
+    components:
+    - type: Transform
+      pos: 36.5,-3.5
+      parent: 8364
+  - uid: 9934
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 41.5,-0.5
+      parent: 8364
   - uid: 12475
     components:
     - type: Transform
@@ -14688,6 +14699,12 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -70.5,-2.5
+      parent: 8364
+  - uid: 13399
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 36.5,1.5
       parent: 8364
   - uid: 13779
     components:
@@ -14740,23 +14757,6 @@ entities:
     - type: Transform
       pos: -0.5,-0.5
       parent: 11906
-- proto: AtmosDeviceFanTiny
-  entities:
-  - uid: 7209
-    components:
-    - type: Transform
-      pos: 36.5,-3.5
-      parent: 8364
-  - uid: 9934
-    components:
-    - type: Transform
-      pos: 36.5,1.5
-      parent: 8364
-  - uid: 13399
-    components:
-    - type: Transform
-      pos: 41.5,-0.5
-      parent: 8364
 - proto: AtmosFixBlockerMarker
   entities:
   - uid: 110
