@@ -122,7 +122,6 @@ public sealed partial class EnsnareableSystem
             BreakOnDamage = false,
             NeedHand = true,
             BreakOnDropItem = false,
-            BreakOnHandChange = false,
         };
 
         if (!_doAfter.TryStartDoAfter(doAfterEventArgs))
