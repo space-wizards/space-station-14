@@ -15,6 +15,9 @@ public sealed class RandomStealTargetSystem : EntitySystem
 
     private void OnInit(EntityUid uid, RandomStealTargetComponent component, ComponentInit args)
     {
+        if (component.StealTargetNames.Count == 0)
+            return;
+
         EnsureComp<StealTargetComponent>(uid, out var stealTarget);
 
         stealTarget.StealGroup = _random.Pick(component.StealTargetNames);

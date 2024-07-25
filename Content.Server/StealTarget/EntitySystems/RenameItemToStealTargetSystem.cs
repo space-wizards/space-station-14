@@ -19,10 +19,7 @@ public sealed class RenameItemToStealTargetSystem : EntitySystem
     private void OnStartup(EntityUid uid, RenameItemToStealTargetComponent component, ComponentStartup args)
     {
         if (!TryComp<StealTargetComponent>(uid, out var stealTarget))
-        {
-            Log.Error($"Steal target not attached!");
             return;
-        }
 
         ProtoId<StealTargetGroupPrototype> protoId = stealTarget.StealGroup;
         var stealGroupProto = _proto.Index(protoId);
