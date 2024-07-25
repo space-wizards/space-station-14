@@ -10,122 +10,121 @@ using Content.Shared.Store;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Traitor.Uplink
+namespace Content.Server.Traitor.Uplink;
+
+public sealed class UplinkSystem : EntitySystem
 {
-    public sealed class UplinkSystem : EntitySystem
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly StoreSystem _store = default!;
+    [Dependency] private readonly SubdermalImplantSystem _subdermalImplant = default!;
+
+    [ValidatePrototypeId<CurrencyPrototype>]
+    public const string TelecrystalCurrencyPrototype = "Telecrystal";
+    public const string FallbackUplinkImplant = "UplinkImplant";
+    public const string FallbackUplinkCatalog = "UplinkUplinkImplanter";
+
+    /// <summary>
+    /// Adds an uplink to the target
+    /// </summary>
+    /// <param name="user">The person who is getting the uplink</param>
+    /// <param name="balance">The amount of currency on the uplink. If null, will just use the amount specified in the preset.</param>
+    /// <param name="uplinkPresetId">The id of the storepreset</param>
+    /// <param name="uplinkEntity">The entity that will actually have the uplink functionality. Defaults to the PDA if null.</param>
+    /// <returns>Whether or not the uplink was added successfully</returns>
+    public bool AddUplink(EntityUid user, FixedPoint2? balance, EntityUid? uplinkEntity = null)
     {
-        [Dependency] private readonly SharedContainerSystem _container = default!;
-        [Dependency] private readonly InventorySystem _inventorySystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly IPrototypeManager _proto = default!;
-        [Dependency] private readonly StoreSystem _store = default!;
-        [Dependency] private readonly SubdermalImplantSystem _subdermalImplant = default!;
-
-        [ValidatePrototypeId<CurrencyPrototype>]
-        public const string TelecrystalCurrencyPrototype = "Telecrystal";
-        public const string FallbackUplinkImplant = "UplinkImplant";
-        public const string FallbackUplinkCatalog = "UplinkUplinkImplanter";
-
-        /// <summary>
-        /// Adds an uplink to the target
-        /// </summary>
-        /// <param name="user">The person who is getting the uplink</param>
-        /// <param name="balance">The amount of currency on the uplink. If null, will just use the amount specified in the preset.</param>
-        /// <param name="uplinkPresetId">The id of the storepreset</param>
-        /// <param name="uplinkEntity">The entity that will actually have the uplink functionality. Defaults to the PDA if null.</param>
-        /// <returns>Whether or not the uplink was added successfully</returns>
-        public bool AddUplink(EntityUid user, FixedPoint2? balance, EntityUid? uplinkEntity = null)
+        // Try to find target item
+        if (uplinkEntity == null)
         {
-            // Try to find target item
+            uplinkEntity = FindUplinkTarget(user);
             if (uplinkEntity == null)
-            {
-                uplinkEntity = FindUplinkTarget(user);
-                if (uplinkEntity == null)
-                    return ImplantUplink(user, balance);
-            }
-
-            EnsureComp<UplinkComponent>(uplinkEntity.Value);
-
-            SetUplink(user, uplinkEntity.Value, balance);
-
-            // TODO add BUI. Currently can't be done outside of yaml -_-
-
-            return true;
+                return ImplantUplink(user, balance);
         }
 
-        /// <summary>
-        /// Configure TC for the uplink
-        /// </summary>
-        public void SetUplink(EntityUid user, EntityUid uplink, FixedPoint2? balance)
+        EnsureComp<UplinkComponent>(uplinkEntity.Value);
+
+        SetUplink(user, uplinkEntity.Value, balance);
+
+        // TODO add BUI. Currently can't be done outside of yaml -_-
+
+        return true;
+    }
+
+    /// <summary>
+    /// Configure TC for the uplink
+    /// </summary>
+    public void SetUplink(EntityUid user, EntityUid uplink, FixedPoint2? balance)
+    {
+        var store = EnsureComp<StoreComponent>(uplink);
+        store.AccountOwner = user;
+        store.Balance.Clear();
+        if (balance != null)
         {
-            var store = EnsureComp<StoreComponent>(uplink);
-            store.AccountOwner = user;
             store.Balance.Clear();
-            if (balance != null)
-            {
-                store.Balance.Clear();
-                _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance.Value } }, uplink, store);
-            }
+            _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance.Value } }, uplink, store);
         }
+    }
 
-        /// <summary>
-        /// Implant an uplink as a fallback measure if the traitor had no PDA
-        /// </summary>
-        public bool ImplantUplink(EntityUid user, FixedPoint2? balance)
-        {
-            var implants = new List<string>(){FallbackUplinkImplant};
+    /// <summary>
+    /// Implant an uplink as a fallback measure if the traitor had no PDA
+    /// </summary>
+    public bool ImplantUplink(EntityUid user, FixedPoint2? balance)
+    {
+        var implants = new List<string>(){FallbackUplinkImplant};
 
-            if (!_proto.TryIndex<ListingPrototype>(FallbackUplinkCatalog, out var catalog))
-                return false;
-
-            if (!catalog.Cost.TryGetValue(TelecrystalCurrencyPrototype, out var cost))
-                return false;
-
-            var implantCost = cost.Int();
-
-            _subdermalImplant.AddImplants(user, implants);
-
-            if (!_container.TryGetContainer(user, ImplanterComponent.ImplantSlotId, out var implantContainer))
-                return false;
-
-            foreach (var implant in implantContainer.ContainedEntities)
-            {
-                if (TryComp<StoreComponent>(implant, out var storeComp))
-                {
-                    SetUplink(user, implant, balance - implantCost);
-                    return true;
-                }
-            }
-
+        if (!_proto.TryIndex<ListingPrototype>(FallbackUplinkCatalog, out var catalog))
             return false;
-        }
 
-        /// <summary>
-        /// Finds the entity that can hold an uplink for a user.
-        /// Usually this is a pda in their pda slot, but can also be in their hands. (but not pockets or inside bag, etc.)
-        /// </summary>
-        public EntityUid? FindUplinkTarget(EntityUid user)
+        if (!catalog.Cost.TryGetValue(TelecrystalCurrencyPrototype, out var cost))
+            return false;
+
+        var implantCost = cost.Int();
+
+        _subdermalImplant.AddImplants(user, implants);
+
+        if (!_container.TryGetContainer(user, ImplanterComponent.ImplantSlotId, out var implantContainer))
+            return false;
+
+        foreach (var implant in implantContainer.ContainedEntities)
         {
-            // Try to find PDA in inventory
-            if (_inventorySystem.TryGetContainerSlotEnumerator(user, out var containerSlotEnumerator))
+            if (TryComp<StoreComponent>(implant, out var storeComp))
             {
-                while (containerSlotEnumerator.MoveNext(out var pdaUid))
-                {
-                    if (!pdaUid.ContainedEntity.HasValue) continue;
-
-                    if (HasComp<PdaComponent>(pdaUid.ContainedEntity.Value) || HasComp<StoreComponent>(pdaUid.ContainedEntity.Value))
-                        return pdaUid.ContainedEntity.Value;
-                }
+                SetUplink(user, implant, balance - implantCost);
+                return true;
             }
-
-            // Also check hands
-            foreach (var item in _handsSystem.EnumerateHeld(user))
-            {
-                if (HasComp<PdaComponent>(item) || HasComp<StoreComponent>(item))
-                    return item;
-            }
-
-            return null;
         }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Finds the entity that can hold an uplink for a user.
+    /// Usually this is a pda in their pda slot, but can also be in their hands. (but not pockets or inside bag, etc.)
+    /// </summary>
+    public EntityUid? FindUplinkTarget(EntityUid user)
+    {
+        // Try to find PDA in inventory
+        if (_inventorySystem.TryGetContainerSlotEnumerator(user, out var containerSlotEnumerator))
+        {
+            while (containerSlotEnumerator.MoveNext(out var pdaUid))
+            {
+                if (!pdaUid.ContainedEntity.HasValue) continue;
+
+                if (HasComp<PdaComponent>(pdaUid.ContainedEntity.Value) || HasComp<StoreComponent>(pdaUid.ContainedEntity.Value))
+                    return pdaUid.ContainedEntity.Value;
+            }
+        }
+
+        // Also check hands
+        foreach (var item in _handsSystem.EnumerateHeld(user))
+        {
+            if (HasComp<PdaComponent>(item) || HasComp<StoreComponent>(item))
+                return item;
+        }
+
+        return null;
     }
 }
