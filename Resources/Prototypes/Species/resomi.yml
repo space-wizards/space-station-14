@@ -3,7 +3,7 @@
 - type: species
   id: Resomi
   name: species-name-resomi
-  roundStart: true
+  roundStart: false # VXS-UPD2
   prototype: MobResomi
   sprites: MobResomiSprites
   defaultSkinTone: "#faf7f7"
