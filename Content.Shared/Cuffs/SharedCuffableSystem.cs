@@ -389,11 +389,10 @@ namespace Content.Shared.Cuffs
             {
                 dirty = true;
 
-                var container = ent.Comp.Container;
-                var entity = container.ContainedEntities[^1];
+                var handcuffContainer = ent.Comp.Container;
+                var handcuffEntity = handcuffContainer.ContainedEntities[^1];
 
-                _container.Remove(entity, container);
-                _transform.SetWorldPosition(entity, _transform.GetWorldPosition(ent.Owner));
+                _transform.PlaceNextTo(handcuffEntity, ent.Owner);
             }
 
             if (dirty)
