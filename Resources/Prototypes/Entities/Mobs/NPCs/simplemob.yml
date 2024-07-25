@@ -63,6 +63,7 @@
   - type: MobPrice
     price: 1000 # Living critters are valuable in space.
   - type: Perishable
+  - type: StepTriggerImmune
 
 - type: entity
   parent:

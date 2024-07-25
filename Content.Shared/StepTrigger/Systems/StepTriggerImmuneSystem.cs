@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Examine;
 using Content.Shared.Inventory;
+using Content.Shared.Mousetrap;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.Tag;
 
@@ -12,13 +13,19 @@ public sealed class StepTriggerImmuneSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<StepTriggerImmuneComponent, StepTriggerAttemptEvent>(OnStepTriggerAttempt);
+        SubscribeLocalEvent<StepTriggerComponent, StepTriggerAttemptEvent>(OnStepTriggerAttempt);
         SubscribeLocalEvent<ClothingRequiredStepTriggerComponent, StepTriggerAttemptEvent>(OnStepTriggerClothingAttempt);
         SubscribeLocalEvent<ClothingRequiredStepTriggerComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnStepTriggerAttempt(Entity<StepTriggerImmuneComponent> ent, ref StepTriggerAttemptEvent args)
+    private void OnStepTriggerAttempt(EntityUid uid, StepTriggerComponent component, ref StepTriggerAttemptEvent args)
     {
+        if (!TryComp<StepTriggerImmuneComponent>(args.Tripper, out var comp))
+            return;
+
+        if (EntityManager.HasComponent<MousetrapComponent>(uid) && !comp.ImmuneToMousetrap)
+            return;
+
         args.Cancelled = true;
     }
 
