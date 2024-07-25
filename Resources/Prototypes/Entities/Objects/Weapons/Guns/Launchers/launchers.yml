@@ -36,7 +36,7 @@
     slots:
     - Back
     - suitStorage
-  - type: AmmoCounter
+  #- type: AmmoCounter VXS
   - type: Gun
     projectileSpeed: 35 # VXS
     fireRate: 1

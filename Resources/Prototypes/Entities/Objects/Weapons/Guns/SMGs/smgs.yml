@@ -14,7 +14,7 @@
     slots:
     - Back
     - suitStorage
-  - type: AmmoCounter
+  #- type: AmmoCounter VXS
   - type: Gun
     projectileSpeed: 30 # VXS
     minAngle: 2
@@ -93,6 +93,7 @@
   id: WeaponSubMachineGunC20r
   description: A firearm that is often used by the infamous nuclear operatives. Uses .35 auto ammo.
   components:
+  - type: AmmoCounter # VXS
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
     layers:

@@ -62,7 +62,7 @@
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
-  - type: AmmoCounter
+  #- type: AmmoCounter VXS
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -77,6 +77,7 @@
   id: WeaponPistolViper
   description: A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Uses .35 auto ammo.
   components:
+  - type: AmmoCounter # VXS
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
     availableModes:
