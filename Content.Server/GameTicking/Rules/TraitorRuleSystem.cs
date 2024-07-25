@@ -8,7 +8,6 @@ using Content.Server.Traitor.Uplink;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mind;
 using Content.Shared.NPC.Systems;
-using Content.Shared.Objectives.Components;
 using Content.Shared.PDA;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
@@ -65,14 +64,15 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
     public bool MakeTraitor(EntityUid traitor, TraitorRuleComponent component, bool giveUplink = true)
     {
-        //Grab the mind if it wasnt provided
         if (!_mindSystem.TryGetMind(traitor, out var mindId, out var mind))
             return false;
 
         var briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", component.Codewords)));
         var issuer = _random.Pick(_prototypeManager.Index(component.ObjectiveIssuers).Values);
 
+        // Uplink code will go here if applicable, but we still need the variable if there aren't any
         Note[]? code = null;
+
         if (giveUplink)
         {
             // Calculate the amount of currency on the uplink.
@@ -80,18 +80,10 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             if (_jobs.MindTryGetJob(mindId, out _, out var prototype))
                 startingBalance = Math.Max(startingBalance - prototype.AntagAdvantage, 0);
 
-            // creadth: we need to create uplink for the antag.
-            // PDA should be in place already
-            var pda = _uplink.FindUplinkTarget(traitor);
-            if (pda == null || !_uplink.AddUplink(traitor, startingBalance))
-                return false;
-
-            // Give traitors their codewords and uplink code to keep in their character info menu
-            code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
-
-            // If giveUplink is false the uplink code part is omitted
-            briefing = string.Format("{0}\n{1}", briefing,
-                Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp", "#"))));
+            // Choose and generate an Uplink, and return the uplink code if applicable
+            var uplinkParams = RequestUplink(traitor, startingBalance, briefing);
+            code = uplinkParams.Item1;
+            briefing = uplinkParams.Item2;
         }
 
         _antag.SendBriefing(traitor, GenerateBriefing(component.Codewords, code, issuer), null, component.GreetSoundNotification);
@@ -109,6 +101,31 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         _npcFaction.AddFaction(traitor, component.SyndicateFaction);
 
         return true;
+    }
+
+    private (Note[]?, string) RequestUplink(EntityUid traitor, int startingBalance, string briefing)
+    {
+        var pda = _uplink.FindUplinkTarget(traitor);
+        Note[]? code = null;
+
+        var uplinked = _uplink.AddUplink(traitor, startingBalance);
+
+        if (pda is not null && uplinked)
+        {
+            // Codes are only generated if the uplink is a PDA
+            code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
+
+            // If giveUplink is false the uplink code part is omitted
+            briefing = string.Format("{0}\n{1}", briefing,
+                Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp", "#"))));
+            return (code, briefing);
+        }
+        else if (pda is null && uplinked)
+        {
+            briefing = string.Format("{0}\n{1}", briefing, Loc.GetString("traitor-role-uplink-implant"));
+        }
+
+        return (null, briefing);
     }
 
     // TODO: AntagCodewordsComponent

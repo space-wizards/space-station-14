@@ -1,19 +1,23 @@
+using Content.Shared.Implants.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Hands.EntitySystems;
+using Content.Server.Implants;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
-using Content.Server.Store.Components;
+using Content.Shared.Store.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
-using Content.Shared.Store.Components;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Traitor.Uplink
 {
     public sealed class UplinkSystem : EntitySystem
     {
+        [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly StoreSystem _store = default!;
+        [Dependency] private readonly SubdermalImplantSystem _subdermalImplant = default!;
 
         [ValidatePrototypeId<CurrencyPrototype>]
         public const string TelecrystalCurrencyPrototype = "Telecrystal";
@@ -33,22 +37,57 @@ namespace Content.Server.Traitor.Uplink
             {
                 uplinkEntity = FindUplinkTarget(user);
                 if (uplinkEntity == null)
-                    return false;
+                    return ImplantUplink(user, balance);
             }
 
             EnsureComp<UplinkComponent>(uplinkEntity.Value);
-            var store = EnsureComp<StoreComponent>(uplinkEntity.Value);
+
+            SetUplink(user, uplinkEntity.Value, balance);
+
+            // TODO add BUI. Currently can't be done outside of yaml -_-
+
+            return true;
+        }
+
+        public void SetUplink(EntityUid user, EntityUid uplink, FixedPoint2? balance)
+        {
+            var store = EnsureComp<StoreComponent>(uplink);
             store.AccountOwner = user;
             store.Balance.Clear();
             if (balance != null)
             {
                 store.Balance.Clear();
-                _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance.Value } }, uplinkEntity.Value, store);
+                _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance.Value } }, uplink, store);
+            }
+        }
+
+        public bool ImplantUplink(EntityUid user, FixedPoint2? balance)
+        {
+            //TODO actually get this value from the catalog
+            var implantCost = 2;
+
+            //TODO Prototype this
+            var implants = new List<string>();
+            implants.Add("UplinkImplant");
+
+            _subdermalImplant.AddImplants(user, implants);
+
+            if (_container.TryGetContainer(user, ImplanterComponent.ImplantSlotId, out var implantContainer))
+                return false;
+
+            if (implantContainer is null)
+                return false;
+
+            foreach (var implant in implantContainer.ContainedEntities)
+            {
+                if (TryComp<StoreComponent>(implant, out var storeComp))
+                {
+                    SetUplink(user, implant, balance - implantCost);
+                    return true;
+                }
             }
 
-            // TODO add BUI. Currently can't be done outside of yaml -_-
-
-            return true;
+            return false;
         }
 
         /// <summary>
