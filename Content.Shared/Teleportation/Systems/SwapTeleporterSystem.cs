@@ -45,7 +45,7 @@ public sealed class SwapTeleporterSystem : EntitySystem
     private void OnInteract(Entity<SwapTeleporterComponent> ent, ref AfterInteractEvent args)
     {
         var (uid, comp) = ent;
-        if (args.Target == null)
+        if (args.Target == null || !args.CanReach)
             return;
 
         var target = args.Target.Value;
@@ -164,9 +164,9 @@ public sealed class SwapTeleporterSystem : EntitySystem
             return;
         }
 
-        _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-teleport-other",
+        _popup.PopupClient(Loc.GetString("swap-teleporter-popup-teleport-other",
             ("entity", Identity.Entity(linkedEnt, EntityManager))),
-            otherTeleEnt,
+            teleEnt,
             otherTeleEnt,
             PopupType.MediumCaution);
         _transform.SwapPositions(teleEnt, otherTeleEnt);
