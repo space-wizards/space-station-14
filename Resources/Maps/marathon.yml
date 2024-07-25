@@ -52039,13 +52039,6 @@ entities:
     - type: Transform
       pos: 38.513725,-64.51438
       parent: 30
-- proto: ClothingNeckCloakTrans
-  entities:
-  - uid: 18360
-    components:
-    - type: Transform
-      pos: -64.42011,-67.461174
-      parent: 30
 - proto: ClothingNeckHeadphones
   entities:
   - uid: 16118

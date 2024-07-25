@@ -27099,20 +27099,6 @@ entities:
     - type: Transform
       pos: 6.6956844,-33.563076
       parent: 31
-- proto: ClothingNeckCloakTrans
-  entities:
-  - uid: 9748
-    components:
-    - type: Transform
-      pos: -28.4315,17.631725
-      parent: 31
-- proto: ClothingNeckNonBinaryPin
-  entities:
-  - uid: 11135
-    components:
-    - type: Transform
-      pos: 43.27403,-8.317395
-      parent: 31
 - proto: ClothingNeckScarfStripedBlue
   entities:
   - uid: 7843
@@ -27158,13 +27144,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: ClothingNeckTransPin
-  entities:
-  - uid: 11137
-    components:
-    - type: Transform
-      pos: -24.17542,-23.65307
-      parent: 31
 - proto: ClothingOuterArmorBasic
   entities:
   - uid: 1206

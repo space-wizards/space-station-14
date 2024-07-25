@@ -58795,20 +58795,6 @@ entities:
     - type: Transform
       pos: -41.75516,14.452198
       parent: 60
-- proto: ClothingNeckAromanticPin
-  entities:
-  - uid: 24089
-    components:
-    - type: Transform
-      pos: 83.621025,-13.51627
-      parent: 60
-- proto: ClothingNeckBisexualPin
-  entities:
-  - uid: 24090
-    components:
-    - type: Transform
-      pos: -20.494595,5.7531924
-      parent: 60
 - proto: ClothingNeckBling
   entities:
   - uid: 18461
@@ -58823,13 +58809,6 @@ entities:
     - type: Transform
       pos: -47.5,-26.5
       parent: 60
-- proto: ClothingNeckCloakTrans
-  entities:
-  - uid: 7082
-    components:
-    - type: Transform
-      pos: -40.498245,-36.02266
-      parent: 60
 - proto: ClothingNeckHeadphones
   entities:
   - uid: 7861
@@ -58841,27 +58820,6 @@ entities:
     components:
     - type: Transform
       pos: -38.4609,19.6876
-      parent: 60
-- proto: ClothingNeckIntersexPin
-  entities:
-  - uid: 24088
-    components:
-    - type: Transform
-      pos: -12.770909,19.336336
-      parent: 60
-- proto: ClothingNeckLesbianPin
-  entities:
-  - uid: 24086
-    components:
-    - type: Transform
-      pos: -10.308835,13.564301
-      parent: 60
-- proto: ClothingNeckLGBTPin
-  entities:
-  - uid: 7174
-    components:
-    - type: Transform
-      pos: -11.221505,22.789167
       parent: 60
 - proto: ClothingNeckMantleCMO
   entities:
@@ -58899,13 +58857,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: ClothingNeckNonBinaryPin
-  entities:
-  - uid: 13569
-    components:
-    - type: Transform
-      pos: -6.8039737,15.288539
-      parent: 60
 - proto: ClothingNeckScarfStripedBlue
   entities:
   - uid: 7862
@@ -106405,13 +106356,6 @@ entities:
     components:
     - type: Transform
       pos: 21.334734,-11.3924055
-      parent: 60
-- proto: LGBTQHandyFlag
-  entities:
-  - uid: 9548
-    components:
-    - type: Transform
-      pos: -41.49743,-36.512333
       parent: 60
 - proto: LightBulb
   entities:

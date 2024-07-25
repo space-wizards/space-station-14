@@ -60699,13 +60699,6 @@ entities:
     - type: Transform
       pos: -32.42196,-65.44334
       parent: 5350
-- proto: ClothingNeckCloakTrans
-  entities:
-  - uid: 24116
-    components:
-    - type: Transform
-      pos: -12.481159,-67.51491
-      parent: 5350
 - proto: ClothingNeckHeadphones
   entities:
   - uid: 10498
