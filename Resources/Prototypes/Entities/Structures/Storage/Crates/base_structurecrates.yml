@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseStructureDynamic
   id: CrateGeneric
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: crate
   description: A large container for items.
   components:
@@ -94,7 +94,7 @@
 - type: entity
   parent: CrateGeneric
   id: CrateBaseWeldable
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Weldable
   - type: ResistLocker
