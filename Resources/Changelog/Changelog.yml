@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: osjarw
-  changes:
-  - message: Fixed some anomaly behaviours pulsing at wrong rates.
-    type: Fix
-  id: 6481
-  time: '2024-04-28T09:28:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27435
 - author: Ubaser
   changes:
   - message: Pyrotton can now be mutated from cotton.
@@ -3780,3 +3773,10 @@
   id: 6980
   time: '2024-07-25T10:52:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29629
+- author: Plykiya
+  changes:
+  - message: You can now build atmos gas pipes through things like walls.
+    type: Tweak
+  id: 6981
+  time: '2024-07-25T23:26:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28707
