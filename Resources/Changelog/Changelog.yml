@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Hardsuits, EVA suits, firesuits and other things now protect your feet
-      from dangerous glass shards.
-    type: Tweak
-  id: 6479
-  time: '2024-04-28T07:11:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26764
 - author: FungiFellow
   changes:
   - message: Bows now fit in Exosuit slot.
@@ -3777,3 +3769,10 @@
   id: 6978
   time: '2024-07-25T03:54:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27888
+- author: themias
+  changes:
+  - message: Fixed the ripley control panel not loading
+    type: Fix
+  id: 6979
+  time: '2024-07-25T05:23:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30325
