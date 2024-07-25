@@ -157438,16 +157438,6 @@ entities:
     - type: Transform
       pos: -24.799974,-52.361668
       parent: 2
-- proto: SheetGlass1
-  entities:
-  - uid: 24198
-    components:
-    - type: Transform
-      rot: 12.566370614359172 rad
-      pos: 77.45773,-46.509197
-      parent: 2
-    - type: Stack
-      count: 10
 - proto: SheetPaper1
   entities:
   - uid: 24199

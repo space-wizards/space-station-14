@@ -765,22 +765,6 @@ entities:
       type: Transform
 - proto: CrateCoffin
   entities:
-  - uid: 331
-    components:
-    - pos: 16.5,32.5
-      parent: 1653
-      type: Transform
-    - containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 332
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-      type: ContainerContainer
   - uid: 435
     components:
     - pos: 22.5,32.5

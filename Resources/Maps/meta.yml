@@ -32867,11 +32867,6 @@ entities:
     - type: Transform
       pos: -31.5,-5.5
       parent: 5350
-  - uid: 24198
-    components:
-    - type: Transform
-      pos: -31.5,-4.5
-      parent: 5350
   - uid: 24199
     components:
     - type: Transform
