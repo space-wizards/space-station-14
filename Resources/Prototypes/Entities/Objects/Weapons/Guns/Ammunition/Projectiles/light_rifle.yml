@@ -2,7 +2,7 @@
   id: BulletLightRifle
   name: bullet (.20 rifle)
   parent: BaseBullet
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:
@@ -18,7 +18,7 @@
   id: BulletLightRiflePractice
   name: bullet (.20 rifle practice)
   parent: BaseBulletPractice
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:
@@ -33,7 +33,7 @@
   id: BulletLightRifleIncendiary
   parent: BaseBulletIncendiary
   name: bullet (.20 rifle incendiary)
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:
@@ -49,7 +49,7 @@
   id: BulletLightRifleUranium
   parent: BaseBulletUranium
   name: bullet (.20 rifle uranium)
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:

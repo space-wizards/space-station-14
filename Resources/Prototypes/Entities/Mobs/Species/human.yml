@@ -34,7 +34,7 @@
 - type: entity
   parent: BaseSpeciesDummy
   id: MobHumanDummy
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Inventory
     femaleDisplacements:
@@ -43,4 +43,3 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
-

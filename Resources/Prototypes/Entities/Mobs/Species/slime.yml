@@ -123,7 +123,7 @@
 - type: entity
   parent: MobHumanDummy
   id: MobSlimePersonDummy
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: HumanoidAppearance
     species: SlimePerson
