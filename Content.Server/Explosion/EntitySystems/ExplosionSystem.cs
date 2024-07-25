@@ -61,7 +61,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// </summary>
     public const ushort DefaultTileSize = 1;
 
-    public const int MaxExplosionAudioRange = 30;
+    public const int MaxExplosionAudioRange = 55;
 
     /// <summary>
     ///     The "default" explosion prototype.
@@ -351,7 +351,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         var visualEnt = CreateExplosionVisualEntity(pos, queued.Proto.ID, spaceMatrix, spaceData, gridData.Values, iterationIntensity);
 
         // camera shake
-        CameraShake(iterationIntensity.Count * 4f, pos, queued.TotalIntensity);
+        CameraShake(iterationIntensity.Count * 6f, pos, queued.TotalIntensity);
 
         //For whatever bloody reason, sound system requires ENTITY coordinates.
         var mapEntityCoords = EntityCoordinates.FromMap(_mapManager.GetMapEntityId(pos.MapId), pos, _transformSystem, EntityManager);

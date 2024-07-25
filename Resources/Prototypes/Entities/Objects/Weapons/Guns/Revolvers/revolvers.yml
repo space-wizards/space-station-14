@@ -21,14 +21,18 @@
     slots:
     - suitStorage
     - Belt
-  - type: AmmoCounter
+  #- type: AmmoCounter VXS
   - type: Gun
+    projectileSpeed: 35 # VXS
     selectedMode: SemiAuto
     fireRate: 1.5
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+      path: /Audio/VXS/Gunshots/Revolver/revolver1.ogg # VXS
+      params: # VXS
+        maxDistance: 58
+        volume: 3
   - type: UseDelay
     delay: 0.66
   - type: ContainerContainer
@@ -56,6 +60,7 @@
   id: WeaponRevolverDeckard
   description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test. Uses .45 magnum ammo.
   components:
+  - type: AmmoCounter # VXS
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
     layers:
@@ -65,6 +70,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Gun
+    projectileSpeed: 35 # VXS
     fireRate: 2
   - type: RevolverAmmoProvider
     capacity: 5
@@ -104,9 +110,13 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Gun
+    projectileSpeed: 35 # VXS
     fireRate: 3
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
+      path: /Audio/VXS/Gunshots/Revolver/revolver2.ogg # VXS
+      params:
+        maxDistance: 60
+        volume: 4
 
 - type: entity
   name: Python
@@ -119,14 +129,16 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
   - type: Gun
+    projectileSpeed: 35 # VXS
     selectedMode: SemiAuto
     fireRate: 2
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+      path: /Audio/VXS/Gunshots/Revolver/revolver1.ogg # VXS
       params:
-        volume: 2.25
+        volume: 3
+        maxDistance: 58 # VXS
 
 - type: entity
   parent: WeaponRevolverPython

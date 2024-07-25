@@ -11,6 +11,10 @@
     damage:
       types:
         Piercing: 28
+  - type: StaminaDamageOnCollide
+    damage: 25 # VXS
+  - type: TimedDespawn # VXS
+    lifetime: 8
 
 - type: entity
   id: PelletShotgunBeanbag
@@ -24,9 +28,9 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 10
+        Blunt: 15 # VXS
   - type: StaminaDamageOnCollide
-    damage: 40 # 3 hits to stun
+    damage: 30 # VXS
 
 - type: entity
   id: PelletShotgun
@@ -40,7 +44,9 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 10
+        Piercing: 7
+  - type: TimedDespawn # VXS
+    lifetime: 3
 
 - type: entity
   id: PelletShotgunIncendiary
@@ -54,10 +60,12 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 3
-        Heat: 7
+        Blunt: 7 # VXS
+        Heat: 3 # VXS
   - type: IgnitionSource
     ignited: true
+  - type: TimedDespawn # VXS
+    lifetime: 3
 
 - type: entity
   id: PelletShotgunPractice
@@ -88,7 +96,6 @@
         Piercing: 3
         Slash: 3
 
-
 - type: entity
   id: PelletShotgunTranquilizer
   name: pellet (.50 tranquilizer)
@@ -101,7 +108,7 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 1
+        Blunt: 3 # VXS
   - type: SolutionContainerManager
     solutions:
       ammo:
@@ -177,6 +184,8 @@
       types:
         Radiation: 5
         Piercing: 5
+  - type: TimedDespawn # VXS
+    lifetime: 3
 
 - type: entity
   id: PelletGrapeshot #tally fucking ho

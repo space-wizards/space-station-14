@@ -1,0 +1,20 @@
+- type: entity
+  parent: Ash
+  id: AshRadioactive
+  suffix: Radioactive
+  name: ash
+  description: This used to be something, but now it's not.
+  components:
+  - type: Tag
+    tags:
+    - Trash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Ash
+          Quantity: 10
+  - type: RadiationSource
+    intensity: 1
+    slope: 0.3

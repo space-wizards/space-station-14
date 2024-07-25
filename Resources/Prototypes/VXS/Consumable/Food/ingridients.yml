@@ -1,0 +1,16 @@
+# Coffe
+- type: entity
+  parent: [ReagentPacketBase, ItemHeftyBase]
+  id: ReagentContainerInstantCoffeeSmall
+  name: coffee bag
+  description: A small bag full of cheap instant coffee. The label shows coffee plantations and the NanoTrasen logo.
+  components:
+  - type: Sprite
+    state: flour-small
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: InstantCoffeePowder
+          Quantity: 20

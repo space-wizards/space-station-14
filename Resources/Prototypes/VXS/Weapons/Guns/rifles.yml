@@ -1,0 +1,45 @@
+- type: entity
+  name: AK 742M
+  parent: WeaponRifleAk
+  id: WeaponRifleAk742M
+  description: An old automatic rifle, but in a new modification. Looks familiar, doesn't it? Uses .20 rifle ammo.
+  components:
+  - type: Sprite
+    sprite: VXS/Weapons/Rifles/ak74m.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    cameraRecoilScalar: 1
+    projectileSpeed: 30
+    fireRate: 6
+    selectedMode: FullAuto
+    availableModes:
+      - SemiAuto
+      - FullAuto
+    soundGunshot:
+      path: /Audio/VXS/Gunshots/Rifle/rifle2.ogg
+      params:
+        maxDistance: 60
+        volume: 2
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeRifle

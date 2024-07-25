@@ -1,0 +1,69 @@
+# Rockets / Grenades
+- type: entity
+  id: BulletRocketFugas
+  name: rocket
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: fugas
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: DemolitionCharge
+    maxIntensity: 17
+    intensitySlope: 800
+    totalIntensity: 150
+    maxTileBreak: 1
+  - type: SmokeOnTrigger
+    duration: 2
+    spreadAmount: 3
+  - type: FlashOnTrigger
+    range: 4
+  - type: ClusterGrenade
+    fillPrototype: PelletFugasStruya
+    maxGrenadesCount: 1
+    grenadeType: enum.GrenadeType.Shoot
+
+- type: entity
+  id: PelletFugasStruya
+  name: pellet
+  noSpawn: true
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
+  - type: Projectile
+    deleteOnCollide: false
+    damage:
+      types:
+        Blunt: 120
+  - type: StaminaDamageOnCollide
+    damage: 99
+  - type: TimedDespawn
+    lifetime: 0.05
+
+- type: entity
+  id: BulletRocketThermobar
+  name: rocket
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: frag
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: FireBomb
+    maxIntensity: 45
+    intensitySlope: 1
+    totalIntensity: 300
+    maxTileBreak: 1
+  - type: SmokeOnTrigger
+    duration: 4
+    spreadAmount: 6
+  - type: FlashOnTrigger
+    range: 2

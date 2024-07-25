@@ -14,8 +14,9 @@
     slots:
     - Back
     - suitStorage
-  - type: AmmoCounter
+  #- type: AmmoCounter VXS
   - type: Gun
+    projectileSpeed: 30 # VXS
     minAngle: 2
     maxAngle: 16
     fireRate: 8
@@ -26,7 +27,10 @@
     - SemiAuto
     - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/smg.ogg
+      path: /Audio/VXS/Gunshots/SMG/smg3.ogg # VXS
+      params: # VXS
+        maxDistance: 55
+        volume: 2
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
@@ -70,9 +74,13 @@
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
+    projectileSpeed: 30 # VXS
     fireRate: 10
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
+      path: /Audio/VXS/Gunshots/SMG/smg1.ogg # VXS
+      params: # VXS
+        maxDistance: 55
+        volume: 2
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -85,6 +93,7 @@
   id: WeaponSubMachineGunC20r
   description: A firearm that is often used by the infamous nuclear operatives. Uses .35 auto ammo.
   components:
+  - type: AmmoCounter # VXS
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
     layers:
@@ -100,6 +109,7 @@
     minAngle: -19
     maxAngle: -16
   - type: Gun
+    projectileSpeed: 30 # VXS
     minAngle: 21
     maxAngle: 32
     shotsPerBurst: 5
@@ -108,7 +118,10 @@
     - Burst
     - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
+      path: /Audio/VXS/Gunshots/SMG/smg2.ogg # VXS
+      params: # VXS
+        maxDistance: 55
+        volume: 2
   - type: ChamberMagazineAmmoProvider
     autoEject: true
   - type: MagazineVisuals
@@ -138,12 +151,16 @@
       minAngle: -19
       maxAngle: -16
     - type: Gun
+      projectileSpeed: 30 # VXS
       minAngle: 21
       maxAngle: 32
       fireRate: 6
       selectedMode: FullAuto
       soundGunshot:
-        path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
+        path: /Audio/VXS/Gunshots/SMG/smg1.ogg # VXS
+      params: # VXS
+        maxDistance: 55
+        volume: 2
       availableModes:
         - FullAuto
     - type: ItemSlots
@@ -175,7 +192,6 @@
   name: Vector
   parent: BaseWeaponSubMachineGun
   id: WeaponSubMachineGunVector
-  suffix: Deprecated use Drozd
   description: An excellent fully automatic Heavy SMG. Uses .45 magnum ammo.
   components:
   - type: Sprite
@@ -188,10 +204,14 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/vector.rsi
   - type: Gun
-    fireRate: 6
+    projectileSpeed: 35 # VXS
+    fireRate: 7 # VXS
     selectedMode: FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
+      path: /Audio/VXS/Gunshots/SMG/smg3.ogg # VXS
+      params: # VXS
+        maxDistance: 60
+        volume: 2
     availableModes:
     - FullAuto
   - type: ItemSlots
@@ -207,11 +227,11 @@
             - MagazineMagnumSubMachineGun
       gun_chamber:
         name: Chamber
-        startingItem: CartridgeMagnum
+        startingItem: CartridgePistol # VXS
         priority: 1
         whitelist:
           tags:
-            - CartridgeMagnum
+            - CartridgePistol # VXS
         whitelistFailPopup: gun-magazine-whitelist-fail
   - type: MagazineVisuals
     magState: mag
@@ -243,6 +263,7 @@
   - type: ChamberMagazineAmmoProvider
     boltClosed: null
   - type: Gun
+    projectileSpeed: 30 # VXS
     fireRate: 5.5
     minAngle: 1
     maxAngle: 6

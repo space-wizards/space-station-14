@@ -1,0 +1,20 @@
+- type: entity
+  id: CartridgeRocketThermobar
+  name: TBG-7V grenade
+  suffix: thermobaric
+  parent: BaseItem
+  description: The thermobaric warhead has a high explosive, fragmentation and incendiary effect, causing devastating damage to the enemy's manpower on the battlefield. The penetration capability of this ammunition is sufficient to defeat lightly armored and unarmored vehicles, and the TBG-7B's impact factors effectively affect the enemy located in trenches and bunkers at a distance of two meters from the epicenter of the grenade explosion. This ammunition leaves no chance for all living things in small spaces # VXS
+  components:
+  - type: Tag
+    tags:
+      - CartridgeRocket
+  - type: Item
+    size: Large
+  - type: CartridgeAmmo
+    proto: BulletRocketThermobar
+    deleteOnSpawn: true
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
+    state: rpg
+  - type: StaticPrice
+    price: 20

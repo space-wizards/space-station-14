@@ -1,0 +1,42 @@
+# Plasma
+
+- type: entity
+  id: PlasmaTankFuel
+  parent: [StorageTank, StructureWheeled]
+  name: plasma tank
+  description: A fuel tank but full of phoron. It's used to store high amounts of fuel.
+  suffix: Plasma
+  components:
+  - type: StaticPrice
+    price: 2500
+  - type: Sprite
+    sprite: Structures/Storage/tanks.rsi
+    layers:
+      - state: fueltank-2
+      - state: fueltank-2-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: fueltank-2-
+  - type: ExaminableSolution
+    solution: tank
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Plasma
+          Quantity: 1500
+  - type: DamageOnToolInteract
+    tools: Welding
+    weldingDamage:
+      types:
+        Heat: 10
+  - type: PacifismDangerousAttack
+  - type: Explosive
+    explosionType: FireBomb
+    totalIntensity: 150
+    intensitySlope: 0.5
+    maxIntensity: 100
+

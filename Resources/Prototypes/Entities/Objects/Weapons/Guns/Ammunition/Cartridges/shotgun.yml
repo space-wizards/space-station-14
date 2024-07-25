@@ -8,9 +8,9 @@
     tags:
     - Cartridge
     - ShellShotgun
-  - type: CartridgeAmmo
-    count: 6
-    spread: 15
+  - type: CartridgeAmmo # VXS
+    count: 12
+    spread: 5
     soundEject:
       collection: ShellEject
   - type: Sprite
@@ -130,7 +130,7 @@
     maxTransferAmount: 7
   - type: SpentAmmoVisuals
     state: "tranquilizer"
-    
+
 - type: entity
   id: ShellShotgunImprovised
   name: improvised shotgun shell
@@ -146,7 +146,7 @@
     node: shell
   - type: CartridgeAmmo
     count: 10
-    spread: 45 
+    spread: 45
     proto: PelletShotgunImprovised
   - type: SpentAmmoVisuals
     state: "improvised"

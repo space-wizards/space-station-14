@@ -1,0 +1,35 @@
+- type: entity
+  parent: GunSafe
+  id: GunSafeWeaponRPG
+  name: RPG safe
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponLauncherRocket
+      amount: 1
+    - id: CartridgeRocket
+      amount: 1
+
+- type: entity
+  parent: GunSafe
+  id: GunSafeRocketRPG
+  name: Rocket RPG safe
+  components:
+  - type: StorageFill
+    contents:
+    - id: CartridgeRocket
+      amount: 2
+    - id: CartridgeRocketThermobar
+      amount: 2
+
+- type: entity
+  parent: GunSafe
+  id: GunSafeWeaponAK742M
+  name: AK 742M safe
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponRifleAk742M
+      amount: 2
+    - id: MagazineRifle
+      amount: 4

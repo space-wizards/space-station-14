@@ -1,0 +1,33 @@
+- type: entity
+  name: AIL-2M
+  parent: BaseLandMine
+  id: LandMineInfantryAIL
+  components:
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 25
+    intensitySlope: 3
+    totalIntensity: 15
+    canCreateVacuum: false
+  - type: Item
+    size: Small
+  - type: Sprite
+    drawdepth: Items
+    sprite: VXS/Objects/landmine.rsi
+    state: landmine
+  - type: StepTrigger
+    stepOn: false
+
+- type: entity
+  parent: BaseFlatpack
+  id: FlatpackLandmineAIL
+  name: landmine flatpack
+  components:
+  - type: Sprite
+    layers:
+    - state: ame-part
+  - type: Flatpack
+    entity: LandMineInfantryAIL
+  - type: StaticPrice
+    price: 250

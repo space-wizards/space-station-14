@@ -25,6 +25,8 @@
       - Slicing
     useSound:
       path: /Audio/Items/Culinary/chop.ogg
+  - type: StaminaDamageOnHit # VXS
+    damage: 2
 
 - type: entity
   name: kitchen knife
@@ -101,6 +103,8 @@
     sprite: Objects/Weapons/Melee/combat_knife.rsi
   - type: DisarmMalus
     malus: 0.225
+  - type: StaminaDamageOnHit # VXS
+    damage: 6
 
 - type: entity
   name: survival knife

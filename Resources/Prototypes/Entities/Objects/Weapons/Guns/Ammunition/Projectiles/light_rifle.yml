@@ -7,7 +7,12 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 19
+        Piercing: 36 # VXS
+        Blunt: 12 # VXS
+  - type: StaminaDamageOnCollide # VXS
+    damage: 15
+  - type: TimedDespawn # VXS
+    lifetime: 15
 
 - type: entity
   id: BulletLightRiflePractice
@@ -18,7 +23,11 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 2
+        Piercing: 34 # VXS
+  - type: StaminaDamageOnCollide # VXS
+    damage: 4
+  - type: TimedDespawn # VXS
+    lifetime: 15
 
 - type: entity
   id: BulletLightRifleIncendiary
@@ -29,8 +38,12 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 3
-        Heat: 16
+        Piercing: 34 # VXS
+        Heat: 11 # VXS
+  - type: StaminaDamageOnCollide # VXS
+    damage: 6
+  - type: TimedDespawn # VXS
+    lifetime: 10
 
 - type: entity
   id: BulletLightRifleUranium
@@ -41,5 +54,9 @@
   - type: Projectile
     damage:
       types:
-        Radiation: 9
-        Piercing: 10
+        Radiation: 1 # VXS
+        Piercing: 48 # VXS
+  - type: StaminaDamageOnCollide # VXS
+    damage: 2
+  - type: TimedDespawn # VXS
+    lifetime: 20

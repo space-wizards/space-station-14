@@ -5,19 +5,30 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from /tg/station at commit 9065b811726ae52be5d1889f436c01a24efbf47a, edited by github user @Flareguy for Space Station 14",
+    "copyright": "Taken from Skyrat-tg at commit https://github.com/Skyrat-SS13/Skyrat-tg/commit/ed4fbf117973dafea6e654bee7efdc2316bc2d8d",
     "states": [
         {
             "name": "mw"
+
         },
         {
             "name": "mw_unlit"
-        },
+        },		
         {
             "name": "mw0"
         },
         {
-            "name": "mw_running_unlit"
+            "name": "mw_running_unlit",
+            "delays": [
+                [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            ]
         },
         {
             "name": "mwb"
@@ -29,13 +40,38 @@
             "name": "mwbloody0"
         },
         {
-            "name": "mwbloody1"
+            "name": "mwbloody1",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
         },
         {
-            "name": "mwbloodyo"
+            "name": "mwbloodyo",
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
         },
         {
-            "name": "mwo"
-        }
-      ]
-    }
+            "name": "mwo",
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+       {
+           "name": "mw-o"
+       }
+    ]
+}

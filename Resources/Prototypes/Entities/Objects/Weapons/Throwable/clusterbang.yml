@@ -187,6 +187,11 @@
   - type: ClusterGrenade
     fillPrototype: PelletClusterLethal
     maxGrenadesCount: 30
+    maxSpreadDistance: 4 # VXS - Start
+    minSpreadDistance: 1
+    randomSpread: true
+    randomAngle: true
+    velocity: 25 # VXS - End
     grenadeType: enum.GrenadeType.Shoot
   - type: OnUseTimerTrigger
     beepSound:
