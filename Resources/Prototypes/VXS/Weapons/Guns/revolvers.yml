@@ -4,6 +4,7 @@
   id: WeaponRevolverRex
   description: Robust revolver with a rubberized grip and stainless steel finish, a good argument in dangerous situations. Uses .45 magnum ammo.
   components:
+  - type: AmmoCounter
   - type: Sprite
     sprite: VXS/Weapons/Revolvers/Rex.rsi
   - type: Clothing
