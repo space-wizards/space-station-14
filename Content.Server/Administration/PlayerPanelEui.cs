@@ -6,6 +6,7 @@ using Content.Server.Administration.Systems;
 using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.Eui;
 using Robust.Server.Player;
 using Robust.Shared.Player;
@@ -20,7 +21,7 @@ public sealed class PlayerPanelEui : BaseEui
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly EuiManager _eui = default!;
-
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
 
     private readonly LocatedPlayerData _targetPlayer;
     private int? _notes;
@@ -78,7 +79,7 @@ public sealed class PlayerPanelEui : BaseEui
     {
         base.HandleMessage(msg);
 
-        ICommonSession? session = null;
+        ICommonSession? session;
 
         switch (msg)
         {
@@ -91,6 +92,7 @@ public sealed class PlayerPanelEui : BaseEui
 
                 if (_entity.HasComponent<AdminFrozenComponent>(session.AttachedEntity))
                 {
+                    _adminLog.Add(LogType.Action,$"{Player:actor} unfroze {_entity.ToPrettyString(session.AttachedEntity):subject}");
                     _entity.RemoveComponent<AdminFrozenComponent>(session.AttachedEntity.Value);
                     SetPlayerState();
                     return;
@@ -98,10 +100,12 @@ public sealed class PlayerPanelEui : BaseEui
 
                 if (freezeMsg.Mute)
                 {
+                    _adminLog.Add(LogType.Action,$"{Player:actor} froze and muted {_entity.ToPrettyString(session.AttachedEntity):subject}");
                     frozenSystem.FreezeAndMute(session.AttachedEntity.Value);
                 }
                 else
                 {
+                    _adminLog.Add(LogType.Action,$"{Player:actor} froze {_entity.ToPrettyString(session.AttachedEntity):subject}");
                     _entity.EnsureComponent<AdminFrozenComponent>(session.AttachedEntity.Value);
                 }
                 SetPlayerState();
@@ -111,6 +115,7 @@ public sealed class PlayerPanelEui : BaseEui
                 if (!_admins.HasAdminFlag(Player, AdminFlags.Logs))
                     return;
 
+                _adminLog.Add(LogType.Action, $"{Player:actor} opened logs on {_targetPlayer.Username:subject}");
                 var ui = new AdminLogsEui();
                 _eui.OpenEui(ui, Player);
                 ui.SetLogFilter(search: _targetPlayer.Username);
@@ -124,6 +129,7 @@ public sealed class PlayerPanelEui : BaseEui
 
                 if (msg is PlayerPanelRejuvenationMessage)
                 {
+                    _adminLog.Add(LogType.Action,$"{Player:actor} rejuvenated {_entity.ToPrettyString(session.AttachedEntity):subject}");
                     if (!_entity.TrySystem<RejuvenateSystem>(out var rejuvenate))
                         return;
 
@@ -131,6 +137,7 @@ public sealed class PlayerPanelEui : BaseEui
                 }
                 else
                 {
+                    _adminLog.Add(LogType.Action,$"{Player:actor} deleted {_entity.ToPrettyString(session.AttachedEntity):subject}");
                     _entity.DeleteEntity(session.AttachedEntity);
                 }
                 break;
