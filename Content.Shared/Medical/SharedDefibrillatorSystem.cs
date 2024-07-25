@@ -129,7 +129,6 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
     public virtual void Zap(EntityUid uid, EntityUid target, EntityUid user, DefibrillatorComponent component, MobStateComponent? mob = null)
     {
         _audio.PlayPredicted(component.ZapSound, uid, user);
-        _electrocution.TryDoElectrocution(target, null, component.ZapDamage, component.WritheDuration, true, ignoreInsulation: true);
         component.NextZapTime = _timing.CurTime + component.ZapDelay;
         _appearance.SetData(uid, DefibrillatorVisuals.Ready, false);
 

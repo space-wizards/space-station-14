@@ -1,4 +1,5 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Electrocution;
 using Content.Server.EUI;
 using Content.Server.Ghost;
 using Content.Server.PowerCell;
@@ -11,6 +12,7 @@ using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Robust.Server.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
@@ -29,12 +31,15 @@ public sealed class DefibrillatorSystem : SharedDefibrillatorSystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
 
     public override void Zap(EntityUid uid, EntityUid target, EntityUid user, DefibrillatorComponent component, MobStateComponent? mob = null)
     {
         base.Zap(uid, target, user, component, mob);
+
+        _electrocution.TryDoElectrocution(target, null, component.ZapDamage, component.WritheDuration, true, ignoreInsulation: true);
 
         // TODO : powercell should be rewritten to shared instead of strictly be on Server side
         if (!_powerCell.TryUseActivatableCharge(uid, user: user))
