@@ -62,6 +62,33 @@ public sealed partial class IconSmoothSystem : EntitySystem
         if (component.Mode != IconSmoothingMode.Corners || !TryComp(uid, out SpriteComponent? sprite))
             return;
 
+        SetCornerLayers(sprite, component);
+
+        if (component.Shader != null)
+        {
+            sprite.LayerSetShader(CornerLayers.SE, component.Shader);
+            sprite.LayerSetShader(CornerLayers.NE, component.Shader);
+            sprite.LayerSetShader(CornerLayers.NW, component.Shader);
+            sprite.LayerSetShader(CornerLayers.SW, component.Shader);
+        }
+    }
+
+    public void SetStateBase(EntityUid uid, IconSmoothComponent component, string newState)
+    {
+        if (!TryComp<SpriteComponent>(uid, out var sprite))
+            return;
+
+        component.StateBase = newState;
+        SetCornerLayers(sprite, component);
+    }
+
+    private void SetCornerLayers(SpriteComponent sprite, IconSmoothComponent component)
+    {
+        sprite.LayerMapRemove(CornerLayers.SE);
+        sprite.LayerMapRemove(CornerLayers.NE);
+        sprite.LayerMapRemove(CornerLayers.NW);
+        sprite.LayerMapRemove(CornerLayers.SW);
+
         var state0 = $"{component.StateBase}0";
         sprite.LayerMapSet(CornerLayers.SE, sprite.AddLayerState(state0));
         sprite.LayerSetDirOffset(CornerLayers.SE, DirectionOffset.None);
@@ -71,14 +98,6 @@ public sealed partial class IconSmoothSystem : EntitySystem
         sprite.LayerSetDirOffset(CornerLayers.NW, DirectionOffset.Flip);
         sprite.LayerMapSet(CornerLayers.SW, sprite.AddLayerState(state0));
         sprite.LayerSetDirOffset(CornerLayers.SW, DirectionOffset.Clockwise);
-
-        if (component.Shader != null)
-        {
-            sprite.LayerSetShader(CornerLayers.SE, component.Shader);
-            sprite.LayerSetShader(CornerLayers.NE, component.Shader);
-            sprite.LayerSetShader(CornerLayers.NW, component.Shader);
-            sprite.LayerSetShader(CornerLayers.SW, component.Shader);
-        }
     }
 
     private void OnShutdown(EntityUid uid, IconSmoothComponent component, ComponentShutdown args)

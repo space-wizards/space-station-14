@@ -1343,6 +1343,9 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Center),
                 }),
 
+                Element<PanelContainer>().Class(OptionButton.StyleClassOptionsBackground)
+                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat(Color.FromHex("#25252A"))),
+
                 new StyleRule(new SelectorElement(typeof(PanelContainer), new []{ ClassHighDivider}, null, null), new []
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, new StyleBoxFlat { BackgroundColor = NanoGold, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2}),

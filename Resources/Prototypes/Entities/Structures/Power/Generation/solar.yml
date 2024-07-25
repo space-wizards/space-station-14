@@ -1,6 +1,6 @@
 - type: entity
   id: SolarPanelBasePhysSprite
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: solar panel
   placement:
     mode: SnapgridCenter

@@ -252,7 +252,7 @@
 - type: entity
   parent: Paper
   id: PaperWritten
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     layers:
@@ -548,6 +548,7 @@
           tags:
           - Write
   - type: CargoOrderConsole
+  - type: BankClient
   - type: ActivatableUI
     verbText: qm-clipboard-computer-verb-text
     key: enum.CargoConsoleUiKey.Orders
