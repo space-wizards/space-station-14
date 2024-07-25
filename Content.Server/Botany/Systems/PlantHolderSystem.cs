@@ -57,7 +57,7 @@ public sealed class PlantHolderSystem : EntitySystem
         SubscribeLocalEvent<PlantHolderComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<PlantHolderComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PlantHolderComponent, InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<PlantHolderComponent, SolutionTransferSuccessEvent>(OnSolutionAdded);
+        SubscribeLocalEvent<PlantHolderComponent, SolutionTransferredEvent>(OnSolutionAdded);
     }
 
     public override void Update(float frameTime)
