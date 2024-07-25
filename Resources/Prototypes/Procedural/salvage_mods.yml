@@ -7,19 +7,23 @@
 # Biome mods -> at least 1 required
 - type: salvageBiomeMod
   id: Caves
+  desc: salvage-biome-mod-caves
   biome: Caves
 
 - type: salvageBiomeMod
   id: Grasslands
+  desc: salvage-biome-mod-grasslands
   biome: Grasslands
 
 - type: salvageBiomeMod
   id: Snow
+  desc: salvage-biome-mod-snow
   cost: 1
   biome: Snow
 
 - type: salvageBiomeMod
   id: Lava
+  desc: salvage-biome-mod-lava
   cost: 2
   biome: Lava
 
@@ -32,26 +36,26 @@
 # Light mods -> required
 - type: salvageLightMod
   id: Daylight
-  desc: Daylight
+  desc: salvage-light-mod-daylight
   color: "#D8B059"
   biomes:
     - Grasslands
 
 - type: salvageLightMod
   id: Lavalight
-  desc: Daylight
+  desc: salvage-light-mod-daylight
   color: "#A34931"
   biomes:
     - Lava
 
 - type: salvageLightMod
   id: Evening
-  desc: Evening
+  desc: salvage-light-mod-evening
   color: "#2b3143"
 
 - type: salvageLightMod
   id: Night
-  desc: Night time
+  desc: salvage-light-mod-night
   cost: 1
   color: null
 
@@ -72,7 +76,7 @@
 
 - type: salvageTemperatureMod
   id: Burning
-  desc: High temperature
+  desc: salvage-temperature-mod-high-temperature
   cost: 2
   temperature: 423.15 # 200C
   biomes:
@@ -82,7 +86,7 @@
 
 - type: salvageTemperatureMod
   id: Melting
-  desc: Extreme heat
+  desc: salvage-temperature-mod-extreme-heat
   cost: 4
   temperature: 1273.15 # 1000C hot hot hot
   biomes:
@@ -100,7 +104,7 @@
 
 - type: salvageTemperatureMod
   id: Tundra
-  desc: Low temperature
+  desc: salvage-temperature-mod-low-temperature
   cost: 2
   temperature: 263.15 # -40C
   biomes:
@@ -109,7 +113,7 @@
 
 - type: salvageTemperatureMod
   id: Frozen
-  desc: Extreme cold
+  desc: salvage-temperature-mod-extreme-cold
   cost: 4
   temperature: 123.15 # -150C
   biomes:
@@ -118,7 +122,7 @@
 # Air mixtures
 - type: salvageAirMod
   id: Space
-  desc: No atmosphere
+  desc: salvage-air-mod-no-atmosphere
   space: true
   cost: 2
   biomes:
@@ -135,7 +139,7 @@
 - type: salvageAirMod
   id: Sleepy
   cost: 1
-  desc: Dangerous atmosphere
+  desc: salvage-air-mod-dangerous-atmosphere
   gases:
     - 21.824779 # oxygen
     - 72.10312 # nitrogen
@@ -155,7 +159,7 @@
 - type: salvageAirMod
   id: Poisoned
   cost: 2
-  desc: Dangerous atmosphere
+  desc: salvage-air-mod-dangerous-atmosphere
   gases:
     - 21.824779 # oxygen
     - 77.10312 # nitrogen
@@ -170,7 +174,7 @@
 - type: salvageAirMod
   id: Poison
   cost: 3
-  desc: Toxic atmosphere
+  desc: salvage-air-mod-toxic-atmosphere
   gases:
     - 21.824779 # oxygen
     - 0
@@ -183,7 +187,7 @@
 - type: salvageAirMod
   id: Plasma
   cost: 4
-  desc: Toxic atmosphere
+  desc: salvage-air-mod-toxic-atmosphere
   gases:
     - 0
     - 0
@@ -196,7 +200,7 @@
 - type: salvageAirMod
   id: Burnable
   cost: 5
-  desc: Volatile atmosphere
+  desc: salvage-air-mod-volatile-atmosphere
   gases:
     - 21.824779 # oxygen
     - 0
@@ -242,7 +246,7 @@
   proto: SnowyLabs
   biomes:
     - Snow
-    
+
 - type: salvageDungeonMod
   id: Haunted
   proto: Haunted
