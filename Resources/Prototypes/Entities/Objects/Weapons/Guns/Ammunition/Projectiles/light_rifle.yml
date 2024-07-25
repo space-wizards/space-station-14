@@ -34,10 +34,10 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 3
-        Heat: 16
-  - type: StaminaDamageOnCollide
-    damage: 2
+        Piercing: 25 # VXS
+        Heat: 11 # VXS
+  - type: StaminaDamageOnCollide # VXS
+    damage: 6
 
 - type: entity
   id: BulletLightRifleUranium

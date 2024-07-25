@@ -32,8 +32,8 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 3
-        Heat: 13 # VXS
+        Piercing: 30 # VXS
+        Heat: 5 # VXS
 
 - type: entity
   id: BulletMagnumAP

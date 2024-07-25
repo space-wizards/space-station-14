@@ -114,13 +114,13 @@
     damage:
       types:
         Blunt: 14
-  - type: PointLight
-    enabled: true
-    color: "#ff4300"
-    radius: 2.0
-    energy: 7.0
+  #- type: PointLight VXS
+  #  enabled: true
+  #  color: "#ff4300"
+  #  radius: 2.0
+  #  energy: 7.0
   - type: IgniteOnCollide
-    fireStacks: 0.25
+    fireStacks: 0.15 # VXS
 
 - type: entity
   id: BaseBulletAP

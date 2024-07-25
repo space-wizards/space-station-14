@@ -56,7 +56,7 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 3
+        Blunt: 7 # VXS
         Heat: 3 # VXS
   - type: IgnitionSource
     ignited: true
