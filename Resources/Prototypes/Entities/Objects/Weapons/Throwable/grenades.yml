@@ -408,6 +408,23 @@
 
 - type: entity
   parent: SmokeGrenade
+  id: BeeGrenade
+  name: beenade
+  description: Run.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/beenade.rsi
+  - type: SmokeOnTrigger
+    duration: 15
+    spreadAmount: 25
+    smokePrototype: Foam
+    solution:
+      reagents:
+      - ReagentId: BuzzochloricBees
+        Quantity: 30
+
+- type: entity
+  parent: SmokeGrenade
   id: TearGasGrenade
   name: tear gas grenade
   description: A riot control tear gas grenade. Causes irritation, pain and makes you cry your eyes out.
