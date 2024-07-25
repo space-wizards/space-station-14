@@ -1,36 +1,4 @@
 ﻿Entries:
-- author: Piksqu & Boaz1111
-  changes:
-  - message: Added the hyperconvection circuit imprinter
-    type: Add
-  id: 6477
-  time: '2024-04-28T05:49:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27283
-- author: exincore
-  changes:
-  - message: Fax machines now copy the labels attached to papers.
-    type: Add
-  - message: Fax machine "Print File" functionality now applies the first line of
-      the file as a label when it begins with `#`.
-    type: Add
-  id: 6478
-  time: '2024-04-28T06:12:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25979
-- author: Plykiya
-  changes:
-  - message: Hardsuits, EVA suits, firesuits and other things now protect your feet
-      from dangerous glass shards.
-    type: Tweak
-  id: 6479
-  time: '2024-04-28T07:11:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26764
-- author: FungiFellow
-  changes:
-  - message: Bows now fit in Exosuit slot.
-    type: Tweak
-  id: 6480
-  time: '2024-04-28T08:23:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27433
 - author: osjarw
   changes:
   - message: Fixed some anomaly behaviours pulsing at wrong rates.
@@ -3780,3 +3748,35 @@
   id: 6976
   time: '2024-07-24T08:57:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30313
+- author: Cojoke-dot
+  changes:
+  - message: Fix infinite QSI linking range
+    type: Fix
+  id: 6977
+  time: '2024-07-24T20:57:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30332
+- author: deltanedas
+  changes:
+  - message: Borgs can no longer unlock the robotics console or other borgs.
+    type: Tweak
+  id: 6978
+  time: '2024-07-25T03:54:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27888
+- author: themias
+  changes:
+  - message: Fixed the ripley control panel not loading
+    type: Fix
+  id: 6979
+  time: '2024-07-25T05:23:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30325
+- author: Timur2011
+  changes:
+  - message: Space adders are now butcherable.
+    type: Add
+  - message: Snakes now drop snake meat when butchered.
+    type: Fix
+  - message: Snakes now appear lying when in critical state.
+    type: Tweak
+  id: 6980
+  time: '2024-07-25T10:52:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29629
