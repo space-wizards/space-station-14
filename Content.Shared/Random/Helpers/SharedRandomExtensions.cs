@@ -142,7 +142,7 @@ namespace Content.Shared.Random.Helpers
 
             foreach (var fill in fills)
             {
-                picks[fill] = fill.Weight * fill.Reagents.Count;
+                picks[fill] = fill.Weight;
             }
 
             var sum = picks.Values.Sum();
