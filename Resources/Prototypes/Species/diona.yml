@@ -1,7 +1,7 @@
 - type: species
   id: Diona
   name: species-name-diona
-  roundStart: false # VXS
+  roundStart: true
   prototype: MobDiona
   sprites: MobDionaSprites
   defaultSkinTone: "#cdb369"
