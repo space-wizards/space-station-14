@@ -1,5 +1,6 @@
 using Content.Shared.Gravity;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Robust.Shared.Utility;
@@ -11,6 +12,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     [Dependency] private readonly IDynamicTypeFactory _factory = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
 
     private DoAfter[] _doAfters = Array.Empty<DoAfter>();
 
@@ -217,16 +219,21 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.AttemptFrequency == AttemptFrequency.EveryTick && !TryAttemptEvent(doAfter))
             return true;
 
+        // Check if the do-after requires hands to perform at first
+        // For example, you need hands to strip clothes off of someone
         if (args.NeedHand)
         {
             if (!handsQuery.TryGetComponent(args.User, out var hands) || hands.Count == 0)
                 return true;
 
-            if (args.BreakOnHandChange && (hands.ActiveHand?.Name != doAfter.InitialHand
-                                           || hands.ActiveHandEntity != doAfter.InitialItem))
-            {
+            // If break on drop item is set to true, check if the item is still in the owner's hands
+            // This potentially still allows the user to change hands, or swap the item between hands
+            if (args.BreakOnDropItem && !_hands.IsHolding((args.User, hands), doAfter.InitialItem))
+                    return true;
+
+            // If the user changes which hand is active at all, interrupt the do-after
+            if (args.BreakOnHandChange && hands.ActiveHand?.Name != doAfter.InitialHand)
                 return true;
-            }
         }
 
         if (args.RequireCanInteract && !_actionBlocker.CanInteract(args.User, args.Target))

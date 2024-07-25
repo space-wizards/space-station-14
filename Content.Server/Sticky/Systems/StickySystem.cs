@@ -95,7 +95,7 @@ public sealed class StickySystem : EntitySystem
             _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new StickyDoAfterEvent(), uid, target: target, used: uid)
             {
                 BreakOnMove = true,
-                NeedHand = true
+                NeedHand = true,
             });
         }
         else
@@ -149,7 +149,7 @@ public sealed class StickySystem : EntitySystem
             _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new StickyDoAfterEvent(), uid, target: uid)
             {
                 BreakOnMove = true,
-                NeedHand = true
+                NeedHand = true,
             });
         }
         else

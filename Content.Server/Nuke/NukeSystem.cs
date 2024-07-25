@@ -590,7 +590,9 @@ public sealed class NukeSystem : EntitySystem
         {
             BreakOnDamage = true,
             BreakOnMove = true,
-            NeedHand = true
+            NeedHand = true,
+            BreakOnDropItem = false,
+            BreakOnHandChange = false,
         };
 
         if (!_doAfter.TryStartDoAfter(doAfter))

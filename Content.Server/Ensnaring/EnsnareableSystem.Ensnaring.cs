@@ -109,7 +109,7 @@ public sealed partial class EnsnareableSystem
     /// <param name="component">The ensnaring component</param>
     public void TryFree(EntityUid target, EntityUid user, EntityUid ensnare, EnsnaringComponent component)
     {
-        //Don't do anything if they don't have the ensnareable component.
+        // Don't do anything if they don't have the ensnareable component.
         if (!HasComp<EnsnareableComponent>(target))
             return;
 
@@ -121,7 +121,8 @@ public sealed partial class EnsnareableSystem
             BreakOnMove = breakOnMove,
             BreakOnDamage = false,
             NeedHand = true,
-            BlockDuplicate = true,
+            BreakOnDropItem = false,
+            BreakOnHandChange = false,
         };
 
         if (!_doAfter.TryStartDoAfter(doAfterEventArgs))
