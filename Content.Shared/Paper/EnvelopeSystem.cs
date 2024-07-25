@@ -74,7 +74,9 @@ public sealed class EnvelopeSystem : EntitySystem
         {
             BreakOnDamage = true,
             NeedHand = true,
-            BreakOnHandChange = true
+            BreakOnHandChange = true,
+            MovementThreshold = 0.01f,
+            DistanceThreshold = 1.0f,
         };
 
         if (_doAfterSystem.TryStartDoAfter(doAfterEventArgs, out var doAfterId))
@@ -83,6 +85,9 @@ public sealed class EnvelopeSystem : EntitySystem
     private void OnDoAfter(Entity<EnvelopeComponent> ent, ref EnvelopeDoAfterEvent args)
     {
         ent.Comp.EnvelopeDoAfter = null;
+
+        if (args.Cancelled)
+            return;
 
         if (ent.Comp.State == EnvelopeComponent.EnvelopeState.Open)
         {
@@ -96,7 +101,7 @@ public sealed class EnvelopeSystem : EntitySystem
             ent.Comp.State = EnvelopeComponent.EnvelopeState.Torn;
             Dirty(ent.Owner, ent.Comp);
 
-            if(_itemSlotsSystem.TryGetSlot(ent.Owner, ent.Comp.SlotId, out var slotComp))
+            if (_itemSlotsSystem.TryGetSlot(ent.Owner, ent.Comp.SlotId, out var slotComp))
                 _itemSlotsSystem.TryEjectToHands(ent.Owner, slotComp, args.User);
         }
     }
