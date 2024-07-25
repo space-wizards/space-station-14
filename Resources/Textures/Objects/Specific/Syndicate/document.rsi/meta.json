@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/commit/82639d14a6fbcc069a9fe8429f8d597b8c410fdc with edits from Beck Thompson",
     "states": [
         {
             "name": "line"
