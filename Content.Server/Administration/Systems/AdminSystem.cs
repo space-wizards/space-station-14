@@ -4,7 +4,6 @@ using Content.Server.Chat.Managers;
 using Content.Server.Forensics;
 using Content.Server.GameTicking;
 using Content.Server.Hands.Systems;
-using Content.Server.IdentityManagement;
 using Content.Server.Mind;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Popups;
@@ -70,6 +69,7 @@ namespace Content.Server.Administration.Systems
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _adminManager.OnPermsChanged += OnAdminPermsChanged;
+            _playTime.SessionPlayTimeUpdated += OnSessionPlayTimeUpdated;
 
             // Panic Bunker Settings
             Subs.CVar(_config, CCVars.PanicBunkerEnabled, OnPanicBunkerChanged, true);
@@ -200,6 +200,7 @@ namespace Content.Server.Administration.Systems
             base.Shutdown();
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
             _adminManager.OnPermsChanged -= OnAdminPermsChanged;
+            _playTime.SessionPlayTimeUpdated -= OnSessionPlayTimeUpdated;
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -445,6 +446,11 @@ namespace Content.Server.Administration.Systems
             QueueDel(entity);
 
             _gameTicker.SpawnObserver(player);
+        }
+
+        private void OnSessionPlayTimeUpdated(ICommonSession session)
+        {
+            UpdatePlayerList(session);
         }
     }
 }

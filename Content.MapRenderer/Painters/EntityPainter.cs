@@ -123,19 +123,28 @@ public sealed class EntityPainter
 
             image.Mutate(o => o.Crop(rect));
 
+            var spriteRotation = 0f;
+            if (!entity.Sprite.NoRotation && !entity.Sprite.SnapCardinals && entity.Sprite.GetLayerDirectionCount(layer) == 1)
+            {
+                spriteRotation = (float) worldRotation.Degrees;
+            }
+
             var colorMix = entity.Sprite.Color * layer.Color;
             var imageColor = Color.FromRgba(colorMix.RByte, colorMix.GByte, colorMix.BByte, colorMix.AByte);
             var coloredImage = new Image<Rgba32>(image.Width, image.Height);
             coloredImage.Mutate(o => o.BackgroundColor(imageColor));
 
             var (imgX, imgY) = rsi?.Size ?? (EyeManager.PixelsPerMeter, EyeManager.PixelsPerMeter);
+            var offsetX = (int) (entity.Sprite.Offset.X * EyeManager.PixelsPerMeter);
+            var offsetY = (int) (entity.Sprite.Offset.Y * EyeManager.PixelsPerMeter);
             image.Mutate(o => o
                 .DrawImage(coloredImage, PixelColorBlendingMode.Multiply, PixelAlphaCompositionMode.SrcAtop, 1)
                 .Resize(imgX, imgY)
-                .Flip(FlipMode.Vertical));
+                .Flip(FlipMode.Vertical)
+                .Rotate(spriteRotation));
 
-            var pointX = (int) entity.X - imgX / 2 + EyeManager.PixelsPerMeter / 2;
-            var pointY = (int) entity.Y - imgY / 2 + EyeManager.PixelsPerMeter / 2;
+            var pointX = (int) entity.X + offsetX - imgX / 2;
+            var pointY = (int) entity.Y + offsetY - imgY / 2;
             canvas.Mutate(o => o.DrawImage(image, new Point(pointX, pointY), 1));
         }
     }

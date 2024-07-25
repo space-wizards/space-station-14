@@ -36,14 +36,14 @@ public sealed class CharacterInfoSystem : EntitySystem
         if (_minds.TryGetMind(entity, out var mindId, out var mind))
         {
             // Get objectives
-            foreach (var objective in mind.AllObjectives)
+            foreach (var objective in mind.Objectives)
             {
                 var info = _objectives.GetInfo(objective, mindId, mind);
                 if (info == null)
                     continue;
 
                 // group objectives by their issuer
-                var issuer = Comp<ObjectiveComponent>(objective).Issuer;
+                var issuer = Comp<ObjectiveComponent>(objective).LocIssuer;
                 if (!objectives.ContainsKey(issuer))
                     objectives[issuer] = new List<ObjectiveInfo>();
                 objectives[issuer].Add(info.Value);
