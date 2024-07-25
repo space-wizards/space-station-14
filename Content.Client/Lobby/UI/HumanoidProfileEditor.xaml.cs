@@ -1554,7 +1554,7 @@ namespace Content.Client.Lobby.UI
 
             // I tried disabling the button but it looks sorta goofy as it only takes a frame or two to save
             _imaging = true;
-            await _entManager.System<ContentSpriteSystem>().Export(PreviewDummy, dir);
+            await _entManager.System<ContentSpriteSystem>().Export(PreviewDummy, dir, includeId: false);
             _imaging = false;
         }
 

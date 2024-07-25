@@ -55,7 +55,7 @@ public sealed class ContentSpriteSystem : EntitySystem
     /// <summary>
     /// Exports sprites for all directions
     /// </summary>
-    public async Task Export(EntityUid entity, CancellationToken cancelToken = default)
+    public async Task Export(EntityUid entity, bool includeId = true, CancellationToken cancelToken = default)
     {
         var tasks = new Task[4];
         var i = 0;
@@ -68,7 +68,7 @@ public sealed class ContentSpriteSystem : EntitySystem
                      Direction.West,
                  })
         {
-            tasks[i++] = Export(entity, dir, cancelToken);
+            tasks[i++] = Export(entity, dir, includeId: includeId, cancelToken);
         }
 
         await Task.WhenAll(tasks);
@@ -77,7 +77,7 @@ public sealed class ContentSpriteSystem : EntitySystem
     /// <summary>
     /// Exports the sprite for a particular direction.
     /// </summary>
-    public async Task Export(EntityUid entity, Direction direction, CancellationToken cancelToken = default)
+    public async Task Export(EntityUid entity, Direction direction, bool includeId = true, CancellationToken cancelToken = default)
     {
         if (!_timing.IsFirstTimePredicted)
             return;
@@ -103,7 +103,7 @@ public sealed class ContentSpriteSystem : EntitySystem
         var texture = _clyde.CreateRenderTarget(new Vector2i(size.X, size.Y), new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "export");
         var tcs = new TaskCompletionSource(cancelToken);
 
-        _control._queuedTextures.Enqueue((texture, direction, entity, tcs));
+        _control._queuedTextures.Enqueue((texture, direction, entity, includeId, tcs));
 
         await tcs.Task;
     }
@@ -133,13 +133,22 @@ public sealed class ContentSpriteSystem : EntitySystem
     private sealed class ContentSpriteControl : Control
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly ILogManager _logMan = default!;
         [Dependency] private readonly IResourceManager _resManager = default!;
 
-        internal Queue<(IRenderTexture Texture, Direction Direction, EntityUid Entity, TaskCompletionSource Tcs)> _queuedTextures = new();
+        internal Queue<(
+            IRenderTexture Texture,
+            Direction Direction,
+            EntityUid Entity,
+            bool IncludeId,
+            TaskCompletionSource Tcs)> _queuedTextures = new();
+
+        private ISawmill _sawmill;
 
         public ContentSpriteControl()
         {
             IoCManager.InjectDependencies(this);
+            _sawmill = _logMan.GetSawmill("sprite.export");
         }
 
         protected override void Draw(DrawingHandleScreen handle)
@@ -165,13 +174,22 @@ public sealed class ContentSpriteSystem : EntitySystem
                             overrideDirection: result.Direction);
                     }, Color.Transparent);
 
-                    var fullFileName = Exports / $"{filename}-{queued.Direction}-{queued.Entity}.png";
+                    ResPath fullFileName;
+
+                    if (queued.IncludeId)
+                    {
+                        fullFileName = Exports / $"{filename}-{queued.Direction}-{queued.Entity}.png";
+                    }
+                    else
+                    {
+                        fullFileName = Exports / $"{filename}-{queued.Direction}.png";
+                    }
 
                     queued.Texture.CopyPixelsToMemory<Rgba32>(image =>
                     {
                         if (_resManager.UserData.Exists(fullFileName))
                         {
-                            Logger.Info($"Found existing file {fullFileName} to replace.");
+                            _sawmill.Info($"Found existing file {fullFileName} to replace.");
                             _resManager.UserData.Delete(fullFileName);
                         }
 
@@ -182,7 +200,7 @@ public sealed class ContentSpriteSystem : EntitySystem
                         image.SaveAsPng(file);
                     });
 
-                    Logger.Info($"Saved screenshot to {fullFileName}");
+                    _sawmill.Info($"Saved screenshot to {fullFileName}");
                     queued.Tcs.SetResult();
                 }
                 catch (Exception exc)
@@ -190,7 +208,7 @@ public sealed class ContentSpriteSystem : EntitySystem
                     queued.Texture.Dispose();
 
                     if (!string.IsNullOrEmpty(exc.StackTrace))
-                        Logger.Fatal(exc.StackTrace);
+                        _sawmill.Fatal(exc.StackTrace);
 
                     queued.Tcs.SetException(exc);
                 }
