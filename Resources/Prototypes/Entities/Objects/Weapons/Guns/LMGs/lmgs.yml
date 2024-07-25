@@ -30,12 +30,15 @@
       - FullAuto
     soundGunshot:
       path: /Audio/VXS/Gunshots/Rifle/rifle4.ogg # VXS
+      params: # VXS
+        maxDistance: 60
+        volume: 4
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/lmg_cock.ogg
-  - type: AmmoCounter
+  #- type: AmmoCounter VXS
   - type: ItemSlots
     slots:
       gun_magazine:

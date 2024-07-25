@@ -45,7 +45,7 @@ public sealed class SwapTeleporterSystem : EntitySystem
     private void OnInteract(Entity<SwapTeleporterComponent> ent, ref AfterInteractEvent args)
     {
         var (uid, comp) = ent;
-        if (args.Target == null)
+        if (args.Target == null || !args.CanReach)
             return;
 
         var target = args.Target.Value;

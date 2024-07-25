@@ -359,8 +359,8 @@
     stateBaseClosed: shotguncase
     stateDoorOpen: shotguncase_open
     stateDoorClosed: shotguncase_door
-  - type: AccessReader
-    access: [["Armory"]]
+  #- type: AccessReader VXS
+  #  access: [["Armory"]]
 
 # Detective
 - type: entity

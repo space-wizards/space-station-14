@@ -25,6 +25,9 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/VXS/Gunshots/Sniper/sniper1.ogg # VXS
+      params: # VXS
+        maxDistance: 110
+        volume: 6
   - type: BallisticAmmoProvider
     capacity: 10
     proto: CartridgeLightRifle
@@ -53,6 +56,10 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/VXS/Gunshots/Sniper/sniper1.ogg # VXS
+      params: # VXS
+        maxDistance: 65
+        volume: 5
+    angle: 0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
 
@@ -67,6 +74,9 @@
     projectileSpeed: 75 # VXS
     soundGunshot:
       path: /Audio/VXS/Gunshots/Sniper/sniper2.ogg # VXS
+      params: # VXS
+        maxDistance: 110
+        volume: 6
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: Clothing

@@ -1,0 +1,10 @@
+- type: reaction
+  id: InstantCoffeeCooking
+  minTemp: 372
+  reactants:
+    InstantCoffeePowder:
+      amount: 0.5
+    Water:
+      amount: 1
+  products:
+    Coffee: 1

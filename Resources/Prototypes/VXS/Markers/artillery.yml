@@ -1,0 +1,84 @@
+- type: entity
+  id: AdminArtilleryBase
+  abstract: true
+  noSpawn: true
+  name: artillery strike
+  components:
+  - type: Sprite
+    sprite: VXS/Weapons/Throwable/Grenades/thermobar.rsi
+    visible: false
+    state: icon
+  - type: TriggerOnSpawn
+  - type: TimedDespawn
+    lifetime: 3
+  - type: SoundOnTrigger
+    sound: /Audio/VXS/Artillery/prilet.ogg
+    params:
+      volume: 5
+      maxDistance: 20
+  - type: SmokeOnTrigger
+    duration: 3
+    spreadAmount: 10
+
+- type: entity
+  id: AdminArtilleryThermobaric
+  suffix: Thermobaric
+  parent: AdminArtilleryBase
+  components:
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: FireBomb
+    totalIntensity: 250
+    intensitySlope: 1
+    maxIntensity: 45
+
+- type: entity
+  id: AdminArtilleryEMP
+  suffix: EMP
+  parent: AdminArtilleryBase
+  components:
+  - type: EmpOnTrigger
+    disableDuration: 2
+    range: 6
+    energyConsumption: 3000
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: MicroBomb
+    totalIntensity: 25
+    intensitySlope: 5
+    maxIntensity: 100
+
+- type: entity
+  id: AdminArtillerySmoke
+  suffix: Smoke
+  parent: AdminArtilleryBase
+  components:
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: MicroBomb
+    totalIntensity: 25
+    intensitySlope: 5
+    maxIntensity: 100
+  - type: SmokeOnTrigger
+    duration: 25
+    spreadAmount: 40
+
+- type: entity
+  id: AdminArtilleryFrag
+  suffix: Frag
+  parent: AdminArtilleryBase
+  components:
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: MicroBomb
+    totalIntensity: 200
+    intensitySlope: 2
+    maxIntensity: 30
+  - type: ClusterGrenade
+    fillPrototype: PelletClusterLethal
+    maxGrenadesCount: 25
+    maxSpreadDistance: 5
+    minSpreadDistance: 1
+    randomSpread: true
+    randomAngle: true
+    velocity: 25

@@ -36,7 +36,7 @@
     slots:
     - Back
     - suitStorage
-  - type: AmmoCounter
+  #- type: AmmoCounter VXS
   - type: Gun
     projectileSpeed: 35 # VXS
     fireRate: 1
@@ -45,6 +45,9 @@
       - SemiAuto
     soundGunshot:
       path: /Audio/VXS/Gunshots/Launcher/launcher1.ogg # VXS
+      params: # VXS
+        maxDistance: 75
+        volume: 4
   - type: BallisticAmmoProvider
     whitelist:
       tags:
@@ -75,6 +78,9 @@
     fireRate: 0.5
     soundGunshot:
       path: /Audio/VXS/Gunshots/Launcher/launcher2.ogg # VXS
+      params: # VXS
+        maxDistance: 75
+        volume: 3
   - type: BallisticAmmoProvider
     whitelist:
       tags:

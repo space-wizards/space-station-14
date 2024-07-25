@@ -14,7 +14,7 @@
     slots:
     - Back
     - suitStorage
-  - type: AmmoCounter
+  #- type: AmmoCounter VXS
   - type: Gun
     cameraRecoilScalar: 2
     projectileSpeed: 35 # VXS
@@ -24,6 +24,9 @@
       - FullAuto
     soundGunshot:
       path: /Audio/VXS/Gunshots/Rifle/rifle1.ogg # VXS
+      params: # VXS
+        maxDistance: 60
+        volume: 3
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
@@ -72,6 +75,9 @@
     fireRate: 5
     soundGunshot:
       path: /Audio/VXS/Gunshots/Rifle/rifle1.ogg # VXS
+      params: # VXS
+        maxDistance: 60
+        volume: 3
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
@@ -110,11 +116,15 @@
   id: WeaponRifleM90GrenadeLauncher
   description: An older bullpup carbine model, with an attached underbarrel grenade launcher. Uses .20 rifle ammo.
   components:
+  - type: AmmoCounter # VXS
   - type: Gun
     cameraRecoilScalar: 1
     projectileSpeed: 45 # VXS
     soundGunshot:
       path: /Audio/VXS/Gunshots/Rifle/rifle2.ogg # VXS
+      params: # VXS
+        maxDistance: 60
+        volume: 2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
     layers:
@@ -159,6 +169,7 @@
   id: WeaponRifleLecter
   description: A high end military grade assault rifle. Uses .20 rifle ammo.
   components:
+  - type: AmmoCounter # VXS
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
     layers:
@@ -173,6 +184,9 @@
     projectileSpeed: 45 # VXS
     soundGunshot:
       path: /Audio/VXS/Gunshots/Rifle/rifle3.ogg # VXS
+      params: # VXS
+        maxDistance: 60
+        volume: 3
   - type: ItemSlots
     slots:
       gun_magazine:

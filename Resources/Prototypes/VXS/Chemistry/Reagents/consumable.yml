@@ -1,0 +1,19 @@
+- type: reagent
+  id: InstantCoffeePowder
+  name: coffee powder
+  group: Drinks
+  recognizable: true
+  slippery: false
+  desc: Instant coffee powder. Looks like you should not eat that without some hot water.
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: bitter
+  color: "#380F0F"
+  boilingPoint: 115.0
+  meltingPoint: 120.0
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.01

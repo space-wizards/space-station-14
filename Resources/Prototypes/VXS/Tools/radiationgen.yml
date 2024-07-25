@@ -1,0 +1,20 @@
+- type: entity
+  parent: DrinkBase
+  id: ToolRadiationSource
+  name: radiation container
+  description: A container containing the unstable isotope phoron. The label hangs NFPA 704 and hazard and high radioactivity. Very reminiscent of a tube of glue.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glue-tube.rsi
+    layers:
+      - state: icon
+        map: ["enum.OpenableVisuals.Layer"]
+      - state: fill1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+      - state: icon-front
+        map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: Appearance
+  - type: RadiationSource
+    intensity: 3
+    slope: 0.3

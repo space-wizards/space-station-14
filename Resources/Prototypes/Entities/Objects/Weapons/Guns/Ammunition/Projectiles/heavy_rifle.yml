@@ -9,7 +9,7 @@
       types:
         Piercing: 23 # VXS
         Blunt: 15 # VXS
-  - type: StaminaDamageOnCollide
+  - type: StaminaDamageOnCollide # VXS
     damage: 17
 
 - type: entity

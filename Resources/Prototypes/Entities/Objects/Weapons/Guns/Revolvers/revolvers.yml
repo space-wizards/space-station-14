@@ -21,7 +21,7 @@
     slots:
     - suitStorage
     - Belt
-  - type: AmmoCounter
+  #- type: AmmoCounter VXS
   - type: Gun
     projectileSpeed: 35 # VXS
     selectedMode: SemiAuto
@@ -30,6 +30,9 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/VXS/Gunshots/Revolver/revolver1.ogg # VXS
+      params: # VXS
+        maxDistance: 58
+        volume: 3
   - type: UseDelay
     delay: 0.66
   - type: ContainerContainer
@@ -57,6 +60,7 @@
   id: WeaponRevolverDeckard
   description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test. Uses .45 magnum ammo.
   components:
+  - type: AmmoCounter # VXS
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
     layers:
@@ -110,6 +114,9 @@
     fireRate: 3
     soundGunshot:
       path: /Audio/VXS/Gunshots/Revolver/revolver2.ogg # VXS
+      params:
+        maxDistance: 60
+        volume: 4
 
 - type: entity
   name: Python
@@ -130,7 +137,8 @@
     soundGunshot:
       path: /Audio/VXS/Gunshots/Revolver/revolver1.ogg # VXS
       params:
-        volume: 2.25
+        volume: 3
+        maxDistance: 58 # VXS
 
 - type: entity
   parent: WeaponRevolverPython

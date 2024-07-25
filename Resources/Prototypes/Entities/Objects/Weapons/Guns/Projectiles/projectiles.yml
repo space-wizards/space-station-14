@@ -114,13 +114,13 @@
     damage:
       types:
         Blunt: 14
-  - type: PointLight
-    enabled: true
-    color: "#ff4300"
-    radius: 2.0
-    energy: 7.0
+  #- type: PointLight VXS
+  #  enabled: true
+  #  color: "#ff4300"
+  #  radius: 2.0
+  #  energy: 7.0
   - type: IgniteOnCollide
-    fireStacks: 0.25
+    fireStacks: 0.15 # VXS
 
 - type: entity
   id: BaseBulletAP
@@ -229,13 +229,13 @@
       fly-by: *flybyfixture
   - type: Ammo
   - type: StaminaDamageOnCollide
-    damage: 30
+    damage: 15 # VXS
   - type: Projectile
     impactEffect: BulletImpactEffectDisabler
     damage:
       types:
-        Heat: 5
-        Asphyxiation: 5
+        Heat: 2 # VXS
+        Asphyxiation: 5 # VXS
     soundHit:
       collection: WeakHit
     forceSound: true
@@ -652,10 +652,10 @@
     intensitySlope: 6
     totalIntensity: 200
     maxTileBreak: 1
-  - type: PointLight
-    radius: 3.5
-    color: orange
-    energy: 0.5
+  #- type: PointLight VXS
+  #  radius: 3.5
+  #  color: orange
+  #  energy: 0.5
 
 - type: entity
   id: BulletWeakRocket
@@ -768,10 +768,10 @@
     disableDuration: 10
   - type: Ammo
     muzzleFlash: null
-  - type: PointLight
-    radius: 3.5
-    color: blue
-    energy: 0.5
+  #- type: PointLight VXS
+  #  radius: 3.5
+  #  color: blue
+  #  energy: 0.5
 
 - type: entity
   id: BulletCap

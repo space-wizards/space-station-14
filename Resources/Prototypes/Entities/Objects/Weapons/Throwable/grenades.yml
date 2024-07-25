@@ -93,7 +93,7 @@
     - type: LightFade
       duration: 0.2 # VXS
     - type: TimedDespawn
-      lifetime: 0.5
+      lifetime: 0.1
 
 #The explosive values for these are pretty god damn mediocre, but SS14's explosion system is hard to understand - this is a good enough approximation of how it was in SS13.
 #Ideally, there should be a weak radius around the bomb outside of its gibbing / spacing range capable of dealing fair damage to players / structures.

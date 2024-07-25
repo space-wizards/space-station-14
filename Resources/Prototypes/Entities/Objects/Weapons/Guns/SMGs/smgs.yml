@@ -14,7 +14,7 @@
     slots:
     - Back
     - suitStorage
-  - type: AmmoCounter
+  #- type: AmmoCounter VXS
   - type: Gun
     projectileSpeed: 30 # VXS
     minAngle: 2
@@ -28,6 +28,9 @@
     - FullAuto
     soundGunshot:
       path: /Audio/VXS/Gunshots/SMG/smg3.ogg # VXS
+      params: # VXS
+        maxDistance: 55
+        volume: 2
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
@@ -75,6 +78,9 @@
     fireRate: 10
     soundGunshot:
       path: /Audio/VXS/Gunshots/SMG/smg1.ogg # VXS
+      params: # VXS
+        maxDistance: 55
+        volume: 2
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -87,6 +93,7 @@
   id: WeaponSubMachineGunC20r
   description: A firearm that is often used by the infamous nuclear operatives. Uses .35 auto ammo.
   components:
+  - type: AmmoCounter # VXS
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
     layers:
@@ -112,6 +119,9 @@
     - FullAuto
     soundGunshot:
       path: /Audio/VXS/Gunshots/SMG/smg2.ogg # VXS
+      params: # VXS
+        maxDistance: 55
+        volume: 2
   - type: ChamberMagazineAmmoProvider
     autoEject: true
   - type: MagazineVisuals
@@ -148,6 +158,9 @@
       selectedMode: FullAuto
       soundGunshot:
         path: /Audio/VXS/Gunshots/SMG/smg1.ogg # VXS
+      params: # VXS
+        maxDistance: 55
+        volume: 2
       availableModes:
         - FullAuto
     - type: ItemSlots
@@ -192,10 +205,13 @@
     sprite: Objects/Weapons/Guns/SMGs/vector.rsi
   - type: Gun
     projectileSpeed: 35 # VXS
-    fireRate: 6
+    fireRate: 7 # VXS
     selectedMode: FullAuto
     soundGunshot:
       path: /Audio/VXS/Gunshots/SMG/smg3.ogg # VXS
+      params: # VXS
+        maxDistance: 60
+        volume: 2
     availableModes:
     - FullAuto
   - type: ItemSlots
@@ -211,11 +227,11 @@
             - MagazineMagnumSubMachineGun
       gun_chamber:
         name: Chamber
-        startingItem: CartridgeMagnum
+        startingItem: CartridgePistol # VXS
         priority: 1
         whitelist:
           tags:
-            - CartridgeMagnum
+            - CartridgePistol # VXS
         whitelistFailPopup: gun-magazine-whitelist-fail
   - type: MagazineVisuals
     magState: mag

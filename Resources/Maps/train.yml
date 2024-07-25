@@ -74144,7 +74144,7 @@ entities:
       pos: 8.5,-176.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -141100.73
+      secondsUntilStateChange: -141260.94
       state: Closing
   - uid: 11227
     components:
@@ -81637,6 +81637,11 @@ entities:
     - type: Transform
       pos: -8.5,-314.5
       parent: 2
+  - uid: 16962
+    components:
+    - type: Transform
+      pos: -5.5,-382.5
+      parent: 2
 - proto: RandomArtifactSpawner20
   entities:
   - uid: 12481
@@ -84582,7 +84587,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 3.5,-338.5
       parent: 2
-- proto: SignAtmosMinsky
+- proto: SignAtmos
   entities:
   - uid: 12994
     components:
@@ -90882,11 +90887,8 @@ entities:
   - uid: 13995
     components:
     - type: Transform
-      anchored: False
-      pos: -5.4964814,-84.54825
+      pos: -5.5,-84.5
       parent: 2
-    - type: Physics
-      bodyType: Dynamic
 - proto: VendingMachineSeedsUnlocked
   entities:
   - uid: 13996

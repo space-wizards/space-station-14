@@ -33,6 +33,9 @@
       - FullAuto
     soundGunshot:
       path: /Audio/VXS/Gunshots/Pistol/pistol1.ogg # VXS
+      params: # VXS
+        maxDistance: 55
+        volume: 2
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
@@ -59,7 +62,7 @@
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
-  - type: AmmoCounter
+  #- type: AmmoCounter VXS
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -74,6 +77,7 @@
   id: WeaponPistolViper
   description: A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Uses .35 auto ammo.
   components:
+  - type: AmmoCounter # VXS
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
     availableModes:
@@ -118,6 +122,7 @@
       - FullAuto
     soundGunshot:
       path: /Audio/VXS/Gunshots/Pistol/pistol1.ogg # VXS
+      volume: 2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
     layers:
@@ -162,6 +167,7 @@
       path: /Audio/VXS/Gunshots/Pistol/pistolSupressed.ogg # VXS
       params:
         volume: -2
+        maxDistance: 25 # VXS
     availableModes:
     - SemiAuto
   - type: ItemSlots
@@ -209,6 +215,8 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/VXS/Gunshots/Pistol/pistol2.ogg # VXS
+      volume: 2
+      maxDistance: 55
 
 - type: entity
   name: N1984
@@ -235,6 +243,9 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/VXS/Gunshots/Pistol/pistol2.ogg # VXS
+      params: # VXS
+        maxDistance: 55
+        volume: 3
   - type: ItemSlots
     slots:
       gun_magazine:
