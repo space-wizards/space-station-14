@@ -109,6 +109,7 @@
     fillPrototype: TrashBananaPeelExplosive
     capacity: 6
     delayBeforeTriggerContents: 20
+  - type: LandAtCursor
   - type: DamageOnLand
     damage:
       types:
@@ -133,6 +134,7 @@
     delayBeforeTriggerContents: 60
     randomDistance: true
     randomThrowDistanceMax: 3
+  - type: LandAtCursor
   - type: DamageOnLand
     damage:
       types:
