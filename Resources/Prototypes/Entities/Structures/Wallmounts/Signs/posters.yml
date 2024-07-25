@@ -6,7 +6,7 @@
   - type: WallMount
     arc: 360
   - type: Sprite
-    drawdepth: WallTops
+    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/posters.rsi
     snapCardinals: true
   - type: Destructible

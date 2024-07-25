@@ -1337,7 +1337,7 @@
   - type: PointLight
     radius: 1.5
     energy: 1.6
-    color: "#9dc5c9"
+    color: "#b89f25"
   - type: AccessReader
     access: [["Salvage"]]
   - type: GuideHelp
@@ -1421,6 +1421,10 @@
       shader: unshaded
     - texture: Structures/Machines/VendingMachines/maintenance_panel.png
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.3
+    energy: 1.6
+    color: "#43ccb5"
   - type: AccessReader
     access: [["Medical"]]
   - type: GuideHelp
@@ -1454,6 +1458,10 @@
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#326e3f"
   - type: AccessReader
     access: [["Hydroponics"]]
 
@@ -1510,6 +1518,10 @@
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#d82929"
   - type: AccessReader
     access: [["Security"]]
 
@@ -1594,6 +1606,10 @@
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89e2a"
   - type: AccessReader
     access: [["Cargo"]]
 
@@ -1706,6 +1722,10 @@
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89e2a"
   - type: AccessReader
     access: [["Engineering"]]
 
@@ -1734,6 +1754,10 @@
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89e2a"
   - type: AccessReader
     access: [["Engineering"]]
 
@@ -1818,6 +1842,10 @@
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#6927C5"
   - type: AccessReader
     access: [["Janitor"]]
 
@@ -1874,6 +1902,10 @@
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#d82929"
   - type: AccessReader
     access: [["NuclearOperative"], ["SyndicateAgent"]]
 
