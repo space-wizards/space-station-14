@@ -213,7 +213,7 @@
           orGroup: syndiemaintloot
         - id: ImportantDocument
           prob: 0.012
-          onGroup: syndiemaintloot
+          orGroup: syndiemaintloot
 
 - type: entity
   id: ClosetWallMaintenanceFilledRandom
