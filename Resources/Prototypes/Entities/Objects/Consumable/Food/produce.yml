@@ -1863,7 +1863,7 @@
     sprite: Objects/Specific/Hydroponics/cotton.rsi
   - type: FlavorProfile
     flavors:
-      - cotton
+    - cotton
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
