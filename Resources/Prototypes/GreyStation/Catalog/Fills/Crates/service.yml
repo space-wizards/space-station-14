@@ -7,16 +7,8 @@
   - type: StorageFill
     contents:
     - id: ClothingHeadHelmetKendoMen
-      amount: 2
-    - id: ClothingOuterArmorKendoBogu
-      amount: 2
-    - id: ClothingUniformKendoHakama
-      amount: 2
-    - id: ClothingShoesGeta
       amount: 4
-    - id: ClothingUniformMartialGi
-      amount: 2
-    - id: ClothingBeltMartialBlack
-      amount: 2
+    - id: ClothingOuterArmorKendoBogu
+      amount: 4
     - id: Shinai
       amount: 4

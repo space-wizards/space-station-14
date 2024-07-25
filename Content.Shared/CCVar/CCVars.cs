@@ -1636,7 +1636,7 @@ namespace Content.Shared.CCVar
         ///     Disabled: Cloning has full biomass cost and reclaimer can reclaim corpses with souls. (Playtested and balanced for MRP+).
         /// </summary>
         public static readonly CVarDef<bool> BiomassEasyMode =
-            CVarDef.Create("biomass.easy_mode", false, CVar.SERVERONLY);
+            CVarDef.Create("biomass.easy_mode", true, CVar.SERVERONLY);
 
         /*
          * Anomaly
