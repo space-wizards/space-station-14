@@ -1,3 +1,6 @@
+# VXS
+# TODO: На релизе поменять roundStart: false если спрайты не пофиксят (а это врядли)
+
 - type: species
   id: Resomi
   name: species-name-resomi
