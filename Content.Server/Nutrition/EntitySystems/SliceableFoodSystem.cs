@@ -18,7 +18,6 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly FoodSystem _food = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly TransformSystem _xformSystem = default!;
 
         public override void Initialize()

@@ -12,6 +12,7 @@
   id: Drinks
   name: guide-entry-drinks
   text: "/ServerInfo/Guidebook/ReferenceTables/Drinks.xml"
+  filterEnabled: True
 
 - type: guideEntry
   id: FoodRecipes

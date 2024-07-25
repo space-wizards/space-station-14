@@ -1,3 +1,4 @@
+using Content.Server.IgnitionSource;
 using Content.Server.Light.Components;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
@@ -99,8 +100,8 @@ namespace Content.Server.Light.EntitySystems
                     _item.SetHeldPrefix(ent, "lit", component: item);
                 }
 
-                var isHotEvent = new IsHotEvent() {IsHot = true};
-                RaiseLocalEvent(ent, isHotEvent);
+                var ignite = new IgnitionEvent(true);
+                RaiseLocalEvent(ent, ref ignite);
 
                 component.CurrentState = ExpendableLightState.Lit;
                 component.StateExpiryTime = component.GlowDuration;
@@ -134,8 +135,8 @@ namespace Content.Server.Light.EntitySystems
 
                 case ExpendableLightState.Dead:
                     _appearance.SetData(ent, ExpendableLightVisuals.Behavior, string.Empty, appearance);
-                    var isHotEvent = new IsHotEvent() {IsHot = true};
-                    RaiseLocalEvent(ent, isHotEvent);
+                    var ignite = new IgnitionEvent(false);
+                    RaiseLocalEvent(ent, ref ignite);
                     break;
             }
         }

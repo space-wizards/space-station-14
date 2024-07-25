@@ -109,6 +109,12 @@
       access: [ [ "Engineering" ] ]
     - type: PryUnpowered
       pryModifier: 0.5
+    - type: PointLight
+      energy: 0.5
+      radius: 1.75
+      color: Red
+      enabled: false
+      castShadows: false
 
 - type: entity
   id: Firelock
