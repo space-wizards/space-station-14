@@ -107,7 +107,7 @@ namespace Content.Client.Actions
             UpdateAction(uid, component);
         }
 
-        protected override void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
+        public override void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
         {
             if (!ResolveActionData(actionId, ref action))
                 return;

@@ -1185,7 +1185,7 @@
       amount: 1
     Radium:
       amount: 1
-    SoapHomemade:
+    SpaceCleaner:
       amount: 1
     SpaceLube:
       amount: 1
@@ -1194,8 +1194,8 @@
 
 - type: reaction
   id: TheeHorsepussy
-    requiredMixerCategories:
-  - Stir
+  requiredMixerCategories:
+    - Stir
   reactants:
     Martini:
       amount: 1
