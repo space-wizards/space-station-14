@@ -180,12 +180,3 @@
     sprite: Clothing/Neck/Cloaks/void.rsi
   - type: TypingIndicatorClothing
     proto: alien
-
-- type: entity
-  parent: ClothingNeckBase
-  id: ClothingNeckCloakAce
-  name: pilot's cloak
-  description: Cloak awarded to Nanotrasen's finest space aces.
-  components:
-  - type: Sprite
-    sprite: Clothing/Neck/Cloaks/ace.rsi

@@ -192,10 +192,6 @@
         orGroup: GiftPool
       - id: ViolaInstrument
         orGroup: GiftPool
-      - id: ClothingNeckCloakTrans
-        orGroup: GiftPool
-      - id: ClothingNeckCloakAdmin
-        orGroup: GiftPool
       - id: ToySkeleton
         orGroup: GiftPool
       - id: Basketball
