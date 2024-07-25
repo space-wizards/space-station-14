@@ -40,11 +40,16 @@ jobs:
 
           pr_title=$(echo $pr | jq -r '.title')
           pr_body=$(echo $pr | jq -r '.body')
-          pr_base=$(echo $pr | jq -r '.base.ref')
-          pr_head=$(echo $pr | jq -r '.head.ref')
+          pr_merge_commit=$(echo $pr | jq -r '.merge_commit_sha')
 
-          # Create a new branch based on the upstream PR
-          git checkout -b mirror-pr-$pr_number upstream/$pr_head
+          # Debugging logs
+          echo "PR Number: $pr_number"
+          echo "PR Title: $pr_title"
+          echo "PR Body: $pr_body"
+          echo "PR Merge Commit: $pr_merge_commit"
+
+          # Create a new branch based on the merge commit
+          git checkout -b mirror-pr-$pr_number $pr_merge_commit
 
           # Push the new branch to the downstream repository
           git push origin mirror-pr-$pr_number
