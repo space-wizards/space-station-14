@@ -280,7 +280,7 @@
   - type: Injector
     injectOnly: false
     ignoreMobs: true
-    minTransferAmount: 0.1
+    minTransferAmount: 1
     maxTransferAmount: 5
     transferAmount: 1
     toggleState: 1 # draw
