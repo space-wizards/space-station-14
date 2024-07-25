@@ -22,6 +22,12 @@ public sealed partial class InteractWithOperator : HTNOperator
     [DataField(required: true)]
     public string TargetKey = default!;
 
+    /// <summary>
+    /// Exit with failure if doafter wasn't raised
+    /// </summary>
+    [DataField]
+    public bool ExpectDoAfter = false;
+
     public string CurrentDoAfter = "CurrentInteractWithDoAfter";
 
 
@@ -51,17 +57,12 @@ public sealed partial class InteractWithOperator : HTNOperator
             if (blackboard.TryGetValue<ushort>(CurrentDoAfter, out var doAfterId, _entManager))
             {
                 var status = _doAfterSystem.GetStatus(owner, doAfterId, null);
-                switch (status)
+                return status switch
                 {
-                    case DoAfterStatus.Running:
-                        return HTNOperatorStatus.Continuing;
-                    case DoAfterStatus.Finished:
-                        return HTNOperatorStatus.Finished;
-                    case DoAfterStatus.Cancelled:
-                        return HTNOperatorStatus.Failed;
-                    case DoAfterStatus.Invalid:
-                        return HTNOperatorStatus.Failed;
-                }
+                    DoAfterStatus.Running => HTNOperatorStatus.Continuing,
+                    DoAfterStatus.Finished => HTNOperatorStatus.Finished,
+                    _ => HTNOperatorStatus.Failed
+                };
             }
 
             nextId = doAfter.NextId;
@@ -88,6 +89,10 @@ public sealed partial class InteractWithOperator : HTNOperator
             blackboard.SetValue(CurrentDoAfter, nextId);
             return HTNOperatorStatus.Continuing;
         }
+
+        // We shouldn't arrive here if we start a doafter, so fail if we expected a doafter
+        if(ExpectDoAfter)
+            return HTNOperatorStatus.Failed;
 
         return HTNOperatorStatus.Finished;
     }
