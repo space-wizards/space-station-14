@@ -41,6 +41,13 @@ public class PvsBenchmark
     private SharedTransformSystem _sys = default!;
     private EntityCoordinates[] _locations = default!;
 
+    [GlobalCleanup]
+    public async Task Cleanup()
+    {
+        await _pair.DisposeAsync();
+        PoolManager.Shutdown();
+    }
+
     [GlobalSetup]
     public void Setup()
     {
