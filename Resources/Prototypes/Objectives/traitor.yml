@@ -302,6 +302,7 @@
   id: BaseDocObjective
   components:
   - type: StealCondition
+    stealGroup: "" # Bad way of doing this will change later. Just need to see if it passes tests
     objectiveNoOwnerText: null
     objectiveText: null
     descriptionText: null
