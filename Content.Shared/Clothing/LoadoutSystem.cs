@@ -45,7 +45,7 @@ public sealed class LoadoutSystem : EntitySystem
     /// </summary>
     public EntProtoId? GetFirstOrNull(LoadoutPrototype loadout)
     {
-        if (!_protoMan.TryIndex(loadout.Equipment, out var gear))
+        if (!_protoMan.TryIndex(loadout.StartingGear, out var gear))
             return null;
 
         var count = gear.Equipment.Count + gear.Inhand.Count + gear.Storage.Values.Sum(x => x.Count);
@@ -80,7 +80,7 @@ public sealed class LoadoutSystem : EntitySystem
     /// </summary>
     public string GetName(LoadoutPrototype loadout)
     {
-        if (!_protoMan.TryIndex(loadout.Equipment, out var gear))
+        if (!_protoMan.TryIndex(loadout.StartingGear, out var gear))
             return Loc.GetString("loadout-unknown");
 
         var count = gear.Equipment.Count + gear.Storage.Values.Sum(o => o.Count) + gear.Inhand.Count;
@@ -119,8 +119,7 @@ public sealed class LoadoutSystem : EntitySystem
         // Use starting gear if specified
         if (component.StartingGear != null)
         {
-            var gear = _protoMan.Index(_random.Pick(component.StartingGear));
-            _station.EquipStartingGear(uid, gear);
+            _station.EquipStartingGear(uid, _random.Pick(component.StartingGear));
             return;
         }
 
