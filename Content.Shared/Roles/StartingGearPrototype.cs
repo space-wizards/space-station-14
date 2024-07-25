@@ -21,14 +21,17 @@ public sealed partial class StartingGearPrototype : IPrototype, IInheritingProto
 
     /// <inheritdoc />
     [DataField]
+    [AlwaysPushInheritance]
     public Dictionary<string, EntProtoId> Equipment { get; set; } = new();
 
     /// <inheritdoc />
     [DataField]
+    [AlwaysPushInheritance]
     public List<EntProtoId> Inhand { get; set; } = new();
 
     /// <inheritdoc />
     [DataField]
+    [AlwaysPushInheritance]
     public Dictionary<string, List<EntProtoId>> Storage { get; set; } = new();
 }
 
