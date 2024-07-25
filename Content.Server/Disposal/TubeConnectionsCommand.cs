@@ -19,11 +19,11 @@ namespace Content.Server.Disposal
         {
             if (shell.Player is not { } player)
             {
-                shell.WriteLine(Loc.GetString("shell-cannot-run-command-from-server"));
+                shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
                 return;
             }
 
-            if (player.AttachedEntity is not { } attached) 
+            if (player.AttachedEntity is not { } attached)
             {
                 shell.WriteLine(Loc.GetString("shell-only-players-can-run-this-command"));
                 return;

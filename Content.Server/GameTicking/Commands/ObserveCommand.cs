@@ -19,7 +19,7 @@ namespace Content.Server.GameTicking.Commands
         {
             if (shell.Player is not { } player)
             {
-                shell.WriteLine(Loc.GetString("shell-cannot-run-command-from-server"));
+                shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
                 return;
             }
 
