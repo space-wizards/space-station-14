@@ -360,7 +360,7 @@ public sealed class PlantHolderSystem : EntitySystem
         }
     }
 
-    private void OnSolutionAdded(Entity<PlantHolderComponent> entity, ref SolutionTransferSuccessEvent args)
+    private void OnSolutionAdded(Entity<PlantHolderComponent> entity, ref SolutionTransferredEvent args)
     {
         var (uid, component) = entity;
 
