@@ -221,13 +221,14 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         // Check if the do-after requires hands to perform at first
         // For example, you need hands to strip clothes off of someone
+        // This does not mean their hand needs to be empty.
         if (args.NeedHand)
         {
             if (!handsQuery.TryGetComponent(args.User, out var hands) || hands.Count == 0)
                 return true;
 
-            // If break on drop item is set to true, check if the item is still in the owner's hands
-            // This potentially still allows the user to change hands, or swap the item between hands
+            // If an item was in the user's hand to begin with,
+            // check if the user is no longer holding the item.
             if (args.BreakOnDropItem && !_hands.IsHolding((args.User, hands), doAfter.InitialItem))
                     return true;
 
