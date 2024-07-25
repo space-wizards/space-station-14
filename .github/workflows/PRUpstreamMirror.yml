@@ -1,75 +1,73 @@
 name: Mirror Merged PRs from upstream
-
-on:
+'on':
   schedule:
-    - cron: '0 * * * *'
-
+    - cron: 0 * * * *
 permissions:
   contents: write
   pull-requests: write
-
 jobs:
   mirror_pr:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout upstream repository
-      uses: actions/checkout@v2
-      with:
-        repository: space-wizards/space-station-14
-        ref: master
-        token: ${{ secrets.GH_PAT }}
-        fetch-depth: 0
+      - name: Checkout upstream repository
+        uses: actions/checkout@v2
+        with:
+          repository: space-wizards/space-station-14
+          ref: master
+          token: '${{ secrets.GH_PAT }}'
+          fetch-depth: 0
+      - name: Fetch merged PRs
+        run: |
+          # Fetch merged PRs using GitHub API
+          MERGED_PRS=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
+            "https://api.github.com/repos/space-wizards/space-station-14/pulls?state=closed&base=master")
 
-    - name: Fetch merged PRs
-      run: |
-        # Fetch merged PRs using GitHub API
-        MERGED_PRS=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
-          "https://api.github.com/repos/space-wizards/space-station-14/pulls?state=closed&base=master")
+          echo "$MERGED_PRS" > merged_prs.json
+      - name: Check for new merged PRs
+        id: check_new_prs
+        run: >
+          NEW_PR_FOUND=false
 
-        echo "$MERGED_PRS" > merged_prs.json
+          for PR in $(jq -r '.[] | select(.merged_at != null) | .number'
+          merged_prs.json); do
+            # Check if PR has already been mirrored
+            MIRRORED=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
+              "https://api.github.com/repos/TerraTheUnwisest/PlanetoidSS14/pulls?head=${{ github.actor }}:pr-${PR}")
 
-    - name: Check for new merged PRs
-      id: check_new_prs
-      run: |
-        NEW_PR_FOUND=false
-        for PR in $(jq -r '.[] | select(.merged_at != null) | .number' merged_prs.json); do
-          # Check if PR has already been mirrored
-          MIRRORED=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
-            "https://api.github.com/repos/TerraTheUnwisest/PlanetoidSS14/pulls?head=${{ github.actor }}:pr-${PR}")
+            if [ "$(echo "$MIRRORED" | jq -r '. | length')" -eq 0 ]; then
+              NEW_PR_FOUND=true
+              echo "NEW_PR_NUMBER=$PR" >> $GITHUB_ENV
+              break
+            fi
+          done
 
-          if [ "$(echo "$MIRRORED" | jq -r '. | length')" -eq 0 ]; then
-            NEW_PR_FOUND=true
-            echo "NEW_PR_NUMBER=$PR" >> $GITHUB_ENV
-            break
-          fi
-        done
 
-        echo "NEW_PR_FOUND=$NEW_PR_FOUND" >> $GITHUB_ENV
+          echo "NEW_PR_FOUND=$NEW_PR_FOUND" >> $GITHUB_ENV
+      - name: Get PR details
+        if: env.NEW_PR_FOUND == 'true'
+        run: |
+          PR_NUMBER=${{ env.NEW_PR_NUMBER }}
 
-    - name: Get PR details
-      if: env.NEW_PR_FOUND == 'true'
-      run: |
-        PR_NUMBER=${{ env.NEW_PR_NUMBER }}
-        
-        PR_DETAILS=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
-          https://api.github.com/repos/space-wizards/space-station-14/pulls/${PR_NUMBER})
-        
-        # Sanitize PR title and body to remove newlines
-        PR_TITLE=$(echo "$PR_DETAILS" | jq -r .title | tr '\n' ' ' | tr -d '\r')
-        PR_BODY=$(echo "$PR_DETAILS" | jq -r .body | tr '\n' ' ' | tr -d '\r')
-        PR_BRANCH=$(echo "$PR_DETAILS" | jq -r .head.ref)
-        
-        echo "PR_TITLE=$PR_TITLE" >> $GITHUB_ENV
-        echo "PR_BODY=$PR_BODY" >> $GITHUB_ENV
-        echo "PR_BRANCH=$PR_BRANCH" >> $GITHUB_ENV
+          PR_DETAILS=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
+            https://api.github.com/repos/space-wizards/space-station-14/pulls/${PR_NUMBER})
 
-    - name: Create a new PR in your fork
-      if: env.NEW_PR_FOUND == 'true'
-      env:
-        GH_PAT: ${{ secrets.GH_PAT }}
-      run: |
-        PR_NUMBER=${{ env.NEW_PR_NUMBER }}
-        curl -X POST -H "Authorization: token $GH_PAT" \
-          -d "{\"title\":\"[MIRROR] ${PR_TITLE}\",\"body\":\"${PR_BODY}\",\"head\":\"pr-${PR_NUMBER}\",\"base\":\"master\"}" \
-          https://api.github.com/repos/TerraTheUnwisest/PlanetoidSS14/pulls
+          # Sanitize PR title and body by encoding them in base64
+          PR_TITLE=$(echo "$PR_DETAILS" | jq -r .title | base64)
+          PR_BODY=$(echo "$PR_DETAILS" | jq -r .body | base64)
+          PR_BRANCH=$(echo "$PR_DETAILS" | jq -r .head.ref)
+
+          echo "PR_TITLE=$PR_TITLE" >> $GITHUB_ENV
+          echo "PR_BODY=$PR_BODY" >> $GITHUB_ENV
+          echo "PR_BRANCH=$PR_BRANCH" >> $GITHUB_ENV
+      - name: Decode and create a new PR in your fork
+        if: env.NEW_PR_FOUND == 'true'
+        env:
+          GH_PAT: '${{ secrets.GH_PAT }}'
+        run: |
+          PR_NUMBER=${{ env.NEW_PR_NUMBER }}
+          PR_TITLE=$(echo $PR_TITLE | base64 --decode)
+          PR_BODY=$(echo $PR_BODY | base64 --decode)
+
+          curl -X POST -H "Authorization: token $GH_PAT" \
+            -d "{\"title\":\"[MIRROR] ${PR_TITLE}\",\"body\":\"${PR_BODY}\",\"head\":\"pr-${PR_NUMBER}\",\"base\":\"master\"}" \
+            https://api.github.com/repos/TerraTheUnwisest/PlanetoidSS14/pulls
