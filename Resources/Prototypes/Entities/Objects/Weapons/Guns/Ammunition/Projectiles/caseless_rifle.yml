@@ -9,8 +9,10 @@
       types:
         Piercing: 13 # VXS
         Blunt: 14 # VXS
-  - type: StaminaDamageOnCollide
+  - type: StaminaDamageOnCollide # VXS
     damage: 9
+  - type: TimedDespawn # VXS
+    lifetime: 10
 
 - type: entity
   id: BulletCaselessRiflePractice

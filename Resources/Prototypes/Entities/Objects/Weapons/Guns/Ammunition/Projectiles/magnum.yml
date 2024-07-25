@@ -11,6 +11,8 @@
         Blunt: 12 # VXS
   - type: StaminaDamageOnCollide
     damage: 17
+  - type: TimedDespawn # VXS
+    lifetime: 13
 
 - type: entity
   id: BulletMagnumPractice
@@ -21,7 +23,9 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 1
+        Piercing: 35 # VXS
+  - type: TimedDespawn # VXS
+    lifetime: 13
 
 - type: entity
   id: BulletMagnumIncendiary
@@ -34,6 +38,8 @@
       types:
         Piercing: 30 # VXS
         Heat: 5 # VXS
+  - type: TimedDespawn # VXS
+    lifetime: 13
 
 - type: entity
   id: BulletMagnumAP
@@ -48,6 +54,8 @@
         Blunt: 19 # VXS
   - type: StaminaDamageOnCollide
     damage: 8
+  - type: TimedDespawn # VXS
+    lifetime: 13
 
 - type: entity
   id: BulletMagnumUranium
@@ -62,3 +70,6 @@
         Piercing: 35 # VXS
   - type: StaminaDamageOnCollide
     damage: 4
+  - type: TimedDespawn # VXS
+    lifetime: 20
+

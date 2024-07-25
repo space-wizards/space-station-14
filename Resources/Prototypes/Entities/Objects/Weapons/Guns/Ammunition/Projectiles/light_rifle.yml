@@ -11,6 +11,8 @@
         Blunt: 12 # VXS
   - type: StaminaDamageOnCollide # VXS
     damage: 15
+  - type: TimedDespawn # VXS
+    lifetime: 15
 
 - type: entity
   id: BulletLightRiflePractice
@@ -24,6 +26,8 @@
         Piercing: 34 # VXS
   - type: StaminaDamageOnCollide # VXS
     damage: 4
+  - type: TimedDespawn # VXS
+    lifetime: 15
 
 - type: entity
   id: BulletLightRifleIncendiary
@@ -38,6 +42,8 @@
         Heat: 11 # VXS
   - type: StaminaDamageOnCollide # VXS
     damage: 6
+  - type: TimedDespawn # VXS
+    lifetime: 10
 
 - type: entity
   id: BulletLightRifleUranium
@@ -52,3 +58,5 @@
         Piercing: 48 # VXS
   - type: StaminaDamageOnCollide # VXS
     damage: 2
+  - type: TimedDespawn # VXS
+    lifetime: 20
