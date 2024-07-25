@@ -42,7 +42,7 @@ namespace Content.Server.Mapping
         {
             if (shell.Player is not { } player)
             {
-                shell.WriteError(Loc.GetString("cmd-savemap-server"));
+                shell.WriteLine(Loc.GetString("shell-cannot-run-command-from-server"));
                 return;
             }
 

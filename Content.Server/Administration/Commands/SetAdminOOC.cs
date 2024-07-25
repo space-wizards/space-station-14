@@ -14,9 +14,9 @@ namespace Content.Server.Administration.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (shell.Player == null)
+            if (shell.Player is not { } player)
             {
-                shell.WriteError(Loc.GetString("shell-only-players-can-run-this-command"));
+                shell.WriteLine(Loc.GetString("shell-cannot-run-command-from-server"));
                 return;
             }
 
