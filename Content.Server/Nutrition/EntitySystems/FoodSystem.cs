@@ -346,11 +346,7 @@ public sealed class FoodSystem : EntitySystem
         }
 
         //We're empty. Become trash.
-        var position = _transform.GetMapCoordinates(food);
-        var trash = Spawn(comp.Trash, position);
-
-        _transform.DropNextTo(trash, food.Owner);
-        _transform.SetLocalRotation(trash, 0);
+        var trash = SpawnNextToOrDrop(comp.Trash, food);
 
         var spawnedEv = new FoodSpawnedTrashEvent(trash, user);
         RaiseLocalEvent(food, ref spawnedEv);
