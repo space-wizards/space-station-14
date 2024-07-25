@@ -64,6 +64,9 @@
     price: 1000 # Living critters are valuable in space.
   - type: Perishable
   - type: StepTriggerImmune
+    whitelist:
+      tags:
+        - Trash
 
 - type: entity
   parent:

@@ -1,14 +1,14 @@
 ﻿using Content.Shared.Examine;
 using Content.Shared.Inventory;
-using Content.Shared.Mousetrap;
+using Content.Shared.Whitelist;
 using Content.Shared.StepTrigger.Components;
-using Content.Shared.Tag;
 
 namespace Content.Shared.StepTrigger.Systems;
 
 public sealed class StepTriggerImmuneSystem : EntitySystem
 {
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -23,7 +23,7 @@ public sealed class StepTriggerImmuneSystem : EntitySystem
         if (!TryComp<StepTriggerImmuneComponent>(args.Tripper, out var comp))
             return;
 
-        if (EntityManager.HasComponent<MousetrapComponent>(uid) && !comp.ImmuneToMousetrap)
+        if (_whitelistSystem.IsWhitelistFailOrNull(comp.Whitelist, args.Source))
             return;
 
         args.Cancelled = true;
