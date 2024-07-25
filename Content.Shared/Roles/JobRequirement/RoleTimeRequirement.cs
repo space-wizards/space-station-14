@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Players.PlayTimeTracking;
+using Content.Shared.Preferences;
 using Content.Shared.Roles.Jobs;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -24,6 +25,7 @@ public sealed partial class RoleTimeRequirement : JobRequirement
 
     public override bool Check(IEntityManager entManager,
         IPrototypeManager protoManager,
+        HumanoidCharacterProfile? profile,
         IReadOnlyDictionary<string, TimeSpan> playTimes,
         [NotNullWhen(false)] out FormattedMessage? reason)
     {
