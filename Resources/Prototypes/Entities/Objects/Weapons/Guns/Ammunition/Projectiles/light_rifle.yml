@@ -7,7 +7,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 26 # VXS
+        Piercing: 36 # VXS
         Blunt: 12 # VXS
   - type: StaminaDamageOnCollide # VXS
     damage: 15
@@ -21,8 +21,8 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 12 # VXS
-  - type: StaminaDamageOnCollide
+        Piercing: 34 # VXS
+  - type: StaminaDamageOnCollide # VXS
     damage: 4
 
 - type: entity
@@ -34,7 +34,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 25 # VXS
+        Piercing: 34 # VXS
         Heat: 11 # VXS
   - type: StaminaDamageOnCollide # VXS
     damage: 6
@@ -48,7 +48,7 @@
   - type: Projectile
     damage:
       types:
-        Radiation: 1
-        Piercing: 38
-  - type: StaminaDamageOnCollide
+        Radiation: 1 # VXS
+        Piercing: 48 # VXS
+  - type: StaminaDamageOnCollide # VXS
     damage: 2
