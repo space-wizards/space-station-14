@@ -58973,13 +58973,6 @@ entities:
     - type: Transform
       pos: -63.651737,-1.4881696
       parent: 60
-- proto: ClothingNeckTransPin
-  entities:
-  - uid: 5166
-    components:
-    - type: Transform
-      pos: -8.970711,16.51249
-      parent: 60
 - proto: ClothingOuterApron
   entities:
   - uid: 8027

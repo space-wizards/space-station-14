@@ -563,17 +563,6 @@ entities:
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
-- proto: ClothingNeckCloakTrans
-  entities:
-  - uid: 332
-    components:
-    - flags: InContainer
-      type: MetaData
-    - parent: 331
-      type: Transform
-    - canCollide: False
-      type: Physics
-    - type: InsideEntityStorage
 - proto: ClothingOuterHardsuitSalvage
   entities:
   - uid: 432

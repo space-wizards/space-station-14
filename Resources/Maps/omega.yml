@@ -30784,13 +30784,6 @@ entities:
     - type: Transform
       pos: -14.6855755,-0.43132806
       parent: 4812
-- proto: ClothingNeckTransPin
-  entities:
-  - uid: 12515
-    components:
-    - type: Transform
-      pos: -14.357392,4.331708
-      parent: 4812
 - proto: ClothingOuterApron
   entities:
   - uid: 10913
