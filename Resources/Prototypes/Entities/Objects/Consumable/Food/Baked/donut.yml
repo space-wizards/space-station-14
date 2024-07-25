@@ -432,26 +432,6 @@
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes like jelly-donut, fizzy tutti frutti.
-
-- type: entity
-  name: slugcat jelly-donut
-  parent: FoodDonutBase
-  id: FoodDonutJellySlugcat
-  description: No holes in this donut in case a suspicious looking pole shows up.
-  components:
-  - type: Sprite
-    state: jelly-slug
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 1
-# Tastes like jelly-donut, fizzy tutti frutti.
-
 # Poison donut
 - type: entity
   parent: FoodDonutPink

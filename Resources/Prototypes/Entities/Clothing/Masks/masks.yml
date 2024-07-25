@@ -562,7 +562,7 @@
   parent: ClothingMaskMime
   id: ClothingMaskSexyMime
   name: sexy mime mask
-  description: Those ruddy cheeks just want to be rubbed.
+  description: A feminine mime mask, sexy.
   components:
   - type: Sprite
     sprite: Clothing/Mask/sexymime.rsi

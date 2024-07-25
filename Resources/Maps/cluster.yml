@@ -36342,13 +36342,6 @@ entities:
     - type: Transform
       pos: 2.6014228,3.2195196
       parent: 1
-- proto: FoodDonutJellySlugcat
-  entities:
-  - uid: 12540
-    components:
-    - type: Transform
-      pos: 17.536278,36.515877
-      parent: 1
 - proto: FoodDonutJellySpaceman
   entities:
   - uid: 12355

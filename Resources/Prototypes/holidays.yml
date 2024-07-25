@@ -6,17 +6,6 @@
   endDay: 2
   endMonth: January
 
-- type: holiday
-  id: MisterLizard
-  name: holiday-name-mister-lizard
-  beginDay: 15
-  beginMonth: January
-
-- type: holiday
-  id: ChineseNewYear
-  name: holiday-name-chinese-new-year
-  shouldCelebrate:
-    !type:ChineseNewYear {}
 
 - type: holiday
   id: GroundhogDay
@@ -50,12 +39,6 @@
   beginMonth: February
 
 - type: holiday
-  id: MikuDay
-  name: holiday-name-miku-day
-  beginDay: 9
-  beginMonth: March
-
-- type: holiday
   id: PiDay
   name: holiday-name-pi-day
   beginDay: 14
@@ -77,12 +60,6 @@
   id: AprilFoolDay
   name: holiday-name-april-fool-day
   beginDay: 1
-  beginMonth: April
-
-- type: holiday
-  id: AutismAwarenessDay
-  name: holiday-name-autism-awareness-day
-  beginDay: 2
   beginMonth: April
 
 - type: holiday
@@ -110,12 +87,6 @@
   id: EarthDay
   name: holiday-name-earth-day
   beginDay: 22
-  beginMonth: April
-
-- type: holiday
-  id: AnzacDay
-  name: holiday-name-anzac-day
-  beginDay: 25
   beginMonth: April
 
 - type: holiday
@@ -147,24 +118,6 @@
   greet:
     !type:Custom
     text: holiday-custom-mothers-day
-
-- type: holiday
-  id: OwlAndPussycatDay
-  name: holiday-name-owl-and-pussycat-day
-  beginDay: 12
-  beginMonth: May
-
-- type: holiday
-  id: TowelDay
-  name: holiday-name-towel-day
-  beginDay: 25
-  beginMonth: May
-
-- type: holiday
-  id: MoMMIDay
-  name: holiday-name-mommi-day
-  beginDay: 30
-  beginMonth: May
 
 - type: holiday
   id: GarbageDay
@@ -266,12 +219,6 @@
     dayOfYear: 256
 
 - type: holiday
-  id: BisexualPrideDay
-  name: holiday-name-bisexual-pride-day
-  beginDay: 23
-  beginMonth: September
-
-- type: holiday
   id: StupidQuestionsDay
   name: holiday-name-stupid-questions-day
   beginDay: 28
@@ -287,18 +234,6 @@
   id: SmilingDay
   name: holiday-name-smiling-day
   beginDay: 7
-  beginMonth: October
-
-- type: holiday
-  id: LesbianDay
-  name: holiday-name-lesbian-day
-  beginDay: 8
-  beginMonth: October
-
-- type: holiday
-  id: NationalComingOutDay
-  name: holiday-name-national-coming-out-day
-  beginDay: 11
   beginMonth: October
 
 - type: holiday
@@ -359,12 +294,6 @@
   id: FlowersDay
   name: holiday-name-flowers-day
   beginDay: 19
-  beginMonth: November
-
-- type: holiday
-  id: TransgenderRemembranceDay
-  name: holiday-name-transgender-remembrance-day
-  beginDay: 20
   beginMonth: November
 
 - type: holiday
@@ -437,10 +366,3 @@
   name: holiday-name-friday-thirteenth
   shouldCelebrate:
     !type:FridayThirteenth { }
-
-- type: holiday
-  id: PrideMonth
-  name: holiday-name-pride-month
-  beginDay: 1
-  endDay: 31
-  beginMonth: June
