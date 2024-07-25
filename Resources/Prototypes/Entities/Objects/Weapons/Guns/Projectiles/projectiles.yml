@@ -652,10 +652,10 @@
     intensitySlope: 6
     totalIntensity: 200
     maxTileBreak: 1
-  - type: PointLight
-    radius: 3.5
-    color: orange
-    energy: 0.5
+  #- type: PointLight VXS
+  #  radius: 3.5
+  #  color: orange
+  #  energy: 0.5
 
 - type: entity
   id: BulletWeakRocket
@@ -768,10 +768,10 @@
     disableDuration: 10
   - type: Ammo
     muzzleFlash: null
-  - type: PointLight
-    radius: 3.5
-    color: blue
-    energy: 0.5
+  #- type: PointLight VXS
+  #  radius: 3.5
+  #  color: blue
+  #  energy: 0.5
 
 - type: entity
   id: BulletCap
