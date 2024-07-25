@@ -1,9 +1,8 @@
 name: Mirror Merged PRs from upstream
 
 on:
-  push:
-    branches:
-      - master  # Change to 'master' for tracking merges
+  schedule:
+    - cron: '0 * * * *' # Runs every hour, adjust as needed
 
 permissions:
   contents: write
@@ -22,28 +21,37 @@ jobs:
         token: ${{ secrets.GH_PAT }}
         fetch-depth: 0
 
-    - name: Check for merged PRs
-      id: check_merged_pr
+    - name: Fetch merged PRs
       run: |
-        # Get the commit message
-        COMMIT_MESSAGE=$(git log -1 --pretty=%B)
-        
-        # Check if commit message contains 'Merge pull request'
-        if echo "$COMMIT_MESSAGE" | grep -q "Merge pull request"; then
-          echo "Commit is a merged PR"
-          echo "MERGED_PR=true" >> $GITHUB_ENV
-        else
-          echo "Commit is not a merged PR"
-          echo "MERGED_PR=false" >> $GITHUB_ENV
-        fi
+        # Fetch merged PRs using GitHub API
+        MERGED_PRS=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
+          "https://api.github.com/repos/space-wizards/space-station-14/pulls?state=closed&base=master")
+
+        echo "$MERGED_PRS" > merged_prs.json
+
+    - name: Check for new merged PRs
+      id: check_new_prs
+      run: |
+        NEW_PR_FOUND=false
+        for PR in $(jq -r '.[] | select(.merged_at != null) | .number' merged_prs.json); do
+          # Check if PR has already been mirrored
+          MIRRORED=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
+            "https://api.github.com/repos/TerraTheUnwisest/PlanetoidSS14/pulls?head=${{ github.actor }}:pr-${PR}")
+
+          if [ "$(echo "$MIRRORED" | jq -r '. | length')" -eq 0 ]; then
+            NEW_PR_FOUND=true
+            echo "NEW_PR_NUMBER=$PR" >> $GITHUB_ENV
+            break
+          fi
+        done
+
+        echo "NEW_PR_FOUND=$NEW_PR_FOUND" >> $GITHUB_ENV
 
     - name: Get PR details
-      if: env.MERGED_PR == 'true'
+      if: env.NEW_PR_FOUND == 'true'
       run: |
-        # Extract PR number from commit message
-        PR_NUMBER=$(echo "$COMMIT_MESSAGE" | grep -oP '(?<=#)\d+')
+        PR_NUMBER=${{ env.NEW_PR_NUMBER }}
         
-        # Get PR details using GitHub API
         PR_DETAILS=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
           https://api.github.com/repos/space-wizards/space-station-14/pulls/${PR_NUMBER})
         
@@ -52,10 +60,11 @@ jobs:
         echo "PR_BRANCH=$(echo "$PR_DETAILS" | jq -r .head.ref)" >> $GITHUB_ENV
 
     - name: Create a new PR in your fork
-      if: env.MERGED_PR == 'true'
+      if: env.NEW_PR_FOUND == 'true'
       env:
         GH_PAT: ${{ secrets.GH_PAT }}
       run: |
+        PR_NUMBER=${{ env.NEW_PR_NUMBER }}
         curl -X POST -H "Authorization: token $GH_PAT" \
-          -d "{\"title\":\"[MIRROR] ${PR_TITLE}\",\"body\":\"${PR_BODY}\",\"head\":\"${PR_BRANCH}\",\"base\":\"master\"}" \
+          -d "{\"title\":\"[MIRROR] ${PR_TITLE}\",\"body\":\"${PR_BODY}\",\"head\":\"pr-${PR_NUMBER}\",\"base\":\"master\"}" \
           https://api.github.com/repos/TerraTheUnwisest/PlanetoidSS14/pulls
