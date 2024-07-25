@@ -68,7 +68,7 @@
 
 # Nuclear Operative
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: Nuclear Operative
   parent: MobHuman
   id: MobHumanNukeOp
@@ -77,7 +77,7 @@
     - type: RandomHumanoidAppearance
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: MobHuman
   id: MobHumanLoneNuclearOperative
   name: Lone Operative

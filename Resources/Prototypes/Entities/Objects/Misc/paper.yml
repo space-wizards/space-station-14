@@ -258,7 +258,7 @@
 - type: entity
   parent: Paper
   id: PaperWritten
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     layers:

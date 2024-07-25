@@ -236,7 +236,7 @@
   id: LockableButton
   name: lockable button
   parent: SignalButtonDirectional
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Appearance
   - type: Lock
@@ -496,7 +496,7 @@
 - type: entity
   id: ButtonFrame
   name: button frame
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   description: It's a frame to help distinguish switches visually.
   placement:
     mode: SnapgridCenter
