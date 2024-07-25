@@ -468,7 +468,7 @@ namespace Content.Shared.Interaction
             var message = new InteractHandEvent(user, target);
             RaiseLocalEvent(target, message, true);
             _adminLogger.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}");
-            DoContactInteraction(user, target, message, true);
+            DoContactInteraction(user, target, message);
             if (message.Handled)
                 return;
 
@@ -952,7 +952,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(target, interactUsingEvent, true);
             DoContactInteraction(user, used, interactUsingEvent);
             DoContactInteraction(user, target, interactUsingEvent);
-            DoContactInteraction(used, target, interactUsingEvent);
+            // Contact interactions are currently only used for forensics, so we don't raise used -> target
             if (interactUsingEvent.Handled)
                 return;
 
@@ -973,7 +973,7 @@ namespace Content.Shared.Interaction
             if (canReach)
             {
                 DoContactInteraction(user, target, afterInteractEvent);
-                DoContactInteraction(used, target, afterInteractEvent);
+                // Contact interactions are currently only used for forensics, so we don't raise used -> target
             }
 
             if (afterInteractEvent.Handled)
@@ -989,7 +989,7 @@ namespace Content.Shared.Interaction
             if (canReach)
             {
                 DoContactInteraction(user, target, afterInteractUsingEvent);
-                DoContactInteraction(used, target, afterInteractUsingEvent);
+                // Contact interactions are currently only used for forensics, so we don't raise used -> target
             }
         }
 
@@ -1047,7 +1047,7 @@ namespace Content.Shared.Interaction
             if (!activateMsg.Handled && !userEv.Handled)
                 return false;
 
-            DoContactInteraction(user, used, activateMsg, true);
+            DoContactInteraction(user, used, activateMsg);
             // Still need to call this even without checkUseDelay in case this gets relayed from Activate.
             if (delayComponent != null)
                 _useDelay.TryResetDelay(used, component: delayComponent);
@@ -1253,7 +1253,7 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Simple convenience function to raise contact events (disease, forensics, etc).
         /// </summary>
-        public void DoContactInteraction(EntityUid uidA, EntityUid? uidB, HandledEntityEventArgs? args = null, bool handContact = false)
+        public void DoContactInteraction(EntityUid uidA, EntityUid? uidB, HandledEntityEventArgs? args = null)
         {
             if (uidB == null || args?.Handled == false)
                 return;
@@ -1265,7 +1265,7 @@ namespace Content.Shared.Interaction
             if (Paused(uidA) || Paused(uidB.Value))
                 return;
 
-            RaiseLocalEvent(uidA, new ContactInteractionEvent(uidB.Value, handContact));
+            RaiseLocalEvent(uidA, new ContactInteractionEvent(uidB.Value));
             RaiseLocalEvent(uidB.Value, new ContactInteractionEvent(uidA));
         }
 

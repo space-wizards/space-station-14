@@ -9,11 +9,9 @@ namespace Content.Shared.Interaction.Events;
 public sealed class ContactInteractionEvent : HandledEntityEventArgs
 {
     public readonly EntityUid Other;
-    public bool HandContact;
 
-    public ContactInteractionEvent(EntityUid other, bool handContact = false)
+    public ContactInteractionEvent(EntityUid other)
     {
         Other = other;
-        HandContact = handContact;
     }
 }

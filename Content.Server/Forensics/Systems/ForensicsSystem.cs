@@ -41,8 +41,7 @@ namespace Content.Server.Forensics
 
         private void OnInteract(EntityUid uid, FingerprintComponent component, ContactInteractionEvent args)
         {
-            if(args.HandContact)
-                ApplyEvidence(uid, args.Other);
+            ApplyEvidence(uid, args.Other);
         }
 
         private void OnFingerprintInit(EntityUid uid, FingerprintComponent component, MapInitEvent args)
