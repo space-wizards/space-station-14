@@ -1,0 +1,42 @@
+name: Mirror PRs from upstream
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main  # Change this to the branch you want to track
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync_prs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout upstream PR branch
+      uses: actions/checkout@v2
+      with:
+        repository: space-wizards/space-station-14
+        ref: ${{ github.event.pull_request.head.ref }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Add your fork as a remote
+      run: git remote add fork https://github.com/TerraTheUnwisest/PlanetoidSS14.git
+
+    - name: Push PR branch to fork
+      run: |
+        git checkout -b pr-${{ github.event.pull_request.number }}
+        git push fork pr-${{ github.event.pull_request.number }}
+
+    - name: Create a new PR in your fork
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        PR_TITLE="[MIRROR] $(jq -r .pull_request.title < $GITHUB_EVENT_PATH)"
+        PR_BODY=$(jq -r .pull_request.body < $GITHUB_EVENT_PATH)
+        curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
+          -d "{\"title\":\"$PR_TITLE\",\"body\":\"$PR_BODY\",\"head\":\"pr-${{ github.event.pull_request.number }}\",\"base\":\"main\"}" \
+          https://api.github.com/repos/TerraTheUnwisest/PlanetoidSS14/pulls
