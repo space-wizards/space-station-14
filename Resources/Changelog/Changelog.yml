@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Pyrotton can now be mutated from cotton.
-    type: Add
-  id: 6482
-  time: '2024-04-28T11:07:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27200
 - author: Plykiya
   changes:
   - message: You can now pick up Smile and put them in your bag.
@@ -3780,3 +3773,13 @@
   id: 6981
   time: '2024-07-25T23:26:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28707
+- author: Ilya246
+  changes:
+  - message: Nuclear operative reinforcements now come with full nuclear operative
+      gear (and a toy carp) at no additional cost.
+    type: Tweak
+  - message: Nuclear operative reinforcements now get nuclear operative names.
+    type: Tweak
+  id: 6982
+  time: '2024-07-25T23:37:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30173
