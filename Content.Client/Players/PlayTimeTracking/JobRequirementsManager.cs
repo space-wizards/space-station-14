@@ -106,16 +106,16 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         if (player == null)
             return true;
 
-        return CheckRoleTime(job, out reason);
+        return CheckRoleRequirements(job, out reason);
     }
 
-    public bool CheckRoleTime(JobPrototype job, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool CheckRoleRequirements(JobPrototype job, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         var reqs = _entManager.System<SharedRoleSystem>().GetJobRequirement(job);
-        return CheckRoleTime(reqs, out reason);
+        return CheckRoleRequirements(reqs, out reason);
     }
 
-    public bool CheckRoleTime(HashSet<JobRequirement>? requirements, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool CheckRoleRequirements(HashSet<JobRequirement>? requirements, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
 
@@ -125,7 +125,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         var reasons = new List<string>();
         foreach (var requirement in requirements)
         {
-            if (JobRequirements.TryRequirementMet(requirement, _roles, out var jobReason, _entManager, _prototypes))
+            if (requirement.Check(_entManager, _prototypes, _roles, out var jobReason))
                 continue;
 
             reasons.Add(jobReason.ToMarkup());
