@@ -2,6 +2,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -20,16 +21,9 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _window = new AirAlarmWindow(this);
+        _window = this.CreateWindow<AirAlarmWindow>();
+        _window.SetEntity(Owner);
 
-        if (State != null)
-        {
-            UpdateState(State);
-        }
-
-        _window.OpenCentered();
-
-        _window.OnClose += Close;
         _window.AtmosDeviceDataChanged += OnDeviceDataChanged;
 		_window.AtmosDeviceDataCopied += OnDeviceDataCopied;
         _window.AtmosAlarmThresholdChanged += OnThresholdChanged;

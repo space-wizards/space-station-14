@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 namespace Content.IntegrationTests.Tests.Body;
 
 [TestFixture]
-public sealed  class GibTest
+public sealed class GibTest
 {
     [Test]
     public async Task TestGib()
