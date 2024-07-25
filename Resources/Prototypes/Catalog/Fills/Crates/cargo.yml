@@ -174,9 +174,6 @@
     - id: ClothingBackpackERTClown
       prob: 0.001
       orGroup: Clothes
-    - id: ClothingNeckCloakAdmin
-      prob: 0.01
-      orGroup: Clothes
     - id: ClothingOuterFlannelBlue
       prob: 0.01
       orGroup: Clothes

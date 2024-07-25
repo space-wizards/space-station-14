@@ -29699,13 +29699,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: ClothingNeckTransPin
-  entities:
-  - uid: 11220
-    components:
-    - type: Transform
-      pos: -39.29348,-0.7646979
-      parent: 1
 - proto: ClothingOuterCoatPirate
   entities:
   - uid: 5181

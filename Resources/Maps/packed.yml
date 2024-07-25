@@ -32537,18 +32537,6 @@ entities:
     - type: Transform
       pos: 17.479858,8.394902
       parent: 2
-- proto: ClothingNeckCloakTrans
-  entities:
-  - uid: 688
-    components:
-    - type: Transform
-      pos: 7.491953,-13.240216
-      parent: 2
-  - uid: 7009
-    components:
-    - type: Transform
-      pos: 19.545155,5.62142
-      parent: 2
 - proto: ClothingNeckScarfStripedRed
   entities:
   - uid: 12226

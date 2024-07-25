@@ -563,17 +563,6 @@ entities:
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
-- proto: ClothingNeckCloakTrans
-  entities:
-  - uid: 332
-    components:
-    - flags: InContainer
-      type: MetaData
-    - parent: 331
-      type: Transform
-    - canCollide: False
-      type: Physics
-    - type: InsideEntityStorage
 - proto: ClothingOuterHardsuitSalvage
   entities:
   - uid: 432
@@ -776,22 +765,6 @@ entities:
       type: Transform
 - proto: CrateCoffin
   entities:
-  - uid: 331
-    components:
-    - pos: 16.5,32.5
-      parent: 1653
-      type: Transform
-    - containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 332
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-      type: ContainerContainer
   - uid: 435
     components:
     - pos: 22.5,32.5

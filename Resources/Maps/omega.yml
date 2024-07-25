@@ -30693,13 +30693,6 @@ entities:
     - type: Transform
       pos: -48.41308,-16.456617
       parent: 4812
-- proto: ClothingNeckCloakTrans
-  entities:
-  - uid: 4827
-    components:
-    - type: Transform
-      pos: 38.546867,-26.403046
-      parent: 4812
 - proto: ClothingNeckHeadphones
   entities:
   - uid: 9196
@@ -30712,13 +30705,6 @@ entities:
     - type: Transform
       pos: -0.5106895,-15.532991
       parent: 4812
-- proto: ClothingNeckIntersexPin
-  entities:
-  - uid: 12511
-    components:
-    - type: Transform
-      pos: 19.693497,8.613337
-      parent: 4812
 - proto: ClothingNeckMantleHOS
   entities:
   - uid: 9197
@@ -30726,24 +30712,12 @@ entities:
     - type: Transform
       pos: -21.425161,22.675072
       parent: 4812
-- proto: ClothingNeckNonBinaryPin
-  entities:
-  - uid: 12513
-    components:
-    - type: Transform
-      pos: 8.410957,-44.59256
-      parent: 4812
 - proto: ClothingNeckScarfStripedBlue
   entities:
   - uid: 8417
     components:
     - type: Transform
       pos: -14.544858,-25.307133
-      parent: 4812
-  - uid: 11338
-    components:
-    - type: Transform
-      pos: -33.593323,-36.57982
       parent: 4812
 - proto: ClothingNeckScarfStripedGreen
   entities:
@@ -30758,11 +30732,6 @@ entities:
     components:
     - type: Transform
       pos: -1.4543457,-27.446754
-      parent: 4812
-  - uid: 12365
-    components:
-    - type: Transform
-      pos: -68.52162,-28.692625
       parent: 4812
 - proto: ClothingNeckStethoscope
   entities:
@@ -30783,13 +30752,6 @@ entities:
     components:
     - type: Transform
       pos: -14.6855755,-0.43132806
-      parent: 4812
-- proto: ClothingNeckTransPin
-  entities:
-  - uid: 12515
-    components:
-    - type: Transform
-      pos: -14.357392,4.331708
       parent: 4812
 - proto: ClothingOuterApron
   entities:

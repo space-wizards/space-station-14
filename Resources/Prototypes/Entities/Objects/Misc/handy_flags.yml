@@ -36,18 +36,6 @@
 
 - type: entity
   parent: BaseItem
-  id: LGBTQHandyFlag
-  name: LGBTQ handheld flag
-  description: "The be gay do crime handy flag."
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/Handy_Flags/lgbtq_handy_flag.rsi
-    state: icon
-  - type: Item
-    sprite: Objects/Misc/Handy_Flags/lgbtq_handy_flag.rsi
-
-- type: entity
-  parent: BaseItem
   id: PirateHandyFlag
   name: pirate handheld flag
   description: "Holding it in your hands, show these carp that you're not kidding."
