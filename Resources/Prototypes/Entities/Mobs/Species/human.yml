@@ -5,6 +5,9 @@
   name: Urist McHands
   abstract: true
   components:
+  - type: MovementSpeedModifier # VXS
+    baseWalkSpeed : 3.5
+    baseSprintSpeed : 2.5
   - type: Hunger
   - type: Icon # It will not have an icon in the adminspawn menu without this. Body parts seem fine for whatever reason.
     sprite: Mobs/Species/Human/parts.rsi
@@ -27,7 +30,6 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
-
 
 - type: entity
   parent: BaseSpeciesDummy

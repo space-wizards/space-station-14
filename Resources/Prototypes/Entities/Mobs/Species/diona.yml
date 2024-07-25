@@ -5,6 +5,9 @@
   id: BaseMobDiona
   abstract: true
   components:
+  - type: MovementSpeedModifier # VXS
+    baseWalkSpeed : 3
+    baseSprintSpeed : 2
   - type: HumanoidAppearance
     species: Diona
   - type: Hunger

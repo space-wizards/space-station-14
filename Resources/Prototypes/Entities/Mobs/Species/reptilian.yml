@@ -5,6 +5,9 @@
   id: BaseMobReptilian
   abstract: true
   components:
+  - type: MovementSpeedModifier # VXS
+    baseWalkSpeed : 3.55
+    baseSprintSpeed : 2.55
   - type: HumanoidAppearance
     species: Reptilian
     hideLayersOnEquip:

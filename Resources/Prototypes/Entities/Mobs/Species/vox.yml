@@ -3,6 +3,9 @@
   id: BaseMobVox
   abstract: true
   components:
+  - type: MovementSpeedModifier # VXS
+    baseWalkSpeed : 3.5
+    baseSprintSpeed : 2.5
   - type: Hunger
   - type: Thirst
   - type: Icon
