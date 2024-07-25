@@ -483,6 +483,49 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("assigned_user_id", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.BanTemplate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ban_template_id");
+
+                    b.Property<bool>("AutoDelete")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("auto_delete");
+
+                    b.Property<int>("ExemptFlags")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("exempt_flags");
+
+                    b.Property<bool>("Hidden")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("hidden");
+
+                    b.Property<TimeSpan>("Length")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("length");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("reason");
+
+                    b.Property<int>("Severity")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("severity");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("title");
+
+                    b.HasKey("Id")
+                        .HasName("PK_ban_template");
+
+                    b.ToTable("ban_template", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
                 {
                     b.Property<int>("Id")
@@ -527,6 +570,8 @@ namespace Content.Server.Database.Migrations.Sqlite
 
                     b.HasIndex("ServerId")
                         .HasDatabaseName("IX_connection_log_server_id");
+
+                    b.HasIndex("Time");
 
                     b.HasIndex("UserId");
 
