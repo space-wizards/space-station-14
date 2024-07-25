@@ -52,8 +52,6 @@
     sprite: Nyanotrasen/Clothing/Uniforms/Costume/bunny.rsi
   - type: Clothing
     sprite: Nyanotrasen/Clothing/Uniforms/Costume/bunny.rsi
-    # TODO: Remove the line below when the sprite accounts for FemaleMask.
-    femaleMask: NoMask
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -98,8 +96,6 @@
     sprite: Nyanotrasen/Clothing/Uniforms/Costume/rat.rsi
   - type: Clothing
     sprite: Nyanotrasen/Clothing/Uniforms/Costume/rat.rsi
-    # TODO: Remove the line below when the sprite accounts for FemaleMask.
-    femaleMask: NoMask
 
 - type: entity
   parent: ClothingUniformBase
@@ -111,7 +107,6 @@
     sprite: Nyanotrasen/Clothing/Uniforms/Costume/red_dress.rsi
   - type: Clothing
     sprite: Nyanotrasen/Clothing/Uniforms/Costume/red_dress.rsi
-    femaleMask: NoMask
 
 - type: entity
   parent: ClothingUniformBase
@@ -123,7 +118,6 @@
     sprite: Nyanotrasen/Clothing/Uniforms/Costume/swimsuit.rsi
   - type: Clothing
     sprite: Nyanotrasen/Clothing/Uniforms/Costume/swimsuit.rsi
-    femaleMask: UniformTop
 
 ## kendo
 
@@ -242,7 +236,6 @@
     sprite: Nyanotrasen/Clothing/Uniforms/Costume/gakuran.rsi
   - type: Clothing
     sprite: Nyanotrasen/Clothing/Uniforms/Costume/gakuran.rsi
-    femaleMask: NoMask
 
 ## mnk
 
@@ -256,7 +249,6 @@
     sprite: Nyanotrasen/Clothing/Misc/office_skirt.rsi
   - type: Clothing
     sprite: Nyanotrasen/Clothing/Misc/office_skirt.rsi
-    femaleMask: NoMask
 
 - type: entity
   parent: ClothingUniformBase
@@ -279,7 +271,6 @@
     sprite: Nyanotrasen/Clothing/Misc/gym_bra.rsi
   - type: Clothing
     sprite: Nyanotrasen/Clothing/Misc/gym_bra.rsi
-    femaleMask: NoMask
 
 - type: entity
   parent: ClothingUniformBase
@@ -291,7 +282,6 @@
     sprite: Nyanotrasen/Clothing/Misc/black_dress.rsi
   - type: Clothing
     sprite: Nyanotrasen/Clothing/Misc/black_dress.rsi
-    femaleMask: UniformTop
 
 - type: entity
   parent: ClothingUniformBase
@@ -303,7 +293,6 @@
     sprite: Nyanotrasen/Clothing/Misc/black_overall.rsi
   - type: Clothing
     sprite: Nyanotrasen/Clothing/Misc/black_overall.rsi
-    femaleMask: NoMask
 
 - type: entity
   parent: ClothingUniformBase
@@ -315,7 +304,6 @@
     sprite: Nyanotrasen/Clothing/Misc/exposed_shoulder.rsi
   - type: Clothing
     sprite: Nyanotrasen/Clothing/Misc/exposed_shoulder.rsi
-    femaleMask: UniformTop
 
 - type: entity
   parent: ClothingUniformBase
@@ -327,4 +315,3 @@
     sprite: Nyanotrasen/Clothing/Misc/tracksuit.rsi
   - type: Clothing
     sprite: Nyanotrasen/Clothing/Misc/tracksuit.rsi
-    femaleMask: NoMask
