@@ -137696,7 +137696,6 @@ entities:
           ents:
           - 24200
           - 24199
-          - 24198
           - 24197
         paper_label: !type:ContainerSlot
           showEnts: False

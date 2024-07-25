@@ -59930,13 +59930,6 @@ entities:
     - type: Transform
       pos: 54.98519,-35.41314
       parent: 2
-- proto: ClothingNeckCloakEnby
-  entities:
-  - uid: 17203
-    components:
-    - type: Transform
-      pos: 28.513657,-33.38952
-      parent: 2
 - proto: ClothingNeckCloakNanotrasen
   entities:
   - uid: 16842
