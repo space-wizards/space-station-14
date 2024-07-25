@@ -15,19 +15,10 @@
         - CigarGold
         - ClothingNeckCloakHerald
         - ClothingHeadHelmetTemplar
-        - ClothingNeckCloakTrans
         - ClothingNeckCloakAdmin
         - ClothingNeckCloakMoth
         - ClothingNeckCloakVoid
         - ClothingNeckCloakGoliathCloak
-        - ClothingNeckCloakAce
-        - ClothingNeckCloakAro
-        - ClothingNeckCloakBi
-        - ClothingNeckCloakIntersex
-        - ClothingNeckCloakLesbian
-        - ClothingNeckCloakGay
-        - ClothingNeckCloakEnby
-        - ClothingNeckCloakPan
         - ToySkeleton
         - Basketball
         - Football
@@ -36,15 +27,6 @@
         - PonderingOrb
         - Skub
         - DrinkMugDog
-        - ClothingNeckLGBTPin
-        - ClothingNeckAromanticPin
-        - ClothingNeckAsexualPin
-        - ClothingNeckBisexualPin
-        - ClothingNeckIntersexPin
-        - ClothingNeckLesbianPin
-        - ClothingNeckNonBinaryPin
-        - ClothingNeckPansexualPin
-        - ClothingNeckTransPin
         - CluwneHorn
         - ClothingMaskRat
         - MysteryFigureBox
@@ -65,8 +47,6 @@
         - ClothingUniformJumpsuitPirate
         - ClothingShoesBootsCowboyFancy
         - ClothingHeadHatCowboyBountyHunter
-        - ClothingNeckAutismPin
-        - ClothingNeckGoldAutismPin
         - WristwatchGold
       rareChance: 0.01
       prototypes:

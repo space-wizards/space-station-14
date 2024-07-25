@@ -10732,13 +10732,6 @@ entities:
     - type: Transform
       pos: 2.5389562,-6.3072195
       parent: 104
-- proto: FoodDonutJellySlugcat
-  entities:
-  - uid: 3327
-    components:
-    - type: Transform
-      pos: -5.7255287,20.539352
-      parent: 104
 - proto: GeneratorBasic15kW
   entities:
   - uid: 2326

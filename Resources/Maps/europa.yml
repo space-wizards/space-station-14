@@ -37660,13 +37660,6 @@ entities:
     - type: Transform
       pos: -0.45427883,33.806004
       parent: 1
-- proto: FoodDonutJellySlugcat
-  entities:
-  - uid: 2398
-    components:
-    - type: Transform
-      pos: -37.505764,1.7455108
-      parent: 1
   - uid: 4914
     components:
     - type: Transform
