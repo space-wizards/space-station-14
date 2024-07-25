@@ -27,7 +27,7 @@
 
 - type: loadout
   id: ChiefEngineerBeret
-  equipment: EngineeringBeret
+  startingGear: EngineeringBeret
 
 # Neck
 - type: loadout

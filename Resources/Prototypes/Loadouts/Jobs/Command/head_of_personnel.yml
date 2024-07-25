@@ -39,13 +39,9 @@
 # Back
 - type: loadout
   id: HoPBackpackIan
-  equipment: HoPBackpackIan
   effects:
   - !type:GroupLoadoutEffect
     proto: ProfessionalHoP
-
-- type: startingGear
-  id: HoPBackpackIan
   equipment:
     back: ClothingBackpackIan
 

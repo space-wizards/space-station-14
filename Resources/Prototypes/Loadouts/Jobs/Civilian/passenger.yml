@@ -11,13 +11,9 @@
 # Face
 - type: loadout
   id: PassengerFace
-  equipment: GasMask
   effects:
   - !type:GroupLoadoutEffect
     proto: GreyTider
-
-- type: startingGear
-  id: GasMask
   equipment:
     mask: ClothingMaskGas
 
@@ -36,26 +32,18 @@
 # Rainbow
 - type: loadout
   id: RainbowJumpsuit
-  equipment: RainbowJumpsuit
   effects:
   - !type:GroupLoadoutEffect
     proto: GreyTider
-
-- type: startingGear
-  id: RainbowJumpsuit
   equipment:
     jumpsuit: ClothingUniformColorRainbow
 
 # Ancient
 - type: loadout
   id: AncientJumpsuit
-  equipment: AncientJumpsuit
   effects:
   - !type:GroupLoadoutEffect
     proto: GreyTider
-
-- type: startingGear
-  id: AncientJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitAncient
 
@@ -78,13 +66,9 @@
 # Gloves
 - type: loadout
   id: PassengerGloves
-  equipment: FingerlessInsulatedGloves
   effects:
   - !type:GroupLoadoutEffect
     proto: GreyTider
-
-- type: startingGear
-  id: FingerlessInsulatedGloves
   equipment:
     gloves: ClothingHandsGlovesFingerlessInsulated
 

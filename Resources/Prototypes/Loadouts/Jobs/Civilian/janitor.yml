@@ -49,13 +49,9 @@
 # Misc
 - type: loadout
   id: JanitorGoldenPlunger
-  equipment: JanitorGoldenPlunger
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorJanitorial
-
-- type: startingGear
-  id: JanitorGoldenPlunger
   storage:
     back:
     - GoldenPlunger

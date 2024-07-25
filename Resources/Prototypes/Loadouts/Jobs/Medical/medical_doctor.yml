@@ -33,25 +33,17 @@
 
 - type: loadout
   id: SeniorPhysicianBeret
-  equipment: SeniorPhysicianBeret
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorPhysician
-
-- type: startingGear
-  id: SeniorPhysicianBeret
   equipment:
     head: ClothingHeadHatBeretSeniorPhysician
 
 - type: loadout
   id: MedicalHeadMirror
-  equipment: MedicalHeadMirror
   effects:
   - !type:GroupLoadoutEffect
     proto: MedicalHeadMirrorTimer
-
-- type: startingGear
-  id: MedicalHeadMirror
   equipment:
     head: ClothingHeadMirror
 
@@ -93,25 +85,17 @@
 
 - type: loadout
   id: SeniorPhysicianJumpsuit
-  equipment: SeniorPhysicianJumpsuit
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorPhysician
-
-- type: startingGear
-  id: SeniorPhysicianJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitSeniorPhysician
 
 - type: loadout
   id: SeniorPhysicianJumpskirt
-  equipment: SeniorPhysicianJumpskirt
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorPhysician
-
-- type: startingGear
-  id: SeniorPhysicianJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtSeniorPhysician
 
@@ -154,13 +138,9 @@
 
 - type: loadout
   id: SeniorPhysicianLabCoat
-  equipment: SeniorPhysicianLabCoat
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorPhysician
-
-- type: startingGear
-  id: SeniorPhysicianLabCoat
   equipment:
     outerClothing: ClothingOuterCoatLabSeniorPhysician
 
@@ -178,13 +158,9 @@
 
 - type: loadout
   id: SeniorPhysicianPDA
-  equipment: SeniorPhysicianPDA
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorPhysician
-
-- type: startingGear
-  id: SeniorPhysicianPDA
   equipment:
     id: SeniorPhysicianPDA
 
