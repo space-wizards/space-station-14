@@ -2,7 +2,7 @@ name: Mirror Merged PRs from upstream
 
 on:
   schedule:
-    - cron: '0 * * * *' # Runs every hour, adjust as needed
+    - cron: '0 * * * *'
 
 permissions:
   contents: write
@@ -55,9 +55,14 @@ jobs:
         PR_DETAILS=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
           https://api.github.com/repos/space-wizards/space-station-14/pulls/${PR_NUMBER})
         
-        echo "PR_TITLE=$(echo "$PR_DETAILS" | jq -r .title)" >> $GITHUB_ENV
-        echo "PR_BODY=$(echo "$PR_DETAILS" | jq -r .body)" >> $GITHUB_ENV
-        echo "PR_BRANCH=$(echo "$PR_DETAILS" | jq -r .head.ref)" >> $GITHUB_ENV
+        # Sanitize PR title and body to remove newlines
+        PR_TITLE=$(echo "$PR_DETAILS" | jq -r .title | tr '\n' ' ' | tr -d '\r')
+        PR_BODY=$(echo "$PR_DETAILS" | jq -r .body | tr '\n' ' ' | tr -d '\r')
+        PR_BRANCH=$(echo "$PR_DETAILS" | jq -r .head.ref)
+        
+        echo "PR_TITLE=$PR_TITLE" >> $GITHUB_ENV
+        echo "PR_BODY=$PR_BODY" >> $GITHUB_ENV
+        echo "PR_BRANCH=$PR_BRANCH" >> $GITHUB_ENV
 
     - name: Create a new PR in your fork
       if: env.NEW_PR_FOUND == 'true'
