@@ -8,6 +8,11 @@ using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Damage;
 using Content.Server.Damage.Components;
 using Content.Shared.Gravity;
+using Content.Shared.Effects;
+using Content.Shared.Inventory;
+using Content.Shared.Tag;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 
 namespace Content.Server.Damage.Systems;
 
@@ -19,6 +24,10 @@ public sealed class DamageOnDraggingCritSystem : EntitySystem
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
+    //[Dependency] private readonly SharedAudioSystem _audio = default!;
 
     private EntityQuery<PullableComponent> _pullableQuery;
     private EntityQuery<MobThresholdsComponent> _thresholdsQuery;
@@ -92,11 +101,20 @@ public sealed class DamageOnDraggingCritSystem : EntitySystem
         // Check that we are not weightless
         if(_gravity.IsWeightless(uid))
             return;
+        
+        // Check that we're not wearing a hardsuit
+        // We don't want to make salvage's job harder
+        if(_inventory.TryGetSlotEntity(uid, "outerClothing", out var suit) && _tag.HasTag(suit.Value, "Hardsuit"))
+            return;
 
         var adjustedThreshold = comp.DistanceThreshold * comp.Interval.TotalSeconds;
         //Log.Info($"Distance dragged: {comp.DistanceDragged} / {adjustedThreshold}");
 
         if(comp.DistanceDragged >= adjustedThreshold)
+        {
             _damageable.TryChangeDamage(uid, comp.Damage * (_gameTiming.CurTime - comp.LastInterval).TotalSeconds, origin: pullable.Puller);
+            _color.RaiseEffect(Color.Red, new List<EntityUid>() { uid }, Filter.Pvs(uid, entityManager: EntityManager));
+            //_audio.PlayPvs(comp.DragSound, uid);
+        }
     }
 }
