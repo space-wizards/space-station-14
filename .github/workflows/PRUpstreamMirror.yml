@@ -1,42 +1,61 @@
-name: Mirror PRs from upstream
+name: Mirror Merged PRs from upstream
 
 on:
-  pull_request:
-    types: [opened, synchronize]
+  push:
     branches:
-      - main  # Change this to the branch you want to track
+      - master  # Change to 'master' for tracking merges
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
-  sync_prs:
+  mirror_pr:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout upstream PR branch
+    - name: Checkout upstream repository
       uses: actions/checkout@v2
       with:
         repository: space-wizards/space-station-14
-        ref: ${{ github.event.pull_request.head.ref }}
-        token: ${{ secrets.GITHUB_TOKEN }}
+        ref: master
+        token: ${{ secrets.GH_PAT }}
         fetch-depth: 0
 
-    - name: Add your fork as a remote
-      run: git remote add fork https://github.com/TerraTheUnwisest/PlanetoidSS14.git
-
-    - name: Push PR branch to fork
+    - name: Check for merged PRs
+      id: check_merged_pr
       run: |
-        git checkout -b pr-${{ github.event.pull_request.number }}
-        git push fork pr-${{ github.event.pull_request.number }}
+        # Get the commit message
+        COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+        
+        # Check if commit message contains 'Merge pull request'
+        if echo "$COMMIT_MESSAGE" | grep -q "Merge pull request"; then
+          echo "Commit is a merged PR"
+          echo "MERGED_PR=true" >> $GITHUB_ENV
+        else
+          echo "Commit is not a merged PR"
+          echo "MERGED_PR=false" >> $GITHUB_ENV
+        fi
+
+    - name: Get PR details
+      if: env.MERGED_PR == 'true'
+      run: |
+        # Extract PR number from commit message
+        PR_NUMBER=$(echo "$COMMIT_MESSAGE" | grep -oP '(?<=#)\d+')
+        
+        # Get PR details using GitHub API
+        PR_DETAILS=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
+          https://api.github.com/repos/space-wizards/space-station-14/pulls/${PR_NUMBER})
+        
+        echo "PR_TITLE=$(echo "$PR_DETAILS" | jq -r .title)" >> $GITHUB_ENV
+        echo "PR_BODY=$(echo "$PR_DETAILS" | jq -r .body)" >> $GITHUB_ENV
+        echo "PR_BRANCH=$(echo "$PR_DETAILS" | jq -r .head.ref)" >> $GITHUB_ENV
 
     - name: Create a new PR in your fork
+      if: env.MERGED_PR == 'true'
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_PAT: ${{ secrets.GH_PAT }}
       run: |
-        PR_TITLE="[MIRROR] $(jq -r .pull_request.title < $GITHUB_EVENT_PATH)"
-        PR_BODY=$(jq -r .pull_request.body < $GITHUB_EVENT_PATH)
-        curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
-          -d "{\"title\":\"$PR_TITLE\",\"body\":\"$PR_BODY\",\"head\":\"pr-${{ github.event.pull_request.number }}\",\"base\":\"main\"}" \
+        curl -X POST -H "Authorization: token $GH_PAT" \
+          -d "{\"title\":\"[MIRROR] ${PR_TITLE}\",\"body\":\"${PR_BODY}\",\"head\":\"${PR_BRANCH}\",\"base\":\"master\"}" \
           https://api.github.com/repos/TerraTheUnwisest/PlanetoidSS14/pulls
