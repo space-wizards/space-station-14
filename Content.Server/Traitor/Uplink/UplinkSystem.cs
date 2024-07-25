@@ -49,6 +49,9 @@ namespace Content.Server.Traitor.Uplink
             return true;
         }
 
+        /// <summary>
+        /// Configure TC for the uplink
+        /// </summary>
         public void SetUplink(EntityUid user, EntityUid uplink, FixedPoint2? balance)
         {
             var store = EnsureComp<StoreComponent>(uplink);
@@ -61,6 +64,9 @@ namespace Content.Server.Traitor.Uplink
             }
         }
 
+        /// <summary>
+        /// Implant an uplink as a fallback measure if the traitor had no PDA
+        /// </summary>
         public bool ImplantUplink(EntityUid user, FixedPoint2? balance)
         {
             //TODO actually get this value from the catalog
