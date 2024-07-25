@@ -1222,7 +1222,7 @@ namespace Content.Client.Lobby.UI
             SetDirty();
         }
 
-        private bool IsDirty
+        public bool IsDirty
         {
             get => _isDirty;
             set

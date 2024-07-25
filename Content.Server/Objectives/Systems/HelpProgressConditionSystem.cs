@@ -59,7 +59,7 @@ public sealed class HelpProgressConditionSystem : EntitySystem
             if (!TryComp<MindComponent>(traitor, out var mind))
                 continue;
 
-            foreach (var objective in mind.AllObjectives)
+            foreach (var objective in mind.Objectives)
             {
                 if (HasComp<HelpProgressConditionComponent>(objective))
                     removeList.Add(traitor);
@@ -88,7 +88,7 @@ public sealed class HelpProgressConditionSystem : EntitySystem
 
         if (TryComp<MindComponent>(target, out var mind))
         {
-            foreach (var objective in mind.AllObjectives)
+            foreach (var objective in mind.Objectives)
             {
                 // this has the potential to loop forever, anything setting target has to check that there is no HelpProgressCondition.
                 var info = _objectives.GetInfo(objective, target, mind);
