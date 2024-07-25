@@ -4304,8 +4304,6 @@ entities:
       pos: -13.5,-38.5
       parent: 4812
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 12321
       - 5071
@@ -7010,8 +7008,6 @@ entities:
       pos: -10.5,-40.5
       parent: 4812
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 9593
   - uid: 12326
@@ -37321,8 +37317,6 @@ entities:
       pos: -11.5,-36.5
       parent: 4812
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 9593
   - uid: 5072
@@ -37331,8 +37325,6 @@ entities:
       pos: -10.5,-36.5
       parent: 4812
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 9593
   - uid: 5308
