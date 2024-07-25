@@ -129,7 +129,6 @@
     - state: nukefestive
       map: ["christmas"]
       visible: false
-      visible: false
   - type: Appearance
   - type: HolidayVisuals
     holidays:
