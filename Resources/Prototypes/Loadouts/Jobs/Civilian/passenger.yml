@@ -25,18 +25,10 @@
 # Grey
 - type: loadout
   id: GreyJumpsuit
-  equipment: GreyJumpsuit
-
-- type: startingGear
-  id: GreyJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorGrey
 
 - type: loadout
-  id: GreyJumpskirt
-  equipment: GreyJumpskirt
-
-- type: startingGear
   id: GreyJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorGrey
@@ -70,27 +62,15 @@
 # Back
 - type: loadout
   id: CommonBackpack
-  equipment: CommonBackpack
-
-- type: startingGear
-  id: CommonBackpack
   equipment:
     back: ClothingBackpack
 
 - type: loadout
   id: CommonSatchel
-  equipment: CommonSatchel
-
-- type: startingGear
-  id: CommonSatchel
   equipment:
     back: ClothingBackpackSatchel
 
 - type: loadout
-  id: CommonDuffel
-  equipment: CommonDuffel
-
-- type: startingGear
   id: CommonDuffel
   equipment:
     back: ClothingBackpackDuffel
@@ -111,28 +91,16 @@
 # Outerclothing
 - type: loadout
   id: PassengerWintercoat
-  equipment: PassengerWintercoat
-
-- type: startingGear
-  id: PassengerWintercoat
   equipment:
     outerClothing: ClothingOuterWinterCoat
 
 # Shoes
 - type: loadout
   id: BlackShoes
-  equipment: BlackShoes
-
-- type: startingGear
-  id: BlackShoes
   equipment:
     shoes: ClothingShoesColorBlack
 
 - type: loadout
-  id: WinterBoots
-  equipment: WinterBoots
-
-- type: startingGear
   id: WinterBoots
   equipment:
     shoes: ClothingShoesBootsWinter

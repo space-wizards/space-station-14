@@ -21,15 +21,11 @@
 # Glasses
 - type: loadout
   id: Glasses
-  equipment: Glasses
-
-- type: startingGear
-  id: Glasses
   equipment:
     eyes: ClothingEyesGlasses
 
 # Special options
-# Jamjar    
+# Jamjar
 - type: loadout
   id: GlassesJamjar
   equipment: GlassesJamjar
