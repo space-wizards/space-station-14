@@ -12,7 +12,7 @@ public sealed partial class HoldDocumentObjectiveComponent : Component
     ///     Can also just be set to false by default if the objective shouldn't be traded in the first place.
     /// </summary>
     [DataField]
-    public bool CanBeTraded = true;
+    public bool IsAvailable = true;
     [DataField(required: true)]
     public string Title;
     [DataField(required: true)]

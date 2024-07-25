@@ -13,6 +13,7 @@ using Content.Shared.Movement.Pulling.Components;
 using Content.Server.Chat.Managers;
 using Content.Shared.Chat;
 using Content.Shared.Objectives;
+using Content.Shared.Stacks;
 
 namespace Content.Server.Objectives.Systems;
 

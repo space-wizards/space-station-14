@@ -19,7 +19,7 @@ public sealed class GiveItemsForObjectiveSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<GiveItemsForObjectiveComponent, ObjectiveAfterAssignEvent>(OnAfterAssign, before: new[] { typeof(StealConditionSystem) });
+        SubscribeLocalEvent<GiveItemsForObjectiveComponent, ObjectiveAddedToMindEvent>(OnAddedToMind, before: new[] { typeof(StealConditionSystem) });
         SubscribeLocalEvent<GiveItemsForObjectiveComponent, ObjectiveAssignedEvent>(OnAssign);
 
     }
@@ -48,7 +48,7 @@ public sealed class GiveItemsForObjectiveSystem : EntitySystem
         Del(obj);
     }
 
-    private void OnAfterAssign(Entity<GiveItemsForObjectiveComponent> entity, ref ObjectiveAfterAssignEvent args)
+    private void OnAddedToMind(Entity<GiveItemsForObjectiveComponent> entity, ref ObjectiveAddedToMindEvent args)
     {
         // At this point we are always going to try to spawn the item. If the players backpack is full then the item
         // will just be dropped on the ground.

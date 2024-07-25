@@ -1,6 +1,7 @@
 using Content.Server.Objectives.Components;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
+using System.Linq;
 using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
 using System.Diagnostics;
@@ -19,56 +20,70 @@ public sealed class InterceptDocumentConditionSystem : EntitySystem
     [Dependency] private readonly StealConditionSystem _stealConditionSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly HoldDocumentConditionSystem _holdDocSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<InterceptDocumentObjectiveComponent, ObjectiveAssignedEvent>(OnTraitorAssigned, before: new[] { typeof(StealConditionSystem) });
-        SubscribeLocalEvent<InterceptDocumentObjectiveComponent, ObjectiveAfterAssignEvent>(OnAfterAssign, after: new[] { typeof(StealConditionSystem) });
+        SubscribeLocalEvent<InterceptDocumentObjectiveComponent, ObjectiveAddedToMindEvent>(OnAddedToMind, after: new[] { typeof(GiveItemsForObjectiveSystem) });
 
     }
 
     private void OnTraitorAssigned(EntityUid uid, InterceptDocumentObjectiveComponent comp, ref ObjectiveAssignedEvent args)
     {
-        if (!TryComp<TargetObjectiveComponent>(uid, out var target) || !TryComp<StealConditionComponent>(uid, out var stealComp))
+        if (args.Cancelled == true)
+            return;
+
+        if (!TryComp<TargetObjectiveComponent>(uid, out var selfTargetComp) || !TryComp<StealConditionComponent>(uid, out var selfStealCondComp))
         {
             args.Cancelled = true;
             Debug.Fail($"Missing components for {uid}.");
             return;
         }
 
-        var validTratorObjectives = _serverObjectivesSystem.GetAllOtherTratorsWithObjective(args.Mind, "DocHoldObjective");
-
-        // No valid traitors!
-        if (validTratorObjectives.Count < 1)
+        if (!_holdDocSystem.GetAllOtherValidDocHoldObjectives(args.Mind, out var validDocHoldTratorObjectives))
         {
             args.Cancelled = true;
             return;
         }
 
-        var selectedTratorAndObjective = _random.Pick(validTratorObjectives);
-        var chosenTrator = selectedTratorAndObjective.Item1;
-        var chosenObjective = selectedTratorAndObjective.Item2;
+        var selectedTratorAndObjective = _random.Pick(validDocHoldTratorObjectives);
+        var otherTrator = selectedTratorAndObjective.Item1;
+        var otherDocHoldObjective = selectedTratorAndObjective.Item2;
 
-        if (!TryComp<StealConditionComponent>(chosenObjective, out var targetStealComp))
+        if (!TryComp<StealConditionComponent>(otherDocHoldObjective, out var otherStealCondComp))
         {
             args.Cancelled = true;
-            Debug.Fail($"Missing StealConditionComponent for {chosenObjective}.");
+            Debug.Fail($"Missing StealConditionComponent for {otherDocHoldObjective}.");
             return;
         }
 
-        _stealConditionSystem.UpdateStealCondition((uid, stealComp), targetStealComp.StealGroup);
-
-        _target.SetTarget(uid, chosenTrator, target);
+        // At this point, both traitors steal objectives will be for the same thing.
+        // We also wont be changing anything about the other trators objective at this moment. This is done later on.
+        _stealConditionSystem.UpdateStealCondition((uid, selfStealCondComp), otherStealCondComp.StealGroup);
+        _target.SetTarget(uid, otherTrator, selfTargetComp);
     }
 
-    private void OnAfterAssign(Entity<InterceptDocumentObjectiveComponent> entity, ref ObjectiveAfterAssignEvent args)
+    private void OnAddedToMind(Entity<InterceptDocumentObjectiveComponent> entity, ref ObjectiveAddedToMindEvent args)
     {
         if (!TryComp<StealConditionComponent>(entity, out var stealConditionComp))
             throw new Exception($"Missing StealConditionComponent for {entity}.");
 
         if (!TryComp<TargetObjectiveComponent>(entity, out var targetObjComp))
             throw new Exception($"Missing TargetObjectiveComponent for {entity}.");
+
+        _serverObjectivesSystem.GetObjectives(targetObjComp.Target, "DocHoldObjective", out var objectives);
+
+        if (objectives.Count > 1)
+            throw new Exception($"Too many DocHoldObjective for {targetObjComp.Target}.");
+
+        var docHoldObjective = objectives.Single();
+
+        if (!TryComp<HoldDocumentObjectiveComponent>(docHoldObjective, out var otherHoldDocObjectiveComp))
+            throw new Exception($"Missing HoldDocumentObjectiveComponent for {docHoldObjective}.");
+
+        otherHoldDocObjectiveComp.IsAvailable = false;
 
         var targetNameAndJob = _serverObjectivesSystem.TryGetJobAndName(targetObjComp.Target);
         var targetName = targetNameAndJob.Item1;
@@ -79,8 +94,8 @@ public sealed class InterceptDocumentConditionSystem : EntitySystem
         var title = Loc.GetString(entity.Comp.Title, ("docname", group.Name));
         var description = Loc.GetString(entity.Comp.Description, ("target", targetName), ("taretjob", targetJob), ("docname", group.Name));
 
-        _metaDataSystem.SetEntityName(entity, title, args.Meta);
-        _metaDataSystem.SetEntityDescription(entity, description, args.Meta);
-        _objectives.SetIcon(entity, group.Sprite, args.Objective);
+        _metaDataSystem.SetEntityName(entity, title);
+        _metaDataSystem.SetEntityDescription(entity, description);
+        _objectives.SetIcon(entity, group.Sprite);
     }
 }

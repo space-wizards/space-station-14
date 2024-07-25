@@ -22,19 +22,23 @@ public sealed class TradeDocumentsConditionSystem : EntitySystem
     [Dependency] private readonly StealConditionSystem _stealConditionSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly HoldDocumentConditionSystem _holdDocSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<TradeDocumentsConditionComponent, ObjectiveAssignedEvent>(OnTraitorAssigned);
+        SubscribeLocalEvent<TradeDocumentsConditionComponent, ObjectiveAssignedEvent>(OnTraitorAssigned, after: new[] { typeof(MultipleTraitorsRequirementSystem) });
         SubscribeLocalEvent<TradeDocumentsConditionComponent, ObjectiveItemGivenEvent>(OnObjectiveItemGivenEvent);
         SubscribeLocalEvent<TradeDocumentsConditionComponent, BeforeObjectiveItemGivenEvent>(OnBeforeObjectiveItemGivenEvent);
-        SubscribeLocalEvent<TradeDocumentsConditionComponent, ObjectiveAfterAssignEvent>(OnAfterAssign, after: new[] { typeof(StealConditionSystem) });
+        SubscribeLocalEvent<TradeDocumentsConditionComponent, ObjectiveAddedToMindEvent>(OnAddedToMind, after: new[] { typeof(GiveItemsForObjectiveSystem) });
 
     }
 
     private void OnTraitorAssigned(EntityUid uid, TradeDocumentsConditionComponent comp, ref ObjectiveAssignedEvent args)
     {
+        if (args.Cancelled == true)
+            return;
+
         if (!TryComp<TargetObjectiveComponent>(uid, out var selfTargetComp) || !TryComp<StealConditionComponent>(uid, out var selfStealCondComp))
         {
             args.Cancelled = true;
@@ -42,14 +46,7 @@ public sealed class TradeDocumentsConditionSystem : EntitySystem
             return;
         }
 
-        var docHoldTratorObjectives = _serverObjectivesSystem.GetAllOtherTratorsWithObjective(args.Mind, "DocHoldObjective");
-        var validDocHoldTratorObjectives = new List<(EntityUid, EntityUid)>();
-        foreach (var tratorAndObjective in docHoldTratorObjectives)
-            if (TryComp<HoldDocumentObjectiveComponent>(tratorAndObjective.Item2, out var holdDocObjComp) && holdDocObjComp.CanBeTraded)
-                validDocHoldTratorObjectives.Add(tratorAndObjective);
-
-        // No valid traitors!
-        if (validDocHoldTratorObjectives.Count < 1)
+        if (!_holdDocSystem.GetAllOtherValidDocHoldObjectives(args.Mind, out var validDocHoldTratorObjectives))
         {
             args.Cancelled = true;
             return;
@@ -62,15 +59,14 @@ public sealed class TradeDocumentsConditionSystem : EntitySystem
         if (!TryComp<StealConditionComponent>(otherDocHoldObjective, out var otherStealCondComp))
         {
             args.Cancelled = true;
-            Debug.Fail($"Missing components for {otherDocHoldObjective}.");
+            Debug.Fail($"Missing StealConditionComponent for {otherDocHoldObjective}.");
             return;
         }
 
         // At this point, both traitors steal objectives will be for the same thing.
-        // We also wont be chaning anything about the other trators objective at this moment. This is done later on.
+        // We also wont be changing anything about the other trators objective at this moment. This is done later on.
         _stealConditionSystem.UpdateStealCondition((uid, selfStealCondComp), otherStealCondComp.StealGroup);
         _target.SetTarget(uid, otherTrator, selfTargetComp);
-
     }
 
     private void OnBeforeObjectiveItemGivenEvent(Entity<TradeDocumentsConditionComponent> entity, ref BeforeObjectiveItemGivenEvent args)
@@ -99,26 +95,27 @@ public sealed class TradeDocumentsConditionSystem : EntitySystem
 
         var otherMindId = targetComp.Target;
 
-        if (otherMindId == null)
-            throw new Exception($"Mind ID is null.");
         if (!TryComp<MindComponent>(otherMindId, out var otherMindComp))
             throw new Exception($"Missing MindComponent for {otherMindId}.");
 
-        foreach (var objective in otherMindComp.Objectives)
-        {
-            if (!TryComp<HoldDocumentObjectiveComponent>(objective, out var otherHoldDocObjectiveComp))
-                continue;
+        _serverObjectivesSystem.GetObjectives(otherMindId, "DocHoldObjective", out var objectives, otherMindComp);
 
-            if (!TryComp<StealConditionComponent>(objective, out var otherStealCondComp))
-                continue;
+        if (objectives.Count > 1)
+            throw new Exception($"Too many DocHoldObjective for {otherMindId}.");
 
-            otherHoldDocObjectiveComp.CanBeTraded = false;
-            _stealConditionSystem.UpdateStealConditionNotify((objective, otherStealCondComp), stealTargetComp.StealGroup, otherMindId.Value);
-        }
+        var docHoldObjective = objectives.Single();
 
+        if (!TryComp<StealConditionComponent>(docHoldObjective, out var otherStealCondComp))
+            throw new Exception($"Missing StealConditionComponent for {docHoldObjective}.");
+
+        if (!TryComp<HoldDocumentObjectiveComponent>(docHoldObjective, out var otherHoldDocObjectiveComp))
+            throw new Exception($"Missing HoldDocumentObjectiveComponent for {docHoldObjective}.");
+
+        otherHoldDocObjectiveComp.IsAvailable = false;
+        _stealConditionSystem.UpdateStealConditionNotify((docHoldObjective, otherStealCondComp), stealTargetComp.StealGroup, otherMindId.Value);
     }
 
-    private void OnAfterAssign(Entity<TradeDocumentsConditionComponent> entity, ref ObjectiveAfterAssignEvent args)
+    private void OnAddedToMind(Entity<TradeDocumentsConditionComponent> entity, ref ObjectiveAddedToMindEvent args)
     {
         if (!TryComp<StealConditionComponent>(entity, out var stealConditionComp))
             throw new Exception($"Missing StealConditionComponent for {entity}.");
@@ -144,10 +141,11 @@ public sealed class TradeDocumentsConditionSystem : EntitySystem
         var selftitle = Loc.GetString(entity.Comp.Title, ("docnameself", otherStealGroup.Name), ("docnameother", selfStealGroup.Name));
         var selfdescription = Loc.GetString(entity.Comp.Description, ("otherjobname", otherJob), ("docnameother", selfStealGroup.Name));
 
-        _metaDataSystem.SetEntityName(entity, selftitle, args.Meta);
-        _metaDataSystem.SetEntityDescription(entity, selfdescription, args.Meta);
-        _objectives.SetIcon(entity, otherStealGroup.Sprite, args.Objective);
+        _metaDataSystem.SetEntityName(entity, selftitle);
+        _metaDataSystem.SetEntityDescription(entity, selfdescription);
+        _objectives.SetIcon(entity, otherStealGroup.Sprite);
 
+        // Move this
         // This is changing the other agents objective.
         var selfJob = _serverObjectivesSystem.TryGetJobAndName(args.MindId, args.Mind).Item2;
         var title = Loc.GetString(entity.Comp.Title, ("docnameself", selfStealGroup.Name), ("docnameother", otherStealGroup.Name));

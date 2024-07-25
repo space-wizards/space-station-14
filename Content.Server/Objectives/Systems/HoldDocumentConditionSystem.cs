@@ -3,11 +3,13 @@ using Content.Server.Objectives.Components.Targets;
 using Robust.Shared.Prototypes;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
+using Content.Shared.Mind;
 
 namespace Content.Server.Objectives.Systems;
 
 public sealed class HoldDocumentConditionSystem : EntitySystem
 {
+    [Dependency] private readonly ObjectivesSystem _serverObjectivesSystem = default!;
     [Dependency] private readonly StealConditionSystem _stealConditionSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -17,7 +19,7 @@ public sealed class HoldDocumentConditionSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<HoldDocumentObjectiveComponent, ObjectiveItemGivenEvent>(OnObjectiveItemGivenEvent);
-        SubscribeLocalEvent<HoldDocumentObjectiveComponent, ObjectiveAfterAssignEvent>(OnAfterAssign, after: new[] { typeof(StealConditionSystem) });
+        SubscribeLocalEvent<HoldDocumentObjectiveComponent, ObjectiveAddedToMindEvent>(OnObjectiveAddedToMind, after: new[] { typeof(StealConditionSystem) });
     }
 
     private void OnObjectiveItemGivenEvent(Entity<HoldDocumentObjectiveComponent> entity, ref ObjectiveItemGivenEvent args)
@@ -30,7 +32,7 @@ public sealed class HoldDocumentConditionSystem : EntitySystem
         _stealConditionSystem.UpdateStealCondition((entity, stealComp), stealTargetComp.StealGroup);
     }
 
-    private void OnAfterAssign(Entity<HoldDocumentObjectiveComponent> entity, ref ObjectiveAfterAssignEvent args)
+    private void OnObjectiveAddedToMind(Entity<HoldDocumentObjectiveComponent> entity, ref ObjectiveAddedToMindEvent args)
     {
         if (!TryComp<StealConditionComponent>(entity, out var stealConditionComp))
             throw new Exception($"Missing StealConditionComponent for {entity}.");
@@ -40,8 +42,24 @@ public sealed class HoldDocumentConditionSystem : EntitySystem
         var title = Loc.GetString(entity.Comp.Title, ("docname", group.Name));
         var description = Loc.GetString(entity.Comp.Description, ("docname", group.Name));
 
-        _metaDataSystem.SetEntityName(entity, title, args.Meta);
-        _metaDataSystem.SetEntityDescription(entity, description, args.Meta);
-        _objectives.SetIcon(entity, group.Sprite, args.Objective);
+        _metaDataSystem.SetEntityName(entity, title);
+        _metaDataSystem.SetEntityDescription(entity, description);
+        _objectives.SetIcon(entity, group.Sprite);
+    }
+
+
+    public bool GetAllOtherValidDocHoldObjectives(MindComponent mindComp, out List<(EntityUid, EntityUid)> validDocHoldTratorObjectives)
+    {
+        var docHoldTratorObjectives = _serverObjectivesSystem.GetAllOtherTratorsWithObjective(mindComp, "DocHoldObjective");
+        validDocHoldTratorObjectives = new List<(EntityUid, EntityUid)>();
+        foreach (var tratorAndObjective in docHoldTratorObjectives)
+            if (TryComp<HoldDocumentObjectiveComponent>(tratorAndObjective.Item2, out var holdDocObjComp) && holdDocObjComp.IsAvailable)
+                validDocHoldTratorObjectives.Add(tratorAndObjective);
+
+        // No valid traitors!
+        if (validDocHoldTratorObjectives.Count < 1)
+            return false;
+
+        return true;
     }
 }
