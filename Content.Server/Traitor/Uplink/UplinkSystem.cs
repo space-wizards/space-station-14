@@ -8,6 +8,7 @@ using Content.Shared.Store.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Traitor.Uplink
 {
@@ -16,11 +17,14 @@ namespace Content.Server.Traitor.Uplink
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly StoreSystem _store = default!;
         [Dependency] private readonly SubdermalImplantSystem _subdermalImplant = default!;
 
         [ValidatePrototypeId<CurrencyPrototype>]
         public const string TelecrystalCurrencyPrototype = "Telecrystal";
+        public const string FallbackUplinkImplant = "UplinkImplant";
+        public const string FallbackUplinkCatalog = "UplinkUplinkImplanter";
 
         /// <summary>
         /// Adds an uplink to the target
@@ -69,19 +73,19 @@ namespace Content.Server.Traitor.Uplink
         /// </summary>
         public bool ImplantUplink(EntityUid user, FixedPoint2? balance)
         {
-            //TODO actually get this value from the catalog
-            var implantCost = 2;
+            var implants = new List<string>(){FallbackUplinkImplant};
 
-            //TODO Prototype this
-            var implants = new List<string>();
-            implants.Add("UplinkImplant");
+            if (!_proto.TryIndex<ListingPrototype>(FallbackUplinkCatalog, out var catalog))
+                return false;
+
+            if (!catalog.Cost.TryGetValue(TelecrystalCurrencyPrototype, out var cost))
+                return false;
+
+            var implantCost = cost.Int();
 
             _subdermalImplant.AddImplants(user, implants);
 
-            if (_container.TryGetContainer(user, ImplanterComponent.ImplantSlotId, out var implantContainer))
-                return false;
-
-            if (implantContainer is null)
+            if (!_container.TryGetContainer(user, ImplanterComponent.ImplantSlotId, out var implantContainer))
                 return false;
 
             foreach (var implant in implantContainer.ContainedEntities)
