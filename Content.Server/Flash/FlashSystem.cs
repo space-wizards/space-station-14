@@ -116,6 +116,11 @@ namespace Content.Server.Flash
             bool melee = false,
             TimeSpan? stunDuration = null)
         {
+            if (TryComp<FlashModifierComponent>(target, out var CompUser))
+            {
+                flashDuration *= CompUser.Modifier;
+            }
+
             var attempt = new FlashAttemptEvent(target, user, used);
             RaiseLocalEvent(target, attempt, true);
 
