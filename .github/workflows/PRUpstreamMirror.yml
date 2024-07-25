@@ -19,8 +19,7 @@ jobs:
     - name: Fetch PRs from upstream
       run: |
         git remote add upstream https://github.com/space-wizards/space-station-14.git
-        git fetch upstream master
-        git pull --rebase upstream master
+        git fetch upstream
 
     - name: List merged PRs
       id: list_prs
@@ -44,19 +43,23 @@ jobs:
           pr_base=$(echo $pr | jq -r '.base.ref')
           pr_head=$(echo $pr | jq -r '.head.ref')
 
-          # Debugging logs
-          echo "PR Number: $pr_number"
-          echo "PR Title: $pr_title"
-          echo "PR Body: $pr_body"
-          echo "PR Base: $pr_base"
-          echo "PR Head: $pr_head"
+          # Create a new branch based on the upstream PR
+          git checkout -b mirror-pr-$pr_number upstream/$pr_head
+
+          # Push the new branch to the downstream repository
+          git push origin mirror-pr-$pr_number
 
           # Create a new PR in the downstream repository
           curl -X POST -H "Authorization: token ${{ secrets.GH_PAT }}" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/TerraTheUnwisest/PlanetoidSS14/pulls \
-            -d "$(jq -n --arg title "MIRROR: $pr_title" --arg body "$pr_body" --arg base "$pr_base" --arg head "$pr_head" \
+            -d "$(jq -n --arg title "MIRROR: $pr_title" --arg body "$pr_body" --arg base "master" --arg head "mirror-pr-$pr_number" \
               '{title: $title, body: $body, base: $base, head: $head}')"
+
+          # Clean up the branch locally
+          git checkout master
+          git branch -D mirror-pr-$pr_number
+
         done < merged_prs.txt
 
     - name: Clean up
