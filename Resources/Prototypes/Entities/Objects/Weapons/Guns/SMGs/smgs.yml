@@ -191,7 +191,6 @@
 - type: entity
   name: Vector
   parent: BaseWeaponSubMachineGun
-  suffix: ERT Only
   id: WeaponSubMachineGunVector
   description: An excellent fully automatic Heavy SMG. Uses .45 magnum ammo.
   components:
@@ -206,7 +205,7 @@
     sprite: Objects/Weapons/Guns/SMGs/vector.rsi
   - type: Gun
     projectileSpeed: 35 # VXS
-    fireRate: 6
+    fireRate: 7 # VXS
     selectedMode: FullAuto
     soundGunshot:
       path: /Audio/VXS/Gunshots/SMG/smg3.ogg # VXS
@@ -228,11 +227,11 @@
             - MagazineMagnumSubMachineGun
       gun_chamber:
         name: Chamber
-        startingItem: CartridgeMagnum
+        startingItem: CartridgePistol # VXS
         priority: 1
         whitelist:
           tags:
-            - CartridgeMagnum
+            - CartridgePistol # VXS
         whitelistFailPopup: gun-magazine-whitelist-fail
   - type: MagazineVisuals
     magState: mag
