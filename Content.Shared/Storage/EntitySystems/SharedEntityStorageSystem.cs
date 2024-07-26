@@ -11,6 +11,7 @@ using Content.Shared.Lock;
 using Content.Shared.Movement.Events;
 using Content.Shared.Placeable;
 using Content.Shared.Popups;
+using Content.Shared.Standing;
 using Content.Shared.Storage.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
@@ -132,6 +133,10 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (!HasComp<HandsComponent>(args.Entity))
             return;
 
+        if (TryComp<StandingStateComponent>(args.Entity, out var standing) &&
+            standing.Standing)
+            return;
+
         if (_timing.CurTime < component.NextInternalOpenAttempt)
             return;
 
@@ -139,9 +144,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         Dirty(uid, component);
 
         if (component.OpenOnMove)
-        {
             TryOpenStorage(args.Entity, uid);
-        }
     }
 
     protected void OnFoldAttempt(EntityUid uid, SharedEntityStorageComponent component, ref FoldAttemptEvent args)

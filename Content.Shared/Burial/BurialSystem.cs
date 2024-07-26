@@ -7,6 +7,7 @@ using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Standing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
@@ -160,6 +161,10 @@ public sealed class BurialSystem : EntitySystem
         // We track a separate doAfter here, as we want someone with a shovel to
         // be able to come along and help someone trying to claw their way out
         if (component.HandDiggingDoAfter != null)
+            return;
+
+        if (TryComp<StandingStateComponent>(args.Entity, out var standing) &&
+            !standing.Standing)
             return;
 
         var doAfterEventArgs = new DoAfterArgs(EntityManager, args.Entity, component.DigDelay / component.DigOutByHandModifier, new GraveDiggingDoAfterEvent(), uid, target: uid)
