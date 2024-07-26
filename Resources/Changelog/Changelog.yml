@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson, CoffeePoweredPHD
-  changes:
-  - message: Fixed infinite reagent duplication glitch with toilets and drains.
-    type: Fix
-  - message: Dirty water toilets now function correctly as toilets.
-    type: Fix
-  id: 6484
-  time: '2024-04-29T03:08:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27446
 - author: Nopey
   changes:
   - message: Many more items can now be recycled, including mops, medkits, and stun
@@ -3786,3 +3777,11 @@
   id: 6983
   time: '2024-07-26T05:26:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30305
+- author: Moomoobeef
+  changes:
+  - message: Some radio channel colors have been tweaked in order to be more easily
+      distinguishable.
+    type: Tweak
+  id: 6984
+  time: '2024-07-26T06:47:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30133
