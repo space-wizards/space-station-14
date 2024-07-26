@@ -18,7 +18,7 @@
     nameSegments: [names_borg]
 
 - type: entity
-  id: PlayerBorgBattery
+  id: PlayerBorgGenericBattery
   parent: BorgChassisGeneric
   suffix: Battery
   components:
@@ -31,6 +31,287 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellMedium
+
+- type: entity
+  id: DummyBorgGeneric
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/chassis.rsi
+    drawdepth: Mobs
+    noRot: true
+    layers:
+    - state: robot
+    - state: robot_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: robot_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+
+- type: entity
+  id: PlayerBorgMining
+  parent: BorgChassisMining
+  suffix: Battery, Tools
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleTool
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: RandomMetadata
+    nameSegments: [names_borg]
+
+- type: entity
+  id: PlayerBorgMiningBattery
+  parent: BorgChassisMining
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - MMIFilled
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+
+- type: entity
+  id: DummyBorgMining
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/chassis.rsi
+    drawdepth: Mobs
+    noRot: true
+    layers:
+    - state: miner
+      map: ["movement"]
+    - state: miner_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: miner_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+
+- type: entity
+  id: PlayerBorgEngineer
+  parent: BorgChassisEngineer
+  suffix: Battery, Tools
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleTool
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: RandomMetadata
+    nameSegments: [names_borg]
+
+- type: entity
+  id: PlayerBorgEngineerBattery
+  parent: BorgChassisEngineer
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - MMIFilled
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+
+- type: entity
+  id: DummyBorgEngineer
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/chassis.rsi
+    drawdepth: Mobs
+    noRot: true
+    layers:
+    - state: engineer
+    - state: engineer_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: engineer_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+
+- type: entity
+  id: PlayerBorgJanitor
+  parent: BorgChassisJanitor
+  suffix: Battery, Tools
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleTool
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: RandomMetadata
+    nameSegments: [names_borg]
+
+- type: entity
+  id: PlayerBorgJanitorBattery
+  parent: BorgChassisJanitor
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - MMIFilled
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+
+- type: entity
+  id: DummyBorgJanitor
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/chassis.rsi
+    drawdepth: Mobs
+    noRot: true
+    layers:
+    - state: janitor
+      map: ["movement"]
+    - state: janitor_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: janitor_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+
+- type: entity
+  id: PlayerBorgMedical
+  parent: BorgChassisMedical
+  suffix: Battery, Tools
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleTool
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: RandomMetadata
+    nameSegments: [names_borg]
+
+- type: entity
+  id: PlayerBorgMedicalBattery
+  parent: BorgChassisMedical
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - MMIFilled
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+
+- type: entity
+  id: DummyBorgMedical
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/chassis.rsi
+    drawdepth: Mobs
+    noRot: true
+    layers:
+    - state: medical
+      map: ["movement"]
+    - state: medical_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: medical_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+
+- type: entity
+  id: PlayerBorgService
+  parent: BorgChassisService
+  suffix: Battery, Tools
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleTool
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: RandomMetadata
+    nameSegments: [names_borg]
+
+- type: entity
+  id: PlayerBorgServiceBattery
+  parent: BorgChassisService
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - MMIFilled
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+
+- type: entity
+  id: DummyBorgService
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/chassis.rsi
+    drawdepth: Mobs
+    noRot: true
+    layers:
+    - state: service
+    - state: service_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: service_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
 
 - type: entity
   id: PlayerBorgSyndicateAssaultBattery

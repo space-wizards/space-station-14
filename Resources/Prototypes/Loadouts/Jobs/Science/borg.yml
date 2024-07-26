@@ -1,0 +1,53 @@
+- type: loadout
+  id: BorgGeneric
+  equipment: BorgGeneric
+
+- type: startingGear
+  id: BorgGeneric
+  entity: PlayerBorgGeneric
+  entityDummy: DummyBorgGeneric
+
+- type: loadout
+  id: BorgMining
+  equipment: BorgMining
+
+- type: startingGear
+  id: BorgMining
+  entity: PlayerBorgMining
+  entityDummy: DummyBorgMining
+
+- type: loadout
+  id: BorgEngineer
+  equipment: BorgEngineer
+
+- type: startingGear
+  id: BorgEngineer
+  entity: PlayerBorgEngineer
+  entityDummy: DummyBorgEngineer
+
+- type: loadout
+  id: BorgJanitor
+  equipment: BorgJanitor
+
+- type: startingGear
+  id: BorgJanitor
+  entity: PlayerBorgJanitor
+  entityDummy: DummyBorgJanitor
+
+- type: loadout
+  id: BorgMedical
+  equipment: BorgMedical
+
+- type: startingGear
+  id: BorgMedical
+  entity: PlayerBorgMedical
+  entityDummy: DummyBorgMedical
+
+- type: loadout
+  id: BorgService
+  equipment: BorgService
+
+- type: startingGear
+  id: BorgService
+  entity: PlayerBorgService
+  entityDummy: DummyBorgService

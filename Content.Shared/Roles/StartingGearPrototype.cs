@@ -27,6 +27,21 @@ public sealed partial class StartingGearPrototype : IPrototype, IInheritingProto
     public Dictionary<string, EntProtoId> Equipment = new();
 
     /// <summary>
+    /// Overides the players entity
+    /// </summary>
+    [DataField]
+    [AlwaysPushInheritance]
+    public string? Entity { get; set; }
+
+    /// <summary>
+    /// Meant to be used in conjunction with Entity
+    /// Entity to show as the players dummy in the lobby
+    /// </summary>
+    [DataField]
+    [AlwaysPushInheritance]
+    public string? EntityDummy { get; set; }
+
+    /// <summary>
     /// The inhand items that are equipped when this starting gear is equipped onto an entity.
     /// </summary>
     [DataField]

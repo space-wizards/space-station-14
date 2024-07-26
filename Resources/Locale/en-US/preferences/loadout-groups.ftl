@@ -195,3 +195,5 @@ loadout-group-reporter-jumpsuit = Reporter jumpsuit
 
 loadout-group-boxer-jumpsuit = Boxer jumpsuit
 loadout-group-boxer-gloves = Boxer gloves
+
+loadout-group-borg-chassis = Cyborg chassis
