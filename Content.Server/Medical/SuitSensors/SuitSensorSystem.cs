@@ -218,6 +218,7 @@ public sealed class SuitSensorSystem : EntitySystem
         if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
             return;
 
+        // check if target is incapacitated (cuffed, dead, etc)
         if (component.User != null && args.User != component.User && _actionBlocker.CanInteract(component.User.Value, null))
             return;
 
@@ -252,7 +253,7 @@ public sealed class SuitSensorSystem : EntitySystem
         args.Disabled = true;
 
         component.PreviousMode = component.Mode;
-        SetSensor(uid, SuitSensorMode.SensorOff, null, component);
+        SetSensor((uid, component), SuitSensorMode.SensorOff, null);
 
         component.PreviousControlsLocked = component.ControlsLocked;
         component.ControlsLocked = true;
@@ -260,7 +261,7 @@ public sealed class SuitSensorSystem : EntitySystem
 
     private void OnEmpFinished(EntityUid uid, SuitSensorComponent component, ref EmpDisabledRemoved args)
     {
-        SetSensor(uid, component.PreviousMode, null, component);
+        SetSensor((uid, component), component.PreviousMode, null);
         component.ControlsLocked = component.PreviousControlsLocked;
     }
 
@@ -272,7 +273,7 @@ public sealed class SuitSensorSystem : EntitySystem
             Disabled = component.Mode == mode,
             Priority = -(int) mode, // sort them in descending order
             Category = VerbCategory.SetSensor,
-            Act = () => TrySetSensor(uid, mode, userUid, component)
+            Act = () => TrySetSensor((uid, component), mode, userUid)
         };
     }
 
@@ -300,18 +301,19 @@ public sealed class SuitSensorSystem : EntitySystem
         return Loc.GetString(name);
     }
 
-    public void TrySetSensor(EntityUid uid, SuitSensorMode mode, EntityUid userUid,
-        SuitSensorComponent? component = null)
+    public void TrySetSensor(Entity<SuitSensorComponent?> sensors, SuitSensorMode mode, EntityUid userUid)
     {
-        if (!Resolve(uid, ref component))
+        var comp = sensors.Comp;
+
+        if (!Resolve(sensors, ref comp))
             return;
 
-        if (component.User == null || userUid == component.User)
-            SetSensor(uid, mode, userUid, component);
+        if (comp.User == null || userUid == comp.User)
+            SetSensor(sensors, mode, userUid);
         else
         {
             var doAfterEvent = new SuitSensorChangeDoAfterEvent(mode);
-            var doAfterArgs = new DoAfterArgs(EntityManager, userUid, component.SensorsTime, doAfterEvent, uid)
+            var doAfterArgs = new DoAfterArgs(EntityManager, userUid, comp.SensorsTime, doAfterEvent, sensors)
             {
                 BreakOnMove = true,
                 BreakOnDamage = true
@@ -326,21 +328,22 @@ public sealed class SuitSensorSystem : EntitySystem
         if (args.Handled || args.Cancelled)
             return;
 
-        SetSensor(uid, args.Mode, args.User, component);
+        SetSensor((uid, component), args.Mode, args.User);
     }
 
-    public void SetSensor(EntityUid uid, SuitSensorMode mode, EntityUid? userUid = null,
-        SuitSensorComponent? component = null)
+    public void SetSensor(Entity<SuitSensorComponent?> sensors, SuitSensorMode mode, EntityUid? userUid = null)
     {
-        if (!Resolve(uid, ref component))
+        var comp = sensors.Comp;
+
+        if (!Resolve(sensors, ref comp))
             return;
 
-        component.Mode = mode;
+        comp.Mode = mode;
 
         if (userUid != null)
         {
             var msg = Loc.GetString("suit-sensor-mode-state", ("mode", GetModeName(mode)));
-            _popupSystem.PopupEntity(msg, uid, userUid.Value);
+            _popupSystem.PopupEntity(msg, sensors, userUid.Value);
         }
     }
 
