@@ -2,15 +2,10 @@
   abstract: true
   parent: BaseItem
   id: BaseLogicItem
-  placement:
-    mode: SnapgridCenter
   components:
   - type: Sprite
     sprite: Objects/Devices/gates.rsi
   - type: Anchorable
-  - type: Transform
-    anchored: true
-  - type: SubFloorHide
   - type: Rotatable
   - type: DeviceNetwork
     deviceNetId: Wireless
