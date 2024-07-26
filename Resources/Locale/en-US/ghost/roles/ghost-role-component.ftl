@@ -206,6 +206,9 @@ ghost-role-information-syndicate-reinforcement-spy-description = Someone needs r
 ghost-role-information-syndicate-reinforcement-thief-name = Syndicate Thief
 ghost-role-information-syndicate-reinforcement-thief-description = Someone needs reinforcements. Your job is to break in and retrieve something valuable for your agent.
 
+ghost-role-information-nukeop-reinforcement-name = Nuclear Operative
+ghost-role-information-nukeop-reinforcement-description = The nuclear operatives need reinforcements. You, a reserve agent, will help them.
+ghost-role-information-nukeop-reinforcement-rules = You are a [color=red][bold]Team Antagonist[/bold][/color] with the nuclear operatives who summoned you.
 
 ghost-role-information-syndicate-monkey-reinforcement-name = Syndicate Monkey Agent
 ghost-role-information-syndicate-monkey-reinforcement-description = Someone needs reinforcements. You, a trained monkey, will help them.
