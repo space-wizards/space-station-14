@@ -2,7 +2,7 @@ using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
-using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry;
 using Content.Shared.Clothing;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Database;
@@ -70,13 +70,18 @@ public sealed partial class PuddleSystem
             return;
 
         args.Handled = true;
+
+        // First update the hit count so anything that is not reactive wont count towards the total!
         foreach (var hit in args.HitEntities)
         {
             if (!HasComp<ReactiveComponent>(hit))
-            {
-                hitCount -= 1; // so we don't undershoot solution calculation for actual reactive entities
+                hitCount -= 1;
+        }
+
+        foreach (var hit in args.HitEntities)
+        {
+            if (!HasComp<ReactiveComponent>(hit))
                 continue;
-            }
 
             var splitSolution = _solutionContainerSystem.SplitSolution(soln.Value, totalSplit / hitCount);
 
