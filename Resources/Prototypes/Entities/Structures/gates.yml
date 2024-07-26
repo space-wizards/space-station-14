@@ -10,6 +10,7 @@
   - type: Anchorable
   - type: Transform
     anchored: true
+  - type: SubFloorHide
   - type: Rotatable
   - type: DeviceNetwork
     deviceNetId: Wireless
