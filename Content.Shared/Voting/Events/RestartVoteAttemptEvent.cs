@@ -8,4 +8,6 @@ namespace Content.Shared.Voting.Events;
 public struct RestartVoteAttemptEvent
 {
     public int DeadPlayers = 0;
+
+    public RestartVoteAttemptEvent(){}
 }
