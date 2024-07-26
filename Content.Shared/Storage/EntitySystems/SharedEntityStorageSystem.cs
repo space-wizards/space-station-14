@@ -134,7 +134,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             return;
 
         if (TryComp<StandingStateComponent>(args.Entity, out var standing) &&
-            standing.Standing)
+            !standing.Standing)
             return;
 
         if (_timing.CurTime < component.NextInternalOpenAttempt)
