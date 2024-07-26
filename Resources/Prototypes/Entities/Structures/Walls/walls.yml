@@ -9,6 +9,8 @@
     snap:
     - Wall
   components:
+  - type: Reflect # VXS
+    reflectProb: 0.04
   - type: RangedDamageSound
     soundGroups:
       Brute:
@@ -452,6 +454,8 @@
   name: plastitanium wall
   suffix: indestructible
   components:
+    - type: Reflect # VXS
+      reflectProb: 0.08
     - type: Tag
       tags:
         - Wall
@@ -507,6 +511,8 @@
   - type: Icon
     sprite: Structures/Walls/plastitanium_diagonal.rsi
     state: state0
+  - type: Reflect # VXS
+    reflectProb: 0.1
 
 - type: entity
   parent: BaseWall
@@ -754,7 +760,7 @@
   - type: Physics
     bodyType: Static
   - type: Reflect
-    reflectProb: 1
+    reflectProb: 0.04 # VXS
   - type: Pullable
   - type: Airtight
     noAirWhenFullyAirBlocked: false
@@ -830,7 +836,7 @@
           4: { state: shuttle_construct-4, visible: true}
           5: { state: shuttle_construct-5, visible: true}
   - type: Reflect
-    reflectProb: 1
+    reflectProb: 0.04 # VXS
 
 - type: entity
   parent: WallSolid
@@ -849,7 +855,7 @@
     key: walls
     base: state
   - type: Reflect
-    reflectProb: 1
+    reflectProb: 0.04 # VXS
 
 - type: entity
   parent: BaseWall
@@ -918,6 +924,8 @@
   - type: Icon
     sprite: Structures/Walls/solid_diagonal.rsi
     state: state0
+  - type: Reflect # VXS
+    reflectProb: 0.06
 
 - type: entity
   parent: WallSolid
