@@ -176,7 +176,7 @@
   id: UplinkRadPen
   name: uplink-radpen-name
   description: uplink-radpen-desc
-  icon: { sprite: /Textures/Objects/Misc/pens.rsi/, state: pen }
+  icon: { sprite: /Textures/Objects/Misc/pens.rsi, state: pen }
   productEntity: RadPenBox
   cost:
     Telecrystal: 7
