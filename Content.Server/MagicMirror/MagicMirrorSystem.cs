@@ -6,6 +6,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Interaction;
 using Content.Shared.MagicMirror;
+using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.MagicMirror;
@@ -19,6 +20,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly MarkingManager _markings = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -65,6 +67,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
             NeedHand = true
         },
             out var doAfterId);
+        _popup.PopupEntity(Loc.GetString("magic-mirror-change-slot"), component.Target.Value, component.Target.Value, PopupType.Medium);
 
         component.DoAfter = doAfterId;
         _audio.PlayPvs(component.ChangeHairSound, uid);
@@ -120,6 +123,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
             NeedHand = true
         },
             out var doAfterId);
+        _popup.PopupEntity(Loc.GetString("magic-mirror-change-color"), component.Target.Value, component.Target.Value, PopupType.Medium);
 
         component.DoAfter = doAfterId;
     }
@@ -173,6 +177,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
             NeedHand = true
         },
             out var doAfterId);
+        _popup.PopupEntity(Loc.GetString("magic-mirror-remove-slot"), component.Target.Value, component.Target.Value, PopupType.Medium);
 
         component.DoAfter = doAfterId;
         _audio.PlayPvs(component.ChangeHairSound, uid);
@@ -226,6 +231,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
             NeedHand = true
         },
             out var doAfterId);
+        _popup.PopupEntity(Loc.GetString("magic-mirror-add-slot"), component.Target.Value, component.Target.Value, PopupType.Medium);
 
         component.DoAfter = doAfterId;
         _audio.PlayPvs(component.ChangeHairSound, uid);
