@@ -130,6 +130,14 @@ public sealed class KillPersonConditionSystem : EntitySystem
         // You are the first/only traitor.
         if (traitors.Count == 0)
         {
+            // Fallback to assign people who COULD be assigned as traitor - quick hack for SVS gamemode. Nothing else currently uses this, so it should be fine?
+            // var allValidTraitorCandidates = new List<(EntityUid Id, MindComponent Mind)>;
+            // foreach (var mind in allHumans)
+            // {
+            //     if (_job.MindTryGetJob(mind, out _, out var prototype) && prototype.CanBeAntag)
+            //         allValidTraitorCandidates.Add(mind, );
+            // }
+            // traitors = allValidTraitorCandidates;
             args.Cancelled = true;
             return;
         }
