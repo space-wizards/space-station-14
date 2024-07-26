@@ -22,6 +22,7 @@ namespace Content.Server.Chat
 
         // I don't think Chat needs it's own CVar file because of these two, so I'll leave them here...
         private const int MessageDelayMilliseconds = 2000;
+        private const int MaxMessageSize = 2000; // CAN'T BE MORE THAN 2000! DISCORD LIMIT.
         private const int MaxMessagesPerBatch = 15;
         private const int MaxICLength = 128;
 
@@ -111,7 +112,7 @@ namespace Content.Server.Chat
                 allMessagesString.AppendLine($"No messages found.");
             }
 
-            var messages = SplitMessage(allMessagesString.ToString(), 2000);
+            var messages = SplitMessage(allMessagesString.ToString(), MaxMessageSize);
             var discordWebhook = new DiscordWebhook();
             int messageCount = 0;
             foreach (var message in messages)
