@@ -10,7 +10,6 @@ using Content.Shared.Voting;
 using Content.Shared.Voting.Events;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -61,7 +60,7 @@ namespace Content.Server.Voting.Managers
             
             //Raised an event so that eligble players can be counted in their respective systems
             var ev = new RestartVoteAttemptEvent();
-            _entityManager.EventBus.RaiseLocalEvent(ref ev);
+            _entityManager.EventBus.RaiseLocalEvent(EntityUid.Invalid,ref ev);
             
             var ghostCount = ev.DeadPlayers;
 

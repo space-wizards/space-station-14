@@ -5,15 +5,21 @@ using Content.Server.Roles;
 using Content.Shared.Actions;
 using Content.Shared.Dragon;
 using Content.Shared.Maps;
+using Content.Server.Mind;
+using Content.Shared.NPC.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NPC.Systems;
+using Content.Shared.Voting.Events;
 using Content.Shared.Zombies;
+using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Player;
 
 namespace Content.Server.Dragon;
 
@@ -21,12 +27,14 @@ public sealed partial class DragonSystem : EntitySystem
 {
     [Dependency] private readonly CarpRiftsConditionSystem _carpRifts = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
     [Dependency] private readonly NpcFactionSystem _faction = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedMindSystem _minds = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private EntityQuery<CarpRiftsConditionComponent> _objQuery;
@@ -55,6 +63,28 @@ public sealed partial class DragonSystem : EntitySystem
         SubscribeLocalEvent<DragonComponent, RefreshMovementSpeedModifiersEvent>(OnDragonMove);
         SubscribeLocalEvent<DragonComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<DragonComponent, EntityZombifiedEvent>(OnZombified);
+        SubscribeLocalEvent<NpcFactionMemberComponent, RestartVoteAttemptEvent>(OnRestartAttempt);
+    }
+
+    private void OnRestartAttempt(Entity<NpcFactionMemberComponent> entity, ref RestartVoteAttemptEvent args)
+    {
+        if (!_faction.IsMember(entity.Owner, "Dragon"))
+            return;
+
+        if (!_minds.TryGetMind(entity, out _ , out var mind))
+            return;
+
+        if(mind.UserId == null)
+            return;
+
+        if(!_playerManager.TryGetSessionById(mind.UserId.Value, out var player))
+            return;
+
+        if (player.Status == SessionStatus.Disconnected)
+            return;
+
+        args.DeadPlayers += 1;
+
     }
 
     public override void Update(float frameTime)
