@@ -73,7 +73,7 @@
   parent: BaseGameRule
   id: BaseNukeopsRule
   components:
-  - type: RandomMetadata #this generates the random operation name cuz it's cool. 
+  - type: RandomMetadata #this generates the random operation name cuz it's cool.
     nameSegments:
     - operationPrefix
     - operationSuffix
@@ -212,7 +212,7 @@
         components:
         - AntagImmune
       lateJoinAdditional: true
-      forceAllLateJoins: true
+      forceAllPossible: true
       mindComponents:
       - type: TraitorRole
         prototype: Traitor
