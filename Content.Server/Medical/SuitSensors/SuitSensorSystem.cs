@@ -301,7 +301,7 @@ public sealed class SuitSensorSystem : EntitySystem
         return Loc.GetString(name);
     }
 
-    public void TrySetSensor(Entity<SuitSensorComponent?> sensors, SuitSensorMode mode, EntityUid userUid)
+    public void TrySetSensor(Entity<SuitSensorComponent> sensors, SuitSensorMode mode, EntityUid userUid)
     {
         var comp = sensors.Comp;
 
@@ -323,20 +323,17 @@ public sealed class SuitSensorSystem : EntitySystem
         }
     }
 
-    private void OnSuitSensorDoAfter(EntityUid uid, SuitSensorComponent component, SuitSensorChangeDoAfterEvent args)
+    private void OnSuitSensorDoAfter(Entity<SuitSensorComponent> sensors, ref SuitSensorChangeDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled)
             return;
 
-        SetSensor((uid, component), args.Mode, args.User);
+        SetSensor(sensors, args.Mode, args.User);
     }
 
-    public void SetSensor(Entity<SuitSensorComponent?> sensors, SuitSensorMode mode, EntityUid? userUid = null)
+    public void SetSensor(Entity<SuitSensorComponent> sensors, SuitSensorMode mode, EntityUid? userUid = null)
     {
         var comp = sensors.Comp;
-
-        if (!Resolve(sensors, ref comp))
-            return;
 
         comp.Mode = mode;
 
