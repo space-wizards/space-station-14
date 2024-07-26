@@ -192,10 +192,10 @@
   id: SpyVsSpy
   components:
   - type: GameRule
-    minPlayers: 15
+    minPlayers: 4
     delay:
-      min: 240
-      max: 420
+      min: 24
+      max: 42
   - type: AntagObjectives
     objectives:
     - KillRandomTraitorSvSObjective
@@ -212,6 +212,7 @@
         components:
         - AntagImmune
       lateJoinAdditional: true
+      forceAllLateJoins: true
       mindComponents:
       - type: TraitorRole
         prototype: Traitor

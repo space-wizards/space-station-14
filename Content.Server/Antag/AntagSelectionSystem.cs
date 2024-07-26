@@ -131,7 +131,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         foreach (var (uid, antag) in rules)
         {
-            if (!RobustRandom.Prob(LateJoinRandomChance))
+            if (!antag.Definitions.Any(p => p.ForceAllLateJoins) || !RobustRandom.Prob(LateJoinRandomChance))
                 continue;
 
             if (!antag.Definitions.Any(p => p.LateJoinAdditional))
