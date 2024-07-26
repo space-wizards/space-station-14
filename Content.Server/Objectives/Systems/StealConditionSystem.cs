@@ -81,7 +81,10 @@ public sealed class StealConditionSystem : EntitySystem
             || condition.Comp.DescriptionText == null || condition.Comp.DescriptionMultiplyText == null)
             return;
 
-        var group = _proto.Index(condition.Comp.StealGroup);
+        if (condition.Comp.StealGroup == null)
+            throw new Exception($"StealGroup is null.");
+
+        var group = _proto.Index(condition.Comp.StealGroup.Value);
 
         var title =condition.Comp.OwnerText == null
             ? Loc.GetString(condition.Comp.ObjectiveNoOwnerText, ("itemName", group.Name))

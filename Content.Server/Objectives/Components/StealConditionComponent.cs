@@ -13,7 +13,7 @@ public sealed partial class StealConditionComponent : Component
     /// A group of items to be stolen
     /// </summary>
     [DataField]
-    public ProtoId<StealTargetGroupPrototype> StealGroup;
+    public ProtoId<StealTargetGroupPrototype>? StealGroup;
 
     /// <summary>
     /// When enabled, disables generation of this target if there is no entity on the map (disable for objects that can be created mid-round).

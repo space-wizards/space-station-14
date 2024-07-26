@@ -37,7 +37,10 @@ public sealed class HoldDocumentConditionSystem : EntitySystem
         if (!TryComp<StealConditionComponent>(entity, out var stealConditionComp))
             throw new Exception($"Missing StealConditionComponent for {entity}.");
 
-        var group = _proto.Index(stealConditionComp.StealGroup);
+        if (stealConditionComp.StealGroup == null)
+            throw new Exception($"StealGroup is null");
+
+        var group = _proto.Index(stealConditionComp.StealGroup.Value);
 
         var title = Loc.GetString(entity.Comp.Title, ("docname", group.Name));
         var description = Loc.GetString(entity.Comp.Description, ("docname", group.Name));

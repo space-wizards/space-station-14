@@ -63,9 +63,16 @@ public sealed class TradeDocumentsConditionSystem : EntitySystem
             return;
         }
 
+        if (otherStealCondComp.StealGroup == null)
+        {
+            args.Cancelled = true;
+            Debug.Fail($"StealGroup is null.");
+            return;
+        }
+
         // At this point, both traitors steal objectives will be for the same thing.
         // We also wont be changing anything about the other trators objective at this moment. This is done later on.
-        _stealConditionSystem.UpdateStealCondition((uid, selfStealCondComp), otherStealCondComp.StealGroup);
+        _stealConditionSystem.UpdateStealCondition((uid, selfStealCondComp), otherStealCondComp.StealGroup.Value);
         _target.SetTarget(uid, otherTrator, selfTargetComp);
     }
 
@@ -133,8 +140,11 @@ public sealed class TradeDocumentsConditionSystem : EntitySystem
         if (!TryComp<StealConditionComponent>(otherDocHoldObjective, out var otherStealConditionComp))
             throw new Exception($"Missing StealConditionComponent for {otherDocHoldObjective}.");
 
-        var selfStealGroup = _proto.Index(stealConditionComp.StealGroup);
-        var otherStealGroup = _proto.Index(otherStealConditionComp.StealGroup);
+        if (stealConditionComp.StealGroup == null || otherStealConditionComp.StealGroup == null)
+            throw new Exception($"StealGroup is null.");
+
+        var selfStealGroup = _proto.Index(stealConditionComp.StealGroup.Value);
+        var otherStealGroup = _proto.Index(otherStealConditionComp.StealGroup.Value);
 
         // This is changing your own objective.
         var otherJob = _serverObjectivesSystem.TryGetJobAndName(targetObjComp.Target).Item2;

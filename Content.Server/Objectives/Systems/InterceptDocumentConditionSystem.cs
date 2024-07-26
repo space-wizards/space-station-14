@@ -59,9 +59,16 @@ public sealed class InterceptDocumentConditionSystem : EntitySystem
             return;
         }
 
+        if (otherStealCondComp.StealGroup == null)
+        {
+            args.Cancelled = true;
+            Debug.Fail($"StealGroup is null.");
+            return;
+        }
+
         // At this point, both traitors steal objectives will be for the same thing.
         // We also wont be changing anything about the other trators objective at this moment. This is done later on.
-        _stealConditionSystem.UpdateStealCondition((uid, selfStealCondComp), otherStealCondComp.StealGroup);
+        _stealConditionSystem.UpdateStealCondition((uid, selfStealCondComp), otherStealCondComp.StealGroup.Value);
         _target.SetTarget(uid, otherTrator, selfTargetComp);
     }
 
@@ -69,6 +76,9 @@ public sealed class InterceptDocumentConditionSystem : EntitySystem
     {
         if (!TryComp<StealConditionComponent>(entity, out var stealConditionComp))
             throw new Exception($"Missing StealConditionComponent for {entity}.");
+
+        if (stealConditionComp.StealGroup == null)
+            throw new Exception($"StealGroup is null");
 
         if (!TryComp<TargetObjectiveComponent>(entity, out var targetObjComp))
             throw new Exception($"Missing TargetObjectiveComponent for {entity}.");
@@ -89,7 +99,7 @@ public sealed class InterceptDocumentConditionSystem : EntitySystem
         var targetName = targetNameAndJob.Item1;
         var targetJob = targetNameAndJob.Item2;
 
-        var group = _proto.Index(stealConditionComp.StealGroup);
+        var group = _proto.Index(stealConditionComp.StealGroup.Value);
 
         var title = Loc.GetString(entity.Comp.Title, ("docname", group.Name));
         var description = Loc.GetString(entity.Comp.Description, ("target", targetName), ("taretjob", targetJob), ("docname", group.Name));

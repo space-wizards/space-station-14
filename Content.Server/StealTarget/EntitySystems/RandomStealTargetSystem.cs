@@ -13,14 +13,14 @@ public sealed class RandomStealTargetSystem : EntitySystem
         SubscribeLocalEvent<RandomStealTargetComponent, ComponentInit>(OnInit);
     }
 
-    private void OnInit(EntityUid uid, RandomStealTargetComponent component, ComponentInit args)
+    private void OnInit(Entity<RandomStealTargetComponent> entity, ref ComponentInit args)
     {
-        if (component.StealTargetNames.Count == 0)
+        if (entity.Comp.StealTargetNames.Count == 0)
             return;
 
-        EnsureComp<StealTargetComponent>(uid, out var stealTarget);
+        EnsureComp<StealTargetComponent>(entity, out var stealTarget);
 
-        stealTarget.StealGroup = _random.Pick(component.StealTargetNames);
+        stealTarget.StealGroup = _random.Pick(entity.Comp.StealTargetNames);
     }
 
 }

@@ -8,5 +8,5 @@ namespace Content.Shared.ImportantDocument;
 public sealed partial class RandomStealTargetComponent : Component
 {
     [DataField(required: true)]
-    public List<string> StealTargetNames;
+    public List<string> StealTargetNames = new List<string>();
 }
