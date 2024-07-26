@@ -1,5 +1,5 @@
 - type: entity
-  name: AK 742M
+  name: AK-742M
   parent: WeaponRifleAk
   id: WeaponRifleAk742M
   description: An old automatic rifle, but in a new modification. Looks familiar, doesn't it? Uses .20 rifle ammo.
@@ -15,7 +15,7 @@
     cameraRecoilScalar: 1
     projectileSpeed: 30
     fireRate: 6
-    selectedMode: FullAuto
+    selectedMode: SemiAuto
     availableModes:
       - SemiAuto
       - FullAuto

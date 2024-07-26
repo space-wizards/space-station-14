@@ -19,8 +19,9 @@
     cameraRecoilScalar: 2
     projectileSpeed: 35 # VXS
     fireRate: 5
-    selectedMode: FullAuto
+    selectedMode: SemiAuto # VXS
     availableModes:
+      - SemiAuto # VXS
       - FullAuto
     soundGunshot:
       path: /Audio/VXS/Gunshots/Rifle/rifle1.ogg # VXS
