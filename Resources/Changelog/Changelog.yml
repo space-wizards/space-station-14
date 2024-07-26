@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Nopey
-  changes:
-  - message: Many more items can now be recycled, including mops, medkits, and stun
-      batons.
-    type: Tweak
-  id: 6485
-  time: '2024-04-29T03:36:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24435
 - author: Hanzdegloker
   changes:
   - message: '"Denied" and "Approved" stamps are now guaranteed to appear in the lockers
@@ -3785,3 +3777,10 @@
   id: 6984
   time: '2024-07-26T06:47:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30133
+- author: Errant
+  changes:
+  - message: Replay ghosts now actually spawn on the proper station, take two.
+    type: Fix
+  id: 6985
+  time: '2024-07-26T12:59:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30273
