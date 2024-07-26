@@ -24,7 +24,8 @@ public sealed class SyndicateTeleporterSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
 
 
-    public const string TeleportEffectPrototype = "TeleportEffect";
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string TeleportEffectPrototype = "TeleportEffect";
     public override void Initialize()
     {
         base.Initialize();
@@ -34,7 +35,8 @@ public sealed class SyndicateTeleporterSystem : EntitySystem
 
     private void OnUse(EntityUid uid, SyndicateTeleporterComponent component, UseInHandEvent args)
     {
-        TryComp<LimitedChargesComponent>(uid, out var charges);
+        if (!TryComp<LimitedChargesComponent>(uid, out var charges))
+            return;
 
         if (args.Handled)
             return;
