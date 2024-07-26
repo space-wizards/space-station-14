@@ -43,3 +43,24 @@
         whitelist:
           tags:
             - CartridgeRifle
+
+- type: entity
+  name: AK-74
+  parent: WeaponRifleAk
+  id: WeaponRifleAk74
+  description: The AK-74 is an assault rifle designed by small arms designer Mikhail Kalashnikov in 1974 as a successor to the AKM.
+  components:
+  - type: Sprite
+    sprite: VXS/Weapons/Rifles/ak74.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    soundGunshot:
+      path: /Audio/VXS/Gunshots/Rifle/rifle2.ogg
+      params:
+        maxDistance: 60
+        volume: 3
+    projectileSpeed: 45
