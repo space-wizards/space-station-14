@@ -31,10 +31,15 @@ jobs:
     - name: List merged PRs
       id: list_prs
       run: |
+        # Fetch the merged PRs from upstream
         curl -H "Authorization: token ${{ secrets.GH_BPAT }}" \
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/space-wizards/space-station-14/pulls?state=closed \
-          | jq '.[] | select(.merged_at != null) | .number' > merged_prs.txt
+          > merged_prs_raw.json
+        # Output the raw JSON for debugging
+        cat merged_prs_raw.json
+        # Extract the PR numbers
+        cat merged_prs_raw.json | jq '.[] | select(.merged_at != null) | .number' > merged_prs.txt
         cat merged_prs.txt
 
     - name: Create new branches
