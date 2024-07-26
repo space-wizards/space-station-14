@@ -1,7 +1,7 @@
 - type: entity
   name: Rat King
   id: MobRatKing
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: [ SimpleMobBase, MobCombat, StripableInventoryBase ]
   description: He's da rat. He make da roolz.
   components:
   - type: CombatMode
@@ -42,6 +42,16 @@
         - SmallMobMask
         layer:
         - SmallMobLayer
+  - type: ComplexInteraction
+  - type: Inventory
+    speciesId: ratking
+    templateId: ratking
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+  - type: Puller
+    needsHands: false
+  - type: IdExaminable
   - type: MobState
   - type: MobThresholds
     thresholds:
