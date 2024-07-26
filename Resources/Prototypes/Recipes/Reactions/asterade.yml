@@ -1,0 +1,83 @@
+- type: reaction
+  id: OrangeAsterade
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Saline:
+      amount: 1
+    JuiceOrange:
+      amount: 1
+  products:
+    OrangeAsterade: 2
+
+- type: reaction
+  id: PurpleAsterade
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Saline:
+      amount: 1
+    JuiceBerry:
+      amount: 1
+  products:
+    PurpleAsterade: 2
+
+- type: reaction
+  id: RedAsterade
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Saline:
+      amount: 1
+    JuiceWatermelon:
+      amount: 1
+  products:
+    RedAsterade: 2
+
+- type: reaction
+  id: GreenAsterade
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Saline:
+      amount: 1
+    JuiceLime:
+      amount: 1
+  products:
+    GreenAsterade: 2
+
+- type: reaction
+  id: YellowAsterade
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Saline:
+      amount: 1
+    JuicePineapple:
+      amount: 1
+  products:
+    YellowAsterade: 2
+
+- type: reaction
+  id: LemonAsterade
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Saline:
+      amount: 1
+    JuiceLemon:
+      amount: 1
+  products:
+    LemonAsterade: 2
+
+- type: reaction
+  id: BrownAsterade
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Saline:
+      amount: 1
+    JuicePotato:
+      amount: 1
+  products:
+    BrownAsterade: 2

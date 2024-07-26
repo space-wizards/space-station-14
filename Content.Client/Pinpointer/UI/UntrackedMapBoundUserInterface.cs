@@ -1,4 +1,4 @@
-using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -14,22 +14,15 @@ public sealed class UntrackedStationMapBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-        _window?.Close();
         EntityUid? gridUid = null;
 
+        // TODO: What this just looks like it's been copy-pasted wholesale from StationMapBoundUserInterface?
         if (EntMan.TryGetComponent<TransformComponent>(Owner, out var xform))
         {
             gridUid = xform.GridUid;
         }
 
-        _window = new StationMapWindow(gridUid, null);
-        _window.OpenCentered();
-        _window.OnClose += Close;
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        _window?.Dispose();
+        _window = this.CreateWindow<StationMapWindow>();
+        _window.Set(gridUid, Owner);
     }
 }

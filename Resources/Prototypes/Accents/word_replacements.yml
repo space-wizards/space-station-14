@@ -22,6 +22,22 @@
     accent-mobster-words-15: accent-mobster-words-replace-15
     accent-mobster-words-16: accent-mobster-words-replace-16
     accent-mobster-words-17: accent-mobster-words-replace-17
+    accent-mobster-words-18: accent-mobster-words-replace-18
+    accent-mobster-words-19: accent-mobster-words-replace-19
+    accent-mobster-words-20: accent-mobster-words-replace-20
+    accent-mobster-words-21: accent-mobster-words-replace-21
+    accent-mobster-words-22: accent-mobster-words-replace-22
+    accent-mobster-words-23: accent-mobster-words-replace-23
+    accent-mobster-words-24: accent-mobster-words-replace-24
+    accent-mobster-words-25: accent-mobster-words-replace-25
+    accent-mobster-words-26: accent-mobster-words-replace-26
+    accent-mobster-words-27: accent-mobster-words-replace-27
+    accent-mobster-words-28: accent-mobster-words-replace-28
+    accent-mobster-words-29: accent-mobster-words-replace-29
+    accent-mobster-words-30: accent-mobster-words-replace-30
+    accent-mobster-words-31: accent-mobster-words-replace-31
+    accent-mobster-words-32: accent-mobster-words-replace-32
+    accent-mobster-words-33: accent-mobster-words-replace-33
 
 - type: accent
   id: italian
@@ -430,6 +446,9 @@
     chatsan-word-47: chatsan-replacement-47
     chatsan-word-48: chatsan-replacement-48
     chatsan-word-49: chatsan-replacement-49
+    chatsan-word-50: chatsan-replacement-50
+    chatsan-word-51: chatsan-replacement-51
+    chatsan-word-52: chatsan-replacement-52
 
 - type: accent
   id: liar
