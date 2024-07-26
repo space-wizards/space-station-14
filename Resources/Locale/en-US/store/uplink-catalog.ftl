@@ -439,3 +439,6 @@ uplink-barber-scissors-desc = A good tool to give your fellow agent a nice hairc
 
 uplink-backpack-syndicate-name = Syndicate backpack
 uplink-backpack-syndicate-desc = Lightweight explosion-proof а backpack for holding various traitor goods
+
+uplink-radpen-name = Radioactive Pen
+uplink-radpen-desc = A high intensity short range radioactive source disguised as an ordinary pen. Toggle the shielding to start emitting radiation. Use caution when handling.

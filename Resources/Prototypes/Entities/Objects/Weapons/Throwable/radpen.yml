@@ -1,0 +1,34 @@
+- type: entity
+  parent: BaseItem
+  id: RadPenBox
+  name: radioactive pen box
+  description: A small box containing a radioactive pen. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Objects/Storage/penbox.rsi
+    state: radpen
+  - type: SpawnItemsOnUse
+    items:
+    - id: PenRadioactive
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  name: pen
+  suffix: Radioactive
+  parent: PenEmbeddable
+  description: A dark ink pen.
+  id: PenRadioactive
+  components:
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Items/flashlight_on.ogg
+    soundDeactivate:
+      path: /Audio/Items/flashlight_off.ogg
+  - type: ComponentToggler
+    components:
+    - type: RadiationSource
+      intensity: 2.5
+      slope: 2
