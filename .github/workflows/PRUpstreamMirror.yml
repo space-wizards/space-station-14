@@ -8,13 +8,15 @@ on:
 jobs:
   mirror_prs:
     runs-on: ubuntu-latest
+    outputs:
+      branches: ${{ steps.branches.outputs.branches }}
 
     steps:
     - name: Checkout the downstream repository
       uses: actions/checkout@v2
       with:
         repository: TerraTheUnwisest/PlanetoidSS14
-        token: ${{ secrets.GH_PAT }}
+        token: ${{ secrets.GH_BPAT }}
 
     - name: Fetch PRs from upstream
       run: |
@@ -24,17 +26,19 @@ jobs:
     - name: List merged PRs
       id: list_prs
       run: |
-        curl -H "Authorization: token ${{ secrets.GH_PAT }}" \
+        curl -H "Authorization: token ${{ secrets.GH_BPAT }}" \
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/space-wizards/space-station-14/pulls?state=closed \
           | jq '.[] | select(.merged_at != null) | .number' > merged_prs.txt
         cat merged_prs.txt
 
     - name: Create new PRs
+      id: branches
       run: |
+        branches=""
         while read pr_number; do
           # Get PR details
-          pr=$(curl -H "Authorization: token ${{ secrets.GH_PAT }}" \
+          pr=$(curl -H "Authorization: token ${{ secrets.GH_BPAT }}" \
               -H "Accept: application/vnd.github.v3+json" \
               https://api.github.com/repos/space-wizards/space-station-14/pulls/$pr_number)
 
@@ -55,18 +59,41 @@ jobs:
           git push origin mirror-pr-$pr_number
 
           # Create a new PR in the downstream repository
-          curl -X POST -H "Authorization: token ${{ secrets.GH_PAT }}" \
+          curl -X POST -H "Authorization: token ${{ secrets.GH_BPAT }}" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/TerraTheUnwisest/PlanetoidSS14/pulls \
             -d "$(jq -n --arg title "MIRROR: $pr_title" --arg body "$pr_body" --arg base "master" --arg head "mirror-pr-$pr_number" \
               '{title: $title, body: $body, base: $base, head: $head}')"
 
-          # Clean up the branch locally
-          git checkout master
-          git branch -D mirror-pr-$pr_number
-
+          # Track created branches
+          branches="$branches mirror-pr-$pr_number"
         done < merged_prs.txt
+
+        echo "::set-output name=branches::$branches"
 
     - name: Clean up
       run: |
         rm merged_prs.txt
+
+  cleanup_branches:
+    runs-on: ubuntu-latest
+    needs: mirror_prs
+    if: ${{ success() }}
+
+    steps:
+    - name: Checkout the downstream repository
+      uses: actions/checkout@v2
+      with:
+        repository: TerraTheUnwisest/PlanetoidSS14
+        token: ${{ secrets.GH_BPAT }}
+
+    - name: Fetch all branches
+      run: |
+        git fetch --all
+
+    - name: Delete old mirror branches
+      run: |
+        branches="${{ needs.mirror_prs.outputs.branches }}"
+        for branch in $branches; do
+          git push origin --delete $branch
+        done
