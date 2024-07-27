@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: MilenVolf
-  changes:
-  - message: Borgs now have brand new voice and walking sounds.
-    type: Add
-  - message: Syndicate assault borgs now have new feature to scare - manic laugher.
-    type: Add
-  id: 6491
-  time: '2024-04-29T04:38:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27205
 - author: KrasnoshchekovPavel
   changes:
   - message: Fixed formatting of floating point numbers during localization
@@ -3781,3 +3772,10 @@
   id: 6990
   time: '2024-07-27T07:27:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30393
+- author: BombasterDS
+  changes:
+  - message: Added new plant mutations for apple, sugarcane and galaxythistle
+    type: Add
+  id: 6991
+  time: '2024-07-27T15:08:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28993
