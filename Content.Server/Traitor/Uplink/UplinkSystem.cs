@@ -23,18 +23,17 @@ public sealed class UplinkSystem : EntitySystem
 
     [ValidatePrototypeId<CurrencyPrototype>]
     public const string TelecrystalCurrencyPrototype = "Telecrystal";
-    public const string FallbackUplinkImplant = "UplinkImplant";
-    public const string FallbackUplinkCatalog = "UplinkUplinkImplanter";
+    private const string FallbackUplinkImplant = "UplinkImplant";
+    private const string FallbackUplinkCatalog = "UplinkUplinkImplanter";
 
     /// <summary>
     /// Adds an uplink to the target
     /// </summary>
     /// <param name="user">The person who is getting the uplink</param>
     /// <param name="balance">The amount of currency on the uplink. If null, will just use the amount specified in the preset.</param>
-    /// <param name="uplinkPresetId">The id of the storepreset</param>
     /// <param name="uplinkEntity">The entity that will actually have the uplink functionality. Defaults to the PDA if null.</param>
     /// <returns>Whether or not the uplink was added successfully</returns>
-    public bool AddUplink(EntityUid user, FixedPoint2? balance, EntityUid? uplinkEntity = null)
+    public bool AddUplink(EntityUid user, FixedPoint2 balance, EntityUid? uplinkEntity = null)
     {
         // Try to find target item
         if (uplinkEntity == null)
@@ -56,22 +55,19 @@ public sealed class UplinkSystem : EntitySystem
     /// <summary>
     /// Configure TC for the uplink
     /// </summary>
-    public void SetUplink(EntityUid user, EntityUid uplink, FixedPoint2? balance)
+    private void SetUplink(EntityUid user, EntityUid uplink, FixedPoint2 balance)
     {
         var store = EnsureComp<StoreComponent>(uplink);
         store.AccountOwner = user;
+
         store.Balance.Clear();
-        if (balance != null)
-        {
-            store.Balance.Clear();
-            _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance.Value } }, uplink, store);
-        }
+        _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance } }, uplink, store);
     }
 
     /// <summary>
     /// Implant an uplink as a fallback measure if the traitor had no PDA
     /// </summary>
-    public bool ImplantUplink(EntityUid user, FixedPoint2? balance)
+    private bool ImplantUplink(EntityUid user, FixedPoint2 balance)
     {
         var implants = new List<string>(){FallbackUplinkImplant};
 
@@ -81,7 +77,10 @@ public sealed class UplinkSystem : EntitySystem
         if (!catalog.Cost.TryGetValue(TelecrystalCurrencyPrototype, out var cost))
             return false;
 
-        var implantCost = cost.Int();
+        if (balance < cost) // Can't use Math functions on FixedPoint2
+            balance = 0;
+        else
+            balance = balance - cost;
 
         _subdermalImplant.AddImplants(user, implants);
 
@@ -90,9 +89,9 @@ public sealed class UplinkSystem : EntitySystem
 
         foreach (var implant in implantContainer.ContainedEntities)
         {
-            if (TryComp<StoreComponent>(implant, out var storeComp))
+            if (HasComp<StoreComponent>(implant))
             {
-                SetUplink(user, implant, balance - implantCost);
+                SetUplink(user, implant, balance);
                 return true;
             }
         }
@@ -111,7 +110,8 @@ public sealed class UplinkSystem : EntitySystem
         {
             while (containerSlotEnumerator.MoveNext(out var pdaUid))
             {
-                if (!pdaUid.ContainedEntity.HasValue) continue;
+                if (!pdaUid.ContainedEntity.HasValue)
+                    continue;
 
                 if (HasComp<PdaComponent>(pdaUid.ContainedEntity.Value) || HasComp<StoreComponent>(pdaUid.ContainedEntity.Value))
                     return pdaUid.ContainedEntity.Value;
