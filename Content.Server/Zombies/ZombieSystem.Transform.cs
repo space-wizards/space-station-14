@@ -36,6 +36,9 @@ using Content.Shared.Prying.Components;
 using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Ghost.Roles.Components;
+using Content.Shared.Cuffs.Components;
+using Content.Server.NPC.Queries.Considerations;
+using Content.Shared.Cuffs;
 
 namespace Content.Server.Zombies
 {
@@ -59,6 +62,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly MindSystem _mind = default!;
         [Dependency] private readonly SharedRoleSystem _roles = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedCuffableSystem _cuffableSys = default!;
 
         /// <summary>
         /// Handles an entity turning into a zombie when they die or go into crit
@@ -255,6 +259,14 @@ namespace Content.Server.Zombies
                 ghostRole.RoleName = Loc.GetString("zombie-generic");
                 ghostRole.RoleDescription = Loc.GetString("zombie-role-desc");
                 ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
+            }
+
+            if (TryComp<CuffableComponent>(target, out var cuffable) && cuffable.CuffedHandCount > 0)
+            {
+                while (cuffable.CuffedHandCount > 0)
+                {
+                    _cuffableSys.Uncuff(target, target, cuffable.LastAddedCuffs);
+                }
             }
 
             if (TryComp<HandsComponent>(target, out var handsComp))
