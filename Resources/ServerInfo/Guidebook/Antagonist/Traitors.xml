@@ -1,8 +1,8 @@
 <Document>
   # Traitors
-  
+
   WHISKEY. ECHO. WHISKEY. LIMA. ALPHA. DELTA.
-  
+
   - A Traitor is an antagonist employed by the Syndicate. They have access to various Syndicate tools and weapons through their [color=#a4885c]Uplink[/color].
   - Traitors can use codewords to identify themselves to one another in order to cooperate.
   - In a Traitor round, any player can be a Traitor aside from department heads, the captain, or any security officers.
@@ -38,6 +38,11 @@
     <GuideEntityEmbed Entity="ClothingEyesGlassesOutlawGlasses" Caption="Pointless"/>
   </Box>
 
+  A pre-installed [color=#a4885c]Uplink Implant[/color] is provided to traitors who do not have a PDA when they receive their briefing.
+  This is not free, the implant's regular catalog price is deducted from their starting Telecrystals.
+  Like other implants, it can be activated from the hotbar. As it is not normally accessible to other people, it does not have any security measures.
+  It can, however, be removed with an empty Implanter.
+
   ## Objectives
 
   - When becoming a Traitor, you will have a list of objectives, ranging from escaping alive, stealing something, and killing someone. Using the [color=#a4885c]Uplink[/color] will help you with most of these tasks.
@@ -58,7 +63,7 @@
  </Box>
   <Box>
     <GuideEntityEmbed Entity="JetpackCaptainFilled" Caption="Captain's Jetpack"/>
-    <GuideEntityEmbed Entity="NukeDisk" Caption="The Nuke Disk"/> 
+    <GuideEntityEmbed Entity="NukeDisk" Caption="The Nuke Disk"/>
  </Box>
   - Steal the Chief Medical Officer's [color=#a4885c]Hypospray[/color] or [color=#a4885c]Handheld Crew Monitor[/color].
   <Box>

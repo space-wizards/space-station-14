@@ -128,7 +128,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         }
         else if (pda is null && uplinked)
         {
-            briefing = string.Format("{0}\n{1}", briefing, Loc.GetString("traitor-role-uplink-implant"));
+            briefing = string.Format("{0}\n{1}", briefing, Loc.GetString("traitor-role-uplink-implant-short"));
         }
 
         return (null, briefing);
@@ -148,6 +148,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         sb.AppendLine(Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", codewords))));
         if (uplinkCode != null)
             sb.AppendLine(Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", uplinkCode).Replace("sharp", "#"))));
+        else
+            sb.AppendLine(Loc.GetString("traitor-role-uplink-implant"));
+
 
         return sb.ToString();
     }
