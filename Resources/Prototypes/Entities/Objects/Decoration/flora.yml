@@ -58,7 +58,7 @@
         - WallLayer
   - type: Damageable
     damageContainer: Inorganic
-    damageModifierSet: Wood
+    damageModifierSet: TreeWood # VXS
   - type: MeleeSound
     soundGroups:
       Brute:

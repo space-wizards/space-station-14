@@ -1,0 +1,9 @@
+- type: damageModifierSet
+  id: TreeWood
+  coefficients:
+    Blunt: 0.4
+    Slash: 2.0
+    Piercing: 0.2
+    Heat: 2.0
+  flatReductions:
+    Blunt: 5
