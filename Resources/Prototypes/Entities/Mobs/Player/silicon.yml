@@ -34,6 +34,7 @@
 
 - type: entity
   id: DummyBorgGeneric
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Mobs/Silicon/chassis.rsi
@@ -86,6 +87,7 @@
 
 - type: entity
   id: DummyBorgMining
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Mobs/Silicon/chassis.rsi
@@ -139,6 +141,7 @@
 
 - type: entity
   id: DummyBorgEngineer
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Mobs/Silicon/chassis.rsi
@@ -191,6 +194,7 @@
 
 - type: entity
   id: DummyBorgJanitor
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Mobs/Silicon/chassis.rsi
@@ -244,6 +248,7 @@
 
 - type: entity
   id: DummyBorgMedical
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Mobs/Silicon/chassis.rsi
@@ -297,6 +302,7 @@
 
 - type: entity
   id: DummyBorgService
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Mobs/Silicon/chassis.rsi
