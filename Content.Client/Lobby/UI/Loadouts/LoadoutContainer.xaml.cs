@@ -20,7 +20,7 @@ public sealed partial class LoadoutContainer : BoxContainer
 
     public Button Select => SelectButton;
 
-    public LoadoutContainer(ProtoId<LoadoutPrototype> proto, bool disabled, FormattedMessage? reason)
+    public LoadoutContainer(ProtoId<LoadoutPrototype> proto, bool disabled, FormattedMessage? reason, string? dummy)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
@@ -34,20 +34,24 @@ public sealed partial class LoadoutContainer : BoxContainer
             SelectButton.TooltipSupplier = _ => tooltip;
         }
 
-        if (_protoManager.TryIndex(proto, out var loadProto))
+        if (dummy != String.Empty)
         {
-            var ent = _entManager.System<LoadoutSystem>().GetFirstOrNull(loadProto);
-
-            if (ent != null)
-            {
-                _entity = _entManager.SpawnEntity(ent, MapCoordinates.Nullspace);
-                Sprite.SetEntity(_entity);
-
-                var spriteTooltip = new Tooltip();
-                spriteTooltip.SetMessage(FormattedMessage.FromUnformatted(_entManager.GetComponent<MetaDataComponent>(_entity.Value).EntityDescription));
-                TooltipSupplier = _ => spriteTooltip;
-            }
+            LoadoutSprite(dummy, _entity);
         }
+        else if (_protoManager.TryIndex(proto, out var loadProto))
+        {
+            LoadoutSprite(_entManager.System<LoadoutSystem>().GetFirstOrNull(loadProto), _entity);
+        }
+
+    }
+
+    private void LoadoutSprite(EntProtoId? proto, EntityUid? ent)
+    {
+        ent = _entManager.SpawnEntity(proto, MapCoordinates.Nullspace);
+        Sprite.SetEntity(ent);
+        var spriteTooltip = new Tooltip();
+        spriteTooltip.SetMessage(FormattedMessage.FromUnformatted(_entManager.GetComponent<MetaDataComponent>(ent.Value).EntityDescription));
+        TooltipSupplier = _ => spriteTooltip;
     }
 
     protected override void Dispose(bool disposing)
