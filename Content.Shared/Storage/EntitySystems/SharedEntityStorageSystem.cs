@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Body.Components;
+using Content.Shared.Cuffs.Components;
 using Content.Shared.Destructible;
 using Content.Shared.Foldable;
 using Content.Shared.Hands.Components;
@@ -135,6 +136,10 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
         if (TryComp<StandingStateComponent>(args.Entity, out var standing) &&
             !standing.Standing)
+            return;
+
+        if (TryComp<CuffableComponent>(args.Entity, out var cuffable) &&
+            !cuffable.CanStillInteract)
             return;
 
         if (_timing.CurTime < component.NextInternalOpenAttempt)

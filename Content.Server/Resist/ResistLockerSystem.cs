@@ -9,6 +9,7 @@ using Content.Shared.Resist;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Standing;
+using Content.Shared.Cuffs.Components;
 
 namespace Content.Server.Resist;
 
@@ -37,6 +38,10 @@ public sealed class ResistLockerSystem : EntitySystem
 
         if (TryComp<StandingStateComponent>(args.Entity, out var standing) &&
             !standing.Standing)
+            return;
+
+        if (TryComp<CuffableComponent>(args.Entity, out var cuffable) &&
+            !cuffable.CanStillInteract)
             return;
 
         if (TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked || _weldable.IsWelded(uid))

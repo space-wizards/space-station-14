@@ -8,6 +8,7 @@ using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Standing;
+using Content.Shared.Cuffs.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
@@ -165,6 +166,10 @@ public sealed class BurialSystem : EntitySystem
 
         if (TryComp<StandingStateComponent>(args.Entity, out var standing) &&
             !standing.Standing)
+            return;
+
+        if (TryComp<CuffableComponent>(args.Entity, out var cuffable) &&
+            !cuffable.CanStillInteract)
             return;
 
         var doAfterEventArgs = new DoAfterArgs(EntityManager, args.Entity, component.DigDelay / component.DigOutByHandModifier, new GraveDiggingDoAfterEvent(), uid, target: uid)
