@@ -4,6 +4,11 @@
   components:
   - type: TimedDespawn
     lifetime: 0.1 # VXS
+  - type: PointLight
+    radius: 4
+    energy: 0.1
+    castShadows: true
+    color: "#FFE1A9"
   - type: Sprite
     drawdepth: Effects
     layers:
