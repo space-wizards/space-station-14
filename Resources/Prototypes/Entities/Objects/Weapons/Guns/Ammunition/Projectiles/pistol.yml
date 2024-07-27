@@ -7,10 +7,10 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 16
-        Blunt: 4
-  - type: StaminaDamageOnCollide
-    damage: 9
+        Piercing: 20 # VXS
+        Blunt: 6 # VXS
+  - type: StaminaDamageOnCollide # VXS
+    damage: 11
   - type: TimedDespawn # VXS
     lifetime: 10
 

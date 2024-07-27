@@ -10,7 +10,7 @@
         Piercing: 36 # VXS
         Blunt: 12 # VXS
   - type: StaminaDamageOnCollide # VXS
-    damage: 15
+    damage: 20
   - type: TimedDespawn # VXS
     lifetime: 15
 
