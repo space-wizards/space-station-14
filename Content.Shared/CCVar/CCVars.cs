@@ -1496,6 +1496,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.godmode_arrivals", false, CVar.SERVERONLY);
 
         /// <summary>
+        /// If a grid is split then hide any smaller ones under this mass (kg) from the map.
+        /// This is useful to avoid split grids spamming out labels.
+        /// </summary>
+        public static readonly CVarDef<int> HideSplitGridsUnder =
+            CVarDef.Create("shuttle.hide_split_grids_under", 30, CVar.SERVERONLY);
+
+        /// <summary>
         /// Whether to automatically spawn escape shuttles.
         /// </summary>
         public static readonly CVarDef<bool> GridFill =
