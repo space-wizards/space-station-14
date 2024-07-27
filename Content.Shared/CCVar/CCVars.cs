@@ -1728,7 +1728,7 @@ namespace Content.Shared.CCVar
         /// Goes from 0 (no recoil at all) to 1 (regular amounts of recoil)
         /// </summary>
         public static readonly CVarDef<float> ScreenShakeIntensity =
-            CVarDef.Create("accessibility.screen_shake_intensity", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
+            CVarDef.Create("accessibility.screen_shake_intensity", 0f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /// <summary>
         /// A generic toggle for various visual effects that are color sensitive.
@@ -1855,7 +1855,7 @@ namespace Content.Shared.CCVar
         /// Control displaying SSD indicators near players
         /// </summary>
         public static readonly CVarDef<bool> ICShowSSDIndicator =
-            CVarDef.Create("ic.show_ssd_indicator", true, CVar.CLIENTONLY);
+            CVarDef.Create("ic.show_ssd_indicator", false, CVar.CLIENTONLY);
 
         /*
          * Salvage
@@ -1871,7 +1871,7 @@ namespace Content.Shared.CCVar
         /// Cooldown for missions.
         /// </summary>
         public static readonly CVarDef<float>
-            SalvageExpeditionCooldown = CVarDef.Create("salvage.expedition_cooldown", 780f, CVar.REPLICATED);
+            SalvageExpeditionCooldown = CVarDef.Create("salvage.expedition_cooldown", 360f, CVar.REPLICATED);
 
         /*
          * Flavor
