@@ -530,6 +530,23 @@ namespace Content.Shared.Cuffs
             return true;
         }
 
+        public bool IsCuffed(EntityUid target, bool requireFullyCuffed = false, CuffableComponent? cuffable = null)
+        {
+            if (!Resolve(target, ref cuffable, false))
+                return false;
+
+            if (!TryComp<HandsComponent>(target, out var hands))
+                return false;
+
+            if (cuffable.CuffedHandCount <= 0)
+                return false;
+
+            if (requireFullyCuffed == true && hands.Count > cuffable.CuffedHandCount)
+                return false;
+
+            return true;
+        }
+
         /// <summary>
         /// Attempt to uncuff a cuffed entity. Can be called by the cuffed entity, or another entity trying to help uncuff them.
         /// If the uncuffing succeeds, the cuffs will drop on the floor.
