@@ -14327,6 +14327,17 @@ entities:
       rot: 3.141592653589793 rad
       pos: 46.5,31.5
       parent: 60
+  - uid: 898
+    components:
+    - type: Transform
+      pos: 23.5,-29.5
+      parent: 60
+  - uid: 902
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 25.5,-25.5
+      parent: 60
   - uid: 3189
     components:
     - type: Transform
@@ -14339,6 +14350,18 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 59.5,14.5
       parent: 60
+  - uid: 6129
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 20.5,29.5
+      parent: 60
+  - uid: 6130
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -11.5,-0.5
+      parent: 7536
   - uid: 6768
     components:
     - type: Transform
@@ -14363,6 +14386,17 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -5.5,-70.5
       parent: 60
+  - uid: 9110
+    components:
+    - type: Transform
+      pos: -11.5,-4.5
+      parent: 7536
+  - uid: 9214
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 0.5,-0.5
+      parent: 7536
   - uid: 12269
     components:
     - type: Transform
@@ -14409,38 +14443,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 15.5,-70.5
-      parent: 60
-- proto: AtmosDeviceFanTiny
-  entities:
-  - uid: 6129
-    components:
-    - type: Transform
-      pos: -11.5,-0.5
-      parent: 7536
-  - uid: 6130
-    components:
-    - type: Transform
-      pos: -11.5,-4.5
-      parent: 7536
-  - uid: 9110
-    components:
-    - type: Transform
-      pos: 0.5,-0.5
-      parent: 7536
-  - uid: 9214
-    components:
-    - type: Transform
-      pos: 23.5,-29.5
-      parent: 60
-  - uid: 13825
-    components:
-    - type: Transform
-      pos: 25.5,-25.5
-      parent: 60
-  - uid: 19808
-    components:
-    - type: Transform
-      pos: 20.5,28.5
       parent: 60
 - proto: AtmosFixBlockerMarker
   entities:
@@ -74858,18 +74860,6 @@ entities:
       parent: 60
     - type: AtmosPipeColor
       color: '#0335FCFF'
-  - uid: 898
-    components:
-    - type: Transform
-      anchored: False
-      rot: 1.5707963267948966 rad
-      pos: -10.5,-22.5
-      parent: 60
-    - type: AtmosPipeColor
-      color: '#0335FCFF'
-    - type: Physics
-      canCollide: True
-      bodyType: Dynamic
   - uid: 899
     components:
     - type: Transform
@@ -74894,18 +74884,6 @@ entities:
       parent: 60
     - type: AtmosPipeColor
       color: '#0335FCFF'
-  - uid: 902
-    components:
-    - type: Transform
-      anchored: False
-      rot: 1.5707963267948966 rad
-      pos: -13.5,-22.5
-      parent: 60
-    - type: AtmosPipeColor
-      color: '#0335FCFF'
-    - type: Physics
-      canCollide: True
-      bodyType: Dynamic
   - uid: 903
     components:
     - type: Transform
