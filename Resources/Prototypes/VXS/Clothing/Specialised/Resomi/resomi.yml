@@ -1,0 +1,82 @@
+- type: entity
+  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase]
+  id: ClothingBeltSpecialisedChestRigResomi
+  suffix: Resomi
+  name: chest rig
+  description: A set of tactical webbing worn by Syndicate boarding parties.
+  components:
+  - type: Sprite
+    sprite: VXS/Clothing/Specialised/Resomi/webbing.rsi
+  - type: Clothing
+    sprite: VXS/Clothing/Specialised/Resomi/webbing.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  parent: ClothingMaskGas
+  id: ClothingMaskSpecialisedMaskResomi
+  name: resomi gas mask
+  suffix: Resomi
+  description: A standard issue Security gas mask.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: VXS/Clothing/Specialised/Resomi/mask.rsi
+  - type: Clothing
+    sprite: VXS/Clothing/Specialised/Resomi/mask.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.95
+
+- type: entity
+  parent: ClothingOuterArmorBasic
+  id: ClothingOuterArmorSpecialisedArmorResomi
+  name: armor vest
+  suffix: Resomi
+  description: A slim Type I armored vest that provides decent protection against most types of damage.
+  components:
+  - type: Sprite
+    sprite: VXS/Clothing/Specialised/Resomi/bulletproof.rsi
+  - type: Clothing
+    sprite: VXS/Clothing/Specialised/Resomi/bulletproof.rsi
+
+- type: entity
+  parent: ClothingShoesMilitaryBase
+  id: ClothingShoesBootsJackSpecialisedResomi
+  suffix: Resomi
+  name: jackboots
+  description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
+  components:
+  - type: Sprite
+    sprite: VXS/Clothing/Specialised/Resomi/boots.rsi
+  - type: Clothing
+    sprite: VXS/Clothing/Specialised/Resomi/boots.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformSpecialisedResomi
+  name: resomi jumpsuit
+  description: A black jumpsuit!
+  suffix: Resomi
+  components:
+  - type: Sprite
+    sprite: VXS/Clothing/Specialised/Resomi/jumpsuit.rsi
+  - type: Clothing
+    sprite: VXS/Clothing/Specialised/Resomi/jumpsuit.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesSpecialisedResomi
+  suffix: Resomi
+  name: resomi night vision goggles
+  components:
+  - type: Sprite
+    sprite: VXS/Clothing/Specialised/Resomi/goggles.rsi
+  - type: Clothing
+    sprite: VXS/Clothing/Specialised/Resomi/goggles.rsi
+  - type: FlashImmunity

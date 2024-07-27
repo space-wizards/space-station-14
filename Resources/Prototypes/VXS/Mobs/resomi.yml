@@ -5,6 +5,9 @@
   id: BaseMobResomi
   abstract: true
   components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 5.5
   - type: DamageVisuals
     thresholds: [ 10, 30, 50, 70]
     targetLayers:
@@ -49,7 +52,7 @@
       140: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      40: 0.7 
+      40: 0.7
       55: 0.5
   - type: MeleeWeapon
     soundHit:
@@ -87,4 +90,3 @@
   components:
   - type: HumanoidAppearance
     species: Resomi
-  
