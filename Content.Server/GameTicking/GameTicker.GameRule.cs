@@ -1,9 +1,9 @@
 using System.Linq;
 using Content.Server.Administration;
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Administration;
 using Content.Shared.Database;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Prototypes;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
@@ -324,6 +324,13 @@ public sealed partial class GameTicker
 
         foreach (var rule in args)
         {
+            if (!_prototypeManager.HasIndex(rule))
+            {
+                shell.WriteError($"Invalid game rule {rule} was skipped.");
+
+                continue;
+            }
+
             if (shell.Player != null)
             {
                 _adminLogger.Add(LogType.EventStarted, $"{shell.Player} tried to add game rule [{rule}] via command");

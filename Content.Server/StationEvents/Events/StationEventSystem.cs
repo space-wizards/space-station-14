@@ -1,10 +1,10 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Database;
+using Content.Shared.GameTicking.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -98,19 +98,14 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
             if (!GameTicker.IsGameRuleAdded(uid, ruleData))
                 continue;
 
-            if (stationEvent.EndTime != null && Timing.CurTime >= stationEvent.EndTime && GameTicker.IsGameRuleActive(uid, ruleData))
+            if (!GameTicker.IsGameRuleActive(uid, ruleData) && !HasComp<DelayedStartRuleComponent>(uid))
+            {
+                GameTicker.StartGameRule(uid, ruleData);
+            }
+            else if (stationEvent.EndTime != null && Timing.CurTime >= stationEvent.EndTime && GameTicker.IsGameRuleActive(uid, ruleData))
             {
                 GameTicker.EndGameRule(uid, ruleData);
             }
         }
     }
-
-    #region Helper Functions
-
-    protected void ForceEndSelf(EntityUid uid, GameRuleComponent? component = null)
-    {
-        GameTicker.EndGameRule(uid, component);
-    }
-
-    #endregion
 }

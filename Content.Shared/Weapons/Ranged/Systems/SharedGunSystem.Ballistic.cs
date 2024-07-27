@@ -15,6 +15,7 @@ public abstract partial class SharedGunSystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
+
     protected virtual void InitializeBallistic()
     {
         SubscribeLocalEvent<BallisticAmmoProviderComponent, ComponentInit>(OnBallisticInit);
@@ -75,6 +76,7 @@ public abstract partial class SharedGunSystem
 
         args.Handled = true;
 
+        // Continuous loading
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.FillDelay, new AmmoFillDoAfterEvent(), used: uid, target: args.Target, eventTarget: uid)
         {
             BreakOnMove = true,
@@ -85,6 +87,9 @@ public abstract partial class SharedGunSystem
 
     private void OnBallisticAmmoFillDoAfter(EntityUid uid, BallisticAmmoProviderComponent component, AmmoFillDoAfterEvent args)
     {
+        if (args.Handled || args.Cancelled)
+            return;
+
         if (Deleted(args.Target) ||
             !TryComp<BallisticAmmoProviderComponent>(args.Target, out var target) ||
             target.Whitelist == null)
@@ -125,7 +130,7 @@ public abstract partial class SharedGunSystem
             if (ent == null)
                 continue;
 
-            if (!target.Whitelist.IsValid(ent.Value))
+            if (_whitelistSystem.IsWhitelistFail(target.Whitelist, ent.Value))
             {
                 Popup(
                     Loc.GetString("gun-ballistic-transfer-invalid",

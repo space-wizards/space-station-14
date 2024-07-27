@@ -255,3 +255,9 @@
   values:
     prefix: advertisement-virodrobe-
     count: 3
+
+- type: localizedDataset
+  id: MedibotAds
+  values:
+    prefix: advertisement-medibot-
+    count: 17

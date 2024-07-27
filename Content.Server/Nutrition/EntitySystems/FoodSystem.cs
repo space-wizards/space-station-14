@@ -10,7 +10,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
@@ -31,7 +30,9 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Containers.ItemSlots;
 using Robust.Server.GameObjects;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -57,6 +58,7 @@ public sealed class FoodSystem : EntitySystem
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
     [Dependency] private readonly UtensilSystem _utensil = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public const float MaxFeedDistance = 1.0f;
 
@@ -97,6 +99,9 @@ public sealed class FoodSystem : EntitySystem
         args.Handled = result.Handled;
     }
 
+    /// <summary>
+    /// Tries to feed the food item to the target entity
+    /// </summary>
     public (bool Success, bool Handled) TryFeed(EntityUid user, EntityUid target, EntityUid food, FoodComponent foodComp)
     {
         //Suppresses eating yourself and alive mobs
@@ -131,6 +136,16 @@ public sealed class FoodSystem : EntitySystem
         {
             _popup.PopupEntity(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
             return (false, true);
+        }
+
+        // Checks for used item slots
+        if (TryComp<ItemSlotsComponent>(food, out var itemSlots))
+        {
+            if (itemSlots.Slots.Any(slot => slot.Value.HasItem))
+            {
+                _popup.PopupEntity(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
+                return (false, true);
+            }
         }
 
         var flavors = _flavorProfile.GetLocalizedFlavorsMessage(food, user, foodSolution);
@@ -183,13 +198,14 @@ public sealed class FoodSystem : EntitySystem
             target: target,
             used: food)
         {
+            BreakOnHandChange = false,
             BreakOnMove = forceFeed,
             BreakOnDamage = true,
             MovementThreshold = 0.01f,
             DistanceThreshold = MaxFeedDistance,
-            // Mice and the like can eat without hands.
-            // TODO maybe set this based on some CanEatWithoutHands event or component?
-            NeedHand = forceFeed,
+            // do-after will stop if item is dropped when trying to feed someone else
+            // or if the item started out in the user's own hands
+            NeedHand = forceFeed || _hands.IsHolding(user, food),
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
@@ -408,7 +424,7 @@ public sealed class FoodSystem : EntitySystem
             if (comp.SpecialDigestible == null)
                 continue;
             // Check if the food is in the whitelist
-            if (comp.SpecialDigestible.IsValid(food, EntityManager))
+            if (_whitelistSystem.IsWhitelistPass(comp.SpecialDigestible, food))
                 return true;
             // They can only eat whitelist food and the food isn't in the whitelist. It's not edible.
             return false;

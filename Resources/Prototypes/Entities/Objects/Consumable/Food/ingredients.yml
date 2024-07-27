@@ -34,6 +34,9 @@
     solution: food
   - type: TrashOnSolutionEmpty
     solution: food
+  - type: Tag
+    tags:
+      - Ingredient
 
 - type: entity
   abstract: true
@@ -272,6 +275,9 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 15
+  - type: Tag
+    tags:
+      - Ingredient
 
 - type: entity
   name: dough
@@ -305,6 +311,24 @@
   - type: Tag
     tags:
     - Slice
+  - type: Construction
+    graph: DoughRope
+    node: start
+
+- type: entity
+  name: dough rope
+  parent: FoodBakingBase
+  id: FoodDoughRope
+  description: A thin noodle of dough. Can be cooked into a bagel.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - dough
+  - type: Sprite
+    state: dough-rope
+  - type: Construction
+    graph: DoughRope
+    node: rolled
 
 - type: entity
   name: cornmeal dough
@@ -666,3 +690,6 @@
       reagents:
       - ReagentId: CocoaPowder
         Quantity: 2
+  - type: Tag
+    tags:
+      - Ingredient

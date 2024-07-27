@@ -74,6 +74,15 @@ namespace Content.Server.Stack
         /// <summary>
         ///     Spawns a stack of a certain stack type. See <see cref="StackPrototype"/>.
         /// </summary>
+        public EntityUid Spawn(int amount, ProtoId<StackPrototype> id, EntityCoordinates spawnPosition)
+        {
+            var proto = _prototypeManager.Index(id);
+            return Spawn(amount, proto, spawnPosition);
+        }
+
+        /// <summary>
+        ///     Spawns a stack of a certain stack type. See <see cref="StackPrototype"/>.
+        /// </summary>
         public EntityUid Spawn(int amount, StackPrototype prototype, EntityCoordinates spawnPosition)
         {
             // Set the output result parameter to the new stack entity...

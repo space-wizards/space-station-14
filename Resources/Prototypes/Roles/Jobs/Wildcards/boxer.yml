@@ -17,3 +17,6 @@
     ears: ClothingHeadsetService
     shoes: ClothingShoesColorRed
     belt: ClothingBeltChampion
+  #storage:
+    #back:
+    #- Stuff
