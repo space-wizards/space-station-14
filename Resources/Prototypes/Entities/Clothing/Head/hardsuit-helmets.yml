@@ -165,9 +165,24 @@
   description: Armored hardsuit helmet for security needs.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/security.rsi
+    sprite: GreyStation/Clothing/Head/Hardsuits/security.rsi # GreyStation Resprite
+    layers:
+    - state: icon
+    - map: [ "light" ]
+      state: icon-flash
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/security.rsi
+    sprite: GreyStation/Clothing/Head/Hardsuits/security.rsi # GreyStation Resprite
+    clothingVisuals:
+      head:
+      - state: off-equipped-HELMET
+      - state: equipped-head-unshaded
+  - type: ToggleableLightVisuals # GreyStation Resprite
+    spriteLayer: light
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
+      - state: equipped-head-unshaded
+        shader: unshaded
   - type: PointLight
     color: "#ffeead"
   - type: PressureProtection
@@ -215,9 +230,24 @@
   description: A modified riot helmet. Oddly comfortable.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/security-warden.rsi
+    sprite: GreyStation/Clothing/Head/Hardsuits/security-warden.rsi # GreyStation Resprite
+    layers:
+    - state: icon
+    - map: [ "light" ]
+      state: icon-flash
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/security-warden.rsi
+    sprite: GreyStation/Clothing/Head/Hardsuits/security-warden.rsi # GreyStation Resprite
+    clothingVisuals:
+      head:
+      - state: off-equipped-HELMET
+      - state: equipped-head-unshaded
+  - type: ToggleableLightVisuals # GreyStation Resprite
+    spriteLayer: light
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
+      - state: equipped-head-unshaded
+        shader: unshaded
   - type: PointLight
     color: "#ffeead"
   - type: PressureProtection
@@ -325,9 +355,24 @@
   description: Security hardsuit helmet with the latest top secret NT-HUD software. Belongs to the HoS.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/security-red.rsi
+    sprite: GreyStation/Clothing/Head/Hardsuits/security-red.rsi # GreyStation Resprite
+    layers:
+    - state: icon
+    - map: [ "light" ]
+      state: icon-flash
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/security-red.rsi
+    sprite: GreyStation/Clothing/Head/Hardsuits/security-red.rsi # GreyStation Resprite
+    clothingVisuals:
+      head:
+      - state: off-equipped-HELMET
+      - state: equipped-head-unshaded
+  - type: ToggleableLightVisuals # GreyStation Resprite
+    spriteLayer: light
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
+      - state: equipped-head-unshaded
+        shader: unshaded
   - type: PointLight
     color: "#ffeead"
   - type: PressureProtection
