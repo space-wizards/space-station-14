@@ -1,80 +1,4 @@
 ﻿Entries:
-- author: osjarw
-  changes:
-  - message: Fixed some anomaly behaviours pulsing at wrong rates.
-    type: Fix
-  id: 6481
-  time: '2024-04-28T09:28:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27435
-- author: Ubaser
-  changes:
-  - message: Pyrotton can now be mutated from cotton.
-    type: Add
-  id: 6482
-  time: '2024-04-28T11:07:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27200
-- author: Plykiya
-  changes:
-  - message: You can now pick up Smile and put them in your bag.
-    type: Add
-  id: 6483
-  time: '2024-04-29T02:44:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27458
-- author: Beck Thompson, CoffeePoweredPHD
-  changes:
-  - message: Fixed infinite reagent duplication glitch with toilets and drains.
-    type: Fix
-  - message: Dirty water toilets now function correctly as toilets.
-    type: Fix
-  id: 6484
-  time: '2024-04-29T03:08:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27446
-- author: Nopey
-  changes:
-  - message: Many more items can now be recycled, including mops, medkits, and stun
-      batons.
-    type: Tweak
-  id: 6485
-  time: '2024-04-29T03:36:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24435
-- author: Hanzdegloker
-  changes:
-  - message: '"Denied" and "Approved" stamps are now guaranteed to appear in the lockers
-      of the HoP and QM.'
-    type: Tweak
-  id: 6486
-  time: '2024-04-29T03:38:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25604
-- author: Potato1234_x
-  changes:
-  - message: Added rainbow weed. It is obtained by mutating regular weed.
-    type: Add
-  id: 6487
-  time: '2024-04-29T04:06:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25759
-- author: Gotimanga
-  changes:
-  - message: Chemists can now create opporozidone, which reverses the effects of rotting
-      in deceased patients while in cryo.
-    type: Add
-  id: 6488
-  time: '2024-04-29T04:13:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24074
-- author: Mangohydra
-  changes:
-  - message: Added a new syndicate cyborg module that contains a very dangerous explosive
-      as a 4tc purchase.
-    type: Add
-  id: 6489
-  time: '2024-04-29T04:16:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25815
-- author: Morb0
-  changes:
-  - message: Added emote panel (by default Y)
-    type: Add
-  id: 6490
-  time: '2024-04-29T04:38:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26702
 - author: MilenVolf
   changes:
   - message: Borgs now have brand new voice and walking sounds.
@@ -3780,3 +3704,80 @@
   id: 6980
   time: '2024-07-25T10:52:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29629
+- author: Plykiya
+  changes:
+  - message: You can now build atmos gas pipes through things like walls.
+    type: Tweak
+  id: 6981
+  time: '2024-07-25T23:26:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28707
+- author: Ilya246
+  changes:
+  - message: Nuclear operative reinforcements now come with full nuclear operative
+      gear (and a toy carp) at no additional cost.
+    type: Tweak
+  - message: Nuclear operative reinforcements now get nuclear operative names.
+    type: Tweak
+  id: 6982
+  time: '2024-07-25T23:37:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30173
+- author: Cojoke-dot
+  changes:
+  - message: Engineering goggles and other similar-looking eyewear now help block
+      identity.
+    type: Tweak
+  - message: Radiation suit's hood now blocks identity.
+    type: Fix
+  id: 6983
+  time: '2024-07-26T05:26:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30305
+- author: Moomoobeef
+  changes:
+  - message: Some radio channel colors have been tweaked in order to be more easily
+      distinguishable.
+    type: Tweak
+  id: 6984
+  time: '2024-07-26T06:47:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30133
+- author: Errant
+  changes:
+  - message: Replay ghosts now actually spawn on the proper station, take two.
+    type: Fix
+  id: 6985
+  time: '2024-07-26T12:59:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30273
+- author: themias
+  changes:
+  - message: Arcade machines are functional again
+    type: Fix
+  id: 6986
+  time: '2024-07-26T17:30:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30376
+- author: themias
+  changes:
+  - message: Zombies now get uncuffed upon transformation
+    type: Fix
+  id: 6987
+  time: '2024-07-26T18:48:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30321
+- author: metalgearsloth
+  changes:
+  - message: Fix grid labels getting spammed from VGRoid.
+    type: Fix
+  id: 6988
+  time: '2024-07-27T01:54:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29946
+- author: GoldenCan
+  changes:
+  - message: Added a Security Clown Mask which is obtainable by hacking a SecDrobe.
+    type: Add
+  id: 6989
+  time: '2024-07-27T04:09:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30249
+- author: Plykiya
+  changes:
+  - message: Thief game rule now properly selects more than one thief.
+    type: Fix
+  id: 6990
+  time: '2024-07-27T07:27:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30393
