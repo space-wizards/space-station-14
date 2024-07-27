@@ -48,12 +48,12 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      70: Critical
+      75: Critical
       140: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      40: 0.7
-      55: 0.5
+      40: 0.9
+      55: 0.7
   - type: MeleeWeapon
     soundHit:
       collection: AlienClaw
