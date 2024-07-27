@@ -128,6 +128,8 @@
   suffix: keg
   description: You probably shouldn't stick around to see if this is armed. It has a tap on the side.
   components:
+  - type: Transform
+    anchored: false
   - type: NukeLabel
   - type: Sprite
     sprite: Objects/Devices/nuke.rsi
@@ -154,7 +156,7 @@
         pride:
           pride: { visible: true }
   - type: Physics
-    bodyType: Static
+    bodyType: Dynamic
   - type: Fixtures
     fixtures:
       fix1:
