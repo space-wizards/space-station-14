@@ -530,7 +530,7 @@ namespace Content.Shared.Cuffs
             return true;
         }
 
-        public bool IsCuffed(EntityUid target, bool requireFullyCuffed = false, CuffableComponent? cuffable = null)
+        public bool IsCuffed(EntityUid target, bool requireFullyCuffed = true, CuffableComponent? cuffable = null)
         {
             if (!Resolve(target, ref cuffable, false))
                 return false;
