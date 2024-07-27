@@ -502,6 +502,9 @@
       - TemperatureProtection
       tags:
       - Scarf
+    blacklist:
+      components:
+      - ToggleableClothing
 
 - type: cargoBounty
   id: BountyBattery
