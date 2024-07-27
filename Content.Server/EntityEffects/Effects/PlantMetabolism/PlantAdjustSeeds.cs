@@ -1,14 +1,18 @@
 ﻿using Content.Server.Botany.Systems;
-using Content.Shared.Chemistry.Reagent;
+using Content.Shared.EntityEffects;
 using Content.Shared.Popups;
 
-namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
+namespace Content.Server.EntityEffects.Effects.PlantMetabolism
+
 {
     public sealed partial class PlantAdjustSeeds : PlantAdjustAttribute
     {
-        public override void Effect(ReagentEffectArgs args)
+
+        public override string GuidebookAttributeName { get; set; } = "plant-attribute-seeds";
+
+        public override void Effect(EntityEffectBaseArgs args)
         {
-            if (!CanMetabolize(args.SolutionEntity, out var plantHolderComp, args.EntityManager))
+            if (!CanMetabolize(args.TargetEntity, out var plantHolderComp, args.EntityManager, mustHaveAlivePlant: false))
                 return;
 
             if (plantHolderComp.Seed == null)
@@ -20,14 +24,14 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
             if (Amount < 0) // If the amount is negative, destroy seeds
                 if (plantHolderComp.Seed.Seedless == false)
                 {
-                    popupSystem.PopupEntity(Loc.GetString("botany-plant-seedsdestroyed"), args.SolutionEntity, PopupType.SmallCaution);
+                    popupSystem.PopupEntity(Loc.GetString("botany-plant-seedsdestroyed"), args.TargetEntity, PopupType.SmallCaution);
                     plantHolderComp.Seed.Seedless = true;
                 }
 
             if (Amount > 0) // If it's positive, restore them!
                 if (plantHolderComp.Seed.Seedless)
                 {
-                    popupSystem.PopupEntity(Loc.GetString("botany-plant-seedsrestored"), args.SolutionEntity);
+                    popupSystem.PopupEntity(Loc.GetString("botany-plant-seedsrestored"), args.TargetEntity);
                     plantHolderComp.Seed.Seedless = false;
                 }
 
