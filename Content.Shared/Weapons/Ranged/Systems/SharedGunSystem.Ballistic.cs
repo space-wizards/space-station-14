@@ -76,6 +76,7 @@ public abstract partial class SharedGunSystem
 
         args.Handled = true;
 
+        // Continuous loading
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.FillDelay, new AmmoFillDoAfterEvent(), used: uid, target: args.Target, eventTarget: uid)
         {
             BreakOnMove = true,

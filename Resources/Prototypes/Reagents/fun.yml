@@ -52,7 +52,7 @@
   color: "#FFD35D"
   tileReactions:
   - !type:CreateEntityTileReaction
-    entity: MobBee
+    entity: MobAngryBee
     usage: 2
     maxOnTile: 2
     randomOffsetMax: 0.3
