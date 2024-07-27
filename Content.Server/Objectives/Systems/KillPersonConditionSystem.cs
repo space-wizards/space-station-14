@@ -4,6 +4,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Shared.CCVar;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
+using Content.Shared.Preferences;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Configuration;
 using Robust.Shared.Random;
@@ -116,6 +117,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
 
         // target already assigned
         if (target.Target != null)
+            args.Cancelled = true;
             return;
 
         // no other humans to kill
@@ -126,22 +128,36 @@ public sealed class KillPersonConditionSystem : EntitySystem
             return;
         }
 
-        var traitors = Enumerable.ToList<(EntityUid Id, MindComponent Mind)>(_traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind));
+        var traitors = Enumerable.ToList(_traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind)).Select(t => t.Id).ToList();
         // You are the first/only traitor.
         if (traitors.Count == 0)
         {
-            // Fallback to assign people who COULD be assigned as traitor - quick hack for SVS gamemode. Nothing else currently uses this, so it should be fine?
-            // var allValidTraitorCandidates = new List<(EntityUid Id, MindComponent Mind)>;
-            // foreach (var mind in allHumans)
-            // {
-            //     if (_job.MindTryGetJob(mind, out _, out var prototype) && prototype.CanBeAntag)
-            //         allValidTraitorCandidates.Add(mind, );
-            // }
-            // traitors = allValidTraitorCandidates;
-            args.Cancelled = true;
-            return;
+            //Fallback to assign people who COULD be assigned as traitor - quick hack for SVS gamemode. Nothing else currently uses this, so it should be fine?
+            var allValidTraitorCandidates = new List<EntityUid>();
+            foreach (var mind in allHumans)
+            {
+                if (_job.MindTryGetJob(mind, out _, out var prototype) && prototype.CanBeAntag)
+                {   // Gotta think about structure here.
+                    // Get session from mind
+                    // Get user ID from session
+                    // Get preferences from character profile based on session
+                    // Check preferences for match with Traitor rule/role/whatever it is
+                    // Handle lack of players able to be traitors -  I guess just cancel the objective? Fuck
+                    // _mind.TryGetSession(mind, out var session);
+                    // var pref = (HumanoidCharacterProfile)_pref.GetPreferences(session.UserId).SelectedCharacter;
+                    allValidTraitorCandidates.Add(mind);
+                }
+
+            }
+            // Cancel if no candidates found
+            if (allValidTraitorCandidates.Count == 0)
+            {
+                args.Cancelled = true;
+                return;
+            }
+            traitors = allValidTraitorCandidates;
         }
-        _target.SetTarget(uid, _random.Pick(traitors).Id, target);
+        _target.SetTarget(uid, _random.Pick(traitors), target);
     }
 
     private float GetProgress(EntityUid target, bool requireDead)
