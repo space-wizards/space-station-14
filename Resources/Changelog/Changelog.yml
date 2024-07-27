@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Gotimanga
-  changes:
-  - message: Chemists can now create opporozidone, which reverses the effects of rotting
-      in deceased patients while in cryo.
-    type: Add
-  id: 6488
-  time: '2024-04-29T04:13:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24074
 - author: Mangohydra
   changes:
   - message: Added a new syndicate cyborg module that contains a very dangerous explosive
@@ -3783,3 +3775,10 @@
   id: 6987
   time: '2024-07-26T18:48:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30321
+- author: metalgearsloth
+  changes:
+  - message: Fix grid labels getting spammed from VGRoid.
+    type: Fix
+  id: 6988
+  time: '2024-07-27T01:54:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29946
