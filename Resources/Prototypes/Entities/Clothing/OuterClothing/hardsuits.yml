@@ -194,9 +194,9 @@
   description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/security.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Hardsuits/security.rsi # GreyStation Resprite
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/security.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Hardsuits/security.rsi # GreyStation Resprite
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
@@ -251,9 +251,9 @@
   description: A specialized riot suit geared to combat low pressure environments.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Hardsuits/security-warden.rsi # GreyStation Resprite
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Hardsuits/security-warden.rsi # GreyStation Resprite
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
@@ -416,9 +416,9 @@
   description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/security-red.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Hardsuits/security-red.rsi # GreyStation Resprite
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/security-red.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Hardsuits/security-red.rsi # GreyStation Resprite
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 1000
