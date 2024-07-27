@@ -1,6 +1,7 @@
 using Content.Server.Objectives.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.GameTicking.Rules;
+using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
@@ -20,12 +21,12 @@ public sealed class KillPersonConditionSystem : EntitySystem
 {
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly IServerPreferencesManager _pref = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedJobSystem _job = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly TargetObjectiveSystem _target = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -117,7 +118,6 @@ public sealed class KillPersonConditionSystem : EntitySystem
 
         // target already assigned
         if (target.Target != null)
-            args.Cancelled = true;
             return;
 
         // no other humans to kill
@@ -134,26 +134,22 @@ public sealed class KillPersonConditionSystem : EntitySystem
         {
             //Fallback to assign people who COULD be assigned as traitor - quick hack for SVS gamemode. Nothing else currently uses this, so it should be fine?
             var allValidTraitorCandidates = new List<EntityUid>();
-            foreach (var mind in allHumans)
+            if (this._traitorRule.CurrentAntagPool != null)
             {
-                if (_job.MindTryGetJob(mind, out _, out var prototype) && prototype.CanBeAntag)
-                {   // Gotta think about structure here.
-                    // Get session from mind
-                    // Get user ID from session
-                    // Get preferences from character profile based on session
-                    // Check preferences for match with Traitor rule/role/whatever it is
-                    // Handle lack of players able to be traitors -  I guess just cancel the objective? Fuck
-                    // _mind.TryGetSession(mind, out var session);
-                    // var pref = (HumanoidCharacterProfile)_pref.GetPreferences(session.UserId).SelectedCharacter;
-                    allValidTraitorCandidates.Add(mind);
+                var poolSessions  = this._traitorRule.CurrentAntagPool.GetPoolSessions();
+                foreach (var mind in allHumans)
+                {
+                    if (_job.MindTryGetJob(mind, out _, out var prototype) && prototype.CanBeAntag && _mind.TryGetSession(mind, out var session) && poolSessions.Contains(session))
+                    {
+                        allValidTraitorCandidates.Add(mind);
+                    }
                 }
-
             }
-            // Cancel if no candidates found
+
+            // Just kill some random nerd if there's literally not a single potential traitor currently available.
             if (allValidTraitorCandidates.Count == 0)
             {
-                args.Cancelled = true;
-                return;
+                allValidTraitorCandidates = allHumans;
             }
             traitors = allValidTraitorCandidates;
         }

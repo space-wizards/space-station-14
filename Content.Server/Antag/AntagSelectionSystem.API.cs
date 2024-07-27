@@ -334,7 +334,7 @@ public sealed partial class AntagSelectionSystem
 
         if (!TryGetNextAvailableDefinition(rule, out var def))
             def = rule.Comp.Definitions.Last();
-        MakeAntag(rule, player, def.Value);
+        MakeAntag(rule, player, def.Value, null);
     }
 
     /// <summary>

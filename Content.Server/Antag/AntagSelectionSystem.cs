@@ -72,7 +72,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (!Exists(rule) || !TryComp<AntagSelectionComponent>(rule, out var select))
             return;
 
-        MakeAntag((rule, select), args.Player, def, ignoreSpawner: true);
+        MakeAntag((rule, select), args.Player, def, null, ignoreSpawner: true);
         args.TookRole = true;
         _ghostRole.UnregisterGhostRole((ent, Comp<GhostRoleComponent>(ent)));
     }
@@ -131,8 +131,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         foreach (var (uid, antag) in rules)
         {
-            if (!antag.Definitions.Any(p => p.ForceAllPossible) || !RobustRandom.Prob(LateJoinRandomChance))
-                continue;
+            if (!antag.Definitions.Any(p => p.ForceAllPossible))
+                if (!RobustRandom.Prob(LateJoinRandomChance))
+                    continue;
 
             if (!antag.Definitions.Any(p => p.LateJoinAdditional))
                 continue;
@@ -240,7 +241,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 }
             }
 
-            MakeAntag(ent, session, def);
+            MakeAntag(ent, session, def, playerPool);
         }
     }
 
@@ -255,14 +256,14 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (!IsSessionValid(ent, session, def) || !IsEntityValid(session?.AttachedEntity, def))
             return false;
 
-        MakeAntag(ent, session, def, ignoreSpawner);
+        MakeAntag(ent, session, def, null, ignoreSpawner);
         return true;
     }
 
     /// <summary>
     /// Makes a given player into the specified antagonist.
     /// </summary>
-    public void MakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, bool ignoreSpawner = false)
+    public void MakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, AntagSelectionPlayerPool? pool, bool ignoreSpawner = false)
     {
         EntityUid? antagEnt = null;
         var isSpawner = false;
@@ -341,7 +342,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             SendBriefing(session, def.Briefing);
         }
 
-        var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent, def);
+        var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent, def, pool);
         RaiseLocalEvent(ent, ref afterEv, true);
     }
 
@@ -490,4 +491,4 @@ public record struct AntagSelectLocationEvent(ICommonSession? Session, Entity<An
 /// Used for applying additional more complex setup logic.
 /// </summary>
 [ByRefEvent]
-public readonly record struct AfterAntagEntitySelectedEvent(ICommonSession? Session, EntityUid EntityUid, Entity<AntagSelectionComponent> GameRule, AntagSelectionDefinition Def);
+public readonly record struct AfterAntagEntitySelectedEvent(ICommonSession? Session, EntityUid EntityUid, Entity<AntagSelectionComponent> GameRule, AntagSelectionDefinition Def, AntagSelectionPlayerPool? Pool);
