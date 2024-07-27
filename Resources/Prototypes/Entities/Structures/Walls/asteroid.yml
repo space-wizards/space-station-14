@@ -640,6 +640,8 @@
   name: rock
   suffix: planetmap
   components:
+    - type: Reflect # VXS
+      reflectProb: 0
     - type: Transform
       noRot: true
     - type: SoundOnGather
