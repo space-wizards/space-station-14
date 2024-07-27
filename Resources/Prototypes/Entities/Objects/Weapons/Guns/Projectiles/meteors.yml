@@ -112,6 +112,11 @@
         sound:
           collection: MetalBreak
       - !type:ExplodeBehavior
+      - !type:WeightedSpawnEntityBehavior
+        weightedSpawn: "MeteorSpawnAsteroidWallTable"
+        minSpawn: 2
+        maxSpawn: 4
+        spawnAfter: 0.5
 
 - type: entity
   parent: BaseMeteor
@@ -147,6 +152,11 @@
         sound:
           collection: MetalBreak
       - !type:ExplodeBehavior
+      - !type:WeightedSpawnEntityBehavior
+        weightedSpawn: "MeteorSpawnAsteroidWallTable"
+        minSpawn: 3
+        maxSpawn: 6
+        spawnAfter: 0.5
 
 - type: entity
   parent: BaseMeteor
@@ -169,6 +179,11 @@
         sound:
           collection: MetalBreak
       - !type:ExplodeBehavior
+      - !type:WeightedSpawnEntityBehavior
+        weightedSpawn: "MeteorSpawnAsteroidWallTable"
+        minSpawn: 5
+        maxSpawn: 8
+        spawnAfter: 0.5
 
 - type: entity
   parent: BaseMeteor
@@ -204,3 +219,12 @@
       - !type:SpillBehavior
         solution: blood
       - !type:ExplodeBehavior
+
+- type: entity
+  id: MeteorCollisionAsteroidWallSpawner
+  categories: [ HideSpawnMenu, Spawner ]
+  components:
+  - type: Transform
+    anchored: True
+  - type: Physics
+    bodyType: Static
