@@ -38,9 +38,8 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     private bool _enableShuttlePosition;
     private EmergencyShuttleOverlay? _overlay;
 
-    public override void Initialize()
+    private void InitializeEmergency()
     {
-        base.Initialize();
         SubscribeNetworkEvent<EmergencyShuttlePositionMessage>(OnShuttlePosMessage);
     }
 

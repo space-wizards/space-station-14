@@ -3,8 +3,8 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Chat.Systems;
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Server.Chemistry.ReagentEffectConditions;
-using Content.Server.Chemistry.ReagentEffects;
+using Content.Server.EntityEffects.EffectConditions;
+using Content.Server.EntityEffects.Effects;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
@@ -13,6 +13,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.EntityEffects;
 using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -261,7 +262,7 @@ public sealed class RespiratorSystem : EntitySystem
         // TODO generalize condition checks
         // this is pretty janky, but I just want to bodge a method that checks if an entity can breathe a gas mixture
         // Applying actual reaction effects require a full ReagentEffectArgs struct.
-        bool CanMetabolize(ReagentEffect effect)
+        bool CanMetabolize(EntityEffect effect)
         {
             if (effect.Conditions == null)
                 return true;
@@ -326,6 +327,9 @@ public sealed class RespiratorSystem : EntitySystem
         Entity<RespiratorComponent> ent,
         ref ApplyMetabolicMultiplierEvent args)
     {
+        // TODO REFACTOR THIS
+        // This will slowly drift over time due to floating point errors.
+        // Instead, raise an event with the base rates and allow modifiers to get applied to it.
         if (args.Apply)
         {
             ent.Comp.UpdateInterval *= args.Multiplier;

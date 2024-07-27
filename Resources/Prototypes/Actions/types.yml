@@ -37,6 +37,7 @@
   description: Turn the light on and off.
   components:
   - type: InstantAction
+    useDelay: 1
     icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
     iconOn: { sprite: Objects/Tools/flashlight.rsi, state: flashlight-on }
     event: !type:ToggleActionEvent

@@ -70,7 +70,7 @@ namespace Content.Shared.ActionBlocker
                 return false;
 
             var ev = new InteractionAttemptEvent(user, target);
-            RaiseLocalEvent(user, ev);
+            RaiseLocalEvent(user, ref ev);
 
             if (ev.Cancelled)
                 return false;
@@ -79,7 +79,7 @@ namespace Content.Shared.ActionBlocker
                 return true;
 
             var targetEv = new GettingInteractedWithAttemptEvent(user, target);
-            RaiseLocalEvent(target.Value, targetEv);
+            RaiseLocalEvent(target.Value, ref targetEv);
 
             return !targetEv.Cancelled;
         }
@@ -110,7 +110,7 @@ namespace Content.Shared.ActionBlocker
         public bool CanConsciouslyPerformAction(EntityUid user)
         {
             var ev = new ConsciousAttemptEvent(user);
-            RaiseLocalEvent(user, ev);
+            RaiseLocalEvent(user, ref ev);
 
             return !ev.Cancelled;
         }
@@ -120,7 +120,13 @@ namespace Content.Shared.ActionBlocker
             var ev = new ThrowAttemptEvent(user, itemUid);
             RaiseLocalEvent(user, ev);
 
-            return !ev.Cancelled;
+            if (ev.Cancelled)
+                return false;
+
+            var itemEv = new ThrowItemAttemptEvent(user);
+            RaiseLocalEvent(itemUid, ref itemEv);
+
+            return !itemEv.Cancelled;
         }
 
         public bool CanSpeak(EntityUid uid)
