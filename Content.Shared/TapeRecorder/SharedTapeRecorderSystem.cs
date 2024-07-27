@@ -86,10 +86,10 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         }
     }
 
-    private void OnActivate(EntityUid uid, TapeRecorderComponent tapeRecorder, ActivateInWorldEvent args)
+    private void OnActivate(Entity<TapeRecorderComponent> tapeRecorder, ref ActivateInWorldEvent args)
     {
-        _uiSystem.OpenUi(uid, TapeRecorderUIKey.Key, args.User);
-        tapeRecorder.NeedUIUpdate = true;
+        _uiSystem.OpenUi(tapeRecorder.Owner, TapeRecorderUIKey.Key, args.User);
+        tapeRecorder.Comp.NeedUIUpdate = true;
     }
 
     /// <summary>

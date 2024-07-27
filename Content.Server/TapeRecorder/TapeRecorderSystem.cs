@@ -7,6 +7,7 @@ using Content.Shared.TapeRecorder;
 using Content.Shared.TapeRecorder.Components;
 using Content.Shared.TapeRecorder.Events;
 using Robust.Server.Audio;
+using Robust.Shared.Timing;
 using System.Linq;
 using System.Text;
 
@@ -19,6 +20,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
     [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
     [Dependency] private readonly PaperSystem _paperSystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {
@@ -114,13 +116,18 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
         return false;
     }
 
-    private void OnPrintMessage(EntityUid uid, TapeRecorderComponent tapeRecorder, PrintTapeRecorderMessage args)
+    private void OnPrintMessage(Entity<TapeRecorderComponent> tapeRecorder, ref PrintTapeRecorderMessage args)
     {
-        var text = new StringBuilder();
-        var paper = EntityManager.SpawnEntity(tapeRecorder.PaperPrototype, Transform(uid).Coordinates);
+        var comp = tapeRecorder.Comp;
 
-        if (!TryGetTapeCassette(uid, out var cassette))
+        if (comp.CooldownEndTime > _gameTiming.CurTime)
             return;
+
+        if (!TryGetTapeCassette(tapeRecorder, out var cassette))
+            return;
+
+        var text = new StringBuilder();
+        var paper = EntityManager.SpawnEntity(comp.PaperPrototype, Transform(tapeRecorder).Coordinates);
 
         // Sorting list by time for overwrite order
         var data = cassette.Comp.RecordedData;
@@ -136,7 +143,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
 
         _metaDataSystem.SetEntityName(paper, Loc.GetString("tape-recorder-transcript-title"));
 
-        _audioSystem.PlayPvs(tapeRecorder.PrintSound, uid);
+        _audioSystem.PlayPvs(comp.PrintSound, tapeRecorder);
 
         text.AppendLine(Loc.GetString("tape-recorder-print-start-text"));
         text.AppendLine();
@@ -157,5 +164,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
         text.Append(Loc.GetString("tape-recorder-print-end-text"));
 
         _paperSystem.SetContent(paper, text.ToString());
+
+        comp.CooldownEndTime = _gameTiming.CurTime + comp.PrintCooldown;
     }
 }

@@ -24,7 +24,7 @@ public sealed partial class TapeRecorderComponent : Component
     /// <summary>
     /// Paper that will spawn when printing transcript
     /// </summary>
-    [DataField("paperPrototype")]
+    [DataField]
     public string PaperPrototype = "Paper";
 
     /// <summary>
@@ -33,6 +33,9 @@ public sealed partial class TapeRecorderComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float RewindSpeed = 3f;
+
+    [DataField]
+    public TimeSpan CooldownEndTime = TimeSpan.Zero;
 
     /// <summary>
     /// Cooldown of print button
@@ -43,7 +46,7 @@ public sealed partial class TapeRecorderComponent : Component
     /// <summary>
     /// Sound on print transcript
     /// </summary>
-    [DataField("printSound")]
+    [DataField]
     public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/diagnoser_printing.ogg")
     {
         Params = AudioParams.Default.WithVolume(-2f).WithMaxDistance(3f)
