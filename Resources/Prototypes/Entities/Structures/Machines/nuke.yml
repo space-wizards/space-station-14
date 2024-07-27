@@ -167,7 +167,7 @@
         mask:
         - MachineMask
         layer:
-        - HalfWallLayer
+        - WallLayer
   - type: SolutionContainerManager
     solutions:
       tank:
