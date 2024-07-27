@@ -200,11 +200,11 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Item
-    size: Small
+    size: Normal # VXS
     sprite: Objects/Weapons/Guns/Shotguns/sawn_inhands_64x.rsi
   - type: Gun
     cameraRecoilScalar: 2
-    fireRate: 4
+    fireRate: 3 # VXS
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
