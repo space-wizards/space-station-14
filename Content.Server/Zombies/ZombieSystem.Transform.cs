@@ -37,7 +37,6 @@ using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Cuffs.Components;
-using Content.Server.NPC.Queries.Considerations;
 using Content.Shared.Cuffs;
 
 namespace Content.Server.Zombies
