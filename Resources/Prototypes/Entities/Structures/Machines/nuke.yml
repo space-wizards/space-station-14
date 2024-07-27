@@ -163,7 +163,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.45
-        density: 255 # Has "bluespace technology" to make it lighter, whatever that means. Don't mind the fact that this is lighter then a high capacity fuel tank.
+        density: 255 
         mask:
         - MachineMask
         layer:
