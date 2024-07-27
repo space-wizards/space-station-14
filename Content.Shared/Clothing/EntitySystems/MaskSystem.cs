@@ -50,18 +50,9 @@ public sealed class MaskSystem : EntitySystem
         ToggleMaskComponents(uid, mask, args.Performer, mask.EquippedPrefix);
     }
 
-    public void SetOverride(EntityUid uid, MaskComponent mask, bool bit)
-    {
-        Dirty(uid, mask);
-        mask.WeldingToggleOverride = bit;
-    }
-
     // set to untoggled when unequipped, so it isn't left in a 'pulled down' state
     private void OnGotUnequipped(EntityUid uid, MaskComponent mask, GotUnequippedEvent args)
     {
-        if (!mask.IsToggled || mask.WeldingToggleOverride)
-            return;
-
         mask.IsToggled = false;
         ToggleMaskComponents(uid, mask, args.Equipee, mask.EquippedPrefix, true);
     }
