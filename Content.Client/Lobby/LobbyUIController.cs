@@ -437,10 +437,42 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     public EntityUid LoadProfileEntity(HumanoidCharacterProfile? humanoid, JobPrototype? job, bool jobClothes)
     {
         EntityUid dummyEnt;
+        bool isDummy = false;
 
         if (humanoid is not null)
         {
+            job ??= GetPreferredJob(humanoid);
+            var jobLoadout = LoadoutSystem.GetJobPrototype(job.ID);
+            humanoid.Loadouts.TryGetValue(jobLoadout, out var loadoutValue);
+
             var dummy = _prototypeManager.Index<SpeciesPrototype>(humanoid.Species).DollPrototype;
+
+            if (loadoutValue != null)
+            {
+                foreach (var group in loadoutValue.SelectedLoadouts)
+                {
+                    foreach (var items in group.Value)
+                    {
+                        if (!_prototypeManager.TryIndex(items.Prototype, out var loadoutProto))
+                        {
+                            continue;
+                        }
+
+                        if (!_prototypeManager.TryIndex(loadoutProto.Equipment, out var equipment))
+                        {
+                            continue;
+                        }
+
+                        if (equipment.EntityDummy != String.Empty && equipment.EntityDummy != null)
+                        {
+                            isDummy = true;
+                            dummy = equipment.EntityDummy;
+                            break;
+                        }
+                    }
+                }
+            }
+
             dummyEnt = EntityManager.SpawnEntity(dummy, MapCoordinates.Nullspace);
         }
         else
@@ -448,11 +480,13 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             dummyEnt = EntityManager.SpawnEntity(_prototypeManager.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
         }
 
-        _humanoid.LoadProfile(dummyEnt, humanoid);
-
-        if (humanoid != null && jobClothes)
+        if (!isDummy)
         {
-            job ??= GetPreferredJob(humanoid);
+            _humanoid.LoadProfile(dummyEnt, humanoid);
+        }
+
+        if (humanoid != null && jobClothes && job != null)
+        {
             GiveDummyJobClothes(dummyEnt, humanoid, job);
 
             if (_prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
