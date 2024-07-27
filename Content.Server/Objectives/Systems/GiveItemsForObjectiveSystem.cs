@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Robust.Server.GameObjects;
+using Robust.Shared.Random;
 using Content.Shared.Storage.EntitySystems;
 using Content.Server.Objectives.Components;
 using Content.Shared.Objectives.Components;
@@ -16,12 +17,12 @@ public sealed class GiveItemsForObjectiveSystem : EntitySystem
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
         SubscribeLocalEvent<GiveItemsForObjectiveComponent, ObjectiveAddedToMindEvent>(OnAddedToMind, before: new[] { typeof(StealConditionSystem) });
         SubscribeLocalEvent<GiveItemsForObjectiveComponent, ObjectiveAssignedEvent>(OnAssign);
-
     }
 
     private void OnAssign(Entity<GiveItemsForObjectiveComponent> entity, ref ObjectiveAssignedEvent args)
@@ -40,12 +41,17 @@ public sealed class GiveItemsForObjectiveSystem : EntitySystem
             return;
         }
 
-        var obj = Spawn(entity.Comp.ItemToSpawnPrototype);
+        // Check if all the items can fit!
+        foreach (var item in entity.Comp.ItemsToSpawnPrototypes)
+        {
+            var obj = Spawn(item);
 
-        if (!_storage.CanInsert(slot.Value, obj, out _, storageComp: storageComp))
-            args.Cancelled |= entity.Comp.CancelAssignmentOnNoSpace;
+            if (!_storage.CanInsert(slot.Value, obj, out _, storageComp: storageComp))
+                args.Cancelled |= entity.Comp.CancelAssignmentOnNoSpace;
 
-        Del(obj);
+            Del(obj);
+        }
+
     }
 
     private void OnAddedToMind(Entity<GiveItemsForObjectiveComponent> entity, ref ObjectiveAddedToMindEvent args)
@@ -60,7 +66,7 @@ public sealed class GiveItemsForObjectiveSystem : EntitySystem
 
         // Spawn the item at the players location.
         var cords = _transformSystem.GetMapCoordinates(mindOwner.Value);
-        EntityUid obj = Spawn(entity.Comp.ItemToSpawnPrototype, cords);
+        EntityUid obj = Spawn(_random.Pick(entity.Comp.ItemsToSpawnPrototypes), cords);
 
         // The loop should never go more than a few times in very unlikely situations.
         var attempts = 30;
@@ -73,7 +79,7 @@ public sealed class GiveItemsForObjectiveSystem : EntitySystem
                 break;
 
             Del(obj);
-            obj = Spawn(entity.Comp.ItemToSpawnPrototype, cords);
+            obj = Spawn(_random.Pick(entity.Comp.ItemsToSpawnPrototypes), cords);
 
             if (i == attempts - 1)
                 throw new Exception($"Could not spawn a valid entity within {attempts}.");

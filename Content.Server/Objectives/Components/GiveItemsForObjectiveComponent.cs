@@ -13,7 +13,7 @@ public sealed partial class GiveItemsForObjectiveComponent : Component
     ///     Prototype of the item being spawned.
     /// </summary>
     [DataField(required: true)]
-    public string ItemToSpawnPrototype;
+    public List<string> ItemsToSpawnPrototypes;
 
     /// <summary>
     ///     If true, will cancel the assigment of the objective if the item can't be fit into the players backpack.

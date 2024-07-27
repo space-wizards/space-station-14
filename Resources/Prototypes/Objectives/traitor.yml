@@ -317,7 +317,7 @@
   - type: Objective
     difficulty: 1.75
   - type: GiveItemsForObjective
-    itemToSpawnPrototype: ImportantDocument
+    itemsToSpawnPrototypes: [ArrestLogsDocument, RadioLogsDocument, StationMaintenceReportDocument, ResesarchReportDocument, MedicalLogsDocument, SupplyReportDocument, CentralCommandReportDocument, CentralCommandAuditDocument, NuclearDeviceMaintainceReportDocument, ArmoryInspectionReportDocument, VaultInspectionReportDocument]
     cancelAssignmentOnNoSpace: true
   - type: HoldDocumentObjective
     title: objective-condition-hold-document-title
@@ -342,7 +342,7 @@
     difficulty: 2
   - type: TargetObjective
   - type: GiveItemsForObjective
-    itemToSpawnPrototype: ImportantDocument
+    itemsToSpawnPrototypes: [ArrestLogsDocument, RadioLogsDocument, StationMaintenceReportDocument, ResesarchReportDocument, MedicalLogsDocument, SupplyReportDocument, CentralCommandReportDocument, CentralCommandAuditDocument, NuclearDeviceMaintainceReportDocument, ArmoryInspectionReportDocument, VaultInspectionReportDocument]
     cancelAssignmentOnNoSpace: true
   - type: TradeDocumentsCondition
     title: objective-condition-trade-document-title
