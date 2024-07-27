@@ -7605,6 +7605,18 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -44.5,3.5
       parent: 1
+  - uid: 3147
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,2.5
+      parent: 1
+  - uid: 3148
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -3.5,2.5
+      parent: 1
   - uid: 4816
     components:
     - type: Transform
@@ -7646,18 +7658,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 23.5,38.5
-      parent: 1
-- proto: AtmosDeviceFanTiny
-  entities:
-  - uid: 3147
-    components:
-    - type: Transform
-      pos: -0.5,2.5
-      parent: 1
-  - uid: 3148
-    components:
-    - type: Transform
-      pos: -3.5,2.5
       parent: 1
 - proto: AtmosFixBlockerMarker
   entities:
