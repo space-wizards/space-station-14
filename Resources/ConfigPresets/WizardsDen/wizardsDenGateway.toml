@@ -15,7 +15,7 @@ baby_jail.enabled = true
 baby_jail.show_reason = true
 baby_jail.max_account_age = 5256000 # 10 years. Disabling this check specifically isn't currently supported
 baby_jail.max_overall_minutes = 3000 # 50 hours
-baby_jail.custom_reason = "Sorry! Only new players can join the servers, try joining another one instead!"
+baby_jail.custom_reason = "Sorry! Only new and whitelisted players can join this server. Apply to be whitelisted in our Discord server (discord.ss14.io) or try joining another server instead!"
 baby_jail.whitelisted_can_bypass = true
 
 [hub]
