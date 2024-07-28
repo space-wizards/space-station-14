@@ -15,7 +15,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
 {
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomEntityPrototype>), required: true)]
-    public string WeightedSpawn = "MeteorSpawnAsteroidWallTable";
+    public string WeightedSpawn = string.Empty;
 
     /// <summary>
     /// How far away to spawn the entity from the parent position
@@ -33,7 +33,7 @@ public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
     /// The max number of entities to spawn randomly
     /// </summary>
     [DataField]
-    public int MaxSpawn = 4;
+    public int MaxSpawn = 1;
 
     /// <summary>
     /// Time in seconds to wait before spawning entities
