@@ -1,0 +1,30 @@
+- type: entity
+  name: CR-2 veresk
+  parent: BaseWeaponPistol
+  id: WeaponSMGVeresk
+  description: Designed to engage in close combat enemy personnel using individual means of armor protection. Uses .25 caseless.
+  components:
+  - type: Sprite
+    sprite: VXS/Weapons/SMGs/veresk.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: VXS/Weapons/SMGs/veresk.rsi
+  - type: Gun
+    projectileSpeed: 30
+    fireRate: 8
+    minAngle: 6
+    maxAngle: 19
+    shotsPerBurst: 3
+    availableModes:
+    - SemiAuto
+    - Burst
+    - FullAuto
+    soundGunshot:
+      path: /Audio/VXS/Gunshots/SMG/smg2.ogg
+      params:
+        maxDistance: 55
+        volume: 2

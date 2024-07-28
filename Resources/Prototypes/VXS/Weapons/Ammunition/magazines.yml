@@ -1,0 +1,32 @@
+- type: entity
+  id: PistolMagazineVeresk
+  name: veresk magazine (.25 caseless)
+  parent: BaseItem
+  components:
+  - type: Tag
+    tags:
+      - MagazinePistol
+      - MagazineVeresk
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeCaselessRifle
+    capacity: 20
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: VXS/Weapons/Ammunition/Magazines/veresk.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: false
+  - type: Appearance
