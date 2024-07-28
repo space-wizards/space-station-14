@@ -10965,7 +10965,7 @@ entities:
       pos: -20.5,-5.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -16575.39
+      secondsUntilStateChange: -16635.135
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -104401,6 +104401,11 @@ entities:
     - type: Transform
       pos: -70.5,-58.5
       parent: 30
+  - uid: 18210
+    components:
+    - type: Transform
+      pos: -36.5,-39.5
+      parent: 30
   - uid: 18359
     components:
     - type: Transform
@@ -104612,6 +104617,11 @@ entities:
       parent: 30
     - type: ApcPowerReceiver
       powerLoad: 0
+  - uid: 18854
+    components:
+    - type: Transform
+      pos: -69.5,-62.5
+      parent: 30
   - uid: 19579
     components:
     - type: Transform
@@ -114481,6 +114491,13 @@ entities:
     components:
     - type: Transform
       pos: -52.5,32.5
+      parent: 30
+- proto: SpawnPointLibrarian
+  entities:
+  - uid: 18604
+    components:
+    - type: Transform
+      pos: -66.5,-62.5
       parent: 30
 - proto: SpawnPointMedicalDoctor
   entities:
