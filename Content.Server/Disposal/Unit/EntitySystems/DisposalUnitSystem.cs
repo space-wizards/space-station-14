@@ -25,9 +25,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
-using Content.Shared.Standing;
-using Content.Shared.Cuffs.Components;
-using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
@@ -37,7 +34,6 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Disposal.Unit.EntitySystems;
@@ -333,17 +329,12 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
         var currentTime = GameTiming.CurTime;
 
-        if (TryComp<StandingStateComponent>(args.Entity, out var standing) &&
-            !standing.Standing)
+        if (!_actionBlockerSystem.CanMove(args.Entity))
             return;
 
         if (!TryComp(args.Entity, out HandsComponent? hands) ||
             hands.Count == 0 ||
             currentTime < component.LastExitAttempt + ExitAttemptDelay)
-            return;
-
-        if (TryComp<CuffableComponent>(args.Entity, out var cuffable) &&
-            !cuffable.CanStillInteract)
             return;
 
         component.LastExitAttempt = currentTime;

@@ -1,3 +1,4 @@
+using Content.Shared.ActionBlocker;
 using Content.Shared.Burial;
 using Content.Shared.Burial.Components;
 using Content.Shared.DoAfter;
@@ -7,10 +8,7 @@ using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
-using Content.Shared.Standing;
-using Content.Shared.Cuffs.Components;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
 
 namespace Content.Server.Burial.Systems;
 
@@ -20,6 +18,7 @@ public sealed class BurialSystem : EntitySystem
     [Dependency] private readonly SharedEntityStorageSystem _storageSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     public override void Initialize()
     {
@@ -164,12 +163,7 @@ public sealed class BurialSystem : EntitySystem
         if (component.HandDiggingDoAfter != null)
             return;
 
-        if (TryComp<StandingStateComponent>(args.Entity, out var standing) &&
-            !standing.Standing)
-            return;
-
-        if (TryComp<CuffableComponent>(args.Entity, out var cuffable) &&
-            !cuffable.CanStillInteract)
+        if (!_actionBlocker.CanMove(args.Entity))
             return;
 
         var doAfterEventArgs = new DoAfterArgs(EntityManager, args.Entity, component.DigDelay / component.DigOutByHandModifier, new GraveDiggingDoAfterEvent(), uid, target: uid)

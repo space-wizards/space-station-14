@@ -9,7 +9,7 @@ using Content.Shared.Resist;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Standing;
-using Content.Shared.Cuffs.Components;
+using Content.Shared.ActionBlocker;
 
 namespace Content.Server.Resist;
 
@@ -20,6 +20,7 @@ public sealed class ResistLockerSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly WeldableSystem _weldable = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     public override void Initialize()
     {
@@ -36,12 +37,7 @@ public sealed class ResistLockerSystem : EntitySystem
         if (!TryComp(uid, out EntityStorageComponent? storageComponent))
             return;
 
-        if (TryComp<StandingStateComponent>(args.Entity, out var standing) &&
-            !standing.Standing)
-            return;
-
-        if (TryComp<CuffableComponent>(args.Entity, out var cuffable) &&
-            !cuffable.CanStillInteract)
+        if (!_actionBlocker.CanMove(args.Entity))
             return;
 
         if (TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked || _weldable.IsWelded(uid))
