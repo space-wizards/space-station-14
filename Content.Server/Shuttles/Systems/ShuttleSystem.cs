@@ -58,11 +58,15 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly ThrusterSystem _thruster = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
+    private EntityQuery<MapGridComponent> _gridQuery;
+
     public const float TileMassMultiplier = 0.5f;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _gridQuery = GetEntityQuery<MapGridComponent>();
 
         InitializeFTL();
         InitializeGridFills();
