@@ -214,6 +214,9 @@
   id: Bottle
 
 - type: Tag
+  id: Bowl
+
+- type: Tag
   id: BoxCardboard
 
 - type: Tag
@@ -373,6 +376,9 @@
 
 - type: Tag
   id: ChiliBowl
+
+- type: Tag
+  id: Chopsticks
 
 - type: Tag
   id: Cigarette
