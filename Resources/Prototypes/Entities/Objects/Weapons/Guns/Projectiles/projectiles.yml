@@ -720,6 +720,11 @@
     totalIntensity: 150 # a ~2 tile radius
     intensitySlope: 5
     maxIntensity: 10
+  - type: SmokeOnTrigger # VXS
+    duration: 1
+    spreadAmount: 2
+  - type: FlashOnTrigger # VXS
+    range: 3
 
 - type: entity
   id: BulletGrenadeFlash
@@ -732,7 +737,7 @@
     layers:
       - state: grenade
   - type: FlashOnTrigger
-    range: 7
+    range: 8 # VXS
   - type: SpawnOnTrigger
     proto: GrenadeFlashEffect
   - type: ActiveTimerTrigger
@@ -756,6 +761,11 @@
     totalIntensity: 175 # about a ~6 tile radius
     intensitySlope: 1
     maxIntensity: 10
+  - type: SmokeOnTrigger # VXS
+    duration: 2
+    spreadAmount: 3
+  - type: FlashOnTrigger # VXS
+    range: 4
 
 - type: entity
   id: BulletGrenadeEMP

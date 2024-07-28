@@ -20,7 +20,7 @@
     duration: 2
     spreadAmount: 3
   - type: FlashOnTrigger
-    range: 4
+    range: 5
   - type: ClusterGrenade
     fillPrototype: PelletFugasStruya
     maxGrenadesCount: 1
@@ -66,4 +66,4 @@
     duration: 4
     spreadAmount: 6
   - type: FlashOnTrigger
-    range: 2
+    range: 4
