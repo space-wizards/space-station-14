@@ -1,4 +1,5 @@
 using Content.Shared.Temperature.Systems;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Temperature.Components;
 
@@ -11,7 +12,7 @@ namespace Content.Shared.Temperature.Components;
 /// Too hot? Suffering heatstroke, start sweating to cool off and increase thirst.
 /// Too cold? Suffering hypothermia, start shivering to warm up and increase hunger.
 /// </remarks>
-[RegisterComponent, Access(typeof(SharedTemperatureSystem))]
+[RegisterComponent, Access(typeof(SharedTemperatureSystem)), NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class InternalTemperatureComponent : Component
 {
     /// <summary>
@@ -19,6 +20,7 @@ public sealed partial class InternalTemperatureComponent : Component
     /// This gets set to <see cref="TemperatureComponent.CurrentTemperature"/> on mapinit.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
     public float Temperature;
 
     /// <summary>
@@ -26,6 +28,7 @@ public sealed partial class InternalTemperatureComponent : Component
     /// Higher conductivity means its insides will heat up faster.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
     public float Conductivity = 0.5f;
 
     /// <summary>
@@ -34,6 +37,7 @@ public sealed partial class InternalTemperatureComponent : Component
     /// Thicker materials take longer for heat to dissipate.
     /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
     public float Thickness;
 
     /// <summary>
@@ -44,5 +48,6 @@ public sealed partial class InternalTemperatureComponent : Component
     /// For meats etc this should just be the area of the cooked surface not the whole thing as it's only getting heat from one side usually.
     /// </remarks>
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
     public float Area;
 }

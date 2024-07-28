@@ -77,6 +77,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
 
             // exchange heat between inside and surface
             comp.Temperature += degrees;
+            Dirty(uid, comp);
             ForceChangeTemperature(uid, temp.CurrentTemperature - degrees, temp);
         }
 
@@ -272,10 +273,11 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
 
     private void OnInit(EntityUid uid, InternalTemperatureComponent comp, MapInitEvent args)
     {
-        if (!TryComp<TemperatureComponent>(uid, out var temp))
+        if (!TryComp<TemperatureComponent>(uid, out var temp) || comp.Temperature == temp.CurrentTemperature)
             return;
 
         comp.Temperature = temp.CurrentTemperature;
+        Dirty(uid, comp);
     }
 
     private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component,
