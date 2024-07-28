@@ -53,7 +53,7 @@ public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
         {
             for (var i = 0; i < amountToSpawn; i++)
             {
-                var spawner = system.EntityManager.SpawnEntity("MeteorCollisionAsteroidWallSpawner", position.Offset(GetRandomVector()));
+                var spawner = system.EntityManager.SpawnEntity("TemporaryEntityForTimedDespawnSpawners", position.Offset(GetRandomVector()));
                 system.EntityManager.EnsureComponent<TimedDespawnComponent>(spawner, out var timedDespawnComponent);
                 timedDespawnComponent.Lifetime = SpawnAfter;
                 system.EntityManager.EnsureComponent<SpawnOnDespawnComponent>(spawner, out var spawnOnDespawnComponent);
