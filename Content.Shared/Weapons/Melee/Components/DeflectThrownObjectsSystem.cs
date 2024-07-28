@@ -32,20 +32,20 @@ public class DeflectThrownObjectsSystem : EntitySystem
     {
         if(!_gameTiming.IsFirstTimePredicted)
             return;
-           
+
         // Check that it was a wide attack
         if(args.Direction == null)
             return;
-        
+
         if(!_melee.TryComp(ent, out var melee))
             return;
-        
+
         var trns = Transform(args.User);
         var deflected = _entLookup.GetEntitiesInArc(trns.Coordinates, melee.Range, new Angle(args.Direction.Value), (float) melee.Angle.Degrees, LookupFlags.Dynamic);
         foreach(var obj in deflected) {
             if(!_entManager.HasComponent<ThrownItemComponent>(obj))
                 continue;
-            
+
             _throwing.TryThrow(
                 obj,
                 args.Direction.Value,
