@@ -28,11 +28,10 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     [Dependency] private readonly UplinkSystem _uplink = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
-
     [Dependency] private readonly SharedJobSystem _jobs = default!;
 
-    // Used for rounds where all possible players will be antags
     public AntagSelectionPlayerPool? CurrentAntagPool = null;
+    public bool ForceAllPossible = false;
 
     public override void Initialize()
     {
@@ -52,6 +51,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     private void AfterEntitySelected(Entity<TraitorRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
     {
         CurrentAntagPool = args.Pool;
+        ForceAllPossible = args.Def.ForceAllPossible;
         MakeTraitor(args.EntityUid, ent);
     }
 

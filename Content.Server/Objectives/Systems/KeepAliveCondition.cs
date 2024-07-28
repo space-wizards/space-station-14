@@ -15,7 +15,6 @@ public sealed class KeepAliveConditionSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
-
     [Dependency] private readonly SharedJobSystem _job = default!;
     [Dependency] private readonly TargetObjectiveSystem _target = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
@@ -47,11 +46,19 @@ public sealed class KeepAliveConditionSystem : EntitySystem
         }
 
         var traitors = Enumerable.ToList<(EntityUid Id, MindComponent Mind)>(_traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind)).Select(t => t.Id).ToList();
+        args.Mind.ObjectiveTargets.ForEach(p => traitors.Remove(p));
 
         // You are the first/only traitor.
         if (traitors.Count == 0)
         {
-            //Fallback to assign people who COULD be assigned as traitor - quick hack for SVS gamemode. Nothing else currently uses this, so it should be fine?
+            // If not trying to make all possible candidates traitors, cancel the objective
+            if (!_traitorRule.ForceAllPossible)
+            {
+                args.Cancelled = true;
+                return;
+            }
+
+            //Fallback to assign people who COULD be assigned as traitor
             var allHumans = _mind.GetAliveHumansExcept(args.MindId);
             var allValidTraitorCandidates = new List<EntityUid>();
             if (_traitorRule.CurrentAntagPool != null)
@@ -59,7 +66,7 @@ public sealed class KeepAliveConditionSystem : EntitySystem
                 var poolSessions = _traitorRule.CurrentAntagPool.GetPoolSessions();
                 foreach (var mind in allHumans)
                 {
-                    if (_job.MindTryGetJob(mind, out _, out var prototype) && prototype.CanBeAntag && _mind.TryGetSession(mind, out var session) && poolSessions.Contains(session))
+                    if (!args.Mind.ObjectiveTargets.Contains(mind) && _job.MindTryGetJob(mind, out _, out var prototype) && prototype.CanBeAntag && _mind.TryGetSession(mind, out var session) && poolSessions.Contains(session))
                     {
                         allValidTraitorCandidates.Add(mind);
                     }
@@ -72,9 +79,16 @@ public sealed class KeepAliveConditionSystem : EntitySystem
                 allValidTraitorCandidates = allHumans;
             }
             traitors = allValidTraitorCandidates;
+
+            // One last check for the road, then cancel it if there's nothing left
+            if (traitors.Count == 0)
+            {
+                args.Cancelled = true;
+                return;
+            }
         }
 
-        _target.SetTarget(uid, _random.Pick(traitors), target);
+        _target.SetTargetExclusive(uid, args.Mind, _random.Pick(traitors), target);
     }
 
     private float GetProgress(EntityUid target)

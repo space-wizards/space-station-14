@@ -5,7 +5,6 @@ using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
-using Content.Shared.Preferences;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Configuration;
 using Robust.Shared.Random;
@@ -21,7 +20,6 @@ public sealed class KillPersonConditionSystem : EntitySystem
 {
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly IServerPreferencesManager _pref = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedJobSystem _job = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
@@ -69,7 +67,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
             return;
         }
 
-        _target.SetTarget(uid, _random.Pick(allHumans), target);
+        _target.SetTargetExclusive(uid, args.Mind, _random.Pick(allHumans), target);
     }
 
     private void OnHeadAssigned(EntityUid uid, PickRandomHeadComponent comp, ref ObjectiveAssignedEvent args)
@@ -104,7 +102,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
         if (allHeads.Count == 0)
             allHeads = allHumans; // fallback to non-head target
 
-        _target.SetTarget(uid, _random.Pick(allHeads), target);
+        _target.SetTargetExclusive(uid, args.Mind, _random.Pick(allHeads), target);
     }
 
     private void OnTraitorAssigned(EntityUid uid, PickRandomTraitorComponent comp, ref ObjectiveAssignedEvent args)
@@ -129,17 +127,26 @@ public sealed class KillPersonConditionSystem : EntitySystem
         }
 
         var traitors = Enumerable.ToList(_traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind)).Select(t => t.Id).ToList();
+        args.Mind.ObjectiveTargets.ForEach(p => traitors.Remove(p));
+
         // You are the first/only traitor.
         if (traitors.Count == 0)
         {
-            //Fallback to assign people who COULD be assigned as traitor - quick hack for SVS gamemode. Nothing else currently uses this, so it should be fine?
-            var allValidTraitorCandidates = new List<EntityUid>();
-            if (this._traitorRule.CurrentAntagPool != null)
+            // If not trying to make all possible candidates traitors, cancel the objective
+            if (!_traitorRule.ForceAllPossible)
             {
-                var poolSessions  = this._traitorRule.CurrentAntagPool.GetPoolSessions();
+                args.Cancelled = true;
+                return;
+            }
+
+            //Fallback to assign people who COULD be assigned as traitor
+            var allValidTraitorCandidates = new List<EntityUid>();
+            if (_traitorRule.CurrentAntagPool != null)
+            {
+                var poolSessions = _traitorRule.CurrentAntagPool.GetPoolSessions();
                 foreach (var mind in allHumans)
                 {
-                    if (_job.MindTryGetJob(mind, out _, out var prototype) && prototype.CanBeAntag && _mind.TryGetSession(mind, out var session) && poolSessions.Contains(session))
+                    if (!args.Mind.ObjectiveTargets.Contains(mind) && _job.MindTryGetJob(mind, out _, out var prototype) && prototype.CanBeAntag && _mind.TryGetSession(mind, out var session) && poolSessions.Contains(session))
                     {
                         allValidTraitorCandidates.Add(mind);
                     }
@@ -152,8 +159,16 @@ public sealed class KillPersonConditionSystem : EntitySystem
                 allValidTraitorCandidates = allHumans;
             }
             traitors = allValidTraitorCandidates;
+
+            // One last check for the road, then cancel it if there's nothing left
+            if (traitors.Count == 0)
+            {
+                args.Cancelled = true;
+                return;
+            }
         }
-        _target.SetTarget(uid, _random.Pick(traitors), target);
+
+        _target.SetTargetExclusive(uid, args.Mind, _random.Pick(traitors), target);
     }
 
     private float GetProgress(EntityUid target, bool requireDead)
