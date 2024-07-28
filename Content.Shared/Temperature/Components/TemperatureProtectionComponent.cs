@@ -1,15 +1,16 @@
 ﻿using Content.Shared.Temperature.Systems;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Temperature.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedTemperatureSystem))]
 public sealed partial class TemperatureProtectionComponent : Component
 {
     /// <summary>
     ///     How much to multiply temperature deltas by.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float Coefficient = 1.0f;
 }
 
