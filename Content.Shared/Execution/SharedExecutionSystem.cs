@@ -127,7 +127,8 @@ public sealed class SharedExecutionSystem : EntitySystem
         if (!TryComp<MeleeWeaponComponent>(uid, out var melee))
             return;
 
-        args.SetHandled(null, damage: melee.Damage);
+        args.Damage = melee.Damage;
+        args.Handled = true;
     }
 
     public void ShowExecutionInternalPopup(string locString,

@@ -79,7 +79,8 @@ namespace Content.Server.Chat
 
             var selfMessage = Loc.GetString("suicide-command-default-text-self");
             _popup.PopupEntity(selfMessage, victim, victim);
-            suicideEvent.SetHandled("Bloodloss");
+            suicideEvent.Kind = "Bloodloss";
+            suicideEvent.Handled = true;
         }
 
         /// <summary>

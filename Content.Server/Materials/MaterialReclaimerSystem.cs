@@ -91,7 +91,8 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         if (args.Handled)
             return;
 
-        args.SetHandled("Bloodloss");
+        args.Kind = "Bloodloss";
+        args.Handled = true;
         var victim = args.Victim;
         if (TryComp(victim, out ActorComponent? actor) &&
             _mind.TryGetMind(actor.PlayerSession, out var mindId, out var mind))

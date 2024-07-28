@@ -264,7 +264,8 @@ namespace Content.Server.Kitchen.EntitySystems
             if (args.Handled)
                 return;
 
-            args.SetHandled("Heat");
+            args.Kind = "Heat";
+            args.Handled = true;
             var victim = args.Victim;
             var headCount = 0;
 

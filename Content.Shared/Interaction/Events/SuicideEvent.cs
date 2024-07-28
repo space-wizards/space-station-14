@@ -7,20 +7,11 @@ namespace Content.Shared.Interaction.Events
     /// <summary>
     ///     Raised Directed at an entity to check whether they will handle the suicide.
     /// </summary>
-    public sealed class SuicideEvent : EntityEventArgs
+    public sealed class SuicideEvent : HandledEntityEventArgs
     {
         public SuicideEvent(EntityUid victim)
         {
             Victim = victim;
-        }
-        public void SetHandled(string? kind = null, DamageSpecifier? damage = null)
-        {
-            if (Handled)
-                throw new InvalidOperationException("Suicide was already handled");
-
-            Kind = kind;
-            Damage = damage;
-            Handled = true;
         }
 
         public void BlockSuicideAttempt(bool suicideAttempt)
@@ -28,11 +19,10 @@ namespace Content.Shared.Interaction.Events
             if (suicideAttempt)
                 AttemptBlocked = suicideAttempt;
         }
-        public DamageSpecifier? Damage { get; private set; }
-        public ProtoId<DamageTypePrototype>? Kind { get; private set; }
+        public DamageSpecifier? Damage;
+
+        public ProtoId<DamageTypePrototype>? Kind;
         public EntityUid Victim { get; private set; }
         public bool AttemptBlocked { get; private set; }
-
-        public bool Handled;
     }
 }
