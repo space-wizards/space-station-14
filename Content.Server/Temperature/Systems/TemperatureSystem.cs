@@ -1,8 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Shared.Alert;
-using Content.Shared.Inventory;
-using Content.Shared.Temperature;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.Systems;
 using Robust.Shared.Prototypes;
@@ -23,8 +21,6 @@ public sealed class TemperatureSystem : SharedTemperatureSystem
 
         SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
         SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
-        SubscribeLocalEvent<TemperatureProtectionComponent, InventoryRelayedEvent<ModifyChangedTemperatureEvent>>(
-            OnTemperatureChangeAttempt);
     }
 
     private void OnAtmosExposedUpdate(EntityUid uid, TemperatureComponent temperature,
@@ -98,14 +94,5 @@ public sealed class TemperatureSystem : SharedTemperatureSystem
                 _alerts.ClearAlertCategory(uid, TemperatureAlertCategory);
                 break;
         }
-    }
-
-    private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component,
-        InventoryRelayedEvent<ModifyChangedTemperatureEvent> args)
-    {
-        var ev = new GetTemperatureProtectionEvent(component.Coefficient);
-        RaiseLocalEvent(uid, ref ev);
-
-        args.Args.TemperatureDelta *= ev.Coefficient;
     }
 }

@@ -2,6 +2,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Inventory;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature.Components;
 using Robust.Shared.Physics.Components;
@@ -31,6 +32,8 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
 
         SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(EnqueueDamage);
         SubscribeLocalEvent<TemperatureComponent, RejuvenateEvent>(OnRejuvenate);
+        SubscribeLocalEvent<TemperatureProtectionComponent, InventoryRelayedEvent<ModifyChangedTemperatureEvent>>(
+            OnTemperatureChangeAttempt);
 
         SubscribeLocalEvent<InternalTemperatureComponent, MapInitEvent>(OnInit);
 
@@ -203,6 +206,15 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
             return;
 
         comp.Temperature = temp.CurrentTemperature;
+    }
+
+    private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component,
+        InventoryRelayedEvent<ModifyChangedTemperatureEvent> args)
+    {
+        var ev = new GetTemperatureProtectionEvent(component.Coefficient);
+        RaiseLocalEvent(uid, ref ev);
+
+        args.Args.TemperatureDelta *= ev.Coefficient;
     }
 
     private void OnParentChange(EntityUid uid, TemperatureComponent component,
