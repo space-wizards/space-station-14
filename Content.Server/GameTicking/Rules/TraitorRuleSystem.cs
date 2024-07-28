@@ -34,6 +34,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly SharedRoleCodewordSystem _roleCodewordSystem = default!;
 
+    public AntagSelectionPlayerPool? CurrentAntagPool = null;
+    public bool ForceAllPossible = false;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -51,6 +54,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
     private void AfterEntitySelected(Entity<TraitorRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
     {
+        CurrentAntagPool = args.Pool;
+        ForceAllPossible = args.Def.ForceAllPossible;
         MakeTraitor(args.EntityUid, ent);
     }
 
