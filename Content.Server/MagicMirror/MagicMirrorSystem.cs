@@ -51,6 +51,10 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         _doAfterSystem.Cancel(component.DoAfter);
         component.DoAfter = null;
 
+        var doafterTime = component.SelectSlotTime;
+        if (component.Target == message.Actor)
+            doafterTime /= 3;
+
         var doAfter = new MagicMirrorSelectDoAfterEvent()
         {
             Category = message.Category,
@@ -58,7 +62,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
             Marking = message.Marking,
         };
 
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Actor, component.SelectSlotTime, doAfter, uid, target: target, used: uid)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Actor, doafterTime, doAfter, uid, target: target, used: uid)
         {
             DistanceThreshold = SharedInteractionSystem.InteractionRange,
             BreakOnDamage = true,
@@ -108,6 +112,10 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         _doAfterSystem.Cancel(component.DoAfter);
         component.DoAfter = null;
 
+        var doafterTime = component.ChangeSlotTime;
+        if (component.Target == message.Actor)
+            doafterTime /= 3;
+
         var doAfter = new MagicMirrorChangeColorDoAfterEvent()
         {
             Category = message.Category,
@@ -115,7 +123,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
             Colors = message.Colors,
         };
 
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Actor, component.ChangeSlotTime, doAfter, uid, target: target, used: uid)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Actor, doafterTime, doAfter, uid, target: target, used: uid)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -163,13 +171,17 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         _doAfterSystem.Cancel(component.DoAfter);
         component.DoAfter = null;
 
+        var doafterTime = component.RemoveSlotTime;
+        if (component.Target == message.Actor)
+            doafterTime /= 3;
+
         var doAfter = new MagicMirrorRemoveSlotDoAfterEvent()
         {
             Category = message.Category,
             Slot = message.Slot,
         };
 
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Actor, component.RemoveSlotTime, doAfter, uid, target: target, used: uid)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Actor, doafterTime, doAfter, uid, target: target, used: uid)
         {
             DistanceThreshold = SharedInteractionSystem.InteractionRange,
             BreakOnDamage = true,
@@ -218,12 +230,16 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         _doAfterSystem.Cancel(component.DoAfter);
         component.DoAfter = null;
 
+        var doafterTime = component.AddSlotTime;
+        if (component.Target == message.Actor)
+            doafterTime /= 3;
+
         var doAfter = new MagicMirrorAddSlotDoAfterEvent()
         {
             Category = message.Category,
         };
 
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Actor, component.AddSlotTime, doAfter, uid, target: component.Target.Value, used: uid)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, message.Actor, doafterTime, doAfter, uid, target: component.Target.Value, used: uid)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
