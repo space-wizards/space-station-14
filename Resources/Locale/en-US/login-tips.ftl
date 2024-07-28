@@ -1,6 +1,6 @@
 login-tips-dataset-1 = Mario is Italian.
 login-tips-dataset-2 = FinFin is your best friend.
-login-tips-dataset-3 = To submit a tip, go to "impstation 14 development" under #game-forum in the discord!
+login-tips-dataset-3 = To submit a tip, go to "loading screen tip submissions +" under #impstation in the discord!
 login-tips-dataset-4 = mariobluegloves.info
 login-tips-dataset-5 = Stunned and being cuffed? Drink some water! It won't help you beat the allegations, but it'll keep you hydrated.
 login-tips-dataset-6 = As a clown, you can get away with anything. Watch out though!
