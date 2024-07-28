@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Latejoin players now have a chance to roll thief.
-    type: Add
-  id: 6494
-  time: '2024-04-29T06:38:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27466
 - author: ElectroJr
   changes:
   - message: Fixed actions sometimes disappearing from the hotbar when double clicking
@@ -3779,3 +3772,11 @@
   id: 6993
   time: '2024-07-28T03:14:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29943
+- author: lzk228
+  changes:
+  - message: Fixed pancakes stacks. Before it, splitting not default pancakes stacks
+      would give you default pancakes.
+    type: Fix
+  id: 6994
+  time: '2024-07-28T03:49:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30270
