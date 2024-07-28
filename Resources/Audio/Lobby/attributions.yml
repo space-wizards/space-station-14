@@ -68,3 +68,8 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "every light is blinking at once by Alexander Divine."
   source: "https://soundcloud.com/alexanderdivine/every-light-is-blinking-at-once"
+
+- files: ["mt_amient_vs_spasm.ogg"]
+  license: "Custom"
+  copyright: "Mt. Amient vs Spasm by Soichi Terada."
+  source: "https://youtu.be/Ov5OkgHyAxk"
