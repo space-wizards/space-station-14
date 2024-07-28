@@ -3,18 +3,18 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Chemistry.Components.Reagents;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ReagentMetamorphicSpriteComponent : Component
 {
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SpriteSpecifier MetamorphicSprite { get; set; } = SpriteSpecifier.Invalid;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public int MetamorphicMaxFillLevels { get; set; } = 0;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string? MetamorphicFillBaseName { get; set; } = null;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool MetamorphicChangeColor { get; set; } = true;
 }

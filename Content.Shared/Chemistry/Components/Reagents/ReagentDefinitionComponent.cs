@@ -11,50 +11,50 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.Components.Reagents;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ReagentDefinitionComponent : Component
 {
-    [DataField(required: true)]
+    [DataField(required: true), AutoNetworkedField]
     public string Id = string.Empty;
 
-    [DataField("Name",required: true)]
+    [DataField("Name",required: true), AutoNetworkedField]
     public LocId NameLocId { get; set; }
 
     [ViewVariables(VVAccess.ReadOnly)]
     public string LocalizedName => Loc.GetString(NameLocId);
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string Group { get; set; } = "Unknown";
 
     /// <summary>
     ///     Is this reagent recognizable to the average spaceman (water, welding fuel, ketchup, etc)?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Recognizable;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float PricePerUnit;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public FixedPoint4 MolarMass = 18;
 
     /// <summary>
     /// Gas constant for thermal expansion, in moles/kelvin
     /// Observed value for water.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float ExpansionConstant = 8.314f;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public ProtoId<FlavorPrototype>? Flavor;
 
-    [DataField("desc", required: true)]
+    [DataField("desc", required: true), AutoNetworkedField]
     public LocId DescriptionLocId { get; set; }
 
     [ViewVariables(VVAccess.ReadOnly)]
     public string LocalizedDescription => Loc.GetString(DescriptionLocId);
 
-    [DataField("physicalDesc", required: true)]
+    [DataField("physicalDesc", required: true), AutoNetworkedField]
     public LocId PhysicalDescriptionLocId { get; set; } = default!;
 
     [ViewVariables(VVAccess.ReadOnly)]
@@ -63,52 +63,52 @@ public sealed partial class ReagentDefinitionComponent : Component
     /// <summary>
     /// There must be at least this much quantity in a solution to be tasted.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public FixedPoint4 FlavorMinimum = FixedPoint4.New(0.1f);
 
-    [DataField("color")]
+    [DataField("color"), AutoNetworkedField]
     public Color SubstanceColor { get; set; } = Color.White;
 
     /// <summary>
     ///     The specific heat of the reagent.
     ///     How much energy it takes to heat one unit of this reagent by one Kelvin.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float SpecificHeat { get; set; } = 1.0f;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float? BoilingPoint { get; set; }
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float? MeltingPoint { get; set; }
 
     /// <summary>
     /// If this reagent is part of a puddle is it slippery.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Slippery;
 
     /// <summary>
     /// How easily this reagent becomes fizzy when aggitated.
     /// 0 - completely flat, 1 - fizzes up when nudged.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float Fizziness;
 
     /// <summary>
     /// How much reagent slows entities down if it's part of a puddle.
     /// 0 - no slowdown; 1 - can't move.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float Viscosity;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));
 
     /// <summary>
     /// Should this reagent work on the dead?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool WorksOnTheDead;
 
     [DataField(serverOnly: true)]
