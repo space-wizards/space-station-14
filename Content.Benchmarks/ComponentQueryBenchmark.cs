@@ -4,11 +4,14 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
+using BenchmarkDotNet.Engines;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
+using Content.Server.Power.Components;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Item;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared;
 using Robust.Shared.Analyzers;
@@ -16,6 +19,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Benchmarks;
 
@@ -30,13 +34,16 @@ public class ComponentQueryBenchmark
 {
     public const string Map = "Maps/atlas.yml";
 
+    private static readonly Consumer _consumer = new();
+
     private TestPair _pair = default!;
-    private IEntityManager _entMan = default!;
+    private EntityManager _entMan = default!;
     private MapId _mapId = new(10);
     private EntityQuery<ItemComponent> _itemQuery;
     private EntityQuery<ClothingComponent> _clothingQuery;
     private EntityQuery<MapComponent> _mapQuery;
     private EntityUid[] _items = default!;
+    private ArchEntity<ItemComponent?>[] _archItems = default!;
 
     [GlobalSetup]
     public void Setup()
@@ -45,7 +52,7 @@ public class ComponentQueryBenchmark
         PoolManager.Startup(typeof(QueryBenchSystem).Assembly);
 
         _pair = PoolManager.GetServerClient().GetAwaiter().GetResult();
-        _entMan = _pair.Server.ResolveDependency<IEntityManager>();
+        _entMan = _pair.Server.ResolveDependency<EntityManager>();
 
         _itemQuery = _entMan.GetEntityQuery<ItemComponent>();
         _clothingQuery = _entMan.GetEntityQuery<ClothingComponent>();
@@ -61,10 +68,12 @@ public class ComponentQueryBenchmark
         }).GetAwaiter().GetResult();
 
         _items = new EntityUid[_entMan.Count<ItemComponent>()];
+        _archItems = new ArchEntity<ItemComponent?>[_entMan.Count<ItemComponent>()];
         var i = 0;
         var enumerator = _entMan.AllEntityQueryEnumerator<ItemComponent>();
         while (enumerator.MoveNext(out var uid, out _))
         {
+            _archItems[i] = _entMan.GetArchEntity<ItemComponent>(uid);
             _items[i++] = uid;
         }
     }
@@ -94,11 +103,26 @@ public class ComponentQueryBenchmark
         return hashCode;
     }
 
+    [Benchmark]
+    [BenchmarkCategory("TryComp")]
+    public int TryCompCached()
+    {
+        var hashCode = 0;
+        for (var i = 0; i < _archItems.Length; i++)
+        {
+            ref var entity = ref _archItems[i];
+
+            if (_entMan.TryComp(ref entity, out ClothingComponent? clothing))
+                hashCode = HashCode.Combine(hashCode, clothing.GetHashCode());
+        }
+        return hashCode;
+    }
+
     /// <summary>
     /// Variant of <see cref="TryComp"/> that is meant to always fail to get a component.
     /// </summary>
-    [Benchmark]
-    [BenchmarkCategory("TryComp")]
+    // [Benchmark]
+    // [BenchmarkCategory("TryComp")]
     public int TryCompFail()
     {
         var hashCode = 0;
@@ -110,11 +134,26 @@ public class ComponentQueryBenchmark
         return hashCode;
     }
 
+    // [Benchmark]
+    // [BenchmarkCategory("TryComp")]
+    public int TryCompFailCached()
+    {
+        var hashCode = 0;
+        for (var i = 0; i < _archItems.Length; i++)
+        {
+            ref var entity = ref _archItems[i];
+
+            if (_entMan.TryComp(ref entity, out MapComponent? map))
+                hashCode = HashCode.Combine(hashCode, map.GetHashCode());
+        }
+        return hashCode;
+    }
+
     /// <summary>
     /// Variant of <see cref="TryComp"/> that is meant to always succeed getting a component.
     /// </summary>
-    [Benchmark]
-    [BenchmarkCategory("TryComp")]
+    // [Benchmark]
+    // [BenchmarkCategory("TryComp")]
     public int TryCompSucceed()
     {
         var hashCode = 0;
@@ -129,8 +168,8 @@ public class ComponentQueryBenchmark
     /// <summary>
     /// Variant of <see cref="TryComp"/> that uses `Resolve()` to try get the component.
     /// </summary>
-    [Benchmark]
-    [BenchmarkCategory("TryComp")]
+    // [Benchmark]
+    // [BenchmarkCategory("TryComp")]
     public int Resolve()
     {
         var hashCode = 0;
@@ -152,36 +191,30 @@ public class ComponentQueryBenchmark
 
     #region Enumeration
 
-    [Benchmark]
-    [BenchmarkCategory("Item Enumerator")]
-    public int SingleItemEnumerator()
+    // [Benchmark]
+    // [BenchmarkCategory("Item Enumerator")]
+    public void SingleItemEnumerator()
     {
-        var hashCode = 0;
         var enumerator = _entMan.AllEntityQueryEnumerator<ItemComponent>();
         while (enumerator.MoveNext(out var item))
         {
-            hashCode = HashCode.Combine(hashCode, item.GetHashCode());
+            _consumer.Consume(item);
         }
-
-        return hashCode;
     }
 
-    [Benchmark]
-    [BenchmarkCategory("Item Enumerator")]
-    public int DoubleItemEnumerator()
+    // [Benchmark]
+    // [BenchmarkCategory("Item Enumerator")]
+    public void DoubleItemEnumerator()
     {
-        var hashCode = 0;
         var enumerator = _entMan.AllEntityQueryEnumerator<ClothingComponent, ItemComponent>();
         while (enumerator.MoveNext(out _, out var item))
         {
-            hashCode = HashCode.Combine(hashCode, item.GetHashCode());
+            _consumer.Consume(item);
         }
-
-        return hashCode;
     }
 
-    [Benchmark]
-    [BenchmarkCategory("Item Enumerator")]
+    // [Benchmark]
+    // [BenchmarkCategory("Item Enumerator")]
     public int TripleItemEnumerator()
     {
         var hashCode = 0;
@@ -194,36 +227,30 @@ public class ComponentQueryBenchmark
         return hashCode;
     }
 
-    [Benchmark]
-    [BenchmarkCategory("Airlock Enumerator")]
-    public int SingleAirlockEnumerator()
+    // [Benchmark]
+    // [BenchmarkCategory("Airlock Enumerator")]
+    public void SingleAirlockEnumerator()
     {
-        var hashCode = 0;
         var enumerator = _entMan.AllEntityQueryEnumerator<AirlockComponent>();
         while (enumerator.MoveNext(out var airlock))
         {
-            hashCode = HashCode.Combine(hashCode, airlock.GetHashCode());
+            _consumer.Consume(airlock);
         }
-
-        return hashCode;
     }
 
-    [Benchmark]
-    [BenchmarkCategory("Airlock Enumerator")]
-    public int DoubleAirlockEnumerator()
+    // [Benchmark]
+    // [BenchmarkCategory("Airlock Enumerator")]
+    public void DoubleAirlockEnumerator()
     {
-        var hashCode = 0;
         var enumerator = _entMan.AllEntityQueryEnumerator<AirlockComponent, DoorComponent>();
         while (enumerator.MoveNext(out _, out var door))
         {
-            hashCode = HashCode.Combine(hashCode, door.GetHashCode());
+            _consumer.Consume(door);
         }
-
-        return hashCode;
     }
 
-    [Benchmark]
-    [BenchmarkCategory("Airlock Enumerator")]
+    // [Benchmark]
+    // [BenchmarkCategory("Airlock Enumerator")]
     public int TripleAirlockEnumerator()
     {
         var hashCode = 0;
@@ -238,8 +265,8 @@ public class ComponentQueryBenchmark
 
     #endregion
 
-    [Benchmark(Baseline = true)]
-    [BenchmarkCategory("Events")]
+    // [Benchmark(Baseline = true)]
+    // [BenchmarkCategory("Events")]
     public int StructEvents()
     {
         var ev = new QueryBenchEvent();
