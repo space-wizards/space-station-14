@@ -318,6 +318,8 @@
       food:
         maxVol: 50
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
         - ReagentId: THC
           Quantity: 30
 
@@ -341,6 +343,8 @@
       food:
         maxVol: 10
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 3.5
         - ReagentId: THC
           Quantity: 5
 # Tastes like crust, tomato, cheese, meat, satisfaction.
