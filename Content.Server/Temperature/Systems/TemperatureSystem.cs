@@ -1,6 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Components;
 using Content.Shared.Alert;
+using Content.Shared.Body.Components;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.Systems;
 using Robust.Shared.Prototypes;

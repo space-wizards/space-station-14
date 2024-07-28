@@ -1,7 +1,7 @@
 using Content.Server.Body.Systems;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Body.Components;
+namespace Content.Shared.Body.Components;
 
 [RegisterComponent]
 [Access(typeof(ThermalRegulatorSystem))]
