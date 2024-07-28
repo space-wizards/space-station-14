@@ -140,6 +140,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
             {
                 _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(uid):entity} started taking high temperature damage");
                 temperature.TakingDamage = true;
+                Dirty(uid, temperature);
             }
 
             var diff = Math.Abs(temperature.CurrentTemperature - heatDamageThreshold);
@@ -152,6 +153,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
             {
                 _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(uid):entity} started taking low temperature damage");
                 temperature.TakingDamage = true;
+                Dirty(uid, temperature);
             }
 
             var diff = Math.Abs(temperature.CurrentTemperature - coldDamageThreshold);
@@ -163,6 +165,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         {
             _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(uid):entity} stopped taking temperature damage");
             temperature.TakingDamage = false;
+            Dirty(uid, temperature);
         }
     }
 
@@ -231,6 +234,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         float lastTemp = temperature.CurrentTemperature;
         float delta = temperature.CurrentTemperature - temp;
         temperature.CurrentTemperature = temp;
+        Dirty(uid, temperature);
         RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta),
             true);
     }
@@ -252,6 +256,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         temperature.CurrentTemperature += heatAmount / GetHeatCapacity(uid, temperature);
         float delta = temperature.CurrentTemperature - lastTemp;
 
+        Dirty(uid, temperature);
         RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta), true);
     }
 
@@ -353,6 +358,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         var newThresholds = RecalculateParentThresholds(transformQuery.GetComponent(uid).ParentUid, transformQuery, tempThresholdsQuery);
         temperature.ParentHeatDamageThreshold = newThresholds.Item1;
         temperature.ParentColdDamageThreshold = newThresholds.Item2;
+        Dirty(uid, temperature);
     }
 
     /// <summary>
