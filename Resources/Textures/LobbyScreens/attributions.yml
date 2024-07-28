@@ -59,6 +59,6 @@
   source: "https://github.com/space-wizards/space-station-14"
 
 - files: ["stationcafe.png"]
-  license: "NA"
+  license: "CC-BY-SA-3.0"
   copyright: "amatiramasu on discord"
   source: "https://github.com/ss14-harmony/space-station-14"
