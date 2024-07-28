@@ -5,9 +5,9 @@
   components:
   - type: Tag
     tags:
-      - MagazinePistol
       - MagazineVeresk
   - type: BallisticAmmoProvider
+    proto: CartridgeCaselessRifle
     mayTransfer: true
     whitelist:
       tags:
