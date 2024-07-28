@@ -8,7 +8,6 @@ using Content.Shared.Popups;
 using Content.Shared.Resist;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
-using Content.Shared.Standing;
 using Content.Shared.ActionBlocker;
 
 namespace Content.Server.Resist;
