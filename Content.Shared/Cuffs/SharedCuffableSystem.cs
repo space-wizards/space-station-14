@@ -530,18 +530,15 @@ namespace Content.Shared.Cuffs
             return true;
         }
 
-        public bool IsCuffed(EntityUid target, bool requireFullyCuffed = true, CuffableComponent? cuffable = null)
+        public bool IsCuffed(Entity<CuffableComponent> target, bool requireFullyCuffed = true)
         {
-            if (!Resolve(target, ref cuffable, false))
-                return false;
-
             if (!TryComp<HandsComponent>(target, out var hands))
                 return false;
 
-            if (cuffable.CuffedHandCount <= 0)
+            if (target.Comp.CuffedHandCount <= 0)
                 return false;
 
-            if (requireFullyCuffed == true && hands.Count > cuffable.CuffedHandCount)
+            if (requireFullyCuffed && hands.Count > target.Comp.CuffedHandCount)
                 return false;
 
             return true;
