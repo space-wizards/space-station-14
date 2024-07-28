@@ -9,10 +9,10 @@ from sys import argv
 try:
     i = int(argv[1])
 except IndexError:
-    i = 0
+    i = 1
 
 
-file_path = Path("Resources/Changelog/Imp.yml")
+file_path = Path("Resources/Changelog/Impstation.yml")
 changelog = file_path.read_text()
 
 

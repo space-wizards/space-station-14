@@ -7,12 +7,13 @@ from subprocess import run
 # Get pull requests from github and make a changelog based on that.
 # You need github cli (gh) installed.
 
+file_path = "Resources/Changelog/Impstation.yml"
 time_format = "%Y-%m-%dT%H:%M:%S.0000000%:z"
 template = """
 - author: {author}
   changes:
   - message: {message}
-    type: TYPE
+    type: {type}
   id: {id}
   time: '{time}'
   url: {url}"""
@@ -32,10 +33,24 @@ process = run(
 prs = json.loads(process.stdout)
 # print(prs)
 
-with open("Resources/Changelog/Imp.yml", "a+") as file:
+
+def get_entry_type(pull_message: str) -> str:
+    types = {
+        "a": "Add",
+        "r": "Remove",
+        "t": "Tweak",
+        "f": "Fix",
+    }
+    choice = input(f"Type for this entry: '{pull_message}'\n")
+    result = types.get(choice)
+    return result
+
+
+with open(file_path, "a+") as file:
     for i, pull in enumerate(reversed(prs)):
-        author = pull["author"]["name"]
+        author = pull["author"]["login"]
         message = pull["title"]
+        entry_type = get_entry_type(message)
         merged_at = pull["mergedAt"]
         time = datetime.fromisoformat(merged_at).strftime(time_format)
         url = pull["url"]
@@ -43,6 +58,7 @@ with open("Resources/Changelog/Imp.yml", "a+") as file:
         entry = template.format(
             author=author,
             message=message,
+            type=entry_type,
             id=i,
             time=time,
             url=url,
