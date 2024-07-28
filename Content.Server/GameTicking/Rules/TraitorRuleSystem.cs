@@ -63,18 +63,25 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         }
     }
 
-    public bool MakeTraitor(EntityUid traitor, TraitorRuleComponent component, bool giveUplink = true)
+    public bool MakeTraitor(EntityUid traitor, TraitorRuleComponent component)
     {
         if (!_mindSystem.TryGetMind(traitor, out var mindId, out var mind))
             return false;
 
-        var briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", component.Codewords)));
+        var briefing = "";
+
+        if (component.GiveCodewords)
+        {
+            briefing = string.Format("{0}{1}", briefing,
+                Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", component.Codewords))));
+        }
+
         var issuer = _random.Pick(_prototypeManager.Index(component.ObjectiveIssuers).Values);
 
         // Uplink code will go here if applicable, but we still need the variable if there aren't any
         Note[]? code = null;
 
-        if (giveUplink)
+        if (component.GiveUplink)
         {
             // Calculate the amount of currency on the uplink.
             var startingBalance = component.StartingBalance;
@@ -92,7 +99,12 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             briefing = uplinkParams.Item2;
         }
 
-        _antag.SendBriefing(traitor, GenerateBriefing(component.Codewords, code, issuer), null, component.GreetSoundNotification);
+        string[]? codewords = null;
+        if (component.GiveCodewords)
+            codewords = component.Codewords;
+
+        if (component.GiveBriefing)
+            _antag.SendBriefing(traitor, GenerateBriefing(codewords, code, issuer), null, component.GreetSoundNotification);
 
         component.TraitorMinds.Add(mindId);
 
@@ -141,11 +153,12 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     }
 
     // TODO: figure out how to handle this? add priority to briefing event?
-    private string GenerateBriefing(string[] codewords, Note[]? uplinkCode, string? objectiveIssuer = null)
+    private string GenerateBriefing(string[]? codewords, Note[]? uplinkCode, string? objectiveIssuer = null)
     {
         var sb = new StringBuilder();
         sb.AppendLine(Loc.GetString("traitor-role-greeting", ("corporation", objectiveIssuer ?? Loc.GetString("objective-issuer-unknown"))));
-        sb.AppendLine(Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", codewords))));
+        if (codewords != null)
+            sb.AppendLine(Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", codewords))));
         if (uplinkCode != null)
             sb.AppendLine(Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", uplinkCode).Replace("sharp", "#"))));
         else

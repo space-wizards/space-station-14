@@ -73,7 +73,7 @@
   parent: BaseGameRule
   id: BaseNukeopsRule
   components:
-  - type: RandomMetadata #this generates the random operation name cuz it's cool. 
+  - type: RandomMetadata #this generates the random operation name cuz it's cool.
     nameSegments:
     - operationPrefix
     - operationSuffix
@@ -186,6 +186,15 @@
       mindComponents:
       - type: TraitorRole
         prototype: Traitor
+
+- type: entity
+  id: TraitorReinforcement
+  parent: Traitor
+  components:
+  - type: TraitorRule
+    giveUplink: false
+    giveCodewords: false # It would actually give them a different set of codewords than the regular traitors, anyway
+    giveBriefing: false
 
 - type: entity
   id: Revolutionary
