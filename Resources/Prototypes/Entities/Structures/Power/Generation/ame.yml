@@ -106,6 +106,8 @@
     requirePower: true
     highVoltageNode: input
     mediumVoltageNode: ame
+  - type: AccessReader
+    access: [["Engineering"]]
 
 - type: entity
   categories: [ HideSpawnMenu ]
