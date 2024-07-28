@@ -11,6 +11,38 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         base.Initialize();
     }
 
+    public void ForceChangeTemperature(EntityUid uid, float temp, TemperatureComponent? temperature = null)
+    {
+        if (!Resolve(uid, ref temperature))
+            return;
+
+        float lastTemp = temperature.CurrentTemperature;
+        float delta = temperature.CurrentTemperature - temp;
+        temperature.CurrentTemperature = temp;
+        RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta),
+            true);
+    }
+
+    public void ChangeHeat(EntityUid uid, float heatAmount, bool ignoreHeatResistance = false,
+        TemperatureComponent? temperature = null)
+    {
+        if (!Resolve(uid, ref temperature))
+            return;
+
+        if (!ignoreHeatResistance)
+        {
+            var ev = new ModifyChangedTemperatureEvent(heatAmount);
+            RaiseLocalEvent(uid, ev);
+            heatAmount = ev.TemperatureDelta;
+        }
+
+        float lastTemp = temperature.CurrentTemperature;
+        temperature.CurrentTemperature += heatAmount / GetHeatCapacity(uid, temperature);
+        float delta = temperature.CurrentTemperature - lastTemp;
+
+        RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta), true);
+    }
+
     public float GetHeatCapacity(EntityUid uid, TemperatureComponent? comp = null, PhysicsComponent? physics = null)
     {
         if (!Resolve(uid, ref comp) || !Resolve(uid, ref physics, false) || physics.FixturesMass <= 0)
