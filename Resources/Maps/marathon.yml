@@ -7662,8 +7662,6 @@ entities:
       pos: -2.5,-42.5
       parent: 30
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 19767
       - 19768
@@ -7688,8 +7686,6 @@ entities:
       pos: -19.5,-38.5
       parent: 30
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 9897
       - 8297
@@ -7762,8 +7758,6 @@ entities:
       pos: -14.5,-51.5
       parent: 30
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 8335
       - 7222
@@ -60131,8 +60125,6 @@ entities:
       pos: -3.5,-42.5
       parent: 30
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 19812
       - 19766
@@ -60153,8 +60145,6 @@ entities:
       pos: -20.5,-38.5
       parent: 30
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 19562
       - 11280
@@ -60171,8 +60161,6 @@ entities:
       pos: -14.5,-52.5
       parent: 30
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 11280
       - 9839
@@ -60196,8 +60184,6 @@ entities:
       pos: -0.5,-38.5
       parent: 30
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 9999
       - 19812
