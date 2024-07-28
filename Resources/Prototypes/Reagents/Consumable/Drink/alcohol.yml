@@ -2014,7 +2014,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.15    
+        amount: 0.15
     Medicine:
       effects:
       - !type:HealthChange
