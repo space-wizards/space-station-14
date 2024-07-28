@@ -4,6 +4,7 @@ using Content.Server.Humanoid;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.MagicMirror;
 using Content.Shared.Popups;
@@ -71,7 +72,15 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
             NeedHand = true
         },
             out var doAfterId);
-        _popup.PopupEntity(Loc.GetString("magic-mirror-change-slot"), component.Target.Value, component.Target.Value, PopupType.Medium);
+
+        if (component.Target == message.Actor)
+        {
+            _popup.PopupEntity(Loc.GetString("magic-mirror-change-slot-self"), component.Target.Value, component.Target.Value, PopupType.Medium);
+        }
+        else
+        {
+            _popup.PopupEntity(Loc.GetString("magic-mirror-change-slot-target", ("user", Identity.Name(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
+        }
 
         component.DoAfter = doAfterId;
         _audio.PlayPvs(component.ChangeHairSound, uid);
@@ -131,7 +140,15 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
             NeedHand = true
         },
             out var doAfterId);
-        _popup.PopupEntity(Loc.GetString("magic-mirror-change-color"), component.Target.Value, component.Target.Value, PopupType.Medium);
+
+        if (component.Target == message.Actor)
+        {
+            _popup.PopupEntity(Loc.GetString("magic-mirror-change-color-self"), component.Target.Value, component.Target.Value, PopupType.Medium);
+        }
+        else
+        {
+            _popup.PopupEntity(Loc.GetString("magic-mirror-change-color-target", ("user", Identity.Name(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
+        }
 
         component.DoAfter = doAfterId;
     }
@@ -189,7 +206,15 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
             NeedHand = true
         },
             out var doAfterId);
-        _popup.PopupEntity(Loc.GetString("magic-mirror-remove-slot"), component.Target.Value, component.Target.Value, PopupType.Medium);
+
+        if (component.Target == message.Actor)
+        {
+            _popup.PopupEntity(Loc.GetString("magic-mirror-remove-slot-self"), component.Target.Value, component.Target.Value, PopupType.Medium);
+        }
+        else
+        {
+            _popup.PopupEntity(Loc.GetString("magic-mirror-remove-slot-target", ("user", Identity.Name(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
+        }
 
         component.DoAfter = doAfterId;
         _audio.PlayPvs(component.ChangeHairSound, uid);
@@ -247,7 +272,15 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
             NeedHand = true
         },
             out var doAfterId);
-        _popup.PopupEntity(Loc.GetString("magic-mirror-add-slot"), component.Target.Value, component.Target.Value, PopupType.Medium);
+
+        if (component.Target == message.Actor)
+        {
+            _popup.PopupEntity(Loc.GetString("magic-mirror-add-slot-self"), component.Target.Value, component.Target.Value, PopupType.Medium);
+        }
+        else
+        {
+            _popup.PopupEntity(Loc.GetString("magic-mirror-add-slot-target", ("user", Identity.Name(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
+        }
 
         component.DoAfter = doAfterId;
         _audio.PlayPvs(component.ChangeHairSound, uid);

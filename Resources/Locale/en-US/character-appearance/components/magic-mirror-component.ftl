@@ -1,7 +1,12 @@
 magic-mirror-component-activate-user-has-no-hair = You can't have any hair!
 
 magic-mirror-window-title = Magic Mirror
-magic-mirror-add-slot = Hair is being added to you.
-magic-mirror-remove-slot = Your hair is being cut off.
-magic-mirror-change-slot = Your hairstyle is being changed.
-magic-mirror-change-color = Your hair color is being changed.
+magic-mirror-add-slot-self = You're giving yourself some hair.
+magic-mirror-remove-slot-self = You're removing some of your hair.
+magic-mirror-change-slot-self = You're changing your hairstyle.
+magic-mirror-change-color-self = You're changing your hair color.
+
+magic-mirror-add-slot-target = Hair is being added to you by {$user}.
+magic-mirror-remove-slot-target = Your hair is being cut off by {$user}.
+magic-mirror-change-slot-target = Your hairstyle is being changed by {$user}.
+magic-mirror-change-color-target = Your hair color is being changed by {$user}.
