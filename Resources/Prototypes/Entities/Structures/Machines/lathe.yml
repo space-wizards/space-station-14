@@ -1246,15 +1246,20 @@
   - type: Transform
     noRot: false
   - type: Sprite
-    sprite: Structures/Machines/uniform_printer.rsi
-    snapCardinals: false
+    sprite: Structures/Machines/cuttermachine.rsi
+    snapCardinals: true
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
     board: CutterMachineCircuitboard
   - type: Lathe
-    producingSound: /Audio/Machines/uniformprinter.ogg
+    producingSound: /Audio/Machines/cutter.ogg
     idleState: icon
     runningState: building
     staticRecipes:
@@ -1292,7 +1297,7 @@
       - FloorTileItemSteelMaint
       - FloorTileItemWood
       - FloorTileItemWoodLarge
-      - FloorTileItemWoodLarge
+      - FloorTileItemWoodPattern
       - FloorTileItemConcrete
       - FloorTileItemConcreteMono
       - FloorTileItemConcreteSmooth
@@ -1302,9 +1307,6 @@
       - FloorTileItemOldConcrete
       - FloorTileItemOldConcreteMono
       - FloorTileItemOldConcreteSmooth
-  - type: EmagLatheRecipes
-    emagStaticRecipes:
-      - ClothingHeadHatCentcom
   - type: MaterialStorage
     whitelist:
       tags:
@@ -1312,5 +1314,4 @@
         - Metal
         - Wooden
         - RawMaterial
-        - Raw
         - Plastic

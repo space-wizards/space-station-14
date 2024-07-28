@@ -262,7 +262,7 @@
   applyMaterialDiscount: false
   completetime: 0.5
   materials:
-    Plank: 25
+    Wood: 25
 
 - type: latheRecipe
   id: FloorTileItemWoodLarge
@@ -270,7 +270,7 @@
   applyMaterialDiscount: false
   completetime: 0.5
   materials:
-    Plank: 25
+    Wood: 25
 
 - type: latheRecipe
   id: FloorTileItemWoodPattern
@@ -278,7 +278,7 @@
   applyMaterialDiscount: false
   completetime: 0.5
   materials:
-    Plank: 25
+    Wood: 25
 
 # Concrete
 - type: latheRecipe
