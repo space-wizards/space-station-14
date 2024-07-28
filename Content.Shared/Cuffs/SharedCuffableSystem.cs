@@ -533,7 +533,7 @@ namespace Content.Shared.Cuffs
         /// <summary>
         /// Checks if the target is handcuffed.
         /// </summary>
-        /// <param name="requireFullyCuffed">return false if the target is only partially cuffed (for things with more than 2 hands)</param>
+        /// <param name="requireFullyCuffed">when true, return false if the target is only partially cuffed (for things with more than 2 hands)</param>
         /// <returns></returns>
         public bool IsCuffed(Entity<CuffableComponent> target, bool requireFullyCuffed = true)
         {
