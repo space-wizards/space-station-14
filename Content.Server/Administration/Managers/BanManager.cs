@@ -33,6 +33,8 @@ public sealed class BanManager : IBanManager, IPostInjectInit
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
 
+    public event EventHandler<BanEventArgs.ServerBanEventArgs>? ServerBanCreated;
+
     private ISawmill _sawmill = default!;
 
     public const string SawmillId = "admin.bans";
@@ -178,6 +180,14 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         // If they are, kick them
         var message = banDef.FormatBanMessage(_cfg, _localizationManager);
         targetPlayer.Channel.Disconnect(message);
+
+        OnServerBanCreated(new BanEventArgs.ServerBanEventArgs(target, targetUsername, banningAdmin, addressRange, hwid, minutes, severity, reason));
+
+    }
+
+    private void OnServerBanCreated(BanEventArgs.ServerBanEventArgs e)
+    {
+        ServerBanCreated?.Invoke(this, e);
     }
     #endregion
 

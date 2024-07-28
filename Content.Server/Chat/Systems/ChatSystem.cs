@@ -235,6 +235,14 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (string.IsNullOrEmpty(message))
             return;
 
+        //Last Message Before Death Webhook
+        var lastMessageSystem = LastMessageBeforeDeath.Instance;
+
+        if (player != null)
+        {
+            lastMessageSystem.AddMessage(source, player.Name, message, Name(source));
+        }
+
         // This message may have a radio prefix, and should then be whispered to the resolved radio channel
         if (checkRadioPrefix)
         {
@@ -257,14 +265,6 @@ public sealed partial class ChatSystem : SharedChatSystem
             case InGameICChatType.Emote:
                 SendEntityEmote(source, message, range, nameOverride, hideLog: hideLog, ignoreActionBlocker: ignoreActionBlocker);
                 break;
-        }
-
-        //Last Message Before Death Webhook
-        var lastMessageSystem = LastMessageBeforeDeath.Instance;
-
-        if (player != null)
-        {
-            lastMessageSystem.AddMessage(Name(source), source, message);
         }
     }
 

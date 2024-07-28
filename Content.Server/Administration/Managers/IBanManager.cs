@@ -12,6 +12,10 @@ namespace Content.Server.Administration.Managers;
 public interface IBanManager
 {
     public void Initialize();
+
+    // Define the event
+    event EventHandler<BanEventArgs.ServerBanEventArgs>? ServerBanCreated;
+
     public void Restart();
 
     /// <summary>
@@ -25,6 +29,7 @@ public interface IBanManager
     /// <param name="severity">Severity of the resulting ban note</param>
     /// <param name="reason">Reason for the ban</param>
     public void CreateServerBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableArray<byte>? hwid, uint? minutes, NoteSeverity severity, string reason);
+
     public HashSet<string>? GetRoleBans(NetUserId playerUserId);
     public HashSet<ProtoId<JobPrototype>>? GetJobBans(NetUserId playerUserId);
 

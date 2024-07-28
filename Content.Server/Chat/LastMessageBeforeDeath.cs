@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Collections.Specialized;
 using System.Collections;
 using Content.Server.GameTicking;
+using Content.Server.Administration.Managers;
 
 namespace Content.Server.Chat
 {
@@ -15,13 +16,17 @@ namespace Content.Server.Chat
         [Dependency] private readonly ILogManager _logManager = default!;
         private ISawmill _sawmill = default!;
 #endif
+        [Dependency] private readonly IBanManager _banManager = default!;
+
         private readonly MobStateSystem _mobStateSystem;
         private readonly GameTicker _gameTicker;
+
 
         private OrderedDictionary _playerData = new OrderedDictionary();
 
         // I don't think Chat needs it's own CVar file because of these two, so I'll leave them here...
         private const int MessageDelayMilliseconds = 2000;
+        private const int MaxMessageSize = 2000; // CAN'T BE MORE THAN 2000! DISCORD LIMIT.
         private const int MaxMessagesPerBatch = 15;
         private const int MaxICLength = 128;
 
@@ -36,10 +41,11 @@ namespace Content.Server.Chat
             IoCManager.InjectDependencies(this);
             _mobStateSystem = IoCManager.Resolve<IEntityManager>().System<MobStateSystem>();
             _gameTicker = IoCManager.Resolve<IEntityManager>().System<GameTicker>();
+            _banManager.ServerBanCreated += OnServerBanCreated;
 #if DEBUG
             _sawmill = _logManager.GetSawmill("lastDeathMsgWebhook");
 #endif
-    }
+        }
 
         // Public property to get the singleton instance
         public static LastMessageBeforeDeath Instance
@@ -58,9 +64,8 @@ namespace Content.Server.Chat
         }
 
         // Method to add a message for a player
-        public async void AddMessage(string playerName, EntityUid player, string message)
+        public async void AddMessage(EntityUid source, string player, string message, string playerName)
         {
-
             if (message.Length > MaxICLength)
             {
                 // if the message is bigger than the message length limit, we make it cut off at a random iterval.
@@ -80,6 +85,7 @@ namespace Content.Server.Chat
 
             var playerMessages = _playerData[player] as OrderedDictionary ?? throw new InvalidOperationException("Player messages dictionary is not initialized.");
             playerMessages[playerName] = formattedMessage;
+            playerMessages["EntityUid"] = source;
         }
 
         // Send messages through the webhook on round end
@@ -92,15 +98,17 @@ namespace Content.Server.Chat
             StringBuilder allMessagesString = new StringBuilder();
             foreach (DictionaryEntry player in _playerData)
             {
-                var playerUid = (EntityUid)player.Key;
-                if (_mobStateSystem.IsDead(playerUid))
+                var playerMessages = player.Value as OrderedDictionary;
+                if (playerMessages != null)
                 {
-                    var playerMessages = player.Value as OrderedDictionary;
-                    if (playerMessages != null)
+                    if (playerMessages["EntityUid"] is EntityUid playerUid && _mobStateSystem.IsDead(playerUid))
                     {
                         foreach (DictionaryEntry playerName in playerMessages)
                         {
-                            allMessagesString.AppendLine($"{playerName.Value}");
+                            if (playerName.Key.ToString() != "EntityUid")
+                            {
+                                allMessagesString.AppendLine($"{playerName.Value}");
+                            }
                         }
                     }
                 }
@@ -111,7 +119,7 @@ namespace Content.Server.Chat
                 allMessagesString.AppendLine($"No messages found.");
             }
 
-            var messages = SplitMessage(allMessagesString.ToString(), 2000);
+            var messages = SplitMessage(allMessagesString.ToString(), MaxMessageSize);
             var discordWebhook = new DiscordWebhook();
             int messageCount = 0;
             foreach (var message in messages)
@@ -173,6 +181,18 @@ namespace Content.Server.Chat
             }
 
             return messages;
+        }
+
+        private void OnServerBanCreated(object? sender, BanEventArgs.ServerBanEventArgs e)
+        {
+            // Handle the event
+            if (e.TargetUsername != null && _playerData.Contains(e.TargetUsername))
+            {
+                _playerData.Remove(e.TargetUsername);
+#if DEBUG
+                _sawmill.Info("A user was removed from last message list due to a ban.");
+#endif
+            }
         }
 
     }
