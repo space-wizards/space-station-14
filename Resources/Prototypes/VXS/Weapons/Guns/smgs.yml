@@ -1,8 +1,8 @@
 - type: entity
-  name: CR-2 veresk
+  name: heath
   parent: BaseWeaponPistol
-  id: WeaponSMGVeresk
-  description: Designed to engage in close combat enemy personnel using individual means of armor protection. Uses .25 caseless.
+  id: WeaponSMGVereskHeath
+  description: Designed to engage in close combat enemy personnel using individual armor protection. Uses .25 caseless.
   components:
   - type: Sprite
     sprite: VXS/Weapons/SMGs/veresk.rsi
@@ -24,7 +24,7 @@
     - Burst
     - FullAuto
     soundGunshot:
-      path: /Audio/VXS/Gunshots/SMG/smg2.ogg
+      path: /Audio/VXS/Gunshots/Pistol/pistolSupressed.ogg
       params:
         maxDistance: 55
         volume: 2
@@ -32,7 +32,7 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: PistolMagazineVeresk
+        startingItem: PistolMagazineVereskHeath
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
         priority: 2

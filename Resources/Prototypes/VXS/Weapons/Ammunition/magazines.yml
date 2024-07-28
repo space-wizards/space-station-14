@@ -1,6 +1,6 @@
 - type: entity
-  id: PistolMagazineVeresk
-  name: veresk magazine (.25 caseless)
+  id: PistolMagazineVereskHeath
+  name: heath magazine (.25 caseless)
   parent: BaseItem
   components:
   - type: Tag
