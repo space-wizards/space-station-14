@@ -493,7 +493,7 @@
 - type: stack
   id: FloorTileGrayConcrete
   name: gray concrete tile
-  spawn: FloorTileGrayConcrete
+  spawn: FloorTileItemGrayConcrete
   maxCount: 30
 
 - type: stack
