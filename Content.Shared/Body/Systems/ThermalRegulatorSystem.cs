@@ -23,11 +23,13 @@ public sealed class ThermalRegulatorSystem : EntitySystem
     private void OnMapInit(Entity<ThermalRegulatorComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
+        Dirty(ent);
     }
 
     private void OnUnpaused(Entity<ThermalRegulatorComponent> ent, ref EntityUnpausedEvent args)
     {
         ent.Comp.NextUpdate += args.PausedTime;
+        Dirty(ent);
     }
 
     public override void Update(float frameTime)
@@ -39,6 +41,7 @@ public sealed class ThermalRegulatorSystem : EntitySystem
                 continue;
 
             regulator.NextUpdate += regulator.UpdateInterval;
+            Dirty(uid, regulator);
             ProcessThermalRegulation((uid, regulator));
         }
     }
