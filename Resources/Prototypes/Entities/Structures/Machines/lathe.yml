@@ -1236,7 +1236,6 @@
     - MaterialSheetMeat
     - SheetPaper
 
-# WIP
 - type: entity
   parent: BaseLathe
   id: Cutter Machine
