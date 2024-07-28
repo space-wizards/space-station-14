@@ -1,6 +1,6 @@
 - type: entity
   id: XenoWardingTower
-  name: Xeno warding tower
+  name: xeno warding tower
   placement:
     mode: SnapgridCenter
     snap:

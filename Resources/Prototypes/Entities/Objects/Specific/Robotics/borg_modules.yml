@@ -505,8 +505,8 @@
     - state: icon-syndicate
   - type: ItemBorgModule
     items:
-    - WeaponAdvancedLaser
-    - Machete
+    - WeaponPistolEchis
+    - EnergyDaggerLoud
 
 - type: entity
   id: BorgModuleOperative
@@ -536,7 +536,7 @@
       - state: icon-syndicate
     - type: ItemBorgModule
       items:
-      - EnergySwordDouble
+      - CyborgEnergySwordDouble
       - PinpointerSyndicateNuclear
 
 - type: entity

@@ -4,7 +4,7 @@
   id: BaseThiefObjective
   components:
   - type: Objective
-    issuer: thief
+    issuer: objective-issuer-thief
   - type: RoleRequirement
     roles:
       components:
@@ -59,8 +59,8 @@
   components:
   - type: StealCondition
     stealGroup: Figurines
-    minCollectionSize: 5
-    maxCollectionSize: 10
+    minCollectionSize: 10
+    maxCollectionSize: 18 #will be limited to the number of figures on the station anyway.
   - type: Objective
     difficulty: 0.25
 
@@ -93,7 +93,7 @@
   - type: StealCondition
     stealGroup: Stamp
     minCollectionSize: 5
-    maxCollectionSize: 15
+    maxCollectionSize: 8
   - type: Objective
     difficulty: 1.0
 
