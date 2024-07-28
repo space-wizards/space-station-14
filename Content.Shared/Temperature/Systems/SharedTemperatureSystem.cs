@@ -1,14 +1,34 @@
+using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
+using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.Temperature.Components;
 using Robust.Shared.Physics.Components;
+using System.Linq;
 
 namespace Content.Shared.Temperature.Systems;
 
 public abstract partial class SharedTemperatureSystem : EntitySystem
 {
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+
+    /// <summary>
+    ///     All the components that will have their damage updated at the end of the tick.
+    ///     This is done because both AtmosExposed and Flammable call ChangeHeat in the same tick, meaning
+    ///     that we need some mechanism to ensure it doesn't double dip on damage for both calls.
+    /// </summary>
+    public HashSet<Entity<TemperatureComponent>> ShouldUpdateDamage = new();
+
+    public float UpdateInterval = 1.0f;
+
+    private float _accumulatedFrametime;
+
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(EnqueueDamage);
 
         SubscribeLocalEvent<InternalTemperatureComponent, MapInitEvent>(OnInit);
     }
@@ -43,7 +63,83 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         UpdateDamage(frameTime);
     }
 
-    protected abstract void UpdateDamage(float frameTime);
+    private void UpdateDamage(float frameTime)
+    {
+        _accumulatedFrametime += frameTime;
+
+        if (_accumulatedFrametime < UpdateInterval)
+            return;
+        _accumulatedFrametime -= UpdateInterval;
+
+        if (!ShouldUpdateDamage.Any())
+            return;
+
+        foreach (var comp in ShouldUpdateDamage)
+        {
+            MetaDataComponent? metaData = null;
+
+            var uid = comp.Owner;
+            if (Deleted(uid, metaData) || Paused(uid, metaData))
+                continue;
+
+            ChangeDamage(uid, comp);
+        }
+
+        ShouldUpdateDamage.Clear();
+    }
+
+    private void EnqueueDamage(Entity<TemperatureComponent> temperature, ref OnTemperatureChangeEvent args)
+    {
+        ShouldUpdateDamage.Add(temperature);
+    }
+
+    private void ChangeDamage(EntityUid uid, TemperatureComponent temperature)
+    {
+        if (!HasComp<DamageableComponent>(uid))
+            return;
+
+        // See this link for where the scaling func comes from:
+        // https://www.desmos.com/calculator/0vknqtdvq9
+        // Based on a logistic curve, which caps out at MaxDamage
+        var heatK = 0.005;
+        var a = 1;
+        var y = temperature.DamageCap;
+        var c = y * 2;
+
+        var heatDamageThreshold = temperature.ParentHeatDamageThreshold ?? temperature.HeatDamageThreshold;
+        var coldDamageThreshold = temperature.ParentColdDamageThreshold ?? temperature.ColdDamageThreshold;
+
+        if (temperature.CurrentTemperature >= heatDamageThreshold)
+        {
+            if (!temperature.TakingDamage)
+            {
+                _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(uid):entity} started taking high temperature damage");
+                temperature.TakingDamage = true;
+            }
+
+            var diff = Math.Abs(temperature.CurrentTemperature - heatDamageThreshold);
+            var tempDamage = c / (1 + a * Math.Pow(Math.E, -heatK * diff)) - y;
+            _damageable.TryChangeDamage(uid, temperature.HeatDamage * tempDamage, ignoreResistances: true, interruptsDoAfters: false);
+        }
+        else if (temperature.CurrentTemperature <= coldDamageThreshold)
+        {
+            if (!temperature.TakingDamage)
+            {
+                _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(uid):entity} started taking low temperature damage");
+                temperature.TakingDamage = true;
+            }
+
+            var diff = Math.Abs(temperature.CurrentTemperature - coldDamageThreshold);
+            var tempDamage =
+                Math.Sqrt(diff * (Math.Pow(temperature.DamageCap.Double(), 2) / coldDamageThreshold));
+            _damageable.TryChangeDamage(uid, temperature.ColdDamage * tempDamage, ignoreResistances: true, interruptsDoAfters: false);
+        }
+        else if (temperature.TakingDamage)
+        {
+            _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(uid):entity} stopped taking temperature damage");
+            temperature.TakingDamage = false;
+        }
+    }
 
     public void ForceChangeTemperature(EntityUid uid, float temp, TemperatureComponent? temperature = null)
     {
