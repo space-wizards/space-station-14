@@ -10,8 +10,8 @@ using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
+using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.Systems;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Temperature.Systems;
@@ -157,16 +157,6 @@ public sealed class TemperatureSystem : SharedTemperatureSystem
         var heat = temperatureDelta * (airHeatCapacity * heatCapacity /
                                        (airHeatCapacity + heatCapacity));
         ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature);
-    }
-
-    public float GetHeatCapacity(EntityUid uid, TemperatureComponent? comp = null, PhysicsComponent? physics = null)
-    {
-        if (!Resolve(uid, ref comp) || !Resolve(uid, ref physics, false) || physics.FixturesMass <= 0)
-        {
-            return Atmospherics.MinimumHeatCapacity;
-        }
-
-        return comp.SpecificHeat * physics.FixturesMass;
     }
 
     private void OnInit(EntityUid uid, InternalTemperatureComponent comp, MapInitEvent args)

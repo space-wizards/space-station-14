@@ -1,11 +1,11 @@
-using Content.Server.Temperature.Systems;
+using Content.Shared.Temperature.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Temperature.Components;
+namespace Content.Shared.Temperature.Components;
 
 /// <summary>
 /// Handles changing temperature,
@@ -56,7 +56,7 @@ public sealed partial class TemperatureComponent : Component
     {
         get
         {
-            return IoCManager.Resolve<IEntityManager>().System<TemperatureSystem>().GetHeatCapacity(Owner, this);
+            return IoCManager.Resolve<IEntityManager>().System<SharedTemperatureSystem>().GetHeatCapacity(Owner, this);
         }
     }
 
