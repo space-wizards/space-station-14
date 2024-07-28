@@ -18,8 +18,31 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     state: rpg
-  - type: StaticPrice
-    price: 20
+  - type: SmokeOnTrigger # VXS
+    duration: 3
+    spreadAmount: 4
+  - type: FlashOnTrigger # VXS
+    range: 5
+  - type: StaticPrice # VXS
+    price: 250
+  - type: ExplodeOnTrigger # VXS
+  - type: Damageable # VXS
+    damageContainer: Inorganic
+  - type: Destructible # VXS
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Explosive # VXS
+    explosionType: DemolitionCharge
+    maxIntensity: 6
+    intensitySlope: 600
+    totalIntensity: 100
+    maxTileBreak: 1
 
 - type: entity
   id: CartridgeRocketSlow
@@ -90,6 +113,28 @@
   - type: SpentAmmoVisuals
     state: blast
     suffix: false
+  - type: SmokeOnTrigger # VXS
+    duration: 2
+    spreadAmount: 3
+  - type: FlashOnTrigger # VXS
+    range: 3
+  - type: ExplodeOnTrigger # VXS
+  - type: Explosive # VXS
+    explosionType: Default
+    totalIntensity: 100
+    intensitySlope: 3
+    maxIntensity: 5
+  - type: Damageable # VXS
+    damageContainer: Inorganic
+  - type: Destructible # VXS
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
   id: GrenadeFlash
@@ -124,6 +169,28 @@
   - type: SpentAmmoVisuals
     state: frag
     suffix: false
+  - type: SmokeOnTrigger # VXS
+    duration: 2
+    spreadAmount: 3
+  - type: FlashOnTrigger # VXS
+    range: 3
+  - type: ExplodeOnTrigger # VXS
+  - type: Explosive # VXS
+    explosionType: Default
+    totalIntensity: 100
+    intensitySlope: 1
+    maxIntensity: 10
+  - type: Damageable # VXS
+    damageContainer: Inorganic
+  - type: Destructible # VXS
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
   id: GrenadeEMP

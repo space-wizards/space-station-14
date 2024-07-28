@@ -17,4 +17,27 @@
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     state: rpg
   - type: StaticPrice
-    price: 20
+    price: 300
+  - type: SmokeOnTrigger
+    duration: 2
+    spreadAmount: 8
+  - type: FlashOnTrigger
+    range: 3
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: FireBomb
+    maxIntensity: 35
+    intensitySlope: 1
+    totalIntensity: 100
+    maxTileBreak: 1
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
