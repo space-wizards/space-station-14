@@ -27,7 +27,7 @@ public interface IGridSpawnGroup
     public float MinimumDistance { get; }
 
     /// <summary>
-    /// Minimum distance to spawn away from the station.
+    /// Maximum distance to spawn away from the station.
     /// </summary>
     public float MaximumDistance { get;  }
 
