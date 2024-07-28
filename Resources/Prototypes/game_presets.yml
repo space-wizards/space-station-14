@@ -120,8 +120,8 @@
   alias:
     - svs
     - theship
-  name: traitor-title
-  description: traitor-description
+  name: spy-vs-spy-title
+  description: spy-vs-spy-description
   showInVote: false
   rules:
     - SpyVsSpy

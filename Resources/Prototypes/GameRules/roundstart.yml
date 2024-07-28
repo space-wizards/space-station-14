@@ -192,10 +192,10 @@
   id: SpyVsSpy
   components:
   - type: GameRule
-    minPlayers: 4
+    minPlayers: 15
     delay:
-      min: 24
-      max: 42
+      min: 240
+      max: 420
   - type: AntagObjectives
     objectives:
     - KillRandomTraitorSvSObjective
