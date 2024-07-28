@@ -459,7 +459,7 @@
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemMiniDark
+  itemDrop: FloorTileItemDarkMini
   heatCapacity: 10000
 
 - type: tile

@@ -1255,8 +1255,8 @@
       Cable: 2
 
 - type: entity
-  id: CutterMachineCircuitboard
   parent: BaseMachineCircuitboard
+  id: CutterMachineCircuitboard
   name: cutter machine board
   components:
   - type: MachineBoard
