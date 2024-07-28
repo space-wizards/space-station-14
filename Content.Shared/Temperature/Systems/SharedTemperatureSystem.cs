@@ -2,6 +2,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature.Components;
 using Robust.Shared.Physics.Components;
 using System.Linq;
@@ -29,6 +30,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(EnqueueDamage);
+        SubscribeLocalEvent<TemperatureComponent, RejuvenateEvent>(OnRejuvenate);
 
         SubscribeLocalEvent<InternalTemperatureComponent, MapInitEvent>(OnInit);
     }
@@ -86,6 +88,11 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         }
 
         ShouldUpdateDamage.Clear();
+    }
+
+    private void OnRejuvenate(EntityUid uid, TemperatureComponent comp, RejuvenateEvent args)
+    {
+        ForceChangeTemperature(uid, Atmospherics.T20C, comp);
     }
 
     private void EnqueueDamage(Entity<TemperatureComponent> temperature, ref OnTemperatureChangeEvent args)
