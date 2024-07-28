@@ -178,3 +178,5 @@ login-tips-dataset-129 = "Tip! pAIs do not have any Laws!"
 login-tips-dataset-130 = Tip: "One more round" is a lie and you know it. You're here forever. We all are.
 login-tips-dataset-131 = This game is marked as "horror" on Steam.
 login-tips-dataset-132 = https://youtu.be/e1DmuzynYyw
+login-tips-dataset-133 = As a Chef, remember that some crew members have a genetic predisposition to dislike cilantro. Try to avoid putting it in desserts.
+login-tips-dataset-134 = As a Clown, if you find a pair of cat ears, apply space glue to them and force them on someone's head.
