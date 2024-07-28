@@ -101,7 +101,7 @@ public sealed class DamageOnDraggingCritSystem : EntitySystem
         // Check that we are not weightless
         if(_gravity.IsWeightless(uid))
             return;
-        
+
         // Check that we're not wearing a hardsuit
         // We don't want to make salvage's job harder
         if(_inventory.TryGetSlotEntity(uid, "outerClothing", out var suit) && _tag.HasTag(suit.Value, "Hardsuit"))

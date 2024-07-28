@@ -226,3 +226,13 @@
   storage:
     back:
     - ClothingNeckGoldAutismPin
+
+- type: loadout
+  id: PersonalAI
+  equipment: PersonalAI
+
+- type: startingGear
+  id: PersonalAI
+  storage:
+    back:
+    - PersonalAI
