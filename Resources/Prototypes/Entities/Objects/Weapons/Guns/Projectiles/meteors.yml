@@ -154,6 +154,7 @@
       - !type:ExplodeBehavior
       - !type:WeightedSpawnEntityBehavior
         weightedSpawn: "MeteorSpawnAsteroidWallTable"
+        spawnOffset: 2
         minSpawn: 3
         maxSpawn: 6
         spawnAfter: 0.5
@@ -181,6 +182,7 @@
       - !type:ExplodeBehavior
       - !type:WeightedSpawnEntityBehavior
         weightedSpawn: "MeteorSpawnAsteroidWallTable"
+        spawnOffset: 3
         minSpawn: 5
         maxSpawn: 8
         spawnAfter: 0.5
