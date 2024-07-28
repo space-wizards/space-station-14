@@ -13,6 +13,8 @@
         state: plain
   - type: RandomSpawner
     prototypes:
+      - FoodBagel
+      - FoodBagelPoppy
       - FoodBurgerJelly
       - FoodBurgerCarp
       - FoodBurgerTofu
@@ -76,5 +78,6 @@
       - FoodMeatRatdoubleKebab
       - FoodMeatSnakeKebab
       - FoodPizzaArnoldSlice
+      - FoodPizzaUraniumSlice
       - FoodTacoRat
     rareChance: 0.05

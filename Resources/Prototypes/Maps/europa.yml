@@ -2,6 +2,8 @@
   id: Europa
   mapName: 'Europa'
   mapPath: /Maps/europa.yml
+  maxRandomOffset: 0
+  randomRotation: false
   minPlayers: 0
   maxPlayers: 40
   stations:
@@ -10,16 +12,11 @@
       components:
         - type: StationBiome
           biome: Snow
-        - type: StationRandomTransform
-          enableStationRotation: false
-          maxStationOffset: null
         - type: StationNameSetup
           mapNameTemplate: '{0} Europa {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
-        - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_transit.yml
         - type: StationJobs
           availableJobs:
             #service
