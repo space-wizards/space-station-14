@@ -1,17 +1,21 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Alert;
 using Content.Shared.Atmos;
+using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature.Components;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Prototypes;
 using System.Linq;
 
 namespace Content.Shared.Temperature.Systems;
 
 public abstract partial class SharedTemperatureSystem : EntitySystem
 {
+    [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
@@ -26,6 +30,9 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
 
     private float _accumulatedFrametime;
 
+    [ValidatePrototypeId<AlertCategoryPrototype>]
+    public const string TemperatureAlertCategory = "Temperature";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -34,6 +41,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         SubscribeLocalEvent<TemperatureComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<TemperatureProtectionComponent, InventoryRelayedEvent<ModifyChangedTemperatureEvent>>(
             OnTemperatureChangeAttempt);
+        SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
 
         SubscribeLocalEvent<InternalTemperatureComponent, MapInitEvent>(OnInit);
 
@@ -155,6 +163,63 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         {
             _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(uid):entity} stopped taking temperature damage");
             temperature.TakingDamage = false;
+        }
+    }
+
+    private void ServerAlert(EntityUid uid, AlertsComponent status, OnTemperatureChangeEvent args)
+    {
+        ProtoId<AlertPrototype> type;
+        float threshold;
+        float idealTemp;
+
+        if (!TryComp<TemperatureComponent>(uid, out var temperature))
+        {
+            _alerts.ClearAlertCategory(uid, TemperatureAlertCategory);
+            return;
+        }
+
+        if (TryComp<ThermalRegulatorComponent>(uid, out var regulator) &&
+            regulator.NormalBodyTemperature > temperature.ColdDamageThreshold &&
+            regulator.NormalBodyTemperature < temperature.HeatDamageThreshold)
+        {
+            idealTemp = regulator.NormalBodyTemperature;
+        }
+        else
+        {
+            idealTemp = (temperature.ColdDamageThreshold + temperature.HeatDamageThreshold) / 2;
+        }
+
+        if (args.CurrentTemperature <= idealTemp)
+        {
+            type = temperature.ColdAlert;
+            threshold = temperature.ColdDamageThreshold;
+        }
+        else
+        {
+            type = temperature.HotAlert;
+            threshold = temperature.HeatDamageThreshold;
+        }
+
+        // Calculates a scale where 1.0 is the ideal temperature and 0.0 is where temperature damage begins
+        // The cold and hot scales will differ in their range if the ideal temperature is not exactly halfway between the thresholds
+        var tempScale = (args.CurrentTemperature - threshold) / (idealTemp - threshold);
+        switch (tempScale)
+        {
+            case <= 0f:
+                _alerts.ShowAlert(uid, type, 3);
+                break;
+
+            case <= 0.4f:
+                _alerts.ShowAlert(uid, type, 2);
+                break;
+
+            case <= 0.66f:
+                _alerts.ShowAlert(uid, type, 1);
+                break;
+
+            case > 0.66f:
+                _alerts.ClearAlertCategory(uid, TemperatureAlertCategory);
+                break;
         }
     }
 
