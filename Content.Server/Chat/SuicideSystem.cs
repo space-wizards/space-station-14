@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Server.GameTicking;
 using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -6,6 +7,7 @@ using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
@@ -24,8 +26,9 @@ namespace Content.Server.Chat
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
 
-        public bool Suicide(EntityUid victim)
+        public bool Suicide(EntityUid victim, EntityUid mindId, MindComponent mind)
         {
             // Checks to see if the CannotSuicide tag exits, ghosts instead.
             if (_tagSystem.HasTag(victim, "CannotSuicide"))
@@ -53,9 +56,12 @@ namespace Content.Server.Chat
             if (suicideEvent.AttemptBlocked)
                 return false;
 
+            if (!_gameTicker.OnGhostAttempt(mindId, false, mind: mind))
+                return false;
+
             DefaultSuicideHandler(victim, suicideEvent);
 
-            ApplyDeath(victim, suicideEvent.Kind!.Value);
+            ApplyDeath(victim, suicideEvent.Kind, suicideEvent.Damage);
             _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} suicided{(environmentSuicide ? " (environment)" : "")}");
             return true;
         }
@@ -73,7 +79,7 @@ namespace Content.Server.Chat
 
             var selfMessage = Loc.GetString("suicide-command-default-text-self");
             _popup.PopupEntity(selfMessage, victim, victim);
-            suicideEvent.SetHandled(SuicideKind.Bloodloss);
+            suicideEvent.SetHandled("Bloodloss");
         }
 
         /// <summary>
@@ -123,19 +129,32 @@ namespace Content.Server.Chat
             return false;
         }
 
-        private void ApplyDeath(EntityUid target, SuicideKind kind)
+        private void ApplyDeath(EntityUid target, string? kind, DamageSpecifier? damage)
         {
-            if (kind == SuicideKind.Special)
-                return;
-
-            if (!_prototypeManager.TryIndex<DamageTypePrototype>(kind.ToString(), out var damagePrototype))
-            {
-                const SuicideKind fallback = SuicideKind.Blunt;
-                Log.Error($"{nameof(SuicideSystem)} could not find the damage type prototype associated with {kind}. Falling back to {fallback}");
-                damagePrototype = _prototypeManager.Index<DamageTypePrototype>(fallback.ToString());
-            }
+            ProtoId<DamageTypePrototype> fallback = "Blunt";
             const int lethalAmountOfDamage = 200; // TODO: Would be nice to get this number from somewhere else
-            _damageableSystem.TryChangeDamage(target, new(damagePrototype, lethalAmountOfDamage), true, origin: target);
+
+            if (kind != null)
+            {
+                if (kind == "Special")
+                    return;
+
+                if (!_prototypeManager.TryIndex<DamageTypePrototype>(kind, out var damagePrototype))
+                {
+                    Log.Error($"{nameof(SuicideSystem)} could not find the damage type prototype associated with {kind}. Falling back to {fallback}");
+                    damagePrototype = _prototypeManager.Index<DamageTypePrototype>(fallback);
+                }
+                damage = new DamageSpecifier(damagePrototype, lethalAmountOfDamage);
+            }
+
+            if (damage == null)
+            {
+                var damagePrototype = _prototypeManager.Index<DamageTypePrototype>(fallback);
+                damage = new DamageSpecifier(damagePrototype, lethalAmountOfDamage);
+            }
+
+
+            _damageableSystem.TryChangeDamage(target, damage, true, origin: target);
         }
     }
 }

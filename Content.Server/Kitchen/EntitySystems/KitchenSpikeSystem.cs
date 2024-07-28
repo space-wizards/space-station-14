@@ -63,7 +63,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (args.Handled)
                 return;
-            args.SetHandled(SuicideKind.Piercing);
+            args.SetHandled("Piercing");
             var victim = args.Victim;
             var othersMessage = Loc.GetString("comp-kitchen-spike-suicide-other", ("victim", victim));
             _popupSystem.PopupEntity(othersMessage, victim);

@@ -150,7 +150,7 @@ public sealed class CrematoriumSystem : EntitySystem
     {
         if (args.Handled)
             return;
-        args.SetHandled(SuicideKind.Heat);
+        args.SetHandled("Heat");
 
         var victim = args.Victim;
         if (TryComp(victim, out ActorComponent? actor) && _minds.TryGetMind(victim, out var mindId, out var mind))

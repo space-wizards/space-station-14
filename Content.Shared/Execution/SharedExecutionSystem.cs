@@ -1,8 +1,8 @@
 using Content.Shared.ActionBlocker;
-using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
@@ -16,12 +16,10 @@ namespace Content.Shared.Execution;
 /// <summary>
 ///     Verb for violently murdering cuffed creatures.
 /// </summary>
-public sealed class ExecutionSystem : EntitySystem
+public sealed class SharedExecutionSystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly SharedCombatModeSystem _combat = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
@@ -31,8 +29,8 @@ public sealed class ExecutionSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ExecutionComponent, GetVerbsEvent<UtilityVerb>>(OnGetInteractionsVerbs);
-        SubscribeLocalEvent<ExecutionComponent, ExecutionDoAfterEvent>(OnExecutionDoAfter);
         SubscribeLocalEvent<ExecutionComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
+        SubscribeLocalEvent<ExecutionComponent, SuicideEvent>(OnSuicide);
     }
 
     private void OnGetInteractionsVerbs(EntityUid uid, ExecutionComponent comp, GetVerbsEvent<UtilityVerb> args)
@@ -84,12 +82,8 @@ public sealed class ExecutionSystem : EntitySystem
 
     }
 
-    private bool CanBeExecuted(EntityUid victim, EntityUid attacker)
+    public bool CanBeExecuted(EntityUid victim, EntityUid attacker)
     {
-        // Use suicide.
-        if (victim == attacker)
-            return false;
-
         // No point executing someone if they can't take damage
         if (!HasComp<DamageableComponent>(victim))
             return false;
@@ -114,43 +108,6 @@ public sealed class ExecutionSystem : EntitySystem
         return true;
     }
 
-    private void OnExecutionDoAfter(EntityUid uid, ExecutionComponent component, ExecutionDoAfterEvent args)
-    {
-        if (args.Handled || args.Cancelled || args.Used == null || args.Target == null)
-            return;
-
-        var attacker = args.User;
-        var victim = args.Target.Value;
-        var weapon = args.Used.Value;
-
-        if (!CanBeExecuted(victim, attacker))
-            return;
-
-        // This is needed so the melee system does not stop it.
-        var prev = _combat.IsInCombatMode(attacker);
-        _combat.SetInCombatMode(attacker, true);
-        component.Executing = true;
-        string? internalMsg = null;
-        string? externalMsg = null;
-
-        if (TryComp(uid, out MeleeWeaponComponent? melee))
-        {
-            _melee.AttemptLightAttack(attacker, weapon, melee, victim);
-            internalMsg = component.DefaultCompleteInternalMeleeExecutionMessage;
-            externalMsg = component.DefaultCompleteExternalMeleeExecutionMessage;
-        }
-
-        _combat.SetInCombatMode(attacker, prev);
-        component.Executing = false;
-        args.Handled = true;
-
-        if (internalMsg != null && externalMsg != null)
-        {
-            ShowExecutionInternalPopup(internalMsg, attacker, victim, uid);
-            ShowExecutionExternalPopup(externalMsg, attacker, victim, uid);
-        }
-    }
-
     private void OnGetMeleeDamage(EntityUid uid, ExecutionComponent comp, ref GetMeleeDamageEvent args)
     {
         if (!TryComp<MeleeWeaponComponent>(uid, out var melee) ||
@@ -165,18 +122,39 @@ public sealed class ExecutionSystem : EntitySystem
         args.ResistanceBypass = true;
     }
 
-    private void ShowExecutionInternalPopup(string locString,
-        EntityUid attacker, EntityUid victim, EntityUid weapon)
+    private void OnSuicide(EntityUid uid, ExecutionComponent comp, ref SuicideEvent args)
     {
-        _popup.PopupClient(
-            Loc.GetString(locString, ("attacker", attacker), ("victim", victim), ("weapon", weapon)),
-            attacker,
-            attacker,
-            PopupType.Medium
-        );
+        if (!TryComp<MeleeWeaponComponent>(uid, out var melee))
+            return;
+
+        args.SetHandled(null, damage: melee.Damage);
     }
 
-    private void ShowExecutionExternalPopup(string locString, EntityUid attacker, EntityUid victim, EntityUid weapon)
+    public void ShowExecutionInternalPopup(string locString,
+        EntityUid attacker, EntityUid victim, EntityUid weapon, bool predict = true)
+    {
+        if (predict)
+        {
+            _popup.PopupClient(
+                Loc.GetString(locString, ("attacker", attacker), ("victim", victim), ("weapon", weapon)),
+                attacker,
+                attacker,
+                PopupType.MediumCaution
+                );
+        }
+        else
+        {
+            _popup.PopupEntity(
+                Loc.GetString(locString, ("attacker", attacker), ("victim", victim), ("weapon", weapon)),
+                attacker,
+                Filter.Entities(attacker),
+                true,
+                PopupType.MediumCaution
+            );
+        }
+    }
+
+    public void ShowExecutionExternalPopup(string locString, EntityUid attacker, EntityUid victim, EntityUid weapon)
     {
         _popup.PopupEntity(
             Loc.GetString(locString, ("attacker", attacker), ("victim", victim), ("weapon", weapon)),

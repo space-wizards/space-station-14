@@ -1,3 +1,7 @@
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
+using Robust.Shared.Prototypes;
+
 namespace Content.Shared.Interaction.Events
 {
     /// <summary>
@@ -9,12 +13,14 @@ namespace Content.Shared.Interaction.Events
         {
             Victim = victim;
         }
-        public void SetHandled(SuicideKind kind)
+        public void SetHandled(string? kind = null, DamageSpecifier? damage = null)
         {
             if (Handled)
                 throw new InvalidOperationException("Suicide was already handled");
 
             Kind = kind;
+            Damage = damage;
+            Handled = true;
         }
 
         public void BlockSuicideAttempt(bool suicideAttempt)
@@ -22,27 +28,11 @@ namespace Content.Shared.Interaction.Events
             if (suicideAttempt)
                 AttemptBlocked = suicideAttempt;
         }
-
-        public SuicideKind? Kind { get; private set; }
+        public DamageSpecifier? Damage { get; private set; }
+        public ProtoId<DamageTypePrototype>? Kind { get; private set; }
         public EntityUid Victim { get; private set; }
         public bool AttemptBlocked { get; private set; }
-        public bool Handled => Kind != null;
-    }
 
-    public enum SuicideKind
-    {
-        Special, //Doesn't damage the mob, used for "weird" suicides like gibbing
-
-        //Damage type suicides
-        Blunt,
-        Slash,
-        Piercing,
-        Heat,
-        Shock,
-        Cold,
-        Poison,
-        Radiation,
-        Asphyxiation,
-        Bloodloss
+        public bool Handled;
     }
 }

@@ -52,13 +52,8 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            if (suicideSystem.Suicide(victim))
-            {
-                // Prevent the player from returning to the body.
-                // Note that mind cannot be null because otherwise victim would be null.
-                gameTicker.OnGhostAttempt(mindId, false, mind: mind);
+            if (suicideSystem.Suicide(victim, mindId, mind))
                 return;
-            }
 
             if (gameTicker.OnGhostAttempt(mindId, true, mind: mind))
                 return;

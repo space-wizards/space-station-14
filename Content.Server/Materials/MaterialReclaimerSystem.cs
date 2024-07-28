@@ -1,4 +1,4 @@
-﻿using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.GameTicking;
 using Content.Server.Popups;
@@ -91,7 +91,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         if (args.Handled)
             return;
 
-        args.SetHandled(SuicideKind.Bloodloss);
+        args.SetHandled("Bloodloss");
         var victim = args.Victim;
         if (TryComp(victim, out ActorComponent? actor) &&
             _mind.TryGetMind(actor.PlayerSession, out var mindId, out var mind))

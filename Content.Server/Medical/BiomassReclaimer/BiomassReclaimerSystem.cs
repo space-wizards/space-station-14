@@ -123,7 +123,7 @@ namespace Content.Server.Medical.BiomassReclaimer
 
             _popup.PopupEntity(Loc.GetString("biomass-reclaimer-suicide-others", ("victim", args.Victim)), ent, PopupType.LargeCaution);
             StartProcessing(args.Victim, ent);
-            args.SetHandled(SuicideKind.Blunt);
+            args.SetHandled("Blunt");
         }
 
         private void OnInit(EntityUid uid, ActiveBiomassReclaimerComponent component, ComponentInit args)

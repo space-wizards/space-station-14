@@ -264,7 +264,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (args.Handled)
                 return;
 
-            args.SetHandled(SuicideKind.Heat);
+            args.SetHandled("Heat");
             var victim = args.Victim;
             var headCount = 0;
 
