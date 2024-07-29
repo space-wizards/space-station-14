@@ -83,6 +83,12 @@ public sealed partial class GeigerComponent : Component
     ///     Played only for current user.
     /// </summary>
     public EntityUid? Stream;
+
+    /// <summary>
+    ///     Mark true if the audio should be heard by everyone around the device
+    /// </summary>
+    [DataField]
+    public bool BroadcastAudio = false;
 }
 
 [Serializable, NetSerializable]
