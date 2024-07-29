@@ -221,3 +221,51 @@
   completetime: 3
   materials:
     Plastic: 200
+
+- type: latheRecipe
+  id: FauxTileConcrete
+  result: FloorTileItemAstroConcrete
+  completetime: 1
+  materials:
+    Plastic: 50
+    Steel: 50
+
+- type: latheRecipe
+  id: FauxTileConcreteSlab
+  result: FloorTileItemAstroConcreteMono
+  completetime: 1
+  materials:
+    Plastic: 50
+    Steel: 50
+
+- type: latheRecipe
+  id: FauxTileGrayConcrete
+  result: FloorTileItemAstroGrayConcrete
+  completetime: 1
+  materials:
+    Plastic: 50
+    Steel: 50
+
+- type: latheRecipe
+  id: FauxTileGrayConcreteSlab
+  result: FloorTileItemAstroGrayConcreteMono
+  completetime: 1
+  materials:
+    Plastic: 50
+    Steel: 50
+
+- type: latheRecipe
+  id: FauxTileOldConcrete
+  result: FloorTileItemAstroOldConcrete
+  completetime: 1
+  materials:
+    Plastic: 50
+    Steel: 50
+
+- type: latheRecipe
+  id: FauxTileOldConcreteSlab
+  result: FloorTileItemAstroOldConcreteMono
+  completetime: 1
+  materials:
+    Plastic: 50
+    Steel: 50

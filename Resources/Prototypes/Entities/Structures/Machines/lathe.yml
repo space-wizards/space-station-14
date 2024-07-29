@@ -331,6 +331,12 @@
       - FauxTileJungleAstroGrass
       - FauxTileAstroIce
       - FauxTileAstroSnow
+      - FauxTileConcrete
+      - FauxTileConcreteSlab
+      - FauxTileGrayConcrete
+      - FauxTileGrayConcreteSlab
+      - FauxTileOldConcrete
+      - FauxTileOldConcreteSlab
       - OreBagOfHolding
       - DeviceQuantumSpinInverter
   - type: EmagLatheRecipes
