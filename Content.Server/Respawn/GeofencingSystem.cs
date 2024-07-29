@@ -10,7 +10,7 @@ using System.Numerics;
 
 namespace Content.Server.Geofencing;
 
-public sealed class NukeSystem : EntitySystem
+public sealed class GeofencingSystem : EntitySystem
 {
 
     [Dependency] private readonly IAdminLogManager _adminlogs = default!;
@@ -39,34 +39,31 @@ public sealed class NukeSystem : EntitySystem
         {
             var fencedent = (uid, geofence);
 
-            if (geofence.Geofence)
+            if (!geofence.Geofence)
+                continue;
+
+            if (!FencedIsAway(fencedent))
             {
-                if (FencedIsAway(fencedent))
-                {
-                    if (geofence.LeftStation && geofence.LeftStationWhen + geofence.OffStationTolerance <= _timing.CurTime)
-                    {
-                        ReturnFencedToOrigin(fencedent);
-                    }
-                    else if (geofence.LeftStation)
-                    {
-                        if (geofence.LastPopup + TimeSpan.FromSeconds(30) <= _timing.CurTime)
-                        {
-                            var diskwarning = Loc.GetString("geofence-feelin-weird", ("entity", uid));
-                            _popups.PopupEntity(diskwarning, uid);
-                            geofence.LastPopup = _timing.CurTime;
-                        }
-                    }
-                    else
-                    {
-                        geofence.LeftStation = true;
-                        geofence.LeftStationWhen = _timing.CurTime;
-                    }
-                }
-                else
-                {
-                    geofence.LeftStation = false;
-                    geofence.LeftStationWhen = TimeSpan.MaxValue;
-                }
+                geofence.LeftStation = false;
+                geofence.LeftStationWhen = TimeSpan.MaxValue;
+                continue;
+            }
+
+            if (geofence.LeftStation && geofence.LeftStationWhen + geofence.OffStationTolerance <= _timing.CurTime)
+            {
+                ReturnFencedToOrigin(fencedent);
+            }
+            else if (geofence.LeftStation && geofence.LastPopup + TimeSpan.FromSeconds(30) <= _timing.CurTime)
+            {
+                var diskwarning = Loc.GetString("geofence-feelin-weird", ("entity", uid));
+                _popups.PopupEntity(diskwarning, uid);
+                geofence.LastPopup = _timing.CurTime;
+
+            }
+            else
+            {
+                geofence.LeftStation = true;
+                geofence.LeftStationWhen = _timing.CurTime;
             }
         }
     }
