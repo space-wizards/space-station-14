@@ -10,11 +10,6 @@
   - Service
   - Janitor
   - Maintenance
-  - Medical
-  - Cargo
-  - Hydroponics
-  - Research
-  - Kitchen
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: GarbageDay
