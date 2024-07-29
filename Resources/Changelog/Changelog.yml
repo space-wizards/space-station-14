@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ERORR404V1
-  changes:
-  - message: Added chameleon projector in thief toolbox!
-    type: Add
-  id: 6502
-  time: '2024-04-30T12:14:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27491
 - author: DamnFeds
   changes:
   - message: honkbot now uses a happy honk meal instead of box of hugs and clown's
@@ -3780,3 +3773,10 @@
   id: 7001
   time: '2024-07-29T12:52:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30400
+- author: TurboTrackerss14
+  changes:
+  - message: Reduced Kobold ghostrole chance to mirror Monkey
+    type: Tweak
+  id: 7002
+  time: '2024-07-29T15:16:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30450
