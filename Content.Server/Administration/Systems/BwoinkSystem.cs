@@ -43,16 +43,21 @@ namespace Content.Server.Administration.Systems
         [GeneratedRegex(@"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$")]
         private static partial Regex DiscordRegex();
 
-        private ISawmill _sawmill = default!;
-        private readonly HttpClient _httpClient = new();
         private string _webhookUrl = string.Empty;
         private WebhookData? _webhookData;
+
+        private string _onCallUrl = string.Empty;
+        private WebhookData? _onCallData;
+
+        private ISawmill _sawmill = default!;
+        private readonly HttpClient _httpClient = new();
+
         private string _footerIconUrl = string.Empty;
         private string _avatarUrl = string.Empty;
         private string _serverName = string.Empty;
-        private readonly Dictionary<NetUserId, (string? id, string username, string description, string? characterName, GameRunLevel lastRunLevel)> _relayMessages = new();
+        private readonly Dictionary<NetUserId, DiscordRelayInteraction> _relayMessages = new();
         private Dictionary<NetUserId, string> _oldMessageIds = new();
-        private readonly Dictionary<NetUserId, Queue<string>> _messageQueues = new();
+        private readonly Dictionary<NetUserId, Queue<DiscordRelayedData>> _messageQueues = new();
         private readonly HashSet<NetUserId> _processingChannels = new();
         private readonly Dictionary<NetUserId, (TimeSpan Timestamp, bool Typing)> _typingUpdateTimestamps = new();
         private string _overrideClientName = string.Empty;
@@ -73,13 +78,16 @@ namespace Content.Server.Administration.Systems
         public override void Initialize()
         {
             base.Initialize();
+
+            Subs.CVar(_config, CCVars.DiscordOnCallWebhook, OnCallChanged, true);
+
             Subs.CVar(_config, CCVars.DiscordAHelpWebhook, OnWebhookChanged, true);
             Subs.CVar(_config, CCVars.DiscordAHelpFooterIcon, OnFooterIconChanged, true);
             Subs.CVar(_config, CCVars.DiscordAHelpAvatar, OnAvatarChanged, true);
             Subs.CVar(_config, CVars.GameHostName, OnServerNameChanged, true);
             Subs.CVar(_config, CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
             _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
-            _maxAdditionalChars = GenerateAHelpMessage("", "", true, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, playedSound: false).Length;
+            _maxAdditionalChars = GenerateAHelpMessage("", "", true, _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"), _gameTicker.RunLevel, playedSound: false).Message.Length;
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
@@ -93,6 +101,33 @@ namespace Content.Server.Administration.Systems
                     CVarLimitCount = CCVars.AhelpRateLimitCount,
                     PlayerLimitedAction = PlayerRateLimitedAction
                 });
+        }
+
+        private async void OnCallChanged(string url)
+        {
+            _onCallUrl = url;
+
+            if (url == string.Empty)
+                return;
+
+            var match = DiscordRegex().Match(url);
+
+            if (!match.Success)
+            {
+                Log.Error("On call URL does not appear to be valid.");
+                return;
+            }
+
+            if (match.Groups.Count <= 2)
+            {
+                Log.Error("Could not get webhook ID or token for on call URL.");
+                return;
+            }
+
+            var webhookId = match.Groups[1].Value;
+            var webhookToken = match.Groups[2].Value;
+
+            _onCallData = await GetWebhookData(webhookId, webhookToken);
         }
 
         private void PlayerRateLimitedAction(ICommonSession obj)
@@ -128,13 +163,13 @@ namespace Content.Server.Administration.Systems
 
             // Store the Discord message IDs of the previous round
             _oldMessageIds = new Dictionary<NetUserId, string>();
-            foreach (var message in _relayMessages)
+            foreach (var (user, interaction) in _relayMessages)
             {
-                var id = message.Value.id;
+                var id = interaction.Id;
                 if (id == null)
                     return;
 
-                _oldMessageIds[message.Key] = id;
+                _oldMessageIds[user] = id;
             }
 
             _relayMessages.Clear();
@@ -199,10 +234,10 @@ namespace Content.Server.Administration.Systems
             var webhookToken = match.Groups[2].Value;
 
             // Fire and forget
-            await SetWebhookData(webhookId, webhookToken);
+            _webhookData = await GetWebhookData(webhookId, webhookToken);
         }
 
-        private async Task SetWebhookData(string id, string token)
+        private async Task<WebhookData?> GetWebhookData(string id, string token)
         {
             var response = await _httpClient.GetAsync($"https://discord.com/api/v10/webhooks/{id}/{token}");
 
@@ -210,10 +245,10 @@ namespace Content.Server.Administration.Systems
             if (!response.IsSuccessStatusCode)
             {
                 _sawmill.Log(LogLevel.Error, $"Discord returned bad status code when trying to get webhook data (perhaps the webhook URL is invalid?): {response.StatusCode}\nResponse: {content}");
-                return;
+                return null;
             }
 
-            _webhookData = JsonSerializer.Deserialize<WebhookData>(content);
+            return JsonSerializer.Deserialize<WebhookData>(content);
         }
 
         private void OnFooterIconChanged(string url)
@@ -226,14 +261,14 @@ namespace Content.Server.Administration.Systems
             _avatarUrl = url;
         }
 
-        private async void ProcessQueue(NetUserId userId, Queue<string> messages)
+        private async void ProcessQueue(NetUserId userId, Queue<DiscordRelayedData> messages)
         {
             // Whether an embed already exists for this player
             var exists = _relayMessages.TryGetValue(userId, out var existingEmbed);
 
             // Whether the message will become too long after adding these new messages
-            var tooLong = exists && messages.Sum(msg => Math.Min(msg.Length, MessageLengthCap) + "\n".Length)
-                    + existingEmbed.description.Length > DescriptionMax;
+            var tooLong = exists && messages.Sum(msg => Math.Min(msg.Message.Length, MessageLengthCap) + "\n".Length)
+                    + existingEmbed?.Description.Length > DescriptionMax;
 
             // If there is no existing embed, or it is getting too long, we create a new embed
             if (!exists || tooLong)
@@ -252,9 +287,9 @@ namespace Content.Server.Administration.Systems
                 // If we have all the data required, we can link to the embed of the previous round or embed that was too long
                 if (_webhookData is { GuildId: { } guildId, ChannelId: { } channelId })
                 {
-                    if (tooLong && existingEmbed.id != null)
+                    if (tooLong && existingEmbed?.Id != null)
                     {
-                        linkToPrevious = $"**[Go to previous embed of this round](https://discord.com/channels/{guildId}/{channelId}/{existingEmbed.id})**\n";
+                        linkToPrevious = $"**[Go to previous embed of this round](https://discord.com/channels/{guildId}/{channelId}/{existingEmbed.Id})**\n";
                     }
                     else if (_oldMessageIds.TryGetValue(userId, out var id) && !string.IsNullOrEmpty(id))
                     {
@@ -263,13 +298,22 @@ namespace Content.Server.Administration.Systems
                 }
 
                 var characterName = _minds.GetCharacterName(userId);
-                existingEmbed = (null, lookup.Username, linkToPrevious, characterName, _gameTicker.RunLevel);
+                existingEmbed = new DiscordRelayInteraction()
+                {
+                    Id = null,
+                    CharacterName = characterName,
+                    Description = linkToPrevious,
+                    Username = lookup.Username,
+                    LastRunLevel = _gameTicker.RunLevel,
+                };
+
+                _relayMessages[userId] = existingEmbed;
             }
 
             // Previous message was in another RunLevel, so show that in the embed
-            if (existingEmbed.lastRunLevel != _gameTicker.RunLevel)
+            if (existingEmbed!.LastRunLevel != _gameTicker.RunLevel)
             {
-                existingEmbed.description += _gameTicker.RunLevel switch
+                existingEmbed.Description += _gameTicker.RunLevel switch
                 {
                     GameRunLevel.PreRoundLobby => "\n\n:arrow_forward: _**Pre-round lobby started**_\n",
                     GameRunLevel.InRound => "\n\n:arrow_forward: _**Round started**_\n",
@@ -277,24 +321,33 @@ namespace Content.Server.Administration.Systems
                     _ => throw new ArgumentOutOfRangeException(nameof(_gameTicker.RunLevel), $"{_gameTicker.RunLevel} was not matched."),
                 };
 
-                existingEmbed.lastRunLevel = _gameTicker.RunLevel;
+                existingEmbed.LastRunLevel = _gameTicker.RunLevel;
             }
+
+            // If last message of the new batch is SOS then relay it to on-call.
+            // ... as long as it hasn't been relayed already.
+            var discordMention = messages.Last();
+            var onCallRelay = !discordMention.Receivers && !existingEmbed.OnCall;
 
             // Add available messages to the embed description
             while (messages.TryDequeue(out var message))
             {
-                // In case someone thinks they're funny
-                if (message.Length > MessageLengthCap)
-                    message = message[..(MessageLengthCap - TooLongText.Length)] + TooLongText;
+                string text;
 
-                existingEmbed.description += $"\n{message}";
+                // In case someone thinks they're funny
+                if (message.Message.Length > MessageLengthCap)
+                    text = message.Message[..(MessageLengthCap - TooLongText.Length)] + TooLongText;
+                else
+                    text = message.Message;
+
+                existingEmbed.Description += $"\n{text}";
             }
 
-            var payload = GeneratePayload(existingEmbed.description, existingEmbed.username, existingEmbed.characterName);
+            var payload = GeneratePayload(existingEmbed.Description, existingEmbed.Username, existingEmbed.CharacterName);
 
             // If there is no existing embed, create a new one
             // Otherwise patch (edit) it
-            if (existingEmbed.id == null)
+            if (existingEmbed.Id == null)
             {
                 var request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true",
                     new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
@@ -315,11 +368,11 @@ namespace Content.Server.Administration.Systems
                     return;
                 }
 
-                existingEmbed.id = id.ToString();
+                existingEmbed.Id = id.ToString();
             }
             else
             {
-                var request = await _httpClient.PatchAsync($"{_webhookUrl}/messages/{existingEmbed.id}",
+                var request = await _httpClient.PatchAsync($"{_webhookUrl}/messages/{existingEmbed.Id}",
                     new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
 
                 if (!request.IsSuccessStatusCode)
@@ -332,6 +385,53 @@ namespace Content.Server.Administration.Systems
             }
 
             _relayMessages[userId] = existingEmbed;
+
+            // Actually do the on call relay last, we just need to grab it before we dequeue every message above.
+            if (onCallRelay &&
+                _onCallData != null)
+            {
+                existingEmbed.OnCall = true;
+                var roleMention = _config.GetCVar(CCVars.DiscordAhelpMention);
+
+                if (!string.IsNullOrEmpty(roleMention))
+                {
+                    var message = new StringBuilder();
+                    message.AppendLine($"<@{roleMention}>");
+                    message.AppendLine("Unanswered SOS");
+                    message.Append($"{existingEmbed.Username}");
+
+                    if (!string.IsNullOrEmpty(existingEmbed.CharacterName))
+                    {
+                        message.AppendLine($" ({existingEmbed.CharacterName})");
+                    }
+                    else
+                    {
+                        message.Append("\n");
+                    }
+
+                    // Need webhook data to get the correct link for that channel rather than on-call data.
+                    if (_webhookData is { GuildId: { } guildId, ChannelId: { } channelId })
+                    {
+                        message.AppendLine(
+                            $"**[Go to ahelp](https://discord.com/channels/{guildId}/{channelId}/{existingEmbed.Id})**");
+                    }
+
+                    payload = GeneratePayload(message.ToString(), existingEmbed.Username, existingEmbed.CharacterName);
+
+                    var request = await _httpClient.PostAsync($"{_onCallUrl}?wait=true",
+                        new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
+
+                    var content = await request.Content.ReadAsStringAsync();
+                    if (!request.IsSuccessStatusCode)
+                    {
+                        _sawmill.Log(LogLevel.Error, $"Discord returned bad status code when posting relay message (perhaps the message is too long?): {request.StatusCode}\nResponse: {content}");
+                    }
+                }
+            }
+            else
+            {
+                existingEmbed.OnCall = false;
+            }
 
             _processingChannels.Remove(userId);
         }
@@ -487,7 +587,7 @@ namespace Content.Server.Administration.Systems
             if (sendsWebhook)
             {
                 if (!_messageQueues.ContainsKey(msg.UserId))
-                    _messageQueues[msg.UserId] = new Queue<string>();
+                    _messageQueues[msg.UserId] = new Queue<DiscordRelayedData>();
 
                 var str = message.Text;
                 var unameLength = senderSession.Name.Length;
@@ -525,7 +625,7 @@ namespace Content.Server.Administration.Systems
                 .ToList();
         }
 
-        private static string GenerateAHelpMessage(string username, string message, bool admin, string roundTime, GameRunLevel roundState, bool playedSound, bool noReceivers = false)
+        private static DiscordRelayedData GenerateAHelpMessage(string username, string message, bool admin, string roundTime, GameRunLevel roundState, bool playedSound, bool noReceivers = false)
         {
             var stringbuilder = new StringBuilder();
 
@@ -542,7 +642,49 @@ namespace Content.Server.Administration.Systems
                 stringbuilder.Append(" **(S)**");
             stringbuilder.Append($" **{username}:** ");
             stringbuilder.Append(message);
-            return stringbuilder.ToString();
+
+            return new DiscordRelayedData()
+            {
+                Receivers = !noReceivers,
+                Message = stringbuilder.ToString(),
+            };
+        }
+
+        private record struct DiscordRelayedData
+        {
+            /// <summary>
+            /// Was anyone online to receive it.
+            /// </summary>
+            public bool Receivers;
+
+            /// <summary>
+            /// What's the payload to send to discord.
+            /// </summary>
+            public string Message;
+        }
+
+        private sealed class DiscordRelayInteraction
+        {
+            public string? Id;
+
+            public string Username = String.Empty;
+
+            public string? CharacterName;
+
+            /// <summary>
+            /// Contents for the discord message.
+            /// </summary>
+            public string Description = string.Empty;
+
+            /// <summary>
+            /// Run level of the last interaction. If different we'll link to the last Id.
+            /// </summary>
+            public GameRunLevel LastRunLevel;
+
+            /// <summary>
+            /// Did we relay this interaction to OnCall previously.
+            /// </summary>
+            public bool OnCall;
         }
     }
 }
