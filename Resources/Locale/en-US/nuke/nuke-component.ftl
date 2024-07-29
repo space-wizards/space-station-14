@@ -47,5 +47,5 @@ nuke-examine-armed = Hey uh, why's that [color=red]red light[/color] blinking?
 nuke-examine-exploding = Yeah... I think it's too late buddy.
 
 ## Nuke disk geofencing
-nuke-disk-poof = The {$entity} fades completely away!
+geofence-poof = The {$entity} fades completely away!
 geofence-feelin-weird = The {$entity} seems to be fading away!

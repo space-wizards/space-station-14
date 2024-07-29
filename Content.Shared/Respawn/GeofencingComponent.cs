@@ -40,7 +40,9 @@ public sealed partial class GeofencingComponent : Component
     [DataField]
     public TimeSpan LastPopup = TimeSpan.Zero;
 
-    ///
+    /// <summary>
+    /// A prototype effect to spawn where the fenced entity reappears.
+    /// </summary>
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string TeleportFlare = "EffectFlashBluespace";
 
