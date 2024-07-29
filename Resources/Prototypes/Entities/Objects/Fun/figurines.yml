@@ -19,6 +19,10 @@
     - Figurine
   - type: StealTarget
     stealGroup: Figurines
+  - type: UseDelay
+    delay: 10
+  - type: Speech
+    speechSounds: Pai # it just sounds better
 
 - type: entity
   parent: BaseFigurine
@@ -173,6 +177,8 @@
   components:
   - type: Sprite
     state: qm
+  - type: SpeakOnUse
+    pack: FigurinesQuartermaster
 
 - type: entity
   parent: BaseFigurine

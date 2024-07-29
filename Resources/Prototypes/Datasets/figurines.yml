@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: FigurinesQuartermaster
+  values:
+    prefix: figurines-quartermaster
+    count: 4
