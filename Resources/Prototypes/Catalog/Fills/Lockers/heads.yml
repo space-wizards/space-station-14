@@ -48,6 +48,7 @@
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
       - id: MedalCase
+      - id: ClothingEyesGlassesCommand
 
 - type: entity
   id: LockerCaptainFilled
@@ -74,6 +75,7 @@
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
       - id: MedalCase
+      - id: ClothingEyesGlassesCommand
 
 - type: entity
   id: LockerCaptainFilledNoLaser
@@ -99,6 +101,7 @@
       - id: RubberStampCaptain
       - id: JetpackCaptainFilled
       - id: MedalCase
+      - id: ClothingEyesGlassesCommand
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -128,6 +131,7 @@
       - id: ClothingBackpackIan
         prob: 0.5
       - id: AccessConfigurator
+      - id: ClothingEyesGlassesCommand
 
 - type: entity
   id: LockerChiefEngineerFilledHardsuit

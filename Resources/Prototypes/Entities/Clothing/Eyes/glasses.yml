@@ -184,6 +184,26 @@
     coverage: EYES
 
 - type: entity
+  parent: [ClothingEyesBase, ShowSecurityIcons]
+  id: ClothingEyesGlassesCommand
+  name: command glasses
+  description: Upgraded sunglasses that provide flash immunity and a security HUD. For Captain and HoP use only.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/commandglasses.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/commandglasses.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
+  - type: IdentityBlocker
+    coverage: EYES
+
+- type: entity
   parent: ClothingEyesBase
   id: ClothingEyesGlassesMercenary
   name: mercenary glasses
