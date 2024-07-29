@@ -430,3 +430,41 @@
   name: large wood floor
   spawn: FloorTileItemWoodLarge
   maxCount: 30
+
+# Faux concrete
+
+- type: stack
+  id: FloorTileAstroConcrete
+  name: astro-concrete tile
+  spawn: FloorTileItemAstroConcrete
+  maxCount: 30
+
+- type: stack
+  id: FloorTileAstroConcreteMono
+  name: astro-concrete slab
+  spawn: FloorTileItemAstroConcreteMono
+  maxCount: 30
+
+- type: stack
+  id: FloorTileAstroGrayConcrete
+  name: gray astro-concrete tile
+  spawn: FloorTileItemAstroGrayConcrete
+  maxCount: 30
+
+- type: stack
+  id: FloorTileAstroGrayConcreteMono
+  name: gray astro-concrete slab
+  spawn: FloorTileItemAstroGrayConcreteMono
+  maxCount: 30
+
+- type: stack
+  id: FloorTileAstroOldConcrete
+  name: old astro-concrete tile
+  spawn: FloorTileItemAstroOldConcrete
+  maxCount: 30
+
+- type: stack
+  id: FloorTileAstroOldConcreteMono
+  name: old astro-concrete slab
+  spawn: FloorTileItemAstroOldConcreteMono
+  maxCount: 30

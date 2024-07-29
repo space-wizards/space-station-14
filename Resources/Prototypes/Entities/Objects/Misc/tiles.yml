@@ -1118,3 +1118,101 @@
   - type: Construction
     graph: TileWoodLarge
     node: woodtilelarge
+
+# Faux concrete
+
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemAstroConcrete
+  name: astro-concrete tile
+  components:
+  - type: Sprite
+    state: concrete
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroConcrete
+  - type: Stack
+    stackType: FloorTileAstroConcrete
+
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemAstroConcreteMono
+  name: astro-concrete slab
+  components:
+  - type: Sprite
+    state: concreteslab
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroConcreteMono
+  - type: Stack
+    stackType: FloorTileAstroConcreteMono
+
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemAstroGrayConcrete
+  name: gray astro-concrete tile
+  components:
+  - type: Sprite
+    state: grayconcrete
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroGrayConcrete
+  - type: Stack
+    stackType: FloorTileAstroGrayConcrete
+
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemAstroGrayConcreteMono
+  name: gray astro-concrete slab
+  components:
+  - type: Sprite
+    state: grayconcreteslab
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroGrayConcreteMono
+  - type: Stack
+    stackType: FloorTileAstroGrayConcreteMono
+
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemAstroOldConcrete
+  name: old astro-concrete tile
+  components:
+  - type: Sprite
+    state: oldconcrete
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroOldConcrete
+  - type: Stack
+    stackType: FloorTileAstroOldConcrete
+
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemAstroOldConcreteMono
+  name: old astro-concrete slab
+  components:
+  - type: Sprite
+    state: oldconcreteslab
+  - type: Item
+    heldPrefix: generic
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorAstroOldConcreteMono
+  - type: Stack
+    stackType: FloorTileAstroOldConcreteMono
