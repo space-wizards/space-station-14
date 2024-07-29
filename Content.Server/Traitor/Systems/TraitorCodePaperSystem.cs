@@ -33,9 +33,12 @@ public sealed class TraitorCodePaperSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (TryGetTraitorCode(out var paperContent, component))
+        if (HasComp<PaperComponent>(uid))
         {
-            _paper.SetContent(uid, paperContent);
+            if (TryGetTraitorCode(out var paperContent, component))
+            {
+                _paper.SetContent(uid, paperContent);
+            }
         }
     }
 
