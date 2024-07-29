@@ -18,7 +18,7 @@ public sealed partial class DepartmentPrototype : IPrototype
     /// A description LocId to display in the character menu as an explanation of the department's function.
     /// </summary>
     [DataField(required: true)]
-    public string Description = string.Empty;
+    public LocId Description = string.Empty;
 
     /// <summary>
     /// A color representing this department to use for text.
