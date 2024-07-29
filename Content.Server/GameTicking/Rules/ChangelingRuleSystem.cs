@@ -23,7 +23,7 @@ public sealed partial class ChangelingRuleSystem : GameRuleSystem<ChangelingRule
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly ObjectivesSystem _objective = default!;
 
-    public readonly SoundSpecifier BriefingSound = new SoundPathSpecifier("/Audio/Goobstation/Ambience/Antag/changeling_start.ogg");
+    public readonly SoundSpecifier BriefingSound = new SoundPathSpecifier("/Audio/Ambience/Antag/changeling_start.ogg");
 
     public readonly ProtoId<AntagPrototype> ChangelingPrototypeId = "Changeling";
 
