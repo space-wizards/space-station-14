@@ -5,7 +5,7 @@
   components:
   - type: Sharp
   - type: Sprite
-    sprite: Changeling/arm_blade.rsi
+    sprite: Goobstation/Changeling/arm_blade.rsi
     state: icon
   - type: MeleeWeapon
     wideAnimationRotation: 90
@@ -20,7 +20,7 @@
       path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: Ginormous
-    sprite: Changeling/arm_blade.rsi
+    sprite: Goobstation/Changeling/arm_blade.rsi
   - type: Prying
     pryPowered: true
   - type: Unremoveable

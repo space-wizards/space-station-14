@@ -292,16 +292,16 @@
   components:
   - type: ChangelingRule
   - type: GameRule
-    minPlayers: 15
+    minPlayers: 10
     delay:
-      min: 10
-      max: 20
+      min: 30
+      max: 60
   - type: AntagSelection
     agentName: changeling-roundend-name
     definitions:
     - prefRoles: [ Changeling ]
-      max: 6
-      playerRatio: 15
+      max: 8
+      playerRatio: 10
       lateJoinAdditional: true
       mindComponents:
       - type: ChangelingRole

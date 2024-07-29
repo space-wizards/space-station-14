@@ -11,10 +11,10 @@ changeling-gamemode-title = Changelings
 changeling-gamemode-description =
     The changeling hive has boarded the station, ready to take anything it desires - be it your equipment, your faces, or your lives!
 
-changeling-role-greeting = 
+changeling-role-greeting =
     You are a changeling who has absorbed and taken the form of {$name}!
     Your objectives are listed in the character menu.
-    Absorb, shapeshift, evolve and use your abilities to the max to complete them!
+    Absorb, shapeshift and evolve to complete them!
 
 changeling-role-greeting-short =
     You are a changeling who has absorbed and taken the initial form of {$name}.

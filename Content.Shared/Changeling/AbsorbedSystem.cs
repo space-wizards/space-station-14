@@ -1,4 +1,5 @@
 using Content.Shared.Examine;
+using Content.Shared.Mobs;
 
 namespace Content.Shared.Changeling;
 
@@ -9,10 +10,18 @@ public sealed partial class AbsorbedSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<AbsorbedComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<AbsorbedComponent, MobStateChangedEvent>(OnMobStateChange);
     }
 
-    private void OnExamine(EntityUid uid, AbsorbedComponent comp, ref ExaminedEvent args)
+    private void OnExamine(Entity<AbsorbedComponent> ent, ref ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("changeling-absorb-onexamine"));
+    }
+
+    private void OnMobStateChange(Entity<AbsorbedComponent> ent, ref MobStateChangedEvent args)
+    {
+        // in case one somehow manages to dehusk someone
+        if (args.NewMobState != MobState.Dead)
+            RemComp<AbsorbedComponent>(ent);
     }
 }

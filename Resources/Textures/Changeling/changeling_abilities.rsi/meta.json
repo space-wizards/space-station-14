@@ -14,9 +14,6 @@
             "name": "anatomic_panacea"
         },
         {
-            "name": "apex_predator"
-        },
-        {
             "name": "armblade"
         },
         {
@@ -29,13 +26,11 @@
             "name": "bone_shard"
         },
         {
-            "name": "chameleon_skin"
+            "name": "chameleon_skin",
+            "delays": [ [ 0.1, 0.1, 0.1, 0.1 ] ]
         },
         {
             "name": "chitinous_armor"
-        },
-        {
-            "name": "contort_body"
         },
         {
             "name": "epinephrine_overdose"
@@ -48,9 +43,6 @@
         },
         {
             "name": "hivemind_access"
-        },
-        {
-            "name": "last_resort"
         },
         {
             "name": "lesser_form"
@@ -71,7 +63,8 @@
             "name": "stasis_enter"
         },
         {
-            "name": "stasis_exit"
+            "name": "stasis_exit",
+            "delays": [ [ 0.5, 0.5 ] ]
         },
         {
             "name": "sting_armblade"
@@ -96,9 +89,6 @@
         },
         {
             "name": "strained_muscles"
-        },
-        {
-            "name": "swap_forms"
         },
         {
             "name": "tentacle"

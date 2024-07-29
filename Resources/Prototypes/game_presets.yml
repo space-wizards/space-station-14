@@ -22,6 +22,7 @@
     - Zombie
     - RampingStationEventScheduler
     - GameRuleMeteorScheduler
+    - Changeling
 
 - type: gamePreset
   id: Extended

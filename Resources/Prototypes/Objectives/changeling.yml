@@ -12,6 +12,17 @@
       - ChangelingRole
 
 - type: entity
+  parent: [BaseChangelingObjective, BaseSurviveObjective]
+  id: ChangelingSurviveObjective
+  name: Survive
+  description: I must survive no matter what.
+  components:
+  - type: Objective
+    icon:
+      sprite: Changeling/changeling_abilities.rsi
+      state: stasis_exit
+
+- type: entity
   parent: BaseChangelingObjective
   id: ChangelingAbsorbObjective
   components:

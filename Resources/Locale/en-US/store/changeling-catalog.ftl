@@ -104,7 +104,7 @@ evolutionmenu-utility-biodegrade-desc =
 
 evolutionmenu-utility-chameleon-name = Chameleon Skin
 evolutionmenu-utility-chameleon-desc =
-    Alter the pigment in your skin to match your surroundings, rendering you invisible.p
+    Alter the pigment in your skin to match your surroundings, rendering you invisible.
     Costs 20 chemicals.
 
 evolutionmenu-utility-stims-name = Ephedrine Overdose
@@ -130,4 +130,5 @@ evolutionmenu-utility-spacesuit-desc =
 
 evolutionmenu-utility-hivemindaccess-name = Hivemind Access
 evolutionmenu-utility-hivemindaccess-desc =
-    Tunes our chemical receptors for hivemind communication, allowing us to recognize other changelings who have also bought this ability.
+    Tunes our chemical receptors for hivemind communication, allowing us to recognize and communicate with other changelings who have also evolved this ability.
+    Default radio key is :g
