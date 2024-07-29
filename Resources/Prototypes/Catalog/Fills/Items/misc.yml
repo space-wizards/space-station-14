@@ -41,7 +41,7 @@
 - type: entity
   id: ClothingShoesBootsSyndieFilled
   parent: ClothingShoesBootsCombat
-  suffix: Filled
+  suffix: Filled, Throwing Knife
   components:
   - type: ContainerFill
     containers:
