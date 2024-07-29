@@ -195,6 +195,7 @@
   - type: GuideHelp
     guides:
     - Bartender
+    - Drinks
 
 - type: entity
   parent: VendingMachine
@@ -2116,6 +2117,7 @@
   - type: GuideHelp
     guides:
     - Chemicals
+    - Chemist
 
 - type: entity
   parent: VendingMachineChemicals
