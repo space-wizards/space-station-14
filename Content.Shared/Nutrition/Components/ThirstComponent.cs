@@ -57,6 +57,15 @@ public sealed partial class ThirstComponent : Component
         {ThirstThreshold.Dead, 0.0f},
     };
 
+    /// <summary>
+    /// The minimum and maximum amount that thirst can be randomly set at when an entity is spawned
+    /// </summary>
+    [DataField("thirstMin"), ViewVariables(VVAccess.ReadWrite)]
+    public float thirstVariationMin = 310.0f;
+
+    [DataField("thirstMax"), ViewVariables(VVAccess.ReadWrite)]
+    public float thirstVariationMax = 449.0f;
+
     [DataField]
     public ProtoId<AlertCategoryPrototype> ThirstyCategory = "Thirst";
 
