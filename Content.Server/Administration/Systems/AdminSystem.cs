@@ -15,7 +15,9 @@ using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
+using Content.Shared.Mind;
 using Content.Shared.PDA;
+using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
@@ -383,69 +385,71 @@ namespace Content.Server.Administration.Systems
         ///     chat messages and showing a popup to other players.
         ///     Their items are dropped on the ground.
         /// </summary>
-        public void Erase(ICommonSession player)
+        public void Erase(NetUserId uid)
         {
-            var entity = player.AttachedEntity;
-            _chat.DeleteMessagesBy(player);
+            _chat.DeleteMessagesBy(uid);
 
-            if (entity != null && !TerminatingOrDeleted(entity.Value))
+            if (!_minds.TryGetMind(uid, out var mindId, out var mind) || mind.OwnedEntity == null || TerminatingOrDeleted(mind.OwnedEntity.Value))
+                return;
+
+            var entity = mind.OwnedEntity.Value;
+
+            if (TryComp(entity, out TransformComponent? transform))
             {
-                if (TryComp(entity.Value, out TransformComponent? transform))
-                {
-                    var coordinates = _transform.GetMoverCoordinates(entity.Value, transform);
-                    var name = Identity.Entity(entity.Value, EntityManager);
-                    _popup.PopupCoordinates(Loc.GetString("admin-erase-popup", ("user", name)), coordinates, PopupType.LargeCaution);
-                    var filter = Filter.Pvs(coordinates, 1, EntityManager, _playerManager);
-                    var audioParams = new AudioParams().WithVolume(3);
-                    _audio.PlayStatic("/Audio/Effects/pop_high.ogg", filter, coordinates, true, audioParams);
-                }
+                var coordinates = _transform.GetMoverCoordinates(entity, transform);
+                var name = Identity.Entity(entity, EntityManager);
+                _popup.PopupCoordinates(Loc.GetString("admin-erase-popup", ("user", name)), coordinates, PopupType.LargeCaution);
+                var filter = Filter.Pvs(coordinates, 1, EntityManager, _playerManager);
+                var audioParams = new AudioParams().WithVolume(3);
+                _audio.PlayStatic("/Audio/Effects/pop_high.ogg", filter, coordinates, true, audioParams);
+            }
 
-                foreach (var item in _inventory.GetHandOrInventoryEntities(entity.Value))
+            foreach (var item in _inventory.GetHandOrInventoryEntities(entity))
+            {
+                if (TryComp(item, out PdaComponent? pda) &&
+                    TryComp(pda.ContainedId, out StationRecordKeyStorageComponent? keyStorage) &&
+                    keyStorage.Key is { } key &&
+                    _stationRecords.TryGetRecord(key, out GeneralStationRecord? record))
                 {
-                    if (TryComp(item, out PdaComponent? pda) &&
-                        TryComp(pda.ContainedId, out StationRecordKeyStorageComponent? keyStorage) &&
-                        keyStorage.Key is { } key &&
-                        _stationRecords.TryGetRecord(key, out GeneralStationRecord? record))
+                    if (TryComp(entity, out DnaComponent? dna) &&
+                        dna.DNA != record.DNA)
                     {
-                        if (TryComp(entity, out DnaComponent? dna) &&
-                            dna.DNA != record.DNA)
-                        {
-                            continue;
-                        }
-
-                        if (TryComp(entity, out FingerprintComponent? fingerPrint) &&
-                            fingerPrint.Fingerprint != record.Fingerprint)
-                        {
-                            continue;
-                        }
-
-                        _stationRecords.RemoveRecord(key);
-                        Del(item);
+                        continue;
                     }
-                }
 
-                if (_inventory.TryGetContainerSlotEnumerator(entity.Value, out var enumerator))
-                {
-                    while (enumerator.NextItem(out var item, out var slot))
+                    if (TryComp(entity, out FingerprintComponent? fingerPrint) &&
+                        fingerPrint.Fingerprint != record.Fingerprint)
                     {
-                        if (_inventory.TryUnequip(entity.Value, entity.Value, slot.Name, true, true))
-                            _physics.ApplyAngularImpulse(item, ThrowingSystem.ThrowAngularImpulse);
+                        continue;
                     }
-                }
 
-                if (TryComp(entity.Value, out HandsComponent? hands))
-                {
-                    foreach (var hand in _hands.EnumerateHands(entity.Value, hands))
-                    {
-                        _hands.TryDrop(entity.Value, hand, checkActionBlocker: false, doDropInteraction: false, handsComp: hands);
-                    }
+                    _stationRecords.RemoveRecord(key);
+                    Del(item);
                 }
             }
 
-            _minds.WipeMind(player);
+            if (_inventory.TryGetContainerSlotEnumerator(entity, out var enumerator))
+            {
+                while (enumerator.NextItem(out var item, out var slot))
+                {
+                    if (_inventory.TryUnequip(entity, entity, slot.Name, true, true))
+                        _physics.ApplyAngularImpulse(item, ThrowingSystem.ThrowAngularImpulse);
+                }
+            }
+
+            if (TryComp(entity, out HandsComponent? hands))
+            {
+                foreach (var hand in _hands.EnumerateHands(entity, hands))
+                {
+                    _hands.TryDrop(entity, hand, checkActionBlocker: false, doDropInteraction: false, handsComp: hands);
+                }
+            }
+
+            _minds.WipeMind(mindId, mind);
             QueueDel(entity);
 
-            _gameTicker.SpawnObserver(player);
+            if (_playerManager.TryGetSessionById(uid, out var session))
+                _gameTicker.SpawnObserver(session);
         }
 
         private void OnSessionPlayTimeUpdated(ICommonSession session)

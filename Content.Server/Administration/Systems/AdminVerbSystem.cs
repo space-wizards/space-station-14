@@ -132,21 +132,6 @@ namespace Content.Server.Administration.Systems
                     prayerVerb.Impact = LogImpact.Low;
                     args.Verbs.Add(prayerVerb);
 
-                    // Erase
-                    args.Verbs.Add(new Verb
-                    {
-                        Text = Loc.GetString("admin-verbs-erase"),
-                        Message = Loc.GetString("admin-verbs-erase-description"),
-                        Category = VerbCategory.Admin,
-                        Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
-                        Act = () =>
-                        {
-                            _adminSystem.Erase(targetActor.PlayerSession);
-                        },
-                        Impact = LogImpact.Extreme,
-                        ConfirmationPopup = true
-                    });
-
                     // Spawn - Like respawn but on the spot.
                     args.Verbs.Add(new Verb()
                     {
@@ -198,8 +183,10 @@ namespace Content.Server.Administration.Systems
                     });
                 }
 
-                // Respawn
                 if (_mindSystem.TryGetMind(args.Target, out _, out var mind) && mind.UserId != null)
+                {
+
+                    // Respawn
                     args.Verbs.Add(new Verb
                     {
                         Text = Loc.GetString("admin-player-actions-respawn"),
@@ -211,6 +198,24 @@ namespace Content.Server.Administration.Systems
                         ConfirmationPopup = true,
                         // No logimpact as the command does it internally.
                     });
+
+
+                    // Erase
+                    args.Verbs.Add(new Verb
+                    {
+                        Text = Loc.GetString("admin-verbs-erase"),
+                        Message = Loc.GetString("admin-verbs-erase-description"),
+                        Category = VerbCategory.Admin,
+                        Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
+                        Act = () =>
+                        {
+                            _adminSystem.Erase(mind.UserId.Value);
+                        },
+                        Impact = LogImpact.Extreme,
+                        ConfirmationPopup = true
+                    });
+
+                }
 
                 // Freeze
                 var frozen = TryComp<AdminFrozenComponent>(args.Target, out var frozenComp);
