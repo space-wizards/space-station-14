@@ -5,5 +5,5 @@
   noSpawn: true
   components:
     - type: Sprite
-      sprite: Goobstation/Changeling/Guidebook/guidebook_changeling.rsi
+      sprite: Changeling/Guidebook/guidebook_changeling.rsi
       state: icon

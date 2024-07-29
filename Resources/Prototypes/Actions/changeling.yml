@@ -10,7 +10,7 @@
   - type: InstantAction
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: evolution_menu
     event: !type:OpenEvolutionMenuEvent {}
   - type: ChangelingAction
@@ -32,7 +32,7 @@
     interactOnMiss: false
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: absorb_dna
     event: !type:AbsorbDNAEvent {}
   - type: ChangelingAction
@@ -54,7 +54,7 @@
     interactOnMiss: false
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: sting_extractdna
     event: !type:StingExtractDNAEvent {}
   - type: ChangelingAction
@@ -70,7 +70,7 @@
   - type: InstantAction
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: transform_cycle
     event: !type:ChangelingTransformCycleEvent {}
   - type: ChangelingAction
@@ -87,7 +87,7 @@
     useDelay: 5
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: transform
     event: !type:ChangelingTransformEvent {}
   - type: ChangelingAction
@@ -105,7 +105,7 @@
     checkConsciousness: false
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: stasis_enter
     event: !type:EnterStasisEvent {}
   - type: ChangelingAction
@@ -123,7 +123,7 @@
     checkConsciousness: false
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: stasis_exit
     event: !type:ExitStasisEvent {}
   - type: ChangelingAction
@@ -141,7 +141,7 @@
     useDelay: 2
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: armblade
     event: !type:ToggleArmbladeEvent {}
   - type: ChangelingAction
@@ -157,7 +157,7 @@
     useDelay: 1
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: bone_shard
     event: !type:CreateBoneShardEvent {}
   - type: ChangelingAction
@@ -173,7 +173,7 @@
     useDelay: 2
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: chitinous_armor
     event: !type:ToggleChitinousArmorEvent {}
   - type: ChangelingAction
@@ -190,7 +190,7 @@
     useDelay: 2
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: organic_shield
     event: !type:ToggleOrganicShieldEvent {}
   - type: ChangelingAction
@@ -207,7 +207,7 @@
     useDelay: 10
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: shriek_dissonant
     event: !type:ShriekDissonantEvent {}
   - type: ChangelingAction
@@ -225,7 +225,7 @@
     useDelay: 10
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: shriek_resonant
     event: !type:ShriekResonantEvent {}
   - type: ChangelingAction
@@ -243,7 +243,7 @@
     useDelay: 1
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: strained_muscles
     event: !type:ToggleStrainedMusclesEvent {}
   - type: ChangelingAction
@@ -265,7 +265,7 @@
     interactOnMiss: false
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: sting_blind
     event: !type:StingBlindEvent {}
   - type: ChangelingAction
@@ -286,7 +286,7 @@
     interactOnMiss: false
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: sting_cryo
     event: !type:StingCryoEvent {}
   - type: ChangelingAction
@@ -307,7 +307,7 @@
     interactOnMiss: false
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: sting_lethargic
     event: !type:StingLethargicEvent {}
   - type: ChangelingAction
@@ -328,7 +328,7 @@
     interactOnMiss: false
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: sting_mute
     event: !type:StingMuteEvent {}
   - type: ChangelingAction
@@ -349,7 +349,7 @@
     interactOnMiss: false
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: sting_armblade
     event: !type:StingFakeArmbladeEvent {}
   - type: ChangelingAction
@@ -370,7 +370,7 @@
     interactOnMiss: false
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: sting_transform
     event: !type:StingTransformEvent {}
   - type: ChangelingAction
@@ -390,7 +390,7 @@
     checkConsciousness: false
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: anatomic_panacea
     event: !type:ActionAnatomicPanaceaEvent {}
   - type: ChangelingAction
@@ -407,7 +407,7 @@
     checkCanInteract: false
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: augmented_eyesight
     event: !type:ActionAugmentedEyesightEvent {}
   - type: ChangelingAction
@@ -424,7 +424,7 @@
     checkCanInteract: false
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: biodegrade
     event: !type:ActionBiodegradeEvent {}
   - type: ChangelingAction
@@ -442,7 +442,7 @@
     checkConsciousness: false
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: chameleon_skin
     event: !type:ActionChameleonSkinEvent {}
   - type: ChangelingAction
@@ -460,7 +460,7 @@
     checkConsciousness: false
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: epinephrine_overdose
     event: !type:ActionEphedrineOverdoseEvent {}
   - type: ChangelingAction
@@ -478,7 +478,7 @@
     checkCanInteract: false
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: fleshmend
     event: !type:ActionFleshmendEvent {}
   - type: ChangelingAction
@@ -496,7 +496,7 @@
     checkCanInteract: false
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: lesser_form
     event: !type:ActionLesserFormEvent {}
   - type: ChangelingAction
@@ -512,7 +512,7 @@
     useDelay: 2
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: space_adaptation
     event: !type:ActionSpacesuitEvent {}
   - type: ChangelingAction
@@ -529,7 +529,7 @@
     checkConsciousness: false
     itemIconStyle: NoItem
     icon:
-      sprite: Goobstation/Changeling/changeling_abilities.rsi
+      sprite: Changeling/changeling_abilities.rsi
       state: hivemind_access
     event: !type:ActionHivemindAccessEvent {}
   - type: ChangelingAction
