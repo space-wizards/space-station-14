@@ -184,10 +184,10 @@
     coverage: EYES
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons]
+  parent: ClothingEyesBase
   id: ClothingEyesGlassesCommand
   name: command glasses
-  description: Upgraded sunglasses that provide flash immunity and a security HUD. For Captain and HoP use only.
+  description: Upgraded sunglasses that provide flash immunity and show ID card status. For Captain and HoP use only.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/commandglasses.rsi
@@ -202,6 +202,7 @@
     - WhitelistChameleon
   - type: IdentityBlocker
     coverage: EYES
+  - type: ShowJobIcons
 
 - type: entity
   parent: ClothingEyesBase
