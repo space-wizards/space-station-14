@@ -30,6 +30,8 @@
   abstract: true
   components:
   - type: Reflective
+    reflective: # VXS
+      - NonEnergy
   - type: FlyBySound
   - type: Clickable
   - type: Sprite
