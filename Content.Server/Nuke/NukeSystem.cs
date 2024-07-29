@@ -128,11 +128,11 @@ public sealed class NukeSystem : EntitySystem
             {
                 if (DiskIsAway(diskent))
                 {
-                    if (disk.LeftStation == true && disk.LeftStationWhen + disk.OffStationTolerance <= _timing.CurTime)
+                    if (disk.LeftStation && disk.LeftStationWhen + disk.OffStationTolerance <= _timing.CurTime)
                     {
                         ReturnDiskToOrigin(diskent);
                     }
-                    else if (disk.LeftStation == true)
+                    else if (disk.LeftStation)
                     {
                         if (disk.LastPopup + TimeSpan.FromSeconds(30) <= _timing.CurTime)
                         {
@@ -210,6 +210,7 @@ public sealed class NukeSystem : EntitySystem
         }
         else
         {
+            diskent.Comp.Geofence = false;
             return;
         }
 
