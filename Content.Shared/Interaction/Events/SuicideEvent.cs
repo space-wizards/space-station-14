@@ -19,9 +19,9 @@ namespace Content.Shared.Interaction.Events
             if (suicideAttempt)
                 AttemptBlocked = suicideAttempt;
         }
-        public DamageSpecifier? Damage;
+        public DamageSpecifier? Damage = null;
 
-        public ProtoId<DamageTypePrototype>? Kind;
+        public ProtoId<DamageTypePrototype>? Kind = null;
         public EntityUid Victim { get; private set; }
         public bool AttemptBlocked { get; private set; }
     }

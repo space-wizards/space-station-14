@@ -67,7 +67,7 @@ namespace Content.Server.Kitchen.EntitySystems
             args.Handled = true;
             var victim = args.Victim;
             var othersMessage = Loc.GetString("comp-kitchen-spike-suicide-other", ("victim", victim));
-            _popupSystem.PopupEntity(othersMessage, victim);
+            _popupSystem.PopupEntity(othersMessage, victim, Filter.PvsExcept(victim), true);
 
             var selfMessage = Loc.GetString("comp-kitchen-spike-suicide-self");
             _popupSystem.PopupEntity(selfMessage, victim, victim);

@@ -30,7 +30,6 @@ public sealed class SharedExecutionSystem : EntitySystem
 
         SubscribeLocalEvent<ExecutionComponent, GetVerbsEvent<UtilityVerb>>(OnGetInteractionsVerbs);
         SubscribeLocalEvent<ExecutionComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
-        SubscribeLocalEvent<ExecutionComponent, SuicideEvent>(OnSuicide);
     }
 
     private void OnGetInteractionsVerbs(EntityUid uid, ExecutionComponent comp, GetVerbsEvent<UtilityVerb> args)
@@ -120,15 +119,6 @@ public sealed class SharedExecutionSystem : EntitySystem
         var bonus = melee.Damage * execComp.DamageModifier - melee.Damage;
         args.Damage += bonus;
         args.ResistanceBypass = true;
-    }
-
-    private void OnSuicide(EntityUid uid, ExecutionComponent comp, ref SuicideEvent args)
-    {
-        if (!TryComp<MeleeWeaponComponent>(uid, out var melee))
-            return;
-
-        args.Damage = melee.Damage;
-        args.Handled = true;
     }
 
     public void ShowExecutionInternalPopup(string locString,

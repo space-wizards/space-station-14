@@ -1,10 +1,10 @@
 using System.Numerics;
 using Content.Server.Chat;
-using Content.Server.Chat.Commands;
 using Content.Shared.CombatMode;
 using Content.Shared.Execution;
 using Content.Shared.Mind;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Interaction.Events;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Execution
@@ -24,6 +24,7 @@ namespace Content.Server.Execution
             base.Initialize();
 
             SubscribeLocalEvent<ExecutionComponent, ExecutionDoAfterEvent>(OnExecutionDoAfter);
+            SubscribeLocalEvent<ExecutionComponent, SuicideEvent>(OnSuicide);
         }
 
         private void OnExecutionDoAfter(EntityUid uid, ExecutionComponent component, ExecutionDoAfterEvent args)
@@ -47,7 +48,6 @@ namespace Content.Server.Execution
 
             if (TryComp(uid, out MeleeWeaponComponent? melee))
             {
-                _melee.AttemptLightAttack(attacker, weapon, melee, victim);
                 internalMsg = component.DefaultCompleteInternalMeleeExecutionMessage;
                 externalMsg = component.DefaultCompleteExternalMeleeExecutionMessage;
 
@@ -61,6 +61,7 @@ namespace Content.Server.Execution
                 }
                 else
                 {
+                    _melee.AttemptLightAttack(attacker, weapon, melee, victim);
                     var targetPos = _transform.GetWorldPosition(victim);
                     var localPos = Vector2.Transform(targetPos, _transform.GetInvWorldMatrix(userXform));
                     localPos = userXform.LocalRotation.RotateVec(localPos);
@@ -88,6 +89,15 @@ namespace Content.Server.Execution
                 _execution.ShowExecutionInternalPopup(internalMsg, attacker, victim, uid, false);
                 _execution.ShowExecutionExternalPopup(externalMsg, attacker, victim, uid);
             }
+        }
+
+        private void OnSuicide(EntityUid uid, ExecutionComponent comp, ref SuicideEvent args)
+        {
+            if (!TryComp<MeleeWeaponComponent>(uid, out var melee))
+                return;
+
+            args.Damage = melee.Damage;
+            args.Handled = true;
         }
     }
 }
