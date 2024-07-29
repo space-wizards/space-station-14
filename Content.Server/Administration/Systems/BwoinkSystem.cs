@@ -398,16 +398,6 @@ namespace Content.Server.Administration.Systems
                     var message = new StringBuilder();
                     message.AppendLine($"<@{roleMention}>");
                     message.AppendLine("Unanswered SOS");
-                    message.Append($"{existingEmbed.Username}");
-
-                    if (!string.IsNullOrEmpty(existingEmbed.CharacterName))
-                    {
-                        message.AppendLine($" ({existingEmbed.CharacterName})");
-                    }
-                    else
-                    {
-                        message.Append("\n");
-                    }
 
                     // Need webhook data to get the correct link for that channel rather than on-call data.
                     if (_webhookData is { GuildId: { } guildId, ChannelId: { } channelId })
