@@ -25,6 +25,7 @@ public sealed class SpaceVillainArcadeBoundUserInterface : BoundUserInterface
         base.Open();
 
         _menu = this.CreateWindow<SpaceVillainArcadeMenu>();
+        _menu.OnPlayerAction += SendAction;
     }
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)

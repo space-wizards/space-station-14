@@ -834,21 +834,27 @@
 
 - type: entity
   parent: BasePlushie
-  id: FabricScrap
+  id: FabricScrapSalad
   name: fabric scrap salad
-  description: Who's clothes are these? 
+  description: Whose clothes are these?
   components:
   - type: Sprite
-    state: scrap
+    state: fabric-scrap-salad
+  - type: Construction
+    graph: FabricScrapSalad
+    node: salad
 
 - type: entity
   parent: BasePlushie
-  id: Yarn
+  id: YarnNoodles
   name: yarn noodles
   description: Looks like someone's failed knitting project.
   components:
   - type: Sprite
-    state: yarn
+    state: yarn-noodles
+  - type: Construction
+    graph: YarnNoodles
+    node: noodles
 
 ## Cheapo Figurines
 

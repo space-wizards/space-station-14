@@ -73,7 +73,7 @@
   parent: BaseGameRule
   id: BaseNukeopsRule
   components:
-  - type: RandomMetadata #this generates the random operation name cuz it's cool. 
+  - type: RandomMetadata #this generates the random operation name cuz it's cool.
     nameSegments:
     - operationPrefix
     - operationSuffix
@@ -158,10 +158,6 @@
   - type: TraitorRule
   # TODO: codewords in yml
   # TODO: uplink in yml
-  - type: AntagRandomObjectives
-    sets:
-    - groups: TraitorObjectiveGroups
-    maxDifficulty: 5
   - type: AntagSelection
     agentName: traitor-round-end-agent-name
 
@@ -174,6 +170,10 @@
     delay:
       min: 240
       max: 420
+  - type: AntagRandomObjectives
+    sets:
+    - groups: TraitorObjectiveGroups
+    maxDifficulty: 5
   - type: AntagSelection
     definitions:
     - prefRoles: [ Traitor ]
@@ -196,10 +196,11 @@
     delay:
       min: 240
       max: 420
-  - type: AntagRandomObjectives
-    sets:
-    - groups: TraitorObjectiveGroupsSpyVsSpy
-    maxDifficulty: 5
+  - type: AntagObjectives
+    objectives:
+    - KillRandomTraitorSvSObjective
+    - RandomTraitorAliveSvSObjective
+    - EscapeShuttleObjective
   - type: AntagSelection
     definitions:
     - prefRoles: [ Traitor ]
@@ -209,6 +210,7 @@
         components:
         - AntagImmune
       lateJoinAdditional: true
+      forceAllPossible: true
       mindComponents:
       - type: TraitorRole
         prototype: Traitor

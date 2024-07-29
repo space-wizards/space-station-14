@@ -540,3 +540,6 @@ binds:
 - function: Hotbar9
   type: State
   key: Num9
+- function: ToggleRoundEndSummaryWindow
+  type: Toggle
+  key: End
