@@ -82,12 +82,6 @@ public sealed partial class DoAfter
     {
         Index = index;
 
-        if (args.Target == null)
-        {
-            DebugTools.Assert(!args.BreakOnTargetMove);
-            args.BreakOnTargetMove = false;
-        }
-
         Args = args;
         StartTime = startTime;
     }

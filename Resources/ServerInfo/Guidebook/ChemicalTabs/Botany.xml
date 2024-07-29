@@ -1,0 +1,14 @@
+<Document>
+
+# Botanical Chemicals
+
+These chemicals are used by botanists. Some of the chemicals change the properties of the plants.
+
+<GuideReagentEmbed Reagent="Ammonia"/>
+<GuideReagentEmbed Reagent="Diethylamine"/>
+<GuideReagentEmbed Reagent="EZNutrient"/>
+<GuideReagentEmbed Reagent="Left4Zed"/>
+<GuideReagentEmbed Reagent="RobustHarvest"/>
+<GuideReagentEmbed Reagent="UnstableMutagen"/>
+
+</Document>

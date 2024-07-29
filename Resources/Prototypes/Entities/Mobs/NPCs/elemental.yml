@@ -44,7 +44,6 @@
   - type: Tag
     tags:
     - DoorBumpOpener
-    - ShoesRequiredStepTriggerImmune
   - type: MobState
     allowedStates:
       - Alive
@@ -73,6 +72,8 @@
   - type: InputMover
   - type: MobMover
   - type: ZombieImmune
+  - type: ClothingRequiredStepTriggerImmune
+    slots: All
 
 - type: entity
   abstract: true
@@ -222,14 +223,18 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  name: Reagent slime
+  name: reagent slime
   id: ReagentSlime
   suffix: Water
   parent: [ MobAdultSlimes, MobCombat ]
   description: It consists of a liquid, and it wants to dissolve you in itself.
   components:
   - type: GhostRole
+    prob: 0
     description: ghost-role-information-angry-slimes-description
+    rules: ghost-role-information-angry-slimes-rules
+    raffle:
+      settings: short
   - type: NpcFactionMember
     factions:
     - SimpleHostile

@@ -23,22 +23,27 @@ namespace Content.Client.Medical.CrewMonitoring;
 [GenerateTypedNameReferences]
 public sealed partial class CrewMonitoringWindow : FancyWindow
 {
-    private readonly IEntityManager _entManager;
-    private readonly IPrototypeManager _prototypeManager;
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     private readonly SpriteSystem _spriteSystem;
 
     private NetEntity? _trackedEntity;
     private bool _tryToScrollToListFocus;
     private Texture? _blipTexture;
 
-    public CrewMonitoringWindow(string stationName, EntityUid? mapUid)
+    public CrewMonitoringWindow()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
-        _entManager = IoCManager.Resolve<IEntityManager>();
-        _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
         _spriteSystem = _entManager.System<SpriteSystem>();
 
+        NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
+
+    }
+
+    public void Set(string stationName, EntityUid? mapUid)
+    {
         _blipTexture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_circle.png")));
 
         if (_entManager.TryGetComponent<TransformComponent>(mapUid, out var xform))
@@ -49,8 +54,6 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 
         StationName.AddStyleClass("LabelBig");
         StationName.Text = stationName;
-
-        NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
         NavMap.ForceNavMapUpdate();
     }
 
@@ -210,9 +213,9 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
                 specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), "dead");
             }
 
-            else if (sensor.TotalDamage != null)
+            else if (sensor.DamagePercentage != null)
             {
-                var index = MathF.Round(4f * (sensor.TotalDamage.Value / 100f));
+                var index = MathF.Round(4f * sensor.DamagePercentage.Value);
 
                 if (index >= 5)
                     specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), "critical");

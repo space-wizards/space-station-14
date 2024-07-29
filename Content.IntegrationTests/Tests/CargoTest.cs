@@ -3,8 +3,13 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
+using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Stacks;
+using Content.Shared.Tag;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -14,11 +19,11 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class CargoTest
 {
-    public static HashSet<ProtoId<CargoProductPrototype>> Ignored = new ()
-    {
+    private static readonly HashSet<ProtoId<CargoProductPrototype>> Ignored =
+    [
         // This is ignored because it is explicitly intended to be able to sell for more than it costs.
         new("FunCrateGambling")
-    };
+    ];
 
     [Test]
     public async Task NoCargoOrderArbitrage()
@@ -149,6 +154,80 @@ public sealed class CargoTest
         await pair.CleanReturnAsync();
     }
 
+    /// <summary>
+    /// Tests to see if any items that are valid for cargo bounties can be sliced into items that
+    /// are also valid for the same bounty entry.
+    /// </summary>
+    [Test]
+    public async Task NoSliceableBountyArbitrageTest()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        var testMap = await pair.CreateTestMap();
+
+        var entManager = server.ResolveDependency<IEntityManager>();
+        var mapManager = server.ResolveDependency<IMapManager>();
+        var protoManager = server.ResolveDependency<IPrototypeManager>();
+        var componentFactory = server.ResolveDependency<IComponentFactory>();
+        var whitelist = entManager.System<EntityWhitelistSystem>();
+        var cargo = entManager.System<CargoSystem>();
+        var sliceableSys = entManager.System<SliceableFoodSystem>();
+
+        var bounties = protoManager.EnumeratePrototypes<CargoBountyPrototype>().ToList();
+
+        await server.WaitAssertion(() =>
+        {
+            var mapId = testMap.MapId;
+            var grid = mapManager.CreateGridEntity(mapId);
+            var coord = new EntityCoordinates(grid.Owner, 0, 0);
+
+            var sliceableEntityProtos = protoManager.EnumeratePrototypes<EntityPrototype>()
+                .Where(p => !p.Abstract)
+                .Where(p => !pair.IsTestPrototype(p))
+                .Where(p => p.TryGetComponent<SliceableFoodComponent>(out _, componentFactory))
+                .Select(p => p.ID)
+                .ToList();
+
+            foreach (var proto in sliceableEntityProtos)
+            {
+                var ent = entManager.SpawnEntity(proto, coord);
+                var sliceable = entManager.GetComponent<SliceableFoodComponent>(ent);
+
+                // Check each bounty
+                foreach (var bounty in bounties)
+                {
+                    // Check each entry in the bounty
+                    foreach (var entry in bounty.Entries)
+                    {
+                        // See if the entity counts as part of this bounty entry
+                        if (!cargo.IsValidBountyEntry(ent, entry))
+                            continue;
+
+                        // Spawn a slice
+                        var slice = entManager.SpawnEntity(sliceable.Slice, coord);
+
+                        // See if the slice also counts for this bounty entry
+                        if (!cargo.IsValidBountyEntry(slice, entry))
+                        {
+                            entManager.DeleteEntity(slice);
+                            continue;
+                        }
+
+                        entManager.DeleteEntity(slice);
+
+                        // If for some reason it can only make one slice, that's okay, I guess
+                        Assert.That(sliceable.TotalCount, Is.EqualTo(1), $"{proto} counts as part of cargo bounty {bounty.ID} and slices into {sliceable.TotalCount} slices which count for the same bounty!");
+                    }
+                }
+
+                entManager.DeleteEntity(ent);
+            }
+            mapManager.DeleteMap(mapId);
+        });
+
+        await pair.CleanReturnAsync();
+    }
 
     [TestPrototypes]
     private const string StackProto = @"

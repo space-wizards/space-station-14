@@ -1,47 +1,33 @@
-# doesnt spawn a ninja or anything, just stores configuration for it
-# see NinjaSpawn event for spawning
 - type: entity
-  id: Ninja
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: GenericAntagRule
-    agentName: ninja-round-end-agent-name
-    objectives:
-    - StealResearchObjective
-    - DoorjackObjective
-    - SpiderChargeObjective
-    - TerrorObjective
-    - NinjaSurviveObjective
-  - type: NinjaRule
-    threats: NinjaThreats
-
-# stores configuration for dragon
-- type: entity
-  noSpawn: true
-  parent: BaseGameRule
-  id: Dragon
-  components:
-  - type: GenericAntagRule
-    agentName: dragon-round-end-agent-name
-    objectives:
-    - CarpRiftsObjective
-    - DragonSurviveObjective
-
-- type: entity
-  noSpawn: true
   parent: BaseGameRule
   id: Thief
   components:
   - type: ThiefRule
-
-- type: entity
-  noSpawn: true
-  parent: BaseGameRule
-  id: Exterminator
-  components:
-  - type: GenericAntagRule
-    agentName: terminator-round-end-agent-name
+  - type: AntagObjectives
     objectives:
-    - TerminateObjective
-    - ShutDownObjective
+    - EscapeThiefShuttleObjective
+  - type: AntagRandomObjectives
+    sets:
+    - groups: ThiefBigObjectiveGroups
+      prob: 0.7
+      maxPicks: 1
+    - groups: ThiefObjectiveGroups
+      maxPicks: 10
+    maxDifficulty: 2.5
+  - type: AntagSelection
+    agentName: thief-round-end-agent-name
+    definitions:
+    - prefRoles: [ Thief ]
+      max: 3
+      playerRatio: 15
+      lateJoinAdditional: true
+      allowNonHumans: true
+      multiAntagSetting: NotExclusive
+      startingGear: ThiefGear
+      components:
+      - type: Pacified
+      mindComponents:
+      - type: ThiefRole
+        prototype: Thief
+      briefing:
+        sound: "/Audio/Misc/thief_greeting.ogg"

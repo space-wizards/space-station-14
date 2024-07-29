@@ -49,24 +49,23 @@ public sealed class ClientAlertsSystem : AlertsSystem
 
     protected override void AfterShowAlert(Entity<AlertsComponent> alerts)
     {
-        if (_playerManager.LocalEntity != alerts.Owner)
-            return;
-
-        SyncAlerts?.Invoke(this, alerts.Comp.Alerts);
+        UpdateHud(alerts);
     }
 
-    protected override void AfterClearAlert(Entity<AlertsComponent> alertsComponent)
+    protected override void AfterClearAlert(Entity<AlertsComponent> alerts)
     {
-        if (_playerManager.LocalEntity != alertsComponent.Owner)
-            return;
-
-        SyncAlerts?.Invoke(this, alertsComponent.Comp.Alerts);
+        UpdateHud(alerts);
     }
 
-    private void ClientAlertsHandleState(EntityUid uid, AlertsComponent component, ref AfterAutoHandleStateEvent args)
+    private void ClientAlertsHandleState(Entity<AlertsComponent> alerts, ref AfterAutoHandleStateEvent args)
     {
-        if (_playerManager.LocalEntity == uid)
-            SyncAlerts?.Invoke(this, component.Alerts);
+        UpdateHud(alerts);
+    }
+
+    private void UpdateHud(Entity<AlertsComponent> entity)
+    {
+        if (_playerManager.LocalEntity == entity.Owner)
+            SyncAlerts?.Invoke(this, entity.Comp.Alerts);
     }
 
     private void OnPlayerAttached(EntityUid uid, AlertsComponent component, LocalPlayerAttachedEvent args)
@@ -92,7 +91,7 @@ public sealed class ClientAlertsSystem : AlertsSystem
         ClearAlerts?.Invoke(this, EventArgs.Empty);
     }
 
-    public void AlertClicked(AlertType alertType)
+    public void AlertClicked(ProtoId<AlertPrototype> alertType)
     {
         RaiseNetworkEvent(new ClickAlertEvent(alertType));
     }

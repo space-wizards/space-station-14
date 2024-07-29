@@ -180,6 +180,8 @@
       - id: GrassBattlemap
       - id: DiceBag
         amount: 6
+      - id: PaperCNCSheet
+        amount: 6
 
 - type: entity
   id: CrateFunSadTromboneImplants

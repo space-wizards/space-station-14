@@ -12,6 +12,8 @@ using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Security.Components;
 
 namespace Content.Server.CriminalRecords.Systems;
 
@@ -25,7 +27,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly SharedIdCardSystem _idCard = default!;
-    [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
+    [Dependency] private readonly StationRecordsSystem _records = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -71,13 +73,14 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     private void OnChangeStatus(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordChangeStatus msg)
     {
         // prevent malf client violating wanted/reason nullability
-        if ((msg.Status == SecurityStatus.Wanted) != (msg.Reason != null))
+        if (msg.Status == SecurityStatus.Wanted != (msg.Reason != null) &&
+            msg.Status == SecurityStatus.Suspected != (msg.Reason != null))
             return;
 
-        if (!CheckSelected(ent, msg.Session, out var mob, out var key))
+        if (!CheckSelected(ent, msg.Actor, out var mob, out var key))
             return;
 
-        if (!_stationRecords.TryGetRecord<CriminalRecord>(key.Value, out var record) || record.Status == msg.Status)
+        if (!_records.TryGetRecord<CriminalRecord>(key.Value, out var record) || record.Status == msg.Status)
             return;
 
         // validate the reason
@@ -103,9 +106,9 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         // will probably never fail given the checks above
         _criminalRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason);
 
-        var name = RecordName(key.Value);
+        var name = _records.RecordName(key.Value);
         var officer = Loc.GetString("criminal-records-console-unknown-officer");
-        if (_idCard.TryFindIdCard(mob.Value, out var id) && id.Comp.FullName is {} fullName)
+        if (_idCard.TryFindIdCard(mob.Value, out var id) && id.Comp.FullName is { } fullName)
             officer = fullName;
 
         (string, object)[] args;
@@ -117,25 +120,36 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         // figure out which radio message to send depending on transition
         var statusString = (oldStatus, msg.Status) switch
         {
-            // going from wanted or detained on the spot
+            // person has been detained
             (_, SecurityStatus.Detained) => "detained",
+            // person did something sus
+            (_, SecurityStatus.Suspected) => "suspected",
+            // released on parole
+            (_, SecurityStatus.Paroled) => "paroled",
             // prisoner did their time
-            (SecurityStatus.Detained, SecurityStatus.None) => "released",
-            // going from wanted to none, must have been a mistake
-            (_, SecurityStatus.None) => "not-wanted",
-            // going from none or detained, AOS or prisonbreak / lazy secoff never set them to released and they reoffended
+            (_, SecurityStatus.Discharged) => "released",
+            // going from any other state to wanted, AOS or prisonbreak / lazy secoff never set them to released and they reoffended
             (_, SecurityStatus.Wanted) => "wanted",
+            // person is no longer sus
+            (SecurityStatus.Suspected, SecurityStatus.None) => "not-suspected",
+            // going from wanted to none, must have been a mistake
+            (SecurityStatus.Wanted, SecurityStatus.None) => "not-wanted",
+            // criminal status removed
+            (SecurityStatus.Detained, SecurityStatus.None) => "released",
+            // criminal is no longer on parole
+            (SecurityStatus.Paroled, SecurityStatus.None) => "not-parole",
             // this is impossible
             _ => "not-wanted"
         };
-        _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{statusString}", args), ent.Comp.SecurityChannel, ent);
+        _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{statusString}", args),
+            ent.Comp.SecurityChannel, ent);
 
         UpdateUserInterface(ent);
     }
 
     private void OnAddHistory(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordAddHistory msg)
     {
-        if (!CheckSelected(ent, msg.Session, out _, out var key))
+        if (!CheckSelected(ent, msg.Actor, out _, out var key))
             return;
 
         var line = msg.Line.Trim();
@@ -152,7 +166,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
 
     private void OnDeleteHistory(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordDeleteHistory msg)
     {
-        if (!CheckSelected(ent, msg.Session, out _, out var key))
+        if (!CheckSelected(ent, msg.Actor, out _, out var key))
             return;
 
         if (!_criminalRecords.TryDeleteHistory(key.Value, msg.Index))
@@ -170,48 +184,46 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
 
         if (!TryComp<StationRecordsComponent>(owningStation, out var stationRecords))
         {
-            _ui.TrySetUiState(uid, CriminalRecordsConsoleKey.Key, new CriminalRecordsConsoleState());
+            _ui.SetUiState(uid, CriminalRecordsConsoleKey.Key, new CriminalRecordsConsoleState());
             return;
         }
 
-        var listing = _stationRecords.BuildListing((owningStation.Value, stationRecords), console.Filter);
+        var listing = _records.BuildListing((owningStation.Value, stationRecords), console.Filter);
 
         var state = new CriminalRecordsConsoleState(listing, console.Filter);
-        if (console.ActiveKey is {} id)
+        if (console.ActiveKey is { } id)
         {
             // get records to display when a crewmember is selected
             var key = new StationRecordKey(id, owningStation.Value);
-            _stationRecords.TryGetRecord(key, out state.StationRecord, stationRecords);
-            _stationRecords.TryGetRecord(key, out state.CriminalRecord, stationRecords);
+            _records.TryGetRecord(key, out state.StationRecord, stationRecords);
+            _records.TryGetRecord(key, out state.CriminalRecord, stationRecords);
             state.SelectedKey = id;
         }
 
-        _ui.TrySetUiState(uid, CriminalRecordsConsoleKey.Key, state);
+        _ui.SetUiState(uid, CriminalRecordsConsoleKey.Key, state);
     }
 
     /// <summary>
     /// Boilerplate that most actions use, if they require that a record be selected.
     /// Obviously shouldn't be used for selecting records.
     /// </summary>
-    private bool CheckSelected(Entity<CriminalRecordsConsoleComponent> ent, ICommonSession session,
+    private bool CheckSelected(Entity<CriminalRecordsConsoleComponent> ent, EntityUid user,
         [NotNullWhen(true)] out EntityUid? mob, [NotNullWhen(true)] out StationRecordKey? key)
     {
         key = null;
         mob = null;
-        if (session.AttachedEntity is not {} user)
-            return false;
 
         if (!_access.IsAllowed(user, ent))
         {
-            _popup.PopupEntity(Loc.GetString("criminal-records-permission-denied"), ent, session);
+            _popup.PopupEntity(Loc.GetString("criminal-records-permission-denied"), ent, user);
             return false;
         }
 
-        if (ent.Comp.ActiveKey is not {} id)
+        if (ent.Comp.ActiveKey is not { } id)
             return false;
 
         // checking the console's station since the user might be off-grid using on-grid console
-        if (_station.GetOwningStation(ent) is not {} station)
+        if (_station.GetOwningStation(ent) is not { } station)
             return false;
 
         key = new StationRecordKey(id, station);
@@ -220,13 +232,29 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     }
 
     /// <summary>
-    /// Gets the name from a record, or empty string if this somehow fails.
+    /// Checks if the new identity's name has a criminal record attached to it, and gives the entity the icon that
+    /// belongs to the status if it does.
     /// </summary>
-    private string RecordName(StationRecordKey key)
+    public void CheckNewIdentity(EntityUid uid)
     {
-        if (!_stationRecords.TryGetRecord<GeneralStationRecord>(key, out var record))
-            return "";
+        var name = Identity.Name(uid, EntityManager);
+        var xform = Transform(uid);
 
-        return record.Name;
+        // TODO use the entity's station? Not the station of the map that it happens to currently be on?
+        var station = _station.GetStationInMap(xform.MapID);
+
+        if (station != null && _records.GetRecordByName(station.Value, name) is { } id)
+        {
+            if (_records.TryGetRecord<CriminalRecord>(new StationRecordKey(id, station.Value),
+                    out var record))
+            {
+                if (record.Status != SecurityStatus.None)
+                {
+                    _criminalRecords.SetCriminalIcon(name, record.Status, uid);
+                    return;
+                }
+            }
+        }
+        RemComp<CriminalRecordComponent>(uid);
     }
 }

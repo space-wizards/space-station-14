@@ -9,9 +9,6 @@ namespace Content.Server.Objectives.Components;
 [RegisterComponent, Access(typeof(NinjaConditionsSystem), typeof(SpiderChargeSystem), typeof(SpaceNinjaSystem))]
 public sealed partial class SpiderChargeConditionComponent : Component
 {
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool Detonated;
-
     /// <summary>
     /// Warp point that the spider charge has to target
     /// </summary>

@@ -1,6 +1,8 @@
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.UI.MapObjects;
+using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -10,11 +12,13 @@ namespace Content.Shared.Shuttles.Systems;
 
 public abstract partial class SharedShuttleSystem : EntitySystem
 {
-    [Dependency] private   readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] protected readonly SharedMapSystem Maps = default!;
     [Dependency] protected readonly SharedTransformSystem XformSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
-    public const float FTLRange = 512f;
+    public const float FTLRange = 256f;
     public const float FTLBufferRange = 8f;
 
     private EntityQuery<MapGridComponent> _gridQuery;
@@ -34,7 +38,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     /// <summary>
     /// Returns whether an entity can FTL to the specified map.
     /// </summary>
-    public bool CanFTLTo(EntityUid shuttleUid, MapId targetMap)
+    public bool CanFTLTo(EntityUid shuttleUid, MapId targetMap, EntityUid consoleUid)
     {
         var mapUid = _mapManager.GetMapEntityId(targetMap);
         var shuttleMap = _xformQuery.GetComponent(shuttleUid).MapID;
@@ -42,16 +46,46 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         if (shuttleMap == targetMap)
             return true;
 
-        if (!TryComp<FTLDestinationComponent>(mapUid, out var destination) ||
-            !destination.Enabled)
-        {
+        if (!TryComp<FTLDestinationComponent>(mapUid, out var destination) || !destination.Enabled)
             return false;
+
+        if (destination.RequireCoordinateDisk)
+        {
+            if (!TryComp<ItemSlotsComponent>(consoleUid, out var slot))
+            {
+                return false;
+            }
+
+            if (!_itemSlots.TryGetSlot(consoleUid, SharedShuttleConsoleComponent.DiskSlotName, out var itemSlot, component: slot) || !itemSlot.HasItem)
+            {
+                return false;
+            }
+
+            if (itemSlot.Item is { Valid: true } disk)
+            {
+                ShuttleDestinationCoordinatesComponent? diskCoordinates = null;
+                if (!Resolve(disk, ref diskCoordinates))
+                {
+                    return false;
+                }
+
+                var diskCoords = diskCoordinates.Destination;
+
+                if (diskCoords == null || !TryComp<FTLDestinationComponent>(diskCoords.Value, out var diskDestination) || diskDestination != destination)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
 
         if (HasComp<FTLMapComponent>(mapUid))
             return false;
 
-        return destination.Whitelist?.IsValid(shuttleUid, EntityManager) != false;
+        return _whitelistSystem.IsWhitelistPassOrNull(destination.Whitelist, shuttleUid);
     }
 
     /// <summary>
@@ -146,7 +180,6 @@ public abstract partial class SharedShuttleSystem : EntitySystem
 
         // Just checks if any grids inside of a buffer range at the target position.
         _grids.Clear();
-        var ftlRange = FTLRange;
         var mapCoordinates = coordinates.ToMap(EntityManager, XformSystem);
 
         var ourPos = Maps.GetGridPosition((shuttleUid, shuttlePhysics, shuttleXform));

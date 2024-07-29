@@ -1,6 +1,7 @@
 using Content.Shared.Alert;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Nutrition.Components;
@@ -56,11 +57,14 @@ public sealed partial class ThirstComponent : Component
         {ThirstThreshold.Dead, 0.0f},
     };
 
-    public static readonly Dictionary<ThirstThreshold, AlertType> ThirstThresholdAlertTypes = new()
+    [DataField]
+    public ProtoId<AlertCategoryPrototype> ThirstyCategory = "Thirst";
+
+    public static readonly Dictionary<ThirstThreshold, ProtoId<AlertPrototype>> ThirstThresholdAlertTypes = new()
     {
-        {ThirstThreshold.Thirsty, AlertType.Thirsty},
-        {ThirstThreshold.Parched, AlertType.Parched},
-        {ThirstThreshold.Dead, AlertType.Parched},
+        {ThirstThreshold.Thirsty, "Thirsty"},
+        {ThirstThreshold.Parched, "Parched"},
+        {ThirstThreshold.Dead, "Parched"},
     };
 }
 

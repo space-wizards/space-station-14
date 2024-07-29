@@ -3,9 +3,11 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
+using Content.Shared.CCVar;
 using Content.Shared.Power;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.Threading;
 
 namespace Content.Server.Power.EntitySystems
@@ -18,19 +20,21 @@ namespace Content.Server.Power.EntitySystems
     {
         [Dependency] private readonly AppearanceSystem _appearance = default!;
         [Dependency] private readonly PowerNetConnectorSystem _powerNetConnector = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IParallelManager _parMan = default!;
 
         private readonly PowerState _powerState = new();
         private readonly HashSet<PowerNet> _powerNetReconnectQueue = new();
         private readonly HashSet<ApcNet> _apcNetReconnectQueue = new();
 
-        private readonly BatteryRampPegSolver _solver = new();
+        private BatteryRampPegSolver _solver = new();
 
         public override void Initialize()
         {
             base.Initialize();
 
             UpdatesAfter.Add(typeof(NodeGroupSystem));
+            _solver = new(_cfg.GetCVar(CCVars.DebugPow3rDisableParallel));
 
             SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentInit>(ApcPowerReceiverInit);
             SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentShutdown>(ApcPowerReceiverShutdown);
@@ -52,6 +56,13 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<PowerSupplierComponent, ComponentShutdown>(PowerSupplierShutdown);
             SubscribeLocalEvent<PowerSupplierComponent, EntityPausedEvent>(PowerSupplierPaused);
             SubscribeLocalEvent<PowerSupplierComponent, EntityUnpausedEvent>(PowerSupplierUnpaused);
+
+            Subs.CVar(_cfg, CCVars.DebugPow3rDisableParallel, DebugPow3rDisableParallelChanged);
+        }
+
+        private void DebugPow3rDisableParallelChanged(bool val)
+        {
+            _solver = new(val);
         }
 
         private void ApcPowerReceiverInit(EntityUid uid, ApcPowerReceiverComponent component, ComponentInit args)
@@ -302,19 +313,27 @@ namespace Content.Server.Power.EntitySystems
             var enumerator = AllEntityQuery<ApcPowerReceiverComponent>();
             while (enumerator.MoveNext(out var uid, out var apcReceiver))
             {
-                var powered = apcReceiver.Powered;
-                if (powered == apcReceiver.PoweredLastUpdate)
+                var powered = !apcReceiver.PowerDisabled
+                              && (!apcReceiver.NeedsPower
+                                  || MathHelper.CloseToPercent(apcReceiver.NetworkLoad.ReceivingPower,
+                                      apcReceiver.Load));
+
+                // If new value is the same as the old, then exit
+                if (!apcReceiver.Recalculate && apcReceiver.Powered == powered)
                     continue;
 
-                if (metaQuery.GetComponent(uid).EntityPaused)
+                var metadata = metaQuery.Comp(uid);
+                if (metadata.EntityPaused)
                     continue;
 
-                apcReceiver.PoweredLastUpdate = powered;
-                var ev = new PowerChangedEvent(apcReceiver.Powered, apcReceiver.NetworkLoad.ReceivingPower);
+                apcReceiver.Recalculate = false;
+                apcReceiver.Powered = powered;
+                Dirty(uid, apcReceiver, metadata);
 
+                var ev = new PowerChangedEvent(powered, apcReceiver.NetworkLoad.ReceivingPower);
                 RaiseLocalEvent(uid, ref ev);
 
-                if (appearanceQuery.TryGetComponent(uid, out var appearance))
+                if (appearanceQuery.TryComp(uid, out var appearance))
                     _appearance.SetData(uid, PowerDeviceVisuals.Powered, powered, appearance);
             }
         }

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by brainfood118 (github) for ss14",
+  "copyright": "Made by brainfood118 (github) for ss14. Label Sprites by Vermidia.",
   "size": {
     "x": 32,
     "y": 32
@@ -20,21 +20,33 @@
       "name": "crate_icon"
     },
     {
-        "name": "sparking",
-        "directions": 1,
-        "delays": [
-            [
-                0.1,
-                0.1,
-                0.1,
-                0.1,
-                0.1,
-                0.1
-            ]
+      "name": "sparking",
+      "directions": 1,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
         ]
+      ]
     },
     {
       "name": "crate_open"
+    },
+    {
+      "name": "paper"
+    },
+    {
+      "name": "bounty"
+    },
+    {
+      "name": "captains_paper"
+    },
+    {
+      "name": "invoice"
     }
   ]
 }

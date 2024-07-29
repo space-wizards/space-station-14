@@ -4,15 +4,13 @@ using Content.Server.Power.Components;
 using Content.Server.Power.Nodes;
 using Content.Shared.Wires;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Power.EntitySystems
 {
     [UsedImplicitly]
     public sealed class CableVisSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
@@ -25,14 +23,11 @@ namespace Content.Server.Power.EntitySystems
 
         private void UpdateAppearance(EntityUid uid, CableVisComponent cableVis, ref NodeGroupsRebuilt args)
         {
-            if (!TryComp(uid, out NodeContainerComponent? nodeContainer) || !TryComp(uid, out AppearanceComponent? appearance))
-                return;
-
-            if (!_nodeContainer.TryGetNode<CableNode>(nodeContainer, cableVis.Node, out var node))
+            if (!_nodeContainer.TryGetNode(uid, cableVis.Node, out CableNode? node))
                 return;
 
             var transform = Transform(uid);
-            if (!_mapManager.TryGetGrid(transform.GridUid, out var grid))
+            if (!TryComp<MapGridComponent>(transform.GridUid, out var grid))
                 return;
 
             var mask = WireVisDirFlags.None;
@@ -57,7 +52,7 @@ namespace Content.Server.Power.EntitySystems
                 };
             }
 
-            _appearance.SetData(uid, WireVisVisuals.ConnectedMask, mask, appearance);
+            _appearance.SetData(uid, WireVisVisuals.ConnectedMask, mask);
         }
     }
 }

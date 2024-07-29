@@ -114,3 +114,33 @@ chatsan-replacement-41 = what are you doing
 
 chatsan-word-42 = ofc
 chatsan-replacement-42 = of course
+
+chatsan-word-43 = ig
+chatsan-replacement-43 = i guess
+
+chatsan-word-44 = tbf
+chatsan-replacement-44 = to be fair
+
+chatsan-word-45 = tysm
+chatsan-replacement-45 = thank you so much
+
+chatsan-word-46 = tyvm
+chatsan-replacement-46 = thank you very much
+
+chatsan-word-47 = cya
+chatsan-replacement-47 = see ya
+
+chatsan-word-48 = rn
+chatsan-replacement-48 = right now
+
+chatsan-word-49 = atm
+chatsan-replacement-49 = at the moment
+
+chatsan-word-50 = istg
+chatsan-replacement-50 = I swear to god
+
+chatsan-word-51 = rq
+chatsan-replacement-51 = real quick
+
+chatsan-word-52 = dw
+chatsan-replacement-52 = don't worry

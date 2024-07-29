@@ -1,8 +1,6 @@
 namespace Content.Shared.CriminalRecords.Systems;
 
 /// <summary>
-/// Nothing is predicted just exists for access.
+/// Station records aren't predicted, just exists for access.
 /// </summary>
-public abstract class SharedCriminalRecordsConsoleSystem : EntitySystem
-{
-}
+public abstract class SharedCriminalRecordsConsoleSystem : EntitySystem;

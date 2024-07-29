@@ -134,14 +134,14 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
         UpdateSetupInterface(uid, component);
     }
 
-    private void OpenSetupInterface(EntityUid uid, EntityUid player, SurveillanceCameraRouterComponent? camera = null, ActorComponent? actor = null)
+    private void OpenSetupInterface(EntityUid uid, EntityUid player, SurveillanceCameraRouterComponent? camera = null)
     {
-        if (!Resolve(uid, ref camera) || !Resolve(player, ref actor))
-            return;
-        if (!_userInterface.TryGetUi(uid, SurveillanceCameraSetupUiKey.Router, out var bui))
+        if (!Resolve(uid, ref camera))
             return;
 
-        _userInterface.OpenUi(bui, actor.PlayerSession);
+        if (!_userInterface.TryOpenUi(uid, SurveillanceCameraSetupUiKey.Router, player))
+            return;
+
         UpdateSetupInterface(uid, camera);
     }
 
@@ -154,13 +154,13 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
 
         if (router.AvailableNetworks.Count == 0 || router.SubnetFrequencyId != null)
         {
-            _userInterface.TryCloseAll(uid, SurveillanceCameraSetupUiKey.Router);
+            _userInterface.CloseUi(uid, SurveillanceCameraSetupUiKey.Router);
             return;
         }
 
         var state = new SurveillanceCameraSetupBoundUiState(router.SubnetName, deviceNet.ReceiveFrequency ?? 0,
             router.AvailableNetworks, true, router.SubnetFrequencyId != null);
-        _userInterface.TrySetUiState(uid, SurveillanceCameraSetupUiKey.Router, state);
+        _userInterface.SetUiState(uid, SurveillanceCameraSetupUiKey.Router, state);
     }
 
     private void SendHeartbeat(EntityUid uid, string origin, string destination,

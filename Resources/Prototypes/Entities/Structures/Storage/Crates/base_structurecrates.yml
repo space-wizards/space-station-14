@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseStructureDynamic
   id: CrateGeneric
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: crate
   description: A large container for items.
   components:
@@ -21,6 +21,9 @@
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -31,7 +34,7 @@
           bounds: "-0.4,-0.4,0.4,0.29"
         density: 50
         mask:
-        - SmallMobMask #this is so they can go under plastic flaps
+        - CrateMask #this is so they can go under plastic flaps
         layer:
         - MachineLayer
   - type: EntityStorage
@@ -55,6 +58,18 @@
   - type: EntityStorageVisuals
     stateDoorOpen: open
     stateDoorClosed: closed
+  - type: GenericVisualizer
+    visuals:
+      enum.PaperLabelVisuals.HasLabel:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
+          Invoice: { state: invoice }
   - type: PaperLabel
     labelSlot:
       insertVerbText: Attach Label
@@ -74,11 +89,12 @@
     node: crategenericsteel
     containers:
       - entity_storage
+  - type: RequireProjectileTarget
 
 - type: entity
   parent: CrateGeneric
   id: CrateBaseWeldable
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Weldable
   - type: ResistLocker
@@ -106,6 +122,10 @@
     - state: locked
       map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.5,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallic

@@ -83,7 +83,7 @@
 
 - type: entity
   id: GrenadeFlashEffect
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: PointLight
       enabled: true
@@ -119,6 +119,30 @@
       path: /Audio/Effects/minibombcountdown.ogg
       params:
         volume: 12
+
+- type: entity
+  name: self destruct
+  description: Go out on your own terms!
+  parent: GrenadeBase
+  id: SelfDestructSeq
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Minibomb
+    totalIntensity: 400
+    intensitySlope: 30
+    maxIntensity: 125
+    canCreateVacuum: true
+  - type: OnUseTimerTrigger
+    delay: 4.5
+    beepSound:
+      path: /Audio/Effects/Grenades/SelfDestruct/SDS_Charge2.ogg
+      params:
+        volume: 30
+    initialBeepDelay: 0
+    beepInterval: 16
+
 
 - type: entity
   name: supermatter grenade
@@ -296,11 +320,12 @@
           emptyCase: { state: empty }
           wiredCase: { state: wired }
           caseWithTrigger: { state: no-payload }
+          caseWithPayload: { state: no-trigger }
           grenade: { state: complete }
       enum.Trigger.TriggerVisuals.VisualState:
         enum.ConstructionVisuals.Layer:
           Primed: { state: primed }
-          Unprimed: { state: complete }
+          # Unprimed: <Use state determined by enum.ConstructionVisuals.Layer>
   - type: StaticPrice
     price: 25
 
@@ -358,11 +383,28 @@
     duration: 30
     spreadAmount: 50
   - type: SoundOnTrigger
-    sound: /Audio/Effects/smoke.ogg
+    sound: /Audio/Items/smoke_grenade_smoke.ogg
   - type: DeleteOnTrigger
   - type: TimerTriggerVisuals
     primingSound:
-      path: /Audio/Effects/Smoke-grenade.ogg
+      path: /Audio/Items/smoke_grenade_prime.ogg
+
+- type: entity
+  parent: SmokeGrenade
+  id: CleanerGrenade
+  name: cleanade
+  description: Special grenade for janitors, releasing large cloud of space cleaner foam
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/janitor.rsi
+  - type: SmokeOnTrigger
+    duration: 15
+    spreadAmount: 50
+    smokePrototype: Foam
+    solution:
+      reagents:
+      - ReagentId: SpaceCleaner
+        Quantity: 30
 
 - type: entity
   parent: SmokeGrenade
@@ -379,6 +421,21 @@
       reagents:
       - ReagentId: TearGas
         Quantity: 50
+
+- type: entity
+  parent: SmokeGrenade
+  id: MetalFoamGrenade
+  name: metal foam grenade
+  description: An emergency tool used for patching up holes. Almost as good as real walls.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/metalfoam.rsi
+  - type: SmokeOnTrigger
+    duration: 10
+    spreadAmount: 13
+    smokePrototype: AluminiumMetalFoam
+  - type: StaticPrice
+    price: 350
 
 # Non-explosive "dummy" grenades to use as a distraction.
 
