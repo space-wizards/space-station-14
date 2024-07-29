@@ -15,6 +15,11 @@ public sealed class PowerReceiverSystem : SharedPowerReceiverSystem
         SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentHandleState>(OnHandleState);
     }
 
+    private void OnExamined(Entity<ApcPowerReceiverComponent> ent, ref ExaminedEvent args)
+    {
+        args.PushMarkup(GetExamineText(ent.Comp.Powered));
+    }
+
     private void OnHandleState(EntityUid uid, ApcPowerReceiverComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not ApcPowerReceiverComponentState state)

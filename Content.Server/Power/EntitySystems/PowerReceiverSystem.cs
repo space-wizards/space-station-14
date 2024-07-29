@@ -46,6 +46,11 @@ namespace Content.Server.Power.EntitySystems
             _provQuery = GetEntityQuery<ApcPowerProviderComponent>();
         }
 
+        private void OnExamined(Entity<ApcPowerReceiverComponent> ent, ref ExaminedEvent args)
+        {
+            args.PushMarkup(GetExamineText(ent.Comp.Powered));
+        }
+
         private void OnGetVerbs(EntityUid uid, ApcPowerReceiverComponent component, GetVerbsEvent<Verb> args)
         {
             if (!_adminManager.HasAdminFlag(args.User, AdminFlags.Admin))
