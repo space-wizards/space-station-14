@@ -53,12 +53,14 @@ public sealed class GeofencingSystem : EntitySystem
             {
                 ReturnFencedToOrigin(fencedent);
             }
-            else if (geofence.LeftStation && geofence.LastPopup + TimeSpan.FromSeconds(30) <= _timing.CurTime)
+            else if (geofence.LeftStation)
             {
-                var diskwarning = Loc.GetString("geofence-feelin-weird", ("entity", uid));
-                _popups.PopupEntity(diskwarning, uid);
-                geofence.LastPopup = _timing.CurTime;
-
+                if (geofence.LastPopup + TimeSpan.FromSeconds(30) <= _timing.CurTime)
+                {
+                    var diskwarning = Loc.GetString("geofence-feelin-weird", ("entity", uid));
+                    _popups.PopupEntity(diskwarning, uid);
+                    geofence.LastPopup = _timing.CurTime;
+                }
             }
             else
             {
