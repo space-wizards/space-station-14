@@ -1,18 +1,23 @@
+using Content.Server.Administration.Logs;
 using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Chat.Systems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
+using Content.Server.Respawn;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.Audio;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Coordinates.Helpers;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Maps;
 using Content.Shared.Nuke;
 using Content.Shared.Popups;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -21,7 +26,10 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Numerics;
+
 
 namespace Content.Server.Nuke;
 
@@ -30,6 +38,8 @@ public sealed class NukeSystem : EntitySystem
     [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosions = default!;
+    [Dependency] private readonly IAdminLogManager _adminlogs = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
@@ -43,6 +53,8 @@ public sealed class NukeSystem : EntitySystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
+    [Dependency] private readonly SpecialRespawnSystem _respawnSys = default!;
 
     /// <summary>
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
@@ -62,6 +74,7 @@ public sealed class NukeSystem : EntitySystem
         SubscribeLocalEvent<NukeComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<NukeComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<NukeComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<NukeDiskComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<NukeComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<NukeComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<NukeComponent, ExaminedEvent>(OnExaminedEvent);
@@ -106,6 +119,103 @@ public sealed class NukeSystem : EntitySystem
                     break;
             }
         }
+
+        var diskquery = EntityQueryEnumerator<NukeDiskComponent>();
+        while (diskquery.MoveNext(out var uid, out var disk))
+        {
+            var diskent = (uid, disk);
+
+            if (disk.Geofence)
+            {
+                if (DiskIsAway(diskent))
+                {
+                    if (disk.LeftStation == true && disk.LeftStationWhen + disk.OffStationTolerance <= _timing.CurTime)
+                    {
+                        ReturnDiskToOrigin(diskent);
+                    }
+                    else if (disk.LeftStation == true)
+                    {
+                        if (disk.LastPopup + TimeSpan.FromSeconds(30) <= _timing.CurTime)
+                        {
+                            var diskwarning = Loc.GetString("nuke-disk-feelin-weird");
+                            _popups.PopupEntity(diskwarning, uid);
+                            disk.LastPopup = _timing.CurTime;
+                        }
+                    }
+                    else
+                    {
+                        disk.LeftStation = true;
+                        disk.LeftStationWhen = _timing.CurTime;
+                    }
+                }
+                else
+                {
+                    disk.LeftStation = false;
+                    disk.LeftStationWhen = TimeSpan.MaxValue;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Checks if the disk has been put somewhere unreasonably unaccesible.
+    /// </summary>
+    private bool DiskIsAway(Entity<NukeDiskComponent> diskent)
+    {
+        if (_emergencyShuttle.EmergencyShuttleArrived)
+            return false;
+
+        var transform = Transform(diskent.Owner);
+        if (diskent.Comp.OriginGrid != null && diskent.Comp.OriginGrid != transform.GridUid)
+            return true;
+        if (diskent.Comp.OriginMap != null && diskent.Comp.OriginMap != transform.MapUid)
+            return true;
+
+        return false;
+    }
+
+    /// <summary>
+    /// Attempt to send the disk to whatever station it came from.
+    /// </summary>
+    /// <param name="diskent"></param>
+    private void ReturnDiskToOrigin(Entity<NukeDiskComponent> diskent)
+    {
+        // some flare to fuck with the disk holder
+        var diskgoodbye = Loc.GetString("nuke-disk-poof");
+        _popups.PopupEntity(diskgoodbye, diskent.Owner);
+
+        if (diskent.Comp.OriginGrid != null)
+        {
+            // tp to OriginGrid
+            var gridtransform = Transform(diskent.Comp.OriginGrid.Value);
+            if (gridtransform.MapUid == null)
+            {
+                Log.Debug($"Issue when geofencing disk, {diskent.Comp.OriginGrid} is on a null map!");
+                return;
+            }
+
+            if (!_respawnSys.TryFindRandomTile(diskent.Comp.OriginGrid.Value, gridtransform.MapUid.Value, 3, out var target))
+            {
+                Log.Debug($"No random tile found for {diskent.Comp.OriginGrid} when geofencing nuke disk");
+                return;
+            }
+
+            _adminlogs.Add(LogType.Teleport, LogImpact.Medium, $"The {ToPrettyString(diskent.Owner)} has been teleported to its origin grid {ToPrettyString(diskent.Comp.OriginGrid)}.");
+            _transform.SetCoordinates(diskent.Owner, target);
+        }
+        else if (diskent.Comp.OriginMap != null)
+        {
+            // tp to OriginMap if no grid
+            _adminlogs.Add(LogType.Teleport, LogImpact.Medium, $"The {ToPrettyString(diskent.Owner)} has been teleported to its origin map {ToPrettyString(diskent.Comp.OriginMap)}.");
+            _transform.SetCoordinates(diskent.Owner, new EntityCoordinates(diskent.Comp.OriginMap.Value, Vector2.Zero));
+        }
+        else
+        {
+            return;
+        }
+
+        // some flare for where the disk appears
+        SpawnNextToOrDrop(diskent.Comp.TeleportFlare, diskent.Owner);
     }
 
     private void OnMapInit(EntityUid uid, NukeComponent nuke, MapInitEvent args)
@@ -122,6 +232,13 @@ public sealed class NukeSystem : EntitySystem
         }
 
         nuke.Code = GenerateRandomNumberString(nuke.CodeLength);
+    }
+
+    private void OnMapInit(EntityUid uid, NukeDiskComponent disk, MapInitEvent args)
+    {
+        var transform = Transform(uid);
+        disk.OriginMap = transform.MapUid;
+        disk.OriginGrid = transform.GridUid;
     }
 
     private void OnRemove(EntityUid uid, NukeComponent component, ComponentRemove args)
