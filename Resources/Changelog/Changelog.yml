@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: FungiFellow
-  changes:
-  - message: Syndi-Cats now have a Wideswing, 80% Explosion Resist, 6/6/15 Pierce/Slash/Structural
-      and step over glass shards with trained feline agility.
-    type: Tweak
-  id: 6497
-  time: '2024-04-29T17:09:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27408
 - author: ShadowCommander
   changes:
   - message: Fixed microwave construction not creating a microwave on completion.
@@ -3781,3 +3773,10 @@
   id: 6996
   time: '2024-07-28T08:32:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30424
+- author: lzk228
+  changes:
+  - message: Fixed permanent absence of the approver string in cargo invoice.
+    type: Fix
+  id: 6997
+  time: '2024-07-29T06:19:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29690
