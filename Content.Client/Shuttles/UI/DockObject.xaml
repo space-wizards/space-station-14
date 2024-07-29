@@ -1,0 +1,11 @@
+<controls:PanelContainer HorizontalExpand="True"
+                         xmlns:controls="https://spacestation14.io"
+                         Margin="0 3">
+    <controls:BoxContainer Name="Contents" Orientation="Vertical"
+                           Margin="3">
+        <controls:Label Name="DockedLabel"
+                        HorizontalAlignment="Center"
+                        Margin="3 5"/>
+        <controls:BoxContainer Orientation="Vertical" Name="DockContainer"/>
+    </controls:BoxContainer>
+</controls:PanelContainer>

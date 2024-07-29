@@ -24,13 +24,14 @@ public sealed partial class InjectorDoAfterEvent : SimpleDoAfterEvent
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class InjectorComponent : Component
 {
-    public const string SolutionName = "injector";
+    [DataField]
+    public string SolutionName = "injector";
 
     /// <summary>
     /// Whether or not the injector is able to draw from containers or if it's a single use
     /// device that can only inject.
     /// </summary>
-    [DataField("injectOnly")]
+    [DataField]
     public bool InjectOnly;
 
     /// <summary>
@@ -39,29 +40,26 @@ public sealed partial class InjectorComponent : Component
     /// <remarks>
     ///     for example: droppers would ignore mobs
     /// </remarks>
-    [DataField("ignoreMobs")]
+    [DataField]
     public bool IgnoreMobs;
 
     /// <summary>
     ///     The minimum amount of solution that can be transferred at once from this solution.
     /// </summary>
     [DataField("minTransferAmount")]
-    [ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 MinimumTransferAmount = FixedPoint2.New(5);
 
     /// <summary>
     ///     The maximum amount of solution that can be transferred at once from this solution.
     /// </summary>
     [DataField("maxTransferAmount")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 MaximumTransferAmount = FixedPoint2.New(50);
+    public FixedPoint2 MaximumTransferAmount = FixedPoint2.New(15);
 
     /// <summary>
     /// Amount to inject or draw on each usage. If the injector is inject only, it will
     /// attempt to inject it's entire contents upon use.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("transferAmount")]
+    [DataField]
     [AutoNetworkedField]
     public FixedPoint2 TransferAmount = FixedPoint2.New(5);
 
@@ -72,19 +70,39 @@ public sealed partial class InjectorComponent : Component
     /// The base delay has a minimum of 1 second, but this will still be modified if the target is incapacitated or
     /// in combat mode.
     /// </remarks>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("delay")]
+    [DataField]
     public TimeSpan Delay = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    /// Each additional 1u after first 5u increases the delay by X seconds.
+    /// </summary>
+    [DataField]
+    public TimeSpan DelayPerVolume = TimeSpan.FromSeconds(0.1);
 
     /// <summary>
     /// The state of the injector. Determines it's attack behavior. Containers must have the
     /// right SolutionCaps to support injection/drawing. For InjectOnly injectors this should
     /// only ever be set to Inject
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     [DataField]
     public InjectorToggleMode ToggleState = InjectorToggleMode.Draw;
+
+    #region Arguments for injection doafter
+
+    /// <inheritdoc cref=DoAfterArgs.NeedHand>
+    [DataField]
+    public bool NeedHand = true;
+
+    /// <inheritdoc cref=DoAfterArgs.BreakOnHandChange>
+    [DataField]
+    public bool BreakOnHandChange = true;
+
+    /// <inheritdoc cref=DoAfterArgs.MovementThreshold>
+    [DataField]
+    public float MovementThreshold = 0.1f;
+
+    #endregion
 }
 
 /// <summary>

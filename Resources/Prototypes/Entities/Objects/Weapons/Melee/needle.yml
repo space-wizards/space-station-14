@@ -12,6 +12,13 @@
     damage:
       types:
         Piercing: 1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 1
   - type: Item
     size: Tiny
   - type: BalloonPopper
+  - type: ThrowingAngle
+    angle: -135
+  - type: LandAtCursor

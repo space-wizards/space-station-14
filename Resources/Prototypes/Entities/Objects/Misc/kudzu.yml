@@ -58,11 +58,9 @@
         types:
           Heat: 5
       coldDamage: {}
-      ColdDamageThreshold: 0
+      coldDamageThreshold: 0
     - type: Flammable
       fireSpread: true #If you walk into incredibly dense, flaming vines, you can expect to burn.
-      cold:
-        types: {}
       damage:
         types:
           Heat: 3
@@ -75,14 +73,15 @@
         methods: [Touch]
         effects:
         - !type:HealthChange
-          scaled: true
+          scaleByQuantity: true
           damage:
             types:
-              Heat: 10
+              Heat: 0.5
     - type: AtmosExposed
+    - type: Kudzu
       growthTickChance: 0.3
       spreadChance: 0.4
-    - type: SlowContacts
+    - type: SpeedModifierContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
       ignoreWhitelist:
@@ -123,7 +122,7 @@
     - type: Kudzu
       spriteVariants: 5
       spreadChance: 0.01
-    - type: SlowContacts
+    - type: SpeedModifierContacts
       walkSpeedModifier: 0.8
       sprintSpeedModifier: 0.8
       ignoreWhitelist:
@@ -235,9 +234,8 @@
       damage:
        types:
          Heat: 3
-      growthTickChance: 0.3
     - type: AtmosExposed
-    - type: SlowContacts
+    - type: SpeedModifierContacts
       walkSpeedModifier: 0.3
       sprintSpeedModifier: 0.3
       ignoreWhitelist:
@@ -300,7 +298,7 @@
           data: { state: spookysmoke_static }
 
 - type: entity
-  name: Haze
+  name: haze
   id: ShadowKudzuWeak
   parent: ShadowKudzu
   components:

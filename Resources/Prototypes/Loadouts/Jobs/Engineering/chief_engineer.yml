@@ -1,0 +1,89 @@
+# Jumpsuit
+- type: loadout
+  id: ChiefEngineerJumpsuit
+  equipment: ChiefEngineerJumpsuit
+
+- type: startingGear
+  id: ChiefEngineerJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChiefEngineer
+
+- type: loadout
+  id: ChiefEngineerJumpskirt
+  equipment: ChiefEngineerJumpskirt
+
+- type: startingGear
+  id: ChiefEngineerJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtChiefEngineer
+
+- type: loadout
+  id: ChiefEngineerTurtleneck
+  equipment: ChiefEngineerTurtleneck
+
+- type: startingGear
+  id: ChiefEngineerTurtleneck
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChiefEngineerTurtle
+
+- type: loadout
+  id: ChiefEngineerTurtleneckSkirt
+  equipment: ChiefEngineerTurtleneckSkirt
+
+- type: startingGear
+  id: ChiefEngineerTurtleneckSkirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtChiefEngineerTurtle
+
+# Head
+- type: loadout
+  id: ChiefEngineerHead
+  equipment: ChiefEngineerHead
+
+- type: startingGear
+  id: ChiefEngineerHead
+  equipment:
+    head: ClothingHeadHatHardhatWhite
+
+- type: loadout
+  id: ChiefEngineerBeret
+  equipment: EngineeringBeret
+
+# Neck
+- type: loadout
+  id: ChiefEngineerCloak
+  equipment: ChiefEngineerCloak
+
+- type: startingGear
+  id: ChiefEngineerCloak
+  equipment:
+    neck: ClothingNeckCloakCe
+
+- type: loadout
+  id: ChiefEngineerMantle
+  equipment: ChiefEngineerMantle
+
+- type: startingGear
+  id: ChiefEngineerMantle
+  equipment:
+    neck: ClothingNeckMantleCE
+
+# OuterClothing
+- type: loadout
+  id: ChiefEngineerWintercoat
+  equipment: ChiefEngineerWintercoat
+
+- type: startingGear
+  id: ChiefEngineerWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterCE
+
+# Shoes
+- type: loadout
+  id: BrownShoes
+  equipment: BrownShoes
+
+- type: startingGear
+  id: BrownShoes
+  equipment:
+    shoes: ClothingShoesColorBrown

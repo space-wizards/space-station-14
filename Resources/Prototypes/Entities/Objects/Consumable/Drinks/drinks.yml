@@ -10,6 +10,8 @@
     solutions:
       drink:
         maxVol: 30
+  - type: MixableSolution
+    solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: Drink
@@ -31,8 +33,8 @@
     solution: drink
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
 
 - type: entity
   parent: DrinkBase
@@ -76,6 +78,9 @@
     solution: drink
   - type: FitsInDispenser
     solution: drink
+  - type: Tag
+    tags:
+      - DrinkGlass
 
 # Transformable container - normal glass
 - type: entity
@@ -260,6 +265,22 @@
 
 - type: entity
   parent: DrinkGlass
+  id: DrinkArnoldPalmer
+  suffix: arnold palmer
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: ArnoldPalmer
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/arnoldpalmer.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkAtomicBombGlass
   suffix: atomic bomb
   components:
@@ -369,6 +390,9 @@
   - type: Icon
     sprite: Objects/Consumable/Drinks/beerglass.rsi
     state: icon
+  - type: Tag
+    tags:
+    - Beer
 
 - type: entity
   parent: DrinkGlass
@@ -436,6 +460,22 @@
 
 - type: entity
   parent: DrinkGlass
+  id: DrinkBlueHawaiianGlass
+  suffix: blue hawaiian
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: BlueHawaiian
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/bluehawaiian.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkBooger
   suffix: booger
   components:
@@ -464,6 +504,22 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/bravebullglass.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: BudgetInsulsDrinkGlass
+  suffix: budget insuls
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: BudgetInsulsDrink
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/budgetinsulsdrink.rsi
     state: icon
 
 - type: entity
@@ -500,6 +556,51 @@
 
 - type: entity
   parent: DrinkGlass
+  id: RubberneckGlass
+  suffix: rubberneck
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Rubberneck
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/rubberneck.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkCoconutRum
+  suffix: coconut rum
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: CoconutRum
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/coconutrum.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkCoconutWaterGlass
+  suffix: coconut water
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: CoconutWater
+          Quantity: 30
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkCoffee
   suffix: coffee
   components:
@@ -528,6 +629,22 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/cognacglass.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkCosmopolitan
+  suffix: cosmopolitan
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Cosmopolitan
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/cosmopolitan.rsi
     state: icon
 
 - type: entity
@@ -943,6 +1060,9 @@
   - type: Icon
     sprite: Objects/Consumable/Drinks/iced_beerglass.rsi
     state: icon
+  - type: Tag
+    tags:
+    - Beer
 
 - type: entity
   parent: DrinkGlass
@@ -974,6 +1094,22 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/icecreamglass.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: IrishBoolGlass
+  suffix: irish bool
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: IrishBool
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/beerglass.rsi
     state: icon
 
 - type: entity
@@ -1085,7 +1221,7 @@
         - ReagentId: JuiceLemon
           Quantity: 30
   - type: Icon
-    sprite: Objects/Consumable/Drinks/lemonjuice.rsi
+    sprite: Objects/Consumable/Drinks/lemonjuiceglass.rsi
     state: icon
 
 - type: entity
@@ -1336,6 +1472,22 @@
 
 - type: entity
   parent: DrinkGlass
+  id: DrinkPainkillerGlass
+  suffix: painkiller
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Painkiller
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/painkiller.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkPatronGlass
   suffix: patron
   components:
@@ -1348,6 +1500,22 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/patronglass.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkPinaColadaGlass
+  suffix: piña colada
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: PinaColada
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/pinacolada.rsi
     state: icon
 
 - type: entity
@@ -1480,6 +1648,22 @@
 
 - type: entity
   parent: DrinkGlass
+  id: DrinkRoyRogersGlass
+  suffix: roy rogers
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: RoyRogers
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/royrogers.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkSakeGlass
   suffix: sake
   components:
@@ -1605,6 +1789,22 @@
 
 - type: entity
   parent: DrinkGlass
+  id: DrinkShirleyTempleGlass
+  suffix: shirley temple
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: ShirleyTemple
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/shirleytemple.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkSilencerGlass
   suffix: silencer
   components:
@@ -1633,6 +1833,22 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/singulo.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkSolDryGlass
+  suffix: sol dry
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: SolDry
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/sol_dry_glass.rsi
     state: icon
 
 - type: entity
@@ -1891,6 +2107,22 @@
 
 - type: entity
   parent: DrinkGlass
+  id: DrinkVodkaRedBool
+  suffix: vodka red bool
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: VodkaRedBool
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkVodkaTonicGlass
   suffix: vodka tonic
   components:
@@ -1934,6 +2166,22 @@
         reagents:
         - ReagentId: JuiceWatermelon
           Quantity: 30
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkWatermelonWakeup
+  suffix: watermelon wakeup
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: WatermelonWakeup
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/champagneglass.rsi
+    state: icon
 
 - type: entity
   parent: DrinkGlass
@@ -2015,6 +2263,22 @@
     sprite: Objects/Consumable/Drinks/wineglass.rsi
     state: icon
 
+- type: entity
+  parent: DrinkGlass
+  id: XenoBasherGlass
+  suffix: xeno basher
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: XenoBasher
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/xenobasher.rsi
+    state: icon
+
 # TODO: MOVE
 
 - type: entity
@@ -2066,44 +2330,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-white.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkRamen
-  name: cup ramen
-  description: Just add 10ml boiling water. A taste that reminds you of your school years.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 40 #big cup
-        reagents:
-        - ReagentId: DryRamen
-          Quantity: 25
-        - ReagentId: Soysauce
-          Quantity: 5
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/ramen.rsi
-  - type: Tag
-    tags:
-    - Trash
-  - type: SpaceGarbage
-
-- type: entity
-  parent: DrinkRamen
-  id: DrinkHellRamen
-  name: hell ramen
-  description: Just add 10ml boiling water. Super spicy flavor.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 40
-        reagents:
-        - ReagentId: DryRamen
-          Quantity: 25
-        - ReagentId: CapsaicinOil
-          Quantity: 5
 
 - type: entity
   parent: DrinkGlass

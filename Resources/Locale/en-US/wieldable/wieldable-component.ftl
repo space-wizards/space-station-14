@@ -1,4 +1,4 @@
-﻿### Locale for wielding items; i.e. two-handing them
+### Locale for wielding items; i.e. two-handing them
 
 wieldable-verb-text-wield = Wield
 wieldable-verb-text-unwield = Unwield
@@ -17,3 +17,6 @@ wieldable-component-not-in-hands = { CAPITALIZE(THE($item)) } isn't in your hand
 
 wieldable-component-requires = { CAPITALIZE(THE($item))} must be wielded!
 
+gunwieldbonus-component-examine = This weapon has improved accuracy when wielded.
+
+gunrequireswield-component-examine = This weapon can only be fired when wielded.

@@ -96,6 +96,21 @@
     seedId: sugarcane
 
 - type: entity
+  name: papercane roll
+  description: Why do we even need to grow paper?
+  id: Papercane
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/papercane.rsi
+  - type: SolutionContainerManager
+  - type: Produce
+    seedId: papercane
+  - type: Log
+    spawnedPrototype: SheetPaper1
+    spawnCount: 2
+
+- type: entity
   parent: FoodProduceBase
   id: FoodLaughinPeaPod
   name: laughin' pea pod
@@ -124,6 +139,9 @@
     sprite: Objects/Specific/Hydroponics/laughin_pea.rsi
   - type: Produce
     seedId: laughinPea
+  - type: Tag
+    tags:
+    - Vegetable
 
 - type: entity
   name: tower-cap log
@@ -258,6 +276,7 @@
   - type: Tag
     tags:
     - Fruit
+    - Banana
 
 - type: entity
   name: mimana
@@ -307,7 +326,6 @@
     sprite: Objects/Specific/Hydroponics/banana.rsi
     heldPrefix: peel
   - type: Slippery
-    launchForwardsMultiplier: 1.5
   - type: StepTrigger
     intersectRatio: 0.2
   - type: CollisionWake
@@ -384,7 +402,6 @@
       path: /Audio/Effects/slip.ogg
       params:
         volume: -100
-    launchForwardsMultiplier: 1.6
 
 - type: entity
   name: bananium peel
@@ -398,8 +415,6 @@
     sprite: Objects/Materials/materials.rsi
     heldPrefix: peel
   - type: Slippery
-    paralyzeTime: 4
-    launchForwardsMultiplier: 2
 
 - type: entity
   name: carrot
@@ -413,6 +428,7 @@
   - type: Tag
     tags:
     - Carrot
+    - Vegetable
   - type: SolutionContainerManager
     solutions:
       food:
@@ -458,6 +474,9 @@
     sprite: Objects/Specific/Hydroponics/cabbage.rsi
   - type: Produce
     seedId: cabbage
+  - type: Tag
+    tags:
+    - Vegetable
 
 - type: entity
   name: garlic
@@ -483,6 +502,9 @@
     sprite: Objects/Specific/Hydroponics/garlic.rsi
   - type: Produce
     seedId: garlic
+  - type: Tag
+    tags:
+    - Vegetable
 
 - type: entity
   name: lemon
@@ -658,6 +680,8 @@
   - type: Tag
     tags:
     - Potato
+    - Vegetable
+
 
 - type: entity
   name: tomato
@@ -712,6 +736,7 @@
   - type: Tag
     tags:
     - Fruit
+    - Vegetable
 
 - type: entity
   name: blue tomato
@@ -756,6 +781,7 @@
   - type: Tag
     tags:
     - Fruit
+    - Vegetable
 
 - type: entity
   name: blood tomato
@@ -798,6 +824,7 @@
   - type: Tag
     tags:
     - Fruit # Fuck you they're a fruit
+    - Vegetable
 
 - type: entity
   name: eggplant
@@ -824,6 +851,7 @@
   - type: Tag
     tags:
     - Fruit
+    - Vegetable
 
 - type: entity
   name: apple
@@ -851,6 +879,42 @@
     juiceSolution:
       reagents:
       - ReagentId: JuiceApple
+        Quantity: 10
+  - type: Tag
+    tags:
+    - Fruit
+
+- type: entity
+  name: golden apple
+  parent: FoodProduceBase
+  id: FoodGoldenApple
+  description: It should be shaped like a cube, shouldn't it?
+  components:
+  - type: FlavorProfile
+    flavors:
+      - apple
+      - metallic
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
+        - ReagentId: DoctorsDelight
+          Quantity: 13
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/golden_apple.rsi
+  - type: Produce
+    seedId: goldenApple
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceApple
+        Quantity: 10
+      - ReagentId: Gold
         Quantity: 10
   - type: Tag
     tags:
@@ -912,6 +976,7 @@
   - type: Tag
     tags:
     - Corn
+    - Vegetable
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/corn.rsi
   - type: Produce
@@ -974,6 +1039,9 @@
   - type: SliceableFood
     count: 5
     slice: FoodOnionSlice
+  - type: Tag
+    tags:
+    - Vegetable
 
 - type: entity
   name: red onion
@@ -1002,6 +1070,9 @@
   - type: SliceableFood
     count: 5
     slice: FoodOnionRedSlice
+  - type: Tag
+    tags:
+    - Vegetable
 
 - type: entity
   name: chanterelle cluster
@@ -1019,6 +1090,9 @@
     sprite: Objects/Specific/Hydroponics/chanterelle.rsi
   - type: Produce
     seedId: chanterelle
+  - type: Tag
+    tags:
+    - Vegetable
 
 # Slices
 
@@ -1038,6 +1112,9 @@
     state: slice
   - type: Extractable
     grindableSolutionName: food
+  - type: Tag
+    tags:
+    - Slice
 
 - type: entity
   name: pineapple slice
@@ -1058,6 +1135,7 @@
   - type: Tag
     tags:
     - Fruit
+    - Slice
 
 - type: entity
   name: onion slice
@@ -1081,6 +1159,10 @@
           Quantity: 1
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Vegetable
+    - Slice
 
 - type: entity
   name: red onion slice
@@ -1104,11 +1186,15 @@
           Quantity: 1
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Vegetable
+    - Slice
 
 - type: entity
-  name: chili
+  name: chili pepper
   parent: FoodProduceBase
-  id: FoodChili
+  id: FoodChiliPepper
   description: Spicy, best not touch your eyes.
   components:
     - type: FlavorProfile
@@ -1129,11 +1215,14 @@
       sprite: Objects/Specific/Hydroponics/chili.rsi
     - type: Produce
       seedId: chili
+    - type: Tag
+      tags:
+      - Vegetable
 
 - type: entity
   name: chilly pepper
   parent: FoodProduceBase
-  id: FoodChilly
+  id: FoodChillyPepper
   description: Icy hot.
   components:
     - type: FlavorProfile
@@ -1180,6 +1269,9 @@
     seedId: aloe
   - type: Extractable
     grindableSolutionName: food
+  - type: Tag
+    tags:
+    - Vegetable
 
 - type: entity
   name: poppy
@@ -1187,6 +1279,10 @@
   id: FoodPoppy
   description: A flower with extracts often used in the production of medicine
   components:
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
   - type: FlavorProfile
     flavors:
       - medicine
@@ -1367,6 +1463,71 @@
     - Fruit # Probably?
 
 - type: entity
+  name: glasstle
+  parent: FoodProduceBase
+  id: FoodGlasstle
+  description: A fragile crystal plant with lot of spiky thorns. 
+  components:
+  - type: Item
+    size: Small
+    sprite: Objects/Specific/Hydroponics/glasstle.rsi
+    heldPrefix: produce  
+  - type: FlavorProfile
+    flavors:
+      - sharp
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Razorium
+          Quantity: 15
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/glasstle.rsi
+  - type: Produce
+    seedId: glasstle
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Damageable 
+    damageContainer: Inorganic
+  - type: ToolRefinable
+    refineResult:
+    - id: SheetGlass1
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+          params:
+            volume: -4
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnHit 
+    damage:
+      types:
+        Blunt: 10
+  - type: MeleeWeapon
+    wideAnimationRotation: 60
+    damage:
+      types:
+        Slash: 15
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Tag
+    tags:
+    - Galaxythistle
+
+
+- type: entity
   name: fly amanita
   parent: FoodProduceBase
   id: FoodFlyAmanita
@@ -1459,6 +1620,9 @@
       reagents:
       - ReagentId: MilkSoy
         Quantity: 5
+  - type: Tag
+    tags:
+    - Vegetable
 
 - type: entity
   name: spaceman's trumpet
@@ -1512,6 +1676,9 @@
       reagents:
       - ReagentId: CarpoToxin
         Quantity: 2
+  - type: Tag
+    tags:
+    - Vegetable
 
 - type: entity
   name: watermelon
@@ -1607,6 +1774,7 @@
   - type: Tag
     tags:
     - Fruit
+    - Slice
 
 - type: entity
   name: grapes
@@ -1635,6 +1803,9 @@
       reagents:
       - ReagentId: JuiceGrape
         Quantity: 10
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: berries
@@ -1707,7 +1878,6 @@
     tags:
     - Recyclable
     - Trash
-    - Fruit
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1746,6 +1916,9 @@
     sprite: Objects/Specific/Hydroponics/pea.rsi
   - type: Produce
     seedId: pea
+  - type: Tag
+    tags:
+    - Vegetable
 
 - type: entity
   name: pumpkin
@@ -1794,6 +1967,7 @@
   - type: Tag
     tags:
     - Fruit
+    - Vegetable
 
 - type: entity
   name: cotton boll
@@ -1822,3 +1996,37 @@
   - type: Tag
     tags:
     - ClothMade
+    - CottonBoll
+
+- type: entity
+  name: pyrotton boll
+  description: This will probably set you on fire.
+  id: PyrottonBol
+  parent: FoodProduceBase
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/pyrotton.rsi
+  - type: FlavorProfile
+    flavors:
+      - pyrotton
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+        - ReagentId: Phlogiston
+          Quantity: 5
+  - type: Log
+    spawnedPrototype: MaterialPyrotton1
+    spawnCount: 2
+  - type: Produce
+    seedId: pyrotton
+  - type: Tag
+    tags:
+    - ClothMade
+    - CottonBoll
+  - type: Extractable
+    grindableSolutionName: food

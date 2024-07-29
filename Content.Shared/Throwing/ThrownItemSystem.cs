@@ -3,8 +3,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Gravity;
 using Content.Shared.Physics;
-using Content.Shared.Physics.Pull;
-using Robust.Shared.GameStates;
+using Content.Shared.Movement.Pulling.Events;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -85,15 +84,15 @@ namespace Content.Shared.Throwing
         private void HandlePullStarted(PullStartedMessage message)
         {
             // TODO: this isn't directed so things have to be done the bad way
-            if (EntityManager.TryGetComponent(message.Pulled.Owner, out ThrownItemComponent? thrownItemComponent))
-                StopThrow(message.Pulled.Owner, thrownItemComponent);
+            if (EntityManager.TryGetComponent(message.PulledUid, out ThrownItemComponent? thrownItemComponent))
+                StopThrow(message.PulledUid, thrownItemComponent);
         }
 
         public void StopThrow(EntityUid uid, ThrownItemComponent thrownItemComponent)
         {
             if (TryComp<PhysicsComponent>(uid, out var physics))
             {
-                _physics.SetBodyStatus(physics, BodyStatus.OnGround);
+                _physics.SetBodyStatus(uid, physics, BodyStatus.OnGround);
 
                 if (physics.Awake)
                     _broadphase.RegenerateContacts(uid, physics);
@@ -154,7 +153,7 @@ namespace Content.Shared.Throwing
                     LandComponent(uid, thrown, physics, thrown.PlayLandSound);
                 }
 
-                var stopThrowTime = (thrown.LandTime ?? thrown.ThrownTime) + TimeSpan.FromSeconds(ThrowingSystem.FlyTime);
+                var stopThrowTime = thrown.LandTime ?? thrown.ThrownTime;
                 if (stopThrowTime <= _gameTiming.CurTime)
                 {
                     StopThrow(uid, thrown);

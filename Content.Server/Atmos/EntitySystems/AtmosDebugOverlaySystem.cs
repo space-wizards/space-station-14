@@ -97,22 +97,20 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
-        private AtmosDebugOverlayData ConvertTileToData(TileAtmosphere? tile)
+        private AtmosDebugOverlayData? ConvertTileToData(TileAtmosphere tile)
         {
-            if (tile == null)
-                return default;
-
             return new AtmosDebugOverlayData(
                 tile.GridIndices,
                 tile.Air?.Temperature ?? default,
                 tile.Air?.Moles,
                 tile.PressureDirection,
                 tile.LastPressureDirection,
-                tile.BlockedAirflow,
+                tile.AirtightData.BlockedDirections,
                 tile.ExcitedGroup?.GetHashCode(),
                 tile.Space,
-                false,
-                false);
+                tile.MapAtmosphere,
+                tile.NoGridTile,
+                tile.Air?.Immutable ?? false);
         }
 
         public override void Update(float frameTime)

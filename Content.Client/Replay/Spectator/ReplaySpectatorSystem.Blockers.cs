@@ -3,7 +3,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement.Events;
-using Content.Shared.Physics.Pull;
+using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Throwing;
 
 namespace Content.Client.Replay.Spectator;
@@ -17,7 +17,7 @@ public sealed partial class ReplaySpectatorSystem
         SubscribeLocalEvent<ReplaySpectatorComponent, UseAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<ReplaySpectatorComponent, PickupAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<ReplaySpectatorComponent, ThrowAttemptEvent>(OnAttempt);
-        SubscribeLocalEvent<ReplaySpectatorComponent, InteractionAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<ReplaySpectatorComponent, InteractionAttemptEvent>(OnInteractAttempt);
         SubscribeLocalEvent<ReplaySpectatorComponent, AttackAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<ReplaySpectatorComponent, DropAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<ReplaySpectatorComponent, IsEquippingAttemptEvent>(OnAttempt);
@@ -25,6 +25,11 @@ public sealed partial class ReplaySpectatorSystem
         SubscribeLocalEvent<ReplaySpectatorComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
         SubscribeLocalEvent<ReplaySpectatorComponent, ChangeDirectionAttemptEvent>(OnUpdateCanMove);
         SubscribeLocalEvent<ReplaySpectatorComponent, PullAttemptEvent>(OnPullAttempt);
+    }
+
+    private void OnInteractAttempt(Entity<ReplaySpectatorComponent> ent, ref InteractionAttemptEvent args)
+    {
+        args.Cancelled = true;
     }
 
     private void OnAttempt(EntityUid uid, ReplaySpectatorComponent component, CancellableEntityEventArgs args)

@@ -1,4 +1,4 @@
-﻿<Control xmlns="https://spacestation14.io"
+<Control xmlns="https://spacestation14.io"
          xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
          MouseFilter="Stop">
     <PanelContainer StyleClasses="BackgroundOpenLeft"/>
@@ -17,7 +17,7 @@
         </Control>
         <PanelContainer StyleClasses="LowDivider" Margin="0 0 1 0"/>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="Title:" Margin="17 10 0 9" VerticalAlignment="Center"/>
+            <Label Text="{Loc news-write-ui-article-name-label}" Margin="17 10 0 9" VerticalAlignment="Center"/>
             <LineEdit Name="TitleField" Margin="6 10 0 9" MinWidth="260" MinHeight="23" Access="Public"/>
             <Control HorizontalExpand="True" />
             <Label Name="RichTextInfoLabel" Text="?" MouseFilter="Pass" Margin="14 0" StyleClasses="LabelSecondaryColor"/>

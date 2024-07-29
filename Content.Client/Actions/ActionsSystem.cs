@@ -94,6 +94,7 @@ namespace Content.Client.Actions
             component.Container = EnsureEntity<T>(state.Container, uid);
             component.EntityIcon = EnsureEntity<T>(state.EntityIcon, uid);
             component.CheckCanInteract = state.CheckCanInteract;
+            component.CheckConsciousness = state.CheckConsciousness;
             component.ClientExclusive = state.ClientExclusive;
             component.Priority = state.Priority;
             component.AttachedEntity = EnsureEntity<T>(state.AttachedEntity, uid);
@@ -106,7 +107,7 @@ namespace Content.Client.Actions
             UpdateAction(uid, component);
         }
 
-        protected override void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
+        public override void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
         {
             if (!ResolveActionData(actionId, ref action))
                 return;
@@ -246,7 +247,10 @@ namespace Content.Client.Actions
             if (action.ClientExclusive)
             {
                 if (instantAction.Event != null)
+                {
                     instantAction.Event.Performer = user;
+                    instantAction.Event.Action = actionId;
+                }
 
                 PerformAction(user, actions, actionId, instantAction, instantAction.Event, GameTiming.CurTime);
             }

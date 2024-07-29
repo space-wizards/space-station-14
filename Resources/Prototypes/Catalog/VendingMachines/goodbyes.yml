@@ -1,0 +1,101 @@
+- type: localizedDataset
+  id: BoozeOMatGoodbyes
+  values:
+    prefix: thankyou-boozeomat-
+    count: 3
+
+- type: localizedDataset
+  id: ChangGoodbyes
+  values:
+    prefix: thankyou-chang-
+    count: 2
+
+- type: localizedDataset
+  id: ChefvendGoodbyes
+  values:
+    prefix: thankyou-chefvend-
+    count: 4
+
+- type: localizedDataset
+  id: CigaretteMachineGoodbyes
+  values:
+    prefix: thankyou-cigs-
+    count: 3
+
+- type: localizedDataset
+  id: HotDrinksMachineGoodbyes
+  values:
+    prefix: thankyou-coffee-
+    count: 4
+
+- type: localizedDataset
+  id: RobustSoftdrinksGoodbyes
+  values:
+    prefix: thankyou-cola-
+    count: 4
+
+- type: localizedDataset
+  id: DiscountDansGoodbyes
+  values:
+    prefix: thankyou-discount-
+    count: 8
+
+- type: localizedDataset
+  id: DonutGoodbyes
+  values:
+    prefix: thankyou-donut-
+    count: 4
+
+- type: localizedDataset
+  id: GoodCleanFunGoodbyes
+  values:
+    prefix: thankyou-goodcleanfun-
+    count: 4
+
+- type: localizedDataset
+  id: GenericVendGoodbyes
+  values:
+    prefix: vending-machine-thanks-
+    count: 1
+
+- type: localizedDataset
+  id: HappyHonkGoodbyes
+  values:
+    prefix: thankyou-happyhonk-
+    count: 4
+
+- type: localizedDataset
+  id: LawDrobeGoodbyes
+  values:
+    prefix: thankyou-lawdrobe-
+    count: 5
+
+- type: localizedDataset
+  id: NutriMaxGoodbyes
+  values:
+    prefix: thankyou-nutrimax-
+    count: 2
+
+- type: localizedDataset
+  id: SecTechGoodbyes
+  values:
+    prefix: thankyou-sectech-
+    count: 3
+
+- type: localizedDataset
+  id: GetmoreChocolateCorpGoodbyes
+  values:
+    prefix: thankyou-snack-
+    count: 6
+
+- type: localizedDataset
+  id: BodaGoodbyes
+  values:
+    prefix: thankyou-sovietsoda-
+    count: 3
+
+- type: localizedDataset
+  id: SyndieDrobeGoodbyes
+  values:
+    prefix: thankyou-syndiedrobe-
+    count: 5

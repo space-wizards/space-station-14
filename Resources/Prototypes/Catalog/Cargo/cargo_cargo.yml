@@ -1,21 +1,11 @@
 - type: cargoProduct
-  id: CargoPallet
-  icon:
-    sprite: Structures/catwalk.rsi
-    state: catwalk_preview
-  product: CargoPallet
-  cost: 250
-  category: Cargo
-  group: market
-
-- type: cargoProduct
   id: CargoOreBox
   icon:
     sprite:  /Textures/Structures/Storage/orebox.rsi
     state: orebox
   product: OreBox
   cost: 500
-  category: Cargo
+  category: cargoproduct-category-name-cargo
   group: market
 
 - type: cargoProduct
@@ -25,5 +15,5 @@
     state: icon
   product: CrateCargoLuxuryHardsuit
   cost: 15000
-  category: Cargo
+  category: cargoproduct-category-name-cargo
   group: market

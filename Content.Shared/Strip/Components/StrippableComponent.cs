@@ -1,3 +1,4 @@
+using Content.Shared.DoAfter;
 using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -8,10 +9,10 @@ namespace Content.Shared.Strip.Components
     public sealed partial class StrippableComponent : Component
     {
         /// <summary>
-        /// The strip delay for hands.
+        ///     The strip delay for hands.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField("handDelay")]
-        public float HandStripDelay = 4f;
+        public TimeSpan HandStripDelay = TimeSpan.FromSeconds(4f);
     }
 
     [NetSerializable, Serializable]
@@ -21,63 +22,63 @@ namespace Content.Shared.Strip.Components
     }
 
     [NetSerializable, Serializable]
-    public sealed class StrippingSlotButtonPressed : BoundUserInterfaceMessage
+    public sealed class StrippingSlotButtonPressed(string slot, bool isHand) : BoundUserInterfaceMessage
     {
-        public readonly string Slot;
-
-        public readonly bool IsHand;
-
-        public StrippingSlotButtonPressed(string slot, bool isHand)
-        {
-            Slot = slot;
-            IsHand = isHand;
-        }
+        public readonly string Slot = slot;
+        public readonly bool IsHand = isHand;
     }
 
     [NetSerializable, Serializable]
-    public sealed class StrippingEnsnareButtonPressed : BoundUserInterfaceMessage
-    {
-        public StrippingEnsnareButtonPressed()
-        {
-        }
-    }
+    public sealed class StrippingEnsnareButtonPressed : BoundUserInterfaceMessage;
 
-    public abstract class BaseBeforeStripEvent : EntityEventArgs, IInventoryRelayEvent
+    [ByRefEvent]
+    public abstract class BaseBeforeStripEvent(TimeSpan initialTime, bool stealth = false) : EntityEventArgs, IInventoryRelayEvent
     {
-        public readonly float InitialTime;
-        public float Time => MathF.Max(InitialTime * Multiplier + Additive, 0f);
-        public float Additive = 0;
+        public readonly TimeSpan InitialTime = initialTime;
         public float Multiplier = 1f;
-        public bool Stealth;
+        public TimeSpan Additive = TimeSpan.Zero;
+        public bool Stealth = stealth;
+
+        public TimeSpan Time => TimeSpan.FromSeconds(MathF.Max(InitialTime.Seconds * Multiplier + Additive.Seconds, 0f));
 
         public SlotFlags TargetSlots { get; } = SlotFlags.GLOVES;
+    }
 
-        public BaseBeforeStripEvent(float initialTime, bool stealth = false)
+    /// <summary>
+    ///     Used to modify strip times. Raised directed at the user.
+    /// </summary>
+    /// <remarks>
+    ///     This is also used by some stripping related interactions, i.e., interactions with items that are currently equipped by another player.
+    /// </remarks>
+    [ByRefEvent]
+    public sealed class BeforeStripEvent(TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(initialTime, stealth);
+
+    /// <summary>
+    ///     Used to modify strip times. Raised directed at the target.
+    /// </summary>
+    /// <remarks>
+    ///     This is also used by some stripping related interactions, i.e., interactions with items that are currently equipped by another player.
+    /// </remarks>
+    [ByRefEvent]
+    public sealed class BeforeGettingStrippedEvent(TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(initialTime, stealth);
+
+    /// <summary>
+    ///     Organizes the behavior of DoAfters for <see cref="StrippableSystem">.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed partial class StrippableDoAfterEvent : DoAfterEvent
+    {
+        public readonly bool InsertOrRemove;
+        public readonly bool InventoryOrHand;
+        public readonly string SlotOrHandName;
+
+        public StrippableDoAfterEvent(bool insertOrRemove, bool inventoryOrHand, string slotOrHandName)
         {
-            InitialTime = initialTime;
-            Stealth = stealth;
+            InsertOrRemove = insertOrRemove;
+            InventoryOrHand = inventoryOrHand;
+            SlotOrHandName = slotOrHandName;
         }
-    }
 
-    /// <summary>
-    /// Used to modify strip times. Raised directed at the user.
-    /// </summary>
-    /// <remarks>
-    /// This is also used by some stripping related interactions, i.e., interactions with items that are currently equipped by another player.
-    /// </remarks>
-    public sealed class BeforeStripEvent : BaseBeforeStripEvent
-    {
-        public BeforeStripEvent(float initialTime, bool stealth = false) : base(initialTime, stealth) { }
-    }
-
-    /// <summary>
-    /// Used to modify strip times. Raised directed at the target.
-    /// </summary>
-    /// <remarks>
-    /// This is also used by some stripping related interactions, i.e., interactions with items that are currently equipped by another player.
-    /// </remarks>
-    public sealed class BeforeGettingStrippedEvent : BaseBeforeStripEvent
-    {
-        public BeforeGettingStrippedEvent(float initialTime, bool stealth = false) : base(initialTime, stealth) { }
+        public override DoAfterEvent Clone() => this;
     }
 }

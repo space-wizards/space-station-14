@@ -1,5 +1,5 @@
 using Content.Server.Popups;
-using Content.Server.Storage.Components;
+using Content.Shared.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
@@ -63,8 +63,7 @@ public sealed class EscapeInventorySystem : EntitySystem
 
         var doAfterEventArgs = new DoAfterArgs(EntityManager, user, component.BaseResistTime * multiplier, new EscapeInventoryEvent(), user, target: container)
         {
-            BreakOnTargetMove = false,
-            BreakOnUserMove = true,
+            BreakOnMove = true,
             BreakOnDamage = true,
             NeedHand = false
         };

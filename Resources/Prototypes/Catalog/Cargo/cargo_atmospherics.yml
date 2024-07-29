@@ -5,7 +5,7 @@
     state: grey
   product: AirCanister
   cost: 1100
-  category: Atmospherics
+  category: cargoproduct-category-name-atmospherics
   group: market
 
 - type: cargoProduct
@@ -15,7 +15,7 @@
     state: blue
   product: OxygenCanister
   cost: 1100
-  category: Atmospherics
+  category: cargoproduct-category-name-atmospherics
   group: market
 
 - type: cargoProduct
@@ -25,7 +25,7 @@
     state: blue
   product: LiquidOxygenCanister
   cost: 2500
-  category: Atmospherics
+  category: cargoproduct-category-name-atmospherics
   group: market
 
 - type: cargoProduct
@@ -35,7 +35,7 @@
     state: red
   product: NitrogenCanister
   cost: 1100
-  category: Atmospherics
+  category: cargoproduct-category-name-atmospherics
   group: market
 
 - type: cargoProduct
@@ -45,7 +45,7 @@
     state: red
   product: LiquidNitrogenCanister
   cost: 2500
-  category: Atmospherics
+  category: cargoproduct-category-name-atmospherics
   group: market
 
 - type: cargoProduct
@@ -55,7 +55,7 @@
     state: black
   product: CarbonDioxideCanister
   cost: 2200 # Until someone fixes it co2 can be used to oneshot people so it's more expensive
-  category: Atmospherics
+  category: cargoproduct-category-name-atmospherics
   group: market
 
 - type: cargoProduct
@@ -65,7 +65,7 @@
     state: black
   product: LiquidCarbonDioxideCanister
   cost: 4000
-  category: Atmospherics
+  category: cargoproduct-category-name-atmospherics
   group: market
 
 - type: cargoProduct
@@ -75,7 +75,7 @@
     state: yellow
   product: StorageCanister
   cost: 1010 # No gases in it so it's cheaper
-  category: Atmospherics
+  category: cargoproduct-category-name-atmospherics
   group: market
 
 #- type: cargoProduct
@@ -87,7 +87,7 @@
 #    state: water_vapor
 #  product: WaterVaporCanister
 #  cost: 2600
-#  category: Atmospherics
+#  category: cargoproduct-category-name-atmospherics
 #  group: market
 
 - type: cargoProduct
@@ -97,7 +97,7 @@
     state: orange
   product: PlasmaCanister
   cost: 4000
-  category: Atmospherics
+  category: cargoproduct-category-name-atmospherics
   group: market
 
 #- type: cargoProduct
@@ -109,5 +109,5 @@
 #    state: green
 #  product: TritiumCanister
 #  cost: 15500
-#  category: Atmospherics
+#  category: cargoproduct-category-name-atmospherics
 #  group: market

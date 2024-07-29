@@ -31,6 +31,7 @@
 
 - type: reaction
   id: ChlorineTrifluoride
+  minTemp: 370
   priority: 20
   reactants:
     Chlorine:
@@ -38,7 +39,6 @@
     Fluorine:
       amount: 3
   effects:
-  # TODO solution temperature!!
   - !type:ExplosionReactionEffect
     explosionType: Default # 15 damage per intensity.
     maxIntensity: 200

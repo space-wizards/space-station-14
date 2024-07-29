@@ -10,13 +10,15 @@ namespace Content.Server.GameTicking.Commands
     [AdminCommand(AdminFlags.Round)]
     sealed class ForcePresetCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _e = default!;
+
         public string Command => "forcepreset";
         public string Description => "Forces a specific game preset to start for the current lobby.";
         public string Help => $"Usage: {Command} <preset>";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var ticker = EntitySystem.Get<GameTicker>();
+            var ticker = _e.System<GameTicker>();
             if (ticker.RunLevel != GameRunLevel.PreRoundLobby)
             {
                 shell.WriteLine("This can only be executed while the game is in the pre-round lobby.");

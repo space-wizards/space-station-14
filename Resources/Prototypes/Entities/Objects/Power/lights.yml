@@ -66,9 +66,9 @@
     materialComposition:
       Glass: 25
   - type: SpaceGarbage
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
-    - SheetGlass1
+    - id: SheetGlass1
 
 - type: entity
   parent: BaseLightbulb
@@ -273,10 +273,10 @@
   - type: Construction
     graph: CyanLight
     node: icon
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
-    - SheetGlass1
-    - ShardCrystalCyan
+    - id: SheetGlass1
+    - id: ShardCrystalCyan
 
 - type: entity
   parent: LightTubeCrystalCyan
@@ -293,10 +293,10 @@
   - type: Construction
     graph: BlueLight
     node: icon
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
-    - SheetGlass1
-    - ShardCrystalBlue
+    - id: SheetGlass1
+    - id: ShardCrystalBlue
 
 - type: entity
   parent: LightTubeCrystalCyan
@@ -313,10 +313,10 @@
   - type: Construction
     graph: PinkLight
     node: icon
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
-    - SheetGlass1
-    - ShardCrystalPink
+    - id: SheetGlass1
+    - id: ShardCrystalPink
 
 - type: entity
   parent: LightTubeCrystalCyan
@@ -333,10 +333,10 @@
   - type: Construction
     graph: OrangeLight
     node: icon
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
-    - SheetGlass1
-    - ShardCrystalOrange
+    - id: SheetGlass1
+    - id: ShardCrystalOrange
 
 - type: entity
   parent: LightTubeCrystalCyan
@@ -353,10 +353,10 @@
   - type: Construction
     graph: RedLight
     node: icon
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
-    - SheetGlass1
-    - ShardCrystalRed
+    - id: SheetGlass1
+    - id: ShardCrystalRed
 
 - type: entity
   parent: LightTubeCrystalCyan
@@ -373,7 +373,7 @@
   - type: Construction
     graph: GreenLight
     node: icon
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
-    - SheetGlass1
-    - ShardCrystalGreen
+    - id: SheetGlass1
+    - id: ShardCrystalGreen

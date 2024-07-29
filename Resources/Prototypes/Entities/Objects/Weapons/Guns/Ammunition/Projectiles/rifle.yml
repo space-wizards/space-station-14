@@ -2,7 +2,7 @@
   id: BulletRifle
   name: bullet (0.20 rifle)
   parent: BaseBullet
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:
@@ -13,7 +13,7 @@
   id: BulletRiflePractice
   name: bullet (0.20 rifle practice)
   parent: BaseBulletPractice
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:
@@ -21,37 +21,26 @@
         Blunt: 2
 
 - type: entity
-  id: BulletRifleRubber
-  name: bullet (0.20 rifle rubber)
-  parent: BaseBulletRubber
-  noSpawn: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Blunt: 3
-
-- type: entity
   id: BulletRifleIncendiary
   parent: BaseBulletIncendiary
   name: bullet (0.20 rifle incendiary)
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:
       types:
         Blunt: 2
         Heat: 15
-  
+
 - type: entity
   id: BulletRifleUranium
   parent: BaseBulletUranium
   name: bullet (0.20 rifle uranium)
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:
       types:
         Radiation: 7
         Piercing: 8
-        
+

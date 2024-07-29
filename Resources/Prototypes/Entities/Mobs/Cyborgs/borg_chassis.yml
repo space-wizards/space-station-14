@@ -20,10 +20,20 @@
       - BorgModuleGeneric
     hasMindState: robot_e
     noMindState: robot_e_r
+  - type: BorgTransponder
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: robot
+    name: cyborg
   - type: Construction
     node: cyborg
   - type: Speech
     speechVerb: Robotic
+  - type: InteractionPopup
+    interactSuccessString: petting-success-generic-cyborg
+    interactFailureString: petting-failure-generic-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisMining
@@ -57,6 +67,11 @@
       - BorgModuleCargo
     hasMindState: miner_e
     noMindState: miner_e_r
+  - type: BorgTransponder
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: miner
+    name: salvage cyborg
   - type: Construction
     node: mining
   - type: IntrinsicRadioTransmitter
@@ -75,6 +90,11 @@
     access: [["Cargo"], ["Salvage"], ["Command"], ["Research"]]
   - type: Inventory
     templateId: borgTall
+  - type: InteractionPopup
+    interactSuccessString: petting-success-salvage-cyborg
+    interactFailureString: petting-failure-salvage-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisEngineer
@@ -100,6 +120,11 @@
       - BorgModuleEngineering
     hasMindState: engineer_e
     noMindState: engineer_e_r
+  - type: BorgTransponder
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: engineer
+    name: engineer cyborg
   - type: Construction
     node: engineer
   - type: IntrinsicRadioTransmitter
@@ -118,6 +143,11 @@
     access: [["Engineering"], ["Command"], ["Research"]]
   - type: Inventory
     templateId: borgShort
+  - type: InteractionPopup
+    interactSuccessString: petting-success-engineer-cyborg
+    interactFailureString: petting-failure-engineer-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisJanitor
@@ -151,6 +181,11 @@
       - BorgModuleJanitor
     hasMindState: janitor_e
     noMindState: janitor_e_r
+  - type: BorgTransponder
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: janitor
+    name: janitor cyborg
   - type: Construction
     node: janitor
   - type: IntrinsicRadioTransmitter
@@ -169,10 +204,15 @@
     access: [["Service"], ["Command"], ["Research"]]
   - type: Inventory
     templateId: borgShort
+  - type: InteractionPopup
+    interactSuccessString: petting-success-janitor-cyborg
+    interactFailureString: petting-failure-janitor-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisMedical
-  parent: BaseBorgChassisNT
+  parent: [BaseBorgChassisNT, ShowMedicalIcons]
   name: medical cyborg
   components:
   - type: Sprite
@@ -202,6 +242,11 @@
       - BorgModuleMedical
     hasMindState: medical_e
     noMindState: medical_e_r
+  - type: BorgTransponder
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: medical
+    name: medical cyborg
   - type: Construction
     node: medical
   - type: IntrinsicRadioTransmitter
@@ -220,6 +265,15 @@
     access: [["Medical"], ["Command"], ["Research"]]
   - type: Inventory
     templateId: borgDutch
+  - type: SolutionScanner
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepHoverBorg
+  - type: InteractionPopup
+    interactSuccessString: petting-success-medical-cyborg
+    interactFailureString: petting-failure-medical-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisService
@@ -245,6 +299,11 @@
       - BorgModuleService
     hasMindState: service_e
     noMindState: service_e_r
+  - type: BorgTransponder
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: service
+    name: service cyborg
   - type: Construction
     node: service
   - type: IntrinsicRadioTransmitter
@@ -263,6 +322,11 @@
     access: [["Service"], ["Command"], ["Research"]]
   - type: Inventory
     templateId: borgTall
+  - type: InteractionPopup
+    interactSuccessString: petting-success-service-cyborg
+    interactFailureString: petting-failure-service-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisSyndicateAssault
@@ -281,8 +345,6 @@
           shader: unshaded
           map: ["light"]
           visible: false
-    - type: PointLight
-      color: "#dd200b"
     - type: BorgChassis
       maxModules: 3
       moduleWhitelist:
@@ -294,10 +356,15 @@
       noMindState: synd_sec
     - type: Construction
       node: syndicateassault
+    - type: InteractionPopup
+      interactSuccessString: petting-success-syndicate-cyborg
+      interactFailureString: petting-failure-syndicate-cyborg
+      interactSuccessSound:
+        path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisSyndicateMedical
-  parent: BaseBorgChassisSyndicate
+  parent: [BaseBorgChassisSyndicate, ShowMedicalIcons]
   name: syndicate medical cyborg
   description: A combat medical cyborg. Has limited offensive potential, but makes more than up for it with its support capabilities.
   components:
@@ -323,6 +390,20 @@
       noMindState: synd_medical
     - type: Construction
       node: syndicatemedical
+    - type: ShowHealthBars
+      damageContainers:
+      - Biological
+    - type: InteractionPopup
+      interactSuccessString: petting-success-syndicate-cyborg
+      interactFailureString: petting-failure-syndicate-cyborg
+      interactSuccessSound:
+        path: /Audio/Ambience/Objects/periodic_beep.ogg
+    - type: SolutionScanner
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepHoverBorg
+        params:
+          volume: -6
 
 - type: entity
   id: BorgChassisSyndicateSaboteur
@@ -352,3 +433,12 @@
       noMindState: synd_engi
     - type: Construction
       node: syndicatesaboteur
+    - type: ShowHealthBars
+      damageContainers:
+      - Inorganic
+      - Silicon
+    - type: InteractionPopup
+      interactSuccessString: petting-success-syndicate-cyborg
+      interactFailureString: petting-failure-syndicate-cyborg
+      interactSuccessSound:
+        path: /Audio/Ambience/Objects/periodic_beep.ogg

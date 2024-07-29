@@ -29,7 +29,7 @@ public abstract class SharedHandheldLightSystem : EntitySystem
         UpdateVisuals(uid, component);
 
         // Want to make sure client has latest data on level so battery displays properly.
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnHandleState(EntityUid uid, HandheldLightComponent component, ref ComponentHandleState args)

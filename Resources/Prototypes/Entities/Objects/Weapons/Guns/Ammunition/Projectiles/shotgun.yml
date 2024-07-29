@@ -1,7 +1,7 @@
 - type: entity
   id: PelletShotgunSlug
   name: pellet (.50 slug)
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
   - type: Sprite
@@ -15,7 +15,7 @@
 - type: entity
   id: PelletShotgunBeanbag
   name: beanbag (.50)
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
   - type: Sprite
@@ -31,7 +31,7 @@
 - type: entity
   id: PelletShotgun
   name: pellet (.50)
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
   - type: Sprite
@@ -45,7 +45,7 @@
 - type: entity
   id: PelletShotgunIncendiary
   name: pellet (.50 incendiary)
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BaseBulletIncendiary
   components:
   - type: Sprite
@@ -62,7 +62,7 @@
 - type: entity
   id: PelletShotgunPractice
   name: pellet (.50 practice)
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BaseBulletPractice
   components:
   - type: Sprite
@@ -76,22 +76,23 @@
 - type: entity
   id: PelletShotgunImprovised
   name: improvised pellet
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: buckshot
+    state: shard
   - type: Projectile
     damage:
       types:
         Piercing: 3
-        Slash: 3 #remember, it's metal shrapnel!
+        Slash: 3
+
 
 - type: entity
   id: PelletShotgunTranquilizer
   name: pellet (.50 tranquilizer)
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BaseBulletPractice
   components:
   - type: Sprite
@@ -109,16 +110,16 @@
     solution: ammo
   - type: DrainableSolution
     solution: ammo
-  - type: SolutionInjectOnCollide
+  - type: SolutionInjectOnProjectileHit
     transferAmount: 15
-    blockSlots: NONE #tranquillizer darts shouldn't be blocked by a mask
+    solution: ammo
   - type: InjectableSolution
     solution: ammo
 
 - type: entity
   id: PelletShotgunFlare
   name: pellet (.50 flare)
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Physics
     bodyType: Dynamic
@@ -165,7 +166,7 @@
 - type: entity
   id: PelletShotgunUranium
   name: pellet (.50 uranium)
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
   - type: Sprite
@@ -180,7 +181,7 @@
 - type: entity
   id: PelletGrapeshot #tally fucking ho
   name: grapeshot pellet
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
   - type: Sprite
@@ -199,7 +200,7 @@
   id: PelletGlass
   name: glass shard
   parent: BaseBullet
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     noRot: false

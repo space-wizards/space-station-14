@@ -2,6 +2,7 @@ using Content.Client.Eui;
 using Content.Shared.Administration.Notes;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
+using Robust.Client.UserInterface.Controls;
 using static Content.Shared.Administration.Notes.AdminMessageEuiMsg;
 
 namespace Content.Client.Administration.UI.AdminRemarks;
@@ -14,9 +15,8 @@ public sealed class AdminMessageEui : BaseEui
     public AdminMessageEui()
     {
         _popup = new AdminMessagePopupWindow();
-        _popup.OnAcceptPressed += () => SendMessage(new Accept());
-        _popup.OnDismissPressed += () => SendMessage(new Dismiss());
-        _popup.OnClose += () => SendMessage(new CloseEuiMessage());
+        _popup.OnAcceptPressed += () => SendMessage(new Dismiss(true));
+        _popup.OnDismissPressed += () => SendMessage(new Dismiss(false));
     }
 
     public override void HandleState(EuiStateBase state)
@@ -26,13 +26,17 @@ public sealed class AdminMessageEui : BaseEui
             return;
         }
 
-        _popup.SetMessage(s.Message);
-        _popup.SetDetails(s.AdminName, s.AddedOn);
-        _popup.Timer = s.Time;
+        _popup.SetState(s);
     }
 
     public override void Opened()
     {
-        _popup.OpenCentered();
+        _popup.UserInterfaceManager.WindowRoot.AddChild(_popup);
+        LayoutContainer.SetAnchorPreset(_popup, LayoutContainer.LayoutPreset.Wide);
+    }
+
+    public override void Closed()
+    {
+        _popup.Orphan();
     }
 }

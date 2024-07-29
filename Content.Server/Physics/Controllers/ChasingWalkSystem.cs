@@ -61,6 +61,9 @@ public sealed class ChasingWalkSystem : VirtualController
 
     private void ChangeTarget(EntityUid uid, ChasingWalkComponent component)
     {
+        if (component.ChasingComponent.Count <= 0)
+            return;
+
         //We find our coordinates and calculate the radius of the target search.
         var xform = Transform(uid);
         var range = component.MaxChaseRadius;
@@ -97,6 +100,6 @@ public sealed class ChasingWalkSystem : VirtualController
         var speed = delta.Length() > 0 ? delta.Normalized() * component.Speed : Vector2.Zero;
 
         _physics.SetLinearVelocity(uid, speed);
-        _physics.SetBodyStatus(physics, BodyStatus.InAir); //If this is not done, from the explosion up close, the tesla will "Fall" to the ground, and almost stop moving.
+        _physics.SetBodyStatus(uid, physics, BodyStatus.InAir); //If this is not done, from the explosion up close, the tesla will "Fall" to the ground, and almost stop moving.
     }
 }

@@ -1,5 +1,7 @@
 using Content.Shared.Labels;
+using Content.Shared.Labels.Components;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Labels.UI
 {
@@ -8,51 +10,42 @@ namespace Content.Client.Labels.UI
     /// </summary>
     public sealed class HandLabelerBoundUserInterface : BoundUserInterface
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+
         [ViewVariables]
         private HandLabelerWindow? _window;
 
         public HandLabelerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
+            IoCManager.InjectDependencies(this);
         }
 
         protected override void Open()
         {
             base.Open();
 
-            _window = new HandLabelerWindow();
-            if (State != null)
-                UpdateState(State);
+            _window = this.CreateWindow<HandLabelerWindow>();
 
-            _window.OpenCentered();
-
-            _window.OnClose += Close;
             _window.OnLabelChanged += OnLabelChanged;
+            Reload();
         }
 
         private void OnLabelChanged(string newLabel)
         {
-            SendMessage(new HandLabelerLabelChangedMessage(newLabel));
-        }
-
-        /// <summary>
-        /// Update the UI state based on server-sent info
-        /// </summary>
-        /// <param name="state"></param>
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
-            if (_window == null || state is not HandLabelerBoundUserInterfaceState cast)
+            // Focus moment
+            if (_entManager.TryGetComponent(Owner, out HandLabelerComponent? labeler) &&
+                labeler.AssignedLabel.Equals(newLabel))
                 return;
 
-            _window.SetCurrentLabel(cast.CurrentLabel);
+            SendPredictedMessage(new HandLabelerLabelChangedMessage(newLabel));
         }
 
-        protected override void Dispose(bool disposing)
+        public void Reload()
         {
-            base.Dispose(disposing);
-            if (!disposing) return;
-            _window?.Dispose();
+            if (_window == null || !_entManager.TryGetComponent(Owner, out HandLabelerComponent? component))
+                return;
+
+            _window.SetCurrentLabel(component.AssignedLabel);
         }
     }
-
 }

@@ -88,7 +88,6 @@
         - proto: RipleyHarness
           cost: 3
           prob: 0.5
-        - proto: RPED
         - proto: SpaceCash1000
         - proto: SpaceCash10000
           cost: 10
@@ -178,6 +177,13 @@
   loots:
     - !type:BiomeMarkerLoot
       proto: OreBananium
+
+- type: salvageLoot
+  id: OreDiamond
+  guaranteed: true
+  loots:
+    - !type:BiomeMarkerLoot
+      proto: OreDiamond
 
 - type: salvageLoot
   id: OreArtifactFragment
