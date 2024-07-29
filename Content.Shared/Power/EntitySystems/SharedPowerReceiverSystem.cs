@@ -9,10 +9,10 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ApcPowerReceiverComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<SharedApcPowerReceiverComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnExamined(Entity<ApcPowerReceiverComponent> ent, ref ExaminedEvent args)
+    private void OnExamined(Entity<SharedApcPowerReceiverComponent> ent, ref ExaminedEvent args)
     {
         var powered = ent.Comp.Powered ? "powered" : "unpowered";
         var state = Loc.GetString($"power-receiver-component-on-examine-{powered}");
