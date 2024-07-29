@@ -32,6 +32,8 @@
   components:
   - type: Sprite
     state: hop
+  - type: SpeakOnUse
+    pack: FigurinesHoP
 
 - type: entity
   parent: BaseFigurine
@@ -41,6 +43,8 @@
   components:
   - type: Sprite
     state: passenger
+  - type: SpeakOnUse
+    pack: FigurinesPassenger
 
 - type: entity
   parent: BaseFigurine
@@ -50,6 +54,8 @@
   components:
   - type: Sprite
     state: passenger_greytide
+  - type: SpeakOnUse
+    pack: FigurinesGreytider
 
 - type: entity
   parent: BaseFigurine
@@ -59,6 +65,8 @@
   components:
   - type: Sprite
     state: clown
+  - type: SpeakOnUse
+    pack: FigurinesClown
 
 - type: entity
   parent: BaseFigurine
@@ -68,7 +76,8 @@
   components:
   - type: Sprite
     state: holoclown
-
+  - type: SpeakOnUse
+    pack: FigurinesHoloClown
 
 - type: entity
   parent: BaseFigurine
@@ -78,6 +87,8 @@
   components:
   - type: Sprite
     state: mime
+  - type: SpeakOnUse
+    pack: FigurinesMime
 
 - type: entity
   parent: BaseFigurine
@@ -87,6 +98,8 @@
   components:
   - type: Sprite
     state: musician
+  - type: SpeakOnUse
+    pack: FigurinesMusician
 
 - type: entity
   parent: BaseFigurine
@@ -96,6 +109,8 @@
   components:
   - type: Sprite
     state: boxer
+  - type: SpeakOnUse
+    pack: FigurinesBoxer
 
 - type: entity
   parent: BaseFigurine
@@ -105,6 +120,8 @@
   components:
   - type: Sprite
     state: captain
+  - type: SpeakOnUse
+    pack: FigurinesCaptain
 
 - type: entity
   parent: BaseFigurine
@@ -114,6 +131,8 @@
   components:
   - type: Sprite
     state: hos
+  - type: SpeakOnUse
+    pack: FigurinesHoS
 
 - type: entity
   parent: BaseFigurine
@@ -123,6 +142,8 @@
   components:
   - type: Sprite
     state: warden
+  - type: SpeakOnUse
+    pack: FigurinesWarden
 
 - type: entity
   parent: BaseFigurine
@@ -132,6 +153,8 @@
   components:
   - type: Sprite
     state: detective
+  - type: SpeakOnUse
+    pack: FigurinesDetective
 
 - type: entity
   parent: BaseFigurine
@@ -141,6 +164,8 @@
   components:
   - type: Sprite
     state: security
+  - type: SpeakOnUse
+    pack: FigurinesSecurity
 
 - type: entity
   parent: BaseFigurine
@@ -150,6 +175,8 @@
   components:
   - type: Sprite
     state: lawyer
+  - type: SpeakOnUse
+    pack: FigurinesLawyer
 
 - type: entity
   parent: BaseFigurine
@@ -159,6 +186,8 @@
   components:
   - type: Sprite
     state: cargotech
+  - type: SpeakOnUse
+    pack: FigurinesCargoTech
 
 - type: entity
   parent: BaseFigurine
@@ -168,6 +197,8 @@
   components:
   - type: Sprite
     state: salvage
+  - type: SpeakOnUse
+    pack: FigurinesSalvage
 
 - type: entity
   parent: BaseFigurine
@@ -178,7 +209,7 @@
   - type: Sprite
     state: qm
   - type: SpeakOnUse
-    pack: FigurinesQuartermaster
+    pack: FigurinesQM
 
 - type: entity
   parent: BaseFigurine
@@ -188,6 +219,8 @@
   components:
   - type: Sprite
     state: ce
+  - type: SpeakOnUse
+    pack: FigurinesCE
 
 - type: entity
   parent: BaseFigurine
@@ -197,6 +230,8 @@
   components:
   - type: Sprite
     state: engineer
+  - type: SpeakOnUse
+    pack: FigurinesEngineer
 
 - type: entity
   parent: BaseFigurine
@@ -206,6 +241,8 @@
   components:
   - type: Sprite
     state: atmos
+  - type: SpeakOnUse
+    pack: FigurinesAtmosTech
 
 - type: entity
   parent: BaseFigurine
@@ -215,6 +252,8 @@
   components:
   - type: Sprite
     state: rd
+  - type: SpeakOnUse
+    pack: FigurinesRD
 
 - type: entity
   parent: BaseFigurine
@@ -224,6 +263,8 @@
   components:
   - type: Sprite
     state: scientist
+  - type: SpeakOnUse
+    pack: FigurinesScientist
 
 - type: entity
   parent: BaseFigurine
@@ -233,6 +274,8 @@
   components:
   - type: Sprite
     state: cmo
+  - type: SpeakOnUse
+    pack: FigurinesCMO
 
 - type: entity
   parent: BaseFigurine
@@ -242,6 +285,8 @@
   components:
   - type: Sprite
     state: chemist
+  - type: SpeakOnUse
+    pack: FigurinesChemist
 
 - type: entity
   parent: BaseFigurine
@@ -251,6 +296,8 @@
   components:
   - type: Sprite
     state: paramedic
+  - type: SpeakOnUse
+    pack: FigurinesParamedic
 
 - type: entity
   parent: BaseFigurine
@@ -260,6 +307,8 @@
   components:
   - type: Sprite
     state: medical
+  - type: SpeakOnUse
+    pack: FigurinesDoctor
 
 - type: entity
   parent: BaseFigurine
@@ -269,6 +318,8 @@
   components:
   - type: Sprite
     state: librarian
+  - type: SpeakOnUse
+    pack: FigurinesLibrarian
 
 - type: entity
   parent: BaseFigurine
@@ -278,6 +329,8 @@
   components:
   - type: Sprite
     state: chaplain
+  - type: SpeakOnUse
+    pack: FigurinesChaplain
 
 - type: entity
   parent: BaseFigurine
@@ -287,6 +340,8 @@
   components:
   - type: Sprite
     state: chef
+  - type: SpeakOnUse
+    pack: FigurinesChef
 
 - type: entity
   parent: BaseFigurine
@@ -296,6 +351,8 @@
   components:
   - type: Sprite
     state: bartender
+  - type: SpeakOnUse
+    pack: FigurinesBartender
 
 - type: entity
   parent: BaseFigurine
@@ -305,6 +362,8 @@
   components:
   - type: Sprite
     state: botanist
+  - type: SpeakOnUse
+    pack: FigurinesBotanist
 
 - type: entity
   parent: BaseFigurine
@@ -314,6 +373,8 @@
   components:
   - type: Sprite
     state: janitor
+  - type: SpeakOnUse
+    pack: FigurinesJanitor
 
 - type: entity
   parent: BaseFigurine
@@ -323,6 +384,8 @@
   components:
   - type: Sprite
     state: nukie
+  - type: SpeakOnUse
+    pack: FigurinesNukie
 
 - type: entity
   parent: BaseFigurine
@@ -332,6 +395,8 @@
   components:
   - type: Sprite
     state: nukie_elite
+  - type: SpeakOnUse
+    pack: FigurinesNukieElite
 
 - type: entity
   parent: BaseFigurine
@@ -341,6 +406,8 @@
   components:
   - type: Sprite
     state: nukie_commander
+  - type: SpeakOnUse
+    pack: FigurinesNukieCommander
 
 - type: entity
   parent: BaseFigurine
@@ -350,6 +417,8 @@
   components:
   - type: Sprite
     state: footsoldier
+  - type: SpeakOnUse
+    pack: FigurinesFootsoldier
 
 - type: entity
   parent: BaseFigurine
@@ -359,6 +428,8 @@
   components:
   - type: Sprite
     state: wizard
+  - type: SpeakOnUse
+    pack: FigurinesWizard
 
 - type: entity
   parent: BaseFigurine
@@ -368,6 +439,8 @@
   components:
   - type: Sprite
     state: wizard_fake
+  - type: SpeakOnUse
+    pack: FigurinesWizard
 
 #Nonhuman Figurines
 
@@ -379,6 +452,8 @@
   components:
   - type: Sprite
     state: spacedragon
+  - type: SpeakOnUse
+    pack: FigurinesSpaceDragon
 
 - type: entity
   parent: BaseFigurine
@@ -388,6 +463,8 @@
   components:
   - type: Sprite
     state: queen
+  - type: SpeakOnUse
+    pack: FigurinesQueen
 
 - type: entity
   parent: BaseFigurine
@@ -397,6 +474,8 @@
   components:
   - type: Sprite
     state: ratking
+  - type: SpeakOnUse
+    pack: FigurinesRatKing
 
 - type: entity
   parent: BaseFigurine
@@ -406,6 +485,8 @@
   components:
   - type: Sprite
     state: ratservant
+  - type: SpeakOnUse
+    pack: FigurinesRatServant
 
 - type: entity
   parent: BaseFigurine
@@ -415,6 +496,8 @@
   components:
   - type: Sprite
     state: mouse
+  - type: SpeakOnUse
+    pack: FigurinesMouse
 
 - type: entity
   parent: BaseFigurine
@@ -424,6 +507,8 @@
   components:
   - type: Sprite
     state: slime
+  - type: SpeakOnUse
+    pack: FigurinesSlime
 
 - type: entity
   parent: BaseFigurine
@@ -433,6 +518,8 @@
   components:
   - type: Sprite
     state: hamlet
+  - type: SpeakOnUse
+    pack: FigurinesHamlet
 
 #TODO: Convert these to the new figurine sprite template and rename their sprite name.
 #Yes, these are humanoids, but they need to be updated first.
