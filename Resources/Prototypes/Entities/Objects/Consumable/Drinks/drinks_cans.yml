@@ -433,6 +433,7 @@
     whitelist:
       tags:
         - Cola
+    hideStackVisualsWhenClosed: false
   - type: StorageFill
     contents:
       - id: DrinkColaCan

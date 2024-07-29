@@ -11,7 +11,7 @@
   - type: MixableSolution
     solution: drink
   - type: Drink
-  - type: Shakeable # Doesn't do anything, but I mean...
+  - type: Shakeable
   - type: FitsInDispenser
     solution: drink
   - type: DrawableSolution
@@ -35,6 +35,10 @@
     materialComposition:
       Steel: 50
   - type: DnaSubstanceTrace
+  - type: ReactionMixer
+    mixOnInteract: false
+    reactionTypes:
+    - Shake
 
 - type: entity
   parent: DrinkGlassBase

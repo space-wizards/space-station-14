@@ -315,7 +315,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkLean
-  name: grape Juice
+  name: grape juice
   description: Damn, no fun allowed.
   components:
   - type: SolutionContainerManager
