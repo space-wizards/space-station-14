@@ -5,6 +5,10 @@ namespace Content.Server.EntityEffects.Effects.PlantMetabolism;
 
 public sealed partial class PlantAdjustPotency : PlantAdjustAttribute
 {
+    /// <summary>
+    ///     Handles increase or decrease of plant potency.
+    /// </summary>
+
     public override string GuidebookAttributeName { get; set; } = "plant-attribute-potency";
 
     public override void Effect(EntityEffectBaseArgs args)

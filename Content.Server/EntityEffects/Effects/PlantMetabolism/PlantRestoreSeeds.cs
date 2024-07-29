@@ -1,13 +1,16 @@
 ﻿using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
 using Content.Shared.EntityEffects;
-using Robust.Shared.Prototypes;
 using Content.Shared.Popups;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.EntityEffects.Effects.PlantMetabolism;
 
 public sealed partial class PlantRestoreSeeds : EntityEffect
 {
+    /// <summary>
+    ///     Handles restoral of seeds on a plant.
+    /// </summary>
     public override void Effect(EntityEffectBaseArgs args)
     {
         if (
@@ -30,7 +33,5 @@ public sealed partial class PlantRestoreSeeds : EntityEffect
     }
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
-    Loc.GetString("reagent-effect-guidebook-plant-seeds-add", ("chance", Probability));
+        Loc.GetString("reagent-effect-guidebook-plant-seeds-add", ("chance", Probability));
 }
-
-
