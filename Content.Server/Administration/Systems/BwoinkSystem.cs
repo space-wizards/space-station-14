@@ -396,7 +396,7 @@ namespace Content.Server.Administration.Systems
                 if (!string.IsNullOrEmpty(roleMention))
                 {
                     var message = new StringBuilder();
-                    message.AppendLine($"<@{roleMention}>");
+                    message.AppendLine($"<@&{roleMention}>");
                     message.AppendLine("Unanswered SOS");
 
                     // Need webhook data to get the correct link for that channel rather than on-call data.
