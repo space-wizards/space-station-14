@@ -168,7 +168,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         ChangeOnLightVisualizer(generator);
         ChangeFieldVisualizer(generator);
         _adminLogger.Add(LogType.FieldGeneration, LogImpact.Medium, $"{ToPrettyString(uid)} lost field connections"); // Ideally LogImpact would depend on if there is a singulo nearby
-        if(component.IsConnected)
+
+        if (component.IsConnected)
             _popupSystem.PopupEntity(Loc.GetString("comp-containment-disconnected"), uid, PopupType.LargeCaution);
         component.IsConnected = false;
     }
