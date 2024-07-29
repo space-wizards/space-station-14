@@ -1446,7 +1446,7 @@
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-kobold
   - type: GhostRole
-    prob: 0.1
+    prob: 0.05
     makeSentient: true
     name: ghost-role-information-kobold-name
     description: ghost-role-information-kobold-description
