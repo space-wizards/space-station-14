@@ -16,6 +16,6 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
     {
         var powered = ent.Comp.Powered ? "powered" : "unpowered";
         var state = Loc.GetString($"power-receiver-component-on-examine-{powered}");
-        args.PushMarkup(Loc.GetString("power-receiver-component-on-examine-main", ("stateText", state));
+        args.PushMarkup(Loc.GetString("power-receiver-component-on-examine-main", ("stateText", state)));
     }
 }
