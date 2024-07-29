@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ShadowCommander
-  changes:
-  - message: Fixed microwave construction not creating a microwave on completion.
-    type: Fix
-  id: 6498
-  time: '2024-04-30T00:19:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27500
 - author: lzk228
   changes:
   - message: Barozine is removed from hydroponics mutatuions.
@@ -3780,3 +3773,10 @@
   id: 6997
   time: '2024-07-29T06:19:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29690
+- author: JIPDawg
+  changes:
+  - message: F9 is correctly bound to the Round End Summary window by default now.
+    type: Fix
+  id: 6998
+  time: '2024-07-29T06:49:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30438
