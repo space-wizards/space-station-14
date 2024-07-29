@@ -5,11 +5,17 @@ namespace Content.Shared.Power.EntitySystems;
 
 public abstract class SharedPowerReceiverSystem : EntitySystem
 {
-    protected string GetExamineText(bool powered)
+    public override void Initialize()
     {
-        return Loc.GetString("power-receiver-component-on-examine-main",
-                                ("stateText", Loc.GetString(powered
-                                    ? "power-receiver-component-on-examine-powered"
-                                    : "power-receiver-component-on-examine-unpowered")));
+        base.Initialize();
+
+        SubscribeLocalEvent<ApcPowerReceiverComponent, ExaminedEvent>(OnExamined);
+    }
+
+    private void OnExamined(Entity<ApcPowerReceiverComponent> ent, ref ExaminedEvent args)
+    {
+        var powered = ent.Comp.Powered ? "powered" : "unpowered";
+        var state = Loc.GetString($"power-receiver-component-on-examine-{powered}");
+        args.PushMarkup(Loc.GetString("power-receiver-component-on-examine-main", ("stateText", state));
     }
 }

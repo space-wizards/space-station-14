@@ -3,7 +3,6 @@ using Content.Server.Administration.Managers;
 using Content.Server.Power.Components;
 using Content.Shared.Administration;
 using Content.Shared.Database;
-using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
@@ -28,7 +27,6 @@ namespace Content.Server.Power.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ApcPowerReceiverComponent, ExaminedEvent>(OnExamined);
 
             SubscribeLocalEvent<ApcPowerReceiverComponent, ExtensionCableSystem.ProviderConnectedEvent>(OnProviderConnected);
             SubscribeLocalEvent<ApcPowerReceiverComponent, ExtensionCableSystem.ProviderDisconnectedEvent>(OnProviderDisconnected);
@@ -44,11 +42,6 @@ namespace Content.Server.Power.EntitySystems
 
             _recQuery = GetEntityQuery<ApcPowerReceiverComponent>();
             _provQuery = GetEntityQuery<ApcPowerProviderComponent>();
-        }
-
-        private void OnExamined(Entity<ApcPowerReceiverComponent> ent, ref ExaminedEvent args)
-        {
-            args.PushMarkup(GetExamineText(ent.Comp.Powered));
         }
 
         private void OnGetVerbs(EntityUid uid, ApcPowerReceiverComponent component, GetVerbsEvent<Verb> args)
