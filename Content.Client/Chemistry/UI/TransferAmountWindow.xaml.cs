@@ -27,12 +27,10 @@ namespace Content.Client.Chemistry.UI
 
         private void OnValueChanged(LineEdit.LineEditEventArgs args)
         {
-            if(!int.TryParse(AmountLineEdit.Text, out var amount)
-              || amount > _max 
-              || amount < _min)
-              ApplyButton.Disabled = true;
+            if (!int.TryParse(AmountLineEdit.Text, out var amount)  || amount > _max || amount < _min)
+                ApplyButton.Disabled = true;
             else 
-              ApplyButton.Disabled = false; 
+                ApplyButton.Disabled = false; 
         }
     }
 }
