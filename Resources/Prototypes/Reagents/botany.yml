@@ -166,9 +166,8 @@
   plantMetabolism:
     - !type:PlantAdjustHealth
       amount: -2
-    - !type:PlantAdjustSeeds
+    - !type:PlantRestoreSeeds
       probability: 0.20
-      amount: 1
     - !type:PlantAdjustPotency
       amount: -3 # Match this with current rate of Robust Harvest potency increase
 

@@ -1,9 +1,8 @@
 ﻿using Content.Server.Botany.Systems;
 using Content.Shared.EntityEffects;
 
-namespace Content.Server.EntityEffects.Effects.PlantMetabolism
+namespace Content.Server.EntityEffects.Effects.PlantMetabolism;
 
-{
     public sealed partial class PlantAdjustPotency : PlantAdjustAttribute
     {
 
@@ -11,7 +10,7 @@ namespace Content.Server.EntityEffects.Effects.PlantMetabolism
 
         public override void Effect(EntityEffectBaseArgs args)
         {
-            if (!CanMetabolize(args.TargetEntity, out var plantHolderComp, args.EntityManager, mustHaveAlivePlant: false))
+            if (!CanMetabolize(args.TargetEntity, out var plantHolderComp, args.EntityManager))
                 return;
 
             if (plantHolderComp.Seed == null)
@@ -22,4 +21,4 @@ namespace Content.Server.EntityEffects.Effects.PlantMetabolism
             plantHolderComp.Seed.Potency = Math.Max(plantHolderComp.Seed.Potency + Amount, 1);
         }
     }
-}
+
