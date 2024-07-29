@@ -13,7 +13,7 @@ namespace Content.Shared.Roles;
 public sealed partial class OverallPlaytimeRequirement : JobRequirement
 {
     /// <inheritdoc cref="DepartmentTimeRequirement.Time"/>
-    [DataField]
+    [DataField(required: true)]
     public TimeSpan Time;
 
     public override bool Check(IEntityManager entManager,

@@ -125,12 +125,10 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         if (requirements == null || !_cfg.GetCVar(CCVars.GameRoleTimers))
             return true;
 
-        var profile = (HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter;
-
         var reasons = new List<string>();
         foreach (var requirement in requirements)
         {
-            if (requirement.Check(_entManager, _prototypes, profile, _roles, out var jobReason))
+            if (requirement.Check(_entManager, _prototypes, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, _roles, out var jobReason))
                 continue;
 
             reasons.Add(jobReason.ToMarkup());

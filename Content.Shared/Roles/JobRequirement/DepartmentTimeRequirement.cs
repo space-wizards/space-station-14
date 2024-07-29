@@ -14,13 +14,13 @@ public sealed partial class DepartmentTimeRequirement : JobRequirement
     /// <summary>
     /// Which department needs the required amount of time.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public ProtoId<DepartmentPrototype> Department = default!;
 
     /// <summary>
     /// How long (in seconds) this requirement is.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public TimeSpan Time;
 
     public override bool Check(IEntityManager entManager,

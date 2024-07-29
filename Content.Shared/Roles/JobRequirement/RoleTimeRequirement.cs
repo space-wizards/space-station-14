@@ -16,11 +16,11 @@ public sealed partial class RoleTimeRequirement : JobRequirement
     /// <summary>
     /// What particular role they need the time requirement with.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public ProtoId<PlayTimeTrackerPrototype> Role = default!;
 
     /// <inheritdoc cref="DepartmentTimeRequirement.Time"/>
-    [DataField]
+    [DataField(required: true)]
     public TimeSpan Time;
 
     public override bool Check(IEntityManager entManager,

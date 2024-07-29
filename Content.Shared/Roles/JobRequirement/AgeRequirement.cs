@@ -7,11 +7,14 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Roles;
 
+/// <summary>
+/// Requires the character to be older or younger than a certain age (inclusive)
+/// </summary>
 [UsedImplicitly]
 [Serializable, NetSerializable]
 public sealed partial class AgeRequirement : JobRequirement
 {
-    [DataField]
+    [DataField(required: true)]
     public int RequiredAge;
 
     public override bool Check(IEntityManager entManager,
