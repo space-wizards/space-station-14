@@ -9,4 +9,6 @@ role-timer-age-to-young = Your character must be over the age of [color=yellow]{
 
 role-timer-locked = Locked (hover for details)
 
+role-timer-department-unknown = Unknown Department
+
 role-ban = You have been banned from this role.

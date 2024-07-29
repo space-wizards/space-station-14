@@ -48,6 +48,12 @@ public sealed partial class DepartmentTimeRequirement : JobRequirement
         }
 
         var deptDiff = Time.TotalMinutes - playtime.TotalMinutes;
+        var nameDepartment = "role-timer-department-unknown";
+
+        if (protoManager.TryIndex(Department, out var departmentIndexed))
+        {
+            nameDepartment = departmentIndexed.Name;
+        }
 
         if (!Inverted)
         {
@@ -57,7 +63,7 @@ public sealed partial class DepartmentTimeRequirement : JobRequirement
             reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
                 "role-timer-department-insufficient",
                 ("time", Math.Ceiling(deptDiff)),
-                ("department", Loc.GetString(Department)),
+                ("department", Loc.GetString(nameDepartment)),
                 ("departmentColor", department.Color.ToHex())));
             return false;
         }
@@ -67,7 +73,7 @@ public sealed partial class DepartmentTimeRequirement : JobRequirement
             reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
                 "role-timer-department-too-high",
                 ("time", -deptDiff),
-                ("department", Loc.GetString(Department)),
+                ("department", Loc.GetString(nameDepartment)),
                 ("departmentColor", department.Color.ToHex())));
             return false;
         }
