@@ -1,4 +1,5 @@
-using Content.Shared.Mind;
+using Content.Server.Administration;
+using Content.Server.Mind;
 using Content.Shared.Players;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -6,57 +7,64 @@ using Robust.Shared.Network;
 
 namespace Content.Server.GameTicking.Commands
 {
-    sealed class RespawnCommand : IConsoleCommand
+    sealed class RespawnCommand : LocalizedCommands
     {
-        public string Command => "respawn";
-        public string Description => "Respawns a player, kicking them back to the lobby.";
-        public string Help => "respawn [player]";
+        [Dependency] private readonly IPlayerManager _player = default!;
+        [Dependency] private readonly IPlayerLocator _locator = default!;
+        [Dependency] private readonly IEntitySystemManager _systems = default!;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Command => "respawn";
+
+        public async override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
+            if (!_systems.TryGetEntitySystem<GameTicker>(out var gameTicker) || !_systems.TryGetEntitySystem<MindSystem>(out var mind))
+                return;
+
             var player = shell.Player;
             if (args.Length > 1)
             {
-                shell.WriteLine("Must provide <= 1 argument.");
+                shell.WriteLine(Loc.GetString("cmd-respawn-invalid-args"));
                 return;
             }
-
-            var playerMgr = IoCManager.Resolve<IPlayerManager>();
-            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
-            var ticker = sysMan.GetEntitySystem<GameTicker>();
-            var mind = sysMan.GetEntitySystem<SharedMindSystem>();
 
             NetUserId userId;
             if (args.Length == 0)
             {
                 if (player == null)
                 {
-                    shell.WriteLine("If not a player, an argument must be given.");
+                    shell.WriteLine(Loc.GetString("cmd-respawn-no-player"));
                     return;
                 }
 
                 userId = player.UserId;
             }
-            else if (!playerMgr.TryGetUserId(args[0], out userId))
+            else
             {
-                shell.WriteLine("Unknown player");
-                return;
+                var located = await _locator.LookupIdByNameOrIdAsync(args[0]);
+
+                if (located == null)
+                {
+                    shell.WriteLine(Loc.GetString("cmd-respawn-unknown-player"));
+                    return;
+                }
+
+                userId = located.UserId;
             }
 
-            if (!playerMgr.TryGetSessionById(userId, out var targetPlayer))
+            if (!_player.TryGetSessionById(userId, out var targetPlayer))
             {
-                if (!playerMgr.TryGetPlayerData(userId, out var data))
+                if (!_player.TryGetPlayerData(userId, out var data))
                 {
-                    shell.WriteLine("Unknown player");
+                    shell.WriteLine(Loc.GetString("cmd-respawn-unknown-player"));
                     return;
                 }
 
                 mind.WipeMind(data.ContentData()?.Mind);
-                shell.WriteLine("Player is not currently online, but they will respawn if they come back online");
+                shell.WriteLine(Loc.GetString("cmd-respawn-player-not-online"));
                 return;
             }
 
-            ticker.Respawn(targetPlayer);
+            gameTicker.Respawn(targetPlayer);
         }
     }
 }
