@@ -3,12 +3,12 @@ using Content.Shared.EntityEffects;
 
 namespace Content.Server.EntityEffects.Effects.PlantMetabolism;
 
+/// <summary>
+///     Handles increase or decrease of plant potency.
+/// </summary>
+
 public sealed partial class PlantAdjustPotency : PlantAdjustAttribute
 {
-    /// <summary>
-    ///     Handles increase or decrease of plant potency.
-    /// </summary>
-
     public override string GuidebookAttributeName { get; set; } = "plant-attribute-potency";
 
     public override void Effect(EntityEffectBaseArgs args)
@@ -20,6 +20,8 @@ public sealed partial class PlantAdjustPotency : PlantAdjustAttribute
             return;
 
         var plantHolder = args.EntityManager.System<PlantHolderSystem>();
+
+        plantHolder.EnsureUniqueSeed(args.TargetEntity, plantHolderComp);
 
         plantHolderComp.Seed.Potency = Math.Max(plantHolderComp.Seed.Potency + Amount, 1);
     }

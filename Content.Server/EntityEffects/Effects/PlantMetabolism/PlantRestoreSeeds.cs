@@ -6,11 +6,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.EntityEffects.Effects.PlantMetabolism;
 
+/// <summary>
+///     Handles restoral of seeds on a plant.
+/// </summary>
+
 public sealed partial class PlantRestoreSeeds : EntityEffect
 {
-    /// <summary>
-    ///     Handles restoral of seeds on a plant.
-    /// </summary>
     public override void Effect(EntityEffectBaseArgs args)
     {
         if (
