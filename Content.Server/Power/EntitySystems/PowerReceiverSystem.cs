@@ -61,17 +61,6 @@ namespace Content.Server.Power.EntitySystems
             });
         }
 
-        ///<summary>
-        ///Adds some markup to the examine text of whatever object is using this component to tell you if it's powered or not, even if it doesn't have an icon state to do this for you.
-        ///</summary>
-        private void OnExamined(EntityUid uid, ApcPowerReceiverComponent component, ExaminedEvent args)
-        {
-            args.PushMarkup(Loc.GetString("power-receiver-component-on-examine-main",
-                                            ("stateText", Loc.GetString( component.Powered
-                                                ? "power-receiver-component-on-examine-powered"
-                                                : "power-receiver-component-on-examine-unpowered"))));
-        }
-
         private void OnProviderShutdown(EntityUid uid, ApcPowerProviderComponent component, ComponentShutdown args)
         {
             foreach (var receiver in component.LinkedReceivers)
