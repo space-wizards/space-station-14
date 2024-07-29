@@ -357,6 +357,24 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
 
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadHelmetRaid
+  name: syndicate raid helmet
+  description: An armored helmet for use with the syndicate raid suit. Very stylish.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/syndie-raid.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/syndie-raid.rsi
+  - type: Armor
+    modifiers: #There's gotta be SOME reason to use this over other helmets.
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+        Heat: 0.85
+
 #Bone Helmet
 - type: entity
   parent: ClothingHeadHelmetBasic
