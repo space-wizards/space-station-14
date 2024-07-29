@@ -18,7 +18,7 @@
     fireRate: 8
     minAngle: 6
     maxAngle: 19
-    shotsPerBurst: 3
+    shotsPerBurst: 4
     availableModes:
     - SemiAuto
     - Burst
