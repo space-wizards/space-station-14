@@ -72,11 +72,16 @@ public sealed class NukeSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks if the disk has been put somewhere unreasonably unaccesible.
+    /// Checks if the fenced entity has been put somewhere unreasonably unaccesible.
     /// </summary>
     private bool FencedIsAway(Entity<GeofencingComponent> fencedent)
     {
         if (_emergencyShuttle.EmergencyShuttleArrived)
+            return false;
+
+        var ev = new TryGeofenceAttemptEvent();
+        RaiseLocalEvent(fencedent.Owner, ev);
+        if (ev.Cancelled)
             return false;
 
         var transform = Transform(fencedent.Owner);
@@ -138,5 +143,13 @@ public sealed class NukeSystem : EntitySystem
         var transform = Transform(uid);
         geofence.OriginMap = transform.MapUid;
         geofence.OriginGrid = transform.GridUid;
+    }
+
+    /// <summary>
+    /// Raised at an entity to see if something is keeping it from being geofenced.
+    /// </summary>
+    public sealed class TryGeofenceAttemptEvent : CancellableEntityEventArgs
+    {
+
     }
 }
