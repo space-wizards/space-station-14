@@ -1,6 +1,5 @@
 plant-attribute-growth = age
 plant-attribute-water = water level
-plant-attribute-seeds = seeds availability
 plant-attribute-potency = potency
 plant-attribute-weeds = weeds level
 plant-attribute-toxins = toxins level

@@ -18,9 +18,6 @@ public sealed partial class PlantRestoreSeeds : EntityEffect
         )
             return;
 
-        if (plantHolderComp.Seed == null)
-            return;
-
         var plantHolder = args.EntityManager.System<PlantHolderSystem>();
         var popupSystem = args.EntityManager.System<SharedPopupSystem>();
 

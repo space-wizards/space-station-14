@@ -4,8 +4,6 @@ using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
 using Content.Shared.Popups;
 
-using Content.Shared.Popups;
-
 namespace Content.Server.EntityEffects.Effects.PlantMetabolism;
 
 public sealed partial class PlantDestroySeeds : EntityEffect
@@ -18,9 +16,6 @@ public sealed partial class PlantDestroySeeds : EntityEffect
             || plantHolderComp.Dead
             || plantHolderComp.Seed.Immutable
         )
-            return;
-
-        if (plantHolderComp.Seed == null)
             return;
 
         var plantHolder = args.EntityManager.System<PlantHolderSystem>();
