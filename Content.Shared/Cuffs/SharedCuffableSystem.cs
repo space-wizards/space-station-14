@@ -462,7 +462,7 @@ namespace Content.Shared.Cuffs
                 return false;
 
             // Success?
-            if(!_hands.TryDrop(user, handcuff))
+            if (!_hands.TryDrop(user, handcuff))
                 return false;
 
             _container.Insert(handcuff, component.Container);
