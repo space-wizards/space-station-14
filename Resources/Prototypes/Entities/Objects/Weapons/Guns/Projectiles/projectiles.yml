@@ -33,6 +33,10 @@
     reflective: # VXS
       - NonEnergy
   - type: FlyBySound
+    sound: # VXS
+      collection: BulletMiss
+      params:
+        volume: 5
   - type: Clickable
   - type: Sprite
     noRot: false
