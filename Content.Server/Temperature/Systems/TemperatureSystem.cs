@@ -1,17 +1,10 @@
-using System.Linq;
-using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Components;
 using Content.Server.Temperature.Components;
-using Content.Shared.Alert;
 using Content.Shared.Atmos;
-using Content.Shared.Damage;
-using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Temperature.Systems;
 
