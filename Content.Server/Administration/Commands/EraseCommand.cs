@@ -7,11 +7,11 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
-public sealed class EraseCommand : LocalizedCommands
+public sealed class EraseCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IPlayerLocator _locator = default!;
-    [Dependency] private readonly IEntitySystemManager _system = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
+    [Dependency] private readonly AdminSystem _admin = default!;
 
     public override string Command => "erase";
 
@@ -19,7 +19,7 @@ public sealed class EraseCommand : LocalizedCommands
     {
         if (args.Length != 1)
         {
-            shell.WriteLine(Loc.GetString("cmd-erase-invalid-args"));
+            shell.WriteError(Loc.GetString("cmd-erase-invalid-args"));
             shell.WriteLine(Help);
             return;
         }
@@ -28,17 +28,14 @@ public sealed class EraseCommand : LocalizedCommands
 
         if (located == null)
         {
-            shell.WriteLine(Loc.GetString("cmd-erase-player-not-found"));
+            shell.WriteError(Loc.GetString("cmd-erase-player-not-found"));
             return;
         }
 
-        if (_system.TryGetEntitySystem<AdminSystem>(out var adminSystem))
-        {
-            adminSystem.Erase(located.UserId);
-        }
+        _admin.Erase(located.UserId);
     }
 
-  public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length != 1)
             return CompletionResult.Empty;
@@ -46,6 +43,5 @@ public sealed class EraseCommand : LocalizedCommands
         var options = _players.Sessions.OrderBy(c => c.Name).Select(c => c.Name).ToArray();
 
         return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-erase-player-completion"));
-
     }
 }
