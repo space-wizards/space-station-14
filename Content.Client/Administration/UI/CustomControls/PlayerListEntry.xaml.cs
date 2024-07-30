@@ -11,11 +11,8 @@ namespace Content.Client.Administration.UI.CustomControls;
 [GenerateTypedNameReferences]
 public sealed partial class PlayerListEntry : BoxContainer
 {
-    private readonly SpriteSystem _sprites;
-
     public PlayerListEntry()
     {
-        _sprites = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>();
         RobustXamlLoader.Load(this);
     }
 

@@ -101,7 +101,7 @@ namespace Content.Server.Administration.Systems
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
             SubscribeNetworkEvent<BwoinkClientTypingUpdated>(OnClientTypingUpdated);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => _activeConversations.Clear());
-            
+
         	_rateLimit.Register(
                 RateLimitKey,
                 new RateLimitRegistration
@@ -715,7 +715,7 @@ namespace Content.Server.Administration.Systems
         }
     }
 
-    public class AHelpMessageParams
+    public sealed class AHelpMessageParams
     {
         public string Username { get; set; }
         public string Message { get; set; }
