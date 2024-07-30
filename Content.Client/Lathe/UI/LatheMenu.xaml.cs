@@ -1,3 +1,4 @@
+using System.Buffers;
 using System.Linq;
 using System.Text;
 using Content.Client.Materials;
@@ -21,9 +22,7 @@ public sealed partial class LatheMenu : DefaultWindow
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IResourceCache _resources = default!;
 
-    private EntityUid _owner;
     private readonly SpriteSystem _spriteSystem;
     private readonly LatheSystem _lathe;
     private readonly MaterialStorageSystem _materialStorage;
@@ -37,17 +36,16 @@ public sealed partial class LatheMenu : DefaultWindow
 
     public ProtoId<LatheCategoryPrototype>? CurrentCategory;
 
-    public LatheMenu(LatheBoundUserInterface owner)
+    public EntityUid Entity;
+
+    public LatheMenu()
     {
-        _owner = owner.Owner;
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
         _spriteSystem = _entityManager.System<SpriteSystem>();
         _lathe = _entityManager.System<LatheSystem>();
         _materialStorage = _entityManager.System<MaterialStorageSystem>();
-
-        Title = _entityManager.GetComponent<MetaDataComponent>(owner.Owner).EntityName;
 
         SearchBar.OnTextChanged += _ =>
         {
@@ -61,8 +59,13 @@ public sealed partial class LatheMenu : DefaultWindow
         FilterOption.OnItemSelected += OnItemSelected;
 
         ServerListButton.OnPressed += a => OnServerListButtonPressed?.Invoke(a);
+    }
 
-        if (_entityManager.TryGetComponent<LatheComponent>(owner.Owner, out var latheComponent))
+    public void SetEntity(EntityUid uid)
+    {
+        Entity = uid;
+
+        if (_entityManager.TryGetComponent<LatheComponent>(Entity, out var latheComponent))
         {
             if (!latheComponent.DynamicRecipes.Any())
             {
@@ -70,7 +73,7 @@ public sealed partial class LatheMenu : DefaultWindow
             }
         }
 
-        MaterialsList.SetOwner(owner.Owner);
+        MaterialsList.SetOwner(Entity);
     }
 
     /// <summary>
@@ -103,13 +106,15 @@ public sealed partial class LatheMenu : DefaultWindow
 
         var sortedRecipesToShow = recipesToShow.OrderBy(p => p.Name);
         RecipeList.Children.Clear();
+        _entityManager.TryGetComponent(Entity, out LatheComponent? lathe);
+
         foreach (var prototype in sortedRecipesToShow)
         {
             EntityPrototype? recipeProto = null;
-            if (_prototypeManager.TryIndex(prototype.Result, out EntityPrototype? entityProto) && entityProto != null)
+            if (_prototypeManager.TryIndex(prototype.Result, out EntityPrototype? entityProto))
                 recipeProto = entityProto;
 
-            var canProduce = _lathe.CanProduce(_owner, prototype, quantity);
+            var canProduce = _lathe.CanProduce(Entity, prototype, quantity, component: lathe);
 
             var control = new RecipeControl(prototype, () => GenerateTooltipText(prototype), canProduce, recipeProto);
             control.OnButtonPressed += s =>
@@ -125,19 +130,20 @@ public sealed partial class LatheMenu : DefaultWindow
     private string GenerateTooltipText(LatheRecipePrototype prototype)
     {
         StringBuilder sb = new();
+        var multiplier = _entityManager.GetComponent<LatheComponent>(Entity).MaterialUseMultiplier;
 
         foreach (var (id, amount) in prototype.RequiredMaterials)
         {
             if (!_prototypeManager.TryIndex<MaterialPrototype>(id, out var proto))
                 continue;
 
-            var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, _entityManager.GetComponent<LatheComponent>(_owner).MaterialUseMultiplier);
+            var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, multiplier);
             var sheetVolume = _materialStorage.GetSheetVolume(proto);
 
             var unit = Loc.GetString(proto.Unit);
             var sheets = adjustedAmount / (float) sheetVolume;
 
-            var availableAmount = _materialStorage.GetMaterialAmount(_owner, id);
+            var availableAmount = _materialStorage.GetMaterialAmount(Entity, id);
             var missingAmount = Math.Max(0, adjustedAmount - availableAmount);
             var missingSheets = missingAmount / (float) sheetVolume;
 
