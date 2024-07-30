@@ -26,7 +26,6 @@
     sprite: Objects/Devices/pda.rsi
     state: pda
   - type: Pda
-    state: pda
     paiSlot:
       priority: -2
       whitelist:
@@ -132,7 +131,6 @@
   components:
   - type: Pda
     id: PassengerIDCard
-    state: pda
   - type: PdaBorderColor
     borderColor: "#717059"
 
@@ -144,7 +142,6 @@
   components:
   - type: Pda
     id: TechnicalAssistantIDCard
-    state: pda-interntech
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -164,7 +161,6 @@
   components:
   - type: Pda
     id: MedicalInternIDCard
-    state: pda-internmed
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -187,7 +183,6 @@
   components:
   - type: Pda
     id: SecurityCadetIDCard
-    state: pda-interncadet
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -207,7 +202,6 @@
   components:
   - type: Pda
     id: ResearchAssistantIDCard
-    state: pda-internsci
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -227,7 +221,6 @@
   components:
   - type: Pda
     id: ServiceWorkerIDCard
-    state: pda-internservice
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -247,7 +240,6 @@
   components:
   - type: Pda
     id: ChefIDCard
-    state: pda-cook
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -266,7 +258,6 @@
   components:
   - type: Pda
     id: BotanistIDCard
-    state: pda-hydro
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -286,7 +277,6 @@
   components:
   - type: Pda
     id: ClownIDCard
-    state: pda-clown
     penSlot:
       startingItem: CrayonOrange # no pink crayon?!?
       # ^ Still unacceptable.
@@ -335,7 +325,6 @@
   components:
   - type: Pda
     id: MimeIDCard
-    state: pda-mime
     idSlot: #  rewrite without sound because mime
       name: ID Card
       whitelist:
@@ -360,7 +349,6 @@
   components:
   - type: Pda
     id: ChaplainIDCard
-    state: pda-chaplain
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -379,7 +367,6 @@
   components:
   - type: Pda
     id: QuartermasterIDCard
-    state: pda-qm
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -399,7 +386,6 @@
   components:
   - type: Pda
     id: CargoIDCard
-    state: pda-cargo
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -418,7 +404,6 @@
   components:
   - type: Pda
     id: SalvageIDCard
-    state: pda-miner
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -438,7 +423,6 @@
   components:
   - type: Pda
     id: BartenderIDCard
-    state: pda-bartender
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -457,7 +441,6 @@
   components:
   - type: Pda
     id: LibrarianIDCard
-    state: pda-library
     penSlot:
       startingItem: LuxuryPen
       priority: -1
@@ -482,7 +465,6 @@
   components:
   - type: Pda
     id: LawyerIDCard
-    state: pda-lawyer
     penSlot:
       startingItem: LuxuryPen
       priority: -1
@@ -507,7 +489,6 @@
   components:
   - type: Pda
     id: JanitorIDCard
-    state: pda-janitor
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -526,7 +507,6 @@
   components:
   - type: Pda
     id: CaptainIDCard
-    state: pda-captain
     penSlot:
       startingItem: PenCap
       priority: -1
@@ -551,7 +531,6 @@
   components:
   - type: Pda
     id: HoPIDCard
-    state: pda-hop
     penSlot:
       startingItem: PenHop
       priority: -1
@@ -577,7 +556,6 @@
   components:
   - type: Pda
     id: CEIDCard
-    state: pda-ce
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -597,7 +575,6 @@
   components:
   - type: Pda
     id: EngineeringIDCard
-    state: pda-engineer
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -617,7 +594,6 @@
   components:
   - type: Pda
     id: CMOIDCard
-    state: pda-cmo
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -638,7 +614,6 @@
   components:
   - type: Pda
     id: MedicalIDCard
-    state: pda-medical
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -661,7 +636,6 @@
   components:
   - type: Pda
     id: ParamedicIDCard
-    state: pda-paramedic
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -681,7 +655,6 @@
   components:
   - type: Pda
     id: ChemistIDCard
-    state: pda-chemistry
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -701,7 +674,6 @@
   components:
   - type: Pda
     id: RDIDCard
-    state: pda-rd
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -722,7 +694,6 @@
   components:
   - type: Pda
     id: ResearchIDCard
-    state: pda-science
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -742,7 +713,6 @@
   components:
   - type: Pda
     id: HoSIDCard
-    state: pda-hos
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -762,7 +732,6 @@
   components:
   - type: Pda
     id: WardenIDCard
-    state: pda-warden
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -782,7 +751,6 @@
   components:
   - type: Pda
     id: SecurityIDCard
-    state: pda-security
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -801,7 +769,6 @@
   components:
   - type: Pda
     id: CentcomIDCard
-    state: pda-centcom
     penSlot:
       startingItem: PenCentcom
       whitelist:
@@ -861,7 +828,6 @@
   components:
   - type: Pda
     id: MusicianIDCard
-    state: pda-musician
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -885,7 +851,6 @@
   components:
   - type: Pda
     id: AtmosIDCard
-    state: pda-atmos
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -905,7 +870,6 @@
   components:
   - type: Pda
     id: PassengerIDCard
-    state: pda-clear
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -924,7 +888,6 @@
   components:
   - type: Pda
     id: SyndicateIDCard
-    state: pda-syndi
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -956,7 +919,6 @@
   components:
   - type: Pda
     id: ERTLeaderIDCard
-    state: pda-ert
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -1044,7 +1006,6 @@
   components:
   - type: Pda
     id: PsychologistIDCard
-    state: pda-medical
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -1064,7 +1025,6 @@
   components:
   - type: Pda
     id: ReporterIDCard
-    state: pda-reporter
     penSlot:
       startingItem: LuxuryPen
       priority: -1
@@ -1089,7 +1049,6 @@
   components:
   - type: Pda
     id: ZookeeperIDCard
-    state: pda-zookeeper
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -1108,7 +1067,6 @@
   components:
   - type: Pda
     id: BoxerIDCard
-    state: pda-boxer
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -1128,7 +1086,6 @@
   components:
   - type: Pda
     id: DetectiveIDCard
-    state: pda-detective
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -1147,7 +1104,6 @@
   components:
   - type: Pda
     id: BrigmedicIDCard
-    state: pda-brigmedic
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -1169,7 +1125,6 @@
   components:
   - type: Pda
     id: CluwneIDCard
-    state: pda-cluwne
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -1196,7 +1151,6 @@
   components:
   - type: Pda
     id: SeniorEngineerIDCard
-    state: pda-seniorengineer
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -1216,7 +1170,6 @@
   components:
   - type: Pda
     id: SeniorResearcherIDCard
-    state: pda-seniorresearcher
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -1237,7 +1190,6 @@
   components:
   - type: Pda
     id: SeniorPhysicianIDCard
-    state: pda-seniorphysician
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -1258,7 +1210,6 @@
   components:
   - type: Pda
     id: SeniorOfficerIDCard
-    state: pda-seniorofficer
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -1278,7 +1229,6 @@
   components:
   - type: Pda
     id: PirateIDCard
-    state: pda-pirate
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
@@ -1295,7 +1245,6 @@
   components:
   - type: Pda
     id: SyndicateIDCard
-    state: pda-syndi-agent
   - type: Appearance
     appearanceData:
      enum.PdaVisuals.PdaType:
