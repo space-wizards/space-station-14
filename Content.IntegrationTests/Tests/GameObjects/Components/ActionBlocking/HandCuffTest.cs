@@ -1,4 +1,3 @@
-/*
 #nullable enable
 using Content.Server.Cuffs;
 using Content.Shared.Body.Components;
@@ -107,4 +106,3 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
         }
     }
 }
-*/
