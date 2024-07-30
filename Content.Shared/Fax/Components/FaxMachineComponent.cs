@@ -127,6 +127,20 @@ public sealed partial class FaxMachineComponent : Component
     /// </summary>
     [ViewVariables]
     public float PrintingTime = 2.3f;
+
+    /// <summary>
+    ///     The prototype ID to use for faxed or copied entities if we can't get one from
+    ///     the paper entity for whatever reason.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: false)]
+    public string PrintPaperId = "Paper";
+
+    /// <summary>
+    ///     The prototype ID to use for faxed or copied entities if we can't get one from
+    ///     the paper entity for whatever reason of the Office type.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: false)]
+    public string PrintOfficePaperId = "PaperOffice";
 }
 
 [DataDefinition]
