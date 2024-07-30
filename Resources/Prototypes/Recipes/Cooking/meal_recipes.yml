@@ -646,12 +646,13 @@
   name: chow mein recipe
   result: FoodNoodlesChowmein
   time: 10
+  reagents:
+    Egg: 6
   solids:
     FoodNoodlesBoiled: 1
     FoodEggplant: 1
     FoodCarrot: 1
     FoodCorn: 1
-    FoodEgg: 1
 
 - type: microwaveMealRecipe
   id: RecipeOatmeal
@@ -711,9 +712,10 @@
   name: egg-fried rice recipe
   result: FoodRiceEgg
   time: 15
+  reagents:
+    Egg: 6
   solids:
     FoodRiceBoiled: 1
-    FoodEgg: 1
     FoodCarrot: 1
 
 - type: microwaveMealRecipe
@@ -1447,10 +1449,10 @@
   reagents:
     Flour: 15
     Sugar: 30
+    Egg: 18
   solids:
     FoodButter: 2
     FoodSnackChocolateBar: 2
-    FoodEgg: 3
 
 #Donks i guess
 - type: microwaveMealRecipe
@@ -1887,10 +1889,10 @@
   reagents:
     Flour: 15
     Sugar: 30
+    Egg: 18
   solids:
     FoodCannabisButter: 2
     FoodSnackChocolateBar: 2
-    FoodEgg: 3
 
 - type: microwaveMealRecipe
   id: RecipeCornInButter
