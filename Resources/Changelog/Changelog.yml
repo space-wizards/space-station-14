@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Doc-Michael
-  changes:
-  - message: CMO's Lab coat is now more resistant to chemical spills and minor cuts
-    type: Tweak
-  id: 6513
-  time: '2024-05-02T12:37:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27551
 - author: Vasilis
   changes:
   - message: Removed airtight flaps from the construction menu.
@@ -3783,3 +3776,11 @@
   id: 7012
   time: '2024-07-30T11:29:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30394
+- author: Cojoke-dot
+  changes:
+  - message: You can no longer get out of a disposal chute or container while knocked
+      over by trying to walk
+    type: Fix
+  id: 7013
+  time: '2024-07-30T13:53:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30391
