@@ -29,13 +29,13 @@ CHANGELOG_RSS_KEY = os.environ.get("CHANGELOG_RSS_KEY")
 
 # Change these to suit your server settings
 # https://docs.fabfile.org/en/stable/getting-started.html#run-commands-via-connections-and-run
-SSH_HOST = "centcomm.spacestation14.io"
+SSH_HOST = "moon.spacestation14.com"
 SSH_USER = "changelog-rss"
 SSH_PORT = 22
 RSS_FILE = "changelog.xml"
 XSL_FILE = "stylesheet.xsl"
 HOST_KEYS = [
-    "AAAAC3NzaC1lZDI1NTE5AAAAIEE8EhnPjb3nIaAPTXAJHbjrwdGGxHoM0f1imCK0SygD"
+    "AAAAC3NzaC1lZDI1NTE5AAAAIOBpGO/Qc6X0YWuw7z+/WS/65+aewWI29oAyx+jJpCmh"
 ]
 
 # RSS feed parameters, change these

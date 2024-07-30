@@ -36,13 +36,13 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 80
+            damage: 140
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
         - trigger:
             !type:DamageTrigger
-            damage: 40 #This is probably enough damage before it breaks
+            damage: 100 #This is probably enough damage before it breaks
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
@@ -70,6 +70,18 @@
   components:
     - type: StaticPrice
       price: 90
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.7
+          Slash: 0.7
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+        flatReductions:
+          Blunt: 1
+          Slash: 1
 
 - type: entity
   name: riot laser shield
@@ -84,12 +96,12 @@
     - type: Blocking
       passiveBlockModifier:
         coefficients:
-          Heat: 0.8
+          Heat: 0.7
       activeBlockModifier:
         coefficients:
-          Heat: 0.7
+          Heat: 0.5
         flatReductions:
-          Heat: 2
+          Heat: 1
 
 - type: entity
   name: riot bullet shield
@@ -104,15 +116,12 @@
     - type: Blocking
       passiveBlockModifier:
         coefficients:
-          Blunt: 0.8
-          Piercing: 0.8
+          Piercing: 0.7
       activeBlockModifier:
         coefficients:
-          Blunt: 0.7
-          Piercing: 0.7
+          Piercing: 0.5
         flatReductions:
-          Blunt: 1.5
-          Piercing: 1.5
+          Piercing: 1
 
 #Craftable shields
 
@@ -373,8 +382,10 @@
         path: /Audio/Weapons/ebladehum.ogg
     - type: ItemToggleSize
       activatedSize: Huge
-    - type: ItemToggleDisarmMalus
-      activatedDisarmMalus: 0.6
+    - type: ComponentToggler
+      components:
+      - type: DisarmMalus
+        malus: 0.6
     - type: Sprite
       sprite: Objects/Weapons/Melee/e_shield.rsi
       layers:
@@ -406,7 +417,6 @@
       energy: 2
       color: blue
     - type: Reflect
-      enabled: false
       reflectProb: 0.95
       reflects:
         - Energy
@@ -483,8 +493,10 @@
         path: /Audio/Weapons/telescopicoff.ogg
         params:
           volume: -5
-    - type: ItemToggleDisarmMalus
-      activatedDisarmMalus: 0.6
+    - type: ComponentToggler
+      components:
+      - type: DisarmMalus
+        malus: 0.6
     - type: ItemToggleSize
       activatedSize: Huge
     - type: Sprite

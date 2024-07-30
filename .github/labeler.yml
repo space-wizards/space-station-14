@@ -5,12 +5,16 @@
 "Changes: Map":
 - changed-files:
   - any-glob-to-any-file:
-    - 'Resources/Maps/*.yml'
-    - 'Resources/Prototypes/Maps/*.yml'
+    - 'Resources/Maps/**/*.yml'
+    - 'Resources/Prototypes/Maps/**/*.yml'
 
 "Changes: UI":
 - changed-files:
   - any-glob-to-any-file: '**/*.xaml*'
+
+"Changes: Shaders":
+- changed-files:
+  - any-glob-to-any-file: '**/*.swsl'
 
 "No C#":
 - changed-files:
