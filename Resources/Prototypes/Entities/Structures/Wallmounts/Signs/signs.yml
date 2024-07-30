@@ -660,7 +660,7 @@
 - type: entity
   parent: BaseSign
   id: SignNosmoking
-  name: nosmoking sign
+  name: no smoking sign
   description: A sign indicating that smoking is not allowed in the vicinity.
   components:
   - type: Sprite

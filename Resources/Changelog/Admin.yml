@@ -367,5 +367,16 @@ Entries:
   id: 45
   time: '2024-07-11T05:14:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29896
+- author: Repo
+  changes:
+  - message: Added aHelp player pinning.
+    type: Add
+  - message: Added disconnection, reconnection, banning notice on relay and ahelp.
+    type: Add
+  - message: Fixed search clears on aHelp close.
+    type: Fix
+  id: 46
+  time: '2024-07-30T08:28:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28639
 Name: Admin
 Order: 1

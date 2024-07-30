@@ -499,6 +499,26 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 break;
             }
+            case RemoveAnchoredFilter:
+            {
+                _entityList.Clear();
+
+                foreach (var ent in entities)
+                {
+                    if (!TryComp(ent, out TransformComponent? xform))
+                        continue;
+
+                    if (xform.Anchored)
+                        _entityList.Add(ent);
+                }
+
+                foreach (var ent in _entityList)
+                {
+                    entities.Remove(ent);
+                }
+
+                break;
+            }
             case PuddleFilter:
             {
                 _entityList.Clear();

@@ -122,7 +122,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         _audio.PlayPvs(ent.Comp.ConnectedSound, ent);
     }
 
-    //TO DO: disconnection from the anomaly should also be triggered if the anomaly is far away from the synchronizer.
+    //TODO: disconnection from the anomaly should also be triggered if the anomaly is far away from the synchronizer.
     //Currently only bluespace anomaly can do this, but for some reason it is the only one that cannot be connected to the synchronizer.
     private void DisconneсtFromAnomaly(Entity<AnomalySynchronizerComponent> ent, AnomalyComponent anomaly)
     {
