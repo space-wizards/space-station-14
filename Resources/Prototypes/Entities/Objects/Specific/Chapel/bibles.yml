@@ -80,7 +80,6 @@
   id: ActionBibleSummon
   name: Summon familiar
   description: Summon a familiar that will aid you and gain humanlike intelligence once inhabited by a soul.
-  noSpawn: true
   components:
   - type: InstantAction
     icon: { sprite: Clothing/Head/Hats/witch.rsi, state: icon }

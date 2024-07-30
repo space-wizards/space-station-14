@@ -30,20 +30,6 @@ public sealed class StoreUpdateState : BoundUserInterfaceState
     }
 }
 
-/// <summary>
-/// initializes miscellaneous data about the store.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class StoreInitializeState : BoundUserInterfaceState
-{
-    public readonly string Name;
-
-    public StoreInitializeState(string name)
-    {
-        Name = name;
-    }
-}
-
 [Serializable, NetSerializable]
 public sealed class StoreRequestUpdateInterfaceMessage : BoundUserInterfaceMessage
 {

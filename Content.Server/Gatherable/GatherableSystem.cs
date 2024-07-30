@@ -3,6 +3,7 @@ using Content.Server.Gatherable.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
@@ -18,6 +19,7 @@ public sealed partial class GatherableSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -30,7 +32,7 @@ public sealed partial class GatherableSystem : EntitySystem
 
     private void OnAttacked(Entity<GatherableComponent> gatherable, ref AttackedEvent args)
     {
-        if (gatherable.Comp.ToolWhitelist?.IsValid(args.Used, EntityManager) != true)
+        if (_whitelistSystem.IsWhitelistFailOrNull(gatherable.Comp.ToolWhitelist, args.Used))
             return;
 
         Gather(gatherable, args.User);
@@ -41,7 +43,7 @@ public sealed partial class GatherableSystem : EntitySystem
         if (args.Handled || !args.Complex)
             return;
 
-        if (gatherable.Comp.ToolWhitelist?.IsValid(args.User, EntityManager) != true)
+        if (_whitelistSystem.IsWhitelistFailOrNull(gatherable.Comp.ToolWhitelist, args.User))
             return;
 
         Gather(gatherable, args.User);

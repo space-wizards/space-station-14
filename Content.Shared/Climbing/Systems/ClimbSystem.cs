@@ -1,5 +1,4 @@
 using Content.Shared.ActionBlocker;
-using Content.Shared.Body.Systems;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Climbing.Components;
 using Content.Shared.Climbing.Events;
@@ -44,6 +43,7 @@ public sealed partial class ClimbSystem : VirtualController
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
 
+    private EntityQuery<ClimbableComponent> _climbableQuery;
     private EntityQuery<FixturesComponent> _fixturesQuery;
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -51,6 +51,7 @@ public sealed partial class ClimbSystem : VirtualController
     {
         base.Initialize();
 
+        _climbableQuery = GetEntityQuery<ClimbableComponent>();
         _fixturesQuery = GetEntityQuery<FixturesComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
 
@@ -58,7 +59,7 @@ public sealed partial class ClimbSystem : VirtualController
         SubscribeLocalEvent<ClimbingComponent, EntParentChangedMessage>(OnParentChange);
         SubscribeLocalEvent<ClimbingComponent, ClimbDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
-        SubscribeLocalEvent<ClimbingComponent, BuckleChangeEvent>(OnBuckleChange);
+        SubscribeLocalEvent<ClimbingComponent, BuckledEvent>(OnBuckled);
 
         SubscribeLocalEvent<ClimbableComponent, CanDropTargetEvent>(OnCanDragDropOn);
         SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
@@ -350,10 +351,37 @@ public sealed partial class ClimbSystem : VirtualController
     {
         if (args.OurFixtureId != ClimbingFixtureName
             || !component.IsClimbing
-            || component.NextTransition != null
-            || args.OurFixture.Contacts.Count > 1)
+            || component.NextTransition != null)
         {
             return;
+        }
+
+        if (args.OurFixture.Contacts.Count > 1)
+        {
+            foreach (var contact in args.OurFixture.Contacts.Values)
+            {
+                if (!contact.IsTouching)
+                    continue;
+
+                var otherEnt = contact.EntityA;
+                var otherFixture = contact.FixtureA;
+                var otherFixtureId = contact.FixtureAId;
+                if (uid == contact.EntityA)
+                {
+                    otherEnt = contact.EntityB;
+                    otherFixture = contact.FixtureB;
+                    otherFixtureId = contact.FixtureBId;
+                }
+
+                if (args.OtherEntity == otherEnt && args.OtherFixtureId == otherFixtureId)
+                    continue;
+
+                if (otherFixture is { Hard: true } &&
+                    _climbableQuery.HasComp(otherEnt))
+                {
+                    return;
+                }
+            }
         }
 
         foreach (var otherFixture in args.OurFixture.Contacts.Keys)
@@ -468,10 +496,8 @@ public sealed partial class ClimbSystem : VirtualController
         Climb(uid, uid, climbable, true, component);
     }
 
-    private void OnBuckleChange(EntityUid uid, ClimbingComponent component, ref BuckleChangeEvent args)
+    private void OnBuckled(EntityUid uid, ClimbingComponent component, ref BuckledEvent args)
     {
-        if (!args.Buckling)
-            return;
         StopClimb(uid, component);
     }
 

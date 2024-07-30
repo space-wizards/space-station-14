@@ -32,7 +32,7 @@ public sealed partial class PowerMonitoringWindow
         if (windowEntry == null)
             return;
 
-        // Update sources and loads 
+        // Update sources and loads
         UpdateEntrySourcesOrLoads(masterContainer, windowEntry.SourcesContainer, focusSources, _sourceIcon);
         UpdateEntrySourcesOrLoads(masterContainer, windowEntry.LoadsContainer, focusLoads, _loadIconPath);
 
@@ -102,7 +102,8 @@ public sealed partial class PowerMonitoringWindow
         button.ToolTip = Loc.GetString(name);
 
         // Update power value
-        button.PowerValue.Text = Loc.GetString("power-monitoring-window-value", ("value", entry.PowerValue));
+        // Don't use SI prefixes, just give the number in W, so that it is readily apparent which consumer is using a lot of power.
+        button.PowerValue.Text = Loc.GetString("power-monitoring-window-button-value", ("value", Math.Round(entry.PowerValue).ToString("N0")));
     }
 
     private void UpdateEntrySourcesOrLoads(BoxContainer masterContainer, BoxContainer currentContainer, PowerMonitoringConsoleEntry[]? entries, SpriteSpecifier.Texture icon)
@@ -133,7 +134,7 @@ public sealed partial class PowerMonitoringWindow
             subEntry.Button.OnButtonUp += args => { ButtonAction(subEntry, masterContainer); };
         }
 
-        if (!_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(_owner, out var console))
+        if (!_entManager.TryGetComponent<PowerMonitoringConsoleComponent>(Entity, out var console))
             return;
 
         // Update all children
@@ -378,7 +379,7 @@ public sealed class PowerMonitoringWindowEntry : PowerMonitoringWindowBaseEntry
 
         AddChild(MainContainer);
 
-        // Grid container to hold the list of sources when selected 
+        // Grid container to hold the list of sources when selected
         SourcesContainer = new BoxContainer()
         {
             Orientation = LayoutOrientation.Vertical,
@@ -480,7 +481,8 @@ public sealed class PowerMonitoringButton : Button
         PowerValue = new Label()
         {
             HorizontalAlignment = HAlignment.Right,
-            SetWidth = 72f,
+            Align = Label.AlignMode.Right,
+            SetWidth = 80f,
             Margin = new Thickness(10, 0, 0, 0),
             ClipText = true,
         };

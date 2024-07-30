@@ -8,7 +8,7 @@
       state: engineering
     - type: MachineBoard
       prototype: ParticleAcceleratorEndCapUnfinished
-      materialRequirements:
+      stackRequirements:
         Glass: 15
         Steel: 15
 
@@ -24,10 +24,9 @@
       prototype: ParticleAcceleratorFuelChamberUnfinished
       componentRequirements:
         AmeFuelContainer:
-          Amount: 1
-          DefaultPrototype: AmeJar
-          ExamineName: AME Fuel Jar
-      materialRequirements:
+          amount: 1
+          defaultPrototype: AmeJar
+      stackRequirements:
         Glass: 10
         Steel: 10
 
@@ -41,7 +40,7 @@
       state: engineering
     - type: MachineBoard
       prototype: ParticleAcceleratorPowerBoxUnfinished
-      materialRequirements:
+      stackRequirements:
         Glass: 5
         Steel: 5
 
@@ -57,7 +56,7 @@
       state: engineering
     - type: MachineBoard
       prototype: ParticleAcceleratorEmitterStarboardUnfinished
-      materialRequirements:
+      stackRequirements:
         Glass: 5
         Steel: 5
 
@@ -71,7 +70,7 @@
       state: engineering
     - type: MachineBoard
       prototype: ParticleAcceleratorEmitterForeUnfinished
-      materialRequirements:
+      stackRequirements:
         Glass: 5
         Steel: 5
 
@@ -85,6 +84,6 @@
       state: engineering
     - type: MachineBoard
       prototype: ParticleAcceleratorEmitterPortUnfinished
-      materialRequirements:
+      stackRequirements:
         Glass: 5
         Steel: 5

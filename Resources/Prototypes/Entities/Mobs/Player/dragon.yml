@@ -14,6 +14,7 @@
     makeSentient: true
     name: ghost-role-information-space-dragon-name
     description: ghost-role-information-space-dragon-description
+    rules: ghost-role-information-space-dragon-rules
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -142,7 +143,6 @@
 - type: entity
   parent: BaseMobDragon
   id: MobDragon
-  suffix: No role or objectives
   components:
   - type: Dragon
     spawnRiftAction: ActionSpawnRift
@@ -154,7 +154,7 @@
     - MinorAntagonists
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   id: DragonsBreathGun
   name: dragon's lung
   description: For dragon's breathing
@@ -180,6 +180,7 @@
   components:
   - type: GhostRole
     description: ghost-role-information-space-dragon-dungeon-description
+    rules: ghost-role-information-space-dragon-dungeon-rules
     raffle:
       settings: default
   - type: SlowOnDamage
@@ -203,7 +204,6 @@
   id: ActionSpawnRift
   name: Summon Carp Rift
   description: Summons a carp rift that will periodically spawns carps.
-  noSpawn: true
   components:
   - type: InstantAction
     icon:
@@ -217,7 +217,6 @@
   id: ActionDevour
   name: "[color=red]Devour[/color]"
   description: Attempt to break a structure with your jaws or swallow a creature.
-  noSpawn: true
   components:
   - type: EntityTargetAction
     icon: { sprite : Interface/Actions/devour.rsi, state: icon }
@@ -226,7 +225,6 @@
     priority: 1
 
 - type: entity
-  noSpawn: true
   id: ActionDragonsBreath
   name: "[color=orange]Dragon's Breath[/color]"
   description: Spew out flames at anyone foolish enough to attack you!

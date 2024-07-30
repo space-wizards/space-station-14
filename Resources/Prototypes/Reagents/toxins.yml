@@ -560,6 +560,7 @@
       - !type:Emote
         emote: Honk
         showInChat: true
+        force: true
         probability: 0.2
       - !type:HealthChange
         conditions:
@@ -661,3 +662,46 @@
             Poison: 2
       - !type:SatiateHunger
         factor: -6
+
+# inspired by the spider neurotoxin GsMtx-4
+# poisons non-spiders and slows you down at high doses
+- type: reagent
+  id: Mechanotoxin
+  name: reagent-name-mechanotoxin
+  group: Toxins
+  desc: reagent-desc-mechanotoxin
+  flavor: sweet
+  color: "#00b408"
+  physicalDesc: reagent-physical-desc-nondescript
+  metabolisms:
+    Poison:
+      metabolismRate: 0.2 # Slower metabolism so it can build up over time for slowdown
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Arachnid
+          shouldHave: false
+        damage:
+          types:
+            Poison: 1.6
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Mechanotoxin
+          min: 2
+        - !type:OrganType
+          type: Arachnid
+          shouldHave: false
+        walkSpeedModifier: 0.8
+        sprintSpeedModifier: 0.8
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Mechanotoxin
+          min: 4
+        - !type:OrganType
+          type: Arachnid
+          shouldHave: false
+        walkSpeedModifier: 0.4
+        sprintSpeedModifier: 0.4

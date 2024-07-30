@@ -7,7 +7,6 @@
     state: extraction_pack
   spawn: Fulton1
   maxCount: 10
-  itemSize: 2
 
 # Entities
 - type: entity
@@ -88,7 +87,7 @@
 
 - type: entity
   id: FultonEffect
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: fulton effect
   components:
   - type: TimedDespawn
