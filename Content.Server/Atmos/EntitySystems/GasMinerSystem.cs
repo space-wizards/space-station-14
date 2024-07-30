@@ -1,15 +1,15 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.Atmos.Piping.Other.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 
-namespace Content.Server.Atmos.Piping.Other.EntitySystems
+namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class GasMinerSystem : EntitySystem
+    public sealed class GasMinerSystem : SharedGasMinerSystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
@@ -27,14 +27,44 @@ namespace Content.Server.Atmos.Piping.Other.EntitySystems
 
             if (!GetValidEnvironment(ent, out var environment))
             {
-                miner.Idle = true;
+                if (miner.Enabled)
+                {
+                    miner.Enabled = false;
+                    Dirty(ent);
+                }
                 return;
+            }
+            else
+            {
+                if (!miner.Enabled)
+                {
+                    miner.Enabled = true;
+                    Dirty(ent);
+                }
             }
 
             // SpawnAmount is declared in mol/s so to get the amount of gas we hope to mine, we have to multiply this by
             // how long we have been waiting to spawn it and further cap the number according to the miner's state.
             var toSpawn = CapSpawnAmount(ent, miner.SpawnAmount * args.dt, environment);
-            miner.Idle = toSpawn == 0;
+
+            if (toSpawn == 0)
+            {
+                if (!miner.Idle)
+                {
+                    miner.Idle = true;
+                    Dirty(ent);
+                }
+            }
+            else
+            {
+                if (miner.Idle)
+                {
+                    miner.Idle = false;
+                    Dirty(ent);
+                }
+            }
+
+            //miner.Idle = toSpawn == 0;
             if (miner.Idle || !miner.Enabled || !miner.SpawnGas.HasValue)
                 return;
 
