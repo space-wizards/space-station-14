@@ -25,7 +25,7 @@
     - WhitelistChameleon
   - type: DamageOnInteractProtection
     damageProtection:
-      types:
+      flatReductions:
         Heat: 5 # the average lightbulb only does around four damage!
 
 - type: entity

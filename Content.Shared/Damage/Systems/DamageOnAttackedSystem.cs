@@ -71,8 +71,7 @@ public sealed class DamageOnAttackedSystem : EntitySystem
             // if comp is NOT NULL that means they have damage protection!
             if (protectiveEntity.Comp != null)
             {
-                totalDamage -= protectiveEntity.Comp.DamageProtection;
-                totalDamage.ClampMin(0); // don't let them heal just because they have enough protection
+                totalDamage = DamageSpecifier.ApplyModifierSet(totalDamage, protectiveEntity.Comp.DamageProtection);
             }
         }
 

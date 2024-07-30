@@ -18,7 +18,7 @@ public sealed partial class DamageOnAttackedProtectionComponent : Component, ICl
     /// when interacting with something with <see cref="DamageOnInteractComponent"/>
     /// </summary>
     [DataField]
-    public DamageSpecifier DamageProtection = default!;
+    public DamageModifierSet DamageProtection = default!;
 
     /// <summary>
     /// Only protects if the item is in the correct slot

@@ -138,7 +138,7 @@
     slots: WITHOUT_POCKET
   - type: DamageOnInteractProtection
     damageProtection:
-      types:
+      flatReductions:
         Heat: 10 # the average lightbulb only does around four damage!
     slots: OUTERCLOTHING
 
@@ -163,7 +163,7 @@
     slots: WITHOUT_POCKET
   - type: DamageOnInteractProtection
     damageProtection:
-      types:
+      flatReductions:
         Heat: 10 # the average lightbulb only does around four damage!
     slots: OUTERCLOTHING
 

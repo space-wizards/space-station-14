@@ -57,12 +57,11 @@ public sealed class DamageOnInteractSystem : EntitySystem
             // so let's calculate how much they resist
             if (protectiveEntity.Comp != null)
             {
-                totalDamage -= protectiveEntity.Comp.DamageProtection;
-                totalDamage.ClampMin(0); // don't let them heal just because they have enough protection
+                totalDamage = DamageSpecifier.ApplyModifierSet(totalDamage, protectiveEntity.Comp.DamageProtection);
             }
         }
 
-        totalDamage = _damageableSystem.TryChangeDamage(args.User, totalDamage, entity.Comp.IgnoreResistances, origin: args.Target);
+        totalDamage = _damageableSystem.TryChangeDamage(args.User, totalDamage,  origin: args.Target);
 
         if (totalDamage != null && totalDamage.AnyPositive())
         {

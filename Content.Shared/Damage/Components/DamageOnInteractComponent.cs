@@ -24,7 +24,7 @@ public sealed partial class DamageOnInteractComponent : Component
     /// and the <see cref="DamageOnInteractProtectionComponent"/>
     /// </summary>
     [DataField]
-    public bool IgnoreResistances = false;
+    public bool IgnoreResistances;
 
     /// <summary>
     /// What kind of localized text should pop up when they interact with the entity

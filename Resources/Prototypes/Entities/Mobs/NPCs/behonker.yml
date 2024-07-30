@@ -115,16 +115,6 @@
     - type: Bloodstream
       bloodMaxVolume: 300
       bloodReagent: Laughter
-    - type: DamageOnInteract
-      damage:
-        types:
-          Radiation: 10
-      popupText: powered-light-component-burn-hand
-    - type: DamageOnAttacked
-      damage:
-        types:
-          Radiation: 10
-      popupText: powered-light-component-burn-hand
 
 - type: entity
   name: behonker
@@ -179,13 +169,3 @@
     releasedGas: 8 # Frezon. Please replace if there is a better way to specify this
     releaseOnMaxSeverity: true
     spawnRadius: 0
-  - type: DamageOnInteract
-    damage:
-      types:
-        Cold: 10
-    popupText: powered-light-component-burn-hand
-  - type: DamageOnAttacked
-    damage:
-      types:
-        Cold: 10
-    popupText: powered-light-component-burn-hand

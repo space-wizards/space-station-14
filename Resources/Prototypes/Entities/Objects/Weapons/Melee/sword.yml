@@ -154,7 +154,7 @@
   - type: DisarmMalus
 
 - type: entity
-  name: The Throngler
+  name: Throngler
   parent: BaseSword
   id: Throngler
   description: Why would you make this?
@@ -180,3 +180,6 @@
       size: Ginormous
       sprite: Objects/Weapons/Melee/Throngler-in-hand.rsi
     - type: DisarmMalus
+    - type: Grammar
+      attributes:
+        proper: true

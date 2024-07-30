@@ -314,10 +314,10 @@
   - type: Fiber
     fiberMaterial: fibers-synthetic
     fiberColor: fibers-black
-  - type: DamageOnInteractProtection 
+  - type: DamageOnInteractProtection
     damageProtection:
-      types:
-        Heat: 0 # no protection!
+      flatReductions:
+        Heat: 0 # no protection
 
 - type: entity
   parent: ClothingHandsBase
@@ -332,10 +332,10 @@
   - type: Fiber
     fiberMaterial: fibers-insulative
     fiberColor: fibers-yellow
-  - type: DamageOnInteractProtection 
+  - type: DamageOnInteractProtection
     damageProtection:
-      types:
-        Heat: 0 # no protection!
+      flatReductions:
+        Heat: 0 # no protection
 
 - type: entity
   parent: ClothingHandsButcherable
@@ -350,10 +350,10 @@
   - type: Fiber
     fiberMaterial: fibers-insulative
     fiberColor: fibers-olive
-  - type: DamageOnInteractProtection 
+  - type: DamageOnInteractProtection
     damageProtection:
-      types:
-        Heat: 0 # no protection!
+      flatReductions:
+        Heat: 0 # no protection
 
 - type: entity
   # Intentionally named after regular gloves, they're meant to be sneaky.
