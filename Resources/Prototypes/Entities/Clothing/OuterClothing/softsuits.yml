@@ -88,6 +88,9 @@
     walkModifier: 0.85
     sprintModifier: 0.85
   - type: HeldSpeedModifier
+  - type: Tag
+    tags:
+    - SuitEVA
 
 #Paramedic Voidsuit
 #Despite having resistances and looking like a hardsuit, this parents off the EVA suit so it goes here.
