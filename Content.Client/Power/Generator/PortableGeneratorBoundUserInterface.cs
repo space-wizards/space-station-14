@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Power.Generator;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Power.Generator;
 
@@ -16,10 +17,25 @@ public sealed class PortableGeneratorBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-        _window = new GeneratorWindow(this, Owner);
+        _window = this.CreateWindow<GeneratorWindow>();
+        _window.SetEntity(Owner);
+        _window.OnState += args =>
+        {
+            if (args)
+            {
+                Start();
+            }
+            else
+            {
+                Stop();
+            }
+        };
+
+        _window.OnPower += SetTargetPower;
+        _window.OnEjectFuel += EjectFuel;
+        _window.OnSwitchOutput += SwitchOutput;
 
         _window.OpenCenteredLeft();
-        _window.OnClose += Close;
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -28,11 +44,6 @@ public sealed class PortableGeneratorBoundUserInterface : BoundUserInterface
             return;
 
         _window?.Update(msg);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-       _window?.Dispose();
     }
 
     public void SetTargetPower(int target)
