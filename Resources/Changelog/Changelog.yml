@@ -1,64 +1,4 @@
 ﻿Entries:
-- author: DamnFeds
-  changes:
-  - message: honkbot now uses a happy honk meal instead of box of hugs and clown's
-      rubber stamp. Honk!
-    type: Tweak
-  id: 6503
-  time: '2024-05-01T03:27:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27535
-- author: Plykiya
-  changes:
-  - message: Inserting telecrystals no longer announces to everyone around you that
-      you inserted it.
-    type: Tweak
-  id: 6504
-  time: '2024-05-01T15:17:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27585
-- author: Dezzzix
-  changes:
-  - message: Goldschlager empty bottle renamed to Gildlager empty bottle
-    type: Tweak
-  id: 6505
-  time: '2024-05-01T15:24:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27581
-- author: FungiFellow
-  changes:
-  - message: Grilles now take Structural Damage
-    type: Tweak
-  id: 6506
-  time: '2024-05-01T22:23:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27596
-- author: lzk228
-  changes:
-  - message: Immovable rod announce now happens at the end of event.
-    type: Tweak
-  id: 6507
-  time: '2024-05-01T22:26:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27587
-- author: metalgearsloth
-  changes:
-  - message: Fix server performance dropping significantly.
-    type: Fix
-  id: 6508
-  time: '2024-05-02T00:18:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27528
-- author: metalgearsloth
-  changes:
-  - message: Fix muzzle flash rotations.
-    type: Fix
-  - message: Fix large client performance drop.
-    type: Fix
-  id: 6509
-  time: '2024-05-02T02:40:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27533
-- author: ElectroJr
-  changes:
-  - message: Fix gas analyzers not opening their UI when used in-hand.
-    type: Fix
-  id: 6510
-  time: '2024-05-02T06:00:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27610
 - author: Plykiya
   changes:
   - message: Disarming a player now causes them to throw the disarmed item away from
@@ -3780,3 +3720,67 @@
   id: 7002
   time: '2024-07-29T15:16:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30450
+- author: Ian321
+  changes:
+  - message: The Courser now comes with a defibrillator.
+    type: Tweak
+  id: 7003
+  time: '2024-07-30T01:05:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30471
+- author: slarticodefast
+  changes:
+  - message: Fixed puppy Ian not counting as a thief steal target.
+    type: Fix
+  id: 7004
+  time: '2024-07-30T01:22:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30474
+- author: themias
+  changes:
+  - message: Added envelopes to the PTech and bureaucracy crate
+    type: Add
+  id: 7005
+  time: '2024-07-30T01:49:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30298
+- author: TheKittehJesus
+  changes:
+  - message: The recipe for chow mein, egg-fried rice, and both brownies now use liquid
+      egg instead of a whole egg.
+    type: Tweak
+  - message: Cake batter now also requires 5u of milk
+    type: Tweak
+  id: 7006
+  time: '2024-07-30T02:14:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30262
+- author: Plykiya
+  changes:
+  - message: Wearing something that covers your head will prevent your hair from being
+      cut.
+    type: Add
+  - message: You now see a popup when your hair is being altered.
+    type: Add
+  - message: The doafter for altering other people's hair now takes seven seconds.
+    type: Tweak
+  id: 7007
+  time: '2024-07-30T02:17:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30366
+- author: Cojoke-dot
+  changes:
+  - message: Hamlet and other ghost rolls can now spin when they enter combat mode
+    type: Fix
+  id: 7008
+  time: '2024-07-30T02:48:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30478
+- author: themias
+  changes:
+  - message: Fixed the ACC wire not appearing in vending machine wire layouts
+    type: Fix
+  id: 7009
+  time: '2024-07-30T03:04:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30453
+- author: Blackern5000
+  changes:
+  - message: The defibrillator has been recolored slightly
+    type: Tweak
+  id: 7010
+  time: '2024-07-30T04:41:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29964
