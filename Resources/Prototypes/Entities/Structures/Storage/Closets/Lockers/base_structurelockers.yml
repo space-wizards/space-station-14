@@ -45,7 +45,7 @@
             min: 1
             max: 2
   - type: Construction
-    graph: ClosetSteel
+    graph: ClosetSteelSecure
     node: done
     containers:
     - entity_storage
@@ -66,8 +66,3 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: Construction
-    graph: ClosetSteelSecure
-    node: done
-    containers:
-    - entity_storage

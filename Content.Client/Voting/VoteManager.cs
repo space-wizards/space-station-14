@@ -6,12 +6,15 @@ using Robust.Client;
 using Robust.Client.Audio;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Sources;
+using Robust.Shared.ContentPack;
 
 
 namespace Content.Client.Voting
@@ -31,15 +34,19 @@ namespace Content.Client.Voting
 
     public sealed class VoteManager : IVoteManager
     {
+        [Dependency] private readonly IAudioManager _audio = default!;
+        [Dependency] private readonly IBaseClient _client = default!;
+        [Dependency] private readonly IClientConsoleHost _console = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IClientConsoleHost _console = default!;
-        [Dependency] private readonly IBaseClient _client = default!;
+        [Dependency] private readonly IResourceCache _res = default!;
 
         private readonly Dictionary<StandardVoteType, TimeSpan> _standardVoteTimeouts = new();
         private readonly Dictionary<int, ActiveVote> _votes = new();
         private readonly Dictionary<int, UI.VotePopup> _votePopups = new();
         private Control? _popupContainer;
+
+        private IAudioSource? _voteSource;
 
         public bool CanCallVote { get; private set; }
 
@@ -49,6 +56,14 @@ namespace Content.Client.Voting
 
         public void Initialize()
         {
+            const string sound = "/Audio/Effects/voteding.ogg";
+            _voteSource = _audio.CreateAudioSource(_res.GetResource<AudioResource>(sound));
+
+            if (_voteSource != null)
+            {
+                _voteSource.Global = true;
+            }
+
             _netManager.RegisterNetMessage<MsgVoteData>(ReceiveVoteData);
             _netManager.RegisterNetMessage<MsgVoteCanCall>(ReceiveVoteCanCall);
 
@@ -125,9 +140,8 @@ namespace Content.Client.Voting
                     return;
                 }
 
+                _voteSource?.Restart();
                 @new = true;
-                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>()
-                    .PlayGlobal("/Audio/Effects/voteding.ogg", Filter.Local(), false);
 
                 // Refresh
                 var container = _popupContainer;

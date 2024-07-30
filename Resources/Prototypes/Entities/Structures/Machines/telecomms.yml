@@ -21,6 +21,12 @@
           True: { visible: true }
           False: { visible: false }
   - type: Appearance
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/server_fans.ogg
   - type: WiresVisuals
   - type: Physics
     bodyType: Static
@@ -67,7 +73,7 @@
 - type: entity
   parent: TelecomServer
   id: TelecomServerFilled
-  suffix: Filled
+  suffix: Filled All
   components:
   - type: ContainerFill
     containers:
@@ -79,4 +85,84 @@
       - EncryptionKeyScience
       - EncryptionKeySecurity
       - EncryptionKeyService
+      - EncryptionKeyCommand
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilledCommon
+  suffix: Common
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommon
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilledCargo
+  suffix: Cargo
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCargo
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilledEngineering
+  suffix: Engineering
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyEngineering
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilledMedical
+  suffix: Medical
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyMedical
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilledScience
+  suffix: Science
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyScience
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilledSecurity
+  suffix: Security
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySecurity
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilledService
+  suffix: Service
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyService
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilledCommand
+  suffix: Command
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
       - EncryptionKeyCommand

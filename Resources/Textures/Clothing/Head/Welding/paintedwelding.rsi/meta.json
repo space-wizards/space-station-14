@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e, icon by лазік#7305",
+  "copyright": "Taken from CEV-Eris at https://github.com/discordia-space/CEV-Eris/blob/2a0d963d5bf68bd8ddf6fba6f60479bec172b51d/icons/inventory/head/mob.dmi, icon by лазік#7305. equipped-HELMET-vox state modified by Flareguy from 'welding' state in /vg/station at commit https://github.com/vgstation-coders/vgstation13/commit/31d6576ba8102135d058ef49c3cb6ecbe8db8a79",
   "size": {
     "x": 32,
     "y": 32
@@ -19,6 +19,14 @@
     },
     {
       "name": "up-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
+      "name": "up-equipped-HELMET-vox",
       "directions": 4
     },
     {

@@ -32,8 +32,8 @@
     key: enum.SignalTimerUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.SignalTimerUiKey.Key
-      type: SignalTimerBoundUserInterface
+      enum.SignalTimerUiKey.Key:
+        type: SignalTimerBoundUserInterface
   - type: ApcPowerReceiver
     powerLoad: 100
   - type: Electrified
@@ -44,6 +44,14 @@
   - type: Construction
     graph: Timer
     node: signal
+    containers:
+    - board
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+  - type: ContainerFill
+    containers:
+      board: [ SignalTimerElectronics ]
 
 - type: entity
   id: ScreenTimer
@@ -67,6 +75,11 @@
   - type: Construction
     graph: Timer
     node: screen
+    containers:
+    - board
+  - type: ContainerFill
+    containers:
+      board: [ ScreenTimerElectronics ]
 
 - type: entity
   id: BrigTimer
@@ -79,11 +92,16 @@
   - type: Construction
     graph: Timer
     node: brig
+    containers:
+    - board
+  - type: ContainerFill
+    containers:
+      board: [ BrigTimerElectronics ]
 
 # Construction Frame
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   id: TimerFrame
   name: timer frame
   description: A construction frame for a timer.

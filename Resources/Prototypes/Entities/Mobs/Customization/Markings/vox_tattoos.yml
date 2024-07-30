@@ -1,0 +1,55 @@
+- type: marking
+  id: TattooVoxHeartLeftArm
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: heart_l_arm
+
+- type: marking
+  id: TattooVoxHeartRightArm
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: heart_r_arm
+
+- type: marking
+  id: TattooVoxHiveChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: hive_s
+
+- type: marking
+  id: TattooVoxNightlingChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/vox_tattoos.rsi
+    state: nightling_s

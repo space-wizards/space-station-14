@@ -108,10 +108,11 @@
   - type: ActivatableUI
     key: enum.SurveillanceCameraMonitorUiKey.Key
   - type: ActivatableUIRequiresPower
+  - type: ActivatableUIRequiresVision
   - type: UserInterface
     interfaces:
-      - key: enum.SurveillanceCameraMonitorUiKey.Key
-        type: SurveillanceCameraMonitorBoundUserInterface
+        enum.SurveillanceCameraMonitorUiKey.Key:
+          type: SurveillanceCameraMonitorBoundUserInterface
 
 # Wall Televisions
 
@@ -167,10 +168,11 @@
   - type: ActivatableUI
     key: enum.SurveillanceCameraMonitorUiKey.Key
   - type: ActivatableUIRequiresPower
+  - type: ActivatableUIRequiresVision
   - type: UserInterface
     interfaces:
-      - key: enum.SurveillanceCameraMonitorUiKey.Key
-        type: SurveillanceCameraMonitorBoundUserInterface
+        enum.SurveillanceCameraMonitorUiKey.Key:
+          type: SurveillanceCameraMonitorBoundUserInterface
   - type: PointLight
     radius: 1.5
     energy: 1.6

@@ -61,6 +61,24 @@
     jumpsuit: ClothingUniformJumpskirtSec
 
 - type: loadout
+  id: SecurityJumpsuitGrey
+  equipment: SecurityJumpsuitGrey
+
+- type: startingGear
+  id: SecurityJumpsuitGrey
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSecGrey
+
+- type: loadout
+  id: SecurityJumpskirtGrey
+  equipment: SecurityJumpskirtGrey
+
+- type: startingGear
+  id: SecurityJumpskirtGrey
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtSecGrey
+
+- type: loadout
   id: SeniorOfficerJumpsuit
   equipment: SeniorOfficerJumpsuit
   effects:
@@ -92,7 +110,7 @@
 - type: startingGear
   id: SecurityBackpack
   equipment:
-    back: ClothingBackpackSecurityFilled
+    back: ClothingBackpackSecurity
 
 - type: loadout
   id: SecuritySatchel
@@ -101,7 +119,7 @@
 - type: startingGear
   id: SecuritySatchel
   equipment:
-    back: ClothingBackpackSatchelSecurityFilled
+    back: ClothingBackpackSatchelSecurity
 
 - type: loadout
   id: SecurityDuffel
@@ -110,7 +128,26 @@
 - type: startingGear
   id: SecurityDuffel
   equipment:
-    back: ClothingBackpackDuffelSecurityFilled
+    back: ClothingBackpackDuffelSecurity
+
+# Belt
+- type: loadout
+  id: SecurityBelt
+  equipment: SecurityBelt
+
+- type: startingGear
+  id: SecurityBelt
+  equipment:
+    belt: ClothingBeltSecurityFilled
+
+- type: loadout
+  id: SecurityWebbing
+  equipment: SecurityWebbing
+
+- type: startingGear
+  id: SecurityWebbing
+  equipment:
+    belt: ClothingBeltSecurityWebbingFilled
 
 # Outerclothing
 - type: loadout
@@ -151,13 +188,22 @@
     shoes: ClothingShoesBootsCombatFilled
 
 - type: loadout
+  id: JackBoots
+  equipment: JackBoots
+
+- type: startingGear
+  id: JackBoots
+  equipment:
+    shoes: ClothingShoesBootsJackFilled
+
+- type: loadout
   id: SecurityWinterBoots
   equipment: SecurityWinterBoots
 
 - type: startingGear
   id: SecurityWinterBoots
   equipment:
-    shoes: ClothingShoesBootsWinterSec
+    shoes: ClothingShoesBootsWinterSecFilled
 
 # PDA
 - type: loadout

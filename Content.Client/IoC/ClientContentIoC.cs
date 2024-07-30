@@ -2,6 +2,7 @@ using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Clickable;
+using Content.Client.DebugMon;
 using Content.Client.Eui;
 using Content.Client.Fullscreen;
 using Content.Client.GhostKick;
@@ -18,6 +19,9 @@ using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Administration.Logs;
+using Content.Client.Guidebook;
+using Content.Client.Lobby;
+using Content.Client.Replay;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Players.PlayTimeTracking;
 
@@ -41,7 +45,6 @@ namespace Content.Client.IoC
             collection.Register<EuiManager, EuiManager>();
             collection.Register<IVoteManager, VoteManager>();
             collection.Register<ChangelogManager, ChangelogManager>();
-            collection.Register<RulesManager, RulesManager>();
             collection.Register<ViewportManager, ViewportManager>();
             collection.Register<ISharedAdminLogManager, SharedAdminLogManager>();
             collection.Register<GhostKickManager>();
@@ -51,6 +54,7 @@ namespace Content.Client.IoC
             collection.Register<ContentReplayPlaybackManager, ContentReplayPlaybackManager>();
             collection.Register<ISharedPlaytimeManager, JobRequirementsManager>();
             collection.Register<MappingManager>();
+            collection.Register<DebugMonitorManager>();
         }
     }
 }

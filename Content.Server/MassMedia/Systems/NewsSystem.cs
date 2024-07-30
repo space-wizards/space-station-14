@@ -20,6 +20,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Popups;
 using Content.Shared.StationRecords;
 using Robust.Shared.Audio.Systems;
+using Content.Server.Chat.Managers;
 
 namespace Content.Server.MassMedia.Systems;
 
@@ -35,6 +36,7 @@ public sealed class NewsSystem : SharedNewsSystem
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly IdCardSystem _idCardSystem = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
 
     public override void Initialize()
     {
@@ -92,15 +94,12 @@ public sealed class NewsSystem : SharedNewsSystem
         if (msg.ArticleNum >= articles.Count)
             return;
 
-        if (msg.Session.AttachedEntity is not { } actor)
-            return;
-
         var article = articles[msg.ArticleNum];
-        if (CheckDeleteAccess(article, ent, actor))
+        if (CheckDeleteAccess(article, ent, msg.Actor))
         {
             _adminLogger.Add(
                 LogType.Chat, LogImpact.Medium,
-                $"{ToPrettyString(actor):actor} deleted news article {article.Title} by {article.Author}: {article.Content}"
+                $"{ToPrettyString(msg.Actor):actor} deleted news article {article.Title} by {article.Author}: {article.Content}"
                 );
 
             articles.RemoveAt(msg.ArticleNum);
@@ -138,14 +137,11 @@ public sealed class NewsSystem : SharedNewsSystem
         if (!TryGetArticles(ent, out var articles))
             return;
 
-        if (msg.Session.AttachedEntity is not { } author)
-            return;
-
-        if (!_accessReader.FindStationRecordKeys(author, out _))
+        if (!_accessReader.FindStationRecordKeys(msg.Actor, out _))
             return;
 
         string? authorName = null;
-        if (_idCardSystem.TryFindIdCard(author, out var idCard))
+        if (_idCardSystem.TryFindIdCard(msg.Actor, out var idCard))
             authorName = idCard.Comp.FullName;
 
         var title = msg.Title.Trim();
@@ -164,8 +160,14 @@ public sealed class NewsSystem : SharedNewsSystem
         _adminLogger.Add(
             LogType.Chat,
             LogImpact.Medium,
-            $"{ToPrettyString(author):actor} created news article {article.Title} by {article.Author}: {article.Content}"
+            $"{ToPrettyString(msg.Actor):actor} created news article {article.Title} by {article.Author}: {article.Content}"
             );
+
+        _chatManager.SendAdminAnnouncement(Loc.GetString("news-publish-admin-announcement",
+            ("actor", msg.Actor),
+            ("title", article.Title),
+            ("author", article.Author ?? Loc.GetString("news-read-ui-no-author"))
+            ));
 
         articles.Add(article);
 
@@ -248,14 +250,14 @@ public sealed class NewsSystem : SharedNewsSystem
 
     private void UpdateWriterUi(Entity<NewsWriterComponent> ent)
     {
-        if (!_ui.TryGetUi(ent, NewsWriterUiKey.Key, out var ui))
+        if (!_ui.HasUi(ent, NewsWriterUiKey.Key))
             return;
 
         if (!TryGetArticles(ent, out var articles))
             return;
 
         var state = new NewsWriterBoundUserInterfaceState(articles.ToArray(), ent.Comp.PublishEnabled, ent.Comp.NextPublish);
-        _ui.SetUiState(ui, state);
+        _ui.SetUiState(ent.Owner, NewsWriterUiKey.Key, state);
     }
 
     private void UpdateReaderUi(Entity<NewsReaderCartridgeComponent> ent, EntityUid loaderUid)

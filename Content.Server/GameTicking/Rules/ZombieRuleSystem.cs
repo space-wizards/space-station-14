@@ -1,4 +1,3 @@
-using Content.Server.Actions;
 using Content.Server.Antag;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules.Components;
@@ -8,18 +7,14 @@ using Content.Server.RoundEnd;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Zombies;
-using Content.Shared.CCVar;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Roles;
 using Content.Shared.Zombies;
-using Robust.Server.Player;
-using Robust.Shared.Configuration;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Globalization;
 
@@ -27,86 +22,88 @@ namespace Content.Server.GameTicking.Rules;
 
 public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly ZombieSystem _zombie = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
-    [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
-        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
-        SubscribeLocalEvent<PendingZombieComponent, ZombifySelfActionEvent>(OnZombifySelf);
+        SubscribeLocalEvent<InitialInfectedRoleComponent, GetBriefingEvent>(OnGetBriefing);
+        SubscribeLocalEvent<ZombieRoleComponent, GetBriefingEvent>(OnGetBriefing);
+        SubscribeLocalEvent<IncurableZombieComponent, ZombifySelfActionEvent>(OnZombifySelf);
     }
 
-    /// <summary>
-    /// Set the required minimum players for this gamemode to start
-    /// </summary>
-    protected override void Added(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    private void OnGetBriefing(EntityUid uid, InitialInfectedRoleComponent component, ref GetBriefingEvent args)
     {
-        base.Added(uid, component, gameRule, args);
-
-        gameRule.MinPlayers = _cfg.GetCVar(CCVars.ZombieMinPlayers);
+        if (!TryComp<MindComponent>(uid, out var mind) || mind.OwnedEntity == null)
+            return;
+        if (HasComp<ZombieRoleComponent>(uid)) // don't show both briefings
+            return;
+        args.Append(Loc.GetString("zombie-patientzero-role-greeting"));
     }
 
-    private void OnRoundEndText(RoundEndTextAppendEvent ev)
+    private void OnGetBriefing(EntityUid uid, ZombieRoleComponent component, ref GetBriefingEvent args)
     {
-        foreach (var zombie in EntityQuery<ZombieRuleComponent>())
+        if (!TryComp<MindComponent>(uid, out var mind) || mind.OwnedEntity == null)
+            return;
+        args.Append(Loc.GetString("zombie-infection-greeting"));
+    }
+
+    protected override void AppendRoundEndText(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule,
+        ref RoundEndTextAppendEvent args)
+    {
+        base.AppendRoundEndText(uid, component, gameRule, ref args);
+
+        // This is just the general condition thing used for determining the win/lose text
+        var fraction = GetInfectedFraction(true, true);
+
+        if (fraction <= 0)
+            args.AddLine(Loc.GetString("zombie-round-end-amount-none"));
+        else if (fraction <= 0.25)
+            args.AddLine(Loc.GetString("zombie-round-end-amount-low"));
+        else if (fraction <= 0.5)
+            args.AddLine(Loc.GetString("zombie-round-end-amount-medium", ("percent", Math.Round((fraction * 100), 2).ToString(CultureInfo.InvariantCulture))));
+        else if (fraction < 1)
+            args.AddLine(Loc.GetString("zombie-round-end-amount-high", ("percent", Math.Round((fraction * 100), 2).ToString(CultureInfo.InvariantCulture))));
+        else
+            args.AddLine(Loc.GetString("zombie-round-end-amount-all"));
+
+        var antags = _antag.GetAntagIdentifiers(uid);
+        args.AddLine(Loc.GetString("zombie-round-end-initial-count", ("initialCount", antags.Count)));
+        foreach (var (_, data, entName) in antags)
         {
-            // This is just the general condition thing used for determining the win/lose text
-            var fraction = GetInfectedFraction(true, true);
+            args.AddLine(Loc.GetString("zombie-round-end-user-was-initial",
+                ("name", entName),
+                ("username", data.UserName)));
+        }
 
-            if (fraction <= 0)
-                ev.AddLine(Loc.GetString("zombie-round-end-amount-none"));
-            else if (fraction <= 0.25)
-                ev.AddLine(Loc.GetString("zombie-round-end-amount-low"));
-            else if (fraction <= 0.5)
-                ev.AddLine(Loc.GetString("zombie-round-end-amount-medium", ("percent", Math.Round((fraction * 100), 2).ToString(CultureInfo.InvariantCulture))));
-            else if (fraction < 1)
-                ev.AddLine(Loc.GetString("zombie-round-end-amount-high", ("percent", Math.Round((fraction * 100), 2).ToString(CultureInfo.InvariantCulture))));
-            else
-                ev.AddLine(Loc.GetString("zombie-round-end-amount-all"));
-
-            ev.AddLine(Loc.GetString("zombie-round-end-initial-count", ("initialCount", zombie.InitialInfectedNames.Count)));
-            foreach (var player in zombie.InitialInfectedNames)
+        var healthy = GetHealthyHumans();
+        // Gets a bunch of the living players and displays them if they're under a threshold.
+        // InitialInfected is used for the threshold because it scales with the player count well.
+        if (healthy.Count <= 0 || healthy.Count > 2 * antags.Count)
+            return;
+        args.AddLine("");
+        args.AddLine(Loc.GetString("zombie-round-end-survivor-count", ("count", healthy.Count)));
+        foreach (var survivor in healthy)
+        {
+            var meta = MetaData(survivor);
+            var username = string.Empty;
+            if (_mindSystem.TryGetMind(survivor, out _, out var mind) && mind.Session != null)
             {
-                ev.AddLine(Loc.GetString("zombie-round-end-user-was-initial",
-                    ("name", player.Key),
-                    ("username", player.Value)));
+                username = mind.Session.Name;
             }
 
-            var healthy = GetHealthyHumans();
-            // Gets a bunch of the living players and displays them if they're under a threshold.
-            // InitialInfected is used for the threshold because it scales with the player count well.
-            if (healthy.Count <= 0 || healthy.Count > 2 * zombie.InitialInfectedNames.Count)
-                continue;
-            ev.AddLine("");
-            ev.AddLine(Loc.GetString("zombie-round-end-survivor-count", ("count", healthy.Count)));
-            foreach (var survivor in healthy)
-            {
-                var meta = MetaData(survivor);
-                var username = string.Empty;
-                if (_mindSystem.TryGetMind(survivor, out _, out var mind) && mind.Session != null)
-                {
-                    username = mind.Session.Name;
-                }
-
-                ev.AddLine(Loc.GetString("zombie-round-end-user-was-survivor",
-                    ("name", meta.EntityName),
-                    ("username", username)));
-            }
+            args.AddLine(Loc.GetString("zombie-round-end-user-was-survivor",
+                ("name", meta.EntityName),
+                ("username", username)));
         }
     }
 
@@ -134,41 +131,23 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             _roundEnd.EndRound();
     }
 
-    /// <summary>
-    /// Check we have enough players to start this game mode, if not - cancel and announce
-    /// </summary>
-    private void OnStartAttempt(RoundStartAttemptEvent ev)
-    {
-        TryRoundStartAttempt(ev, Loc.GetString("zombie-title"));
-    }
-
     protected override void Started(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
 
-        var delay = _random.Next(component.MinStartDelay, component.MaxStartDelay);
-        component.StartTime = _timing.CurTime + delay;
+        component.NextRoundEndCheck = _timing.CurTime + component.EndCheckDelay;
     }
 
     protected override void ActiveTick(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
-
-        if (component.StartTime.HasValue && component.StartTime < _timing.CurTime)
-        {
-            InfectInitialPlayers(component);
-            component.StartTime = null;
-            component.NextRoundEndCheck = _timing.CurTime + component.EndCheckDelay;
-        }
-
-        if (component.NextRoundEndCheck.HasValue && component.NextRoundEndCheck < _timing.CurTime)
-        {
-            CheckRoundEnd(component);
-            component.NextRoundEndCheck = _timing.CurTime + component.EndCheckDelay;
-        }
+        if (!component.NextRoundEndCheck.HasValue || component.NextRoundEndCheck > _timing.CurTime)
+            return;
+        CheckRoundEnd(component);
+        component.NextRoundEndCheck = _timing.CurTime + component.EndCheckDelay;
     }
 
-    private void OnZombifySelf(EntityUid uid, PendingZombieComponent component, ZombifySelfActionEvent args)
+    private void OnZombifySelf(EntityUid uid, IncurableZombieComponent component, ZombifySelfActionEvent args)
     {
         _zombie.ZombifyEntity(uid);
         if (component.Action != null)
@@ -231,82 +210,5 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             healthy.Add(uid);
         }
         return healthy;
-    }
-
-    /// <summary>
-    ///     Infects the first players with the passive zombie virus.
-    ///     Also records their names for the end of round screen.
-    /// </summary>
-    /// <remarks>
-    ///     The reason this code is written separately is to facilitate
-    ///     allowing this gamemode to be started midround. As such, it doesn't need
-    ///     any information besides just running.
-    /// </remarks>
-    private void InfectInitialPlayers(ZombieRuleComponent component)
-    {
-        //Get all players with initial infected enabled, and exclude those with the ZombieImmuneComponent and roles with CanBeAntag = False
-        var eligiblePlayers = _antagSelection.GetEligiblePlayers(
-            _playerManager.Sessions,
-            component.PatientZeroPrototypeId,
-            includeAllJobs: false,
-            customExcludeCondition: player => HasComp<ZombieImmuneComponent>(player) || HasComp<InitialInfectedExemptComponent>(player)
-            );
-
-        //And get all players, excluding ZombieImmune and roles with CanBeAntag = False - to fill any leftover initial infected slots
-        var allPlayers = _antagSelection.GetEligiblePlayers(
-            _playerManager.Sessions,
-            component.PatientZeroPrototypeId,
-            acceptableAntags: Shared.Antag.AntagAcceptability.All,
-            includeAllJobs: false ,
-            ignorePreferences: true,
-            customExcludeCondition: HasComp<ZombieImmuneComponent>
-            );
-
-        //If there are no players to choose, abort
-        if (allPlayers.Count == 0)
-            return;
-
-        //How many initial infected should we select
-        var initialInfectedCount = _antagSelection.CalculateAntagCount(_playerManager.PlayerCount, component.PlayersPerInfected, component.MaxInitialInfected);
-
-        //Choose the required number of initial infected from the eligible players, making up any shortfall by choosing from all players
-        var initialInfected = _antagSelection.ChooseAntags(initialInfectedCount, eligiblePlayers, allPlayers);
-
-        //Make brain craving
-        MakeZombie(initialInfected, component);
-
-        //Send the briefing, play greeting sound
-        _antagSelection.SendBriefing(initialInfected, Loc.GetString("zombie-patientzero-role-greeting"), Color.Plum, component.InitialInfectedSound);
-    }
-
-    private void MakeZombie(List<EntityUid> entities, ZombieRuleComponent component)
-    {
-        foreach (var entity in entities)
-        {
-            MakeZombie(entity, component);
-        }
-    }
-    private void MakeZombie(EntityUid entity, ZombieRuleComponent component)
-    {
-        if (!_mindSystem.TryGetMind(entity, out var mind, out var mindComponent))
-            return;
-
-        //Add the role to the mind silently (to avoid repeating job assignment)
-        _roles.MindAddRole(mind, new InitialInfectedRoleComponent { PrototypeId = component.PatientZeroPrototypeId }, silent: true);
-        EnsureComp<InitialInfectedComponent>(entity);
-
-        //Add the zombie components and grace period
-        var pending = EnsureComp<PendingZombieComponent>(entity);
-        pending.GracePeriod = _random.Next(component.MinInitialInfectedGrace, component.MaxInitialInfectedGrace);
-        EnsureComp<ZombifyOnDeathComponent>(entity);
-        EnsureComp<IncurableZombieComponent>(entity);
-
-        //Add the zombify action
-        _action.AddAction(entity, ref pending.Action, component.ZombifySelfActionPrototype, entity);
-
-        //Get names for the round end screen, incase they leave mid-round
-        var inCharacterName = MetaData(entity).EntityName;
-        var accountName = mindComponent.Session == null ? string.Empty : mindComponent.Session.Name;
-        component.InitialInfectedNames.Add(inCharacterName, accountName);
     }
 }

@@ -9,7 +9,6 @@ using Content.Server.Inventory;
 using Content.Server.Mind;
 using Content.Server.Mind.Commands;
 using Content.Server.NPC;
-using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Server.Roles;
@@ -21,12 +20,11 @@ using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Humanoid;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Systems;
-using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Nutrition.AnimalHusbandry;
 using Content.Shared.Nutrition.Components;
@@ -37,6 +35,7 @@ using Content.Shared.Zombies;
 using Content.Shared.Prying.Components;
 using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio.Systems;
+using Content.Shared.Ghost.Roles.Components;
 
 namespace Content.Server.Zombies
 {
@@ -79,7 +78,7 @@ namespace Content.Server.Zombies
         /// <param name="target">the entity being zombified</param>
         /// <param name="mobState"></param>
         /// <remarks>
-        ///     ALRIGHT BIG BOY. YOU'VE COME TO THE LAYER OF THE BEAST. THIS IS YOUR WARNING.
+        ///     ALRIGHT BIG BOYS, GIRLS AND ANYONE ELSE. YOU'VE COME TO THE LAYER OF THE BEAST. THIS IS YOUR WARNING.
         ///     This function is the god function for zombie stuff, and it is cursed. I have
         ///     attempted to label everything thouroughly for your sanity. I have attempted to
         ///     rewrite this, but this is how it shall lie eternal. Turn back now.
@@ -106,6 +105,7 @@ namespace Content.Server.Zombies
             RemComp<ReproductiveComponent>(target);
             RemComp<ReproductivePartnerComponent>(target);
             RemComp<LegsParalyzedComponent>(target);
+            RemComp<ComplexInteractionComponent>(target);
 
             //funny voice
             var accentType = "zombie";
@@ -220,11 +220,14 @@ namespace Content.Server.Zombies
             _faction.AddFaction(target, "Zombie");
 
             //gives it the funny "Zombie ___" name.
-            var meta = MetaData(target);
-            zombiecomp.BeforeZombifiedEntityName = meta.EntityName;
-            _metaData.SetEntityName(target, Loc.GetString("zombie-name-prefix", ("target", meta.EntityName)), meta);
+            _nameMod.RefreshNameModifiers(target);
 
             _identity.QueueIdentityUpdate(target);
+
+            var htn = EnsureComp<HTNComponent>(target);
+            htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
+            htn.Blackboard.SetValue(NPCBlackboard.Owner, target);
+            _npc.SleepNPC(target, htn);
 
             //He's gotta have a mind
             var hasMind = _mind.TryGetMind(target, out var mindId, out _);
@@ -241,9 +244,6 @@ namespace Content.Server.Zombies
             }
             else
             {
-                var htn = EnsureComp<HTNComponent>(target);
-                htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
-                htn.Blackboard.SetValue(NPCBlackboard.Owner, target);
                 _npc.WakeNPC(target, htn);
             }
 

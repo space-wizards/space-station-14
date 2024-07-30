@@ -1,5 +1,5 @@
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   id: BaseAPC
   name: APC
   description: A control terminal for the area's electrical systems.
@@ -35,21 +35,26 @@
     - state: display-charging
       shader: unshaded
       map: ["enum.ApcVisualLayers.ChargeState"]
-    - state: lock0-unlocked
+    - state: lock0-locked
       shader: unshaded
       map: ["enum.ApcVisualLayers.InterfaceLock"]
-    - state: lock1-unlocked
+      visible: false
+    - state: lock1-locked
       shader: unshaded
       map: ["enum.ApcVisualLayers.PanelLock"]
-    - state: channel0-auto_on
+      visible: false
+    - state: lock1-locked #when these are implemented get actual sprites.
       shader: unshaded
       map: ["enum.ApcVisualLayers.Equipment"]
-    - state: channel1-auto_on
+      visible: false
+    - state: lock1-locked
       shader: unshaded
       map: ["enum.ApcVisualLayers.Lighting"]
-    - state: channel2-auto_on
+      visible: false
+    - state: lock1-locked
       shader: unshaded
       map: ["enum.ApcVisualLayers.Environment"]
+      visible: false
   - type: Appearance
   - type: ApcVisuals
   - type: Battery
@@ -81,8 +86,8 @@
   - type: ExtensionCableProvider
   - type: UserInterface
     interfaces:
-    - key: enum.ApcUiKey.Key
-      type: ApcBoundUserInterface
+      enum.ApcUiKey.Key:
+        type: ApcBoundUserInterface
   - type: ActivatableUI
     inHandsOnly: false
     singleUser: true
@@ -141,7 +146,7 @@
 
 # APC under construction
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   id: APCFrame
   name: APC frame
   description: A control terminal for the area's electrical systems, lacking the electronics.
@@ -199,7 +204,7 @@
 - type: entity
   parent: BaseAPC
   id: APCBasic
-  suffix: Basic, 50kW
+  suffix: Basic, 50kJ
   components:
   - type: Battery
     maxCharge: 50000
@@ -208,7 +213,7 @@
 - type: entity
   parent: BaseAPC
   id: APCHighCapacity
-  suffix: High Capacity, 100kW
+  suffix: High Capacity, 100kJ
   components:
   - type: Battery
     maxCharge: 100000
@@ -217,7 +222,7 @@
 - type: entity
   parent: BaseAPC
   id: APCSuperCapacity
-  suffix: Super Capacity, 150kW
+  suffix: Super Capacity, 150kJ
   components:
   - type: Battery
     maxCharge: 150000
@@ -226,7 +231,7 @@
 - type: entity
   parent: BaseAPC
   id: APCHyperCapacity
-  suffix: Hyper Capacity, 200kW
+  suffix: Hyper Capacity, 200kJ
   components:
   - type: Battery
     maxCharge: 200000

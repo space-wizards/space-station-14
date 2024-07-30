@@ -17,10 +17,12 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Wires;
 using Content.Server.Body.Systems;
+using Content.Shared.Tools.Systems;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Mech.Systems;
 
@@ -35,6 +37,8 @@ public sealed partial class MechSystem : SharedMechSystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -87,7 +91,7 @@ public sealed partial class MechSystem : SharedMechSystem
             return;
         }
 
-        if (TryComp<ToolComponent>(args.Used, out var tool) && tool.Qualities.Contains("Prying") && component.BatterySlot.ContainedEntity != null)
+        if (_toolSystem.HasQuality(args.Used, "Prying") && component.BatterySlot.ContainedEntity != null)
         {
             var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.BatteryRemovalDelay,
                 new RemoveBatteryEvent(), uid, target: uid, used: args.Target)
@@ -222,7 +226,7 @@ public sealed partial class MechSystem : SharedMechSystem
         if (args.Cancelled || args.Handled)
             return;
 
-        if (component.PilotWhitelist != null && !component.PilotWhitelist.IsValid(args.User))
+        if (_whitelistSystem.IsWhitelistFail(component.PilotWhitelist, args.User))
         {
             _popup.PopupEntity(Loc.GetString("mech-no-enter", ("item", uid)), args.User);
             return;
@@ -303,15 +307,14 @@ public sealed partial class MechSystem : SharedMechSystem
         {
             EquipmentStates = ev.States
         };
-        var ui = _ui.GetUi(uid, MechUiKey.Key);
-        _ui.SetUiState(ui, state);
+        _ui.SetUiState(uid, MechUiKey.Key, state);
     }
 
     public override void BreakMech(EntityUid uid, MechComponent? component = null)
     {
         base.BreakMech(uid, component);
 
-        _ui.TryCloseAll(uid, MechUiKey.Key);
+        _ui.CloseUi(uid, MechUiKey.Key);
         _actionBlocker.UpdateCanMove(uid);
     }
 

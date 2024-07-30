@@ -48,30 +48,21 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
 
     private void GeneratorSwitchOutputMessage(EntityUid uid, PortableGeneratorComponent component, PortableGeneratorSwitchOutputMessage args)
     {
-        if (args.Session.AttachedEntity == null)
-            return;
-
         var fuelGenerator = Comp<FuelGeneratorComponent>(uid);
         if (fuelGenerator.On)
             return;
 
-        _switchable.Cycle(uid, args.Session.AttachedEntity.Value);
+        _switchable.Cycle(uid, args.Actor);
     }
 
     private void GeneratorStopMessage(EntityUid uid, PortableGeneratorComponent component, PortableGeneratorStopMessage args)
     {
-        if (args.Session.AttachedEntity == null)
-            return;
-
-        StopGenerator(uid, component, args.Session.AttachedEntity.Value);
+        StopGenerator(uid, component, args.Actor);
     }
 
     private void GeneratorStartMessage(EntityUid uid, PortableGeneratorComponent component, PortableGeneratorStartMessage args)
     {
-        if (args.Session.AttachedEntity == null)
-            return;
-
-        StartGenerator(uid, component, args.Session.AttachedEntity.Value);
+        StartGenerator(uid, component, args.Actor);
     }
 
     private void StartGenerator(EntityUid uid, PortableGeneratorComponent component, EntityUid user)
@@ -234,7 +225,7 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         if (powerSupplier.Net is { IsConnectedNetwork: true } net)
             networkStats = (net.NetworkNode.LastCombinedLoad, net.NetworkNode.LastCombinedSupply);
 
-        _uiSystem.TrySetUiState(
+        _uiSystem.SetUiState(
             uid,
             GeneratorComponentUiKey.Key,
             new PortableGeneratorComponentBuiState(fuelComp, fuel, clogged, networkStats));

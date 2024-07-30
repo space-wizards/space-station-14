@@ -18,15 +18,14 @@ public sealed class PermanentBlindnessSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<PermanentBlindnessComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<PermanentBlindnessComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PermanentBlindnessComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<PermanentBlindnessComponent, EyeDamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<PermanentBlindnessComponent, ExaminedEvent>(OnExamined);
     }
 
     private void OnExamined(Entity<PermanentBlindnessComponent> blindness, ref ExaminedEvent args)
     {
-        if (args.IsInDetailsRange && !_net.IsClient)
+        if (args.IsInDetailsRange && !_net.IsClient && blindness.Comp.Blindness == 0)
         {
             args.PushMarkup(Loc.GetString("permanent-blindness-trait-examined", ("target", Identity.Entity(blindness, EntityManager))));
         }
@@ -37,28 +36,17 @@ public sealed class PermanentBlindnessSystem : EntitySystem
         _blinding.UpdateIsBlind(blindness.Owner);
     }
 
-    private void OnStartup(Entity<PermanentBlindnessComponent> blindness, ref ComponentStartup args)
+    private void OnMapInit(Entity<PermanentBlindnessComponent> blindness, ref MapInitEvent args)
     {
         if (!_entityManager.TryGetComponent<BlindableComponent>(blindness, out var blindable))
             return;
 
-        var damageToDeal = (int) BlurryVisionComponent.MaxMagnitude - blindable.EyeDamage;
-
-        if (damageToDeal <= 0)
-            return;
-
-        _blinding.AdjustEyeDamage(blindness.Owner, damageToDeal);
-    }
-
-    private void OnDamageChanged(Entity<PermanentBlindnessComponent> blindness, ref EyeDamageChangedEvent args)
-    {
-        if (args.Damage >= BlurryVisionComponent.MaxMagnitude)
-            return;
-
-        if (!_entityManager.TryGetComponent<BlindableComponent>(blindness, out var blindable))
-            return;
-
-        var damageRestoration = (int) BlurryVisionComponent.MaxMagnitude - args.Damage;
-        _blinding.AdjustEyeDamage(blindness.Owner, damageRestoration);
+        if (blindness.Comp.Blindness != 0)
+            _blinding.SetMinDamage(new Entity<BlindableComponent?>(blindness.Owner, blindable), blindness.Comp.Blindness);
+        else
+        {
+            var maxMagnitudeInt = (int) BlurryVisionComponent.MaxMagnitude;
+            _blinding.SetMinDamage(new Entity<BlindableComponent?>(blindness.Owner, blindable), maxMagnitudeInt);
+        }
     }
 }

@@ -155,10 +155,10 @@
     state: icon
   - type: ThiefUndeterminedBackpack
     possibleSets:
-    # - TO DO Thief pinpointer needed
+    # TODO Thief pinpointer needed
     - ChemistrySet
     - ToolsSet
-    - ChameleonSet # - TO DO Chameleon stump PR needed
+    - ChameleonSet # TODO Chameleon stump PR needed
     - SyndieSet
     - SleeperSet
     - CommunicatorSet
@@ -167,5 +167,5 @@
     key: enum.ThiefBackpackUIKey.Key
   - type: UserInterface
     interfaces:
-      - key: enum.ThiefBackpackUIKey.Key
+      enum.ThiefBackpackUIKey.Key:
         type: ThiefBackpackBoundUserInterface

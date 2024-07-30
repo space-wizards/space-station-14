@@ -32,7 +32,7 @@
       node: grille
       deconstructionTarget: start
     - type: Damageable
-      damageContainer: Inorganic
+      damageContainer: StructuralInorganic
       damageModifierSet: PerforatedMetallic
     - type: PowerConsumer
       showInMonitor: false

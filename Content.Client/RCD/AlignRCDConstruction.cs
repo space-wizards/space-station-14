@@ -16,9 +16,9 @@ public sealed class AlignRCDConstruction : PlacementMode
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly RCDSystem _rcdSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    private readonly SharedMapSystem _mapSystem;
+    private readonly RCDSystem _rcdSystem;
+    private readonly SharedTransformSystem _transformSystem;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
 
@@ -32,12 +32,7 @@ public sealed class AlignRCDConstruction : PlacementMode
     /// </summary>
     public AlignRCDConstruction(PlacementManager pMan) : base(pMan)
     {
-        var dependencies = IoCManager.Instance!;
-        _entityManager = dependencies.Resolve<IEntityManager>();
-        _mapManager = dependencies.Resolve<IMapManager>();
-        _playerManager = dependencies.Resolve<IPlayerManager>();
-        _stateManager = dependencies.Resolve<IStateManager>();
-
+        IoCManager.InjectDependencies(this);
         _mapSystem = _entityManager.System<SharedMapSystem>();
         _rcdSystem = _entityManager.System<RCDSystem>();
         _transformSystem = _entityManager.System<SharedTransformSystem>();
@@ -50,7 +45,7 @@ public sealed class AlignRCDConstruction : PlacementMode
         _unalignedMouseCoords = ScreenToCursorGrid(mouseScreen);
         MouseCoords = _unalignedMouseCoords.AlignWithClosestGridTile(SearchBoxSize, _entityManager, _mapManager);
 
-        var gridId = MouseCoords.GetGridUid(_entityManager);
+        var gridId = _transformSystem.GetGrid(MouseCoords);
 
         if (!_entityManager.TryGetComponent<MapGridComponent>(gridId, out var mapGrid))
             return;
@@ -80,7 +75,7 @@ public sealed class AlignRCDConstruction : PlacementMode
         if (!_entityManager.TryGetComponent<TransformComponent>(player, out var xform))
             return false;
 
-        if (!xform.Coordinates.InRange(_entityManager, _transformSystem, position, SharedInteractionSystem.InteractionRange))
+        if (!_transformSystem.InRange(xform.Coordinates, position, SharedInteractionSystem.InteractionRange))
         {
             InvalidPlaceColor = InvalidPlaceColor.WithAlpha(0);
             return false;
@@ -110,8 +105,8 @@ public sealed class AlignRCDConstruction : PlacementMode
 
         if (currentState is not GameplayStateBase screen)
             return false;
-
-        var target = screen.GetClickedEntity(_unalignedMouseCoords.ToMap(_entityManager, _transformSystem));
+        
+        var target = screen.GetClickedEntity(_transformSystem.ToMapCoordinates(_unalignedMouseCoords));
 
         // Determine if the RCD operation is valid or not
         if (!_rcdSystem.IsRCDOperationStillValid(heldEntity.Value, rcd, mapGridData.Value, target, player.Value, false))

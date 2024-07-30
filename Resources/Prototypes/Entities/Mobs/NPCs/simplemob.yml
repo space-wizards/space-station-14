@@ -25,6 +25,7 @@
     - ForcedSleep
     - TemporaryBlindness
     - Pacified
+    - Flashed
   - type: Buckle
   - type: StandingState
   - type: Tag
@@ -99,6 +100,7 @@
       - TemporaryBlindness
       - Pacified
       - StaminaModifier
+      - Flashed
   - type: Bloodstream
     bloodMaxVolume: 150
   - type: MobPrice

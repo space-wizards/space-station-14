@@ -1,9 +1,7 @@
 - type: entity
-  id: PlasticFlapsClear
+  id: PlasticFlapsBase
   parent: BaseStructureDynamic
-  name: plastic flaps
-  suffix: Clear
-  description: Heavy duty, plastic flaps. Definitely can't get past those. No way.
+  abstract: true
   placement:
     mode: SnapgridCenter
   components:
@@ -23,7 +21,7 @@
           bounds: "-0.49,-0.49,0.49,0.49"
         density: 100
         mask:
-        - TabletopMachineMask
+        - Impassable
         layer:
         - MidImpassable
   - type: Damageable
@@ -40,15 +38,23 @@
   - type: IconSmooth
     key: walls
     mode: NoSprite
-  - type: Construction
-    graph: PlasticFlapsGraph
-    node: plasticFlaps
   - type: StaticPrice
     price: 83
 
 - type: entity
+  id: PlasticFlapsClear
+  parent: PlasticFlapsBase
+  name: plastic flaps
+  suffix: Clear
+  description: Heavy duty, plastic flaps. Definitely can't get past those. No way.
+  components:
+  - type: Construction
+    graph: PlasticFlapsGraph
+    node: plasticFlaps
+
+- type: entity
   id: PlasticFlapsOpaque
-  parent: PlasticFlapsClear
+  parent: PlasticFlapsBase
   name: plastic flaps
   suffix: Opaque
   description: Heavy duty, plastic flaps. Definitely can't get past those. No way.
@@ -61,7 +67,7 @@
           bounds: "-0.49,-0.49,0.49,0.49"
         density: 100
         mask:
-        - TabletopMachineMask
+        - Impassable
         layer:
         - Opaque
         - MidImpassable
@@ -72,7 +78,7 @@
 
 - type: entity
   id: PlasticFlapsAirtightClear
-  parent: PlasticFlapsClear
+  parent: PlasticFlapsBase
   name: airtight plastic flaps
   suffix: Airtight, Clear
   description: Heavy duty, slightly stronger, airtight plastic flaps. Definitely can't get past those. No way.
@@ -86,15 +92,12 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Airtight
-  - type: Construction
-    graph: PlasticFlapsGraph
-    node: airtightFlaps
   - type: StaticPrice
     price: 100
 
 - type: entity
   id: PlasticFlapsAirtightOpaque
-  parent: PlasticFlapsOpaque
+  parent: PlasticFlapsBase
   name: airtight plastic flaps
   suffix: Airtight, Opaque
   description: Heavy duty, slightly stronger, airtight plastic flaps. Definitely can't get past those. No way.
@@ -108,8 +111,5 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Airtight
-  - type: Construction
-    graph: PlasticFlapsGraph
-    node: airtightopaqueFlaps
   - type: StaticPrice
     price: 100

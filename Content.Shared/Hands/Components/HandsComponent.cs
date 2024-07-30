@@ -1,3 +1,4 @@
+using Content.Shared.DisplacementMap;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -38,11 +39,11 @@ public sealed partial class HandsComponent : Component
     public bool DisableExplosionRecursion = false;
 
     /// <summary>
-    ///     The amount of throw impulse per distance the player is from the throw target.
+    ///     Modifies the speed at which items are thrown.
     /// </summary>
-    [DataField("throwForceMultiplier")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
-    public float ThrowForceMultiplier { get; set; } = 10f; //should be tuned so that a thrown item lands about under the player's cursor
+    public float BaseThrowspeed { get; set; } = 11f;
 
     /// <summary>
     ///     Distance after which longer throw targets stop increasing throw impulse.
@@ -76,6 +77,9 @@ public sealed partial class HandsComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan ThrowCooldown = TimeSpan.FromSeconds(0.5f);
+
+    [DataField]
+    public DisplacementData? HandDisplacement;
 }
 
 [Serializable, NetSerializable]
@@ -126,9 +130,43 @@ public sealed class HandsComponentState : ComponentState
 /// <summary>
 ///     What side of the body this hand is on.
 /// </summary>
+/// <seealso cref="HandUILocation"/>
+/// <seealso cref="HandLocationExt"/>
 public enum HandLocation : byte
 {
     Left,
     Middle,
     Right
+}
+
+/// <summary>
+/// What side of the UI a hand is on.
+/// </summary>
+/// <seealso cref="HandLocationExt"/>
+/// <seealso cref="HandLocation"/>
+public enum HandUILocation : byte
+{
+    Left,
+    Right
+}
+
+/// <summary>
+/// Helper functions for working with <see cref="HandLocation"/>.
+/// </summary>
+public static class HandLocationExt
+{
+    /// <summary>
+    /// Convert a <see cref="HandLocation"/> into the appropriate <see cref="HandUILocation"/>.
+    /// This maps "middle" hands to <see cref="HandUILocation.Right"/>.
+    /// </summary>
+    public static HandUILocation GetUILocation(this HandLocation location)
+    {
+        return location switch
+        {
+            HandLocation.Left => HandUILocation.Left,
+            HandLocation.Middle => HandUILocation.Right,
+            HandLocation.Right => HandUILocation.Right,
+            _ => throw new ArgumentOutOfRangeException(nameof(location), location, null)
+        };
+    }
 }

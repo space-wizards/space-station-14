@@ -107,7 +107,7 @@ namespace Content.Client.Actions
             UpdateAction(uid, component);
         }
 
-        protected override void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
+        public override void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
         {
             if (!ResolveActionData(actionId, ref action))
                 return;
@@ -247,7 +247,10 @@ namespace Content.Client.Actions
             if (action.ClientExclusive)
             {
                 if (instantAction.Event != null)
+                {
                     instantAction.Event.Performer = user;
+                    instantAction.Event.Action = actionId;
+                }
 
                 PerformAction(user, actions, actionId, instantAction, instantAction.Event, GameTiming.CurTime);
             }

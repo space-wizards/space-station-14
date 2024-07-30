@@ -1,12 +1,8 @@
-using Content.Server.Communications;
-using Content.Server.Mind;
 using Content.Server.Ninja.Events;
-using Content.Server.Objectives.Components;
-using Content.Shared.Communications;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Systems;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
-using Content.Shared.Research.Components;
-using Content.Shared.Toggleable;
 
 namespace Content.Server.Ninja.Systems;
 
@@ -15,85 +11,44 @@ namespace Content.Server.Ninja.Systems;
 /// </summary>
 public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 {
-    [Dependency] private readonly EmagProviderSystem _emagProvider = default!;
-    [Dependency] private readonly CommsHackerSystem _commsHacker = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly SharedStunProviderSystem _stunProvider = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
     [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
 
-    public override void Initialize()
+    protected override void EnableGloves(Entity<NinjaGlovesComponent> ent, Entity<SpaceNinjaComponent> user)
     {
-        base.Initialize();
+        base.EnableGloves(ent, user);
 
-        SubscribeLocalEvent<NinjaGlovesComponent, ToggleActionEvent>(OnToggleAction);
-    }
-
-    /// <summary>
-    /// Toggle gloves, if the user is a ninja wearing a ninja suit.
-    /// </summary>
-    private void OnToggleAction(EntityUid uid, NinjaGlovesComponent comp, ToggleActionEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Handled = true;
-
-        var user = args.Performer;
-        // need to wear suit to enable gloves
-        if (!TryComp<SpaceNinjaComponent>(user, out var ninja)
-            || ninja.Suit == null
-            || !HasComp<NinjaSuitComponent>(ninja.Suit.Value))
-        {
-            Popup.PopupEntity(Loc.GetString("ninja-gloves-not-wearing-suit"), user, user);
-            return;
-        }
-
-        // show its state to the user
-        var enabling = comp.User == null;
-        Appearance.SetData(uid, ToggleVisuals.Toggled, enabling);
-        var message = Loc.GetString(enabling ? "ninja-gloves-on" : "ninja-gloves-off");
-        Popup.PopupEntity(message, user, user);
-
-        if (enabling)
-        {
-            EnableGloves(uid, comp, user, ninja);
-        }
-        else
-        {
-            DisableGloves(uid, comp);
-        }
-    }
-
-    private void EnableGloves(EntityUid uid, NinjaGlovesComponent comp, EntityUid user, SpaceNinjaComponent ninja)
-    {
         // can't use abilities if suit is not equipped, this is checked elsewhere but just making sure to satisfy nullability
-        if (ninja.Suit == null)
+        if (user.Comp.Suit is not {} suit)
             return;
 
-        comp.User = user;
-        Dirty(uid, comp);
-        _ninja.AssignGloves(user, uid, ninja);
+        if (!_mind.TryGetMind(user, out var mindId, out var mind))
+            return;
 
-        var drainer = EnsureComp<BatteryDrainerComponent>(user);
-        var stun = EnsureComp<StunProviderComponent>(user);
-        _stunProvider.SetNoPowerPopup(user, "ninja-no-power", stun);
+        foreach (var ability in ent.Comp.Abilities)
+        {
+            // non-objective abilities are added in shared already
+            if (ability.Objective is not {} objId)
+                continue;
+
+            // prevent doing an objective multiple times by toggling gloves after doing them
+            // if it's not tied to an objective always add them anyway
+            if (!_mind.TryFindObjective((mindId, mind), objId, out var obj))
+            {
+                Log.Error($"Ninja glove ability of {ent} referenced missing objective {ability.Objective} of {_mind.MindOwnerLoggingString(mind)}");
+                continue;
+            }
+
+            if (!_objectives.IsCompleted(obj.Value, (mindId, mind)))
+                EntityManager.AddComponents(user, ability.Components);
+        }
+
+        // let abilities that use battery power work
         if (_ninja.GetNinjaBattery(user, out var battery, out var _))
         {
-            var ev = new NinjaBatteryChangedEvent(battery.Value, ninja.Suit.Value);
+            var ev = new NinjaBatteryChangedEvent(battery.Value, suit);
             RaiseLocalEvent(user, ref ev);
-        }
-
-        var emag = EnsureComp<EmagProviderComponent>(user);
-        _emagProvider.SetWhitelist(user, comp.DoorjackWhitelist, emag);
-
-        EnsureComp<ResearchStealerComponent>(user);
-        // prevent calling in multiple threats by toggling gloves after
-        if (_mind.TryGetObjectiveComp<TerrorConditionComponent>(user, out var obj) && !obj.CalledInThreat)
-        {
-            var hacker = EnsureComp<CommsHackerComponent>(user);
-            var rule = _ninja.NinjaRule(user);
-            if (rule != null)
-                _commsHacker.SetThreats(user, rule.Threats, hacker);
         }
     }
 }

@@ -1,9 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
+using Content.Client.DisplacementMap;
 using Content.Client.Inventory;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
@@ -11,6 +14,7 @@ using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
 using static Robust.Client.GameObjects.SpriteComponent;
@@ -46,7 +50,9 @@ public sealed class ClientClothingSystem : ClothingSystem
     };
 
     [Dependency] private readonly IResourceCache _cache = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly DisplacementMapSystem _displacement = default!;
 
     public override void Initialize()
     {
@@ -61,15 +67,14 @@ public sealed class ClientClothingSystem : ClothingSystem
 
     private void OnAppearanceUpdate(EntityUid uid, InventoryComponent component, ref AppearanceChangeEvent args)
     {
-        // May need to update jumpsuit stencils if the sex changed. Also required to properly set the stencil on init
+        // May need to update displacement maps if the sex changed. Also required to properly set the stencil on init
         if (args.Sprite == null)
             return;
 
-        if (_inventorySystem.TryGetSlotEntity(uid, Jumpsuit, out var suit, component)
-            && TryComp(suit, out ClothingComponent? clothing))
+        var enumerator = _inventorySystem.GetSlotEnumerator((uid, component));
+        while (enumerator.NextItem(out var item, out var slot))
         {
-            SetGenderedMask(uid, args.Sprite, clothing);
-            return;
+            RenderEquipment(uid, item, slot.Name, component);
         }
 
         // No clothing equipped -> make sure the layer is hidden, though this should already be handled by on-unequip.
@@ -111,6 +116,7 @@ public sealed class ClientClothingSystem : ClothingSystem
                 i++;
             }
 
+            item.MappedLayer = key;
             args.Layers.Add((key, layer));
         }
     }
@@ -151,13 +157,9 @@ public sealed class ClientClothingSystem : ClothingSystem
 
         // species specific
         if (speciesId != null && rsi.TryGetState($"{state}-{speciesId}", out _))
-        {
             state = $"{state}-{speciesId}";
-        }
         else if (!rsi.TryGetState(state, out _))
-        {
             return false;
-        }
 
         var layer = new PrototypeLayerData();
         layer.RsiPath = rsi.Path.ToString();
@@ -179,14 +181,6 @@ public sealed class ClientClothingSystem : ClothingSystem
 
     private void OnDidUnequip(EntityUid uid, SpriteComponent component, DidUnequipEvent args)
     {
-        // Hide jumpsuit mask layer.
-        if (args.Slot == Jumpsuit
-            && TryComp(uid, out SpriteComponent? sprite)
-            && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out var maskLayer))
-        {
-                sprite.LayerSetVisible(maskLayer, false);
-        }
-
         if (!TryComp(uid, out InventorySlotsComponent? inventorySlots))
             return;
 
@@ -231,9 +225,6 @@ public sealed class ClientClothingSystem : ClothingSystem
             return;
         }
 
-        if (slot == Jumpsuit)
-            SetGenderedMask(equipee, sprite, clothingComponent);
-
         if (!_inventorySystem.TryGetSlot(equipee, slot, out var slotDef, inventory))
             return;
 
@@ -266,6 +257,25 @@ public sealed class ClientClothingSystem : ClothingSystem
         // bookmark to determine where in the list of layers we should insert the clothing layers.
         bool slotLayerExists = sprite.LayerMapTryGet(slot, out var index);
 
+        // Select displacement maps
+        var displacementData = inventory.Displacements.GetValueOrDefault(slot); //Default unsexed map
+
+        var equipeeSex = CompOrNull<HumanoidAppearanceComponent>(equipee)?.Sex;
+        if (equipeeSex != null)
+        {
+            switch (equipeeSex)
+            {
+                case Sex.Male:
+                    if (inventory.MaleDisplacements.Count > 0)
+                        displacementData = inventory.MaleDisplacements.GetValueOrDefault(slot);
+                    break;
+                case Sex.Female:
+                    if (inventory.FemaleDisplacements.Count > 0)
+                        displacementData = inventory.FemaleDisplacements.GetValueOrDefault(slot);
+                    break;
+            }
+        }
+
         // add the new layers
         foreach (var (key, layerData) in ev.Layers)
         {
@@ -284,12 +294,14 @@ public sealed class ClientClothingSystem : ClothingSystem
 
                 if (layerData.Color != null)
                     sprite.LayerSetColor(key, layerData.Color.Value);
+                if (layerData.Scale != null)
+                    sprite.LayerSetScale(key, layerData.Scale.Value);
             }
             else
                 index = sprite.LayerMapReserveBlank(key);
 
             if (sprite[index] is not Layer layer)
-                return;
+                continue;
 
             // In case no RSI is given, use the item's base RSI as a default. This cuts down on a lot of unnecessary yaml entries.
             if (layerData.RsiPath == null
@@ -300,56 +312,19 @@ public sealed class ClientClothingSystem : ClothingSystem
                 layer.SetRsi(clothingSprite.BaseRSI);
             }
 
-            // Another "temporary" fix for clothing stencil masks.
-            // Sprite layer redactor when
-            // Sprite "redactor" just a week away.
-            if (slot == Jumpsuit)
-                layerData.Shader ??= "StencilDraw";
-
             sprite.LayerSetData(index, layerData);
             layer.Offset += slotDef.Offset;
+
+            if (displacementData is not null)
+            {
+                //Checking that the state is not tied to the current race. In this case we don't need to use the displacement maps.
+                if (layerData.State is not null && inventory.SpeciesId is not null && layerData.State.EndsWith(inventory.SpeciesId))
+                    continue;
+
+                _displacement.TryAddDisplacement(displacementData, sprite, index, key, revealedLayers);
+            }
         }
 
         RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers), true);
-    }
-
-
-    /// <summary>
-    ///     Sets a sprite's gendered mask based on gender (obviously).
-    /// </summary>
-    /// <param name="sprite">Sprite to modify</param>
-    /// <param name="humanoid">Humanoid, to get gender from</param>
-    /// <param name="clothing">Clothing component, to get mask sprite type</param>
-    private void SetGenderedMask(EntityUid uid, SpriteComponent sprite, ClothingComponent clothing)
-    {
-        if (!sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out var layer))
-            return;
-
-        ClothingMask mask;
-        string prefix;
-
-        switch (CompOrNull<HumanoidAppearanceComponent>(uid)?.Sex)
-        {
-            case Sex.Male:
-                mask = clothing.MaleMask;
-                prefix = "male_";
-                break;
-            case Sex.Female:
-                mask = clothing.FemaleMask;
-                prefix = "female_";
-                break;
-            default:
-                mask = clothing.UnisexMask;
-                prefix = "unisex_";
-                break;
-        }
-
-        sprite.LayerSetState(layer, mask switch
-        {
-            ClothingMask.NoMask => $"{prefix}none",
-            ClothingMask.UniformTop => $"{prefix}top",
-            _ => $"{prefix}full",
-        });
-        sprite.LayerSetVisible(layer, true);
     }
 }
