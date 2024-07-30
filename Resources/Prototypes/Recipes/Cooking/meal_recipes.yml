@@ -233,7 +233,7 @@
     FoodBreadBun: 1
     FoodCheeseSlice: 1
     FoodEgg: 2
-    
+
 - type: microwaveMealRecipe
   id: RecipeBurgerMcrib
   name: BBQ rib sandwich recipe
@@ -313,7 +313,7 @@
     FoodCheeseSlice: 2
     FoodTomato: 2
     FoodEgg: 2
-    
+
 - type: microwaveMealRecipe
   id: RecipeTofuBurger
   name: tofu burger recipe
@@ -591,6 +591,17 @@
     FoodCheeseSlice: 1
     FoodTomato: 1
 
+- type: microwaveMealRecipe
+  id: RecipeUraniumPizza
+  name: spicy rock pizza recipe
+  result: FoodPizzaUranium
+  time: 30
+  solids:
+    FoodDoughFlat: 1
+    FoodChiliPepper: 2
+    FoodTomato: 2
+    SheetUranium1: 2
+
 #Italian
 - type: microwaveMealRecipe
   id: RecipeBoiledSpaghetti
@@ -636,13 +647,13 @@
   result: FoodNoodlesChowmein
   time: 10
   reagents:
-    Egg: 18
+    Egg: 6
   solids:
     FoodNoodlesBoiled: 1
     FoodEggplant: 1
     FoodCarrot: 1
     FoodCorn: 1
-    
+
 - type: microwaveMealRecipe
   id: RecipeOatmeal
   name: oatmeal recipe
@@ -702,10 +713,9 @@
   result: FoodRiceEgg
   time: 15
   reagents:
-    Egg: 18
+    Egg: 6
   solids:
     FoodRiceBoiled: 1
-    FoodEgg: 1
     FoodCarrot: 1
 
 - type: microwaveMealRecipe
@@ -1443,15 +1453,6 @@
   solids:
     FoodButter: 2
     FoodSnackChocolateBar: 2
-- type: microwaveMealRecipe
-  id: RecipeEggBoiled
-  name: Number.1 Handwarmer in Spaced Areas
-  result: FoodEggBoiled
-  time: 10
-  reagents:
-    Water: 5
-  solids:
-    FoodEgg: 1
 
 #Donks i guess
 - type: microwaveMealRecipe
@@ -1892,7 +1893,6 @@
   solids:
     FoodCannabisButter: 2
     FoodSnackChocolateBar: 2
-    
 
 - type: microwaveMealRecipe
   id: RecipeCornInButter
