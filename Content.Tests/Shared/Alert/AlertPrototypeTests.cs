@@ -39,9 +39,9 @@ namespace Content.Tests.Shared.Alert
         [Test]
         public void TestAlertKey()
         {
-            Assert.That(new AlertKey(AlertType.HumanHealth, null), Is.Not.EqualTo(AlertKey.ForCategory(AlertCategory.Health)));
-            Assert.That((new AlertKey(null, AlertCategory.Health)), Is.EqualTo(AlertKey.ForCategory(AlertCategory.Health)));
-            Assert.That((new AlertKey(AlertType.Buckled, AlertCategory.Health)), Is.EqualTo(AlertKey.ForCategory(AlertCategory.Health)));
+            Assert.That(new AlertKey("HumanHealth", null), Is.Not.EqualTo(AlertKey.ForCategory("Health")));
+            Assert.That((new AlertKey(null, "Health")), Is.EqualTo(AlertKey.ForCategory("Health")));
+            Assert.That((new AlertKey("Buckled", "Health")), Is.EqualTo(AlertKey.ForCategory("Health")));
         }
 
         [TestCase(0, "/Textures/Interface/Alerts/Human/human.rsi/human0.png")]

@@ -1,4 +1,5 @@
 using Content.Server.Atmos.Components;
+using Content.Shared.Atmos.Components;
 
 namespace Content.Server.Atmos.Piping.Components;
 
@@ -28,7 +29,7 @@ public sealed partial class AtmosDeviceComponent : Component
     /// <summary>
     ///     If non-null, the grid that this device is part of.
     /// </summary>
-    [DataField]
+    [ViewVariables]
     public EntityUid? JoinedGrid = null;
 
     /// <summary>
@@ -46,18 +47,25 @@ public sealed partial class AtmosDeviceComponent : Component
 /// Use this for atmos devices instead of <see cref="EntitySystem.Update"/>.
 /// </summary>
 [ByRefEvent]
-public readonly struct AtmosDeviceUpdateEvent
+public readonly struct AtmosDeviceUpdateEvent(float dt, Entity<GridAtmosphereComponent, GasTileOverlayComponent>? grid, Entity<MapAtmosphereComponent?>? map)
 {
     /// <summary>
     /// Time elapsed since last update, in seconds. Multiply values used in the update handler
     /// by this number to make them tickrate-invariant. Use this number instead of AtmosphereSystem.AtmosTime.
     /// </summary>
-    public readonly float dt;
+    public readonly float dt = dt;
 
-    public AtmosDeviceUpdateEvent(float dt)
-    {
-        this.dt = dt;
-    }
+    /// <summary>
+    /// The grid that this device is currently on.
+    /// </summary>
+    public readonly Entity<GridAtmosphereComponent?, GasTileOverlayComponent?>? Grid = grid == null
+        ? null
+        : (grid.Value, grid.Value, grid.Value);
+
+    /// <summary>
+    /// The map that the device & grid is on.
+    /// </summary>
+    public readonly Entity<MapAtmosphereComponent?>? Map = map;
 }
 
 /// <summary>

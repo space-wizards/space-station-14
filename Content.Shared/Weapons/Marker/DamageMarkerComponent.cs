@@ -10,6 +10,7 @@ namespace Content.Shared.Weapons.Marker;
 /// Marks an entity to take additional damage
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedDamageMarkerSystem))]
+[AutoGenerateComponentPause]
 public sealed partial class DamageMarkerComponent : Component
 {
     /// <summary>
@@ -34,5 +35,6 @@ public sealed partial class DamageMarkerComponent : Component
     public EntityUid Marker;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("endTime", customTypeSerializer:typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [AutoPausedField]
     public TimeSpan EndTime;
 }

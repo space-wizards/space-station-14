@@ -1,5 +1,4 @@
-﻿using Content.Shared.Humanoid.Prototypes;
-using Robust.Shared.Containers;
+﻿using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 
 namespace Content.Shared.IdentityManagement.Components;

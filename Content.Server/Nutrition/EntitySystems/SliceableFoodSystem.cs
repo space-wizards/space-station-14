@@ -1,10 +1,10 @@
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Nutrition.Components;
+using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -17,8 +17,6 @@ namespace Content.Server.Nutrition.EntitySystems
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly TransformSystem _xformSystem = default!;
 
         public override void Initialize()
@@ -66,6 +64,8 @@ namespace Content.Server.Nutrition.EntitySystems
             FillSlice(sliceUid, lostSolution);
 
             _audio.PlayPvs(component.Sound, transform.Coordinates, AudioParams.Default.WithVolume(-2));
+            var ev = new SliceFoodEvent();
+            RaiseLocalEvent(uid, ref ev);
 
             // Decrease size of item based on count - Could implement in the future
             // Bug with this currently is the size in a container is not updated
@@ -109,15 +109,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
             // try putting the slice into the container if the food being sliced is in a container!
             // this lets you do things like slice a pizza up inside of a hot food cart without making a food-everywhere mess
-            if (_containerSystem.TryGetContainingContainer(uid, out var container) && _containerSystem.CanInsert(sliceUid, container))
-            {
-                _containerSystem.Insert(sliceUid, container);
-            }
-            else // puts it down "right-side up"
-            {
-                _xformSystem.AttachToGridOrMap(sliceUid);
-                _xformSystem.SetLocalRotation(sliceUid, 0);
-            }
+            _xformSystem.DropNextTo(sliceUid, (uid, transform));
+            _xformSystem.SetLocalRotation(sliceUid, 0);
 
             return sliceUid;
         }
@@ -142,15 +135,8 @@ namespace Content.Server.Nutrition.EntitySystems
             var trashUid = Spawn(foodComp.Trash, _xformSystem.GetMapCoordinates(uid));
 
             // try putting the trash in the food's container too, to be consistent with slice spawning?
-            if (_containerSystem.TryGetContainingContainer(uid, out var container) && _containerSystem.CanInsert(trashUid, container))
-            {
-                _containerSystem.Insert(trashUid, container);
-            }
-            else // puts it down "right-side up"
-            {
-                _xformSystem.AttachToGridOrMap(trashUid);
-                _xformSystem.SetLocalRotation(trashUid, 0);
-            }
+            _xformSystem.DropNextTo(trashUid, uid);
+            _xformSystem.SetLocalRotation(trashUid, 0);
 
             QueueDel(uid);
         }

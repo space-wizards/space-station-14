@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Numerics;
 using Content.Client.Clothing.Systems;
 using Content.Client.Stylesheets;
@@ -74,13 +74,9 @@ public sealed partial class ChameleonMenu : DefaultWindow
             };
             button.OnPressed += _ => OnIdSelected?.Invoke(id);
             Grid.AddChild(button);
-
-            var texture = _sprite.GetPrototypeIcon(proto);
-            button.AddChild(new TextureRect
-            {
-                Stretch = TextureRect.StretchMode.KeepAspectCentered,
-                Texture = texture.Default
-            });
+            var entityPrototypeView = new EntityPrototypeView();
+            button.AddChild(entityPrototypeView);
+            entityPrototypeView.SetPrototype(proto);
         }
     }
 

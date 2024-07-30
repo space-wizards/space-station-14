@@ -5,9 +5,15 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Throwing
 {
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateComponentPause]
     public sealed partial class ThrownItemComponent : Component
     {
+        /// <summary>
+        /// Should the in-air throwing animation play.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public bool Animate = true;
+
         /// <summary>
         ///     The entity that threw this entity.
         /// </summary>
@@ -24,6 +30,7 @@ namespace Content.Shared.Throwing
         ///     Compared to <see cref="IGameTiming.CurTime"/> to land this entity, if any.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+        [AutoPausedField]
         public TimeSpan? LandTime;
 
         /// <summary>

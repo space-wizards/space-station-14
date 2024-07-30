@@ -5,7 +5,7 @@
     state: seed
   product: CrateHydroponicsSeedsExotic
   cost: 1000
-  category: Hydroponics
+  category: cargoproduct-category-name-hydroponics
   group: market
 
 - type: cargoProduct
@@ -15,7 +15,7 @@
     state: seed
   product: CrateHydroponicsSeedsMedicinal
   cost: 500
-  category: Hydroponics
+  category: cargoproduct-category-name-hydroponics
   group: market
 
 - type: cargoProduct
@@ -25,7 +25,7 @@
     state: icon
   product: CrateHydroponicsTools
   cost: 500
-  category: Hydroponics
+  category: cargoproduct-category-name-hydroponics
   group: market
 
 - type: cargoProduct
@@ -35,7 +35,7 @@
     state: seed
   product: CrateHydroponicsSeeds
   cost: 550
-  category: Hydroponics
+  category: cargoproduct-category-name-hydroponics
   group: market
 
 - type: cargoProduct
@@ -45,5 +45,5 @@
     state: jug
   product: CratePlantBGone
   cost: 750
-  category: Hydroponics
+  category: cargoproduct-category-name-hydroponics
   group: market

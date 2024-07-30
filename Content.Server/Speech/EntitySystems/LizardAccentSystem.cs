@@ -5,6 +5,12 @@ namespace Content.Server.Speech.EntitySystems;
 
 public sealed class LizardAccentSystem : EntitySystem
 {
+    private static readonly Regex RegexLowerS = new("s+");
+    private static readonly Regex RegexUpperS = new("S+");
+    private static readonly Regex RegexInternalX = new(@"(\w)x");
+    private static readonly Regex RegexLowerEndX = new(@"\bx([\-|r|R]|\b)");
+    private static readonly Regex RegexUpperEndX = new(@"\bX([\-|r|R]|\b)");
+
     public override void Initialize()
     {
         base.Initialize();
@@ -16,15 +22,15 @@ public sealed class LizardAccentSystem : EntitySystem
         var message = args.Message;
 
         // hissss
-        message = Regex.Replace(message, "s+", "sss");
+        message = RegexLowerS.Replace(message, "sss");
         // hiSSS
-        message = Regex.Replace(message, "S+", "SSS");
+        message = RegexUpperS.Replace(message, "SSS");
         // ekssit
-        message = Regex.Replace(message, @"(\w)x", "$1kss");
+        message = RegexInternalX.Replace(message, "$1kss");
         // ecks
-        message = Regex.Replace(message, @"\bx([\-|r|R]|\b)", "ecks$1");
+        message = RegexLowerEndX.Replace(message, "ecks$1");
         // eckS
-        message = Regex.Replace(message, @"\bX([\-|r|R]|\b)", "ECKS$1");
+        message = RegexUpperEndX.Replace(message, "ECKS$1");
 
         args.Message = message;
     }

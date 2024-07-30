@@ -1,6 +1,8 @@
-﻿using Content.Shared.Whitelist;
+﻿using Content.Shared.Alert;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Silicons.Borgs.Components;
@@ -13,12 +15,6 @@ namespace Content.Shared.Silicons.Borgs.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem)), AutoGenerateComponentState]
 public sealed partial class BorgChassisComponent : Component
 {
-    /// <summary>
-    /// Whether or not the borg is activated, meaning it has access to modules and a heightened movement speed
-    /// </summary>
-    [DataField("activated"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public bool Activated;
-
     #region Brain
     /// <summary>
     /// A whitelist for which entities count as valid brains
@@ -66,7 +62,7 @@ public sealed partial class BorgChassisComponent : Component
     /// <summary>
     /// The currently selected module
     /// </summary>
-    [DataField("selectedModule")]
+    [DataField("selectedModule"), AutoNetworkedField]
     public EntityUid? SelectedModule;
 
     #region Visuals
@@ -76,6 +72,12 @@ public sealed partial class BorgChassisComponent : Component
     [DataField("noMindState")]
     public string NoMindState = string.Empty;
     #endregion
+
+    [DataField]
+    public ProtoId<AlertPrototype> BatteryAlert = "BorgBattery";
+
+    [DataField]
+    public ProtoId<AlertPrototype> NoBatteryAlert = "BorgBatteryNone";
 }
 
 [Serializable, NetSerializable]

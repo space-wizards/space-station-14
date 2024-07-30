@@ -26,7 +26,7 @@ public sealed class FoldableSystem : EntitySystem
         SubscribeLocalEvent<FoldableComponent, StoreMobInItemContainerAttemptEvent>(OnStoreThisAttempt);
         SubscribeLocalEvent<FoldableComponent, StorageOpenAttemptEvent>(OnFoldableOpenAttempt);
 
-        SubscribeLocalEvent<FoldableComponent, BuckleAttemptEvent>(OnBuckleAttempt);
+        SubscribeLocalEvent<FoldableComponent, StrapAttemptEvent>(OnStrapAttempt);
     }
 
     private void OnHandleState(EntityUid uid, FoldableComponent component, ref AfterAutoHandleStateEvent args)
@@ -53,9 +53,9 @@ public sealed class FoldableSystem : EntitySystem
             args.Cancelled = true;
     }
 
-    public void OnBuckleAttempt(EntityUid uid, FoldableComponent comp, ref BuckleAttemptEvent args)
+    public void OnStrapAttempt(EntityUid uid, FoldableComponent comp, ref StrapAttemptEvent args)
     {
-        if (args.Buckling && comp.IsFolded)
+        if (comp.IsFolded)
             args.Cancelled = true;
     }
 
@@ -134,7 +134,7 @@ public sealed class FoldableSystem : EntitySystem
         AlternativeVerb verb = new()
         {
             Act = () => TryToggleFold(uid, component),
-            Text = component.IsFolded ? Loc.GetString("unfold-verb") : Loc.GetString("fold-verb"),
+            Text = component.IsFolded ? Loc.GetString(component.UnfoldVerbText) : Loc.GetString(component.FoldVerbText),
             Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/fold.svg.192dpi.png")),
 
             // If the object is unfolded and they click it, they want to fold it, if it's folded, they want to pick it up

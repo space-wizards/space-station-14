@@ -9,7 +9,6 @@
     state: id_mod
   - type: Tag
     tags:
-      - DroneUsable
       - IntercomElectronics
   - type: StaticPrice
     price: 55

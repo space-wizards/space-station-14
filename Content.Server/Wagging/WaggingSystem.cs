@@ -48,9 +48,6 @@ public sealed class WaggingSystem : EntitySystem
 
     private void OnMobStateChanged(EntityUid uid, WaggingComponent component, MobStateChangedEvent args)
     {
-        if (args.NewMobState != MobState.Dead)
-            return;
-
         if (component.Wagging)
             TryToggleWagging(uid, wagging: component);
     }

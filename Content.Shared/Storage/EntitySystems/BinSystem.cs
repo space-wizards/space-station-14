@@ -1,15 +1,15 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
 using Robust.Shared.Network;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -18,11 +18,11 @@ namespace Content.Shared.Storage.EntitySystems;
 /// </summary>
 public sealed class BinSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly ISharedAdminLogManager _admin = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public const string BinContainerId = "bin-container";
 
@@ -32,7 +32,7 @@ public sealed class BinSystem : EntitySystem
         SubscribeLocalEvent<BinComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<BinComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<BinComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
-        SubscribeLocalEvent<BinComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<BinComponent, InteractHandEvent>(OnInteractHand, before: new[] { typeof(SharedItemSystem) });
         SubscribeLocalEvent<BinComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
         SubscribeLocalEvent<BinComponent, GetVerbsEvent<AlternativeVerb>>(OnAltInteractHand);
         SubscribeLocalEvent<BinComponent, ExaminedEvent>(OnExamined);
@@ -73,7 +73,7 @@ public sealed class BinSystem : EntitySystem
 
     private void OnInteractHand(EntityUid uid, BinComponent component, InteractHandEvent args)
     {
-        if (args.Handled || !_timing.IsFirstTimePredicted)
+        if (args.Handled)
             return;
 
         EntityUid? toGrab = component.Items.LastOrDefault();
@@ -111,9 +111,6 @@ public sealed class BinSystem : EntitySystem
         if (handled || !canReach)
             return;
 
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         if (!TryInsertIntoBin(target, itemInHand, component))
             return;
 
@@ -135,12 +132,12 @@ public sealed class BinSystem : EntitySystem
         if (component.Items.Count >= component.MaxItems)
             return false;
 
-        if (component.Whitelist != null && !component.Whitelist.IsValid(toInsert))
+        if (_whitelistSystem.IsWhitelistFail(component.Whitelist, toInsert))
             return false;
 
         _container.Insert(toInsert, component.ItemContainer);
         component.Items.Add(toInsert);
-        Dirty(component);
+        Dirty(uid, component);
         return true;
     }
 
@@ -156,7 +153,7 @@ public sealed class BinSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return false;
 
-        if (!component.Items.Any())
+        if (component.Items.Count == 0)
             return false;
 
         if (toRemove == null || toRemove != component.Items.LastOrDefault())
@@ -166,7 +163,7 @@ public sealed class BinSystem : EntitySystem
             return false;
 
         component.Items.Remove(toRemove.Value);
-        Dirty(component);
+        Dirty(uid, component);
         return true;
     }
 }

@@ -2,6 +2,6 @@
     HorizontalExpand="True" Orientation="Vertical"
             Margin = "20 0 0 0" MinSize="160 0" >
     <Label Name="CBoundLabel" HorizontalAlignment="Center" />
-    <CheckBox Name="CBoundEnabled" HorizontalAlignment="Center" Text="{Loc 'Enable'}"/>
+    <CheckBox Name="CBoundEnabled" HorizontalAlignment="Center" Text="{Loc 'Enable'}" Pressed="True" />
     <FloatSpinBox Name="CSpinner" />
 </BoxContainer>

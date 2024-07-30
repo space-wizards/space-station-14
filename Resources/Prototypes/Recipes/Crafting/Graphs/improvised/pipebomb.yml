@@ -1,0 +1,43 @@
+- type: constructionGraph
+  id: PipeBomb
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: gunpowder
+      steps:
+      - tag: Pipe
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+        name: pipe
+      - material: Steel
+        amount: 1
+        doAfter: 3
+  - node: gunpowder
+    entity: PipeBombGunpowder
+    edges:
+    - to: cable
+      steps:
+      - material: Gunpowder
+        amount: 5
+        doAfter: 3
+  - node: cable
+    entity: PipeBombCable
+    edges:
+    - to: pipebomb
+      steps:
+      - material: Cable
+        amount: 5
+        doAfter: 2
+  - node: pipebomb
+    entity: PipeBomb
+    edges:
+    - to: cable
+      completed:
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 5
+      steps:
+      - tool: Cutting
+        doAfter: 2

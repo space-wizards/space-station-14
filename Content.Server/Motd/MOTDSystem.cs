@@ -24,14 +24,8 @@ public sealed class MOTDSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        _configurationManager.OnValueChanged(CCVars.MOTD, OnMOTDChanged, invokeImmediately: true);
+        Subs.CVar(_configurationManager, CCVars.MOTD, OnMOTDChanged, invokeImmediately: true);
         SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
-    }
-
-    public override void Shutdown()
-    {
-        _configurationManager.UnsubValueChanged(CCVars.MOTD, OnMOTDChanged);
-        base.Shutdown();
     }
 
     /// <summary>

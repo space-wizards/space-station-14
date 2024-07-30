@@ -26,11 +26,11 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
         base.Initialize();
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeNetworkEvent<AdminSoundEvent>(PlayAdminSound);
-        _cfg.OnValueChanged(CCVars.AdminSoundsEnabled, ToggleAdminSound, true);
+        Subs.CVar(_cfg, CCVars.AdminSoundsEnabled, ToggleAdminSound, true);
 
         SubscribeNetworkEvent<StationEventMusicEvent>(PlayStationEventMusic);
         SubscribeNetworkEvent<StopStationEventMusic>(StopStationEventMusic);
-        _cfg.OnValueChanged(CCVars.EventMusicEnabled, ToggleStationEventMusic, true);
+        Subs.CVar(_cfg, CCVars.EventMusicEnabled, ToggleStationEventMusic, true);
 
         SubscribeNetworkEvent<GameGlobalSoundEvent>(PlayGameSound);
     }

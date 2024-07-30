@@ -17,6 +17,10 @@
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
+    - type: RCDDeconstructable
+      cost: 2
+      delay: 0
+      fx: EffectRCDConstruct0  
     - type: Destructible
       thresholds:
         - trigger:

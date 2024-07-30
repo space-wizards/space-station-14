@@ -180,6 +180,8 @@
       - id: GrassBattlemap
       - id: DiceBag
         amount: 6
+      - id: PaperCNCSheet
+        amount: 6
 
 - type: entity
   id: CrateFunSadTromboneImplants
@@ -288,6 +290,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: SnapPopBox
       - id: CrazyGlue
         amount: 2
       - id: PlasticBanana
@@ -298,6 +301,7 @@
       - id: MrDips
         orGroup: Giftpool
       - id: RevolverCapGun
+      - id: BalloonNT
       - id: ClothingShoesClownLarge
       - id: ClothingHeadHatMagician
       - id: BeachBall

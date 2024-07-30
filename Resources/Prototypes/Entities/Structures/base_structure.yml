@@ -56,5 +56,13 @@
         - LowImpassable
   - type: Anchorable
 
+# For use with yaml composition, so that all wheeled structures can easily be changed.
+- type: entity
+  id: StructureWheeled
+  abstract: true
+  components:
+    - type: TileFrictionModifier
+      modifier: 0.4
+
 - type: Tag
   id: Structure

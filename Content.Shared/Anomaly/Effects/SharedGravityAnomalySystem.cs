@@ -1,20 +1,21 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Throwing;
 using Robust.Shared.Map;
 using Content.Shared.Physics;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Anomaly.Effects;
 
 public abstract class SharedGravityAnomalySystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -26,8 +27,8 @@ public abstract class SharedGravityAnomalySystem : EntitySystem
     private void OnAnomalyPulse(EntityUid uid, GravityAnomalyComponent component, ref AnomalyPulseEvent args)
     {
         var xform = Transform(uid);
-        var range = component.MaxThrowRange * args.Severity;
-        var strength = component.MaxThrowStrength * args.Severity;
+        var range = component.MaxThrowRange * args.Severity * args.PowerModifier;
+        var strength = component.MaxThrowStrength * args.Severity * args.PowerModifier;
         var lookup = _lookup.GetEntitiesInRange(uid, range, LookupFlags.Dynamic | LookupFlags.Sundries);
         var xformQuery = GetEntityQuery<TransformComponent>();
         var worldPos = _xform.GetWorldPosition(xform, xformQuery);
@@ -47,16 +48,21 @@ public abstract class SharedGravityAnomalySystem : EntitySystem
     private void OnSupercritical(EntityUid uid, GravityAnomalyComponent component, ref AnomalySupercriticalEvent args)
     {
         var xform = Transform(uid);
-        if (!_map.TryGetGrid(xform.GridUid, out var grid))
+        if (!TryComp(xform.GridUid, out MapGridComponent? grid))
             return;
 
         var worldPos = _xform.GetWorldPosition(xform);
-        var tileref = grid.GetTilesIntersecting(new Circle(worldPos, component.SpaceRange)).ToArray();
-        var tiles = tileref.Select(t => (t.GridIndices, Tile.Empty)).ToList();
-        grid.SetTiles(tiles);
+        var tileref = _mapSystem.GetTilesIntersecting(
+                xform.GridUid.Value,
+                grid,
+                new Circle(worldPos, component.SpaceRange))
+            .ToArray();
 
-        var range = component.MaxThrowRange * 2;
-        var strength = component.MaxThrowStrength * 2;
+        var tiles = tileref.Select(t => (t.GridIndices, Tile.Empty)).ToList();
+        _mapSystem.SetTiles(xform.GridUid.Value, grid, tiles);
+
+        var range = component.MaxThrowRange * 2 * args.PowerModifier;
+        var strength = component.MaxThrowStrength * 2 * args.PowerModifier;
         var lookup = _lookup.GetEntitiesInRange(uid, range, LookupFlags.Dynamic | LookupFlags.Sundries);
         var xformQuery = GetEntityQuery<TransformComponent>();
         var physQuery = GetEntityQuery<PhysicsComponent>();

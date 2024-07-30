@@ -93,6 +93,11 @@
   license: Custom
   source: https://gdc.sonniss.com
 
+- files: ["church_bell1.ogg", "church_bell2.ogg", "church_bell3.ogg", "church_bell4.ogg"]
+  copyright: '"the bell of my schools church.wav" by fonografico https://freesound.org/s/636113/". Pitch variations created via edits by Sphiral.'
+  license: "CC0-1.0"
+  source: https://freesound.org/people/fonografico/sounds/636113/?
+
 - files: ["pop.ogg"]
   copyright: '"pop.ogg" by mirrorcult of GitHub.com'
   license: "CC0-1.0"
@@ -216,3 +221,13 @@
   copyright: Bhijn and Myr (github username deathride58)
   license: CC0-1.0
   source: https://github.com/space-wizards/space-station-14/pull/23212
+
+- files: ["newplayerping.ogg"]
+  copyright: TGStation at 3df5d3b42bfb6b3b5adba1067ab41f83816255bb
+  license: CC-BY-SA-3.0
+  source: https://github.com/tgstation/tgstation/blob/3df5d3b42bfb6b3b5adba1067ab41f83816255bb/sound/misc/server-ready.ogg
+
+- files: [beep_landmine.ogg]
+  copyright: '"beep_landmine.ogg" by kaktuscsc of Discord for SS14'
+  license: "CC-BY-SA-3.0"
+  source: https://github.com/YuriyKiss/space-station-14/commit/971a135a9c83aed46e967aac9302ab5b35562b5f

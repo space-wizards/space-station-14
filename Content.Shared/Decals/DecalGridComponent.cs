@@ -12,7 +12,8 @@ namespace Content.Shared.Decals
     [NetworkedComponent]
     public sealed partial class DecalGridComponent : Component
     {
-        [DataField("chunkCollection", serverOnly: true)]
+        [Access(Other = AccessPermissions.ReadExecute)]
+        [DataField(serverOnly: true)]
         public DecalGridChunkCollection ChunkCollection = new(new ());
 
         /// <summary>
@@ -24,10 +25,6 @@ namespace Content.Shared.Decals
         ///     Tick at which PVS was last toggled. Ensures that all players receive a full update when toggling PVS.
         /// </summary>
         public GameTick ForceTick { get; set; }
-
-        // client-side data. I CBF creating a separate client-side comp for this. The server can survive with some empty dictionaries.
-        public readonly Dictionary<uint, int> DecalZIndexIndex = new();
-        public readonly SortedDictionary<int, SortedDictionary<uint, Decal>> DecalRenderIndex = new();
 
         [DataDefinition]
         [Serializable, NetSerializable]
@@ -65,46 +62,37 @@ namespace Content.Shared.Decals
     }
 
     [Serializable, NetSerializable]
-    public sealed class DecalGridState : ComponentState, IComponentDeltaState
+    public sealed class DecalGridState(Dictionary<Vector2i, DecalChunk> chunks) : ComponentState
     {
-        public Dictionary<Vector2i, DecalChunk> Chunks;
-        public bool FullState => AllChunks == null;
+        public Dictionary<Vector2i, DecalChunk> Chunks = chunks;
+    }
 
-        // required to infer deleted/missing chunks for delta states
-        public HashSet<Vector2i>? AllChunks;
+    [Serializable, NetSerializable]
+    public sealed class DecalGridDeltaState(Dictionary<Vector2i, DecalChunk> modifiedChunks, HashSet<Vector2i> allChunks)
+        : ComponentState, IComponentDeltaState<DecalGridState>
+    {
+        public Dictionary<Vector2i, DecalChunk> ModifiedChunks = modifiedChunks;
+        public HashSet<Vector2i> AllChunks = allChunks;
 
-        public DecalGridState(Dictionary<Vector2i, DecalChunk> chunks)
+        public void ApplyToFullState(DecalGridState state)
         {
-            Chunks = chunks;
-        }
-
-        public void ApplyToFullState(IComponentState fullState)
-        {
-            DebugTools.Assert(!FullState);
-            var state = (DecalGridState) fullState;
-            DebugTools.Assert(state.FullState);
-
             foreach (var key in state.Chunks.Keys)
             {
                 if (!AllChunks!.Contains(key))
                     state.Chunks.Remove(key);
             }
 
-            foreach (var (chunk, data) in Chunks)
+            foreach (var (chunk, data) in ModifiedChunks)
             {
                 state.Chunks[chunk] = new(data);
             }
         }
 
-        public IComponentState CreateNewFullState(IComponentState fullState)
+        public DecalGridState CreateNewFullState(DecalGridState state)
         {
-            DebugTools.Assert(!FullState);
-            var state = (DecalGridState) fullState;
-            DebugTools.Assert(state.FullState);
-
             var chunks = new Dictionary<Vector2i, DecalChunk>(state.Chunks.Count);
 
-            foreach (var (chunk, data) in Chunks)
+            foreach (var (chunk, data) in ModifiedChunks)
             {
                 chunks[chunk] = new(data);
             }

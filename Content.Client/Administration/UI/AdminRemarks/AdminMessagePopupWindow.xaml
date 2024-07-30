@@ -1,22 +1,36 @@
-<ui:FancyWindow xmlns="https://spacestation14.io"
-                xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
-                VerticalExpand="True" HorizontalExpand="True"
-                Title="{Loc admin-notes-message-window-title}"
-                MinSize="600 170">
-    <PanelContainer VerticalExpand="True" HorizontalExpand="True" StyleClasses="BackgroundDark">
-        <ScrollContainer HScrollEnabled="False" VerticalExpand="True" HorizontalExpand="True" Margin="4">
-            <BoxContainer Orientation="Vertical" SeparationOverride="10" VerticalAlignment="Bottom">
-                <Label Name="AdminLabel" Text="Loading..." />
-                <RichTextLabel Name="MessageLabel" />
+<Control xmlns="https://spacestation14.io"
+         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+    <PanelContainer MouseFilter="Stop">
+        <PanelContainer.PanelOverride>
+            <!-- semi-transparent background -->
+            <gfx:StyleBoxFlat BackgroundColor="#000000AA" />
+        </PanelContainer.PanelOverride>
+
+        <Control HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="600">
+            <PanelContainer StyleClasses="AngleRect" />
+
+            <BoxContainer Orientation="Vertical" Margin="4">
+                <RichTextLabel Name="Description" />
+
+                <!-- Contains actual messages -->
+                <ScrollContainer HScrollEnabled="False" Margin="4" VerticalExpand="True" ReturnMeasure="True" MaxHeight="400">
+                    <BoxContainer Orientation="Vertical" Name="MessageContainer" Margin="0 2 0 0" />
+                </ScrollContainer>
+
                 <Label Name="WaitLabel" />
                 <BoxContainer Orientation="Horizontal">
                     <Button Name="DismissButton"
-                            Text="{Loc 'admin-notes-message-dismiss'}" />
+                            Text="{Loc 'admin-notes-message-dismiss'}"
+                            Disabled="True"
+                            HorizontalExpand="True"
+                            StyleClasses="OpenRight" />
                     <Button Name="AcceptButton"
                             Text="{Loc 'admin-notes-message-accept'}"
-                            Disabled="True" />
+                            Disabled="True"
+                            HorizontalExpand="True"
+                            StyleClasses="OpenLeft" />
                 </BoxContainer>
             </BoxContainer>
-        </ScrollContainer>
+        </Control>
     </PanelContainer>
-</ui:FancyWindow>
+</Control>

@@ -55,7 +55,7 @@
         amount: 2
         doAfter: 1
   - node: logic_gate
-    entity: LogicGate
+    entity: LogicGateOr
     edges:
     - to: empty
       steps:
