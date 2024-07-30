@@ -489,8 +489,10 @@ namespace Content.Shared.Cuffs
             }
 
             if (!_hands.CanDrop(user, handcuff))
-                // TODO: Add a popup explaining why cuffing failed
+            {
+                _popup.PopupClient(Loc.GetString("handcuff-component-cannot-drop-cuffs", ("target", Identity.Name(target, EntityManager, user))), user, user);
                 return false;
+            }
 
             var cuffTime = handcuffComponent.CuffTime;
 
