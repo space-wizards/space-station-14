@@ -1,40 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Disarming a player now causes them to throw the disarmed item away from
-      them.
-    type: Tweak
-  id: 6511
-  time: '2024-05-02T12:32:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27589
-- author: fujiwaranao
-  changes:
-  - message: Renault now has additional fox noises.
-    type: Add
-  id: 6512
-  time: '2024-05-02T12:35:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27578
-- author: Doc-Michael
-  changes:
-  - message: CMO's Lab coat is now more resistant to chemical spills and minor cuts
-    type: Tweak
-  id: 6513
-  time: '2024-05-02T12:37:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27551
-- author: Vasilis
-  changes:
-  - message: Removed airtight flaps from the construction menu.
-    type: Remove
-  id: 6514
-  time: '2024-05-02T14:49:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27619
-- author: Lamrr
-  changes:
-  - message: Wine and beer bottles can now be inserted into the booze dispenser.
-    type: Fix
-  id: 6515
-  time: '2024-05-02T16:17:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27626
 - author: deltanedas
   changes:
   - message: "Ducky slippers now make you waddle. \U0001F986\U0001F986"
@@ -3784,3 +3748,40 @@
   id: 7010
   time: '2024-07-30T04:41:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29964
+- author: themias
+  changes:
+  - message: Fixed victim's fingerprints transferring onto an attacker's weapon
+    type: Fix
+  id: 7011
+  time: '2024-07-30T08:35:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30257
+- author: to4no_fix
+  changes:
+  - message: Now engineering access is needed to interact with the particle accelerator
+    type: Tweak
+  id: 7012
+  time: '2024-07-30T11:29:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30394
+- author: Cojoke-dot
+  changes:
+  - message: You can no longer get out of a disposal chute or container while knocked
+      over by trying to walk
+    type: Fix
+  id: 7013
+  time: '2024-07-30T13:53:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30391
+- author: Cojoke-dot
+  changes:
+  - message: QSI now swaps the top most valid container instead of QSI when placed
+      in an anchored container
+    type: Fix
+  id: 7014
+  time: '2024-07-30T14:07:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30241
+- author: TheShuEd
+  changes:
+  - message: industrial ore processor can now process diamonds
+    type: Fix
+  id: 7015
+  time: '2024-07-30T14:41:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30499
