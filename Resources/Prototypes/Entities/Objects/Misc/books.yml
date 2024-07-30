@@ -234,6 +234,7 @@
     openOnActivation: true
     guides:
     - Security
+    - Antagonists
 
 - type: entity
   id: BookHowToKeepStationClean
