@@ -100,6 +100,8 @@
     - id: FoodMeatCorgi
       amount: 2
     - id: MaterialHideCorgi
+  - type: StealTarget
+    stealGroup: AnimalIan
 
 - type: entity
   name: Runtime
