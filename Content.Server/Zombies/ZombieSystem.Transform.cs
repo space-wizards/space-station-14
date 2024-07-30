@@ -114,13 +114,6 @@ namespace Content.Server.Zombies
 
             EnsureComp<ReplacementAccentComponent>(target).Accent = accentType;
 
-            //This is needed for stupid entities that fuck up combat mode component
-            //in an attempt to make an entity not attack. This is the easiest way to do it.
-            var combat = EnsureComp<CombatModeComponent>(target);
-            RemComp<PacifiedComponent>(target);
-            _combat.SetCanDisarm(target, false, combat);
-            _combat.SetInCombatMode(target, true, combat);
-
             //This is the actual damage of the zombie. We assign the visual appearance
             //and range here because of stuff we'll find out later
             var melee = EnsureComp<MeleeWeaponComponent>(target);
@@ -246,6 +239,13 @@ namespace Content.Server.Zombies
             {
                 _npc.WakeNPC(target, htn);
             }
+
+            //This is needed for stupid entities that fuck up combat mode component
+            //in an attempt to make an entity not attack. This is the easiest way to do it.
+            var combat = EnsureComp<CombatModeComponent>(target);
+            RemComp<PacifiedComponent>(target);
+            _combat.SetCanDisarm(target, false, combat);
+            _combat.SetInCombatMode(target, true, combat);
 
             if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !hasMind) //this specific component gives build test trouble so pop off, ig
             {
