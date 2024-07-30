@@ -63,8 +63,13 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         // How many primitive tasks we've added since last record.
         var primitiveCount = 0;
 
+        int tasksProcessed = 0;
+
         while (tasksToProcess.TryDequeue(out var currentTask))
         {
+            if (tasksProcessed++ > _rootTask.MaximumTasks)
+                throw new Exception("HTN Planner exceeded maximum tasks");
+
             switch (currentTask)
             {
                 case HTNCompoundTask compound:

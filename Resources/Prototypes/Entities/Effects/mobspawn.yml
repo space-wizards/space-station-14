@@ -1,7 +1,7 @@
-﻿- type: entity
+- type: entity
   id: MobSpawnCrabQuartz
   name: mobspawner quartzcrab
-  noSpawn: True
+  categories: [ HideSpawnMenu, Spawner ]
   components:
   - type: Transform
     anchored: True
@@ -31,7 +31,7 @@
   id: MobSpawnCrabIron
   parent: MobSpawnCrabQuartz
   name: mobspawner ironcrab
-  noSpawn: True
+  categories: [ HideSpawnMenu, Spawner ]
   components:
   - type: Sprite
     sprite: /Textures/Effects/mobspawn.rsi
@@ -43,7 +43,7 @@
   id: MobSpawnCrabSilver
   parent: MobSpawnCrabQuartz
   name: mobspawner silvercrab
-  noSpawn: True
+  categories: [ HideSpawnMenu, Spawner ]
   components:
   - type: Sprite
     sprite: /Textures/Effects/mobspawn.rsi
@@ -55,7 +55,7 @@
   id: MobSpawnCrabUranium
   parent: MobSpawnCrabQuartz
   name: mobspawner uraniumcrab
-  noSpawn: True
+  categories: [ HideSpawnMenu, Spawner ]
   components:
   - type: Sprite
     sprite: /Textures/Effects/mobspawn.rsi
@@ -65,7 +65,7 @@
 
 - type: entity
   id: EffectAnomalyFloraBulb
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
     lifetime: 0.4
