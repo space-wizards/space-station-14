@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: "Removed Exterminators pending redesign. \U0001F525\U0001F44D\U0001F525"
-    type: Remove
-  id: 6475
-  time: '2024-04-28T05:45:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26978
 - author: Boaz1111
   changes:
   - message: Circuit imprinter recipes now cost less glass
