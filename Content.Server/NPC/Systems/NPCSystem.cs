@@ -57,6 +57,8 @@ namespace Content.Server.NPC.Systems
             if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind)
                 return;
 
+            RemComp<MouseRotatorComponent>(uid);
+            RemComp<NoRotateOnMoveComponent>(uid);
             WakeNPC(uid, component);
         }
 
@@ -105,8 +107,6 @@ namespace Content.Server.NPC.Systems
 
             Log.Debug($"Waking {ToPrettyString(uid)}");
             EnsureComp<ActiveNPCComponent>(uid);
-            RemComp<MouseRotatorComponent>(uid);
-            RemComp<NoRotateOnMoveComponent>(uid);
         }
 
         public void SleepNPC(EntityUid uid, HTNComponent? component = null)
