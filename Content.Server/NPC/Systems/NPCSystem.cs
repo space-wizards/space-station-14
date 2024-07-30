@@ -7,6 +7,8 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC;
+using Content.Shared.MouseRotator;
+using Content.Shared.Movement.Components;
 using Content.Shared.NPC.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -103,6 +105,8 @@ namespace Content.Server.NPC.Systems
 
             Log.Debug($"Waking {ToPrettyString(uid)}");
             EnsureComp<ActiveNPCComponent>(uid);
+            RemComp<MouseRotatorComponent>(uid);
+            RemComp<NoRotateOnMoveComponent>(uid);
         }
 
         public void SleepNPC(EntityUid uid, HTNComponent? component = null)
