@@ -9,8 +9,7 @@ namespace Content.Server.Temperature.Components;
 
 /// <summary>
 /// Handles changing temperature,
-/// informing others of the current temperature,
-/// and taking fire damage from high temperature.
+/// informing others of the current temperature.
 /// </summary>
 [RegisterComponent]
 public sealed partial class TemperatureComponent : Component

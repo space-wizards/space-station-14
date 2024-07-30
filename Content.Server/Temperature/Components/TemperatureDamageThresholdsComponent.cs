@@ -12,9 +12,15 @@ namespace Content.Server.Temperature.Components;
 [RegisterComponent]
 public sealed partial class TemperatureDamageThresholdsComponent : Component
 {
+    /// <summary>
+    /// The temperature above which the entity will start taking damage from being too hot.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float HeatDamageThreshold = 360f;
 
+    /// <summary>
+    /// The temperature below which the entity will start taking damage from being too cold.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float ColdDamageThreshold = 260f;
 
@@ -30,14 +36,24 @@ public sealed partial class TemperatureDamageThresholdsComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float? ParentColdDamageThreshold;
 
+    /// <summary>
+    /// The base damage that this entity will take if it's too cold.
+    /// Will be scaled according to how cold it is.
+    /// The scaling maxes out at <see cref="DamageCap"/> times this damage per second.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier ColdDamage = new();
 
+    /// <summary>
+    /// The base damage that this entity will take per second if it's too hot.
+    /// Will be scaled according to how hot it is.
+    /// The scaling maxes out at <see cref="DamageCap"/> times this damage per second.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier HeatDamage = new();
 
     /// <summary>
-    /// Temperature won't do more than this amount of damage per second.
+    /// Temperature won't do more than this multiple of the base overheating/overcooling damage per seond.
     /// </summary>
     /// <remarks>
     /// Okay it genuinely reaches this basically immediately for a plasma fire.
@@ -51,9 +67,15 @@ public sealed partial class TemperatureDamageThresholdsComponent : Component
     [DataField]
     public bool TakingDamage = false;
 
+    /// <summary>
+    /// The id of the alert thrown when the entity is too hot.
+    /// </summary>
     [DataField]
     public ProtoId<AlertPrototype> HotAlert = "Hot";
 
+    /// <summary>
+    /// The id of the alert thrown when the entity is too cold.
+    /// </summary>
     [DataField]
     public ProtoId<AlertPrototype> ColdAlert = "Cold";
 }

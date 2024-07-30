@@ -336,7 +336,7 @@ public sealed class TemperatureSystem : EntitySystem
     /// Recalculate and apply parent thresholds for the root entity and all its descendant.
     /// </summary>
     /// <param name="root"></param>
-    /// <param name="temperatureQuery"></param>
+    /// <param name="thresholdsQuery"></param>
     /// <param name="transformQuery"></param>
     /// <param name="containerThresholdsQuery"></param>
     private void RecursiveThresholdUpdate(EntityUid root, EntityQuery<TemperatureDamageThresholdsComponent> thresholdsQuery,
@@ -356,9 +356,9 @@ public sealed class TemperatureSystem : EntitySystem
     /// Recalculate parent thresholds and apply them on the uid temperature component.
     /// </summary>
     /// <param name="uid"></param>
-    /// <param name="temperatureQuery"></param>
+    /// <param name="thresholdsQuery"></param>
     /// <param name="transformQuery"></param>
-    /// <param name="tempThresholdsQuery"></param>
+    /// <param name="containerThresholdsQuery"></param>
     private void RecalculateAndApplyParentThresholds(EntityUid uid,
         EntityQuery<TemperatureDamageThresholdsComponent> thresholdsQuery, EntityQuery<TransformComponent> transformQuery,
         EntityQuery<ContainerTemperatureDamageThresholdsComponent> containerThresholdsQuery)
@@ -379,7 +379,7 @@ public sealed class TemperatureSystem : EntitySystem
     /// </summary>
     /// <param name="initialParentUid"></param>
     /// <param name="transformQuery"></param>
-    /// <param name="tempThresholdsQuery"></param>
+    /// <param name="containerThresholdsQuery"></param>
     private (float?, float?) RecalculateParentThresholds(
         EntityUid initialParentUid,
         EntityQuery<TransformComponent> transformQuery,
