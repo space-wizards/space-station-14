@@ -21,21 +21,25 @@ public sealed partial class TemperatureComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float CurrentTemperature = Atmospherics.T20C;
 
+    [Obsolete]
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float HeatDamageThreshold = 360f;
 
+    [Obsolete]
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float ColdDamageThreshold = 260f;
 
     /// <summary>
     /// Overrides HeatDamageThreshold if the entity's within a parent with the TemperatureDamageThresholdsComponent component.
     /// </summary>
+    [Obsolete]
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float? ParentHeatDamageThreshold;
 
     /// <summary>
     /// Overrides ColdDamageThreshold if the entity's within a parent with the TemperatureDamageThresholdsComponent component.
     /// </summary>
+    [Obsolete]
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float? ParentColdDamageThreshold;
 
@@ -60,9 +64,11 @@ public sealed partial class TemperatureComponent : Component
         }
     }
 
+    [Obsolete]
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier ColdDamage = new();
 
+    [Obsolete]
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier HeatDamage = new();
 
@@ -72,18 +78,22 @@ public sealed partial class TemperatureComponent : Component
     /// <remarks>
     /// Okay it genuinely reaches this basically immediately for a plasma fire.
     /// </summary>
+    [Obsolete]
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 DamageCap = FixedPoint2.New(8);
 
     /// <summary>
     /// Used to keep track of when damage starts/stops. Useful for logs.
     /// </summary>
+    [Obsolete]
     [DataField]
     public bool TakingDamage = false;
 
+    [Obsolete]
     [DataField]
     public ProtoId<AlertPrototype> HotAlert = "Hot";
 
+    [Obsolete]
     [DataField]
     public ProtoId<AlertPrototype> ColdAlert = "Cold";
 }
