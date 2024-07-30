@@ -354,6 +354,34 @@
     - Chemicals
 
 - type: entity
+  id: BookSpaceLaw
+  parent: BaseItem
+  name: space law
+  description: A set of Nanotrasen guidelines for keeping law and order on their space stations.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_strong
+      color: "#87011c"
+    - state: icon_law
+      color: "#f7d61a"
+  - type: Tag
+    tags:
+    - Book
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - SpaceLaw
+  - type: MeleeWeapon # so you can beat stupid cadets
+    soundHit:
+      collection: Punch
+    damage:
+      types:
+        Blunt: 1
+
+- type: entity
   parent: BookBase
   id: BookRandom
   suffix: random visual
