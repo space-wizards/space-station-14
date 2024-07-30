@@ -221,8 +221,11 @@
         {
             "name": "vials"
         },
-		{
-			"name": "recorder"
-		}
+		    {
+			      "name": "recorder"
+		    },
+        {
+            "name": "envelope"
+        }
     ]
 }

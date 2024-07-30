@@ -79,6 +79,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<MicrowaveComponent, EntInsertedIntoContainerMessage>(OnContentUpdate);
             SubscribeLocalEvent<MicrowaveComponent, EntRemovedFromContainerMessage>(OnContentUpdate);
             SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(AnchorableSystem) });
+            SubscribeLocalEvent<MicrowaveComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
             SubscribeLocalEvent<MicrowaveComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<MicrowaveComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<MicrowaveComponent, AnchorStateChangedEvent>(OnAnchorChanged);
@@ -251,7 +252,7 @@ namespace Content.Server.Kitchen.EntitySystems
         private void OnInit(Entity<MicrowaveComponent> ent, ref ComponentInit args)
         {
             // this really does have to be in ComponentInit
-            ent.Comp.Storage = _container.EnsureContainer<Container>(ent, "microwave_entity_container");
+            ent.Comp.Storage = _container.EnsureContainer<Container>(ent, ent.Comp.ContainerId);
         }
 
         private void OnMapInit(Entity<MicrowaveComponent> ent, ref MapInitEvent args)
@@ -307,6 +308,35 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
 
             UpdateUserInterfaceState(uid, component);
+        }
+
+        private void OnInsertAttempt(Entity<MicrowaveComponent> ent, ref ContainerIsInsertingAttemptEvent args)
+        {
+            if (args.Container.ID != ent.Comp.ContainerId)
+                return;
+
+            if (ent.Comp.Broken)
+            {
+                args.Cancel();
+                return;
+            }
+
+            if (TryComp<ItemComponent>(args.EntityUid, out var item))
+            {
+                if (_item.GetSizePrototype(item.Size) > _item.GetSizePrototype(ent.Comp.MaxItemSize))
+                {
+                    args.Cancel();
+                    return;
+                }
+            }
+            else
+            {
+                args.Cancel();
+                return;
+            }
+
+            if (ent.Comp.Storage.Count >= ent.Comp.Capacity)
+                args.Cancel();
         }
 
         private void OnInteractUsing(Entity<MicrowaveComponent> ent, ref InteractUsingEvent args)

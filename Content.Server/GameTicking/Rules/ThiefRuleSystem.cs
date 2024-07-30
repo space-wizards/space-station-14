@@ -12,10 +12,8 @@ namespace Content.Server.GameTicking.Rules;
 
 public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
-    [Dependency] private readonly ObjectivesSystem _objectives = default!;
 
     public override void Initialize()
     {

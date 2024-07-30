@@ -26,8 +26,6 @@
     spawned:
     - id: FoodMeatLizard
       amount: 5
-  - type: Inventory
-    speciesId: reptilian
   - type: LizardAccent
   - type: Speech
     speechSounds: Lizard
@@ -62,14 +60,35 @@
       types:
         Heat : 1.5 #per second, scales with temperature & other constants
   - type: Wagging
+  - type: Inventory
+    speciesId: reptilian
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+
 
 - type: entity
   parent: BaseSpeciesDummy
   id: MobReptilianDummy
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   description: A dummy reptilian meant to be used in character setup.
   components:
   - type: HumanoidAppearance
     species: Reptilian
+    hideLayersOnEquip:
+    - Snout
+    - HeadTop
+    - HeadSide
+  - type: Inventory
+    speciesId: reptilian
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
 
 #Weh

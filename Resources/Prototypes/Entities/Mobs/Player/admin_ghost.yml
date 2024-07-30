@@ -2,7 +2,7 @@
   parent: [MobObserver, InventoryBase]
   id: AdminObserver
   name: admin observer
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: ContentEye
     maxZoom: 8.916104, 8.916104
