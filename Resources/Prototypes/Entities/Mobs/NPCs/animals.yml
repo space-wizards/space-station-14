@@ -1358,6 +1358,8 @@
     speechSounds: Lizard
     speechVerb: Reptilian
   - type: Vocal
+    wilhelm:
+      path: /Audio/Items/Toys/weh.ogg
     sounds:
       Male: MaleReptilian
       Female: FemaleReptilian

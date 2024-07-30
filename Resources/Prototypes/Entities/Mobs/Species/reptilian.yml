@@ -33,6 +33,8 @@
   - type: TypingIndicator
     proto: lizard
   - type: Vocal
+    wilhelm:
+      path: /Audio/Items/Toys/weh.ogg
     sounds:
       Male: MaleReptilian
       Female: FemaleReptilian
