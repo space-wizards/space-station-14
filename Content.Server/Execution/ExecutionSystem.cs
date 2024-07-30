@@ -4,7 +4,6 @@ using Content.Shared.CombatMode;
 using Content.Shared.Execution;
 using Content.Shared.Mind;
 using Content.Shared.Weapons.Melee;
-using Content.Shared.Interaction.Events;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Execution
@@ -24,7 +23,6 @@ namespace Content.Server.Execution
             base.Initialize();
 
             SubscribeLocalEvent<ExecutionComponent, ExecutionDoAfterEvent>(OnExecutionDoAfter);
-            SubscribeLocalEvent<ExecutionComponent, SuicideEvent>(OnSuicide);
         }
 
         private void OnExecutionDoAfter(EntityUid uid, ExecutionComponent component, ExecutionDoAfterEvent args)
@@ -76,28 +74,19 @@ namespace Content.Server.Execution
                         localPos = localPos.Normalized() * visualLength;
 
                     _melee.DoLunge(attacker, weapon, melee.Angle, localPos, melee.Animation, false);
+                    _audio.PlayEntity(melee.HitSound, attacker, victim);
                 }
-                _audio.PlayEntity(melee.HitSound, attacker, victim);
             }
 
             _combat.SetInCombatMode(attacker, prev);
             component.Executing = false;
             args.Handled = true;
 
-            if (internalMsg != null && externalMsg != null)
+            if (internalMsg != null && externalMsg != null && attacker != victim)
             {
                 _execution.ShowExecutionInternalPopup(internalMsg, attacker, victim, uid, false);
                 _execution.ShowExecutionExternalPopup(externalMsg, attacker, victim, uid);
             }
-        }
-
-        private void OnSuicide(EntityUid uid, ExecutionComponent comp, ref SuicideEvent args)
-        {
-            if (!TryComp<MeleeWeaponComponent>(uid, out var melee))
-                return;
-
-            args.Damage = melee.Damage;
-            args.Handled = true;
         }
     }
 }

@@ -2,14 +2,15 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Interaction.Events;
 using Robust.Shared.Player;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Execution;
 
@@ -19,6 +20,7 @@ namespace Content.Shared.Execution;
 public sealed class SharedExecutionSystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -30,6 +32,7 @@ public sealed class SharedExecutionSystem : EntitySystem
 
         SubscribeLocalEvent<ExecutionComponent, GetVerbsEvent<UtilityVerb>>(OnGetInteractionsVerbs);
         SubscribeLocalEvent<ExecutionComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
+        SubscribeLocalEvent<ExecutionComponent, SuicideEvent>(OnSuicide);
     }
 
     private void OnGetInteractionsVerbs(EntityUid uid, ExecutionComponent comp, GetVerbsEvent<UtilityVerb> args)
@@ -119,6 +122,23 @@ public sealed class SharedExecutionSystem : EntitySystem
         var bonus = melee.Damage * execComp.DamageModifier - melee.Damage;
         args.Damage += bonus;
         args.ResistanceBypass = true;
+    }
+
+    private void OnSuicide(EntityUid uid, ExecutionComponent comp, ref SuicideEvent args)
+    {
+        if (!TryComp<MeleeWeaponComponent>(uid, out var melee))
+            return;
+
+        string? internalMsg = comp.DefaultCompleteInternalMeleeExecutionMessage;
+        string? externalMsg = comp.DefaultCompleteExternalMeleeExecutionMessage;
+
+        args.Damage = melee.Damage;
+        args.Handled = true;
+
+        _audio.PlayPvs(melee.HitSound, args.Victim);
+        // Needed for when someone does /suicide rather than using the execute verb.
+        ShowExecutionInternalPopup(internalMsg, args.Victim, args.Victim, uid, false);
+        ShowExecutionExternalPopup(externalMsg, args.Victim, args.Victim, uid);
     }
 
     public void ShowExecutionInternalPopup(string locString,

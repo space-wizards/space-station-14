@@ -1,9 +1,9 @@
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
-using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
+using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -14,6 +14,7 @@ using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Chat
 {
@@ -133,7 +134,11 @@ namespace Content.Server.Chat
         private void ApplyDeath(EntityUid target, string? kind, DamageSpecifier? damage)
         {
             ProtoId<DamageTypePrototype> fallback = "Blunt";
-            const int lethalAmountOfDamage = 200; // TODO: Would be nice to get this number from somewhere else
+            FixedPoint2 lethalAmountOfDamage = 200;
+            if (TryComp<DamageableComponent>(target, out var damagable) && TryComp<MobThresholdsComponent>(target, out var thresholds))
+            {
+                lethalAmountOfDamage = thresholds.Thresholds.Keys.Last() - damagable.TotalDamage;
+            }
 
             if (kind != null)
             {
@@ -154,8 +159,14 @@ namespace Content.Server.Chat
                 damage = new DamageSpecifier(damagePrototype, lethalAmountOfDamage);
             }
 
-
-            _damageableSystem.TryChangeDamage(target, damage, true, origin: target);
+            var finalDamage = new DamageSpecifier(damage);
+            finalDamage.DamageDict.Remove("Structural");
+            var totalItemDamage = finalDamage.GetTotal();
+            foreach (var (key, value) in finalDamage.DamageDict)
+            {
+                finalDamage.DamageDict[key] = Math.Ceiling((double)(value * lethalAmountOfDamage / totalItemDamage));
+            }
+            _damageableSystem.TryChangeDamage(target, finalDamage, true, origin: target);
         }
     }
 }
