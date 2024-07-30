@@ -11,7 +11,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Objectives.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
-public sealed class AddObjectiveCommand : LocalizedCommands
+public sealed class AddObjectiveCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IPlayerManager _players = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
