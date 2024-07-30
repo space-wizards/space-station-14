@@ -8,7 +8,10 @@ namespace Content.Shared.Weapons.Ranged.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class GrapplingGunComponent : Component
 {
-    [DataField("reelRate"), AutoNetworkedField]
+    /// <summary>
+    /// Hook's reeling force and speed - the higher the number, the faster the hook rewinds.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public float ReelRate = 2.5f;
 
     [DataField("jointId"), AutoNetworkedField]
