@@ -130,9 +130,7 @@ namespace Content.Client.Communications.UI
 
             EmergencyShuttleButton.Text = Loc.GetString("comms-console-menu-recall-shuttle");
             var infoText = Loc.GetString($"comms-console-menu-time-remaining",
-                ("hours", diff.Hours.ToString("D2", CultureInfo.CurrentCulture)), // it won't be more than 24 hours, right?
-                ("minutes", diff.Minutes.ToString("D2", CultureInfo.CurrentCulture)),
-                ("seconds", diff.Seconds.ToString("D2", CultureInfo.CurrentCulture)));
+                ("time", diff.ToString(@"hh\:mm\:ss", CultureInfo.CurrentCulture)));
             CountdownLabel.SetMessage(infoText);
         }
     }
