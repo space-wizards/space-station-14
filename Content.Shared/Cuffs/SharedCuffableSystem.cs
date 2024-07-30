@@ -461,9 +461,8 @@ namespace Content.Shared.Cuffs
             if (!_interaction.InRangeUnobstructed(handcuff, target))
                 return false;
 
-            // Success?
-            if (!_hands.TryDrop(user, handcuff))
-                return false;
+            // Success!
+            _hands.TryDrop(user, handcuff);
 
             _container.Insert(handcuff, component.Container);
             UpdateHeldItems(target, handcuff, component);
