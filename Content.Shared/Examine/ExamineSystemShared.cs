@@ -349,6 +349,16 @@ namespace Content.Shared.Examine
             // tolist/clone formatted message so calling this multiple times wont fuck shit up
             // (if that happens for some reason)
             var parts = Parts.ToList();
+#if DEBUG
+            ISawmill log = IoCManager.Resolve<ILogManager>()
+                .GetSawmill(nameof(ExaminedEvent));
+
+            foreach (var part in parts)
+                if (part.Message.Count == 0)
+                    log.Warning($"Examine group `{part.Group ?? "unknown-group"}` is empty. Please avoid this!");
+#endif
+            //parts.RemoveAll(p => p.Message.Count == 0); // remove parts with no message segments
+
             var totalMessage = new FormattedMessage(Message);
             parts.Sort(Comparison);
 
@@ -359,6 +369,10 @@ namespace Content.Shared.Examine
 
             foreach (var part in parts)
             {
+#if DEBUG
+                if (part.Message.Count > 0 && part.Message[^1].ToString().EndsWith('\n'))
+                    log.Warning($"Examine group `{part.Group ?? "unknown-group"}` ends with a trailing newline. Please avoid this!");
+#endif
                 totalMessage.AddMessage(part.Message);
                 if (part.DoNewLine && parts.Last() != part)
                     totalMessage.PushNewline();
