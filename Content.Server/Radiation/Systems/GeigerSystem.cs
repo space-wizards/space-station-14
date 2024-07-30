@@ -164,13 +164,13 @@ public sealed class GeigerSystem : SharedGeigerSystem
         }
 
         var sound = _audio.GetSound(sounds);
-        var param = sounds.Params.WithLoop(true).WithVolume(-4f);
+        var param = sounds.Params.WithLoop(true).WithVolume(component.Volume);
 
         switch (component.BroadcastAudio)
         {
             case true:
-                // For some reason PlayPvs is quieter even when the range is 0, so less volume reduction on this one
-                param = sounds.Params.WithLoop(true).WithVolume(-2.5f).WithMaxDistance(4f);
+                // For some reason PlayPvs sounds quieter even at distance 0, so we need to boost the volume a bit for consistency
+                param = sounds.Params.WithLoop(true).WithVolume(component.Volume + 1.5f).WithMaxDistance(component.BroadcastRange);
                 component.Stream = _audio.PlayPvs(sound, uid, param)?.Entity;
                 break;
             case false:

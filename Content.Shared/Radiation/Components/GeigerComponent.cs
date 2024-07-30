@@ -89,6 +89,18 @@ public sealed partial class GeigerComponent : Component
     /// </summary>
     [DataField]
     public bool BroadcastAudio = false;
+
+    /// <summary>
+    ///     The distance within which the broadcast tone can be heard.
+    /// </summary>
+    [DataField]
+    public float BroadcastRange = 4f;
+
+    /// <summary>
+    ///     The volume of the warning tone.
+    /// </summary>
+    [DataField]
+    public float Volume = -4f;
 }
 
 [Serializable, NetSerializable]
