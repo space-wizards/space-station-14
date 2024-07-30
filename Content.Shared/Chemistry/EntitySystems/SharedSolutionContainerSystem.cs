@@ -16,11 +16,13 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Systems;
+using Content.Shared.Chemistry.Types;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Dependency = Robust.Shared.IoC.DependencyAttribute;
+using ReagentQuantity = Content.Shared.Chemistry.Reagent.ReagentQuantity;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -71,6 +73,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
     [Dependency] protected readonly INetManager NetManager = default!;
     [Dependency] protected readonly SharedChemistryRegistrySystem ChemistryRegistry = default!;
+    [Dependency] protected readonly SharedSolutionSystem SolutionSystem = default!;
 
     public override void Initialize()
     {
@@ -302,43 +305,16 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="soln"></param>
     /// <param name="needsReactionsProcessing"></param>
     /// <param name="mixerComponent"></param>
+    [Obsolete("Use SolutionSystem.UpdateChemicals Instead!")]
     public void UpdateChemicals(Entity<SolutionComponent> soln, bool needsReactionsProcessing = true, ReactionMixerComponent? mixerComponent = null)
     {
-        Dirty(soln);
-
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
-
-        // Process reactions
-        if (needsReactionsProcessing && solution.CanReact)
-            ChemicalReactionSystem.FullyReactSolution(soln, mixerComponent);
-
-        var overflow = solution.Volume - solution.MaxVolume;
-        if (overflow > FixedPoint2.Zero)
-        {
-            var overflowEv = new SolutionOverflowEvent(soln, overflow);
-            RaiseLocalEvent(uid, ref overflowEv);
-        }
-
-        UpdateAppearance((uid, comp, null));
-
-        var changedEv = new SolutionChangedEvent(soln);
-        RaiseLocalEvent(uid, ref changedEv);
+       SolutionSystem.UpdateChemicals(soln, needsReactionsProcessing, mixerComponent);
     }
 
+    [Obsolete("Use SolutionSystem.UpdateAppearance Instead!")]
     public void UpdateAppearance(Entity<SolutionComponent, AppearanceComponent?> soln)
     {
-        var (uid, comp, appearanceComponent) = soln;
-        var solution = comp.Solution;
-
-        if (!EntityManager.EntityExists(uid) || !Resolve(uid, ref appearanceComponent, false))
-            return;
-
-        AppearanceSystem.SetData(uid, SolutionContainerVisuals.FillFraction, solution.FillFraction, appearanceComponent);
-        AppearanceSystem.SetData(uid, SolutionContainerVisuals.Color, solution.GetColor(PrototypeManager), appearanceComponent);
-
-        if (solution.GetPrimaryReagentId() is { } reagent)
-            AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
+        SolutionSystem.UpdateAppearance(soln);
     }
 
     /// <summary>
@@ -420,30 +396,28 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="reagentQuantity">The reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
     /// <returns>If all the reagent could be added.</returns>
-    public bool TryAddReagent(Entity<SolutionComponent> soln, ReagentQuantity reagentQuantity, out FixedPoint2 acceptedQuantity, float? temperature = null)
+    public bool TryAddReagent(Entity<SolutionComponent> soln, ReagentQuantity reagentQuantity, out FixedPoint2 acceptedQuantity, float? temperature = null, ReagentMetadata? reagentMetadata = null)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
+        acceptedQuantity = 0;
+        if (!SolutionSystem.TryAddReagent((soln, soln),
+                reagentQuantity.Reagent.Prototype,
+                reagentQuantity.Quantity,
+                out var overflow,
+                reagentMetadata))
+            return false;
 
-        acceptedQuantity = solution.AvailableVolume > reagentQuantity.Quantity
-            ? reagentQuantity.Quantity
-            : solution.AvailableVolume;
+        acceptedQuantity = reagentQuantity.Quantity - FixedPoint2.Max(0, overflow);
+        return true;
+        //TODO: remember to take into account temp again
 
-        if (acceptedQuantity <= 0)
-            return reagentQuantity.Quantity == 0;
-
-        if (temperature == null)
-        {
-            solution.AddReagent(reagentQuantity.Reagent, acceptedQuantity);
-        }
-        else
-        {
-            var reagentDef = ChemistryRegistry.Index(reagentQuantity.Reagent.Prototype);
-            solution.AddReagent(reagentDef, acceptedQuantity, temperature.Value, PrototypeManager);
-        }
-
-        UpdateChemicals(soln);
-        return acceptedQuantity == reagentQuantity.Quantity;
+        // if (temperature == null)
+        // {
+        //     solution.AddReagent(reagentQuantity.Reagent, acceptedQuantity);
+        // }
+        // else
+        // {
+        //     solution.AddReagent(reagentDef, acceptedQuantity, temperature.Value, ChemistryRegistry);
+        // }
     }
 
     /// <summary>

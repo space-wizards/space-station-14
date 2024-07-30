@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.GameStates;
 
-namespace Content.Shared.Chemistry.Components.Reagents;
+namespace Content.Shared.Chemistry.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class RequiresReactionTemperatureComponent : Component
