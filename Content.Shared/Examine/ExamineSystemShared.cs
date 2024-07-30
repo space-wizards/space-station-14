@@ -357,7 +357,6 @@ namespace Content.Shared.Examine
                 if (part.Message.Count == 0)
                     log.Warning($"Examine group `{part.Group ?? "unknown-group"}` is empty. Please avoid this!");
 #endif
-            //parts.RemoveAll(p => p.Message.Count == 0); // remove parts with no message segments
 
             var totalMessage = new FormattedMessage(Message);
             parts.Sort(Comparison);
