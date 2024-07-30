@@ -8,6 +8,9 @@ namespace Content.Shared.Weapons.Ranged.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class GrapplingGunComponent : Component
 {
+    [DataField("reelRate"), AutoNetworkedField]
+    public float ReelRate = 2.5f;
+
     [DataField("jointId"), AutoNetworkedField]
     public string Joint = string.Empty;
 
