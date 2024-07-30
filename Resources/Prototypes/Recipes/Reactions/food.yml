@@ -421,6 +421,8 @@
 - type: reaction
   id: ReduceMilk #makes Cream renewable
   minTemp: 320
+  requiredMixerCategories:
+  - Shake
   reactants:
    Milk:
     amount: 2
