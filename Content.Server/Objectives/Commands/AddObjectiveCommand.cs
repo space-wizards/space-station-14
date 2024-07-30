@@ -16,10 +16,9 @@ public sealed class AddObjectiveCommand : LocalizedEntityCommands
     [Dependency] private readonly IPlayerManager _players = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly AddObjectiveManager _objectives = default!;
 
     public override string Command => "addobjective";
-
-    private IEnumerable<string>? _objectives;
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -67,22 +66,8 @@ public sealed class AddObjectiveCommand : LocalizedEntityCommands
         if (args.Length != 2)
             return CompletionResult.Empty;
 
-        if (_objectives == null)
-        {
-            CreateCompletions();
-            _prototypes.PrototypesReloaded += _ => CreateCompletions();
-        }
-
         return CompletionResult.FromHintOptions(
-            _objectives!,
+            _objectives.Objectives(),
             Loc.GetString(Loc.GetString("cmd-add-objective-obj-completion")));
-    }
-
-    private void CreateCompletions()
-    {
-        _objectives = _prototypes.EnumeratePrototypes<EntityPrototype>()
-            .Where(p => p.HasComponent<ObjectiveComponent>())
-            .Select(p => p.ID)
-            .Order();
     }
 }
