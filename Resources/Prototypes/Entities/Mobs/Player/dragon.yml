@@ -97,6 +97,7 @@
     damage:
       types: {}
   - type: Temperature
+  - type: TemperatureDamageThresholds
     heatDamageThreshold: 800
   - type: Metabolizer
     solutionOnBody: false
