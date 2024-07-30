@@ -37,6 +37,7 @@ public sealed class EraseCommand : LocalizedCommands
             adminSystem.Erase(located.UserId);
         }
     }
+
   public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length != 1)
@@ -44,7 +45,7 @@ public sealed class EraseCommand : LocalizedCommands
 
         var options = _players.Sessions.OrderBy(c => c.Name).Select(c => c.Name).ToArray();
 
-        return CompletionResult.FromHintOptions(options, "<PlayerIndex>");
+        return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-erase-player-completion"));
 
     }
 }

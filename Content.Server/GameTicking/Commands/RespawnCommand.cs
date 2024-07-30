@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Mind;
 using Content.Shared.Players;
@@ -7,23 +8,21 @@ using Robust.Shared.Network;
 
 namespace Content.Server.GameTicking.Commands
 {
-    sealed class RespawnCommand : LocalizedCommands
+    sealed class RespawnCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly IPlayerManager _player = default!;
         [Dependency] private readonly IPlayerLocator _locator = default!;
-        [Dependency] private readonly IEntitySystemManager _systems = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly MindSystem _mind = default!;
 
         public override string Command => "respawn";
 
-        public async override void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (!_systems.TryGetEntitySystem<GameTicker>(out var gameTicker) || !_systems.TryGetEntitySystem<MindSystem>(out var mind))
-                return;
-
             var player = shell.Player;
             if (args.Length > 1)
             {
-                shell.WriteLine(Loc.GetString("cmd-respawn-invalid-args"));
+                shell.WriteError(Loc.GetString("cmd-respawn-invalid-args"));
                 return;
             }
 
@@ -32,7 +31,7 @@ namespace Content.Server.GameTicking.Commands
             {
                 if (player == null)
                 {
-                    shell.WriteLine(Loc.GetString("cmd-respawn-no-player"));
+                    shell.WriteError(Loc.GetString("cmd-respawn-no-player"));
                     return;
                 }
 
@@ -44,7 +43,7 @@ namespace Content.Server.GameTicking.Commands
 
                 if (located == null)
                 {
-                    shell.WriteLine(Loc.GetString("cmd-respawn-unknown-player"));
+                    shell.WriteError(Loc.GetString("cmd-respawn-unknown-player"));
                     return;
                 }
 
@@ -55,16 +54,26 @@ namespace Content.Server.GameTicking.Commands
             {
                 if (!_player.TryGetPlayerData(userId, out var data))
                 {
-                    shell.WriteLine(Loc.GetString("cmd-respawn-unknown-player"));
+                    shell.WriteError(Loc.GetString("cmd-respawn-unknown-player"));
                     return;
                 }
 
-                mind.WipeMind(data.ContentData()?.Mind);
-                shell.WriteLine(Loc.GetString("cmd-respawn-player-not-online"));
+                _mind.WipeMind(data.ContentData()?.Mind);
+                shell.WriteError(Loc.GetString("cmd-respawn-player-not-online"));
                 return;
             }
 
-            gameTicker.Respawn(targetPlayer);
+            _gameTicker.Respawn(targetPlayer);
+        }
+
+      public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length != 1)
+                return CompletionResult.Empty;
+
+            var options = _player.Sessions.OrderBy(c => c.Name).Select(c => c.Name).ToArray();
+
+            return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-respawn-player-completion"));
         }
     }
 }
