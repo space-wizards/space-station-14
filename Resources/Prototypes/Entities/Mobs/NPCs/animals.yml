@@ -945,6 +945,96 @@
     rootTask:
       task: RuminantHostileCompound
 
+- type: entity
+  name: sheep
+  parent: SimpleMobBase
+  id: MobSheep
+  description: A wooly sheep, her soft fluffy coat looks amazing to hug.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: sheep
+      sprite: Mobs/Animals/sheep.rsi
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 150
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Tag
+    tags:
+    # let moths eat wool directly
+    - ClothMade
+    - DoorBumpOpener
+    - Sheep
+  - type: Reproductive
+    partnerWhitelist:
+      tags:
+      - Sheep
+    offspring:
+    - id: MobSheep
+  - type: ReproductivePartner
+  - type: Appearance
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: sheep
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: SolutionContainerManager
+    solutions:
+      udder:
+        maxVol: 250
+        reagents:
+        - ReagentId: MilkSheep
+          Quantity: 30
+      wool:
+        maxVol: 250
+  - type: Udder
+    reagentId: MilkSheep
+    quantityPerUpdate: 25
+    growthDelay: 20
+  - type: Wooly
+  - type: Food
+    solution: wool
+    requiresSpecialDigestion: true
+    # Wooly prevents eating wool deleting the sheep so its fine
+    requireDead: false
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 4
+  - type: Grammar
+    attributes:
+      gender: female # Here because of UdderComponent
+  - type: InteractionPopup
+    successChance: 0.8 #SHEEP so FRIEND!!! HUG! SQUISHY! SOFT!
+    interactSuccessString: petting-success-sheep
+    interactFailureString: petting-failure-sheep
+    interactSuccessSpawn: EffectHearts #🥰
+    interactSuccessSound:
+      collection: Sheep
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: Body
+    prototype: AnimalRuminant
+  - type: NPCRetaliation
+    attackMemoryLength: 5
+  - type: FactionException
+  - type: HTN
+    rootTask:
+      task: RuminantHostileCompound
+
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
   name: goose

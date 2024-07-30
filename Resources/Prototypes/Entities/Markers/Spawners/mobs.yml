@@ -668,6 +668,20 @@
     - MobGoat
 
 - type: entity
+  name: Sheep Spawner
+  id: SpawnMobSheep
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: sheep
+      sprite: Mobs/Animals/sheep.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSheep
+
+- type: entity
   name: Frog Spawner
   id: SpawnMobFrog
   parent: MarkerBase
