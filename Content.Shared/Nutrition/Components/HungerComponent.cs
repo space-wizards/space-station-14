@@ -18,7 +18,7 @@ public sealed partial class HungerComponent : Component
     /// </summary>
     [DataField("currentHunger"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public float CurrentHunger;
+    public float CurrentHunger = -1f;
 
     /// <summary>
     /// The base amount at which <see cref="CurrentHunger"/> decays.
