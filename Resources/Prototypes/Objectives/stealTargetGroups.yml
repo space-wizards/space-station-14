@@ -348,7 +348,7 @@
 
 - type: stealTargetGroup
   id: AnimalNamedCat
-  name: Cat
+  name: CMO's Cat
   sprite:
     sprite: Mobs/Pets/bingus.rsi
     state: bingus
