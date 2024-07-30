@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Vasilis
-  changes:
-  - message: Removed airtight flaps from the construction menu.
-    type: Remove
-  id: 6514
-  time: '2024-05-02T14:49:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27619
 - author: Lamrr
   changes:
   - message: Wine and beer bottles can now be inserted into the booze dispenser.
@@ -3784,3 +3777,11 @@
   id: 7013
   time: '2024-07-30T13:53:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30391
+- author: Cojoke-dot
+  changes:
+  - message: QSI now swaps the top most valid container instead of QSI when placed
+      in an anchored container
+    type: Fix
+  id: 7014
+  time: '2024-07-30T14:07:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30241
