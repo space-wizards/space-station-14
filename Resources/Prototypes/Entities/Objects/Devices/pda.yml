@@ -6,7 +6,7 @@
   description: Personal Data Assistant.
   components:
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda
@@ -143,7 +143,7 @@
   - type: Pda
     id: TechnicalAssistantIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-interntech
@@ -162,7 +162,7 @@
   - type: Pda
     id: MedicalInternIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-internmed
@@ -184,7 +184,7 @@
   - type: Pda
     id: SecurityCadetIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-interncadet
@@ -203,7 +203,7 @@
   - type: Pda
     id: ResearchAssistantIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-internsci
@@ -222,7 +222,7 @@
   - type: Pda
     id: ServiceWorkerIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-internservice
@@ -241,7 +241,7 @@
   - type: Pda
     id: ChefIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-cook
@@ -259,7 +259,7 @@
   - type: Pda
     id: BotanistIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-hydro
@@ -286,7 +286,7 @@
         tags:
         - Write
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-clown
@@ -331,7 +331,7 @@
         components:
         - IdCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-mime
@@ -350,7 +350,7 @@
   - type: Pda
     id: ChaplainIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-chaplain
@@ -368,7 +368,7 @@
   - type: Pda
     id: QuartermasterIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-qm
@@ -387,7 +387,7 @@
   - type: Pda
     id: CargoIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-cargo
@@ -405,7 +405,7 @@
   - type: Pda
     id: SalvageIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-miner
@@ -424,7 +424,7 @@
   - type: Pda
     id: BartenderIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-bartender
@@ -448,7 +448,7 @@
         tags:
         - Write
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-library
@@ -472,7 +472,7 @@
         tags:
         - Write
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-lawyer
@@ -490,7 +490,7 @@
   - type: Pda
     id: JanitorIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-janitor
@@ -514,7 +514,7 @@
         tags:
         - Write
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-captain
@@ -538,7 +538,7 @@
         tags:
         - Write
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-hop
@@ -557,7 +557,7 @@
   - type: Pda
     id: CEIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-ce
@@ -576,7 +576,7 @@
   - type: Pda
     id: EngineeringIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-engineer
@@ -595,7 +595,7 @@
   - type: Pda
     id: CMOIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-cmo
@@ -615,7 +615,7 @@
   - type: Pda
     id: MedicalIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-medical
@@ -637,7 +637,7 @@
   - type: Pda
     id: ParamedicIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-paramedic
@@ -656,7 +656,7 @@
   - type: Pda
     id: ChemistIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-chemistry
@@ -675,7 +675,7 @@
   - type: Pda
     id: RDIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-rd
@@ -695,7 +695,7 @@
   - type: Pda
     id: ResearchIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-science
@@ -714,7 +714,7 @@
   - type: Pda
     id: HoSIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-hos
@@ -733,7 +733,7 @@
   - type: Pda
     id: WardenIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-warden
@@ -752,7 +752,7 @@
   - type: Pda
     id: SecurityIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-security
@@ -775,7 +775,7 @@
         tags:
         - Write
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-centcom
@@ -829,7 +829,7 @@
   - type: Pda
     id: MusicianIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-musician
@@ -852,7 +852,7 @@
   - type: Pda
     id: AtmosIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-atmos
@@ -871,7 +871,7 @@
   - type: Pda
     id: PassengerIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-clear
@@ -889,7 +889,7 @@
   - type: Pda
     id: SyndicateIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-syndi
@@ -920,7 +920,7 @@
   - type: Pda
     id: ERTLeaderIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-ert
@@ -1007,7 +1007,7 @@
   - type: Pda
     id: PsychologistIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-medical
@@ -1032,7 +1032,7 @@
         tags:
         - Write
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-reporter
@@ -1050,7 +1050,7 @@
   - type: Pda
     id: ZookeeperIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-zookeeper
@@ -1068,7 +1068,7 @@
   - type: Pda
     id: BoxerIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-boxer
@@ -1087,7 +1087,7 @@
   - type: Pda
     id: DetectiveIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-detective
@@ -1105,7 +1105,7 @@
   - type: Pda
     id: BrigmedicIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-brigmedic
@@ -1126,7 +1126,7 @@
   - type: Pda
     id: CluwneIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-cluwne
@@ -1152,7 +1152,7 @@
   - type: Pda
     id: SeniorEngineerIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-seniorengineer
@@ -1171,7 +1171,7 @@
   - type: Pda
     id: SeniorResearcherIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-seniorresearcher
@@ -1191,7 +1191,7 @@
   - type: Pda
     id: SeniorPhysicianIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-seniorphysician
@@ -1211,7 +1211,7 @@
   - type: Pda
     id: SeniorOfficerIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-seniorofficer
@@ -1230,7 +1230,7 @@
   - type: Pda
     id: PirateIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-pirate
@@ -1246,7 +1246,7 @@
   - type: Pda
     id: SyndicateIDCard
   - type: Appearance
-    appearanceData:
+    appearanceDataInit:
      enum.PdaVisuals.PdaType:
        !type:String
        pda-syndi-agent
