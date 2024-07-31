@@ -132,15 +132,15 @@ public sealed partial class FaxMachineComponent : Component
     ///     The prototype ID to use for faxed or copied entities if we can't get one from
     ///     the paper entity for whatever reason.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: false)]
-    public string PrintPaperId = "Paper";
+    [DataField]
+    public EntProtoId PrintPaperId = "Paper";
 
     /// <summary>
     ///     The prototype ID to use for faxed or copied entities if we can't get one from
     ///     the paper entity for whatever reason of the Office type.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: false)]
-    public string PrintOfficePaperId = "PaperOffice";
+    [DataField]
+    public EntProtoId PrintOfficePaperId = "PaperOffice";
 }
 
 [DataDefinition]
