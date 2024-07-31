@@ -51,13 +51,16 @@ public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
 
     public void Execute(EntityUid uid, DestructibleSystem system, EntityUid? cause = null)
     {
+        // Get the position at which to start initially spawning entities
         var transform = system.EntityManager.System<TransformSystem>();
         var position = transform.GetMapCoordinates(uid);
+        // Helper function used to randomly get an offset to apply to the original position
         Vector2 GetRandomVector() => new (system.Random.NextFloat(-SpawnOffset, SpawnOffset), system.Random.NextFloat(-SpawnOffset, SpawnOffset));
+        // Randomly pick the entity to spawn and randomly pick how many to spawn
         var entity = system.PrototypeManager.Index(WeightedEntityTable).Pick(system.Random);
         var amountToSpawn = system.Random.NextFloat(MinSpawn, MaxSpawn);
 
-
+        // Different behaviors for delayed spawning and immediate spawning
         if (SpawnAfter != 0)
         {
             // if it fails to get the spawner, this won't ever work so just return
