@@ -106,6 +106,8 @@ public sealed class BurialSystem : EntitySystem
         if (args.Cancelled || args.Handled)
             return;
 
+        component.HandDiggingDoAfter = null;
+
         component.DiggingComplete = true;
 
         if (args.Used != null)
@@ -178,7 +180,7 @@ public sealed class BurialSystem : EntitySystem
         if (component.Stream == null)
             component.Stream = _audioSystem.PlayPredicted(component.DigSound, uid, args.Entity)?.Entity;
 
-        if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs))
+        if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs, out component.HandDiggingDoAfter))
         {
             _audioSystem.Stop(component.Stream);
             return;
