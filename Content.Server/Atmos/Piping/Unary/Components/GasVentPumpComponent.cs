@@ -10,7 +10,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
     public sealed partial class GasVentPumpComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Enabled { get; set; } = true;
+        public bool Enabled { get; set; } = false;
 
         [ViewVariables]
         public bool IsDirty { get; set; } = false;
@@ -40,7 +40,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("underPressureLockoutThreshold")]
-        public float UnderPressureLockoutThreshold = 60; // this must be tuned in conjunction with atmos.mmos_spacing_speed
+        public float UnderPressureLockoutThreshold = 80; // this must be tuned in conjunction with atmos.mmos_spacing_speed
 
         /// <summary>
         ///     Pressure locked vents still leak a little (leading to eventual pressurization of sealed sections)
