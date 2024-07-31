@@ -1,6 +1,7 @@
 using Content.Server.Objectives.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.GameTicking.Rules;
+using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
@@ -24,7 +25,6 @@ public sealed class KillPersonConditionSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly TargetObjectiveSystem _target = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -67,7 +67,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
             return;
         }
 
-        _target.SetTarget(uid, _random.Pick(allHumans), target);
+        _target.SetTargetExclusive(uid, args.Mind, _random.Pick(allHumans), target);
     }
 
     private void OnHeadAssigned(EntityUid uid, PickRandomHeadComponent comp, ref ObjectiveAssignedEvent args)
@@ -102,7 +102,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
         if (allHeads.Count == 0)
             allHeads = allHumans; // fallback to non-head target
 
-        _target.SetTarget(uid, _random.Pick(allHeads), target);
+        _target.SetTargetExclusive(uid, args.Mind, _random.Pick(allHeads), target);
     }
 
     private void OnTraitorAssigned(EntityUid uid, PickRandomTraitorComponent comp, ref ObjectiveAssignedEvent args)
@@ -126,14 +126,49 @@ public sealed class KillPersonConditionSystem : EntitySystem
             return;
         }
 
-        var traitors = Enumerable.ToList<(EntityUid Id, MindComponent Mind)>(_traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind));
+        var traitors = Enumerable.ToList(_traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind)).Select(t => t.Id).ToList();
+        args.Mind.ObjectiveTargets.ForEach(p => traitors.Remove(p));
+
         // You are the first/only traitor.
         if (traitors.Count == 0)
         {
-            args.Cancelled = true;
-            return;
+            // If not trying to make all possible candidates traitors, cancel the objective
+            if (!_traitorRule.ForceAllPossible)
+            {
+                args.Cancelled = true;
+                return;
+            }
+
+            //Fallback to assign people who COULD be assigned as traitor
+            var allValidTraitorCandidates = new List<EntityUid>();
+            if (_traitorRule.CurrentAntagPool != null)
+            {
+                var poolSessions = _traitorRule.CurrentAntagPool.GetPoolSessions();
+                foreach (var mind in allHumans)
+                {
+                    if (!args.Mind.ObjectiveTargets.Contains(mind) && _job.MindTryGetJob(mind, out _, out var prototype) && prototype.CanBeAntag && _mind.TryGetSession(mind, out var session) && poolSessions.Contains(session))
+                    {
+                        allValidTraitorCandidates.Add(mind);
+                    }
+                }
+            }
+
+            // Just kill some random nerd if there's literally not a single potential traitor currently available.
+            if (allValidTraitorCandidates.Count == 0)
+            {
+                allValidTraitorCandidates = allHumans;
+            }
+            traitors = allValidTraitorCandidates;
+
+            // One last check for the road, then cancel it if there's nothing left
+            if (traitors.Count == 0)
+            {
+                args.Cancelled = true;
+                return;
+            }
         }
-        _target.SetTarget(uid, _random.Pick(traitors).Id, target);
+
+        _target.SetTargetExclusive(uid, args.Mind, _random.Pick(traitors), target);
     }
 
     private float GetProgress(EntityUid target, bool requireDead)

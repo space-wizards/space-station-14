@@ -135,7 +135,7 @@
     layers:
     - state: plain-slice
     - state: alpha-slice-filling
-      color: blue
+      color: pink
   - type: Tag
     tags:
     - Fruit
@@ -189,6 +189,8 @@
     - state: tin
     - state: plain
   - type: CreamPie
+  - type: ThrowingAngle
+    angle: 180
   - type: LandAtCursor
   - type: ContainerContainer
     containers:

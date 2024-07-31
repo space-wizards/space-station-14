@@ -13,6 +13,11 @@ traitor-description = There are traitors among us...
 traitor-not-enough-ready-players = Not enough players readied up for the game! There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start Traitor.
 traitor-no-one-ready = No players readied up! Can't start Traitor.
 
+spy-vs-spy-title = Spy VS Spy
+spy-vs-spy-description = Watch your back.
+spy-vs-spy-not-enough-ready-players = Not enough players readied up for the game! There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start Spy VS Spy.
+spy-vs-spy-no-one-ready = No players readied up! Can't start Spy VS Spy.
+
 ## TraitorDeathMatch
 traitor-death-match-title = Traitor Deathmatch
 traitor-death-match-description = Everyone's a traitor. Everyone wants each other dead.

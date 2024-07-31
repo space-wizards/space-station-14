@@ -455,8 +455,8 @@ binds:
 - function: OpenDecalSpawnWindow
   type: State
   key: F8
-- function: OpenScoreboardWindow
-  type: State
+- function: ToggleRoundEndSummaryWindow
+  type: Toggle
   key: F9
 - function: OpenSandboxWindow
   type: State
@@ -540,3 +540,6 @@ binds:
 - function: Hotbar9
   type: State
   key: Num9
+- function: ToggleRoundEndSummaryWindow
+  type: Toggle
+  key: End

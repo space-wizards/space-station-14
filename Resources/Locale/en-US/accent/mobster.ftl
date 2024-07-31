@@ -1,6 +1,4 @@
-﻿﻿accent-mobster-prefix-boss-1 = Nyehh,
-
-﻿accent-mobster-prefix-minion-1 = Nyehh,
+﻿accent-mobster-prefix-1 = Nyehh,
 
 accent-mobster-suffix-boss-1 = , see?
 accent-mobster-suffix-boss-2 = , fugeddaboutit.
@@ -61,7 +59,7 @@ accent-mobster-words-17 = here
 accent-mobster-words-replace-17 = 'ere
 
 accent-mobster-words-18 = forget about it
-accent-mobster-words-replace-17 = fuhgeddaboudit
+accent-mobster-words-replace-18 = fuhgeddaboudit
 
 accent-mobster-words-19 = meeting
 accent-mobster-words-replace-19 = sitdown

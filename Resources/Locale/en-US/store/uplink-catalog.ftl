@@ -42,6 +42,9 @@ uplink-mini-bomb-desc = A low-yield, high-impact precision sabotage explosive wi
 uplink-supermatter-grenade-name = Supermatter Grenade
 uplink-supermatter-grenade-desc = Grenade that simulates delamination of a suppermatter engine, generates powerful gravity well. Explosion comparable to a Mini Bomb.
 
+uplink-beenade-name = Beenade
+uplink-beenade-desc = The ultimate in distraction, this foaming grenade contains enough pure concentrated bees to keep Medbay busy for quite a while. Throw it into the bar and watch everyone panic. Just don't stand too close.
+
 uplink-whitehole-grenade-name = Whitehole Grenade
 uplink-whitehole-grenade-desc = Grenade that are repulses everything around for about 10 seconds. Very useful in small rooms and for chasing someone.
 
@@ -125,7 +128,10 @@ uplink-reinforcement-radio-ancestor-name = Genetic Ancestor Reinforcement Telepo
 uplink-reinforcement-radio-ancestor-desc =  Call in a trained ancestor of your choosing to assist you. Comes with a single syndicate cigarette.
 
 uplink-reinforcement-radio-name = Reinforcement Teleporter
-uplink-reinforcement-radio-desc =  Radio in a reinforcement agent of extremely questionable quality. No off button, buy this if you're ready to party. They have a pistol with no reserve ammo, and a knife. That's it.
+uplink-reinforcement-radio-traitor-desc =  Radio in a reinforcement agent of extremely questionable quality. No off button, buy this if you're ready to party. Call in a medic or spy or thief to help you out. Good luck.
+
+uplink-reinforcement-radio-nukeops-name = Nuclear Operative Teleporter
+uplink-reinforcement-radio-nukeops-desc =  Radio in a nuclear operative of extremely questionable quality. No off button, buy this if you're ready to party. They have basic nuclear operative gear.
 
 uplink-reinforcement-radio-cyborg-assault-name = Syndicate Assault Cyborg Teleporter
 uplink-reinforcement-radio-cyborg-assault-desc =  A lean, mean killing machine with access to an Energy Sword, LMG, Cryptographic Sequencer, and a Pinpointer.

@@ -301,6 +301,12 @@
           Quantity: 10
         - ReagentId: JuiceThatMakesYouWeh
           Quantity: 10
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/toys.rsi
+    equippedPrefix: lizard
+    slots:
+    - HEAD
 
 - type: entity
   parent: PlushieLizard
@@ -831,6 +837,30 @@
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Voice/Moth/moth_chitter.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: FabricScrapSalad
+  name: fabric scrap salad
+  description: Whose clothes are these?
+  components:
+  - type: Sprite
+    state: fabric-scrap-salad
+  - type: Construction
+    graph: FabricScrapSalad
+    node: salad
+
+- type: entity
+  parent: BasePlushie
+  id: YarnNoodles
+  name: yarn noodles
+  description: Looks like someone's failed knitting project.
+  components:
+  - type: Sprite
+    state: yarn-noodles
+  - type: Construction
+    graph: YarnNoodles
+    node: noodles
 
 ## Cheapo Figurines
 

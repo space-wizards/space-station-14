@@ -115,6 +115,12 @@ public partial struct AntagSelectionDefinition()
     [DataField]
     public bool LateJoinAdditional = false;
 
+    /// <summary>
+    /// If true, all possible players who have this antag type enabled will be selected. Includes latejoins if LateJoinAdditional is true.
+    /// </summary>
+    [DataField]
+    public bool ForceAllPossible = false;
+
     //todo: find out how to do this with minimal boilerplate: filler department, maybe?
     //public HashSet<ProtoId<JobPrototype>> JobBlacklist = new()
 

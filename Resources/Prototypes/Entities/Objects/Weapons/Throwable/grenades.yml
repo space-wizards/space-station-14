@@ -83,7 +83,7 @@
 
 - type: entity
   id: GrenadeFlashEffect
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: PointLight
       enabled: true
@@ -121,11 +121,11 @@
         volume: 12
 
 - type: entity
-  name: Self Destruct
+  name: self destruct
   description: Go out on your own terms!
   parent: GrenadeBase
   id: SelfDestructSeq
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: ExplodeOnTrigger
   - type: Explosive
@@ -404,6 +404,23 @@
     solution:
       reagents:
       - ReagentId: SpaceCleaner
+        Quantity: 30
+
+- type: entity
+  parent: SmokeGrenade
+  id: BeeGrenade
+  name: beenade
+  description: Run.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/beenade.rsi
+  - type: SmokeOnTrigger
+    duration: 15
+    spreadAmount: 25
+    smokePrototype: Foam
+    solution:
+      reagents:
+      - ReagentId: BuzzochloricBees
         Quantity: 30
 
 - type: entity

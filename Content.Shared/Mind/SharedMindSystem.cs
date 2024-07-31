@@ -552,6 +552,27 @@ public abstract class SharedMindSystem : EntitySystem
 
         return allHumans;
     }
+
+    public List<EntityUid> GetAliveHumansExceptGroup(List<EntityUid> exclude)
+    {
+        var mindQuery = EntityQuery<MindComponent>();
+
+        var allHumans = new List<EntityUid>();
+        // HumanoidAppearanceComponent is used to prevent mice, pAIs, etc from being chosen
+        var query = EntityQueryEnumerator<MindContainerComponent, MobStateComponent, HumanoidAppearanceComponent>();
+        while (query.MoveNext(out var uid, out var mc, out var mobState, out _))
+        {
+            // the player needs to have a mind and not be in the excluded group
+            if (mc.Mind == null || exclude.Contains((EntityUid)mc.Mind))
+                continue;
+
+            // the player has to be alive
+            if (_mobState.IsAlive(uid, mobState))
+                allHumans.Add(mc.Mind.Value);
+        }
+
+        return allHumans;
+    }
 }
 
 /// <summary>
