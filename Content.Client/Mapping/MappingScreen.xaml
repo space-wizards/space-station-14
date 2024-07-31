@@ -11,7 +11,7 @@
     <controls:RecordedSplitContainer Name="ScreenContainer" HorizontalExpand="True"
                                      VerticalExpand="True" SplitWidth="0"
                                      StretchDirection="TopLeft">
-        <BoxContainer Orientation="Vertical" VerticalExpand="True" Name="SpawnContainer" MinWidth="600">
+        <BoxContainer Orientation="Vertical" VerticalExpand="True" Name="SpawnContainer" MinWidth="200" SetWidth="600">
             <mapping:MappingPrototypeList Name="Prototypes" Access="Public" VerticalExpand="True" />
             <BoxContainer Name="DecalContainer" Access="Public" Orientation="Horizontal"
                           Visible="False">
@@ -47,8 +47,10 @@
             </BoxContainer>
             <BoxContainer Orientation="Horizontal">
                 <Button Name="EraseEntityButton" Access="Public" HorizontalExpand="True"
+                        SetHeight="48"
                         ToggleMode="True" Text="Erase Entity" StyleClasses="ButtonSquare" />
                 <Button Name="EraseDecalButton" Access="Public" HorizontalExpand="True"
+                        SetHeight="48"
                         ToggleMode="True" Text="Erase Decal" StyleClasses="ButtonSquare" />
             </BoxContainer>
             <widgets:ChatBox Visible="False" />

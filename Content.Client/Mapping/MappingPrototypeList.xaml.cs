@@ -67,6 +67,10 @@ public sealed partial class MappingPrototypeList : Control
             button.Texture.Textures.AddRange(_insertTextures);
             button.Texture.InvalidateMeasure();
         }
+        else
+        {
+            button.Texture.Visible = false;
+        }
 
         if (prototype != null && button.Prototype == Selected?.Prototype)
         {
@@ -85,6 +89,7 @@ public sealed partial class MappingPrototypeList : Control
         }
         else
         {
+            button.CollapseButtonWrapper.Visible = false;
             button.CollapseButton.Visible = false;
         }
 

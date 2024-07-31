@@ -12,10 +12,8 @@ namespace Content.Client.Mapping;
 public sealed class MappingOverlay : Overlay
 {
     [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
     // 1 off in case something else uses these colors since we use them to compare
     private static readonly Color PickColor = new(1, 255, 0);
