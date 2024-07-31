@@ -12,6 +12,7 @@
       - sprite: Objects/Consumable/Drinks/beerglass.rsi
         state: icon
   - type: GenericSpawner
-    entityTable: DrinksGlassEntityTable
-    chance: 0.8
+    entityTables:
+      DrinksGlassEntityTable: 0.8
+      DrinksGlassRareEntityTable: 0.05
     offset: 0.0

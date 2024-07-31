@@ -9,7 +9,8 @@
         - sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
           state: nanotrasen
     - type: GenericSpawner
-      entityTable: AltarEntityTable
+      entityTables:
+        AltarEntityTable: 1.0
       offset: 0.0
 
 - type: entity
@@ -23,7 +24,8 @@
         - sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
           state: convertaltar
     - type: GenericSpawner
-      entityTable: ConvertAltarEntityTable
+      entityTables:
+        ConvertAltarEntityTable: 1.0
       offset: 0.0
 
 - type: entity
@@ -37,5 +39,6 @@
         - sprite: Structures/Furniture/Altars/Cults/fangs.rsi
           state: full
     - type: GenericSpawner
-      entityTable: CultAltarEntityTable
+      entityTables:
+        CultAltarEntityTable: 1.0
       offset: 0.0

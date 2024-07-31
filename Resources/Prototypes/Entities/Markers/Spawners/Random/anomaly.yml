@@ -9,8 +9,8 @@
     - sprite: Structures/Specific/anomaly.rsi
       state: anom1
   - type: GenericSpawner
-    entityTable: AnomalyEntityTable
-    chance: 1
+    entityTables:
+      AnomalyEntityTable: 1.0
     offset: 0.15 # not to put it higher. The anomaly sychnronizer looks for anomalies within this radius, and if the radius is higher, the anomaly can be attracted from a neighboring tile.
 
 - type: entity
@@ -23,6 +23,6 @@
     - sprite: Structures/Specific/anomaly.rsi
       state: anom6
   - type: GenericSpawner
-    entityTable: RockAnomalyEntityTable
-    chance: 1
+    entityTables:
+      RockAnomalyEntityTable: 1.0
     offset: 0.15

@@ -12,6 +12,7 @@
       - sprite: Objects/Consumable/Food/meals.rsi
         state: cornedbeef
   - type: GenericSpawner
-    entityTable: FoodMealEntityTable
-    chance: 0.8
+    entityTables:
+      FoodMealEntityTable: 0.8
+      FoodMealRareEntityTable: 0.05
     offset: 0.0

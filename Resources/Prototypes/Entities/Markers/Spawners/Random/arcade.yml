@@ -9,5 +9,5 @@
       - sprite: Structures/Machines/arcade.rsi
         state: icon
   - type: GenericSpawner
-    entityTable: ArcadeEntityTable
-    chance: 1
+    entityTables:
+      ArcadeEntityTable: 1.0

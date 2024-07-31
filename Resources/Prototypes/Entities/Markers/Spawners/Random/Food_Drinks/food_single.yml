@@ -12,6 +12,7 @@
       - sprite: Objects/Consumable/Food/burger.rsi
         state: plain
   - type: GenericSpawner
-    entityTable: FoodSingleEntityTable
-    chance: 0.8
+    entityTables:
+      FoodSingleEntityTable: 0.8
+      FoodSingleRareEntityTable: 0.05
     offset: 0.0

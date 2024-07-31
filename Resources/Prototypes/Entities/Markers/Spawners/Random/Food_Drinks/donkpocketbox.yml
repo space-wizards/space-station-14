@@ -9,6 +9,6 @@
         - sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
           state: box
     - type: GenericSpawner
-      entityTable: DonkPocketBoxEntityTable
-      chance: 0.5
+      entityTables:
+        DonkPocketBoxEntityTable: 0.5
       offset: 0.0

@@ -9,5 +9,6 @@
         - sprite: Objects/Misc/bedsheets.rsi
           state: random_bedsheet
     - type: GenericSpawner
-      entityTable: BedsheetEntityTable
+      entityTables:
+        BedsheetEntityTable: 1.0
       offset: 0

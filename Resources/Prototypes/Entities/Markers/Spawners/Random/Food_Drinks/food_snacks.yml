@@ -12,6 +12,6 @@
       - sprite: Objects/Consumable/Food/snacks.rsi
         state: cheesiehonkers
   - type: GenericSpawner
-    entityTable: FoodSnacksEntityTable
-    chance: 0.8
+    entityTables:
+      FoodSnacksEntityTable: 0.8
     offset: 0.0

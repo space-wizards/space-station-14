@@ -9,8 +9,8 @@
         - sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
           state: ano01
     - type: GenericSpawner
-      entityTable: ArtifactEntityTable
-      chance: 1
+      entityTables:
+        ArtifactEntityTable: 1.0
 
 - type: entity
   id: RandomArtifactSpawner20
@@ -18,4 +18,5 @@
   parent: RandomArtifactSpawner
   components:
     - type: GenericSpawner
-      chance: 0.2
+      entityTables:
+        ArtifactEntityTable: 0.2

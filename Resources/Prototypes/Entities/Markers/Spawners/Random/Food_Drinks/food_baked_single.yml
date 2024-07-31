@@ -12,6 +12,7 @@
       - sprite: Objects/Consumable/Food/Baked/pie.rsi
         state: plain-slice
   - type: GenericSpawner
-    entityTable: FoodBakedSingleEntityTable
-    chance: 0.8
+    entityTables:
+      FoodBakedSingleEntityTable: 0.8
+      FoodBakedSingleRareEntityTable: 0.05
     offset: 0.0

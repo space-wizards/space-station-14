@@ -12,6 +12,7 @@
       - sprite: Objects/Consumable/Drinks/ginbottle.rsi
         state: icon
   - type: GenericSpawner
-    entityTable: DrinksBottlesEntityTable
-    chance: 0.8
+    entityTables:
+      DrinksBottlesEntityTable: 0.8
+      DrinksBottlesRareEntityTable: 0.01
     offset: 0.0

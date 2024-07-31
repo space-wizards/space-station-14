@@ -9,8 +9,8 @@
         - sprite: Structures/Storage/Crates/generic.rsi
           state: icon
     - type: GenericSpawner
-      entityTable: EmptyCrateEntityTable
-      chance: 0.7
+      entityTables:
+        EmptyCrateEntityTable: 0.7
       offset: 0.0
 
 - type: entity
@@ -25,8 +25,9 @@
         - sprite: Structures/Storage/Crates/o2.rsi
           state: icon
     - type: GenericSpawner
-      entityTable: FilledCrateEntityTable
-      chance: 0.8
+      entityTables:
+        FilledCrateEntityTable: 0.7
+        FilledCrateRareEntityTable: 0.1
       offset: 0.0
 
 - type: entity
@@ -40,8 +41,9 @@
         - sprite: Structures/Storage/Crates/engineering.rsi
           state: icon
     - type: GenericSpawner
-      entityTable: EngineeringCrateEntityTable
-      chance: 0.9
+      entityTables:
+        EngineeringCrateEntityTable: 0.9
+        EngineeringCrateRareEntityTable: 0.2
       offset: 0.0
 
 - type: entity
@@ -55,5 +57,7 @@
         - sprite: Structures/Storage/Crates/sec_gear.rsi
           state: icon
     - type: GenericSpawner
-      entityTable: SecurityCrateEntityTable
+      entityTables:
+        SecurityCrateEntityTable: 0.9
+        SecurityCrateRareEntityTable: 0.1
       offset: 0.0

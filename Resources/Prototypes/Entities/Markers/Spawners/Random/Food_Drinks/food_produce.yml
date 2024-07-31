@@ -11,6 +11,7 @@
       - sprite: Objects/Specific/Hydroponics/onion_red.rsi
         state: produce
   - type: GenericSpawner
-    entityTable: FoodProduceEntityTable
-    chance: 0.8
+    entityTables:
+      FoodProduceEntityTable: 0.8
+      FoodProduceRareEntityTable: 0.01
     offset: 0.0

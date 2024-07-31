@@ -11,6 +11,7 @@
       - sprite: Objects/Consumable/Drinks/dr_gibb.rsi
         state: icon
   - type: GenericSpawner
-    entityTable: DrinksSodaEntityTable
-    chance: 0.8
+    entityTables:
+      DrinksSodaEntityTable: 0.8
+      DrinksSodaRareEntityTable: 0.05
     offset: 0.0
