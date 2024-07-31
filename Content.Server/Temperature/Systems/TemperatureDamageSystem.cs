@@ -5,6 +5,7 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using System.Linq;
 
 namespace Content.Server.Temperature.Systems;
@@ -18,6 +19,7 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     /// <summary>
     ///     All the components that will have their damage updated at the end of the tick.
@@ -25,10 +27,6 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
     ///     that we need some mechanism to ensure it doesn't double dip on damage for both calls.
     /// </summary>
     public HashSet<Entity<TemperatureDamageThresholdsComponent>> ShouldUpdateDamage = new();
-
-    public float UpdateInterval = 1.0f;
-
-    private float _accumulatedFrametime;
 
     [ValidatePrototypeId<AlertCategoryPrototype>]
     public const string TemperatureAlertCategory = "Temperature";
@@ -40,7 +38,9 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
         UpdatesAfter.Add(typeof(TemperatureSystem));
 
         SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
+
         SubscribeLocalEvent<TemperatureDamageThresholdsComponent, OnTemperatureChangeEvent>(EnqueueDamage);
+        SubscribeLocalEvent<TemperatureDamageThresholdsComponent, EntityUnpausedEvent>(OnUnpaused);
 
         // Allows overriding thresholds based on the parent's thresholds.
         SubscribeLocalEvent<TemperatureDamageThresholdsComponent, EntParentChangedMessage>(OnParentChange);
@@ -52,31 +52,29 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        _accumulatedFrametime += frameTime;
-
-        if (_accumulatedFrametime < UpdateInterval)
-            return;
-        _accumulatedFrametime -= UpdateInterval;
-
         if (!ShouldUpdateDamage.Any())
             return;
 
-        foreach (var comp in ShouldUpdateDamage)
+        var curTime = _gameTiming.CurTime;
+        foreach (var (uid, thresholds) in ShouldUpdateDamage)
         {
-            MetaDataComponent? metaData = null;
-
-            var uid = comp.Owner;
-            if (Deleted(uid, metaData) || Paused(uid, metaData))
+            if (Deleted(uid) || Paused(uid))
                 continue;
 
-            ChangeDamage(uid, comp);
+            var deltaTime = curTime - thresholds.LastUpdate;
+            if (!thresholds.TakingDamage || deltaTime < thresholds.UpdateInterval)
+                continue;
+
+            ChangeDamage(uid, thresholds, deltaTime);
         }
 
         ShouldUpdateDamage.Clear();
     }
 
-    private void ChangeDamage(EntityUid uid, TemperatureDamageThresholdsComponent thresholds)
+    private void ChangeDamage(EntityUid uid, TemperatureDamageThresholdsComponent thresholds, TimeSpan deltaTime)
     {
+        thresholds.LastUpdate = _gameTiming.CurTime;
+
         if (!HasComp<DamageableComponent>(uid) || !TryComp<TemperatureComponent>(uid, out var temperature))
             return;
 
@@ -101,7 +99,7 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
 
             var diff = Math.Abs(temperature.CurrentTemperature - heatDamageThreshold);
             var tempDamage = c / (1 + a * Math.Pow(Math.E, -heatK * diff)) - y;
-            _damageable.TryChangeDamage(uid, thresholds.HeatDamage * tempDamage, ignoreResistances: true, interruptsDoAfters: false);
+            _damageable.TryChangeDamage(uid, thresholds.HeatDamage * tempDamage * deltaTime.TotalSeconds, ignoreResistances: true, interruptsDoAfters: false);
         }
         else if (temperature.CurrentTemperature <= coldDamageThreshold)
         {
@@ -114,7 +112,7 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
             var diff = Math.Abs(temperature.CurrentTemperature - coldDamageThreshold);
             var tempDamage =
                 Math.Sqrt(diff * (Math.Pow(thresholds.DamageCap.Double(), 2) / coldDamageThreshold));
-            _damageable.TryChangeDamage(uid, thresholds.ColdDamage * tempDamage, ignoreResistances: true, interruptsDoAfters: false);
+            _damageable.TryChangeDamage(uid, thresholds.ColdDamage * tempDamage * deltaTime.TotalSeconds, ignoreResistances: true, interruptsDoAfters: false);
         }
         else if (thresholds.TakingDamage)
         {
@@ -182,7 +180,13 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
 
     private void EnqueueDamage(Entity<TemperatureDamageThresholdsComponent> ent, ref OnTemperatureChangeEvent args)
     {
-        ShouldUpdateDamage.Add(ent);
+        if (ShouldUpdateDamage.Add(ent))
+            ent.Comp.LastUpdate = _gameTiming.CurTime;
+    }
+
+    private void OnUnpaused(Entity<TemperatureDamageThresholdsComponent> ent, ref EntityUnpausedEvent args)
+    {
+        ent.Comp.LastUpdate += args.PausedTime;
     }
 
     private void OnParentChange(EntityUid uid, TemperatureDamageThresholdsComponent component,

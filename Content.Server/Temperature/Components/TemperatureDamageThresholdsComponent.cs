@@ -2,6 +2,7 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Temperature.Components;
 
@@ -78,4 +79,16 @@ public sealed partial class TemperatureDamageThresholdsComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<AlertPrototype> ColdAlert = "Cold";
+
+    /// <summary>
+    /// The last time this entity processed temperature damage.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan LastUpdate;
+
+    /// <summary>
+    /// The time interval between temperature damage ticks for this entity.
+    /// </summary>
+    [DataField]
+    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1.0);
 }
