@@ -3,7 +3,6 @@ using System.Numerics;
 using Content.Server.GameTicking;
 using Content.Server.Spawners.Components;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -81,6 +80,9 @@ public sealed class GenericSpawnerSystem : EntitySystem
                 Log.Warning($"Referenced entity table prototype does not exist! Entity: {ToPrettyString(uid)}");
                 continue;
             }
+
+            if (pair.Value != 1.0f && !_robustRandom.Prob(pair.Value))
+                continue;
 
             if (entTable.Weights.Count == 0)
             {

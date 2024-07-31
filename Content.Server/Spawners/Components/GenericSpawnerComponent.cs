@@ -14,7 +14,7 @@ public partial class GenericSpawnerComponent : Component
     /// WeightedRandomEntityPrototype IDs from which the entity will be picked, along with their respective chances.
     /// </summary>
     [DataField]
-    public Dictionary<ProtoId<WeightedRandomEntityPrototype>, float> EntityTables;
+    public Dictionary<ProtoId<WeightedRandomEntityPrototype>, float> EntityTables = new();
 
     /// <summary>
     /// Which gamerules have to be active for that spawner to work.
