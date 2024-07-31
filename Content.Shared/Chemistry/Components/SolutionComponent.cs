@@ -1,7 +1,6 @@
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Types;
 using Content.Shared.FixedPoint;
-using Content.Shared.Materials;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Chemistry.Components;
@@ -21,19 +20,25 @@ public sealed partial class SolutionComponent : Component
     [DataField, AutoNetworkedField, Obsolete]
     public Solution Solution = new(); //TODO: legacy remove this
 
-    [DataField]
-    public EntityUid SolutionOwner = EntityUid.Invalid;
+    [DataField, AutoNetworkedField]
+    public EntityUid Parent = EntityUid.Invalid;
 
     [DataField, AutoNetworkedField]
     public List<ReagentQuantity> Contents = new();
 
+    [DataField, AutoNetworkedField]
+    public List<ReagentVariantQuantity> VariantContents = new();
+
+    [NonSerialized]
+    public List<FixedPoint2> CachedTotalReagentVolumes = new();
+
     /// <summary>
     ///     The name of this solution
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string Name;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool CanOverflow = true;
 
     public FixedPoint2 OverflowAmount => Volume - MaxVolume;
@@ -42,7 +47,7 @@ public sealed partial class SolutionComponent : Component
     ///     If reactions will be checked for when adding reagents to the container.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("canReact")]
+    [DataField("canReact"), AutoNetworkedField]
     public bool CanReact { get; set; } = true;
 
     /// <summary>
@@ -67,7 +72,7 @@ public sealed partial class SolutionComponent : Component
     ///     initialization. Note that most solution methods ignore max volume altogether, but various solution
     ///     systems use this.
     /// </remarks>
-    [DataField("maxVol")]
+    [DataField("maxVol"), AutoNetworkedField]
     [ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 MaxVolume { get; set; } = FixedPoint2.Zero;
 
@@ -84,7 +89,7 @@ public sealed partial class SolutionComponent : Component
     ///     The temperature of the reagents in the solution.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("temperature")]
+    [DataField("temperature"), AutoNetworkedField]
     public float Temperature { get; set; } = 293.15f;
 
     /// <summary>

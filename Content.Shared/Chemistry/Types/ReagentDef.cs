@@ -37,7 +37,7 @@ public partial struct ReagentDef
 
         }
         Entity = foundReagentDef;
-        NetEntity = entityManager.GetNetEntity(foundReagentDef.Owner);
+        NetEntity = entityManager.GetNetEntity(foundReagentDef.Value.Owner);
     }
 
     public void NetSync(IEntityManager entityManager)

@@ -124,7 +124,7 @@ public sealed class PricingSystem : EntitySystem
                     continue;
 
                 // TODO check ReagentData for price information?
-                price += (float) quantity * reagentDef.Comp.PricePerUnit;
+                price += (float) quantity * reagentDef.Value.Comp.PricePerUnit;
             }
         }
 
@@ -143,7 +143,7 @@ public sealed class PricingSystem : EntitySystem
                     continue;
 
                 // TODO check ReagentData for price information?
-                price += (float) quantity * reagentDef.Comp.PricePerUnit;
+                price += (float) quantity * reagentDef.Value.Comp.PricePerUnit;
             }
         }
 

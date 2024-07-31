@@ -129,14 +129,32 @@ public abstract class SharedChemistryRegistrySystem : EntitySystem
         }
     }
 
+
+    public bool ResolveReagent(string id,
+        [NotNullWhen(true)] ref Entity<ReagentDefinitionComponent>? reagent,
+        bool logMissingRegistry = true)
+    {
+        if (reagent != null)
+        {
+            if (reagent.Value.Comp.Id != id)
+                throw new KeyNotFoundException($"ReagentDefinition {ToPrettyString(reagent)} does not match Id:{id}!");
+            return true;
+        }
+
+        if (TryIndex(id, out reagent))
+            return true;
+        Log.Error($"reagent:{id} was not found in the reagent registry!");
+        return false;
+    }
+
     public Entity<ReagentDefinitionComponent> GetReagentById(string id)
     {
         if (!TryIndex(id, out var result))
             throw new KeyNotFoundException($"{id} is not registered as a reagent!");
-        return result;
+        return result.Value;
     }
 
-    public bool TryGetReagentById(string id, out Entity<ReagentDefinitionComponent> reagent)
+    public bool TryGetReagentById(string id,[NotNullWhen(true)] out Entity<ReagentDefinitionComponent>? reagent)
     {
         reagent = default;
         if (!TryEnsureRegistry(out var registry))
@@ -161,7 +179,7 @@ public abstract class SharedChemistryRegistrySystem : EntitySystem
 
     public bool HasIndex(string id) => HasReagentId(id);
 
-    public bool TryIndex(string id, out Entity<ReagentDefinitionComponent> reagentDefinition) =>
+    public bool TryIndex(string id, [NotNullWhen(true)] out Entity<ReagentDefinitionComponent>? reagentDefinition) =>
         TryGetReagentById(id, out reagentDefinition);
 
     protected bool TryCreateReagentMetaSpriteFromLegacyProto(ReagentPrototype proto,[NotNullWhen(true)] out ReagentMetamorphicSpriteComponent? comp)

@@ -102,7 +102,7 @@ namespace Content.Client.Chemistry.UI
             {
                 // Try get to the prototype for the given reagent. This gives us its name.
                 var localizedName = _chemistryRegistry.TryIndex(reagent.Prototype, out var reagentDef)
-                    ? reagentDef.Comp.LocalizedName
+                    ? reagentDef.Value.Comp.LocalizedName
                     : Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text");
 
                 var nameLabel = new Label { Text = $"{localizedName}: " };

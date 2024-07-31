@@ -31,13 +31,13 @@ public sealed class DumpReagentGuideText : IConsoleCommand
             return;
         }
 
-        if (reagent.Comp.Metabolisms is null)
+        if (reagent.Value.Comp.Metabolisms is null)
         {
             shell.WriteLine("Nothing to dump.");
             return;
         }
 
-        foreach (var entry in reagent.Comp.Metabolisms.Values)
+        foreach (var entry in reagent.Value.Comp.Metabolisms.Values)
         {
             foreach (var effect in entry.Effects)
             {

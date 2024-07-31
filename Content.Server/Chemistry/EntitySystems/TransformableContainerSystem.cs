@@ -60,7 +60,7 @@ public sealed class TransformableContainerSystem : EntitySystem
             && _chemistryRegistry.TryIndex(reagentId.Value.Prototype, out var reagentDef))
         {
             var metadata = MetaData(entity.Owner);
-            _metadataSystem.SetEntityDescription(entity.Owner, reagentDef.Comp.LocalizedDescription, metadata);
+            _metadataSystem.SetEntityDescription(entity.Owner, reagentDef.Value.Comp.LocalizedDescription, metadata);
             entity.Comp.CurrentReagent = reagentDef;
             entity.Comp.Transformed = true;
         }

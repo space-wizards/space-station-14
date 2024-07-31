@@ -69,7 +69,7 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
             {
                 // What portion of the solution is this reagent?
                 var proportion = (float) (reagent.Quantity / solution.Volume);
-                totalFizzability += reagentData.Comp.Fizziness * proportion;
+                totalFizzability += reagentData.Value.Comp.Fizziness * proportion;
             }
         }
 

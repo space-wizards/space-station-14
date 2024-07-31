@@ -147,8 +147,9 @@ namespace Content.Client.Chemistry.UI
                 return "";
 
             var reagent = state.BufferReagents.OrderBy(r => r.Quantity).First().Reagent;
-            _chemistryRegistry.TryIndex(reagent.Prototype, out var reagentDef);
-            return reagentDef.Comp.LocalizedName;
+            if (!_chemistryRegistry.TryIndex(reagent.Prototype, out var reagentDef))
+                return "";
+            return reagentDef.Value.Comp.LocalizedName;
         }
 
         /// <summary>
@@ -192,7 +193,7 @@ namespace Content.Client.Chemistry.UI
                 // Try to get the prototype for the given reagent. This gives us its name.
                 if (_chemistryRegistry.TryIndex(reagent.Prototype, out var reagentDef))
                 {
-                    var name = reagentDef.Comp.LocalizedName;
+                    var name = reagentDef.Value.Comp.LocalizedName;
                     BufferInfo.Children.Add(new BoxContainer
                     {
                         Orientation = LayoutOrientation.Horizontal,
@@ -260,7 +261,7 @@ namespace Content.Client.Chemistry.UI
                     contents = info.Reagents.Select(x =>
                         {
                             var name = _chemistryRegistry.TryIndex(x.Reagent.Prototype, out var reagentDef)
-                            ? reagentDef.Comp.LocalizedName
+                            ? reagentDef.Value.Comp.LocalizedName
                             : Loc.GetString("chem-master-window-unknown-reagent-text");
 
                             return (name, Id: x.Reagent, x.Quantity);

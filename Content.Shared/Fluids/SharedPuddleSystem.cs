@@ -83,7 +83,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         if (!string.IsNullOrWhiteSpace(reagentId?.Prototype)
             && _chemRegistry.TryIndex(reagentId.Value.Prototype, out var reagentDef))
         {
-            args.Sound = reagentDef.Comp.FootstepSound;
+            args.Sound = reagentDef.Value.Comp.FootstepSound;
         }
     }
 

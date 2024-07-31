@@ -125,7 +125,8 @@ namespace Content.Shared.Chemistry.Components
             _heatCapacityUpdateCounter = 0;
         }
 
-        public float GetHeatCapacity(SharedChemistryRegistrySystem? chemicalRegistry)
+        [Obsolete]
+        public float GetHeatCapacityNew(SharedChemistryRegistrySystem? chemicalRegistry)
         {
             if (_heatCapacityDirty)
             {
@@ -135,9 +136,9 @@ namespace Content.Shared.Chemistry.Components
         }
 
         [Obsolete]
-        public float GetHeatCapacity(IPrototypeManager? _)
+        public float GetHeatCapacity(IPrototypeManager? protoManager)
         {
-            return GetHeatCapacity(IoCManager.Resolve<IEntitySystemManager>()
+            return GetHeatCapacityNew(IoCManager.Resolve<IEntitySystemManager>()
                 .GetEntitySystem<SharedChemistryRegistrySystem>());
         }
 
@@ -152,7 +153,7 @@ namespace Content.Shared.Chemistry.Components
 
         public float GetThermalEnergy(SharedChemistryRegistrySystem? chemistryRegistry)
         {
-            return GetHeatCapacity(chemistryRegistry) * Temperature;
+            return GetHeatCapacityNew(chemistryRegistry) * Temperature;
         }
 
 
@@ -183,7 +184,7 @@ namespace Content.Shared.Chemistry.Components
         /// <param name="reagent">The prototype ID of the reagent to add.</param>
         /// <param name="quantity">The quantity in milli-units.</param>
         /// <param name="data"></param>
-        public Solution(string reagent, FixedPoint2 quantity, ReagentData? data = null) : this()
+        public Solution(string reagent, FixedPoint2 quantity, Reagent.ReagentData? data = null) : this()
         {
             AddReagent(new ReagentId(reagent, data), quantity);
         }
@@ -279,7 +280,7 @@ namespace Content.Shared.Chemistry.Components
             return false;
         }
 
-        public bool ContainsReagent(string reagentId, ReagentData? data)
+        public bool ContainsReagent(string reagentId, Reagent.ReagentData? data)
             => ContainsReagent(new(reagentId, data));
 
         public bool TryGetReagent(ReagentId id, out ReagentQuantity quantity)
@@ -445,7 +446,7 @@ namespace Content.Shared.Chemistry.Components
         /// <param name="proto">The prototype of the reagent to add.</param>
         /// <param name="quantity">The quantity in milli-units.</param>
         [Obsolete]
-        public void AddReagent(ReagentPrototype proto, FixedPoint2 quantity, float temperature, IPrototypeManager? protoMan, ReagentData? data = null)
+        public void AddReagent(ReagentPrototype proto, FixedPoint2 quantity, float temperature, IPrototypeManager? protoMan, Reagent.ReagentData? data = null)
         {
             if (_heatCapacityDirty)
                 UpdateHeatCapacity(protoMan);
@@ -455,7 +456,7 @@ namespace Content.Shared.Chemistry.Components
             Temperature = _heatCapacity == 0 ? 0 : totalThermalEnergy / _heatCapacity;
         }
 
-        public void AddReagent(Entity<ReagentDefinitionComponent> reagentDef, FixedPoint2 quantity, float temperature, SharedChemistryRegistrySystem? chemRegistry, ReagentData? data = null)
+        public void AddReagent(Entity<ReagentDefinitionComponent> reagentDef, FixedPoint2 quantity, float temperature, SharedChemistryRegistrySystem? chemRegistry, Reagent.ReagentData? data = null)
         {
             if (_heatCapacityDirty)
                 UpdateHeatCapacity(chemRegistry);
@@ -574,7 +575,7 @@ namespace Content.Shared.Chemistry.Components
         /// <param name="prototype">The prototype of the reagent to be removed.</param>
         /// <param name="quantity">The amount of reagent to remove.</param>
         /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
-        public FixedPoint2 RemoveReagent(string prototype, FixedPoint2 quantity, ReagentData? data = null)
+        public FixedPoint2 RemoveReagent(string prototype, FixedPoint2 quantity, Reagent.ReagentData? data = null)
         {
             return RemoveReagent(new ReagentQuantity(prototype, quantity, data));
         }
@@ -770,11 +771,6 @@ namespace Content.Shared.Chemistry.Components
 
             _heatCapacityDirty = true;
             ValidateSolution();
-        }
-
-        public void AddSolution(Solution otherSolution, SharedChemistryRegistrySystem? chemRegistry)
-        {
-
         }
 
         [Obsolete]

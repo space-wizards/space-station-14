@@ -130,7 +130,7 @@ namespace Content.Client.Kitchen.UI
                 foreach (var (reagent, quantity) in reagents)
                 {
                     var reagentName = _chemRegistry.TryIndex(reagent.Prototype, out var reagentDef)
-                        ? $"{quantity} {reagentDef.Comp.LocalizedName}"
+                        ? $"{quantity} {reagentDef.Value.Comp.LocalizedName}"
                         : "???";
                     BeakerContentBox.BoxContents.AddItem(reagentName);
                 }

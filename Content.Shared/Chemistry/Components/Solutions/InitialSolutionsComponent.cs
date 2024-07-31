@@ -11,4 +11,4 @@ public sealed partial class InitialSolutionsComponent : Component
 }
 
 [DataRecord, Serializable, NetSerializable]
-public record struct InitialSolutionId(string ReagentId, ReagentMetadata? Metadata);
+public record struct InitialSolutionId(string ReagentId, ReagentVariant? Metadata);

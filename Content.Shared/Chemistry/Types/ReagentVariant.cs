@@ -1,10 +1,11 @@
-﻿using Content.Shared.FixedPoint;
+﻿using System.Runtime.CompilerServices;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Types;
 
 [ImplicitDataDefinitionForInheritors, Serializable, NetSerializable]
-public abstract partial class ReagentMetadata : IEquatable<ReagentMetadata>
+public abstract partial class ReagentVariant : IEquatable<ReagentVariant>
 {
     /// <summary>
     /// Convert to a string representation. This if for logging & debugging. This is not localized and should not be
@@ -24,7 +25,7 @@ public abstract partial class ReagentMetadata : IEquatable<ReagentMetadata>
         return $"{prototype}:{GetType().Name}";
     }
 
-    public abstract bool Equals(ReagentMetadata? other);
+    public abstract bool Equals(ReagentVariant? other);
 
     public override bool Equals(object? obj)
     {
@@ -32,13 +33,10 @@ public abstract partial class ReagentMetadata : IEquatable<ReagentMetadata>
             return false;
         if (ReferenceEquals(this, obj))
             return true;
-        if (obj.GetType() != GetType())
-            return false;
-
-        return Equals((ReagentMetadata) obj);
+        return obj.GetType() == GetType() && Equals((ReagentVariant) obj);
     }
 
     public abstract override int GetHashCode();
 
-    public abstract ReagentMetadata Clone();
+    public abstract ReagentVariant Clone();
 }

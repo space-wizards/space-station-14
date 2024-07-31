@@ -5,7 +5,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
@@ -155,7 +154,7 @@ namespace Content.Server.Body.Systems
                     continue;
 
                 var mostToRemove = FixedPoint2.Zero;
-                if (reagentDef.Comp.Metabolisms is null)
+                if (reagentDef.Value.Comp.Metabolisms is null)
                 {
                     if (ent.Comp1.RemoveEmpty)
                     {
@@ -176,7 +175,7 @@ namespace Content.Server.Body.Systems
 
                 foreach (var group in ent.Comp1.MetabolismGroups)
                 {
-                    if (!reagentDef.Comp.Metabolisms.TryGetValue(group.Id, out var entry))
+                    if (!reagentDef.Value.Comp.Metabolisms.TryGetValue(group.Id, out var entry))
                         continue;
 
                     var rate = entry.MetabolismRate * group.MetabolismRateModifier;
@@ -191,7 +190,7 @@ namespace Content.Server.Body.Systems
                     // still remove reagents
                     if (TryComp<MobStateComponent>(solutionEntityUid.Value, out var state))
                     {
-                        if (!reagentDef.Comp.WorksOnTheDead && _mobStateSystem.IsDead(solutionEntityUid.Value, state))
+                        if (!reagentDef.Value.Comp.WorksOnTheDead && _mobStateSystem.IsDead(solutionEntityUid.Value, state))
                             continue;
                     }
 
@@ -210,7 +209,7 @@ namespace Content.Server.Body.Systems
                                 LogType.ReagentEffect,
                                 effect.LogImpact,
                                 $"Metabolism effect {effect.GetType().Name:effect}"
-                                + $" of reagent {reagentDef.Comp.LocalizedName:reagent}"
+                                + $" of reagent {reagentDef.Value.Comp.LocalizedName:reagent}"
                                 + $" applied on entity {actualEntity:entity}"
                                 + $" at {Transform(actualEntity).Coordinates:coordinates}"
                             );
