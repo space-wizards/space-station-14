@@ -173,6 +173,9 @@
         prob: 0.05
         maxAmount: 5
         orGroup: Chems
+      - id: VestineChemistryVial
+        prob: 0.05
+        orGroup: Chems
       - id: OmnizineChemistryBottle
         prob: 0.05
         orGroup: Chems
@@ -960,6 +963,7 @@
   id: RandomSatchel
   name: random smuggler's satchel spawner
   parent: MarkerBase
+  suffix: Do Not Map
   components:
   - type: Sprite
     layers:
@@ -974,7 +978,7 @@
       - ClothingBackpackSatchelSmugglerFour
       - ClothingBackpackSatchelSmugglerFive
       - ClothingBackpackSatchelSmugglerSix
-    chance: 0.05 #place up to 20 spots around the station
+    chance: 1 #Handled by event now
     rarePrototypes:
       - BriefcaseCash
     rareChance: 0.001
@@ -983,9 +987,8 @@
   name: brown briefcase
   parent: BriefcaseBase
   id: BriefcaseCash
-  suffix: Smuggler
+  suffix: Smuggler, Do Not Map
   description: A handy briefcase.
-  noSpawn: true
   placement:
     mode: SnapgridCenter
   components:
