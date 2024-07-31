@@ -1140,6 +1140,7 @@
   - type: SingularityDistortion
     intensity: 2000
     falloffPower: 2.6
+    hasEventHorizon: true
   - type: Item
     size: Normal
     sprite: Objects/Fun/toys.rsi

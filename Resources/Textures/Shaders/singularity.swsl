@@ -8,9 +8,12 @@ uniform lowp int count;
 uniform highp float[32] falloffPower;
 uniform highp float[32] intensity;
 uniform highp vec2[32] position;
+uniform bool[32] hasEventHorizon;
 // The array lengths correspond to the upper limit on the simultaneous distortion sources that can be present on screen at a time.
 // If you want to change this, make sure to change all of them here, in the for loop, and, in whatever overlay assigns the uniforms
 // (apparently #define is an unknown preprocessor directive)
+
+const highp float maxDeformation = 6.0;
 
 void fragment() {
 
@@ -35,11 +38,11 @@ void fragment() {
         } else {
             deformation *= (1.0 - pow(distance / maxDistance, 4.0));
 
-            brightnessFactor = clamp(1.0 - pow(deformation / 16.0, 4.0), 0.0, 1.0);
-            cumulativeBrightnessFactor *= brightnessFactor;
+            if (hasEventHorizon[i] && intensity[i] > 0.0) {
+                deformation -= pow(deformation / maxDeformation, 8.0);
 
-            if (deformation > 1.0) {
-                deformation = sqrt(deformation);
+                brightnessFactor = clamp(1.0 - pow(deformation / 16.0, 4.0), 0.0, 1.0);
+                cumulativeBrightnessFactor *= brightnessFactor;
             }
         }
 

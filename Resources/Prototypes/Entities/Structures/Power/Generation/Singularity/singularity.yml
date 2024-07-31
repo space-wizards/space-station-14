@@ -49,6 +49,7 @@
   - type: SingularityDistortion
     falloffPower: 2.529822
     intensity: 3645
+    hasEventHorizon: true
   - type: RadiationSource
     slope: 0.2 # its emit really far away
     intensity: 2

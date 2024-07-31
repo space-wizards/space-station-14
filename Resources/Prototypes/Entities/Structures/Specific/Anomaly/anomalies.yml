@@ -129,8 +129,8 @@
   - type: CanMoveInAir
   - type: RandomWalk
   - type: SingularityDistortion
-    intensity: 1000
-    falloffPower: 2.7
+    intensity: 200
+    falloffPower: 1.7
 
 - type: entity
   id: AnomalyElectricity
