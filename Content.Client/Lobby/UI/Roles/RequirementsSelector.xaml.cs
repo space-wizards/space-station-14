@@ -145,9 +145,15 @@ public sealed partial class RequirementsSelector : BoxContainer
         message.AddText(Loc.GetString("role-banned-reason", ("reason", banReason)));
         message.PushNewline();
 
-        var expirationText = expirationTime.HasValue
-            ? Loc.GetString("role-banned-expiration", ("expiration", expirationTime.Value.ToString("G")))
-            : Loc.GetString("role-banned-permanent") + CCVars.InstructionToAppeal;
+        string expirationText;
+        if (expirationTime.HasValue)
+        {
+            expirationText = Loc.GetString("role-banned-expiration", ("expiration", expirationTime.Value.ToString("G")));
+        }
+        else
+        {
+            expirationText = Loc.GetString("role-banned-permanent") + CCVars.InstructionToAppeal;
+        }
         message.AddText(expirationText);
 
         tooltip.SetMessage(message);
