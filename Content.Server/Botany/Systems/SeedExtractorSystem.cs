@@ -29,12 +29,12 @@ public sealed class SeedExtractorSystem : EntitySystem
             return;
         if (!_botanySystem.TryGetSeed(produce, out var seed) || seed.Seedless)
         {
-            _popupSystem.PopupCursor(Loc.GetString("seed-extractor-component-no-seeds",("name", args.Used)),
+            _popupSystem.PopupCursor(Loc.GetString("seed-extractor-component-no-seeds", ("name", args.Used)),
                 args.User, PopupType.MediumCaution);
             return;
         }
 
-        _popupSystem.PopupCursor(Loc.GetString("seed-extractor-component-interact-message",("name", args.Used)),
+        _popupSystem.PopupCursor(Loc.GetString("seed-extractor-component-interact-message", ("name", args.Used)),
             args.User, PopupType.Medium);
 
         QueueDel(args.Used);

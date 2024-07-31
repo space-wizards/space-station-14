@@ -13,7 +13,7 @@
               amount: 3
               doAfter: 1
             - tag: GlassShard
-              name: Glass Shard
+              name: glass shard
               icon:
                 sprite: Objects/Materials/Shards/shard.rsi
                 state: shard1
@@ -36,7 +36,7 @@
               amount: 3
               doAfter: 1
             - tag: ReinforcedGlassShard
-              name: Reinforced Glass Shard
+              name: reinforced glass shard
               icon:
                 sprite: Objects/Materials/Shards/shard.rsi
                 state: shard1
@@ -59,7 +59,7 @@
               amount: 3
               doAfter: 1
             - tag: PlasmaGlassShard
-              name: Plasma Glass Shard
+              name: plasma glass shard
               icon:
                 sprite: Objects/Materials/Shards/shard.rsi
                 state: shard1
@@ -82,7 +82,7 @@
               amount: 3
               doAfter: 1
             - tag: UraniumGlassShard
-              name: Uranium Glass Shard
+              name: uranium glass shard
               icon:
                 sprite: Objects/Materials/Shards/shard.rsi
                 state: shard1
