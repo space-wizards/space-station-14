@@ -96,6 +96,17 @@
       "directions": 4
     },
     {
+      "name": "plushie_finfin"
+    },
+    {
+      "name": "plushie_finfin-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "plushie_finfin-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "plushie_lamp"
     },
     {
