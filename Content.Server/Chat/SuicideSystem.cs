@@ -62,7 +62,11 @@ namespace Content.Server.Chat
 
             DefaultSuicideHandler(victim, suicideEvent);
 
-            ApplyDeath(victim, suicideEvent.Kind, suicideEvent.Damage);
+            if (suicideEvent.Damage != null)
+                ApplyLethalDamage(victim, suicideEvent.Damage);
+            else
+                ApplyLethalDamage(victim, suicideEvent.Kind);
+
             _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} suicided{(environmentSuicide ? " (environment)" : "")}");
             return true;
         }
@@ -131,31 +135,16 @@ namespace Content.Server.Chat
             return false;
         }
 
-        private void ApplyDeath(EntityUid target, string? kind, DamageSpecifier? damage)
+        private void ApplyLethalDamage(EntityUid target, DamageSpecifier? damage)
         {
-            ProtoId<DamageTypePrototype> fallback = "Blunt";
-            FixedPoint2 lethalAmountOfDamage = 200;
-            if (TryComp<DamageableComponent>(target, out var damagable) && TryComp<MobThresholdsComponent>(target, out var thresholds))
-            {
-                lethalAmountOfDamage = thresholds.Thresholds.Keys.Last() - damagable.TotalDamage;
-            }
+            if (!TryComp<DamageableComponent>(target, out var damagable) || !TryComp<MobThresholdsComponent>(target, out var thresholds))
+                return;
 
-            if (kind != null)
-            {
-                if (kind == "Special")
-                    return;
-
-                if (!_prototypeManager.TryIndex<DamageTypePrototype>(kind, out var damagePrototype))
-                {
-                    Log.Error($"{nameof(SuicideSystem)} could not find the damage type prototype associated with {kind}. Falling back to {fallback}");
-                    damagePrototype = _prototypeManager.Index<DamageTypePrototype>(fallback);
-                }
-                damage = new DamageSpecifier(damagePrototype, lethalAmountOfDamage);
-            }
+            var lethalAmountOfDamage = thresholds.Thresholds.Keys.Last() - damagable.TotalDamage;
 
             if (damage == null)
             {
-                var damagePrototype = _prototypeManager.Index<DamageTypePrototype>(fallback);
+                var damagePrototype = _prototypeManager.Index<DamageTypePrototype>("Blunt");
                 damage = new DamageSpecifier(damagePrototype, lethalAmountOfDamage);
             }
 
@@ -164,7 +153,35 @@ namespace Content.Server.Chat
             var totalItemDamage = finalDamage.GetTotal();
             foreach (var (key, value) in finalDamage.DamageDict)
             {
-                finalDamage.DamageDict[key] = Math.Ceiling((double)(value * lethalAmountOfDamage / totalItemDamage));
+                finalDamage.DamageDict[key] = Math.Ceiling((double) (value * lethalAmountOfDamage / totalItemDamage));
+            }
+            _damageableSystem.TryChangeDamage(target, finalDamage, true, origin: target);
+        }
+
+        private void ApplyLethalDamage(EntityUid target, ProtoId<DamageTypePrototype>? kind)
+        {
+            if (kind == "Special")
+                return;
+
+            if (!TryComp<DamageableComponent>(target, out var damagable) || !TryComp<MobThresholdsComponent>(target, out var thresholds))
+                return;
+
+            var lethalAmountOfDamage = thresholds.Thresholds.Keys.Last() - damagable.TotalDamage;
+
+            if (!_prototypeManager.TryIndex<DamageTypePrototype>(kind, out var damagePrototype))
+            {
+                Log.Error($"{nameof(SuicideSystem)} could not find the damage type prototype associated with {kind}. Falling back to Blunt");
+                damagePrototype = _prototypeManager.Index<DamageTypePrototype>("Blunt");
+            }
+
+            var damage = new DamageSpecifier(damagePrototype, lethalAmountOfDamage);
+
+            var finalDamage = new DamageSpecifier(damage);
+            finalDamage.DamageDict.Remove("Structural");
+            var totalItemDamage = finalDamage.GetTotal();
+            foreach (var (key, value) in finalDamage.DamageDict)
+            {
+                finalDamage.DamageDict[key] = Math.Ceiling((double) (value * lethalAmountOfDamage / totalItemDamage));
             }
             _damageableSystem.TryChangeDamage(target, finalDamage, true, origin: target);
         }
