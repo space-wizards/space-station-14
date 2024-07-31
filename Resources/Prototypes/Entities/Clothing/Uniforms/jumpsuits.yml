@@ -213,6 +213,7 @@
   - type: Tag
     tags:
     - ClownSuit
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingUniformJumpsuitClown

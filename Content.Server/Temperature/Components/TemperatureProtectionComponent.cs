@@ -1,6 +1,6 @@
 ﻿using Content.Server.Temperature.Systems;
 
-namespace Content.Server.Atmos.Components;
+namespace Content.Server.Temperature.Components;
 
 [RegisterComponent]
 [Access(typeof(TemperatureSystem))]

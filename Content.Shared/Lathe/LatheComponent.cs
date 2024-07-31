@@ -39,6 +39,12 @@ namespace Content.Shared.Lathe
 
         [DataField]
         public string? RunningState;
+
+        [DataField]
+        public string? UnlitIdleState;
+
+        [DataField]
+        public string? UnlitRunningState;
         #endregion
 
         /// <summary>

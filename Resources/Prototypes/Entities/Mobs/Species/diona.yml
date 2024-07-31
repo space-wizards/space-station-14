@@ -111,7 +111,7 @@
 - type: entity
   parent: BaseSpeciesDummy
   id: MobDionaDummy
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: HumanoidAppearance
     species: Diona
