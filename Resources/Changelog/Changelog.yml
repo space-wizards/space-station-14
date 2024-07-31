@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Blast grenades have had their manufacturing cost tripled.
-    type: Tweak
-  - message: Blast grenades are now part of the Basic Shuttle Armament research and
-      can be printed at the secfab.
-    type: Tweak
-  id: 6518
-  time: '2024-05-03T00:03:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27580
 - author: Vasilis, Dutch-VanDerLinde
   changes:
   - message: A new event has been added, syndicate sleeper agents, which raises the
@@ -3785,3 +3775,10 @@
   id: 7017
   time: '2024-07-31T00:14:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30509
+- author: metalgearsloth
+  changes:
+  - message: Add a button to the lobby so you can export a .png of your characters
+    type: Add
+  id: 7018
+  time: '2024-07-31T15:14:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29874
