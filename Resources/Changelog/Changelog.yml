@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: "Ducky slippers now make you waddle. \U0001F986\U0001F986"
-    type: Tweak
-  id: 6516
-  time: '2024-05-02T17:09:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27628
-- author: ElectroJr
-  changes:
-  - message: Fixed various interactions not prioritizing opening a UI. No more trying
-      to eat mission critical faxes.
-    type: Fix
-  id: 6517
-  time: '2024-05-02T23:37:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27631
 - author: Plykiya
   changes:
   - message: Blast grenades have had their manufacturing cost tripled.
@@ -3785,3 +3770,18 @@
   id: 7015
   time: '2024-07-30T14:41:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30499
+- author: PJB3005
+  changes:
+  - message: CLF3 is now called "chlorine trifluoride"
+    type: Tweak
+  id: 7016
+  time: '2024-07-31T00:14:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30510
+- author: slarticodefast
+  changes:
+  - message: Fixed the mouse position when it is over a singularity distortion effect
+      while zoomed in or out.
+    type: Fix
+  id: 7017
+  time: '2024-07-31T00:14:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30509
