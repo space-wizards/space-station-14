@@ -53,7 +53,6 @@ public sealed class MappingState : GameplayStateBase
     private EntityMenuUIController _entityMenuController = default!;
 
     private DecalPlacementSystem _decal = default!;
-    private SharedMapSystem _maps = default!;
     private SpriteSystem _sprite = default!;
     private TransformSystem _transform = default!;
     private VerbSystem _verbs = default!;
@@ -205,7 +204,6 @@ public sealed class MappingState : GameplayStateBase
         _entityMenuController = UserInterfaceManager.GetUIController<EntityMenuUIController>();
 
         _decal = _entityManager.System<DecalPlacementSystem>();
-        _maps = _entityManager.System<SharedMapSystem>();
         _sprite = _entityManager.System<SpriteSystem>();
         _transform = _entityManager.System<TransformSystem>();
         _verbs = _entityManager.System<VerbSystem>();
@@ -652,10 +650,9 @@ public sealed class MappingState : GameplayStateBase
 
         if (_placement.CurrentMode != null)
         {
-            _placement.CurrentPermission.EntityType
             var placement = new PlacementInformation
             {
-                PlacementOption = EntitySpawnWindow.InitOpts[args.Id] _pla,
+                PlacementOption = EntitySpawnWindow.InitOpts[args.Id],
                 EntityType = _placement.CurrentPermission!.EntityType,
                 TileType = _placement.CurrentPermission.TileType,
                 Range = 2,

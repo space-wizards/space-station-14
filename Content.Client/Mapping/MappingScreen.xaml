@@ -39,8 +39,10 @@
             <BoxContainer Name="EntityContainer" Access="Public" Orientation="Horizontal"
                           Visible="False">
                 <Button Name="EntityReplaceButton" Access="Public" ToggleMode="True"
+                        SetHeight="48"
                         StyleClasses="ButtonSquare" Text="Replace" HorizontalExpand="True" />
                 <OptionButton Name="EntityPlacementMode" Access="Public"
+                              SetHeight="48"
                               StyleClasses="ButtonSquare" TooltipDelay="0"
                               ToolTip="{Loc entity-spawn-window-override-menu-tooltip}"
                               HorizontalExpand="True" />
