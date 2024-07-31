@@ -12,29 +12,39 @@ namespace Content.Server.Spawners.Components;
 [Virtual]
 public partial class GenericSpawnerComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// WeightedRandomEntityPrototype ID from which the entity will be picked.
+    /// </summary>
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomEntityPrototype>))]
     public string EntityTable = string.Empty;
 
-    [ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// Which gamerules have to be active for that spawner to work.
+    /// </summary>
     [DataField]
     public List<EntProtoId> GameRules = new();
 
-    [ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// A chance that spawner spawns an entity.
+    /// </summary>
     [DataField]
     public float Chance { get; set; } = 1.0f;
 
-    [ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// Spawned entities get spread randomly in a square with this size. Set to 0 to disable.
+    /// </summary>
     [DataField]
     public float Offset { get; set; } = 0.2f;
 
     /// <summary>
     /// Spawner will pick an entity this amount of times. Must be between 1 and 100.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public int Rolls { get; set; } = 1;
 
+    /// <summary>
+    /// Should this spawner be deleted after spawning an entity?
+    /// </summary>
     [DataField]
     public bool DeleteSpawnerAfterSpawn = true;
 
