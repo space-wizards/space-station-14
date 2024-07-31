@@ -113,7 +113,7 @@
           collection: MetalBreak
       - !type:ExplodeBehavior
       - !type:WeightedSpawnEntityBehavior
-        weightedSpawn: "MeteorSpawnAsteroidWallTable"
+        weightedEntityTable: "MeteorSpawnAsteroidWallTable"
         minSpawn: 2
         maxSpawn: 4
         spawnAfter: 0.5
@@ -153,7 +153,7 @@
           collection: MetalBreak
       - !type:ExplodeBehavior
       - !type:WeightedSpawnEntityBehavior
-        weightedSpawn: "MeteorSpawnAsteroidWallTable"
+        weightedEntityTable: "MeteorSpawnAsteroidWallTable"
         spawnOffset: 2
         minSpawn: 3
         maxSpawn: 6
@@ -181,7 +181,7 @@
           collection: MetalBreak
       - !type:ExplodeBehavior
       - !type:WeightedSpawnEntityBehavior
-        weightedSpawn: "MeteorSpawnAsteroidWallTable"
+        weightedEntityTable: "MeteorSpawnAsteroidWallTable"
         spawnOffset: 3
         minSpawn: 5
         maxSpawn: 8
