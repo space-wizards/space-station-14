@@ -21,6 +21,8 @@ namespace Content.Client.Singularity
 
         private const float MaxDistance = 20f;
 
+        private const float MaxDeformation = 6.0f;
+
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         public override bool RequestScreenTexture => true;
 
@@ -90,6 +92,7 @@ namespace Content.Client.Singularity
             _shader?.SetParameter("intensity", _intensities);
             _shader?.SetParameter("falloffPower", _falloffPowers);
             _shader?.SetParameter("hasEventHorizon", _haveEventHorizons);
+            _shader?.SetParameter("maxDeformation", MaxDeformation);
             _shader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
 
             var worldHandle = args.WorldHandle;
@@ -131,10 +134,12 @@ namespace Content.Client.Singularity
                 if (distance >= maxDistance)
                     deformation = 0.0f;
                 else
+                {
                     deformation *= 1.0f - MathF.Pow(distance / maxDistance, 4.0f);
 
-                if (deformation > 0.8)
-                    deformation = MathF.Pow(deformation, 0.3f);
+                    if (_haveEventHorizons[i] && _intensities[i] > 0.0f)
+                        deformation -= MathF.Pow(deformation / MaxDeformation, 8.0f);
+                }
 
                 finalCoords -= delta * deformation;
             }

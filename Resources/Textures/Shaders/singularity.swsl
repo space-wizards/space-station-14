@@ -4,6 +4,7 @@ uniform sampler2D SCREEN_TEXTURE;
 uniform highp vec2 renderScale;
 uniform highp float maxDistance;
 uniform lowp int count;
+uniform highp float maxDeformation;
 
 uniform highp float[32] falloffPower;
 uniform highp float[32] intensity;
@@ -12,8 +13,6 @@ uniform bool[32] hasEventHorizon;
 // The array lengths correspond to the upper limit on the simultaneous distortion sources that can be present on screen at a time.
 // If you want to change this, make sure to change all of them here, in the for loop, and, in whatever overlay assigns the uniforms
 // (apparently #define is an unknown preprocessor directive)
-
-const highp float maxDeformation = 6.0;
 
 void fragment() {
 
