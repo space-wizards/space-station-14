@@ -382,6 +382,7 @@
       Max: 5
       PotencyDivisor: 20
 
+- type: seed
   id: papercane
   name: seeds-papercane-name
   noun: seeds-noun-seeds
