@@ -78,28 +78,8 @@ namespace Content.Shared.Verbs
             // call ActionBlocker checks, just cache it for the verb request.
             var canInteract = force || _actionBlockerSystem.CanInteract(user, target);
 
-            EntityUid? @using = null;
-            if (TryComp(user, out HandsComponent? hands) && (force || _actionBlockerSystem.CanUseHeldEntity(user)))
-            {
-                // if we don't actually have any hands, pass in a null value for the events.
-                if (hands.Count == 0)
-                {
-                    hands = null;
-                }
-                else
-                {
-                    @using = hands.ActiveHandEntity;
-
-                    // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
-                    // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
-                    // their sprite.
-
-                    if (TryComp(@using, out VirtualItemComponent? pull))
-                    {
-                        @using = pull.BlockingEntity;
-                    }
-                }
-            }
+            _interactionSystem.TryGetUsedEntity(user, out var @using);
+            TryComp<HandsComponent>(user, out var hands);
 
             // TODO: fix this garbage and use proper generics or reflection or something else, not this.
             if (types.Contains(typeof(InteractionVerb)))

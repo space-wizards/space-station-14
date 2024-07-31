@@ -1,10 +1,12 @@
 ﻿using Content.Shared.Access.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.UserInterface;
 using Content.Shared.Wires;
 using Robust.Shared.Containers;
 
@@ -17,6 +19,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
 {
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] protected readonly ItemSlotsSystem ItemSlots = default!;
+    [Dependency] protected readonly ItemToggleSystem Toggle = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
 
     /// <inheritdoc/>
@@ -30,7 +33,8 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<BorgChassisComponent, EntRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<BorgChassisComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
-
+        SubscribeLocalEvent<BorgChassisComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
+        
         InitializeRelay();
     }
 
@@ -75,6 +79,13 @@ public abstract partial class SharedBorgSystem : EntitySystem
         component.ModuleContainer = Container.EnsureContainer<Container>(uid, component.ModuleContainerId, containerManager);
     }
 
+    private void OnUIOpenAttempt(EntityUid uid, BorgChassisComponent component, ActivatableUIOpenAttemptEvent args)
+    {
+        // borgs can't view their own ui
+        if (args.User == uid)
+            args.Cancel();
+    }
+
     protected virtual void OnInserted(EntityUid uid, BorgChassisComponent component, EntInsertedIntoContainerMessage args)
     {
 
@@ -87,7 +98,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
     private void OnRefreshMovementSpeedModifiers(EntityUid uid, BorgChassisComponent component, RefreshMovementSpeedModifiersEvent args)
     {
-        if (component.Activated)
+        if (Toggle.IsActivated(uid))
             return;
 
         if (!TryComp<MovementSpeedModifierComponent>(uid, out var movement))

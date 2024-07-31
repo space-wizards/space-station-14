@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Audio;
 using Robust.Shared.Audio;
@@ -38,8 +39,8 @@ public sealed partial class ShuttleSystem
 
         var otherXform = Transform(args.OtherEntity);
 
-        var ourPoint = ourXform.InvWorldMatrix.Transform(args.WorldPoint);
-        var otherPoint = otherXform.InvWorldMatrix.Transform(args.WorldPoint);
+        var ourPoint = Vector2.Transform(args.WorldPoint, ourXform.InvWorldMatrix);
+        var otherPoint = Vector2.Transform(args.WorldPoint, otherXform.InvWorldMatrix);
 
         var ourVelocity = _physics.GetLinearVelocity(uid, ourPoint, ourBody, ourXform);
         var otherVelocity = _physics.GetLinearVelocity(args.OtherEntity, otherPoint, otherBody, otherXform);

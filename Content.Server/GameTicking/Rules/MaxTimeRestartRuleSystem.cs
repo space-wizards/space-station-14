@@ -1,7 +1,7 @@
 using System.Threading;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Shared.GameTicking.Components;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking.Rules;

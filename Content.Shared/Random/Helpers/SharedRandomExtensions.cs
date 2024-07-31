@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Dataset;
 using Content.Shared.FixedPoint;
@@ -10,6 +11,15 @@ namespace Content.Shared.Random.Helpers
         public static string Pick(this IRobustRandom random, DatasetPrototype prototype)
         {
             return random.Pick(prototype.Values);
+        }
+
+        /// <summary>
+        /// Randomly selects an entry from <paramref name="prototype"/>, attempts to localize it, and returns the result.
+        /// </summary>
+        public static string Pick(this IRobustRandom random, LocalizedDatasetPrototype prototype)
+        {
+            var index = random.Next(prototype.Values.Count);
+            return Loc.GetString(prototype.Values[index]);
         }
 
         public static string Pick(this IWeightedRandomPrototype prototype, System.Random random)
@@ -76,6 +86,26 @@ namespace Content.Shared.Random.Helpers
             }
 
             throw new InvalidOperationException("Invalid weighted pick");
+        }
+
+        public static T PickAndTake<T>(this IRobustRandom random, Dictionary<T, float> weights)
+            where T : notnull
+        {
+            var pick = Pick(random, weights);
+            weights.Remove(pick);
+            return pick;
+        }
+
+        public static bool TryPickAndTake<T>(this IRobustRandom random, Dictionary<T, float> weights, [NotNullWhen(true)] out T? pick)
+            where T : notnull
+        {
+            if (weights.Count == 0)
+            {
+                pick = default;
+                return false;
+            }
+            pick = PickAndTake(random, weights);
+            return true;
         }
 
         public static (string reagent, FixedPoint2 quantity) Pick(this WeightedRandomFillSolutionPrototype prototype, IRobustRandom? random = null)

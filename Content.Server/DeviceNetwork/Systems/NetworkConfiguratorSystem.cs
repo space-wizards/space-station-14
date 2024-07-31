@@ -63,7 +63,19 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         SubscribeLocalEvent<NetworkConfiguratorComponent, NetworkConfiguratorToggleLinkMessage>(OnToggleLinks);
         SubscribeLocalEvent<NetworkConfiguratorComponent, NetworkConfiguratorButtonPressedMessage>(OnConfigButtonPressed);
 
+        SubscribeLocalEvent<NetworkConfiguratorComponent, BoundUserInterfaceCheckRangeEvent>(OnUiRangeCheck);
+
         SubscribeLocalEvent<DeviceListComponent, ComponentRemove>(OnComponentRemoved);
+    }
+
+    private void OnUiRangeCheck(Entity<NetworkConfiguratorComponent> ent, ref BoundUserInterfaceCheckRangeEvent args)
+    {
+        if (ent.Comp.ActiveDeviceList == null || args.Result == BoundUserInterfaceRangeResult.Fail)
+            return;
+
+        DebugTools.Assert(Exists(ent.Comp.ActiveDeviceList));
+        if (!_interactionSystem.InRangeUnobstructed(args.Actor!, ent.Comp.ActiveDeviceList.Value))
+            args.Result = BoundUserInterfaceRangeResult.Fail;
     }
 
     private void OnShutdown(EntityUid uid, NetworkConfiguratorComponent component, ComponentShutdown args)
@@ -73,23 +85,6 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (TryComp(component.ActiveDeviceList, out DeviceListComponent? list))
             list.Configurators.Remove(uid);
         component.ActiveDeviceList = null;
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<NetworkConfiguratorComponent>();
-        while (query.MoveNext(out var uid, out var component))
-        {
-            if (component.ActiveDeviceList != null
-            && EntityManager.EntityExists(component.ActiveDeviceList.Value)
-            && _interactionSystem.InRangeUnobstructed(uid, component.ActiveDeviceList.Value))
-                continue;
-
-            //The network configurator is a handheld device. There can only ever be an ui session open for the player holding the device.
-            _uiSystem.CloseUi(uid, NetworkConfiguratorUiKey.Configure);
-        }
     }
 
     private void OnMapInit(EntityUid uid, NetworkConfiguratorComponent component, MapInitEvent args)
@@ -428,11 +423,11 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (Delay(configurator))
             return;
 
-        if (!targetUid.HasValue || !configurator.ActiveDeviceLink.HasValue || !TryComp(userUid, out ActorComponent? actor) || !AccessCheck(targetUid.Value, userUid, configurator))
+        if (!targetUid.HasValue || !configurator.ActiveDeviceLink.HasValue || !AccessCheck(targetUid.Value, userUid, configurator))
             return;
 
 
-        _uiSystem.OpenUi(configuratorUid, NetworkConfiguratorUiKey.Link, actor.PlayerSession);
+        _uiSystem.OpenUi(configuratorUid, NetworkConfiguratorUiKey.Link, userUid);
         configurator.DeviceLinkTarget = targetUid;
 
 

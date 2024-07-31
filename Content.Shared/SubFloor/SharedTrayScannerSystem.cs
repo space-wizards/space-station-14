@@ -26,7 +26,11 @@ public abstract class SharedTrayScannerSystem : EntitySystem
 
     private void OnTrayScannerActivate(EntityUid uid, TrayScannerComponent scanner, ActivateInWorldEvent args)
     {
+        if (args.Handled || !args.Complex)
+            return;
+
         SetScannerEnabled(uid, !scanner.Enabled, scanner);
+        args.Handled = true;
     }
 
     private void SetScannerEnabled(EntityUid uid, bool enabled, TrayScannerComponent? scanner = null)

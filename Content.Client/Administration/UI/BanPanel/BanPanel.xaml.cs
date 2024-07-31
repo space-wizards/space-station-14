@@ -147,7 +147,7 @@ public sealed partial class BanPanel : DefaultWindow
         var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
         foreach (var proto in prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
         {
-            CreateRoleGroup(proto.ID, proto.Roles, proto.Color);
+            CreateRoleGroup(proto.ID, proto.Roles.Select(p =>  p.Id), proto.Color);
         }
 
         CreateRoleGroup("Antagonist", prototypeManager.EnumeratePrototypes<AntagPrototype>().Select(p => p.ID), Color.Red);

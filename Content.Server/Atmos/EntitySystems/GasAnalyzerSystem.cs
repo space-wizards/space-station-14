@@ -68,7 +68,6 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             }
             ActivateAnalyzer(uid, component, args.User, args.Target);
-            OpenUserInterface(uid, args.User, component);
             args.Handled = true;
         }
 
@@ -86,6 +85,9 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void ActivateAnalyzer(EntityUid uid, GasAnalyzerComponent component, EntityUid user, EntityUid? target = null)
         {
+            if (!TryOpenUserInterface(uid, user, component))
+                return;
+
             component.Target = target;
             component.User = user;
             if (target != null)
@@ -97,7 +99,6 @@ namespace Content.Server.Atmos.EntitySystems
             UpdateAppearance(uid, component);
             EnsureComp<ActiveGasAnalyzerComponent>(uid);
             UpdateAnalyzer(uid, component);
-            OpenUserInterface(uid, user, component);
         }
 
         /// <summary>
@@ -134,12 +135,12 @@ namespace Content.Server.Atmos.EntitySystems
             DisableAnalyzer(uid, component);
         }
 
-        private void OpenUserInterface(EntityUid uid, EntityUid user, GasAnalyzerComponent? component = null)
+        private bool TryOpenUserInterface(EntityUid uid, EntityUid user, GasAnalyzerComponent? component = null)
         {
             if (!Resolve(uid, ref component, false))
-                return;
+                return false;
 
-            _userInterface.OpenUi(uid, GasAnalyzerUiKey.Key, user);
+            return _userInterface.TryOpenUi(uid, GasAnalyzerUiKey.Key, user);
         }
 
         /// <summary>
@@ -161,7 +162,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (component.LastPosition.HasValue)
             {
                 // Check if position is out of range => don't update and disable
-                if (!component.LastPosition.Value.InRange(EntityManager, _transform, userPos, SharedInteractionSystem.InteractionRange))
+                if (!_transform.InRange(component.LastPosition.Value, userPos, SharedInteractionSystem.InteractionRange))
                 {
                     if (component.User is { } userId && component.Enabled)
                         _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, userId);
