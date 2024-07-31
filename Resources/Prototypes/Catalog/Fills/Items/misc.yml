@@ -1,5 +1,6 @@
 - type: entity
   id: ClothingShoesBootsCombatFilled
+  suffix: Filled, Combat Knife
   parent:
   - ClothingShoesBootsCombat
   - ClothingShoesBootsSecFilled
@@ -38,3 +39,12 @@
       item:
       - KukriKnife
 
+- type: entity
+  id: ClothingShoesBootsSyndieFilled
+  parent: ClothingShoesBootsCombat
+  suffix: Filled, Throwing Knife
+  components:
+  - type: ContainerFill
+    containers:
+      item:
+      - ThrowingKnife
