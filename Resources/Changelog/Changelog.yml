@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Space Ninjas now automatically turn their internals on when they spawn.
-    type: Tweak
-  id: 6520
-  time: '2024-05-03T01:24:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25083
 - author: Hanzdegloker
   changes:
   - message: Added 6 new energy drink based mixed drinks.
@@ -3781,3 +3774,10 @@
   id: 7019
   time: '2024-07-31T16:08:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30530
+- author: themias
+  changes:
+  - message: Pens can be clicked cathartically
+    type: Tweak
+  id: 7020
+  time: '2024-07-31T17:57:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30531
