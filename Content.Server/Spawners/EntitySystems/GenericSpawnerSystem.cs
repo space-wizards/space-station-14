@@ -71,36 +71,39 @@ public sealed class GenericSpawnerSystem : EntitySystem
         if (Deleted(uid))
             return;
 
-        if (component.Chance != 1.0f && !_robustRandom.Prob(component.Chance))
+        if (component.EntityTables.Count == 0)
             return;
 
-        if (!_proto.TryIndex<WeightedRandomEntityPrototype>(component.EntityTable, out var entTable))
+        foreach (var pair in component.EntityTables)
         {
-            Log.Warning($"Referenced entity table prototype does not exist! Entity: {ToPrettyString(uid)}");
-            return;
-        }
+            if (!_proto.TryIndex(pair.Key, out var entTable))
+            {
+                Log.Warning($"Referenced entity table prototype does not exist! Entity: {ToPrettyString(uid)}");
+                continue;
+            }
 
-        if (entTable.Weights.Count == 0)
-        {
-            Log.Warning($"Entity table in GenericSpawnerComponent is empty! Entity: {ToPrettyString(uid)}");
-            return;
-        }
+            if (entTable.Weights.Count == 0)
+            {
+                Log.Warning($"Entity table in GenericSpawnerComponent is empty! Entity: {ToPrettyString(uid)}");
+                continue;
+            }
 
-        if (component.Rolls is < 1 or > 100)
-        {
-            Log.Warning($"Invalid amount of rolls on entity table, value should be between 1 and 100. Entity: {ToPrettyString(uid)}");
-            return;
-        }
+            if (component.Rolls is < 1 or > 100)
+            {
+                Log.Warning($"Invalid amount of rolls on entity table, value should be between 1 and 100. Entity: {ToPrettyString(uid)}");
+                continue;
+            }
 
-        foreach (var _ in Enumerable.Repeat(1, component.Rolls))
-        {
-            var entity = entTable.Pick(_robustRandom);
-            var offset = component.Offset;
-            var xOffset = _robustRandom.NextFloat(-offset, offset);
-            var yOffset = _robustRandom.NextFloat(-offset, offset);
-            var coordinates = Transform(uid).Coordinates.Offset(new Vector2(xOffset, yOffset));
+            foreach (var _ in Enumerable.Repeat(1, component.Rolls))
+            {
+                var entity = entTable.Pick(_robustRandom);
+                var offset = component.Offset;
+                var xOffset = _robustRandom.NextFloat(-offset, offset);
+                var yOffset = _robustRandom.NextFloat(-offset, offset);
+                var coordinates = Transform(uid).Coordinates.Offset(new Vector2(xOffset, yOffset));
 
-            EntityManager.SpawnEntity(entity, coordinates);
+                EntityManager.SpawnEntity(entity, coordinates);
+            }
         }
     }
 }

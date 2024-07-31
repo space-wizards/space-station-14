@@ -1,7 +1,5 @@
-using Content.Shared.EntityList;
 using Content.Shared.Random;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Spawners.Components;
 
@@ -13,22 +11,16 @@ namespace Content.Server.Spawners.Components;
 public partial class GenericSpawnerComponent : Component
 {
     /// <summary>
-    /// WeightedRandomEntityPrototype ID from which the entity will be picked.
+    /// WeightedRandomEntityPrototype IDs from which the entity will be picked, along with their respective chances.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomEntityPrototype>))]
-    public string EntityTable = string.Empty;
+    [DataField]
+    public Dictionary<ProtoId<WeightedRandomEntityPrototype>, float> EntityTables;
 
     /// <summary>
     /// Which gamerules have to be active for that spawner to work.
     /// </summary>
     [DataField]
     public List<EntProtoId> GameRules = new();
-
-    /// <summary>
-    /// A chance that spawner spawns an entity.
-    /// </summary>
-    [DataField]
-    public float Chance { get; set; } = 1.0f;
 
     /// <summary>
     /// Spawned entities get spread randomly in a square with this size. Set to 0 to disable.
