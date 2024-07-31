@@ -62,7 +62,7 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
                 continue;
 
             var deltaTime = curTime - thresholds.LastUpdate;
-            if (!thresholds.TakingDamage || deltaTime < thresholds.UpdateInterval)
+            if (thresholds.TakingDamage && deltaTime < thresholds.UpdateInterval)
                 continue;
 
             ChangeDamage(uid, thresholds, deltaTime);
@@ -180,7 +180,7 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
 
     private void EnqueueDamage(Entity<TemperatureDamageThresholdsComponent> ent, ref OnTemperatureChangeEvent args)
     {
-        if (ShouldUpdateDamage.Add(ent))
+        if (ShouldUpdateDamage.Add(ent) && !ent.Comp.TakingDamage)
             ent.Comp.LastUpdate = _gameTiming.CurTime;
     }
 
