@@ -77,7 +77,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
-        [Dependency] private readonly ElectrocutionSystem _electrocutionSystem = default!;
+        [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
 
         public override void Initialize()
         {
@@ -124,28 +124,28 @@ namespace Content.Server.Explosion.EntitySystems
             }
         }
 
-        private void HandleShockTrigger(EntityUid uid, ShockOnTriggerComponent component, TriggerEvent args)
+        private void HandleShockTrigger(Entity<ShockOnTriggerComponent> shockOnTrigger, ref TriggerEvent args)
         {
-            if (!_container.TryGetContainingContainer(uid, out var container))
+            if (!_container.TryGetContainingContainer(shockOnTrigger, out var container))
                 return;
 
             var containerEnt = container.Owner;
             var curTime = _timing.CurTime;
 
-            if (component.NextTrigger == TimeSpan.Zero)
+            if (shockOnTrigger.Comp.NextTrigger == TimeSpan.Zero)
             {
-                component.NextTrigger = curTime;
+                shockOnTrigger.Comp.NextTrigger = curTime;
             }
 
-            if (curTime < component.NextTrigger)
+            if (curTime < shockOnTrigger.Comp.NextTrigger)
             {
                 // The trigger's on cooldown.
                 return;
             }
             else
             {
-                _electrocutionSystem.TryDoElectrocution(containerEnt, null, component.Force, component.Duration, true);
-                component.NextTrigger = curTime + component.Cooldown;
+                _electrocution.TryDoElectrocution(containerEnt, null, shockOnTrigger.Comp.Force, shockOnTrigger.Comp.Duration, true);
+                shockOnTrigger.Comp.NextTrigger = curTime + shockOnTrigger.Comp.Cooldown;
             }
         }
 

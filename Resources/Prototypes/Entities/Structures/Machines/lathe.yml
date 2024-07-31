@@ -802,6 +802,7 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
+      - ShockCollar
   - type: MaterialStorage
     whitelist:
       tags:
