@@ -1,0 +1,23 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ShockCollar
+  name: shock collar
+  description: An electric collar that shocks when a trigger is triggered.
+  components:
+   - type: Sprite
+     sprite: Clothing/Neck/Misc/shok_collar.rsi
+   - type: Clothing
+     sprite: Clothing/Neck/Misc/shok_collar.rsi
+   - type: ShockOnTrigger
+     force: 5
+     duration: 3
+     cooldown: 4
+   - type: TriggerOnSignal
+   - type: DeviceLinkSink
+     ports:
+        - Trigger
+   - type: GuideHelp
+     guides:
+        - Security
+   - type: StealTarget
+     stealGroup: ShockCollar
