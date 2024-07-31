@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Vasilis, Dutch-VanDerLinde
-  changes:
-  - message: A new event has been added, syndicate sleeper agents, which raises the
-      alert level and selects 1-2 players to be traitors rarely throughout the round.
-    type: Add
-  id: 6519
-  time: '2024-05-03T00:13:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27501
-- author: Errant
-  changes:
-  - message: Space Ninjas now automatically turn their internals on when they spawn.
-    type: Tweak
-  id: 6520
-  time: '2024-05-03T01:24:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25083
 - author: Hanzdegloker
   changes:
   - message: Added 6 new energy drink based mixed drinks.
@@ -3782,3 +3767,17 @@
   id: 7018
   time: '2024-07-31T15:14:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29874
+- author: slarticodefast
+  changes:
+  - message: Skeletons no longer have fingerprints.
+    type: Tweak
+  id: 7019
+  time: '2024-07-31T16:08:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30530
+- author: themias
+  changes:
+  - message: Pens can be clicked cathartically
+    type: Tweak
+  id: 7020
+  time: '2024-07-31T17:57:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30531
