@@ -1189,7 +1189,7 @@
 
 - type: entity
   id: WallInvisible
-  name: Invisible Wall
+  name: invisible wall
   components:
   - type: TimedDespawn
     lifetime: 15
