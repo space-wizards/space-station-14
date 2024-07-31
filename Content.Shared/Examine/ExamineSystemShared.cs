@@ -361,7 +361,7 @@ namespace Content.Shared.Examine
                     Log.Warning($"Examine group `{part.Group ?? "unknown-group"}` is empty. Please avoid this!");
 #else
             // in release mode, remove empty message groups
-            parts.RemoveAll(p => p.Message == 0);
+            parts.RemoveAll(p => p.Message.Count == 0);
 #endif
 
             var totalMessage = new FormattedMessage(Message);
