@@ -7,8 +7,11 @@ namespace Content.Shared.Chemistry.Types;
 
 
 [DataRecord, Serializable, NetSerializable]
-public partial struct ReagentQuantity
+public partial struct ReagentQuantity : IEquatable<ReagentQuantity>//This is a struct so that we don't allocate. Allocations are paying taxes. Nobody wants to pay taxes.
 {
+    /// <summary>
+    ///
+    /// </summary>
     [DataField(required:true)]
     public string ReagentId;
 
@@ -18,6 +21,9 @@ public partial struct ReagentQuantity
 
     [DataField(required:true)]
     public FixedPoint2 Quantity;
+
+    [ViewVariables]
+    public List<int>? VariantIndices = null;
 
     public ReagentQuantity()
     {
@@ -40,16 +46,6 @@ public partial struct ReagentQuantity
         Quantity = quantity;
         ReagentDef = reagentDef;
     }
-
-    public bool IsValid(SharedChemistryRegistrySystem chemRegistry)
-    {
-        if (ReagentDef != null)
-        {
-            return ReagentDef.Value.Comp.Id == ReagentId;
-        }
-        return chemRegistry.TryIndex(ReagentId, out ReagentDef) && ReagentDef.Value.Comp.Id == ReagentId;
-    }
-
     public static implicit operator ReagentQuantity(
         (string, FixedPoint2) t) => new (t.Item1, t.Item2);
     public static implicit operator ReagentQuantity(
@@ -77,7 +73,29 @@ public partial struct ReagentQuantity
         quantity = Quantity;
     }
 
-    public void UpdateReagentDef(SharedChemistryRegistrySystem chemRegistry)
+    public bool Equals(ReagentQuantity other)
+    {
+        return other.GetHashCode() == GetHashCode();
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj == null)
+            return false;
+        return obj.GetHashCode() == GetHashCode();
+    }
+
+    public override int GetHashCode()
+    {
+        return ReagentId.GetHashCode();
+    }
+
+    public override string ToString()
+    {
+        return $"{ReagentId}:{Quantity}";
+    }
+
+    public void UpdateDef(SharedChemistryRegistrySystem chemRegistry)
     {
         if (ReagentDef != null && ReagentId == ReagentDef.Value.Comp.Id)
             return;

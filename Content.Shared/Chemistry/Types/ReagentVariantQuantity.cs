@@ -5,11 +5,14 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Chemistry.Types;
 
 [DataRecord, Serializable, NetSerializable]
-public partial struct ReagentVariantQuantity  : IEquatable<ReagentVariantQuantity>
+public partial struct ReagentVariantQuantity  : IEquatable<ReagentVariantQuantity> //This is a struct so that we don't allocate. Allocations are paying taxes. Nobody wants to pay taxes.
 {
 
     [DataField(required:true)]
     public string ReagentId  = string.Empty;
+
+    [NonSerialized]
+    public Entity<ReagentDefinitionComponent>? ReagentDef;
 
     [DataField(required: true)]
     public ReagentVariant? Variant;
@@ -17,11 +20,9 @@ public partial struct ReagentVariantQuantity  : IEquatable<ReagentVariantQuantit
     [DataField(required:true)]
     public FixedPoint2 Quantity;
 
-    public bool IsValid(SharedChemistryRegistrySystem chemRegistry)
-    {
-        return Variant != null && chemRegistry.TryIndex(ReagentId, out var regDef) &&
-               regDef.Value.Comp.Id == ReagentId;
-    }
+    //Cached index of the reagent type if this is in a solution
+    [ViewVariables]
+    public int CachedReagentIndex = -1;
 
     public ReagentVariantQuantity()
     {
@@ -29,6 +30,7 @@ public partial struct ReagentVariantQuantity  : IEquatable<ReagentVariantQuantit
 
     public ReagentVariantQuantity(string reagentId, ReagentVariant variant, FixedPoint2 quantity)
     {
+        ReagentDef = null;
         ReagentId = reagentId;
         Variant = variant;
         Quantity = quantity;
@@ -36,8 +38,22 @@ public partial struct ReagentVariantQuantity  : IEquatable<ReagentVariantQuantit
 
     public ReagentVariantQuantity(Entity<ReagentDefinitionComponent> reagentDef, ReagentVariant variant, FixedPoint2 quantity)
     {
+        ReagentDef = reagentDef;
         ReagentId = reagentDef.Comp.Id;
         Variant = variant;
+        Quantity = quantity;
+    }
+
+    public ReagentVariantQuantity(
+        Entity<ReagentDefinitionComponent> reagentDef,
+        ReagentVariant variant,
+        int reagentIndex ,
+        FixedPoint2 quantity)
+    {
+        ReagentDef = reagentDef;
+        ReagentId = reagentDef.Comp.Id;
+        Variant = variant;
+        CachedReagentIndex = reagentIndex;
         Quantity = quantity;
     }
 
@@ -58,4 +74,20 @@ public partial struct ReagentVariantQuantity  : IEquatable<ReagentVariantQuantit
     {
         return HashCode.Combine(ReagentId.GetHashCode(), Variant?.GetHashCode());
     }
+
+    public override string ToString()
+    {
+        return $"{ReagentId}:{Quantity}";
+    }
+
+    public void UpdateDef(SharedChemistryRegistrySystem chemRegistry)
+    {
+        if (ReagentDef != null && ReagentId == ReagentDef.Value.Comp.Id)
+            return;
+
+        if (chemRegistry.TryIndex(ReagentId, out ReagentDef))
+            return;
+        chemRegistry.Log.Error($"Reagent with ID:{ReagentId} could not be found in the chemical registry!");
+    }
+
 }

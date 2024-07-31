@@ -29,8 +29,7 @@ public sealed partial class SolutionComponent : Component
     [DataField, AutoNetworkedField]
     public List<ReagentVariantQuantity> VariantContents = new();
 
-    [NonSerialized]
-    public List<FixedPoint2> CachedTotalReagentVolumes = new();
+    public int PrimaryReagentIndex = -1;
 
     /// <summary>
     ///     The name of this solution

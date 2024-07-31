@@ -398,17 +398,23 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <returns>If all the reagent could be added.</returns>
     public bool TryAddReagent(Entity<SolutionComponent> soln, ReagentQuantity reagentQuantity, out FixedPoint2 acceptedQuantity, float? temperature = null, ReagentVariant? reagentMetadata = null)
     {
-        acceptedQuantity = 0;
-        if (!SolutionSystem.TryAddReagent((soln, soln),
-                reagentQuantity.Reagent.Prototype,
-                reagentQuantity.Quantity,
-                out var overflow,
-                reagentMetadata))
+        acceptedQuantity = reagentQuantity.Quantity;
+        if (!ChemistryRegistry.TryIndex(reagentQuantity.Reagent.Prototype, out var reagentDef, true))
             return false;
+
+        //TODO: remember to take into account temp again
+        SolutionSystem.AddReagent((soln, soln),
+            reagentDef.Value,
+            reagentQuantity.Quantity,
+            out var overflow,
+            true,
+            reagentMetadata);
+        if (overflow == 0)
+            return true;
 
         acceptedQuantity = reagentQuantity.Quantity - FixedPoint2.Max(0, overflow);
         return true;
-        //TODO: remember to take into account temp again
+
 
         // if (temperature == null)
         // {
