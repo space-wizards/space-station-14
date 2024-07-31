@@ -11,7 +11,9 @@ using Content.Shared.Inventory;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Temperature.Systems;
 
@@ -46,6 +48,9 @@ public sealed class TemperatureSystem : EntitySystem
             OnTemperatureChangeAttempt);
 
         SubscribeLocalEvent<InternalTemperatureComponent, MapInitEvent>(OnInit);
+
+        SubscribeLocalEvent<TemperatureComponent, MassDataChangedEvent>(OnMassDataChanged);
+        SubscribeLocalEvent<PhysicsComponent, RecalculateHeatCapacityEvent>(OnRecalculateHeatCapacity);
 
         // Allows overriding thresholds based on the parent's thresholds.
         SubscribeLocalEvent<TemperatureComponent, EntParentChangedMessage>(OnParentChange);
@@ -158,14 +163,39 @@ public sealed class TemperatureSystem : EntitySystem
         ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature);
     }
 
+    /// <summary>
+    /// Fetches the total heat capacity for an entity.
+    /// Will recalculate the value as necessary to reflect any changes to the sources of heat capacity.
+    /// </summary>
+    /// <param name="uid">The entity that is having its heat capacity recalculated.</param>
+    /// <param name="comp">The thermal data (temperature and heat capacity) for the entity.</param>
+    /// <param name="physics">[Obsolete]</param>
+    /// <returns>The total heat capacity of the entity.</returns>
     public float GetHeatCapacity(EntityUid uid, TemperatureComponent? comp = null, PhysicsComponent? physics = null)
     {
-        if (!Resolve(uid, ref comp) || !Resolve(uid, ref physics, false) || physics.FixturesMass <= 0)
-        {
+        if (!Resolve(uid, ref comp))
             return Atmospherics.MinimumHeatCapacity;
-        }
 
-        return comp.SpecificHeat * physics.FixturesMass;
+        if (comp.HeatCapacityDirty)
+            RecalculateHeatCapacity((uid, comp));
+
+        return comp.TotalHeatCapacity;
+    }
+
+    /// <summary>
+    /// Recalculates the total heat capacity for an entity based on all contributing sources.
+    /// </summary>
+    private void RecalculateHeatCapacity(Entity<TemperatureComponent> ent)
+    {
+        DebugTools.Assert(ent.Comp.HeatCapacityDirty, $"The heat capacity for {ToPrettyString(ent)} was recalculated without being dirtied.");
+        ent.Comp.HeatCapacityDirty = false;
+
+        var ev = new RecalculateHeatCapacityEvent(ent);
+        RaiseLocalEvent(ent, ref ev);
+
+        ent.Comp.TotalHeatCapacity = ev.HeatCapacity;
+
+        DebugTools.Assert(!ent.Comp.HeatCapacityDirty, $"The heat capacity for {ToPrettyString(ent)} was dirtied while it was being recalculated.");
     }
 
     private void OnInit(EntityUid uid, InternalTemperatureComponent comp, MapInitEvent args)
@@ -174,6 +204,28 @@ public sealed class TemperatureSystem : EntitySystem
             return;
 
         comp.Temperature = temp.CurrentTemperature;
+    }
+
+    /// <summary>
+    /// Marks the heat capacity of the entity as having changed when the mass of the entity changes if such a dependency exists.
+    /// </summary>
+    private void OnMassDataChanged(Entity<TemperatureComponent> ent, ref MassDataChangedEvent args)
+    {
+        if (!args.MassChanged || ent.Comp.SpecificHeat == 0f)
+            return;
+
+        ent.Comp.HeatCapacityDirty = true;
+    }
+
+    /// <summary>
+    /// Accumulates additional mass-based heat capacity for the entity.
+    /// </summary>
+    private void OnRecalculateHeatCapacity(Entity<PhysicsComponent> ent, ref RecalculateHeatCapacityEvent args)
+    {
+        if (args.Entity.Comp.SpecificHeat == 0f || ent.Comp.FixturesMass == 0f)
+            return;
+
+        args.HeatCapacity += args.Entity.Comp.SpecificHeat * ent.Comp.FixturesMass;
     }
 
     private void OnRejuvenate(EntityUid uid, TemperatureComponent comp, RejuvenateEvent args)
@@ -425,4 +477,15 @@ public sealed class OnTemperatureChangeEvent : EntityEventArgs
         LastTemperature = last;
         TemperatureDelta = delta;
     }
+}
+
+/// <summary>
+/// A directed event raised when the total heat capacity of an entity is recalculated.
+/// </summary>
+/// <param name="Entity">The entity that is having its heat capacity recalculated.</param>
+/// <param name="HeatCapacity">An accumulator used to aggregate heat capacity from sources.</param>
+[ByRefEvent]
+public record struct RecalculateHeatCapacityEvent(Entity<TemperatureComponent> Entity, float HeatCapacity = 0f)
+{
+    public readonly Entity<TemperatureComponent> Entity = Entity;
 }

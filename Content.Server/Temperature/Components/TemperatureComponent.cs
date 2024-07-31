@@ -40,6 +40,20 @@ public sealed partial class TemperatureComponent : Component
     public float? ParentColdDamageThreshold;
 
     /// <summary>
+    /// The total heat capacity of this entity given all available sources.
+    /// <see cref="HeatCapacityDirty"/> handles tracking whether this is out of date given changes to the sources. 
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly), Access(typeof(TemperatureSystem), Other = AccessPermissions.None)]
+    public float TotalHeatCapacity;
+
+    /// <summary>
+    /// Whether any sources of heat capacity for this entity have changed since the last time <see cref="TotalHeatCapacity"/> was calculated.
+    /// If this is true the next attempt to fetch the heat capacity of this entity using <see cref="TemperatureSystem.GetHeatCapacity"/> will recalculate it.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly), Access(typeof(TemperatureSystem), Other = AccessPermissions.None)]
+    public bool HeatCapacityDirty = true; // Force the first fetch to calculate the total heat capacity.
+
+    /// <summary>
     /// Heat capacity per kg of mass.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
