@@ -1,4 +1,6 @@
-﻿using Content.Shared.FixedPoint;
+﻿using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Chemistry.Systems;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Reagent;
@@ -7,7 +9,7 @@ namespace Content.Shared.Chemistry.Reagent;
 /// Simple struct for storing a <see cref="ReagentId"/> & quantity tuple.
 /// </summary>
 [Serializable, NetSerializable]
-[DataDefinition]
+[DataDefinition, Obsolete("Use Chemistry.Types.ReagentQuantity or Chemistry.Types.ReagentVariantQuantity instead!")]
 public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
 {
     [DataField("Quantity", required:true)]
@@ -16,6 +18,32 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
     [IncludeDataField]
     [ViewVariables]
     public ReagentId Reagent { get; private set; }
+
+    public bool TryConvert([NotNullWhen(true)] out Types.ReagentQuantity? newData,
+        SharedChemistryRegistrySystem? chemRegistry = null)
+    {
+        newData = null;
+        if (Reagent.Data != null)
+            return false;
+        chemRegistry ??= IoCManager.Resolve<EntitySystemManager>().GetEntitySystem<SharedChemistryRegistrySystem>();
+        if (!chemRegistry.TryIndex(Reagent.Prototype, out var regDef))
+            return false;
+        newData = new Types.ReagentQuantity(regDef.Value, Quantity);
+        return true;
+    }
+
+    public bool TryConvertToVariant([NotNullWhen(true)] out Types.ReagentVariantQuantity? newData,
+        SharedChemistryRegistrySystem? chemRegistry = null)
+    {
+        newData = null;
+        if (Reagent.Data == null)
+            return false;
+        chemRegistry ??= IoCManager.Resolve<EntitySystemManager>().GetEntitySystem<SharedChemistryRegistrySystem>();
+        if (!chemRegistry.TryIndex(Reagent.Prototype, out var regDef))
+            return false;
+        newData = new Types.ReagentVariantQuantity(regDef.Value, Reagent.Data ,Quantity);
+        return true;
+    }
 
     public ReagentQuantity(string reagentId, FixedPoint2 quantity, ReagentData? data)
         : this(new ReagentId(reagentId, data), quantity)

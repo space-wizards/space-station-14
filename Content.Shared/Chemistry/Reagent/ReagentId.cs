@@ -9,7 +9,7 @@ namespace Content.Shared.Chemistry.Reagent;
 /// contain additional data (e.g., blood could store DNA data).
 /// </summary>
 [Serializable, NetSerializable]
-[DataDefinition]
+[DataDefinition, Obsolete("Use new SolutionSystem methods that take reagentData as an argument, or ReagentVariantQuantity")]
 public partial struct ReagentId : IEquatable<ReagentId>
 {
     // TODO rename data field.
