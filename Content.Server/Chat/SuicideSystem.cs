@@ -160,9 +160,6 @@ namespace Content.Server.Chat
 
         private void ApplyLethalDamage(EntityUid target, ProtoId<DamageTypePrototype>? kind)
         {
-            if (kind == "Special")
-                return;
-
             if (!TryComp<DamageableComponent>(target, out var damagable) || !TryComp<MobThresholdsComponent>(target, out var thresholds))
                 return;
 
