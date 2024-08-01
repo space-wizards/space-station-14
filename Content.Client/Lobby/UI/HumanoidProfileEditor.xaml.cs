@@ -612,8 +612,6 @@ namespace Content.Client.Lobby.UI
                 ("humanoid-profile-editor-antag-preference-no-button", 1)
             };
 
-            var clientBanManager = IoCManager.Resolve<JobRequirementsManager>();
-
             foreach (var antag in _prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => Loc.GetString(a.Name)))
             {
                 if (!antag.SetPreference)
@@ -638,7 +636,7 @@ namespace Content.Client.Lobby.UI
                 var requirements = _entManager.System<SharedRoleSystem>().GetAntagRequirement(antag);
                 var antagAllSelection = Loc.GetString("ban-panel-role-selection-antag-all-option");
 
-                if (clientBanManager.IsRoleBanned(new[] { $"Antag:{antag.ID}", $"Antag:{antagAllSelection}" }, out var banReason, out var expirationTime))
+                if (_requirements.IsRoleBanned(new[] { $"Antag:{antag.ID}", $"Antag:{antagAllSelection}" }, out var banReason, out var expirationTime))
                 {
                     if (banReason != null)
                     {
@@ -647,7 +645,7 @@ namespace Content.Client.Lobby.UI
                     Profile = Profile?.WithAntagPreference(antag.ID, false);
                     SetDirty();
                 }
-                else if (!clientBanManager.CheckRoleTime(requirements, out var reason))
+                else if (!_requirements.CheckRoleTime(requirements, out var reason))
                 {
                     selector.LockRequirements(reason);
                     Profile = Profile?.WithAntagPreference(antag.ID, false);
@@ -891,16 +889,15 @@ namespace Content.Client.Lobby.UI
                     var jobIcon = _prototypeManager.Index(job.Icon);
                     icon.Texture = jobIcon.Icon.Frame0();
                     selector.Setup(items, job.LocalizedName, 200, job.LocalizedDescription, icon, job.Guides);
-
-                    var clientBanManager = IoCManager.Resolve<JobRequirementsManager>();
-                    if (clientBanManager.IsRoleBanned(new[] { $"Job:{job.ID}" }, out var banReason, out var expirationTime))
+                    
+                    if (_requirements.IsRoleBanned(new[] { $"Job:{job.ID}" }, out var banReason, out var expirationTime))
                     {
                         if (banReason != null)
                         {
                             selector.LockDueToBan(banReason, expirationTime);
                         }
                     }
-                    else if (!clientBanManager.IsAllowed(job, out var reason))
+                    else if (!_requirements.IsAllowed(job, out var reason))
                     {
                         selector.LockRequirements(reason);
                     }
