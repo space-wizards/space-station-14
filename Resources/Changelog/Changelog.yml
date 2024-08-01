@@ -1,81 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Blast grenades have had their manufacturing cost tripled.
-    type: Tweak
-  - message: Blast grenades are now part of the Basic Shuttle Armament research and
-      can be printed at the secfab.
-    type: Tweak
-  id: 6518
-  time: '2024-05-03T00:03:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27580
-- author: Vasilis, Dutch-VanDerLinde
-  changes:
-  - message: A new event has been added, syndicate sleeper agents, which raises the
-      alert level and selects 1-2 players to be traitors rarely throughout the round.
-    type: Add
-  id: 6519
-  time: '2024-05-03T00:13:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27501
-- author: Errant
-  changes:
-  - message: Space Ninjas now automatically turn their internals on when they spawn.
-    type: Tweak
-  id: 6520
-  time: '2024-05-03T01:24:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25083
-- author: Hanzdegloker
-  changes:
-  - message: Added 6 new energy drink based mixed drinks.
-    type: Add
-  - message: Added Red Bool energy drink back to the soda dispenser and gave it a
-      new canned sprite.
-    type: Add
-  id: 6521
-  time: '2024-05-03T06:57:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27597
-- author: DuskyJay
-  changes:
-  - message: Allowed EMP implants to be used while stunned or cuffed.
-    type: Tweak
-  id: 6522
-  time: '2024-05-03T07:51:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27644
-- author: Just-a-Unity-Dev
-  changes:
-  - message: Fixed Geras not having their speed buff.
-    type: Fix
-  - message: Geras are no longer immune to other AI mobs.
-    type: Fix
-  - message: Slimes can no longer morph into a Geras when zombified.
-    type: Fix
-  - message: Lowered the Geras death threshold.
-    type: Tweak
-  id: 6523
-  time: '2024-05-03T17:26:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27308
-- author: nikthechampiongr
-  changes:
-  - message: Ninjas will no longer be pointed to random wreckage in space.
-    type: Fix
-  id: 6524
-  time: '2024-05-03T20:23:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27552
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Fixed nuclear operatives, zombies, and head revolutionary round end summaries
-      not showing.
-    type: Fix
-  id: 6525
-  time: '2024-05-04T00:03:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27654
-- author: TheShuEd
-  changes:
-  - message: Added Train station!
-    type: Add
-  id: 6526
-  time: '2024-05-04T11:10:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27534
 - author: TheShuEd
   changes:
   - message: "Added Pathological Liar trait accent. The accent has a 15% chance of\
@@ -3785,3 +3708,70 @@
   id: 7017
   time: '2024-07-31T00:14:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30509
+- author: metalgearsloth
+  changes:
+  - message: Add a button to the lobby so you can export a .png of your characters
+    type: Add
+  id: 7018
+  time: '2024-07-31T15:14:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29874
+- author: slarticodefast
+  changes:
+  - message: Skeletons no longer have fingerprints.
+    type: Tweak
+  id: 7019
+  time: '2024-07-31T16:08:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30530
+- author: themias
+  changes:
+  - message: Pens can be clicked cathartically
+    type: Tweak
+  id: 7020
+  time: '2024-07-31T17:57:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30531
+- author: Plykiya
+  changes:
+  - message: Meteors now leave behind asteroid rocks on impact.
+    type: Add
+  id: 7021
+  time: '2024-08-01T02:55:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30419
+- author: PixelTheAertist
+  changes:
+  - message: The Social Anxiety trait is now renamed to "Stutter"
+    type: Tweak
+  id: 7022
+  time: '2024-08-01T02:58:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29898
+- author: Plykiya
+  changes:
+  - message: Adds hand labelers to the PTech, ChemDrobe, and LawDrobe.
+    type: Add
+  id: 7023
+  time: '2024-08-01T02:59:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29958
+- author: Ko4erga
+  changes:
+  - message: Added a cutter machine for crafting patterned steel tiles, concrete and
+      wooden tiles.
+    type: Add
+  - message: After rip off patterned tiles you get current pattern, not just steel
+      tile.
+    type: Tweak
+  id: 7024
+  time: '2024-08-01T10:26:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30431
+- author: NakataRin
+  changes:
+  - message: Added paramedic to the train station.
+    type: Add
+  id: 7025
+  time: '2024-08-01T19:59:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30556
+- author: marbow
+  changes:
+  - message: Rejoice, detectives! Hand labeler has been added to your closet!
+    type: Add
+  id: 7026
+  time: '2024-08-01T20:01:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30501
