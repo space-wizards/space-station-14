@@ -269,6 +269,16 @@ binds:
   type: State
   key: MouseMiddle
   canFocus: true
+- function: RotateObjectClockwise
+  type: State
+  key: R
+- function: RotateObjectCounterclockwise
+  type: State
+  key: R
+  mod1: Shift
+- function: FlipObject
+  type: State
+  key: F
 - function: TextCursorLeft
   type: State
   key: Left
