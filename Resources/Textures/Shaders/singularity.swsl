@@ -40,7 +40,7 @@ void fragment() {
             if (hasEventHorizon[i] && intensity[i] > 0.0) {
                 deformation -= pow(deformation / maxDeformation, 8.0);
 
-                brightnessFactor = clamp(1.0 - pow(deformation / 16.0, 4.0), 0.0, 1.0);
+                brightnessFactor = clamp(0.3 * deformation + 1.0, 0.0, 1.0);
                 cumulativeBrightnessFactor *= brightnessFactor;
             }
         }
