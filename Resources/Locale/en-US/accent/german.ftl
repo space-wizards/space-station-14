@@ -194,3 +194,10 @@ accent-german-words-replace-61 = kugelblitz
 
 accent-german-words-62 = accent
 accent-german-words-replace-62 = akzent
+
+accent-german-words-63 = anomaly
+accent-german-words-replace-63 = anomalie
+
+accent-german-words-64 = artifact
+accent-german-words-64-2 = artefact
+accent-german-words-replace-64 = artefakt
