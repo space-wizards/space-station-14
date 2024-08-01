@@ -130,15 +130,11 @@ accent-german-words-replace-41 = wunderbar
 accent-german-words-42 = warning
 accent-german-words-replace-42 = warnung
 
-accent-german-words-43 = mr.
-accent-german-words-43-2 = mr
-accent-german-words-replace-43 = Herr
+accent-german-words-43 = warnings
+accent-german-words-replace-43 = warnungs
 
-accent-german-words-44 = mrs.
-accent-german-words-44-2 = mrs
-accent-german-words-44-3 = ms.
-accent-german-words-44-4 = ms
-accent-german-words-replace-44 = Frau
+accent-german-words-44 = and
+accent-german-words-replace-44 = und
 
 accent-german-words-45 = officer
 accent-german-words-replace-45 = offizier
@@ -149,11 +145,8 @@ accent-german-words-replace-46 = kommandant
 accent-german-words-47 = command
 accent-german-words-replace-47 = kommando
 
-accent-german-words-48 = and
-accent-german-words-replace-48 = und
+accent-german-words-48 = motherfucker
+accent-german-words-replace-48 = mutterficker
 
-accent-german-words-49 = motherfucker
-accent-german-words-replace-49 = mutterficker
-
-accent-german-words-50 = motherfuckers
-accent-german-words-replace-50 = mutterfickers
+accent-german-words-49 = motherfuckers
+accent-german-words-replace-49 = mutterfickers
