@@ -163,3 +163,27 @@ accent-german-words-replace-53 = tschau
 
 accent-german-words-54 = fantastic
 accent-german-words-replace-54 = fantastisch
+
+accent-german-words-55 = changeling
+accent-german-words-replace-55 = doppelgänger
+
+accent-german-words-56 = forbidden
+accent-german-words-56-2 = prohibited
+accent-german-words-56-3 = banned
+accent-german-words-replace-56 = verboten
+
+accent-german-words-57 = quick
+accent-german-words-57-2 = quickly
+accent-german-words-replace-57 = schnell
+
+accent-german-words-58 = war ops
+accent-german-words-replace-58 = blitzkrieg
+
+accent-german-words-59 = teslaloose
+accent-german-words-59-2 = tesloose
+accent-german-words-59-3 = lightning ball
+accent-german-words-59-4 = ball lightning
+accent-german-words-replace-59 = kugelblitz
+
+accent-german-words-60 = tesla generator
+accent-german-words-replace-60 = kugelblitz generator
