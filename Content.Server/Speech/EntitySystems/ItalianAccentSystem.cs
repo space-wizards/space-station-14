@@ -39,7 +39,7 @@ public sealed class ItalianAccentSystem : EntitySystem
         }
 
         // Prefix
-        if (_rng.Prob(0.5f))
+        if (_rng.Prob(0.05f))
         {
             var pick = _rng.Next(1, 5);
             msg = Loc.GetString($"accent-italian-prefix-{pick}") + " " + msg;
