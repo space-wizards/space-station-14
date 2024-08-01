@@ -8,6 +8,7 @@
      sprite: Clothing/Neck/Misc/shock_collar.rsi
    - type: Clothing
      sprite: Clothing/Neck/Misc/shock_collar.rsi
+     stripDelay: 10
    - type: ShockOnTrigger
      force: 5
      duration: 3
