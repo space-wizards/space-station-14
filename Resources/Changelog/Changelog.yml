@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Fixed nuclear operatives, zombies, and head revolutionary round end summaries
-      not showing.
-    type: Fix
-  id: 6525
-  time: '2024-05-04T00:03:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27654
 - author: TheShuEd
   changes:
   - message: Added Train station!
@@ -3776,3 +3768,10 @@
   id: 7024
   time: '2024-08-01T10:26:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30431
+- author: NakataRin
+  changes:
+  - message: Added paramedic to the train station.
+    type: Add
+  id: 7025
+  time: '2024-08-01T19:59:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30556
