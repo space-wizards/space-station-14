@@ -118,10 +118,9 @@ accent-german-words-39 = stupid
 accent-german-words-replace-39 = dumm
 
 accent-german-words-40 = car
-accent-german-words-replace-40 = Auto
+accent-german-words-replace-40 = auto
 
 accent-german-words-41 = wonderful
-accent-german-words-41-2 = fantastic
 accent-german-words-replace-41 = wunderbar
 
 accent-german-words-42 = warning
@@ -161,3 +160,6 @@ accent-german-words-replace-52 = tschüss
 accent-german-words-53 = bye bye
 accent-german-words-53-2 = bye-bye
 accent-german-words-replace-53 = tschau
+
+accent-german-words-54 = fantastic
+accent-german-words-replace-54 = fantastisch
