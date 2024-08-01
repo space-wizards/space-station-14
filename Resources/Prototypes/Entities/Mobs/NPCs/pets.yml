@@ -949,5 +949,6 @@
       gender: male
   - type: Tag
     tags:
+    - DoorBumpOpener
     - CannotSuicide
     - VimPilot
