@@ -46,7 +46,7 @@ public sealed class GermanAccentSystem : EntitySystem
         var msgBuilder = new StringBuilder(msg);
         for (var i = 0; i < msgBuilder.Length; i++)
         {
-            if (_rng.Prob(0.2f)) // 20% of all eligible vowels become umlauts
+            if (_rng.Prob(0.1f)) // 10% of all eligible vowels become umlauts
             {
                 msgBuilder[i] = msgBuilder[i] switch
                 {
