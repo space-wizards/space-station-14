@@ -326,14 +326,14 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     _vomitSystem.Vomit(args.Target, -1000, -1000); // You feel hollow!
-                    var organs = _bodySystem.GetBodyOrganComponents<TransformComponent>(args.Target, body);
+                    var organs = _bodySystem.GetBodyOrganEntityComps<TransformComponent>((args.Target, body));
                     var baseXform = Transform(args.Target);
-                    foreach (var (xform, organ) in organs)
+                    foreach (var organ in organs)
                     {
-                        if (HasComp<BrainComponent>(xform.Owner) || HasComp<EyeComponent>(xform.Owner))
+                        if (HasComp<BrainComponent>(organ.Owner) || HasComp<EyeComponent>(organ.Owner))
                             continue;
 
-                        _transformSystem.AttachToGridOrMap(organ.Owner);
+                        _transformSystem.PlaceNextTo((organ.Owner, organ.Comp1), (args.Target, baseXform));
                     }
 
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-vomit-organs-self"),
@@ -418,10 +418,9 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new("/Textures/Mobs/Species/Human/organs.rsi"), "stomach"),
                 Act = () =>
                 {
-                    foreach (var (component, _) in _bodySystem.GetBodyOrganComponents<StomachComponent>(args.Target,
-                                 body))
+                    foreach (var entity in _bodySystem.GetBodyOrganEntityComps<StomachComponent>((args.Target, body)))
                     {
-                        QueueDel(component.Owner);
+                        QueueDel(entity.Owner);
                     }
 
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-stomach-removal-self"),
@@ -441,9 +440,9 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new("/Textures/Mobs/Species/Human/organs.rsi"), "lung-r"),
                 Act = () =>
                 {
-                    foreach (var (component, _) in _bodySystem.GetBodyOrganComponents<LungComponent>(args.Target, body))
+                    foreach (var entity in _bodySystem.GetBodyOrganEntityComps<LungComponent>((args.Target, body)))
                     {
-                        QueueDel(component.Owner);
+                        QueueDel(entity.Owner);
                     }
 
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-lung-removal-self"),

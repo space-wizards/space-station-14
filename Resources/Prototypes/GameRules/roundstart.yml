@@ -73,7 +73,7 @@
   parent: BaseGameRule
   id: BaseNukeopsRule
   components:
-  - type: RandomMetadata #this generates the random operation name cuz it's cool.
+  - type: RandomMetadata #this generates the random operation name cuz it's cool. 
     nameSegments:
     - operationPrefix
     - operationSuffix
@@ -82,6 +82,11 @@
   - type: AntagSelection
   - type: AntagLoadProfileRule
     speciesOverride: Human
+    speciesOverrideBlacklist:
+    #Species that do not work with nukies should be included in this list.
+    #Once the issues are fixed the species should be removed from this list to be enabled.
+    #Balance concerns are not a valid reason to disable a species, except for high-impact Nukie-specific exploits.
+    - Vox
 
 - type: entity
   parent: BaseNukeopsRule
@@ -90,7 +95,7 @@
   - type: GameRule
     minPlayers: 20
   - type: LoadMapRule
-    gameMap: NukieOutpost
+    mapPath: /Maps/Nonstations/nukieplanet.yml
   - type: AntagSelection
     selectionTime: PrePlayerSpawn
     definitions:
