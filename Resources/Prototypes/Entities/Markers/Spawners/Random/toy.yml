@@ -10,8 +10,8 @@
           state: plushie_h
     - type: GenericSpawner
       entityTables:
-        ToyEntityTable: 0.5
         ToyRareEntityTable: 0.03
+        ToyEntityTable: 0.5
       offset: 0.2
 
 - type: entity
@@ -41,6 +41,6 @@
           state: figurine_spawner
     - type: GenericSpawner
       entityTables:
-        FigureEntityTable: 0.9
         FigureRareEntityTable: 0.05
+        FigureEntityTable: 0.9
       offset: 0.2

@@ -11,8 +11,8 @@
           state: flashlight
     - type: GenericSpawner
       entityTables:
-        IndustrialFluffEntityTable: 0.85
         IndustrialFluffRareEntityTable: 0.1
+        IndustrialFluffEntityTable: 0.85
       offset: 0.0
 
 - type: entity
@@ -28,6 +28,6 @@
           state: icon
     - type: GenericSpawner
       entityTables:
-        IndustrialLootEntityTable: 0.8
         IndustrialLootRareEntityTable: 0.2
+        IndustrialLootEntityTable: 0.8
       offset: 0.0

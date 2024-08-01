@@ -11,5 +11,5 @@
   - type: GenericSpawner
     offset: 0
     entityTables:
-      PaintingsEntityTable: 1.0
       PaintingsRareEntityTable: 0.01
+      PaintingsEntityTable: 1.0

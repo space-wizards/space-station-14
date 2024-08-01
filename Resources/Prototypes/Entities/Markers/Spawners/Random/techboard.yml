@@ -10,5 +10,5 @@
       state: boris
   - type: GenericSpawner
     entityTables:
-      TechboardEntityTable: 0.95
       TechboardRareEntityTable: 0.05
+      TechboardEntityTable: 0.95

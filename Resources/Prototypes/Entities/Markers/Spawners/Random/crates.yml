@@ -26,8 +26,8 @@
           state: icon
     - type: GenericSpawner
       entityTables:
-        FilledCrateEntityTable: 0.7
         FilledCrateRareEntityTable: 0.1
+        FilledCrateEntityTable: 0.7
       offset: 0.0
 
 - type: entity
@@ -42,8 +42,8 @@
           state: icon
     - type: GenericSpawner
       entityTables:
-        EngineeringCrateEntityTable: 0.9
         EngineeringCrateRareEntityTable: 0.2
+        EngineeringCrateEntityTable: 0.9
       offset: 0.0
 
 - type: entity
@@ -58,6 +58,6 @@
           state: icon
     - type: GenericSpawner
       entityTables:
-        SecurityCrateEntityTable: 0.9
         SecurityCrateRareEntityTable: 0.1
+        SecurityCrateEntityTable: 0.9
       offset: 0.0

@@ -13,6 +13,6 @@
         state: plain
   - type: GenericSpawner
     entityTables:
-      FoodSingleEntityTable: 0.8
       FoodSingleRareEntityTable: 0.05
+      FoodSingleEntityTable: 0.8
     offset: 0.0

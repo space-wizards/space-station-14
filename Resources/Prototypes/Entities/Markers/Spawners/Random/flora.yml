@@ -10,5 +10,5 @@
         state: icon
   - type: GenericSpawner
     entityTables:
-      FloraEntityTable: 0.95
       FloraRareEntityTable: 0.05
+      FloraEntityTable: 0.95

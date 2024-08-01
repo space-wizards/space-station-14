@@ -10,5 +10,5 @@
         state: soap-4
   - type: GenericSpawner
     entityTables:
-      SoapEntityTable: 0.95
       SoapRareEntityTable: 0.05
+      SoapEntityTable: 0.95

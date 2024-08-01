@@ -65,8 +65,8 @@
           state: icon
     - type: GenericSpawner
       entityTables:
-        LootArmoryGunsEntityTable: 0.95
         LootArmoryGunsRareEntityTable: 0.05
+        LootArmoryGunsEntityTable: 0.95
       offset: 0.0
 
 - type: entity
@@ -82,6 +82,6 @@
           state: icon
     - type: GenericSpawner
       entityTables:
-        LootArmoryArmorEntityTable: 0.95
         LootArmoryArmorRareEntityTable: 0.05
+        LootArmoryArmorEntityTable: 0.95
       offset: 0.0

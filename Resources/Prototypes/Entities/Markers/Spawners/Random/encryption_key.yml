@@ -13,6 +13,6 @@
           state: nano_label
     - type: GenericSpawner
       entityTables:
-        EncryptionKeysEntityTable: 0.9
         EncryptionKeysRareEntityTable: 0.1
+        EncryptionKeysEntityTable: 0.9
       offset: 0.0

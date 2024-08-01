@@ -13,8 +13,8 @@
           state: icon
     - type: GenericSpawner
       entityTables:
-        SalvageMaterialCrateEntityTable: 0.9
         SalvageMaterialCrateRareEntityTable: 0.4
+        SalvageMaterialCrateEntityTable: 0.9
       offset: 0.0
 
 - type: entity
@@ -29,8 +29,8 @@
           state: blue
     - type: GenericSpawner
       entityTables:
-        SalvageCanisterEntityTable: 0.9
         SalvageCanisterRareEntityTable: 0.03
+        SalvageCanisterEntityTable: 0.9
       offset: 0.0
 
 - type: entity

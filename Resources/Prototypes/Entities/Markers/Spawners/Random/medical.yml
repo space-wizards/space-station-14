@@ -12,8 +12,8 @@
           state: brutepack
     - type: GenericSpawner
       entityTables:
-        MedicalMinorLootEntityTable: 0.9
         MedicalMinorLootRareEntityTable: 0.1
+        MedicalMinorLootEntityTable: 0.9
       offset: 0.0
 
 # Proper medical loot spawner, contains things like beakers and better meds.
@@ -29,6 +29,6 @@
           state: firstaid
     - type: GenericSpawner
       entityTables:
-        MedicalClassyLootEntityTable: 0.9
         MedicalClassyLootRareEntityTable: 0.1
+        MedicalClassyLootEntityTable: 0.9
       offset: 0.0

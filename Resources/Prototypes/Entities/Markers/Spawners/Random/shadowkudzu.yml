@@ -10,5 +10,5 @@
     - type: GenericSpawner
       offset: 0.05
       entityTables:
-        ShadowKudzuLootEntityTable: 0.7
         ShadowKudzuLootRareEntityTable: 0.05
+        ShadowKudzuLootEntityTable: 0.7

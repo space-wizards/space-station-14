@@ -13,6 +13,6 @@
         state: plain
   - type: GenericSpawner
     entityTables:
-      FoodBakedWholeEntityTable: 0.8
       FoodBakedWholeRareEntityTable: 0.05
+      FoodBakedWholeEntityTable: 0.8
     offset: 0.0

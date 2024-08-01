@@ -10,5 +10,5 @@
         state: icon
   - type: GenericSpawner
     entityTables:
-      InstrumentsEntityTable: 0.95
       InstrumentsRareEntityTable: 0.05
+      InstrumentsEntityTable: 0.95

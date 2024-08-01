@@ -13,6 +13,6 @@
         state: icon
   - type: GenericSpawner
     entityTables:
-      DrinksGlassEntityTable: 0.8
       DrinksGlassRareEntityTable: 0.05
+      DrinksGlassEntityTable: 0.8
     offset: 0.0

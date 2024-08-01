@@ -12,8 +12,8 @@
           state: steel_3
     - type: GenericSpawner
       entityTables:
-        MaterialsEntityTable: 0.8
         MaterialsRareEntityTable: 0.2
+        MaterialsEntityTable: 0.8
       offset: 0.0
 
 - type: entity
@@ -80,8 +80,8 @@
           state: steel_3
     - type: GenericSpawner
       entityTables:
-        SurplusMaterialsEntityTable: 0.9
         SurplusMaterialsRareEntityTable: 0.1
+        SurplusMaterialsEntityTable: 0.9
       offset: 0.0
 
 # Cable coil spawner

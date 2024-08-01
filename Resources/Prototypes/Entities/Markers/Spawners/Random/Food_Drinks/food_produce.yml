@@ -12,6 +12,6 @@
         state: produce
   - type: GenericSpawner
     entityTables:
-      FoodProduceEntityTable: 0.8
       FoodProduceRareEntityTable: 0.01
+      FoodProduceEntityTable: 0.8
     offset: 0.0

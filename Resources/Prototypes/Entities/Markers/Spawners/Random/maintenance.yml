@@ -11,8 +11,8 @@
           state: icon-super
     - type: GenericSpawner
       entityTables:
-        MaintenanceFluffEntityTable: 0.6
         MaintenanceFluffRareEntityTable: 0.01
+        MaintenanceFluffEntityTable: 0.6
       offset: 0.0
 
 
@@ -29,8 +29,8 @@
           state: high
     - type: GenericSpawner
       entityTables:
-        MaintenanceToolEntityTable: 0.6
         MaintenanceToolRareEntityTable: 0.08
+        MaintenanceToolEntityTable: 0.6
       offset: 0.0
 
 - type: entity
@@ -46,8 +46,8 @@
           state: icon
     - type: GenericSpawner
       entityTables:
-        MaintenanceWeaponEntityTable: 0.6
         MaintenanceWeaponRareEntityTable: 0.05
+        MaintenanceWeaponEntityTable: 0.6
       offset: 0.0
 
 - type: entity

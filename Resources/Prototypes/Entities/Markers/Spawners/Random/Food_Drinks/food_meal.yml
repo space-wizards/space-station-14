@@ -13,6 +13,6 @@
         state: cornedbeef
   - type: GenericSpawner
     entityTables:
-      FoodMealEntityTable: 0.8
       FoodMealRareEntityTable: 0.05
+      FoodMealEntityTable: 0.8
     offset: 0.0

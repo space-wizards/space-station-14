@@ -13,6 +13,6 @@
         state: plain-slice
   - type: GenericSpawner
     entityTables:
-      FoodBakedSingleEntityTable: 0.8
       FoodBakedSingleRareEntityTable: 0.05
+      FoodBakedSingleEntityTable: 0.8
     offset: 0.0
