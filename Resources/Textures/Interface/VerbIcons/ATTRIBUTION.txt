@@ -11,5 +11,5 @@ https://game-icons.net/1x1/delapouite/padlock-open.html
 bubbles.svg by Lorc under CC BY 3.0
 https://game-icons.net/1x1/lorc/bubbles.html
 
-shears.svg by Delapouite under CC BY 3.0 https://creativecommons.org/licenses/by/3.0/
-https://game-icons.net/1x1/delapouite/shears.html
+scissors.svg by Icons8 under Good Boy License https://github.com/icons8/WPF-UI-Framework/blob/master/LICENSE.md
+https://github.com/icons8/WPF-UI-Framework/blob/master/Windows%20Icons/Cut.svg
