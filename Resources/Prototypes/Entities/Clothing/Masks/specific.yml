@@ -81,16 +81,21 @@
     visuals:
       enum.CursedMaskVisuals.State:
         mask:
-          0: { state: icon-anger }
-          1: { state: icon }
-          2: { state: icon-despair }
-          3: { state: icon-joy }
+          Neutral: { state: icon }
+          Despair: { state: icon-despair }
+          Joy: { state: icon-joy }
+          Anger: { state: icon-anger }
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
   - type: SelfEquipOnly
   - type: CursedMask
+    despairDamageModifier:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.4
   - type: HideLayerClothing
     slots:
     - Snout
   - type: StaticPrice
-    price: 2500
+    price: 5000

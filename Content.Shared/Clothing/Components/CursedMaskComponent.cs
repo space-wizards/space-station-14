@@ -1,3 +1,4 @@
+using Content.Shared.Damage;
 using Content.Shared.NPC.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -8,17 +9,26 @@ namespace Content.Shared.Clothing.Components;
 /// <summary>
 /// This is used for a mask that takes over the host when worn.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedCursedMaskSystem))]
 public sealed partial class CursedMaskComponent : Component
 {
-    [DataField]
-    public int CurrentState;
-
     /// <summary>
-    /// Used to determine visuals
+    /// The current expression shown. Used to determine which effect is applied.
     /// </summary>
     [DataField]
-    public int CurseStates = 4;
+    public CursedMaskExpression CurrentState = CursedMaskExpression.Neutral;
+
+    /// <summary>
+    /// Speed modifier applied when the "Joy" expression is present.
+    /// </summary>
+    [DataField]
+    public float JoySpeedModifier = 1.15f;
+
+    /// <summary>
+    /// Damage modifier applied when the "Despair" expression is present.
+    /// </summary>
+    [DataField]
+    public DamageModifierSet DespairDamageModifier = new();
 
     /// <summary>
     /// Whether or not the mask is currently attached to an NPC.
@@ -37,4 +47,13 @@ public sealed partial class CursedMaskComponent : Component
 public enum CursedMaskVisuals : byte
 {
      State
+}
+
+[Serializable, NetSerializable]
+public enum CursedMaskExpression : byte
+{
+    Neutral,
+    Joy,
+    Despair,
+    Anger
 }

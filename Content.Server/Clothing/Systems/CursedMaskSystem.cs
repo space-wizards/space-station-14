@@ -27,12 +27,11 @@ public sealed class CursedMaskSystem : SharedCursedMaskSystem
     [Dependency] private readonly HTNSystem _htn = default!;
 
     // We can't store this info on the component easily
-    private static ProtoId<HTNCompoundPrototype> _takeoverRootTask = "SimpleHostileCompound";
+    private static readonly ProtoId<HTNCompoundPrototype> TakeoverRootTask = "SimpleHostileCompound";
 
     protected override void TryTakeover(Entity<CursedMaskComponent> ent, EntityUid wearer)
     {
-        // our unlucky number.
-        if (ent.Comp.CurrentState != 0)
+        if (ent.Comp.CurrentState != CursedMaskExpression.Anger)
             return;
 
         if (TryComp<ActorComponent>(wearer, out var actor) && actor.PlayerSession.GetMind() is { } mind)
@@ -53,7 +52,7 @@ public sealed class CursedMaskSystem : SharedCursedMaskSystem
         _npcFaction.AddFaction((wearer, npcFaction), ent.Comp.CursedMaskFaction);
 
         ent.Comp.HasNpc = !EnsureComp<HTNComponent>(wearer, out var htn);
-        htn.RootTask = new HTNCompoundTask { Task = _takeoverRootTask };
+        htn.RootTask = new HTNCompoundTask { Task = TakeoverRootTask };
         htn.Blackboard.SetValue(NPCBlackboard.Owner, wearer);
         _npc.WakeNPC(wearer, htn);
         _htn.Replan(htn);
@@ -62,7 +61,7 @@ public sealed class CursedMaskSystem : SharedCursedMaskSystem
     protected override void OnClothingUnequip(Entity<CursedMaskComponent> ent, ref ClothingGotUnequippedEvent args)
     {
         // If we are taking off the cursed mask
-        if (ent.Comp.CurrentState == 0)
+        if (ent.Comp.CurrentState == CursedMaskExpression.Anger)
         {
             if (ent.Comp.HasNpc)
                 RemComp<HTNComponent>(args.Wearer);
@@ -75,6 +74,6 @@ public sealed class CursedMaskSystem : SharedCursedMaskSystem
             ent.Comp.OldFactions.Clear();
         }
 
-        base.OnClothingUnequip(ent, ref args);
+        RandomizeCursedMask(ent, args.Wearer);
     }
 }
