@@ -17,7 +17,7 @@ public sealed class SelfUnremovableClothingSystem : EntitySystem
         SubscribeLocalEvent<SelfUnremovableClothingComponent, ExaminedEvent>(OnUnequipMarkup);
     }
 
-    private void OnUnequip(Entity<SelfUnremovableClothingComponent> prohibitionRemovingClothes, ref BeingUnequippedAttemptEvent args)
+    private void OnUnequip(Entity<SelfUnremovableClothingComponent> selfUnremovableClothing, ref BeingUnequippedAttemptEvent args)
     {
         if (args.UnEquipTarget == args.Unequipee)
         {
@@ -25,7 +25,7 @@ public sealed class SelfUnremovableClothingSystem : EntitySystem
         }
     }
 
-    private void OnUnequipMarkup(Entity<SelfUnremovableClothingComponent> prohibitionRemovingClothes, ref ExaminedEvent args)
+    private void OnUnequipMarkup(Entity<SelfUnremovableClothingComponent> selfUnremovableClothing, ref ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("self-unremovable-clothing"));
     }
