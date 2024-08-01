@@ -44,6 +44,15 @@
       accent: cowboy
 
 - type: trait
+  id: GermanAccent
+  name: trait-german-name
+  description: trait-german-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+    - type: GermanAccent
+
+- type: trait
   id: ItalianAccent
   name: trait-italian-name
   description: trait-italian-desc
