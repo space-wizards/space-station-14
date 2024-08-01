@@ -1,34 +1,4 @@
 ﻿Entries:
-- author: Hanzdegloker
-  changes:
-  - message: Added 6 new energy drink based mixed drinks.
-    type: Add
-  - message: Added Red Bool energy drink back to the soda dispenser and gave it a
-      new canned sprite.
-    type: Add
-  id: 6521
-  time: '2024-05-03T06:57:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27597
-- author: DuskyJay
-  changes:
-  - message: Allowed EMP implants to be used while stunned or cuffed.
-    type: Tweak
-  id: 6522
-  time: '2024-05-03T07:51:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27644
-- author: Just-a-Unity-Dev
-  changes:
-  - message: Fixed Geras not having their speed buff.
-    type: Fix
-  - message: Geras are no longer immune to other AI mobs.
-    type: Fix
-  - message: Slimes can no longer morph into a Geras when zombified.
-    type: Fix
-  - message: Lowered the Geras death threshold.
-    type: Tweak
-  id: 6523
-  time: '2024-05-03T17:26:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27308
 - author: nikthechampiongr
   changes:
   - message: Ninjas will no longer be pointed to random wreckage in space.
@@ -3781,3 +3751,24 @@
   id: 7020
   time: '2024-07-31T17:57:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30531
+- author: Plykiya
+  changes:
+  - message: Meteors now leave behind asteroid rocks on impact.
+    type: Add
+  id: 7021
+  time: '2024-08-01T02:55:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30419
+- author: PixelTheAertist
+  changes:
+  - message: The Social Anxiety trait is now renamed to "Stutter"
+    type: Tweak
+  id: 7022
+  time: '2024-08-01T02:58:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29898
+- author: Plykiya
+  changes:
+  - message: Adds hand labelers to the PTech, ChemDrobe, and LawDrobe.
+    type: Add
+  id: 7023
+  time: '2024-08-01T02:59:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29958
