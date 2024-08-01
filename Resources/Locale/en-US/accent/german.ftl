@@ -128,7 +128,7 @@ accent-german-words-42 = warning
 accent-german-words-replace-42 = warnung
 
 accent-german-words-43 = warnings
-accent-german-words-replace-43 = warnungs
+accent-german-words-replace-43 = warnungen
 
 accent-german-words-44 = and
 accent-german-words-replace-44 = und
