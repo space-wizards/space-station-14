@@ -636,7 +636,7 @@ namespace Content.Client.Lobby.UI
                 var requirements = _entManager.System<SharedRoleSystem>().GetAntagRequirement(antag);
                 var antagAllSelection = Loc.GetString("ban-panel-role-selection-antag-all-option");
 
-                if (_requirements.IsRoleBanned(new[] { $"Antag:{antag.ID}", $"Antag:{antagAllSelection}" }, out var banReason, out var expirationTime))
+                if (_requirements.IsAntagBanned(new[] { $"Antag:{antag.ID}", $"Antag:{antagAllSelection}" }, out var banReason, out var expirationTime))
                 {
                     if (banReason != null)
                     {
@@ -889,7 +889,7 @@ namespace Content.Client.Lobby.UI
                     var jobIcon = _prototypeManager.Index(job.Icon);
                     icon.Texture = jobIcon.Icon.Frame0();
                     selector.Setup(items, job.LocalizedName, 200, job.LocalizedDescription, icon, job.Guides);
-                    
+
                     if (_requirements.IsRoleBanned(new[] { $"Job:{job.ID}" }, out var banReason, out var expirationTime))
                     {
                         if (banReason != null)

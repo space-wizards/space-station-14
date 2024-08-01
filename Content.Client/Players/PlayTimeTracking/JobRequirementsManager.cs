@@ -180,14 +180,47 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         return _roles;
     }
 
+    public List<BanInfo> GetAntagBans()
+    {
+        return _roleBans.Where(ban => ban.Role != null && ban.Role.StartsWith("Antag:")).ToList();
+    }
+
+    public List<BanInfo> GetRoleBans()
+    {
+        return _roleBans.Where(ban => ban.Role != null && ban.Role.StartsWith("Job:")).ToList();
+    }
+
+    public bool IsAntagBanned(IEnumerable<string> antags, [NotNullWhen(true)] out string? banReason, [NotNullWhen(true)] out DateTime? expirationTime)
+    {
+        banReason = null;
+        expirationTime = null;
+
+        var antagBans = GetAntagBans();
+
+        foreach (var antag in antags)
+        {
+            var antagBan = antagBans.FirstOrDefault(ban => ban.Role == antag);
+            if (antagBan != null)
+            {
+                banReason = antagBan.Reason ?? string.Empty;
+                expirationTime = antagBan.ExpirationTime ?? DateTime.MinValue;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public bool IsRoleBanned(IEnumerable<string> roles, [NotNullWhen(true)] out string? banReason, [NotNullWhen(true)] out DateTime? expirationTime)
     {
         banReason = null;
         expirationTime = null;
 
+        var roleBans = GetRoleBans();
+
         foreach (var role in roles)
         {
-            var roleBan = _roleBans.FirstOrDefault(ban => ban.Role == role);
+            var roleBan = roleBans.FirstOrDefault(ban => ban.Role == role);
             if (roleBan != null)
             {
                 banReason = roleBan.Reason ?? string.Empty;
