@@ -9,6 +9,7 @@
    - type: Clothing
      sprite: Clothing/Neck/Misc/shock_collar.rsi
      stripDelay: 10
+   - type: SelfUnremovableClothing
    - type: ShockOnTrigger
      force: 5
      duration: 3
