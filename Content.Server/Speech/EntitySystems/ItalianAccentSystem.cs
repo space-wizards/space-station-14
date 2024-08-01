@@ -1,4 +1,4 @@
-using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
 using Robust.Shared.Random;
@@ -7,9 +7,7 @@ namespace Content.Server.Speech.EntitySystems;
 
 public sealed class ItalianAccentSystem : EntitySystem
 {
-    private static readonly Regex RegexFirstWord = new(@"^(\S+)");
-
-    private static readonly Regex RegexMeat = new(@"(?<=\s|^)meat(?=\s|$)", RegexOptions.IgnoreCase);
+    private static readonly Regex RegexProsciutto = new(@"(?<=\s|^)prosciutto(?=\s|$)", RegexOptions.IgnoreCase);
 
     [Dependency] private readonly IRobustRandom _rng = default!;
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
@@ -24,29 +22,27 @@ public sealed class ItalianAccentSystem : EntitySystem
     public string Accentuate(string message)
     {
         // Order:
-        // Do text manipulations first
-        // Then prefix/suffix funnyies
+        // Do text manipulations
+        // Then alternative meat 
+        // Last prefix funnyies
 
-        var msg = message;
+        // direct word replacements
+        var msg = _replacement.ApplyReplacements(message, "italian");
 
         // Half the time meat should be "pepperoni" instead of "prosciutto"
-        foreach (Match match in RegexMeat.Matches(msg))
+        foreach (Match match in RegexProsciutto.Matches(msg))
         {
             if (_rng.Prob(0.5f))
             {
-                msg = RegexMeat.Replace(msg, "pepperoni");
+                msg = msg.Remove(match.Index, match.Length).Insert(match.Index, "pepperoni");
             }
         }
 
-        // direct word replacements
-        msg = _replacement.ApplyReplacements(message, "italian");
-
         // Prefix
-        if (_rng.Prob(0.02f))
+        if (_rng.Prob(0.5f))
         {
-            var pick = _rng.Next(1, 4);
-            var prefix = Loc.GetString($"accent-italian-prefix-{pick}");
-            msg = prefix + " " + msg;
+            var pick = _rng.Next(1, 5);
+            msg = Loc.GetString($"accent-italian-prefix-{pick}") + " " + msg;
         }
 
         return msg;
