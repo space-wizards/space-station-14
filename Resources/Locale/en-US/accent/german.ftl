@@ -151,3 +151,9 @@ accent-german-words-replace-47 = kommando
 
 accent-german-words-48 = and
 accent-german-words-replace-48 = und
+
+accent-german-words-49 = motherfucker
+accent-german-words-replace-49 = mutterficker
+
+accent-german-words-50 = motherfuckers
+accent-german-words-replace-50 = mutterfickers
