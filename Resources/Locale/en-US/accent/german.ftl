@@ -14,17 +14,14 @@ accent-german-words-replace-4 = scheisse
 accent-german-words-5 = hospital
 accent-german-words-replace-5 = krankenhaus
 
-accent-german-words-6 = ambulance
-accent-german-words-replace-6 = krankenwagen
+accent-german-words-6 = sausage
+accent-german-words-replace-6 = wurst
 
-accent-german-words-7 = sausage
-accent-german-words-replace-7 = wurst
+accent-german-words-7 = sausages
+accent-german-words-replace-7 = wieners
 
-accent-german-words-8 = sausages
-accent-german-words-replace-8 = wieners
-
-accent-german-words-9 = steak
-accent-german-words-replace-9 = schnitzel
+accent-german-words-8 = steak
+accent-german-words-replace-8 = schnitzel
 
 accent-german-words-9 = steaks
 accent-german-words-replace-9 = schnitzels
@@ -150,3 +147,6 @@ accent-german-words-replace-48 = mutterficker
 
 accent-german-words-49 = motherfuckers
 accent-german-words-replace-49 = mutterfickers
+
+accent-german-words-50 = ambulance
+accent-german-words-replace-50 = krankenwagen
