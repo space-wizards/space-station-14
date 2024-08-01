@@ -44,20 +44,28 @@ public sealed class GermanAccentSystem : EntitySystem
 
         // Random Umlaut Time!
         var msgBuilder = new StringBuilder(msg);
+        var umlautCooldown = 0;
         for (var i = 0; i < msgBuilder.Length; i++)
         {
-            if (_rng.Prob(0.1f)) // 10% of all eligible vowels become umlauts
+            if (umlautCooldown == 0)
             {
-                msgBuilder[i] = msgBuilder[i] switch
+                if (_rng.Prob(0.15f)) // 15% of all eligible vowels become umlauts)
                 {
-                    'A' => 'Ä',
-                    'a' => 'ä',
-                    'O' => 'Ö',
-                    'o' => 'ö',
-                    'U' => 'Ü',
-                    'u' => 'ü',
-                    _ => msgBuilder[i]
-                };
+                    msgBuilder[i] = msgBuilder[i] switch
+                    {
+                        'A' => 'Ä',
+                        'a' => 'ä',
+                        'O' => 'Ö',
+                        'o' => 'ö',
+                        'U' => 'Ü',
+                        'u' => 'ü',
+                        _ => msgBuilder[i]
+                    };
+                    umlautCooldown = 4;
+                }
+            } else
+            {
+                umlautCooldown--;
             }
         }
 
