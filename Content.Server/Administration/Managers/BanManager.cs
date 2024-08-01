@@ -292,6 +292,19 @@ public sealed class BanManager : IBanManager, IPostInjectInit
             .ToHashSet();
     }
 
+    public bool IsRoleBanned(NetUserId userId, IEnumerable<string> roles)
+    {
+        var roleBans = GetRoleBans(userId);
+
+        if (roleBans == null)
+            return false;
+
+        return roles.Any(role => roleBans.Contains(role));
+    }
+
+    #endregion
+
+    #region Antag Bans
     public HashSet<ProtoId<AntagPrototype>>? GetAntagBans(NetUserId playerUserId)
     {
         if (!_cachedRoleBans.TryGetValue(playerUserId, out var roleBans))
@@ -302,18 +315,33 @@ public sealed class BanManager : IBanManager, IPostInjectInit
             .ToHashSet();
     }
 
-    public bool IsRoleBanned(NetUserId userId, IEnumerable<string> roles)
+    private bool IsBannedFromAntag(NetUserId userId, IEnumerable<string> antags)
     {
+        var antagBans = GetAntagBans(userId);
         var antagAllSelection = Loc.GetString("ban-panel-role-selection-antag-all-option");
-        var roleBans = GetRoleBans(userId);
 
-        if (roleBans == null)
+        if (antagBans == null)
             return false;
 
-        if (roleBans.Contains(antagAllSelection))
+        if (antagBans.Contains(new ProtoId<AntagPrototype>(antagAllSelection)))
             return true;
 
-        return roles.Any(role => roleBans.Contains(role));
+        return antags.Any(antag => antagBans.Contains(new ProtoId<AntagPrototype>(antag)));
+    }
+
+    public bool IsAntagBanned(NetUserId userId, string antag)
+    {
+        return IsBannedFromAntag(userId, new[] { antag });
+    }
+
+    public bool IsAntagBanned(NetUserId userId, IEnumerable<string> antags)
+    {
+        return IsBannedFromAntag(userId, antags);
+    }
+
+    public bool IsAntagBanned(NetUserId userId, IEnumerable<ProtoId<AntagPrototype>> antags)
+    {
+        return IsBannedFromAntag(userId, antags.Select(antag => antag.ToString()));
     }
 
     #endregion

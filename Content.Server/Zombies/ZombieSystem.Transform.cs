@@ -242,12 +242,8 @@ namespace Content.Server.Zombies
             var hasMind = _mind.TryGetMind(target, out var mindId, out var mind);
             if (hasMind && _mind.TryGetSession(mindId, out var session))
             {
-                // Retrieve the user's bans
-                var antagBans = _banManager.GetAntagBans(session.UserId);
-                var antagAllSelection = Loc.GetString("ban-panel-role-selection-antag-all-option");
-
                 // Check if the user has a ban on "Zombie"
-                if (antagBans != null && (antagBans.Contains(antagAllSelection) || antagBans.Contains(zombiecomp.ZombieRoleId)))
+                if (_banManager.IsAntagBanned(session.UserId, zombiecomp.ZombieRoleId))
                 {
                     // Ghost the player if they have a "Zombie" ban
                     _gameTicker.OnGhostAttempt(mindId, true, true, mind);

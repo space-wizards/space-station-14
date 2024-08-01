@@ -389,13 +389,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (ent.Comp.SelectedSessions.Contains(session))
             return false;
 
-        // Get the antagonist bans for the player
-        var antagBans = _banManager.GetAntagBans(session.UserId);
-        var antagAllSelection = Loc.GetString("ban-panel-role-selection-antag-all-option");
-
-
         // Check if any of the antagonist bans match the preferred roles in the AntagSelectionDefinition
-        if (antagBans != null && (antagBans.Contains(antagAllSelection) || def.PrefRoles.Any(role => antagBans.Contains(role))))
+        if (_banManager.IsAntagBanned(session.UserId, def.PrefRoles))
             return false;
 
         mind ??= session.GetMind();

@@ -149,23 +149,11 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
 
         // Check if the user has a ban on "Revolutionary"
-        if (mind != null && mind.Session != null)
+        // Check if the user has a ban on "Revolutionary"
+        if (mind != null && mind.Session != null && _banManager.IsAntagBanned(mind.Session.UserId, "Rev"))
         {
-            var antagBans = _banManager.GetAntagBans(mind.Session.UserId);
-            var antagAllSelection = Loc.GetString("ban-panel-role-selection-antag-all-option");
-            var revolutionaryRoleId = "Rev"; // Assuming "Rev" is the ID for RevolutionaryRoleComponent
-
-            if (antagBans != null && (antagBans.Contains(antagAllSelection) || antagBans.Contains(revolutionaryRoleId)))
-            {
-                // Notify the player and trigger a random bad event
-                _popup.PopupEntity(Loc.GetString("rev-banned"), ev.Target, ev.Target, PopupType.LargeCaution);
-
-                var randomDelay = new Random().Next(10000, 60000); // 10-60 seconds
-                var @event = ev;
-                Timer.Spawn(TimeSpan.FromMilliseconds(randomDelay), () => _adminVerbSystem.RandomDeath(@event.Target));
-
-                return;
-            }
+            KillDueToBan(ev.Target);
+            return;
         }
 
         _npcFaction.AddFaction(ev.Target, RevolutionaryNpcFaction);
@@ -302,6 +290,14 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
 
         return gone == list.Count || list.Count == 0;
+    }
+
+    private void KillDueToBan(EntityUid target)
+    {
+        _popup.PopupEntity(Loc.GetString("rev-banned"), target, target, PopupType.LargeCaution);
+
+        var randomDelay = new Random().Next(10000, 60000); // 10-60 seconds
+        Timer.Spawn(TimeSpan.FromMilliseconds(randomDelay), () => _adminVerbSystem.RandomDeath(target));
     }
 
     private static readonly string[] Outcomes =
