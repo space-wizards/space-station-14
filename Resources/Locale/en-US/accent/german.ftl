@@ -142,11 +142,11 @@ accent-german-words-replace-46 = kommandant
 accent-german-words-47 = command
 accent-german-words-replace-47 = kommando
 
-accent-german-words-48 = motherfucker
-accent-german-words-replace-48 = mutterficker
+accent-german-words-48 = hi
+accent-german-words-replace-48 = hallo
 
-accent-german-words-49 = motherfuckers
-accent-german-words-replace-49 = mutterfickers
+accent-german-words-49 = hello
+accent-german-words-replace-49 = guten Tag
 
 accent-german-words-50 = ambulance
 accent-german-words-replace-50 = krankenwagen
@@ -160,9 +160,3 @@ accent-german-words-replace-52 = tschüss
 
 accent-german-words-53 = goodbye
 accent-german-words-replace-53 = tschau
-
-accent-german-words-54 = hi
-accent-german-words-replace-54 = hallo
-
-accent-german-words-55 = hello
-accent-german-words-replace-55 = guten Tag
