@@ -201,3 +201,20 @@ accent-german-words-replace-63 = anomalie
 accent-german-words-64 = artifact
 accent-german-words-64-2 = artefact
 accent-german-words-replace-64 = artefakt
+
+accent-german-words-65 = man
+accent-german-words-replace-65 = mann
+
+accent-german-words-66 = woman
+accent-german-words-66-2 = lady
+accent-german-words-replace-66 = fräulein
+
+accent-german-words-67 = women
+accent-german-words-67-2 = ladies
+accent-german-words-replace-67 = fräuleins
+
+accent-german-words-68 = gentleman
+accent-german-words-replace-68 = herr
+
+accent-german-words-69 = gentlemen
+accent-german-words-replace-69 = herren
