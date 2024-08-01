@@ -180,6 +180,25 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         return _roles;
     }
 
+    private bool IsBanned(IEnumerable<BanInfo> bans, IEnumerable<string> items, [NotNullWhen(true)] out string? banReason, out DateTime? expirationTime)
+    {
+        banReason = null;
+        expirationTime = null;
+
+        foreach (var item in items)
+        {
+            var ban = bans.FirstOrDefault(b => b.Role == item);
+            if (ban != null)
+            {
+                banReason = ban.Reason ?? string.Empty;
+                expirationTime = ban.ExpirationTime ?? null;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public List<BanInfo> GetAntagBans()
     {
         return _roleBans.Where(ban => ban.Role != null && ban.Role.StartsWith("Antag:")).ToList();
@@ -190,45 +209,13 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         return _roleBans.Where(ban => ban.Role != null && ban.Role.StartsWith("Job:")).ToList();
     }
 
-    public bool IsAntagBanned(IEnumerable<string> antags, [NotNullWhen(true)] out string? banReason, [NotNullWhen(true)] out DateTime? expirationTime)
+    public bool IsAntagBanned(IEnumerable<string> antags, [NotNullWhen(true)] out string? banReason, out DateTime? expirationTime)
     {
-        banReason = null;
-        expirationTime = null;
-
-        var antagBans = GetAntagBans();
-
-        foreach (var antag in antags)
-        {
-            var antagBan = antagBans.FirstOrDefault(ban => ban.Role == antag);
-            if (antagBan != null)
-            {
-                banReason = antagBan.Reason ?? string.Empty;
-                expirationTime = antagBan.ExpirationTime ?? DateTime.MinValue;
-                return true;
-            }
-        }
-
-        return false;
+        return IsBanned(GetAntagBans(), antags, out banReason, out expirationTime);
     }
 
-    public bool IsRoleBanned(IEnumerable<string> roles, [NotNullWhen(true)] out string? banReason, [NotNullWhen(true)] out DateTime? expirationTime)
+    public bool IsRoleBanned(IEnumerable<string> roles, [NotNullWhen(true)] out string? banReason, out DateTime? expirationTime)
     {
-        banReason = null;
-        expirationTime = null;
-
-        var roleBans = GetRoleBans();
-
-        foreach (var role in roles)
-        {
-            var roleBan = roleBans.FirstOrDefault(ban => ban.Role == role);
-            if (roleBan != null)
-            {
-                banReason = roleBan.Reason ?? string.Empty;
-                expirationTime = roleBan.ExpirationTime ?? DateTime.MinValue;
-                return true;
-            }
-        }
-
-        return false;
+        return IsBanned(GetRoleBans(), roles, out banReason, out expirationTime);
     }
 }
