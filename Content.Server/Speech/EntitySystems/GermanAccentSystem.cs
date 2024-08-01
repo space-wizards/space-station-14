@@ -27,7 +27,7 @@ public sealed class GermanAccentSystem : EntitySystem
         {
             if (_rng.Prob(0.3f))
             {
-                // just shift T, H and E over to D, A and S to preserve capitalization.
+                // just shift T, H and E over to D, A and S to preserve capitalization
                 msg = msg.Substring(0, match.Index) +
                       (char) (msg[match.Index] - 16) +
                       (char) (msg[match.Index + 1] - 7) +
@@ -39,11 +39,15 @@ public sealed class GermanAccentSystem : EntitySystem
         // now, apply word replacements
         msg = _replacement.ApplyReplacements(msg, "german");
 
-        // replaces th with zh (for zhis, zhat, etc. the => ze is handled by replacements already)
-        msg = RegexTh.Replace(msg, "zh");
+        // replace th with zh (for zhis, zhat, etc. the => ze is handled by replacements already)
+        var msgBuilder = new StringBuilder(msg);
+        foreach (Match match in RegexTh.Matches(msg))
+        {
+            // just shift the T over to a Z to preserve capitalization
+            msgBuilder[match.Index] = (char) (msgBuilder[match.Index] + 6);
+        }
 
         // Random Umlaut Time!
-        var msgBuilder = new StringBuilder(msg);
         var umlautCooldown = 0;
         for (var i = 0; i < msgBuilder.Length; i++)
         {
