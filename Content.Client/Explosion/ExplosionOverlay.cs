@@ -16,24 +16,21 @@ public sealed class ExplosionOverlay : Overlay
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    private SharedAppearanceSystem? _appearance;
+    private SharedAppearanceSystem _appearance;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
     private ShaderInstance _shader;
 
-    public ExplosionOverlay()
+    public ExplosionOverlay(SharedAppearanceSystem appearanceSystem)
     {
         IoCManager.InjectDependencies(this);
         _shader = _proto.Index<ShaderPrototype>("unshaded").Instance();
-        _appearance = _entMan.System<SharedAppearanceSystem>();
+        _appearance = appearanceSystem;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (_appearance is null && !_entMan.TrySystem(out _appearance))
-            return;
-
         var drawHandle = args.WorldHandle;
         drawHandle.UseShader(_shader);
 
