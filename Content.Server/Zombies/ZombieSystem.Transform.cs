@@ -246,7 +246,7 @@ namespace Content.Server.Zombies
                 if (_banManager.IsAntagBanned(session.UserId, zombiecomp.ZombieRoleId))
                 {
                     // Ghost the player if they have a "Zombie" ban
-                    _gameTicker.OnGhostAttempt(mindId, true, true, mind);
+                    _gameTicker.OnGhostAttempt(mindId, false, true, mind);
                 }
 
                 // Zombie role for player manifest
