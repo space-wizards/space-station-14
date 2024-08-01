@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: Just-a-Unity-Dev
-  changes:
-  - message: Fixed Geras not having their speed buff.
-    type: Fix
-  - message: Geras are no longer immune to other AI mobs.
-    type: Fix
-  - message: Slimes can no longer morph into a Geras when zombified.
-    type: Fix
-  - message: Lowered the Geras death threshold.
-    type: Tweak
-  id: 6523
-  time: '2024-05-03T17:26:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27308
 - author: nikthechampiongr
   changes:
   - message: Ninjas will no longer be pointed to random wreckage in space.
@@ -3778,3 +3765,10 @@
   id: 7022
   time: '2024-08-01T02:58:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29898
+- author: Plykiya
+  changes:
+  - message: Adds hand labelers to the PTech, ChemDrobe, and LawDrobe.
+    type: Add
+  id: 7023
+  time: '2024-08-01T02:59:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29958
