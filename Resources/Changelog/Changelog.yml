@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: nikthechampiongr
-  changes:
-  - message: Ninjas will no longer be pointed to random wreckage in space.
-    type: Fix
-  id: 6524
-  time: '2024-05-03T20:23:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27552
 - author: Dutch-VanDerLinde
   changes:
   - message: Fixed nuclear operatives, zombies, and head revolutionary round end summaries
@@ -3772,3 +3765,14 @@
   id: 7023
   time: '2024-08-01T02:59:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29958
+- author: Ko4erga
+  changes:
+  - message: Added a cutter machine for crafting patterned steel tiles, concrete and
+      wooden tiles.
+    type: Add
+  - message: After rip off patterned tiles you get current pattern, not just steel
+      tile.
+    type: Tweak
+  id: 7024
+  time: '2024-08-01T10:26:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30431
