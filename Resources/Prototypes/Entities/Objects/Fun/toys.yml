@@ -1382,12 +1382,6 @@
         variation: 0.125
   - type: UseDelay
     delay: 0.8
-  - type: Slippery
-    paralyzeTime: 0
-    slipSound:
-      collection: Parp
-      params:
-        variation: 0.125
   - type: MeleeWeapon
     soundHit:
       collection: Parp
