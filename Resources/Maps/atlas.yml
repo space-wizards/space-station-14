@@ -19779,15 +19779,6 @@ entities:
     - type: Transform
       pos: 22.560492,23.524494
       parent: 30
-- proto: ClothingHeadHelmetTemplar
-  entities:
-  - uid: 4127
-    components:
-    - type: Transform
-      pos: 24.456139,-14.492622
-      parent: 30
-    - type: Physics
-      canCollide: False
 - proto: ClothingHeadHelmetWizardHelm
   entities:
   - uid: 4130
