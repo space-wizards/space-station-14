@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Hanzdegloker
-  changes:
-  - message: Added 6 new energy drink based mixed drinks.
-    type: Add
-  - message: Added Red Bool energy drink back to the soda dispenser and gave it a
-      new canned sprite.
-    type: Add
-  id: 6521
-  time: '2024-05-03T06:57:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27597
 - author: DuskyJay
   changes:
   - message: Allowed EMP implants to be used while stunned or cuffed.
@@ -3781,3 +3771,10 @@
   id: 7020
   time: '2024-07-31T17:57:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30531
+- author: Plykiya
+  changes:
+  - message: Meteors now leave behind asteroid rocks on impact.
+    type: Add
+  id: 7021
+  time: '2024-08-01T02:55:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30419
