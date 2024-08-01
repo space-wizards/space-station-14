@@ -265,7 +265,7 @@ public abstract partial class SharedSolutionSystem : EntitySystem
                     {
                         if (filterEntry.Comp.Id == reagentData.ReagentId)
                             continue;
-                        blendData.Add((quantData.Quantity, reagentData.ReagentDef, reagentData.ReagentId));
+                        blendData.Add((quantData.Quantity, reagentData.ReagentEnt, reagentData.ReagentId));
                         voidedVolume -= quantData.Quantity;
                         break;
                     }
@@ -277,7 +277,7 @@ public abstract partial class SharedSolutionSystem : EntitySystem
                     {
                         if (filterEntry.Comp.Id != reagentData.ReagentId)
                             continue;
-                        blendData.Add((quantData.Quantity, reagentData.ReagentDef, reagentData.ReagentId));
+                        blendData.Add((quantData.Quantity, reagentData.ReagentEnt, reagentData.ReagentId));
                         voidedVolume -= quantData.Quantity;
                         break;
                     }

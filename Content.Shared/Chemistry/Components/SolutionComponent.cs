@@ -1,7 +1,11 @@
+using System.Runtime.InteropServices;
+using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.Types;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Components;
 
@@ -24,12 +28,8 @@ public sealed partial class SolutionComponent : Component
     public EntityUid Parent = EntityUid.Invalid;
 
     [DataField, AutoNetworkedField]
-    public List<ReagentQuantity> Contents = new();
-
-    [DataField, AutoNetworkedField]
-    public List<ReagentVariantQuantity> VariantContents = new();
-
-    public int PrimaryReagentIndex = -1;
+    public List<ReagentData> Contents;
+    public Span<ReagentData> ContentsSpan => CollectionsMarshal.AsSpan(Contents);
 
     /// <summary>
     ///     The name of this solution
@@ -95,4 +95,98 @@ public sealed partial class SolutionComponent : Component
     ///     The total heat capacity of all reagents in the solution.
     /// </summary>
     [ViewVariables] public float HeatCapacity;
+
+    [ViewVariables]
+    public int PrimaryReagentIndex = -1;
+
+    [DataDefinition, Serializable, NetSerializable]
+    public partial struct ReagentData : IEquatable<ReagentData>//This is a struct so that we don't allocate. Allocations are paying taxes. Nobody wants to pay taxes.
+    {
+        [DataField(required:true)]
+        public string ReagentId = "";
+
+        [NonSerialized]
+        public Entity<ReagentDefinitionComponent> ReagentEnt;
+
+        [DataField(required:true)]
+        public FixedPoint2 BaseQuantity;
+
+        [DataField]
+        public FixedPoint2 TotalQuantity;
+
+        [DataField]
+        public List<VariantData>? Variants = null;
+
+        /// <summary>
+        /// Make sure to check variants for null before calling this
+        /// </summary>
+        public Span<VariantData> VariantsSpan => CollectionsMarshal.AsSpan(Variants);
+
+        [NonSerialized]
+        public int Index = -1;
+
+        [NonSerialized]
+        public bool IsValid = false;
+
+        public ReagentData(Entity<ReagentDefinitionComponent> reagentEnt, FixedPoint2 quantity, int index)
+        {
+            BaseQuantity = quantity;
+            TotalQuantity = quantity;
+            ReagentEnt = reagentEnt;
+            Index = index;
+            ReagentId = reagentEnt.Comp.Id;
+            IsValid = true;
+        }
+
+        public bool Equals(ReagentData other)
+        {
+            return other.GetHashCode() == GetHashCode();
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null)
+                return false;
+            return obj.GetHashCode() == GetHashCode();
+        }
+
+        public override int GetHashCode()
+        {
+            return ReagentId.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"{ReagentId}:{TotalQuantity}";
+        }
+
+        public static implicit operator ReagentQuantity(ReagentData d) =>
+            new (d.ReagentId, d.BaseQuantity, null);
+
+        public static implicit operator ReagentDef(ReagentData d) =>
+            new (d.ReagentEnt, null);
+    }
+
+    [Serializable, NetSerializable, DataDefinition]
+    public partial struct VariantData
+    {
+        [DataField]
+        public ReagentVariant Variant;
+        [DataField]
+        public FixedPoint2 Quantity;
+
+        [NonSerialized]
+        public int ParentIndex = -1;
+
+        [NonSerialized]
+        public bool IsValid = false;
+
+        public VariantData(ReagentVariant variant, FixedPoint2 quantity, int parentReagentIndex)
+        {
+            Variant = variant;
+            Quantity = quantity;
+            ParentIndex = parentReagentIndex;
+            IsValid = true;
+        }
+    };
 }

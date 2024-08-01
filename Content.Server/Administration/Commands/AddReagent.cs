@@ -51,7 +51,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var registry = _entManager.System<ChemistryRegistrySystem>();
-            if (!registry.TryGetReagentById(args[2], out var reagent))
+            if (!registry.TryGetReagentEntity(args[2], out var reagent))
             {
                 shell.WriteLine($"Unknown reagent prototype");
                 return;

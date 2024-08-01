@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Types;
+﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
 

@@ -129,6 +129,18 @@ public abstract class SharedChemistryRegistrySystem : EntitySystem
         }
     }
 
+    public IEnumerable<ReagentDef> EnumerateReagentDefs()
+    {
+        foreach (var reagent in EnumerateReagents())
+        {
+            yield return new ReagentDef(reagent, null);
+        }
+    }
+
+    public bool ResolveReagent(ref ReagentDef reagentDef, bool logMissingRegistry = true)
+    {
+        return reagentDef.Resolve(this, logMissingRegistry);
+    }
 
     public bool ResolveReagent(string id,
         [NotNullWhen(true)] ref Entity<ReagentDefinitionComponent>? reagent,
@@ -143,18 +155,39 @@ public abstract class SharedChemistryRegistrySystem : EntitySystem
 
         if (TryIndex(id, out reagent))
             return true;
-        Log.Error($"reagent:{id} was not found in the reagent registry!");
+        if (logMissingRegistry)
+            Log.Error($"reagent:{id} was not found in the reagent registry!");
         return false;
     }
 
-    public Entity<ReagentDefinitionComponent> GetReagentById(string id)
+    public ReagentDef GetReagentDef(string id, ReagentVariant? variantData = null)
+    {
+        if (!TryIndex(id, out var result))
+            throw new KeyNotFoundException($"{id} is not registered as a reagent!");
+        return new ReagentDef(result.Value, variantData);
+    }
+
+    public Entity<ReagentDefinitionComponent> GetReagentEntity(string id)
     {
         if (!TryIndex(id, out var result))
             throw new KeyNotFoundException($"{id} is not registered as a reagent!");
         return result.Value;
     }
 
-    public bool TryGetReagentById(string id,[NotNullWhen(true)] out Entity<ReagentDefinitionComponent>? reagent,
+    public bool TryGetReagentDef(string id,
+        out ReagentDef reagent,
+        ReagentVariant? variant,
+        bool logMissing = false)
+    {
+        reagent = default;
+        if (!TryGetReagentEntity(id, out var reagentDefEnt, logMissing))
+            return false;
+        reagent = new ReagentDef(reagentDefEnt.Value, variant);
+        return true;
+    }
+
+    public bool TryGetReagentEntity(string id,
+        [NotNullWhen(true)] out Entity<ReagentDefinitionComponent>? reagent,
         bool logMissing = false)
     {
         reagent = default;
@@ -173,19 +206,21 @@ public abstract class SharedChemistryRegistrySystem : EntitySystem
         return true;
     }
 
-    public bool HasReagentId(string id)
+    public bool HasReagentDefinition(string id)
     {
         return TryEnsureRegistry(out var registry) && registry.Comp.Reagents.ContainsKey(id);
     }
 
-    public Entity<ReagentDefinitionComponent> Index(string id) => GetReagentById(id);
+    public ReagentDef IndexDef(string id, ReagentVariant? variant = null) => GetReagentDef(id, variant);
 
-    public bool HasIndex(string id) => HasReagentId(id);
+    public Entity<ReagentDefinitionComponent> Index(string id) => GetReagentEntity(id);
+
+    public bool HasIndex(string id) => HasReagentDefinition(id);
 
     public bool TryIndex(string id,
         [NotNullWhen(true)] out Entity<ReagentDefinitionComponent>? reagentDefinition,
         bool logMissing = false) =>
-        TryGetReagentById(id, out reagentDefinition, logMissing);
+        TryGetReagentEntity(id, out reagentDefinition, logMissing);
 
     protected bool TryCreateReagentMetaSpriteFromLegacyProto(ReagentPrototype proto,[NotNullWhen(true)] out ReagentMetamorphicSpriteComponent? comp)
     {

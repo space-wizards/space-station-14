@@ -273,7 +273,7 @@ namespace Content.Shared.Chemistry.Components
         {
             foreach (var (reagent, _) in Contents)
             {
-                if (reagent == id)
+                if (reagent == (ReagentDef)id)
                     return true;
             }
 
@@ -345,7 +345,7 @@ namespace Content.Shared.Chemistry.Components
             var total = FixedPoint2.Zero;
             foreach (var (reagent, quantity) in Contents)
             {
-                if (prototypes.Contains(reagent.Prototype))
+                if (prototypes.Contains(reagent.Id))
                     total += quantity;
             }
 
@@ -357,7 +357,7 @@ namespace Content.Shared.Chemistry.Components
             var total = FixedPoint2.Zero;
             foreach (var (reagent, quantity) in Contents)
             {
-                if (id == reagent.Prototype)
+                if (id == reagent.Id)
                     total += quantity;
             }
 
@@ -410,7 +410,7 @@ namespace Content.Shared.Chemistry.Components
             for (var i = 0; i < Contents.Count; i++)
             {
                 var (reagent, existingQuantity) = Contents[i];
-                if (reagent != id)
+                if (reagent != (ReagentDef)id)
                     continue;
 
                 Contents[i] = new ReagentQuantity(id, existingQuantity + quantity);

@@ -16,7 +16,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Systems;
-using Content.Shared.Chemistry.Types;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Map;

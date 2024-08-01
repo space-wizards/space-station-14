@@ -1,7 +1,7 @@
 ﻿using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Chemistry.Types;
+namespace Content.Shared.Chemistry.Reagent;
 
 [ImplicitDataDefinitionForInheritors, Serializable, NetSerializable]
 public abstract partial class ReagentVariant : IEquatable<ReagentVariant>
