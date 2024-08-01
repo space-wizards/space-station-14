@@ -11,7 +11,9 @@
         - sprite: Objects/Specific/Medical/medical.rsi
           state: brutepack
     - type: GenericSpawner
-      entityTable: MedicalMinorLootEntityTable
+      entityTables:
+        MedicalMinorLootEntityTable: 0.9
+        MedicalMinorLootRareEntityTable: 0.1
       offset: 0.0
 
 # Proper medical loot spawner, contains things like beakers and better meds.
@@ -26,5 +28,7 @@
         - sprite: Objects/Specific/Medical/firstaidkits.rsi
           state: firstaid
     - type: GenericSpawner
-      entityTable: MedicalClassyLootEntityTable
+      entityTables:
+        MedicalClassyLootEntityTable: 0.9
+        MedicalClassyLootRareEntityTable: 0.1
       offset: 0.0

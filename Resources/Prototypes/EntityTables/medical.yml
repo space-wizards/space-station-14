@@ -1,32 +1,40 @@
 - type: weightedRandomEntity
   id: MedicalMinorLootEntityTable
   weights:
-    Syringe: 9
-    Brutepack: 9
-    Ointment: 9
-    Gauze: 9
-    EmergencyMedipen: 9
-    PillCanisterIron: 9
+    Syringe: 1
+    Brutepack: 1
+    Ointment: 1
+    Gauze: 1
+    EmergencyMedipen: 1
+    PillCanisterIron: 1
+
+- type: weightedRandomEntity
+  id: MedicalMinorLootRareEntityTable
+  weights:
     MedkitFilled: 1
 
 - type: weightedRandomEntity
   id: MedicalClassyLootEntityTable
   weights:
-    Syringe: 9
-    Dropper: 9
-    Beaker: 9
-    LargeBeaker: 9
-    Brutepack: 9
-    Ointment: 9
-    Gauze: 9
-    EmergencyMedipen: 9
-    EpinephrineChemistryBottle: 9
-    PillCanisterTricordrazine: 9
-    PillCanisterCharcoal: 9
-    PillCanisterHyronalin: 9
-    PillCanisterIron: 9
-    Bloodpack: 9
-    MedkitFilled: 9
+    Syringe: 1
+    Dropper: 1
+    Beaker: 1
+    LargeBeaker: 1
+    Brutepack: 1
+    Ointment: 1
+    Gauze: 1
+    EmergencyMedipen: 1
+    EpinephrineChemistryBottle: 1
+    PillCanisterTricordrazine: 1
+    PillCanisterCharcoal: 1
+    PillCanisterHyronalin: 1
+    PillCanisterIron: 1
+    Bloodpack: 1
+    MedkitFilled: 1
+
+- type: weightedRandomEntity
+  id: MedicalClassyLootRareEntityTable
+  weights:
     PillCanisterDermaline: 1
     PillCanisterDylovene: 1
     PillCanisterBicaridine: 1

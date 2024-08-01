@@ -13,5 +13,6 @@
       - state: folder-base
       - state: folder-colormap
   - type: GenericSpawner
-    entityTable: FoldersEntityTable
+    entityTables:
+      FoldersEntityTable: 1.0
     offset: 0

@@ -9,8 +9,9 @@
         - sprite: Objects/Fun/toys.rsi
           state: plushie_h
     - type: GenericSpawner
-      entityTable: ToyEntityTable
-      chance: 0.5
+      entityTables:
+        ToyEntityTable: 0.5
+        ToyRareEntityTable: 0.03
       offset: 0.2
 
 - type: entity
@@ -24,8 +25,8 @@
         - sprite: Objects/Fun/mech_figurines.rsi
           state: ripley
     - type: GenericSpawner
-      entityTable: PrizeFigureEntityTable
-      chance: 0.5
+      entityTables:
+        PrizeFigureEntityTable: 0.5
       offset: 0.2
 
 - type: entity
@@ -39,5 +40,7 @@
         - sprite: Objects/Fun/figurines.rsi
           state: figurine_spawner
     - type: GenericSpawner
-      entityTable: FigureEntityTable
+      entityTables:
+        FigureEntityTable: 0.9
+        FigureRareEntityTable: 0.05
       offset: 0.2

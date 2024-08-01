@@ -1,37 +1,45 @@
 - type: weightedRandomEntity
   id: SalvageMaterialCrateEntityTable
   weights:
-    CrateSalvageAssortedGoodies: 9
-    SalvageHumanCorpse: 4
-    CrateMaterialPlasteel: 4
-    CrateMaterialWood: 4
-    CrateMaterialPlastic: 4
-    CrateSalvageEquipment: 4
-    CrateMaterialSteel: 4
-    CrateMaterialGlass: 4
-    CrateServiceJanitorialSupplies: 4
-    CrateHydroponicsSeedsMedicinal: 4
-    CrateEmergencyInternals: 4
-    CrateFoodMRE: 4
-    CrateMaterialTextiles: 4
-    CrateMedicalSupplies: 4
-    CrateEngineeringCableBulk: 4
-    CrateMaterialCardboard: 4
-    CrateServiceBooks: 4
-    CrateServiceSmokeables: 4
-    CrateTrashCartFilled: 4
-    ClosetMaintenanceFilledRandom: 4
-    ClosetEmergencyFilledRandom: 4
+    CrateSalvageAssortedGoodies: 1
+
+- type: weightedRandomEntity
+  id: SalvageMaterialCrateRareEntityTable
+  weights:
+    SalvageHumanCorpse: 1
+    CrateMaterialPlasteel: 1
+    CrateMaterialWood: 1
+    CrateMaterialPlastic: 1
+    CrateSalvageEquipment: 1
+    CrateMaterialSteel: 1
+    CrateMaterialGlass: 1
+    CrateServiceJanitorialSupplies: 1
+    CrateHydroponicsSeedsMedicinal: 1
+    CrateEmergencyInternals: 1
+    CrateFoodMRE: 1
+    CrateMaterialTextiles: 1
+    CrateMedicalSupplies: 1
+    CrateEngineeringCableBulk: 1
+    CrateMaterialCardboard: 1
+    CrateServiceBooks: 1
+    CrateServiceSmokeables: 1
+    CrateTrashCartFilled: 1
+    ClosetMaintenanceFilledRandom: 1
+    ClosetEmergencyFilledRandom: 1
 
 - type: weightedRandomEntity
   id: SalvageCanisterEntityTable
   weights:
-    AirCanister: 90
-    NitrogenCanister: 90
-    OxygenCanister: 90
-    CarbonDioxideCanister: 90
-    WaterVaporCanister: 90
-    PlasmaCanister: 3
+    AirCanister: 1
+    NitrogenCanister: 1
+    OxygenCanister: 1
+    CarbonDioxideCanister: 1
+    WaterVaporCanister: 1
+
+- type: weightedRandomEntity
+  id: SalvageCanisterRareEntityTable
+  weights:
+    PlasmaCanister: 1
 
 - type: weightedRandomEntity
   id: SalvageLootEntityTable

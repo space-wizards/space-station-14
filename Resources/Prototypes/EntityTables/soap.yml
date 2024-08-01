@@ -1,9 +1,13 @@
 - type: weightedRandomEntity
   id: SoapEntityTable
   weights:
-    Soap: 95
-    SoapHomemade: 95
-    SoapNT: 95
-    SoapDeluxe: 95
-    SoapSyndie: 5
-    SoapOmega: 5
+    Soap: 1
+    SoapHomemade: 1
+    SoapNT: 1
+    SoapDeluxe: 1
+
+- type: weightedRandomEntity
+  id: SoapRareEntityTable
+  weights:
+    SoapSyndie: 1
+    SoapOmega: 1

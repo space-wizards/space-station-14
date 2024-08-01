@@ -9,4 +9,6 @@
     - sprite: Objects/Misc/module.rsi
       state: boris
   - type: GenericSpawner
-    entityTable: TechboardEntityTable
+    entityTables:
+      TechboardEntityTable: 0.95
+      TechboardRareEntityTable: 0.05

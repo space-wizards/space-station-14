@@ -10,7 +10,8 @@
         state: random_anything
   - type: GenericSpawner
     offset: 0
-    entityTable: PostersEntityTable
+    entityTables:
+      PostersEntityTable: 0.95 #I have no idea why????
 
 - type: entity
   parent: MarkerBase
@@ -24,7 +25,8 @@
         state: random_contraband
   - type: GenericSpawner
     offset: 0
-    entityTable: ContrabandPostersEntityTable
+    entityTables:
+      ContrabandPostersEntityTable: 1.0
 
 - type: entity
   parent: MarkerBase
@@ -38,4 +40,5 @@
         state: random_legit
   - type: GenericSpawner
     offset: 0
-    entityTable: LegitPostersEntityTable
+    entityTables:
+      LegitPostersEntityTable: 1.0

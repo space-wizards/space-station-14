@@ -9,5 +9,6 @@
         - sprite: Structures/Furniture/Tables/Fancy/blue.rsi
           state: full
     - type: GenericSpawner
-      entityTable: FancyTablesEntityTable
+      entityTables:
+        FancyTablesEntityTable: 1.0
       offset: 0.0

@@ -12,7 +12,9 @@
         - sprite: Structures/Storage/Crates/generic.rsi
           state: icon
     - type: GenericSpawner
-      entityTable: SalvageMaterialCrateEntityTable
+      entityTables:
+        SalvageMaterialCrateEntityTable: 0.9
+        SalvageMaterialCrateRareEntityTable: 0.4
       offset: 0.0
 
 - type: entity
@@ -26,7 +28,9 @@
         - sprite: Structures/Storage/canister.rsi
           state: blue
     - type: GenericSpawner
-      entityTable: SalvageCanisterEntityTable
+      entityTables:
+        SalvageCanisterEntityTable: 0.9
+        SalvageCanisterRareEntityTable: 0.03
       offset: 0.0
 
 - type: entity
@@ -40,7 +44,8 @@
         - sprite: Objects/Weapons/Melee/crusher.rsi
           state: icon
     - type: GenericSpawner
-      entityTable: SalvageLootEntityTable
+      entityTables:
+        SalvageLootEntityTable: 1.0
       offset: 0.0
 
 - type: entity
@@ -55,7 +60,8 @@
         - sprite: Mobs/Aliens/Carps/space.rsi
           state: icon
     - type: GenericSpawner
-      entityTable: SalvageMobEntityTable
+      entityTables:
+        SalvageMobEntityTable: 0.25
       offset: 0.2
 
 - type: entity #I made this in case someone decided to make a terrifying space tick swarm for salvage. that someone may be me -EG404
@@ -70,7 +76,8 @@
         - sprite: Mobs/Aliens/Xenos/spacetick.rsi
           state: icon
     - type: GenericSpawner
-      entityTable: SpaceTickEntityTable
+      entityTables:
+        SpaceTickEntityTable: 1.0
 
 - type: entity
   name: Salvage Space Bear Spawner
@@ -83,7 +90,8 @@
     - state: bear
       sprite: Mobs/Animals/bear.rsi
   - type: GenericSpawner
-    entityTable: SalvageBearEntityTable
+    entityTables:
+      SalvageBearEntityTable: 1.0
 
 - type: entity
   id: SalvageMobSpawner75
@@ -91,8 +99,8 @@
   suffix: 75
   components:
   - type: GenericSpawner
-    entityTable: SalvageMobEntityTable
-    chance: 0.75
+    entityTables:
+      SalvageMobEntityTable: 0.75
     offset: 0.2
 
 - type: entity
@@ -106,7 +114,8 @@
     - state: kangaroo-space
       sprite: Mobs/Animals/kangaroo.rsi
   - type: GenericSpawner
-    entityTable: SpaceKangarooEntityTable
+    entityTables:
+      SpaceKangarooEntityTable: 1.0
 
 - type: entity
   name: Salvage Space Spider Spawner
@@ -119,7 +128,8 @@
     - state: spacespider
       sprite: Mobs/Animals/spacespider.rsi
   - type: GenericSpawner
-    entityTable: SpaceSpiderEntityTable
+    entityTables:
+      SpaceSpiderEntityTable: 1.0
 
 - type: entity
   name: Salvage Space Cobra Spawner
@@ -132,7 +142,8 @@
       - state: spacecobra
         sprite: Mobs/Animals/spacecobra.rsi
   - type: GenericSpawner
-    entityTable: SpaceCobraEntityTable
+    entityTables:
+      SpaceCobraEntityTable: 1.0
 
 - type: entity
   name: Salvage Flesh Spawner
@@ -146,5 +157,6 @@
         - sprite: Mobs/Aliens/flesh.rsi
           state: jared
     - type: GenericSpawner
-      entityTable: SalvageFleshEntityTable
+      entityTables:
+        SalvageFleshEntityTable: 1.0
       offset: 0.2

@@ -1,20 +1,24 @@
 - type: weightedRandomEntity
   id: TechboardEntityTable
   weights:
-    AirAlarmElectronics: 95
-    FireAlarmElectronics: 95
-    DoorElectronics: 95
-    FirelockElectronics: 95
-    IntercomElectronics: 95
-    APCElectronics: 95
-    SignalTimerElectronics: 95
-    APECircuitboard: 95
-    SMESMachineCircuitboard: 95
-    SubstationMachineCircuitboard: 95
-    TelecomServerCircuitboard: 95
-    CommsComputerCircuitboard: 5
-    ShuttleConsoleCircuitboard: 5
-    ComputerMassMediaCircuitboard: 5
-    AutolatheMachineCircuitboard: 5
-    ProtolatheMachineCircuitboard: 5
-    SalvageMagnetMachineCircuitboard: 5
+    AirAlarmElectronics: 1
+    FireAlarmElectronics: 1
+    DoorElectronics: 1
+    FirelockElectronics: 1
+    IntercomElectronics: 1
+    APCElectronics: 1
+    SignalTimerElectronics: 1
+    APECircuitboard: 1
+    SMESMachineCircuitboard: 1
+    SubstationMachineCircuitboard: 1
+    TelecomServerCircuitboard: 1
+
+- type: weightedRandomEntity
+  id: TechboardRareEntityTable
+  weights:
+    CommsComputerCircuitboard: 1
+    ShuttleConsoleCircuitboard: 1
+    ComputerMassMediaCircuitboard: 1
+    AutolatheMachineCircuitboard: 1
+    ProtolatheMachineCircuitboard: 1
+    SalvageMagnetMachineCircuitboard: 1

@@ -9,5 +9,6 @@
         state: anom
     - type: GenericSpawner
       offset: 0.05
-      chance: 0.75
-      entityTable: ShadowKudzuLootEntityTable
+      entityTables:
+        ShadowKudzuLootEntityTable: 0.7
+        ShadowKudzuLootRareEntityTable: 0.05

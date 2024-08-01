@@ -9,4 +9,6 @@
       - sprite: Objects/Fun/Instruments/h_synthesizer.rsi
         state: icon
   - type: GenericSpawner
-    entityTable: InstrumentsEntityTable
+    entityTables:
+      InstrumentsEntityTable: 0.95
+      InstrumentsRareEntityTable: 0.05

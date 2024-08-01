@@ -12,5 +12,7 @@
         - sprite: Objects/Devices/encryption_keys.rsi
           state: nano_label
     - type: GenericSpawner
-      entityTable: EncryptionKeysEntityTable
+      entityTables:
+        EncryptionKeysEntityTable: 0.9
+        EncryptionKeysRareEntityTable: 0.1
       offset: 0.0

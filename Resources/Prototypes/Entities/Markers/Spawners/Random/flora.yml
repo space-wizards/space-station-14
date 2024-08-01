@@ -9,4 +9,6 @@
       - sprite: Objects/Decoration/Flora/flora_trees.rsi
         state: icon
   - type: GenericSpawner
-    entityTable: FloraEntityTable
+    entityTables:
+      FloraEntityTable: 0.95
+      FloraRareEntityTable: 0.05

@@ -8,6 +8,7 @@
         - sprite: Structures/Walls/random.rsi
           state: randomgrille
     - type: GenericSpawner
-      entityTable: GrilleEntityTable
+      entityTables:
+        GrilleEntityTable: 1.0
   placement:
     mode: AlignTileAny

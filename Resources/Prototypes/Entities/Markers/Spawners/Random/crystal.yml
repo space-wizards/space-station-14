@@ -10,5 +10,5 @@
         - sprite: Structures/Decoration/crystal.rsi
           state: crystal_grey
     - type: GenericSpawner
-      entityTable: CrystalEntityTable
-      chance: 0.7
+      entityTables:
+        CrystalEntityTable: 0.7

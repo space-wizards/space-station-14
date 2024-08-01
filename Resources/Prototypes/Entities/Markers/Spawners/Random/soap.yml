@@ -9,4 +9,6 @@
       - sprite: Objects/Specific/Janitorial/soap.rsi
         state: soap-4
   - type: GenericSpawner
-    entityTable: SoapEntityTable
+    entityTables:
+      SoapEntityTable: 0.95
+      SoapRareEntityTable: 0.05

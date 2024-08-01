@@ -10,7 +10,8 @@
         state: random
   - type: GenericSpawner
     offset: 0
-    entityTable: PottedPlantEntityTable
+    entityTables:
+      PottedPlantEntityTable: 1.0
 
 - type: entity
   parent: MarkerBase
@@ -24,4 +25,5 @@
         state: plant-27
   - type: GenericSpawner
     offset: 0
-    entityTable: PottedPlantPlasticEntityTable
+    entityTables:
+      PottedPlantPlasticEntityTable: 1.0

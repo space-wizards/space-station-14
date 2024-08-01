@@ -1,21 +1,25 @@
 - type: weightedRandomEntity
   id: PaintingsEntityTable
   weights:
-    PaintingPersistenceOfMemory: 100
-    PaintingTheSonOfMan: 100
-    PaintingTheKiss: 100
-    PaintingTheScream: 100
-    PaintingTheGreatWave: 100
-    PaintingCafeTerraceAtNight: 100
-    PaintingNightHawks: 100
-    PaintingSkeletonCigarette: 100
-    PaintingPrayerHands: 100
-    PaintingOldGuitarist: 100
-    PaintingOlympia: 100
-    PaintingSaturn: 100
-    PaintingSleepingGypsy: 100
-    PaintingRedBlueYellow: 100
-    PaintingHelloWorld: 100
+    PaintingPersistenceOfMemory: 1
+    PaintingTheSonOfMan: 1
+    PaintingTheKiss: 1
+    PaintingTheScream: 1
+    PaintingTheGreatWave: 1
+    PaintingCafeTerraceAtNight: 1
+    PaintingNightHawks: 1
+    PaintingSkeletonCigarette: 1
+    PaintingPrayerHands: 1
+    PaintingOldGuitarist: 1
+    PaintingOlympia: 1
+    PaintingSaturn: 1
+    PaintingSleepingGypsy: 1
+    PaintingRedBlueYellow: 1
+    PaintingHelloWorld: 1
+
+- type: weightedRandomEntity
+  id: PaintingsRareEntityTable
+  weights:
     PaintingSkeletonBoof: 1
     PaintingEmpty: 1
     PaintingMoony: 1

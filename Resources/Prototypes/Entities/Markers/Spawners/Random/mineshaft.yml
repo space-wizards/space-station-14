@@ -9,8 +9,8 @@
       - sprite: Objects/Decoration/mines.rsi
         state: support
   - type: GenericSpawner
-    entityTable: WoodenSupportEntityTable
-    chance: 0.9
+    entityTables:
+      WoodenSupportEntityTable: 0.9
 
 - type: entity
   id: RandomWoodenWall
@@ -23,8 +23,8 @@
       - sprite: Objects/Decoration/mines.rsi
         state: support_wall
   - type: GenericSpawner
-    entityTable: WoodenWallEntityTable
-    chance: 0.9
+    entityTables:
+      WoodenWallEntityTable: 0.9
 
 - type: entity
   id: RandomStalagmiteOrCrystal
@@ -38,8 +38,8 @@
         state: stalagmite2
   - type: GenericSpawner
     offset: 0.3
-    entityTable: RockFormationEntityTable
-    chance: 0.9
+    entityTables:
+      RockFormationEntityTable: 0.9
 
 - type: entity
   id: RandomBrownStalagmite
@@ -53,8 +53,8 @@
         state: stalagmite2
   - type: GenericSpawner
     offset: 0.3
-    entityTable: BrownStalagmiteEntityTable
-    chance: 0.9
+    entityTables:
+      BrownStalagmiteEntityTable: 0.9
 
 - type: entity
   id: RandomGreyStalagmite
@@ -68,5 +68,5 @@
         state: grey_stalagmite3
   - type: GenericSpawner
     offset: 0.3
-    entityTable: GreyStalagmiteEntityTable
-    chance: 0.9
+    entityTables:
+      GreyStalagmiteEntityTable: 0.9

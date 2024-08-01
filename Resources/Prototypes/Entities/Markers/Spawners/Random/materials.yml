@@ -11,7 +11,9 @@
         - sprite: Objects/Materials/Sheets/metal.rsi
           state: steel_3
     - type: GenericSpawner
-      entityTable: MaterialsEntityTable
+      entityTables:
+        MaterialsEntityTable: 0.8
+        MaterialsRareEntityTable: 0.2
       offset: 0.0
 
 - type: entity
@@ -26,8 +28,8 @@
         - sprite: Objects/Materials/materials.rsi
           state: wood_2
     - type: GenericSpawner
-      entityTable: SupplementaryMaterialsEntityTable
-      chance: 0.8
+      entityTables:
+        SupplementaryMaterialsEntityTable: 0.8
       offset: 0.0
 
 # High-value materials spawners
@@ -44,7 +46,8 @@
         - sprite: Objects/Materials/Sheets/metal.rsi
           state: plasteel_2
     - type: GenericSpawner
-      entityTable: HighValueMaterialsEntityTable
+      entityTables:
+        HighValueMaterialsEntityTable: 0.8
       offset: 0.0
 
 - type: entity
@@ -58,7 +61,8 @@
         - sprite: Objects/Materials/Sheets/other.rsi
           state: plasma_2
     - type: GenericSpawner
-      entityTable: HigherValueMaterialsEntityTable
+      entityTables:
+        HigherValueMaterialsEntityTable: 0.8
       offset: 0.0
 
 # Surplus materials spawner.
@@ -75,7 +79,9 @@
         - sprite: Objects/Materials/Sheets/metal.rsi
           state: steel_3
     - type: GenericSpawner
-      entityTable: SurplusMaterialsEntityTable
+      entityTables:
+        SurplusMaterialsEntityTable: 0.9
+        SurplusMaterialsRareEntityTable: 0.1
       offset: 0.0
 
 # Cable coil spawner
@@ -90,5 +96,6 @@
         - sprite: Objects/Tools/cable-coils.rsi
           state: coilall-30
     - type: GenericSpawner
-      entityTable: CableCoilEntityTable
+      entityTables:
+        CableCoilEntityTable: 0.9
       offset: 0.0

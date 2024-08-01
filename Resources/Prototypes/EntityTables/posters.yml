@@ -1,9 +1,9 @@
 - type: weightedRandomEntity
   id: PostersEntityTable
   weights:
-    RandomPosterContraband: 95
-    RandomPosterLegit: 95
-    PosterBroken: 5
+    RandomPosterContraband: 19
+    RandomPosterLegit: 19
+    PosterBroken: 1
 
 - type: weightedRandomEntity
   id: ContrabandPostersEntityTable

@@ -11,7 +11,9 @@
         - sprite: Objects/Weapons/Melee/flash.rsi
           state: flash
     - type: GenericSpawner
-      entityTable: BasicLootSecurityEntityTable
+      entityTables:
+        BasicLootSecurityEntityTable: 0.85
+        BasicLootSecurityRareEntityTable: 0.05
 
 - type: entity
   name: security loot spawner
@@ -25,7 +27,9 @@
         - sprite: Objects/Weapons/Melee/flash.rsi
           state: flash
     - type: GenericSpawner
-      entityTable: LootSecurityEntityTable
+      entityTables:
+        LootSecurityEntityTable: 0.05
+        LootSecurityRareEntityTable: 0.85
 
 # Armory loot spawner
 # Automatics are a complete mess right now, so the AK-MS And WT-550 have been commented out for consistency's sake. I have no idea what role these guns are supposed to fufill.
@@ -43,7 +47,9 @@
         - sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
           state: icon
     - type: GenericSpawner
-      entityTable: LootArmoryEntityTable
+      entityTables:
+        LootArmoryEntityTable: 0.95
+        LootArmoryRareEntityTable: 0.05
       offset: 0.0
 
 - type: entity
@@ -58,7 +64,9 @@
         - sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
           state: icon
     - type: GenericSpawner
-      entityTable: LootArmoryGunsEntityTable
+      entityTables:
+        LootArmoryGunsEntityTable: 0.95
+        LootArmoryGunsRareEntityTable: 0.05
       offset: 0.0
 
 - type: entity
@@ -73,5 +81,7 @@
         - sprite: Clothing/OuterClothing/Armor/security.rsi
           state: icon
     - type: GenericSpawner
-      entityTable: LootArmoryArmorEntityTable
+      entityTables:
+        LootArmoryArmorEntityTable: 0.95
+        LootArmoryArmorRareEntityTable: 0.05
       offset: 0.0

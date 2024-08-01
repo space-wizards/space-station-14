@@ -9,5 +9,6 @@
         - sprite: Structures/Decoration/Curtains/hospital.rsi
           state: closed
     - type: GenericSpawner
-      entityTable: CurtainsEntityTable
+      entityTables:
+        CurtainsEntityTable: 1.0
       offset: 0.0

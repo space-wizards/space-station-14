@@ -10,4 +10,6 @@
         state: painting8
   - type: GenericSpawner
     offset: 0
-    entityTable: PaintingsEntityTable
+    entityTables:
+      PaintingsEntityTable: 1.0
+      PaintingsRareEntityTable: 0.01

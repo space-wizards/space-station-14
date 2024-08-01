@@ -10,8 +10,9 @@
         - sprite: Objects/Tools/flashlight.rsi
           state: flashlight
     - type: GenericSpawner
-      entityTable: IndustrialFluffEntityTable
-      chance: 0.95
+      entityTables:
+        IndustrialFluffEntityTable: 0.85
+        IndustrialFluffRareEntityTable: 0.1
       offset: 0.0
 
 - type: entity
@@ -26,5 +27,7 @@
         - sprite: Objects/Tools/welder.rsi
           state: icon
     - type: GenericSpawner
-      entityTable: IndustrialLootEntityTable
+      entityTables:
+        IndustrialLootEntityTable: 0.8
+        IndustrialLootRareEntityTable: 0.2
       offset: 0.0
