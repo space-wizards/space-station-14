@@ -474,6 +474,7 @@ namespace Content.Shared.Cuffs
         {
             if (!Resolve(handcuff, ref handcuffComponent) || !Resolve(target, ref cuffable, false))
                 return false;
+
             if (!TryComp<HandsComponent>(target, out var hands))
             {
                 _popup.PopupClient(Loc.GetString("handcuff-component-target-has-no-hands-error",
