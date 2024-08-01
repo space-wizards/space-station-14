@@ -179,11 +179,15 @@ accent-german-words-replace-57 = schnell
 accent-german-words-58 = war ops
 accent-german-words-replace-58 = blitzkrieg
 
-accent-german-words-59 = teslaloose
-accent-german-words-59-2 = tesloose
-accent-german-words-59-3 = lightning ball
-accent-german-words-59-4 = ball lightning
-accent-german-words-replace-59 = kugelblitz
+accent-german-words-59 = tesla coil
+accent-german-words-replace-59 = tesla coil
 
-accent-german-words-60 = tesla generator
-accent-german-words-replace-60 = kugelblitz generator
+accent-german-words-60 = tesla coils
+accent-german-words-replace-60 = tesla coils
+
+accent-german-words-61 = teslaloose
+accent-german-words-61-2 = tesloose
+accent-german-words-61-3 = lightning ball
+accent-german-words-61-4 = ball lightning
+accent-german-words-61-5 = tesla
+accent-german-words-replace-61 = kugelblitz
