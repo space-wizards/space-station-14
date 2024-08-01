@@ -191,3 +191,6 @@ accent-german-words-61-3 = lightning ball
 accent-german-words-61-4 = ball lightning
 accent-german-words-61-5 = tesla
 accent-german-words-replace-61 = kugelblitz
+
+accent-german-words-62 = accent
+accent-german-words-replace-62 = akzent
