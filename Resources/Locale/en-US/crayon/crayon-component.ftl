@@ -8,3 +8,4 @@ crayon-interact-invalid-location = Can't reach there!
 
 ## UI
 crayon-window-title = Crayon
+crayon-window-rotation = Rotation

@@ -60,5 +60,9 @@ namespace Content.Client.Crayon.UI
         {
             SendMessage(new CrayonColorMessage(color));
         }
+        public void SelectRotation(float rotation)
+        {
+            SendMessage(new CrayonRotationMessage(rotation));
+        }
     }
 }

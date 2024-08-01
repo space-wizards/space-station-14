@@ -10,5 +10,8 @@
                 <!-- Crayon decals get added here by code -->
             </GridContainer>
         </ScrollContainer>
+        <BoxContainer Name="SpinBoxContainer" Orientation="Horizontal">
+            <Label Text="{Loc 'crayon-window-rotation'}" Margin="0 0 0 1" />
+        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

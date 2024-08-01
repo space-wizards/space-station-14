@@ -38,6 +38,16 @@ namespace Content.Shared.Crayon
     }
 
     [Serializable, NetSerializable]
+    public sealed class CrayonRotationMessage : BoundUserInterfaceMessage
+    {
+        public readonly float Rotation;
+        public CrayonRotationMessage(float rotation)
+        {
+            Rotation = rotation;
+        }
+    }
+
+    [Serializable, NetSerializable]
     public enum CrayonVisuals
     {
         State,
@@ -51,13 +61,15 @@ namespace Content.Shared.Crayon
         public readonly string State;
         public readonly int Charges;
         public readonly int Capacity;
+        public readonly float Rotation;
 
-        public CrayonComponentState(Color color, string state, int charges, int capacity)
+        public CrayonComponentState(Color color, string state, int charges, int capacity, float rotation)
         {
             Color = color;
             State = state;
             Charges = charges;
             Capacity = capacity;
+            Rotation = rotation;
         }
     }
     [Serializable, NetSerializable]
@@ -66,12 +78,14 @@ namespace Content.Shared.Crayon
         public string Selected;
         public bool SelectableColor;
         public Color Color;
+        public float Rotation;
 
-        public CrayonBoundUserInterfaceState(string selected, bool selectableColor, Color color)
+        public CrayonBoundUserInterfaceState(string selected, bool selectableColor, Color color, float rotation)
         {
             Selected = selected;
             SelectableColor = selectableColor;
             Color = color;
+            Rotation = rotation;
         }
     }
 }
