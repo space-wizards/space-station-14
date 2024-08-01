@@ -112,6 +112,11 @@
         sound:
           collection: MetalBreak
       - !type:ExplodeBehavior
+      - !type:WeightedSpawnEntityBehavior
+        weightedEntityTable: "MeteorSpawnAsteroidWallTable"
+        minSpawn: 2
+        maxSpawn: 4
+        spawnAfter: 0.5
 
 - type: entity
   parent: BaseMeteor
@@ -147,6 +152,12 @@
         sound:
           collection: MetalBreak
       - !type:ExplodeBehavior
+      - !type:WeightedSpawnEntityBehavior
+        weightedEntityTable: "MeteorSpawnAsteroidWallTable"
+        spawnOffset: 2
+        minSpawn: 3
+        maxSpawn: 6
+        spawnAfter: 0.5
 
 - type: entity
   parent: BaseMeteor
@@ -169,6 +180,12 @@
         sound:
           collection: MetalBreak
       - !type:ExplodeBehavior
+      - !type:WeightedSpawnEntityBehavior
+        weightedEntityTable: "MeteorSpawnAsteroidWallTable"
+        spawnOffset: 3
+        minSpawn: 5
+        maxSpawn: 8
+        spawnAfter: 0.5
 
 - type: entity
   parent: BaseMeteor
