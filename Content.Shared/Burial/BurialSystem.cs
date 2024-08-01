@@ -149,13 +149,11 @@ public sealed class BurialSystem : EntitySystem
     private void OnAfterOpen(EntityUid uid, GraveComponent component, ref StorageAfterOpenEvent args)
     {
         component.DiggingComplete = false;
-        component.HandDiggingDoAfter = null;
     }
 
     private void OnAfterClose(EntityUid uid, GraveComponent component, ref StorageAfterCloseEvent args)
     {
         component.DiggingComplete = false;
-        component.HandDiggingDoAfter = null;
     }
 
     private void OnRelayMovement(EntityUid uid, GraveComponent component, ref ContainerRelayMovementEntityEvent args)
