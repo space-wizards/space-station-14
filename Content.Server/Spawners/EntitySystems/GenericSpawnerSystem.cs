@@ -84,14 +84,14 @@ public sealed class GenericSpawnerSystem : EntitySystem
         {
             foreach (var pair in component.EntityTables)
             {
+                if (pair.Value != 1.0f && !_robustRandom.Prob(pair.Value))
+                    continue;
+
                 if (!_proto.TryIndex(pair.Key, out var entTable))
                 {
                     Log.Warning($"Referenced entity table prototype does not exist! Entity: {ToPrettyString(uid)}");
                     return;
                 }
-
-                if (pair.Value != 1.0f && !_robustRandom.Prob(pair.Value))
-                    continue;
 
                 if (entTable.Weights.Count == 0)
                 {
@@ -106,6 +106,7 @@ public sealed class GenericSpawnerSystem : EntitySystem
                 var coordinates = Transform(uid).Coordinates.Offset(new Vector2(xOffset, yOffset));
 
                 EntityManager.SpawnEntity(entity, coordinates);
+                break;
             }
         }
     }
