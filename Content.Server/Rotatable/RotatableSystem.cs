@@ -41,10 +41,7 @@ namespace Content.Server.Rotatable
 
             // Check if the object is anchored.
             if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physics) && physics.BodyType == BodyType.Static)
-            {
-                _popup.PopupEntity(Loc.GetString("flippable-component-try-flip-is-stuck"), uid, args.User);
                 return;
-            }
 
             Verb verb = new()
             {
@@ -69,10 +66,7 @@ namespace Content.Server.Rotatable
             if (!component.RotateWhileAnchored &&
                 EntityManager.TryGetComponent(uid, out PhysicsComponent? physics) &&
                 physics.BodyType == BodyType.Static)
-            {
-                _popup.PopupEntity(Loc.GetString("rotatable-component-try-rotate-stuck"), uid, args.User);
                 return;
-            }
 
             Verb resetRotation = new()
             {
