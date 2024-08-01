@@ -39,6 +39,12 @@ public sealed class CrayonSystem : SharedCrayonSystem
         _overlay.AddOverlay(new CrayonDecalPlacementOverlay(this, _transform, _sprite, _interaction));
     }
 
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _overlay.RemoveOverlay<CrayonDecalPlacementOverlay>();
+    }
+
     private static void OnCrayonHandleState(EntityUid uid, CrayonComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not CrayonComponentState state) return;
@@ -99,6 +105,6 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
     public void SetActive(bool active)
     {
-        _active = active;
+            _active = active;
     }
 }
