@@ -52,6 +52,17 @@
       "directions": 4
     },
 		{
+			"name": "n2kit"
+		},
+		{
+      "name": "n2kit-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "n2kit-inhand-left",
+      "directions": 4
+    },
+		{
 			"name": "radkit"
 		},
 		{
