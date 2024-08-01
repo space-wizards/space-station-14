@@ -114,7 +114,7 @@
 - type: entity
   parent: [BaseTraitorObjective, BaseKillObjective]
   id: KillRandomTraitorObjective
-  description: We have reason to believe that they have become unloyal to the syndicate and need them eliminated.
+  description: We have reason to believe that they have begun to question the syndicate and need them eliminated.
   components:
   - type: Objective
     difficulty: 2.25 # They can easily buy weapons to defend themselves if they think something is up.
