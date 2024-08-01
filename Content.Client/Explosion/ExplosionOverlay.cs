@@ -16,15 +16,17 @@ public sealed class ExplosionOverlay : Overlay
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    private SharedAppearanceSystem _appearance;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
     private ShaderInstance _shader;
 
-    public ExplosionOverlay()
+    public ExplosionOverlay(SharedAppearanceSystem appearanceSystem)
     {
         IoCManager.InjectDependencies(this);
         _shader = _proto.Index<ShaderPrototype>("unshaded").Instance();
+        _appearance = appearanceSystem;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -33,15 +35,14 @@ public sealed class ExplosionOverlay : Overlay
         drawHandle.UseShader(_shader);
 
         var xforms = _entMan.GetEntityQuery<TransformComponent>();
-        var query = _entMan
-            .EntityQuery<ExplosionVisualsComponent, ExplosionVisualsTexturesComponent, AppearanceComponent>(true);
+        var query = _entMan.EntityQueryEnumerator<ExplosionVisualsComponent, ExplosionVisualsTexturesComponent>();
 
-        foreach (var (visuals, textures, appearance) in query)
+        while (query.MoveNext(out var uid, out var visuals, out var textures))
         {
             if (visuals.Epicenter.MapId != args.MapId)
                 continue;
 
-            if (!appearance.TryGetData(ExplosionAppearanceData.Progress, out int index))
+            if (!_appearance.TryGetData(uid, ExplosionAppearanceData.Progress, out int index))
                 continue;
 
             index = Math.Min(index, visuals.Intensity.Count - 1);
