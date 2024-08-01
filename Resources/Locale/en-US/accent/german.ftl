@@ -150,3 +150,19 @@ accent-german-words-replace-49 = mutterfickers
 
 accent-german-words-50 = ambulance
 accent-german-words-replace-50 = krankenwagen
+
+accent-german-words-51 = hi
+accent-german-words-replace-51 = hallo
+
+accent-german-words-52 = hello
+accent-german-words-replace-52 = guten Tag
+
+accent-german-words-51 = bye bye
+accent-german-words-51-2 = bye-bye
+accent-german-words-replace-51 = auf Wiedersehen
+
+accent-german-words-52 = bye
+accent-german-words-replace-52 = tschüss
+
+accent-german-words-53 = goodbye
+accent-german-words-replace-53 = tschau
