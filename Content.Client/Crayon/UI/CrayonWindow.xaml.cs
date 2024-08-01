@@ -32,6 +32,7 @@ namespace Content.Client.Crayon.UI
 
         public event Action<Color>? OnColorSelected;
         public event Action<string>? OnSelected;
+        public event Action<float>? OnRotationSelected;
 
         public CrayonWindow()
         {
@@ -53,7 +54,7 @@ namespace Content.Client.Crayon.UI
             RotationSpinBox.OnValueChanged += args =>
             {
                 _rotation = args.Value;
-                Owner.SelectRotation(_rotation);
+                OnRotationSelected?.Invoke(_rotation);
                 UpdateCrayonDecalPlacementInfo();
             };
         }

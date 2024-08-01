@@ -24,6 +24,7 @@ namespace Content.Client.Crayon.UI
             _menu = this.CreateWindow<CrayonWindow>();
             _menu.OnColorSelected += SelectColor;
             _menu.OnSelected += Select;
+            _menu.OnRotationSelected += SelectRotation;
             PopulateCrayons();
             _menu.OpenCenteredLeft();
         }
