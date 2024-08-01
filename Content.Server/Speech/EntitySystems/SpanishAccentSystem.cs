@@ -14,7 +14,7 @@ namespace Content.Server.Speech.EntitySystems
             // Insert E before every S
             message = InsertS(message);
             // If a sentence ends with ?, insert a reverse ? at the beginning of the sentence
-            message = ReplaceQuestionMark(message);
+            message = ReplacePunctuation(message);
             return message;
         }
 
@@ -36,21 +36,29 @@ namespace Content.Server.Speech.EntitySystems
             return msg;
         }
 
-        private string ReplaceQuestionMark(string message)
+        private string ReplacePunctuation(string message)
         {
             var sentences = AccentSystem.SentenceRegex.Split(message);
             var msg = "";
             foreach (var s in sentences)
             {
-                if (s.EndsWith("?", StringComparison.Ordinal)) // We've got a question => add ¿ to the beginning
+                var toInsert = "";
+                for (var i = s.Length - 1; i >= 0 && "?!‽".Contains(s[i]); i--)
                 {
-                    // Because we don't split by whitespace, we may have some spaces in front of the sentence.
-                    // So we add the symbol before the first non space char
-                    msg += s.Insert(s.Length - s.TrimStart().Length, "¿");
+                    toInsert += s[i] switch
+                    {
+                        '?' => '¿',
+                        '!' => '¡',
+                        '‽' => '⸘',
+                        _ => ' '
+                    };
                 }
-                else
+                if (toInsert == "")
                 {
                     msg += s;
+                } else
+                {
+                    msg += s.Insert(s.Length - s.TrimStart().Length, toInsert);
                 }
             }
             return msg;
