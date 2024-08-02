@@ -24,7 +24,7 @@ public sealed class WindowRepair : InteractionTest
         Assert.That(comp.Damage.GetTotal(), Is.GreaterThan(FixedPoint2.Zero));
 
         // Repair the entity
-        await Interact(Weld);
+        await InteractUsing(Weld);
         Assert.That(comp.Damage.GetTotal(), Is.EqualTo(FixedPoint2.Zero));
 
         // Validate that we can still deconstruct the entity (i.e., that welding deconstruction is not blocked).

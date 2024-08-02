@@ -5,6 +5,12 @@
   suffix: Empty
   description: A spray bottle with an unscrewable top.
   components:
+  - type: Drink
+    solution: spray
+    ignoreEmpty: true
+    useSound:
+      path: /Audio/Effects/spray3.ogg
+    transferAmount: 10
   - type: Tag
     tags:
     - Spray
@@ -98,7 +104,7 @@
 - type: entity
   id: Vapor
   name: "vapor"
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: SolutionContainerManager
     solutions:
@@ -130,7 +136,7 @@
 - type: entity
   id: BigVapor
   parent: Vapor
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Effects/chempuff.rsi

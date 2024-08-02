@@ -8,6 +8,7 @@ using Content.Shared.APC;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Rounding;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -31,7 +32,7 @@ public sealed class ApcSystem : EntitySystem
         UpdatesAfter.Add(typeof(PowerNetSystem));
 
         SubscribeLocalEvent<ApcComponent, BoundUIOpenedEvent>(OnBoundUiOpen);
-        SubscribeLocalEvent<ApcComponent, MapInitEvent>(OnApcInit);
+        SubscribeLocalEvent<ApcComponent, ComponentStartup>(OnApcStartup);
         SubscribeLocalEvent<ApcComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
         SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerMessage>(OnToggleMainBreaker);
         SubscribeLocalEvent<ApcComponent, GotEmaggedEvent>(OnEmagged);
@@ -44,10 +45,15 @@ public sealed class ApcSystem : EntitySystem
         var query = EntityQueryEnumerator<ApcComponent, PowerNetworkBatteryComponent, UserInterfaceComponent>();
         while (query.MoveNext(out var uid, out var apc, out var battery, out var ui))
         {
-            if (apc.LastUiUpdate + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
+            if (apc.LastUiUpdate + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime && _ui.IsUiOpen((uid, ui), ApcUiKey.Key))
             {
                 apc.LastUiUpdate = _gameTiming.CurTime;
                 UpdateUIState(uid, apc, battery);
+            }
+
+            if (apc.NeedStateUpdate)
+            {
+                UpdateApcState(uid, apc, battery);
             }
         }
     }
@@ -58,9 +64,11 @@ public sealed class ApcSystem : EntitySystem
         UpdateApcState(uid, component);
     }
 
-    private void OnApcInit(EntityUid uid, ApcComponent component, MapInitEvent args)
+    private static void OnApcStartup(EntityUid uid, ApcComponent component, ComponentStartup args)
     {
-        UpdateApcState(uid, component);
+        // We cannot update immediately, as various network/battery state is not valid yet.
+        // Defer until the next tick.
+        component.NeedStateUpdate = true;
     }
 
     //Update the HasAccess var for UI to read
@@ -118,15 +126,18 @@ public sealed class ApcSystem : EntitySystem
         if (!Resolve(uid, ref apc, ref battery, false))
             return;
 
-        var newState = CalcChargeState(uid, battery.NetworkBattery);
-        if (newState != apc.LastChargeState && apc.LastChargeStateTime + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
+        if (apc.LastChargeStateTime == null || apc.LastChargeStateTime + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
         {
-            apc.LastChargeState = newState;
-            apc.LastChargeStateTime = _gameTiming.CurTime;
-
-            if (TryComp(uid, out AppearanceComponent? appearance))
+            var newState = CalcChargeState(uid, battery.NetworkBattery);
+            if (newState != apc.LastChargeState)
             {
-                _appearance.SetData(uid, ApcVisuals.ChargeState, newState, appearance);
+                apc.LastChargeState = newState;
+                apc.LastChargeStateTime = _gameTiming.CurTime;
+
+                if (TryComp(uid, out AppearanceComponent? appearance))
+                {
+                    _appearance.SetData(uid, ApcVisuals.ChargeState, newState, appearance);
+                }
             }
         }
 
@@ -136,6 +147,8 @@ public sealed class ApcSystem : EntitySystem
             apc.LastExternalState = extPowerState;
             UpdateUIState(uid, apc, battery);
         }
+
+        apc.NeedStateUpdate = false;
     }
 
     public void UpdateUIState(EntityUid uid,
@@ -147,10 +160,14 @@ public sealed class ApcSystem : EntitySystem
             return;
 
         var battery = netBat.NetworkBattery;
+        const int ChargeAccuracy = 5;
+
+        // TODO: Fix ContentHelpers or make a new one coz this is cooked.
+        var charge = ContentHelpers.RoundToNearestLevels(battery.CurrentStorage / battery.Capacity, 1.0, 100 / ChargeAccuracy) / 100f * ChargeAccuracy;
 
         var state = new ApcBoundInterfaceState(apc.MainBreakerEnabled, apc.HasAccess,
             (int) MathF.Ceiling(battery.CurrentSupply), apc.LastExternalState,
-            battery.CurrentStorage / battery.Capacity);
+            charge);
 
         _ui.SetUiState((uid, ui), ApcUiKey.Key, state);
     }

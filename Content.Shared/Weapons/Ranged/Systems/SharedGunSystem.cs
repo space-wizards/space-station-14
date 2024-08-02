@@ -21,6 +21,7 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -63,6 +64,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly TagSystem TagSystem = default!;
     [Dependency] protected readonly ThrowingSystem ThrowingSystem = default!;
     [Dependency] private   readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     private const float InteractNextFire = 0.3f;
     private const double SafetyNextFire = 0.5;
@@ -136,7 +138,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             return;
 
         gun.ShootCoordinates = GetCoordinates(msg.Coordinates);
-        Log.Debug($"Set shoot coordinates to {gun.ShootCoordinates}");
+        gun.Target = GetEntity(msg.Target);
         AttemptShoot(user.Value, ent, gun);
     }
 
@@ -195,9 +197,9 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (gun.ShotCounter == 0)
             return;
 
-        Log.Debug($"Stopped shooting {ToPrettyString(uid)}");
         gun.ShotCounter = 0;
         gun.ShootCoordinates = null;
+        gun.Target = null;
         Dirty(uid, gun);
     }
 
@@ -239,7 +241,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         var prevention = new ShotAttemptedEvent
         {
             User = user,
-            Used = gunUid
+            Used = (gunUid, gun)
         };
         RaiseLocalEvent(gunUid, ref prevention);
         if (prevention.Cancelled)
@@ -461,7 +463,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         RemCompDeferred<AmmoComponent>(uid);
     }
 
-    protected void MuzzleFlash(EntityUid gun, AmmoComponent component, EntityUid? user = null)
+    protected void MuzzleFlash(EntityUid gun, AmmoComponent component, Angle worldAngle, EntityUid? user = null)
     {
         var attemptEv = new GunMuzzleFlashAttemptEvent();
         RaiseLocalEvent(gun, ref attemptEv);
@@ -473,8 +475,8 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (sprite == null)
             return;
 
-        var ev = new MuzzleFlashEvent(GetNetEntity(gun), sprite, user == gun);
-        CreateEffect(gun, ev, user);
+        var ev = new MuzzleFlashEvent(GetNetEntity(gun), sprite, worldAngle);
+        CreateEffect(gun, ev, gun);
     }
 
     public void CauseImpulse(EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid user, PhysicsComponent userPhysics)
@@ -522,7 +524,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         Dirty(gun);
     }
 
-    protected abstract void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null);
+    protected abstract void CreateEffect(EntityUid gunUid, MuzzleFlashEvent message, EntityUid? user = null);
 
     /// <summary>
     /// Used for animated effects on the client.

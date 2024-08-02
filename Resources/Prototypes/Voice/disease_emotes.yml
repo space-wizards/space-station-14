@@ -7,6 +7,7 @@
 - type: emote
   id: Cough
   name: chat-emote-name-cough
+  icon: Interface/Emotes/cough.png
   category: Vocal
   whitelist:
     components:
@@ -41,11 +42,12 @@
   id: RobotBeep
   name: chat-emote-name-robotbeep
   category: Vocal
-  chatMessages: ["chat-emote-msg-robotbeep"]
+  chatMessages: ["chat-emote-msg-beep"]
 
 - type: emote
   id: Yawn
   name: chat-emote-name-yawn
+  icon: Interface/Emotes/yawn.png
   category: Vocal
   whitelist:
     components:

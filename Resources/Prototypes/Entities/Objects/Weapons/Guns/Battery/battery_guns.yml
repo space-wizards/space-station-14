@@ -200,7 +200,7 @@
 
 - type: entity
   name: laser rifle
-  parent: BaseWeaponBattery
+  parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponLaserCarbine
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
@@ -267,7 +267,7 @@
 
 - type: entity
   name: pulse carbine
-  parent: BaseWeaponBattery
+  parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponPulseCarbine
   description: A high tech energy carbine favoured by the NT-ERT operatives.
   components:
@@ -298,7 +298,7 @@
 
 - type: entity
   name: pulse rifle
-  parent: BaseWeaponBattery
+  parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponPulseRifle
   description: A weapon that is almost as infamous as its users.
   components:
@@ -325,7 +325,7 @@
 
 - type: entity
   name: laser cannon
-  parent: BaseWeaponBattery
+  parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponLaserCannon
   description: A heavy duty, high powered laser weapon.
   components:
@@ -380,7 +380,7 @@
 
 - type: entity
   name: x-ray cannon
-  parent: BaseWeaponBattery
+  parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponXrayCannon
   description: An experimental weapon that uses concentrated x-ray energy against its target.
   components:

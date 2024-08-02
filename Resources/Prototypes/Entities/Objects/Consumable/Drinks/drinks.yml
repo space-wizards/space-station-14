@@ -78,6 +78,9 @@
     solution: drink
   - type: FitsInDispenser
     solution: drink
+  - type: Tag
+    tags:
+      - DrinkGlass
 
 # Transformable container - normal glass
 - type: entity
@@ -505,6 +508,22 @@
 
 - type: entity
   parent: DrinkGlass
+  id: BudgetInsulsDrinkGlass
+  suffix: budget insuls
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: BudgetInsulsDrink
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/budgetinsulsdrink.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkCarrotJuice
   suffix: carrot juice
   components:
@@ -533,6 +552,22 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/chocolateglass.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: RubberneckGlass
+  suffix: rubberneck
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Rubberneck
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/rubberneck.rsi
     state: icon
 
 - type: entity
@@ -1063,6 +1098,22 @@
 
 - type: entity
   parent: DrinkGlass
+  id: IrishBoolGlass
+  suffix: irish bool
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: IrishBool
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/beerglass.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkIrishCarBomb
   suffix: irish car bomb
   components:
@@ -1170,7 +1221,7 @@
         - ReagentId: JuiceLemon
           Quantity: 30
   - type: Icon
-    sprite: Objects/Consumable/Drinks/lemonjuice.rsi
+    sprite: Objects/Consumable/Drinks/lemonjuiceglass.rsi
     state: icon
 
 - type: entity
@@ -2056,6 +2107,22 @@
 
 - type: entity
   parent: DrinkGlass
+  id: DrinkVodkaRedBool
+  suffix: vodka red bool
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: VodkaRedBool
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkVodkaTonicGlass
   suffix: vodka tonic
   components:
@@ -2099,6 +2166,22 @@
         reagents:
         - ReagentId: JuiceWatermelon
           Quantity: 30
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkWatermelonWakeup
+  suffix: watermelon wakeup
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: WatermelonWakeup
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/champagneglass.rsi
+    state: icon
 
 - type: entity
   parent: DrinkGlass
@@ -2180,6 +2263,22 @@
     sprite: Objects/Consumable/Drinks/wineglass.rsi
     state: icon
 
+- type: entity
+  parent: DrinkGlass
+  id: XenoBasherGlass
+  suffix: xeno basher
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: XenoBasher
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/xenobasher.rsi
+    state: icon
+
 # TODO: MOVE
 
 - type: entity
@@ -2231,44 +2330,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-white.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkRamen
-  name: cup ramen
-  description: Just add 10ml boiling water. A taste that reminds you of your school years.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 40 #big cup
-        reagents:
-        - ReagentId: DryRamen
-          Quantity: 25
-        - ReagentId: Soysauce
-          Quantity: 5
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/ramen.rsi
-  - type: Tag
-    tags:
-    - Trash
-  - type: SpaceGarbage
-
-- type: entity
-  parent: DrinkRamen
-  id: DrinkHellRamen
-  name: hell ramen
-  description: Just add 10ml boiling water. Super spicy flavor.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 40
-        reagents:
-        - ReagentId: DryRamen
-          Quantity: 25
-        - ReagentId: CapsaicinOil
-          Quantity: 5
 
 - type: entity
   parent: DrinkGlass

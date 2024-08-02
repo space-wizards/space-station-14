@@ -33,4 +33,7 @@ public sealed partial class GunWieldBonusComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public Angle AngleIncrease = Angle.FromDegrees(0);
+
+    [DataField]
+    public LocId? WieldBonusExamineMessage = "gunwieldbonus-component-examine";
 }

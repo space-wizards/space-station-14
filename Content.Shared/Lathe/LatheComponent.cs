@@ -33,12 +33,21 @@ namespace Content.Shared.Lathe
         [DataField]
         public SoundSpecifier? ProducingSound;
 
+        [DataField]
+        public string? ReagentOutputSlotId;
+
         #region Visualizer info
         [DataField]
         public string? IdleState;
 
         [DataField]
         public string? RunningState;
+
+        [DataField]
+        public string? UnlitIdleState;
+
+        [DataField]
+        public string? UnlitRunningState;
         #endregion
 
         /// <summary>
@@ -59,8 +68,6 @@ namespace Content.Shared.Lathe
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
         public float MaterialUseMultiplier = 1;
-
-        public const float DefaultPartRatingMaterialUseMultiplier = 0.85f;
         #endregion
     }
 

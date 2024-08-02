@@ -187,6 +187,16 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of papercane seeds
+  id: PapercaneSeeds
+  components:
+    - type: Seed
+      seedId: papercane
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/papercane.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of tower cap spores
   id: TowercapSeeds
   components:
@@ -264,6 +274,16 @@
       seedId: apple
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/apple.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of golden apple seeds
+  id: GoldenAppleSeeds
+  components:
+    - type: Seed
+      seedId: goldenApple
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/golden_apple.rsi
 
 - type: entity
   parent: SeedBase
@@ -448,6 +468,17 @@
       seedId: galaxythistle
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of glasstle seeds
+  description: "Scars of gloomy nights."
+  id: GlasstleSeeds
+  components:
+    - type: Seed
+      seedId: glasstle
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/glasstle.rsi
 
 - type: entity
   parent: SeedBase

@@ -8,5 +8,7 @@ namespace Content.Shared.Traits.Assorted;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class PermanentBlindnessComponent : Component
 {
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public int Blindness = 0; // How damaged should their eyes be. Set 0 for maximum damage.
 }
 

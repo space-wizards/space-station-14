@@ -20,9 +20,9 @@ public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-        _window = new OfferingWindow();
+
+        _window = this.CreateWindow<OfferingWindow>();
         _window.Title = Loc.GetString("salvage-magnet-window-title");
-        _window.OnClose += Close;
         _window.OpenCenteredLeft();
     }
 

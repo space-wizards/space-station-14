@@ -1,23 +1,19 @@
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.Nodes;
 using Content.Server.Power.NodeGroups;
-using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Pinpointer;
+using Content.Shared.Station.Components;
 using Content.Shared.Power;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Linq;
-using System.Diagnostics.CodeAnalysis;
-using Content.Server.GameTicking.Components;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -163,7 +159,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             allChunks = new();
 
         var tile = _sharedMapSystem.LocalToTile(xform.GridUid.Value, grid, xform.Coordinates);
-        var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, SharedNavMapSystem.ChunkSize);
+        var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, ChunkSize);
 
         if (!allChunks.TryGetValue(chunkOrigin, out var chunk))
         {
@@ -171,8 +167,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             allChunks[chunkOrigin] = chunk;
         }
 
-        var relative = SharedMapSystem.GetChunkRelative(tile, SharedNavMapSystem.ChunkSize);
-        var flag = SharedNavMapSystem.GetFlag(relative);
+        var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
+        var flag = GetFlag(relative);
 
         if (args.Anchored)
             chunk.PowerCableData[(int) component.CableType] |= flag;
@@ -884,7 +880,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
                 continue;
 
             var tile = _sharedMapSystem.GetTileRef(gridUid, grid, entXform.Coordinates);
-            var chunkOrigin = SharedMapSystem.GetChunkIndices(tile.GridIndices, SharedNavMapSystem.ChunkSize);
+            var chunkOrigin = SharedMapSystem.GetChunkIndices(tile.GridIndices, ChunkSize);
 
             if (!allChunks.TryGetValue(chunkOrigin, out var chunk))
             {
@@ -892,8 +888,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
                 allChunks[chunkOrigin] = chunk;
             }
 
-            var relative = SharedMapSystem.GetChunkRelative(tile.GridIndices, SharedNavMapSystem.ChunkSize);
-            var flag = SharedNavMapSystem.GetFlag(relative);
+            var relative = SharedMapSystem.GetChunkRelative(tile.GridIndices, ChunkSize);
+            var flag = GetFlag(relative);
 
             chunk.PowerCableData[(int) cable.CableType] |= flag;
         }
@@ -910,7 +906,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             var xform = Transform(ent);
             var tile = _sharedMapSystem.GetTileRef(gridUid, grid, xform.Coordinates);
             var gridIndices = tile.GridIndices;
-            var chunkOrigin = SharedMapSystem.GetChunkIndices(gridIndices, SharedNavMapSystem.ChunkSize);
+            var chunkOrigin = SharedMapSystem.GetChunkIndices(gridIndices, ChunkSize);
 
             if (!component.FocusChunks.TryGetValue(chunkOrigin, out var chunk))
             {
@@ -918,8 +914,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
                 component.FocusChunks[chunkOrigin] = chunk;
             }
 
-            var relative = SharedMapSystem.GetChunkRelative(gridIndices, SharedNavMapSystem.ChunkSize);
-            var flag = SharedNavMapSystem.GetFlag(relative);
+            var relative = SharedMapSystem.GetChunkRelative(gridIndices, ChunkSize);
+            var flag = GetFlag(relative);
 
             if (TryComp<CableComponent>(ent, out var cable))
                 chunk.PowerCableData[(int) cable.CableType] |= flag;

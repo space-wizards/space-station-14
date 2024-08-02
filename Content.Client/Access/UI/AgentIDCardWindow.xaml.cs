@@ -17,19 +17,19 @@ namespace Content.Client.Access.UI
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         private readonly SpriteSystem _spriteSystem;
-        private readonly AgentIDCardBoundUserInterface _bui;
 
         private const int JobIconColumnCount = 10;
 
         public event Action<string>? OnNameChanged;
         public event Action<string>? OnJobChanged;
 
-        public AgentIDCardWindow(AgentIDCardBoundUserInterface bui)
+        public event Action<ProtoId<StatusIconPrototype>>? OnJobIconChanged;
+
+        public AgentIDCardWindow()
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
             _spriteSystem = _entitySystem.GetEntitySystem<SpriteSystem>();
-            _bui = bui;
 
             NameLineEdit.OnTextEntered += e => OnNameChanged?.Invoke(e.Text);
             NameLineEdit.OnFocusExit += e => OnNameChanged?.Invoke(e.Text);
@@ -38,7 +38,7 @@ namespace Content.Client.Access.UI
             JobLineEdit.OnFocusExit += e => OnJobChanged?.Invoke(e.Text);
         }
 
-        public void SetAllowedIcons(HashSet<string> icons, string currentJobIconId)
+        public void SetAllowedIcons(HashSet<ProtoId<StatusIconPrototype>> icons, string currentJobIconId)
         {
             IconGrid.DisposeAllChildren();
 
@@ -46,10 +46,8 @@ namespace Content.Client.Access.UI
             var i = 0;
             foreach (var jobIconId in icons)
             {
-                if (!_prototypeManager.TryIndex<StatusIconPrototype>(jobIconId, out var jobIcon))
-                {
+                if (!_prototypeManager.TryIndex(jobIconId, out var jobIcon))
                     continue;
-                }
 
                 String styleBase = StyleBase.ButtonOpenBoth;
                 var modulo = i % JobIconColumnCount;
@@ -69,7 +67,7 @@ namespace Content.Client.Access.UI
                 };
 
                 // Generate buttons textures
-                TextureRect jobIconTexture = new TextureRect
+                var jobIconTexture = new TextureRect
                 {
                     Texture = _spriteSystem.Frame0(jobIcon.Icon),
                     TextureScale = new Vector2(2.5f, 2.5f),
@@ -77,7 +75,7 @@ namespace Content.Client.Access.UI
                 };
 
                 jobIconButton.AddChild(jobIconTexture);
-                jobIconButton.OnPressed += _ => _bui.OnJobIconChanged(jobIcon.ID);
+                jobIconButton.OnPressed += _ => OnJobIconChanged?.Invoke(jobIcon.ID);
                 IconGrid.AddChild(jobIconButton);
 
                 if (jobIconId.Equals(currentJobIconId))

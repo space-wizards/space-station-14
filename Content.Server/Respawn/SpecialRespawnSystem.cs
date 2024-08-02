@@ -2,7 +2,7 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using Content.Server.Station.Components;
+using Content.Shared.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Database;
 using Content.Shared.Maps;
@@ -95,7 +95,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         {
             var xform = Transform(entityGridUid.Value);
             var pos = xform.Coordinates;
-            var mapPos = xform.MapPosition;
+            var mapPos = _transform.GetMapCoordinates(entityGridUid.Value, xform: xform);
             var circle = new Circle(mapPos.Position, 2);
 
             var found = false;

@@ -2,15 +2,16 @@
   id: ActionBlink
   name: Blink
   description: Teleport to the clicked location.
-  noSpawn: true
   components:
   - type: WorldTargetAction
     useDelay: 10
     range: 16 # default examine-range.
     # ^ should probably add better validation that the clicked location is on the users screen somewhere,
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/blink.ogg
     itemIconStyle: BigAction
     checkCanAccess: false
-    repeat: true
+    repeat: false
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: blink

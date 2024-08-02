@@ -27,7 +27,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly SharedIdCardSystem _idCard = default!;
-    [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
+    [Dependency] private readonly StationRecordsSystem _records = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -80,7 +80,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         if (!CheckSelected(ent, msg.Actor, out var mob, out var key))
             return;
 
-        if (!_stationRecords.TryGetRecord<CriminalRecord>(key.Value, out var record) || record.Status == msg.Status)
+        if (!_records.TryGetRecord<CriminalRecord>(key.Value, out var record) || record.Status == msg.Status)
             return;
 
         // validate the reason
@@ -106,7 +106,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         // will probably never fail given the checks above
         _criminalRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason);
 
-        var name = RecordName(key.Value);
+        var name = _records.RecordName(key.Value);
         var officer = Loc.GetString("criminal-records-console-unknown-officer");
         if (_idCard.TryFindIdCard(mob.Value, out var id) && id.Comp.FullName is { } fullName)
             officer = fullName;
@@ -145,7 +145,6 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             ent.Comp.SecurityChannel, ent);
 
         UpdateUserInterface(ent);
-        UpdateCriminalIdentity(name, msg.Status);
     }
 
     private void OnAddHistory(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordAddHistory msg)
@@ -189,15 +188,15 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             return;
         }
 
-        var listing = _stationRecords.BuildListing((owningStation.Value, stationRecords), console.Filter);
+        var listing = _records.BuildListing((owningStation.Value, stationRecords), console.Filter);
 
         var state = new CriminalRecordsConsoleState(listing, console.Filter);
         if (console.ActiveKey is { } id)
         {
             // get records to display when a crewmember is selected
             var key = new StationRecordKey(id, owningStation.Value);
-            _stationRecords.TryGetRecord(key, out state.StationRecord, stationRecords);
-            _stationRecords.TryGetRecord(key, out state.CriminalRecord, stationRecords);
+            _records.TryGetRecord(key, out state.StationRecord, stationRecords);
+            _records.TryGetRecord(key, out state.CriminalRecord, stationRecords);
             state.SelectedKey = id;
         }
 
@@ -233,17 +232,6 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     }
 
     /// <summary>
-    /// Gets the name from a record, or empty string if this somehow fails.
-    /// </summary>
-    private string RecordName(StationRecordKey key)
-    {
-        if (!_stationRecords.TryGetRecord<GeneralStationRecord>(key, out var record))
-            return "";
-
-        return record.Name;
-    }
-
-    /// <summary>
     /// Checks if the new identity's name has a criminal record attached to it, and gives the entity the icon that
     /// belongs to the status if it does.
     /// </summary>
@@ -255,14 +243,14 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         // TODO use the entity's station? Not the station of the map that it happens to currently be on?
         var station = _station.GetStationInMap(xform.MapID);
 
-        if (station != null && _stationRecords.GetRecordByName(station.Value, name) is { } id)
+        if (station != null && _records.GetRecordByName(station.Value, name) is { } id)
         {
-            if (_stationRecords.TryGetRecord<CriminalRecord>(new StationRecordKey(id, station.Value),
+            if (_records.TryGetRecord<CriminalRecord>(new StationRecordKey(id, station.Value),
                     out var record))
             {
                 if (record.Status != SecurityStatus.None)
                 {
-                    SetCriminalIcon(name, record.Status, uid);
+                    _criminalRecords.SetCriminalIcon(name, record.Status, uid);
                     return;
                 }
             }

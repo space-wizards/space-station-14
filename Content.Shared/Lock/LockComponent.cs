@@ -21,11 +21,17 @@ public sealed partial class LockComponent : Component
     public bool Locked  = true;
 
     /// <summary>
-    /// Whether or not the lock is toggled by simply clicking.
+    /// Whether or not the lock is locked by simply clicking.
     /// </summary>
     [DataField("lockOnClick"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public bool LockOnClick;
+
+    /// <summary>
+    /// Whether or not the lock is unlocked by simply clicking.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool UnlockOnClick = true;
 
     /// <summary>
     /// The sound played when unlocked.
@@ -79,6 +85,13 @@ public sealed partial class LockComponent : Component
 /// </summary>
 [ByRefEvent]
 public record struct LockToggleAttemptEvent(EntityUid User, bool Silent = false, bool Cancelled = false);
+
+/// <summary>
+/// Event raised on the user when a toggle is attempted.
+/// Can be cancelled to prevent it.
+/// </summary>
+[ByRefEvent]
+public record struct UserLockToggleAttemptEvent(EntityUid Target, bool Silent = false, bool Cancelled = false);
 
 /// <summary>
 /// Event raised on a lock after it has been toggled.

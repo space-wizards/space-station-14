@@ -1,9 +1,7 @@
 using System.Numerics;
 using Content.Server.Salvage.Expeditions;
-using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
-using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Shared.Chat;
 using Content.Shared.Humanoid;
@@ -11,9 +9,9 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Localizations;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Salvage;
 
@@ -35,7 +33,7 @@ public sealed partial class SalvageSystem
 
     private void OnConsoleFTLAttempt(ref ConsoleFTLAttemptEvent ev)
     {
-        if (!TryComp<TransformComponent>(ev.Uid, out var xform) ||
+        if (!TryComp(ev.Uid, out TransformComponent? xform) ||
             !TryComp<SalvageExpeditionComponent>(xform.MapUid, out var salvage))
         {
             return;
@@ -106,8 +104,10 @@ public sealed partial class SalvageSystem
 
         Announce(args.MapUid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", (component.EndTime - _timing.CurTime).Minutes)));
 
+         var directionLocalization = ContentLocalizationManager.FormatDirection(component.DungeonLocation.GetDir()).ToLower();
+
         if (component.DungeonLocation != Vector2.Zero)
-            Announce(args.MapUid, Loc.GetString("salvage-expedition-announcement-dungeon", ("direction", component.DungeonLocation.GetDir())));
+            Announce(args.MapUid, Loc.GetString("salvage-expedition-announcement-dungeon", ("direction", directionLocalization)));
 
         component.Stage = ExpeditionStage.Running;
         Dirty(args.MapUid, component);
@@ -144,6 +144,7 @@ public sealed partial class SalvageSystem
         while (query.MoveNext(out var uid, out var comp))
         {
             var remaining = comp.EndTime - _timing.CurTime;
+            var audioLength = _audio.GetAudioLength(comp.SelectedSong.Path.ToString());
 
             if (comp.Stage < ExpeditionStage.FinalCountdown && remaining < TimeSpan.FromSeconds(45))
             {
@@ -151,13 +152,14 @@ public sealed partial class SalvageSystem
                 Dirty(uid, comp);
                 Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-seconds", ("duration", TimeSpan.FromSeconds(45).Seconds)));
             }
-            else if (comp.Stage < ExpeditionStage.MusicCountdown && remaining < TimeSpan.FromMinutes(2))
+            else if (comp.Stream == null && remaining < audioLength)
             {
-                // TODO: Some way to play audio attached to a map for players.
-                comp.Stream = _audio.PlayGlobal(comp.Sound, Filter.BroadcastMap(Comp<MapComponent>(uid).MapId), true).Value.Entity;
+                var audio = _audio.PlayPvs(comp.Sound, uid).Value;
+                comp.Stream = audio.Entity;
+                _audio.SetMapAudio(audio);
                 comp.Stage = ExpeditionStage.MusicCountdown;
                 Dirty(uid, comp);
-                Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(2).Minutes)));
+                Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", audioLength.Minutes)));
             }
             else if (comp.Stage < ExpeditionStage.Countdown && remaining < TimeSpan.FromMinutes(4))
             {
@@ -166,16 +168,16 @@ public sealed partial class SalvageSystem
                 Announce(uid, Loc.GetString("salvage-expedition-announcement-countdown-minutes", ("duration", TimeSpan.FromMinutes(5).Minutes)));
             }
             // Auto-FTL out any shuttles
-            else if (remaining < TimeSpan.FromSeconds(ShuttleSystem.DefaultStartupTime) + TimeSpan.FromSeconds(0.5))
+            else if (remaining < TimeSpan.FromSeconds(_shuttle.DefaultStartupTime) + TimeSpan.FromSeconds(0.5))
             {
                 var ftlTime = (float) remaining.TotalSeconds;
 
-                if (remaining < TimeSpan.FromSeconds(ShuttleSystem.DefaultStartupTime))
+                if (remaining < TimeSpan.FromSeconds(_shuttle.DefaultStartupTime))
                 {
                     ftlTime = MathF.Max(0, (float) remaining.TotalSeconds - 0.5f);
                 }
 
-                ftlTime = MathF.Min(ftlTime, ShuttleSystem.DefaultStartupTime);
+                ftlTime = MathF.Min(ftlTime, _shuttle.DefaultStartupTime);
                 var shuttleQuery = AllEntityQuery<ShuttleComponent, TransformComponent>();
 
                 if (TryComp<StationDataComponent>(comp.Station, out var data))

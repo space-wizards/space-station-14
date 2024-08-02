@@ -55,8 +55,10 @@
   - type: ItemToggleSize
     activatedSize: Large
   - type: ItemToggleHot
-  - type: ItemToggleDisarmMalus
-    activatedDisarmMalus: 0.6
+  - type: ComponentToggler
+    components:
+    - type: DisarmMalus
+      malus: 0.6
   - type: ToggleableLightVisuals
     spriteLayer: flame
     inhandVisuals:
@@ -139,7 +141,7 @@
           Quantity: 250
         maxVol: 250
   - type: Tool
-    speed: 1.3
+    speedModifier: 1.3
 
 - type: entity
   name: experimental welding tool
@@ -190,7 +192,7 @@
           Quantity: 50
         maxVol: 50
   - type: Tool
-    speed: 0.7
+    speedModifier: 0.7
   - type: PointLight
     enabled: false
     radius: 1.0

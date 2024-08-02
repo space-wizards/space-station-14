@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Atmos;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -19,53 +20,43 @@ public sealed partial class NavMapComponent : Component
     /// Bitmasks that represent chunked tiles.
     /// </summary>
     [ViewVariables]
-    public Dictionary<(NavMapChunkType, Vector2i), NavMapChunk> Chunks = new();
+    public Dictionary<Vector2i, NavMapChunk> Chunks = new();
 
     /// <summary>
     /// List of station beacons.
     /// </summary>
     [ViewVariables]
-    public HashSet<SharedNavMapSystem.NavMapBeacon> Beacons = new();
+    public Dictionary<NetEntity, SharedNavMapSystem.NavMapBeacon> Beacons = new();
 }
 
 [Serializable, NetSerializable]
-public sealed class NavMapChunk
+public sealed class NavMapChunk(Vector2i origin)
 {
     /// <summary>
     /// The chunk origin
     /// </summary>
-    public readonly Vector2i Origin;
+    [ViewVariables]
+    public readonly Vector2i Origin = origin;
 
     /// <summary>
-    /// Bitmask for tiles, 1 for occupied and 0 for empty. There is a bitmask for each cardinal direction,
-    /// representing each edge of the tile, in case the entities inside it do not entirely fill it
+    /// Array containing the chunk's data. The
     /// </summary>
-    public Dictionary<AtmosDirection, ushort> TileData;
+    [ViewVariables]
+    public int[] TileData = new int[SharedNavMapSystem.ArraySize];
 
     /// <summary>
     /// The last game tick that the chunk was updated
     /// </summary>
     [NonSerialized]
     public GameTick LastUpdate;
-
-    public NavMapChunk(Vector2i origin)
-    {
-        Origin = origin;
-
-        TileData = new()
-        {
-            [AtmosDirection.North] = 0,
-            [AtmosDirection.East] = 0,
-            [AtmosDirection.South] = 0,
-            [AtmosDirection.West] = 0,
-        };
-    }
 }
 
 public enum NavMapChunkType : byte
 {
-    Invalid,
-    Floor,
-    Wall,
-    Airlock,
+    // Values represent bit shift offsets when retrieving data in the tile array.
+    Invalid  = byte.MaxValue,
+    Floor = 0, // I believe floors have directional information for diagonal tiles?
+    Wall = SharedNavMapSystem.Directions,
+    Airlock = 2 * SharedNavMapSystem.Directions,
 }
+

@@ -12,7 +12,7 @@
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Clothing/Head/Soft/mimesoft.rsi/icon.png"/>
         </ui:RadialMenuTextureButton>
         <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'emote-menu-category-vocal'}" TargetLayer="Vocal" Visible="False">
-            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Actions/scream.png"/>
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Emotes/vocal.png"/>
         </ui:RadialMenuTextureButton>
         <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'emote-menu-category-hands'}" TargetLayer="Hands" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Clothing/Hands/Gloves/latex.rsi/icon.png"/>

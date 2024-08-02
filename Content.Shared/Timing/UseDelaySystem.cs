@@ -47,7 +47,7 @@ public sealed class UseDelaySystem : EntitySystem
     {
         // Set default delay length from the prototype
         // This makes it easier for simple use cases that only need a single delay
-        SetLength(ent, ent.Comp.Delay, DefaultId);
+        SetLength((ent, ent.Comp), ent.Comp.Delay, DefaultId);
     }
 
     private void OnUnpaused(Entity<UseDelayComponent> ent, ref EntityUnpausedEvent args)
@@ -62,9 +62,14 @@ public sealed class UseDelaySystem : EntitySystem
     /// <summary>
     /// Sets the length of the delay with the specified ID.
     /// </summary>
-    public bool SetLength(Entity<UseDelayComponent> ent, TimeSpan length, string id = DefaultId)
+    /// <remarks>
+    /// This will add a UseDelay component to the entity if it doesn't have one.
+    /// </remarks>
+    public bool SetLength(Entity<UseDelayComponent?> ent, TimeSpan length, string id = DefaultId)
     {
-        if (ent.Comp.Delays.TryGetValue(id, out var entry))
+        EnsureComp<UseDelayComponent>(ent.Owner, out var comp);
+
+        if (comp.Delays.TryGetValue(id, out var entry))
         {
             if (entry.Length == length)
                 return true;
@@ -73,7 +78,7 @@ public sealed class UseDelaySystem : EntitySystem
         }
         else
         {
-            ent.Comp.Delays.Add(id, new UseDelayInfo(length));
+            comp.Delays.Add(id, new UseDelayInfo(length));
         }
 
         Dirty(ent);

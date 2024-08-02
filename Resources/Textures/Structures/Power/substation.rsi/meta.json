@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Drawn by Ubaser.",
+  "license": "CC0-1.0",
+  "copyright": "Created by EmoGarbage404 (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -13,8 +13,39 @@
 	{
 	  "name": "substation_static"
 	},
-    {		
-      "name": "substation_wall"
+    {
+      "name": "substation_wall",
+      "directions": 4
+    },
+    {
+      "name": "screen_wall",
+      "directions": 4,
+      "delays": [
+        [
+          5.0,
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          5.0,
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          5.0,
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          5.0,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
     },
 	{
 	  "name": "substation_wall_static"
@@ -23,21 +54,31 @@
       "name": "full"
     },
     {
-      "name": "charging"
+      "name": "charging",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
     },
     {
-      "name": "dead"
+      "name": "dead",
+      "delays": [
+        [
+          0.3,
+          0.1
+        ]
+      ]
     },
     {
       "name": "screen",
       "delays": [
         [
-          0.15,
-          0.15,
-          0.15,
-          0.15,
-          0.15,
-          0.15
+          5.0,
+          0.5,
+          0.5,
+          0.5
         ]
       ]
     }

@@ -89,6 +89,9 @@
     - id: RevolverCapGun
     - id: BarberScissors
     - id: ClothingUniformJumpskirtOldDress
+    - id: BikeHorn
+    - id: ClownRecorder
+    - id: ClothingBeltSuspenders
 
 - type: entity
   id: CrateServiceCustomSmokable
@@ -125,6 +128,18 @@
     - id: BoxFolderRed
     - id: BoxFolderYellow
     - id: NewtonCradle
+    - id: BoxEnvelope
+
+- type: entity
+  id: CrateServiceFaxMachine
+  parent: CrateGenericSteel
+  name: fax machine crate
+  description: A fax machine and a screwdriver to set the name with.
+  components:
+  - type: StorageFill
+    contents:
+    - id: Screwdriver
+    - id: FaxMachineFlatpack
 
 - type: entity
   id: CrateServicePersonnel
@@ -159,7 +174,7 @@
       - id: BookSpaceEncyclopedia
       - id: BookTheBookOfControl
       - id: BookBartendersManual
-      - id: BookChefGaming
+      - id: BookHowToCookForFortySpaceman
       - id: BookLeafLoversSecret
       - id: BookEngineersHandbook
       - id: BookScientistsGuidebook
@@ -169,6 +184,7 @@
       - id: BookMedicalReferenceBook
       - id: BookHowToSurvive
       - id: BookChemicalCompendium
+      - id: BookSpaceLaw
 
 - type: entity
   id: CrateServiceSodaDispenser
@@ -320,14 +336,14 @@
           prob: 0.1
 
 - type: entity
-  id: CrateJanitorExplosive
-  parent: ClosetJanitorBomb
-  name: janitorial bomb suit crate
-  description: Supplies a bomb suit for cleaning up any explosive compounds, buy one today!
+  id: CrateCandles
+  parent: CrateGenericSteel
+  name: candles crate
+  description: Contains 4 boxes of candles, 2 large and 2 small. For atmosphere or something.
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterSuitJanitorBomb
-        amount: 1
-      - id: ClothingHeadHelmetJanitorBombSuit
-        amount: 1
+      - id: BoxCandle
+        amount: 2
+      - id: BoxCandleSmall
+        amount: 2

@@ -17,6 +17,7 @@ using Content.Shared.Disposal.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Explosion;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
@@ -24,7 +25,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
-using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
@@ -34,7 +34,6 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Disposal.Unit.EntitySystems;
@@ -42,7 +41,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems;
 public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
@@ -77,6 +75,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         SubscribeLocalEvent<DisposalUnitComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
         SubscribeLocalEvent<DisposalUnitComponent, DragDropTargetEvent>(OnDragDropOn);
         SubscribeLocalEvent<DisposalUnitComponent, DestructionEventArgs>(OnDestruction);
+        SubscribeLocalEvent<DisposalUnitComponent, BeforeExplodeEvent>(OnExploded);
 
         SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<InteractionVerb>>(AddInsertVerb);
         SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<AlternativeVerb>>(AddDisposalAltVerbs);
@@ -210,10 +209,11 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<DisposalUnitComponent, MetaDataComponent>();
+        var query = AllEntityQuery<DisposalUnitComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out var unit, out var metadata))
         {
-            Update(uid, unit, metadata, frameTime);
+            if (!metadata.EntityPaused)
+                Update(uid, unit, metadata, frameTime);
         }
     }
 
@@ -263,6 +263,9 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     private void OnActivate(EntityUid uid, SharedDisposalUnitComponent component, ActivateInWorldEvent args)
     {
+        if (args.Handled || !args.Complex)
+            return;
+
         if (!TryComp(args.User, out ActorComponent? actor))
         {
             return;
@@ -326,12 +329,13 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
         var currentTime = GameTiming.CurTime;
 
+        if (!_actionBlockerSystem.CanMove(args.Entity))
+            return;
+
         if (!TryComp(args.Entity, out HandsComponent? hands) ||
             hands.Count == 0 ||
             currentTime < component.LastExitAttempt + ExitAttemptDelay)
-        {
             return;
-        }
 
         component.LastExitAttempt = currentTime;
         Remove(uid, component, args.Entity);
@@ -775,6 +779,12 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         Joints.RecursiveClearJoints(inserted);
         UpdateVisualState(uid, component);
     }
+
+    private void OnExploded(Entity<DisposalUnitComponent> ent, ref BeforeExplodeEvent args)
+    {
+        args.Contents.AddRange(ent.Comp.Container.ContainedEntities);
+    }
+
 }
 
 /// <summary>

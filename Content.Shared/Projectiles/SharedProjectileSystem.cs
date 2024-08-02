@@ -47,7 +47,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         if (component.RemovalTime == null)
             return;
 
-        if (args.Handled || !TryComp<PhysicsComponent>(uid, out var physics) || physics.BodyType != BodyType.Static)
+        if (args.Handled || !args.Complex || !TryComp<PhysicsComponent>(uid, out var physics) || physics.BodyType != BodyType.Static)
             return;
 
         args.Handled = true;
@@ -120,7 +120,10 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
         if (component.Offset != Vector2.Zero)
         {
-            _transform.SetLocalPosition(uid, xform.LocalPosition + xform.LocalRotation.RotateVec(component.Offset),
+            var rotation = xform.LocalRotation;
+            if (TryComp<ThrowingAngleComponent>(uid, out var throwingAngleComp))
+                rotation += throwingAngleComp.Angle;
+            _transform.SetLocalPosition(uid, xform.LocalPosition + rotation.RotateVec(component.Offset),
                 xform);
         }
 

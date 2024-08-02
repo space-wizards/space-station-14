@@ -176,6 +176,7 @@
           nodeGroupID: Teg
 
     - type: AtmosUnsafeUnanchor
+    - type: PipeRestrictOverlap
     - type: TegCirculator
     - type: StealTarget
       stealGroup: Teg
@@ -183,7 +184,7 @@
 - # Spawned by the client-side circulator examine code to indicate the inlet/outlet direction.
   type: entity
   id: TegCirculatorArrow
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Markers/teg_arrow.rsi

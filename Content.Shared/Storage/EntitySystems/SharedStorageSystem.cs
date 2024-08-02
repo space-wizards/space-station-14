@@ -2,17 +2,15 @@ using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Administration;
-using Content.Shared.Administration.Managers;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
-using Content.Shared.Ghost;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Lock;
@@ -23,6 +21,8 @@ using Content.Shared.Stacks;
 using Content.Shared.Storage.Components;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -40,7 +40,6 @@ public abstract class SharedStorageSystem : EntitySystem
 {
     [Dependency] private   readonly IPrototypeManager _prototype = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
-    [Dependency] private readonly ISharedAdminManager _admin = default!;
     [Dependency] protected readonly ActionBlockerSystem ActionBlocker = default!;
     [Dependency] private   readonly EntityLookupSystem _entityLookupSystem = default!;
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
@@ -57,6 +56,7 @@ public abstract class SharedStorageSystem : EntitySystem
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private   readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] protected readonly UseDelaySystem UseDelay = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     private EntityQuery<ItemComponent> _itemQuery;
     private EntityQuery<StackComponent> _stackQuery;
@@ -66,6 +66,9 @@ public abstract class SharedStorageSystem : EntitySystem
     public const string DefaultStorageMaxItemSize = "Normal";
 
     public const float AreaInsertDelayPerItem = 0.075f;
+    private static AudioParams _audioParams = AudioParams.Default
+        .WithMaxDistance(7f)
+        .WithVolume(-2f);
 
     private ItemSizePrototype _defaultStorageMaxItemSize = default!;
 
@@ -97,6 +100,7 @@ public abstract class SharedStorageSystem : EntitySystem
             subs.Event<BoundUIClosedEvent>(OnBoundUIClosed);
         });
 
+        SubscribeLocalEvent<StorageComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<StorageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<StorageComponent, GetVerbsEvent<ActivationVerb>>(AddUiVerb);
         SubscribeLocalEvent<StorageComponent, ComponentGetState>(OnStorageGetState);
@@ -109,6 +113,7 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, AfterInteractEvent>(AfterInteract);
         SubscribeLocalEvent<StorageComponent, DestructionEventArgs>(OnDestroy);
         SubscribeLocalEvent<StorageComponent, BoundUIOpenedEvent>(OnBoundUIOpen);
+        SubscribeLocalEvent<StorageComponent, LockToggledEvent>(OnLockToggled);
         SubscribeLocalEvent<MetaDataComponent, StackCountChangedEvent>(OnStackCountChanged);
 
         SubscribeLocalEvent<StorageComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
@@ -133,13 +138,15 @@ public abstract class SharedStorageSystem : EntitySystem
         UpdatePrototypeCache();
     }
 
+    private void OnRemove(Entity<StorageComponent> entity, ref ComponentRemove args)
+    {
+        _ui.CloseUi(entity.Owner, StorageComponent.StorageUiKey.Key);
+    }
+
     private void OnMapInit(Entity<StorageComponent> entity, ref MapInitEvent args)
     {
-        if (TryComp<UseDelayComponent>(entity, out var useDelayComp))
-        {
-            UseDelay.SetLength((entity, useDelayComp), entity.Comp.QuickInsertCooldown, QuickInsertUseDelayID);
-            UseDelay.SetLength((entity, useDelayComp), entity.Comp.OpenUiCooldown, OpenUiUseDelayID);
-        }
+        UseDelay.SetLength(entity.Owner, entity.Comp.QuickInsertCooldown, QuickInsertUseDelayID);
+        UseDelay.SetLength(entity.Owner, entity.Comp.OpenUiCooldown, OpenUiUseDelayID);
     }
 
     private void OnStorageGetState(EntityUid uid, StorageComponent component, ref ComponentGetState args)
@@ -156,7 +163,9 @@ public abstract class SharedStorageSystem : EntitySystem
             Grid = new List<Box2i>(component.Grid),
             MaxItemSize = component.MaxItemSize,
             StoredItems = storedItems,
-            SavedLocations = component.SavedLocations
+            SavedLocations = component.SavedLocations,
+            Whitelist = component.Whitelist,
+            Blacklist = component.Blacklist
         };
     }
 
@@ -168,6 +177,8 @@ public abstract class SharedStorageSystem : EntitySystem
         component.Grid.Clear();
         component.Grid.AddRange(state.Grid);
         component.MaxItemSize = state.MaxItemSize;
+        component.Whitelist = state.Whitelist;
+        component.Blacklist = state.Blacklist;
 
         component.StoredItems.Clear();
 
@@ -251,17 +262,8 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void AddUiVerb(EntityUid uid, StorageComponent component, GetVerbsEvent<ActivationVerb> args)
     {
-        var silent = false;
-        if (!args.CanAccess || !args.CanInteract || TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked)
-        {
-            // we allow admins to open the storage anyways
-            if (!_admin.HasAdminFlag(args.User, AdminFlags.Admin))
-                return;
-
-            silent = true;
-        }
-
-        silent |= HasComp<GhostComponent>(args.User);
+        if (!CanInteract(args.User, (uid, component), args.CanAccess && args.CanInteract))
+            return;
 
         // Does this player currently have the storage UI open?
         var uiOpen = _ui.IsUiOpen(uid, StorageComponent.StorageUiKey.Key, args.User);
@@ -276,7 +278,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 }
                 else
                 {
-                    OpenStorageUI(uid, args.User, component, silent);
+                    OpenStorageUI(uid, args.User, component);
                 }
             }
         };
@@ -300,20 +302,23 @@ public abstract class SharedStorageSystem : EntitySystem
     ///     Opens the storage UI for an entity
     /// </summary>
     /// <param name="entity">The entity to open the UI for</param>
-    public void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = false)
+    public void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = true)
     {
         if (!Resolve(uid, ref storageComp, false))
             return;
 
         // prevent spamming bag open / honkerton honk sound
-        silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && UseDelay.IsDelayed((uid, useDelay));
+        silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && UseDelay.IsDelayed((uid, useDelay), id: OpenUiUseDelayID);
+        if (!CanInteract(entity, (uid, storageComp), silent: silent))
+            return;
+
         if (!silent)
         {
             if (!_ui.IsUiOpen(uid, StorageComponent.StorageUiKey.Key))
                 Audio.PlayPredicted(storageComp.StorageOpenSound, uid, entity);
 
             if (useDelay != null)
-                UseDelay.TryResetDelay((uid, useDelay));
+                UseDelay.TryResetDelay((uid, useDelay), id: OpenUiUseDelayID);
         }
 
         _ui.OpenUi(uid, StorageComponent.StorageUiKey.Key, entity);
@@ -328,7 +333,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         var entities = component.Container.ContainedEntities;
 
-        if (entities.Count == 0 || TryComp(uid, out LockComponent? lockComponent) && lockComponent.Locked)
+        if (entities.Count == 0 || !CanInteract(args.User, (uid, component)))
             return;
 
         // if the target is storage, add a verb to transfer storage.
@@ -339,7 +344,7 @@ public abstract class SharedStorageSystem : EntitySystem
             {
                 Text = Loc.GetString("storage-component-transfer-verb"),
                 IconEntity = GetNetEntity(args.Using),
-                Act = () => TransferEntities(uid, args.Target, args.User, component, lockComponent, targetStorage, targetLock)
+                Act = () => TransferEntities(uid, args.Target, args.User, component, null, targetStorage, targetLock)
             };
 
             args.Verbs.Add(verb);
@@ -352,7 +357,7 @@ public abstract class SharedStorageSystem : EntitySystem
     /// <returns>true if inserted, false otherwise</returns>
     private void OnInteractUsing(EntityUid uid, StorageComponent storageComp, InteractUsingEvent args)
     {
-        if (args.Handled || !storageComp.ClickInsert || TryComp(uid, out LockComponent? lockComponent) && lockComponent.Locked)
+        if (args.Handled || !CanInteract(args.User, (uid, storageComp), storageComp.ClickInsert, false))
             return;
 
         if (HasComp<PlaceableSurfaceComponent>(uid))
@@ -370,7 +375,7 @@ public abstract class SharedStorageSystem : EntitySystem
     /// </summary>
     private void OnActivate(EntityUid uid, StorageComponent storageComp, ActivateInWorldEvent args)
     {
-        if (args.Handled || TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked)
+        if (args.Handled || !args.Complex || !CanInteract(args.User, (uid, storageComp), storageComp.ClickInsert))
             return;
 
         // Toggle
@@ -380,7 +385,7 @@ public abstract class SharedStorageSystem : EntitySystem
         }
         else
         {
-            OpenStorageUI(uid, args.User, storageComp);
+            OpenStorageUI(uid, args.User, storageComp, false);
         }
 
         args.Handled = true;
@@ -394,7 +399,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (args.Handled)
             return;
 
-        OpenStorageUI(uid, args.Performer, storageComp);
+        OpenStorageUI(uid, args.Performer, storageComp, false);
         args.Handled = true;
     }
 
@@ -465,7 +470,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 return;
             }
 
-            if (_xformQuery.TryGetComponent(uid, out var transformOwner) && TryComp<TransformComponent>(target, out var transformEnt))
+            if (TryComp(uid, out TransformComponent? transformOwner) && TryComp(target, out TransformComponent? transformEnt))
             {
                 var parent = transformOwner.ParentUid;
 
@@ -541,7 +546,7 @@ public abstract class SharedStorageSystem : EntitySystem
         // If we picked up at least one thing, play a sound and do a cool animation!
         if (successfullyInserted.Count > 0)
         {
-            Audio.PlayPredicted(component.StorageInsertSound, uid, args.User);
+            Audio.PlayPredicted(component.StorageInsertSound, uid, args.User, _audioParams);
             EntityManager.RaiseSharedEvent(new AnimateInsertingEntitiesEvent(
                 GetNetEntity(uid),
                 GetNetEntityList(successfullyInserted),
@@ -602,7 +607,7 @@ public abstract class SharedStorageSystem : EntitySystem
         {
             if (_sharedHandsSystem.TryPickupAnyHand(player, entity, handsComp: hands)
                 && storageComp.StorageRemoveSound != null)
-                Audio.PlayPredicted(storageComp.StorageRemoveSound, uid, player);
+                Audio.PlayPredicted(storageComp.StorageRemoveSound, uid, player, _audioParams);
             {
                 return;
             }
@@ -662,7 +667,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
 
         TransformSystem.DropNextTo(itemEnt, player);
-        Audio.PlayPredicted(storageComp.StorageRemoveSound, storageEnt, player);
+        Audio.PlayPredicted(storageComp.StorageRemoveSound, storageEnt, player, _audioParams);
     }
 
     private void OnInsertItemIntoLocation(StorageInsertItemIntoLocationEvent msg, EntitySessionEventArgs args)
@@ -805,7 +810,11 @@ public abstract class SharedStorageSystem : EntitySystem
         _appearance.SetData(uid, StorageVisuals.Capacity, capacity, appearance);
         _appearance.SetData(uid, StorageVisuals.Open, isOpen, appearance);
         _appearance.SetData(uid, SharedBagOpenVisuals.BagState, isOpen ? SharedBagState.Open : SharedBagState.Closed, appearance);
-        _appearance.SetData(uid, StackVisuals.Hide, !isOpen, appearance);
+
+        // HideClosedStackVisuals true sets the StackVisuals.Hide to the open state of the storage.
+        // This is for containers that only show their contents when open. (e.g. donut boxes)
+        if (storage.HideStackVisualsWhenClosed)
+            _appearance.SetData(uid, StackVisuals.Hide, !isOpen, appearance);
     }
 
     /// <summary>
@@ -831,7 +840,7 @@ public abstract class SharedStorageSystem : EntitySystem
             Insert(target, entity, out _, user: user, targetComp, playSound: false);
         }
 
-        Audio.PlayPredicted(sourceComp.StorageInsertSound, target, user);
+        Audio.PlayPredicted(sourceComp.StorageInsertSound, target, user, _audioParams);
     }
 
     /// <summary>
@@ -866,13 +875,8 @@ public abstract class SharedStorageSystem : EntitySystem
             return false;
         }
 
-        if (storageComp.Whitelist?.IsValid(insertEnt, EntityManager) == false)
-        {
-            reason = "comp-storage-invalid-container";
-            return false;
-        }
-
-        if (storageComp.Blacklist?.IsValid(insertEnt, EntityManager) == true)
+        if (_whitelistSystem.IsWhitelistFail(storageComp.Whitelist, insertEnt) ||
+            _whitelistSystem.IsBlacklistPass(storageComp.Blacklist, insertEnt))
         {
             reason = "comp-storage-invalid-container";
             return false;
@@ -1015,7 +1019,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 return false;
 
             if (playSound)
-                Audio.PlayPredicted(storageComp.StorageInsertSound, uid, user);
+                Audio.PlayPredicted(storageComp.StorageInsertSound, uid, user, _audioParams);
 
             return true;
         }
@@ -1045,7 +1049,7 @@ public abstract class SharedStorageSystem : EntitySystem
         }
 
         if (playSound)
-            Audio.PlayPredicted(storageComp.StorageInsertSound, uid, user);
+            Audio.PlayPredicted(storageComp.StorageInsertSound, uid, user, _audioParams);
 
         return true;
     }
@@ -1089,7 +1093,7 @@ public abstract class SharedStorageSystem : EntitySystem
     /// <returns>true if inserted, false otherwise</returns>
     public bool PlayerInsertEntityInWorld(Entity<StorageComponent?> uid, EntityUid player, EntityUid toInsert)
     {
-        if (!Resolve(uid, ref uid.Comp) || !_interactionSystem.InRangeUnobstructed(player, uid))
+        if (!Resolve(uid, ref uid.Comp) || !_interactionSystem.InRangeUnobstructed(player, uid.Owner))
             return false;
 
         if (!Insert(uid, toInsert, out _, user: player, uid.Comp))
@@ -1394,7 +1398,12 @@ public abstract class SharedStorageSystem : EntitySystem
 
         // If we specify a max item size, use that
         if (uid.Comp.MaxItemSize != null)
-            return _prototype.Index(uid.Comp.MaxItemSize.Value);
+        {
+            if (_prototype.TryIndex(uid.Comp.MaxItemSize.Value, out var proto))
+                return proto;
+
+            Log.Error($"{ToPrettyString(uid.Owner)} tried to get invalid item size prototype: {uid.Comp.MaxItemSize.Value}. Stack trace:\\n{Environment.StackTrace}");
+        }
 
         if (!_itemQuery.TryGetComponent(uid, out var item))
             return _defaultStorageMaxItemSize;
@@ -1402,6 +1411,22 @@ public abstract class SharedStorageSystem : EntitySystem
         // if there is no max item size specified, the value used
         // is one below the item size of the storage entity.
         return _nextSmallest[item.Size];
+    }
+
+    /// <summary>
+    /// Checks if a storage's UI is open by anyone when locked, and closes it.
+    /// </summary>
+    private void OnLockToggled(EntityUid uid, StorageComponent component, ref LockToggledEvent args)
+    {
+        if (!args.Locked)
+            return;
+
+        // Gets everyone looking at the UI
+        foreach (var actor in _ui.GetActors(uid, StorageComponent.StorageUiKey.Key).ToList())
+        {
+            if (!CanInteract(actor, (uid, component)))
+                _ui.CloseUi(uid, StorageComponent.StorageUiKey.Key, actor);
+        }
     }
 
     private void OnStackCountChanged(EntityUid uid, MetaDataComponent component, StackCountChangedEvent args)
@@ -1416,15 +1441,15 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void HandleOpenBackpack(ICommonSession? session)
     {
-        HandleOpenSlotUI(session, "back");
+        HandleToggleSlotUI(session, "back");
     }
 
     private void HandleOpenBelt(ICommonSession? session)
     {
-        HandleOpenSlotUI(session, "belt");
+        HandleToggleSlotUI(session, "belt");
     }
 
-    private void HandleOpenSlotUI(ICommonSession? session, string slot)
+    private void HandleToggleSlotUI(ICommonSession? session, string slot)
     {
         if (session is not { } playerSession)
             return;
@@ -1438,7 +1463,14 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!ActionBlocker.CanInteract(playerEnt, storageEnt))
             return;
 
-        OpenStorageUI(storageEnt.Value, playerEnt);
+        if (!_ui.IsUiOpen(storageEnt.Value, StorageComponent.StorageUiKey.Key, playerEnt))
+        {
+            OpenStorageUI(storageEnt.Value, playerEnt, silent: false);
+        }
+        else
+        {
+            _ui.CloseUi(storageEnt.Value, StorageComponent.StorageUiKey.Key, playerEnt);
+        }
     }
 
     protected void ClearCantFillReasons()
@@ -1446,6 +1478,20 @@ public abstract class SharedStorageSystem : EntitySystem
 #if DEBUG
         CantFillReasons.Clear();
 #endif
+    }
+
+    private bool CanInteract(EntityUid user, Entity<StorageComponent> storage, bool canInteract = true, bool silent = true)
+    {
+        if (HasComp<BypassInteractionChecksComponent>(user))
+            return true;
+
+        if (!canInteract)
+            return false;
+
+        var ev = new StorageInteractAttemptEvent(silent);
+        RaiseLocalEvent(storage, ref ev);
+
+        return !ev.Cancelled;
     }
 
     /// <summary>
@@ -1464,5 +1510,9 @@ public abstract class SharedStorageSystem : EntitySystem
         public List<Box2i> Grid = new();
 
         public ProtoId<ItemSizePrototype>? MaxItemSize;
+
+        public EntityWhitelist? Whitelist;
+
+        public EntityWhitelist? Blacklist;
     }
 }

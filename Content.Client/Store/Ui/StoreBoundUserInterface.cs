@@ -1,6 +1,8 @@
 using Content.Shared.Store;
 using JetBrains.Annotations;
 using System.Linq;
+using Content.Shared.Store.Components;
+using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Store.Ui;
@@ -14,9 +16,6 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
     private StoreMenu? _menu;
 
     [ViewVariables]
-    private string _windowName = Loc.GetString("store-ui-default-title");
-
-    [ViewVariables]
     private string _search = string.Empty;
 
     [ViewVariables]
@@ -28,10 +27,9 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
     protected override void Open()
     {
-        _menu = new StoreMenu(_windowName);
-
-        _menu.OpenCentered();
-        _menu.OnClose += Close;
+        _menu = this.CreateWindow<StoreMenu>();
+        if (EntMan.TryGetComponent<StoreComponent>(Owner, out var store))
+            _menu.Title = Loc.GetString(store.Name);
 
         _menu.OnListingButtonPressed += (_, listing) =>
         {
@@ -64,36 +62,17 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
     {
         base.UpdateState(state);
 
-        if (_menu == null)
-            return;
-
         switch (state)
         {
             case StoreUpdateState msg:
                 _listings = msg.Listings;
 
-                _menu.UpdateBalance(msg.Balance);
+                _menu?.UpdateBalance(msg.Balance);
                 UpdateListingsWithSearchFilter();
-                _menu.SetFooterVisibility(msg.ShowFooter);
-                _menu.UpdateRefund(msg.AllowRefund);
-                break;
-            case StoreInitializeState msg:
-                _windowName = msg.Name;
-                if (_menu != null && _menu.Window != null)
-                {
-                    _menu.Window.Title = msg.Name;
-                }
+                _menu?.SetFooterVisibility(msg.ShowFooter);
+                _menu?.UpdateRefund(msg.AllowRefund);
                 break;
         }
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-        _menu?.Close();
-        _menu?.Dispose();
     }
 
     private void UpdateListingsWithSearchFilter()

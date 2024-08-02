@@ -12,6 +12,10 @@ namespace Content.Server.Info;
 [AdminCommand(AdminFlags.Admin)]
 public sealed class ShowRulesCommand : IConsoleCommand
 {
+    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly IConfigurationManager _configuration = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
+
     public string Command => "showrules";
     public string Description => "Opens the rules popup for the specified player.";
     public string Help => "showrules <username> [seconds]";
@@ -25,8 +29,7 @@ public sealed class ShowRulesCommand : IConsoleCommand
             case 1:
             {
                 target = args[0];
-                var configurationManager = IoCManager.Resolve<IConfigurationManager>();
-                seconds = configurationManager.GetCVar(CCVars.RulesWaitTime);
+                seconds = _configuration.GetCVar(CCVars.RulesWaitTime);
                 break;
             }
             case 2:
@@ -47,20 +50,15 @@ public sealed class ShowRulesCommand : IConsoleCommand
             }
         }
 
-        var locator = IoCManager.Resolve<IPlayerLocator>();
-        var located = await locator.LookupIdByNameOrIdAsync(target);
-        if (located == null)
+
+        if (!_player.TryGetSessionByUsername(target, out var player))
         {
             shell.WriteError("Unable to find a player with that name.");
-            return;
+           return;
         }
 
-        var netManager = IoCManager.Resolve<INetManager>();
-
-        var message = new SharedRulesManager.ShowRulesPopupMessage();
-        message.PopupTime = seconds;
-
-        var player = IoCManager.Resolve<IPlayerManager>().GetSessionById(located.UserId);
-        netManager.ServerSendMessage(message, player.Channel);
+        var coreRules = _configuration.GetCVar(CCVars.RulesFile);
+        var message = new SendRulesInformationMessage { PopupTime = seconds, CoreRules = coreRules, ShouldShowRules = true};
+        _net.ServerSendMessage(message, player.Channel);
     }
 }

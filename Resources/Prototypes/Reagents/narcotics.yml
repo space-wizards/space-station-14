@@ -151,8 +151,7 @@
         - !type:HealthChange
           conditions:
           - !type:TotalDamage
-            min: 70
-            max: 120 # you've got a chance to get out of crit
+            min: 70 # only heals when you're more dead than alive
           damage: # heals at the same rate as tricordrazine, doesn't heal poison because if you OD'd I'm not giving you a safety net
             groups:
               Burn: -1
@@ -172,25 +171,6 @@
     amount: -5
   - !type:PlantAdjustHealth
     amount: -1
-  metabolisms:
-    Narcotic:
-      effects:
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
-        component: SeeingRainbows
-        type: Add
-        time: 16
-        refresh: false
-
-- type: reagent
-  id: THCOil # deprecated in favor of THC, preserved here for forks
-  name: reagent-name-thc-oil
-  group: Narcotics
-  desc: reagent-desc-thc-oil
-  physicalDesc: reagent-physical-desc-skunky
-  flavor: bitter
-  flavorMinimum: 0.05
-  color: "#DAA520"
   metabolisms:
     Narcotic:
       effects:
