@@ -104,7 +104,7 @@
   id: FigurinesCE
   values:
     prefix: figurines-ce-
-    count: 6
+    count: 5
 
 - type: localizedDataset
   id: FigurinesEngineer
