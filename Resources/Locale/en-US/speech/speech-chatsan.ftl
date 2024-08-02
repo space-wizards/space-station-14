@@ -144,3 +144,6 @@ chatsan-replacement-51 = real quick
 
 chatsan-word-52 = dw
 chatsan-replacement-52 = don't worry
+
+chatsan-word-56 = ngl
+chatsan-replacement-56 = not going to lie
