@@ -16,7 +16,7 @@ public sealed class AddObjectiveCommand : LocalizedEntityCommands
     [Dependency] private readonly IPlayerManager _players = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly AddObjectiveManager _objectives = default!;
+    [Dependency] private readonly AddObjectivesCompletionsSystem _objectives = default!;
 
     public override string Command => "addobjective";
 

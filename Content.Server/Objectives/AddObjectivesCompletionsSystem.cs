@@ -5,18 +5,18 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Objectives;
 
-public sealed class AddObjectiveManager : IPostInjectInit
+public sealed class AddObjectivesCompletionsSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     private IEnumerable<string>? _objectives;
 
-    public void PostInject()
+    public override void Initialize()
     {
         _prototypes.PrototypesReloaded += CreateCompletions;
     }
 
-    public void Shutdown()
+    public override void Shutdown()
     {
         _prototypes.PrototypesReloaded -= CreateCompletions;
     }
