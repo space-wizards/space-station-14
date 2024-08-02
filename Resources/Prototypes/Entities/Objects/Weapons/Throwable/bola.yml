@@ -66,15 +66,9 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Throwable/energy_bola.rsi
-  - type: Item
-    size: Small
   - type: DamageOnLand
     damage:
       types:
         Heat: 5
   - type: Ensnaring
-    breakoutTime: 4
-    walkSpeed: 0.5
-    sprintSpeed: 0.5
-    canMoveBreakout: false
     destroyOnRemove: true
