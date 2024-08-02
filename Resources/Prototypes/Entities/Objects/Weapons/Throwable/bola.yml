@@ -66,6 +66,8 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Throwable/energy_bola.rsi
+  - type: Item
+    size: Small
   - type: DamageOnLand
     damage:
       types:
