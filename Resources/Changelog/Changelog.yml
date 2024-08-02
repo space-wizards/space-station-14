@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Blackern5000
   changes:
-  - message: Security belts can now hold more items that security commonly uses.
-    type: Tweak
-  id: 6529
-  time: '2024-05-04T20:00:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27674
-- author: Blackern5000
-  changes:
   - message: Floodlights now use medium power cells instead of small ones.
     type: Tweak
   id: 6530
@@ -3772,3 +3765,11 @@
   id: 7028
   time: '2024-08-02T05:43:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29199
+- author: slarticodefast
+  changes:
+  - message: Fixed borgs not being able to state laws or open other UIs without an
+      active module.
+    type: Fix
+  id: 7029
+  time: '2024-08-02T05:44:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30299
