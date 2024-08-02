@@ -44,6 +44,15 @@ public sealed partial class PullableComponent : Component
     [DataField]
     public ProtoId<AlertPrototype> PulledAlert = "Pulled";
 
+    [DataField]
+    public Dictionary<GrabStage, short> PulledAlertAlertSeverity = new()
+    {
+        { GrabStage.No, 0 },
+        { GrabStage.Soft, 1 },
+        { GrabStage.Hard, 2 },
+        { GrabStage.Suffocate, 3 },
+    };
+
     [AutoNetworkedField, DataField]
     public GrabStage GrabStage = GrabStage.No;
 

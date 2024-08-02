@@ -17,7 +17,7 @@
   extendedAccess:
   - Hydroponics
   - Bar
-  
+
 - type: startingGear
   id: ChefGear
   equipment:

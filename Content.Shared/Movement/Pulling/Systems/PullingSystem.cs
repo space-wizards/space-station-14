@@ -132,7 +132,7 @@ public sealed class PullingSystem : EntitySystem
         if (!TryComp(pullerComp.Pulling, out PullableComponent? pullableComp))
             return;
 
-        foreach (var item in pullerComp.SuffocateVirtualItems)
+        foreach (var item in pullerComp.GrabVirtualItems)
         {
             QueueDel(item);
         }
@@ -148,7 +148,7 @@ public sealed class PullingSystem : EntitySystem
         if (!TryComp(ent.Comp.Pulling.Value, out PullableComponent? pulling))
             return;
 
-        foreach (var item in ent.Comp.SuffocateVirtualItems)
+        foreach (var item in ent.Comp.GrabVirtualItems)
         {
             QueueDel(item);
         }
@@ -466,12 +466,12 @@ public sealed class PullingSystem : EntitySystem
             pullerComp.Pulling = null;
 
             pullerComp.GrabStage = GrabStage.No;
-            List<EntityUid> virtItems = pullerComp.SuffocateVirtualItems;
+            List<EntityUid> virtItems = pullerComp.GrabVirtualItems;
             foreach (var item in virtItems)
             {
                 QueueDel(item);
             }
-            pullerComp.SuffocateVirtualItems.Clear();
+            pullerComp.GrabVirtualItems.Clear();
 
             Dirty(oldPuller.Value, pullerComp);
 
@@ -565,19 +565,17 @@ public sealed class PullingSystem : EntitySystem
         if (!Resolve(pullable, ref pullable.Comp, false))
             return false;
 
-        if (pullable.Comp.Puller == pullerUid)
-        {
-            if (TryGrab(pullable, pullerUid))
-                return true;
+        if (pullable.Comp.Puller != pullerUid)
+            return TryStartPull(pullerUid, pullable, pullableComp: pullable);
 
-            if (TryComp<PullerComponent>(pullerUid, out var pullerComp))
-                if (_timing.CurTime < pullerComp.NextStageChange)
-                    return true;
+        if (TryGrab(pullable, pullerUid))
+            return true;
 
-            return TryStopPull(pullable, pullable.Comp, ignoreGrab: true);
-        }
+        if (TryComp<PullerComponent>(pullerUid, out var pullerComp) && _timing.CurTime < pullerComp.NextStageChange)
+            return true;
 
-        return TryStartPull(pullerUid, pullable, pullableComp: pullable);
+        return TryStopPull(pullable, pullable.Comp, ignoreGrab: true);
+
     }
 
     public bool TogglePull(EntityUid pullerUid, PullerComponent puller)
@@ -737,7 +735,7 @@ public sealed class PullingSystem : EntitySystem
                 return false;
             }
 
-            else if (_netManager.IsServer && user != null && user.Value == pullableUid)
+            if (_netManager.IsServer && user != null && user.Value == pullableUid)
             {
                 _popup.PopupEntity(Loc.GetString("popup-grab-release-success-self"), pullableUid, pullableUid, PopupType.SmallCaution);
                 _popup.PopupEntity(Loc.GetString("popup-grab-release-success-puller", ("target", Identity.Entity(pullableUid, EntityManager))), pullerUidNull.Value, pullerUidNull.Value, PopupType.MediumCaution);
@@ -754,113 +752,155 @@ public sealed class PullingSystem : EntitySystem
     /// <param name="pullable">Target that would be grabbed</param>
     /// <param name="puller">Performer of the grab</param>
     /// <param name="ignoreCombatMode">If true, will ignore disabled combat mode</param>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <returns></returns>
     public bool TryGrab(Entity<PullableComponent?> pullable, Entity<PullerComponent?> puller, bool ignoreCombatMode = false)
     {
-        if (!Resolve(pullable.Owner, ref pullable.Comp) ||
-            !Resolve(puller.Owner, ref puller.Comp) ||
-            pullable.Comp.Puller != puller.Owner ||
-            puller.Comp.Pulling != pullable.Owner ||
-            _timing.CurTime < puller.Comp.NextStageChange ||
-            !HasComp<MobStateComponent>(pullable))  // You can't choke crates
+        if (!Resolve(pullable.Owner, ref pullable.Comp))
             return false;
 
+        if (!Resolve(puller.Owner, ref puller.Comp))
+            return false;
 
+        if (pullable.Comp.Puller != puller.Owner ||
+            puller.Comp.Pulling != pullable.Owner)
+            return false;
+
+        if (puller.Comp.NextStageChange > _timing.CurTime)
+            return false;
+
+        // You can't choke crates
+        if (!HasComp<MobStateComponent>(pullable))
+            return false;
+
+        // Delay to avoid spamming
+        puller.Comp.NextStageChange = _timing.CurTime + puller.Comp.StageChangeCooldown;
+        Dirty(puller);
+
+        // Don't grab without combat mode
         if (!ignoreCombatMode)
         {
             if (!TryComp<CombatModeComponent>(puller.Owner, out var combatMode) || !combatMode.IsInCombatMode)
                 return false;
         }
 
-        // To avoid spamming
-        if (_netManager.IsServer)
+        // It's blocking stage update, maybe better UX?
+        if (puller.Comp.GrabStage == GrabStage.Suffocate)
         {
+            _stamina.TakeStaminaDamage(pullable, puller.Comp.SuffocateGrabStaminaDamage);
 
-            if (puller.Comp.GrabStage == GrabStage.Suffocate)
+            Dirty(pullable);
+            Dirty(puller);
+            return true;
+        }
+
+        // Update stage
+        // TODO: Change grab stage direction
+        var nextStageAddition = puller.Comp.GrabStageDirection switch
+        {
+            GrubStageDirection.Increase => 1,
+            GrubStageDirection.Decrease => -1,
+            _ => throw new ArgumentOutOfRangeException(),
+        };
+
+        var newStage = puller.Comp.GrabStage + nextStageAddition;
+
+        if (!TrySetGrabStages((puller.Owner, puller.Comp), (pullable.Owner, pullable.Comp), newStage))
+            return true;
+
+        _color.RaiseEffect(Color.Yellow, new List<EntityUid> { pullable }, Filter.Pvs(pullable, entityManager: EntityManager));
+        return true;
+    }
+
+    private bool TrySetGrabStages(Entity<PullerComponent> puller, Entity<PullableComponent> pullable, GrabStage stage)
+    {
+        puller.Comp.GrabStage = stage;
+        pullable.Comp.GrabStage = stage;
+
+        if (!TryUpdateGrabVirtualItems(puller, pullable))
+            return false;
+
+        var filter = Filter.Empty()
+            .AddPlayersByPvs(Transform(puller))
+            .RemovePlayerByAttachedEntity(puller.Owner)
+            .RemovePlayerByAttachedEntity(pullable.Owner);
+
+        var popupType = stage switch
+        {
+            GrabStage.No => PopupType.Small,
+            GrabStage.Soft => PopupType.Small,
+            GrabStage.Hard => PopupType.MediumCaution,
+            GrabStage.Suffocate => PopupType.LargeCaution,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
+        pullable.Comp.GrabEscapeChance = puller.Comp.EscapeChances[stage];
+
+        _alertsSystem.ShowAlert(puller, puller.Comp.PullingAlert, puller.Comp.PullingAlertSeverity[stage]);
+        _alertsSystem.ShowAlert(pullable, pullable.Comp.PulledAlert, pullable.Comp.PulledAlertAlertSeverity[stage]);
+
+        _blocker.UpdateCanMove(pullable);
+        _modifierSystem.RefreshMovementSpeedModifiers(puller);
+
+        // I'm lazy to write client code
+        if (!_netManager.IsServer)
+            return true;
+
+        _popup.PopupEntity(Loc.GetString($"popup-grab-{puller.Comp.GrabStage.ToString().ToLower()}-target", ("puller", Identity.Entity(puller, EntityManager))), pullable, pullable, popupType);
+        _popup.PopupEntity(Loc.GetString($"popup-grab-{puller.Comp.GrabStage.ToString().ToLower()}-self", ("target", Identity.Entity(pullable, EntityManager))), pullable, puller, PopupType.Medium);
+        _popup.PopupEntity(Loc.GetString($"popup-grab-{puller.Comp.GrabStage.ToString().ToLower()}-others", ("target", Identity.Entity(pullable, EntityManager)), ("puller", Identity.Entity(puller, EntityManager))), pullable, filter, true, popupType);
+
+        _audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg"), pullable);
+
+        Dirty(pullable);
+        Dirty(puller);
+
+        return true;
+    }
+
+    private bool TryUpdateGrabVirtualItems(Entity<PullerComponent> puller, Entity<PullableComponent> pullable)
+    {
+        // Updating virtual items
+        var virtualItemsCount = puller.Comp.GrabVirtualItems.Count;
+
+        var newVirtualItemsCount = puller.Comp.NeedsHands ? 0 : 1;
+        if (puller.Comp.GrabVirtualItemStageCount.TryGetValue(puller.Comp.GrabStage, out var count))
+            newVirtualItemsCount += count;
+
+        if (virtualItemsCount != newVirtualItemsCount)
+        {
+            var delta = newVirtualItemsCount - virtualItemsCount;
+
+            // Adding new virtual items
+            if (delta > 0)
             {
-                _stamina.TakeStaminaDamage(pullable, puller.Comp.SuffocateGrabStaminaDamage);
-                Dirty(pullable.Owner, pullable.Comp);
-                Dirty(puller.Owner, puller.Comp);
-
-                return true;
-            }
-
-            var nextStage = puller.Comp.GrabStage + 1;
-
-            if (!puller.Comp.NeedsHands && nextStage == GrabStage.Hard)
-            {
-                if (_virtualSystem.TrySpawnVirtualItemInHand(pullable.Owner, puller.Owner, out var item2, true))
-                    puller.Comp.SuffocateVirtualItems.Add(item2.Value);
-                else
+                for (var i = 0; i < delta; i++)
                 {
-                    _popup.PopupEntity(Loc.GetString("popup-grab-need-hand"), puller, puller, PopupType.Medium);
-                    return true;
+                    if (!_virtualSystem.TrySpawnVirtualItemInHand(pullable, puller.Owner, out var item, true))
+                    {
+                        // I'm lazy write client code
+                        if (_netManager.IsServer)
+                            _popup.PopupEntity(Loc.GetString("popup-grab-need-hand"), puller, puller, PopupType.Medium);
+
+                        return false;
+                    }
+
+                    puller.Comp.GrabVirtualItems.Add(item.Value);
                 }
             }
 
-            if (nextStage == GrabStage.Suffocate)
+            if (delta < 0)
             {
-                if (_virtualSystem.TrySpawnVirtualItemInHand(pullable.Owner, puller.Owner, out var item2, true))
-                    puller.Comp.SuffocateVirtualItems.Add(item2.Value);
-                else
+                for (var i = 0; i < Math.Abs(delta); i++)
                 {
-                    _popup.PopupEntity(Loc.GetString("popup-grab-need-hand"), puller, puller, PopupType.Medium);
-                    return true;
+                    if (i >= puller.Comp.GrabVirtualItems.Count)
+                        break;
+
+                    var item = puller.Comp.GrabVirtualItems[i];
+                    puller.Comp.GrabVirtualItems.Remove(item);
+                    QueueDel(item);
                 }
             }
-
-            _audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg"), pullable);
-            puller.Comp.NextStageChange = _timing.CurTime.Add(TimeSpan.FromSeconds(1.5f));
-            pullable.Comp.NextEscapeAttempt = _timing.CurTime.Add(TimeSpan.FromSeconds(1f));
-            _color.RaiseEffect(Color.Yellow, new List<EntityUid>() { pullable }, Filter.Pvs(pullable, entityManager: EntityManager));
-            Dirty(pullable.Owner, pullable.Comp);
-            Dirty(puller.Owner, puller.Comp);
-
-
-            puller.Comp.GrabStage = nextStage;
-            pullable.Comp.GrabStage = nextStage;
-
-            var othersFilter = Filter.Empty().AddPlayersByPvs(Transform(puller)).RemovePlayerByAttachedEntity(puller.Owner).RemovePlayerByAttachedEntity(pullable.Owner);
-            var popupType = PopupType.Small;
-
-            switch (puller.Comp.GrabStage)
-            {
-                case GrabStage.Soft:
-                    pullable.Comp.GrabEscapeChance = puller.Comp.SoftStageEscapeChance;
-                    _blocker.UpdateCanMove(pullable.Owner);
-                    _alertsSystem.ShowAlert(puller, puller.Comp.PullingAlert, 1);
-                    _alertsSystem.ShowAlert(pullable, pullable.Comp.PulledAlert, 1);
-                    popupType = PopupType.Small;
-                    break;
-                case GrabStage.Hard:
-                    pullable.Comp.GrabEscapeChance = puller.Comp.HardStageEscapeChance;
-                    _blocker.UpdateCanMove(pullable.Owner);
-                    _alertsSystem.ShowAlert(puller, puller.Comp.PullingAlert, 2);
-                    _alertsSystem.ShowAlert(pullable, pullable.Comp.PulledAlert, 2);
-                    popupType = PopupType.MediumCaution;
-                    break;
-                case GrabStage.Suffocate:
-                    pullable.Comp.GrabEscapeChance = puller.Comp.SuffocateStageEscapeChance;
-                    _blocker.UpdateCanMove(pullable.Owner);
-                    _alertsSystem.ShowAlert(puller, puller.Comp.PullingAlert, 3);
-                    _alertsSystem.ShowAlert(pullable, pullable.Comp.PulledAlert, 3);
-                    popupType = PopupType.LargeCaution;
-                    break;
-                default:
-                    pullable.Comp.GrabEscapeChance = 1f;
-                    _blocker.UpdateCanMove(pullable.Owner);
-                    _alertsSystem.ShowAlert(puller, puller.Comp.PullingAlert, 0);
-                    _alertsSystem.ShowAlert(pullable, pullable.Comp.PulledAlert, 0);
-                    break;
-            }
-
-            _modifierSystem.RefreshMovementSpeedModifiers(puller);
-            _popup.PopupEntity(Loc.GetString("popup-grab-" + puller.Comp.GrabStage.ToString().ToLower() + "-target", ("puller", Identity.Entity(puller, EntityManager))), pullable, pullable, popupType);
-            _popup.PopupEntity(Loc.GetString("popup-grab-" + puller.Comp.GrabStage.ToString().ToLower() + "-self", ("target", Identity.Entity(pullable, EntityManager))), pullable, puller, PopupType.Medium);
-            _popup.PopupEntity(Loc.GetString("popup-grab-" + puller.Comp.GrabStage.ToString().ToLower() + "-others", ("target", Identity.Entity(pullable, EntityManager)), ("puller", Identity.Entity(puller, EntityManager))), pullable, othersFilter, true, popupType);
-
-            Dirty(pullable.Owner, pullable.Comp);
-            Dirty(puller.Owner, puller.Comp);
         }
 
         return true;
@@ -916,14 +956,21 @@ public sealed class PullingSystem : EntitySystem
     /// <returns></returns>
     public bool TryLowerGrabStage(Entity<PullableComponent?> pullable, Entity<PullerComponent?> puller, bool ignoreCombatMode = false)
     {
-        if (!Resolve(pullable.Owner, ref pullable.Comp) ||
-            !Resolve(puller.Owner, ref puller.Comp) ||
-            pullable.Comp.Puller != puller.Owner ||
+        if (!Resolve(pullable.Owner, ref pullable.Comp))
+            return false;
+
+        if (!Resolve(puller.Owner, ref puller.Comp))
+            return false;
+
+        if (pullable.Comp.Puller != puller.Owner ||
             puller.Comp.Pulling != pullable.Owner)
             return false;
 
         if (_timing.CurTime < puller.Comp.NextStageChange)
             return true;
+
+        pullable.Comp.NextEscapeAttempt = _timing.CurTime.Add(TimeSpan.FromSeconds(1f));
+        Dirty(pullable);
 
         if (!ignoreCombatMode)
         {
@@ -934,91 +981,28 @@ public sealed class PullingSystem : EntitySystem
             }
         }
 
-        if (_netManager.IsServer)
+        if (puller.Comp.GrabStage == GrabStage.No)
         {
-            if (puller.Comp.GrabStage == GrabStage.No)
-            {
-                TryStopPull(pullable, pullable.Comp, ignoreGrab: true);
-
-                return true;
-            }
-
-            if (puller.Comp.GrabStage >= GrabStage.Hard && puller.Comp.SuffocateVirtualItems.Count > 0)
-            {
-                var ent = puller.Comp.SuffocateVirtualItems.Last();
-                puller.Comp.SuffocateVirtualItems.Remove(ent);
-                QueueDel(ent);
-            }
-            if (puller.Comp.GrabStage < GrabStage.Hard)
-            {
-                List<EntityUid> virtItems = puller.Comp.SuffocateVirtualItems;
-                foreach (var item in virtItems)
-                {
-                    QueueDel(item);
-                }
-                puller.Comp.SuffocateVirtualItems.Clear();
-            }
-
-            _audio.PlayPvs(new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg"), pullable);
-            puller.Comp.NextStageChange = _timing.CurTime.Add(TimeSpan.FromSeconds(1.5f));
-            pullable.Comp.NextEscapeAttempt = _timing.CurTime.Add(TimeSpan.FromSeconds(1f));
-            Dirty(pullable.Owner, pullable.Comp);
-            Dirty(puller.Owner, puller.Comp);
-
-            puller.Comp.GrabStage -= 1;
-            pullable.Comp.GrabStage = puller.Comp.GrabStage;
-
-            var othersFilter = Filter.Empty().AddPlayersByPvs(Transform(puller)).RemovePlayerByAttachedEntity(puller.Owner).RemovePlayerByAttachedEntity(pullable.Owner);
-            var popupType = PopupType.Small;
-
-            switch (puller.Comp.GrabStage)
-            {
-                case GrabStage.Soft:
-                    pullable.Comp.GrabEscapeChance = puller.Comp.SoftStageEscapeChance;
-                    _blocker.UpdateCanMove(pullable.Owner);
-                    _alertsSystem.ShowAlert(puller, puller.Comp.PullingAlert, 1);
-                    _alertsSystem.ShowAlert(pullable, pullable.Comp.PulledAlert, 1);
-                    popupType = PopupType.Small;
-                    break;
-                case GrabStage.Hard:
-                    pullable.Comp.GrabEscapeChance = puller.Comp.HardStageEscapeChance;
-                    _blocker.UpdateCanMove(pullable.Owner);
-                    _alertsSystem.ShowAlert(puller, puller.Comp.PullingAlert, 2);
-                    _alertsSystem.ShowAlert(pullable, pullable.Comp.PulledAlert, 2);
-                    popupType = PopupType.MediumCaution;
-                    break;
-                case GrabStage.Suffocate:
-                    pullable.Comp.GrabEscapeChance = puller.Comp.SuffocateStageEscapeChance;
-                    _blocker.UpdateCanMove(pullable.Owner);
-                    _alertsSystem.ShowAlert(puller, puller.Comp.PullingAlert, 3);
-                    _alertsSystem.ShowAlert(pullable, pullable.Comp.PulledAlert, 3);
-                    popupType = PopupType.LargeCaution;
-                    break;
-                default:
-                    pullable.Comp.GrabEscapeChance = 1f;
-                    _blocker.UpdateCanMove(pullable.Owner);
-                    _alertsSystem.ShowAlert(puller, puller.Comp.PullingAlert, 0);
-                    _alertsSystem.ShowAlert(pullable, pullable.Comp.PulledAlert, 0);
-                    break;
-            }
-
-            _modifierSystem.RefreshMovementSpeedModifiers(puller);
-            _popup.PopupEntity(Loc.GetString("popup-grab-" + puller.Comp.GrabStage.ToString().ToLower() + "-target", ("puller", Identity.Entity(puller, EntityManager))), pullable, pullable, popupType);
-            _popup.PopupEntity(Loc.GetString("popup-grab-" + puller.Comp.GrabStage.ToString().ToLower() + "-self", ("target", Identity.Entity(pullable, EntityManager))), pullable, puller, PopupType.Medium);
-            _popup.PopupEntity(Loc.GetString("popup-grab-" + puller.Comp.GrabStage.ToString().ToLower() + "-others", ("target", Identity.Entity(pullable, EntityManager)), ("puller", Identity.Entity(puller, EntityManager))), pullable, othersFilter, true, popupType);
-
-            Dirty(pullable.Owner, pullable.Comp);
-            Dirty(puller.Owner, puller.Comp);
+            TryStopPull(pullable, pullable.Comp, ignoreGrab: true);
+            return true;
         }
 
+        var newStage = puller.Comp.GrabStage - 1;
+        TrySetGrabStages((puller.Owner, puller.Comp), (pullable.Owner, pullable.Comp), newStage);
         return true;
     }
 }
 
-public enum GrabStage : int
+public enum GrabStage
 {
     No = 0,
     Soft = 1,
     Hard = 2,
-    Suffocate = 3
+    Suffocate = 3,
+}
+
+public enum GrubStageDirection
+{
+    Increase,
+    Decrease,
 }

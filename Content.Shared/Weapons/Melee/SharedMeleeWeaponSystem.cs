@@ -640,7 +640,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
             var damageResult = Damageable.TryChangeDamage(entity, modifiedDamage, origin:user);
 
-
             if (damageResult != null && damageResult.GetTotal() > FixedPoint2.Zero)
             {
                 appliedDamage += damageResult;
