@@ -1004,6 +1004,15 @@
     quantityPerUpdate: 25
     growthDelay: 20
   - type: Wooly
+  - type: Shearable
+    targetSolutionName: wool
+    shearedProductID: Cotton # Cotton is spawned because there is no wool item.
+    # How much product should 1u of solution spawn?
+    # A value of 5 will spawn 5 products for every 1u of solution. 25u of solution would spawn 125 product.
+    # A value of 0.2 will spawn 0.2 products for every 1u of solution. 25u of solution would spawn 5 product.
+    # Keep in mind, a maximum of 30 products can be in a stack, the remaining solution will be truncated and left unchanged.
+    productsPerSolution: 0.2 # To moths 1 Wool is worth 3 Hunger; 1 Cotton is worth 15 Hunger. Therefore, 5 Wool needed for 1 Cotton.
+    toolQuality: Cutting # blank for any item / no item.
   - type: Food
     solution: wool
     requiresSpecialDigestion: true
