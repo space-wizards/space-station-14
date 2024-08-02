@@ -190,12 +190,82 @@ public sealed class TemperatureSystem : EntitySystem
         DebugTools.Assert(ent.Comp.HeatCapacityDirty, $"The heat capacity for {ToPrettyString(ent)} was recalculated without being dirtied.");
         ent.Comp.HeatCapacityDirty = false;
 
-        var ev = new RecalculateHeatCapacityEvent(ent);
+        var ev = new RecalculateHeatCapacityEvent(ent, ent.Comp.BaseHeatCapacity);
         RaiseLocalEvent(ent, ref ev);
 
         ent.Comp.TotalHeatCapacity = ev.HeatCapacity;
 
         DebugTools.Assert(!ent.Comp.HeatCapacityDirty, $"The heat capacity for {ToPrettyString(ent)} was dirtied while it was being recalculated.");
+    }
+
+    /// <summary>
+    /// Adjusts the total heat capacity of an entity by some amount.
+    /// May dirty the total heat capacity of the entity if called enough times between recalculations.
+    /// </summary>
+    /// <remarks>
+    /// Should only be used in response to changes to a source of heat capacity for the entity.
+    /// </remarks>
+    /// <param name="ent">The entity that will have its total heat capacity modified.</param>
+    /// <param name="delta">The amount by which to increase or decrease the entities heat capacity.</param>
+    public void AdjustTotalHeatCapacity(Entity<TemperatureComponent?> ent, float delta)
+    {
+        if (!Resolve(ent, ref ent.Comp) || delta == 0f)
+            return;
+
+        ent.Comp.TotalHeatCapacity += delta;
+
+        if (++ent.Comp.HeatCapacityTouched >= TemperatureComponent.HeatCapacityUpdateInterval)
+            ent.Comp.HeatCapacityDirty = true;
+    }
+
+    /// <summary>
+    /// Marks the total heat capacity of an entity as out of date.
+    /// </summary>
+    /// <remarks>
+    /// Should be used every time a source of heat capacity for the entity changes.
+    /// Prefer <see cref="AdjustTotalHeatCapacity"/> if you know the amount by which the heat capacity has changed.
+    /// </remarks>
+    public void DirtyHeatCapacity(Entity<TemperatureComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        ent.Comp.HeatCapacityDirty = true;
+    }
+
+    /// <summary>
+    /// Sets the base heat capacity of an entity.
+    /// </summary>
+    /// <param name="ent">The entity to modify the base heat capacity of.</param>
+    /// <param name="value">The new base heat capacity for the entity.</param>
+    public void SetBaseHeatCapacity(Entity<TemperatureComponent?> ent, float value)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        var oldHeatCapacity = ent.Comp.BaseHeatCapacity;
+        if (value == oldHeatCapacity)
+            return;
+
+        ent.Comp.BaseHeatCapacity = value;
+        AdjustTotalHeatCapacity(ent, value - oldHeatCapacity);
+    }
+
+    /// <summary>
+    /// Sets how much additional heat capacity an entity gets from each kg of mass it has.
+    /// </summary>
+    /// <param name="ent">The entity to modify the specific heat of.</param>
+    /// <param name="value">The new specific heat for the entity.</param>
+    public void SetSpecificHeat(Entity<TemperatureComponent?> ent, float value)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (value == ent.Comp.SpecificHeat)
+            return;
+
+        ent.Comp.SpecificHeat = value;
+        DirtyHeatCapacity(ent); // Assume the entity has PhysicsComponent and nonzero mass.
     }
 
     private void OnInit(EntityUid uid, InternalTemperatureComponent comp, MapInitEvent args)
@@ -207,18 +277,18 @@ public sealed class TemperatureSystem : EntitySystem
     }
 
     /// <summary>
-    /// Marks the heat capacity of the entity as having changed when the mass of the entity changes if such a dependency exists.
+    /// Marks the heat capacity of the entity as having changed when the mass of the entity changes if its heat capacity is dependent on that.
     /// </summary>
     private void OnMassDataChanged(Entity<TemperatureComponent> ent, ref MassDataChangedEvent args)
     {
         if (!args.MassChanged || ent.Comp.SpecificHeat == 0f)
             return;
 
-        ent.Comp.HeatCapacityDirty = true;
+        AdjustTotalHeatCapacity((ent, ent.Comp), ent.Comp.SpecificHeat * (args.NewMass - args.OldMass));
     }
 
     /// <summary>
-    /// Accumulates additional mass-based heat capacity for the entity.
+    /// Accumulates additional heat capacity for the entity based on its specific heat and mass.
     /// </summary>
     private void OnRecalculateHeatCapacity(Entity<PhysicsComponent> ent, ref RecalculateHeatCapacityEvent args)
     {
