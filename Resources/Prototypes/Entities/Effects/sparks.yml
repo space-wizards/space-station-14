@@ -1,6 +1,6 @@
 - type: entity
   id: EffectSparks
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
     lifetime: 0.5
@@ -20,7 +20,7 @@
 
 - type: entity
   id: EffectTeslaSparks
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
     lifetime: 0.5

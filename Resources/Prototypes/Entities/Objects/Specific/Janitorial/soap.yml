@@ -144,7 +144,7 @@
 - type: entity
   name: soaplet
   id: SoapletSyndie
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: Soap
   description: A tiny piece of syndicate soap.
   components:
