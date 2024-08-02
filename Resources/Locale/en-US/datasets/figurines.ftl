@@ -2,7 +2,7 @@ figurines-hop-1 = Papers, please.
 figurines-hop-2 = You are fired.
 
 figurines-passenger-1 = How to change hands?
-figurines-passenger-2 = Call the evac.
+figurines-passenger-2 = Call evac.
 
 figurines-greytider-1 = Man, this party stinks. I fucking hate these people.
 figurines-greytider-2 = Uh-oh, who's lost their stunbaton?
@@ -61,12 +61,12 @@ figurines-qm-7 = Fill the form.
 
 figurines-ce-1 = Everyone to the briefing!
 figurines-ce-2 = Wire the solars!
-figurines-ce-4 = How to setup the TEG?
-figurines-ce-5 = SINGULOOSE!
-figurines-ce-6 = TESLALOOSE!
+figurines-ce-3 = How to setup the TEG?
+figurines-ce-4 = SINGULOOSE!
+figurines-ce-5 = TESLOOSE!
 
 figurines-engineer-1 = SINGULOOSE!
-figurines-engineer-2 = TESLALOOSE!
+figurines-engineer-2 = TESLOOSE!
 figurines-engineer-3 = What is AME?
 
 figurines-atmostech-1 = I put plasma in distro.
@@ -133,7 +133,7 @@ figurines-wizard-2 = Wehgardium Leviosa!
 figurines-wizard-3 = Skidaddle skadoodle!
 figurines-wizard-4 = FIREBALL!
 
-figurines-space-dragon-1 = Fish will consume the staion.
+figurines-space-dragon-1 = Fish will consume the station.
 
 # figurines-queen
 
@@ -164,17 +164,3 @@ figurines-hamlet-5 = Pip!
 figurines-hamlet-6 = Fwiep!
 figurines-hamlet-7 = Heep!
 figurines-hamlet-8 = NOT THE MICROWAVE!
-
-
-
-
-
-
-
-
-
-
-
-
-
-

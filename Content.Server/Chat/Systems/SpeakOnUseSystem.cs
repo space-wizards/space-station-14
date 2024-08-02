@@ -20,10 +20,10 @@ public sealed partial class SpeakOnUIClosedSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SpeakOnUseComponent, UseInHandEvent>(TrySpeak);
+        SubscribeLocalEvent<SpeakOnUseComponent, UseInHandEvent>(OnUseInHand);
     }
 
-    public void TrySpeak(EntityUid uid, SpeakOnUseComponent? component, UseInHandEvent args)
+    public void OnUseInHand(EntityUid uid, SpeakOnUseComponent? component, UseInHandEvent args)
     {
         if (!Resolve(uid, ref component))
             return;
