@@ -140,7 +140,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         DateTimeOffset? expires = null;
         if (minutes > 0)
         {
-            expires = DateTimeOffset.Now + TimeSpan.FromMinutes(minutes.Value);
+            expires = DateTimeOffset.UtcNow + TimeSpan.FromMinutes(minutes.Value);
         }
 
         _systems.TryGetEntitySystem<GameTicker>(out var ticker);
@@ -152,7 +152,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
             target,
             addressRange,
             hwid,
-            DateTimeOffset.Now,
+            DateTimeOffset.UtcNow,
             expires,
             roundId,
             playtime,
@@ -232,7 +232,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         DateTimeOffset? expires = null;
         if (minutes > 0)
         {
-            expires = DateTimeOffset.Now + TimeSpan.FromMinutes(minutes.Value);
+            expires = DateTimeOffset.UtcNow + TimeSpan.FromMinutes(minutes.Value);
         }
 
         _systems.TryGetEntitySystem(out GameTicker? ticker);
@@ -291,7 +291,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
             return response.ToString();
         }
 
-        await _db.AddServerRoleUnbanAsync(new ServerRoleUnbanDef(banId, unbanningAdmin, DateTimeOffset.Now));
+        await _db.AddServerRoleUnbanAsync(new ServerRoleUnbanDef(banId, unbanningAdmin, DateTimeOffset.UtcNow));
 
         if (ban.UserId is { } player && _cachedRoleBans.TryGetValue(player, out var roleBans))
         {

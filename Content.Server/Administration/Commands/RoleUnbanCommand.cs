@@ -26,7 +26,7 @@ public sealed class RoleUnbanCommand : IConsoleCommand
         }
 
         var banManager = IoCManager.Resolve<IBanManager>();
-        var response = await banManager.PardonRoleBan(banId, shell.Player?.UserId, DateTimeOffset.Now);
+        var response = await banManager.PardonRoleBan(banId, shell.Player?.UserId, DateTimeOffset.UtcNow);
         shell.WriteLine(response);
     }
 

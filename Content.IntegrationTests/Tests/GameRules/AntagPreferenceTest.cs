@@ -110,8 +110,8 @@ public sealed class AntagPreferenceTest
                 client.User!.Value,
                 null,
                 null,
-                DateTimeOffset.Now,
-                DateTimeOffset.Now.AddMinutes(60),
+                DateTimeOffset.UtcNow,
+                DateTimeOffset.UtcNow.AddMinutes(60),
                 null,
                 TimeSpan.Zero,
                 "Test ban",
@@ -120,7 +120,7 @@ public sealed class AntagPreferenceTest
                 null,
                 $"{BanManager.AntagPrefix}Traitor"
             );
-            banManager.CreateRoleBan(client.User!.Value, "TestUser", null, null, null, "Traitor", 60, NoteSeverity.Medium, "Test ban", DateTimeOffset.Now);
+            banManager.CreateRoleBan(client.User!.Value, "TestUser", null, null, null, "Traitor", 60, NoteSeverity.Medium, "Test ban", DateTimeOffset.UtcNow);
         });
 
         // Opt into the traitor role.

@@ -52,7 +52,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            await dbMan.AddServerUnbanAsync(new ServerUnbanDef(banId, player?.UserId, DateTimeOffset.Now));
+            await dbMan.AddServerUnbanAsync(new ServerUnbanDef(banId, player?.UserId, DateTimeOffset.UtcNow));
 
             shell.WriteLine($"Pardoned ban with id {banId}");
         }
