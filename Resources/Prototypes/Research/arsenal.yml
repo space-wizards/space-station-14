@@ -116,8 +116,8 @@
   - ChemicalPayload
 
 - type: technology
-  id: ShockTechnology
-  name: research-technology-shock-technology
+  id: SpecialMeans
+  name: research-technology-special-means
   icon:
     sprite: Clothing/Neck/Misc/shock_collar.rsi
     state: icon

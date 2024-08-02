@@ -132,21 +132,14 @@ namespace Content.Server.Explosion.EntitySystems
             var containerEnt = container.Owner;
             var curTime = _timing.CurTime;
 
-            if (shockOnTrigger.Comp.NextTrigger == TimeSpan.Zero)
-            {
-                shockOnTrigger.Comp.NextTrigger = curTime;
-            }
-
             if (curTime < shockOnTrigger.Comp.NextTrigger)
             {
                 // The trigger's on cooldown.
                 return;
             }
-            else
-            {
-                _electrocution.TryDoElectrocution(containerEnt, null, shockOnTrigger.Comp.Force, shockOnTrigger.Comp.Duration, true);
-                shockOnTrigger.Comp.NextTrigger = curTime + shockOnTrigger.Comp.Cooldown;
-            }
+
+            _electrocution.TryDoElectrocution(containerEnt, null, shockOnTrigger.Comp.DamageSpecifier, shockOnTrigger.Comp.Duration, true);
+            shockOnTrigger.Comp.NextTrigger = curTime + shockOnTrigger.Comp.Cooldown;
         }
 
         private void OnAnchorTrigger(EntityUid uid, AnchorOnTriggerComponent component, TriggerEvent args)
