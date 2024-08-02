@@ -159,7 +159,6 @@
   - type: Tag
     tags:
     - SuitEVA
-    - MonkeyWearable
     - WhitelistChameleon
 
 - type: entity
