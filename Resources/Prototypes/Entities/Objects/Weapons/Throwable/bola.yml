@@ -55,7 +55,7 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  name: Energy Bola
+  name: energy bola
   id: BolaEnergy
   parent: BaseBola
   description: An advanced hardlight criminal entangling tool. Otherwise known as an expensive piece of string.
