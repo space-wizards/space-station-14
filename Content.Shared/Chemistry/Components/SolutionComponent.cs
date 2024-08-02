@@ -3,7 +3,6 @@ using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -50,17 +49,9 @@ public sealed partial class SolutionComponent : Component
     public bool CanReact { get; set; } = true;
 
     /// <summary>
-    ///     Checks if a solution can fit into the container.
-    /// </summary>
-    public bool CanAddSolution(Solution solution)
-    {
-        return !CanOverflow && solution.Volume <= AvailableVolume;
-    }
-
-    /// <summary>
     ///     The calculated total volume of all reagents in the solution (ex. Total volume of liquid in beaker).
     /// </summary>
-    [ViewVariables]
+    [DataField, AutoNetworkedField]
     public FixedPoint2 Volume { get; set; }
 
     /// <summary>
@@ -94,10 +85,17 @@ public sealed partial class SolutionComponent : Component
     /// <summary>
     ///     The total heat capacity of all reagents in the solution.
     /// </summary>
-    [ViewVariables] public float HeatCapacity;
+    [DataField, AutoNetworkedField] public float HeatCapacity;
+
+    [DataField, AutoNetworkedField]
+    public int PrimaryReagentIndex = -1;
+
+    [DataField, AutoNetworkedField]
+    public int ReagentVariantCount = 0;
 
     [ViewVariables]
-    public int PrimaryReagentIndex = -1;
+    public int ReagentAndVariantCount => ReagentVariantCount + Contents.Count;
+
 
     [DataDefinition, Serializable, NetSerializable]
     public partial struct ReagentData : IEquatable<ReagentData>//This is a struct so that we don't allocate. Allocations are paying taxes. Nobody wants to pay taxes.
@@ -109,10 +107,13 @@ public sealed partial class SolutionComponent : Component
         public Entity<ReagentDefinitionComponent> ReagentEnt;
 
         [DataField(required:true)]
-        public FixedPoint2 BaseQuantity;
+        public FixedPoint2 Quantity;
 
         [DataField]
         public FixedPoint2 TotalQuantity;
+
+        [ViewVariables]
+        public int VariantCount => Variants?.Count ?? 0;
 
         [DataField]
         public List<VariantData>? Variants = null;
@@ -122,7 +123,7 @@ public sealed partial class SolutionComponent : Component
         /// </summary>
         public Span<VariantData> VariantsSpan => CollectionsMarshal.AsSpan(Variants);
 
-        [NonSerialized]
+        [DataField]
         public int Index = -1;
 
         [NonSerialized]
@@ -130,7 +131,7 @@ public sealed partial class SolutionComponent : Component
 
         public ReagentData(Entity<ReagentDefinitionComponent> reagentEnt, FixedPoint2 quantity, int index)
         {
-            BaseQuantity = quantity;
+            Quantity = quantity;
             TotalQuantity = quantity;
             ReagentEnt = reagentEnt;
             Index = index;
@@ -161,13 +162,13 @@ public sealed partial class SolutionComponent : Component
         }
 
         public static implicit operator ReagentQuantity(ReagentData d) =>
-            new (d.ReagentId, d.BaseQuantity, null);
+            new (d.ReagentId, d.Quantity, null);
 
         public static implicit operator ReagentDef(ReagentData d) =>
             new (d.ReagentEnt, null);
     }
 
-    [Serializable, NetSerializable, DataDefinition]
+    [DataDefinition, Serializable, NetSerializable]
     public partial struct VariantData
     {
         [DataField]
@@ -175,10 +176,10 @@ public sealed partial class SolutionComponent : Component
         [DataField]
         public FixedPoint2 Quantity;
 
-        [NonSerialized]
+        [DataField]
         public int ParentIndex = -1;
 
-        [NonSerialized]
+        [DataField(readOnly:true)]
         public bool IsValid = false;
 
         public VariantData(ReagentVariant variant, FixedPoint2 quantity, int parentReagentIndex)

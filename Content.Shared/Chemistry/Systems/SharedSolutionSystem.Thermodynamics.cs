@@ -5,7 +5,7 @@ namespace Content.Shared.Chemistry.Systems;
 
 public partial class SharedSolutionSystem
 {
-    protected void ChangeReagentVolume(Entity<SolutionComponent> solution,
+    protected void ChangeTotalVolume(Entity<SolutionComponent> solution,
         ref SolutionComponent.ReagentData origin,
         FixedPoint2 delta)
     {

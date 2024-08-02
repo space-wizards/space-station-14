@@ -1,4 +1,5 @@
-﻿using Content.Shared.FixedPoint;
+﻿using Content.Shared.Chemistry.Systems;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Reagent;
@@ -76,5 +77,10 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
     public static bool operator !=(ReagentQuantity left, ReagentQuantity right)
     {
         return !(left == right);
+    }
+
+    public bool Validate(SharedChemistryRegistrySystem chemRegistry, bool logMissing = true)
+    {
+        return ReagentDef.Validate(chemRegistry, logMissing);
     }
 }

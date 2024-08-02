@@ -137,9 +137,14 @@ public abstract class SharedChemistryRegistrySystem : EntitySystem
         }
     }
 
-    public bool ResolveReagent(ref ReagentDef reagentDef, bool logMissingRegistry = true)
+    public bool ResolveReagentDef(ref ReagentDef reagentDef, bool logMissingRegistry = true)
     {
-        return reagentDef.Resolve(this, logMissingRegistry);
+        return reagentDef.Validate(this, logMissingRegistry);
+    }
+
+    public bool ResolveReagentDef(ref ReagentQuantity reagentDef, bool logMissingRegistry = true)
+    {
+        return reagentDef.Validate(this, logMissingRegistry);
     }
 
     public bool ResolveReagent(string id,

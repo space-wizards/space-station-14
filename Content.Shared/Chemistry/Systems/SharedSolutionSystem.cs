@@ -12,6 +12,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Chemistry.Systems;
 
@@ -26,6 +27,7 @@ public abstract partial class SharedSolutionSystem : EntitySystem
     [Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
     [Dependency] protected readonly INetManager NetManager = default!;
     [Dependency] protected readonly SharedChemistryRegistrySystem ChemistryRegistry = default!;
+    [Dependency] protected readonly IRobustRandom Random = default!;
 
     public const string SolutionContainerPrefix = "@Solution";
 
@@ -50,7 +52,7 @@ public abstract partial class SharedSolutionSystem : EntitySystem
     {
         foreach (var (solutionId, initialReagents) in ent.Comp.Contents)
         {
-            if (!EnsureSolution((ent, null), solutionId, out var solution))
+            if (!TryEnsureSolution((ent, null), solutionId, out var solution))
             {
                 throw new NotSupportedException($"Could not ensure solution with id:{solutionId} inside " +
                                                 $"Entity:{ToPrettyString(ent)}");
@@ -73,7 +75,11 @@ public abstract partial class SharedSolutionSystem : EntitySystem
     {
         foreach (ref var reagentData in CollectionsMarshal.AsSpan(ent.Comp.Contents))
         {
-            reagentData.UpdateDef(ChemistryRegistry);
+            if (reagentData.IsValid
+                || !ChemistryRegistry.TryIndex(reagentData.ReagentId, out var reagentDef, true))
+                continue;
+            reagentData.ReagentEnt = reagentDef.Value;
+            reagentData.IsValid = true;
         }
     }
 
@@ -126,7 +132,7 @@ public abstract partial class SharedSolutionSystem : EntitySystem
     /// <param name="solution">Solution</param>
     /// <returns>True if successful, False if not found (only happens on the client)</returns>
     [PublicAPI]
-    public bool EnsureSolution(Entity<ContainerManagerComponent?> containingEntity,
+    public bool TryEnsureSolution(Entity<ContainerManagerComponent?> containingEntity,
         string solutionId,
         out Entity<SolutionComponent> solution)
     {
@@ -179,8 +185,8 @@ public abstract partial class SharedSolutionSystem : EntitySystem
         string solutionId)
     {
         if (NetManager.IsClient)
-            throw new NotSupportedException("GuaranteeSolution is not supported on client!");
-        if (!EnsureSolution(containingEntity, solutionId, out var foundSolution))
+            throw new NotSupportedException("EnsureSolution is not supported on client!");
+        if (!TryEnsureSolution(containingEntity, solutionId, out var foundSolution))
         {
             throw new Exception(
                 $"Failed to ensure solution on entity: {ToPrettyString(containingEntity)} with solutionId: {solutionId}");
@@ -211,6 +217,7 @@ public abstract partial class SharedSolutionSystem : EntitySystem
         return ContainerSystem.TryGetContainer(container, GetContainerId(solutionId), out var foundCont)
                && (solutionContainer = foundCont as ContainerSlot) == null;
     }
+
     public void UpdateChemicals(Entity<SolutionComponent> solution,
         bool needsReactionsProcessing = true,
         ReactionMixerComponent? mixerComponent = null)
@@ -243,7 +250,7 @@ public abstract partial class SharedSolutionSystem : EntitySystem
         AppearanceSystem.SetData(uid, SolutionContainerVisuals.Color, GetSolutionColor((soln, soln)), appearanceComponent);
 
         if (TryGetPrimaryReagent(solEnt, out var reagent))
-            AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.Value.ToString(), appearanceComponent);
+            AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
     }
     public Color GetSolutionColor(Entity<SolutionComponent> solution,
         ICollection<Entity<ReagentDefinitionComponent>>? filterOut = null,

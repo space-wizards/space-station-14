@@ -1,10 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
-using Content.Shared.Chemistry.Components;
+﻿using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
+using Robust.Shared.Collections;
 
 namespace Content.Shared.Chemistry.Systems;
 
@@ -28,26 +27,8 @@ public partial class SharedSolutionSystem
             EnsureReagentDataRef(solution, reagent);
             return;
         }
-        EnsureReagentDataRef(solution, reagent, variant);
+        EnsureVariantDataRef(solution, reagent, variant);
     }
-
-    /// <summary>
-    /// Ensures that the specified reagent will be present in the solution
-    /// </summary>
-    /// <param name="solution">target solution</param>
-    /// <param name="reagent">reagent to add</param>
-    /// <param name="variant"></param>
-    [PublicAPI]
-    public void EnsureReagent(Entity<SolutionComponent> solution,
-        ReagentDef reagent,
-        ReagentVariant? variant = null
-        )
-    {
-        if (!ChemistryRegistry.ResolveReagent(ref reagent))
-            return;
-        EnsureReagent(solution, reagent.DefinitionEntity, variant);
-    }
-
 
     /// <summary>
     /// Attempt to get the quantity of a reagent
@@ -58,7 +39,7 @@ public partial class SharedSolutionSystem
     /// <param name="variant"></param>
     /// <returns></returns>
     [PublicAPI]
-    public bool TryGetQuantity(
+    public bool TryGetReagentQuantity(
         Entity<SolutionComponent> solution,
         Entity<ReagentDefinitionComponent> reagent,
         out FixedPoint2 quantity,
@@ -70,10 +51,10 @@ public partial class SharedSolutionSystem
             ref var reagentData = ref GetReagentDataRef(solution, reagent);
             if (!reagentData.IsValid)
                 return false;
-            quantity = reagentData.BaseQuantity;
+            quantity = reagentData.Quantity;
             return true;
         }
-        ref var variantData = ref GetReagentDataRef(solution, reagent, variant);
+        ref var variantData = ref GetVariantDataRef(solution, reagent, variant);
         if (!variantData.IsValid)
             return false;
         quantity = variantData.Quantity;
@@ -81,23 +62,24 @@ public partial class SharedSolutionSystem
     }
 
     /// <summary>
-    /// Attempt to get the quantity of a reagent
+    /// Attempt to get the total quantity of a reagent and it's variants
     /// </summary>
     /// <param name="solution"></param>
     /// <param name="reagent"></param>
-    /// <param name="quantity"></param>
-    /// <param name="variant"></param>
+    /// <param name="totalQuantity"></param>
     /// <returns></returns>
     [PublicAPI]
-    public bool TryGetQuantity(
+    public bool TryGetTotalQuantity(
         Entity<SolutionComponent> solution,
-        ReagentDef reagent,
-        out FixedPoint2 quantity,
-        ReagentVariant? variant = null)
+        Entity<ReagentDefinitionComponent> reagent,
+        out FixedPoint2 totalQuantity)
     {
-        quantity = 0;
-        return ChemistryRegistry.ResolveReagent(ref reagent)
-               && TryGetQuantity(solution, reagent.DefinitionEntity, out quantity, variant);
+        totalQuantity = 0;
+        ref var reagentData = ref GetReagentDataRef(solution, reagent);
+        if (!reagentData.IsValid)
+            return false;
+        totalQuantity = reagentData.TotalQuantity;
+        return true;
     }
 
     /// <summary>
@@ -112,24 +94,7 @@ public partial class SharedSolutionSystem
         Entity<ReagentDefinitionComponent> reagent,
         ReagentVariant? variant = null)
     {
-        if (!TryGetQuantity(solution, reagent, out var quantity, variant))
-            return -1;
-        return quantity;
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="solution"></param>
-    /// <param name="reagent"></param>
-    /// <param name="variant"></param>
-    /// <returns></returns>
-    [PublicAPI]
-    public FixedPoint2 GetQuantity(Entity<SolutionComponent> solution,
-        ReagentDef reagent,
-        ReagentVariant? variant = null)
-    {
-        if (!TryGetQuantity(solution, reagent, out var quantity, variant))
+        if (!TryGetReagentQuantity(solution, reagent, out var quantity, variant))
             return -1;
         return quantity;
     }
@@ -146,26 +111,9 @@ public partial class SharedSolutionSystem
         Entity<ReagentDefinitionComponent> reagent,
         ReagentVariant? variant = null)
     {
-        return !TryGetQuantity(solution, reagent, out var quantity, variant)
+        return !TryGetReagentQuantity(solution, reagent, out var quantity, variant)
             ? new ReagentQuantity()
             : new ReagentQuantity(new ReagentDef(reagent, variant), quantity);
-    }
-
-    /// <summary>
-    /// Get the quantity of a reagent, returning -1 if a reagent is not found
-    /// </summary>
-    /// <param name="solution"></param>
-    /// <param name="reagent"></param>
-    /// <param name="variant"></param>
-    /// <returns></returns>
-    [PublicAPI]
-    public ReagentQuantity GetReagentQuantity(Entity<SolutionComponent> solution,
-        ReagentDef reagent,
-        ReagentVariant? variant = null)
-    {
-        return !ChemistryRegistry.ResolveReagent(ref reagent)
-            ? new ReagentQuantity()
-            : GetReagentQuantity(solution, reagent.DefinitionEntity, variant);
     }
 
     /// <summary>
@@ -199,7 +147,7 @@ public partial class SharedSolutionSystem
     [PublicAPI]
     public IEnumerable<ReagentDef> EnumerateReagentVariants(Entity<SolutionComponent> solution)
     {
-        return EnumerateReagentVariants<ReagentVariant>(solution, true);
+        return EnumerateReagentVariantsOfType<ReagentVariant>(solution, true);
     }
 
     /// <summary>
@@ -209,7 +157,7 @@ public partial class SharedSolutionSystem
     /// <param name="includeChildTypes"></param>
     /// <returns></returns>
     [PublicAPI]
-    public IEnumerable<ReagentDef> EnumerateReagentVariants<T>(Entity<SolutionComponent> solution,
+    public IEnumerable<ReagentDef> EnumerateReagentVariantsOfType<T>(Entity<SolutionComponent> solution,
         bool includeChildTypes = false) where T: ReagentVariant
     {
         foreach (var reagentData in solution.Comp.Contents)
@@ -232,7 +180,6 @@ public partial class SharedSolutionSystem
             }
         }
     }
-
 
     /// <summary>
     /// Gets the current primary reagent if there is one
@@ -269,71 +216,211 @@ public partial class SharedSolutionSystem
     #endregion
 
     #region QuantityOperations
+
     /// <summary>
-    /// Add an amount of reagent to a solution, this will ignore maxVolume!
+    /// Sets the quantity of a reagent or reagent variant. This respects max volume if force is set to true
+    /// </summary>
+    /// <param name="solution">Target solution</param>
+    /// <param name="reagent">Target Reagent</param>
+    /// <param name="newQuantity">New Quantity value</param>
+    /// <param name="overflow">How much </param>
+    /// <param name="variant">Reagent Variant Data</param>
+    /// <param name="force">Should this ignore maxVolume</param>
+    [PublicAPI]
+    public void SetReagent(
+        Entity<SolutionComponent> solution,
+        Entity<ReagentDefinitionComponent> reagent,
+        FixedPoint2 newQuantity,
+        out FixedPoint2 overflow,
+        ReagentVariant? variant = null,
+        bool force = true)
+    {
+        overflow = 0;
+        ref var reagentData = ref EnsureReagentDataRef(solution, reagent);
+        if (variant == null)
+        {
+                ChangeReagentQuantity_Implementation(solution,
+                    ref reagentData,
+                    newQuantity - reagentData.Quantity,
+                    out overflow,
+                    force);
+            return;
+        }
+        ref var variantData = ref EnsureVariantDataRef(solution, reagent, variant);
+        ChangeVariantQuantity_Implementation(solution,
+            ref reagentData,
+            ref variantData,
+            newQuantity - variantData.Quantity,
+            out overflow,
+            force);
+    }
+
+    /// <summary>
+    /// Change the quantity of a reagent or reagent variant by the value specified
     /// </summary>
     /// <param name="solution"></param>
     /// <param name="reagent"></param>
     /// <param name="quantity"></param>
+    /// <param name="overflow"></param>
     /// <param name="variant"></param>
+    /// <param name="force"></param>
+    /// <returns>True if successful</returns>
     [PublicAPI]
-    public void AddReagent(
+    public bool AddReagent(
         Entity<SolutionComponent> solution,
         Entity<ReagentDefinitionComponent> reagent,
         FixedPoint2 quantity,
-        ReagentVariant? variant = null)
+        out FixedPoint2 overflow,
+        ReagentVariant? variant = null,
+        bool force = true)
     {
+        overflow = 0;
+        if (quantity == 0)
+            return true;
+        ref var reagentData = ref GetReagentDataRef(solution, reagent);
+        if (!reagentData.IsValid)
+            return false;
+        if (variant == null)
+        {
+            ChangeReagentQuantity_Implementation(solution,
+                ref reagentData,
+                quantity,
+                out overflow,
+                force);
+            return true;
+        }
+        ref var variantData = ref GetVariantDataRef(solution, reagent, variant);
+        if (!variantData.IsValid)
+            return false;
+        ChangeVariantQuantity_Implementation(solution,
+            ref reagentData,
+            ref variantData,
+            quantity,
+            out overflow,
+            force);
+        return true;
     }
 
-    /// <summary>
-    /// Tries to remove the specified amount of reagent
-    /// </summary>
-    /// <param name="solution"></param>
-    /// <param name="reagent"></param>
-    /// <param name="quantity"></param>
-    /// <param name="variant"></param>
-    /// <returns></returns>
     [PublicAPI]
-    public bool RemoveReagent(Entity<SolutionComponent> solution,
+    public bool SetReagentTotalQuantity(
+        Entity<SolutionComponent> solution,
         Entity<ReagentDefinitionComponent> reagent,
         FixedPoint2 quantity,
-        ReagentVariant? variant = null)
+        out FixedPoint2 overflow,
+        bool force = true)
     {
-
+        overflow = 0;
+        if (quantity == 0)
+            return true;
+        ref var reagentData = ref GetReagentDataRef(solution, reagent);
+        if (!reagentData.IsValid)
+            return false;
+        ChangeReagentTotalQuantity_Implementation(solution,
+            ref reagentData,
+            quantity - reagentData.TotalQuantity,
+            out overflow,
+            force);
+        return true;
     }
 
-    /// <summary>
-    /// Set the quantity of the target reagent, this will scale variant quantities accordingly. This will ignore MaxVolume!
-    /// </summary>
-    /// <param name="solution"></param>
-    /// <param name="reagent"></param>
-    /// <param name="newQuantity"></param>
     [PublicAPI]
-    public void SetReagentQuantity(Entity<SolutionComponent> solution,
+    public bool AddReagentTotalQuantity(
+        Entity<SolutionComponent> solution,
         Entity<ReagentDefinitionComponent> reagent,
-        FixedPoint2 newQuantity)
+        FixedPoint2 quantity,
+        out FixedPoint2 overflow,
+        bool force = true)
     {
-
+        overflow = 0;
+        if (quantity == 0)
+            return true;
+        ref var reagentData = ref GetReagentDataRef(solution, reagent);
+        if (!reagentData.IsValid)
+            return false;
+        ChangeReagentTotalQuantity_Implementation(solution, ref reagentData, quantity, out overflow, force);
+        return true;
     }
 
-    /// <summary>
-    /// Sets the quantity of the target reagent variant. This will ignore MaxVolume!
-    /// </summary>
-    /// <param name="solution"></param>
-    /// <param name="reagent"></param>
-    /// <param name="variant"></param>
-    /// <param name="newQuantity"></param>
     [PublicAPI]
-    public void SetReagentQuantity(Entity<SolutionComponent> solution,
-        Entity<ReagentDefinitionComponent> reagent,
-        ReagentVariant variant,
-        FixedPoint2 newQuantity)
+    public void SplitSolution(Entity<SolutionComponent> originSolution,
+        Entity<SolutionComponent>? targetSolution,
+        out FixedPoint2 overflow,
+        bool force = true)
     {
+        if (targetSolution == null)
+        {
+            ScaleSolution(originSolution, 0.5f, out overflow, true, force);
+            return;
+        }
+        TransferSolution(originSolution,
+            targetSolution.Value,
+            originSolution.Comp.Volume * 0.5,
+            out overflow,
+            force);
+    }
+
+
+    [PublicAPI]
+    public void ScaleSolution(Entity<SolutionComponent> solution,
+        float scalingFactor,
+        out FixedPoint2 overflow,
+        bool byCurrentVolume = true,
+        bool force = true)
+    {
+        scalingFactor = MathF.Abs(scalingFactor);
+        var volume = solution.Comp.MaxVolume;
+        if (byCurrentVolume)
+            volume = solution.Comp.Volume;
+        var delta = volume * scalingFactor - volume;
+        ChangeSolutionVolume(solution, delta, out overflow, force);
+    }
+
+    [PublicAPI]
+    public void ChangeSolutionVolume(Entity<SolutionComponent> solution,
+        FixedPoint2 quantity,
+        out FixedPoint2 overflow,
+        bool force = true)
+    {
+        overflow = 0;
+        WillOverflow(solution, quantity, out overflow);
+        if ( !force)
+            quantity -= overflow;
+        if (quantity == 0)
+            return;
+        overflow = -ChangeAllDataQuantities(solution, quantity);
+    }
+
+    [PublicAPI]
+    public void TransferSolution(Entity<SolutionComponent> originSolution,
+        Entity<SolutionComponent> targetSolution,
+        FixedPoint2 quantity,
+        out FixedPoint2 overflow,
+        bool force = true)
+    {
+        overflow = 0;
+        if (quantity == 0)
+            return;
+        if (quantity < 0)
+        {
+            quantity = -quantity;
+            (originSolution, targetSolution) = (targetSolution, originSolution);
+        }
+        WillOverflow(targetSolution, quantity, out overflow);
+        if (!force)
+        {
+            quantity -= overflow;
+        }
+        if (quantity == 0)
+            return;
+        var missing = ChangeAllDataQuantities(originSolution, -quantity);
+        if (missing >= quantity)
+            return;
+        overflow -= missing;
+        //we don't care about underflow here because it isn't possible
+        ChangeAllDataQuantities(targetSolution, quantity - missing);
     }
 
     #endregion
-
-
 
     #region Internal
 
@@ -359,13 +446,13 @@ public partial class SharedSolutionSystem
     }
 
     /// <summary>
-    /// Ensures that reagentData is present for the specified reagent in the solution
+    /// Ensures that variantData is present for the specified reagent in the solution
     /// </summary>
     /// <param name="solution"></param>
     /// <param name="reagent"></param>
     /// <param name="variant"></param>
     /// <returns>Reference to variantData</returns>
-    protected ref SolutionComponent.VariantData EnsureReagentDataRef(
+    protected ref SolutionComponent.VariantData EnsureVariantDataRef(
         Entity<SolutionComponent> solution,
         Entity<ReagentDefinitionComponent> reagent,
         ReagentVariant variant)
@@ -378,6 +465,7 @@ public partial class SharedSolutionSystem
         }
         quantData.Variants ??= new(VariantAlloc);
         quantData.Variants.Add(new SolutionComponent.VariantData(variant, 0, quantData.Index));
+        solution.Comp.ReagentVariantCount++;
         Dirty(solution);
         return ref quantData.VariantsSpan[^1];
     }
@@ -406,7 +494,7 @@ public partial class SharedSolutionSystem
     /// <param name="reagent"></param>
     /// <param name="variant"></param>
     /// <returns>Found variantData or invalid one</returns>
-    protected ref SolutionComponent.VariantData GetReagentDataRef(Entity<SolutionComponent> solution,
+    protected ref SolutionComponent.VariantData GetVariantDataRef(Entity<SolutionComponent> solution,
         Entity<ReagentDefinitionComponent> reagent,
         ReagentVariant variant)
     {
@@ -420,6 +508,181 @@ public partial class SharedSolutionSystem
         }
         return ref _invalidVariantData;
     }
+
+    /// <summary>
+    /// Changes the quantity in the specified reagentData
+    /// </summary>
+    /// <param name="solution"></param>
+    /// <param name="reagentData"></param>
+    /// <param name="delta"></param>
+    /// <returns>Underflow ammount</returns>
+    protected FixedPoint2 ChangeReagentDataQuantity(Entity<SolutionComponent> solution,
+        ref SolutionComponent.ReagentData reagentData,
+        FixedPoint2 delta)
+    {
+        var underflow = FixUnderflow(reagentData.Quantity, ref delta);
+        if (delta == 0)
+            return underflow;
+        reagentData.Quantity += delta;
+        reagentData.TotalQuantity += delta;
+        Dirty(solution);
+        ChangeTotalVolume(solution,ref reagentData, delta);
+        return underflow;
+    }
+
+    /// <summary>
+    /// Changes the quantity in the specified variantData
+    /// </summary>
+    /// <param name="solution"></param>
+    /// <param name="parentData"></param>
+    /// /// <param name="variantData"></param>
+    /// <param name="delta"></param>
+    /// <returns>Underflow</returns>
+    protected FixedPoint2 ChangeVariantDataQuantity(Entity<SolutionComponent> solution,
+        ref SolutionComponent.ReagentData parentData,
+        ref SolutionComponent.VariantData variantData,
+        FixedPoint2 delta)
+    {
+        var underflow = FixUnderflow(variantData.Quantity, ref delta);
+        if (delta == 0)
+            return underflow;
+        variantData.Quantity += delta;
+        parentData.TotalQuantity += delta;
+        Dirty(solution);
+        ChangeTotalVolume(solution,ref parentData, delta);
+        return underflow;
+    }
+
+    protected FixedPoint2 ChangeAllReagentVariantDataQuantity(
+        Entity<SolutionComponent> solution,
+        ref SolutionComponent.ReagentData reagentData,
+        FixedPoint2 delta)
+    {
+        //If there are no variants, then just use the regular reagent method
+        if (reagentData.Variants == null || reagentData.TotalQuantity == reagentData.Quantity)
+            return ChangeReagentDataQuantity(solution, ref reagentData, delta);
+
+        //Start with the base reagent
+        delta += ChangeReagentDataQuantity(solution,
+            ref reagentData,
+            ClampToEpsilon(delta.Float() / reagentData.VariantCount+1));
+
+        //shuffle the order we check variants so that they aren't always accessed in the
+        //order of how old they are.
+        var validCount = reagentData.VariantCount;
+        var shuffle = CreateRandomIndexer(validCount);
+
+        var skip = new bool[validCount];
+        Array.Fill(skip, false);
+
+        var variants = reagentData.VariantsSpan;
+        for (var i = 0; i < variants.Length; i++)
+        {
+            if (validCount == 0 || delta == 0)
+                break;
+            if (skip[i])
+                continue;
+            var variantData = variants[shuffle[i]];
+            if (variantData.Quantity == 0)
+            {
+                skip[i] = true;
+                validCount--;
+                continue;
+            }
+
+            var localDelta = ClampToEpsilon(delta.Float() / validCount);
+            var underflow = ChangeVariantDataQuantity(solution, ref reagentData, ref variantData, localDelta);
+            if (underflow > 0) //If we have an underflow update re-add it back to the delta and decrement the valid count.
+            {
+                skip[i] = true;
+                validCount--;
+                delta += underflow;
+            }
+            //if we hit the end keep looping until we no longer have any delta left.
+            if (i == variants.Length-1 && delta > 0)
+                i = 0;
+        }
+        return ChangeReagentDataQuantity(solution, ref reagentData, delta);
+    }
+
+    protected FixedPoint2 ChangeAllDataQuantities(
+        Entity<SolutionComponent> solution,
+        FixedPoint2 delta)
+    {
+        //create an indexShuffler so that reagents aren't accessed only by oldest
+        var validCount = solution.Comp.Contents.Count;
+        var shuffle = CreateRandomIndexer(solution.Comp.Contents.Count);
+        var contents = solution.Comp.ContentsSpan;
+
+        var skip = new bool[validCount];
+        Array.Fill(skip, false);
+
+        for (var i = 0; i < contents.Length; i++)
+        {
+            if (validCount == 0 || delta == 0)
+                break;
+            if (skip[i])
+                continue;
+            var reagentData = contents[shuffle[i]];
+            if (reagentData.Quantity == 0)
+            {
+                validCount--;
+                skip[i] = true;
+                continue;
+            }
+            var localDelta = ClampToEpsilon(delta.Float() / validCount);
+            var underflow = ChangeAllReagentVariantDataQuantity(solution, ref reagentData, localDelta);
+            if (underflow > 0) //If we have an underflow update re-add it back to the delta and decrement the valid count.
+            {
+                validCount--;
+                skip[i] = true;
+                delta += underflow;
+            }
+            //if we hit the end keep looping until we no longer have any delta left.
+            if (i == contents.Length-1)
+                i = 0;
+        }
+        return delta;
+    }
+
+    protected void ChangeReagentQuantity_Implementation(Entity<SolutionComponent> solution,
+        ref SolutionComponent.ReagentData reagentData,
+        FixedPoint2 delta,
+        out FixedPoint2 overflow,
+        bool force = true)
+    {
+        overflow = 0;
+        if (!force && WillOverflow(solution, delta, out overflow))
+            delta -= overflow;
+        overflow -= ChangeReagentDataQuantity(solution, ref reagentData , delta);
+    }
+
+    protected void ChangeVariantQuantity_Implementation(Entity<SolutionComponent> solution,
+        ref SolutionComponent.ReagentData reagentData,
+        ref SolutionComponent.VariantData variantData,
+        FixedPoint2 delta,
+        out FixedPoint2 overflow,
+        bool force = true)
+    {
+        overflow = 0;
+        if (!force && WillOverflow(solution, delta, out overflow))
+            delta -= overflow;
+        overflow -= ChangeVariantDataQuantity(solution, ref reagentData, ref variantData , delta);
+    }
+
+    protected void ChangeReagentTotalQuantity_Implementation(Entity<SolutionComponent> solution,
+        ref SolutionComponent.ReagentData reagentData,
+        FixedPoint2 delta,
+        out FixedPoint2 overflow,
+        bool force)
+    {
+        overflow = 0;
+        WillOverflow(solution, delta, out overflow);
+        if (!force)
+            delta -= overflow;
+        overflow = -ChangeAllReagentVariantDataQuantity(solution, ref reagentData, delta);
+    }
+
 
     /// <summary>
     /// Gets the quantity of the primary reagent or 0 if there are none
@@ -449,7 +712,8 @@ public partial class SharedSolutionSystem
         if (!reagentData.IsValid)
             return false;
         var index = reagentData.Index;
-        ChangeReagentVolume(solution, ref reagentData, -reagentData.TotalQuantity);
+        ChangeTotalVolume(solution, ref reagentData, -reagentData.TotalQuantity);
+        solution.Comp.ReagentVariantCount -= reagentData.VariantCount;
         solution.Comp.Contents.RemoveAt(index);
         ShiftContentIndices(solution, index);
         UpdatePrimaryReagent(solution);
@@ -486,9 +750,10 @@ public partial class SharedSolutionSystem
             return false;
 
         reagentData.TotalQuantity -= variantData.Quantity;
-        ChangeReagentVolume(solution, ref reagentData, variantData.Quantity);
+        ChangeTotalVolume(solution, ref reagentData, variantData.Quantity);
         reagentData.Variants?.RemoveAt(i);
-        if (removeBaseIfLast && reagentData.Variants?.Count == 0)
+        solution.Comp.ReagentVariantCount--;
+        if (removeBaseIfLast && reagentData.VariantCount == 0)
         {
             return PurgeReagent(solution, ref reagentData);
         }

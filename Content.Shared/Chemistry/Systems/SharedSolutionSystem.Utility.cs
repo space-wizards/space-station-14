@@ -1,8 +1,7 @@
-﻿using System.Runtime.InteropServices;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.Reagents;
+﻿using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using JetBrains.Annotations;
 
 namespace Content.Shared.Chemistry.Systems;
 
@@ -10,6 +9,62 @@ public partial class SharedSolutionSystem
 {
     private static SolutionComponent.ReagentData _invalidReagentData = new();
     private static SolutionComponent.VariantData _invalidVariantData = new();
+
+/// <summary>
+    /// Get the possible overflow from changing the volume of this solution.
+    /// </summary>
+    /// <param name="solution">Target Solution</param>
+    /// <param name="delta">Potential volume change</param>
+    /// <returns>Overflow (positive)</returns>
+    [PublicAPI]
+    public FixedPoint2 GetPossibleOverflow(Entity<SolutionComponent> solution,
+        FixedPoint2 delta)
+    {
+        if (delta <= 0)
+            return 0;
+        var overflow = delta - solution.Comp.AvailableVolume;
+        return overflow < 0 ? 0 : overflow;
+    }
+
+    private FixedPoint2 FixUnderflow(FixedPoint2 value, ref FixedPoint2 delta)
+    {
+        if (delta >= 0)
+            return 0;
+        var underflow = delta - value;
+        if (underflow < 0)
+            return 0;
+        delta += underflow;
+        return underflow;
+    }
+
+
+
+    [PublicAPI]
+    public FixedPoint2 GetMissingAmount(Entity<SolutionComponent> solution, FixedPoint2 delta)
+    {
+        if (delta >= 0)
+            return 0;
+        var underflow = delta - solution.Comp.Volume;
+        return underflow <= 0 ? 0 : underflow;
+    }
+
+    /// <summary>
+    /// Check if this solution will overflow if it's volume gets changed by the delta amount.
+    /// OverCapacityAmount can be negative to represent an underflow.
+    /// </summary>
+    /// <param name="solution"></param>
+    /// <param name="delta"></param>
+    /// <param name="overCapacityAmount"></param>
+    /// <returns></returns>
+    [PublicAPI]
+    public bool WillOverflow(Entity<SolutionComponent> solution,
+        FixedPoint2 delta,
+        out FixedPoint2 overCapacityAmount)
+    {
+        overCapacityAmount = GetPossibleOverflow(solution, delta);
+        return solution.Comp.CanOverflow && overCapacityAmount > 0;
+    }
+
 
     /// <summary>
     /// Optimize memory usage of reagent lists
@@ -141,5 +196,31 @@ public partial class SharedSolutionSystem
         }
     }
 
+    private int[] CreateRandomIndexer(int length)
+    {
+        var indices = new int[length];
+        for (var i = 0; i < length; i++)
+        {
+            indices[i] = i;
+        }
+        Random.GetRandom().Shuffle(indices);
+        return indices;
+    }
+
+    private FixedPoint2 ClampToEpsilon(float input)
+    {
+        return input < FixedPoint2.Epsilon ? FixedPoint2.Epsilon : input;
+    }
+
+
+    public bool ResolveReagent(ref ReagentDef reagent, bool logMissing = true)
+    {
+        return ChemistryRegistry.ResolveReagentDef(ref reagent, logMissing);
+    }
+
+    public bool ResolveReagent(ref ReagentQuantity reagent, bool logMissing = true)
+    {
+        return ChemistryRegistry.ResolveReagentDef(ref reagent, logMissing);
+    }
 
 }

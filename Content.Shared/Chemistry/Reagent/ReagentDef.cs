@@ -25,23 +25,26 @@ public partial struct ReagentDef : IEquatable<ReagentDef>
     [DataField]
     public ReagentVariant? Variant { get; init; } = null;
 
-    [ViewVariables] private bool IsValid
-    {
-        get => _isValid;
-        init => _isValid = value;
-    }
-
     [NonSerialized]
     private Entity<ReagentDefinitionComponent> _definitionEntity = default!;
 
     [NonSerialized]
     private bool _isValid = false;
 
+    [ViewVariables]
+    public bool IsValid => _isValid;
+
     public Entity<ReagentDefinitionComponent> DefinitionEntity
     {
-        get => _definitionEntity;
+        get
+        {
+            if (!IsValid)
+                throw new NullReferenceException($"ReagentDef with Id:{Id} is invalid, its DefinitionEntity is null");
+            return _definitionEntity;
+        }
         init => _definitionEntity = value;
     }
+
     public ReagentDef(string id, ReagentVariant? data)
     {
         Id = id;
@@ -114,9 +117,9 @@ public partial struct ReagentDef : IEquatable<ReagentDef>
         return !(left == right);
     }
 
-    public bool Resolve(SharedChemistryRegistrySystem chemRegistry, bool logMissing = true)
+    public bool Validate(SharedChemistryRegistrySystem chemRegistry, bool logMissing = true)
     {
-        if (!_isValid)
+        if (IsValid)
             return true;
         if (!chemRegistry.TryIndex(Id, out var foundEnt, logMissing))
             return false;
