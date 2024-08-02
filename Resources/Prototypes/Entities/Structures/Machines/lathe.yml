@@ -753,6 +753,7 @@
       - WeaponDisablerPractice
       - WeaponLaserCarbinePractice
       - Zipties
+      - BolaEnergy
     dynamicRecipes:
       - BoxBeanbag
       - BoxShotgunIncendiary
