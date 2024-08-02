@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Floodlights now use medium power cells instead of small ones.
-    type: Tweak
-  id: 6530
-  time: '2024-05-04T20:06:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27672
 - author: lzk228
   changes:
   - message: Grey whistle added to arcade machine prizes.
@@ -3773,3 +3766,11 @@
   id: 7029
   time: '2024-08-02T05:44:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30299
+- author: TropicalHibi
+  changes:
+  - message: Now fs (for sure) and wru (where are you) are changed to their full version
+      in text
+    type: Add
+  id: 7030
+  time: '2024-08-02T05:57:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30508
