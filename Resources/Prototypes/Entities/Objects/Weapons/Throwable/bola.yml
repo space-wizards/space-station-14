@@ -64,6 +64,9 @@
   parent: BaseBola
   description: An advanced hardlight criminal entangling tool. Otherwise known as an expensive piece of string.
   components:
+  - type: Tag
+    tags:
+    - BolaEnergy
   - type: Sprite
     sprite: Objects/Weapons/Throwable/energy_bola.rsi
   - type: Item

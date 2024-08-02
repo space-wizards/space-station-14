@@ -64,6 +64,9 @@
   id: BodyBag
 
 - type: Tag
+  id: BolaEnergy
+
+- type: Tag
   id: Book
 
 - type: Tag
@@ -548,7 +551,7 @@
 - type: Tag
   id: DrinkSpaceGlue
 
-- type: Tag 
+- type: Tag
   id: Dropper
 
 - type: Tag
