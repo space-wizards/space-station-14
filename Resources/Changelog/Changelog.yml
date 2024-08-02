@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Fixed nuclear operatives, zombies, and head revolutionary round end summaries
-      not showing.
-    type: Fix
-  id: 6525
-  time: '2024-05-04T00:03:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27654
-- author: TheShuEd
-  changes:
-  - message: Added Train station!
-    type: Add
-  id: 6526
-  time: '2024-05-04T11:10:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27534
 - author: TheShuEd
   changes:
   - message: "Added Pathological Liar trait accent. The accent has a 15% chance of\
@@ -3776,3 +3761,17 @@
   id: 7024
   time: '2024-08-01T10:26:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30431
+- author: NakataRin
+  changes:
+  - message: Added paramedic to the train station.
+    type: Add
+  id: 7025
+  time: '2024-08-01T19:59:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30556
+- author: marbow
+  changes:
+  - message: Rejoice, detectives! Hand labeler has been added to your closet!
+    type: Add
+  id: 7026
+  time: '2024-08-01T20:01:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30501
