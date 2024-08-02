@@ -1964,7 +1964,7 @@
           reagent: Radium
           amount: 0.05
         - !type:PopupMessage
-          Conditions:
+          conditions:
             - !type:ReagentThreshold
               reagent: UAP
               min: 1
@@ -1974,7 +1974,7 @@
           messages: [ "uap-effect-n1"]
           probability: 0.1
         - !type:PopupMessage
-          Conditions:
+          conditions:
             - !type:ReagentThreshold
               reagent: UAP
               min: 10
@@ -1984,7 +1984,7 @@
           messages: [ "uap-effect-n2" ]
           probability: 0.1
         - !type:PopupMessage
-          Conditions:
+          conditions:
             - !type:ReagentThreshold
               reagent: UAP
               min: 20
