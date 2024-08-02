@@ -70,3 +70,5 @@
     damage:
       types:
         Heat: 5
+  - type: Ensnaring
+    destroyOnRemove: true

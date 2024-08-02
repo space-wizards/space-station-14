@@ -64,6 +64,10 @@ public sealed partial class EnsnaringComponent : Component
     [DataField("canMoveBreakout")]
     public bool CanMoveBreakout;
 
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
+    public bool DestroyOnRemove = false;
+
 }
 
 /// <summary>
