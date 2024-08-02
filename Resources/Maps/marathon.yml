@@ -10987,7 +10987,7 @@ entities:
       pos: -20.5,-5.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -19847.316
+      secondsUntilStateChange: -19887.758
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -74165,17 +74165,6 @@ entities:
       parent: 30
     - type: AtmosPipeColor
       color: '#FF0000FF'
-  - uid: 8933
-    components:
-    - type: Transform
-      anchored: False
-      pos: 7.5,-22.5
-      parent: 30
-    - type: AtmosPipeColor
-      color: '#0335FCFF'
-    - type: Physics
-      canCollide: True
-      bodyType: Dynamic
   - uid: 8934
     components:
     - type: Transform
@@ -75346,17 +75335,6 @@ entities:
       parent: 30
     - type: AtmosPipeColor
       color: '#FF0000FF'
-  - uid: 9980
-    components:
-    - type: Transform
-      anchored: False
-      pos: 5.5,-22.5
-      parent: 30
-    - type: AtmosPipeColor
-      color: '#FF1212FF'
-    - type: Physics
-      canCollide: True
-      bodyType: Dynamic
   - uid: 9982
     components:
     - type: Transform
