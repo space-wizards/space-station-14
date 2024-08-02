@@ -316,3 +316,65 @@ Entries:
   id: 45
   time: '2024-07-28T18:44:49.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/58
+- author: joelsgp
+  changes:
+  - message: Custom changelog for our fork!
+    type: Add
+  id: 46
+  time: '2024-07-28T22:21:44.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/59
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Damage from low pressure (space) increased dramatically (4x current amount).
+    type: Tweak
+  id: 47
+  time: '2024-07-30T01:36:25.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/60
+- author: formlessnameless
+  changes:
+  - message: Base Spy Vs Spy now starts everyone with 0 TC. Also added variants with 5 starting TC, and default (20) starting TC to test with.
+    type: Add
+  - message: Traitors and Sleeper Agents should no longer have blank objectives.
+    type: Fix
+  id: 48
+  time: '2024-07-30T01:36:42.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/61
+- author: ultramario1998
+  changes:
+  - message: Increased HoS required playtime to 90 hours
+    type: Tweak
+  id: 49
+  time: '2024-07-30T19:17:23.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/62
+- author: 12rabbits
+  changes:
+  - message: Fixed certain inaccuracies in the ready manifest display
+    type: Fix
+  id: 50
+  time: '2024-08-01T19:46:45.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/63
+- author: FlippenPage
+  changes:
+  - message: Nitrogen Deprivation Kit, found rarely in N2 Lockers.
+    type: Add
+  - message: N2 Wall Locker.
+    type: Add
+  - message: N2 Locker Loot Table updated.
+    type: Tweak
+  id: 51
+  time: '2024-08-01T19:46:36.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/64
+- author: ultramario1998
+  changes:
+  - message: Fin fin can now open doors. Life, uh, finds a way.
+    type: Tweak
+  id: 52
+  time: '2024-08-01T19:46:26.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/65
+- author: formlessnameless
+  changes:
+  - message: Blessed bananium flooring.
+    type: Add
+  id: 53
+  time: '2024-08-02T00:36:08.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/67
