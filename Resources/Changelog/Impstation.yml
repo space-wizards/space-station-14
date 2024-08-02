@@ -99,7 +99,7 @@ Entries:
   url: https://github.com/medabunny/imp-station-14/pull/16
 - author: joelsgp
   changes:
-  - message: Newports
+  - message: Newports (sprites by Arch)
     type: Add
   id: 15
   time: '2024-07-03T15:39:46.0000000+00:00'
