@@ -441,6 +441,12 @@ namespace Content.Client.Lobby.UI
 
             UpdateSpeciesGuidebookIcon();
             IsDirty = false;
+
+            _requirements.Updated += () =>
+            {
+                RefreshJobs();
+                RefreshAntags();
+            };
         }
 
         /// <summary>

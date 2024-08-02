@@ -50,12 +50,23 @@ public sealed class BanManager : IBanManager, IPostInjectInit
 
     private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
     {
-        if (e.NewStatus != SessionStatus.Connected || _cachedRoleBans.ContainsKey(e.Session.UserId))
+        if (e.NewStatus != SessionStatus.Connected)
             return;
 
         var netChannel = e.Session.Channel;
+        var userId = e.Session.UserId;
         ImmutableArray<byte>? hwId = netChannel.UserData.HWId.Length == 0 ? null : netChannel.UserData.HWId;
-        await CacheDbRoleBans(e.Session.UserId, netChannel.RemoteEndPoint.Address, hwId);
+
+        if (_cachedRoleBans.ContainsKey(userId))
+        {
+            // Player is known, check for expired bans and update cache if necessary
+            RemoveExpiredBans(userId);
+        }
+        else
+        {
+            // Player is new, cache their bans
+            await CacheDbRoleBans(userId, netChannel.RemoteEndPoint.Address, hwId);
+        }
 
         SendRoleBans(e.Session);
     }
@@ -112,6 +123,15 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         {
             roleBans.RemoveWhere(ban => DateTimeOffset.Now > ban.ExpirationTime);
         }
+    }
+
+    private void RemoveExpiredBans(NetUserId userId)
+    {
+        if (!_cachedRoleBans.TryGetValue(userId, out var roleBans))
+            return;
+        roleBans.RemoveWhere(ban => DateTimeOffset.UtcNow > ban.ExpirationTime);
+        // Do not remove the user entry, just clear the role bans if they are expired
+        _cachedRoleBans[userId] = roleBans;
     }
 
     #region Server Bans
@@ -282,14 +302,22 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         return $"Pardoned ban with id {banId}";
     }
 
-    public HashSet<ProtoId<JobPrototype>>? GetJobBans(NetUserId playerUserId)
+    private HashSet<string> GetActiveRoleBans(NetUserId playerUserId, string banTypePrefix)
     {
         if (!_cachedRoleBans.TryGetValue(playerUserId, out var roleBans))
-            return null;
+            return new HashSet<string>();
+
+        var now = DateTime.UtcNow;
         return roleBans
-            .Where(ban => ban.Role.StartsWith(JobPrefix, StringComparison.Ordinal))
-            .Select(ban => new ProtoId<JobPrototype>(ban.Role[JobPrefix.Length..]))
+            .Where(ban => ban.Role.StartsWith(banTypePrefix, StringComparison.Ordinal) && (ban.ExpirationTime == null || ban.ExpirationTime > now))
+            .Select(ban => ban.Role[banTypePrefix.Length..])
             .ToHashSet();
+    }
+
+    public HashSet<ProtoId<JobPrototype>> GetJobBans(NetUserId playerUserId)
+    {
+        var activeJobBans = GetActiveRoleBans(playerUserId, JobPrefix);
+        return activeJobBans.Select(role => new ProtoId<JobPrototype>(role)).ToHashSet();
     }
 
     public bool IsRoleBanned(NetUserId userId, IEnumerable<string> roles)
@@ -305,14 +333,10 @@ public sealed class BanManager : IBanManager, IPostInjectInit
     #endregion
 
     #region Antag Bans
-    public HashSet<ProtoId<AntagPrototype>>? GetAntagBans(NetUserId playerUserId)
+    public HashSet<ProtoId<AntagPrototype>> GetAntagBans(NetUserId playerUserId)
     {
-        if (!_cachedRoleBans.TryGetValue(playerUserId, out var roleBans))
-            return null;
-        return roleBans
-            .Where(ban => ban.Role.StartsWith(AntagPrefix, StringComparison.Ordinal))
-            .Select(ban => new ProtoId<AntagPrototype>(ban.Role[AntagPrefix.Length..]))
-            .ToHashSet();
+        var activeAntagBans = GetActiveRoleBans(playerUserId, AntagPrefix);
+        return activeAntagBans.Select(role => new ProtoId<AntagPrototype>(role)).ToHashSet();
     }
 
     private bool IsBannedFromAntag(NetUserId userId, IEnumerable<string> antags)

@@ -180,14 +180,22 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         return _roles;
     }
 
-    private bool IsBanned(IEnumerable<BanInfo> bans, IEnumerable<string> items, [NotNullWhen(true)] out string? banReason, out DateTime? expirationTime)
+    /// <summary>
+    /// Checks if any of the specified ban types (jobs or antags) are currently active for the provided bans.
+    /// </summary>
+    /// <param name="bans">The collection of bans to check against.</param>
+    /// <param name="banTypes">The collection of ban types (roles or antags) to check.</param>
+    /// <param name="banReason">The reason for the ban, if found.</param>
+    /// <param name="expirationTime">The expiration time of the ban, if found.</param>
+    /// <returns>True if an active ban is found, otherwise false.</returns>
+    private bool IsBanned(IEnumerable<BanInfo> bans, IEnumerable<string> banTypes, [NotNullWhen(true)] out string? banReason, out DateTime? expirationTime)
     {
         banReason = null;
         expirationTime = null;
 
-        foreach (var item in items)
+        foreach (var banType in banTypes)
         {
-            var ban = bans.FirstOrDefault(b => b.Role == item);
+            var ban = bans.FirstOrDefault(b => b.Role == banType);
             if (ban != null)
             {
                 banReason = ban.Reason ?? string.Empty;

@@ -26,17 +26,17 @@ public interface IBanManager
     /// <param name="reason">Reason for the ban</param>
     public void CreateServerBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableArray<byte>? hwid, uint? minutes, NoteSeverity severity, string reason);
     public HashSet<string>? GetRoleBans(NetUserId playerUserId);
-    public HashSet<ProtoId<JobPrototype>>? GetJobBans(NetUserId playerUserId);
+    public HashSet<ProtoId<JobPrototype>> GetJobBans(NetUserId playerUserId);
 
     /// <summary>
-    /// Retrieves a set of antagonist bans for the specified player.
+    /// Retrieves a set of antagonist bans for the specified player. By Default only active bans.
     /// </summary>
     /// <param name="playerUserId">The user ID of the player.</param>
     /// <returns>
     /// A set of antagonist prototype IDs representing the banned antagonist roles for the player,
     /// or null if the player has no antagonist bans.
     /// </returns>
-    public HashSet<ProtoId<AntagPrototype>>? GetAntagBans(NetUserId playerUserId);
+    public HashSet<ProtoId<AntagPrototype>> GetAntagBans(NetUserId playerUserId);
 
     /// <summary>
     /// Checks if the player is banned from a specific antagonist role.
