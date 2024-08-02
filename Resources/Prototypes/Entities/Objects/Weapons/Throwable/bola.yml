@@ -9,6 +9,7 @@
     size: Normal
   - type: Sprite
     sprite: Objects/Weapons/Throwable/bola.rsi
+    state: icon
   - type: EmitSoundOnThrow
     sound: /Audio/Weapons/bolathrow.ogg
   - type: EmitSoundOnLand
