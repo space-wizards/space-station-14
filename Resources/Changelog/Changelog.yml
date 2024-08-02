@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Tyzemol
-  changes:
-  - message: Fixed NPCs being able to see and attack you hiding in closed lockers
-      and crates
-    type: Fix
-  id: 6528
-  time: '2024-05-04T19:57:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27677
 - author: Blackern5000
   changes:
   - message: Security belts can now hold more items that security commonly uses.
@@ -3773,3 +3765,10 @@
   id: 7027
   time: '2024-08-02T01:33:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30452
+- author: WarMechanic
+  changes:
+  - message: Adjusted meteors to have less lethal blast fragments.
+    type: Tweak
+  id: 7028
+  time: '2024-08-02T05:43:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29199
