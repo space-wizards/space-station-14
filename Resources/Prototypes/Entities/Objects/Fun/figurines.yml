@@ -109,8 +109,8 @@
   components:
   - type: Sprite
     state: boxer
-  - type: SpeakOnUse
-    pack: FigurinesBoxer
+  # - type: SpeakOnUse # TODO add something
+  #   pack: FigurinesBoxer
 
 - type: entity
   parent: BaseFigurine
@@ -463,8 +463,8 @@
   components:
   - type: Sprite
     state: queen
-  - type: SpeakOnUse
-    pack: FigurinesQueen
+  # - type: SpeakOnUse # TODO add something
+  #   pack: FigurinesQueen
 
 - type: entity
   parent: BaseFigurine
