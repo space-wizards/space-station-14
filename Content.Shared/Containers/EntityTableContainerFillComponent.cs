@@ -5,7 +5,7 @@ namespace Content.Shared.Containers;
 /// <summary>
 /// Version of <see cref="ContainerFillComponent"/> that utilizes <see cref="EntityTableSelector"/>
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(ContainerFillSystem))]
 public sealed partial class EntityTableContainerFillComponent : Component
 {
     [DataField]

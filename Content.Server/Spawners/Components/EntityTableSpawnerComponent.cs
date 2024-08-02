@@ -1,9 +1,10 @@
+using Content.Server.Spawners.EntitySystems;
 using Content.Shared.EntityTable.EntitySelectors;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Spawners.Components;
 
-[RegisterComponent, EntityCategory("Spawner")]
+[RegisterComponent, EntityCategory("Spawner"), Access(typeof(ConditionalSpawnerSystem))]
 public sealed partial class EntityTableSpawnerComponent : Component
 {
     /// <summary>
