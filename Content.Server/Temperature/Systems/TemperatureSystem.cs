@@ -14,6 +14,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Temperature.Systems;
 
@@ -23,6 +24,7 @@ public sealed class TemperatureSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IViewVariablesManager _vvManager = default!;
 
     /// <summary>
     ///     All the components that will have their damage updated at the end of the tick.
@@ -58,6 +60,21 @@ public sealed class TemperatureSystem : EntitySystem
             OnParentThresholdStartup);
         SubscribeLocalEvent<ContainerTemperatureDamageThresholdsComponent, ComponentShutdown>(
             OnParentThresholdShutdown);
+
+        var vvHandle = _vvManager.GetTypeHandler<TemperatureComponent>();
+        vvHandle.AddPath(nameof(TemperatureComponent.TotalHeatCapacity), (uid, comp) => GetHeatCapacity(uid, comp));
+        vvHandle.AddPath(nameof(TemperatureComponent.BaseHeatCapacity), (_, comp) => comp.BaseHeatCapacity, (uid, value, comp) => SetBaseHeatCapacity((uid, comp), value));
+        vvHandle.AddPath(nameof(TemperatureComponent.SpecificHeat), (_, comp) => comp.SpecificHeat, (uid, value, comp) => SetSpecificHeat((uid, comp), value));
+    }
+
+    public override void Shutdown()
+    {
+        var vvHandle = _vvManager.GetTypeHandler<TemperatureComponent>();
+        vvHandle.RemovePath(nameof(TemperatureComponent.TotalHeatCapacity));
+        vvHandle.RemovePath(nameof(TemperatureComponent.BaseHeatCapacity));
+        vvHandle.RemovePath(nameof(TemperatureComponent.SpecificHeat));
+
+        base.Shutdown();
     }
 
     public override void Update(float frameTime)
