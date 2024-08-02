@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: "Added Pathological Liar trait accent. The accent has a 15% chance of\
-      \ inverting your message to the opposite. Replacing \u201CYes\u201D with \u201C\
-      No\u201D, \u201CCan\u201D with \u201Ccan't\u201D and so on."
-    type: Add
-  id: 6527
-  time: '2024-05-04T11:11:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27618
 - author: Tyzemol
   changes:
   - message: Fixed NPCs being able to see and attack you hiding in closed lockers
@@ -3775,3 +3766,10 @@
   id: 7026
   time: '2024-08-01T20:01:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30501
+- author: metalgearsloth
+  changes:
+  - message: Fix some popups playing twice.
+    type: Fix
+  id: 7027
+  time: '2024-08-02T01:33:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30452
