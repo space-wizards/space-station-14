@@ -52,6 +52,9 @@ public sealed class ContainerFillSystem : EntitySystem
         if (!TryComp(ent, out ContainerManagerComponent? containerComp))
             return;
 
+        if (TerminatingOrDeleted(ent) || !Exists(ent))
+            return;
+
         var xform = Transform(ent);
         var coords = new EntityCoordinates(ent, Vector2.Zero);
 

@@ -41,6 +41,8 @@ namespace Content.Server.Spawners.EntitySystems
         private void OnEntityTableSpawnMapInit(Entity<EntityTableSpawnerComponent> ent, ref MapInitEvent args)
         {
             Spawn(ent);
+            if (ent.Comp.DeleteSpawnerAfterSpawn && !TerminatingOrDeleted(ent) && Exists(ent))
+                QueueDel(ent);
         }
 
         private void OnRuleStarted(ref GameRuleStartedEvent args)
@@ -121,6 +123,9 @@ namespace Content.Server.Spawners.EntitySystems
 
         private void Spawn(Entity<EntityTableSpawnerComponent> ent)
         {
+            if (TerminatingOrDeleted(ent) || !Exists(ent))
+                return;
+
             var coords = Transform(ent).Coordinates;
 
             var spawns = _entityTable.GetSpawns(ent.Comp.Table);
@@ -132,9 +137,6 @@ namespace Content.Server.Spawners.EntitySystems
 
                 Spawn(proto, trueCoords);
             }
-
-            if (ent.Comp.DeleteSpawnerAfterSpawn)
-                Del(ent);
         }
     }
 }
