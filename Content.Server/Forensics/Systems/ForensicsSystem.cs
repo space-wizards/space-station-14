@@ -36,7 +36,7 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<FingerprintComponent, MapInitEvent>(OnFingerprintInit);
             SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit);
 
-            SubscribeLocalEvent<DnaComponent, BeingGibbedEvent>(OnBeingGibbed);
+            SubscribeLocalEvent<ForensicsComponent, BeingGibbedEvent>(OnBeingGibbed);
             SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
             SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(AbsorbentSystem) });
@@ -80,12 +80,17 @@ namespace Content.Server.Forensics
             }
         }
 
-        private void OnBeingGibbed(EntityUid uid, DnaComponent component, BeingGibbedEvent args)
+        private void OnBeingGibbed(EntityUid uid, ForensicsComponent component, BeingGibbedEvent args)
         {
+            string dna = Loc.GetString("forensics-dna-unknown");
+
+            if (TryComp(uid, out DnaComponent? dnaComp))
+                dna = dnaComp.DNA;
+
             foreach (EntityUid part in args.GibbedParts)
             {
                 var partComp = EnsureComp<ForensicsComponent>(part);
-                partComp.DNAs.Add(component.DNA);
+                partComp.DNAs.Add(dna);
                 partComp.CanDnaBeCleaned = false;
             }
         }

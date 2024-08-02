@@ -275,16 +275,6 @@ public sealed class BloodstreamSystem : EntitySystem
     private void OnBeingGibbed(Entity<BloodstreamComponent> ent, ref BeingGibbedEvent args)
     {
         SpillAllSolutions(ent, ent);
-
-        if (HasComp<ForensicsComponent>(ent))
-        {
-            foreach (EntityUid part in args.GibbedParts)
-            {
-                var partComp = EnsureComp<ForensicsComponent>(part);
-                partComp.DNAs.Add(Loc.GetString("forensics-dna-unknown"));
-                partComp.CanDnaBeCleaned = false;
-            }
-        }
     }
 
     private void OnApplyMetabolicMultiplier(
