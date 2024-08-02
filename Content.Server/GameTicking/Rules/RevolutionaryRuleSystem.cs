@@ -87,24 +87,23 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     protected override void ActiveTick(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
+        // Check for command loss or if a banned player needs to be smited.
         if (component.CommandCheck <= _timing.CurTime)
         {
             component.CommandCheck = _timing.CurTime + component.TimerWait;
 
+            // Check for command loss
             if (CheckCommandLose())
             {
                 _roundEnd.DoRoundEndBehavior(RoundEndBehavior.ShuttleCall, component.ShuttleCallTime);
                 GameTicker.EndGameRule(uid, gameRule);
             }
-        }
 
-        // Execute scheduled smites if there are any for banned players that are converted.
-        if (_scheduledSmites.Count > 0)
-        {
-            var currentTime = _timing.CurTime;
-            foreach (var entity in _scheduledSmites.Keys.ToList())
+            // Execute scheduled smites for banned players
+            if (_scheduledSmites.Count > 0)
             {
-                if (_scheduledSmites[entity] <= currentTime)
+                var currentTime = _timing.CurTime;
+                foreach (var entity in _scheduledSmites.Keys.ToList().Where(entity => _scheduledSmites[entity] <= currentTime))
                 {
                     if (EntityManager.EntityExists(entity))
                     {
