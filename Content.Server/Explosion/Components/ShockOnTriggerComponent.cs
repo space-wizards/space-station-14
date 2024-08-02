@@ -13,7 +13,7 @@ public sealed partial class ShockOnTriggerComponent : Component
     /// </summary>
     [ViewVariables]
     [DataField]
-    public int DamageSpecifier = 5;
+    public int Damage = 5;
 
     /// <summary>
     /// Duration of electric shock when the trigger is triggered.
