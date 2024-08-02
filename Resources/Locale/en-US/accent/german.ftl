@@ -177,6 +177,7 @@ accent-german-words-57-2 = quickly
 accent-german-words-replace-57 = schnell
 
 accent-german-words-58 = war ops
+accent-german-words-58-2 = warops
 accent-german-words-replace-58 = blitzkrieg
 
 accent-german-words-59 = tesla coil
