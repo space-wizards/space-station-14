@@ -165,10 +165,7 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (!uiComp.RequireHands)
-                return;
-
-            if (!_handsQuery.TryComp(ev.Actor, out var hands) || hands.Hands.Count == 0)
+            if (uiComp.RequireHands && !_handsQuery.HasComp(ev.Actor))
                 ev.Cancel();
         }
 
