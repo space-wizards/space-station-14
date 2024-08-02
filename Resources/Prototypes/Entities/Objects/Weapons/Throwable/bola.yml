@@ -35,6 +35,9 @@
   id: Bola
   description: Linked together with some spare cuffs and metal.
   components:
+  - type: Construction
+    graph: Bola
+    node: bola
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
