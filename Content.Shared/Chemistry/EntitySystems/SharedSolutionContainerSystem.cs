@@ -14,14 +14,11 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
-using Content.Shared.Chemistry.Components.Reagents;
-using Content.Shared.Chemistry.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Dependency = Robust.Shared.IoC.DependencyAttribute;
-using ReagentQuantity = Content.Shared.Chemistry.Reagent.ReagentQuantity;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -60,7 +57,7 @@ public partial record struct SolutionAccessAttemptEvent(string SolutionName)
 /// <summary>
 /// Part of Chemistry system deal with SolutionContainers
 /// </summary>
-[UsedImplicitly]
+[UsedImplicitly, Obsolete("Use SharedSolutionSystem instead!")]
 public abstract partial class SharedSolutionContainerSystem : EntitySystem
 {
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
@@ -71,8 +68,6 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
     [Dependency] protected readonly INetManager NetManager = default!;
-    [Dependency] protected readonly SharedChemistryRegistrySystem ChemistryRegistry = default!;
-    [Dependency] protected readonly SharedSolutionSystem SolutionSystem = default!;
 
     public override void Initialize()
     {
@@ -304,16 +299,43 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="soln"></param>
     /// <param name="needsReactionsProcessing"></param>
     /// <param name="mixerComponent"></param>
-    [Obsolete("Use SolutionSystem.UpdateChemicals Instead!")]
     public void UpdateChemicals(Entity<SolutionComponent> soln, bool needsReactionsProcessing = true, ReactionMixerComponent? mixerComponent = null)
     {
-       SolutionSystem.UpdateChemicals(soln, needsReactionsProcessing, mixerComponent);
+        Dirty(soln);
+
+        var (uid, comp) = soln;
+        var solution = comp.Solution;
+
+        // Process reactions
+        if (needsReactionsProcessing && solution.CanReact)
+            ChemicalReactionSystem.FullyReactSolution(soln, mixerComponent);
+
+        var overflow = solution.Volume - solution.MaxVolume;
+        if (overflow > FixedPoint2.Zero)
+        {
+            var overflowEv = new SolutionOverflowEvent(soln, overflow);
+            RaiseLocalEvent(uid, ref overflowEv);
+        }
+
+        UpdateAppearance((uid, comp, null));
+
+        var changedEv = new SolutionChangedEvent(soln);
+        RaiseLocalEvent(uid, ref changedEv);
     }
 
-    [Obsolete("Use SolutionSystem.UpdateAppearance Instead!")]
     public void UpdateAppearance(Entity<SolutionComponent, AppearanceComponent?> soln)
     {
-        SolutionSystem.UpdateAppearance(soln);
+        var (uid, comp, appearanceComponent) = soln;
+        var solution = comp.Solution;
+
+        if (!EntityManager.EntityExists(uid) || !Resolve(uid, ref appearanceComponent, false))
+            return;
+
+        AppearanceSystem.SetData(uid, SolutionContainerVisuals.FillFraction, solution.FillFraction, appearanceComponent);
+        AppearanceSystem.SetData(uid, SolutionContainerVisuals.Color, solution.GetColor(PrototypeManager), appearanceComponent);
+
+        if (solution.GetPrimaryReagentId() is { } reagent)
+            AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
     }
 
     /// <summary>
@@ -395,34 +417,30 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="reagentQuantity">The reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
     /// <returns>If all the reagent could be added.</returns>
-    public bool TryAddReagent(Entity<SolutionComponent> soln, ReagentQuantity reagentQuantity, out FixedPoint2 acceptedQuantity, float? temperature = null, ReagentVariant? reagentMetadata = null)
+    public bool TryAddReagent(Entity<SolutionComponent> soln, ReagentQuantity reagentQuantity, out FixedPoint2 acceptedQuantity, float? temperature = null)
     {
-        acceptedQuantity = reagentQuantity.Quantity;
-        if (!ChemistryRegistry.TryIndex(reagentQuantity.Reagent.Prototype, out var reagentDef, true))
-            return false;
+        var (uid, comp) = soln;
+        var solution = comp.Solution;
 
-        //TODO: remember to take into account temp again
-        SolutionSystem.AddReagent((soln, soln),
-            reagentDef.Value,
-            reagentQuantity.Quantity,
-            out var overflow,
-            true,
-            reagentMetadata);
-        if (overflow == 0)
-            return true;
+        acceptedQuantity = solution.AvailableVolume > reagentQuantity.Quantity
+            ? reagentQuantity.Quantity
+            : solution.AvailableVolume;
 
-        acceptedQuantity = reagentQuantity.Quantity - FixedPoint2.Max(0, overflow);
-        return true;
+        if (acceptedQuantity <= 0)
+            return reagentQuantity.Quantity == 0;
 
+        if (temperature == null)
+        {
+            solution.AddReagent(reagentQuantity.Reagent, acceptedQuantity);
+        }
+        else
+        {
+            var proto = PrototypeManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
+            solution.AddReagent(proto, acceptedQuantity, temperature.Value, PrototypeManager);
+        }
 
-        // if (temperature == null)
-        // {
-        //     solution.AddReagent(reagentQuantity.Reagent, acceptedQuantity);
-        // }
-        // else
-        // {
-        //     solution.AddReagent(reagentDef, acceptedQuantity, temperature.Value, ChemistryRegistry);
-        // }
+        UpdateChemicals(soln);
+        return acceptedQuantity == reagentQuantity.Quantity;
     }
 
     /// <summary>
@@ -434,7 +452,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="quantity">The amount of reagent to add.</param>
     /// <returns>If all the reagent could be added.</returns>
     [PublicAPI]
-    public bool TryAddReagent(Entity<SolutionComponent> soln, string prototype, FixedPoint2 quantity, float? temperature = null, Reagent.ReagentData? data = null)
+    public bool TryAddReagent(Entity<SolutionComponent> soln, string prototype, FixedPoint2 quantity, float? temperature = null, ReagentData? data = null)
         => TryAddReagent(soln, new ReagentQuantity(prototype, quantity, data), out _, temperature);
 
     /// <summary>
@@ -446,7 +464,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="quantity">The amount of reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
     /// <returns>If all the reagent could be added.</returns>
-    public bool TryAddReagent(Entity<SolutionComponent> soln, string prototype, FixedPoint2 quantity, out FixedPoint2 acceptedQuantity, float? temperature = null, Reagent.ReagentData? data = null)
+    public bool TryAddReagent(Entity<SolutionComponent> soln, string prototype, FixedPoint2 quantity, out FixedPoint2 acceptedQuantity, float? temperature = null, ReagentData? data = null)
     {
         var reagent = new ReagentQuantity(prototype, quantity, data);
         return TryAddReagent(soln, reagent, out acceptedQuantity, temperature);
@@ -495,7 +513,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="prototype">The Id of the reagent to remove.</param>
     /// <param name="quantity">The amount of reagent to remove.</param>
     /// <returns>If the reagent to remove was found in the container.</returns>
-    public bool RemoveReagent(Entity<SolutionComponent> soln, string prototype, FixedPoint2 quantity, Reagent.ReagentData? data = null)
+    public bool RemoveReagent(Entity<SolutionComponent> soln, string prototype, FixedPoint2 quantity, ReagentData? data = null)
     {
         return RemoveReagent(soln, new ReagentQuantity(prototype, quantity, data));
     }
@@ -770,9 +788,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             return;
         }
 
-        if (!ChemistryRegistry.TryIndex(primaryReagent.Value.Prototype, out var primary))
+        if (!PrototypeManager.TryIndex(primaryReagent.Value.Prototype, out ReagentPrototype? primary))
         {
-            Log.Error($"{nameof(Solution)} could not find the reagent {primaryReagent} in the chemical registry.");
+            Log.Error($"{nameof(Solution)} could not find the prototype associated with {primaryReagent}.");
             return;
         }
 
@@ -787,23 +805,26 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                 ("wordedAmount", Loc.GetString(solution.Contents.Count == 1
                     ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"
                     : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
-                ("desc", primary.Value.Comp.LocalizedPhysicalDescription)));
+                ("desc", primary.LocalizedPhysicalDescription)));
+
+            var reagentPrototypes = solution.GetReagentPrototypes(PrototypeManager);
+
             // Sort the reagents by amount, descending then alphabetically
-            var sortedReagentDefs =  solution.GetReagents(ChemistryRegistry)
+            var sortedReagentPrototypes = reagentPrototypes
                 .OrderByDescending(pair => pair.Value.Value)
-                .ThenBy(pair => pair.Key.Comp.LocalizedName);
+                .ThenBy(pair => pair.Key.LocalizedName);
 
             // Add descriptions of immediately recognizable reagents, like water or beer
-            var recognized = new List<Entity<ReagentDefinitionComponent>>();
-            foreach (var keyValuePair in sortedReagentDefs)
+            var recognized = new List<ReagentPrototype>();
+            foreach (var keyValuePair in sortedReagentPrototypes)
             {
-                var reagentDef = keyValuePair.Key;
-                if (!reagentDef.Comp.Recognizable)
+                var proto = keyValuePair.Key;
+                if (!proto.Recognizable)
                 {
                     continue;
                 }
 
-                recognized.Add(reagentDef);
+                recognized.Add(proto);
             }
 
             // Skip if there's nothing recognizable
@@ -829,8 +850,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                     part = "examinable-solution-recognized-next";
                 }
 
-                msg.Append(Loc.GetString(part, ("color", reagent.Comp.SubstanceColor.ToHexNoAlpha()),
-                    ("chemical", reagent.Comp.LocalizedName)));
+                msg.Append(Loc.GetString(part, ("color", reagent.SubstanceColor.ToHexNoAlpha()),
+                    ("chemical", reagent.LocalizedName)));
             }
 
             args.PushMarkup(Loc.GetString("examinable-solution-has-recognizable-chemicals",
@@ -888,19 +909,19 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         msg.AddMarkup(Loc.GetString("scannable-solution-main-text"));
 
-        var reagentDefs = solution.GetReagents(ChemistryRegistry);
+        var reagentPrototypes = solution.GetReagentPrototypes(PrototypeManager);
 
         // Sort the reagents by amount, descending then alphabetically
-        var sortedReagentPrototypes = reagentDefs
+        var sortedReagentPrototypes = reagentPrototypes
             .OrderByDescending(pair => pair.Value.Value)
-            .ThenBy(pair => pair.Key.Comp.LocalizedName);
+            .ThenBy(pair => pair.Key.LocalizedName);
 
         foreach (var (proto, quantity) in sortedReagentPrototypes)
         {
             msg.PushNewline();
             msg.AddMarkup(Loc.GetString("scannable-solution-chemical"
-                , ("type", proto.Comp.LocalizedName)
-                , ("color", proto.Comp.SubstanceColor.ToHexNoAlpha())
+                , ("type", proto.LocalizedName)
+                , ("color", proto.SubstanceColor.ToHexNoAlpha())
                 , ("amount", quantity)));
         }
 

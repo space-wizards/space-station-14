@@ -16,7 +16,6 @@ namespace Content.Shared.Chemistry.Components
     /// </summary>
     [Serializable, NetSerializable]
     [DataDefinition]
-    [Obsolete("Use SolutionSystem, SolutionComponent,and InitialSolutionComponent instead!")]
     public sealed partial class Solution : IEnumerable<ReagentQuantity>, ISerializationHooks
     {
         // This is a list because it is actually faster to add and remove reagents from
@@ -94,22 +93,6 @@ namespace Content.Shared.Chemistry.Components
         // This value is arbitrary btw.
         private const int HeatCapacityUpdateInterval = 15;
 
-        public void UpdateHeatCapacity(SharedChemistryRegistrySystem? chemRegistry)
-        {
-            IoCManager.Resolve<IEntitySystemManager>().Resolve(ref chemRegistry);
-            DebugTools.Assert(_heatCapacityDirty);
-            _heatCapacityDirty = false;
-            _heatCapacity = 0;
-            foreach (var (reagent, quantity) in Contents)
-            {
-                _heatCapacity += (float) quantity *
-                                 chemRegistry.Index(reagent.Prototype).Comp.SpecificHeat;
-            }
-
-            _heatCapacityUpdateCounter = 0;
-        }
-
-        [Obsolete]
         public void UpdateHeatCapacity(IPrototypeManager? protoMan)
         {
             IoCManager.Resolve(ref protoMan);
@@ -125,21 +108,11 @@ namespace Content.Shared.Chemistry.Components
             _heatCapacityUpdateCounter = 0;
         }
 
-        [Obsolete]
-        public float GetHeatCapacityNew(SharedChemistryRegistrySystem? chemicalRegistry)
+        public float GetHeatCapacity(IPrototypeManager? protoMan)
         {
             if (_heatCapacityDirty)
-            {
-                UpdateHeatCapacity(chemicalRegistry);
-            }
+                UpdateHeatCapacity(protoMan);
             return _heatCapacity;
-        }
-
-        [Obsolete]
-        public float GetHeatCapacity(IPrototypeManager? protoManager)
-        {
-            return GetHeatCapacityNew(IoCManager.Resolve<IEntitySystemManager>()
-                .GetEntitySystem<SharedChemistryRegistrySystem>());
         }
 
         public void CheckRecalculateHeatCapacity()
@@ -151,16 +124,9 @@ namespace Content.Shared.Chemistry.Components
                 _heatCapacityDirty = true;
         }
 
-        public float GetThermalEnergy(SharedChemistryRegistrySystem? chemistryRegistry)
+        public float GetThermalEnergy(IPrototypeManager? protoMan)
         {
-            return GetHeatCapacityNew(chemistryRegistry) * Temperature;
-        }
-
-
-        [Obsolete]
-        public float GetThermalEnergy(IPrototypeManager? _)
-        {
-            return GetThermalEnergy(IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedChemistryRegistrySystem>());
+            return GetHeatCapacity(protoMan) * Temperature;
         }
 
         /// <summary>
@@ -181,12 +147,11 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         ///     Constructs a solution containing 100% of a reagent (ex. A beaker of pure water).
         /// </summary>
-        /// <param name="reagent">The prototype ID of the reagent to add.</param>
+        /// <param name="prototype">The prototype ID of the reagent to add.</param>
         /// <param name="quantity">The quantity in milli-units.</param>
-        /// <param name="data"></param>
-        public Solution(string reagent, FixedPoint2 quantity, Reagent.ReagentData? data = null) : this()
+        public Solution(string prototype, FixedPoint2 quantity, ReagentData? data = null) : this()
         {
-            AddReagent(new ReagentId(reagent, data), quantity);
+            AddReagent(new ReagentId(prototype, data), quantity);
         }
 
         public Solution(IEnumerable<ReagentQuantity> reagents, bool setMaxVol = true)
@@ -240,7 +205,7 @@ namespace Content.Shared.Chemistry.Components
             {
                 var cur = _heatCapacity;
                 _heatCapacityDirty = true;
-                UpdateHeatCapacity(IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedChemistryRegistrySystem>());
+                UpdateHeatCapacity(null);
                 DebugTools.Assert(MathHelper.CloseTo(_heatCapacity, cur, tolerance: 0.01));
             }
     #endif
@@ -273,14 +238,14 @@ namespace Content.Shared.Chemistry.Components
         {
             foreach (var (reagent, _) in Contents)
             {
-                if (reagent == (ReagentDef)id)
+                if (reagent == id)
                     return true;
             }
 
             return false;
         }
 
-        public bool ContainsReagent(string reagentId, Reagent.ReagentData? data)
+        public bool ContainsReagent(string reagentId, ReagentData? data)
             => ContainsReagent(new(reagentId, data));
 
         public bool TryGetReagent(ReagentId id, out ReagentQuantity quantity)
@@ -345,7 +310,7 @@ namespace Content.Shared.Chemistry.Components
             var total = FixedPoint2.Zero;
             foreach (var (reagent, quantity) in Contents)
             {
-                if (prototypes.Contains(reagent.Id))
+                if (prototypes.Contains(reagent.Prototype))
                     total += quantity;
             }
 
@@ -357,7 +322,7 @@ namespace Content.Shared.Chemistry.Components
             var total = FixedPoint2.Zero;
             foreach (var (reagent, quantity) in Contents)
             {
-                if (id == reagent.Id)
+                if (id == reagent.Prototype)
                     total += quantity;
             }
 
@@ -387,7 +352,6 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         /// <param name="prototype">The prototype ID of the reagent to add.</param>
         /// <param name="quantity">The quantity in milli-units.</param>
-        /// <param name="dirtyHeatCap">Should heatcap be dirtied?</param>
         public void AddReagent(string prototype, FixedPoint2 quantity, bool dirtyHeatCap = true)
             => AddReagent(new ReagentId(prototype, null), quantity, dirtyHeatCap);
 
@@ -396,7 +360,6 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         /// <param name="id">The reagent to add.</param>
         /// <param name="quantity">The quantity in milli-units.</param>
-        /// <param name="dirtyHeatCap">Should heatcap be dirtied?</param>
         public void AddReagent(ReagentId id, FixedPoint2 quantity, bool dirtyHeatCap = true)
         {
             if (quantity <= 0)
@@ -410,7 +373,7 @@ namespace Content.Shared.Chemistry.Components
             for (var i = 0; i < Contents.Count; i++)
             {
                 var (reagent, existingQuantity) = Contents[i];
-                if (reagent != (ReagentDef)id)
+                if (reagent != id)
                     continue;
 
                 Contents[i] = new ReagentQuantity(id, existingQuantity + quantity);
@@ -425,15 +388,13 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         ///     Adds a given quantity of a reagent directly into the solution.
         /// </summary>
-        /// <param name="proto"></param>
         /// <param name="reagentId">The reagent to add.</param>
         /// <param name="quantity">The quantity in milli-units.</param>
-        [Obsolete]
         public void AddReagent(ReagentPrototype proto, ReagentId reagentId, FixedPoint2 quantity)
         {
             AddReagent(reagentId, quantity, false);
-            var reagentDef = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedChemistryRegistrySystem>().Index(reagentId.Prototype);
-            _heatCapacity += quantity.Float() * reagentDef.Comp.SpecificHeat;
+
+            _heatCapacity += quantity.Float() * proto.SpecificHeat;
             CheckRecalculateHeatCapacity();
         }
 
@@ -445,24 +406,13 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         /// <param name="proto">The prototype of the reagent to add.</param>
         /// <param name="quantity">The quantity in milli-units.</param>
-        [Obsolete]
-        public void AddReagent(ReagentPrototype proto, FixedPoint2 quantity, float temperature, IPrototypeManager? protoMan, Reagent.ReagentData? data = null)
+        public void AddReagent(ReagentPrototype proto, FixedPoint2 quantity, float temperature, IPrototypeManager? protoMan, ReagentData? data = null)
         {
             if (_heatCapacityDirty)
                 UpdateHeatCapacity(protoMan);
 
             var totalThermalEnergy = Temperature * _heatCapacity + temperature * proto.SpecificHeat;
             AddReagent(new ReagentId(proto.ID, data), quantity);
-            Temperature = _heatCapacity == 0 ? 0 : totalThermalEnergy / _heatCapacity;
-        }
-
-        public void AddReagent(Entity<ReagentDefinitionComponent> reagentDef, FixedPoint2 quantity, float temperature, SharedChemistryRegistrySystem? chemRegistry, Reagent.ReagentData? data = null)
-        {
-            if (_heatCapacityDirty)
-                UpdateHeatCapacity(chemRegistry);
-
-            var totalThermalEnergy = Temperature * _heatCapacity + temperature * reagentDef.Comp.SpecificHeat;
-            AddReagent(new ReagentId(reagentDef.Comp.Id, data), quantity);
             Temperature = _heatCapacity == 0 ? 0 : totalThermalEnergy / _heatCapacity;
         }
 
@@ -575,7 +525,7 @@ namespace Content.Shared.Chemistry.Components
         /// <param name="prototype">The prototype of the reagent to be removed.</param>
         /// <param name="quantity">The amount of reagent to remove.</param>
         /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
-        public FixedPoint2 RemoveReagent(string prototype, FixedPoint2 quantity, Reagent.ReagentData? data = null)
+        public FixedPoint2 RemoveReagent(string prototype, FixedPoint2 quantity, ReagentData? data = null)
         {
             return RemoveReagent(new ReagentQuantity(prototype, quantity, data));
         }
@@ -773,7 +723,6 @@ namespace Content.Shared.Chemistry.Components
             ValidateSolution();
         }
 
-        [Obsolete]
         public void AddSolution(Solution otherSolution, IPrototypeManager? protoMan)
         {
             if (otherSolution.Volume <= FixedPoint2.Zero)
@@ -938,7 +887,8 @@ namespace Content.Shared.Chemistry.Components
 
             ValidateSolution();
         }
-        [Obsolete]
+
+        [Obsolete("Use SharedSolutionSystem instead!")]
         public Dictionary<ReagentPrototype, FixedPoint2> GetReagentPrototypes(IPrototypeManager protoMan)
         {
             var dict = new Dictionary<ReagentPrototype, FixedPoint2>(Contents.Count);
@@ -955,7 +905,7 @@ namespace Content.Shared.Chemistry.Components
             var dict = new Dictionary<Entity<ReagentDefinitionComponent>, FixedPoint2>(Contents.Count);
             foreach (var (reagent, quantity) in Contents)
             {
-                var proto = chemRegistry.Index(reagent.Prototype);
+                var proto = chemRegistry.Index(reagent.Id);
                 dict[proto] = quantity + dict.GetValueOrDefault(proto);
             }
             return dict;

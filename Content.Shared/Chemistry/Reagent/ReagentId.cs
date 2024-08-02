@@ -70,6 +70,20 @@ public partial struct ReagentId : IEquatable<ReagentId>
         return Data.GetType() == other.Data.GetType() && Data.Equals(other.Data);
     }
 
+    public bool Equals(ReagentDef other)
+    {
+        if (Prototype != other.Prototype)
+            return false;
+
+        if (Data == null)
+            return other.Variant == null;
+
+        if (other.Variant == null)
+            return false;
+
+        return Data.GetType() == other.Variant.GetType() && Data.Equals(other.Variant);
+    }
+
     public bool Equals(string id, ReagentVariant? otherData = null)
     {
         if (Prototype != id)
@@ -101,12 +115,39 @@ public partial struct ReagentId : IEquatable<ReagentId>
         return Data?.ToString(Prototype) ?? Prototype;
     }
 
+    [Obsolete("Use ReagentDef instead of ReagentId")]
     public static bool operator ==(ReagentId left, ReagentId right)
     {
         return left.Equals(right);
     }
 
+    [Obsolete("Use ReagentDef instead of ReagentId")]
     public static bool operator !=(ReagentId left, ReagentId right)
+    {
+        return !(left == right);
+    }
+
+    [Obsolete("Use ReagentDef instead of ReagentId")]
+    public static bool operator ==(ReagentDef left, ReagentId right)
+    {
+        return left.Equals(right);
+    }
+
+
+    [Obsolete("Use ReagentDef instead of ReagentId")]
+    public static bool operator !=(ReagentDef left, ReagentId right)
+    {
+        return !(left == right);
+    }
+
+    [Obsolete("Use ReagentDef instead of ReagentId")]
+    public static bool operator ==(ReagentId left, ReagentDef right)
+    {
+        return left.Equals(right);
+    }
+
+    [Obsolete("Use ReagentDef instead of ReagentId")]
+    public static bool operator !=(ReagentId left, ReagentDef right)
     {
         return !(left == right);
     }
