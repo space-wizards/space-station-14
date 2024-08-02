@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Grey whistle added to arcade machine prizes.
-    type: Add
-  id: 6531
-  time: '2024-05-05T14:42:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27676
 - author: Killerqu00
   changes:
   - message: Welding masks can now be put on utility belts.
@@ -3774,3 +3767,10 @@
   id: 7030
   time: '2024-08-02T05:57:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30508
+- author: Plykiya
+  changes:
+  - message: Rechargers now show the percent charged of the item it is charging.
+    type: Add
+  id: 7031
+  time: '2024-08-02T06:05:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28500
