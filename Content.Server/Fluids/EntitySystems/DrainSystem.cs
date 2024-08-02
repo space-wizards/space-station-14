@@ -32,9 +32,10 @@ public sealed class DrainSystem : SharedDrainSystem
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly PuddleSystem _puddleSystem = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    private HashSet<Entity<PuddleComponent>> _puddleSet = new();
 
     public override void Initialize()
     {
@@ -119,7 +120,6 @@ public sealed class DrainSystem : SharedDrainSystem
         base.Update(frameTime);
         var managerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var puddleQuery = GetEntityQuery<PuddleComponent>();
         var puddles = new ValueList<(Entity<PuddleComponent> Entity, string Solution)>();
 
         var query = EntityQueryEnumerator<DrainComponent>();
@@ -162,15 +162,15 @@ public sealed class DrainSystem : SharedDrainSystem
                 continue;
 
             puddles.Clear();
+            _puddleSet.Clear();
+            _lookup.GetEntitiesInRange(xform.Coordinates, drain.Range, _puddleSet);
 
-            foreach (var entity in _lookup.GetEntitiesInRange(_transform.GetMapCoordinates(uid, xform), drain.Range))
+
+            foreach (var entity in _puddleSet)
             {
                 // No InRangeUnobstructed because there's no collision group that fits right now
                 // and these are placed by mappers and not buildable/movable so shouldnt really be a problem...
-                if (puddleQuery.TryGetComponent(entity, out var puddle))
-                {
-                    puddles.Add(((entity, puddle), puddle.SolutionName));
-                }
+                puddles.Add(((entity, entity), entity.Comp.SolutionName));
             }
 
             if (puddles.Count == 0)

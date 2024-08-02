@@ -68,7 +68,7 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
         SendMessage(new AirAlarmTabSetMessage(tab));
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
 

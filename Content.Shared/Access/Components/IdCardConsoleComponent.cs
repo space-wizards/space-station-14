@@ -77,7 +77,7 @@ public sealed partial class IdCardConsoleComponent : Component
     };
 
     [Serializable, NetSerializable]
-    public sealed class IdCardConsoleBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class IdCardConsoleBoundUserInterfaceState : IBoundUserInterfaceState
     {
         public readonly string PrivilegedIdName;
         public readonly bool IsPrivilegedIdPresent;

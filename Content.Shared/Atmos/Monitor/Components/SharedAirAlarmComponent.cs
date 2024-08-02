@@ -35,7 +35,7 @@ public interface IAtmosDeviceData
 }
 
 [Serializable, NetSerializable]
-public sealed class AirAlarmUIState : BoundUserInterfaceState
+public sealed class AirAlarmUIState : IBoundUserInterfaceState
 {
     public AirAlarmUIState(string address, int deviceCount, float pressureAverage, float temperatureAverage, Dictionary<string, IAtmosDeviceData> deviceData, AirAlarmMode mode, AirAlarmTab tab, AtmosAlarmType alarmType, bool autoMode)
     {

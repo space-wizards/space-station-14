@@ -57,7 +57,7 @@ namespace Content.Client.Chemistry.UI
         /// Update the UI state when new state data is received from the server.
         /// </summary>
         /// <param name="state">State data sent by the server.</param>
-        public void UpdateState(BoundUserInterfaceState state)
+        public void UpdateState(IBoundUserInterfaceState state)
         {
             var castState = (ReagentDispenserBoundUserInterfaceState) state;
             UpdateContainerInfo(castState);

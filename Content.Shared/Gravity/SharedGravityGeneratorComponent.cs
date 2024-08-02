@@ -57,7 +57,7 @@ namespace Content.Shared.Gravity
         }
 
         [Serializable, NetSerializable]
-        public sealed class GeneratorState : BoundUserInterfaceState
+        public sealed class GeneratorState : IBoundUserInterfaceState
         {
             public bool On;
             // 0 -> 255

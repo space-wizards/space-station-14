@@ -163,7 +163,7 @@ public abstract partial class SharedDisposalUnitComponent : Component
     }
 
     [Serializable, NetSerializable]
-    public sealed class DisposalUnitBoundUserInterfaceState : BoundUserInterfaceState, IEquatable<DisposalUnitBoundUserInterfaceState>
+    public sealed class DisposalUnitBoundUserInterfaceState : IBoundUserInterfaceState, IEquatable<DisposalUnitBoundUserInterfaceState>
     {
         public readonly string UnitName;
         public readonly string UnitState;

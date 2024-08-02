@@ -41,7 +41,7 @@ public sealed partial class AccessOverriderComponent : Component
     public float DoAfter;
 
     [Serializable, NetSerializable]
-    public sealed class AccessOverriderBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class AccessOverriderBoundUserInterfaceState : IBoundUserInterfaceState
     {
         public readonly string TargetLabel;
         public readonly Color TargetLabelColor;

@@ -9,7 +9,7 @@ public enum FaxUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class FaxUiState : BoundUserInterfaceState
+public sealed class FaxUiState : IBoundUserInterfaceState
 {
     public string DeviceName { get; }
     public Dictionary<string, string> AvailablePeers { get; }

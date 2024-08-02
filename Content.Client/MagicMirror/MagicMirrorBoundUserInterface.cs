@@ -52,7 +52,7 @@ public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
         SendMessage(new MagicMirrorAddSlotMessage(category));
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
 

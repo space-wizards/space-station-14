@@ -25,6 +25,9 @@ public sealed class ApcSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
+    // Boxing be like
+    private static readonly Enum ApcKey = ApcUiKey.Key;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -45,10 +48,14 @@ public sealed class ApcSystem : EntitySystem
         var query = EntityQueryEnumerator<ApcComponent, PowerNetworkBatteryComponent, UserInterfaceComponent>();
         while (query.MoveNext(out var uid, out var apc, out var battery, out var ui))
         {
-            if (apc.LastUiUpdate + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime && _ui.IsUiOpen((uid, ui), ApcUiKey.Key))
+            if (apc.LastUiUpdate + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
             {
+                if (_ui.IsUiOpen((uid, ui), ApcKey))
+                {
+                    UpdateUIState(uid, apc, battery);
+                }
+
                 apc.LastUiUpdate = _gameTiming.CurTime;
-                UpdateUIState(uid, apc, battery);
             }
 
             if (apc.NeedStateUpdate)

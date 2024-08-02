@@ -12,7 +12,7 @@ public enum SignalTimerUiKey : byte
 /// Represents a SignalTimerComponent state that can be sent to the client
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class SignalTimerBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class SignalTimerBoundUserInterfaceState : IBoundUserInterfaceState
 {
     public string CurrentText;
     public string CurrentDelayMinutes;

@@ -25,7 +25,7 @@ public sealed class DoorElectronicsUpdateConfigurationMessage : BoundUserInterfa
 }
 
 [Serializable, NetSerializable]
-public sealed class DoorElectronicsConfigurationState : BoundUserInterfaceState
+public sealed class DoorElectronicsConfigurationState : IBoundUserInterfaceState
 {
     public List<ProtoId<AccessLevelPrototype>> AccessList;
 

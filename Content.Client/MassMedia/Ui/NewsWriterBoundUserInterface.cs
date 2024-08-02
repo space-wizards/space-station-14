@@ -28,7 +28,7 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
         SendMessage(new NewsWriterArticlesRequestMessage());
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
         if (state is not NewsWriterBoundUserInterfaceState cast)

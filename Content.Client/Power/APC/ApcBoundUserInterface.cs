@@ -24,12 +24,11 @@ namespace Content.Client.Power.APC
             _menu.OnBreaker += BreakerPressed;
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void UpdateState(IBoundUserInterfaceState state)
         {
             base.UpdateState(state);
 
-            var castState = (ApcBoundInterfaceState) state;
-            _menu?.UpdateState(castState);
+            _menu?.UpdateState(state);
         }
 
         public void BreakerPressed()

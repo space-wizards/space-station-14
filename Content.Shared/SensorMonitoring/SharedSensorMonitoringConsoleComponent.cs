@@ -4,7 +4,7 @@ using ConsoleUIState = Content.Shared.SensorMonitoring.SensorMonitoringConsoleBo
 namespace Content.Shared.SensorMonitoring;
 
 [Serializable, NetSerializable]
-public sealed class SensorMonitoringConsoleBoundInterfaceState : BoundUserInterfaceState
+public sealed class SensorMonitoringConsoleBoundInterfaceState : IBoundUserInterfaceState
 {
     public TimeSpan RetentionTime;
     public SensorData[] Sensors = Array.Empty<SensorData>();

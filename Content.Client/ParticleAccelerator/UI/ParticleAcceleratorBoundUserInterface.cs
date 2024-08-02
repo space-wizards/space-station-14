@@ -39,7 +39,7 @@ namespace Content.Client.ParticleAccelerator.UI
             SendMessage(new ParticleAcceleratorRescanPartsMessage());
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void UpdateState(IBoundUserInterfaceState state)
         {
             _menu?.DataUpdate((ParticleAcceleratorUIState) state);
         }

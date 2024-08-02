@@ -44,7 +44,7 @@ public sealed class SurveillanceCameraSetupBoundUi : BoundUserInterface
         SendMessage(new SurveillanceCameraSetupSetName(name));
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
 

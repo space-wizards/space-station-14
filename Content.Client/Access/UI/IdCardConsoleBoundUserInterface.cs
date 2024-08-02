@@ -57,7 +57,7 @@ namespace Content.Client.Access.UI
             _window?.Dispose();
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void UpdateState(IBoundUserInterfaceState state)
         {
             base.UpdateState(state);
             var castState = (IdCardConsoleBoundUserInterfaceState) state;

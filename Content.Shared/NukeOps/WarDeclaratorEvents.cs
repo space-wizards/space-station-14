@@ -19,7 +19,7 @@ public enum WarConditionStatus : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class WarDeclaratorBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class WarDeclaratorBoundUserInterfaceState : IBoundUserInterfaceState
 {
     public WarConditionStatus? Status;
     public TimeSpan ShuttleDisabledTime;

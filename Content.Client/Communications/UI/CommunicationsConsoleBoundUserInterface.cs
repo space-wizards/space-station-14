@@ -68,7 +68,7 @@ namespace Content.Client.Communications.UI
             SendMessage(new CommunicationsConsoleRecallEmergencyShuttleMessage());
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void UpdateState(IBoundUserInterfaceState state)
         {
             base.UpdateState(state);
 

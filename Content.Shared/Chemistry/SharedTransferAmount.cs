@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Chemistry
 {
     [Serializable, NetSerializable]
-    public sealed class TransferAmountBoundInterfaceState : BoundUserInterfaceState
+    public sealed class TransferAmountBoundInterfaceState : IBoundUserInterfaceState
     {
         public FixedPoint2 Max;
         public FixedPoint2 Min;

@@ -32,7 +32,7 @@ public sealed class GasThermomachineChangeTemperatureMessage : BoundUserInterfac
 
 [Serializable]
 [NetSerializable]
-public sealed class GasThermomachineBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class GasThermomachineBoundUserInterfaceState : IBoundUserInterfaceState
 {
     public float MinTemperature { get; }
     public float MaxTemperature { get; }

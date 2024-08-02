@@ -4,7 +4,7 @@ using Content.Shared.MassMedia.Systems;
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
 [Serializable, NetSerializable]
-public sealed class NewsReaderBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class NewsReaderBoundUserInterfaceState : IBoundUserInterfaceState
 {
     public NewsArticle Article;
     public int TargetNum;
@@ -21,7 +21,7 @@ public sealed class NewsReaderBoundUserInterfaceState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed class NewsReaderEmptyBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class NewsReaderEmptyBoundUserInterfaceState : IBoundUserInterfaceState
 {
     public bool NotificationOn;
 

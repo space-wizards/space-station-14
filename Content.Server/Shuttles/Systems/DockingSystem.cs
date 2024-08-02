@@ -28,6 +28,7 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private readonly PathfindingSystem _pathfinding = default!;
         [Dependency] private readonly ShuttleConsoleSystem _console = default!;
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
+        [Dependency] private readonly SharedMapSystem _maps = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
 

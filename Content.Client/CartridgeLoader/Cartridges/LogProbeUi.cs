@@ -18,7 +18,7 @@ public sealed partial class LogProbeUi : UIFragment
         _fragment = new LogProbeUiFragment();
     }
 
-    public override void UpdateState(BoundUserInterfaceState state)
+    public override void UpdateState(IBoundUserInterfaceState state)
     {
         if (state is not LogProbeUiState logProbeUiState)
             return;

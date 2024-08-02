@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.PDA.Ringer
 {
     [Serializable, NetSerializable]
-    public sealed class RingerUpdateState : BoundUserInterfaceState
+    public sealed class RingerUpdateState : IBoundUserInterfaceState
     {
         public bool IsPlaying;
         public Note[] Ringtone;

@@ -26,7 +26,7 @@ public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
         _window.OpenCenteredLeft();
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
 

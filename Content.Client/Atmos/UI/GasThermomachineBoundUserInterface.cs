@@ -67,7 +67,7 @@ namespace Content.Client.Atmos.UI
         /// Update the UI state based on server-sent info
         /// </summary>
         /// <param name="state"></param>
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void UpdateState(IBoundUserInterfaceState state)
         {
             base.UpdateState(state);
             if (_window == null || state is not GasThermomachineBoundUserInterfaceState cast)

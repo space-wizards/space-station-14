@@ -5,7 +5,7 @@ namespace Content.Shared.CartridgeLoader;
 
 [Virtual]
 [Serializable, NetSerializable]
-public class CartridgeLoaderUiState : BoundUserInterfaceState
+public class CartridgeLoaderUiState : IBoundUserInterfaceState
 {
     public NetEntity? ActiveUI;
     public List<NetEntity> Programs;

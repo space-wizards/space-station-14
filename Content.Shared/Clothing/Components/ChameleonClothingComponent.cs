@@ -35,7 +35,7 @@ public sealed partial class ChameleonClothingComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class ChameleonBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class ChameleonBoundUserInterfaceState : IBoundUserInterfaceState
 {
     public readonly SlotFlags Slot;
     public readonly string? SelectedId;

@@ -9,7 +9,7 @@ public enum DiskConsoleUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class DiskConsoleBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class DiskConsoleBoundUserInterfaceState : IBoundUserInterfaceState
 {
     public bool CanPrint;
     public int PointCost;

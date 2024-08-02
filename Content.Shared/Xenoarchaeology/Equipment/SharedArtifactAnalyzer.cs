@@ -51,7 +51,7 @@ public sealed class AnalysisConsoleUpdateState(
     int pointAmount,
     bool isTraversalDown
 )
-    : BoundUserInterfaceState
+    : IBoundUserInterfaceState
 {
     public NetEntity? Artifact = artifact;
     public bool AnalyzerConnected = analyzerConnected;

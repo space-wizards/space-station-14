@@ -39,7 +39,7 @@ namespace Content.Client.VendingMachines
             _menu.Populate(_cachedInventory, out _cachedFilteredIndex);
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void UpdateState(IBoundUserInterfaceState state)
         {
             base.UpdateState(state);
 

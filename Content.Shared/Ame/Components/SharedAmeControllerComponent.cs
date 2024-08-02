@@ -9,7 +9,7 @@ public partial class SharedAmeControllerComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class AmeControllerBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class AmeControllerBoundUserInterfaceState : IBoundUserInterfaceState
 {
     public readonly bool HasPower;
     public readonly bool IsMaster;

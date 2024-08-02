@@ -53,7 +53,7 @@ public sealed class SpaceHeaterChangeModeMessage : BoundUserInterfaceMessage
 
 [Serializable]
 [NetSerializable]
-public sealed class SpaceHeaterBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class SpaceHeaterBoundUserInterfaceState : IBoundUserInterfaceState
 {
     public float MinTemperature { get; }
     public float MaxTemperature { get; }

@@ -8,7 +8,7 @@ namespace Content.Shared.Communications
     }
 
     [Serializable, NetSerializable]
-    public sealed class CommunicationsConsoleInterfaceState : BoundUserInterfaceState
+    public sealed class CommunicationsConsoleInterfaceState : IBoundUserInterfaceState
     {
         public readonly bool CanAnnounce;
         public readonly bool CanBroadcast = true;

@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.DeviceNetwork;
 
 [Serializable, NetSerializable]
-public sealed class NetworkConfiguratorUserInterfaceState : BoundUserInterfaceState
+public sealed class NetworkConfiguratorUserInterfaceState : IBoundUserInterfaceState
 {
     public readonly HashSet<(string address, string name)> DeviceList;
 
@@ -16,7 +16,7 @@ public sealed class NetworkConfiguratorUserInterfaceState : BoundUserInterfaceSt
 }
 
 [Serializable, NetSerializable]
-public sealed class DeviceListUserInterfaceState : BoundUserInterfaceState
+public sealed class DeviceListUserInterfaceState : IBoundUserInterfaceState
 {
     public readonly HashSet<(string address, string name)> DeviceList;
 
@@ -27,7 +27,7 @@ public sealed class DeviceListUserInterfaceState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed class DeviceLinkUserInterfaceState : BoundUserInterfaceState
+public sealed class DeviceLinkUserInterfaceState : IBoundUserInterfaceState
 {
     public readonly List<SourcePortPrototype> Sources;
     public readonly List<SinkPortPrototype> Sinks;

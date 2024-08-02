@@ -24,7 +24,7 @@ public sealed class RadarConsoleBoundUserInterface : BoundUserInterface
         _window = this.CreateWindow<RadarConsoleWindow>();
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
         if (state is not NavBoundUserInterfaceState cState)

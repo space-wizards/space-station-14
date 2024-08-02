@@ -29,7 +29,7 @@ namespace Content.Client.Kitchen.UI
             _menu.OnEjectChamber += EjectChamberContent;
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void UpdateState(IBoundUserInterfaceState state)
         {
             base.UpdateState(state);
             if (state is not ReagentGrinderInterfaceState cState)

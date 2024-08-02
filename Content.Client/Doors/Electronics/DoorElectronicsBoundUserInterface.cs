@@ -50,7 +50,7 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
         _window?.Reset(_prototypeManager, accessLevels);
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
 

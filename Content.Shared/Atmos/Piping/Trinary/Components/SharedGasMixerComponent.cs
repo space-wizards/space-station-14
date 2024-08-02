@@ -9,7 +9,7 @@ namespace Content.Shared.Atmos.Piping.Trinary.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed class GasMixerBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class GasMixerBoundUserInterfaceState : IBoundUserInterfaceState
     {
         public string MixerLabel { get; }
         public float OutputPressure { get; }

@@ -19,7 +19,7 @@ namespace Content.Shared.Configurable
         public Regex Validation = new("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
 
         [Serializable, NetSerializable]
-        public sealed class ConfigurationBoundUserInterfaceState : BoundUserInterfaceState
+        public sealed class ConfigurationBoundUserInterfaceState : IBoundUserInterfaceState
         {
             public Dictionary<string, string?> Config { get; }
 

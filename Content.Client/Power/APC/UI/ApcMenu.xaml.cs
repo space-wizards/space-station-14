@@ -32,7 +32,7 @@ namespace Content.Client.Power.APC.UI
             EntityView.SetEntity(entity);
         }
 
-        public void UpdateState(BoundUserInterfaceState state)
+        public void UpdateState(IBoundUserInterfaceState state)
         {
             var castState = (ApcBoundInterfaceState) state;
 

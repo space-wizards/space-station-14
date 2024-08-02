@@ -61,7 +61,7 @@ namespace Content.Shared.Crayon
         }
     }
     [Serializable, NetSerializable]
-    public sealed class CrayonBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class CrayonBoundUserInterfaceState : IBoundUserInterfaceState
     {
         public string Selected;
         public bool SelectableColor;

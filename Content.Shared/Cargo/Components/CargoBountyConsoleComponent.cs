@@ -47,7 +47,7 @@ public sealed partial class CargoBountyConsoleComponent : Component
 }
 
 [NetSerializable, Serializable]
-public sealed class CargoBountyConsoleState : BoundUserInterfaceState
+public sealed class CargoBountyConsoleState : IBoundUserInterfaceState
 {
     public List<CargoBountyData> Bounties;
     public TimeSpan UntilNextSkip;

@@ -26,7 +26,7 @@ public sealed class WarDeclaratorBoundUserInterface : BoundUserInterface
         _window.OnActivated += OnWarDeclaratorActivated;
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
         if (_window == null || state is not WarDeclaratorBoundUserInterfaceState cast)

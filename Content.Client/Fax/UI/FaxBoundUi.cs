@@ -92,7 +92,7 @@ public sealed class FaxBoundUi : BoundUserInterface
         SendMessage(new FaxDestinationMessage(address));
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
 

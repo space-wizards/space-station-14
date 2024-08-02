@@ -23,7 +23,7 @@ namespace Content.Shared.Access.Systems
     /// Represents an <see cref="AgentIDCardComponent"/> state that can be sent to the client
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class AgentIDCardBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class AgentIDCardBoundUserInterfaceState : IBoundUserInterfaceState
     {
         public readonly HashSet<ProtoId<StatusIconPrototype>> Icons;
         public string CurrentName { get; }

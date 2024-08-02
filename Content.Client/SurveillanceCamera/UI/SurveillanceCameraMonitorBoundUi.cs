@@ -66,7 +66,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
         SendMessage(new SurveillanceCameraDisconnectMessage());
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         if (_window == null || state is not SurveillanceCameraMonitorUiState cast)
         {

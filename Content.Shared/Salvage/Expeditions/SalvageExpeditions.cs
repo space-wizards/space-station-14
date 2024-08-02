@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Salvage.Expeditions;
 
 [Serializable, NetSerializable]
-public sealed class SalvageExpeditionConsoleState : BoundUserInterfaceState
+public sealed class SalvageExpeditionConsoleState : IBoundUserInterfaceState
 {
     public TimeSpan NextOffer;
     public bool Claimed;

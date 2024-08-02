@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Disposal;
 
 [Serializable, NetSerializable]
-public sealed class MailingUnitBoundUserInterfaceState : BoundUserInterfaceState, IEquatable<MailingUnitBoundUserInterfaceState>
+public sealed class MailingUnitBoundUserInterfaceState : IBoundUserInterfaceState, IEquatable<MailingUnitBoundUserInterfaceState>
 {
     public string? Target;
     public List<string> TargetList;

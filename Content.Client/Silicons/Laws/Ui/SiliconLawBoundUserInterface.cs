@@ -26,7 +26,7 @@ public sealed class SiliconLawBoundUserInterface : BoundUserInterface
         _menu = this.CreateWindow<SiliconLawMenu>();
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
 

@@ -21,7 +21,7 @@ public sealed class ThiefBackpackBoundUserInterface : BoundUserInterface
         _window.OnSetChange += SendChangeSelected;
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
 

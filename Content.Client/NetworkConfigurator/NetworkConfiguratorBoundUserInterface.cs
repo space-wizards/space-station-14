@@ -76,7 +76,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
         _netConfig.ToggleVisualization(Owner, args.Button.Pressed);
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
 

@@ -175,7 +175,7 @@ namespace Content.Shared.APC
     }
 
     [Serializable, NetSerializable]
-    public sealed class ApcBoundInterfaceState : BoundUserInterfaceState, IEquatable<ApcBoundInterfaceState>
+    public readonly record struct ApcBoundInterfaceState : IBoundUserInterfaceState
     {
         public readonly bool MainBreaker;
         public readonly bool HasAccess;
@@ -192,20 +192,13 @@ namespace Content.Shared.APC
             Charge = charge;
         }
 
-        public bool Equals(ApcBoundInterfaceState? other)
+        public bool Equals(ApcBoundInterfaceState other)
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
             return MainBreaker == other.MainBreaker &&
                    HasAccess == other.HasAccess &&
                    Power == other.Power &&
                    ApcExternalPower == other.ApcExternalPower &&
                    MathHelper.CloseTo(Charge, other.Charge);
-        }
-
-        public override bool Equals(object? obj)
-        {
-            return ReferenceEquals(this, obj) || obj is ApcBoundInterfaceState other && Equals(other);
         }
 
         public override int GetHashCode()

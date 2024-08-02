@@ -25,7 +25,7 @@ public sealed class CargoShuttleConsoleBoundUserInterface : BoundUserInterface
         _menu = this.CreateWindow<CargoShuttleMenu>();
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
         if (state is not CargoShuttleConsoleBoundUserInterfaceState cargoState) return;

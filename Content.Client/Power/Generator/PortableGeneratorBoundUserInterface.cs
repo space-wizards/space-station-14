@@ -38,7 +38,7 @@ public sealed class PortableGeneratorBoundUserInterface : BoundUserInterface
         _window.OpenCenteredLeft();
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         if (state is not PortableGeneratorComponentBuiState msg)
             return;

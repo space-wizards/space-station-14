@@ -51,7 +51,7 @@ namespace Content.Client.Chemistry.UI
         /// Data of the <see cref="ReagentDispenserComponent"/> that this UI represents.
         /// Sent from the server.
         /// </param>
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void UpdateState(IBoundUserInterfaceState state)
         {
             base.UpdateState(state);
 

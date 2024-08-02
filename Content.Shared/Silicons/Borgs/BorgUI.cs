@@ -9,7 +9,7 @@ public enum BorgUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class BorgBuiState : BoundUserInterfaceState
+public sealed class BorgBuiState : IBoundUserInterfaceState
 {
     public float ChargePercent;
 

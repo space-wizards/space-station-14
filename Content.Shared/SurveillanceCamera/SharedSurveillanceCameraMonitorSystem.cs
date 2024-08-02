@@ -5,7 +5,7 @@ namespace Content.Shared.SurveillanceCamera;
 // Camera monitor state. If the camera is null, there should be a blank
 // space where the camera is.
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraMonitorUiState : BoundUserInterfaceState
+public sealed class SurveillanceCameraMonitorUiState : IBoundUserInterfaceState
 {
     // The active camera on the monitor. If this is null, the part of the UI
     // that contains the monitor should clear.
@@ -79,7 +79,7 @@ public enum SurveillanceCameraMonitorUiKey : byte
 // SETUP
 
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraSetupBoundUiState : BoundUserInterfaceState
+public sealed class SurveillanceCameraSetupBoundUiState : IBoundUserInterfaceState
 {
     public string Name { get; }
     public uint Network { get; }

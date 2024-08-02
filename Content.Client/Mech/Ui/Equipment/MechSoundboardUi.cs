@@ -27,7 +27,7 @@ public sealed partial class MechSoundboardUi : UIFragment
         };
     }
 
-    public override void UpdateState(BoundUserInterfaceState state)
+    public override void UpdateState(IBoundUserInterfaceState state)
     {
         if (state is not MechSoundboardUiState soundboardState)
             return;

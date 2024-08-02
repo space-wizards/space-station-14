@@ -31,7 +31,7 @@ public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
         _menu.Set(stationName, gridUid);
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
 

@@ -3,7 +3,7 @@
 namespace Content.Shared.Cloning.CloningConsole
 {
     [Serializable, NetSerializable]
-    public sealed class CloningConsoleBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class CloningConsoleBoundUserInterfaceState : IBoundUserInterfaceState
     {
         public readonly string? ScannerBodyInfo;
         public readonly string? ClonerBodyInfo;

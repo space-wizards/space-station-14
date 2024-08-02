@@ -29,7 +29,7 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
         }
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
         _window?.Populate((PaperBoundUserInterfaceState) state);

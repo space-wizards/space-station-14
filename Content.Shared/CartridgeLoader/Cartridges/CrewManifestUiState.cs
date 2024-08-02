@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
 [Serializable, NetSerializable]
-public sealed class CrewManifestUiState : BoundUserInterfaceState
+public sealed class CrewManifestUiState : IBoundUserInterfaceState
 {
     public string StationName;
     public CrewManifestEntries? Entries;

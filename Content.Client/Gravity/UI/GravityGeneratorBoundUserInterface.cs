@@ -22,7 +22,7 @@ namespace Content.Client.Gravity.UI
             _window.SetEntity(Owner);
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void UpdateState(IBoundUserInterfaceState state)
         {
             base.UpdateState(state);
 

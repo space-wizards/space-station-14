@@ -20,6 +20,6 @@ public abstract partial class UIFragment
 
     public abstract void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner);
 
-    public abstract void UpdateState(BoundUserInterfaceState state);
+    public abstract void UpdateState(IBoundUserInterfaceState state);
 
 }

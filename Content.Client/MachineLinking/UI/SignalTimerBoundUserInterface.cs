@@ -48,7 +48,7 @@ public sealed class SignalTimerBoundUserInterface : BoundUserInterface
     /// Update the UI state based on server-sent info
     /// </summary>
     /// <param name="state"></param>
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
 

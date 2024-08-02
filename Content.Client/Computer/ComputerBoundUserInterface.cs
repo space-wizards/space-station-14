@@ -9,7 +9,7 @@ namespace Content.Client.Computer
     /// NOTE: Despite the name, ComputerBoundUserInterface does not and will not care about things like power.
     /// </summary>
     [Virtual]
-    public class ComputerBoundUserInterface<TWindow, TState> : ComputerBoundUserInterfaceBase where TWindow : BaseWindow, IComputerWindow<TState>, new() where TState : BoundUserInterfaceState
+    public class ComputerBoundUserInterface<TWindow, TState> : ComputerBoundUserInterfaceBase where TWindow : BaseWindow, IComputerWindow<TState>, new() where TState : IBoundUserInterfaceState
     {
         [Dependency] private readonly IDynamicTypeFactory _dynamicTypeFactory = default!;
 
@@ -29,7 +29,7 @@ namespace Content.Client.Computer
         {
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void UpdateState(IBoundUserInterfaceState state)
         {
             base.UpdateState(state);
 

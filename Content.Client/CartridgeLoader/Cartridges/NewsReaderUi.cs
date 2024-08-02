@@ -32,7 +32,7 @@ public sealed partial class NewsReaderUi : UIFragment
         };
     }
 
-    public override void UpdateState(BoundUserInterfaceState state)
+    public override void UpdateState(IBoundUserInterfaceState state)
     {
         switch (state)
         {

@@ -50,7 +50,7 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
         _consoleMenu?.UpdateInformationPanel(rState);
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
 

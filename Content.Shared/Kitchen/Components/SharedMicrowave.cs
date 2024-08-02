@@ -47,7 +47,7 @@ namespace Content.Shared.Kitchen.Components
     }
 
     [NetSerializable, Serializable]
-    public sealed class MicrowaveUpdateUserInterfaceState : BoundUserInterfaceState
+    public sealed class MicrowaveUpdateUserInterfaceState : IBoundUserInterfaceState
     {
         public NetEntity[] ContainedSolids;
         public bool IsMicrowaveBusy;

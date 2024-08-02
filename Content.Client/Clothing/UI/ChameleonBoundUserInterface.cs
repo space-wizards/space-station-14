@@ -27,7 +27,7 @@ public sealed class ChameleonBoundUserInterface : BoundUserInterface
         _menu.OnIdSelected += OnIdSelected;
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
         if (state is not ChameleonBoundUserInterfaceState st)

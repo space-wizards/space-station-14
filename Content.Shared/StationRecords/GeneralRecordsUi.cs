@@ -27,7 +27,7 @@ public enum GeneralStationRecordConsoleKey : byte
 ///     Other states are erroneous.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
+public sealed class GeneralStationRecordConsoleState : IBoundUserInterfaceState
 {
     /// <summary>
     /// Current selected key.

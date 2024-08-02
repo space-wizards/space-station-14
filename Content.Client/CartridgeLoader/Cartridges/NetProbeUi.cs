@@ -19,7 +19,7 @@ public sealed partial class NetProbeUi : UIFragment
         _fragment = new NetProbeUiFragment();
     }
 
-    public override void UpdateState(BoundUserInterfaceState state)
+    public override void UpdateState(IBoundUserInterfaceState state)
     {
         if (state is not NetProbeUiState netProbeUiState)
             return;

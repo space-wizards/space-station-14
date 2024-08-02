@@ -108,7 +108,7 @@ namespace Content.Client.Cargo.BUI
             _menu.PopulateOrders(orders);
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void UpdateState(IBoundUserInterfaceState state)
         {
             base.UpdateState(state);
 

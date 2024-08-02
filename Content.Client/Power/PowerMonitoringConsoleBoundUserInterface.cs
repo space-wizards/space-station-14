@@ -17,7 +17,7 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
         _menu.SendPowerMonitoringConsoleMessageAction += SendPowerMonitoringConsoleMessage;
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
 

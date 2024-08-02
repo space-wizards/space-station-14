@@ -22,7 +22,7 @@ public sealed partial class NotekeeperUi : UIFragment
         _fragment.OnNoteAdded += note => SendNotekeeperMessage(NotekeeperUiAction.Add, note, userInterface);
     }
 
-    public override void UpdateState(BoundUserInterfaceState state)
+    public override void UpdateState(IBoundUserInterfaceState state)
     {
         if (state is not NotekeeperUiState notekeepeerState)
             return;

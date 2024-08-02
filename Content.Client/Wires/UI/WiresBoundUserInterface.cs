@@ -20,7 +20,7 @@ namespace Content.Client.Wires.UI
             _menu.OnAction += PerformAction;
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void UpdateState(IBoundUserInterfaceState state)
         {
             base.UpdateState(state);
             _menu?.Populate((WiresBoundUserInterfaceState) state);

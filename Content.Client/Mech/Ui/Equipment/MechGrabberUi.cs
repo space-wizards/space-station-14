@@ -28,7 +28,7 @@ public sealed partial class MechGrabberUi : UIFragment
         };
     }
 
-    public override void UpdateState(BoundUserInterfaceState state)
+    public override void UpdateState(IBoundUserInterfaceState state)
     {
         if (state is not MechGrabberUiState grabberState)
             return;

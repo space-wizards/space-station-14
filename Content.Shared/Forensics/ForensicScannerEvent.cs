@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Forensics
 {
     [Serializable, NetSerializable]
-    public sealed class ForensicScannerBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class ForensicScannerBoundUserInterfaceState : IBoundUserInterfaceState
     {
         public readonly List<string> Fingerprints = new();
         public readonly List<string> Fibers = new();

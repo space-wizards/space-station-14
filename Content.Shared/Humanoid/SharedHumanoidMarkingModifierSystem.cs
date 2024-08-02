@@ -38,7 +38,7 @@ public sealed class HumanoidMarkingModifierBaseLayersSetMessage : BoundUserInter
 }
 
 [Serializable, NetSerializable]
-public sealed class HumanoidMarkingModifierState : BoundUserInterfaceState
+public sealed class HumanoidMarkingModifierState : IBoundUserInterfaceState
 {
     // TODO just use the component state, remove the BUI state altogether.
     public HumanoidMarkingModifierState(

@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Cargo.BUI;
 
 [Serializable, NetSerializable]
-public sealed class CargoShuttleConsoleBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class CargoShuttleConsoleBoundUserInterfaceState : IBoundUserInterfaceState
 {
     public string AccountName;
     public string ShuttleName;

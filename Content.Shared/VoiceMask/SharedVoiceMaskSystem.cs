@@ -9,7 +9,7 @@ public enum VoiceMaskUIKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class VoiceMaskBuiState : BoundUserInterfaceState
+public sealed class VoiceMaskBuiState : IBoundUserInterfaceState
 {
     public readonly string Name;
     public readonly string? Verb;

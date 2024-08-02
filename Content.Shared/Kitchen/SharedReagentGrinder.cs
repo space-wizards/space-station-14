@@ -89,7 +89,7 @@ namespace Content.Shared.Kitchen
     }
 
     [NetSerializable, Serializable]
-    public sealed class ReagentGrinderInterfaceState : BoundUserInterfaceState
+    public sealed class ReagentGrinderInterfaceState : IBoundUserInterfaceState
     {
         public bool IsBusy;
         public bool HasBeakerIn;

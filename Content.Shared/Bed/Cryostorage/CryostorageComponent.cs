@@ -74,7 +74,7 @@ public record struct CryostorageContainedPlayerData()
 }
 
 [Serializable, NetSerializable]
-public sealed class CryostorageBuiState : BoundUserInterfaceState
+public sealed class CryostorageBuiState : IBoundUserInterfaceState
 {
     public List<CryostorageContainedPlayerData> PlayerData;
 

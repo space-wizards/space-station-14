@@ -24,7 +24,7 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
         _entManager = IoCManager.Resolve<IEntityManager>();
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
 

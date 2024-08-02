@@ -37,7 +37,7 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
             _window.OnToggleInternals += ToggleInternals;
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void UpdateState(IBoundUserInterfaceState state)
         {
             base.UpdateState(state);
 

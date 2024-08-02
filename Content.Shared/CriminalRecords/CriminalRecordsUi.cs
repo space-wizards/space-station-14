@@ -29,7 +29,7 @@ public enum CriminalRecordsConsoleKey : byte
 ///     Other states are erroneous.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class CriminalRecordsConsoleState : BoundUserInterfaceState
+public sealed class CriminalRecordsConsoleState : IBoundUserInterfaceState
 {
     /// <summary>
     /// Currently selected crewmember record key.

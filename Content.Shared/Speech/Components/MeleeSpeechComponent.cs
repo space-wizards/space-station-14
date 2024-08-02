@@ -49,7 +49,7 @@ public enum MeleeSpeechUiKey : byte
 /// Represents an <see cref="MeleeSpeechComponent"/> state that can be sent to the client
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MeleeSpeechBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class MeleeSpeechBoundUserInterfaceState : IBoundUserInterfaceState
 {
     public string CurrentBattlecry { get; }
     public MeleeSpeechBoundUserInterfaceState(string currentBattlecry)

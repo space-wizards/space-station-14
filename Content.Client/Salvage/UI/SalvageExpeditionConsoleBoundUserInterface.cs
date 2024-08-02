@@ -35,7 +35,7 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
         _window.OpenCenteredLeft();
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
 

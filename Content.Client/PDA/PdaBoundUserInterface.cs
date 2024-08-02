@@ -85,7 +85,7 @@ namespace Content.Client.PDA
             _menu.AccentVColor = borderColorComponent.AccentVColor;
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void UpdateState(IBoundUserInterfaceState state)
         {
             base.UpdateState(state);
 

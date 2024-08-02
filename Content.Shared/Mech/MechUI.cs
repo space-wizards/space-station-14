@@ -13,7 +13,7 @@ public enum MechUiKey : byte
 /// </summary>
 public sealed class MechEquipmentUiStateReadyEvent : EntityEventArgs
 {
-    public Dictionary<NetEntity, BoundUserInterfaceState> States = new();
+    public Dictionary<NetEntity, IBoundUserInterfaceState> States = new();
 }
 
 /// <summary>
@@ -104,13 +104,13 @@ public sealed class MechSoundboardPlayMessage : MechEquipmentUiMessage
 /// trojan horse bui state⠀
 /// </remarks>
 [Serializable, NetSerializable]
-public sealed class MechBoundUiState : BoundUserInterfaceState
+public sealed class MechBoundUiState : IBoundUserInterfaceState
 {
-    public Dictionary<NetEntity, BoundUserInterfaceState> EquipmentStates = new();
+    public Dictionary<NetEntity, IBoundUserInterfaceState> EquipmentStates = new();
 }
 
 [Serializable, NetSerializable]
-public sealed class MechGrabberUiState : BoundUserInterfaceState
+public sealed class MechGrabberUiState : IBoundUserInterfaceState
 {
     public List<NetEntity> Contents = new();
     public int MaxContents;
@@ -120,7 +120,7 @@ public sealed class MechGrabberUiState : BoundUserInterfaceState
 /// List of sound collection ids to be localized and displayed.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MechSoundboardUiState : BoundUserInterfaceState
+public sealed class MechSoundboardUiState : IBoundUserInterfaceState
 {
     public List<string> Sounds = new();
 }

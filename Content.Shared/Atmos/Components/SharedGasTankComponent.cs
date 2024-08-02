@@ -20,7 +20,7 @@ namespace Content.Shared.Atmos.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed class GasTankBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class GasTankBoundUserInterfaceState : IBoundUserInterfaceState
     {
         public float TankPressure { get; set; }
         public float? OutputPressure { get; set; }

@@ -44,7 +44,7 @@ namespace Content.Client.Crayon.UI
             PopulateCrayons();
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void UpdateState(IBoundUserInterfaceState state)
         {
             base.UpdateState(state);
 

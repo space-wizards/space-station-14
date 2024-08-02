@@ -62,7 +62,7 @@ namespace Content.Client.Access.UI
             _window?.SetAccessLevels(_prototypeManager, accessLevels);
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void UpdateState(IBoundUserInterfaceState state)
         {
             base.UpdateState(state);
             var castState = (AccessOverriderBoundUserInterfaceState) state;

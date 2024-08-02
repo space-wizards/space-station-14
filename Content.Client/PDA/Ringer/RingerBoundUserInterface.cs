@@ -63,7 +63,7 @@ namespace Content.Client.PDA.Ringer
             return true;
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        protected override void UpdateState(IBoundUserInterfaceState state)
         {
             base.UpdateState(state);
 

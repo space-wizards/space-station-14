@@ -122,7 +122,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     /// This method is called "UpdateCartridgeUiState" but cartridges and a programs are the same. A cartridge is just a program as a visible item.
     /// </remarks>
     /// <seealso cref="Cartridges.NotekeeperCartridgeSystem.UpdateUiState"/>
-    public void UpdateCartridgeUiState(EntityUid loaderUid, BoundUserInterfaceState state, ICommonSession? session = default!, CartridgeLoaderComponent? loader = default!)
+    public void UpdateCartridgeUiState(EntityUid loaderUid, IBoundUserInterfaceState state, ICommonSession? session = default!, CartridgeLoaderComponent? loader = default!)
     {
         if (!Resolve(loaderUid, ref loader))
             return;

@@ -32,7 +32,7 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
         SendMessage(new VoiceMaskChangeNameMessage(name));
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         if (state is not VoiceMaskBuiState cast || _window == null)
         {

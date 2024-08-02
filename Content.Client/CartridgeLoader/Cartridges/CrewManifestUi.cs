@@ -19,7 +19,7 @@ public sealed partial class CrewManifestUi : UIFragment
         _fragment = new CrewManifestUiFragment();
     }
 
-    public override void UpdateState(BoundUserInterfaceState state)
+    public override void UpdateState(IBoundUserInterfaceState state)
     {
         if (state is not CrewManifestUiState crewManifestState)
             return;

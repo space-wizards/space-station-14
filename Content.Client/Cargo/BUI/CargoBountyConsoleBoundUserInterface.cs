@@ -32,7 +32,7 @@ public sealed class CargoBountyConsoleBoundUserInterface : BoundUserInterface
         };
     }
 
-    protected override void UpdateState(BoundUserInterfaceState message)
+    protected override void UpdateState(IBoundUserInterfaceState message)
     {
         base.UpdateState(message);
 

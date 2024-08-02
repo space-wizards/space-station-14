@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Lathe;
 
 [Serializable, NetSerializable]
-public sealed class LatheUpdateState : BoundUserInterfaceState
+public sealed class LatheUpdateState : IBoundUserInterfaceState
 {
     public List<ProtoId<LatheRecipePrototype>> Recipes;
 

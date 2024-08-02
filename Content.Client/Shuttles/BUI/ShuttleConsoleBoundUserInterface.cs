@@ -73,7 +73,7 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
         }
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(IBoundUserInterfaceState state)
     {
         base.UpdateState(state);
         if (state is not ShuttleBoundUserInterfaceState cState)

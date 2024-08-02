@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.VendingMachines
 {
     [NetSerializable, Serializable]
-    public sealed class VendingMachineInterfaceState : BoundUserInterfaceState
+    public sealed class VendingMachineInterfaceState : IBoundUserInterfaceState
     {
         public List<VendingMachineInventoryEntry> Inventory;
 
