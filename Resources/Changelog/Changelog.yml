@@ -1,78 +1,4 @@
 ﻿Entries:
-- author: nikthechampiongr
-  changes:
-  - message: Ninjas will no longer be pointed to random wreckage in space.
-    type: Fix
-  id: 6524
-  time: '2024-05-03T20:23:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27552
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Fixed nuclear operatives, zombies, and head revolutionary round end summaries
-      not showing.
-    type: Fix
-  id: 6525
-  time: '2024-05-04T00:03:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27654
-- author: TheShuEd
-  changes:
-  - message: Added Train station!
-    type: Add
-  id: 6526
-  time: '2024-05-04T11:10:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27534
-- author: TheShuEd
-  changes:
-  - message: "Added Pathological Liar trait accent. The accent has a 15% chance of\
-      \ inverting your message to the opposite. Replacing \u201CYes\u201D with \u201C\
-      No\u201D, \u201CCan\u201D with \u201Ccan't\u201D and so on."
-    type: Add
-  id: 6527
-  time: '2024-05-04T11:11:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27618
-- author: Tyzemol
-  changes:
-  - message: Fixed NPCs being able to see and attack you hiding in closed lockers
-      and crates
-    type: Fix
-  id: 6528
-  time: '2024-05-04T19:57:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27677
-- author: Blackern5000
-  changes:
-  - message: Security belts can now hold more items that security commonly uses.
-    type: Tweak
-  id: 6529
-  time: '2024-05-04T20:00:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27674
-- author: Blackern5000
-  changes:
-  - message: Floodlights now use medium power cells instead of small ones.
-    type: Tweak
-  id: 6530
-  time: '2024-05-04T20:06:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27672
-- author: lzk228
-  changes:
-  - message: Grey whistle added to arcade machine prizes.
-    type: Add
-  id: 6531
-  time: '2024-05-05T14:42:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27676
-- author: Killerqu00
-  changes:
-  - message: Welding masks can now be put on utility belts.
-    type: Tweak
-  id: 6532
-  time: '2024-05-05T23:30:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27694
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Chemical analysis goggles now show the scanned solution's temperature.
-    type: Tweak
-  id: 6533
-  time: '2024-05-05T23:32:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27693
 - author: Allen
   changes:
   - message: Added new icons for the emote wheel
@@ -3772,3 +3698,79 @@
   id: 7023
   time: '2024-08-01T02:59:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29958
+- author: Ko4erga
+  changes:
+  - message: Added a cutter machine for crafting patterned steel tiles, concrete and
+      wooden tiles.
+    type: Add
+  - message: After rip off patterned tiles you get current pattern, not just steel
+      tile.
+    type: Tweak
+  id: 7024
+  time: '2024-08-01T10:26:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30431
+- author: NakataRin
+  changes:
+  - message: Added paramedic to the train station.
+    type: Add
+  id: 7025
+  time: '2024-08-01T19:59:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30556
+- author: marbow
+  changes:
+  - message: Rejoice, detectives! Hand labeler has been added to your closet!
+    type: Add
+  id: 7026
+  time: '2024-08-01T20:01:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30501
+- author: metalgearsloth
+  changes:
+  - message: Fix some popups playing twice.
+    type: Fix
+  id: 7027
+  time: '2024-08-02T01:33:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30452
+- author: WarMechanic
+  changes:
+  - message: Adjusted meteors to have less lethal blast fragments.
+    type: Tweak
+  id: 7028
+  time: '2024-08-02T05:43:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29199
+- author: slarticodefast
+  changes:
+  - message: Fixed borgs not being able to state laws or open other UIs without an
+      active module.
+    type: Fix
+  id: 7029
+  time: '2024-08-02T05:44:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30299
+- author: TropicalHibi
+  changes:
+  - message: Now fs (for sure) and wru (where are you) are changed to their full version
+      in text
+    type: Add
+  id: 7030
+  time: '2024-08-02T05:57:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30508
+- author: Plykiya
+  changes:
+  - message: Rechargers now show the percent charged of the item it is charging.
+    type: Add
+  id: 7031
+  time: '2024-08-02T06:05:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28500
+- author: ShadowCommander
+  changes:
+  - message: Rollerbeds now deploy when holding them in hand and clicking on the ground.
+    type: Add
+  id: 7032
+  time: '2024-08-02T07:05:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30000
+- author: slarticodefast
+  changes:
+  - message: The digital audio workstation can now be rotated.
+    type: Tweak
+  id: 7033
+  time: '2024-08-02T10:02:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30571
