@@ -914,12 +914,9 @@ namespace Content.Client.Lobby.UI
 
                     if (_requirements.IsRoleBanned(new[] { $"Job:{job.ID}" }, out var banReason, out var expirationTime))
                     {
-                        if (banReason != null)
-                        {
-                            selector.LockDueToBan(banReason, expirationTime);
-                        }
+                        selector.LockDueToBan(banReason, expirationTime);
                     }
-                    else if (!_requirements.IsAllowed(job, out var reason))
+                    else if (!_requirements.IsAllowed(job, out var reason, true))
                     {
                         selector.LockRequirements(reason);
                     }

@@ -91,11 +91,11 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         Updated?.Invoke();
     }
 
-    public bool IsAllowed(JobPrototype job, [NotNullWhen(false)] out FormattedMessage? reason)
+    public bool IsAllowed(JobPrototype job, [NotNullWhen(false)] out FormattedMessage? reason, bool skipBanCheck = false)
     {
         reason = null;
 
-        if (_roleBans.Any(ban => ban.Role == $"Job:{job.ID}"))
+        if (!skipBanCheck && _roleBans.Any(ban => ban.Role == $"Job:{job.ID}"))
         {
             reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
             return false;
