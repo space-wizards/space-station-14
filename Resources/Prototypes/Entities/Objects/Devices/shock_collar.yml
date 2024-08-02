@@ -12,7 +12,7 @@
      equipDelay: 5 # to avoid accidentally falling into the trap associated with SelfUnremovableClothing
    - type: SelfUnremovableClothing
    - type: ShockOnTrigger
-     damageSpecifier: 5
+     damage: 5
      duration: 3
      cooldown: 4
    - type: TriggerOnSignal
