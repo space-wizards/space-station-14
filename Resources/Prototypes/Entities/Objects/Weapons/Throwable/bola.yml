@@ -1,21 +1,39 @@
 - type: entity
   name: bola
+  abstract: true
+  id: BaseBola
   parent: BaseItem
-  id: Bola
-  description: Linked together with some spare cuffs and metal.
+  description: High velocity entanglement tool.
   components:
   - type: Item
     size: Normal
   - type: Sprite
     sprite: Objects/Weapons/Throwable/bola.rsi
-    state: icon
   - type: EmitSoundOnThrow
     sound: /Audio/Weapons/bolathrow.ogg
   - type: EmitSoundOnLand
     sound: /Audio/Effects/snap.ogg
-  - type: Construction
-    graph: Bola
-    node: bola
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5
+  - type: Ensnaring
+    freeTime: 2.0
+    breakoutTime: 3.5
+    walkSpeed: 0.7
+    sprintSpeed: 0.7
+    staminaDamage: 55
+    canThrowTrigger: true
+    canMoveBreakout: true
+  - type: LandAtCursor
+
+
+- type: entity
+  name: bola
+  parent: BaseBola
+  id: Bola
+  description: Linked together with some spare cuffs and metal.
+  components:
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -35,16 +53,16 @@
           collection: MetalBreak
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
+- type: entity
+  name: Energy Bola
+  id: BolaEnergy
+  parent: BaseBola
+  description: An advanced hardlight criminal entangling tool. Otherwise known as an expensive piece of string.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Throwable/energy_bola.rsi
   - type: DamageOnLand
     damage:
       types:
-        Blunt: 5
-  - type: Ensnaring
-    freeTime: 2.0
-    breakoutTime: 3.5 #all bola should generally be fast to remove
-    walkSpeed: 0.7 #makeshift bola shouldn't slow too much
-    sprintSpeed: 0.7
-    staminaDamage: 55 # Sudden weight increase sapping stamina
-    canThrowTrigger: true
-    canMoveBreakout: true
-  - type: LandAtCursor
+        Heat: 5
