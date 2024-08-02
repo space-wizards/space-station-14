@@ -261,6 +261,8 @@
   - type: StorageFill
     contents:
       - id: WeaponDisabler
+      - id: BolaEnergy
+        amount: 2
       - id: ClothingOuterCoatHoSTrench
       - id: ClothingMaskNeckGaiter
       - id: ClothingOuterHardsuitSecurityRed
@@ -288,6 +290,8 @@
   - type: StorageFill
     contents:
       - id: WeaponDisabler
+      - id: BolaEnergy
+        amount: 2
       - id: ClothingOuterCoatHoSTrench
       - id: ClothingMaskNeckGaiter
       - id: ClothingBeltSecurityFilled
