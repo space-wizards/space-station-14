@@ -144,3 +144,9 @@ chatsan-replacement-51 = real quick
 
 chatsan-word-52 = dw
 chatsan-replacement-52 = don't worry
+
+chatsan-word-53 = wru
+chatsan-replacement-53 = where are you
+
+chatsan-word-54 = fs
+chatsan-replacement-54 = for sure
