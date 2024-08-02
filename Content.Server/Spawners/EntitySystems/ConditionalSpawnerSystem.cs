@@ -133,8 +133,8 @@ namespace Content.Server.Spawners.EntitySystems
                 Spawn(proto, trueCoords);
             }
 
-            //if (ent.Comp.DeleteSpawnerAfterSpawn)
-            //    Del(ent);
+            if (ent.Comp.DeleteSpawnerAfterSpawn)
+                Del(ent);
         }
     }
 }
