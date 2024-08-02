@@ -324,10 +324,10 @@
   potency: 10
   idealLight: 8
   chemicals:
-    #Haloperidol:
-    #  Min: 3
-    #  Max: 10
-    #  PotencyDivisor: 20
+    Haloperidol:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
     Nutriment:
       Min: 1
       Max: 5
@@ -756,7 +756,7 @@
     DoctorsDelight:
       Min: 3
       Max: 13
-      PotencyDivisor: 10 
+      PotencyDivisor: 10
 
 - type: seed
   id: corn

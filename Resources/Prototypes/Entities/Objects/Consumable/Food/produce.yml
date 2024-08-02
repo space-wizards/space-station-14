@@ -648,10 +648,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 19
+        maxVol: 14
         reagents:
-        #- ReagentId: Haloperidol
-        #  Quantity: 10
+        - ReagentId: Haloperidol
+          Quantity: 5
         - ReagentId: Nutriment
           Quantity: 5
         - ReagentId: Vitamin
@@ -661,7 +661,7 @@
   - type: Produce
     seedId: extradimensionalOrange
   - type: PotencyVisuals
-    minimumScale: 0.5 # reduce this in size beacuse the texture is way too big
+    minimumScale: 0.5 # reduce this in size because the sprite is way too big
     maximumScale: 1
   - type: Extractable
     juiceSolution:
@@ -1524,12 +1524,12 @@
   name: glasstle
   parent: FoodProduceBase
   id: FoodGlasstle
-  description: A fragile crystal plant with lot of spiky thorns. 
+  description: A fragile crystal plant with lot of spiky thorns.
   components:
   - type: Item
     size: Small
     sprite: Objects/Specific/Hydroponics/glasstle.rsi
-    heldPrefix: produce  
+    heldPrefix: produce
   - type: FlavorProfile
     flavors:
       - sharp
@@ -1546,7 +1546,7 @@
     seedId: glasstle
   - type: Extractable
     grindableSolutionName: food
-  - type: Damageable 
+  - type: Damageable
     damageContainer: Inorganic
   - type: ToolRefinable
     refineResult:
@@ -1569,7 +1569,7 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: DamageOnHit 
+  - type: DamageOnHit
     damage:
       types:
         Blunt: 10
@@ -1923,6 +1923,10 @@
       reagents:
       - ReagentId: Wine
         Quantity: 4
+  - type: Tag
+    tags:
+    - Fruit
+    - Slice
 
 - type: entity
   name: grapes
