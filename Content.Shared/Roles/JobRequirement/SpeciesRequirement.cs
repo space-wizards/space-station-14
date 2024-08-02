@@ -26,8 +26,8 @@ public sealed partial class SpeciesRequirement : JobRequirement
     {
         reason = new FormattedMessage();
 
-        if (profile is null)
-            return false;
+        if (profile is null) //the profile could be null if the player is a ghost. In this case we don't need to block the role selection for ghostrole
+            return true;
 
         var speciesList = "[color=yellow]";
         foreach (var s in Species)
