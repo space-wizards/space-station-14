@@ -39,8 +39,11 @@
     damageContainer: Inorganic
   - type: Explosive
     explosionType: Default
-    intensitySlope: 4
+    intensitySlope: 2
     maxIntensity: 100
+    maxTileBreak: 1
+    tileBreakScale: 2
+
 
 - type: entity
   parent: BaseMeteor
@@ -99,7 +102,7 @@
         - Impassable
         - BulletImpassable
   - type: Explosive
-    totalIntensity: 100
+    totalIntensity: 50
   - type: Destructible
     thresholds:
     - trigger:
@@ -139,7 +142,7 @@
         - Impassable
         - BulletImpassable
   - type: Explosive
-    totalIntensity: 200
+    totalIntensity: 100
   - type: Destructible
     thresholds:
     - trigger:
@@ -167,7 +170,7 @@
   - type: Sprite
     state: big
   - type: Explosive
-    totalIntensity: 300
+    totalIntensity: 150
   - type: Destructible
     thresholds:
     - trigger:
