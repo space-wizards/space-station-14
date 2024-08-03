@@ -276,7 +276,7 @@
   id: ClothingNeckShockCollar
   name: shock collar
   sprite:
-    sprite: Clothing/Neck/Misc/shok_collar.rsi
+    sprite: Clothing/Neck/Misc/shock_collar.rsi
     state: icon
 
 #Thief structures
