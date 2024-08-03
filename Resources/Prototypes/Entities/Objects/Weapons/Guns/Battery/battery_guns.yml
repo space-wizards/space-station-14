@@ -718,7 +718,7 @@
   name: energy shotgun
   parent: BaseWeaponBattery
   id: WeaponEnergyShotgun
-  description: An unique energy shotgun, often used by the Head of Security. It uses multiple configurations, mainly lethal, non-lethal and ion. 
+  description: An one of a kind prototype energy weapon using various shotgun configurations. The possibility for both lethal, and non-lethal shots makes this a versatile weapon. 
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
@@ -735,15 +735,15 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: ProjectileBatteryAmmoProvider
-    proto: CartridgeEnergyShotgunWide
+    proto: BulletLaserSpread
     fireCost: 200
   - type: BatteryWeaponFireModes
     fireModes:
-    - proto: CartridgeEnergyShotgunWide
+    - proto: BulletLaserSpread
       fireCost: 200
-    - proto: CartridgeEnergyShotgunNarrow
+    - proto: BulletLaserHeavySpread
       fireCost: 200
-    - proto: CartridgeEnergyShotgunDisabler
+    - proto: BulletDisablerSmgSpread
       fireCost: 200
   - type: Item
     size: Normal

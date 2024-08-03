@@ -981,10 +981,10 @@
       - HideContextMenu
 
 - type: entity
-  name: weak laser bolt
+  name: laser bolt 
   id: BulletLaser
   parent: BaseBullet
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Reflective
     reflective:
@@ -1022,14 +1022,42 @@
     forceSound: true
 
 - type: entity
+  id: BulletLaserSpread
+  noSpawn: true
+  parent: BulletLaser
+  components:
+  - type: ProjectileSpread
+    proto: BulletLaser
+    count: 5 #50 heat damage if you hit all your shots, but wide spread
+    spread: 30 
+
+- type: entity
   name : heavy laser bolt
   id: BulletLaserHeavy
   parent: BulletLaser
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:
       types:
         Heat: 15
 
+- type: entity
+  id: BulletLaserHeavySpread
+  noSpawn: true
+  parent: BulletLaser
+  components:
+  - type: ProjectileSpread
+    proto: BulletLaser
+    count: 3 #45 heat damage if you hit all your shots, but narrower spread
+    spread: 10
 
+- type: entity
+  id: BulletDisablerSmgSpread
+  noSpawn: true
+  parent: BulletDisablerSmg
+  components:
+  - type: ProjectileSpread
+    proto: BulletDisablerSmg
+    count: 3 #bit stronger than a disabler if you hit your shots you goober, still not a 2 hit stun though
+    spread: 9 
