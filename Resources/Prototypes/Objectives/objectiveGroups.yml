@@ -12,6 +12,7 @@
   weights:
     CaptainIDStealObjective: 1
     CMOHyposprayStealObjective: 1
+    CMOCrewMonitorStealObjective: 1
     RDHardsuitStealObjective: 1
     NukeDiskStealObjective: 1
     MagbootsStealObjective: 1
@@ -56,13 +57,6 @@
     ThiefObjectiveGroupAnimal: 2
 
 - type: weightedRandom
-  id: ThiefEscapeObjectiveGroups
-  weights:
-    ThiefObjectiveGroupEscape: 1
-
-
-
-- type: weightedRandom
   id: ThiefObjectiveGroupCollection
   weights:
     HeadCloakStealCollectionObjective: 1           #command
@@ -72,7 +66,6 @@
     TechnologyDiskStealCollectionObjective: 1        #rnd
     FigurineStealCollectionObjective: 0.3          #service
     IDCardsStealCollectionObjective: 1
-    CannabisStealCollectionObjective: 1
     LAMPStealCollectionObjective: 2 #only for moth
 
 - type: weightedRandom
@@ -85,7 +78,7 @@
     MedicalTechFabCircuitboardStealObjective: 1
     ClothingHeadsetAltMedicalStealObjective: 1
     FireAxeStealObjective: 1                            #eng
-    AmePartStealObjective: 1
+    AmePartFlatpackStealObjective: 1
     ExpeditionsCircuitboardStealObjective: 1            #sup
     CargoShuttleCircuitboardStealObjective: 1
     SalvageShuttleCircuitboardStealObjective: 1
@@ -117,10 +110,7 @@
     WalterStealObjective: 1
     MortyStealObjective: 1
     RenaultStealObjective: 1
-    HamletStealObjective: 1
     ShivaStealObjective: 1
-    SmileStealObjective: 1
-    PunPunStealObjective: 1
     TropicoStealObjective: 1
 
 - type: weightedRandom

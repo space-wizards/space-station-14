@@ -1,19 +1,19 @@
 ﻿- type: statusIcon
   id: DebugStatus
   icon:
-    sprite: Interface/Misc/research_disciplines.rsi
+    sprite: /Textures/Interface/Misc/research_disciplines.rsi
     state: civilianservices
 
 - type: statusIcon
   id: DebugStatus2
   priority: 1
   icon:
-    sprite: Interface/Misc/research_disciplines.rsi
+    sprite: /Textures/Interface/Misc/research_disciplines.rsi
     state: arsenal
 
 - type: statusIcon
   id: DebugStatus3
   priority: 5
   icon:
-    sprite: Interface/Misc/research_disciplines.rsi
+    sprite: /Textures/Interface/Misc/research_disciplines.rsi
     state: experimental

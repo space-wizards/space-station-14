@@ -11,37 +11,9 @@ public sealed partial class InstrumentSystem
 
     private void InitializeCVars()
     {
-        _cfg.OnValueChanged(CCVars.MaxMidiEventsPerSecond, OnMaxMidiEventsPerSecondChanged, true);
-        _cfg.OnValueChanged(CCVars.MaxMidiEventsPerBatch, OnMaxMidiEventsPerBatchChanged, true);
-        _cfg.OnValueChanged(CCVars.MaxMidiBatchesDropped, OnMaxMidiBatchesDroppedChanged, true);
-        _cfg.OnValueChanged(CCVars.MaxMidiLaggedBatches, OnMaxMidiLaggedBatchesChanged, true);
-    }
-
-    private void ShutdownCVars()
-    {
-        _cfg.UnsubValueChanged(CCVars.MaxMidiEventsPerSecond, OnMaxMidiEventsPerSecondChanged);
-        _cfg.UnsubValueChanged(CCVars.MaxMidiEventsPerBatch, OnMaxMidiEventsPerBatchChanged);
-        _cfg.UnsubValueChanged(CCVars.MaxMidiBatchesDropped, OnMaxMidiBatchesDroppedChanged);
-        _cfg.UnsubValueChanged(CCVars.MaxMidiLaggedBatches, OnMaxMidiLaggedBatchesChanged);
-    }
-
-    private void OnMaxMidiLaggedBatchesChanged(int obj)
-    {
-        MaxMidiLaggedBatches = obj;
-    }
-
-    private void OnMaxMidiBatchesDroppedChanged(int obj)
-    {
-        MaxMidiBatchesDropped = obj;
-    }
-
-    private void OnMaxMidiEventsPerBatchChanged(int obj)
-    {
-        MaxMidiEventsPerBatch = obj;
-    }
-
-    private void OnMaxMidiEventsPerSecondChanged(int obj)
-    {
-        MaxMidiEventsPerSecond = obj;
+        Subs.CVar(_cfg, CCVars.MaxMidiEventsPerSecond, obj => MaxMidiEventsPerSecond = obj, true);
+        Subs.CVar(_cfg, CCVars.MaxMidiEventsPerBatch, obj => MaxMidiEventsPerBatch = obj, true);
+        Subs.CVar(_cfg, CCVars.MaxMidiBatchesDropped, obj => MaxMidiBatchesDropped = obj, true);
+        Subs.CVar(_cfg, CCVars.MaxMidiLaggedBatches, obj => MaxMidiLaggedBatches = obj, true);
     }
 }

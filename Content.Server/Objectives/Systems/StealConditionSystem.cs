@@ -6,11 +6,11 @@ using Content.Shared.Objectives.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Shared.Pulling.Components;
-using Content.Shared.Objectives;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Stacks;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -42,17 +42,8 @@ public sealed class StealConditionSystem : EntitySystem
     {
         List<StealTargetComponent?> targetList = new();
 
-        // cancel if invalid TargetStealName
-        var group = _proto.Index<StealTargetGroupPrototype>(condition.Comp.StealGroup);
-        if (group == null)
-        {
-            args.Cancelled = true;
-            Log.Error("StealTargetGroup invalid prototype!");
-            return;
-        }
-
-        var query = EntityQueryEnumerator<StealTargetComponent>();
-        while (query.MoveNext(out var uid, out var target))
+        var query = AllEntityQuery<StealTargetComponent>();
+        while (query.MoveNext(out var target))
         {
             if (condition.Comp.StealGroup != target.StealGroup)
                 continue;
@@ -61,17 +52,17 @@ public sealed class StealConditionSystem : EntitySystem
         }
 
         // cancel if the required items do not exist
-        if (targetList.Count == 0 && condition.Comp.VerifyMapExistance)
+        if (targetList.Count == 0 && condition.Comp.VerifyMapExistence)
         {
             args.Cancelled = true;
             return;
         }
 
         //setup condition settings
-        var maxSize = condition.Comp.VerifyMapExistance
+        var maxSize = condition.Comp.VerifyMapExistence
             ? Math.Min(targetList.Count, condition.Comp.MaxCollectionSize)
             : condition.Comp.MaxCollectionSize;
-        var minSize = condition.Comp.VerifyMapExistance
+        var minSize = condition.Comp.VerifyMapExistence
             ? Math.Min(targetList.Count, condition.Comp.MinCollectionSize)
             : condition.Comp.MinCollectionSize;
 
@@ -102,28 +93,26 @@ public sealed class StealConditionSystem : EntitySystem
 
     private float GetProgress(MindComponent mind, StealConditionComponent condition)
     {
-        if (!_metaQuery.TryGetComponent(mind.OwnedEntity, out var meta))
-            return 0;
         if (!_containerQuery.TryGetComponent(mind.OwnedEntity, out var currentManager))
             return 0;
 
         var stack = new Stack<ContainerManagerComponent>();
         var count = 0;
 
-        //check pulling object 
-        if (TryComp<SharedPullerComponent>(mind.OwnedEntity, out var pull)) //TO DO: to make the code prettier? don't like the repetition
+        //check pulling object
+        if (TryComp<PullerComponent>(mind.OwnedEntity, out var pull)) //TO DO: to make the code prettier? don't like the repetition
         {
-            var pullid = pull.Pulling;
-            if (pullid != null)
+            var pulledEntity = pull.Pulling;
+            if (pulledEntity != null)
             {
                 // check if this is the item
-                if (CheckStealTarget(pullid.Value, condition)) count++;
+                count += CheckStealTarget(pulledEntity.Value, condition);
 
                 //we don't check the inventories of sentient entity
-                if (!TryComp<MindContainerComponent>(pullid, out var pullMind))
+                if (!HasComp<MindContainerComponent>(pulledEntity))
                 {
                     // if it is a container check its contents
-                    if (_containerQuery.TryGetComponent(pullid, out var containerManager))
+                    if (_containerQuery.TryGetComponent(pulledEntity, out var containerManager))
                         stack.Push(containerManager);
                 }
             }
@@ -138,7 +127,7 @@ public sealed class StealConditionSystem : EntitySystem
                 foreach (var entity in container.ContainedEntities)
                 {
                     // check if this is the item
-                    if (CheckStealTarget(entity, condition)) count++; //To Do: add support for stackable items
+                    count += CheckStealTarget(entity, condition);
 
                     // if it is a container check its contents
                     if (_containerQuery.TryGetComponent(entity, out var containerManager))
@@ -147,29 +136,30 @@ public sealed class StealConditionSystem : EntitySystem
             }
         } while (stack.TryPop(out currentManager));
 
-        var result = (float) count / (float) condition.CollectionSize;
+        var result = count / (float) condition.CollectionSize;
         result = Math.Clamp(result, 0, 1);
         return result;
     }
 
-    private bool CheckStealTarget(EntityUid entity, StealConditionComponent condition)
+    private int CheckStealTarget(EntityUid entity, StealConditionComponent condition)
     {
         // check if this is the target
         if (!TryComp<StealTargetComponent>(entity, out var target))
-            return false;
+            return 0;
 
         if (target.StealGroup != condition.StealGroup)
-            return false;
+            return 0;
 
         // check if needed target alive
         if (condition.CheckAlive)
         {
             if (TryComp<MobStateComponent>(entity, out var state))
             {
-                if (!_mobState.IsAlive(entity))
-                    return false;
+                if (!_mobState.IsAlive(entity, state))
+                    return 0;
             }
         }
-        return true;
+
+        return TryComp<StackComponent>(entity, out var stack) ? stack.Count : 1;
     }
 }

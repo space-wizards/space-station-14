@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/ParadiseSS13/Paradise/commit/aa7a7b3cee09b313705343a6859658b928a3da03",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon-off"
+    },
+    {
+      "name": "icon",
+      "delays": [
+        [
+          0.3,
+          0.1,
+          0.3,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 using System.Numerics;
 using Robust.Shared.GameStates;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Weapons.Melee.Components;
@@ -89,6 +90,12 @@ public sealed partial class MeleeThrownComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField]
     public TimeSpan MinLifetimeTime;
+
+    /// <summary>
+    /// the status to which the entity will return when the thrown ends
+    /// </summary>
+    [DataField]
+    public BodyStatus PreviousStatus;
 }
 
 /// <summary>

@@ -43,13 +43,13 @@ public sealed class BlindingSystem : EntitySystem
 
     private void OnBlindInit(EntityUid uid, BlindableComponent component, ComponentInit args)
     {
-        if (_player.LocalPlayer?.ControlledEntity == uid)
+        if (_player.LocalEntity == uid)
             _overlayMan.AddOverlay(_overlay);
     }
 
     private void OnBlindShutdown(EntityUid uid, BlindableComponent component, ComponentShutdown args)
     {
-        if (_player.LocalPlayer?.ControlledEntity == uid)
+        if (_player.LocalEntity == uid)
         {
             _overlayMan.RemoveOverlay(_overlay);
         }

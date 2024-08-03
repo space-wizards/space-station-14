@@ -1,5 +1,3 @@
-using Content.Shared.Anomaly;
-using Content.Shared.Anomaly.Components;
 using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -18,6 +16,23 @@ public sealed partial class AnomalySynchronizerComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? ConnectedAnomaly;
 
+    /// <summary>
+    /// Should the anomaly pulse when connected to the synchronizer?
+    /// </summary>
+    [DataField]
+    public bool PulseOnConnect = true;
+
+    /// <summary>
+    /// Should the anomaly pulse when disconnected from synchronizer?
+    /// </summary>
+    [DataField]
+    public bool PulseOnDisconnect = false;
+
+    /// <summary>
+    /// minimum distance from the synchronizer to the anomaly to be attached
+    /// </summary>
+    [DataField]
+    public float AttachRange = 0.4f;
 
     [DataField]
     public ProtoId<SourcePortPrototype> DecayingPort = "Decaying";

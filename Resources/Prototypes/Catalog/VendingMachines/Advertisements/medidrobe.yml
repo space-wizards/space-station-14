@@ -1,6 +1,0 @@
-- type: advertisementsPack
-  id: MediDrobeAds
-  advertisements:
-    - advertisement-medidrobe-1
-  thankyous:
-    - vending-machine-thanks

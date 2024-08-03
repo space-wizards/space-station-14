@@ -25,8 +25,6 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly PowerReceiverSystem _power = default!;
 
-    private const float AttachRange = 0.15f; // The radius of one tile. It must not be set higher, otherwise the anomaly can be moved from tile to tile.
-
     public override void Initialize()
     {
         base.Initialize();
@@ -55,9 +53,9 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         }
 
         var coords = _transform.GetMapCoordinates(ent);
-        var anomaly = _entityLookup.GetEntitiesInRange<AnomalyComponent>(coords, AttachRange).FirstOrDefault();
+        var anomaly = _entityLookup.GetEntitiesInRange<AnomalyComponent>(coords, ent.Comp.AttachRange).FirstOrDefault();
 
-        if (anomaly.Owner is {Valid: false}) // no anomaly in range
+        if (anomaly.Owner is { Valid: false }) // no anomaly in range
         {
             if (user is not null)
                 _popup.PopupEntity(Loc.GetString("anomaly-sync-no-anomaly"), ent, user.Value);
@@ -77,7 +75,6 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         if (!TryComp<AnomalyComponent>(ent.Comp.ConnectedAnomaly, out var anomaly))
             return;
 
-        _anomaly.DoAnomalyPulse(ent.Comp.ConnectedAnomaly.Value, anomaly);
         DisconneсtFromAnomaly(ent, anomaly);
     }
 
@@ -92,7 +89,8 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
             return;
 
         var user = args.User;
-        args.Verbs.Add(new() {
+        args.Verbs.Add(new()
+        {
             Act = () =>
             {
                 TryAttachNearbyAnomaly(ent, user);
@@ -117,19 +115,23 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         var targetXform = _transform.GetWorldPosition(ent);
         _transform.SetWorldPosition(anomaly, targetXform);
 
-        _anomaly.DoAnomalyPulse(anomaly, anomaly);
+        if (ent.Comp.PulseOnConnect)
+            _anomaly.DoAnomalyPulse(anomaly, anomaly);
+
         _popup.PopupEntity(Loc.GetString("anomaly-sync-connected"), ent, PopupType.Medium);
         _audio.PlayPvs(ent.Comp.ConnectedSound, ent);
     }
 
-    //TO DO: disconnection from the anomaly should also be triggered if the anomaly is far away from the synchronizer.
+    //TODO: disconnection from the anomaly should also be triggered if the anomaly is far away from the synchronizer.
     //Currently only bluespace anomaly can do this, but for some reason it is the only one that cannot be connected to the synchronizer.
     private void DisconneсtFromAnomaly(Entity<AnomalySynchronizerComponent> ent, AnomalyComponent anomaly)
     {
         if (ent.Comp.ConnectedAnomaly == null)
             return;
 
-        _anomaly.DoAnomalyPulse(ent.Comp.ConnectedAnomaly.Value, anomaly);
+        if (ent.Comp.PulseOnDisconnect)
+            _anomaly.DoAnomalyPulse(ent.Comp.ConnectedAnomaly.Value, anomaly);
+
         _popup.PopupEntity(Loc.GetString("anomaly-sync-disconnected"), ent, PopupType.Large);
         _audio.PlayPvs(ent.Comp.ConnectedSound, ent);
 

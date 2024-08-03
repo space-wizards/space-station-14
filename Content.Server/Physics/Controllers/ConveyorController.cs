@@ -55,8 +55,6 @@ public sealed class ConveyorController : SharedConveyorController
         if (MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
             return;
 
-        RemComp<ActiveConveyorComponent>(uid);
-
         if (!TryComp<PhysicsComponent>(uid, out var physics))
             return;
 
@@ -67,7 +65,7 @@ public sealed class ConveyorController : SharedConveyorController
     {
         component.Powered = args.Powered;
         UpdateAppearance(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void UpdateAppearance(EntityUid uid, ConveyorComponent component)
@@ -106,7 +104,7 @@ public sealed class ConveyorController : SharedConveyorController
         _materialReclaimer.SetReclaimerEnabled(uid, component.State != ConveyorState.Off);
 
         UpdateAppearance(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     /// <summary>

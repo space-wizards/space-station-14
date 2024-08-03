@@ -35,27 +35,7 @@
             }
 
             var toOne = actual / max;
-            double threshold;
-            if (levels % 2 == 0)
-            {
-                // Basically, if we have an even count of levels, there's no exact "mid point".
-                // Thus, I nominate the first one below the 50% mark.
-                threshold = ((levels / 2f) - 1) / (levels - 1);
-            }
-            else
-            {
-                threshold = 0.5f;
-            }
-
-            var preround = toOne * (levels - 1);
-            if (toOne < threshold || levels <= 2)
-            {
-                return (int) Math.Ceiling(preround);
-            }
-            else
-            {
-                return (int) Math.Floor(preround);
-            }
+            return (int) Math.Ceiling(toOne * (levels - 2));
         }
 
         /// <summary>

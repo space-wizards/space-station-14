@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Content.Server.GameTicking;
 using Content.Shared.Players;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
@@ -25,6 +26,8 @@ public sealed partial class TestPair
     public readonly List<string> TestHistory = new();
     public PoolSettings Settings = default!;
     public TestMapData? TestMap;
+    private List<NetUserId> _modifiedProfiles = new();
+
     public RobustIntegrationTest.ServerIntegrationInstance Server { get; private set; } = default!;
     public RobustIntegrationTest.ClientIntegrationInstance Client { get;  private set; } = default!;
 
@@ -36,7 +39,8 @@ public sealed partial class TestPair
         client = Client;
     }
 
-    public ICommonSession? Player => Server.PlayerMan.Sessions.FirstOrDefault();
+    public ICommonSession? Player => Server.PlayerMan.SessionsDict.GetValueOrDefault(Client.User!.Value);
+
     public ContentPlayerData? PlayerData => Player?.Data.ContentData();
 
     public PoolTestLogHandler ServerLogHandler { get;  private set; } = default!;
@@ -58,6 +62,9 @@ public sealed partial class TestPair
         (Server, ServerLogHandler) = await PoolManager.GenerateServer(settings, testOut);
         ActivateContext(testOut);
 
+        Client.CfgMan.OnCVarValueChanged += OnClientCvarChanged;
+        Server.CfgMan.OnCVarValueChanged += OnServerCvarChanged;
+
         if (!settings.NoLoadTestPrototypes)
             await LoadPrototypes(testPrototypes!);
 
@@ -70,9 +77,11 @@ public sealed partial class TestPair
         if (settings.ShouldBeConnected)
         {
             Client.SetConnectTarget(Server);
+            await Client.WaitIdleAsync();
+            var netMgr = Client.ResolveDependency<IClientNetManager>();
+
             await Client.WaitPost(() =>
             {
-                var netMgr = IoCManager.Resolve<IClientNetManager>();
                 if (!netMgr.IsConnected)
                 {
                     netMgr.ClientConnect(null!, 0, null!);

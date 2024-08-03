@@ -30,7 +30,6 @@
     sourceSolution: food
     ignoreEmpty: true
     popup: spike-solution-egg
-  - type: DeleteOnTrigger
   # egg fragile
   - type: DamageOnHighSpeedImpact
     minimumSpeed: 0.1

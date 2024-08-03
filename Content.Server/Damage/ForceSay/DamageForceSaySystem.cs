@@ -1,4 +1,5 @@
-﻿using Content.Shared.Damage;
+using Content.Shared.Bed.Sleep;
+using Content.Shared.Damage;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
@@ -90,7 +91,7 @@ public sealed class DamageForceSaySystem : EntitySystem
 
     private void OnDamageChanged(EntityUid uid, DamageForceSayComponent component, DamageChangedEvent args)
     {
-        if (args.DamageDelta == null || !args.DamageIncreased || args.DamageDelta.Total < component.DamageThreshold)
+        if (args.DamageDelta == null || !args.DamageIncreased || args.DamageDelta.GetTotal() < component.DamageThreshold)
             return;
 
         if (component.ValidDamageGroups != null)

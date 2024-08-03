@@ -1,11 +1,10 @@
 - type: latheRecipe
   id: Fulton
   result: Fulton1
-  completetime: 5
+  completetime: 1
   materials:
     Steel: 200
-    # TODO: Need better sources of cloth as otherwise these will never get made.
-    # Cloth: 200
+    Cloth: 100
 
 - type: latheRecipe
   id: FultonBeacon

@@ -21,19 +21,22 @@ public sealed partial class ParticleAcceleratorStrengthWireAction : ComponentWir
     public override bool Cut(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
     {
         controller.StrengthLocked = true;
+        var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
+        paSystem.UpdateUI(wire.Owner, controller);
         return true;
     }
 
     public override bool Mend(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
     {
         controller.StrengthLocked = false;
+        var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
+        paSystem.UpdateUI(wire.Owner, controller);
         return true;
     }
 
     public override void Pulse(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
     {
         var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
-        var userSession = EntityManager.TryGetComponent<ActorComponent>(user, out var actor) ? actor.PlayerSession : null;
-        paSystem.SetStrength(wire.Owner, (ParticleAcceleratorPowerState) ((int) controller.SelectedStrength + 1), userSession, controller);
+        paSystem.SetStrength(wire.Owner, (ParticleAcceleratorPowerState) ((int) controller.SelectedStrength + 1), user, controller);
     }
 }

@@ -20,12 +20,15 @@ namespace Content.MapRenderer.Painters
         public const int TileImageSize = EyeManager.PixelsPerMeter;
 
         private readonly ITileDefinitionManager _sTileDefinitionManager;
+        private readonly SharedMapSystem _sMapSystem;
         private readonly IResourceManager _resManager;
 
         public TilePainter(ClientIntegrationInstance client, ServerIntegrationInstance server)
         {
             _sTileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
             _resManager = client.ResolveDependency<IResourceManager>();
+            var esm = server.ResolveDependency<IEntitySystemManager>();
+            _sMapSystem = esm.GetEntitySystem<SharedMapSystem>();
         }
 
         public void Run(Image gridCanvas, EntityUid gridUid, MapGridComponent grid)
@@ -41,7 +44,7 @@ namespace Content.MapRenderer.Painters
             var images = GetTileImages(_sTileDefinitionManager, _resManager, tileSize);
             var i = 0;
 
-            grid.GetAllTiles().AsParallel().ForAll(tile =>
+            _sMapSystem.GetAllTiles(gridUid, grid).AsParallel().ForAll(tile =>
             {
                 var path = _sTileDefinitionManager[tile.Tile.TypeId].Sprite.ToString();
 

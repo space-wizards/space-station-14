@@ -1,5 +1,7 @@
-using Content.Shared.Shuttles.Events;
+using Content.Shared.Shuttles.Systems;
 
 namespace Content.Client.Shuttles.Systems;
 
-public sealed class DockingSystem : EntitySystem {}
+public sealed class DockingSystem : SharedDockingSystem
+{
+}

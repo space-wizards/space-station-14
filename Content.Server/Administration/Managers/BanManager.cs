@@ -52,7 +52,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         if (e.NewStatus != SessionStatus.Connected || _cachedRoleBans.ContainsKey(e.Session.UserId))
             return;
 
-        var netChannel = e.Session.ConnectedClient;
+        var netChannel = e.Session.Channel;
         ImmutableArray<byte>? hwId = netChannel.UserData.HWId.Length == 0 ? null : netChannel.UserData.HWId;
         await CacheDbRoleBans(e.Session.UserId, netChannel.RemoteEndPoint.Address, hwId);
 
@@ -73,7 +73,9 @@ public sealed class BanManager : IBanManager, IPostInjectInit
 
     public HashSet<string>? GetRoleBans(NetUserId playerUserId)
     {
-        return _cachedRoleBans.TryGetValue(playerUserId, out var roleBans) ? roleBans.Select(banDef => banDef.Role).ToHashSet() : null;
+        return _cachedRoleBans.TryGetValue(playerUserId, out var roleBans)
+            ? roleBans.Select(banDef => banDef.Role).ToHashSet()
+            : null;
     }
 
     private async Task CacheDbRoleBans(NetUserId userId, IPAddress? address = null, ImmutableArray<byte>? hwId = null)
@@ -175,7 +177,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
             return;
         // If they are, kick them
         var message = banDef.FormatBanMessage(_cfg, _localizationManager);
-        targetPlayer.ConnectedClient.Disconnect(message);
+        targetPlayer.Channel.Disconnect(message);
     }
     #endregion
 
@@ -263,13 +265,13 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         return $"Pardoned ban with id {banId}";
     }
 
-    public HashSet<string>? GetJobBans(NetUserId playerUserId)
+    public HashSet<ProtoId<JobPrototype>>? GetJobBans(NetUserId playerUserId)
     {
         if (!_cachedRoleBans.TryGetValue(playerUserId, out var roleBans))
             return null;
         return roleBans
             .Where(ban => ban.Role.StartsWith(JobPrefix, StringComparison.Ordinal))
-            .Select(ban => ban.Role[JobPrefix.Length..])
+            .Select(ban => new ProtoId<JobPrototype>(ban.Role[JobPrefix.Length..]))
             .ToHashSet();
     }
     #endregion
@@ -293,7 +295,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         };
 
         _sawmill.Debug($"Sent rolebans to {pSession.Name}");
-        _netManager.ServerSendMessage(bans, pSession.ConnectedClient);
+        _netManager.ServerSendMessage(bans, pSession.Channel);
     }
 
     public void PostInject()

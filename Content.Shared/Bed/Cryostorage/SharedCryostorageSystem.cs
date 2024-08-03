@@ -4,6 +4,7 @@ using Content.Shared.DragDrop;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -22,6 +23,7 @@ public abstract class SharedCryostorageSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] protected readonly SharedMindSystem Mind = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     protected EntityUid? PausedMap { get; private set; }
 
@@ -37,19 +39,11 @@ public abstract class SharedCryostorageSystem : EntitySystem
         SubscribeLocalEvent<CryostorageComponent, CanDropTargetEvent>(OnCanDropTarget);
 
         SubscribeLocalEvent<CryostorageContainedComponent, EntGotRemovedFromContainerMessage>(OnRemovedContained);
-        SubscribeLocalEvent<CryostorageContainedComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<CryostorageContainedComponent, ComponentShutdown>(OnShutdownContained);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
 
-        _configuration.OnValueChanged(CCVars.GameCryoSleepRejoining, OnCvarChanged, true);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        _configuration.UnsubValueChanged(CCVars.GameCryoSleepRejoining, OnCvarChanged);
+        Subs.CVar(_configuration, CCVars.GameCryoSleepRejoining, OnCvarChanged, true);
     }
 
     private void OnCvarChanged(bool value)
@@ -88,6 +82,12 @@ public abstract class SharedCryostorageSystem : EntitySystem
         var (_, comp) = ent;
         if (args.Container.ID != comp.ContainerId)
             return;
+
+        if (_mobState.IsIncapacitated(args.EntityUid))
+        {
+            args.Cancel();
+            return;
+        }
 
         if (!TryComp<MindContainerComponent>(args.EntityUid, out var mindContainer))
         {
@@ -135,13 +135,6 @@ public abstract class SharedCryostorageSystem : EntitySystem
         var (uid, comp) = ent;
         if (!IsInPausedMap(uid))
             RemCompDeferred(ent, comp);
-    }
-
-    private void OnUnpaused(Entity<CryostorageContainedComponent> ent, ref EntityUnpausedEvent args)
-    {
-        var comp = ent.Comp;
-        if (comp.GracePeriodEndTime != null)
-            comp.GracePeriodEndTime = comp.GracePeriodEndTime.Value + args.PausedTime;
     }
 
     private void OnShutdownContained(Entity<CryostorageContainedComponent> ent, ref ComponentShutdown args)

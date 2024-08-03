@@ -4,9 +4,21 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Climbing.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+/// <summary>
+/// Indicates that this entity is able to be placed on top of surfaces like tables.
+/// Does not by itself allow the entity to carry out the action of climbing, unless
+/// <see cref="CanClimb"/> is true. Use <see cref="CanForceClimb"/> to control whether
+/// the entity can force other entities onto surfaces.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class ClimbingComponent : Component
 {
+    /// <summary>
+    /// Whether the owner is able to climb onto things by their own action.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool CanClimb = true;
+
     /// <summary>
     /// Whether the owner is climbing on a climbable entity.
     /// </summary>
@@ -17,6 +29,7 @@ public sealed partial class ClimbingComponent : Component
     /// Whether the owner is being moved onto the climbed entity.
     /// </summary>
     [AutoNetworkedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan? NextTransition;
 
     /// <summary>

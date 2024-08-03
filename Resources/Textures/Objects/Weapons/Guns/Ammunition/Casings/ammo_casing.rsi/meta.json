@@ -11,6 +11,9 @@
             "name": "base"
         },
         {
+            "name": "tip"
+        },
+        {
             "name": "base-spent"
         }
     ]

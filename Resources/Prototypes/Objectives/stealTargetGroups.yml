@@ -8,6 +8,13 @@
     state: hypo
 
 - type: stealTargetGroup
+  id: HandheldCrewMonitor
+  name: handheld crew monitor
+  sprite:
+    sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
+    state: scanner
+
+- type: stealTargetGroup
   id: ClothingOuterHardsuitRd
   name: experimental research hardsuit
   sprite:
@@ -142,12 +149,7 @@
     sprite: Objects/Misc/id_cards.rsi
     state: default
 
-- type: stealTargetGroup
-  id: Cannabis
-  name: cannabis
-  sprite:
-    sprite: Objects/Specific/Hydroponics/cannabis.rsi
-    state: produce
+
 
 - type: stealTargetGroup
   id: LAMP
@@ -222,11 +224,11 @@
     state: icon
 
 - type: stealTargetGroup
-  id: AmePart
+  id: AmePartFlatpack
   name: AME part
   sprite:
-    sprite: Objects/Power/AME/ame_part.rsi
-    state: box
+    sprite: Objects/Devices/flatpack.rsi
+    state: ame-part
 
 - type: stealTargetGroup
   id: SalvageExpeditionsComputerCircuitboard
@@ -294,13 +296,6 @@
     state: icon
 
 - type: stealTargetGroup
-  id: VehicleSecway
-  name: secway
-  sprite:
-    sprite: Objects/Vehicles/secway.rsi
-    state: icon
-
-- type: stealTargetGroup
   id: ChemDispenser
   name: chemical dispenser
   sprite:
@@ -359,8 +354,8 @@
     state: ian
 
 - type: stealTargetGroup
-  id: AnimalBingus
-  name: Bingus
+  id: AnimalNamedCat
+  name: CMO's Cat
   sprite:
     sprite: Mobs/Pets/bingus.rsi
     state: bingus
@@ -394,32 +389,11 @@
     state: fox
 
 - type: stealTargetGroup
-  id: AnimalHamlet
-  name: Hamlet
-  sprite:
-    sprite: Mobs/Pets/hamlet.rsi
-    state: hamster-0
-
-- type: stealTargetGroup
   id: AnimalShiva
   name: Shiva
   sprite:
     sprite: Mobs/Pets/shiva.rsi
     state: shiva
-
-- type: stealTargetGroup
-  id: AnimalSmile
-  name: Smile
-  sprite:
-    sprite: Mobs/Aliens/slimes.rsi
-    state: rainbow_baby_slime
-
-- type: stealTargetGroup
-  id: AnimalPunPun
-  name: Pun Pun
-  sprite:
-    sprite: Mobs/Animals/monkey.rsi
-    state: monkey
 
 - type: stealTargetGroup
   id: AnimalTropico

@@ -17,10 +17,14 @@ public sealed partial class SlotDefinition
 {
     [DataField("name", required: true)] public string Name { get; private set; } = string.Empty;
     [DataField("slotTexture")] public string TextureName { get; private set; } = "pocket";
+    /// <summary>
+    /// The texture displayed in a slot when it has an item inside of it.
+    /// </summary>
+    [DataField] public string FullTextureName { get; private set; } = "SlotBackground";
     [DataField("slotFlags")] public SlotFlags SlotFlags { get; private set; } = SlotFlags.PREVENTEQUIP;
     [DataField("showInWindow")] public bool ShowInWindow { get; private set; } = true;
     [DataField("slotGroup")] public string SlotGroup { get; private set; } = "Default";
-    [DataField("stripTime")] public float StripTime { get; private set; } = 4f;
+    [DataField("stripTime")] public TimeSpan StripTime { get; private set; } = TimeSpan.FromSeconds(4f);
 
     [DataField("uiWindowPos", required: true)]
     public Vector2i UIWindowPosition { get; private set; }
@@ -29,6 +33,8 @@ public sealed partial class SlotDefinition
     public Vector2i StrippingWindowPos { get; private set; }
 
     [DataField("dependsOn")] public string? DependsOn { get; private set; }
+
+    [DataField("dependsOnComponents")] public ComponentRegistry? DependsOnComponents { get; private set; }
 
     [DataField("displayName", required: true)]
     public string DisplayName { get; private set; } = string.Empty;

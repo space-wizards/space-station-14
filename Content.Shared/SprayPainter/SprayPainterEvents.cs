@@ -12,7 +12,7 @@ public enum SprayPainterUiKey
 [Serializable, NetSerializable]
 public sealed class SprayPainterSpritePickedMessage : BoundUserInterfaceMessage
 {
-    public int Index { get; }
+    public readonly int Index;
 
     public SprayPainterSpritePickedMessage(int index)
     {
@@ -23,7 +23,7 @@ public sealed class SprayPainterSpritePickedMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class SprayPainterColorPickedMessage : BoundUserInterfaceMessage
 {
-    public string? Key { get; }
+    public readonly string? Key;
 
     public SprayPainterColorPickedMessage(string? key)
     {
@@ -32,36 +32,40 @@ public sealed class SprayPainterColorPickedMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class SprayPainterBoundUserInterfaceState : BoundUserInterfaceState
+public sealed partial class SprayPainterDoorDoAfterEvent : DoAfterEvent
 {
-    public int SelectedStyle { get; }
-    public string? SelectedColorKey { get; }
-    public Dictionary<string, Color> Palette { get; }
+    /// <summary>
+    /// Base RSI path to set for the door sprite.
+    /// </summary>
+    [DataField]
+    public string Sprite;
 
-    public SprayPainterBoundUserInterfaceState(int selectedStyle, string? selectedColorKey, Dictionary<string, Color> palette)
+    /// <summary>
+    /// Department id to set for the door, if the style has one.
+    /// </summary>
+    [DataField]
+    public string? Department;
+
+    public SprayPainterDoorDoAfterEvent(string sprite, string? department)
     {
-        SelectedStyle = selectedStyle;
-        SelectedColorKey = selectedColorKey;
-        Palette = palette;
+        Sprite = sprite;
+        Department = department;
     }
+
+    public override DoAfterEvent Clone() => this;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SprayPainterDoAfterEvent : DoAfterEvent
+public sealed partial class SprayPainterPipeDoAfterEvent : DoAfterEvent
 {
-    [DataField("sprite")]
-    public string? Sprite = null;
+    /// <summary>
+    /// Color of the pipe to set.
+    /// </summary>
+    [DataField]
+    public Color Color;
 
-    [DataField("color")]
-    public Color? Color = null;
-
-    private SprayPainterDoAfterEvent()
+    public SprayPainterPipeDoAfterEvent(Color color)
     {
-    }
-
-    public SprayPainterDoAfterEvent(string? sprite, Color? color)
-    {
-        Sprite = sprite;
         Color = color;
     }
 

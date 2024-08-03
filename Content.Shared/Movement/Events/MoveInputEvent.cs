@@ -9,14 +9,14 @@ namespace Content.Shared.Movement.Events;
 [ByRefEvent]
 public readonly struct MoveInputEvent
 {
-    public readonly EntityUid Entity;
-    public readonly InputMoverComponent Component;
+    public readonly Entity<InputMoverComponent> Entity;
     public readonly MoveButtons OldMovement;
 
-    public MoveInputEvent(EntityUid entity, InputMoverComponent component, MoveButtons oldMovement)
+    public bool HasDirectionalMovement => (Entity.Comp.HeldMoveButtons & MoveButtons.AnyDirection) != MoveButtons.None;
+
+    public MoveInputEvent(Entity<InputMoverComponent> entity, MoveButtons oldMovement)
     {
         Entity = entity;
-        Component = component;
         OldMovement = oldMovement;
     }
 }

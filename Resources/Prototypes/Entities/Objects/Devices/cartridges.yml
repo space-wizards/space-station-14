@@ -13,12 +13,12 @@
     programName: notekeeper-program-name
     icon:
       sprite:  Objects/Misc/books.rsi
-      state: book6
+      state: book_icon
   - type: NotekeeperCartridge
 
 - type: entity
   parent: BaseItem
-  id: NewsReadCartridge
+  id: NewsReaderCartridge
   name: news cartridge
   description: A program for reading news
   components:
@@ -26,13 +26,13 @@
     sprite: Objects/Devices/cartridge.rsi
     state: cart-y
   - type: UIFragment
-    ui: !type:NewsReadUi
+    ui: !type:NewsReaderUi
   - type: Cartridge
     programName: news-read-program-name
     icon:
       sprite: Interface/Misc/program_icons.rsi
       state: news_read
-  - type: NewsReadCartridge
+  - type: NewsReaderCartridge
 
 - type: entity
   parent: BaseItem
@@ -90,5 +90,6 @@
         sprite: Structures/Doors/Airlocks/Standard/security.rsi
         state: closed
     - type: LogProbeCartridge
+    - type: GuideHelp
       guides:
         - Forensics

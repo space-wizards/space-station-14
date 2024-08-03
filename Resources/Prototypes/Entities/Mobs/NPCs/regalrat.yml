@@ -1,5 +1,5 @@
 - type: entity
-  name: Rat King
+  name: rat king
   id: MobRatKing
   parent: [ SimpleMobBase, MobCombat ]
   description: He's da rat. He make da roolz.
@@ -26,6 +26,9 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: regalrat
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: eyes
+      shader: unshaded
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -77,6 +80,7 @@
     states:
       Alive:
         Base: regalrat
+        BaseUnshaded: eyes
       Critical:
         Base: critical
       Dead:
@@ -85,7 +89,9 @@
     makeSentient: true
     name: ghost-role-information-rat-king-name
     description: ghost-role-information-rat-king-description
-    rules: ghost-role-information-rat-king-rules
+    rules: ghost-role-information-freeagent-rules
+    raffle:
+      settings: default
   - type: GhostTakeoverAvailable
   - type: Tag
     tags:
@@ -126,6 +132,9 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: regalrat
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
+      state: eyes
+      shader: unshaded
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -149,11 +158,11 @@
     - MinorAntagonists
 
 - type: entity
-  name: Rat Servant
+  name: rat servant
   id: MobRatServant
   parent: [ SimpleMobBase, MobCombat ]
   description: He's da mini rat. He don't make da roolz.
-  noSpawn: true #Must be configured to a King or the AI breaks.
+  categories: [ HideSpawnMenu ] #Must be configured to a King or the AI breaks.
   components:
   - type: CombatMode
   - type: MovementSpeedModifier
@@ -180,17 +189,21 @@
     - SimpleHostile
   - type: Sprite
     drawdepth: SmallMobs
-    sprite: Mobs/Animals/mouse.rsi
+    sprite: Mobs/Animals/rat.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
-      state: mouse-3
+      state: rat
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
+      state: eyes
+      shader: unshaded
+
   - type: SpriteMovement
     movementLayers:
       movement:
-        state: mouse-moving-3
+        state: rat-moving
     noMovementLayers:
       movement:
-        state: mouse-3
+        state: rat
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -243,11 +256,12 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: mouse-3
+        Base: rat
+        BaseUnshaded: eyes
       Critical:
-        Base: dead-3
+        Base: dead
       Dead:
-        Base: splat-3
+        Base: splat
   - type: Butcherable
     spawned:
     - id: FoodMeatRat
@@ -272,6 +286,9 @@
   - type: GuideHelp
     guides:
     - MinorAntagonists
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Mouse_burning
 
 - type: weightedRandomEntity
   id: RatKingLoot
@@ -284,7 +301,6 @@
   id: ActionRatKingRaiseArmy
   name: Raise Army
   description: Spend some hunger to summon an allied rat to help defend you.
-  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 4
@@ -297,7 +313,6 @@
   id: ActionRatKingDomain
   name: Rat King's Domain
   description: Spend some hunger to release a cloud of ammonia into the air.
-  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 6
@@ -310,7 +325,6 @@
   id: ActionRatKingOrderStay
   name: Stay
   description: Command your army to stand in place.
-  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 1
@@ -329,7 +343,6 @@
   id: ActionRatKingOrderFollow
   name: Follow
   description: Command your army to follow you around.
-  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 1
@@ -348,7 +361,6 @@
   id: ActionRatKingOrderCheeseEm
   name: Cheese 'Em
   description: Command your army to attack whoever you point at.
-  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 1
@@ -367,7 +379,6 @@
   id: ActionRatKingOrderLoose
   name: Loose
   description: Command your army to act at their own will.
-  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 1

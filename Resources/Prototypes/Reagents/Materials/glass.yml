@@ -31,6 +31,14 @@
   price: 0.40 # 1-1-0.5 mix of plasma, glass, and metal.
 
 - type: material
+  id: BrassGlass
+  stackEntity: SheetClockworkGlass1
+  name: materials-clockwork-glass
+  icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: cglass }
+  color: "#9b6f07"
+  price: 0.0875 # average of glass and brass.
+
+- type: material
   id: UraniumGlass
   stackEntity: SheetUGlass1
   name: materials-uranium-glass

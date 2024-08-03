@@ -22,6 +22,7 @@ public sealed class TargetOutlineSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     private bool _enabled = false;
 
@@ -114,7 +115,7 @@ public sealed class TargetOutlineSystem : EntitySystem
 
     private void HighlightTargets()
     {
-        if (_playerManager.LocalPlayer?.ControlledEntity is not { Valid: true } player)
+        if (_playerManager.LocalEntity is not { Valid: true } player)
             return;
 
         // remove current highlights
@@ -137,7 +138,7 @@ public sealed class TargetOutlineSystem : EntitySystem
 
             // check the entity whitelist
             if (valid && Whitelist != null)
-                valid = Whitelist.IsValid(entity);
+                valid = _whitelistSystem.IsWhitelistPass(Whitelist, entity);
 
             // and check the cancellable event
             if (valid && ValidationEvent != null)

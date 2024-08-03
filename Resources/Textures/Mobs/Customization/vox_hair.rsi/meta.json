@@ -1,1 +1,99 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "license": "CC-BY-SA-3.0", "copyright": "https://github.com/vgstation-coders/vgstation13/blob/02ff588d59b3c560c685d9ca75e882d32a72d8cb/icons/mob/human_face.dmi", "states": [{"name": "vox_afro_s", "directions": 4}, {"name": "vox_afro_s2", "directions": 4}, {"name": "vox_bald_s", "directions": 4}, {"name": "vox_cropped_s", "directions": 4}, {"name": "vox_cropped_s2", "directions": 4}, {"name": "vox_horns_s", "directions": 4}, {"name": "vox_horns_s2", "directions": 4}, {"name": "vox_kingly_s", "directions": 4}, {"name": "vox_kingly_s2", "directions": 4}, {"name": "vox_mange_s", "directions": 4}, {"name": "vox_mange_s2", "directions": 4}, {"name": "vox_mohawk_s", "directions": 4}, {"name": "vox_mohawk_s2", "directions": 4}, {"name": "vox_nights_s", "directions": 4}, {"name": "vox_nights_s2", "directions": 4}, {"name": "vox_pony_s", "directions": 4}, {"name": "vox_pony_s2", "directions": 4}, {"name": "vox_rows_s", "directions": 4}, {"name": "vox_rows_s2", "directions": 4}, {"name": "vox_ruff_hawk_s", "directions": 4}, {"name": "vox_ruff_hawk_s2", "directions": 4}, {"name": "vox_shortquills_s", "directions": 4}, {"name": "vox_shortquills_s2", "directions": 4}, {"name": "vox_surf_s", "directions": 4}, {"name": "vox_surf_s2", "directions": 4}, {"name": "vox_yasu_s", "directions": 4}, {"name": "vox_yasu_s2", "directions": 4}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/dcd1f5d88a8c5ba9634fc3fce67a76ada45f71dc/icons/mob/sprite_accessories/vox/vox_hair.dmi and greyscaled",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "crestedquills_s",
+      "directions": 4
+    },
+    {
+      "name": "emperorquills_s",
+      "directions": 4
+    },
+    {
+      "name": "keelquills_s",
+      "directions": 4
+    },
+    {
+      "name": "keetquills_s",
+      "directions": 4
+    },
+    {
+      "name": "shortquills_s",
+      "directions": 4
+    },
+    {
+      "name": "tielquills_s",
+      "directions": 4
+    },
+    {
+      "name": "kingly_s",
+      "directions": 4
+    },
+    {
+      "name": "afro_s",
+      "directions": 4
+    },
+    {
+      "name": "yasu_s",
+      "directions": 4
+    },
+    {
+      "name": "razor_s",
+      "directions": 4
+    },
+    {
+      "name": "razor_clipped_s",
+      "directions": 4
+    },
+    {
+      "name": "mohawk_s",
+      "directions": 4
+    },
+    {
+      "name": "horns_s",
+      "directions": 4
+    },
+    {
+      "name": "nights_s",
+      "directions": 4
+    },
+    {
+      "name": "hawk_s",
+      "directions": 4
+    },
+    {
+      "name": "long_braid_s",
+      "directions": 4
+    },
+    {
+      "name": "short_braid_s",
+      "directions": 4
+    },
+    {
+      "name": "mange_s",
+      "directions": 4
+    },
+    {
+      "name": "ponytail_s",
+      "directions": 4
+    },
+    {
+      "name": "braid_s",
+      "directions": 4
+    },
+    {
+      "name": "surf_s",
+      "directions": 4
+    },
+    {
+      "name": "flowing_s",
+      "directions": 4
+    }
+  ]
+}

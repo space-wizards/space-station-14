@@ -1,0 +1,34 @@
+- type: inventoryTemplate
+  id: aghost
+  slots:
+    - name: back
+      slotTexture: back
+      slotFlags: BACK
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,4
+      displayName: ID
+    - name: id
+      slotTexture: id
+      fullTextureName: template_small
+      slotFlags: IDCARD
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 2,2
+      strippingWindowPos: 2,3
+      displayName: ID
+
+    # For drip reasons.
+    - name: head
+      slotTexture: head
+      slotFlags: HEAD
+      uiWindowPos: 0,2
+      strippingWindowPos: 0,0
+      displayName: Head
+    - name: mask
+      slotTexture: mask
+      slotFlags: MASK
+      uiWindowPos: 0,1
+      strippingWindowPos: 1,1
+      displayName: Mask

@@ -7,7 +7,7 @@ namespace Content.Server.Medical.SuitSensors;
 ///     Tracking device, embedded in almost all uniforms and jumpsuits.
 ///     If enabled, will report to crew monitoring console owners position and status.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 [Access(typeof(SuitSensorSystem))]
 public sealed partial class SuitSensorComponent : Component
 {
@@ -57,6 +57,7 @@ public sealed partial class SuitSensorComponent : Component
     ///     Next time when sensor updated owners status
     /// </summary>
     [DataField("nextUpdate", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan NextUpdate = TimeSpan.Zero;
 
     /// <summary>
@@ -72,4 +73,17 @@ public sealed partial class SuitSensorComponent : Component
     /// </summary>
     [DataField("server")]
     public string? ConnectedServer = null;
+
+    /// <summary>
+    /// The previous mode of the suit. This is used to restore the state when an EMP effect ends.
+    /// </summary>
+    [DataField, ViewVariables]
+    public SuitSensorMode PreviousMode = SuitSensorMode.SensorOff;
+
+    /// <summary>
+    ///  The previous locked status of the controls.  This is used to restore the state when an EMP effect ends.
+    ///  This keeps prisoner jumpsuits/internal implants from becoming unlocked after an EMP.
+    /// </summary>
+    [DataField, ViewVariables]
+    public bool PreviousControlsLocked = false;
 }

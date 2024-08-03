@@ -16,7 +16,7 @@ public sealed partial class SiliconLawProviderComponent : Component
 
     /// <summary>
     /// Lawset created from the prototype id.
-    /// Cached when getting laws and only modified during an ion storm event.
+    /// Cached when getting laws and modified during an ion storm event and when emagged.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SiliconLawset? Lawset;

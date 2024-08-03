@@ -26,7 +26,7 @@ entities:
       name: NT Evac Box
     - type: Transform
       pos: 0.06253052,0.58707
-      parent: invalid
+      parent: 484
     - type: MapGrid
       chunks:
         0,0:
@@ -61,6 +61,10 @@ entities:
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
+    - type: DeviceNetwork
+      configurators: []
+      deviceLists: []
+      transmitFrequencyId: ShuttleTimer
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -488,6 +492,18 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: NavMap
+  - uid: 484
+    components:
+    - type: MetaData
+      name: Map Entity
+    - type: Transform
+    - type: Map
+      mapPaused: True
+    - type: PhysicsMap
+    - type: GridTree
+    - type: MovedGrids
+    - type: Broadphase
+    - type: OccluderTree
 - proto: AirCanister
   entities:
   - uid: 526
@@ -495,14 +511,10 @@ entities:
     - type: Transform
       pos: 14.5,0.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: Airlock
   entities:
   - uid: 417
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,8.5
@@ -511,8 +523,6 @@ entities:
   entities:
   - uid: 124
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 16.5,5.5
       parent: 1
@@ -561,30 +571,20 @@ entities:
   entities:
   - uid: 184
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 15.5,12.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 420
     - type: DeviceLinkSource
       linkedPorts:
         420:
         - DoorStatus: DoorBolt
   - uid: 420
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 15.5,14.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 184
     - type: DeviceLinkSource
       linkedPorts:
         184:
@@ -593,8 +593,6 @@ entities:
   entities:
   - uid: 128
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 7.5,-1.5
       parent: 1
@@ -1897,8 +1895,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 17.5,-1.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GasPassiveVent
   entities:
   - uid: 436
@@ -1907,8 +1903,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 17.5,-3.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GasPipeBend
   entities:
   - uid: 158
@@ -2284,8 +2278,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 14.5,0.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GasVentPump
   entities:
   - uid: 127
@@ -2293,63 +2285,47 @@ entities:
     - type: Transform
       pos: 3.5,10.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 171
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,-1.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 492
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,10.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 499
     components:
     - type: Transform
       pos: 2.5,6.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 500
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 14.5,4.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 501
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 18.5,4.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 502
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 12.5,-3.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 503
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-2.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GeneratorBasic15kW
   entities:
   - uid: 294
@@ -2527,6 +2503,13 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 14.5,1.5
       parent: 1
+- proto: LootSpawnerRandomCrateEngineering
+  entities:
+  - uid: 595
+    components:
+    - type: Transform
+      pos: 10.5,10.5
+      parent: 1
 - proto: MaintenanceWeaponSpawner
   entities:
   - uid: 334
@@ -2643,85 +2626,63 @@ entities:
   entities:
   - uid: 163
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,-0.5
       parent: 1
   - uid: 223
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 1.5,0.5
       parent: 1
   - uid: 230
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 18.5,11.5
       parent: 1
   - uid: 242
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 5.5,-2.5
       parent: 1
   - uid: 254
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 9.5,7.5
       parent: 1
   - uid: 255
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 14.5,-3.5
       parent: 1
   - uid: 257
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 18.5,3.5
       parent: 1
   - uid: 474
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 5.5,3.5
       parent: 1
   - uid: 475
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,3.5
       parent: 1
   - uid: 561
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 3.5,11.5
       parent: 1
   - uid: 594
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 17.5,-2.5
@@ -2813,13 +2774,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 14.5,10.5
-      parent: 1
-- proto: SalvageMaterialCrateSpawner
-  entities:
-  - uid: 484
-    components:
-    - type: Transform
-      pos: 10.5,10.5
       parent: 1
 - proto: Screen
   entities:
@@ -3284,70 +3238,52 @@ entities:
   entities:
   - uid: 166
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,13.5
       parent: 1
   - uid: 192
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,13.5
       parent: 1
   - uid: 337
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,13.5
       parent: 1
   - uid: 377
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 18.5,-5.5
       parent: 1
   - uid: 381
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,-5.5
       parent: 1
   - uid: 391
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 9.5,-5.5
       parent: 1
   - uid: 392
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 13.5,-5.5
       parent: 1
   - uid: 398
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 19.5,-0.5
       parent: 1
   - uid: 400
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 19.5,13.5
@@ -3364,827 +3300,615 @@ entities:
   entities:
   - uid: 2
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 0.5,-1.5
       parent: 1
   - uid: 3
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,8.5
       parent: 1
   - uid: 9
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,12.5
       parent: 1
   - uid: 11
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 0.5,8.5
       parent: 1
   - uid: 21
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,8.5
       parent: 1
   - uid: 22
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 8.5,8.5
       parent: 1
   - uid: 24
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,8.5
       parent: 1
   - uid: 25
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,8.5
       parent: 1
   - uid: 30
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 9.5,12.5
       parent: 1
   - uid: 31
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 15.5,-4.5
       parent: 1
   - uid: 36
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,11.5
       parent: 1
   - uid: 37
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,10.5
       parent: 1
   - uid: 38
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,9.5
       parent: 1
   - uid: 49
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,5.5
       parent: 1
   - uid: 63
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,-2.5
       parent: 1
   - uid: 64
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,-1.5
       parent: 1
   - uid: 69
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 4.5,-3.5
       parent: 1
   - uid: 71
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 9.5,-4.5
       parent: 1
   - uid: 72
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 8.5,-4.5
       parent: 1
   - uid: 73
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 7.5,-4.5
       parent: 1
   - uid: 74
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 5.5,-4.5
       parent: 1
   - uid: 75
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-4.5
       parent: 1
   - uid: 76
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,-4.5
       parent: 1
   - uid: 77
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 11.5,-4.5
       parent: 1
   - uid: 78
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 10.5,-4.5
       parent: 1
   - uid: 79
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 10.5,-3.5
       parent: 1
   - uid: 80
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 14.5,8.5
       parent: 1
   - uid: 81
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 10.5,-1.5
       parent: 1
   - uid: 83
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 13.5,9.5
       parent: 1
   - uid: 84
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 13.5,8.5
       parent: 1
   - uid: 85
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 13.5,11.5
       parent: 1
   - uid: 89
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 18.5,-1.5
       parent: 1
   - uid: 90
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,-4.5
       parent: 1
   - uid: 92
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 13.5,-4.5
       parent: 1
   - uid: 93
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 13.5,-1.5
       parent: 1
   - uid: 94
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 13.5,-0.5
       parent: 1
   - uid: 95
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 13.5,0.5
       parent: 1
   - uid: 96
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 13.5,1.5
       parent: 1
   - uid: 97
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 17.5,-4.5
       parent: 1
   - uid: 103
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 16.5,-2.5
       parent: 1
   - uid: 104
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 18.5,-0.5
       parent: 1
   - uid: 105
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 17.5,-0.5
       parent: 1
   - uid: 106
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 16.5,3.5
       parent: 1
   - uid: 107
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 13.5,2.5
       parent: 1
   - uid: 108
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,2.5
       parent: 1
   - uid: 109
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 15.5,2.5
       parent: 1
   - uid: 110
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 16.5,2.5
       parent: 1
   - uid: 111
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 16.5,-0.5
       parent: 1
   - uid: 112
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 18.5,-2.5
       parent: 1
   - uid: 113
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 18.5,-3.5
       parent: 1
   - uid: 114
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 18.5,0.5
       parent: 1
   - uid: 115
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 16.5,-4.5
       parent: 1
   - uid: 116
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 18.5,-4.5
       parent: 1
   - uid: 118
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 13.5,12.5
       parent: 1
   - uid: 120
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 14.5,12.5
       parent: 1
   - uid: 121
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 16.5,12.5
       parent: 1
   - uid: 125
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 16.5,8.5
       parent: 1
   - uid: 129
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 16.5,7.5
       parent: 1
   - uid: 130
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 18.5,2.5
       parent: 1
   - uid: 131
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 12.5,8.5
       parent: 1
   - uid: 132
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 17.5,2.5
       parent: 1
   - uid: 133
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 17.5,12.5
       parent: 1
   - uid: 134
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 18.5,12.5
       parent: 1
   - uid: 135
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 19.5,12.5
       parent: 1
   - uid: 138
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 20.5,11.5
       parent: 1
   - uid: 139
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 21.5,10.5
       parent: 1
   - uid: 145
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 21.5,4.5
       parent: 1
   - uid: 146
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 20.5,3.5
       parent: 1
   - uid: 149
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 19.5,2.5
       parent: 1
   - uid: 151
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 18.5,1.5
       parent: 1
   - uid: 152
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 17.5,11.5
       parent: 1
   - uid: 153
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 17.5,9.5
       parent: 1
   - uid: 159
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 13.5,-3.5
       parent: 1
   - uid: 167
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 0.5,2.5
       parent: 1
   - uid: 178
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,12.5
       parent: 1
   - uid: 179
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,12.5
       parent: 1
   - uid: 182
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 16.5,14.5
       parent: 1
   - uid: 188
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 17.5,8.5
       parent: 1
   - uid: 193
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 11.5,8.5
       parent: 1
   - uid: 225
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,12.5
       parent: 1
   - uid: 228
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,12.5
       parent: 1
   - uid: 229
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,12.5
       parent: 1
   - uid: 231
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 12.5,12.5
       parent: 1
   - uid: 236
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 4.5,3.5
       parent: 1
   - uid: 238
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,-2.5
       parent: 1
   - uid: 240
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 4.5,1.5
       parent: 1
   - uid: 241
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 4.5,5.5
       parent: 1
   - uid: 249
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 15.5,8.5
       parent: 1
   - uid: 253
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,3.5
       parent: 1
   - uid: 261
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,1.5
       parent: 1
   - uid: 274
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 16.5,13.5
       parent: 1
   - uid: 280
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 1.5,-2.5
       parent: 1
   - uid: 348
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 0.5,-2.5
       parent: 1
   - uid: 349
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,12.5
       parent: 1
   - uid: 351
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 14.5,13.5
       parent: 1
   - uid: 352
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 14.5,14.5
       parent: 1
   - uid: 360
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,12.5
       parent: 1
   - uid: 378
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,-4.5
       parent: 1
   - uid: 383
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 0.5,0.5
       parent: 1
   - uid: 403
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,6.5
       parent: 1
   - uid: 422
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 8.5,12.5
       parent: 1
   - uid: 425
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 2.5,-2.5
       parent: 1
   - uid: 430
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       pos: 3.5,-2.5
       parent: 1
   - uid: 468
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 11.5,12.5
       parent: 1
   - uid: 535
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,11.5
       parent: 1
   - uid: 536
     components:
-    - type: MetaData
-      flags: PvsPriority
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,10.5

@@ -1,6 +1,6 @@
 - type: entity
   name: BaseWeaponRifle
-  parent: BaseItem
+  parent: [BaseItem, BaseGunWieldable]
   id: BaseWeaponRifle
   description: A rooty tooty point and shooty.
   abstract: true
@@ -36,6 +36,7 @@
         whitelist:
           tags:
             - MagazineLightRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
         startingItem: CartridgeLightRifle
@@ -81,6 +82,7 @@
         whitelist:
           tags:
             - MagazineLightRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
         startingItem: CartridgeLightRifle
@@ -124,6 +126,7 @@
         whitelist:
           tags:
             - MagazineRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
         startingItem: CartridgeRifle
@@ -170,6 +173,7 @@
         whitelist:
           tags:
             - MagazineRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
         startingItem: CartridgeRifle
@@ -188,26 +192,32 @@
   - type: Appearance
 
 - type: entity
-  name: Lecter
-  parent: WeaponRifleLecter
-  id: WeaponRifleLecterRubber
-  suffix: Non-lethal
+  name: Foam Force Astro Ace
+  parent: [BaseWeaponShotgun, BaseGunWieldable]
+  id: WeaponRifleFoam
+  description: A premium foam rifle of the highest quality. Its plastic feels rugged, and its mechanisms sturdy.
   components:
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineRifleRubber
-        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-            - MagazineRifle
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgeRifleRubber
-        priority: 1
-        whitelist:
-          tags:
-            - CartridgeRifle
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Rifles/foam_rifle.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Rifles/foam_rifle.rsi
+  - type: Item
+    sprite: Objects/Weapons/Guns/Rifles/foam_rifle_inhand_64x.rsi
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - BulletFoam
+    capacity: 10
+    proto: BulletFoam
+  - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Effects/thunk.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    clumsyProof: true
+  - type: PacifismAllowedGun

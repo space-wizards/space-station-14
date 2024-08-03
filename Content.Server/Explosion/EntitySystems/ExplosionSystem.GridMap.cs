@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Atmos;
 using Content.Shared.Explosion;
+using Content.Shared.Explosion.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
@@ -22,7 +23,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// </summary>
     private void OnGridStartup(GridStartupEvent ev)
     {
-        var grid = _mapManager.GetGrid(ev.EntityUid);
+        var grid = Comp<MapGridComponent>(ev.EntityUid);
 
         Dictionary<Vector2i, NeighborFlag> edges = new();
         _gridEdges[ev.EntityUid] = edges;
@@ -59,7 +60,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     {
         Dictionary<Vector2i, BlockedSpaceTile> transformedEdges = new();
 
-        var targetMatrix = Matrix3.Identity;
+        var targetMatrix = Matrix3x2.Identity;
         Angle targetAngle = new();
         var tileSize = DefaultTileSize;
         var maxDistanceSq = (int) (maxDistance * maxDistance);
@@ -74,9 +75,9 @@ public sealed partial class ExplosionSystem : EntitySystem
             tileSize = targetGrid.TileSize;
         }
 
-        var offsetMatrix = Matrix3.Identity;
-        offsetMatrix.R0C2 = tileSize / 2f;
-        offsetMatrix.R1C2 = tileSize / 2f;
+        var offsetMatrix = Matrix3x2.Identity;
+        offsetMatrix.M31 = tileSize / 2f;
+        offsetMatrix.M32 = tileSize / 2f;
 
         // Here we can end up with a triple nested for loop:
         // foreach other grid
@@ -105,7 +106,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             var xform = xforms.GetComponent(gridToTransform);
             var  (_, gridWorldRotation, gridWorldMatrix, invGridWorldMatrid) = xform.GetWorldPositionRotationMatrixWithInv(xforms);
 
-            var localEpicentre = (Vector2i) invGridWorldMatrid.Transform(epicentre.Position);
+            var localEpicentre = (Vector2i) Vector2.Transform(epicentre.Position, invGridWorldMatrid);
             var matrix = offsetMatrix * gridWorldMatrix * targetMatrix;
             var angle = gridWorldRotation - targetAngle;
 
@@ -118,7 +119,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                 if (delta.X * delta.X + delta.Y * delta.Y > maxDistanceSq) // no Vector2.Length???
                     continue;
 
-                var center = matrix.Transform(tile);
+                var center = Vector2.Transform(tile, matrix);
 
                 if ((dir & NeighborFlag.Cardinal) == 0)
                 {

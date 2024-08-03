@@ -54,7 +54,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        var player = _player.LocalPlayer?.ControlledEntity;
+        var player = _player.LocalEntity;
 
         if (player == null ||
             !TryGetTetherGun(player.Value, out var gunUid, out var gun) ||
@@ -82,7 +82,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
 
         const float BufferDistance = 0.1f;
 
-        if (TryComp<TransformComponent>(gun.TetherEntity, out var tetherXform) &&
+        if (TryComp(gun.TetherEntity, out TransformComponent? tetherXform) &&
             tetherXform.Coordinates.TryDistance(EntityManager, TransformSystem, coords, out var distance) &&
             distance < BufferDistance)
         {

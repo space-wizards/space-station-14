@@ -166,3 +166,11 @@
   - accent-words-kobold-7
   - accent-words-kobold-8
   - accent-words-kobold-9
+
+- type: accent
+  id: nymph
+  fullReplacements:
+  - accent-words-nymph-1
+  - accent-words-nymph-2
+  - accent-words-nymph-3
+  - accent-words-nymph-4

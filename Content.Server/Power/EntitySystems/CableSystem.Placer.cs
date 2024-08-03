@@ -4,6 +4,7 @@ using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Stacks;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -25,7 +26,7 @@ public sealed partial class CableSystem
         if (component.CablePrototypeId == null)
             return;
 
-        if(!_mapManager.TryGetGrid(args.ClickLocation.GetGridUid(EntityManager), out var grid))
+        if(!TryComp<MapGridComponent>(args.ClickLocation.GetGridUid(EntityManager), out var grid))
             return;
 
         var snapPos = grid.TileIndicesFor(args.ClickLocation);

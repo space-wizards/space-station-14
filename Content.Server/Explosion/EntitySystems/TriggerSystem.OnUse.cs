@@ -1,6 +1,7 @@
 using Content.Server.Explosion.Components;
 using Content.Server.Sticky.Events;
 using Content.Shared.Examine;
+using Content.Shared.Explosion.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -25,13 +26,7 @@ public sealed partial class TriggerSystem
         if (!component.StartOnStick)
             return;
 
-        HandleTimerTrigger(
-            uid,
-            args.User,
-            component.Delay,
-            component.BeepInterval,
-            component.InitialBeepDelay,
-            component.BeepSound);
+        StartTimer((uid, component), args.User);
     }
 
     private void OnExamined(EntityUid uid, OnUseTimerTriggerComponent component, ExaminedEvent args)
@@ -53,14 +48,7 @@ public sealed partial class TriggerSystem
             args.Verbs.Add(new AlternativeVerb()
             {
                 Text = Loc.GetString("verb-start-detonation"),
-                Act = () => HandleTimerTrigger(
-                    uid,
-                    args.User,
-                    component.Delay,
-                    component.BeepInterval,
-                    component.InitialBeepDelay,
-                    component.BeepSound
-                ),
+                Act = () => StartTimer((uid, component), args.User),
                 Priority = 2
             });
         }
@@ -170,13 +158,10 @@ public sealed partial class TriggerSystem
         if (args.Handled || HasComp<AutomatedTimerComponent>(uid) || component.UseVerbInstead)
             return;
 
-        HandleTimerTrigger(
-            uid,
-            args.User,
-            component.Delay,
-            component.BeepInterval,
-            component.InitialBeepDelay,
-            component.BeepSound);
+        if (component.DoPopup)
+            _popupSystem.PopupEntity(Loc.GetString("trigger-activated", ("device", uid)), args.User, args.User);
+
+        StartTimer((uid, component), args.User);
 
         args.Handled = true;
     }

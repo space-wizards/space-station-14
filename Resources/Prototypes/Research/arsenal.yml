@@ -24,33 +24,16 @@
   tier: 1
   cost: 10000
   recipeUnlocks:
-  - ShellShotgunIncendiary
-  - CartridgePistolIncendiary
-  - CartridgeMagnumIncendiary
-  - CartridgeLightRifleIncendiary
-  - CartridgeRifleIncendiary
+  - BoxShotgunIncendiary
+  - MagazineRifleIncendiary
+  - MagazinePistolIncendiary
+  - MagazineLightRifleIncendiary
+  - SpeedLoaderMagnumIncendiary
+  - MagazineShotgunIncendiary
   - MagazineBoxPistolIncendiary
   - MagazineBoxMagnumIncendiary
   - MagazineBoxLightRifleIncendiary
   - MagazineBoxRifleIncendiary
-
-- type: technology
-  id: ExplosiveTechnology
-  name: research-technology-explosive-technology
-  icon:
-    sprite: Objects/Devices/payload.rsi
-    state: payload-explosive-armed
-  discipline: Arsenal
-  tier: 1
-  cost: 7500
-  recipeUnlocks:
-  - Signaller
-  - SignalTrigger
-  - VoiceTrigger
-  - TimerTrigger
-  - FlashPayload
-  - ExplosivePayload
-  - Igniter
 
 - type: technology
   id: WeaponizedLaserManipulation
@@ -74,15 +57,10 @@
   tier: 1
   cost: 5000
   recipeUnlocks:
-  - ShellShotgunBeanbag
-  - CartridgePistolRubber
-  - CartridgeMagnumRubber
-  - CartridgeLightRifleRubber
-  - CartridgeRifleRubber
-  - MagazineBoxPistolRubber
-  - MagazineBoxMagnumRubber
-  - MagazineBoxLightRifleRubber
-  - MagazineBoxRifleRubber
+  - MagazineShotgunBeanbag
+  - BoxShellTranquilizer 
+  - BoxBeanbag 
+  - WeaponDisabler
 
 - type: technology
   id: UraniumMunitions
@@ -94,15 +72,48 @@
   tier: 1
   cost: 7500
   recipeUnlocks:
-  - ShellShotgunUranium
-  - CartridgePistolUranium
-  - CartridgeMagnumUranium
-  - CartridgeLightRifleUranium
-  - CartridgeRifleUranium
+  - MagazineRifleUranium
+  - MagazinePistolUranium
+  - MagazineLightRifleUranium
+  - SpeedLoaderMagnumUranium
   - MagazineBoxPistolUranium
   - MagazineBoxMagnumUranium
   - MagazineBoxLightRifleUranium
   - MagazineBoxRifleUranium
+  - BoxShotgunUranium
+
+- type: technology
+  id: AdvancedRiotControl
+  name: research-technology-advanced-riot-control
+  icon:
+    sprite: Objects/Weapons/Melee/truncheon.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 1
+  cost: 8000
+  recipeUnlocks:
+  - Truncheon
+  - TelescopicShield
+  - HoloprojectorSecurity
+  - WeaponDisablerSMG
+
+- type: technology
+  id: ExplosiveTechnology
+  name: research-technology-explosive-technology
+  icon:
+    sprite: Objects/Devices/payload.rsi
+    state: payload-explosive-armed
+  discipline: Arsenal
+  tier: 1
+  cost: 10000
+  recipeUnlocks:
+  - SignallerAdvanced
+  - SignalTrigger
+  - VoiceTrigger
+  - TimerTrigger
+  - FlashPayload
+  - ExplosivePayload
+  - ChemicalPayload
 
 # Tier 2
 
@@ -131,22 +142,6 @@
   - WeaponXrayCannon
 
 - type: technology
-  id: AdvancedRiotControl
-  name: research-technology-advanced-riot-control
-  icon:
-    sprite: Objects/Weapons/Melee/truncheon.rsi
-    state: icon
-  discipline: Arsenal
-  tier: 2
-  cost: 8000
-  recipeUnlocks:
-  - ClothingEyesGlassesSecurity
-  - Truncheon
-  - TelescopicShield
-  - HoloprojectorSecurity
-  - WeaponDisablerSMG
-
-- type: technology
   id: BasicShuttleArmament
   name: research-technology-basic-shuttle-armament
   icon: 
@@ -161,6 +156,7 @@
   - PowerCageMedium
   - MagazineGrenadeEmpty
   - GrenadeFlash
+  - GrenadeBlast
   - ShuttleGunSvalinnMachineGunCircuitboard
   - ShuttleGunPerforatorCircuitboard
   - ShuttleGunFriendshipCircuitboard
@@ -180,6 +176,7 @@
   cost: 15000
   recipeUnlocks:
   - WeaponAdvancedLaser
+  - PortableRecharger
 
 - type: technology
   id: ExperimentalBatteryAmmo
