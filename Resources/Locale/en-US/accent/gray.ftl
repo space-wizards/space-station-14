@@ -152,7 +152,7 @@ accent-gray-words-51 = bounties
 accent-gray-words-replace-51 = bogos
 
 accent-gray-words-52 = shoot
-accent-gray-words-replace-53 = beba
+accent-gray-words-replace-52 = beba
 
 accent-gray-words-53 = mine
 accent-gray-words-replace-53 = keboo
