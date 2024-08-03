@@ -152,4 +152,4 @@ chatsan-word-54 = fs
 chatsan-replacement-54 = for sure
 
 chatsan-word-55 = ngl
-chatsan-replacement-55 = not going to lie
+chatsan-replacement-55 = not gonna lie
