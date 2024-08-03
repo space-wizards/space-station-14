@@ -13721,13 +13721,6 @@ entities:
     - type: Transform
       pos: 3.5882664,-8.344303
       parent: 104
-- proto: VariantCubeBox
-  entities:
-  - uid: 1826
-    components:
-    - type: Transform
-      pos: 14.485744,-16.427467
-      parent: 104
 - proto: VendingMachineBooze
   entities:
   - uid: 1380

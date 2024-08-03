@@ -158,32 +158,6 @@ public partial class SharedBodySystem
     }
 
     /// <summary>
-    ///     Returns a list of ValueTuples of <see cref="T"/> and OrganComponent on each organ
-    ///     in the given body.
-    /// </summary>
-    /// <param name="uid">The body entity id to check on.</param>
-    /// <param name="body">The body to check for organs on.</param>
-    /// <typeparam name="T">The component to check for.</typeparam>
-    public List<(T Comp, OrganComponent Organ)> GetBodyOrganComponents<T>(
-        EntityUid uid,
-        BodyComponent? body = null)
-        where T : IComponent
-    {
-        if (!Resolve(uid, ref body))
-            return new List<(T Comp, OrganComponent Organ)>();
-
-        var query = GetEntityQuery<T>();
-        var list = new List<(T Comp, OrganComponent Organ)>(3);
-        foreach (var organ in GetBodyOrgans(uid, body))
-        {
-            if (query.TryGetComponent(organ.Id, out var comp))
-                list.Add((comp, organ.Component));
-        }
-
-        return list;
-    }
-
-    /// <summary>
     /// Returns a list of Entity<<see cref="T"/>, <see cref="OrganComponent"/>>
     /// for each organ of the body
     /// </summary>
@@ -216,19 +190,18 @@ public partial class SharedBodySystem
     /// <param name="body">The body to check for organs on.</param>
     /// <typeparam name="T">The component to check for.</typeparam>
     /// <returns>Whether any were found.</returns>
-    public bool TryGetBodyOrganComponents<T>(
-        EntityUid uid,
-        [NotNullWhen(true)] out List<(T Comp, OrganComponent Organ)>? comps,
-        BodyComponent? body = null)
+    public bool TryGetBodyOrganEntityComps<T>(
+        Entity<BodyComponent?> entity,
+        [NotNullWhen(true)] out List<Entity<T, OrganComponent>>? comps)
         where T : IComponent
     {
-        if (!Resolve(uid, ref body))
+        if (!Resolve(entity.Owner, ref entity.Comp))
         {
             comps = null;
             return false;
         }
 
-        comps = GetBodyOrganComponents<T>(uid, body);
+        comps = GetBodyOrganEntityComps<T>(entity);
 
         if (comps.Count != 0)
             return true;
