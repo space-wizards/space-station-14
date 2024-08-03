@@ -11,9 +11,10 @@ namespace Content.Shared.Fluids;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class AbsorbentComponent : Component
 {
-    public const string SolutionName = "absorbed";
-
     public Dictionary<Color, float> Progress = new();
+
+    [DataField("solutionName")]
+    public string SolutionName = "absorbed";
 
     /// <summary>
     /// How much solution we can transfer in one interaction.
@@ -38,4 +39,7 @@ public sealed partial class AbsorbentComponent : Component
         {
             Params = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(-3f),
         };
+
+    [DataField("useAbsorberSolution")]
+    public bool UseAbsorberSolution = true;
 }

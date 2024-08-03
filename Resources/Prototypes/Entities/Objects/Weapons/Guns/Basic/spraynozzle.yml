@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: WeaponSprayNozzle
   parent: BaseItem
   name: spray nozzle
@@ -18,11 +18,16 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
-  - type: SolutionVacuumCleaner
-    fixedTransferAmount: 25
+  - type: Absorbent
+    pickupAmount: 25
+    solutionName: tank
+    useAbsorberSolution: false
   - type: Appearance
   - type: ClothingSlotAmmoProvider
+  - type: ConnectedContainer
     targetSlot: BACK
     providerWhitelist:
       tags:
       - NozzleBackTank
+  - type: UseDelay
+    delay: 0.5
