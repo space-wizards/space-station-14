@@ -24,7 +24,7 @@
     useAbsorberSolution: false
   - type: Appearance
   - type: ClothingSlotAmmoProvider
-  - type: ConnectedContainer
+  - type: SlotBasedConnectedContainer
     targetSlot: BACK
     providerWhitelist:
       tags:
