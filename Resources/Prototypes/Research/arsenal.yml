@@ -125,7 +125,7 @@
   tier: 1
   cost: 5000
   recipeUnlocks:
-  - ShockCollar
+  - ClothingNeckShockCollar
 
 # Tier 2
 

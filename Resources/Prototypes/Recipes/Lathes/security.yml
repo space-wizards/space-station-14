@@ -90,8 +90,8 @@
     Gold: 100
 
 - type: latheRecipe
-  id: ShockCollar
-  result: ShockCollar
+  id: ClothingNeckShockCollar
+  result: ClothingNeckShockCollar
   completetime: 4
   materials:
     Steel: 500

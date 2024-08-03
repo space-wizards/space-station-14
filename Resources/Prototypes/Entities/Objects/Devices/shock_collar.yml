@@ -1,6 +1,6 @@
 - type: entity
   parent: Clothing
-  id: ShockCollar
+  id: ClothingNeckShockCollar
   name: shock collar
   description: An electric collar that shocks when a trigger is triggered.
   components:
