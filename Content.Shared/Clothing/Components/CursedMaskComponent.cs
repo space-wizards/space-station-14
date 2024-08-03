@@ -36,6 +36,12 @@ public sealed partial class CursedMaskComponent : Component
     [DataField]
     public bool HasNpc;
 
+    /// <summary>
+    /// The mind that was booted from the wearer when the mask took over.
+    /// </summary>
+    [DataField]
+    public EntityUid? StolenMind;
+
     [DataField]
     public ProtoId<NpcFactionPrototype> CursedMaskFaction = "SimpleHostile";
 

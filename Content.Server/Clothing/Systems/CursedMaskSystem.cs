@@ -1,5 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
+using Content.Server.Mind;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
@@ -21,10 +22,11 @@ public sealed class CursedMaskSystem : SharedCursedMaskSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly HTNSystem _htn = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
-    [Dependency] private readonly HTNSystem _htn = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     // We can't store this info on the component easily
     private static readonly ProtoId<HTNCompoundPrototype> TakeoverRootTask = "SimpleHostileCompound";
@@ -39,6 +41,8 @@ public sealed class CursedMaskSystem : SharedCursedMaskSystem
             var session = actor.PlayerSession;
             if (!_ticker.OnGhostAttempt(mind, false))
                 return;
+
+            ent.Comp.StolenMind = mind;
 
             _popup.PopupEntity(Loc.GetString("cursed-mask-takeover-popup"), wearer, session, PopupType.LargeCaution);
             _adminLog.Add(LogType.Action,
@@ -72,6 +76,15 @@ public sealed class CursedMaskSystem : SharedCursedMaskSystem
 
             ent.Comp.HasNpc = false;
             ent.Comp.OldFactions.Clear();
+
+            if (Exists(ent.Comp.StolenMind))
+            {
+                _mind.TransferTo(ent.Comp.StolenMind.Value, args.Wearer);
+                _adminLog.Add(LogType.Action,
+                    LogImpact.Extreme,
+                    $"{ToPrettyString(args.Wearer):player} was restored to their body after the removal of {ToPrettyString(ent):entity}.");
+                ent.Comp.StolenMind = null;
+            }
         }
 
         RandomizeCursedMask(ent, args.Wearer);
