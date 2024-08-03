@@ -30,7 +30,10 @@ public sealed class SetNutrit : LocalizedEntityCommands
 
         if (args.Length != 2)
         {
-            shell.WriteError($"Wrong number of arguments! Expected 2 got {args.Length}");
+            shell.WriteError(Loc.GetString("shell-wrong-arguments-number-need-specific",
+                ("properAmount", 2),
+                ("currentAmount", args.Length)
+            ));
             return;
         }
 
@@ -47,7 +50,10 @@ public sealed class SetNutrit : LocalizedEntityCommands
 
                 if (!Enum.TryParse(args[1], out HungerThreshold hungerThreshold))
                 {
-                    shell.WriteError($"Invalid {nameof(HungerThreshold)} `{args[1]}`");
+                    shell.WriteError(Loc.GetString("cmd-setnutrit-error-invalid-threshold",
+                        ("thresholdType", nameof(HungerThreshold)),
+                        ("thresholdString", args[1])
+                    ));
                     return;
                 }
 
@@ -65,7 +71,10 @@ public sealed class SetNutrit : LocalizedEntityCommands
 
                 if (!Enum.TryParse(args[1], out ThirstThreshold thirstThreshold))
                 {
-                    shell.WriteError($"Invalid {nameof(ThirstThreshold)} `{args[1]}`");
+                    shell.WriteError(Loc.GetString("cmd-setnutrit-error-invalid-threshold",
+                         ("thresholdType", nameof(ThirstThreshold)),
+                         ("thresholdString", args[1])
+                     ));
                     return;
                 }
 
