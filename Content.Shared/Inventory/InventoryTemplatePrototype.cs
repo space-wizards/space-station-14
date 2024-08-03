@@ -49,10 +49,10 @@ public sealed partial class SlotDefinition
     /// <summary>
     ///     Entity whitelist for CanEquip checks.
     /// </summary>
-    [DataField("whitelist")] public EntityWhitelist? Whitelist = null;
+    [DataField("whitelist")] public ItemWhitelist? Whitelist = null;
 
     /// <summary>
     ///     Entity blacklist for CanEquip checks.
     /// </summary>
-    [DataField("blacklist")] public EntityWhitelist? Blacklist = null;
+    [DataField("blacklist")] public ItemWhitelist? Blacklist = null;
 }

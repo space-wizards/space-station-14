@@ -13,7 +13,7 @@ public sealed partial class PilotedClothingSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedMoverController _moverController = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelist = default!;
 
     public override void Initialize()
     {
@@ -32,7 +32,7 @@ public sealed partial class PilotedClothingSystem : EntitySystem
             return;
 
         // Check potential pilot against whitelist, if one exists.
-        if (_whitelist.IsWhitelistFail(entity.Comp.PilotWhitelist, args.Entity))
+        if (_itemWhitelist.IsWhitelistFail(entity.Comp.PilotWhitelist, args.Entity))
             return;
 
         entity.Comp.Pilot = args.Entity;

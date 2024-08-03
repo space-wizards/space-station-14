@@ -10,7 +10,7 @@ namespace Content.Server.Polymorph.Systems;
 
 public partial class PolymorphSystem
 {
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
 
     /// <summary>
     /// Need to do this so we don't get a collection enumeration error in physics by polymorphing
@@ -42,8 +42,8 @@ public partial class PolymorphSystem
             return;
 
         var other = args.OtherEntity;
-        if (_whitelistSystem.IsWhitelistFail(component.Whitelist, other) ||
-            _whitelistSystem.IsBlacklistPass(component.Blacklist, other))
+        if (_itemWhitelistSystem.IsWhitelistFail(component.Whitelist, other) ||
+            _itemWhitelistSystem.IsBlacklistPass(component.Blacklist, other))
             return;
 
         _queuedPolymorphUpdates.Enqueue(new (other, component.Sound, component.Polymorph));

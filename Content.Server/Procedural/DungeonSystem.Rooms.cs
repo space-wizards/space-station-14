@@ -19,7 +19,7 @@ public sealed partial class DungeonSystem
     /// <summary>
     /// Gets a random dungeon room matching the specified area and whitelist.
     /// </summary>
-    public DungeonRoomPrototype? GetRoomPrototype(Vector2i size, Random random, EntityWhitelist? whitelist = null)
+    public DungeonRoomPrototype? GetRoomPrototype(Vector2i size, Random random, ItemWhitelist? whitelist = null)
     {
         // Can never be true.
         if (whitelist is { Tags: null })

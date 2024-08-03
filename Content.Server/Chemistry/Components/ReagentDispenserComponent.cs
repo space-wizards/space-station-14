@@ -37,7 +37,7 @@ namespace Content.Server.Chemistry.Components
         /// don't accidentally get slotted into the source slots.
         /// </summary>
         [DataField]
-        public EntityWhitelist? StorageWhitelist;
+        public ItemWhitelist? StorageWhitelist;
 
         [DataField]
         public ItemSlot BeakerSlot = new();

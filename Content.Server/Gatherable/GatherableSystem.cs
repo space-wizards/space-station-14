@@ -19,7 +19,7 @@ public sealed partial class GatherableSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -32,7 +32,7 @@ public sealed partial class GatherableSystem : EntitySystem
 
     private void OnAttacked(Entity<GatherableComponent> gatherable, ref AttackedEvent args)
     {
-        if (_whitelistSystem.IsWhitelistFailOrNull(gatherable.Comp.ToolWhitelist, args.Used))
+        if (_itemWhitelistSystem.IsWhitelistFailOrNull(gatherable.Comp.ToolWhitelist, args.Used))
             return;
 
         Gather(gatherable, args.User);
@@ -43,7 +43,7 @@ public sealed partial class GatherableSystem : EntitySystem
         if (args.Handled || !args.Complex)
             return;
 
-        if (_whitelistSystem.IsWhitelistFailOrNull(gatherable.Comp.ToolWhitelist, args.User))
+        if (_itemWhitelistSystem.IsWhitelistFailOrNull(gatherable.Comp.ToolWhitelist, args.User))
             return;
 
         Gather(gatherable, args.User);

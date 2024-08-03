@@ -18,5 +18,5 @@ public sealed partial class SpeedModifierContactsComponent : Component
     public float SprintSpeedModifier = 1.0f;
 
     [DataField("ignoreWhitelist")]
-    public EntityWhitelist? IgnoreWhitelist;
+    public ItemWhitelist? IgnoreWhitelist;
 }

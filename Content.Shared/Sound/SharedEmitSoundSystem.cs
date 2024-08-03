@@ -35,7 +35,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
     [Dependency] private   readonly SharedAmbientSoundSystem _ambient = default!;
     [Dependency] private   readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -125,7 +125,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
 
     private void OnEmitSoundOnInteractUsing(Entity<EmitSoundOnInteractUsingComponent> ent, ref InteractUsingEvent args)
     {
-        if (_whitelistSystem.IsWhitelistPass(ent.Comp.Whitelist, args.Used))
+        if (_itemWhitelistSystem.IsWhitelistPass(ent.Comp.Whitelist, args.Used))
         {
             TryEmitSound(ent, ent.Comp, args.User);
         }

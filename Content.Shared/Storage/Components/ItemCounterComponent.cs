@@ -20,7 +20,7 @@ namespace Content.Shared.Storage.Components
     public sealed partial class ItemCounterComponent : Component
     {
         [DataField("count", required: true)]
-        public EntityWhitelist Count { get; set; } = default!;
+        public ItemWhitelist Count { get; set; } = default!;
 
         [DataField("amount")]
         public int? MaxAmount { get; set; }

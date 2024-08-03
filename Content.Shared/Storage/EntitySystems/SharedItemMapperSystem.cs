@@ -16,7 +16,7 @@ public abstract class SharedItemMapperSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -84,7 +84,7 @@ public abstract class SharedItemMapperSystem : EntitySystem
     /// </summary>
     /// <param name="uid">EntityUid used to search the storage</param>
     /// <param name="itemMapper">component that contains definition used to map
-    /// <see cref="EntityWhitelist">Whitelist</see> in <see cref="ItemMapperComponent.MapLayers"/> to string.
+    /// <see cref="ItemWhitelist">Whitelist</see> in <see cref="ItemMapperComponent.MapLayers"/> to string.
     /// </param>
     /// <param name="showLayers">list of <paramref name="itemMapper"/> layers that should be visible</param>
     /// <returns>false if <c>msg.Container.Owner</c> is not a storage, true otherwise.</returns>
@@ -98,7 +98,7 @@ public abstract class SharedItemMapperSystem : EntitySystem
         var list = new List<string>();
         foreach (var mapLayerData in itemMapper.MapLayers.Values)
         {
-            var count = containedLayers.Count(ent => _whitelistSystem.IsWhitelistPassOrNull(mapLayerData.Whitelist,
+            var count = containedLayers.Count(ent => _itemWhitelistSystem.IsWhitelistPassOrNull(mapLayerData.Whitelist,
                 ent));
             if (count >= mapLayerData.MinCount && count <= mapLayerData.MaxCount)
             {

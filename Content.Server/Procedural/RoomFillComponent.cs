@@ -27,7 +27,7 @@ public sealed partial class RoomFillComponent : Component
     /// Rooms allowed for the marker.
     /// </summary>
     [DataField]
-    public EntityWhitelist? RoomWhitelist;
+    public ItemWhitelist? RoomWhitelist;
     
     /// <summary>
     /// Should any existing entities / decals be bulldozed first.

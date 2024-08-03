@@ -20,7 +20,7 @@ public sealed partial class BorgChassisComponent : Component
     /// A whitelist for which entities count as valid brains
     /// </summary>
     [DataField("brainWhitelist")]
-    public EntityWhitelist? BrainWhitelist;
+    public ItemWhitelist? BrainWhitelist;
 
     /// <summary>
     /// The container ID for the brain
@@ -39,7 +39,7 @@ public sealed partial class BorgChassisComponent : Component
     /// A whitelist for what types of modules can be installed into this borg
     /// </summary>
     [DataField("moduleWhitelist")]
-    public EntityWhitelist? ModuleWhitelist;
+    public ItemWhitelist? ModuleWhitelist;
 
     /// <summary>
     /// How many modules can be installed in this borg

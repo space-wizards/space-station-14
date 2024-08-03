@@ -21,13 +21,13 @@ public sealed partial class ImplanterComponent : Component
     /// Implants get their own whitelist which is checked afterwards.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityWhitelist? Whitelist;
+    public ItemWhitelist? Whitelist;
 
     /// <summary>
     /// Blacklist to check entities against before implanting.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityWhitelist? Blacklist;
+    public ItemWhitelist? Blacklist;
 
     /// <summary>
     /// Used for implanters that start with specific implants

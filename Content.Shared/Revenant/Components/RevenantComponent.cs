@@ -192,13 +192,13 @@ public sealed partial class RevenantComponent : Component
     /// Used to prevent ultra gamer things like ghost emagging chem or instantly launching the shuttle.
     /// </summary>
     [DataField]
-    public EntityWhitelist? MalfunctionWhitelist;
+    public ItemWhitelist? MalfunctionWhitelist;
 
     /// <summary>
     /// Whitelist for entities that can never be emagged by malfunction.
     /// </summary>
     [DataField]
-    public EntityWhitelist? MalfunctionBlacklist;
+    public ItemWhitelist? MalfunctionBlacklist;
     #endregion
 
     [DataField]

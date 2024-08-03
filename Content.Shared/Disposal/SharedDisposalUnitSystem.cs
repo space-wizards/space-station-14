@@ -26,7 +26,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly MetaDataSystem Metadata = default!;
     [Dependency] protected readonly SharedJointSystem Joints = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
 
     protected static TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
 
@@ -115,8 +115,8 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (!storable && !HasComp<BodyComponent>(entity))
             return false;
 
-        if (_whitelistSystem.IsBlacklistPass(component.Blacklist, entity) ||
-            _whitelistSystem.IsWhitelistFail(component.Whitelist, entity))
+        if (_itemWhitelistSystem.IsBlacklistPass(component.Blacklist, entity) ||
+            _itemWhitelistSystem.IsWhitelistFail(component.Whitelist, entity))
             return false;
 
         if (TryComp<PhysicsComponent>(entity, out var physics) && (physics.CanCollide) || storable)

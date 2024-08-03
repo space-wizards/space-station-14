@@ -1,13 +1,14 @@
 ﻿using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Whitelist;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Storage.Components
 {
     /// <summary>
-    /// <para><c>ItemMapperComponent</c> is a <see cref="Component"/> that maps string labels to an <see cref="Content.Shared.Whitelist.EntityWhitelist"/> of elements. Useful primarily  for visualization.</para>
+    /// <para><c>ItemMapperComponent</c> is a <see cref="Component"/> that maps string labels to an <see cref="ItemWhitelist"/> of elements. Useful primarily  for visualization.</para>
     /// <para>
     /// To define a mapping, create a <c>mapLayers</c> map in configuration <c>ItemMapper</c> component and with <see cref="MapLayers"/> mapping.
-    /// Each map layer maps layer name to an <see cref="Content.Shared.Whitelist.EntityWhitelist"/>, plus special modifiers for min and max item count.
+    /// Each map layer maps layer name to an <see cref="ItemWhitelist"/>, plus special modifiers for min and max item count.
     /// Min and max count are useful when you need to visualize a certain number of items, for example, to display one, two, three, or more items.
     /// </para>
     /// <para>
@@ -49,7 +50,7 @@ namespace Content.Shared.Storage.Components
     /// The min count will ensure that <c>lightbulb1</c> layer is only displayed when one or more light bulbs are in the belt.
     /// And <c>lightbulb2</c> layer will only be shown when two or more light bulbs are inserted.
     /// </para>
-    /// <seealso cref="Content.Shared.Whitelist.EntityWhitelist"/>
+    /// <seealso cref="ItemWhitelist"/>
     /// <seealso cref="Content.Shared.Storage.Components.SharedMapLayerData"/>
     /// </summary>
     [RegisterComponent]

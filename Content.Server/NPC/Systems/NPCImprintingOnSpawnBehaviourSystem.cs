@@ -14,7 +14,7 @@ public sealed partial class NPCImprintingOnSpawnBehaviourSystem : SharedNPCImpri
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -29,7 +29,7 @@ public sealed partial class NPCImprintingOnSpawnBehaviourSystem : SharedNPCImpri
 
         foreach (var friend in friends)
         {
-            if (_whitelistSystem.IsWhitelistPassOrNull(imprinting.Comp.Whitelist, friend))
+            if (_itemWhitelistSystem.IsWhitelistPassOrNull(imprinting.Comp.Whitelist, friend))
             {
                 AddImprintingTarget(imprinting, friend, imprinting.Comp);
             }

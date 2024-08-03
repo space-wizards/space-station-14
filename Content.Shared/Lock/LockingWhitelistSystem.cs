@@ -5,7 +5,7 @@ namespace Content.Shared.Lock;
 
 public sealed class LockingWhitelistSystem : EntitySystem
 {
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
@@ -17,7 +17,7 @@ public sealed class LockingWhitelistSystem : EntitySystem
 
     private void OnUserLockToggleAttempt(Entity<LockingWhitelistComponent> ent, ref UserLockToggleAttemptEvent args)
     {
-        if (_whitelistSystem.CheckBoth(args.Target, ent.Comp.Blacklist, ent.Comp.Whitelist))
+        if (_itemWhitelistSystem.CheckBoth(args.Target, ent.Comp.Blacklist, ent.Comp.Whitelist))
             return;
 
         if (!args.Silent)

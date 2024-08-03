@@ -12,7 +12,7 @@ public sealed class TraitSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -32,8 +32,8 @@ public sealed class TraitSystem : EntitySystem
                 return;
             }
 
-            if (_whitelistSystem.IsWhitelistFail(traitPrototype.Whitelist, args.Mob) ||
-                _whitelistSystem.IsBlacklistPass(traitPrototype.Blacklist, args.Mob))
+            if (_itemWhitelistSystem.IsWhitelistFail(traitPrototype.Whitelist, args.Mob) ||
+                _itemWhitelistSystem.IsBlacklistPass(traitPrototype.Blacklist, args.Mob))
                 continue;
 
             // Add all components required by the prototype

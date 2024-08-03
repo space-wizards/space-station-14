@@ -22,5 +22,5 @@ public sealed partial class ClothingSlotAmmoProviderComponent : AmmoProviderComp
     /// A whitelist for determining whether or not an ammo provider is valid.
     /// </summary>
     [DataField("providerWhitelist")]
-    public EntityWhitelist? ProviderWhitelist;
+    public ItemWhitelist? ProviderWhitelist;
 }

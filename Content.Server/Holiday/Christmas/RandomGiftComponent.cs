@@ -33,7 +33,7 @@ public sealed partial class RandomGiftComponent : Component
     /// What entities are allowed to examine this gift to see its contents.
     /// </summary>
     [DataField("contentsViewers", required: true)]
-    public EntityWhitelist ContentsViewers = default!;
+    public ItemWhitelist ContentsViewers = default!;
 
     /// <summary>
     /// The currently selected entity to give out. Used so contents viewers can see inside.

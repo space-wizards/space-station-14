@@ -16,7 +16,7 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -60,7 +60,7 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
         if (!args.OtherFixture.Hard ||
             args.OurFixtureId != SharedProjectileSystem.ProjectileFixture ||
             component.Amount <= 0 ||
-            _whitelistSystem.IsWhitelistFail(component.Whitelist, args.OtherEntity) ||
+            _itemWhitelistSystem.IsWhitelistFail(component.Whitelist, args.OtherEntity) ||
             !TryComp<ProjectileComponent>(uid, out var projectile) ||
             projectile.Weapon == null)
         {

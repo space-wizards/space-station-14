@@ -50,7 +50,7 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
     [Dependency] private readonly WeldableSystem _weldable = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
     [Dependency] private readonly MobThresholdSystem _thresholdSystem = default!;
 
     private EntityQuery<PuddleComponent> _puddleQuery;
@@ -255,7 +255,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                     return 0f;
                 }
 
-                if (_whitelistSystem.IsWhitelistFailOrNull(heldGun.Whitelist, targetUid))
+                if (_itemWhitelistSystem.IsWhitelistFailOrNull(heldGun.Whitelist, targetUid))
                 {
                     return 0f;
                 }

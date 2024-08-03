@@ -73,5 +73,5 @@ public sealed partial class StunProviderComponent : Component
     /// Whitelist for what counts as a mob.
     /// </summary>
     [DataField(required: true)]
-    public EntityWhitelist Whitelist = new();
+    public ItemWhitelist Whitelist = new();
 }

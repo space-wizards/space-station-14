@@ -18,7 +18,7 @@ namespace Content.Shared.Storage.Components
         public string Layer = string.Empty;
 
         [DataField(required: true)]
-        public EntityWhitelist? Whitelist { get; set; }
+        public ItemWhitelist? Whitelist { get; set; }
 
         /// <summary>
         ///     Minimal amount of entities that are valid for whitelist.

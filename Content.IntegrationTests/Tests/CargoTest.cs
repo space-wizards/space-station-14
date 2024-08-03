@@ -170,7 +170,7 @@ public sealed class CargoTest
         var mapManager = server.ResolveDependency<IMapManager>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var componentFactory = server.ResolveDependency<IComponentFactory>();
-        var whitelist = entManager.System<EntityWhitelistSystem>();
+        var whitelist = entManager.System<ItemWhitelistSystem>();
         var cargo = entManager.System<CargoSystem>();
         var sliceableSys = entManager.System<SliceableFoodSystem>();
 

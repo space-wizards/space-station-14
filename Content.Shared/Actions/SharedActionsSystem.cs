@@ -29,7 +29,7 @@ public abstract class SharedActionsSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -478,7 +478,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!target.IsValid() || Deleted(target))
             return false;
 
-        if (_whitelistSystem.IsWhitelistFail(action.Whitelist, target))
+        if (_itemWhitelistSystem.IsWhitelistFail(action.Whitelist, target))
             return false;
 
         if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, target))

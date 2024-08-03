@@ -24,7 +24,7 @@ namespace Content.Shared.Whitelist;
 /// </code>
 [DataDefinition]
 [Serializable, NetSerializable]
-public sealed partial class EntityWhitelist
+public sealed partial class ItemWhitelist
 {
     /// <summary>
     ///     Component names that are allowed in the whitelist.
@@ -38,7 +38,7 @@ public sealed partial class EntityWhitelist
     [DataField]
     public List<ProtoId<ItemSizePrototype>>? Sizes;
 
-    [NonSerialized, Access(typeof(EntityWhitelistSystem))]
+    [NonSerialized, Access(typeof(ItemWhitelistSystem))]
     public List<ComponentRegistration>? Registrations;
 
     /// <summary>

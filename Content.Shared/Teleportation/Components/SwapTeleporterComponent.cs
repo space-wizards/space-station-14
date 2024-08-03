@@ -56,7 +56,7 @@ public sealed partial class SwapTeleporterComponent : Component
     /// A whitelist for what entities are valid for <see cref="LinkedEnt"/>.
     /// </summary>
     [DataField]
-    public EntityWhitelist TeleporterWhitelist = new();
+    public ItemWhitelist TeleporterWhitelist = new();
 }
 
 [Serializable, NetSerializable]

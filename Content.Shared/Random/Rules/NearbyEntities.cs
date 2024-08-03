@@ -15,7 +15,7 @@ public sealed partial class NearbyEntitiesRule : RulesRule
     public int Count = 1;
 
     [DataField(required: true)]
-    public EntityWhitelist Whitelist = new();
+    public ItemWhitelist Whitelist = new();
 
     [DataField]
     public float Range = 10f;
@@ -30,7 +30,7 @@ public sealed partial class NearbyEntitiesRule : RulesRule
 
         var transform = entManager.System<SharedTransformSystem>();
         var lookup = entManager.System<EntityLookupSystem>();
-        var whitelistSystem = entManager.System<EntityWhitelistSystem>();
+        var whitelistSystem = entManager.System<ItemWhitelistSystem>();
 
         var found = false;
         var worldPos = transform.GetWorldPosition(xform);

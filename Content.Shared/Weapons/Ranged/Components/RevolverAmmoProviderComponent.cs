@@ -17,7 +17,7 @@ public sealed partial class RevolverAmmoProviderComponent : AmmoProviderComponen
      */
 
     [DataField("whitelist")]
-    public EntityWhitelist? Whitelist;
+    public ItemWhitelist? Whitelist;
 
     public Container AmmoContainer = default!;
 

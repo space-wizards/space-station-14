@@ -16,5 +16,5 @@ public sealed partial class DamageContactsComponent : Component
     /// Entities that aren't damaged by this entity
     /// </summary>
     [DataField("ignoreWhitelist")]
-    public EntityWhitelist? IgnoreWhitelist;
+    public ItemWhitelist? IgnoreWhitelist;
 }

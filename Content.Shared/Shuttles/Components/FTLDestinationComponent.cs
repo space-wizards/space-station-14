@@ -10,7 +10,7 @@ public sealed partial class FTLDestinationComponent : Component
     /// Should this destination be restricted in some form from console visibility.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
-    public EntityWhitelist? Whitelist;
+    public ItemWhitelist? Whitelist;
 
     /// <summary>
     /// Is this destination visible but available to be warped to?

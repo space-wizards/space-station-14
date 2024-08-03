@@ -48,13 +48,13 @@ public readonly partial record struct CargoBountyItemEntry()
     /// A whitelist for determining what items satisfy the entry.
     /// </summary>
     [DataField(required: true)]
-    public EntityWhitelist Whitelist { get; init; } = default!;
+    public ItemWhitelist Whitelist { get; init; } = default!;
 
     /// <summary>
     /// A blacklist that can be used to exclude items in the whitelist.
     /// </summary>
     [DataField]
-    public EntityWhitelist? Blacklist { get; init; } = null;
+    public ItemWhitelist? Blacklist { get; init; } = null;
 
     // todo: implement some kind of simple generic condition system
 

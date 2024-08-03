@@ -15,7 +15,7 @@ public sealed class MechEquipmentSystem : EntitySystem
     [Dependency] private readonly MechSystem _mech = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -42,7 +42,7 @@ public sealed class MechEquipmentSystem : EntitySystem
         if (mechComp.EquipmentContainer.ContainedEntities.Count >= mechComp.MaxEquipmentAmount)
             return;
 
-        if (_whitelistSystem.IsWhitelistFail(mechComp.EquipmentWhitelist, args.Used))
+        if (_itemWhitelistSystem.IsWhitelistFail(mechComp.EquipmentWhitelist, args.Used))
             return;
 
         _popup.PopupEntity(Loc.GetString("mech-equipment-begin-install", ("item", uid)), mech);

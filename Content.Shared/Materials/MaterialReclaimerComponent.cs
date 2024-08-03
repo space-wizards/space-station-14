@@ -66,13 +66,13 @@ public sealed partial class MaterialReclaimerComponent : Component
     /// a whitelist for what entities can be inserted into this reclaimer
     /// </summary>
     [DataField]
-    public EntityWhitelist? Whitelist;
+    public ItemWhitelist? Whitelist;
 
     /// <summary>
     /// a blacklist for what entities cannot be inserted into this reclaimer
     /// </summary>
     [DataField]
-    public EntityWhitelist? Blacklist;
+    public ItemWhitelist? Blacklist;
 
     /// <summary>
     /// The sound played when something is being processed.

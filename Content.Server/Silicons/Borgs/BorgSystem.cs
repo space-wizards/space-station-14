@@ -54,7 +54,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
 
 
     [ValidatePrototypeId<JobPrototype>]
@@ -109,7 +109,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
         }
 
         if (component.BrainEntity == null && brain != null &&
-            _whitelistSystem.IsWhitelistPassOrNull(component.BrainWhitelist, used))
+            _itemWhitelistSystem.IsWhitelistPassOrNull(component.BrainWhitelist, used))
         {
             if (_mind.TryGetMind(used, out _, out var mind) && mind.Session != null)
             {

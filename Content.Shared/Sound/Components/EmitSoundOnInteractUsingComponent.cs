@@ -11,5 +11,5 @@ namespace Content.Shared.Sound.Components;
 public sealed partial class EmitSoundOnInteractUsingComponent : BaseEmitSoundComponent
 {
     [DataField(required: true)]
-    public EntityWhitelist Whitelist = new();
+    public ItemWhitelist Whitelist = new();
 }

@@ -16,7 +16,7 @@ public sealed class PickRandomSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -32,7 +32,7 @@ public sealed class PickRandomSystem : EntitySystem
 
         var user = args.User;
 
-        var enabled = storage.Container.ContainedEntities.Any(item => _whitelistSystem.IsWhitelistPassOrNull(comp.Whitelist, item));
+        var enabled = storage.Container.ContainedEntities.Any(item => _itemWhitelistSystem.IsWhitelistPassOrNull(comp.Whitelist, item));
 
         // alt-click / alt-z to pick an item
         args.Verbs.Add(new AlternativeVerb
@@ -50,7 +50,7 @@ public sealed class PickRandomSystem : EntitySystem
 
     private void TryPick(EntityUid uid, PickRandomComponent comp, StorageComponent storage, EntityUid user)
     {
-        var entities = storage.Container.ContainedEntities.Where(item => _whitelistSystem.IsWhitelistPassOrNull(comp.Whitelist, item)).ToArray();
+        var entities = storage.Container.ContainedEntities.Where(item => _itemWhitelistSystem.IsWhitelistPassOrNull(comp.Whitelist, item)).ToArray();
 
         if (!entities.Any())
             return;

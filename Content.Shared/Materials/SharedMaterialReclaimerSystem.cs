@@ -30,7 +30,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     [Dependency] protected readonly SharedAmbientSoundSystem AmbientSound = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
 
     public const string ActiveReclaimerContainerId = "active-material-reclaimer-container";
 
@@ -93,8 +93,8 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         if (HasComp<MobStateComponent>(item) && !CanGib(uid, item, component)) // whitelist? We be gibbing, boy!
             return false;
 
-        if (_whitelistSystem.IsWhitelistFail(component.Whitelist, item) ||
-            _whitelistSystem.IsBlacklistPass(component.Blacklist, item))
+        if (_itemWhitelistSystem.IsWhitelistFail(component.Whitelist, item) ||
+            _itemWhitelistSystem.IsBlacklistPass(component.Blacklist, item))
             return false;
 
         if (Container.TryGetContainingContainer(item, out _) && !Container.TryRemoveFromContainer(item))

@@ -12,7 +12,7 @@ public sealed class DamageContactsSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -65,7 +65,7 @@ public sealed class DamageContactsSystem : EntitySystem
         if (HasComp<DamagedByContactComponent>(otherUid))
             return;
 
-        if (_whitelistSystem.IsWhitelistFail(component.IgnoreWhitelist, otherUid))
+        if (_itemWhitelistSystem.IsWhitelistFail(component.IgnoreWhitelist, otherUid))
             return;
 
         var damagedByContact = EnsureComp<DamagedByContactComponent>(otherUid);

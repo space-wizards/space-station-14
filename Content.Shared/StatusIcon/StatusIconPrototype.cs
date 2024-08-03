@@ -48,7 +48,7 @@ public partial class StatusIconData : IComparable<StatusIconData>
     /// Specifies what entities and components/tags this icon can be shown to.
     /// </summary>
     [DataField]
-    public EntityWhitelist? ShowTo;
+    public ItemWhitelist? ShowTo;
 
     /// <summary>
     /// A preference for where the icon will be displayed. None | Left | Right

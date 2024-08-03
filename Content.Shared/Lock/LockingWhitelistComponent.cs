@@ -11,8 +11,8 @@ namespace Content.Shared.Lock;
 public sealed partial class LockingWhitelistComponent : Component
 {
     [DataField]
-    public EntityWhitelist? Whitelist;
+    public ItemWhitelist? Whitelist;
 
     [DataField]
-    public EntityWhitelist? Blacklist;
+    public ItemWhitelist? Blacklist;
 }

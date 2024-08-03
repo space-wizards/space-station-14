@@ -23,7 +23,7 @@ public sealed partial class EntityTargetActionComponent : BaseTargetActionCompon
     /// Determines which entities are valid targets for this action.
     /// </summary>
     /// <remarks>No whitelist check when null.</remarks>
-    [DataField("whitelist")] public EntityWhitelist? Whitelist;
+    [DataField("whitelist")] public ItemWhitelist? Whitelist;
 
     /// <summary>
     /// Whether this action considers the user as a valid target entity when using this action.
@@ -34,7 +34,7 @@ public sealed partial class EntityTargetActionComponent : BaseTargetActionCompon
 [Serializable, NetSerializable]
 public sealed class EntityTargetActionComponentState : BaseActionComponentState
 {
-    public EntityWhitelist? Whitelist;
+    public ItemWhitelist? Whitelist;
     public bool CanTargetSelf;
 
     public EntityTargetActionComponentState(EntityTargetActionComponent component, IEntityManager entManager) : base(component, entManager)

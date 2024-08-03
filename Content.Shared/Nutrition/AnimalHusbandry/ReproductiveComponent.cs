@@ -104,5 +104,5 @@ public sealed partial class ReproductiveComponent : Component
     /// can be this one's partner.
     /// </summary>
     [DataField(required: true)]
-    public EntityWhitelist PartnerWhitelist = default!;
+    public ItemWhitelist PartnerWhitelist = default!;
 }

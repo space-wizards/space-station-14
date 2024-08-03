@@ -11,7 +11,7 @@ public sealed class BreakWindowArtifactSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -26,7 +26,7 @@ public sealed class BreakWindowArtifactSystem : EntitySystem
             ents.Add(args.Activator.Value);
         foreach (var ent in ents)
         {
-            if (_whitelistSystem.IsWhitelistFail(component.Whitelist, ent))
+            if (_itemWhitelistSystem.IsWhitelistFail(component.Whitelist, ent))
                 continue;
 
             if (!_random.Prob(component.DamageChance))

@@ -12,7 +12,7 @@ public sealed class ItemPlacerSystem : EntitySystem
 {
     [Dependency] private readonly CollisionWakeSystem _wake = default!;
     [Dependency] private readonly PlaceableSurfaceSystem _placeableSurface = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -24,7 +24,7 @@ public sealed class ItemPlacerSystem : EntitySystem
 
     private void OnStartCollide(EntityUid uid, ItemPlacerComponent comp, ref StartCollideEvent args)
     {
-        if (_whitelistSystem.IsWhitelistFail(comp.Whitelist, args.OtherEntity))
+        if (_itemWhitelistSystem.IsWhitelistFail(comp.Whitelist, args.OtherEntity))
             return;
 
         if (TryComp<CollisionWakeComponent>(args.OtherEntity, out var wakeComp))

@@ -170,7 +170,7 @@ public sealed partial class ShuttleSystem
     /// </summary>
     /// <param name="entity"></param>
     /// <param name="whitelist"></param>
-    public void SetFTLWhitelist(Entity<FTLDestinationComponent?> entity, EntityWhitelist? whitelist)
+    public void SetFTLWhitelist(Entity<FTLDestinationComponent?> entity, ItemWhitelist? whitelist)
     {
         if (!Resolve(entity, ref entity.Comp))
             return;

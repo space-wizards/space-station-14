@@ -1,4 +1,3 @@
-using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -27,11 +26,11 @@ public sealed partial class EntityWhitelistCondition : IConstructionCondition
     /// The whitelist that allows only certain entities to use this.
     /// </summary>
     [DataField("whitelist", required: true)]
-    public EntityWhitelist Whitelist = new();
+    public ItemWhitelist Whitelist = new();
 
     public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
     {
-        var whitelistSystem = IoCManager.Resolve<IEntityManager>().System<EntityWhitelistSystem>();
+        var whitelistSystem = IoCManager.Resolve<IEntityManager>().System<ItemWhitelistSystem>();
         return whitelistSystem.IsWhitelistPass(Whitelist, user);
     }
 

@@ -14,7 +14,7 @@ namespace Content.Shared.Ninja.Systems;
 public sealed class EmagProviderSystem : EntitySystem
 {
     [Dependency] private readonly EmagSystem _emag = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelist = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
     [Dependency] private readonly TagSystem _tag = default!;
@@ -38,7 +38,7 @@ public sealed class EmagProviderSystem : EntitySystem
         var (uid, comp) = ent;
 
         // only allowed to emag entities on the whitelist
-        if (_whitelist.IsWhitelistFail(comp.Whitelist, target))
+        if (_itemWhitelist.IsWhitelistFail(comp.Whitelist, target))
             return;
 
         // only allowed to emag non-immune entities

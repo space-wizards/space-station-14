@@ -29,7 +29,7 @@ public sealed partial class MaterialStorageComponent : Component
     /// Whitelist for specifying the kind of items that can be insert into this entity.
     /// </summary>
     [DataField]
-    public EntityWhitelist? Whitelist;
+    public ItemWhitelist? Whitelist;
 
     /// <summary>
     /// Whether or not to drop contained materials when deconstructed.

@@ -31,7 +31,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-        [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+        [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -339,7 +339,7 @@ namespace Content.Server.Construction
                 return false;
             }
 
-            if (_whitelistSystem.IsWhitelistFail(constructionPrototype.EntityWhitelist, user))
+            if (_itemWhitelistSystem.IsWhitelistFail(constructionPrototype.ItemWhitelist, user))
             {
                 _popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
                 return false;
@@ -424,7 +424,7 @@ namespace Content.Server.Construction
                 return;
             }
 
-            if (_whitelistSystem.IsWhitelistFail(constructionPrototype.EntityWhitelist, user))
+            if (_itemWhitelistSystem.IsWhitelistFail(constructionPrototype.ItemWhitelist, user))
             {
                 _popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
                 return;

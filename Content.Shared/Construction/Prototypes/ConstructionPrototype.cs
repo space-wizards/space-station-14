@@ -69,8 +69,8 @@ public sealed partial class ConstructionPrototype : IPrototype
     /// If not null, then this is used to check if the entity trying to construct this is whitelisted.
     /// If they're not whitelisted, hide the item.
     /// </summary>
-    [DataField("entityWhitelist")]
-    public EntityWhitelist? EntityWhitelist = null;
+    [DataField]
+    public ItemWhitelist? ItemWhitelist;
 
     [DataField("category")] public string Category { get; private set; } = "";
 

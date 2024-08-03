@@ -13,7 +13,7 @@ public sealed partial class GatherableComponent : Component
     ///     Supports multiple tags.
     /// </summary>
     [DataField(required: true)]
-    public EntityWhitelist? ToolWhitelist;
+    public ItemWhitelist? ToolWhitelist;
 
     /// <summary>
     ///     YAML example below

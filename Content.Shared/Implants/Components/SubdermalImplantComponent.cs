@@ -41,14 +41,14 @@ public sealed partial class SubdermalImplantComponent : Component
     /// Only checked if the implanter allows implanting on the target to begin with.
     /// </summary>
     [DataField]
-    public EntityWhitelist? Whitelist;
+    public ItemWhitelist? Whitelist;
 
     /// <summary>
     /// Target blacklist for this implant specifically.
     /// Only checked if the implanter allows implanting on the target to begin with.
     /// </summary>
     [DataField]
-    public EntityWhitelist? Blacklist;
+    public ItemWhitelist? Blacklist;
 }
 
 /// <summary>

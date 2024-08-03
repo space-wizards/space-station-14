@@ -31,7 +31,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
     [Dependency] private   readonly SharedPopupSystem _popup = default!;
     [Dependency] private   readonly SharedStackSystem _stack = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
 
     [ValidatePrototypeId<EntityPrototype>] public const string EffectProto = "FultonEffect";
     protected static readonly Vector2 EffectOffset = Vector2.Zero;
@@ -178,7 +178,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
         if (!CanFulton(targetUid))
             return false;
 
-        if (_whitelistSystem.IsWhitelistFailOrNull(component.Whitelist, targetUid))
+        if (_itemWhitelistSystem.IsWhitelistFailOrNull(component.Whitelist, targetUid))
             return false;
 
         return true;

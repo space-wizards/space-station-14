@@ -37,8 +37,8 @@ public sealed partial class ArtifactEffectPrototype : IPrototype
     public string? EffectHint;
 
     [DataField("whitelist")]
-    public EntityWhitelist? Whitelist;
+    public ItemWhitelist? Whitelist;
 
     [DataField("blacklist")]
-    public EntityWhitelist? Blacklist;
+    public ItemWhitelist? Blacklist;
 }

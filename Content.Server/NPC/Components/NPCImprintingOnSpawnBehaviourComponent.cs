@@ -12,7 +12,7 @@ public sealed partial class NPCImprintingOnSpawnBehaviourComponent : Component
     /// filter who can be a friend to this creature
     /// </summary>
     [DataField]
-    public EntityWhitelist? Whitelist;
+    public ItemWhitelist? Whitelist;
 
     /// <summary>
     /// when a creature appears, it will memorize all creatures in the radius to remember them as friends

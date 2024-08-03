@@ -13,7 +13,7 @@ public sealed partial class PilotedClothingComponent : Component
     /// Whitelist for entities that are allowed to act as pilots when inside this entity.
     /// </summary>
     [DataField]
-    public EntityWhitelist? PilotWhitelist;
+    public ItemWhitelist? PilotWhitelist;
 
     /// <summary>
     /// Should movement input be relayed from the pilot to the target?

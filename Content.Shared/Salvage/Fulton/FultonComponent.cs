@@ -35,7 +35,7 @@ public sealed partial class FultonComponent : Component
     public TimeSpan FultonDuration = TimeSpan.FromSeconds(45);
 
     [ViewVariables(VVAccess.ReadWrite), DataField("whitelist"), AutoNetworkedField]
-    public EntityWhitelist? Whitelist = new()
+    public ItemWhitelist? Whitelist = new()
     {
         Components = new[]
         {

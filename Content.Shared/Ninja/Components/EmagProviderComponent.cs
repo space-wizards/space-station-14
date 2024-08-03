@@ -23,5 +23,5 @@ public sealed partial class EmagProviderComponent : Component
     /// Whitelist that entities must be on to work.
     /// </summary>
     [DataField]
-    public EntityWhitelist? Whitelist;
+    public ItemWhitelist? Whitelist;
 }
