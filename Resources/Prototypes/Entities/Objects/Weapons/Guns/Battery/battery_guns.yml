@@ -716,7 +716,7 @@
 
 - type: entity
   name: energy shotgun
-  parent: BaseWeaponBattery
+  parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponEnergyShotgun
   description: An one of a kind prototype energy weapon using various shotgun configurations. The possibility for both lethal, and non-lethal shots makes this a versatile weapon. 
   components:
@@ -756,3 +756,4 @@
     - HighRiskItem
   - type: StealTarget
     stealGroup: WeaponEnergyShotgun
+  - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
