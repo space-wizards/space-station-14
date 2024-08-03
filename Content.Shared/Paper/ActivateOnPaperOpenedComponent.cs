@@ -1,4 +1,6 @@
-namespace Content.Server.Paper;
+using Content.Shared.Paper;
+
+namespace Content.Shared.Paper;
 
 /// <summary>
 /// Activates the item when used to write on paper, as if Z was pressed.

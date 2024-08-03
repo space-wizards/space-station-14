@@ -1,3 +1,4 @@
+using Content.Shared.Paper;
 using Content.Shared.StoryGen;
 
 namespace Content.Server.Paper;
@@ -22,6 +23,6 @@ public sealed class PaperRandomStorySystem : EntitySystem
         if (!_storyGen.TryGenerateStoryFromTemplate(paperStory.Comp.Template, out var story))
             return;
 
-        _paper.SetContent(paperStory.Owner, story, paper);
+        _paper.SetContent((paperStory.Owner, paper), story);
     }
 }
