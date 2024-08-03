@@ -45,4 +45,7 @@
 - type: lobbyBackground
   id: ReclaimerNuke
   background: /Textures/LobbyScreens/reclaimer-nuke.webp
-  
+
+- type: lobbyBackground
+  id: DieBadly
+  background: /Textures/LobbyScreens/pov_you_are_about_to_die_badly_in_a_tunnel_and_your_coords_are_off.webp

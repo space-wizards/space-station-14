@@ -63,6 +63,19 @@
       - id: PillCanisterDexalin
 
 - type: entity
+  id: MedkitNitrogenFilled
+  suffix: Filled
+  parent: MedkitN2
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingMaskBreathMedical
+      - id: EmergencyNitrogenTankFilled
+      - id: EmergencyMedipen
+      - id: PillCanisterDylovene
+      - id: PillCanisterDexalin
+
+- type: entity
   id: MedkitRadiationFilled
   suffix: Filled
   parent: MedkitRadiation

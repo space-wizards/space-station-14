@@ -172,6 +172,7 @@ flavor-complex-pyrotton = like a burning mouth
 flavor-complex-mothballs = like mothballs
 flavor-complex-paint-thinner = like paint thinner
 flavor-complex-finfin = like your best friend
+flavor-complex-radiation = like radiation
 
 # Drink-specific flavors.
 

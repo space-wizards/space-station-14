@@ -95,7 +95,7 @@
   - type: GameRule
     minPlayers: 20
   - type: LoadMapRule
-    gameMap: NukieOutpost
+    mapPath: /Maps/Nonstations/nukieplanet.yml
   - type: AntagSelection
     selectionTime: PrePlayerSpawn
     definitions:
@@ -166,6 +166,17 @@
     agentName: traitor-round-end-agent-name
 
 - type: entity
+  abstract: true
+  parent: BaseGameRule
+  id: BaseTraitorRuleNoRandomObjectives
+  components:
+  - type: TraitorRule
+  # TODO: codewords in yml
+  # TODO: uplink in yml
+  - type: AntagSelection
+    agentName: traitor-round-end-agent-name
+
+- type: entity
   parent: BaseTraitorRule
   id: Traitor
   components:
@@ -188,18 +199,19 @@
         prototype: Traitor
 
 - type: entity
-  parent: BaseTraitorRule
-  id: SpyVsSpy
+  parent: BaseTraitorRuleNoRandomObjectives
+  id: SpyVsSpyDefaultTC
   components:
   - type: GameRule
     minPlayers: 15
     delay:
       min: 240
       max: 420
-  - type: AntagRandomObjectives
-    sets:
-    - groups: TraitorObjectiveGroupsSpyVsSpy
-    maxDifficulty: 5
+  - type: AntagObjectives
+    objectives:
+    - KillRandomTraitorSvSObjective
+    - RandomTraitorAliveSvSObjective
+    - EscapeShuttleObjective
   - type: AntagSelection
     definitions:
     - prefRoles: [ Traitor ]
@@ -209,6 +221,67 @@
         components:
         - AntagImmune
       lateJoinAdditional: true
+      forceAllPossible: true
+      mindComponents:
+      - type: TraitorRole
+        prototype: Traitor
+
+- type: entity
+  parent: BaseTraitorRuleNoRandomObjectives
+  id: SpyVsSpy5TC
+  components:
+  - type: TraitorRule
+    startingBalance: 5
+  - type: GameRule
+    minPlayers: 15
+    delay:
+      min: 240
+      max: 420
+  - type: AntagObjectives
+    objectives:
+    - KillRandomTraitorSvSObjective
+    - RandomTraitorAliveSvSObjective
+    - EscapeShuttleObjective
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Traitor ]
+      max: 100
+      playerRatio: 1
+      blacklist:
+        components:
+        - AntagImmune
+      lateJoinAdditional: true
+      forceAllPossible: true
+      mindComponents:
+      - type: TraitorRole
+        prototype: Traitor
+
+- type: entity
+  parent: BaseTraitorRuleNoRandomObjectives
+  id: SpyVsSpy
+  components:
+  - type: TraitorRule
+    startingBalance: 0
+  - type: GameRule
+    minPlayers: 15
+    delay:
+      min: 240
+      max: 420
+  - type: AntagObjectives
+    objectives:
+    - KillRandomTraitorSvSObjective
+    - RandomTraitorAliveSvSObjective
+    - EscapeShuttleObjective
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Traitor ]
+      max: 100
+      playerRatio: 1
+      blacklist:
+        components:
+        - AntagImmune
+      lateJoinAdditional: true
+      forceAllPossible: true
       mindComponents:
       - type: TraitorRole
         prototype: Traitor

@@ -49,8 +49,34 @@
       - MobCorgiIanPup
 
 - type: entity
+  name: Finfin Spawner
+  id: SpawnMobFinfin
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobFinfin
+
+- type: entity
   name: Possum Morty Spawner
   id: SpawnMobPossumMorty
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobPossumMortyOld
+
+- type: entity
+  name: Poppy Spawner
+  id: SpawnMobPoppyMorty
   parent: MarkerBase
   components:
   - type: Sprite
@@ -166,19 +192,6 @@
       - MobPipi
 
 - type: entity
-  name: Finfin Spawner
-  id: SpawnMobCatKittenFinfin
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-      - state: green
-      - state: ai
-  - type: ConditionalSpawner
-    prototypes:
-      - MobFinfin
-
-- type: entity
   name: Space Cat Spawner
   id: SpawnMobCatSpace
   parent: MarkerBase
@@ -213,13 +226,16 @@
     layers:
       - state: green
       - state: ai
-  - type: ConditionalSpawner
+  - type: RandomSpawner
     prototypes:
       - MobCatRuntime
       - MobCatException
       - MobCatFloppa
       - MobBingus
       - MobPipi
+    rarePrototypes:
+      - MobFinfin
+    rareChance: 0.05
 
 - type: entity
   name: Generic Cat Spawner
@@ -238,6 +254,7 @@
       - MobCatKitten
     rarePrototypes:
       - MobCatSpace
+      - MobFinfin
     rareChance: 0.05
 
 - type: entity
