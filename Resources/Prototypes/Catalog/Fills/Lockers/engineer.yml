@@ -91,6 +91,7 @@
       - id: ClothingMaskGasAtmos
       - id: ClothingOuterSuitAtmosFire
       - id: ClothingHeadHelmetAtmosFire
+      - id: ClothingHandsGlovesAtmos
       - id: GasAnalyzer
       - id: MedkitOxygenFilled
       - id: HolofanProjector
@@ -107,6 +108,7 @@
       - id: ClothingMaskGasAtmos
       - id: ClothingOuterSuitAtmosFire
       - id: ClothingHeadHelmetAtmosFire
+      - id: ClothingHandsGlovesAtmos
       - id: GasAnalyzer
       - id: MedkitOxygenFilled
       - id: HolofanProjector

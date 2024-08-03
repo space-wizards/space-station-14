@@ -441,3 +441,25 @@
     fiberMaterial: fibers-rubber
     fiberColor: fibers-yellow
   - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesAtmos
+  name: insulated atmos gloves
+  description: Like normal insulated gloves, but simply better by virtue of being from the Atmospherics department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/atmos.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/atmos.rsi
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingHandsGlovesFingerlessInsulated
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-blue
+  - type: FingerprintMask
