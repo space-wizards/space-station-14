@@ -157,6 +157,7 @@ namespace Content.Shared.Paper
             if (args.Text.Length <= entity.Comp.ContentSize)
             {
                 entity.Comp.Content = args.Text;
+                Dirty(entity);
 
                 if (TryComp<AppearanceComponent>(entity, out var appearance))
                     _appearance.SetData(entity, PaperVisuals.Status, PaperStatus.Written, appearance);
@@ -202,8 +203,8 @@ namespace Content.Shared.Paper
         public void SetContent(Entity<PaperComponent> entity, string content)
         {
             entity.Comp.Content = content + '\n';
-            UpdateUserInterface(entity);
             Dirty(entity);
+            UpdateUserInterface(entity);
 
             if (!TryComp<AppearanceComponent>(entity, out var appearance))
                 return;
