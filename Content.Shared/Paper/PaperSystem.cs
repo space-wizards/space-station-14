@@ -41,8 +41,7 @@ namespace Content.Shared.Paper
         {
             if (!string.IsNullOrEmpty(entity.Comp.Content))
             {
-                entity.Comp.Content = Loc.GetString(entity.Comp.Content);
-                Dirty(entity);
+                SetContent(entity, Loc.GetString(entity.Comp.Content));
             }
         }
 
@@ -216,7 +215,7 @@ namespace Content.Shared.Paper
             _appearance.SetData(entity, PaperVisuals.Status, status, appearance);
         }
 
-        public void UpdateUserInterface(Entity<PaperComponent> entity)
+        private void UpdateUserInterface(Entity<PaperComponent> entity)
         {
             _uiSystem.SetUiState(entity.Owner, PaperUiKey.Key, new PaperBoundUserInterfaceState(entity.Comp.Content, entity.Comp.StampedBy, entity.Comp.Mode));
         }
