@@ -132,6 +132,8 @@
     - Pacified
     - StaminaModifier
     - Flashed
+    - RadiationProtection
+    - Drowsiness
   - type: Body
     prototype: Human
     requiredLegs: 2
@@ -234,7 +236,6 @@
       groups:
         Brute: -0.07
   - type: Fingerprint
-
   - type: Blindable
   # Other
   - type: Temperature
