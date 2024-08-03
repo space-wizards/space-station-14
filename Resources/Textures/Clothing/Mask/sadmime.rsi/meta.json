@@ -18,5 +18,8 @@
       "name": "equipped-MASK-reptilian",
       "directions": 4
     }
+    {"name":"equipped-mask-vox",
+      "directions": 4
+    }
   ]
 }
