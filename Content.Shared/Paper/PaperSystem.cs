@@ -156,8 +156,7 @@ namespace Content.Shared.Paper
         {
             if (args.Text.Length <= entity.Comp.ContentSize)
             {
-                entity.Comp.Content = args.Text;
-                Dirty(entity);
+                SetContent(entity, args.Text);
 
                 if (TryComp<AppearanceComponent>(entity, out var appearance))
                     _appearance.SetData(entity, PaperVisuals.Status, PaperStatus.Written, appearance);
@@ -189,6 +188,7 @@ namespace Content.Shared.Paper
             if (!entity.Comp.StampedBy.Contains(stampInfo))
             {
                 entity.Comp.StampedBy.Add(stampInfo);
+                Dirty(entity);
                 if (entity.Comp.StampState == null && TryComp<AppearanceComponent>(entity, out var appearance))
                 {
                     entity.Comp.StampState = spriteStampState;
