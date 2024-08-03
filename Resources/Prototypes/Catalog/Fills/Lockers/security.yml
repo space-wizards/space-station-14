@@ -21,9 +21,9 @@
       - id: HoloprojectorSecurity
       - id: BookSpaceLaw
       - id: ShockCollar
-      - id: ShockCollar
+        amount: 2
       - id: RemoteSignaller
-      - id: RemoteSignaller
+        amount: 2
 
 - type: entity
   id: LockerWardenFilled
@@ -47,9 +47,9 @@
       - id: HoloprojectorSecurity
       - id: BookSpaceLaw
       - id: ShockCollar
-      - id: ShockCollar
+        amount: 2
       - id: RemoteSignaller
-      - id: RemoteSignaller
+        amount: 2
 
 - type: entity
   id: LockerSecurityFilled
