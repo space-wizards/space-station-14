@@ -36,20 +36,15 @@ namespace Content.Server.Paper
             SubscribeLocalEvent<PaperComponent, PaperInputTextMessage>(OnInputTextMessage);
 
             SubscribeLocalEvent<ActivateOnPaperOpenedComponent, PaperWriteEvent>(OnPaperWrite);
-
-            SubscribeLocalEvent<PaperComponent, MapInitEvent>(OnMapInit);
         }
 
-        private void OnMapInit(EntityUid uid, PaperComponent paperComp, MapInitEvent args)
+        private void OnInit(EntityUid uid, PaperComponent paperComp, ComponentInit args)
         {
             if (!string.IsNullOrEmpty(paperComp.Content))
             {
                 paperComp.Content = Loc.GetString(paperComp.Content);
             }
-        }
 
-        private void OnInit(EntityUid uid, PaperComponent paperComp, ComponentInit args)
-        {
             paperComp.Mode = PaperAction.Read;
             UpdateUserInterface(uid, paperComp);
 
