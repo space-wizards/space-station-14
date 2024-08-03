@@ -378,5 +378,26 @@ Entries:
   id: 46
   time: '2024-07-30T08:28:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28639
+- author: Repo
+  changes:
+  - message: Fixed Ahelp Sorting
+    type: Fix
+  id: 47
+  time: '2024-07-31T01:58:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30518
+- author: Mervill
+  changes:
+  - message: added a debug command to make you thirsty
+    type: Add
+  id: 48
+  time: '2024-08-02T15:49:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30562
+- author: Repo
+  changes:
+  - message: Players that aHelped in Current round stay at top of bwoink list.
+    type: Fix
+  id: 49
+  time: '2024-08-02T18:58:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30580
 Name: Admin
 Order: 1
