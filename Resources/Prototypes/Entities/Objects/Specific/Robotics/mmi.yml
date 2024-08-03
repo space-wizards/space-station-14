@@ -124,4 +124,5 @@
             On: { state: posibrain-occupied }
     - type: GuideHelp
       guides:
+      - Cyborgs
       - Robotics
