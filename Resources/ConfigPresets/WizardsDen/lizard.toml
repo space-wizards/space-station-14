@@ -4,6 +4,10 @@
 
 [game]
 hostname = "[EN] Wizard's Den Lizard [US West]"
+panic_bunker.enabled = false
+panic_bunker.disable_with_admins = false
+panic_bunker.enable_without_admins = false
+panic_bunker.custom_reason = ""
 
 [hub]
 tags = "lang:en,region:am_n_w,rp:low"

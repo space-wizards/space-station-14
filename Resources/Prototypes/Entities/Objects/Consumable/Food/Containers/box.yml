@@ -669,7 +669,7 @@
   id: FoodMealHappyHonkClown
   parent: HappyHonk
   suffix: random food spawner meal
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: StorageFill
     contents:
