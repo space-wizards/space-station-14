@@ -19,7 +19,7 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
     public ReagentId Reagent => ReagentDef;
 
     [IncludeDataField]
-    public ReagentDef ReagentDef { get; private set; }
+    public ReagentDef ReagentDef { get; private set; } = new();
 
     public ReagentQuantity(string reagentId, FixedPoint2 quantity, ReagentVariant? data)
         : this(new ReagentDef(reagentId, data), quantity)
@@ -34,6 +34,7 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
 
     public ReagentQuantity() : this(default, default)
     {
+        ReagentDef = new();
     }
 
     public override string ToString()

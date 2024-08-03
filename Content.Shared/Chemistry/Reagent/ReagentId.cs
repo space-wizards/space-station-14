@@ -39,11 +39,7 @@ public partial struct ReagentId : IEquatable<ReagentId>
 
     public static implicit operator ReagentDef(ReagentId d)
     {
-        return new ReagentDef
-        {
-            Id = d.Prototype,
-            Variant = d.Data,
-        };
+        return new ReagentDef(d.Prototype, d.Data);
     }
 
     public ReagentId(Entity<ReagentDefinitionComponent> reagentDef, ReagentVariant? data) : this(reagentDef.Comp.Id,

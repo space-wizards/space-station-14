@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chemistry.Components;
+﻿using System.Runtime.InteropServices;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
@@ -75,7 +76,7 @@ public partial class SharedSolutionSystem
         //This is for memory optimization, there is no point to dirtying this since we aren't in a rush to sync it.
         solution.Comp.Contents.TrimExcess();
         solution.Comp.Contents.EnsureCapacity(ReagentAlloc);
-        foreach (ref var reagentData in solution.Comp.ContentsSpan)
+        foreach (ref var reagentData in  CollectionsMarshal.AsSpan(solution.Comp.Contents))
         {
             TrimAlloc(ref reagentData);
         }
@@ -104,7 +105,7 @@ public partial class SharedSolutionSystem
     {
         if (CheckIfEmpty(solution))
             return;
-        var contents = solution.Comp.ContentsSpan;
+        var contents =  CollectionsMarshal.AsSpan(solution.Comp.Contents);
         UpdatePrimaryReagent(solution, contents, GetPrimaryReagentQuantity(solution, contents));
     }
 
@@ -120,7 +121,7 @@ public partial class SharedSolutionSystem
     {
         if (!reagentData.IsValid || CheckIfEmpty(solution))
             return;
-        var contentsSpan = solution.Comp.ContentsSpan;
+        var contentsSpan = CollectionsMarshal.AsSpan(solution.Comp.Contents);
         var primaryQuantity = GetPrimaryReagentQuantity(solution, contentsSpan);
         if (solution.Comp.PrimaryReagentIndex == reagentData.Index
             && FixedPoint2.Sign(delta) >= 0)
@@ -182,14 +183,14 @@ public partial class SharedSolutionSystem
     {
         if (startingIndex >= solution.Comp.Contents.Count)
             return;
-        var contents = solution.Comp.ContentsSpan;
+        var contents = CollectionsMarshal.AsSpan(solution.Comp.Contents);
         for (var i = startingIndex; i < contents.Length; i++)
         {
             ref var reagentData = ref contents[i];
             reagentData.Index--;
             if (reagentData.Variants == null)
                 continue;
-            foreach (ref var variantData in reagentData.VariantsSpan)
+            foreach (ref var variantData in  CollectionsMarshal.AsSpan(reagentData.Variants))
             {
                 variantData.ParentIndex = i;
             }

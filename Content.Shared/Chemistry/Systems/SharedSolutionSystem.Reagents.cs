@@ -1,9 +1,9 @@
-﻿using Content.Shared.Chemistry.Components;
+﻿using System.Runtime.InteropServices;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
-using Robust.Shared.Collections;
 
 namespace Content.Shared.Chemistry.Systems;
 
@@ -24,10 +24,10 @@ public partial class SharedSolutionSystem
     {
         if (variant == null)
         {
-            EnsureReagentDataRef(solution, reagent);
+            EnsureReagentData(solution, reagent);
             return;
         }
-        EnsureVariantDataRef(solution, reagent, variant);
+        EnsureVariantData(solution, reagent, variant);
     }
 
     /// <summary>
@@ -46,18 +46,17 @@ public partial class SharedSolutionSystem
         ReagentVariant? variant = null)
     {
         quantity = 0;
+        if (!TryGetReagentDataIndex(solution, reagent, out var index))
+            return false;
+        ref var reagentData = ref CollectionsMarshal.AsSpan(solution.Comp.Contents)[index];
         if (variant == null)
         {
-            ref var reagentData = ref GetReagentDataRef(solution, reagent);
-            if (!reagentData.IsValid)
-                return false;
             quantity = reagentData.Quantity;
             return true;
         }
-        ref var variantData = ref GetVariantDataRef(solution, reagent, variant);
-        if (!variantData.IsValid)
+        if (!TryGetVariantDataIndex(solution, reagent, variant, out var varIndex))
             return false;
-        quantity = variantData.Quantity;
+        quantity = CollectionsMarshal.AsSpan(reagentData.Variants)[varIndex].Quantity;
         return true;
     }
 
@@ -75,10 +74,9 @@ public partial class SharedSolutionSystem
         out FixedPoint2 totalQuantity)
     {
         totalQuantity = 0;
-        ref var reagentData = ref GetReagentDataRef(solution, reagent);
-        if (!reagentData.IsValid)
+        if (!TryGetReagentDataIndex(solution, reagent, out var index))
             return false;
-        totalQuantity = reagentData.TotalQuantity;
+        totalQuantity = CollectionsMarshal.AsSpan(solution.Comp.Contents)[index].TotalQuantity;
         return true;
     }
 
@@ -236,7 +234,7 @@ public partial class SharedSolutionSystem
         bool force = true)
     {
         overflow = 0;
-        ref var reagentData = ref EnsureReagentDataRef(solution, reagent);
+        ref var reagentData = ref CollectionsMarshal.AsSpan(solution.Comp.Contents)[EnsureReagentData(solution, reagent)];
         if (variant == null)
         {
                 ChangeReagentQuantity_Implementation(solution,
@@ -246,7 +244,7 @@ public partial class SharedSolutionSystem
                     force);
             return;
         }
-        ref var variantData = ref EnsureVariantDataRef(solution, reagent, variant);
+        ref var variantData = ref CollectionsMarshal.AsSpan(reagentData.Variants)[EnsureVariantData(solution, reagent, variant)];
         ChangeVariantQuantity_Implementation(solution,
             ref reagentData,
             ref variantData,
@@ -277,9 +275,9 @@ public partial class SharedSolutionSystem
         overflow = 0;
         if (quantity == 0)
             return true;
-        ref var reagentData = ref GetReagentDataRef(solution, reagent);
-        if (!reagentData.IsValid)
+        if (!TryGetReagentDataIndex(solution, reagent, out var reagentIndex))
             return false;
+        ref var reagentData = ref CollectionsMarshal.AsSpan(solution.Comp.Contents)[reagentIndex];
         if (variant == null)
         {
             ChangeReagentQuantity_Implementation(solution,
@@ -289,12 +287,11 @@ public partial class SharedSolutionSystem
                 force);
             return true;
         }
-        ref var variantData = ref GetVariantDataRef(solution, reagent, variant);
-        if (!variantData.IsValid)
+        if (!TryGetVariantDataIndex(solution, reagent, variant, out var index))
             return false;
         ChangeVariantQuantity_Implementation(solution,
             ref reagentData,
-            ref variantData,
+            ref CollectionsMarshal.AsSpan(reagentData.Variants)[index],
             quantity,
             out overflow,
             force);
@@ -312,9 +309,9 @@ public partial class SharedSolutionSystem
         overflow = 0;
         if (quantity == 0)
             return true;
-        ref var reagentData = ref GetReagentDataRef(solution, reagent);
-        if (!reagentData.IsValid)
+        if (!TryGetReagentDataIndex(solution, reagent, out var reagentIndex))
             return false;
+        ref var reagentData = ref CollectionsMarshal.AsSpan(solution.Comp.Contents)[reagentIndex];
         ChangeReagentTotalQuantity_Implementation(solution,
             ref reagentData,
             quantity - reagentData.TotalQuantity,
@@ -334,10 +331,13 @@ public partial class SharedSolutionSystem
         overflow = 0;
         if (quantity == 0)
             return true;
-        ref var reagentData = ref GetReagentDataRef(solution, reagent);
-        if (!reagentData.IsValid)
+        if (!TryGetReagentDataIndex(solution, reagent, out var reagentIndex))
             return false;
-        ChangeReagentTotalQuantity_Implementation(solution, ref reagentData, quantity, out overflow, force);
+        ChangeReagentTotalQuantity_Implementation(solution,
+            ref CollectionsMarshal.AsSpan(solution.Comp.Contents)[reagentIndex],
+            quantity,
+            out overflow,
+            force);
         return true;
     }
 
@@ -425,91 +425,6 @@ public partial class SharedSolutionSystem
     #region Internal
 
     /// <summary>
-    /// Ensures that reagentData is present for the specified reagent in the solution
-    /// </summary>
-    /// <param name="solution"></param>
-    /// <param name="reagent"></param>
-    /// <returns>Reference to reagentData</returns>
-    protected ref SolutionComponent.ReagentData EnsureReagentDataRef(
-        Entity<SolutionComponent> solution,
-        Entity<ReagentDefinitionComponent> reagent)
-    {
-        foreach (ref var quantityData in solution.Comp.ContentsSpan)
-        {
-            if (quantityData.ReagentId == reagent.Comp.Id)
-                return ref quantityData;
-        }
-        var index = solution.Comp.Contents.Count - 1;
-        solution.Comp.Contents.Add(new SolutionComponent.ReagentData(reagent, 0, index));
-        Dirty(solution);
-        return ref solution.Comp.ContentsSpan[index];
-    }
-
-    /// <summary>
-    /// Ensures that variantData is present for the specified reagent in the solution
-    /// </summary>
-    /// <param name="solution"></param>
-    /// <param name="reagent"></param>
-    /// <param name="variant"></param>
-    /// <returns>Reference to variantData</returns>
-    protected ref SolutionComponent.VariantData EnsureVariantDataRef(
-        Entity<SolutionComponent> solution,
-        Entity<ReagentDefinitionComponent> reagent,
-        ReagentVariant variant)
-    {
-        ref var quantData = ref EnsureReagentDataRef(solution, reagent);
-        foreach (ref var varData in quantData.VariantsSpan)
-        {
-            if (varData.Variant.Equals(variant))
-                return ref varData;
-        }
-        quantData.Variants ??= new(VariantAlloc);
-        quantData.Variants.Add(new SolutionComponent.VariantData(variant, 0, quantData.Index));
-        solution.Comp.ReagentVariantCount++;
-        Dirty(solution);
-        return ref quantData.VariantsSpan[^1];
-    }
-
-    /// <summary>
-    /// Gets reagentData if present, or returns an invalid one
-    /// </summary>
-    /// <param name="solution"></param>
-    /// <param name="reagent"></param>
-    /// <returns>Found reagentData or invalid one</returns>
-    protected ref SolutionComponent.ReagentData GetReagentDataRef(Entity<SolutionComponent> solution,
-        Entity<ReagentDefinitionComponent> reagent)
-    {
-        foreach (ref var reagentData in solution.Comp.ContentsSpan)
-        {
-            if (reagentData.ReagentId == reagent.Comp.Id)
-                return ref reagentData;
-        }
-        return ref _invalidReagentData;
-    }
-
-    /// <summary>
-    /// Gets variantData if present, or returns an invalid one
-    /// </summary>
-    /// <param name="solution"></param>
-    /// <param name="reagent"></param>
-    /// <param name="variant"></param>
-    /// <returns>Found variantData or invalid one</returns>
-    protected ref SolutionComponent.VariantData GetVariantDataRef(Entity<SolutionComponent> solution,
-        Entity<ReagentDefinitionComponent> reagent,
-        ReagentVariant variant)
-    {
-        ref var reagentData = ref GetReagentDataRef(solution, reagent);
-        if (!reagentData.IsValid)
-            return ref _invalidVariantData;
-        foreach (ref var variantData in reagentData.VariantsSpan)
-        {
-            if (variantData.Variant.Equals(variant))
-                return ref variantData;
-        }
-        return ref _invalidVariantData;
-    }
-
-    /// <summary>
     /// Changes the quantity in the specified reagentData
     /// </summary>
     /// <param name="solution"></param>
@@ -575,7 +490,7 @@ public partial class SharedSolutionSystem
         var skip = new bool[validCount];
         Array.Fill(skip, false);
 
-        var variants = reagentData.VariantsSpan;
+        var variants = CollectionsMarshal.AsSpan(reagentData.Variants);
         for (var i = 0; i < variants.Length; i++)
         {
             if (validCount == 0 || delta == 0)
@@ -612,7 +527,7 @@ public partial class SharedSolutionSystem
         //create an indexShuffler so that reagents aren't accessed only by oldest
         var validCount = solution.Comp.Contents.Count;
         var shuffle = CreateRandomIndexer(solution.Comp.Contents.Count);
-        var contents = solution.Comp.ContentsSpan;
+        var contents = CollectionsMarshal.AsSpan(solution.Comp.Contents);
 
         var skip = new bool[validCount];
         Array.Fill(skip, false);
@@ -734,12 +649,12 @@ public partial class SharedSolutionSystem
     {
         if (!variantData.IsValid)
             return false;
-        ref var reagentData = ref solution.Comp.ContentsSpan[variantData.ParentIndex];
+        ref var reagentData = ref CollectionsMarshal.AsSpan(solution.Comp.Contents)[variantData.ParentIndex];
         if (reagentData.Variants == null)
             return false;
 
         var i = 0;
-        foreach (ref var variant in reagentData.VariantsSpan)
+        foreach (ref var variant in CollectionsMarshal.AsSpan(reagentData.Variants))
         {
             if (variant.Variant.Equals(variantData.Variant))
                 break;
@@ -771,6 +686,111 @@ public partial class SharedSolutionSystem
        SetTotalVolume(solution, 0);
        TrimAllocs(solution);
     }
+
+
+    /// <summary>
+    /// Ensures that reagentData is present for the specified reagent in the solution
+    /// </summary>
+    /// <param name="solution"></param>
+    /// <param name="reagent"></param>
+    /// <returns>reagentData index</returns>
+    protected int EnsureReagentData(
+        Entity<SolutionComponent> solution,
+        Entity<ReagentDefinitionComponent> reagent)
+    {
+        var index = 0;
+        foreach (ref var quantityData in CollectionsMarshal.AsSpan(solution.Comp.Contents))
+        {
+            if (quantityData.ReagentId == reagent.Comp.Id)
+                return index;
+            index++;
+        }
+        index++;
+        solution.Comp.Contents.Add(new SolutionComponent.ReagentData(reagent, 0, index));
+        Dirty(solution);
+        return index;
+    }
+
+    /// <summary>
+    /// Ensures that variantData is present for the specified reagent in the solution
+    /// </summary>
+    /// <param name="solution"></param>
+    /// <param name="reagent"></param>
+    /// <param name="variant"></param>
+    /// <returns>variantData index</returns>
+    protected int EnsureVariantData(
+        Entity<SolutionComponent> solution,
+        Entity<ReagentDefinitionComponent> reagent,
+        ReagentVariant variant)
+    {
+        var index = 0;
+        ref var reagentData = ref CollectionsMarshal.AsSpan(solution.Comp.Contents)[EnsureReagentData(solution, reagent)];
+        foreach (ref var varData in CollectionsMarshal.AsSpan(reagentData.Variants))
+        {
+            if (varData.Variant.Equals(variant))
+                return index;
+            index++;
+        }
+        index++;
+        reagentData.Variants ??= new(VariantAlloc);
+        reagentData.Variants.Add(new SolutionComponent.VariantData(variant, 0, reagentData.Index));
+        solution.Comp.ReagentVariantCount++;
+        Dirty(solution);
+        return index;
+    }
+
+    /// <summary>
+    /// Tries to get the index of the specified reagent if it exists
+    /// </summary>
+    /// <param name="solution"></param>
+    /// <param name="reagent"></param>
+    /// <param name="index">Index of reagentData</param>
+    /// <returns>If reagentData is valid</returns>
+    protected bool TryGetReagentDataIndex(Entity<SolutionComponent> solution,
+        Entity<ReagentDefinitionComponent> reagent,
+        out int index)
+    {
+        index = 0;
+        foreach (ref var reagentData in CollectionsMarshal.AsSpan(solution.Comp.Contents))
+        {
+            if (reagentData.ReagentId == reagent.Comp.Id)
+                return true;
+            index++;
+        }
+        index = -1;
+        return false;
+    }
+
+    /// <summary>
+    /// Tries to get the index of the specified reagentVariant if it exists
+    /// </summary>
+    /// <param name="solution"></param>
+    /// <param name="reagent"></param>
+    /// <param name="variant"></param>
+    /// <param name="index">Index of variantData</param>
+    /// <returns>If variantData is valid</returns>
+    protected bool TryGetVariantDataIndex(Entity<SolutionComponent> solution,
+        Entity<ReagentDefinitionComponent> reagent,
+        ReagentVariant variant,
+        out int index)
+    {
+        if (!TryGetReagentDataIndex(solution, reagent, out var reagentIndex))
+        {
+            index = -1;
+            return false;
+        }
+        index = 0;
+        foreach (ref var variantData in CollectionsMarshal.AsSpan(
+                     CollectionsMarshal.AsSpan(solution.Comp.Contents)[reagentIndex].Variants))
+        {
+            if (variantData.Variant.Equals(variant))
+                return true;
+            index++;
+        }
+        index = -1;
+        return false;
+    }
+
     #endregion
 
 }

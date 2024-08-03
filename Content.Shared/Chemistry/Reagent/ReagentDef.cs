@@ -22,8 +22,11 @@ public partial struct ReagentDef : IEquatable<ReagentDef>
     /// <summary>
     /// Any additional data that is unique to this reagent type. E.g., for blood this could be DNA data.
     /// </summary>
-    [DataField]
+    [DataField("data")]
     public ReagentVariant? Variant { get; init; } = null;
+
+    [Obsolete("Use Variant Field instead")]
+    public ReagentVariant? Data => Variant;
 
     [NonSerialized]
     private Entity<ReagentDefinitionComponent> _definitionEntity = default!;

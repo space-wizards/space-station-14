@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices;
 using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
@@ -28,7 +27,6 @@ public sealed partial class SolutionComponent : Component
 
     [DataField, AutoNetworkedField]
     public List<ReagentData> Contents;
-    public Span<ReagentData> ContentsSpan => CollectionsMarshal.AsSpan(Contents);
 
     /// <summary>
     ///     The name of this solution
@@ -117,11 +115,6 @@ public sealed partial class SolutionComponent : Component
 
         [DataField]
         public List<VariantData>? Variants = null;
-
-        /// <summary>
-        /// Make sure to check variants for null before calling this
-        /// </summary>
-        public Span<VariantData> VariantsSpan => CollectionsMarshal.AsSpan(Variants);
 
         [DataField]
         public int Index = -1;

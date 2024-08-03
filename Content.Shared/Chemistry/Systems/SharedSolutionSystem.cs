@@ -75,9 +75,11 @@ public abstract partial class SharedSolutionSystem : EntitySystem
     {
         foreach (ref var reagentData in CollectionsMarshal.AsSpan(ent.Comp.Contents))
         {
-            if (reagentData.IsValid
-                || !ChemistryRegistry.TryIndex(reagentData.ReagentId, out var reagentDef, true))
+            if (!ChemistryRegistry.TryIndex(reagentData.ReagentId, out var reagentDef, true))
+            {
+                reagentData.IsValid = false;
                 continue;
+            }
             reagentData.ReagentEnt = reagentDef.Value;
             reagentData.IsValid = true;
         }
