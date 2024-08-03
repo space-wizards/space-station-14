@@ -12,10 +12,10 @@ public sealed class PaperRandomStorySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PaperRandomStoryComponent, MapInitEvent>(OnMapinit);
+        SubscribeLocalEvent<PaperRandomStoryComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnMapinit(Entity<PaperRandomStoryComponent> paperStory, ref MapInitEvent ev)
+    private void OnMapInit(Entity<PaperRandomStoryComponent> paperStory, ref MapInitEvent ev)
     {
         if (!TryComp<PaperComponent>(paperStory, out var paper))
             return;

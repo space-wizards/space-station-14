@@ -10,9 +10,9 @@ using Robust.Shared.Player;
 using Robust.Shared.Audio.Systems;
 using static Content.Shared.Paper.PaperComponent;
 
-namespace Content.Shared.Paper
-{
-    public sealed class PaperSystem : EntitySystem
+namespace Content.Shared.Paper;
+
+public sealed class PaperSystem : EntitySystem
     {
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -221,9 +221,8 @@ namespace Content.Shared.Paper
         }
     }
 
-    /// <summary>
-    /// Event fired when using a pen on paper, opening the UI.
-    /// </summary>
-    [ByRefEvent]
-    public record struct PaperWriteEvent(EntityUid User, EntityUid Paper);
-}
+/// <summary>
+/// Event fired when using a pen on paper, opening the UI.
+/// </summary>
+[ByRefEvent]
+public record struct PaperWriteEvent(EntityUid User, EntityUid Paper);
