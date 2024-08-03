@@ -113,7 +113,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             return;
 
         // If it's a puddle try to grab from
-        if (!TryPuddleInteract(user, used, target, component, useDelay, absorberSoln.Value))
+        if (!TryPuddleInteract(user, used, target, component, useDelay, absorberSoln.Value) && component.UseAbsorberSolution)
         {
             // If it's refillable try to transfer
             if (!TryRefillableInteract(user, used, target, component, useDelay, absorberSoln.Value))
