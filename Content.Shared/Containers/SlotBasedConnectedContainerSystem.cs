@@ -6,16 +6,28 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.Containers;
 
-public class ConnectedContainerSystem : EntitySystem
+/// <summary>
+/// System for getting container that is linked to subject entity. Container is supposed to be present in certain character slot.
+/// Can be used for linking ammo feeder, solution source for spray nozzle, etc.
+/// </summary>
+public class SlotBasedConnectedContainerSystem : EntitySystem
 {
     [Dependency] protected readonly SharedContainerSystem _containers = default!;
     [Dependency] protected readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] protected readonly InventorySystem _inventory = default!;
 
-
+    /// <summary>
+    /// Try get connected container entity in character slots for <see cref="subject"/>.
+    /// </summary>
+    /// <param name="subject">
+    /// Entity for which connected container is required. If <see cref="SlotBasedConnectedContainerComponent"/>
+    /// is used - tries to find container in slot, returns false and null <see cref="slotEntity"/> otherwise. 
+    /// </param>
+    /// <param name="slotEntity">Found connected container entity or null.</param>
+    /// <returns>True if connected container was found, false otherwise.</returns>
     public bool TryGetConnectedContainer(EntityUid subject, [NotNullWhen(true)] out EntityUid? slotEntity)
     {
-        if (!TryComp<ConnectedContainerComponent>(subject, out var component))
+        if (!TryComp<SlotBasedConnectedContainerComponent>(subject, out var component))
         {
             slotEntity = null;
             return false;

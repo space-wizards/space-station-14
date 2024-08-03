@@ -13,6 +13,10 @@ public sealed partial class AbsorbentComponent : Component
 {
     public Dictionary<Color, float> Progress = new();
 
+    /// <summary>
+    /// Name for solution container, that should be used for absorbed solution storage and as source of absorber solution.
+    /// Default is 'absorbed'.
+    /// </summary>
     [DataField("solutionName")]
     public string SolutionName = "absorbed";
 
@@ -40,6 +44,10 @@ public sealed partial class AbsorbentComponent : Component
             Params = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(-3f),
         };
 
+    /// <summary>
+    /// Marker that absorbent component owner should try to use 'absorber solution' to replace solution to be absorbed.
+    /// Target solution will be simply consumed into container if set to false.
+    /// </summary>
     [DataField("useAbsorberSolution")]
     public bool UseAbsorberSolution = true;
 }

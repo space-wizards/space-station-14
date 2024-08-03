@@ -69,7 +69,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
     [Dependency] protected readonly INetManager NetManager = default!;
-    [Dependency] protected readonly ConnectedContainerSystem _connectedContainer = default!;
+    [Dependency] protected readonly SlotBasedConnectedContainerSystem SlotBasedConnectedContainer = default!;
 
     public override void Initialize()
     {
@@ -164,8 +164,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         [NotNullWhen(true)] out Entity<SolutionComponent>? entity,
         bool errorOnMissing = false)
     {
-
-        if (_connectedContainer.TryGetConnectedContainer(container, out var replaceUsedWith))
+        // use connected container instead of entity from arguments, if it exists.
+        if (SlotBasedConnectedContainer.TryGetConnectedContainer(container, out var replaceUsedWith))
         {
             container = replaceUsedWith.Value;
         }
