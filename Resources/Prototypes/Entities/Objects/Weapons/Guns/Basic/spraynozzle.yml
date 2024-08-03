@@ -18,6 +18,8 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
+  - type: SolutionVacuumCleaner
+    fixedTransferAmount: 25
   - type: Appearance
   - type: ClothingSlotAmmoProvider
     targetSlot: BACK

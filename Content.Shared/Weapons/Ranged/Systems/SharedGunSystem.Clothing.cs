@@ -29,7 +29,7 @@ public partial class SharedGunSystem
         RaiseLocalEvent(entity.Value, ref args);
     }
 
-    private bool TryGetClothingSlotEntity(EntityUid uid, ClothingSlotAmmoProviderComponent component, [NotNullWhen(true)] out EntityUid? slotEntity)
+    public bool TryGetClothingSlotEntity(EntityUid uid, ClothingSlotAmmoProviderComponent component, [NotNullWhen(true)] out EntityUid? slotEntity)
     {
         slotEntity = null;
 
