@@ -7,7 +7,7 @@ from subprocess import run
 # Get pull requests from github and make a changelog based on that.
 # You need github cli (gh) installed.
 
-file_path = "Resources/Changelog/Impstation.yml"
+file_path = "Resources/Changelog/Impstation-new.yml"
 time_format = "%Y-%m-%dT%H:%M:%S.0000000%:z"
 template = """
 - author: {author}
@@ -50,7 +50,8 @@ with open(file_path, "a+") as file:
     for i, pull in enumerate(reversed(prs)):
         author = pull["author"]["login"]
         message = pull["title"]
-        entry_type = get_entry_type(message)
+        # entry_type = get_entry_type(message)
+        entry_type = "None"
         merged_at = pull["mergedAt"]
         time = datetime.fromisoformat(merged_at).strftime(time_format)
         url = pull["url"]
