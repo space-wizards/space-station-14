@@ -206,7 +206,7 @@
     minPlayers: 15
     delay:
       min: 240
-      max: 42
+      max: 420
   - type: AntagObjectives
     objectives:
     - KillRandomTraitorSvSObjective
