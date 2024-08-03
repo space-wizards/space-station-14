@@ -950,8 +950,8 @@
       - HideContextMenu
 
 - type: entity
-  name : heavy laser bolt
-  id: BulletLaserHeavy
+  name: weak laser bolt
+  id: BulletLaser
   parent: BaseBullet
   noSpawn: true
   components:
@@ -985,7 +985,20 @@
     impactEffect: BulletImpactEffectOrangeDisabler
     damage:
       types:
-        Heat: 15
+        Heat: 10
     soundHit:
       collection: WeakHit
     forceSound: true
+
+- type: entity
+  name : heavy laser bolt
+  id: BulletLaserHeavy
+  parent: BulletLaser
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Heat: 15
+
+
