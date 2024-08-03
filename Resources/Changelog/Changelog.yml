@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: '0x6273'
-  changes:
-  - message: Shuttle docks now have a "dock status" device link port
-    type: Add
-  id: 6536
-  time: '2024-05-06T03:59:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27646
-- author: DogZeroX
-  changes:
-  - message: 'Added new lobby art: Just a week away by Fern'
-    type: Add
-  id: 6537
-  time: '2024-05-06T08:17:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27717
 - author: mirrorcult
   changes:
   - message: Event weights have been tweaked across the board, and some events removed
@@ -3784,3 +3770,17 @@
   id: 7035
   time: '2024-08-02T23:05:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30350
+- author: lzk228
+  changes:
+  - message: Figurines will say phrases on activation.
+    type: Add
+  id: 7036
+  time: '2024-08-03T14:06:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30455
+- author: JoelZimmerman
+  changes:
+  - message: Dank pizza is now cooked with cannabis leaves instead of ambrosia vulgaris.
+    type: Tweak
+  id: 7037
+  time: '2024-08-03T14:07:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30430
