@@ -75,7 +75,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("manualLockoutDisabledDuration")]
-        public float ManualLockoutDisabledDuration = 5.0f;
+        public float ManualLockoutDisabledDuration = 30.0f; // Enough time to fill a 5x5 room
         /// <summary>
         /// How long the doAfter should take when attempting to manually disable the pressure lockout.
         /// </summary>
