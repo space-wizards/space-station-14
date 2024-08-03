@@ -228,7 +228,6 @@
   components:
   - type: Paper
     contentSize: 10000
-    escapeFormatting: false
     content: book-cnc-sheet
   - type: Sprite
     layers:
