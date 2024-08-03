@@ -1,4 +1,5 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory.Events;
 
 namespace Content.Shared.Inventory;
@@ -19,6 +20,9 @@ public sealed class SelfEquipOnlySystem : EntitySystem
         if (args.Cancelled)
             return;
 
+        if (TryComp<ClothingComponent>(ent, out var clothing) && (clothing.Slots & args.SlotFlags) == SlotFlags.NONE)
+            return;
+
         if (args.Equipee != args.EquipTarget)
             args.Cancel();
     }
@@ -29,6 +33,9 @@ public sealed class SelfEquipOnlySystem : EntitySystem
             return;
 
         if (args.Unequipee == args.UnEquipTarget)
+            return;
+
+        if (TryComp<ClothingComponent>(ent, out var clothing) && (clothing.Slots & args.SlotFlags) == SlotFlags.NONE)
             return;
 
         if (ent.Comp.UnequipRequireConscious && !_actionBlocker.CanConsciouslyPerformAction(args.UnEquipTarget))
