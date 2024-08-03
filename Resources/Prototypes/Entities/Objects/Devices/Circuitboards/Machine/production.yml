@@ -1253,3 +1253,16 @@
       Steel: 2
       Glass: 5
       Cable: 2
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: CutterMachineCircuitboard
+  name: cutter machine board
+  components:
+  - type: MachineBoard
+    prototype: CutterMachine
+    stackRequirements:
+      Steel: 2
+      Capacitor: 1
+      Manipulator: 1
+      Cable: 1

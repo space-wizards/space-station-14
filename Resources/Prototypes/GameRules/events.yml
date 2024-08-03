@@ -145,12 +145,16 @@
   components:
   - type: StationEvent
     weight: 6
-    duration: 1
+    duration: null
     earliestStart: 30
     reoccurrenceDelay: 20
     minimumPlayers: 30
   - type: SpaceSpawnRule
   - type: AntagLoadProfileRule
+    # Vox disabled until loadouts work on AntagSelection-based spawns
+    speciesOverride: Human
+    speciesOverrideBlacklist:
+    - Vox
   - type: AntagObjectives
     objectives:
     - StealResearchObjective
