@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
@@ -23,3 +24,31 @@
     }
   ]
 }
+=======
+{
+  "version": 1,
+  "license": null,
+  "copyright": null,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "equipped-MASK",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-vox",
+      "directions": 4
+    },
+    {
+      "name": "icon"
+    }
+  ]
+}
+>>>>>>> ef4a3986c3264cdd4fe5c83f9a9d59a1be7a1ef2
