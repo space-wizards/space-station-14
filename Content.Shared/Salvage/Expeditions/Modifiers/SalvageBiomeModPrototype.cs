@@ -12,7 +12,7 @@ public sealed partial class SalvageBiomeModPrototype : IPrototype, ISalvageMod
 {
     [IdDataField] public string ID { get; } = default!;
 
-    [DataField("desc")] public string Description { get; private set; } = string.Empty;
+    [DataField("desc")] public LocId Description { get; private set; } = string.Empty;
 
     /// <summary>
     /// Cost for difficulty modifiers.

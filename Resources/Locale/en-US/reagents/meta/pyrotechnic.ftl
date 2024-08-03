@@ -7,7 +7,7 @@ reagent-desc-napalm = It's just a little flammable.
 reagent-name-phlogiston = phlogiston
 reagent-desc-phlogiston = Catches you on fire and makes you ignite.
 
-reagent-name-chlorine-trifluoride = CLF3
+reagent-name-chlorine-trifluoride = chlorine trifluoride
 reagent-desc-chlorine-trifluoride = You really, REALLY don't want to get this shit anywhere near you.
 
 reagent-name-foaming-agent = foaming agent
