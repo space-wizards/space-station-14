@@ -29,6 +29,7 @@ namespace Content.Server.Paper
         {
             base.Initialize();
 
+            SubscribeLocalEvent<PaperComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<PaperComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<PaperComponent, BeforeActivatableUIOpenEvent>(BeforeUIOpen);
             SubscribeLocalEvent<PaperComponent, ExaminedEvent>(OnExamined);
@@ -36,6 +37,14 @@ namespace Content.Server.Paper
             SubscribeLocalEvent<PaperComponent, PaperInputTextMessage>(OnInputTextMessage);
 
             SubscribeLocalEvent<ActivateOnPaperOpenedComponent, PaperWriteEvent>(OnPaperWrite);
+        }
+
+        private void OnMapInit(Entity<PaperComponent> entity, ref MapInitEvent args)
+        {
+            if (!string.IsNullOrEmpty(entity.Comp.Content))
+            {
+                entity.Comp.Content = Loc.GetString(entity.Comp.Content);
+            }
         }
 
         private void OnInit(EntityUid uid, PaperComponent paperComp, ComponentInit args)
