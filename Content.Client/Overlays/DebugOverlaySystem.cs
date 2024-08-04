@@ -1,5 +1,6 @@
 using Content.Shared.Overlays;
 using Robust.Client.Graphics;
+using Robust.Shared.Sandboxing;
 
 namespace Content.Client.Overlays;
 
@@ -7,9 +8,9 @@ public abstract class DebugOverlaySystem<TOverlay, TPayload> : SharedDebugOverla
     where TOverlay : DebugOverlay<TPayload>, new()
     where TPayload : DebugOverlayPayload, new()
 {
-    [Dependency] private readonly IOverlayManager _overlayManager = default!;
+    [Dependency] protected readonly IOverlayManager _overlayManager = default!;
 
-    private TOverlay? _currentOverlay = null;
+    protected TOverlay? _currentOverlay = null;
 
     public override void Initialize()
     {
@@ -24,7 +25,7 @@ public abstract class DebugOverlaySystem<TOverlay, TPayload> : SharedDebugOverla
         {
             if (_currentOverlay == null && !_overlayManager.HasOverlay<TOverlay>())
             {
-                _currentOverlay = new TOverlay();
+                _currentOverlay = (TOverlay)_sandboxHelper.CreateInstance(typeof(TOverlay));
                 _overlayManager.AddOverlay(_currentOverlay);
             }
             else if (_currentOverlay != null && !_overlayManager.HasOverlay<TOverlay>())

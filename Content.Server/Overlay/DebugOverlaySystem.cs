@@ -10,7 +10,12 @@ public abstract class DebugOverlaySystem<TPayload> : SharedDebugOverlaySystem<TP
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-    private readonly HashSet<ICommonSession> _playerObservers = new();
+    /// <summary>
+    ///     Players allowed to see the atmos debug overlay.
+    ///     To modify it see <see cref="AddObserver"/> and
+    ///     <see cref="RemoveObserver"/>.
+    /// </summary>
+    protected readonly HashSet<ICommonSession> _playerObservers = new();
 
     public override void Initialize()
     {
@@ -41,12 +46,17 @@ public abstract class DebugOverlaySystem<TPayload> : SharedDebugOverlaySystem<TP
             return false;
         }
 
-        var message = new TPayload() { OverlayEnabled = false };
+        TPayload message = (TPayload)_sandboxHelper.CreateInstance(typeof(TPayload));
         RaiseNetworkEvent(message);
 
         return true;
     }
 
+    /// <summary>
+    ///     Adds the given observer if it doesn't exist, removes it otherwise.
+    /// </summary>
+    /// <param name="observer">The observer to toggle.</param>
+    /// <returns>true if added, false if removed.</returns>
     public bool ToggleObserver(ICommonSession observer)
     {
         if (HasObserver(observer))

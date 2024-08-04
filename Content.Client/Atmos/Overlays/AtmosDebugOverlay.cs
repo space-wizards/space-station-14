@@ -3,6 +3,8 @@ using System.Numerics;
 using Content.Client.Atmos.EntitySystems;
 using Content.Client.Resources;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.EntitySystems;
+using Content.Client.Overlays;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
@@ -11,35 +13,40 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using AtmosDebugOverlayData = Content.Shared.Atmos.EntitySystems.SharedAtmosDebugOverlaySystem.AtmosDebugOverlayData;
-using DebugMessage = Content.Shared.Atmos.EntitySystems.SharedAtmosDebugOverlaySystem.AtmosDebugOverlayMessage;
 
 namespace Content.Client.Atmos.Overlays;
 
-
-public sealed class AtmosDebugOverlay : Overlay
+public sealed class AtmosDebugOverlay : DebugOverlay<AtmosDebugOverlayMessage>
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly IUserInterfaceManager _ui = default!;
     [Dependency] private readonly IResourceCache _cache = default!;
+
     private readonly SharedTransformSystem _transform;
     private readonly AtmosDebugOverlaySystem _system;
     private readonly SharedMapSystem _map;
     private readonly Font _font;
-    private List<(Entity<MapGridComponent>, DebugMessage)> _grids = new();
+    private List<(Entity<MapGridComponent>, AtmosDebugOverlayMessage)> _grids = new();
+
+    public readonly Dictionary<EntityUid, AtmosDebugOverlayMessage> TileData = new();
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace | OverlaySpace.ScreenSpace;
 
-    internal AtmosDebugOverlay(AtmosDebugOverlaySystem system)
+    public AtmosDebugOverlay()
     {
         IoCManager.InjectDependencies(this);
 
-        _system = system;
         _transform = _entManager.System<SharedTransformSystem>();
+        _system = _entManager.System<AtmosDebugOverlaySystem>();
         _map = _entManager.System<SharedMapSystem>();
         _font = _cache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
+    }
+
+    public override void OnRecievedPayload(AtmosDebugOverlayMessage payload)
+    {
+        TileData[_entManager.GetEntity(payload.GridId)] = payload;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -69,7 +76,7 @@ public sealed class AtmosDebugOverlay : Overlay
         handle.SetTransform(Matrix3x2.Identity);
     }
 
-    private void DrawData(DebugMessage msg,
+    private void DrawData(AtmosDebugOverlayMessage msg,
         DrawingHandleWorld handle)
     {
         foreach (var data in msg.OverlayData)
@@ -264,9 +271,9 @@ public sealed class AtmosDebugOverlay : Overlay
     {
         _grids.Clear();
         _mapManager.FindGridsIntersecting(mapId, box, ref _grids, (EntityUid uid, MapGridComponent grid,
-            ref List<(Entity<MapGridComponent>, DebugMessage)> state) =>
+            ref List<(Entity<MapGridComponent>, AtmosDebugOverlayMessage)> state) =>
         {
-            if (_system.TileData.TryGetValue(uid, out var data))
+            if (TileData.TryGetValue(uid, out var data))
                 state.Add(((uid, grid), data));
             return true;
         });

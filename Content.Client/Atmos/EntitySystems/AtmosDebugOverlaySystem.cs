@@ -1,4 +1,5 @@
 using Content.Client.Atmos.Overlays;
+using Content.Client.Overlays;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.GameTicking;
@@ -8,10 +9,9 @@ using Robust.Client.Graphics;
 namespace Content.Client.Atmos.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem
+    public sealed class AtmosDebugOverlaySystem : DebugOverlaySystem<AtmosDebugOverlay, AtmosDebugOverlayMessage>
     {
-        public readonly Dictionary<EntityUid, AtmosDebugOverlayMessage> TileData = new();
-
+        
         // Configuration set by debug commands and used by AtmosDebugOverlay {
         /// <summary>Value source for display</summary>
         public AtmosDebugOverlayMode CfgMode;
@@ -30,54 +30,44 @@ namespace Content.Client.Atmos.EntitySystems
             base.Initialize();
 
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeNetworkEvent<AtmosDebugOverlayMessage>(HandleAtmosDebugOverlayMessage);
-            SubscribeNetworkEvent<AtmosDebugOverlayDisableMessage>(HandleAtmosDebugOverlayDisableMessage);
-
             SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
+        }
 
-            var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlay<AtmosDebugOverlay>())
-                overlayManager.AddOverlay(new AtmosDebugOverlay(this));
+        protected override void OnRecievedPayload(AtmosDebugOverlayMessage message)
+        {
+            // no-op
         }
 
         private void OnGridRemoved(GridRemovalEvent ev)
         {
-            if (TileData.ContainsKey(ev.EntityUid))
+            if (_currentOverlay != null && _currentOverlay.TileData.ContainsKey(ev.EntityUid))
             {
-                TileData.Remove(ev.EntityUid);
+                _currentOverlay.TileData.Remove(ev.EntityUid);
             }
-        }
-
-        private void HandleAtmosDebugOverlayMessage(AtmosDebugOverlayMessage message)
-        {
-            TileData[GetEntity(message.GridId)] = message;
-        }
-
-        private void HandleAtmosDebugOverlayDisableMessage(AtmosDebugOverlayDisableMessage ev)
-        {
-            TileData.Clear();
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if (overlayManager.HasOverlay<AtmosDebugOverlay>())
-                overlayManager.RemoveOverlay<AtmosDebugOverlay>();
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
         {
-            TileData.Clear();
+            if (_currentOverlay != null)
+            {
+                _currentOverlay.TileData.Clear();
+            }
         }
 
         public bool HasData(EntityUid gridId)
         {
-            return TileData.ContainsKey(gridId);
+            if (_currentOverlay != null)
+            {
+                return _currentOverlay.TileData.ContainsKey(gridId);
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 
-    internal enum AtmosDebugOverlayMode : byte
+    public enum AtmosDebugOverlayMode : byte
     {
         TotalMoles,
         GasMoles,

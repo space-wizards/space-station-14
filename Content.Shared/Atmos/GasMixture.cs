@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Content.Shared.Overlays;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Reactions;
 using Robust.Shared.Serialization;
@@ -18,7 +19,7 @@ namespace Content.Shared.Atmos
         public static GasMixture SpaceGas => new() {Volume = Atmospherics.CellVolume, Temperature = Atmospherics.TCMB, Immutable = true};
 
         // No access, to ensure immutable mixtures are never accidentally mutated.
-        [Access(typeof(SharedAtmosphereSystem), typeof(SharedAtmosDebugOverlaySystem), Other = AccessPermissions.None)]
+        [Access(typeof(SharedAtmosphereSystem), typeof(SharedDebugOverlaySystem<AtmosDebugOverlayMessage>), Other = AccessPermissions.None)]
         [DataField]
         public float[] Moles = new float[Atmospherics.AdjustedNumberOfGases];
 
