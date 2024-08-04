@@ -207,6 +207,20 @@
     stealGroup: BookSecretDocuments
     owner: job-name-hos
 
+- type: entity
+  noSpawn: true
+  parent: BaseTraitorStealObjective
+  id: EnergyShotgunStealObjective
+  components:
+  - type: Objective
+    # HoS will have this on them a lot of the time so..
+    difficulty: 3
+  - type: NotJobRequirement
+    job: HeadOfSecurity
+  - type: StealCondition
+    stealGroup: WeaponEnergyShotgun
+    owner: job-name-hos
+
 ## ce
 
 - type: entity
