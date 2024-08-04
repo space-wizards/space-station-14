@@ -16,7 +16,8 @@ public sealed partial class SiliconLawMenu : FancyWindow
         IoCManager.InjectDependencies(this);
         _sawmill = Logger.GetSawmill("silicon_debugging");
         _sawmill.Debug($"Starting new Law UI");
-        var channelControl = new ChannelDisplay();
+        // Pass this into the display so we can access the menu's Update() function, and have a stateful reference to the containing parent
+        var channelControl = new ChannelDisplay(this);
         LawDisplayHeader.AddChild(channelControl);
     }
 
@@ -28,16 +29,19 @@ public sealed partial class SiliconLawMenu : FancyWindow
         {
             if (control is ChannelDisplay)
             {
-                _sawmill.Debug($"Updating radio channels for law DDL.");
-                ((ChannelDisplay) control).Update(uid, state.RadioChannels);
+                _sawmill.Debug($"Updating radio channels for law DDL. Selected channel is {state.SelectedChannel}");
+                // Pass along the uid and current state
+                ((ChannelDisplay)control).Update(uid, state);
             }
         }
 
+        // Clear the laws, not the entire UI
         LawDisplayContainer.Children.Clear();
 
         foreach (var law in state.Laws)
         {
-            var control = new LawDisplay(uid, law, state.RadioChannels);
+            // Pass along the law information, the accessible channels for redundancy, and the selected channel
+            var control = new LawDisplay(uid, law, state.RadioChannels, state.SelectedChannel);
 
             LawDisplayContainer.AddChild(control);
         }

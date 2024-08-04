@@ -87,13 +87,9 @@
   - type: IntrinsicRadioTransmitter
     channels:
     - Binary
-    - Common
-    - Science
   - type: ActiveRadio
     channels:
     - Binary
-    - Common
-    - Science
   - type: ZombieImmune
   - type: Repairable
     doAfterDelay: 10

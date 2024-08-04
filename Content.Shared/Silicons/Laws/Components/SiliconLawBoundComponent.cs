@@ -64,9 +64,12 @@ public sealed class SiliconLawBuiState : BoundUserInterfaceState
     public List<SiliconLaw> Laws;
     public HashSet<string>? RadioChannels;
 
-    public SiliconLawBuiState(List<SiliconLaw> laws, HashSet<string>? radioChannels)
+    public string? SelectedChannel;
+
+    public SiliconLawBuiState(List<SiliconLaw> laws, HashSet<string>? radioChannels, string? selChannel)
     {
         Laws = laws;
         RadioChannels = radioChannels;
+        SelectedChannel = selChannel;
     }
 }

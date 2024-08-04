@@ -3,13 +3,11 @@ using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Radio.Components;
-using Content.Server.Radio.EntitySystems;
 using Content.Server.Roles;
 using Content.Server.Station.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
-using Content.Shared.Clothing.Components;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
@@ -98,17 +96,16 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     {
         _entityManager.TryGetComponent<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
 
-
-        HashSet<string>? radioChannels = intrinsicRadio?.Channels ?? new HashSet<string> { "Common" };
+        // Grab the intrinsic channels, or a default if missing
+        HashSet<string>? radioChannels = intrinsicRadio?.Channels ?? new HashSet<string> { "Binary" };
+        // Grab ear slot
         _inventory.TryGetSlotEntity(uid, "ears", out var borgRadioID);
-        EncryptionKeyHolderComponent borgRadio;
+        // If the borg is wearing a headset, add the channels to the list
         if (borgRadioID != null)
-        {
-            borgRadio = _entityManager.GetComponent<EncryptionKeyHolderComponent>((EntityUid) borgRadioID);
-            radioChannels.UnionWith(borgRadio.Channels);
-        }
-        // borgRadio.Channels = radioChannels ?? new HashSet<string> { "Common" };
-        var state = new SiliconLawBuiState(GetLaws(uid).Laws, radioChannels);
+            radioChannels.UnionWith(_entityManager.GetComponent<EncryptionKeyHolderComponent>((EntityUid)borgRadioID).Channels);
+        // Create a new state and set the default channel to local
+        var state = new SiliconLawBuiState(GetLaws(uid).Laws, radioChannels, "Local");
+        // Initialize UI state
         _userInterface.SetUiState(args.Entity, SiliconLawsUiKey.Key, state);
     }
 
