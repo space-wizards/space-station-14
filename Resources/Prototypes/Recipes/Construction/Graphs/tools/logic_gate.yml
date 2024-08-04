@@ -34,7 +34,7 @@
           state: icon
         name: a multitool
   - node: logic_gate
-    entity: LogicGate
+    entity: LogicGateOr
   - node: edge_detector
     entity: EdgeDetector
   - node: power_sensor
