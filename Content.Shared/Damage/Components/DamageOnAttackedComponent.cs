@@ -16,7 +16,7 @@ public sealed partial class DamageOnAttackedComponent : Component
     /// <summary>
     /// How much damage to apply to the person making contact
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField(required: true), AutoNetworkedField]
     public DamageSpecifier Damage = default!;
 
     /// <summary>

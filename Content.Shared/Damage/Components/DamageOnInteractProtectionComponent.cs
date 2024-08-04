@@ -17,7 +17,7 @@ public sealed partial class DamageOnInteractProtectionComponent : Component, ICl
     /// How much and what kind of damage to protect the user from
     /// when interacting with something with <see cref="DamageOnInteractComponent"/>
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public DamageModifierSet DamageProtection = default!;
 
     /// <summary>

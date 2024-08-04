@@ -9,7 +9,6 @@ namespace Content.Shared.Damage.Components;
 /// when attacking objects with the <see cref="DamageOnAttackedComponent"/>
 /// If the entity has sufficient protection, the entity will take no damage.
 /// </summary>
-
 [RegisterComponent, NetworkedComponent]
 public sealed partial class DamageOnAttackedProtectionComponent : Component, IClothingSlots
 {
@@ -17,7 +16,7 @@ public sealed partial class DamageOnAttackedProtectionComponent : Component, ICl
     /// How much and what kind of damage to protect the user from
     /// when interacting with something with <see cref="DamageOnInteractComponent"/>
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public DamageModifierSet DamageProtection = default!;
 
     /// <summary>
