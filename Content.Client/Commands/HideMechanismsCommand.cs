@@ -9,16 +9,16 @@ public sealed class HideMechanismsCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
+    private EntityQuery<TransformComponent> _xformQuery;
+
     public override string Command => "hidemechanisms";
-
-    public override string Description => LocalizationManager.GetString($"cmd-{Command}-desc", ("showMechanismsCommand", ShowMechanismsCommand.CommandName));
-
-    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var containerSys = _entityManager.System<SharedContainerSystem>();
         var query = _entityManager.AllEntityQueryEnumerator<OrganComponent>();
+
+        _xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
 
         while (query.MoveNext(out var uid, out _))
         {
@@ -29,8 +29,11 @@ public sealed class HideMechanismsCommand : LocalizedCommands
 
             sprite.ContainerOccluded = false;
 
+            if (!_xformQuery.TryGetComponent(uid, out var xform))
+                return;
             var tempParent = uid;
-            while (containerSys.TryGetContainingContainer(tempParent, out var container))
+
+            while (containerSys.TryGetContainingContainer(xform.ParentUid, tempParent,out var container))
             {
                 if (!container.ShowContents)
                 {
@@ -39,6 +42,9 @@ public sealed class HideMechanismsCommand : LocalizedCommands
                 }
 
                 tempParent = container.Owner;
+
+                if (!_xformQuery.TryGetComponent(tempParent, out xform))
+                    break;
             }
         }
     }

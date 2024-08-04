@@ -8,11 +8,7 @@ public sealed class ShowMechanismsCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    public const string CommandName = "showmechanisms";
-
-    public override string Command => CommandName;
-
-    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+    public override string Command => "showmechanisms";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
