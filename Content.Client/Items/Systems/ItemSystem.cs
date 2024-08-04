@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Visuals;
 using Content.Shared.Hands;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
@@ -107,6 +109,10 @@ public sealed class ItemSystem : SharedItemSystem
         layer.RsiPath = rsi.Path.ToString();
         layer.State = state;
         layer.MapKeys = new() { state };
+        if (TryComp(uid, out PipeColorSyncComponent? color))
+        {
+            layer.Color = color.SyncColor;
+        }
 
         result = new() { layer };
         return true;

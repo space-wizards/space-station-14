@@ -1,4 +1,5 @@
 using Content.Server.Atmos.Piping.Components;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping;
 using Robust.Server.GameObjects;
 
@@ -38,6 +39,15 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
             if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
+
+            if (EntityManager.TryGetComponent(uid, out PipeColorSyncComponent? colorSync))
+            {
+                if (colorSync != null)
+                {
+                    colorSync.SyncColor = color;
+                    Dirty(uid, colorSync);
+                }
+            }
 
             _appearance.SetData(uid, PipeColorVisuals.Color, color, appearance);
         }
