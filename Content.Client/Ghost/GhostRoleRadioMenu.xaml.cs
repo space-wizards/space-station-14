@@ -70,7 +70,7 @@ public sealed partial class GhostRoleRadioMenu : RadialMenu
             if (_prototypeManager.TryIndex(ghostRoleProto.IconPrototype, out var iconProto))
                 entProtoView.SetPrototype(iconProto);
             else
-                entProtoView.SetPrototype(comp.Prototype);
+                entProtoView.SetPrototype(ghostRoleProto.EntityPrototype);
 
             button.AddChild(entProtoView);
             main.AddChild(button);
