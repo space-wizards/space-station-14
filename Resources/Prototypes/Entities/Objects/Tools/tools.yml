@@ -189,7 +189,7 @@
   name: multitool
   parent: BaseItem
   id: Multitool
-  description: An advanced tool to copy, store, and send electrical pulses and signals through wires and machines
+  description: An advanced tool to copy, store, and send electrical pulses and signals through wires and machines.
   components:
   - type: EmitSoundOnLand
     sound:
