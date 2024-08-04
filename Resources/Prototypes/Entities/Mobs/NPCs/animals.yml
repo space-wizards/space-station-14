@@ -791,6 +791,7 @@
   - type: GuideHelp
     guides:
     - Chef
+    - FoodRecipes
 
 - type: entity
   name: crab
