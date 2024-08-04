@@ -4,7 +4,7 @@
   description: ghost-role-information-syndicate-kobold-reinforcement-description
   rules: ghost-role-information-syndicate-kobold-reinforcement-rules
   entityPrototype: MobKoboldSyndicateAgent
-  iconPrototype: MobKoboldSyndicateAgentNukeops
+  iconPrototype: MobKoboldSyndicateAgent
 
 - type: ghostRole
   id: SyndicateKoboldNukeops
@@ -12,7 +12,7 @@
   description: ghost-role-information-syndicate-kobold-reinforcement-description
   rules: ghost-role-information-syndicate-kobold-reinforcement-rules
   entityPrototype: MobKoboldSyndicateAgentNukeops
-  iconPrototype: MobKoboldSyndicateAgent
+  iconPrototype: MobKoboldSyndicateAgentNukeops
 
 - type: ghostRole
   id: SyndicateMonkey
