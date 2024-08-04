@@ -12,35 +12,35 @@ namespace Content.Shared.Containers;
 /// </summary>
 public class SlotBasedConnectedContainerSystem : EntitySystem
 {
-    [Dependency] protected readonly SharedContainerSystem _containers = default!;
-    [Dependency] protected readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] protected readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly SharedContainerSystem _containers = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     /// <summary>
-    /// Try get connected container entity in character slots for <see cref="subject"/>.
+    /// Try get connected container entity in character slots for <see cref="uid"/>.
     /// </summary>
-    /// <param name="subject">
+    /// <param name="uid">
     /// Entity for which connected container is required. If <see cref="SlotBasedConnectedContainerComponent"/>
     /// is used - tries to find container in slot, returns false and null <see cref="slotEntity"/> otherwise. 
     /// </param>
     /// <param name="slotEntity">Found connected container entity or null.</param>
     /// <returns>True if connected container was found, false otherwise.</returns>
-    public bool TryGetConnectedContainer(EntityUid subject, [NotNullWhen(true)] out EntityUid? slotEntity)
+    public bool TryGetConnectedContainer(EntityUid uid, [NotNullWhen(true)] out EntityUid? slotEntity)
     {
-        if (!TryComp<SlotBasedConnectedContainerComponent>(subject, out var component))
+        if (!TryComp<SlotBasedConnectedContainerComponent>(uid, out var component))
         {
             slotEntity = null;
             return false;
         }
 
-        return TryGetConnectedContainer(subject, component.TargetSlot, component.ContainerWhitelist, out slotEntity);
+        return TryGetConnectedContainer(uid, component.TargetSlot, component.ContainerWhitelist, out slotEntity);
     }
 
-    private bool TryGetConnectedContainer(EntityUid subject, SlotFlags slotFlag, EntityWhitelist? providerWhitelist, [NotNullWhen(true)] out EntityUid? slotEntity)
+    private bool TryGetConnectedContainer(EntityUid uid, SlotFlags slotFlag, EntityWhitelist? providerWhitelist, [NotNullWhen(true)] out EntityUid? slotEntity)
     {
         slotEntity = null;
 
-        if (!_containers.TryGetContainingContainer((subject, Transform(subject)), out var container))
+        if (!_containers.TryGetContainingContainer((uid, null, null), out var container))
             return false;
 
         var user = container.Owner;
