@@ -11876,6 +11876,8 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-0.5
       parent: 7536
+    - type: Door
+      changeAirtight: False
     - type: Docking
       dockJointId: docking43669
       dockedWith: 7332
@@ -13198,6 +13200,8 @@ entities:
       lastSignals:
         DoorStatus: False
         DockStatus: True
+    - type: Door
+      changeAirtight: False
   - uid: 12584
     components:
     - type: Transform
@@ -14327,6 +14331,17 @@ entities:
       rot: 3.141592653589793 rad
       pos: 46.5,31.5
       parent: 60
+  - uid: 898
+    components:
+    - type: Transform
+      pos: 23.5,-29.5
+      parent: 60
+  - uid: 902
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 25.5,-25.5
+      parent: 60
   - uid: 3189
     components:
     - type: Transform
@@ -14339,6 +14354,18 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 59.5,14.5
       parent: 60
+  - uid: 6129
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 20.5,29.5
+      parent: 60
+  - uid: 6130
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -11.5,-0.5
+      parent: 7536
   - uid: 6768
     components:
     - type: Transform
@@ -14363,6 +14390,17 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -5.5,-70.5
       parent: 60
+  - uid: 9110
+    components:
+    - type: Transform
+      pos: -11.5,-4.5
+      parent: 7536
+  - uid: 9214
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 0.5,-0.5
+      parent: 7536
   - uid: 12269
     components:
     - type: Transform
@@ -14409,38 +14447,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 15.5,-70.5
-      parent: 60
-- proto: AtmosDeviceFanTiny
-  entities:
-  - uid: 6129
-    components:
-    - type: Transform
-      pos: -11.5,-0.5
-      parent: 7536
-  - uid: 6130
-    components:
-    - type: Transform
-      pos: -11.5,-4.5
-      parent: 7536
-  - uid: 9110
-    components:
-    - type: Transform
-      pos: 0.5,-0.5
-      parent: 7536
-  - uid: 9214
-    components:
-    - type: Transform
-      pos: 23.5,-29.5
-      parent: 60
-  - uid: 13825
-    components:
-    - type: Transform
-      pos: 25.5,-25.5
-      parent: 60
-  - uid: 19808
-    components:
-    - type: Transform
-      pos: 20.5,28.5
       parent: 60
 - proto: AtmosFixBlockerMarker
   entities:
@@ -74858,18 +74864,6 @@ entities:
       parent: 60
     - type: AtmosPipeColor
       color: '#0335FCFF'
-  - uid: 898
-    components:
-    - type: Transform
-      anchored: False
-      rot: 1.5707963267948966 rad
-      pos: -10.5,-22.5
-      parent: 60
-    - type: AtmosPipeColor
-      color: '#0335FCFF'
-    - type: Physics
-      canCollide: True
-      bodyType: Dynamic
   - uid: 899
     components:
     - type: Transform
@@ -74894,18 +74888,6 @@ entities:
       parent: 60
     - type: AtmosPipeColor
       color: '#0335FCFF'
-  - uid: 902
-    components:
-    - type: Transform
-      anchored: False
-      rot: 1.5707963267948966 rad
-      pos: -13.5,-22.5
-      parent: 60
-    - type: AtmosPipeColor
-      color: '#0335FCFF'
-    - type: Physics
-      canCollide: True
-      bodyType: Dynamic
   - uid: 903
     components:
     - type: Transform
@@ -122248,6 +122230,21 @@ entities:
       parent: 60
 - proto: SignAi
   entities:
+  - uid: 16533
+    components:
+    - type: Transform
+      pos: -101.5,16.5
+      parent: 60
+  - uid: 19800
+    components:
+    - type: Transform
+      pos: -112.5,20.5
+      parent: 60
+  - uid: 19808
+    components:
+    - type: Transform
+      pos: -107.5,16.5
+      parent: 60
   - uid: 21237
     components:
     - type: Transform
@@ -122257,6 +122254,18 @@ entities:
     components:
     - type: Transform
       pos: -60.5,16.5
+      parent: 60
+- proto: SignAiUpload
+  entities:
+  - uid: 21130
+    components:
+    - type: Transform
+      pos: -110.5,6.5
+      parent: 60
+  - uid: 23380
+    components:
+    - type: Transform
+      pos: -112.5,14.5
       parent: 60
 - proto: SignalButton
   entities:
@@ -123144,11 +123153,12 @@ entities:
     - type: Transform
       pos: 2.5,-1.5
       parent: 60
-- proto: SignCanisters
+- proto: SignCans
   entities:
-  - uid: 15171
+  - uid: 13825
     components:
     - type: Transform
+      rot: 3.141592653589793 rad
       pos: -28.5,37.5
       parent: 60
 - proto: SignCargo
@@ -123204,6 +123214,13 @@ entities:
     components:
     - type: Transform
       pos: 42.5,-25.5
+      parent: 60
+- proto: SignCryo
+  entities:
+  - uid: 15171
+    components:
+    - type: Transform
+      pos: -29.5,22.5
       parent: 60
 - proto: SignCryogenicsMed
   entities:
@@ -123335,11 +123352,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 42.49971,-21.305145
       parent: 60
-  - uid: 16533
+  - uid: 23381
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -29.5,22.5
+      rot: 3.141592653589793 rad
+      pos: -32.5,18.5
       parent: 60
 - proto: SignDirectionalDorms
   entities:
@@ -124078,6 +124095,14 @@ entities:
     - type: Transform
       pos: -109.5,20.5
       parent: 60
+- proto: SignKitchen
+  entities:
+  - uid: 23382
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 24.5,-25.5
+      parent: 60
 - proto: SignLaserMed
   entities:
   - uid: 14624
@@ -124115,6 +124140,12 @@ entities:
     components:
     - type: Transform
       pos: 3.5,-46.5
+      parent: 60
+  - uid: 23969
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 18.5,17.5
       parent: 60
 - proto: SignMedical
   entities:
@@ -124300,6 +124331,14 @@ entities:
     components:
     - type: Transform
       pos: -19.5,-11.5
+      parent: 60
+- proto: SignRestroom
+  entities:
+  - uid: 23970
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 18.5,11.5
       parent: 60
 - proto: SignRND
   entities:
@@ -124559,12 +124598,28 @@ entities:
     - type: Transform
       pos: 22.5,6.5
       parent: 60
+- proto: SignTheater
+  entities:
+  - uid: 24271
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 18.5,-20.5
+      parent: 60
 - proto: SignToolStorage
   entities:
   - uid: 6315
     components:
     - type: Transform
       pos: 14.5,10.5
+      parent: 60
+- proto: SignVault
+  entities:
+  - uid: 24268
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 2.5,-5.5
       parent: 60
 - proto: SignVirology
   entities:
