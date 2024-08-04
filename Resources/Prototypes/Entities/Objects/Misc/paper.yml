@@ -219,6 +219,7 @@
   - type: GuideHelp
     guides:
     - CargoBounties
+    - Cargo
 
 - type: entity
   name: character sheet

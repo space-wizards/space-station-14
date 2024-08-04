@@ -736,7 +736,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void LoadGui()
     {
-        DebugTools.Assert(_window == null);
+        UnloadGui();
         _window = UIManager.CreateWindow<ActionsWindow>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
 
