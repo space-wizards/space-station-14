@@ -70,9 +70,9 @@
     <GuideEntityEmbed Entity="ClothingOuterHardsuitRd" Caption="RD's Hardsuit"/>
     <GuideEntityEmbed Entity="HandTeleporter" Caption="Hand Teleporter"/>
   </Box>
-  - Steal the Head of Security's [color=#a4885c]Energy Shotgun[/color].
+  - Steal the Head of Security's [color=#a4885c]Secret Documents[/color].
   <Box>
-    <GuideEntityEmbed Entity="WeaponEnergyShotgun" Caption="Energy Shotgun"/>
+    <GuideEntityEmbed Entity="BookSecretDocuments" Caption="Secret Documents"/>
   </Box>
   - Steal the Chief Engineer's [color=#a4885c]Advanced Magboots[/color].
   <Box>
