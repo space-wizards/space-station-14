@@ -1,8 +1,7 @@
-using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Explosion;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
-namespace Content.Server.Explosion.Components;
+namespace Content.Shared.Explosion.Components;
 
 /// <summary>
 /// Component that provides entities with explosion resistance.
@@ -14,7 +13,6 @@ namespace Content.Server.Explosion.Components;
 ///     significantly reduce the damage, but shouldn't be silly overpowered in regular combat.
 /// </remarks>
 [RegisterComponent]
-[Access(typeof(ExplosionSystem))]
 public sealed partial class ExplosionResistanceComponent : Component
 {
     /// <summary>
