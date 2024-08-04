@@ -869,7 +869,7 @@
   parent: DrinkBottlePlasticBaseFull
   id: DrinkGreenTeaJug
   name: green tea jug
-  description: its like tea... but green! great for settling the stomach.
+  description: It's like tea... but green! great for settling the stomach.
   components:
   - type: SolutionContainerManager
     solutions:
