@@ -1,7 +1,6 @@
 using Content.Shared.Chemistry.Components;
-using Robust.Shared.Prototypes;
 using Content.Shared.Stacks;
-
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Animals.Components;
 
@@ -50,5 +49,4 @@ public sealed partial class ShearableComponent : Component
     /// </summary>
     [DataField]
     public string ToolQuality = string.Empty;
-
 }

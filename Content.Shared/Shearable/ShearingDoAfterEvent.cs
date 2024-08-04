@@ -4,6 +4,4 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Shearing;
 
 [Serializable, NetSerializable]
-public sealed partial class ShearingDoAfterEvent : SimpleDoAfterEvent
-{
-}
+public sealed partial class ShearingDoAfterEvent : SimpleDoAfterEvent { }

@@ -1,17 +1,17 @@
 using Content.Server.Animals.Components;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Shearing;
-using Content.Shared.Verbs;
-using Content.Shared.DoAfter;
-using Content.Shared.Tools.Systems;
 using Content.Server.Popups;
-using Content.Shared.Popups;
-using Content.Shared.IdentityManagement;
 using Content.Server.Stack;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Utility;
-using Robust.Shared.Prototypes;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
+using Content.Shared.Shearing;
+using Content.Shared.Tools.Systems;
+using Content.Shared.Verbs;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Animals.Systems;
 
@@ -21,12 +21,23 @@ namespace Content.Server.Animals.Systems;
 /// </summary>
 public sealed class ShearableSystem : EntitySystem
 {
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SharedToolSystem _tool = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly StackSystem _stackSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency]
+    private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+
+    [Dependency]
+    private readonly SharedToolSystem _tool = default!;
+
+    [Dependency]
+    private readonly SharedDoAfterSystem _doAfterSystem = default!;
+
+    [Dependency]
+    private readonly PopupSystem _popup = default!;
+
+    [Dependency]
+    private readonly StackSystem _stackSystem = default!;
+
+    [Dependency]
+    private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -66,6 +77,7 @@ public sealed class ShearableSystem : EntitySystem
         // Triggers the ShearingDoAfter event.
         _doAfterSystem.TryStartDoAfter(doargs);
     }
+
     /// <summary>
     ///     Handles shearing when left-click the entity.
     ///     Only checks if there's an item being held and that is has the specified quality,
@@ -74,15 +86,17 @@ public sealed class ShearableSystem : EntitySystem
     private void OnClicked(Entity<ShearableComponent> ent, ref InteractUsingEvent args)
     {
         // Check the player is holding an item and that it has the defined quality.
-        if (args.Used == null ||
+        if (
+            args.Used == null
+            ||
             // Checks if you're using an item with the toolQuality component quality.
             !_tool.HasQuality(args.Used, ent.Comp.ToolQuality)
-            )
-
+        )
             return;
 
         AttemptShear(ent.Owner, args.User, args.Used);
     }
+
     /// <summary>
     ///     Called by the ShearingDoAfter event.
     ///     Checks the action hasn't been cancelled, already handled, and that there's an item in the player's hand.
@@ -96,7 +110,14 @@ public sealed class ShearableSystem : EntitySystem
             return;
 
         // Resolves the targetSolutionName as a solution inside the shearable creature. Outputs the "solution" variable.
-        if (!_solutionContainer.ResolveSolution(ent.Owner, ent.Comp.TargetSolutionName, ref ent.Comp.Solution, out var solution))
+        if (
+            !_solutionContainer.ResolveSolution(
+                ent.Owner,
+                ent.Comp.TargetSolutionName,
+                ref ent.Comp.Solution,
+                out var solution
+            )
+        )
             return;
 
         // Mark as handled so we don't duplicate.
@@ -109,14 +130,15 @@ public sealed class ShearableSystem : EntitySystem
         _prototypeManager.TryIndex(ent.Comp.ShearedProductID, out var shearedProductStack);
         if (shearedProductStack == null)
         {
-            Log.Error($"Could not resolve ShearedProductID \"{ent.Comp.ShearedProductID}\" to a StackPrototype while shearing. Does this item exist?");
+            Log.Error(
+                $"Could not resolve ShearedProductID \"{ent.Comp.ShearedProductID}\" to a StackPrototype while shearing. Does this item exist?"
+            );
             return;
         }
 
         // Solution is measured in units but the actual value for 1u is 1000 reagent, so multiply it by 100.
         // Then, divide by 1 because it's the reagent needed for 1 product.
         var productsPerSolution = (int)(1 / ent.Comp.ProductsPerSolution * 100);
-
 
         // Work out the maxium stack size of the product.
         var maxProductsToSpawnValue = 0;
@@ -129,7 +151,12 @@ public sealed class ShearableSystem : EntitySystem
         // Modulas the targetSolutionQuantity so no solution is wasted if it can't be divided evenly.
         // Everything is divided by 100, because for fixedPoint2 multiplies everything by 100.
         // Math.Min ensures that no more solution than what is needed for the maximum stack is used, shear the entity multiple times if you want the rest of the product.
-        var solutionToRemove = FixedPoint2.New(Math.Min((targetSolutionQuantity.Value - targetSolutionQuantity.Value % productsPerSolution) / 100, maxProductsToSpawnValue * productsPerSolution / 100));
+        var solutionToRemove = FixedPoint2.New(
+            Math.Min(
+                (targetSolutionQuantity.Value - targetSolutionQuantity.Value % productsPerSolution) / 100,
+                maxProductsToSpawnValue * productsPerSolution / 100
+            )
+        );
 
         // Failure message, if the shearable creature has no targetSolutionName to be sheared.
         if (solutionToRemove == 0)
@@ -137,17 +164,8 @@ public sealed class ShearableSystem : EntitySystem
             _popup.PopupEntity(
                 Loc.GetString(
                     "shearable-system-no-product",
-                    (
-                        "target",
-                        Identity.Entity(
-                            ent.Owner,
-                            EntityManager
-                        )
-                    ),
-                    (
-                        "product",
-                        shearedProductStack.Name
-                    )
+                    ("target", Identity.Entity(ent.Owner, EntityManager)),
+                    ("product", shearedProductStack.Name)
                 ),
                 ent.Owner,
                 args.Args.User
@@ -162,23 +180,18 @@ public sealed class ShearableSystem : EntitySystem
         var spawnCoordinates = Transform(ent).Coordinates;
 
         // Spawn cotton.
-        _stackSystem.Spawn(removedSolution.Volume.Value / productsPerSolution, ent.Comp.ShearedProductID, spawnCoordinates);
+        _stackSystem.Spawn(
+            removedSolution.Volume.Value / productsPerSolution,
+            ent.Comp.ShearedProductID,
+            spawnCoordinates
+        );
 
         // Success message.
         _popup.PopupEntity(
             Loc.GetString(
                 "shearable-system-success",
-                (
-                    "target",
-                    Identity.Entity(
-                        ent.Owner,
-                        EntityManager
-                    )
-                ),
-                (
-                    "product",
-                    shearedProductStack.Name
-                )
+                ("target", Identity.Entity(ent.Owner, EntityManager)),
+                ("product", shearedProductStack.Name)
             ),
             ent.Owner,
             args.Args.User,
@@ -192,27 +205,32 @@ public sealed class ShearableSystem : EntitySystem
     /// </summary>
     private void AddShearVerb(Entity<ShearableComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-
-        if (args.Using == null ||
-             !args.CanInteract ||
-             // Checks if you're using an item with the toolQuality component quality.
-             !_tool.HasQuality(args.Using.Value, ent.Comp.ToolQuality))
+        if (
+            args.Using == null
+            || !args.CanInteract
+            ||
+            // Checks if you're using an item with the toolQuality component quality.
+            !_tool.HasQuality(args.Using.Value, ent.Comp.ToolQuality)
+        )
             return;
 
         var uid = ent.Owner;
         var user = args.User;
         var used = args.Using.Value;
         // Construct verb object.
-        AlternativeVerb verb = new()
-        {
-            Act = () =>
+        AlternativeVerb verb =
+            new()
             {
-                AttemptShear(uid, user, used);
-            },
-            Text = Loc.GetString("shearable-system-verb-shear"),
-            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/scissors.svg.236dpi.png")),
-            Priority = 2
-        };
+                Act = () =>
+                {
+                    AttemptShear(uid, user, used);
+                },
+                Text = Loc.GetString("shearable-system-verb-shear"),
+                Icon = new SpriteSpecifier.Texture(
+                    new ResPath("/Textures/Interface/VerbIcons/scissors.svg.236dpi.png")
+                ),
+                Priority = 2
+            };
         // Add verb to the player.
         args.Verbs.Add(verb);
     }
