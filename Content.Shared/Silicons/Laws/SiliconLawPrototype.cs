@@ -6,7 +6,7 @@ namespace Content.Shared.Silicons.Laws;
 
 [Virtual, DataDefinition]
 [Serializable, NetSerializable]
-public partial class SiliconLaw : IComparable<SiliconLaw>
+public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw>
 {
     /// <summary>
     /// A locale string which is the actual text of the law.
@@ -39,11 +39,25 @@ public partial class SiliconLaw : IComparable<SiliconLaw>
         return Order.CompareTo(other.Order);
     }
 
-    public bool Equals(SiliconLaw other)
+    public bool Equals(SiliconLaw? other)
     {
+        if (other == null)
+            return false;
         return LawString == other.LawString
                && Order == other.Order
                && LawIdentifierOverride == other.LawIdentifierOverride;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj == null)
+            return false;
+        return Equals(obj as SiliconLaw);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(LawString, Order, LawIdentifierOverride);
     }
 
     /// <summary>
