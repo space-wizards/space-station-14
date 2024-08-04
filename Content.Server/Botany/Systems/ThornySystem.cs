@@ -28,16 +28,25 @@ public sealed class ThornySystem : EntitySystem
     private void OnHandPickUp(Entity<ThornyComponent> entity, ref ContainerGettingInsertedAttemptEvent args)
     {
         var user = args.Container.Owner;
-        if (_inventory.TryGetSlotEntity(user, "gloves", out var slotEntity) &&
-            TryComp<ThornyImmuneComponent>(slotEntity, out var immunity))
+
+        // Verify that the entity has a gloves container slot. This returns is false, since the entity is likely a bag.
+        if (_inventory.TryGetSlotContainer(user, "gloves", out var containerSlot, out var slotDefinition))
+        {
+            if (TryComp<ThornyImmuneComponent>(containerSlot.ContainedEntity, out var immunity))
+            {
+                return;
+            }
+        }
+        else
         {
             return;
         }
+
         args.Cancel();
         _audio.PlayPvs(entity.Comp.Sound, entity);
         _transform.SetCoordinates(entity, Transform(user).Coordinates);
         _transform.AttachToGridOrMap(entity);
-        _throwing.TryThrow(entity, _random.NextVector2(), strength: entity.Comp.ThrowStrength);
+        _throwing.TryThrow(entity, _random.NextVector2(), recoil: false);
         var tookDamage = _damageableSystem.TryChangeDamage(user, entity.Comp.Damage, origin: user);
 
         if (tookDamage != null)
