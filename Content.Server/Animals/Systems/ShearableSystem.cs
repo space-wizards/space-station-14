@@ -95,8 +95,26 @@ public sealed class ShearableSystem : EntitySystem
             return;
         }
 
+        // Solution is measured in units but the actual value for 1u is 1000 reagent, so multiply it by 100.
+        // Then, divide by 1 because it's the reagent needed for 1 product.
+        var productsPerSolution = (int)(1 / ent.Comp.ProductsPerSolution * 100);
+
+
+        // Work out the maxium stack size of the product.
+        var maxProductsToSpawnValue = 0;
+        var maxProductsToSpawn = _prototypeManager.Index(ent.Comp.ShearedProductID).MaxCount;
+        if (maxProductsToSpawn.HasValue)
+        {
+            maxProductsToSpawnValue = maxProductsToSpawn.Value;
+        }
+
+        // Modulas the targetSolutionQuantity so no solution is wasted if it can't be divided evenly.
+        // Everything is divided by 100, because for fixedPoint2 multiplies everything by 100.
+        // Math.Min ensures that no more solution than what is needed for the maximum stack is used, shear the entity multiple times if you want the rest of the product.
+        var solutionToRemove = FixedPoint2.New(Math.Min((targetSolutionQuantity.Value - targetSolutionQuantity.Value % productsPerSolution) / 100, maxProductsToSpawnValue * productsPerSolution / 100));
+
         // Failure message, if the shearable creature has no targetSolutionName to be sheared.
-        if (targetSolutionQuantity == 0)
+        if (solutionToRemove == 0)
         {
             _popup.PopupEntity(
                 Loc.GetString(
@@ -118,24 +136,6 @@ public sealed class ShearableSystem : EntitySystem
             );
             return;
         }
-
-        // Solution is measured in units but the actual value for 1u is 1000 reagent, so multiply it by 100.
-        // Then, divide by 1 because it's the reagent needed for 1 product.
-        var productsPerSolution = (int)(1 / ent.Comp.ProductsPerSolution * 100);
-
-
-        // Work out the maxium stack size of the product.
-        var maxProductsToSpawnValue = 0;
-        var maxProductsToSpawn = _prototypeManager.Index(ent.Comp.ShearedProductID).MaxCount;
-        if (maxProductsToSpawn.HasValue)
-        {
-            maxProductsToSpawnValue = maxProductsToSpawn.Value;
-        }
-
-        // Modulas the targetSolutionQuantity so no solution is wasted if it can't be divided evenly.
-        // Everything is divided by 100, because for fixedPoint2 multiplies everything by 100.
-        // Math.Min ensures that no more solution than what is needed for the maximum stack is used, shear the entity multiple times if you want the rest of the product.
-        var solutionToRemove = FixedPoint2.New(Math.Min((targetSolutionQuantity.Value - targetSolutionQuantity.Value % productsPerSolution) / 100, maxProductsToSpawnValue * productsPerSolution / 100));
 
         // Split the solution inside the creature by solutionToRemove, return what was removed.
         var removedSolution = _solutionContainer.SplitSolution(ent.Comp.Solution.Value, solutionToRemove);
