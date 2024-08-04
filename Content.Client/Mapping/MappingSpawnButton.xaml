@@ -12,7 +12,10 @@
                     <Button Name="CollapseButton" Access="Public" Text="▶"
                             ToggleMode="True" StyleClasses="ButtonSquare" SetSize="48 48" />
                 </Control>
-                <Label Name="Label" Access="Public" VerticalAlignment="Center"
+                <Label Name="Label" Access="Public"
+                       VAlign="Center"
+                       VerticalExpand="True"
+                       MinHeight="48"
                        Margin="5 0"
                        HorizontalExpand="True" ClipText="True" />
             </BoxContainer>

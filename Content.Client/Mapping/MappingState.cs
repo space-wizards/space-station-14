@@ -526,8 +526,8 @@ public sealed class MappingState : GameplayStateBase
             return;
         }
 
-        // Toggle if it's the same button
-        if (button.Prototype?.Prototype != null && _lastClicked?.Button == button)
+        // Toggle if it's the same button (at least if we just unclicked it).
+        if (!button.Button.Pressed && button.Prototype?.Prototype != null && _lastClicked?.Button == button)
         {
             _lastClicked = null;
             Deselect();
@@ -636,7 +636,10 @@ public sealed class MappingState : GameplayStateBase
 
     private void OnDeletePressed(ButtonEventArgs obj)
     {
-
+        if (obj.Button.Pressed)
+            EnableDelete();
+        else
+            DisableDelete();
     }
 
     private void OnEntityReplacePressed(ButtonToggledEventArgs args)
