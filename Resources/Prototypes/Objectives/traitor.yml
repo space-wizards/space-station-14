@@ -195,19 +195,6 @@
 ## hos
 
 - type: entity
-  parent: BaseTraitorStealObjective
-  id: SecretDocumentsStealObjective
-  components:
-  - type: Objective
-    # hos has a gun ce does not, higher difficulty than most
-    difficulty: 3
-  - type: NotJobRequirement
-    job: HeadOfSecurity
-  - type: StealCondition
-    stealGroup: BookSecretDocuments
-    owner: job-name-hos
-
-- type: entity
   noSpawn: true
   parent: BaseTraitorStealObjective
   id: EnergyShotgunStealObjective
