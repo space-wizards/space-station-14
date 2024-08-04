@@ -220,7 +220,15 @@
   id: IntercomCommand
   parent: Intercom
   suffix: Command
+  description: An intercom. It's been reinforced with metal from security helmets, making it a bitch-and-a-half to open.
   components:
+  - type: WiresPanel
+    openDelay: 5
+  - type: WiresPanelSecurity
+    examine: wires-panel-component-on-examine-security-level2
+    wiresAccessible: false
+  - type: Construction
+    node: intercomReinforced
   - type: ContainerFill
     containers:
       board:
