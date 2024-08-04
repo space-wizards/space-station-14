@@ -277,7 +277,6 @@
       - id: JetpackSecurityFilled
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
-      - id: BookSecretDocuments
       - id: WeaponEnergyShotgun
       - id: BookSpaceLaw
 
@@ -302,7 +301,6 @@
       - id: SecurityTechFabCircuitboard
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
-      - id: BookSecretDocuments
       - id: WeaponEnergyShotgun 
       - id: BookSpaceLaw
 
