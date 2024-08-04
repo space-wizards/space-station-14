@@ -72,7 +72,7 @@ public sealed class InternalsSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || args.Hands is null)
             return;
 
-        if (ent.Comp.BreathTools.Count == 0)
+        if (!AreInternalsWorking(ent) && ent.Comp.BreathTools.Count == 0)
             return;
 
         var user = args.User;
