@@ -18,5 +18,5 @@
   id: HeadRevGear
   storage:
     back:
-    - Flash
+    - PenFlash
     - ClothingEyesGlassesSunglasses
