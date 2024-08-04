@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Visuals;
@@ -109,9 +109,9 @@ public sealed class ItemSystem : SharedItemSystem
         layer.RsiPath = rsi.Path.ToString();
         layer.State = state;
         layer.MapKeys = new() { state };
-        if (TryComp(uid, out PipeColorSyncComponent? color))
+        if (TryComp(uid, out AtmosPipeColorComponent? pipeColor))
         {
-            layer.Color = color.SyncColor;
+            layer.Color = pipeColor.Color;
         }
 
         result = new() { layer };
