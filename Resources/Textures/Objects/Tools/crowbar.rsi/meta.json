@@ -41,7 +41,16 @@
       "directions": 4
     },
     {
-      "name": "cover-storage"
+      "name": "red-storage"
+    },
+    {
+      "name": "green-storage"
+    }
+    {
+      "name": "orange-storage"
+    }
+    {
+      "name": "yellow-storage"
     }
   ]
 }

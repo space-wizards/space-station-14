@@ -45,12 +45,12 @@
   description: A multipurpose tool to pry open doors and fight interdimensional invaders.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Crowbars/crowbar.rsi
+    sprite: Objects/Tools/crowbar.rsi
     state: icon
   - type: Item
-    sprite: Objects/Tools/Crowbars/crowbar.rsi
+    sprite: Objects/Tools/crowbar.rsi
     storedSprite:
-      sprite: Objects/Tools/Crowbars/crowbar.rsi
+      sprite: Objects/Tools/crowbar.rsi
       state: storage
 
 # Emergency (red) Crowbar
@@ -65,71 +65,134 @@
     - Crowbar
     - CrowbarRed
   - type: Sprite
-    sprite: Objects/Tools/Crowbars/crowbar.rsi
+    sprite: Objects/Tools/crowbar.rsi
     layers:
     - state: icon
     - state: cover-icon
       color: "#990000"
   - type: Item
-    sprite: Objects/Tools/Crowbars/crowbar.rsi
+    sprite: Objects/Tools/crowbar.rsi
     storedSprite:
-      - state: storage
-      - state: cover-storage
-        color: "#990000"
+      state: red-storage
+      sprite: Objects/Tools/crowbar.rsi
     inhandVisuals:
       left:
       - state: inhand-left
       - state: cover-inhand-left
-      color: "#990000"
+        color: "#990000"
       right:
       - state: inhand-right
       - state: cover-inhand-right
         color: "#990000"
+  - type: Clothing
+    sprite: Objects/Tools/crowbar.rsi
+    clothingVisuals:
+      belt:
+      - state: equipped-BELT
+      - state: cover-equipped-BELT
+        color: "#990000"
 
 # Autolathe (green) Crowbar
 - type: entity
-  name: crowbar
+  name: emergency crowbar
   parent: BaseCrowbar
   id: CrowbarGreen
   description: A multipurpose tool to pry open doors and fight interdimensional invaders, printed from an autolathe.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Crowbars/crowbar.rsi
-    state: icon
+    sprite: Objects/Tools/crowbar.rsi
+    layers:
+    - state: icon
+    - state: cover-icon
+      color: "#00621c"
   - type: Item
-    sprite: Objects/Tools/Crowbars/crowbar.rsi
+    sprite: Objects/Tools/crowbar.rsi
     storedSprite:
-      sprite: Objects/Tools/Crowbars/crowbar.rsi
-      state: storage
+      state: green-storage
+      sprite: Objects/Tools/crowbar.rsi
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      - state: cover-inhand-left
+        color: "#00621c"
+      right:
+      - state: inhand-right
+      - state: cover-inhand-right
+        color: "#00621c"
+  - type: Clothing
+    sprite: Objects/Tools/crowbar.rsi
+    clothingVisuals:
+      belt:
+      - state: equipped-BELT
+      - state: cover-equipped-BELT
+        color: "#00621c"
 
 # Toolbox (orange) Crowbar
 - type: entity
-  name: crowbar
+  name: emergency crowbar
   parent: BaseCrowbar
   id: CrowbarOrange
   description: A multipurpose tool to pry open doors and fight interdimensional invaders, found in toolboxes.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Crowbars/crowbar.rsi
-    state: icon
+    sprite: Objects/Tools/crowbar.rsi
+    layers:
+    - state: icon
+    - state: cover-icon
+      color: "#673800"
   - type: Item
-    sprite: Objects/Tools/Crowbars/crowbar.rsi
+    sprite: Objects/Tools/crowbar.rsi
     storedSprite:
-      sprite: Objects/Tools/Crowbars/crowbar.rsi
-      state: storage
+      state: orange-storage
+      sprite: Objects/Tools/crowbar.rsi
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      - state: cover-inhand-left
+        color: "#673800"
+      right:
+      - state: inhand-right
+      - state: cover-inhand-right
+        color: "#673800"
+  - type: Clothing
+    sprite: Objects/Tools/crowbar.rsi
+    clothingVisuals:
+      belt:
+      - state: equipped-BELT
+      - state: cover-equipped-BELT
+        color: "#673800"
 
 # Engineering (yellow) Crowbar
 - type: entity
-  name: crowbar
+  name: emergency crowbar
   parent: BaseCrowbar
   id: CrowbarYellow
   description: A pocket crowbar designed to pry open doors and firelocks during power outages, dispensed from Engineering.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Crowbars/crowbar.rsi
-    state: icon
+    sprite: Objects/Tools/crowbar.rsi
+    layers:
+    - state: icon
+    - state: cover-icon
+      color: "#968000"
   - type: Item
-    sprite: Objects/Tools/Crowbars/crowbar.rsi
+    sprite: Objects/Tools/crowbar.rsi
     storedSprite:
-      sprite: Objects/Tools/Crowbars/crowbar.rsi
-      state: storage
+      state: yellow-storage
+      sprite: Objects/Tools/crowbar.rsi
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      - state: cover-inhand-left
+        color: "#968000"
+      right:
+      - state: inhand-right
+      - state: cover-inhand-right
+        color: "#968000"
+  - type: Clothing
+    sprite: Objects/Tools/crowbar.rsi
+    clothingVisuals:
+      belt:
+      - state: equipped-BELT
+      - state: cover-equipped-BELT
+        color: "#968000"
