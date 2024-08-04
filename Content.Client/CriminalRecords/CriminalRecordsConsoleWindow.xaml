@@ -22,6 +22,7 @@
             <!-- Selected record info -->
             <BoxContainer Name="PersonContainer" Orientation="Vertical" Margin="5" Visible="False">
                 <Label Name="PersonName" StyleClasses="LabelBig"/>
+                <Label Name="PersonGender"/>
                 <Label Name="PersonPrints"/>
                 <Label Name="PersonDna"/>
                 <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 5" />
