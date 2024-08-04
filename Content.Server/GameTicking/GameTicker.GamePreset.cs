@@ -226,7 +226,7 @@ namespace Content.Server.GameTicking
                 return false;
             }
 
-            if (HasComp<GhostComponent>(playerEntity))
+            if (TryComp<GhostComponent>(playerEntity, out var comp) && !comp.CanGhostInteract)
                 return false;
 
             if (mind.VisitingEntity != default)
@@ -251,7 +251,9 @@ namespace Content.Server.GameTicking
             //   (If the mob survives, that's a bug. Ghosting is kept regardless.)
             var canReturn = canReturnGlobal && _mind.IsCharacterDeadPhysically(mind);
 
-            if (canReturnGlobal && TryComp(playerEntity, out MobStateComponent? mobState))
+            if (_configurationManager.GetCVar(CCVars.GhostKillCrit) &&
+                canReturnGlobal &&
+                TryComp(playerEntity, out MobStateComponent? mobState))
             {
                 if (_mobState.IsCritical(playerEntity.Value, mobState))
                 {

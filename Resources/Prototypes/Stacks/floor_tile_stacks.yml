@@ -1,7 +1,175 @@
 ﻿- type: stack
+  id: FloorTileDark
+  name: dark tile
+  spawn: FloorTileItemDark
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkDiagonalMini
+  name: dark steel diagonal mini tile
+  spawn: FloorTileItemDarkDiagonalMini
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkDiagonal
+  name: dark steel diagonal tile
+  spawn: FloorTileItemDarkDiagonal
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkHerringbone
+  name: dark steel herringbone
+  spawn: FloorTileItemDarkHerringbone
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkMini
+  name: dark steel mini tile
+  spawn: FloorTileItemDarkMini
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkMono
+  name: dark steel mono tile
+  spawn: FloorTileItemDarkMono
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkPavement
+  name: dark steel pavement
+  spawn: FloorTileItemDarkPavement
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkPavementVertical
+  name: dark steel vertical pavement
+  spawn: FloorTileItemDarkPavementVertical
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkOffset
+  name: offset dark steel tile
+  spawn: FloorTileItemDarkOffset
+  maxCount: 30
+
+- type: stack
   id: FloorTileSteel
   name: steel tile
   spawn: FloorTileItemSteel
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelOffset
+  name: offset steel tile
+  spawn: FloorTileItemSteelOffset
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelDiagonalMini
+  name: steel diagonal mini tile
+  spawn: FloorTileItemSteelDiagonalMini
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelDiagonal
+  name: steel diagonal tile
+  spawn: FloorTileItemSteelDiagonal
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelHerringbone
+  name: steel herringbone
+  spawn: FloorTileItemSteelHerringbone
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelMini
+  name: steel mini tile
+  spawn: FloorTileItemSteelMini
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelMono
+  name: steel mono tile
+  spawn: FloorTileItemSteelMono
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelPavement
+  name: steel pavement
+  spawn: FloorTileItemSteelPavement
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelPavementVertical
+  name: steel vertical pavement
+  spawn: FloorTileItemSteelPavementVertical
+  maxCount: 30
+
+- type: stack
+  id: FloorTileWhite
+  name: white tile
+  spawn: FloorTileItemWhite
+  maxCount: 30
+
+- type: stack
+  id: FloorTileWhiteOffset
+  name: offset white steel tile
+  spawn: FloorTileItemWhiteOffset
+  maxCount: 30
+
+- type: stack
+  id: FloorTileWhiteDiagonalMini
+  name: white steel diagonal mini tile
+  spawn: FloorTileItemWhiteDiagonalMini
+  maxCount: 30
+
+- type: stack
+  id: FloorTileWhiteDiagonal
+  name: white steel diagonal tile
+  spawn: FloorTileItemWhiteDiagonal
+  maxCount: 30
+
+- type: stack
+  id: FloorTileWhiteHerringbone
+  name: white steel herringbone
+  spawn: FloorTileItemWhiteHerringbone
+  maxCount: 30
+
+- type: stack
+  id: FloorTileWhiteMini
+  name: white steel mini tile
+  spawn: FloorTileItemWhiteMini
+  maxCount: 30
+
+- type: stack
+  id: FloorTileWhiteMono
+  name: white steel mono tile
+  spawn: FloorTileItemWhiteMono
+  maxCount: 30
+
+- type: stack
+  id: FloorTileWhitePavement
+  name: white steel pavement
+  spawn: FloorTileItemWhitePavement
+  maxCount: 30
+
+- type: stack
+  id: FloorTileWhitePavementVertical
+  name: white steel vertical pavement
+  spawn: FloorTileItemWhitePavementVertical
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelCheckerDark
+  name: steel dark checker tile
+  spawn: FloorTileItemSteelCheckerDark
+  maxCount: 30
+
+- type: stack
+  id: FloorTileSteelCheckerLight
+  name: steel light checker tile
+  spawn: FloorTileItemSteelCheckerLight
   maxCount: 30
 
 - type: stack
@@ -14,18 +182,6 @@
   id: FloorTileWood
   name: wood floor
   spawn: FloorTileItemWood
-  maxCount: 30
-
-- type: stack
-  id: FloorTileWhite
-  name: white tile
-  spawn: FloorTileItemWhite
-  maxCount: 30
-
-- type: stack
-  id: FloorTileDark
-  name: dark tile
-  spawn: FloorTileItemDark
   maxCount: 30
 
 - type: stack
@@ -56,12 +212,6 @@
   id: FloorTileGold
   name: gold floor
   spawn: FloorTileItemGold
-  maxCount: 30
-
-- type: stack
-  id: FloorTileReinforced
-  name: reinforced tile
-  spawn: FloorTileItemReinforced
   maxCount: 30
 
 - type: stack
@@ -329,15 +479,51 @@
   maxCount: 30
 
 - type: stack
+  id: FloorTileConcreteMono
+  name: concrete mono tile
+  spawn: FloorTileItemConcreteMono
+  maxCount: 30
+
+- type: stack
+  id: FloorTileConcreteSmooth
+  name: concrete smooth
+  spawn: FloorTileItemConcreteSmooth
+  maxCount: 30
+
+- type: stack
   id: FloorTileGrayConcrete
   name: gray concrete tile
-  spawn: FloorTileItemLaundry
+  spawn: FloorTileItemGrayConcrete
+  maxCount: 30
+
+- type: stack
+  id: FloorTileGrayConcreteMono
+  name: gray concrete mono tile
+  spawn: FloorTileItemGrayConcreteMono
+  maxCount: 30
+
+- type: stack
+  id: FloorTileGrayConcreteSmooth
+  name: gray concrete smooth
+  spawn: FloorTileItemGrayConcreteSmooth
   maxCount: 30
 
 - type: stack
   id: FloorTileOldConcrete
   name: old concrete tile
   spawn: FloorTileItemOldConcrete
+  maxCount: 30
+
+- type: stack
+  id: FloorTileOldConcreteMono
+  name: old concrete mono tile
+  spawn: FloorTileItemOldConcreteMono
+  maxCount: 30
+
+- type: stack
+  id: FloorTileOldConcreteSmooth
+  name: old concrete smooth
+  spawn: FloorTileItemOldConcreteSmooth
   maxCount: 30
 
 - type: stack

@@ -240,7 +240,6 @@ namespace Content.Server.Administration.Managers
             _sawmill = _logManager.GetSawmill("admin");
 
             _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>();
-            _netMgr.RegisterNetMessage<ShowRulesPopupMessage>();
 
             // Cache permissions for loaded console commands with the requisite attributes.
             foreach (var (cmdName, cmd) in _consoleHost.AvailableCommands)
@@ -459,7 +458,7 @@ namespace Content.Server.Administration.Managers
                     Flags = flags
                 };
 
-                if (dbData.Title != null)
+                if (dbData.Title != null  && _cfg.GetCVar(CCVars.AdminUseCustomNamesAdminRank))
                 {
                     data.Title = dbData.Title;
                 }

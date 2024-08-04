@@ -92,7 +92,7 @@
   name: wrench
   parent: BaseItem
   id: Wrench
-  description: 'A common tool for assembly and disassembly. Remember: righty tighty, lefty loosey.'
+  description: 'A common tool for assembly and disassembly. Remember: lefty latchy, righty removey.'
   components:
   - type: EmitSoundOnLand
     sound:
@@ -282,7 +282,7 @@
       price: 56
     - type: GuideHelp
       guides:
-        - NetworkConfigurator
+      - NetworkConfigurator
 
 #Power tools
 #Later on these should switch probably switch damage when changing the tool behavior.
@@ -401,20 +401,6 @@
   components:
   - type: LimitedCharges
     charges: 0
-  - type: RCD
-    availablePrototypes:
-    - WallSolid
-    - FloorSteel
-    - Plating
-    - Catwalk
-    - Grille
-    - Window
-    - WindowDirectional
-    - WindowReinforcedDirectional
-    - ReinforcedWindow
-    - Airlock
-    - AirlockGlass
-    - Firelock
 
 - type: entity
   id: RCDRecharging

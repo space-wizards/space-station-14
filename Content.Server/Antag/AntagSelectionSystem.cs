@@ -264,7 +264,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// </summary>
     public void MakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, bool ignoreSpawner = false)
     {
-        var antagEnt = (EntityUid?) null;
+        EntityUid? antagEnt = null;
         var isSpawner = false;
 
         if (session != null)
@@ -285,17 +285,16 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         {
             var getEntEv = new AntagSelectEntityEvent(session, ent);
             RaiseLocalEvent(ent, ref getEntEv, true);
-
-            if (!getEntEv.Handled)
-            {
-                throw new InvalidOperationException($"Attempted to make {session} antagonist in gamerule {ToPrettyString(ent)} but there was no valid entity for player.");
-            }
-
             antagEnt = getEntEv.Entity;
         }
 
         if (antagEnt is not { } player)
+        {
+            Log.Error($"Attempted to make {session} antagonist in gamerule {ToPrettyString(ent)} but there was no valid entity for player.");
+            if (session != null)
+                ent.Comp.SelectedSessions.Remove(session);
             return;
+        }
 
         var getPosEv = new AntagSelectLocationEvent(session, ent);
         RaiseLocalEvent(ent, ref getPosEv, true);
@@ -313,6 +312,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (!TryComp<GhostRoleAntagSpawnerComponent>(player, out var spawnerComp))
             {
                 Log.Error($"Antag spawner {player} does not have a GhostRoleAntagSpawnerComponent.");
+                if (session != null)
+                    ent.Comp.SelectedSessions.Remove(session);
                 return;
             }
 
@@ -327,16 +328,13 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (session != null)
         {
-            var curMind = session.GetMind();
-            if (curMind == null)
-            {
-                curMind = _mind.CreateMind(session.UserId, Name(antagEnt.Value));
-                _mind.SetUserId(curMind.Value, session.UserId);
-            }
+            var curMind = _mind.CreateMind(session.UserId, Name(antagEnt.Value));
+            _mind.SetUserId(curMind, session.UserId);
 
-            _mind.TransferTo(curMind.Value, antagEnt, ghostCheckOverride: true);
-            _role.MindAddRoles(curMind.Value, def.MindComponents);
-            ent.Comp.SelectedMinds.Add((curMind.Value, Name(player)));
+            _mind.TransferTo(curMind, antagEnt, ghostCheckOverride: true);
+            _role.MindAddRoles(curMind, def.MindComponents, null, true);
+            ent.Comp.SelectedMinds.Add((curMind, Name(player)));
+
             SendBriefing(session, def.Briefing);
         }
 
@@ -374,6 +372,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// </summary>
     public bool IsSessionValid(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, EntityUid? mind = null)
     {
+        // TODO ROLE TIMERS
+        // Check if antag role requirements are met
+
         if (session == null)
             return true;
 

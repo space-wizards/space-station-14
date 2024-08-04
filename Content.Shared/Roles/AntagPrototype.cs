@@ -42,7 +42,9 @@ public sealed partial class AntagPrototype : IPrototype
     /// <summary>
     ///     Requirements that must be met to opt in to this antag role.
     /// </summary>
-    [DataField("requirements")]
+    // TODO ROLE TIMERS
+    // Actually check if the requirements are met. Because apparently this is actually unused.
+    [DataField, Access(typeof(SharedRoleSystem), Other = AccessPermissions.None)]
     public HashSet<JobRequirement>? Requirements;
 
     /// <summary>

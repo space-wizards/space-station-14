@@ -78,3 +78,15 @@
     sprite: Clothing/OuterClothing/Vests/vest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/vest.rsi
+
+#Tank Harness
+- type: entity
+  parent: [ClothingOuterBase, AllowSuitStorageClothingGasTanks]
+  id: ClothingOuterVestTank
+  name: tank harness
+  description: A simple harness that can hold a gas tank.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/tankharness.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/tankharness.rsi

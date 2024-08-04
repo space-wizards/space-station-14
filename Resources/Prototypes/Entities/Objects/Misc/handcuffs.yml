@@ -26,8 +26,9 @@
   - type: GuideHelp
     guides:
     - Security
+    - Antagonists
   - type: UseDelay
-    delay: 6
+    delay: 3
 
 - type: entity
   name: makeshift handcuffs
