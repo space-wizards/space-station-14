@@ -40,7 +40,7 @@
                           Visible="False">
                 <Button Name="EntityReplaceButton" Access="Public" ToggleMode="True"
                         SetHeight="48"
-                        StyleClasses="ButtonSquare" Text="Replace" HorizontalExpand="True" />
+                        StyleClasses="ButtonSquare" Text="{Loc 'mapping-replace'}" HorizontalExpand="True" />
                 <OptionButton Name="EntityPlacementMode" Access="Public"
                               SetHeight="48"
                               StyleClasses="ButtonSquare" TooltipDelay="0"
@@ -50,10 +50,10 @@
             <BoxContainer Orientation="Horizontal">
                 <Button Name="EraseEntityButton" Access="Public" HorizontalExpand="True"
                         SetHeight="48"
-                        ToggleMode="True" Text="Erase Entity" StyleClasses="ButtonSquare" />
+                        ToggleMode="True" Text="{Loc 'mapping-erase-entity'}" StyleClasses="ButtonSquare" />
                 <Button Name="EraseDecalButton" Access="Public" HorizontalExpand="True"
                         SetHeight="48"
-                        ToggleMode="True" Text="Erase Decal" StyleClasses="ButtonSquare" />
+                        ToggleMode="True" Text="{Loc 'mapping-erase-decal'}" StyleClasses="ButtonSquare" />
             </BoxContainer>
             <widgets:ChatBox Visible="False" />
         </BoxContainer>
