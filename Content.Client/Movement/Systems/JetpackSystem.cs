@@ -64,15 +64,15 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
     private void CreateParticles(EntityUid uid)
     {
+        var uidXform = Transform(uid);
         // Don't show particles unless the user is moving.
-        if (Container.TryGetContainingContainer(uid, out var container) &&
+        if (Container.TryGetContainingContainer((uid, uidXform, null), out var container) &&
             TryComp<PhysicsComponent>(container.Owner, out var body) &&
             body.LinearVelocity.LengthSquared() < 1f)
         {
             return;
         }
 
-        var uidXform = Transform(uid);
         var coordinates = uidXform.Coordinates;
         var gridUid = _transform.GetGrid(coordinates);
 
