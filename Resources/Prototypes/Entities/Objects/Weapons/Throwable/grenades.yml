@@ -80,6 +80,7 @@
   - type: GuideHelp
     guides:
     - Security
+    - Antagonists
 
 - type: entity
   id: GrenadeFlashEffect
