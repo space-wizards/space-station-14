@@ -60,13 +60,18 @@ namespace Content.Client.Verbs.UI
 
         public void OnStateEntered(MappingState state)
         {
+            _context.OnContextKeyEvent += OnKeyBindDown;
+            _context.OnContextClosed += Close;
             _verbSystem.OnVerbsResponse += HandleVerbsResponse;
         }
 
         public void OnStateExited(MappingState state)
         {
+            _context.OnContextKeyEvent -= OnKeyBindDown;
+            _context.OnContextClosed -= Close;
             if (_verbSystem != null)
                 _verbSystem.OnVerbsResponse -= HandleVerbsResponse;
+            Close();
         }
 
         /// <summary>
