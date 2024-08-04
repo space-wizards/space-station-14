@@ -11,6 +11,7 @@ using Content.Server.Stack;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Utility;
 using Robust.Shared.Prototypes;
+using Content.Shared.Interaction;
 
 namespace Content.Server.Animals.Systems;
 
@@ -33,6 +34,7 @@ public sealed class ShearableSystem : EntitySystem
 
         SubscribeLocalEvent<ShearableComponent, GetVerbsEvent<AlternativeVerb>>(AddShearVerb);
         SubscribeLocalEvent<ShearableComponent, ShearingDoAfterEvent>(OnSheared);
+        SubscribeLocalEvent<ShearableComponent, InteractUsingEvent>(OnClicked);
     }
 
     /// <summary>
@@ -64,7 +66,23 @@ public sealed class ShearableSystem : EntitySystem
         // Triggers the ShearingDoAfter event.
         _doAfterSystem.TryStartDoAfter(doargs);
     }
+    /// <summary>
+    ///     Handles shearing when left-click the entity.
+    ///     Only checks if there's an item being held and that is has the specified quality,
+    ///     then calls AttemptShear()
+    /// </summary>
+    private void OnClicked(Entity<ShearableComponent> ent, ref InteractUsingEvent args)
+    {
+        // Check the player is holding an item and that it has the defined quality.
+        if (args.Used == null ||
+            // Checks if you're using an item with the toolQuality component quality.
+            !_tool.HasQuality(args.Used, ent.Comp.ToolQuality)
+            )
 
+            return;
+
+        AttemptShear(ent.Owner, args.User, args.Used);
+    }
     /// <summary>
     ///     Called by the ShearingDoAfter event.
     ///     Checks the action hasn't been cancelled, already handled, and that there's an item in the player's hand.

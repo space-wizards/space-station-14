@@ -1018,7 +1018,7 @@
     targetSolutionName: wool
     shearedProductID: Cotton # Cotton is spawned because there is no wool item.
     productsPerSolution: 0.2 # To moths 1 Wool is worth 3 Hunger; 1 Cotton is worth 15 Hunger. Therefore, 5 Wool needed for 1 Cotton. 1 ÷ 5 = 0.2
-    toolQuality: Cutting # blank for any item / no item.
+    toolQuality: Cutting # Wirecutters and barber's scissors.
   - type: Food
     solution: wool
     requiresSpecialDigestion: true

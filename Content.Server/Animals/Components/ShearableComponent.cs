@@ -7,7 +7,7 @@ namespace Content.Server.Animals.Components;
 
 /// <summary>
 ///     Lets an entity be sheared by a tool to consume a reagent to spawn an amount of an item.
-///     For example, sheep can be sheared to consume woolSolution to spawn cotton.
+///     For example, sheep can be sheared to consume wool Solution to spawn cotton.
 /// </summary>
 
 [RegisterComponent]
