@@ -394,7 +394,7 @@
   targetNode: half
   category: construction-category-utilities
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
+  canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeHalf
@@ -408,7 +408,7 @@
   targetNode: straight
   category: construction-category-utilities
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
+  canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeStraight
@@ -422,7 +422,7 @@
   targetNode: bend
   category: construction-category-utilities
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
+  canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeBend
@@ -436,7 +436,7 @@
   targetNode: tjunction
   category: construction-category-utilities
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
+  canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeTJunction
@@ -450,7 +450,7 @@
   targetNode: fourway
   category: construction-category-utilities
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
+  canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeFourway
@@ -489,12 +489,12 @@
   canBuildInImpassable: false
   icon:
     sprite: Structures/Piping/Atmospherics/vent.rsi
-    state: vent_off
+    state: vent_passive
   layers:
   - sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeHalf
   - sprite: Structures/Piping/Atmospherics/vent.rsi
-    state: vent_off
+    state: vent_passive
   conditions:
     - !type:NoUnstackableInTile
 
@@ -790,7 +790,7 @@
 # INTERCOM
 - type: construction
   name: intercom
-  id: IntercomAssesmbly
+  id: IntercomAssembly
   graph: Intercom
   startNode: start
   targetNode: intercom

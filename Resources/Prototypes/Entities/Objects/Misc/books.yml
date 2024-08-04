@@ -108,12 +108,13 @@
     openOnActivation: true
     guides:
     - Bartender
+    - Drinks
 
 - type: entity
-  id: BookChefGaming
+  id: BookHowToCookForFortySpaceman
   parent: BaseItem
-  name: chef gaming
-  description: A book about cooking written by a gamer chef.
+  name: How To Cook For Forty Spacemen
+  description: A book about cooking written by a space chef.
   components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi
@@ -130,6 +131,7 @@
     openOnActivation: true
     guides:
     - Chef
+    - FoodRecipes
 
 - type: entity
   id: BookLeafLoversSecret
@@ -155,6 +157,7 @@
     openOnActivation: true
     guides:
     - Botany
+    - Chemicals
 
 - type: entity
   id: BookEngineersHandbook
@@ -231,6 +234,7 @@
     openOnActivation: true
     guides:
     - Security
+    - Antagonists
 
 - type: entity
   id: BookHowToKeepStationClean
@@ -352,6 +356,35 @@
     openOnActivation: true
     guides:
     - Chemicals
+    - Chemist
+
+- type: entity
+  id: BookSpaceLaw
+  parent: BaseItem
+  name: space law
+  description: A set of Nanotrasen guidelines for keeping law and order on their space stations.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_strong
+      color: "#87011c"
+    - state: icon_law
+      color: "#f7d61a"
+  - type: Tag
+    tags:
+    - Book
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - SpaceLaw
+  - type: MeleeWeapon # so you can beat stupid cadets
+    soundHit:
+      collection: Punch
+    damage:
+      types:
+        Blunt: 1
 
 - type: entity
   parent: BookBase

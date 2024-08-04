@@ -47,7 +47,7 @@
     - type: GuideHelp
       openOnActivation: true
       guides:
-        - Defusal
+      - Defusal
 
 - type: entity
   parent: BaseHardBomb

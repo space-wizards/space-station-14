@@ -6,10 +6,11 @@ using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
-using Robust.Shared.Prototypes;
+using Content.Shared.Timing;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
-using Content.Shared.Whitelist;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Ninja.Systems;
 
@@ -20,12 +21,12 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
 {
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
     {
@@ -38,16 +39,18 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
     /// <summary>
     /// Stun clicked mobs on the whitelist, if there is enough power.
     /// </summary>
-    private void OnBeforeInteractHand(EntityUid uid, StunProviderComponent comp, BeforeInteractHandEvent args)
+    private void OnBeforeInteractHand(Entity<StunProviderComponent> ent, ref BeforeInteractHandEvent args)
     {
         // TODO: generic check
+        var (uid, comp) = ent;
         if (args.Handled || comp.BatteryUid == null || !_gloves.AbilityCheck(uid, args, out var target))
             return;
 
-        if (target == uid || _whitelistSystem.IsWhitelistFail(comp.Whitelist, target))
+        if (target == uid || _whitelist.IsWhitelistFail(comp.Whitelist, target))
             return;
 
-        if (_timing.CurTime < comp.NextStun)
+        var useDelay = EnsureComp<UseDelayComponent>(uid);
+        if (_useDelay.IsDelayed((uid, useDelay), id: comp.DelayId))
             return;
 
         // take charge from battery
@@ -63,13 +66,14 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
         _stun.TryParalyze(target, comp.StunTime, refresh: false);
 
         // short cooldown to prevent instant stunlocking
-        comp.NextStun = _timing.CurTime + comp.Cooldown;
+        _useDelay.SetLength((uid, useDelay), comp.Cooldown, id: comp.DelayId);
+        _useDelay.TryResetDelay((uid, useDelay), id: comp.DelayId);
 
         args.Handled = true;
     }
 
-    private void OnBatteryChanged(EntityUid uid, StunProviderComponent comp, ref NinjaBatteryChangedEvent args)
+    private void OnBatteryChanged(Entity<StunProviderComponent> ent, ref NinjaBatteryChangedEvent args)
     {
-        SetBattery(uid, args.Battery, comp);
+        SetBattery((ent, ent.Comp), args.Battery);
     }
 }
