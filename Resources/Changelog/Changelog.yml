@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Tile weighting for many events and variation rules (messes, dragons,
-      revenants, kudzu, gasleak, rods, etc) has been fixed. They will now no longer
-      spawn disproportionately often on smaller grids.
-    type: Add
-  id: 6539
-  time: '2024-05-06T11:25:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27724
 - author: Blackern5000
   changes:
   - message: Burn damage is now half as effective at cauterizing wounds as it was
@@ -3782,3 +3773,11 @@
   id: 7038
   time: '2024-08-04T03:32:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30462
+- author: DrSmugleaf
+  changes:
+  - message: The Toggle Internals verb no longer shows up in the context menu if no
+      breathing tool is equipped and internals are off.
+    type: Tweak
+  id: 7039
+  time: '2024-08-04T03:34:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30622
