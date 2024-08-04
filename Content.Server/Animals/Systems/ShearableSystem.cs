@@ -8,11 +8,12 @@ using Content.Server.Popups;
 using Content.Shared.Popups;
 using Content.Shared.IdentityManagement;
 using Content.Server.Stack;
-using Content.Shared.Stacks;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.Prototypes;
+using Content.Shared.Chemistry.Components;
+using Robust.Shared.GameObjects;
+using Content.Shared.Toggleable;
 
 namespace Content.Server.Animals.Systems;
 
@@ -28,12 +29,15 @@ public sealed class ShearableSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly StackSystem _stackSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ShearableComponent, GetVerbsEvent<AlternativeVerb>>(AddShearVerb);
         SubscribeLocalEvent<ShearableComponent, ShearingDoAfterEvent>(OnSheared);
+        SubscribeLocalEvent<ShearableComponent, SolutionContainerChangedEvent>(OnSolutionChange);
     }
 
     /// <summary>
@@ -67,6 +71,36 @@ public sealed class ShearableSystem : EntitySystem
     }
 
     /// <summary>
+    ///     Handles enabling and disabling the ShearableLayer.
+    ///     e.g. in Sheep, it will remove the wool layer when the remaining reagent drops below a level that it can be harvested.
+    ///     the layer is re-added when the reagent is high enough that it can be harvested.
+    /// </summary>
+    private void OnSolutionChange(Entity<ShearableComponent> ent, ref SolutionContainerChangedEvent args)
+    {
+        // Only interested in one solution ignore the rest.
+        if (args.SolutionId != ent.Comp.TargetSolutionName)
+            return;
+
+        // Solution is measured in units but the actual value for 1u is 1000 reagent, so multiply it by 100.
+        // Then, divide by 1 because it's the reagent needed for 1 product.
+        var productsPerSolution = (int)(1 / ent.Comp.ProductsPerSolution * 100);
+
+        TryComp<AppearanceComponent>(ent.Owner, out var appearance);
+
+        if (args.Solution.Volume.Value < productsPerSolution)
+        {
+            // Remove wool layer
+            _appearance.SetData(ent.Owner, ToggleVisuals.Toggled, false, appearance);
+        }
+        else
+        {
+            // Add wool layer
+            _appearance.SetData(ent.Owner, ToggleVisuals.Toggled, true, appearance);
+        }
+
+    }
+
+    /// <summary>
     ///     Called by the ShearingDoAfter event.
     ///     Checks the action hasn't been cancelled, already handled, and that there's an item in the player's hand.
     ///     Checks that the target shearable creature contains a shearable solution.
@@ -89,10 +123,11 @@ public sealed class ShearableSystem : EntitySystem
         var targetSolutionQuantity = solution.Volume;
 
         // Create a stack object so we can reference its name in localisation.
-        _prototypeManager.TryIndex<StackPrototype>(ent.Comp.ShearedProductID, out var shearedProductStack);
+        _prototypeManager.TryIndex(ent.Comp.ShearedProductID, out var shearedProductStack);
         if (shearedProductStack == null)
         {
-            throw new Exception("Could not resolve shearedProductID to a StackPrototype.");
+            Log.Error($"Could not resolve ShearedProductID \"{ent.Comp.ShearedProductID}\" to a StackPrototype while shearing. Does this item exist?");
+            return;
         }
 
         // Failure message, if the shearable creature has no targetSolutionName to be sheared.
@@ -126,7 +161,7 @@ public sealed class ShearableSystem : EntitySystem
 
         // Work out the maxium stack size of the product.
         var maxProductsToSpawnValue = 0;
-        var maxProductsToSpawn = _prototypeManager.Index((ProtoId<StackPrototype>)ent.Comp.ShearedProductID).MaxCount;
+        var maxProductsToSpawn = _prototypeManager.Index(ent.Comp.ShearedProductID).MaxCount;
         if (maxProductsToSpawn.HasValue)
         {
             maxProductsToSpawnValue = maxProductsToSpawn.Value;

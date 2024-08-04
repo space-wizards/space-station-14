@@ -50,6 +50,24 @@
           1
         ]
       ]
+    },
+    {
+      "name": "wool_greyscale",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
     }
   ]
 }

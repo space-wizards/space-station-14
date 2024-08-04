@@ -955,8 +955,18 @@
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: sheep
+      state: sheep_harvested
       sprite: Mobs/Animals/sheep.rsi
+    - map: ["enum.ToggleVisuals.Layer"]
+      state: wool_greyscale
+      sprite: Mobs/Animals/sheep.rsi
+      visible: true
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
   - type: Fixtures
     fixtures:
       fix1:
@@ -985,7 +995,7 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: sheep
+        Base: sheep_harvested
       Critical:
         Base: dead
       Dead:
@@ -1007,11 +1017,7 @@
   - type: Shearable
     targetSolutionName: wool
     shearedProductID: Cotton # Cotton is spawned because there is no wool item.
-    # How much product should 1u of solution spawn?
-    # A value of 5 will spawn 5 products for every 1u of solution. 25u of solution would spawn 125 product.
-    # A value of 0.2 will spawn 0.2 products for every 1u of solution. 25u of solution would spawn 5 product.
-    # Keep in mind, a maximum of 30 products can be in a stack, the remaining solution will be truncated and left unchanged.
-    productsPerSolution: 0.2 # To moths 1 Wool is worth 3 Hunger; 1 Cotton is worth 15 Hunger. Therefore, 5 Wool needed for 1 Cotton.
+    productsPerSolution: 0.2 # To moths 1 Wool is worth 3 Hunger; 1 Cotton is worth 15 Hunger. Therefore, 5 Wool needed for 1 Cotton. 1 ÷ 5 = 0.2
     toolQuality: Cutting # blank for any item / no item.
   - type: Food
     solution: wool
@@ -1027,6 +1033,7 @@
       gender: female # Here because of UdderComponent
   - type: InteractionPopup
     successChance: 0.8 #SHEEP so FRIEND!!! HUG! SQUISHY! SOFT!
+    interactDelay: 1
     interactSuccessString: petting-success-sheep
     interactFailureString: petting-failure-sheep
     interactSuccessSpawn: EffectHearts #🥰
@@ -1037,12 +1044,12 @@
     - Passive
   - type: Body
     prototype: AnimalRuminant
-  - type: NPCRetaliation
-    attackMemoryLength: 5
-  - type: FactionException
   - type: HTN
     rootTask:
-      task: RuminantHostileCompound
+      task: RuminantCompound
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0.6
+    baseSprintSpeed: 0.8
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity

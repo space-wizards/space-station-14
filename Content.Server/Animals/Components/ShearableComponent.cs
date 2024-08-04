@@ -1,9 +1,7 @@
-using Content.Server.Animals.Systems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Content.Shared.Stacks;
+
 
 namespace Content.Server.Animals.Components;
 
@@ -16,20 +14,25 @@ namespace Content.Server.Animals.Components;
 public sealed partial class ShearableComponent : Component
 {
     /// <summary>
-    ///     A pre-existing solution inside the target entity that will be removed upon being sheared.
+    ///     A pre-existing solution inside the target entity that will be subtracted from upon being sheared.
+    ///     e.g. wooly creatures use "wool"
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public string TargetSolutionName = string.Empty;
 
     /// <summary>
-    ///     A product that will be spawned upon the creature being sheared.
+    ///     An ID of a stackable product that will be spawned upon the creature being sheared.
+    ///     e.g. Sheep use "Cotton".
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public string ShearedProductID = string.Empty;
+    public ProtoId<StackPrototype> ShearedProductID;
 
     /// <summary>
     ///     How many products will be spawned per solution.
-    ///     For example, 0.2 would spawn 1 shearedProductID for every 5 targetSolutionID consumed.
+    ///     A value of 5 will spawn 5 products for every 1u of solution. 25u of solution would spawn 125 product.
+    ///     A value of 0.2 will spawn 0.2 products for every 1u of solution. 25u of solution would spawn 5 product.
+    ///     Keep in mind, only up to the maximum stack of the specified product will be spawned,
+    ///     the remaining solution will be truncated and left unchanged. In these cases the player can shear more than once to get more.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public float ProductsPerSolution = 0;
