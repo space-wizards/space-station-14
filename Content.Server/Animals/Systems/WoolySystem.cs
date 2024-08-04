@@ -147,15 +147,7 @@ public sealed class WoolySystem : EntitySystem
     ///     If it is, then the wooly layer is removed.
     private void OnMobStateChanged(Entity<WoolyComponent> ent, ref MobStateChangedEvent args)
     {
-        if (args.NewMobState == MobState.Dead || args.NewMobState == MobState.Critical)
-        {
-            TryComp<AppearanceComponent>(ent.Owner, out var appearance);
-            _appearance.SetData(ent.Owner, ToggleVisuals.Toggled, false, appearance);
-        }
-        else
-        {
-            UpdateWoolLayer(ent);
-        }
+        UpdateWoolLayer(ent);
     }
 
 }
