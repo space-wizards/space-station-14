@@ -361,7 +361,7 @@
   name: dragon flesh
   parent: FoodMeatBase
   id: FoodMeatDragon
-  description: The dense meat of the space-era apex predator is oozing with it's mythical ichor. Ironically, best eaten raw.
+  description: The dense meat of the space-era apex predator is oozing with its mythical ichor. Ironically, best eaten raw.
   components:
   - type: Tag
     tags:
