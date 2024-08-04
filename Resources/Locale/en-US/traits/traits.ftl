@@ -50,3 +50,12 @@ trait-cowboy-desc = You speak with a distinct cowboy accent!
 
 trait-italian-name = Italian accent
 trait-italian-desc = Mamma mia! You seem to have lived in space italy!
+
+trait-french-name = French accent
+trait-french-desc = Your accent seems to have a certain «je ne sais quoi».
+
+trait-spanish-name = Spanish accent
+trait-spanish-desc = Hola señor, 
+
+trait-russian-name = Russian accent
+trait-russian-desc = Your babushka would be proud.
