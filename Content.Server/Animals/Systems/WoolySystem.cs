@@ -5,6 +5,9 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Timing;
+using Content.Shared.Toggleable;
+using Content.Shared.Chemistry.EntitySystems;
+
 
 namespace Content.Server.Animals.Systems;
 
@@ -18,12 +21,14 @@ public sealed class WoolySystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<WoolyComponent, BeforeFullyEatenEvent>(OnBeforeFullyEaten);
+        SubscribeLocalEvent<WoolyComponent, SolutionContainerChangedEvent>(OnSolutionChange);
     }
 
     public override void Update(float frameTime)
@@ -64,4 +69,33 @@ public sealed class WoolySystem : EntitySystem
         // don't want moths to delete goats after eating them
         args.Cancel();
     }
+
+
+    /// <summary>
+    ///     Handles enabling and disabling the wooly layer (if one exists).
+    ///     e.g. in Sheep, it will remove the wool layer when the remaining reagent drops to 0.
+    ///     the layer is re-added when the reagent is high enough that it can be harvested.
+    ///     Check the sheep's Sprite and GenericVisualizer components for an example of how to add a wooly layer to your animal.
+    /// </summary>
+    private void OnSolutionChange(Entity<WoolyComponent> ent, ref SolutionContainerChangedEvent args)
+    {
+        // Only interested in wool solution, ignore the rest.
+        if (args.SolutionId != "wool")
+            return;
+
+        TryComp<AppearanceComponent>(ent.Owner, out var appearance);
+
+        if (args.Solution.Volume.Value <= 0)
+        {
+            // Remove wool layer
+            _appearance.SetData(ent.Owner, ToggleVisuals.Toggled, false, appearance);
+        }
+        else
+        {
+            // Add wool layer
+            _appearance.SetData(ent.Owner, ToggleVisuals.Toggled, true, appearance);
+        }
+
+    }
+
 }

@@ -11,9 +11,6 @@ using Content.Server.Stack;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Utility;
 using Robust.Shared.Prototypes;
-using Content.Shared.Chemistry.Components;
-using Robust.Shared.GameObjects;
-using Content.Shared.Toggleable;
 
 namespace Content.Server.Animals.Systems;
 
@@ -29,7 +26,6 @@ public sealed class ShearableSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly StackSystem _stackSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -37,7 +33,6 @@ public sealed class ShearableSystem : EntitySystem
 
         SubscribeLocalEvent<ShearableComponent, GetVerbsEvent<AlternativeVerb>>(AddShearVerb);
         SubscribeLocalEvent<ShearableComponent, ShearingDoAfterEvent>(OnSheared);
-        SubscribeLocalEvent<ShearableComponent, SolutionContainerChangedEvent>(OnSolutionChange);
     }
 
     /// <summary>
@@ -68,36 +63,6 @@ public sealed class ShearableSystem : EntitySystem
 
         // Triggers the ShearingDoAfter event.
         _doAfterSystem.TryStartDoAfter(doargs);
-    }
-
-    /// <summary>
-    ///     Handles enabling and disabling the ShearableLayer.
-    ///     e.g. in Sheep, it will remove the wool layer when the remaining reagent drops below a level that it can be harvested.
-    ///     the layer is re-added when the reagent is high enough that it can be harvested.
-    /// </summary>
-    private void OnSolutionChange(Entity<ShearableComponent> ent, ref SolutionContainerChangedEvent args)
-    {
-        // Only interested in one solution ignore the rest.
-        if (args.SolutionId != ent.Comp.TargetSolutionName)
-            return;
-
-        // Solution is measured in units but the actual value for 1u is 1000 reagent, so multiply it by 100.
-        // Then, divide by 1 because it's the reagent needed for 1 product.
-        var productsPerSolution = (int)(1 / ent.Comp.ProductsPerSolution * 100);
-
-        TryComp<AppearanceComponent>(ent.Owner, out var appearance);
-
-        if (args.Solution.Volume.Value < productsPerSolution)
-        {
-            // Remove wool layer
-            _appearance.SetData(ent.Owner, ToggleVisuals.Toggled, false, appearance);
-        }
-        else
-        {
-            // Add wool layer
-            _appearance.SetData(ent.Owner, ToggleVisuals.Toggled, true, appearance);
-        }
-
     }
 
     /// <summary>
