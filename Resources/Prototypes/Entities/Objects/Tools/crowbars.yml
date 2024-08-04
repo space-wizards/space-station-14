@@ -94,7 +94,6 @@
 
 # Autolathe (green) Crowbar
 - type: entity
-  name: emergency crowbar
   parent: BaseCrowbar
   id: CrowbarGreen
   description: A multipurpose tool to pry open doors and fight interdimensional invaders, printed from an autolathe.
@@ -129,7 +128,6 @@
 
 # Toolbox (orange) Crowbar
 - type: entity
-  name: emergency crowbar
   parent: BaseCrowbar
   id: CrowbarOrange
   description: A multipurpose tool to pry open doors and fight interdimensional invaders, found in toolboxes.
@@ -164,7 +162,6 @@
 
 # Engineering (yellow) Crowbar
 - type: entity
-  name: emergency crowbar
   parent: BaseCrowbar
   id: CrowbarYellow
   description: A pocket crowbar designed to pry open doors and firelocks during power outages, dispensed from Engineering.
