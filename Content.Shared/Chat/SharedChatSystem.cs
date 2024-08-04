@@ -241,6 +241,7 @@ public abstract class SharedChatSystem : EntitySystem
 
     /// <summary>
     /// Injects a tag around all found instances of a specific string in a ChatMessage.
+    /// Excludes strings inside other tags and brackets.
     /// </summary>
     public static string InjectTagAroundString(ChatMessage message, string targetString, string tag, string? tagParameter)
     {
