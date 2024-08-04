@@ -1,15 +1,6 @@
 ﻿Entries:
 - author: mirrorcult
   changes:
-  - message: Event weights have been tweaked across the board, and some events removed
-      (such as false alarm) to hopefully allow for a more interesting and varied slate
-      of random occurrences per round.
-    type: Add
-  id: 6538
-  time: '2024-05-06T10:10:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27721
-- author: mirrorcult
-  changes:
   - message: Tile weighting for many events and variation rules (messes, dragons,
       revenants, kudzu, gasleak, rods, etc) has been fixed. They will now no longer
       spawn disproportionately often on smaller grids.
@@ -3784,3 +3775,10 @@
   id: 7037
   time: '2024-08-03T14:07:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30430
+- author: Ian321
+  changes:
+  - message: Help menus now include the linked guides.
+    type: Fix
+  id: 7038
+  time: '2024-08-04T03:32:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30462
