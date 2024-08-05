@@ -1780,6 +1780,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ICShowSSDIndicator =
             CVarDef.Create("ic.show_ssd_indicator", true, CVar.CLIENTONLY);
 
+        /// <summary>
+        /// Forces SSD characters to sleep
+        /// </summary>
+        public static readonly CVarDef<bool> ICSSDSleep =
+            CVarDef.Create("ic.ssd_sleep", true, CVar.SERVERONLY);
+
         /*
          * Salvage
          */

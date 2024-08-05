@@ -1,4 +1,6 @@
 ﻿using Content.Shared.Bed.Sleep;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 
 namespace Content.Shared.SSDIndicator;
@@ -8,6 +10,8 @@ namespace Content.Shared.SSDIndicator;
 /// </summary>
 public sealed class SSDIndicatorSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
+
     public override void Initialize()
     {
         SubscribeLocalEvent<SSDIndicatorComponent, PlayerAttachedEvent>(OnPlayerAttached);
@@ -17,14 +21,15 @@ public sealed class SSDIndicatorSystem : EntitySystem
     private void OnPlayerAttached(EntityUid uid, SSDIndicatorComponent component, PlayerAttachedEvent args)
     {
         component.IsSSD = false;
-        EntityManager.RemoveComponent<ForcedSleepingComponent>(uid);
+        if (_cfgManager.GetCVar(CVars.ICSSDSleep))
+            EntityManager.RemoveComponent<ForcedSleepingComponent>(uid);
         Dirty(uid, component);
     }
 
     private void OnPlayerDetached(EntityUid uid, SSDIndicatorComponent component, PlayerDetachedEvent args)
     {
         component.IsSSD = true;
-        if (!TerminatingOrDeleted(uid))
+        if (_cfgManager.GetCVar(CVars.ICSSDSleep) || !TerminatingOrDeleted(uid))
             EnsureComp<ForcedSleepingComponent>(uid);
         Dirty(uid, component);
     }
