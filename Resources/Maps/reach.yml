@@ -7252,8 +7252,6 @@ entities:
       pos: 24.5,0.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 12
 - proto: FirelockGlass
@@ -10245,8 +10243,6 @@ entities:
       pos: -4.5,-7.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 7
       - 6
@@ -10513,8 +10509,6 @@ entities:
       pos: -4.5,-8.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 6
     - type: AtmosPipeColor
