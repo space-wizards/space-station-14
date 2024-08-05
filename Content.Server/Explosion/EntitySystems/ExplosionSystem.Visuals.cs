@@ -1,14 +1,14 @@
 using System.Numerics;
 using Content.Shared.Explosion;
 using Content.Shared.Explosion.Components;
+using Content.Shared.Explosion.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-
 namespace Content.Server.Explosion.EntitySystems;
 
 // This part of the system handled send visual / overlay data to clients.
-public sealed partial class ExplosionSystem : EntitySystem
+public sealed partial class ExplosionSystem : SharedExplosionSystem
 {
     public void InitVisuals()
     {

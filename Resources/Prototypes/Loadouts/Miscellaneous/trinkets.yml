@@ -9,11 +9,8 @@
       time: 3600 # 1 hour
 
 # Misc #GreyStation
-- type: loadout
-  id: ToyFigurineGreytider
-  equipment: ToyFigurineGreytider
 
-- type: startingGear
+- type: loadout
   id: ToyFigurineGreytider
   storage:
     back:
@@ -21,29 +18,17 @@
 
 - type: loadout
   id: HarmonicaInstrument
-  equipment: HarmonicaInstrument
-
-- type: startingGear
-  id: HarmonicaInstrument
   storage:
     back:
     - HarmonicaInstrument
 
 - type: loadout
   id: CoinQuarter
-  equipment: CoinQuarter
-
-- type: startingGear
-  id: CoinQuarter
   storage:
     back:
     - CoinQuarter
 
 - type: loadout
-  id: BalloonNT
-  equipment: BalloonNT
-
-- type: startingGear
   id: BalloonNT
   storage:
     back:
@@ -52,19 +37,11 @@
 # Plushies
 - type: loadout
   id: PlushieLizard
-  equipment: PlushieLizard
-
-- type: startingGear
-  id: PlushieLizard
   storage:
     back:
     - PlushieLizard
-    
-- type: loadout
-  id: PlushieSpaceLizard
-  equipment: PlushieSpaceLizard
 
-- type: startingGear
+- type: loadout
   id: PlushieSpaceLizard
   storage:
     back:
@@ -73,19 +50,11 @@
 # Smokeables
 - type: loadout
   id: Lighter
-  equipment: Lighter
-
-- type: startingGear
-  id: Lighter
   storage:
     back:
     - Lighter
 
 - type: loadout #GreyStation
-  id: FlippoLighter
-  equipment: FlippoLighter
-
-- type: startingGear #GreyStation
   id: FlippoLighter
   storage:
     back:
@@ -93,19 +62,11 @@
 
 - type: loadout #GreyStation
   id: Matchbox
-  equipment: Matchbox
-
-- type: startingGear #GreyStation
-  id: Matchbox
   storage:
     back:
     - Matchbox
 
 - type: loadout
-  id: CigPackGreen
-  equipment: CigPackGreen
-
-- type: startingGear
   id: CigPackGreen
   storage:
     back:
@@ -113,19 +74,11 @@
 
 - type: loadout
   id: CigPackRed
-  equipment: CigPackRed
-
-- type: startingGear
-  id: CigPackRed
   storage:
     back:
     - CigPackRed
 
 - type: loadout
-  id: CigPackBlue
-  equipment: CigPackBlue
-
-- type: startingGear
   id: CigPackBlue
   storage:
     back:
@@ -133,36 +86,24 @@
 
 - type: loadout
   id: CigPackBlack
-  equipment: CigPackBlack
-
-- type: startingGear
-  id: CigPackBlack
   storage:
     back:
     - CigPackBlack
 
 - type: loadout
   id: CigarCase
-  equipment: CigarCase
   effects:
   - !type:GroupLoadoutEffect
     proto: Command
-
-- type: startingGear
-  id: CigarCase
   storage:
     back:
     - CigarCase
 
 - type: loadout
   id: CigarGold
-  equipment: CigarGold
   effects:
   - !type:GroupLoadoutEffect
     proto: Command
-
-- type: startingGear
-  id: CigarGold
   storage:
     back:
     - CigarGold
@@ -170,19 +111,11 @@
 # Pins
 - type: loadout
   id: ClothingNeckLGBTPin
-  equipment: ClothingNeckLGBTPin
-
-- type: startingGear
-  id: ClothingNeckLGBTPin
   storage:
     back:
     - ClothingNeckLGBTPin
 
 - type: loadout
-  id: ClothingNeckAromanticPin
-  equipment: ClothingNeckAromanticPin
-
-- type: startingGear
   id: ClothingNeckAromanticPin
   storage:
     back:
@@ -190,19 +123,11 @@
 
 - type: loadout
   id: ClothingNeckAsexualPin
-  equipment: ClothingNeckAsexualPin
-
-- type: startingGear
-  id: ClothingNeckAsexualPin
   storage:
     back:
     - ClothingNeckAsexualPin
 
 - type: loadout
-  id: ClothingNeckBisexualPin
-  equipment: ClothingNeckBisexualPin
-
-- type: startingGear
   id: ClothingNeckBisexualPin
   storage:
     back:
@@ -210,19 +135,11 @@
 
 - type: loadout
   id: ClothingNeckIntersexPin
-  equipment: ClothingNeckIntersexPin
-
-- type: startingGear
-  id: ClothingNeckIntersexPin
   storage:
     back:
     - ClothingNeckIntersexPin
 
 - type: loadout
-  id: ClothingNeckLesbianPin
-  equipment: ClothingNeckLesbianPin
-
-- type: startingGear
   id: ClothingNeckLesbianPin
   storage:
     back:
@@ -230,19 +147,11 @@
 
 - type: loadout
   id: ClothingNeckNonBinaryPin
-  equipment: ClothingNeckNonBinaryPin
-
-- type: startingGear
-  id: ClothingNeckNonBinaryPin
   storage:
     back:
     - ClothingNeckNonBinaryPin
 
 - type: loadout
-  id: ClothingNeckPansexualPin
-  equipment: ClothingNeckPansexualPin
-
-- type: startingGear
   id: ClothingNeckPansexualPin
   storage:
     back:
@@ -250,29 +159,17 @@
 
 - type: loadout
   id: ClothingNeckTransPin
-  equipment: ClothingNeckTransPin
-
-- type: startingGear
-  id: ClothingNeckTransPin
   storage:
     back:
     - ClothingNeckTransPin
 
 - type: loadout
   id: ClothingNeckAutismPin
-  equipment: ClothingNeckAutismPin
-
-- type: startingGear
-  id: ClothingNeckAutismPin
   storage:
     back:
     - ClothingNeckAutismPin
 
 - type: loadout
-  id: ClothingNeckGoldAutismPin
-  equipment: ClothingNeckGoldAutismPin
-
-- type: startingGear
   id: ClothingNeckGoldAutismPin
   storage:
     back:

@@ -97,7 +97,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
             _whitelistSystem.IsBlacklistPass(component.Blacklist, item))
             return false;
 
-        if (Container.TryGetContainingContainer(item, out _) && !Container.TryRemoveFromContainer(item))
+        if (Container.TryGetContainingContainer((item, null, null), out _) && !Container.TryRemoveFromContainer(item))
             return false;
 
         if (user != null)

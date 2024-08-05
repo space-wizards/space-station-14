@@ -47,7 +47,8 @@
   - type: Appearance
   - type: GuideHelp
     guides:
-      - Cyborgs
+    - Cyborgs
+    - Robotics
 
 - type: entity
   parent: MMI
@@ -124,3 +125,4 @@
     - type: GuideHelp
       guides:
       - Cyborgs
+      - Robotics
