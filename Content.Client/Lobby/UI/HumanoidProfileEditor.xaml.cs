@@ -661,7 +661,7 @@ namespace Content.Client.Lobby.UI
                     Profile = Profile?.WithAntagPreference(antag.ID, false);
                     SetDirty();
                 }
-                else if (!_requirements.CheckRoleTime(requirements, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
+                else if (!_requirements.CheckRoleRequirements(requirements, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
                 {
                     selector.LockRequirements(reason);
                     Profile = Profile?.WithAntagPreference(antag.ID, false);
