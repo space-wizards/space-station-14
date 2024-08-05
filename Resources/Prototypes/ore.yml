@@ -59,6 +59,12 @@
   maxOreYield: 3
 
 - type: ore
+  id: OreDiamond
+  oreEntity: DiamondOre1
+  minOreYield: 1
+  maxOreYield: 2
+
+- type: ore
   id: OreQuartzCrab
   oreEntity: MobSpawnCrabQuartz
 

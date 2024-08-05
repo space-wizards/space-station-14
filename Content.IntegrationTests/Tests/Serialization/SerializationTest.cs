@@ -24,7 +24,7 @@ public sealed partial class SerializationTest
 
         Enum value = TestEnum.Bb;
 
-        var node = seriMan.WriteValue(value, notNullableOverride:true);
+        var node = seriMan.WriteValue(value, notNullableOverride: true);
         var valueNode = node as ValueDataNode;
         Assert.That(valueNode, Is.Not.Null);
 
@@ -34,22 +34,22 @@ public sealed partial class SerializationTest
         var errors = seriMan.ValidateNode<Enum>(valueNode).GetErrors();
         Assert.That(errors.Any(), Is.False);
 
-        var deserialized = seriMan.Read<Enum>(node, notNullableOverride:true);
+        var deserialized = seriMan.Read<Enum>(node, notNullableOverride: true);
         Assert.That(deserialized, Is.EqualTo(value));
 
         // Repeat test with enums in a data definitions.
         var data = new TestData
         {
             Value = TestEnum.Cc,
-            Sequence = new() {TestEnum.Dd, TestEnum.Aa}
+            Sequence = [TestEnum.Dd, TestEnum.Aa]
         };
 
-        node = seriMan.WriteValue(data, notNullableOverride:true);
+        node = seriMan.WriteValue(data, notNullableOverride: true);
 
         errors = seriMan.ValidateNode<TestData>(node).GetErrors();
         Assert.That(errors.Any(), Is.False);
 
-        var deserializedData = seriMan.Read<TestData>(node, notNullableOverride:false);
+        var deserializedData = seriMan.Read<TestData>(node, notNullableOverride: false);
 
         Assert.That(deserializedData.Value, Is.EqualTo(data.Value));
         Assert.That(deserializedData.Sequence.Count, Is.EqualTo(data.Sequence.Count));
@@ -60,7 +60,7 @@ public sealed partial class SerializationTest
         Enum genericValue = TestEnum.Bb;
         TestEnum typedValue = TestEnum.Bb;
 
-        var genericNode = seriMan.WriteValue(genericValue, notNullableOverride:true);
+        var genericNode = seriMan.WriteValue(genericValue, notNullableOverride: true);
         var typedNode = seriMan.WriteValue(typedValue);
 
         Assert.That(seriMan.ValidateNode<Enum>(genericNode).GetErrors().Any(), Is.False);
@@ -76,7 +76,7 @@ public sealed partial class SerializationTest
     [DataDefinition]
     private sealed partial class TestData
     {
-        [DataField("value")] public Enum Value = default!;
-        [DataField("sequence")] public List<Enum> Sequence = default!;
+        [DataField] public Enum Value = default!;
+        [DataField] public List<Enum> Sequence = default!;
     }
 }

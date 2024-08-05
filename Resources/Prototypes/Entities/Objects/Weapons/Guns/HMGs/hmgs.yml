@@ -2,7 +2,7 @@
   name: BaseWeaponHeavyMachineGun
   parent: BaseItem
   id: BaseWeaponHeavyMachineGun
-  description: Spray and pray
+  description: Spray and pray.
   abstract: true
   components:
   - type: Sprite

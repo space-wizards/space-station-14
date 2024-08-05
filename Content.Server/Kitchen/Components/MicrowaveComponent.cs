@@ -79,6 +79,9 @@ namespace Content.Server.Kitchen.Components
 
         public Container Storage = default!;
 
+        [DataField]
+        public string ContainerId = "microwave_entity_container";
+
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public int Capacity = 10;
 
@@ -101,6 +104,12 @@ namespace Content.Server.Kitchen.Components
         /// Chance of lightning occurring when we microwave a metallic object
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float LightningChance = .75f;
+
+        /// <summary>
+        /// If this microwave can give ids accesses without exploding
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public bool CanMicrowaveIdsSafely = true;
     }
 
     public sealed class BeingMicrowavedEvent : HandledEntityEventArgs

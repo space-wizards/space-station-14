@@ -1,0 +1,168 @@
+# Instruments
+- type: loadout
+  id: Glockenspiel
+  storage:
+    back:
+    - GlockenspielInstrument
+
+- type: loadout
+  id: MusicBox
+  storage:
+    back:
+    - MusicBoxInstrument
+
+- type: loadout
+  id: Xylophone
+  storage:
+    back:
+    - XylophoneInstrument
+
+- type: loadout
+  id: Microphone
+  storage:
+    back:
+    - MicrophoneInstrument
+
+- type: loadout
+  id: Synthesizer
+  storage:
+    back:
+    - SynthesizerInstrument
+
+- type: loadout
+  id: Kalimba
+  storage:
+    back:
+    - KalimbaInstrument
+
+- type: loadout
+  id: Woodblock
+  storage:
+    back:
+    - WoodblockInstrument
+
+- type: loadout
+  id: ElectricGuitar
+  storage:
+    back:
+    - ElectricGuitarInstrument
+
+- type: loadout
+  id: BassGuitar
+  storage:
+    back:
+    - BassGuitarInstrument
+
+- type: loadout
+  id: RockGuitar
+  storage:
+    back:
+    - RockGuitarInstrument
+
+- type: loadout
+  id: AcousticGuitar
+  storage:
+    back:
+    - AcousticGuitarInstrument
+
+- type: loadout
+  id: Banjo
+  storage:
+    back:
+    - BanjoInstrument
+
+- type: loadout
+  id: Violin
+  storage:
+    back:
+    - ViolinInstrument
+
+- type: loadout
+  id: Viola
+  storage:
+    back:
+    - ViolaInstrument
+
+- type: loadout
+  id: Cello
+  storage:
+    back:
+    - CelloInstrument
+
+- type: loadout
+  id: Trumpet
+  storage:
+    back:
+    - TrumpetInstrument
+
+- type: loadout
+  id: Trombone
+  storage:
+    back:
+    - TromboneInstrument
+
+- type: loadout
+  id: FrenchHorn
+  storage:
+    back:
+    - FrenchHornInstrument
+
+- type: loadout
+  id: Euphonium
+  storage:
+    back:
+    - EuphoniumInstrument
+
+- type: loadout
+  id: Saxophone
+  storage:
+    back:
+    - SaxophoneInstrument
+
+- type: loadout
+  id: Accordion
+  storage:
+    back:
+    - AccordionInstrument
+
+- type: loadout
+  id: Harmonica
+  storage:
+    back:
+    - HarmonicaInstrument
+
+- type: loadout
+  id: Clarinet
+  storage:
+    back:
+    - ClarinetInstrument
+
+- type: loadout
+  id: Flute
+  storage:
+    back:
+    - FluteInstrument
+
+- type: loadout
+  id: Recorder
+  storage:
+    back:
+    - RecorderInstrument
+
+- type: loadout
+  id: PanFlute
+  storage:
+    back:
+    - PanFluteInstrument
+
+- type: loadout
+  id: Ocarina
+  storage:
+    back:
+    - OcarinaInstrument
+
+- type: loadout
+  id: Bagpipe
+  storage:
+    back:
+    - BagpipeInstrument

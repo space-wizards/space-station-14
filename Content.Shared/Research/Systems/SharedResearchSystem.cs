@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Shared.Lathe;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
@@ -12,6 +13,7 @@ public abstract class SharedResearchSystem : EntitySystem
 {
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedLatheSystem _lathe = default!;
 
     public override void Initialize()
     {
@@ -185,7 +187,7 @@ public abstract class SharedResearchSystem : EntitySystem
             var recipeProto = PrototypeManager.Index(recipe);
             description.PushNewline();
             description.AddMarkup(Loc.GetString("research-console-unlocks-list-entry",
-                ("name",recipeProto.Name)));
+                ("name", _lathe.GetRecipeName(recipeProto))));
         }
         foreach (var generic in technology.GenericUnlocks)
         {
@@ -279,5 +281,24 @@ public abstract class SharedResearchSystem : EntitySystem
 
         comp.UnlockedTechnologies.Clear();
         Dirty(uid, comp);
+    }
+
+    /// <summary>
+    /// Adds a lathe recipe to the specified technology database
+    /// without checking if it can be unlocked.
+    /// </summary>
+    public void AddLatheRecipe(EntityUid uid, string recipe, TechnologyDatabaseComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (component.UnlockedRecipes.Contains(recipe))
+            return;
+
+        component.UnlockedRecipes.Add(recipe);
+        Dirty(uid, component);
+
+        var ev = new TechnologyDatabaseModifiedEvent();
+        RaiseLocalEvent(uid, ref ev);
     }
 }

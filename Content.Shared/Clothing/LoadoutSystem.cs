@@ -1,8 +1,12 @@
 using System.Linq;
+using Content.Shared.Body.Systems;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Humanoid;
+using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Station;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -15,6 +19,7 @@ public sealed class LoadoutSystem : EntitySystem
 {
     // Shared so we can predict it for placement manager.
 
+    [Dependency] private readonly ActorSystem _actors = default!;
     [Dependency] private readonly SharedStationSpawningSystem _station = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -23,7 +28,8 @@ public sealed class LoadoutSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<LoadoutComponent, MapInitEvent>(OnMapInit);
+        // Wait until the character has all their organs before we give them their loadout
+        SubscribeLocalEvent<LoadoutComponent, MapInitEvent>(OnMapInit, after: [typeof(SharedBodySystem)]);
     }
 
     public static string GetJobPrototype(string? loadout)
@@ -34,12 +40,25 @@ public sealed class LoadoutSystem : EntitySystem
         return "Job" + loadout;
     }
 
+    public EntProtoId? GetFirstOrNull(LoadoutPrototype loadout)
+    {
+        EntProtoId? proto = null;
+
+        if (_protoMan.TryIndex(loadout.StartingGear, out var gear))
+        {
+            proto = GetFirstOrNull(gear);
+        }
+
+        proto ??= GetFirstOrNull((IEquipmentLoadout)loadout);
+        return proto;
+    }
+
     /// <summary>
     /// Tries to get the first entity prototype for operations such as sprite drawing.
     /// </summary>
-    public EntProtoId? GetFirstOrNull(LoadoutPrototype loadout)
+    public EntProtoId? GetFirstOrNull(IEquipmentLoadout? gear)
     {
-        if (!_protoMan.TryIndex(loadout.Equipment, out var gear))
+        if (gear == null)
             return null;
 
         var count = gear.Equipment.Count + gear.Inhand.Count + gear.Storage.Values.Sum(x => x.Count);
@@ -69,13 +88,23 @@ public sealed class LoadoutSystem : EntitySystem
         return null;
     }
 
+    public string GetName(LoadoutPrototype loadout)
+    {
+        if (_protoMan.TryIndex(loadout.StartingGear, out var gear))
+        {
+            return GetName(gear);
+        }
+
+        return GetName((IEquipmentLoadout) loadout);
+    }
+
     /// <summary>
     /// Tries to get the name of a loadout.
     /// </summary>
-    public string GetName(LoadoutPrototype loadout)
+    public string GetName(IEquipmentLoadout? gear)
     {
-        if (!_protoMan.TryIndex(loadout.Equipment, out var gear))
-            return Loc.GetString("loadout-unknown");
+        if (gear == null)
+            return string.Empty;
 
         var count = gear.Equipment.Count + gear.Storage.Values.Sum(o => o.Count) + gear.Inhand.Count;
 
@@ -105,7 +134,7 @@ public sealed class LoadoutSystem : EntitySystem
             }
         }
 
-        return Loc.GetString($"loadout-{loadout.ID}");
+        return Loc.GetString($"unknown");
     }
 
     private void OnMapInit(EntityUid uid, LoadoutComponent component, MapInitEvent args)
@@ -113,8 +142,7 @@ public sealed class LoadoutSystem : EntitySystem
         // Use starting gear if specified
         if (component.StartingGear != null)
         {
-            var gear = _protoMan.Index(_random.Pick(component.StartingGear));
-            _station.EquipStartingGear(uid, gear);
+            _station.EquipStartingGear(uid, _random.Pick(component.StartingGear));
             return;
         }
 
@@ -125,7 +153,17 @@ public sealed class LoadoutSystem : EntitySystem
         var id = _random.Pick(component.RoleLoadout);
         var proto = _protoMan.Index(id);
         var loadout = new RoleLoadout(id);
-        loadout.SetDefault(_protoMan, true);
+        loadout.SetDefault(GetProfile(uid), _actors.GetSession(uid), _protoMan, true);
         _station.EquipRoleLoadout(uid, loadout, proto);
+    }
+
+    public HumanoidCharacterProfile GetProfile(EntityUid? uid)
+    {
+        if (TryComp(uid, out HumanoidAppearanceComponent? appearance))
+        {
+            return HumanoidCharacterProfile.DefaultWithSpecies(appearance.Species);
+        }
+
+        return HumanoidCharacterProfile.Random();
     }
 }

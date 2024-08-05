@@ -24,12 +24,13 @@
       Steel: 25
   - type: GuideHelp
     guides:
-      - Cyborgs
+    - Cyborgs
+    - Robotics
 
 - type: entity
   id: BaseBorgArmLeft
   parent: PartSilicon
-  name: left cyborg arm
+  name: cyborg left arm
   abstract: true
   components:
   - type: BodyPart
@@ -43,7 +44,7 @@
 - type: entity
   id: BaseBorgArmRight
   parent: PartSilicon
-  name: right cyborg arm
+  name: cyborg right arm
   abstract: true
   components:
   - type: BodyPart
@@ -57,7 +58,7 @@
 - type: entity
   id: BaseBorgLegLeft
   parent: PartSilicon
-  name: left cyborg leg
+  name: cyborg left leg
   abstract: true
   components:
   - type: BodyPart
@@ -71,7 +72,7 @@
 - type: entity
   id: BaseBorgLegRight
   parent: PartSilicon
-  name: right cyborg leg
+  name: cyborg right leg
   abstract: true
   components:
   - type: BodyPart
