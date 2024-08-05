@@ -211,7 +211,7 @@
   parent: BasePlushie
   id: PlushieRouny
   name: rouny plushie
-  description: Rouny
+  description: Rouny.
   components:
   - type: Sprite
     state: plushie_rouny
@@ -1273,7 +1273,7 @@
   parent: BasePlushie
   id: ToyAmongPequeno
   name: among pequeño
-  description: sus!
+  description: Sus!
   components:
   - type: Sprite
     sprite: Objects/Fun/pequeno.rsi
