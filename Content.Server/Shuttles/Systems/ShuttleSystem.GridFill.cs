@@ -85,7 +85,7 @@ public sealed partial class ShuttleSystem
         _mapManager.DeleteMap(mapId);
     }
 
-    private bool TryDungeonSpawn(Entity<MapGridComponent?> targetGrid, EntityUid stationUid, MapId mapId, DungeonSpawnGroup group, out EntityUid spawned)
+    private bool TryDungeonSpawn(Entity<MapGridComponent?> targetGrid, MapId mapId, DungeonSpawnGroup group, out EntityUid spawned)
     {
         spawned = EntityUid.Invalid;
 
