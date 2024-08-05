@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Active lights now deal significantly less burn damage when touched.
-    type: Tweak
-  id: 6541
-  time: '2024-05-06T20:20:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27728
 - author: pissdemon
   changes:
   - message: Special ghost roles are now raffled, instead of being given out to the
@@ -3780,3 +3773,11 @@
   id: 7040
   time: '2024-08-04T10:13:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30594
+- author: DrSmugleaf
+  changes:
+  - message: Fixed the client sometimes falsely showing the red color flash effect
+      when attacking something that they can't, like allied xenonids.
+    type: Fix
+  id: 7041
+  time: '2024-08-05T03:14:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30661
