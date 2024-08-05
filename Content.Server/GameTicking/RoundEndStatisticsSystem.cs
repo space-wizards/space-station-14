@@ -1,9 +1,10 @@
-using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
+using Content.Shared.GameTicking;
+using System.Linq;
 using System.Numerics;
 using System.Text;
 
-namespace Content.Shared.GameTicking
+namespace Content.Server.GameTicking
 {
     /// <summary>
     /// System for count different stuff and show it in round end summary.
@@ -13,20 +14,21 @@ namespace Content.Shared.GameTicking
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<IncrementStatsValueEvent>(IncrementValue);
             SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
             SubscribeLocalEvent<RoundStatisticsAppendEvent>(OnRoundEndText);
         }
 
-        Dictionary<string, int> Statistics = new Dictionary<string, int>
+        private Dictionary<string, int> Statistics = new Dictionary<string, int>
         {
             { "MoppedTimes", 0 },
             { "SlippedTimes", 0 }
         };
 
-        public void IncrementStatsValue(string key)
+        public void IncrementValue(IncrementStatsValueEvent ev)
         {
             // Adds 1 to specific int
-            Statistics[key]++;
+            Statistics[ev.Key] += 1;
         }
 
         private void OnRoundStart(RoundStartingEvent ev)
@@ -41,18 +43,18 @@ namespace Content.Shared.GameTicking
         private void OnRoundEndText(RoundStatisticsAppendEvent ev)
         {
             // Mopped
-            if(MoppedTimes != 0)
+            if(Statistics["MoppedTimes"] != 0)
             {
                 var mopped = new StringBuilder();
-                mopped.AppendLine(Loc.GetString("round-end-statistic-mopped-times", ("count", count)));
+                mopped.AppendLine(Loc.GetString("round-end-statistic-mopped-times", ("count", Statistics["MoppedTimes"])));
                 ev.AddLine(mopped.AppendLine().ToString());
             }
 
             // Slipped
-            if(SlippedTimes != 0)
+            if(Statistics["SlippedTimes"] != 0)
             {
                 var slipped = new StringBuilder();
-                slipped.AppendLine(Loc.GetString("round-end-statistic-slipped-times", ("count", count)));
+                slipped.AppendLine(Loc.GetString("round-end-statistic-slipped-times", ("count", Statistics["SlippedTimes"])));
                 ev.AddLine(slipped.AppendLine().ToString());
             }
         }

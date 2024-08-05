@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Server.GameTicking;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -324,7 +325,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
 
         _melee.DoLunge(user, used, Angle.Zero, localPos, null, false);
 
-        IncrementStatsValue(MoppedTimes);
+        RaiseNetworkEvent(new IncrementStatsValueEvent("MoppedTimes"));
         return true;
     }
 }

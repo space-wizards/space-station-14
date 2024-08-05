@@ -33,8 +33,7 @@ namespace Content.Client.RoundEnd
             var roundEndTabs = new TabContainer();
             roundEndTabs.AddChild(MakeRoundEndSummaryTab(gm, roundEnd, roundTimeSpan, roundId));
             roundEndTabs.AddChild(MakePlayerManifestTab(info));
-            if (!string.IsNullOrEmpty(roundStats))
-                roundEndTabs.AddChild(MakeRoundStatisticsTab(roundStats))
+            roundEndTabs.AddChild(MakeRoundStatisticsTab(roundStats));
 
             Contents.AddChild(roundEndTabs);
 
@@ -174,7 +173,7 @@ namespace Content.Client.RoundEnd
             var roundStatisticsTab = new BoxContainer
             {
                 Orientation = LayoutOrientation.Vertical,
-                Name = Loc.GetString("round-end-summary-window-round-statistics-tab-title")
+                Name = Loc.GetString("round-end-summary-window-round-statistic-tab-title")
             };
 
             var roundStatisticsContainerScrollbox = new ScrollContainer
@@ -187,8 +186,18 @@ namespace Content.Client.RoundEnd
                 Orientation = LayoutOrientation.Vertical
             };
 
+
             var statsLabel = new RichTextLabel();
-            roundEndLabel.SetMarkup(roundStats);
+
+            statsLabel.SetMarkup(string.IsNullOrEmpty(roundStats)
+                ? Loc.GetString("round-end-statistic-none")
+                : roundStats);
+
+            roundStatisticsContainer.AddChild(statsLabel);
+            roundStatisticsContainerScrollbox.AddChild(roundStatisticsContainer);
+            roundStatisticsTab.AddChild(roundStatisticsContainerScrollbox);
+
+            return roundStatisticsTab;
         }
     }
 

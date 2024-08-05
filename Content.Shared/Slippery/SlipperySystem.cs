@@ -108,7 +108,7 @@ public sealed class SlipperySystem : EntitySystem
             _audio.PlayPredicted(component.SlipSound, other, other);
         }
 
-        IncrementStatsValue(SlippedTimes);
+        RaiseNetworkEvent(new IncrementStatsValueEvent("SlippedTimes"));
 
         _adminLogger.Add(LogType.Slip, LogImpact.Low,
             $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(uid):entity}");

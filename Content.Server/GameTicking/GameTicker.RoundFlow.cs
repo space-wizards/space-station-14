@@ -355,7 +355,7 @@ namespace Content.Server.GameTicking
             var stats = new RoundStatisticsAppendEvent();
             RaiseLocalEvent(stats);
 
-            var roundStats = stats;
+            var roundStats = stats.Text;
 
             // Let things add text here.
             var textEv = new RoundEndTextAppendEvent();
