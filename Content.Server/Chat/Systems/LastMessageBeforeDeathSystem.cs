@@ -17,7 +17,6 @@ namespace Content.Server.Chat.Systems
     internal class LastMessageBeforeDeathSystem
     {
 
-        [Dependency] private readonly IBanManager _banManager = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
 
         private readonly MobStateSystem _mobStateSystem;
@@ -27,10 +26,6 @@ namespace Content.Server.Chat.Systems
         private readonly LastMessageWebhookManager _webhookManager = new LastMessageWebhookManager();
         private OrderedDictionary _playerData = new OrderedDictionary();
 
-        // I don't think Chat needs it's own CVar file because of these, so I'll leave them here...
-        private const int MessageDelayMilliseconds = 2000;
-        private const int MaxMessageSize = 2000; // CAN'T BE MORE THAN 2000! DISCORD LIMIT.
-        private const int MaxMessagesPerBatch = 15;
         private const int MaxICLength = 128;
 
         private static LastMessageBeforeDeathSystem? _instance;
