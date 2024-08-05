@@ -43,5 +43,7 @@ public sealed class CrewMedalBoundUserInterface : BoundUserInterface
             return;
 
         _window.SetCurrentReason(component.Reason);
+        _window.SetAwarded(component.Awarded);
+        _window.SetMaxCharacters(component.MaxCharacters);
     }
 }

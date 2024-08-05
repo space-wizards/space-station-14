@@ -7,6 +7,7 @@
             <LineEdit Name="ReasonLineEdit" HorizontalExpand="True" />
             <Button Name="SaveButton" Text="{Loc crew-medal-ui-save}"/>
         </BoxContainer>
+        <Label Name="CharacterLabel" Text="" />
         <Label Text="{Loc 'crew-medal-ui-info'}" />
     </BoxContainer>
 </DefaultWindow>
