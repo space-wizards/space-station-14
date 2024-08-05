@@ -1,83 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Event weights have been tweaked across the board, and some events removed
-      (such as false alarm) to hopefully allow for a more interesting and varied slate
-      of random occurrences per round.
-    type: Add
-  id: 6538
-  time: '2024-05-06T10:10:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27721
-- author: mirrorcult
-  changes:
-  - message: Tile weighting for many events and variation rules (messes, dragons,
-      revenants, kudzu, gasleak, rods, etc) has been fixed. They will now no longer
-      spawn disproportionately often on smaller grids.
-    type: Add
-  id: 6539
-  time: '2024-05-06T11:25:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27724
-- author: Blackern5000
-  changes:
-  - message: Burn damage is now half as effective at cauterizing wounds as it was
-      previously
-    type: Tweak
-  id: 6540
-  time: '2024-05-06T20:19:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27726
-- author: Blackern5000
-  changes:
-  - message: Active lights now deal significantly less burn damage when touched.
-    type: Tweak
-  id: 6541
-  time: '2024-05-06T20:20:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27728
-- author: pissdemon
-  changes:
-  - message: Special ghost roles are now raffled, instead of being given out to the
-      first player requesting them.
-    type: Add
-  id: 6542
-  time: '2024-05-07T01:48:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26629
-- author: mirrorcult
-  changes:
-  - message: Less ratkings should spawn during the mouse migration event now
-    type: Tweak
-  id: 6543
-  time: '2024-05-07T03:23:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27760
-- author: PJB3005
-  changes:
-  - message: Fixed preferences not loading sometimes if you had a loadout item with
-      playtime requirement selected in a character profile.
-    type: Fix
-  id: 6544
-  time: '2024-05-07T04:21:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27742
-- author: lzk228
-  changes:
-  - message: Morgue now can be anchored and unanchored.
-    type: Tweak
-  - message: Changed morgue's collision layer, so items now can go through it.
-    type: Tweak
-  id: 6545
-  time: '2024-05-07T07:26:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27750
-- author: mirrorcult
-  changes:
-  - message: Events that run now get logged to admin alert chat
-    type: Tweak
-  id: 6546
-  time: '2024-05-07T15:13:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27761
-- author: cooldolphin
-  changes:
-  - message: Cigarettes in the loadout menu.
-    type: Add
-  id: 6547
-  time: '2024-05-07T15:55:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27292
 - author: FairlySadPanda
   changes:
   - message: Weapons that deflect shots, like the e-sword, now are most effective
@@ -3784,3 +3705,82 @@
   id: 7037
   time: '2024-08-03T14:07:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30430
+- author: Ian321
+  changes:
+  - message: Help menus now include the linked guides.
+    type: Fix
+  id: 7038
+  time: '2024-08-04T03:32:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30462
+- author: DrSmugleaf
+  changes:
+  - message: The Toggle Internals verb no longer shows up in the context menu if no
+      breathing tool is equipped and internals are off.
+    type: Tweak
+  id: 7039
+  time: '2024-08-04T03:34:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30622
+- author: Mervill
+  changes:
+  - message: Rotten Meat can be collected in trash bags and deleted by the recycler
+    type: Tweak
+  id: 7040
+  time: '2024-08-04T10:13:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30594
+- author: DrSmugleaf
+  changes:
+  - message: Fixed the client sometimes falsely showing the red color flash effect
+      when attacking something that they can't, like allied xenonids.
+    type: Fix
+  id: 7041
+  time: '2024-08-05T03:14:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30661
+- author: Killerqu00
+  changes:
+  - message: Sleeper agents event no longer occurs when evacuation is called.
+    type: Tweak
+  id: 7042
+  time: '2024-08-05T03:17:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30646
+- author: Cojoke-dot
+  changes:
+  - message: Mice can now use combat mode with a 0 damage attack
+    type: Tweak
+  id: 7043
+  time: '2024-08-05T03:26:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30487
+- author: TheShuEd
+  changes:
+  - message: Nanotrasen has introduced recruitment rules. Characters under the age
+      of 20 are no longer allowed to take on the role of head.
+    type: Tweak
+  id: 7044
+  time: '2024-08-05T04:25:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30347
+- author: foboscheshir
+  changes:
+  - message: added missing mime mask sprites for Vox - scared and sad.
+    type: Add
+  id: 7045
+  time: '2024-08-05T06:09:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30607
+- author: SlamBamActionman, PolarTundra
+  changes:
+  - message: Thief's Syndie Kit now comes with a Radio Jammer, a lighter and a Syndicate
+      codeword.
+    type: Add
+  - message: Thief's Agent ID has been moved from the Syndie Kit to the Chameleon
+      Kit.
+    type: Tweak
+  - message: The Syndicate pAI has been removed from the Thief's Syndie Kit.
+    type: Remove
+  id: 7046
+  time: '2024-08-05T08:03:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30446
+- author: EmoGarbage404
+  changes:
+  - message: Being cold now slows down your character.
+    type: Add
+  id: 7047
+  time: '2024-08-05T08:07:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29692
