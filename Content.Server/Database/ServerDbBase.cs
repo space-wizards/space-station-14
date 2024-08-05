@@ -505,16 +505,23 @@ namespace Content.Server.Database
         public async Task EditServerRoleBan(int id, string reason, NoteSeverity severity, DateTimeOffset? expiration, Guid editedBy, DateTimeOffset editedAt)
         {
             await using var db = await GetDb();
+            var banTime = await db.DbContext.RoleBan
+                .Where(b => b.Id == id)
+                .Select(b => b.BanTime)
+                .SingleOrDefaultAsync();
 
-            var ban = await db.DbContext.RoleBan.SingleOrDefaultAsync(b => b.Id == id);
-            if (ban is null)
+            if (banTime == default)
                 return;
-            ban.Severity = severity;
-            ban.Reason = reason;
-            ban.ExpirationTime = expiration?.UtcDateTime;
-            ban.LastEditedById = editedBy;
-            ban.LastEditedAt = editedAt.UtcDateTime;
-            await db.DbContext.SaveChangesAsync();
+            
+            await db.DbContext.RoleBan
+                .Where(b => b.BanTime == banTime)
+                .ExecuteUpdateAsync(setters => setters
+                    .SetProperty(b => b.Severity, severity)
+                    .SetProperty(b => b.Reason, reason)
+                    .SetProperty(b => b.ExpirationTime, expiration.HasValue ? expiration.Value.UtcDateTime : (DateTime?)null)
+                    .SetProperty(b => b.LastEditedById, editedBy)
+                    .SetProperty(b => b.LastEditedAt, editedAt.UtcDateTime)
+                );
         }
         #endregion
 
