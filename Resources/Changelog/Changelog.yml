@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Less ratkings should spawn during the mouse migration event now
-    type: Tweak
-  id: 6543
-  time: '2024-05-07T03:23:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27760
 - author: PJB3005
   changes:
   - message: Fixed preferences not loading sometimes if you had a loadout item with
@@ -3780,3 +3773,10 @@
   id: 7042
   time: '2024-08-05T03:17:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30646
+- author: Cojoke-dot
+  changes:
+  - message: Mice can now use combat mode with a 0 damage attack
+    type: Tweak
+  id: 7043
+  time: '2024-08-05T03:26:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30487
