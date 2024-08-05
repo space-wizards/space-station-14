@@ -40,7 +40,7 @@
   equipment:
     head: ClothingHeadHatBeretHoS
 
-- type: startingGear
+- type: loadout
   id: HeadofSecurityCowboy
   equipment:
     head: ClothingHeadHatHoshatCowboy

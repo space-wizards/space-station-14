@@ -10,25 +10,25 @@
 
 # Misc #GreyStation
 
-- type: startingGear
+- type: loadout
   id: ToyFigurineGreytider
   storage:
     back:
     - ToyFigurineGreytider
 
-- type: startingGear
+- type: loadout
   id: HarmonicaInstrument
   storage:
     back:
     - HarmonicaInstrument
 
-- type: startingGear
+- type: loadout
   id: CoinQuarter
   storage:
     back:
     - CoinQuarter
 
-- type: startingGear
+- type: loadout
   id: BalloonNT
   storage:
     back:
@@ -54,13 +54,13 @@
     back:
     - Lighter
 
-- type: startingGear #GreyStation
+- type: loadout #GreyStation
   id: FlippoLighter
   storage:
     back:
     - FlippoLighter
 
-- type: startingGear #GreyStation
+- type: loadout #GreyStation
   id: Matchbox
   storage:
     back:
