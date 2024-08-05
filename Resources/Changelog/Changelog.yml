@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Events that run now get logged to admin alert chat
-    type: Tweak
-  id: 6546
-  time: '2024-05-07T15:13:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27761
 - author: cooldolphin
   changes:
   - message: Cigarettes in the loadout menu.
@@ -3778,3 +3771,16 @@
   id: 7045
   time: '2024-08-05T06:09:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30607
+- author: SlamBamActionman, PolarTundra
+  changes:
+  - message: Thief's Syndie Kit now comes with a Radio Jammer, a lighter and a Syndicate
+      codeword.
+    type: Add
+  - message: Thief's Agent ID has been moved from the Syndie Kit to the Chameleon
+      Kit.
+    type: Tweak
+  - message: The Syndicate pAI has been removed from the Thief's Syndie Kit.
+    type: Remove
+  id: 7046
+  time: '2024-08-05T08:03:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30446
