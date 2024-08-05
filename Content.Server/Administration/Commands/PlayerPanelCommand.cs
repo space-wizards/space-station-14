@@ -48,7 +48,7 @@ public sealed class PlayerPanelCommand : LocalizedCommands
         {
             var options = _players.Sessions.OrderBy(c => c.Name).Select(c => c.Name).ToArray();
 
-            return CompletionResult.FromHintOptions(options, "<PlayerIndex>");
+            return CompletionResult.FromHintOptions(options, LocalizationManager.GetString("cmd-playerpanel-completion"));
         }
 
         return CompletionResult.Empty;

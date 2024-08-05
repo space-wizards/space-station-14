@@ -10,7 +10,7 @@
         </BoxContainer>
        <BoxContainer Orientation="Horizontal">
            <Label Name="Whitelisted"/>
-           <controls:ConfirmButton Name="WhitelistToggle" Text="False" Visible="False"></controls:ConfirmButton>
+           <controls:ConfirmButton Name="WhitelistToggle" Text="{Loc 'player-panel-false'}" Visible="False"></controls:ConfirmButton>
        </BoxContainer>
        <Label Name="Playtime"/>
        <Label Name="Notes"/>
