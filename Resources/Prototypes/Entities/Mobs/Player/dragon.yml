@@ -96,6 +96,7 @@
   - type: Flammable
     damage:
       types: {}
+  - type: FlashImmunity # Getting flashed as dragon just feelsbad
   - type: Temperature
     heatDamageThreshold: 800
   - type: Metabolizer
