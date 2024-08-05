@@ -2147,7 +2147,7 @@
   parent: DrinkGlassBase
   id: DrinkWaterJug
   name: water jug
-  description: Stay hydrated
+  description: Stay hydrated.
   components:
   - type: SolutionContainerManager
     solutions:

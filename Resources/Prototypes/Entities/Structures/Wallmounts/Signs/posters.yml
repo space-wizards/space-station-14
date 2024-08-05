@@ -441,7 +441,7 @@
   parent: PosterBase
   id: PosterContrabandUnreadableAnnouncement
   name: "Unreadable Announcement"
-  description: "A poster announcing something by someone, oddly enough they seem to have forgotten making it readable"
+  description: "A poster announcing something by someone, oddly enough they seem to have forgotten making it readable."
   components:
   - type: Sprite
     state: poster45_contraband

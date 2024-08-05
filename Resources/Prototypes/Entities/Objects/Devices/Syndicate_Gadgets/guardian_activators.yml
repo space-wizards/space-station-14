@@ -36,7 +36,7 @@
   name: holoparasite box
   parent: BoxCardboard
   id: BoxHoloparasite
-  description: A box containing a holoparasite injector
+  description: A box containing a holoparasite injector.
   components:
   - type: StorageFill
     contents:
@@ -52,7 +52,7 @@
   name: holoclown box
   parent: BoxCardboard
   id: BoxHoloclown
-  description: A box containing a holoclown injector
+  description: A box containing a holoclown injector.
   components:
   - type: StorageFill
     contents:
