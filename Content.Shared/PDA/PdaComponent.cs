@@ -13,12 +13,6 @@ namespace Content.Shared.PDA
         public const string PdaPenSlotId = "PDA-pen";
         public const string PdaPaiSlotId = "PDA-pai";
 
-        /// <summary>
-        /// The base PDA sprite state, eg. "pda", "pda-clown"
-        /// </summary>
-        [DataField("state")]
-        public string? State;
-
         [DataField("idSlot")]
         public ItemSlot IdSlot = new();
 
@@ -36,7 +30,6 @@ namespace Content.Shared.PDA
         [ViewVariables] public EntityUid? ContainedId;
         [ViewVariables] public bool FlashlightOn;
 
-        [ViewVariables(VVAccess.ReadWrite)] public string? OwnerName;
         [ViewVariables] public string? StationName;
         [ViewVariables] public string? StationAlertLevel;
         [ViewVariables] public Color StationAlertColor = Color.White;
