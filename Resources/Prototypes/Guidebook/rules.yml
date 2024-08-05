@@ -1,23 +1,29 @@
+- type: guideEntry # Default for forks and stuff. Should not be listed anywhere if the server is using a custom ruleset.
+  id: DefaultRuleset
+  name: guide-entry-rules
+  ruleEntry: true
+  text: "/ServerInfo/Guidebook/ServerRules/DefaultRules.xml"
+
 - type: guideEntry
   id: CoreRuleset
   name: guide-entry-rules-core-only
   ruleEntry: true
   priority: 0
-  text: "/ServerInfo/Guidebook/ServerRules/Solaris14.xml"
+  text: "/ServerInfo/Guidebook/ServerRules/SolarisCoreOnlyRules.xml"
 
 - type: guideEntry
   id: StandardRuleset
   name: guide-entry-rules-lrp
   ruleEntry: true
   priority: 5
-  text: "/ServerInfo/Guidebook/ServerRules/WizDenLRPRules.xml"
+  text: "/ServerInfo/Guidebook/ServerRules/SolarisLRPRules.xml"
 
 - type: guideEntry
   id: MRPRuleset
   name: guide-entry-rules-mrp
   ruleEntry: true
   priority: 10
-  text: "/ServerInfo/Guidebook/ServerRules/WizDenMRPRules.xml"
+  text: "/ServerInfo/Guidebook/ServerRules/SolarisMRPRules.xml"
 
 - type: guideEntry
   id: RoleTypes
