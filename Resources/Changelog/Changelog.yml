@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Fixed preferences not loading sometimes if you had a loadout item with
-      playtime requirement selected in a character profile.
-    type: Fix
-  id: 6544
-  time: '2024-05-07T04:21:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27742
 - author: lzk228
   changes:
   - message: Morgue now can be anchored and unanchored.
@@ -3780,3 +3772,11 @@
   id: 7043
   time: '2024-08-05T03:26:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30487
+- author: TheShuEd
+  changes:
+  - message: Nanotrasen has introduced recruitment rules. Characters under the age
+      of 20 are no longer allowed to take on the role of head.
+    type: Tweak
+  id: 7044
+  time: '2024-08-05T04:25:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30347
