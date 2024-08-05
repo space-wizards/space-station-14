@@ -104,9 +104,10 @@
   description: A fake poppy. Can be worn on the head.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Misc/fakepoppy.rsi
+    sprite: Objects/Specific/Hydroponics/poppy.rsi
+    state: produce
   - type: Clothing
-    sprite: Clothing/Head/Misc/fakepoppy.rsi
+    sprite: Objects/Specific/Hydroponics/poppy.rsi
 
 - type: entity
   parent: ClothingHeadBase
