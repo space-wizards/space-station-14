@@ -881,8 +881,11 @@
   - HeadofSecurityJumpskirt
   - HeadofSecurityTurtleneck
   - HeadofSecurityTurtleneckSkirt
+  - HeadofSecurityJumpsuitParade
+  - HeadofSecurityJumpskirtParade
   - HeadofSecurityFormalSuit
   - HeadofSecurityFormalSkirt
+  - HeadofSecurityJumpsuitGrey
 
 - type: loadoutGroup
   id: HeadofSecurityNeck
@@ -894,6 +897,7 @@
 
 - type: loadoutGroup
   id: HeadofSecurityOuterClothing
+  minLimit: 0
   name: loadout-group-head-of-security-outerclothing
   loadouts:
   - HeadofSecurityCoat
@@ -916,9 +920,11 @@
 
 - type: loadoutGroup
   id: WardenOuterClothing
+  minLimit: 0
   name: loadout-group-warden-outerclothing
   loadouts:
   - WardenCoat
+  - WardenWinterUnarmoredCoat
   - WardenArmoredWinterCoat
 
 - type: loadoutGroup
@@ -959,6 +965,7 @@
 - type: loadoutGroup
   id: SecurityOuterClothing
   name: loadout-group-security-outerclothing
+  minLimit: 0
   loadouts:
   - ArmorVest
   - ArmorVestSlim
@@ -1012,11 +1019,19 @@
   - DetectiveCoat
 
 - type: loadoutGroup
+  id: SecurityCadetHead
+  name: loadout-group-security-cadet-head
+  minLimit: 0
+  loadouts:
+  - SecurityHelmet
+  - SecurityHat
+
+- type: loadoutGroup
   id: SecurityCadetJumpsuit
   name: loadout-group-security-cadet-jumpsuit
   loadouts:
-  - RedJumpsuit
-  - RedJumpskirt
+  - SecurityJumpsuitGrey
+  - SecurityJumpskirtGrey
 
 - type: loadoutGroup
   id: SurvivalSecurity

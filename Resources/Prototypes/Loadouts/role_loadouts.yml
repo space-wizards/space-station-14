@@ -381,6 +381,7 @@
 - type: roleLoadout
   id: JobSecurityCadet
   groups:
+  - SecurityCadetHead
   - SecurityCadetJumpsuit
   - SecurityBackpack
   - SurvivalSecurity

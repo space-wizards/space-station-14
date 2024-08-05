@@ -27,6 +27,7 @@
   equipment:
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetSecurity
+    gloves: ClothingHandsGlovesColorBlack
     pocket1: WeaponPistolMk58
   storage:
     back:
