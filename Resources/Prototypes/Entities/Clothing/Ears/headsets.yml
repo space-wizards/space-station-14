@@ -278,7 +278,7 @@
   parent: ClothingHeadset
   id: ClothingHeadsetFreelance
   name: freelancer headset
-  description: This is used by a roaming group of freelancers
+  description: This is used by a roaming group of freelancers.
   components:
     - type: ContainerFill
       containers:
