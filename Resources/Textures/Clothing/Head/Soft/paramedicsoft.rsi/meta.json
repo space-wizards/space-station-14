@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by MagnusCrowe (Github) for SS14",
+  "copyright": "Made by MagnusCrowe (Github) for SS14.  Vox states by foboscheshir(github)", 
   "size": {
     "x": 32,
     "y": 32
@@ -44,6 +44,14 @@
     {
       "name": "flipped-inhand-right",
       "directions": 4
-    }
+    },
+    {
+      "name":"equipped-HELMET-vox",
+      "directions":4
+    },
+  {
+    "name":"flipped-equipped-HELMET-vox",
+    "directions":4
+  }
   ]
 }
