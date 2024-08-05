@@ -162,7 +162,7 @@
   parent: BaseHandheldInstrument
   id: GuitarlessFretsInstrument
   name: guitarless frets
-  description: who even needs a body?
+  description: Who even needs a body?
   suffix: Admeme #the sound is awful
   components:
   - type: Instrument
