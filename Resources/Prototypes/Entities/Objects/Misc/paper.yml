@@ -229,7 +229,6 @@
   components:
   - type: Paper
     contentSize: 10000
-    escapeFormatting: false
     content: book-cnc-sheet
   - type: Sprite
     layers:
@@ -587,7 +586,6 @@
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
   - type: Paper
-    escapeFormatting: false
     content: envelope-default-message
   - type: PaperVisuals
     headerImagePath: "/Textures/Interface/Paper/paper_heading_postage_stamp.svg.96dpi.png"
