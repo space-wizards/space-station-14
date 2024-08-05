@@ -1,5 +1,6 @@
-using System.Numerics;
 using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Server.GameTicking;
+using Content.Server.GameTicking.Events;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -14,6 +15,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Numerics;
+using System.Text;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -30,6 +33,8 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
 
+    int MoppedTimes;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -37,6 +42,8 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         SubscribeLocalEvent<AbsorbentComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<AbsorbentComponent, UserActivateInWorldEvent>(OnActivateInWorld);
         SubscribeLocalEvent<AbsorbentComponent, SolutionContainerChangedEvent>(OnAbsorbentSolutionChange);
+        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
+        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
     }
 
     private void OnAbsorbentInit(EntityUid uid, AbsorbentComponent component, ComponentInit args)
@@ -323,6 +330,25 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
 
         _melee.DoLunge(user, used, Angle.Zero, localPos, null, false);
 
+        MoppedTimes += 1;
+
         return true;
+    }
+
+    private void OnRoundStart(RoundStartingEvent ev)
+    {
+        MoppedTimes = 0;
+    }
+
+
+    private void OnRoundEndText(RoundEndTextAppendEvent ev)
+    {
+        var count = MoppedTimes;
+        if (count == 0)
+            return;
+
+        var result = new StringBuilder();
+        result.AppendLine(Loc.GetString("round-end-summary-mopped-times", ("count", count)));
+        ev.AddLine(result.AppendLine().ToString());
     }
 }
