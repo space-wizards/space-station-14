@@ -1161,7 +1161,7 @@
   parent: BaseSign
   id: SignSmoking
   name: no smoking sign
-  description: A warning sign which reads 'NO SMOKING'
+  description: A warning sign which reads 'NO SMOKING'.
   components:
   - type: Sprite
     state: nosmoking2
