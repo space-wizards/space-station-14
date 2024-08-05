@@ -9,9 +9,6 @@
       time: 3600 # 1 hour
 
 # Misc #GreyStation
-- type: loadout
-  id: ToyFigurineGreytider
-  equipment: ToyFigurineGreytider
 
 - type: startingGear
   id: ToyFigurineGreytider
@@ -19,29 +16,17 @@
     back:
     - ToyFigurineGreytider
 
-- type: loadout
-  id: HarmonicaInstrument
-  equipment: HarmonicaInstrument
-
 - type: startingGear
   id: HarmonicaInstrument
   storage:
     back:
     - HarmonicaInstrument
 
-- type: loadout
-  id: CoinQuarter
-  equipment: CoinQuarter
-
 - type: startingGear
   id: CoinQuarter
   storage:
     back:
     - CoinQuarter
-
-- type: loadout
-  id: BalloonNT
-  equipment: BalloonNT
 
 - type: startingGear
   id: BalloonNT
@@ -69,19 +54,11 @@
     back:
     - Lighter
 
-- type: loadout #GreyStation
-  id: FlippoLighter
-  equipment: FlippoLighter
-
 - type: startingGear #GreyStation
   id: FlippoLighter
   storage:
     back:
     - FlippoLighter
-
-- type: loadout #GreyStation
-  id: Matchbox
-  equipment: Matchbox
 
 - type: startingGear #GreyStation
   id: Matchbox
