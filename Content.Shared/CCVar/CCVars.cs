@@ -1888,7 +1888,7 @@ namespace Content.Shared.CCVar
         /// Forces SSD characters to sleep
         /// </summary>
         public static readonly CVarDef<bool> ICSSDSleep =
-            CVarDef.Create("ic.ssd_sleep", true, CVar.SERVERONLY);
+            CVarDef.Create("ic.ssd_sleep", true, CVar.SERVER);
 
         /*
          * Salvage

@@ -10,7 +10,7 @@ namespace Content.Shared.SSDIndicator;
 /// </summary>
 public sealed class SSDIndicatorSystem : EntitySystem
 {
-    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     public override void Initialize()
     {
@@ -21,16 +21,20 @@ public sealed class SSDIndicatorSystem : EntitySystem
     private void OnPlayerAttached(EntityUid uid, SSDIndicatorComponent component, PlayerAttachedEvent args)
     {
         component.IsSSD = false;
-        if (_cfgManager.GetCVar(CVars.ICSSDSleep))
+        if (_cfg.GetCVar(CCVars.ICSSDSleep))
+        {
             EntityManager.RemoveComponent<ForcedSleepingComponent>(uid);
+        }
         Dirty(uid, component);
     }
 
     private void OnPlayerDetached(EntityUid uid, SSDIndicatorComponent component, PlayerDetachedEvent args)
     {
         component.IsSSD = true;
-        if (_cfgManager.GetCVar(CVars.ICSSDSleep) || !TerminatingOrDeleted(uid))
+        if (_cfg.GetCVar(CCVars.ICSSDSleep) && !TerminatingOrDeleted(uid))
+        {
             EnsureComp<ForcedSleepingComponent>(uid);
+        }
         Dirty(uid, component);
     }
 }
