@@ -104,7 +104,7 @@
   name: artifact analyzer printout
   parent: Paper
   id: PaperArtifactAnalyzer
-  description: 'The readout of a device forgotten to time'
+  description: The readout of a device forgotten to time.
   components:
   - type: Sprite
     layers:

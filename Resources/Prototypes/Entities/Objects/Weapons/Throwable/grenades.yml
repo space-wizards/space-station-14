@@ -59,7 +59,7 @@
 
 - type: entity
   name: flashbang
-  description: Eeeeeeeeeeeeeeeeeeeeee
+  description: Eeeeeeeeeeeeeeeeeeeeee.
   parent: GrenadeBase
   id: GrenadeFlashBang
   components:
@@ -394,7 +394,7 @@
   parent: SmokeGrenade
   id: CleanerGrenade
   name: cleanade
-  description: Special grenade for janitors, releasing large cloud of space cleaner foam
+  description: Special grenade for janitors, releasing large cloud of space cleaner foam.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/janitor.rsi
