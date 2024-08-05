@@ -1,5 +1,6 @@
-using Content.Shared.Explosion;
+using Content.Shared.Explosion.EntitySystems;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Explosion.Components;
 
@@ -12,7 +13,8 @@ namespace Content.Shared.Explosion.Components;
 ///     This is desirable over just using damage modifier sets, given that equipment like bomb-suits need to
 ///     significantly reduce the damage, but shouldn't be silly overpowered in regular combat.
 /// </remarks>
-[RegisterComponent]
+[NetworkedComponent, RegisterComponent]
+[Access(typeof(SharedExplosionSystem))]
 public sealed partial class ExplosionResistanceComponent : Component
 {
     /// <summary>
