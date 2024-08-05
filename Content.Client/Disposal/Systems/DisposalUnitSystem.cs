@@ -111,7 +111,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         {
             if (!_animationSystem.HasRunningAnimation(uid, AnimationKey))
             {
-                var flushState = sprite.LayerMapTryGet(DisposalUnitVisualLayers.OverlayFlush, out var flushLayer)
+                var flushState = sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseFlush, out var flushLayer)
                     ? sprite.LayerGetState(flushLayer)
                     : new RSI.StateId(DefaultFlushState);
 
@@ -179,6 +179,7 @@ public enum DisposalUnitVisualLayers : byte
     Unanchored,
     Base,
     BaseCharging,
+    BaseFlush,
     OverlayFlush,
     OverlayCharging,
     OverlayReady,
