@@ -1,6 +1,6 @@
 - type: entity
   id: BaseIntercom
-  name: intercom
+  name: Intercom
   description: An intercom. For when the station just needs to know something.
   abstract: true
   components:
@@ -205,6 +205,36 @@
     open: false
 
 - type: entity
+  id: IntercomReinforced
+  parent: Intercom
+  suffix: ""
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+    - state: broadcasting
+      map: ["enum.RadioDeviceVisualLayers.Broadcasting"]
+      shader: unshaded
+      visible: false
+    - state: speaker
+      map: ["enum.RadioDeviceVisualLayers.Speaker"]
+      shader: unshaded
+      visible: false
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: WiresPanel
+    open: false
+  - type: WiresPanelSecurity
+    examine: wires-panel-component-on-examine-security-level2
+    wiresAccessible: false
+  - type: Construction
+    node: intercomReinforced
+
+
+- type: entity
   id: IntercomCommon
   parent: Intercom
   suffix: Common
@@ -218,17 +248,10 @@
 
 - type: entity
   id: IntercomCommand
-  parent: Intercom
+  parent: IntercomReinforced
   suffix: Command
-  description: An intercom. It's been reinforced with metal from security helmets, making it a bitch-and-a-half to open.
+  description: An intercom. It's been reinforced with steel plating. You'll need to use a welder to get inside.
   components:
-  - type: WiresPanel
-    openDelay: 5
-  - type: WiresPanelSecurity
-    examine: wires-panel-component-on-examine-security-level2
-    wiresAccessible: false
-  - type: Construction
-    node: intercomReinforced
   - type: ContainerFill
     containers:
       board:
@@ -278,17 +301,10 @@
 
 - type: entity
   id: IntercomSecurity
-  parent: Intercom
+  parent: IntercomReinforced
   suffix: Security
   description: An intercom. It's been reinforced with metal from security helmets, making it a bitch-and-a-half to open.
   components:
-  - type: WiresPanel
-    openDelay: 5
-  - type: WiresPanelSecurity
-    examine: wires-panel-component-on-examine-security-level2
-    wiresAccessible: false
-  - type: Construction
-    node: intercomReinforced
   - type: ContainerFill
     containers:
       board:
