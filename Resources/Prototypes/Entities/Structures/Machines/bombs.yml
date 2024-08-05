@@ -144,7 +144,7 @@
   id: DebugHardBomb
   name: debug bomb
   suffix: DEBUG
-  description: Holy shit this is gonna explode
+  description: Holy shit this is gonna explode.
   components:
     - type: Defusable
       disposable: true
