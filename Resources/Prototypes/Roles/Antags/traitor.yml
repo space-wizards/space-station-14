@@ -41,7 +41,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
     back: ClothingBackpackSyndicate
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsSyndieFilled
     gloves: ClothingHandsGlovesColorBlack
 
 - type: startingGear
@@ -77,14 +77,6 @@
     back:
     - BoxSurvivalSyndicate
     - SyndicateJawsOfLife
-
-# Syndicate Reinforcement NukeOps
-- type: startingGear
-  id: SyndicateOperativeGearReinforcementNukeOps
-  parent: SyndicateOperativeGearExtremelyBasic
-  equipment:
-    id: SyndiPDA #Do not give a PDA to the normal Reinforcement - it will spawn with a 20TC uplink
-
 
 #Syndicate Operative Outfit - Basic
 - type: startingGear
