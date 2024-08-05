@@ -42,10 +42,6 @@
 
 - type: loadout
   id: HeadofSecurityCowboy
-  equipment: HeadofSecurityCowboy
-
-- type: startingGear
-  id: HeadofSecurityCowboy
   equipment:
     head: ClothingHeadHatHoshatCowboy
 
