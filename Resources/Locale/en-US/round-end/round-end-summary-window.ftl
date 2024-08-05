@@ -9,5 +9,4 @@ round-end-summary-window-player-info-if-observer-text = [color=gray]{$playerOOCN
 round-end-summary-window-player-info-if-not-observer-text = [color=gray]{$playerOOCName}[/color] was [color={$icNameColor}]{$playerICName}[/color] playing role of [color=orange]{$playerRole}[/color].
 
 round-end-statistic-none = No statistics found in this round.
-round-end-statistic-mopped-times = Puddles were mopped [color=yellow]{$count}[/color] times.
-round-end-statistic-sipped-times = Mobs were slipped [color=yellow]{$count}[/color] times.
+

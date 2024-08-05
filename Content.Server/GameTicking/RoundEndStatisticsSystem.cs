@@ -14,21 +14,20 @@ namespace Content.Server.GameTicking
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<IncrementStatsValueEvent>(IncrementValue);
+            SubscribeNetworkEvent<IncrementStatsValueEvent>(IncrementValue);
             SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
             SubscribeLocalEvent<RoundStatisticsAppendEvent>(OnRoundEndText);
         }
 
         private Dictionary<string, int> Statistics = new Dictionary<string, int>
         {
-            { "MoppedTimes", 0 },
-            { "SlippedTimes", 0 }
+            { "ExampleCount", 0 },
         };
 
-        public void IncrementValue(IncrementStatsValueEvent ev)
+        public void ChangeValue(ChangeStatsValueEvent ev)
         {
             // Adds 1 to specific int
-            Statistics[ev.Key] += 1;
+            Statistics[ev.Key] += ev.Amount;
         }
 
         private void OnRoundStart(RoundStartingEvent ev)
@@ -42,20 +41,12 @@ namespace Content.Server.GameTicking
 
         private void OnRoundEndText(RoundStatisticsAppendEvent ev)
         {
-            // Mopped
-            if(Statistics["MoppedTimes"] != 0)
+            // Cream pied
+            if(Statistics["ExampleCount"] != 0)
             {
-                var mopped = new StringBuilder();
-                mopped.AppendLine(Loc.GetString("round-end-statistic-mopped-times", ("count", Statistics["MoppedTimes"])));
-                ev.AddLine(mopped.AppendLine().ToString());
-            }
-
-            // Slipped
-            if(Statistics["SlippedTimes"] != 0)
-            {
-                var slipped = new StringBuilder();
-                slipped.AppendLine(Loc.GetString("round-end-statistic-slipped-times", ("count", Statistics["SlippedTimes"])));
-                ev.AddLine(slipped.AppendLine().ToString());
+                // var example = new StringBuilder();
+                // example.AppendLine(Loc.GetString("example", ("count", Statistics["ExampleCount"])));
+                // ev.AddLine(example.AppendLine().ToString());
             }
         }
     }

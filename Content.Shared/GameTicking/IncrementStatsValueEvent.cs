@@ -1,16 +1,10 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameTicking
+namespace Content.Shared.GameTicking;
+
+[Serializable, NetSerializable]
+public sealed class ChangeStatsValueEvent(string key, int amount) : EntityEventArgs
 {
-    [Serializable, NetSerializable]
-    public sealed class IncrementStatsValueEvent : EntityEventArgs
-    {
-        public string Key { get; }
-
-        public IncrementStatsValueEvent(string key)
-        {
-            Key = key;
-        }
-
-    }
+    public string Key = key;
+    public int Amount = amount;
 }
