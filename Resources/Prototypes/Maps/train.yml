@@ -16,7 +16,7 @@
             !type:NanotrasenNameGenerator
             prefixCreator: 'ED'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_omega.yml # To do - add railway station
+          emergencyShuttlePath: /Maps/Shuttles/emergency_omega.yml # TODO - add railway station
         - type: StationJobs
           availableJobs:
             #service
@@ -38,8 +38,9 @@
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
             Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 3, 3 ]
+            MedicalDoctor: [ 2, 2 ]
             MedicalIntern: [ 2, 2 ]
+            Paramedic: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 4, 4 ]

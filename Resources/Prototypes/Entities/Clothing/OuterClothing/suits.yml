@@ -113,7 +113,7 @@
     modifiers:
       coefficients:
         Heat: 0.90
-        Radiation: 0.001
+        Radiation: 0.01
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/rad.rsi
   - type: GroupExamine

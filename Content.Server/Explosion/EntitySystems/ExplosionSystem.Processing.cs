@@ -4,6 +4,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Explosion;
 using Content.Shared.Explosion.Components;
+using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
