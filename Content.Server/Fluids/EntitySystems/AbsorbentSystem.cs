@@ -340,7 +340,6 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         MoppedTimes = 0;
     }
 
-
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
         var count = MoppedTimes;
