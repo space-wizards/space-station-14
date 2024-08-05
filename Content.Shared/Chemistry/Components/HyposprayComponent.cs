@@ -30,10 +30,10 @@ public sealed partial class HyposprayComponent : Component
     [DataField(required: true)]
     public bool OnlyAffectsMobs = false;
 
-	/// <summary>
-	/// If this can draw from containers in mob-only mode.
-	/// </summary>
-	[AutoNetworkedField]
+    /// <summary>
+    /// If this can draw from containers in mob-only mode.
+    /// </summary>
+    [AutoNetworkedField]
     [DataField]
     public bool CanContainerDraw = true;
 
