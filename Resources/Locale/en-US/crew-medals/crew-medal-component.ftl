@@ -9,7 +9,9 @@ comp-crew-medal-round-end-result = {$count ->
     *[other] There were {$count} medals awarded:
 }
 
-comp-crew-medal-round-end-list = [color=white]{$recipient}[/color] earned the [color=white]{$medal}[/color] for
+comp-crew-medal-round-end-list =
+    - [color=white]{$recipient}[/color] earned the [color=white]{$medal}[/color] for
+    {"  "}{$reason}
 
 # UI
 

@@ -3,6 +3,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Clothing;
 using Content.Shared.CrewMedal;
 using Content.Shared.Database;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,7 @@ public sealed class CrewMedalSystem : SharedCrewMedalSystem
     {
         if (medal.Comp.Awarded)
             return;
-        medal.Comp.Recipient = Name(args.Wearer);
+        medal.Comp.Recipient = Identity.Name(args.Wearer, EntityManager);
         medal.Comp.Awarded = true;
         Dirty(medal);
         _popup.PopupEntity(Loc.GetString("comp-crew-medal-award-text", ("recipient", medal.Comp.Recipient), ("medal", Name(medal.Owner))), medal.Owner);
@@ -53,7 +54,8 @@ public sealed class CrewMedalSystem : SharedCrewMedalSystem
         var query = EntityQueryEnumerator<CrewMedalComponent>();
         while (query.MoveNext(out var uid, out var crewMedalComp))
         {
-            medals.Add((Name(uid), crewMedalComp.Recipient, crewMedalComp.Reason));
+            if (crewMedalComp.Awarded)
+                medals.Add((Name(uid), crewMedalComp.Recipient, crewMedalComp.Reason));
         }
         var count = medals.Count;
         if (count == 0)
@@ -64,8 +66,7 @@ public sealed class CrewMedalSystem : SharedCrewMedalSystem
         result.AppendLine(Loc.GetString("comp-crew-medal-round-end-result", ("count", count)));
         foreach (var medal in medals)
         {
-            result.Append("- ").AppendLine(Loc.GetString("comp-crew-medal-round-end-list", ("recipient", medal.Item2), ("medal", medal.Item1)));
-            result.Append("  ").AppendLine(medal.Item3);
+            result.AppendLine(Loc.GetString("comp-crew-medal-round-end-list", ("medal", medal.Item1), ("recipient", medal.Item2), ("reason", medal.Item3)));
         }
         ev.AddLine(result.AppendLine().ToString());
     }
