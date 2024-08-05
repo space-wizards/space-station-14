@@ -422,7 +422,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitKimono
   name: kimono
-  description: traditional chinese clothing
+  description: Traditional chinese clothing.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/kimono.rsi
@@ -1076,7 +1076,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCossack
   name: cossack suit
-  description: the good old pants and brigantine.
+  description: The good old pants and brigantine.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/cossack.rsi

@@ -661,7 +661,7 @@ namespace Content.Client.Lobby.UI
                     Profile = Profile?.WithAntagPreference(antag.ID, false);
                     SetDirty();
                 }
-                else if (!_requirements.CheckRoleTime(requirements, out var reason))
+                else if (!_requirements.CheckRoleTime(requirements, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
                 {
                     selector.LockRequirements(reason);
                     Profile = Profile?.WithAntagPreference(antag.ID, false);
@@ -911,7 +911,7 @@ namespace Content.Client.Lobby.UI
                     {
                         selector.LockDueToBan(banReason, expirationTime);
                     }
-                    else if (!_requirements.IsAllowed(job, out var reason, true))
+                    else if (!_requirements.IsAllowed(job, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason, true))
                     {
                         selector.LockRequirements(reason);
                     }
