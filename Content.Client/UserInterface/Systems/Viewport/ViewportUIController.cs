@@ -16,7 +16,7 @@ public sealed class ViewportUIController : UIController
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
-    public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
+    public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 15, EyeManager.PixelsPerMeter * 15); // GreyStation - 1:1 viewport
     public const int ViewportHeight = 15;
     private MainViewport? Viewport => UIManager.ActiveScreen?.GetWidget<MainViewport>();
 
@@ -45,17 +45,7 @@ public sealed class ViewportUIController : UIController
 
         var min = _configurationManager.GetCVar(CCVars.ViewportMinimumWidth);
         var max = _configurationManager.GetCVar(CCVars.ViewportMaximumWidth);
-        var width = _configurationManager.GetCVar(CCVars.ViewportWidth);
-        var verticalfit = _configurationManager.GetCVar(CCVars.ViewportVerticalFit) && _configurationManager.GetCVar(CCVars.ViewportStretch);
-
-        if (verticalfit)
-        {
-            width = max;
-        }
-        else if (width < min || width > max)
-        {
-            width = CCVars.ViewportWidth.DefaultValue;
-        }
+        var width = ViewportHeight; // GreyStation - 1:1 viewport
 
         Viewport.Viewport.ViewportSize = (EyeManager.PixelsPerMeter * width, EyeManager.PixelsPerMeter * ViewportHeight);
         Viewport.UpdateCfg();
