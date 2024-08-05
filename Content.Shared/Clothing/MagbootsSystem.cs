@@ -36,7 +36,7 @@ public sealed class SharedMagbootsSystem : EntitySystem
     {
         var (uid, comp) = ent;
         // only stick to the floor if being worn in the correct slot
-        if (_container.TryGetContainingContainer(uid, out var container) &&
+        if (_container.TryGetContainingContainer((uid, null, null), out var container) &&
             _inventory.TryGetSlotEntity(container.Owner, comp.Slot, out var worn)
             && uid == worn)
         {

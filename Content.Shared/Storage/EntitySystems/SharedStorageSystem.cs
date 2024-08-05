@@ -1431,7 +1431,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void OnStackCountChanged(EntityUid uid, MetaDataComponent component, StackCountChangedEvent args)
     {
-        if (_containerSystem.TryGetContainingContainer(uid, out var container, component) &&
+        if (_containerSystem.TryGetContainingContainer((uid, null, component), out var container) &&
             container.ID == StorageComponent.ContainerId)
         {
             UpdateAppearance(container.Owner);

@@ -328,16 +328,13 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (session != null)
         {
-            var curMind = session.GetMind();
-            if (curMind == null)
-            {
-                curMind = _mind.CreateMind(session.UserId, Name(antagEnt.Value));
-                _mind.SetUserId(curMind.Value, session.UserId);
-            }
+            var curMind = _mind.CreateMind(session.UserId, Name(antagEnt.Value));
+            _mind.SetUserId(curMind, session.UserId);
 
-            _mind.TransferTo(curMind.Value, antagEnt, ghostCheckOverride: true);
-            _role.MindAddRoles(curMind.Value, def.MindComponents, null, true);
-            ent.Comp.SelectedMinds.Add((curMind.Value, Name(player)));
+            _mind.TransferTo(curMind, antagEnt, ghostCheckOverride: true);
+            _role.MindAddRoles(curMind, def.MindComponents, null, true);
+            ent.Comp.SelectedMinds.Add((curMind, Name(player)));
+
             SendBriefing(session, def.Briefing);
         }
 

@@ -157,7 +157,7 @@
   categories: [ HideSpawnMenu ]
   id: DragonsBreathGun
   name: dragon's lung
-  description: For dragon's breathing
+  description: For dragon's breathing.
   components:
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 5
