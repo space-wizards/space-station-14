@@ -14,7 +14,7 @@ namespace Content.Server.GameTicking
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeNetworkEvent<IncrementStatsValueEvent>(IncrementValue);
+            SubscribeNetworkEvent<ChangeStatsValueEvent>(ChangeValue);
             SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
             SubscribeLocalEvent<RoundStatisticsAppendEvent>(OnRoundEndText);
         }
