@@ -13,12 +13,12 @@ namespace Content.Shared.Movement.Systems;
 
 public abstract class SharedJetpackSystem : EntitySystem
 {
-    [Dependency] private   readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
-    [Dependency] protected  readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
-    [Dependency] private   readonly SharedMoverController _mover = default!;
-    [Dependency] private   readonly SharedPopupSystem _popup = default!;
-    [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedMoverController _mover = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
@@ -158,7 +158,7 @@ public abstract class SharedJetpackSystem : EntitySystem
 
         if (user == null)
         {
-            Container.TryGetContainingContainer(uid, out var container);
+            Container.TryGetContainingContainer((uid, null, null), out var container);
             user = container?.Owner;
         }
 

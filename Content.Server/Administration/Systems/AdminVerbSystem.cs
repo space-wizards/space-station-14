@@ -180,7 +180,7 @@ namespace Content.Server.Administration.Systems
 
                             if (targetMind != null)
                             {
-                                _mindSystem.TransferTo(targetMind.Value, mobUid);
+                                _mindSystem.TransferTo(targetMind.Value, mobUid, true);
                             }
                         },
                         ConfirmationPopup = true,

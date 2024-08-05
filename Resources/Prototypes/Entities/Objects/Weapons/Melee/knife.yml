@@ -44,6 +44,7 @@
   - type: GuideHelp
     guides:
     - Chef
+    - FoodRecipes
 
 - type: entity
   name: butcher's cleaver
@@ -70,6 +71,7 @@
   - type: GuideHelp
     guides:
     - Chef
+    - FoodRecipes
 
 - type: entity
   name: combat knife
@@ -92,6 +94,7 @@
         Slash: 12
   - type: EmbeddableProjectile
     sound: /Audio/Weapons/star_hit.ogg
+  - type: LandAtCursor
   - type: DamageOtherOnHit
     damage:
       types:
@@ -150,6 +153,7 @@
     damage:
       types:
         Slash: 10
+  - type: LandAtCursor
   - type: Sprite
     sprite: Clothing/Head/Hats/greyflatcap.rsi
   - type: Clothing
@@ -274,6 +278,7 @@
         Slash: 5
   - type: EmbeddableProjectile
     sound: /Audio/Weapons/star_hit.ogg
+  - type: LandAtCursor
   - type: DamageOtherOnHit
     ignoreResistances: true
     damage:
