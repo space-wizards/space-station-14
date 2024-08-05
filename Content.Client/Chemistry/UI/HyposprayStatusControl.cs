@@ -42,9 +42,9 @@ public sealed class HyposprayStatusControl : Control
 
         PrevVolume = solution.Volume;
         PrevMaxVolume = solution.MaxVolume;
-        PrevOnlyAffectsMobs = _parent.Comp.OnlyAffectsMobs;
+		PrevOnlyAffectsMobs = _parent.Comp.OnlyAffectsMobs;
 
-        var modeStringLocalized = Loc.GetString(_parent.Comp.OnlyAffectsMobs switch
+        var modeStringLocalized = Loc.GetString((_parent.Comp.OnlyAffectsMobs & _parent.Comp.CanContainerDraw) switch
         {
             false => "hypospray-all-mode-text",
             true => "hypospray-mobs-only-mode-text",
