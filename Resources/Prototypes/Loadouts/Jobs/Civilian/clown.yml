@@ -13,6 +13,11 @@
 - type: loadout
   id: JesterSuit
   equipment:
+    jumpsuit: ClothingUniformJumpsuitJester
+
+- type: loadout
+  id: JesterAltSuit
+  equipment:
     jumpsuit: ClothingUniformJumpsuitJesterAlt
 
 # Back
