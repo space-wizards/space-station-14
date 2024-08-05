@@ -1,28 +1,16 @@
 # Head
 - type: loadout
   id: DetectiveFedora
-  equipment: DetectiveFedora
-
-- type: startingGear
-  id: DetectiveFedora
   equipment:
     head: ClothingHeadHatFedoraBrown
 
 - type: loadout
   id: DetectiveFedoraGrey
-  equipment: DetectiveFedoraGrey
-
-- type: startingGear
-  id: DetectiveFedoraGrey
   equipment:
     head: ClothingHeadHatFedoraGrey
-  
+
 # Neck
 - type: loadout
-  id: DetectiveTie
-  equipment: DetectiveTie
-
-- type: startingGear
   id: DetectiveTie
   equipment:
     neck: ClothingNeckTieDet
@@ -30,36 +18,20 @@
 # Jumpsuit
 - type: loadout
   id: DetectiveJumpsuit
-  equipment: DetectiveJumpsuit
-
-- type: startingGear
-  id: DetectiveJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitDetective
 
 - type: loadout
-  id: DetectiveJumpskirt
-  equipment: DetectiveJumpskirt
-
-- type: startingGear
   id: DetectiveJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtDetective
 
 - type: loadout
   id: NoirJumpsuit
-  equipment: NoirJumpsuit
-
-- type: startingGear
-  id: NoirJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitDetectiveGrey
 
 - type: loadout
-  id: NoirJumpskirt
-  equipment: NoirJumpskirt
-
-- type: startingGear
   id: NoirJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtDetectiveGrey
@@ -67,18 +39,10 @@
 # OuterClothing
 - type: loadout
   id: DetectiveArmorVest
-  equipment: DetectiveArmorVest
-
-- type: startingGear
-  id: DetectiveArmorVest
   equipment:
     outerClothing: ClothingOuterVestDetective
 
 - type: loadout
-  id: DetectiveCoat
-  equipment: DetectiveCoat
-
-- type: startingGear
   id: DetectiveCoat
   equipment:
     outerClothing: ClothingOuterCoatDetectiveLoadout
