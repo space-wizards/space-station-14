@@ -339,7 +339,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/empgrenade.rsi
   - type: EmpOnTrigger
-    range: 4
+    range: 5.5
     energyConsumption: 50000
   - type: DeleteOnTrigger
   - type: Appearance
