@@ -512,7 +512,7 @@ namespace Content.Server.Database
 
             if (banTime == default)
                 return;
-            
+
             await db.DbContext.RoleBan
                 .Where(b => b.BanTime == banTime)
                 .ExecuteUpdateAsync(setters => setters
