@@ -1,30 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: Event weights have been tweaked across the board, and some events removed
-      (such as false alarm) to hopefully allow for a more interesting and varied slate
-      of random occurrences per round.
-    type: Add
-  id: 6538
-  time: '2024-05-06T10:10:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27721
-- author: mirrorcult
-  changes:
-  - message: Tile weighting for many events and variation rules (messes, dragons,
-      revenants, kudzu, gasleak, rods, etc) has been fixed. They will now no longer
-      spawn disproportionately often on smaller grids.
-    type: Add
-  id: 6539
-  time: '2024-05-06T11:25:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27724
-- author: Blackern5000
-  changes:
-  - message: Burn damage is now half as effective at cauterizing wounds as it was
-      previously
-    type: Tweak
-  id: 6540
-  time: '2024-05-06T20:19:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27726
 - author: Blackern5000
   changes:
   - message: Active lights now deal significantly less burn damage when touched.
@@ -3784,3 +3758,25 @@
   id: 7037
   time: '2024-08-03T14:07:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30430
+- author: Ian321
+  changes:
+  - message: Help menus now include the linked guides.
+    type: Fix
+  id: 7038
+  time: '2024-08-04T03:32:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30462
+- author: DrSmugleaf
+  changes:
+  - message: The Toggle Internals verb no longer shows up in the context menu if no
+      breathing tool is equipped and internals are off.
+    type: Tweak
+  id: 7039
+  time: '2024-08-04T03:34:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30622
+- author: Mervill
+  changes:
+  - message: Rotten Meat can be collected in trash bags and deleted by the recycler
+    type: Tweak
+  id: 7040
+  time: '2024-08-04T10:13:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30594
