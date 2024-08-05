@@ -24,15 +24,15 @@ namespace Content.Server.GameTicking
             { "ExampleCount", 0 },
         };
 
+        // Change the value by given int
         public void ChangeValue(ChangeStatsValueEvent ev)
         {
-            // Adds 1 to specific int
             Statistics[ev.Key] += ev.Amount;
         }
 
+        // Set all ints to zero
         private void OnRoundStart(RoundStartingEvent ev)
         {
-            // Set all ints to zero
             foreach (var key in Statistics.Keys.ToList())
             {
                 Statistics[key] = 0;
@@ -41,7 +41,7 @@ namespace Content.Server.GameTicking
 
         private void OnRoundEndText(RoundStatisticsAppendEvent ev)
         {
-            // Cream pied
+            // Don't add anything if 0. We don't want to spoil any specific and hard statistics.
             if(Statistics["ExampleCount"] != 0)
             {
                 // var example = new StringBuilder();
