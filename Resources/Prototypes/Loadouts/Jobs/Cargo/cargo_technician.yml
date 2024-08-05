@@ -1,28 +1,16 @@
 # Head
 - type: loadout
   id: CargoTechnicianHead
-  equipment: CargoTechnicianHead
-
-- type: startingGear
-  id: CargoTechnicianHead
   equipment:
     head: ClothingHeadHatCargosoft
 
 # Jumpsuit
 - type: loadout
   id: CargoTechnicianJumpsuit
-  equipment: CargoTechnicianJumpsuit
-
-- type: startingGear
-  id: CargoTechnicianJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitCargo
 
 - type: loadout
-  id: CargoTechnicianJumpskirt
-  equipment: CargoTechnicianJumpskirt
-
-- type: startingGear
   id: CargoTechnicianJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtCargo
@@ -30,27 +18,15 @@
 # Back
 - type: loadout
   id: CargoTechnicianBackpack
-  equipment: CargoTechnicianBackpack
-
-- type: startingGear
-  id: CargoTechnicianBackpack
   equipment:
     back: ClothingBackpackCargo
 
 - type: loadout
   id: CargoTechnicianSatchel
-  equipment: CargoTechnicianSatchel
-
-- type: startingGear
-  id: CargoTechnicianSatchel
   equipment:
     back: ClothingBackpackSatchelCargo
 
 - type: loadout
-  id: CargoTechnicianDuffel
-  equipment: CargoTechnicianDuffel
-
-- type: startingGear
   id: CargoTechnicianDuffel
   equipment:
     back: ClothingBackpackDuffelCargo
@@ -58,19 +34,11 @@
 # OuterClothing
 - type: loadout
   id: CargoTechnicianWintercoat
-  equipment: CargoTechnicianWintercoat
-
-- type: startingGear
-  id: CargoTechnicianWintercoat
   equipment:
     outerClothing: ClothingOuterWinterCargo
 
 # Shoes
 - type: loadout
-  id: CargoWinterBoots
-  equipment: CargoWinterBoots
-
-- type: startingGear
   id: CargoWinterBoots
   equipment:
     shoes: ClothingShoesBootsWinterCargo

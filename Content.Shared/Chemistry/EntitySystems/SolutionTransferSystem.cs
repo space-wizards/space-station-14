@@ -76,6 +76,9 @@ public sealed class SolutionTransferSystem : EntitySystem
         var user = args.User;
         foreach (var amount in DefaultTransferAmounts)
         {
+          if (amount < comp.MinimumTransferAmount || amount > comp.MaximumTransferAmount)
+                continue;
+
             AlternativeVerb verb = new();
             verb.Text = Loc.GetString("comp-solution-transfer-verb-amount", ("amount", amount));
             verb.Category = VerbCategory.SetTransferAmount;
@@ -117,6 +120,7 @@ public sealed class SolutionTransferSystem : EntitySystem
                 transferAmount = FixedPoint2.Min(transferAmount, maxRefill);
 
             var transferred = Transfer(args.User, target, targetSoln.Value, uid, ownerSoln.Value, transferAmount);
+            args.Handled = true;
             if (transferred > 0)
             {
                 var toTheBrim = ownerRefill.AvailableVolume == 0;
@@ -125,8 +129,6 @@ public sealed class SolutionTransferSystem : EntitySystem
                     : "comp-solution-transfer-fill-normal";
 
                 _popup.PopupClient(Loc.GetString(msg, ("owner", args.Target), ("amount", transferred), ("target", uid)), uid, args.User);
-
-                args.Handled = true;
                 return;
             }
         }
@@ -143,13 +145,11 @@ public sealed class SolutionTransferSystem : EntitySystem
                 transferAmount = FixedPoint2.Min(transferAmount, maxRefill);
 
             var transferred = Transfer(args.User, uid, ownerSoln.Value, target, targetSoln.Value, transferAmount);
-
+            args.Handled = true;
             if (transferred > 0)
             {
                 var message = Loc.GetString("comp-solution-transfer-transfer-solution", ("amount", transferred), ("target", target));
                 _popup.PopupClient(message, uid, args.User);
-
-                args.Handled = true;
             }
         }
     }
@@ -202,6 +202,9 @@ public sealed class SolutionTransferSystem : EntitySystem
         var solution = _solution.SplitSolution(source, actualAmount);
         _solution.AddSolution(target, solution);
 
+        var ev = new SolutionTransferredEvent(sourceEntity, targetEntity, user, actualAmount);
+        RaiseLocalEvent(targetEntity, ref ev);
+
         _adminLogger.Add(LogType.Action, LogImpact.Medium,
             $"{ToPrettyString(user):player} transferred {SharedSolutionContainerSystem.ToPrettyString(solution)} to {ToPrettyString(targetEntity):target}, which now contains {SharedSolutionContainerSystem.ToPrettyString(targetSolution)}");
 
@@ -225,3 +228,9 @@ public record struct SolutionTransferAttemptEvent(EntityUid From, EntityUid To, 
         CancelReason = reason;
     }
 }
+
+/// <summary>
+/// Raised on the target entity when a non-zero amount of solution gets transferred.
+/// </summary>
+[ByRefEvent]
+public record struct SolutionTransferredEvent(EntityUid From, EntityUid To, EntityUid User, FixedPoint2 Amount);

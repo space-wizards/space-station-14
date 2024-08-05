@@ -9,5 +9,5 @@ advertisement-lawdrobe-8 = You or a loved one hurt by Nanotrasen? Too bad!
 thankyou-lawdrobe-1 = You can win any case in that outfit!
 thankyou-lawdrobe-2 = Get one for your client as well!
 thankyou-lawdrobe-3 = Win or lose, you get paid either way!
-thankyou-lawdrobe-4 = Remember: Its only illegal if you get caught!
+thankyou-lawdrobe-4 = Remember: It's only illegal if you get caught!
 thankyou-lawdrobe-5 = OBJECTION! That outfit is too cool for court!
