@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: cooldolphin
-  changes:
-  - message: Cigarettes in the loadout menu.
-    type: Add
-  id: 6547
-  time: '2024-05-07T15:55:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27292
 - author: FairlySadPanda
   changes:
   - message: Weapons that deflect shots, like the e-sword, now are most effective
@@ -3784,3 +3777,10 @@
   id: 7046
   time: '2024-08-05T08:03:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30446
+- author: EmoGarbage404
+  changes:
+  - message: Being cold now slows down your character.
+    type: Add
+  id: 7047
+  time: '2024-08-05T08:07:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29692
