@@ -394,7 +394,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             return;
 
         // if the user is forced to whisper, they will whisper
-        if (TransformSpeechType(source, InGameICChatType.Speak) != InGameICChatType.Speak)
+        if (TransformSpeechType(source, InGameICChatType.Speak) == InGameICChatType.Whisper)
         {
             SendEntityWhisper(source, originalMessage, ChatTransmitRange.Normal, channel, nameOverride, hideLog, ignoreActionBlocker);
             return;
@@ -474,7 +474,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             return;
 
         // if the user is forced to speak, make them speak!
-        if (TransformSpeechType(source, InGameICChatType.Whisper) != InGameICChatType.Whisper)
+        if (TransformSpeechType(source, InGameICChatType.Whisper) == InGameICChatType.Speak)
         {
             SendEntitySpeak(source, originalMessage, ChatTransmitRange.Normal, channel, nameOverride, hideLog, ignoreActionBlocker);
             return;
