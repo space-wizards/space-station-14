@@ -1,7 +1,7 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
-using Robust.Shared.Network;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
 using Content.Shared.StepTrigger.Systems;
@@ -10,6 +10,7 @@ using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
@@ -106,6 +107,8 @@ public sealed class SlipperySystem : EntitySystem
         {
             _audio.PlayPredicted(component.SlipSound, other, other);
         }
+
+        IncrementStatsValue(SlippedTimes);
 
         _adminLogger.Add(LogType.Slip, LogImpact.Low,
             $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(uid):entity}");
