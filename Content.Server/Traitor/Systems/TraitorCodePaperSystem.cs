@@ -7,6 +7,7 @@ using Content.Server.Traitor.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Paper;
 
 namespace Content.Server.Traitor.Systems;
 
@@ -33,11 +34,11 @@ public sealed class TraitorCodePaperSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (HasComp<PaperComponent>(uid))
+        if (TryComp(uid, out PaperComponent? paperComp))
         {
             if (TryGetTraitorCode(out var paperContent, component))
             {
-                _paper.SetContent(uid, paperContent);
+                _paper.SetContent((uid, paperComp), paperContent);
             }
         }
     }
@@ -83,7 +84,7 @@ public sealed class TraitorCodePaperSystem : EntitySystem
 
         if (!codesMessage.IsEmpty)
         {
-            if (i == 1) 
+            if (i == 1)
                 traitorCode = Loc.GetString("traitor-codes-message-singular") + codesMessage;
             else
                 traitorCode = Loc.GetString("traitor-codes-message-plural") + codesMessage;
