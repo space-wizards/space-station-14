@@ -1,80 +1,4 @@
 ﻿Entries:
-- author: Allen
-  changes:
-  - message: Added new icons for the emote wheel
-    type: Add
-  id: 6534
-  time: '2024-05-06T01:12:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27541
-- author: DogZeroX
-  changes:
-  - message: 'Added a new salvage song: Deadline by Bolgarich'
-    type: Add
-  id: 6535
-  time: '2024-05-06T03:51:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27707
-- author: '0x6273'
-  changes:
-  - message: Shuttle docks now have a "dock status" device link port
-    type: Add
-  id: 6536
-  time: '2024-05-06T03:59:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27646
-- author: DogZeroX
-  changes:
-  - message: 'Added new lobby art: Just a week away by Fern'
-    type: Add
-  id: 6537
-  time: '2024-05-06T08:17:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27717
-- author: mirrorcult
-  changes:
-  - message: Event weights have been tweaked across the board, and some events removed
-      (such as false alarm) to hopefully allow for a more interesting and varied slate
-      of random occurrences per round.
-    type: Add
-  id: 6538
-  time: '2024-05-06T10:10:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27721
-- author: mirrorcult
-  changes:
-  - message: Tile weighting for many events and variation rules (messes, dragons,
-      revenants, kudzu, gasleak, rods, etc) has been fixed. They will now no longer
-      spawn disproportionately often on smaller grids.
-    type: Add
-  id: 6539
-  time: '2024-05-06T11:25:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27724
-- author: Blackern5000
-  changes:
-  - message: Burn damage is now half as effective at cauterizing wounds as it was
-      previously
-    type: Tweak
-  id: 6540
-  time: '2024-05-06T20:19:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27726
-- author: Blackern5000
-  changes:
-  - message: Active lights now deal significantly less burn damage when touched.
-    type: Tweak
-  id: 6541
-  time: '2024-05-06T20:20:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27728
-- author: pissdemon
-  changes:
-  - message: Special ghost roles are now raffled, instead of being given out to the
-      first player requesting them.
-    type: Add
-  id: 6542
-  time: '2024-05-07T01:48:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26629
-- author: mirrorcult
-  changes:
-  - message: Less ratkings should spawn during the mouse migration event now
-    type: Tweak
-  id: 6543
-  time: '2024-05-07T03:23:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27760
 - author: PJB3005
   changes:
   - message: Fixed preferences not loading sometimes if you had a loadout item with
@@ -3774,3 +3698,85 @@
   id: 7033
   time: '2024-08-02T10:02:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30571
+- author: slarticodefast
+  changes:
+  - message: Added potassium iodide. It gives you short term radiation protection
+      and can be found in radiation treatment kits.
+    type: Add
+  - message: Added haloperidol. It removes most stimulating/hallucinogenic drugs from
+      the body and makes you drowsy.
+    type: Add
+  - message: Added the drowsiness status effect. It blurs your vision and makes you
+      randomly fall asleep. Drink some coffee or cola to remove it.
+    type: Add
+  - message: Chloral hydrate now makes you drowsy instead of forcing you to sleep
+      instantly.
+    type: Tweak
+  id: 7034
+  time: '2024-08-02T17:12:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27454
+- author: Blackern5000
+  changes:
+  - message: Winter boots no longer have ugly outlines
+    type: Tweak
+  id: 7035
+  time: '2024-08-02T23:05:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30350
+- author: lzk228
+  changes:
+  - message: Figurines will say phrases on activation.
+    type: Add
+  id: 7036
+  time: '2024-08-03T14:06:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30455
+- author: JoelZimmerman
+  changes:
+  - message: Dank pizza is now cooked with cannabis leaves instead of ambrosia vulgaris.
+    type: Tweak
+  id: 7037
+  time: '2024-08-03T14:07:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30430
+- author: Ian321
+  changes:
+  - message: Help menus now include the linked guides.
+    type: Fix
+  id: 7038
+  time: '2024-08-04T03:32:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30462
+- author: DrSmugleaf
+  changes:
+  - message: The Toggle Internals verb no longer shows up in the context menu if no
+      breathing tool is equipped and internals are off.
+    type: Tweak
+  id: 7039
+  time: '2024-08-04T03:34:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30622
+- author: Mervill
+  changes:
+  - message: Rotten Meat can be collected in trash bags and deleted by the recycler
+    type: Tweak
+  id: 7040
+  time: '2024-08-04T10:13:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30594
+- author: DrSmugleaf
+  changes:
+  - message: Fixed the client sometimes falsely showing the red color flash effect
+      when attacking something that they can't, like allied xenonids.
+    type: Fix
+  id: 7041
+  time: '2024-08-05T03:14:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30661
+- author: Killerqu00
+  changes:
+  - message: Sleeper agents event no longer occurs when evacuation is called.
+    type: Tweak
+  id: 7042
+  time: '2024-08-05T03:17:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30646
+- author: Cojoke-dot
+  changes:
+  - message: Mice can now use combat mode with a 0 damage attack
+    type: Tweak
+  id: 7043
+  time: '2024-08-05T03:26:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30487
