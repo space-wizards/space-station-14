@@ -236,11 +236,12 @@ public sealed partial class ChatSystem : SharedChatSystem
             return;
 
         //Last Message Before Death Webhook
-        var lastMessageSystem = LastMessageBeforeDeath.Instance;
+        var lastMessageSystem = LastMessageBeforeDeathSystem.Instance;
 
         if (player != null)
         {
             lastMessageSystem.AddMessage(source, player.Name, message, Name(source));
+            
         }
 
         // This message may have a radio prefix, and should then be whispered to the resolved radio channel
