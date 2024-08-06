@@ -147,11 +147,7 @@ public sealed class LoadoutSystem : EntitySystem
     {
         // First, randomly pick a startingGear profile from those specified, and equip it.
         if (startingGear != null && startingGear.Count > 0)
-        {
-            var gear = _protoMan.Index(_random.Pick(startingGear));
-            _station.EquipStartingGear(uid, gear);
-            //TODO: _station.EquipStartingGear(uid, _random.Pick(component.StartingGear));
-        }
+            _station.EquipStartingGear(uid, _random.Pick(startingGear));
 
         if (loadoutGroups == null)
         {
