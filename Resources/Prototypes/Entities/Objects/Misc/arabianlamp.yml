@@ -1,0 +1,139 @@
+- type: entity
+  name: lamp
+  parent: BaseItem
+  id: ArabianLamp
+  description: Why the heck won't this piece of junk open!?
+  components:
+  - type: Appearance
+  - type: AccessReader
+    access: [ [ "CentralCommand" ] ]
+    breakOnEmag: false
+  - type: Lock
+    lockOnClick: false
+    breakOnEmag: false
+  - type: EntityStorage
+    capacity: 1 # Its smol.
+    itemCanStoreMobs: false #  just leaving this here explicitly since I know at some point someone will want to use this to hold a mob. This also prevents it from becoming His Grace.
+  # - type: StorageFill 
+    # contents: 
+      # - id: PuddleSparkle # Ha! Cute. Unfortunately it despawns before the container is likely to open. 
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+  - type: Item
+    size: Normal
+    heldPrefix: lamp
+    sprite: Objects/Misc/arabianlamp.rsi
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    damage:
+      types:
+        Blunt: 6
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+        types:
+            Blunt: 6
+            Heat: 3
+    activatedSoundOnHit:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+      params:
+        variation: 0.250
+        volume: -10
+    activatedSoundOnHitNoDamage:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+      params:
+        variation: 0.250
+        volume: -12
+    deactivatedSoundOnHitNoDamage:
+      collection: MetalThud
+  - type: ItemToggle
+    predictable: false
+    soundActivate:
+      collection: lighterOnSounds
+    soundDeactivate:
+      path: /Audio/Items/candle_blowing.ogg
+      params:
+        variation: 0.05
+        volume: 10
+  - type: ItemToggleHot
+  - type: Sprite
+    sprite: Objects/Misc/arabianlamp.rsi
+    layers:
+    - state: lamp 
+      map: [ "enum.StorageVisualLayers.Base" ]
+    - state: lamptop
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: flame
+      visible: false
+      shader: unshaded
+      map: ["enum.ToggleVisuals.Layer"]
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: EntityStorageVisuals
+    stateBaseClosed: lamp
+    stateDoorOpen: lamp
+    stateDoorClosed: lamptop
+  - type: ToggleableLightVisuals
+    spriteLayer: flame
+    inhandVisuals:
+      left:
+      - state: inhand-left-flame
+        shader: unshaded
+      right:
+      - state: inhand-right-flame
+        shader: unshaded
+  - type: SolutionContainerManager
+    solutions:
+      Welder:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 25
+        maxVol: 25
+  - type: SolutionTransfer
+    transferAmount: 5
+    canChangeTransferAmount: false
+  - type: Spillable
+    solution: Welder
+  - type: DrawableSolution
+    solution: Welder
+  - type: RefillableSolution
+    solution: Welder
+  - type: DrainableSolution
+    solution: Welder
+  - type: ExaminableSolution
+    solution: Welder
+  - type: SolutionRegeneration
+    solution: Welder
+    generated:
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 0.1
+    duration: 5
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/welder_drop.ogg
+  - type: Welder
+    fuelConsumption: 0.05
+    fuelLitCost: 0.05
+    tankSafe: true
+  - type: PointLight
+    enabled: false
+    netsync: false
+    radius: 5
+    color: orange
+  - type: StaticPrice
+    price: 1500
+  - type: Prayable
+    sentMessage: prayer-popup-notify-lamp-sent
+    notificationPrefix: prayer-chat-notify-lamp
+    verb: prayer-verbs-rub
+    verbImage: null

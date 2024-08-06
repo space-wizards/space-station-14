@@ -17,10 +17,17 @@ Small fixes/refactors are exempt.
 Any media may be used in SS14 progress reports, with clear credit given.
 
 If you're unsure whether your PR will require media, ask a maintainer.
-
-Check the box below to confirm that you have in fact seen this (put an X in the brackets, like [X]):
 -->
 
+## Requirements
+<!-- 
+Due to influx of PR's we require to ensure that PR's are following the correct guidelines.
+
+Please take a moment to read these if its your first time.
+
+Check the boxes below to confirm that you have in fact seen these (put an X in the brackets, like [X]):
+-->
+- [ ] I have read and I am following the [Pull Request Guidelines](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html). I understand that not doing so may get my pr closed at maintainer’s discretion
 - [ ] I have added screenshots/videos to this PR showcasing its changes ingame, **or** this PR does not require an ingame showcase
 
 ## Breaking changes
@@ -34,7 +41,7 @@ Make players aware of new features and changes that could affect how they play t
 -->
 
 <!--
-Make sure to take this Changelog template out of the comment block in order for it to show up.
+Make sure to take this Changelog template out of the comment block in order for it to show up. Changelog must have a :cl: symbol, so the bot recognizes the changes and adds them to the game's changelog.
 :cl:
 - add: Added fun!
 - remove: Removed fun!

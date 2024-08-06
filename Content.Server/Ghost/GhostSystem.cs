@@ -128,7 +128,7 @@ namespace Content.Server.Ghost
         private void OnRelayMoveInput(EntityUid uid, GhostOnMoveComponent component, ref MoveInputEvent args)
         {
             // If they haven't actually moved then ignore it.
-            if ((args.Component.HeldMoveButtons &
+            if ((args.Entity.Comp.HeldMoveButtons &
                  (MoveButtons.Down | MoveButtons.Left | MoveButtons.Up | MoveButtons.Right)) == 0x0)
             {
                 return;
