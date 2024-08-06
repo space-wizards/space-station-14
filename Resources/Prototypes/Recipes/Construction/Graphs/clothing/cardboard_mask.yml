@@ -1,0 +1,16 @@
+﻿- type: constructionGraph
+  id: MaskCardboard
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: maskCardboard
+      steps:
+      - material: Cardboard
+        amount: 1
+        doAfter: 2
+      - material: Cable
+        amount: 5
+        doAfter: 2
+  - node: maskCardboard
+    entity: ClothingMaskCardboard

@@ -266,6 +266,25 @@
 
 - type: entity
   parent: ClothingMaskBase
+  id: ClothingMaskCardboard
+  name: cardboard mask
+  description: A piece of cardboard, with two holes in it, held up by a wire. Ranked #2 on the list of simplest masks of all time.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/cardboard.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/cardboard.rsi
+  - type: BreathMask
+  - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Snout
+
+- type: entity
+  parent: ClothingMaskBase
   id: ClothingMaskMime
   name: mime mask
   description: The traditional mime's mask. It has an eerie facial posture.
