@@ -47,11 +47,14 @@
     sprite: Clothing/OuterClothing/Armor/riot.rsi
   - type: Armor
     modifiers:
-      damageConversions:
-        Blunt:
-          Slash: 0.25
-        Heat:
-          Caustic: 0.25
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.7
+        Heat: 0.9
+        Caustic: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
   - type: GroupExamine
 
 - type: entity
