@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Server.Chat;
+using Content.Shared.Chat;
 using Content.Shared.CombatMode;
 using Content.Shared.Execution;
 using Content.Shared.Mind;
@@ -25,9 +26,12 @@ namespace Content.Server.Execution
             SubscribeLocalEvent<ExecutionComponent, ExecutionDoAfterEvent>(OnExecutionDoAfter);
         }
 
-        private void OnExecutionDoAfter(EntityUid uid, ExecutionComponent component, ExecutionDoAfterEvent args)
+        private void OnExecutionDoAfter(Entity<ExecutionComponent> entity, ref ExecutionDoAfterEvent args)
         {
             if (args.Handled || args.Cancelled || args.Used == null || args.Target == null)
+                return;
+
+            if (!TryComp<MeleeWeaponComponent>(entity, out var meleeWeaponComp))
                 return;
 
             var attacker = args.User;
@@ -40,52 +44,49 @@ namespace Content.Server.Execution
             // This is needed so the melee system does not stop it.
             var prev = _combat.IsInCombatMode(attacker);
             _combat.SetInCombatMode(attacker, true);
-            component.Executing = true;
+            entity.Comp.Executing = true;
             string? internalMsg = null;
             string? externalMsg = null;
 
-            if (TryComp(uid, out MeleeWeaponComponent? melee))
+            internalMsg = entity.Comp.DefaultCompleteInternalMeleeExecutionMessage;
+            externalMsg = entity.Comp.DefaultCompleteExternalMeleeExecutionMessage;
+
+            var userXform = Transform(attacker);
+
+            if (attacker == victim)
             {
-                internalMsg = component.DefaultCompleteInternalMeleeExecutionMessage;
-                externalMsg = component.DefaultCompleteExternalMeleeExecutionMessage;
+                Spawn(meleeWeaponComp.Animation, userXform.Coordinates);
+                if (_mind.TryGetMind(victim, out var mindId, out var mindComp))
+                    _suicide.Suicide(victim, (mindId, mindComp));
+            }
+            else
+            {
+                _melee.AttemptLightAttack(attacker, weapon, meleeWeaponComp, victim);
+                var targetPos = _transform.GetWorldPosition(victim);
+                var localPos = Vector2.Transform(targetPos, _transform.GetInvWorldMatrix(userXform));
+                localPos = userXform.LocalRotation.RotateVec(localPos);
 
-                var userXform = Transform(attacker);
+                if (localPos.LengthSquared() <= 0f)
+                    return;
 
-                if (attacker == victim)
-                {
-                    Spawn(melee.Animation, userXform.Coordinates);
-                    if (_mind.TryGetMind(victim, out var mindId, out var mind))
-                        _suicide.Suicide(victim, mindId, mind: mind);
-                }
-                else
-                {
-                    _melee.AttemptLightAttack(attacker, weapon, melee, victim);
-                    var targetPos = _transform.GetWorldPosition(victim);
-                    var localPos = Vector2.Transform(targetPos, _transform.GetInvWorldMatrix(userXform));
-                    localPos = userXform.LocalRotation.RotateVec(localPos);
+                const float bufferLength = 0.2f;
+                var visualLength = meleeWeaponComp.Range - bufferLength;
 
-                    if (localPos.LengthSquared() <= 0f)
-                        return;
+                if (localPos.Length() > visualLength)
+                    localPos = localPos.Normalized() * visualLength;
 
-                    const float bufferLength = 0.2f;
-                    var visualLength = melee.Range - bufferLength;
-
-                    if (localPos.Length() > visualLength)
-                        localPos = localPos.Normalized() * visualLength;
-
-                    _melee.DoLunge(attacker, weapon, melee.Angle, localPos, melee.Animation, false);
-                    _audio.PlayEntity(melee.HitSound, attacker, victim);
-                }
+                _melee.DoLunge(attacker, weapon, meleeWeaponComp.Angle, localPos, meleeWeaponComp.Animation, false);
+                _audio.PlayEntity(meleeWeaponComp.HitSound, attacker, victim);
             }
 
             _combat.SetInCombatMode(attacker, prev);
-            component.Executing = false;
+            entity.Comp.Executing = false;
             args.Handled = true;
 
-            if (internalMsg != null && externalMsg != null && attacker != victim)
+            if (attacker != victim)
             {
-                _execution.ShowExecutionInternalPopup(internalMsg, attacker, victim, uid, false);
-                _execution.ShowExecutionExternalPopup(externalMsg, attacker, victim, uid);
+                _execution.ShowExecutionInternalPopup(internalMsg, attacker, victim, entity, false);
+                _execution.ShowExecutionExternalPopup(externalMsg, attacker, victim, entity);
             }
         }
     }

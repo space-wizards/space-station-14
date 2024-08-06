@@ -1,4 +1,5 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -24,6 +25,7 @@ public sealed class SharedExecutionSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedSuicideSystem _suicide = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -32,7 +34,7 @@ public sealed class SharedExecutionSystem : EntitySystem
 
         SubscribeLocalEvent<ExecutionComponent, GetVerbsEvent<UtilityVerb>>(OnGetInteractionsVerbs);
         SubscribeLocalEvent<ExecutionComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
-        SubscribeLocalEvent<ExecutionComponent, SuicideEvent>(OnSuicide);
+        SubscribeLocalEvent<ExecutionComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
     }
 
     private void OnGetInteractionsVerbs(EntityUid uid, ExecutionComponent comp, GetVerbsEvent<UtilityVerb> args)
@@ -110,35 +112,36 @@ public sealed class SharedExecutionSystem : EntitySystem
         return true;
     }
 
-    private void OnGetMeleeDamage(EntityUid uid, ExecutionComponent comp, ref GetMeleeDamageEvent args)
+    private void OnGetMeleeDamage(Entity<ExecutionComponent> entity, ref GetMeleeDamageEvent args)
     {
-        if (!TryComp<MeleeWeaponComponent>(uid, out var melee) ||
-            !TryComp<ExecutionComponent>(uid, out var execComp) ||
-            !execComp.Executing)
+        if (!TryComp<MeleeWeaponComponent>(entity, out var melee) || !entity.Comp.Executing)
         {
             return;
         }
 
-        var bonus = melee.Damage * execComp.DamageModifier - melee.Damage;
+        var bonus = melee.Damage * entity.Comp.DamageModifier - melee.Damage;
         args.Damage += bonus;
         args.ResistanceBypass = true;
     }
 
-    private void OnSuicide(EntityUid uid, ExecutionComponent comp, ref SuicideEvent args)
+    private void OnSuicideByEnvironment(Entity<ExecutionComponent> entity, ref SuicideByEnvironmentEvent args)
     {
-        if (!TryComp<MeleeWeaponComponent>(uid, out var melee))
+        if (!TryComp<MeleeWeaponComponent>(entity, out var melee))
             return;
 
-        string? internalMsg = comp.DefaultCompleteInternalMeleeExecutionMessage;
-        string? externalMsg = comp.DefaultCompleteExternalMeleeExecutionMessage;
+        string? internalMsg = entity.Comp.DefaultCompleteInternalMeleeExecutionMessage;
+        string? externalMsg = entity.Comp.DefaultCompleteExternalMeleeExecutionMessage;
 
-        args.Damage = melee.Damage;
+        if (!TryComp<DamageableComponent>(args.Victim, out var damageableComponent))
+            return;
+
+        _suicide.ApplyLethalDamage((args.Victim, damageableComponent), melee.Damage);
         args.Handled = true;
 
         _audio.PlayPvs(melee.HitSound, args.Victim);
         // Needed for when someone does /suicide rather than using the execute verb.
-        ShowExecutionInternalPopup(internalMsg, args.Victim, args.Victim, uid, false);
-        ShowExecutionExternalPopup(externalMsg, args.Victim, args.Victim, uid);
+        ShowExecutionInternalPopup(internalMsg, args.Victim, args.Victim, entity, false);
+        ShowExecutionExternalPopup(externalMsg, args.Victim, args.Victim, entity);
     }
 
     public void ShowExecutionInternalPopup(string locString,

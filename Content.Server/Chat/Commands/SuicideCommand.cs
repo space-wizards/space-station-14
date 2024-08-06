@@ -1,6 +1,7 @@
 using Content.Server.GameTicking;
 using Content.Server.Popups;
 using Content.Shared.Administration;
+using Content.Shared.Chat;
 using Content.Shared.Mind;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
@@ -32,8 +33,8 @@ namespace Content.Server.Chat.Commands
             var minds = _e.System<SharedMindSystem>();
 
             // This check also proves mind not-null for at the end when the mob is ghosted.
-            if (!minds.TryGetMind(player, out var mindId, out var mind) ||
-                mind.OwnedEntity is not { Valid: true } victim)
+            if (!minds.TryGetMind(player, out var mindId, out var mindComp) ||
+                mindComp.OwnedEntity is not { Valid: true } victim)
             {
                 shell.WriteLine(Loc.GetString("suicide-command-no-mind"));
                 return;
@@ -52,7 +53,7 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            if (suicideSystem.Suicide(victim, mindId, mind))
+            if (suicideSystem.Suicide(victim, (mindId, mindComp)))
                 return;
 
             shell.WriteLine(Loc.GetString("ghost-command-denied"));
