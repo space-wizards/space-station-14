@@ -18,7 +18,7 @@
   id: BackgammonBoardTabletop
   name: backgammon
   parent: BaseBoardTabletop
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/backgammon_tabletop.rsi

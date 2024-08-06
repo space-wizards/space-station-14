@@ -211,7 +211,7 @@
   parent: BasePlushie
   id: PlushieRouny
   name: rouny plushie
-  description: Rouny
+  description: Rouny.
   components:
   - type: Sprite
     state: plushie_rouny
@@ -301,6 +301,12 @@
           Quantity: 10
         - ReagentId: JuiceThatMakesYouWeh
           Quantity: 10
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/toys.rsi
+    equippedPrefix: lizard
+    slots:
+    - HEAD
 
 - type: entity
   parent: PlushieLizard
@@ -1267,7 +1273,7 @@
   parent: BasePlushie
   id: ToyAmongPequeno
   name: among pequeño
-  description: sus!
+  description: Sus!
   components:
   - type: Sprite
     sprite: Objects/Fun/pequeno.rsi

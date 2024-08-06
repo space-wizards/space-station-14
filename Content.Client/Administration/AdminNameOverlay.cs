@@ -44,7 +44,7 @@ namespace Content.Client.Administration
                 }
 
                 // if not on the same map, continue
-                if (_entityManager.GetComponent<TransformComponent>(entity.Value).MapID != _eyeManager.CurrentMap)
+                if (_entityManager.GetComponent<TransformComponent>(entity.Value).MapID != args.MapId)
                 {
                     continue;
                 }
