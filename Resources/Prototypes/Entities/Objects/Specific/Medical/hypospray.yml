@@ -18,9 +18,8 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
-    onlyAffectsMobs: false
-  - type: UseDelay
-    delay: 0.5
+    onlyAffectsMobs: true
+    doAfterTime: 0.5
   - type: StaticPrice
     price: 750
   - type: Tag
@@ -49,7 +48,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
-    onlyAffectsMobs: false
+    onlyAffectsMobs: true
   - type: UseDelay
     delay: 0.5
 
