@@ -648,7 +648,7 @@
 - type: entity
   id: Biofabricator
   parent: BaseLathe
-  name: flesh cuboid mill
+  name: biocube fabricator
   description: Produces animal cubes using biomass.
   components:
   - type: Sprite
