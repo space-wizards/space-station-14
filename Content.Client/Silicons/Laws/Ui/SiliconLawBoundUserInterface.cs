@@ -13,12 +13,10 @@ public sealed class SiliconLawBoundUserInterface : BoundUserInterface
     private SiliconLawMenu? _menu;
     private EntityUid _owner;
     private List<SiliconLaw>? _laws;
-    private ISawmill _sawmill = default!;
 
     public SiliconLawBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
         _owner = owner;
-        _sawmill = Logger.GetSawmill("silicon_debugging");
     }
 
     protected override void Open()
@@ -41,14 +39,11 @@ public sealed class SiliconLawBoundUserInterface : BoundUserInterface
             foreach (var law in msg.Laws)
             {
 
-                _sawmill.Debug($"Checking for {law} in laws...");
                 if (_laws.Find(oldLaw => oldLaw.Equals(law)) != null)
                 {
-                    _sawmill.Debug($"Law found: {law.LawString}");
                     continue;
                 }
 
-                _sawmill.Debug($"Law not found: {law.LawString}.");
                 isSame = false;
                 break;
             }

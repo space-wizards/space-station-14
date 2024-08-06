@@ -82,14 +82,21 @@
   - type: Hands
     showInHands: false
     disableExplosionRecursion: true
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
+  - type: WearingHeadset
+  - type: Headset
+  - type: EncryptionKeyHolder
+    keySlots: 8
+    keysExtractionMethod: Prying
   - type: ComplexInteraction
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
     - Binary
-  - type: ActiveRadio
-    channels:
-    - Binary
+    - Common
   - type: ZombieImmune
   - type: Repairable
     doAfterDelay: 10
@@ -101,6 +108,7 @@
       - BorgChassis
       - RoboticsConsole
   - type: WiresPanel
+    ExamineWhenOpenOnly: true
   - type: ActivatableUIRequiresPanel
   - type: NameIdentifier
     group: Silicon
@@ -260,6 +268,11 @@
   parent: [BaseBorgChassis, BaseBorgTransponder]
   abstract: true
   components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyScience
+      - EncryptionKeyCommon
   - type: NpcFactionMember
     factions:
     - NanoTrasen

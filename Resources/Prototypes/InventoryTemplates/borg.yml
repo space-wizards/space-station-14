@@ -8,13 +8,6 @@
     strippingWindowPos: 0,0
     displayName: Head
     offset: 0.015625, -0.09375
-  - name: ears
-    slotTexture: ears
-    slotFlags: EARS
-    uiWindowPos: 2,0
-    strippingWindowPos: 1,0
-    displayName: Ears
-    offset: 0.015625, -0.09375
 
 - type: inventoryTemplate
   id: borgShort
@@ -26,13 +19,6 @@
     strippingWindowPos: 0,0
     displayName: Head
     offset: 0.015625, -0.1875
-  - name: ears
-    slotTexture: ears
-    slotFlags: EARS
-    uiWindowPos: 2,0
-    strippingWindowPos: 1,0
-    displayName: Ears
-    offset: 0.015625, -0.09375
 
 - type: inventoryTemplate
   id: borgTall
@@ -45,13 +31,6 @@
     strippingWindowPos: 0,0
     displayName: Head
     offset: 0.015625, 0
-  - name: ears
-    slotTexture: ears
-    slotFlags: EARS
-    uiWindowPos: 2,0
-    strippingWindowPos: 1,0
-    displayName: Ears
-    offset: 0.015625, 0
 
 # taller than tall
 - type: inventoryTemplate
@@ -63,11 +42,4 @@
     uiWindowPos: 1,0
     strippingWindowPos: 0,0
     displayName: Head
-    offset: 0, 0.09375
-  - name: ears
-    slotTexture: ears
-    slotFlags: EARS
-    uiWindowPos: 2,0
-    strippingWindowPos: 1,0
-    displayName: Ears
     offset: 0, 0.09375

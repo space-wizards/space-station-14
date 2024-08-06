@@ -43,7 +43,7 @@ public sealed partial class LawDisplay : Control
         var stateLawButton = new Button
         {
             Text = Loc.GetString("hud-borgui-state-law"),
-            Modulate = Color.DarkGray,
+            Modulate = Color.LightBlue,
             StyleClasses = { "chatSelectorOptionButton" },
             MinHeight = 35,
             MinWidth = 100

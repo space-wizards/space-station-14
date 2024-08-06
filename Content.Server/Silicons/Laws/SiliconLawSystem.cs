@@ -98,11 +98,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         // Grab the intrinsic channels, or a default if missing
         HashSet<string>? radioChannels = intrinsicRadio?.Channels ?? new HashSet<string> { "Binary" };
-        // Grab ear slot
-        _inventory.TryGetSlotEntity(uid, "ears", out var borgRadioID);
-        // If the borg is wearing a headset, add the channels to the list
-        if (borgRadioID != null)
-            radioChannels.UnionWith(_entityManager.GetComponent<EncryptionKeyHolderComponent>((EntityUid)borgRadioID).Channels);
+        radioChannels.UnionWith(_entityManager.GetComponent<EncryptionKeyHolderComponent>(uid).Channels);
         // Create a new state and set the default channel to local
         var state = new SiliconLawBuiState(GetLaws(uid).Laws, radioChannels, "Local");
         // Initialize UI state
