@@ -25,16 +25,13 @@ public abstract class SharedGasMinerSystem : EntitySystem
     {
         var component = ent.Comp;
 
-        if (component.SpawnGas == null)
-            return;
-
         if (!_examineSystemShared.InRangeUnOccluded(args.Examiner, args.Examined, MinerExamineRange))
             return;
 
         using (args.PushGroup(nameof(GasMinerComponent)))
         {
             args.PushMarkup(Loc.GetString("gas-miner-mines-text",
-                ("gas", Loc.GetString(_sharedAtmosphereSystem.GetGas(component.SpawnGas.Value).Name))));
+                ("gas", Loc.GetString(_sharedAtmosphereSystem.GetGas(component.SpawnGas).Name))));
 
             args.PushText(Loc.GetString("gas-miner-amount-text",
                 ("moles", $"{component.SpawnAmount:0.#}")));

@@ -24,43 +24,33 @@ namespace Content.Server.Atmos.EntitySystems
         private void OnMinerUpdated(Entity<GasMinerComponent> ent, ref AtmosDeviceUpdateEvent args)
         {
             var miner = ent.Comp;
+            var oldState = miner.MinerState;
+            float toSpawn;
 
-            if (!GetValidEnvironment(ent, out var environment) || !Transform(ent).Anchored || !miner.SpawnGas.HasValue)
+            if (!GetValidEnvironment(ent, out var environment) || !Transform(ent).Anchored)
             {
-                if (miner.MinerState != GasMinerState.Disabled)
-                {
-                    miner.MinerState = GasMinerState.Disabled;
-                    Dirty(ent);
-                }
-                return;
+                miner.MinerState = GasMinerState.Disabled;
             }
-
             // SpawnAmount is declared in mol/s so to get the amount of gas we hope to mine, we have to multiply this by
             // how long we have been waiting to spawn it and further cap the number according to the miner's state.
-            var toSpawn = CapSpawnAmount(ent, miner.SpawnAmount * args.dt, environment);
-
-            if (toSpawn == 0)
+            else if ((toSpawn = CapSpawnAmount(ent, miner.SpawnAmount * args.dt, environment)) == 0)
             {
-                if (miner.MinerState != GasMinerState.Idle)
-                {
-                    miner.MinerState = GasMinerState.Idle;
-                    Dirty(ent);
-                }
-                return;
+                miner.MinerState = GasMinerState.Idle;
             }
-
-            if (miner.MinerState != GasMinerState.Working)
+            else
             {
                 miner.MinerState = GasMinerState.Working;
-                Dirty(ent);
+
+                // Time to mine some gas.
+                var merger = new GasMixture(1) { Temperature = miner.SpawnTemperature };
+                merger.SetMoles(miner.SpawnGas, toSpawn);
+                _atmosphereSystem.Merge(environment, merger);
             }
 
-            // Time to mine some gas.
-
-            var merger = new GasMixture(1) { Temperature = miner.SpawnTemperature };
-            merger.SetMoles(miner.SpawnGas.Value, toSpawn);
-
-            _atmosphereSystem.Merge(environment, merger);
+            if (miner.MinerState != oldState)
+            {
+                Dirty(ent);
+            }
         }
 
         private bool GetValidEnvironment(Entity<GasMinerComponent> ent, [NotNullWhen(true)] out GasMixture? environment)
