@@ -22,6 +22,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly TagSystem _tags = default!;
 
     public override void Initialize()
@@ -234,7 +235,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         if (!gen1XForm.Anchored)
             return false;
 
-        var genWorldPosRot = gen1XForm.GetWorldPositionRotation();
+        var genWorldPosRot = _transformSystem.GetWorldPositionRotation(gen1XForm);
         var dirRad = dir.ToAngle() + genWorldPosRot.WorldRotation; //needs to be like this for the raycast to work properly
 
         var ray = new CollisionRay(genWorldPosRot.WorldPosition, dirRad.ToVec(), component.CollisionMask);

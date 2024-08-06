@@ -132,7 +132,7 @@
   name: interrogator lamp
   id: LampInterrogator
   parent: BaseLamp
-  description: Ultra-bright lamp for the bad cop
+  description: Ultra-bright lamp for the bad cop.
   components:
   - type: Sprite
     sprite: Objects/Misc/Lights/lampint.rsi
