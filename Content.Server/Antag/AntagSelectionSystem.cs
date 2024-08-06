@@ -365,6 +365,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             ent.Comp.SelectedMinds.Add((curMind.Value, Name(player)));
             SendBriefing(session, def.Briefing);
         }
+
+        var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent, def);
+        RaiseLocalEvent(ent, ref afterEv, true);
     }
 
     /// <summary>
