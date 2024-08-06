@@ -10,7 +10,6 @@ using Content.Shared.Database;
 using Prometheus;
 using Robust.Shared;
 using Robust.Shared.Configuration;
-using Robust.Shared.Player;
 using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
 
@@ -334,8 +333,8 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         {
             switch (value)
             {
-                case ICommonSession player:
-                    AddPlayer(players, player.UserId.UserId, logId);
+                case SerializablePlayer player:
+                    AddPlayer(players, player.UserId, logId);
                     continue;
                 case EntityStringRepresentation rep:
                     if (rep.Session is {} session)
