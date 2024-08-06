@@ -7,9 +7,7 @@ public interface ISharedAdminLogManager
 {
     public bool Enabled { get; }
 
-    /// <summary>
-    /// JsonNamingPolicy is not whitelisted by the sandbox.
-    /// </summary>
+    // JsonNamingPolicy is not whitelisted by the sandbox.
     public string ConvertName(string name);
 
     // Required for the log string interpolation handler to access ToPrettyString()

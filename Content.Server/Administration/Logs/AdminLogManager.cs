@@ -109,6 +109,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
     public override string ConvertName(string name)
     {
+        // JsonNamingPolicy is not whitelisted by the sandbox.
         return NamingPolicy.ConvertName(name);
     }
 
