@@ -1,29 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: Weapons that deflect shots, like the e-sword, now are most effective
-      at doing so when standing still, with moving or sprinting making the deflection
-      chance worse.
-    type: Tweak
-  id: 6548
-  time: '2024-05-07T18:14:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27219
-- author: deltanedas
-  changes:
-  - message: Lathes can now be sped up by using Space Lube.
-    type: Tweak
-  id: 6549
-  time: '2024-05-07T18:20:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25515
-- author: OnsenCapy
-  changes:
-  - message: Combat gloves now have their own unique sprite.
-    type: Tweak
-  - message: Combat gloves now have heat resistance to match their fireproof description.
-    type: Tweak
-  id: 6550
-  time: '2024-05-08T00:19:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27373
 - author: deltanedas
   changes:
   - message: Dragons can now breathe fire.
@@ -3784,3 +3759,24 @@
   id: 7047
   time: '2024-08-05T08:07:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29692
+- author: EmoGarbage404
+  changes:
+  - message: The biogenerator has been recolored and renamed to the "biocube fabricator."
+    type: Tweak
+  id: 7048
+  time: '2024-08-06T10:51:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30696
+- author: Errant
+  changes:
+  - message: Vox can be nukies and ninjas again.
+    type: Tweak
+  id: 7049
+  time: '2024-08-06T10:58:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29783
+- author: slarticodefast
+  changes:
+  - message: Fixed borgs, animals and aghosts being able to enter cryosleep.
+    type: Fix
+  id: 7050
+  time: '2024-08-06T11:00:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30574

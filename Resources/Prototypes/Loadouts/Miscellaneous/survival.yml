@@ -142,14 +142,31 @@
 
 # Pre-equipped species gear
 
-# Full Tank Equipped
+# Full tank for vox as part of any Survival loadout
 - type: loadout
-  id: LoadoutSpeciesEVANitrogen
+  id: LoadoutSpeciesVoxNitrogen
   effects:
   - !type:GroupLoadoutEffect
     proto: EffectSpeciesVox
   equipment:
     suitstorage: NitrogenTankFilled
+
+# Full EVA Tank, Any Species
+- type: loadout
+  id: LoadoutSpeciesEVANitrogen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  equipment:
+    suitstorage: NitrogenTankFilled
+
+- type: loadout
+  id: LoadoutSpeciesEVAOxygen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  equipment:
+    suitstorage: OxygenTankFilled
 
 # Tank Harness
 - type: loadout
