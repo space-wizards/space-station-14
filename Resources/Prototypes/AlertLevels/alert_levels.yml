@@ -37,7 +37,7 @@
       shuttleTime: 600 #No reduction in time as we don't have swiping for red alert like in /tg/. Shuttle times are intended to create friction, so having a way to brainlessly bypass that would be dumb.
     gamma:
       announcement: alert-level-gamma-announcement
-      selectable: false
+      selectable: true
       sound:
         path: /Audio/Misc/siren.ogg
         params:
@@ -48,7 +48,7 @@
       forceEnableEmergencyLights: true
     delta:
       announcement: alert-level-delta-announcement
-      selectable: false
+      selectable: true
       sound:
         path: /Audio/Misc/delta.ogg
         params:
@@ -60,7 +60,7 @@
       shuttleTime: 1200
     epsilon:
       announcement: alert-level-epsilon-announcement
-      selectable: false
+      selectable: true
       sound:
         path: /Audio/Misc/epsilon.ogg
         params:
@@ -70,3 +70,15 @@
       emergencyLightColor: DarkViolet
       forceEnableEmergencyLights: true
       shuttleTime: 1200
+    black:
+      announcement: alert-level-gamma-announcement
+      selectable: true
+      sound:
+        path: /Audio/Misc/siren.ogg
+        params:
+          volume: -2
+      disableSelection: false
+      color: PaleVioletRed
+      emergencyLightColor: PaleVioletRed
+      forceEnableEmergencyLights: true
+
