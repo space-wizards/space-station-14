@@ -1,4 +1,4 @@
-using Content.Shared.Atmos;
+using Robust.Shared.Serialization;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Atmos.Components;
@@ -10,11 +10,7 @@ public sealed partial class GasMinerComponent : Component
 {
     [AutoNetworkedField]
     [ViewVariables(VVAccess.ReadOnly)]
-    public bool Enabled = true;
-
-    [AutoNetworkedField]
-    [ViewVariables(VVAccess.ReadOnly)]
-    public bool Idle = false;
+    public GasMinerState MinerState = GasMinerState.Disabled;
 
     /// <summary>
     ///      If the number of moles in the external environment exceeds this number, no gas will be mined.
@@ -44,4 +40,12 @@ public sealed partial class GasMinerComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public float SpawnAmount = Atmospherics.MolesCellStandard * 20f;
+}
+
+[Serializable, NetSerializable]
+public enum GasMinerState : byte
+{
+    Disabled,
+    Idle,
+    Working,
 }

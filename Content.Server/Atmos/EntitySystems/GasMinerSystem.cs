@@ -25,22 +25,14 @@ namespace Content.Server.Atmos.EntitySystems
         {
             var miner = ent.Comp;
 
-            if (!GetValidEnvironment(ent, out var environment))
+            if (!GetValidEnvironment(ent, out var environment) || !miner.SpawnGas.HasValue)
             {
-                if (miner.Enabled)
+                if (miner.MinerState != GasMinerState.Disabled)
                 {
-                    miner.Enabled = false;
+                    miner.MinerState = GasMinerState.Disabled;
                     Dirty(ent);
                 }
                 return;
-            }
-            else
-            {
-                if (!miner.Enabled)
-                {
-                    miner.Enabled = true;
-                    Dirty(ent);
-                }
             }
 
             // SpawnAmount is declared in mol/s so to get the amount of gas we hope to mine, we have to multiply this by
@@ -49,24 +41,19 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (toSpawn == 0)
             {
-                if (!miner.Idle)
+                if (miner.MinerState != GasMinerState.Idle)
                 {
-                    miner.Idle = true;
+                    miner.MinerState = GasMinerState.Idle;
                     Dirty(ent);
                 }
-            }
-            else
-            {
-                if (miner.Idle)
-                {
-                    miner.Idle = false;
-                    Dirty(ent);
-                }
+                return;
             }
 
-            //miner.Idle = toSpawn == 0;
-            if (miner.Idle || !miner.Enabled || !miner.SpawnGas.HasValue)
-                return;
+            if (miner.MinerState != GasMinerState.Working)
+            {
+                miner.MinerState = GasMinerState.Working;
+                Dirty(ent);
+            }
 
             // Time to mine some gas.
 

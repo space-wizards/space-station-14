@@ -55,18 +55,14 @@ public abstract class SharedGasMinerSystem : EntitySystem
                     ("pressure", $"{component.MaxExternalPressure:0.#}")));
             }
 
-            if (!component.Enabled)
+            args.AddMarkup(component.MinerState switch
             {
-                args.AddMarkup(Loc.GetString("gas-miner-state-disabled-text"));
-            }
-            else if (component.Idle)
-            {
-                args.AddMarkup(Loc.GetString("gas-miner-state-idle-text"));
-            }
-            else
-            {
-                args.AddMarkup(Loc.GetString("gas-miner-state-working-text"));
-            }
+                GasMinerState.Disabled => Loc.GetString("gas-miner-state-disabled-text"),
+                GasMinerState.Idle => Loc.GetString("gas-miner-state-idle-text"),
+                GasMinerState.Working => Loc.GetString("gas-miner-state-working-text"),
+                // C# pattern matching is not exhaustive for enums
+                _ => throw new IndexOutOfRangeException(nameof(component.MinerState)),
+            });
         }
     }
 }
