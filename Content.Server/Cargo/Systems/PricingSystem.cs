@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Server.Body.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
@@ -17,6 +17,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Research.Prototypes;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -157,6 +158,26 @@ public sealed class PricingSystem : EntitySystem
         {
             price += _prototypeManager.Index<MaterialPrototype>(id).Price * quantity;
         }
+        return price;
+    }
+
+    public double GetLatheRecipePrice(LatheRecipePrototype recipe)
+    {
+        var price = 0.0;
+
+        if (recipe.Result is { } result)
+        {
+            price += GetEstimatedPrice(_prototypeManager.Index(result));
+        }
+
+        if (recipe.ResultReagents is { } resultReagents)
+        {
+            foreach (var (reagent, amount) in resultReagents)
+            {
+                price += (_prototypeManager.Index(reagent).PricePerUnit * amount).Double();
+            }
+        }
+
         return price;
     }
 
