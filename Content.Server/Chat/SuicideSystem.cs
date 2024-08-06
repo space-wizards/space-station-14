@@ -3,7 +3,6 @@ using Content.Server.GameTicking;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
-using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -135,6 +134,9 @@ namespace Content.Server.Chat
             return false;
         }
 
+        /// <summary>
+        /// Applies lethal damage spread out across the damage types given.
+        /// </summary>
         private void ApplyLethalDamage(EntityUid target, DamageSpecifier? damage)
         {
             if (!TryComp<DamageableComponent>(target, out var damagable) || !TryComp<MobThresholdsComponent>(target, out var thresholds))
@@ -148,6 +150,8 @@ namespace Content.Server.Chat
                 damage = new DamageSpecifier(damagePrototype, lethalAmountOfDamage);
             }
 
+            // Removing structural because it causes issues against entities that cannot take structural damage,
+            // then getting the total to use in calculations for spreading out damage.
             var finalDamage = new DamageSpecifier(damage);
             finalDamage.DamageDict.Remove("Structural");
             var totalItemDamage = finalDamage.GetTotal();
@@ -158,6 +162,9 @@ namespace Content.Server.Chat
             _damageableSystem.TryChangeDamage(target, finalDamage, true, origin: target);
         }
 
+        /// <summary>
+        /// Applies lethal damage in a single type, specified by kind.
+        /// </summary>
         private void ApplyLethalDamage(EntityUid target, ProtoId<DamageTypePrototype>? kind)
         {
             if (!TryComp<DamageableComponent>(target, out var damagable) || !TryComp<MobThresholdsComponent>(target, out var thresholds))
@@ -165,7 +172,8 @@ namespace Content.Server.Chat
 
             var lethalAmountOfDamage = thresholds.Thresholds.Keys.Last() - damagable.TotalDamage;
 
-            if (!_prototypeManager.TryIndex<DamageTypePrototype>(kind, out var damagePrototype))
+            // We don't want structural damage for the same reasons listed above
+            if (!_prototypeManager.TryIndex<DamageTypePrototype>(kind, out var damagePrototype) || damagePrototype.ID == "Structural")
             {
                 Log.Error($"{nameof(SuicideSystem)} could not find the damage type prototype associated with {kind}. Falling back to Blunt");
                 damagePrototype = _prototypeManager.Index<DamageTypePrototype>("Blunt");
@@ -173,14 +181,7 @@ namespace Content.Server.Chat
 
             var damage = new DamageSpecifier(damagePrototype, lethalAmountOfDamage);
 
-            var finalDamage = new DamageSpecifier(damage);
-            finalDamage.DamageDict.Remove("Structural");
-            var totalItemDamage = finalDamage.GetTotal();
-            foreach (var (key, value) in finalDamage.DamageDict)
-            {
-                finalDamage.DamageDict[key] = Math.Ceiling((double) (value * lethalAmountOfDamage / totalItemDamage));
-            }
-            _damageableSystem.TryChangeDamage(target, finalDamage, true, origin: target);
+            _damageableSystem.TryChangeDamage(target, damage, true, origin: target);
         }
     }
 }
