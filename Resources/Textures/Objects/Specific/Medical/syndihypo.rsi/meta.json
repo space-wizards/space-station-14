@@ -11,6 +11,18 @@
       "name": "hypo"
     },
     {
+      "name": "hypo_fill1"
+    },
+    {
+      "name": "hypo_fill2"
+    },
+    {
+      "name": "hypo_fill3"
+    },
+    {
+      "name": "hypo_fill4"
+    },
+    {
       "name": "inhand-left",
       "directions": 4
     },
