@@ -19,17 +19,8 @@ public sealed partial class LoadoutComponent : Component
     /// <summary>
     /// A list of role loadouts, of which one will be given.
     /// All elements are weighted the same in the list.
-    ///
-    /// If AddAllRoleLoadout is set to True, all role loadouts will be given.
     /// </summary>
     [DataField]
     [AutoNetworkedField]
     public List<ProtoId<RoleLoadoutPrototype>>? RoleLoadout;
-
-    /// <summary>
-    /// Determines if all RoleLoadouts are added to StartingGear, or just a single random one.
-    /// </summary>
-    [DataField]
-    [AutoNetworkedField]
-    public bool AddAllRoleLoadouts = true;
 }
