@@ -85,7 +85,7 @@ public sealed class TradeDocumentsConditionSystem : EntitySystem
         if (!TryComp<StealTargetComponent>(args.ItemUid, out var stealTargetComp))
             throw new Exception($"Missing StealTargetComponent for {args.ItemUid}.");
 
-        // This works because at this point both the person we are both us and the person we are trading with have the same steal target.
+        // This works because at this point both is and the person we are trading with have the same steal target.
         // This is a little cursed...
         if (selfStealComp.StealGroup == stealTargetComp.StealGroup)
             args.Retry = true;

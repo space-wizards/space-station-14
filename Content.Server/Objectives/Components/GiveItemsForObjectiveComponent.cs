@@ -1,4 +1,6 @@
 using Content.Server.Objectives.Systems;
+using Content.Shared.Random;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Objectives.Components;
 
@@ -13,7 +15,7 @@ public sealed partial class GiveItemsForObjectiveComponent : Component
     ///     Prototype of the item being spawned.
     /// </summary>
     [DataField(required: true)]
-    public List<string> ItemsToSpawnPrototypes;
+    public ProtoId<WeightedRandomPrototype> ItemsToSpawn;
 
     /// <summary>
     ///     If true, will cancel the assigment of the objective if the item can't be fit into the players backpack.

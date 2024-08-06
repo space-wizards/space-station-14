@@ -1,11 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
 using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Shared.Storage.EntitySystems;
+using Robust.Shared.Utility;
 using Content.Server.Objectives.Components;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Inventory;
-using Content.Shared.Storage;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -14,10 +16,10 @@ namespace Content.Server.Objectives.Systems;
 /// </summary>
 public sealed class GiveItemsForObjectiveSystem : EntitySystem
 {
-    [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -28,6 +30,7 @@ public sealed class GiveItemsForObjectiveSystem : EntitySystem
     private void OnAssign(Entity<GiveItemsForObjectiveComponent> entity, ref ObjectiveAssignedEvent args)
     {
         // All this is to check if the item can actually fit in someones backpack.
+
         var mindOwner = args.Mind.OwnedEntity;
         if (mindOwner == null)
         {
@@ -35,23 +38,29 @@ public sealed class GiveItemsForObjectiveSystem : EntitySystem
             return;
         }
 
+        if (!_prototypeManager.TryIndex<WeightedRandomPrototype>(entity.Comp.ItemsToSpawn, out var itemWeights))
+        {
+            Log.Error($"Item weights are not a valid prototype: {entity.Comp.ItemsToSpawn}");
+            return;
+        }
+
         // It doesn't matter if the item can fit or not so just skip checking.
         if (entity.Comp.CancelAssignmentOnNoSpace == false)
             return;
 
-        // Check if all the items can fit!
-        foreach (var item in entity.Comp.ItemsToSpawnPrototypes)
+        // Check if all the items can fit! If there is an item that can't, cancel the assignment.
+        foreach (var itemAndWeight in itemWeights.Weights)
         {
-            var obj = Spawn(item);
+            var obj = Spawn(itemAndWeight.Key);
+            var canFit = _inventorySystem.CanItemFitOnEntity(mindOwner.Value, obj);
+            Del(obj);
 
-            if (!_inventorySystem.CanItemFitOnEntity(mindOwner.Value, obj))
+            if (!canFit)
             {
-                Del(obj);
                 args.Cancelled = true;
                 return;
             }
 
-            Del(obj);
         }
 
     }
@@ -61,38 +70,42 @@ public sealed class GiveItemsForObjectiveSystem : EntitySystem
         // At this point we are *always* going to try to spawn the item. If the player can't hold the item then
         // will just be dropped on the ground.
 
+        if (!_prototypeManager.TryIndex<WeightedRandomPrototype>(entity.Comp.ItemsToSpawn, out var itemWeights))
+        {
+            Log.Error($"Item weights are not a valid prototype: {entity.Comp.ItemsToSpawn}");
+            return;
+        }
+
         var mindOwner = args.Mind.OwnedEntity;
 
         if (mindOwner == null)
             throw new Exception($"Mind owner is null.");
 
-        // Spawn the item at the players location.
         var cords = _transformSystem.GetMapCoordinates(mindOwner.Value);
-        var obj = Spawn(_random.Pick(entity.Comp.ItemsToSpawnPrototypes), cords);
 
-        // The loop should never go more than a few times in very unlikely situations.
-        var attempts = 30;
-        for (var i = 0; i < attempts; i++)
+        var itemWeightsCopy = itemWeights.Weights.ShallowClone();
+        while (_random.TryPickAndTake(itemWeightsCopy, out var chosenItem))
         {
+            var obj = Spawn(chosenItem, cords);
+
             var beforeEvnt = new BeforeObjectiveItemGivenEvent(obj, false);
             RaiseLocalEvent(entity, ref beforeEvnt);
 
+            // The item is good to spawn and we can stop if you get in this statment.
             if (!beforeEvnt.Retry)
+            {
+                var evnt = new ObjectiveItemGivenEvent(obj);
+                RaiseLocalEvent(entity, ref evnt);
+
+                // If their inventory is full, it will be spawned on the ground
+                _inventorySystem.GiveItemToEntity(mindOwner.Value, obj);
+
                 break;
+            }
 
             Del(obj);
-            obj = Spawn(_random.Pick(entity.Comp.ItemsToSpawnPrototypes), cords);
-
-            // This is on the final iteration of the loop.
-            if (i == attempts - 1)
-                throw new Exception($"Could not spawn a valid entity within {attempts}.");
         }
 
-        var evnt = new ObjectiveItemGivenEvent(obj);
-        RaiseLocalEvent(entity, ref evnt);
-
-        // If their inventory is full, it will be spawned on the ground
-        _inventorySystem.GiveItemToEntity(mindOwner.Value, obj);
     }
 
 }
