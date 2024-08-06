@@ -142,7 +142,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
                 // This is awful. I hate this so much.
                 // TODO: Please, someone refactor containers and free me from this bullshit.
-                if (!_container.TryGetContainingContainer(uid, out var containerManager) ||
+                if (!_container.TryGetContainingContainer((uid, null, null), out var containerManager) ||
                     !(_inventorySystem.TryGetSlotEntity(containerManager.Owner, "mask", out var inMaskSlotUid) && inMaskSlotUid == uid) ||
                     !TryComp(containerManager.Owner, out BloodstreamComponent? bloodstream))
                 {

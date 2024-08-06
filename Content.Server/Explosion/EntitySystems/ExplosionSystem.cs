@@ -16,6 +16,8 @@ using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.Projectiles;
 using Content.Shared.Throwing;
+using Content.Shared.Explosion.Components;
+using Content.Shared.Explosion.EntitySystems;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
@@ -29,7 +31,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Explosion.EntitySystems;
 
-public sealed partial class ExplosionSystem : EntitySystem
+public sealed partial class ExplosionSystem : SharedExplosionSystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
@@ -91,8 +93,6 @@ public sealed partial class ExplosionSystem : EntitySystem
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
-
-        SubscribeLocalEvent<ExplosionResistanceComponent, ArmorExamineEvent>(OnArmorExamine);
 
         // Handled by ExplosionSystem.Processing.cs
         SubscribeLocalEvent<MapChangedEvent>(OnMapChanged);
@@ -417,16 +417,5 @@ public sealed partial class ExplosionSystem : EntitySystem
             if (effect > 0.01f)
                 _recoilSystem.KickCamera(uid, -delta.Normalized() * effect);
         }
-    }
-
-    private void OnArmorExamine(EntityUid uid, ExplosionResistanceComponent component, ref ArmorExamineEvent args)
-    {
-        var value = MathF.Round((1f - component.DamageCoefficient) * 100, 1);
-
-        if (value == 0)
-            return;
-
-        args.Msg.PushNewline();
-        args.Msg.AddMarkupOrThrow(Loc.GetString(component.Examine, ("value", value)));
     }
 }
