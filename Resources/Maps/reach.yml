@@ -5958,7 +5958,7 @@ entities:
       parent: 407
 - proto: CleanerDispenser
   entities:
-  - uid: 2279
+  - uid: 2492
     components:
     - type: Transform
       pos: -3.5,-5.5
