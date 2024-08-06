@@ -139,22 +139,37 @@ public sealed class LoadoutSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, LoadoutComponent component, MapInitEvent args)
     {
-        // Use starting gear if specified
-        if (component.StartingGear != null)
+        Equip(uid, component.StartingGear, component.RoleLoadout);
+    }
+
+    public void Equip(EntityUid uid, List<ProtoId<StartingGearPrototype>>? startingGear,
+        List<ProtoId<RoleLoadoutPrototype>>? loadoutGroups)
+    {
+        // First, randomly pick a startingGear profile from those specified, and equip it.
+        if (startingGear != null && startingGear.Count > 0)
+            _station.EquipStartingGear(uid, _random.Pick(startingGear));
+
+        if (loadoutGroups == null)
         {
-            _station.EquipStartingGear(uid, _random.Pick(component.StartingGear));
+            GearEquipped(uid);
             return;
         }
 
-        if (component.RoleLoadout == null)
-            return;
-
-        // ...otherwise equip from role loadout
-        var id = _random.Pick(component.RoleLoadout);
+        // Then, randomly pick a RoleLoadout profile from those specified, and process/equip all LoadoutGroups from it.
+        // For non-roundstart mobs there is no SelectedLoadout data, so minValue must be set in each LoadoutGroup to force selection.
+        var id = _random.Pick(loadoutGroups);
         var proto = _protoMan.Index(id);
         var loadout = new RoleLoadout(id);
         loadout.SetDefault(GetProfile(uid), _actors.GetSession(uid), _protoMan, true);
         _station.EquipRoleLoadout(uid, loadout, proto);
+
+        GearEquipped(uid);
+    }
+
+    public void GearEquipped(EntityUid uid)
+    {
+        var ev = new StartingGearEquippedEvent(uid);
+        RaiseLocalEvent(uid, ref ev);
     }
 
     public HumanoidCharacterProfile GetProfile(EntityUid? uid)
