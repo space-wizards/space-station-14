@@ -29,7 +29,7 @@ public sealed class DungeonData
     public Dictionary<DungeonDataKey, EntProtoId> Entities = new();
     public Dictionary<DungeonDataKey, ProtoId<EntitySpawnEntryPrototype>> SpawnGroups = new();
     public Dictionary<DungeonDataKey, ProtoId<ContentTileDefinition>> Tiles = new();
-    public Dictionary<DungeonDataKey, ItemWhitelist> Whitelists = new();
+    public Dictionary<DungeonDataKey, EntityWhitelist> Whitelists = new();
 
     /// <summary>
     /// Applies the specified data to this data.

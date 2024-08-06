@@ -22,13 +22,13 @@ public abstract partial class SharedDisposalUnitComponent : Component
     /// Blacklists (prevents) entities listed from being placed inside.
     /// </summary>
     [DataField]
-    public ItemWhitelist? Blacklist;
+    public EntityWhitelist? Blacklist;
 
     /// <summary>
     /// Whitelists (allows) entities listed from being placed inside.
     /// </summary>
     [DataField]
-    public ItemWhitelist? Whitelist;
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// Sound played when an object is inserted into the disposal unit.

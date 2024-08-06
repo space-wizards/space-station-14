@@ -18,7 +18,7 @@ public sealed partial class SurveillanceCameraMicrophoneComponent : Component
     ///     Used to avoid things like feedback loops, or radio spam.
     /// </summary>
     [DataField("blacklist")]
-    public ItemWhitelist Blacklist { get; private set; } = new();
+    public EntityWhitelist Blacklist { get; private set; } = new();
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("range")]

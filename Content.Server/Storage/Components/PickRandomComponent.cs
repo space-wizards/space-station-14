@@ -15,7 +15,7 @@ public sealed partial class PickRandomComponent : Component
     /// Whitelist for potential picked items.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public ItemWhitelist? Whitelist;
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// Locale id for the pick verb text.

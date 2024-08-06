@@ -16,7 +16,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] protected readonly SharedMapSystem Maps = default!;
     [Dependency] protected readonly SharedTransformSystem XformSystem = default!;
-    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public const float FTLRange = 256f;
     public const float FTLBufferRange = 8f;
@@ -85,7 +85,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         if (HasComp<FTLMapComponent>(mapUid))
             return false;
 
-        return _itemWhitelistSystem.IsWhitelistPassOrNull(destination.Whitelist, shuttleUid);
+        return _whitelistSystem.IsWhitelistPassOrNull(destination.Whitelist, shuttleUid);
     }
 
     /// <summary>

@@ -178,7 +178,7 @@ public partial class ChatSystem
     /// <returns></returns>
     private bool AllowedToUseEmote(EntityUid source, EmotePrototype emote)
     {
-        if ((_itemWhitelistSystem.IsWhitelistFail(emote.Whitelist, source) || _itemWhitelistSystem.IsBlacklistPass(emote.Blacklist, source)))
+        if ((_whitelistSystem.IsWhitelistFail(emote.Whitelist, source) || _whitelistSystem.IsBlacklistPass(emote.Blacklist, source)))
             return false;
 
         if (!emote.Available &&

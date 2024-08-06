@@ -12,7 +12,7 @@ namespace Content.Server.GameTicking.Rules.VariationPass;
 /// </summary>
 public sealed class CutWireVariationPassSystem : VariationPassSystem<CutWireVariationPassComponent>
 {
-    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     protected override void ApplyVariation(Entity<CutWireVariationPassComponent> ent, ref StationVariationPassEvent args)
     {
@@ -25,7 +25,7 @@ public sealed class CutWireVariationPassSystem : VariationPassSystem<CutWireVari
                 continue;
 
             // Check against blacklist
-            if (_itemWhitelistSystem.IsBlacklistPass(ent.Comp.Blacklist, uid))
+            if (_whitelistSystem.IsBlacklistPass(ent.Comp.Blacklist, uid))
                 continue;
 
             if (Random.Prob(ent.Comp.WireCutChance))

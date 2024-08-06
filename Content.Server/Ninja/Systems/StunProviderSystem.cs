@@ -21,7 +21,7 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
 {
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly ItemWhitelistSystem _itemWhitelist = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -46,7 +46,7 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
         if (args.Handled || comp.BatteryUid == null || !_gloves.AbilityCheck(uid, args, out var target))
             return;
 
-        if (target == uid || _itemWhitelist.IsWhitelistFail(comp.Whitelist, target))
+        if (target == uid || _whitelist.IsWhitelistFail(comp.Whitelist, target))
             return;
 
         var useDelay = EnsureComp<UseDelayComponent>(uid);

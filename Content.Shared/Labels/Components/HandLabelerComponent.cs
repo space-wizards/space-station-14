@@ -18,7 +18,7 @@ public sealed partial class HandLabelerComponent : Component
     public int MaxLabelChars = 50;
 
     [DataField]
-    public ItemWhitelist Whitelist = new();
+    public EntityWhitelist Whitelist = new();
 }
 
 [Serializable, NetSerializable]

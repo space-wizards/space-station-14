@@ -11,19 +11,19 @@ public sealed partial class BuyerWhitelistCondition : ListingCondition
     /// <summary>
     /// A whitelist of tags or components.
     /// </summary>
-    [DataField]
-    public ItemWhitelist? Whitelist;
+    [DataField("whitelist")]
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// A blacklist of tags or components.
     /// </summary>
-    [DataField]
-    public ItemWhitelist? Blacklist;
+    [DataField("blacklist")]
+    public EntityWhitelist? Blacklist;
 
     public override bool Condition(ListingConditionArgs args)
     {
         var ent = args.EntityManager;
-        var whitelistSystem = ent.System<ItemWhitelistSystem>();
+        var whitelistSystem = ent.System<EntityWhitelistSystem>();
 
         if (whitelistSystem.IsWhitelistFail(Whitelist, args.Buyer) ||
             whitelistSystem.IsBlacklistPass(Blacklist, args.Buyer))

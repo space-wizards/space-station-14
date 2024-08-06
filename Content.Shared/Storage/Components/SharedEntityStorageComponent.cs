@@ -117,7 +117,7 @@ public abstract partial class SharedEntityStorageComponent : Component
     ///     standard requirement that the entity must be an item or mob is waived.
     /// </summary>
     [DataField]
-    public ItemWhitelist? Whitelist;
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// The contents of the storage

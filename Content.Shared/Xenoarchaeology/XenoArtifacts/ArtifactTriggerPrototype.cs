@@ -26,8 +26,8 @@ public sealed partial class ArtifactTriggerPrototype : IPrototype
     public string? TriggerHint;
 
     [DataField("whitelist")]
-    public ItemWhitelist? Whitelist;
+    public EntityWhitelist? Whitelist;
 
     [DataField("blacklist")]
-    public ItemWhitelist? Blacklist;
+    public EntityWhitelist? Blacklist;
 }

@@ -46,7 +46,7 @@ public sealed partial class ArtifactCrusherComponent : Component
     /// A whitelist specifying what items, when crushed, will give fragments.
     /// </summary>
     [DataField]
-    public ItemWhitelist CrushingWhitelist = new();
+    public EntityWhitelist CrushingWhitelist = new();
 
     /// <summary>
     /// The minimum amount of fragments spawned.

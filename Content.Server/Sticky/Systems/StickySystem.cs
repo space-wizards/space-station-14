@@ -21,7 +21,7 @@ public sealed class StickySystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     private const string StickerSlotId = "stickers_container";
 
@@ -69,8 +69,8 @@ public sealed class StickySystem : EntitySystem
             return false;
 
         // check whitelist and blacklist
-        if (_itemWhitelistSystem.IsWhitelistFail(component.Whitelist, target) ||
-            _itemWhitelistSystem.IsBlacklistPass(component.Blacklist, target))
+        if (_whitelistSystem.IsWhitelistFail(component.Whitelist, target) ||
+            _whitelistSystem.IsBlacklistPass(component.Blacklist, target))
             return false;
 
         var attemptEv = new AttemptEntityStickEvent(target, user);

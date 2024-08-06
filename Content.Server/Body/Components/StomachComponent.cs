@@ -45,7 +45,7 @@ namespace Content.Server.Body.Components
         ///     A whitelist for what special-digestible-required foods this stomach is capable of eating.
         /// </summary>
         [DataField]
-        public ItemWhitelist? SpecialDigestible;
+        public EntityWhitelist? SpecialDigestible = null;
 
         /// <summary>
         ///     Used to track how long each reagent has been in the stomach

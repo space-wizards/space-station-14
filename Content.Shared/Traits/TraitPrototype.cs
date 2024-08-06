@@ -29,13 +29,13 @@ public sealed partial class TraitPrototype : IPrototype
     /// Don't apply this trait to entities this whitelist IS NOT valid for.
     /// </summary>
     [DataField]
-    public ItemWhitelist? Whitelist;
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// Don't apply this trait to entities this whitelist IS valid for. (hence, a blacklist)
     /// </summary>
     [DataField]
-    public ItemWhitelist? Blacklist;
+    public EntityWhitelist? Blacklist;
 
     /// <summary>
     /// The components that get added to the player, when they pick this trait.

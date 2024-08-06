@@ -128,13 +128,13 @@ public partial struct AntagSelectionDefinition()
     /// A whitelist for selecting which players can become this antag.
     /// </summary>
     [DataField]
-    public ItemWhitelist? Whitelist;
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// A blacklist for selecting which players can become this antag.
     /// </summary>
     [DataField]
-    public ItemWhitelist? Blacklist;
+    public EntityWhitelist? Blacklist;
 
     /// <summary>
     /// Components added to the player.

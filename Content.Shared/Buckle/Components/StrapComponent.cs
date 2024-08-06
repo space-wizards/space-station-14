@@ -23,13 +23,13 @@ public sealed partial class StrapComponent : Component
     /// If null it accepts any entity
     /// </summary>
     [DataField]
-    public ItemWhitelist? Whitelist;
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// Entities that this strap does not accept and cannot buckle.
     /// </summary>
     [DataField]
-    public ItemWhitelist? Blacklist;
+    public EntityWhitelist? Blacklist;
 
     /// <summary>
     /// The change in position to the strapped mob

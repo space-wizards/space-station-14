@@ -1,12 +1,13 @@
 using System.Linq;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Whitelist;
+using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Utility
 {
     [TestFixture]
-    [TestOf(typeof(ItemWhitelist))]
-    public sealed class ItemWhitelistTest
+    [TestOf(typeof(EntityWhitelist))]
+    public sealed class EntityWhitelistTest
     {
         private const string InvalidComponent = "Sprite";
         private const string ValidComponent = "Physics";
@@ -64,7 +65,7 @@ namespace Content.IntegrationTests.Tests.Utility
             var mapCoordinates = testMap.MapCoords;
 
             var sEntities = server.EntMan;
-            var sys = server.System<ItemWhitelistSystem>();
+            var sys = server.System<EntityWhitelistSystem>();
 
             await server.WaitAssertion(() =>
             {
@@ -75,7 +76,7 @@ namespace Content.IntegrationTests.Tests.Utility
                 var WhitelistTestInvalidTag = sEntities.SpawnEntity("WhitelistTestInvalidTagDummy", mapCoordinates);
 
                 // Test instantiated on its own
-                var whitelistInst = new ItemWhitelist
+                var whitelistInst = new EntityWhitelist
                 {
                     Components = new[] { $"{ValidComponent}" },
                     Tags = new() { "WhitelistTestValidTag" }

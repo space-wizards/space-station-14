@@ -26,7 +26,7 @@ public sealed class SmartEquipSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -185,7 +185,7 @@ public sealed class SmartEquipSystem : EntitySystem
             foreach (var slot in slots.Slots.Values)
             {
                 if (!slot.HasItem
-                    && _itemWhitelistSystem.IsWhitelistPassOrNull(slot.Whitelist, handItem.Value)
+                    && _whitelistSystem.IsWhitelistPassOrNull(slot.Whitelist, handItem.Value)
                     && slot.Priority > (toInsertTo?.Priority ?? int.MinValue))
                 {
                     toInsertTo = slot;

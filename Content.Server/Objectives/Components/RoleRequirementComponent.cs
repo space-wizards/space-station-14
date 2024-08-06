@@ -11,5 +11,5 @@ namespace Content.Server.Objectives.Components;
 public sealed partial class RoleRequirementComponent : Component
 {
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
-    public ItemWhitelist Roles = new();
+    public EntityWhitelist Roles = new();
 }

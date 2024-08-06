@@ -51,7 +51,7 @@ public sealed partial class DevourerComponent : Component
     public bool ShouldStoreDevoured = true;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("whitelist")]
-    public ItemWhitelist? Whitelist = new()
+    public EntityWhitelist? Whitelist = new()
     {
         Components = new[]
         {

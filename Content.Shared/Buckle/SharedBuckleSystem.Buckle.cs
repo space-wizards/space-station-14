@@ -29,7 +29,7 @@ public abstract partial class SharedBuckleSystem
 {
     public static ProtoId<AlertCategoryPrototype> BuckledAlertCategory = "Buckled";
 
-    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     private void InitializeBuckle()
     {
@@ -223,8 +223,8 @@ public abstract partial class SharedBuckleSystem
             return false;
 
         // Does it pass the Whitelist
-        if (_itemWhitelistSystem.IsWhitelistFail(strapComp.Whitelist, buckleUid) ||
-            _itemWhitelistSystem.IsBlacklistPass(strapComp.Blacklist, buckleUid))
+        if (_whitelistSystem.IsWhitelistFail(strapComp.Whitelist, buckleUid) ||
+            _whitelistSystem.IsBlacklistPass(strapComp.Blacklist, buckleUid))
         {
             if (_netManager.IsServer && popup && user != null)
                 _popup.PopupEntity(Loc.GetString("buckle-component-cannot-fit-message"), user.Value, user.Value, PopupType.Medium);

@@ -16,13 +16,13 @@ public sealed partial class ChameleonProjectorComponent : Component
     /// If non-null, whitelist for valid entities to disguise as.
     /// </summary>
     [DataField(required: true)]
-    public ItemWhitelist? Whitelist;
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// If non-null, blacklist that prevents entities from being used even if they are in the whitelist.
     /// </summary>
     [DataField(required: true)]
-    public ItemWhitelist? Blacklist;
+    public EntityWhitelist? Blacklist;
 
     /// <summary>
     /// Polymorph configuration for the disguise entity.

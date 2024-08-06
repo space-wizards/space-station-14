@@ -9,7 +9,7 @@ namespace Content.Server.Objectives.Systems;
 /// </summary>
 public sealed class ObjectiveBlacklistRequirementSystem : EntitySystem
 {
-    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -25,7 +25,7 @@ public sealed class ObjectiveBlacklistRequirementSystem : EntitySystem
 
         foreach (var objective in args.Mind.Objectives)
         {
-            if (_itemWhitelistSystem.IsBlacklistPass(comp.Blacklist, objective))
+            if (_whitelistSystem.IsBlacklistPass(comp.Blacklist, objective))
             {
                 args.Cancelled = true;
                 return;

@@ -20,7 +20,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -98,7 +98,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (!args.CanAccess)
             return false;
 
-        if (_itemWhitelistSystem.IsWhitelistFail(component.RequiredItems, args.Using ?? default))
+        if (_whitelistSystem.IsWhitelistFail(component.RequiredItems, args.Using ?? default))
             return false;
 
         if (component.RequireHands)
@@ -158,7 +158,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (component.RequiredItems == null)
             return;
 
-        if (_itemWhitelistSystem.IsWhitelistFail(component.RequiredItems, args.Used))
+        if (_whitelistSystem.IsWhitelistFail(component.RequiredItems, args.Used))
             return;
 
         args.Handled = InteractUI(args.User, uid, component);

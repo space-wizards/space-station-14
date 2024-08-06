@@ -26,5 +26,5 @@ public sealed partial class RuleGridsComponent : Component
     /// All spawners must have <c>SpawnPointComponent</c> regardless to be found.
     /// </summary>
     [DataField]
-    public ItemWhitelist? SpawnerWhitelist;
+    public EntityWhitelist? SpawnerWhitelist;
 }

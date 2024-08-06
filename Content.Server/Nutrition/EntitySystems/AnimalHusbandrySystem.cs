@@ -32,7 +32,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
     private readonly HashSet<EntityUid> _failedAttempts = new();
@@ -169,7 +169,7 @@ public sealed class AnimalHusbandrySystem : EntitySystem
         if (!CanReproduce(partner))
             return false;
 
-        return _itemWhitelistSystem.IsWhitelistPass(component.PartnerWhitelist, partner);
+        return _whitelistSystem.IsWhitelistPass(component.PartnerWhitelist, partner);
     }
 
     /// <summary>

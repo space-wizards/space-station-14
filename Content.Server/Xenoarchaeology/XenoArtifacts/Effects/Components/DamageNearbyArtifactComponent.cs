@@ -22,7 +22,7 @@ public sealed partial class DamageNearbyArtifactComponent : Component
     /// TODO: The component portion, since it uses an array, does not work currently.
     /// </remarks>
     [DataField("whitelist")]
-    public ItemWhitelist? Whitelist;
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// The damage that is applied

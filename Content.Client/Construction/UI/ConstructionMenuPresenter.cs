@@ -32,7 +32,7 @@ namespace Content.Client.Construction.UI
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         private readonly IConstructionMenuView _constructionView;
-        private readonly ItemWhitelistSystem _itemWhitelistSystem;
+        private readonly EntityWhitelistSystem _whitelistSystem;
 
         private ConstructionSystem? _constructionSystem;
         private ConstructionPrototype? _selected;
@@ -84,7 +84,7 @@ namespace Content.Client.Construction.UI
             // This is a lot easier than a factory
             IoCManager.InjectDependencies(this);
             _constructionView = new ConstructionMenu();
-            _itemWhitelistSystem = _entManager.System<ItemWhitelistSystem>();
+            _whitelistSystem = _entManager.System<EntityWhitelistSystem>();
 
             // This is required so that if we load after the system is initialized, we can bind to it immediately
             if (_systemManager.TryGetEntitySystem<ConstructionSystem>(out var constructionSystem))
@@ -172,7 +172,7 @@ namespace Content.Client.Construction.UI
 
                 if (_playerManager.LocalSession == null
                 || _playerManager.LocalEntity == null
-                || _itemWhitelistSystem.IsWhitelistFail(recipe.ItemWhitelist, _playerManager.LocalEntity.Value))
+                || _whitelistSystem.IsWhitelistFail(recipe.EntityWhitelist, _playerManager.LocalEntity.Value))
                     continue;
 
                 if (!string.IsNullOrEmpty(search))

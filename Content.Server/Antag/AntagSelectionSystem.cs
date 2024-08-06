@@ -42,7 +42,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly ItemWhitelistSystem _itemWhitelist = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     // arbitrary random number to give late joining some mild interest.
     public const float LateJoinRandomChance = 0.5f;
@@ -435,13 +435,13 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (def.Whitelist != null)
         {
-            if (!_itemWhitelist.IsValid(def.Whitelist, entity.Value))
+            if (!_whitelist.IsValid(def.Whitelist, entity.Value))
                 return false;
         }
 
         if (def.Blacklist != null)
         {
-            if (_itemWhitelist.IsValid(def.Blacklist, entity.Value))
+            if (_whitelist.IsValid(def.Blacklist, entity.Value))
                 return false;
         }
 

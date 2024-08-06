@@ -69,10 +69,10 @@ namespace Content.Shared.Containers.ItemSlots
 
         [DataField]
         [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)]
-        public ItemWhitelist? Whitelist;
+        public EntityWhitelist? Whitelist;
 
         [DataField]
-        public ItemWhitelist? Blacklist;
+        public EntityWhitelist? Blacklist;
 
         [DataField]
         public SoundSpecifier InsertSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/revolver_magin.ogg");

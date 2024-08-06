@@ -83,13 +83,13 @@ namespace Content.Shared.Storage
         /// Whitelist for entities that can go into the storage.
         /// </summary>
         [DataField]
-        public ItemWhitelist? Whitelist;
+        public EntityWhitelist? Whitelist;
 
         /// <summary>
         /// Blacklist for entities that can go into storage.
         /// </summary>
         [DataField]
-        public ItemWhitelist? Blacklist;
+        public EntityWhitelist? Blacklist;
 
         /// <summary>
         /// Sound played whenever an entity is inserted into storage.

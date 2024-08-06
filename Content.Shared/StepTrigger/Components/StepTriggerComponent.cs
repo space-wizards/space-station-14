@@ -43,7 +43,7 @@ public sealed partial class StepTriggerComponent : Component
     ///     If any entities occupy the blacklist on the same tile then steptrigger won't work.
     /// </summary>
     [DataField]
-    public ItemWhitelist? Blacklist;
+    public EntityWhitelist? Blacklist;
 
     /// <summary>
     ///     If this is true, steptrigger will still occur on entities that are in air / weightless. They do not

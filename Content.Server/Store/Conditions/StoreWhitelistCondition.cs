@@ -12,13 +12,13 @@ public sealed partial class StoreWhitelistCondition : ListingCondition
     /// A whitelist of tags or components.
     /// </summary>
     [DataField("whitelist")]
-    public ItemWhitelist? Whitelist;
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// A blacklist of tags or components.
     /// </summary>
     [DataField("blacklist")]
-    public ItemWhitelist? Blacklist;
+    public EntityWhitelist? Blacklist;
 
     public override bool Condition(ListingConditionArgs args)
     {
@@ -26,7 +26,7 @@ public sealed partial class StoreWhitelistCondition : ListingCondition
             return false;
 
         var ent = args.EntityManager;
-        var whitelistSystem = ent.System<ItemWhitelistSystem>();
+        var whitelistSystem = ent.System<EntityWhitelistSystem>();
 
         if (whitelistSystem.IsWhitelistFail(Whitelist, args.StoreEntity.Value) ||
             whitelistSystem.IsBlacklistPass(Blacklist, args.StoreEntity.Value))

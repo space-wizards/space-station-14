@@ -30,7 +30,7 @@ public sealed partial class CreateEntityTileReaction : ITileReaction
     ///     The whitelist to use when determining what counts as "max entities on a tile".0
     /// </summary>
     [DataField("maxOnTileWhitelist")]
-    public ItemWhitelist? Whitelist;
+    public EntityWhitelist? Whitelist;
 
     [DataField]
     public float RandomOffsetMax = 0.0f;
@@ -47,7 +47,7 @@ public sealed partial class CreateEntityTileReaction : ITileReaction
                 int acc = 0;
                 foreach (var ent in tile.GetEntitiesInTile())
                 {
-                    var whitelistSystem = entityManager.System<ItemWhitelistSystem>();
+                    var whitelistSystem = entityManager.System<EntityWhitelistSystem>();
                     if (whitelistSystem.IsWhitelistPass(Whitelist, ent))
                         acc += 1;
 

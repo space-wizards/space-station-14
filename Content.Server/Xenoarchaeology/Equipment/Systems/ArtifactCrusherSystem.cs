@@ -26,7 +26,7 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -94,7 +94,7 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
         var coords = Transform(ent).Coordinates;
         foreach (var contained in contents)
         {
-            if (_itemWhitelistSystem.IsWhitelistPass(crusher.CrushingWhitelist, contained))
+            if (_whitelistSystem.IsWhitelistPass(crusher.CrushingWhitelist, contained))
             {
                 var amount = _random.Next(crusher.MinFragments, crusher.MaxFragments);
                 var stacks = _stack.SpawnMultiple(crusher.FragmentStackProtoId, amount, coords);

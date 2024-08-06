@@ -14,14 +14,14 @@ public sealed partial class StickyComponent : Component
     /// </summary>
     [DataField("whitelist")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public ItemWhitelist? Whitelist;
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     ///     What target entities can't be used as surface for sticky entity.
     /// </summary>
     [DataField("blacklist")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public ItemWhitelist? Blacklist;
+    public EntityWhitelist? Blacklist;
 
     /// <summary>
     ///     How much time does it take to stick entity to target.

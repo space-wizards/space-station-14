@@ -87,10 +87,10 @@ public sealed partial class MechComponent : Component
     /// A whitelist for inserting equipment items.
     /// </summary>
     [DataField]
-    public ItemWhitelist? EquipmentWhitelist;
+    public EntityWhitelist? EquipmentWhitelist;
 
     [DataField]
-    public ItemWhitelist? PilotWhitelist;
+    public EntityWhitelist? PilotWhitelist;
 
     /// <summary>
     /// A container for storing the equipment entities.

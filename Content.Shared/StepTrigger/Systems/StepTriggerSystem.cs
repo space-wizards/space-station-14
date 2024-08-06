@@ -13,7 +13,7 @@ public sealed class StepTriggerSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -69,7 +69,7 @@ public sealed class StepTriggerSystem : EntitySystem
                 if (ent == uid)
                     continue;
 
-                if (_itemWhitelistSystem.IsBlacklistPass(component.Blacklist, ent.Value))
+                if (_whitelistSystem.IsBlacklistPass(component.Blacklist, ent.Value))
                 {
                     return false;
                 }

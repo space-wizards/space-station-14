@@ -13,7 +13,7 @@ public sealed partial class CutWireVariationPassComponent : Component
     /// have wires cut.
     /// </summary>
     [DataField]
-    public ItemWhitelist Blacklist = new();
+    public EntityWhitelist Blacklist = new();
 
     /// <summary>
     /// Chance for an individual wire to be cut.

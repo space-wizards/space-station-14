@@ -21,7 +21,7 @@ public sealed partial class ItemPlacerComponent : Component
     /// Whitelist for entities that can be placed.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public ItemWhitelist? Whitelist;
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// The max amount of entities that can be placed at the same time.

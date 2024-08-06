@@ -11,7 +11,7 @@ namespace Content.Shared.Weapons.Marker;
 public sealed partial class DamageMarkerOnCollideComponent : Component
 {
     [DataField("whitelist"), AutoNetworkedField]
-    public ItemWhitelist? Whitelist = new();
+    public EntityWhitelist? Whitelist = new();
 
     [ViewVariables(VVAccess.ReadWrite), DataField("duration"), AutoNetworkedField]
     public TimeSpan Duration = TimeSpan.FromSeconds(5);

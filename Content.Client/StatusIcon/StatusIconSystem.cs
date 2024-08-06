@@ -18,7 +18,7 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly ItemWhitelistSystem _itemWhitelist = default!;
+    [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
 
     private bool _globalEnabled;
     private bool _localEnabled;
@@ -85,7 +85,7 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
         if (data.HideOnStealth && TryComp<StealthComponent>(ent, out var stealth) && stealth.Enabled)
             return false;
 
-        if (data.ShowTo != null && !_itemWhitelist.IsValid(data.ShowTo, viewer))
+        if (data.ShowTo != null && !_entityWhitelist.IsValid(data.ShowTo, viewer))
             return false;
 
         return true;

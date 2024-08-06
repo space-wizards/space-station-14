@@ -25,7 +25,7 @@ namespace Content.Server.Power.Components
         /// A whitelist for what entities can be charged by this Charger.
         /// </summary>
         [DataField("whitelist")]
-        public ItemWhitelist? Whitelist;
+        public EntityWhitelist? Whitelist;
 
         /// <summary>
         /// Indicates whether the charger is portable and thus subject to EMP effects

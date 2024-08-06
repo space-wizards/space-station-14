@@ -9,7 +9,7 @@ namespace Content.Server.Objectives.Systems;
 /// </summary>
 public sealed class RoleRequirementSystem : EntitySystem
 {
-    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -24,7 +24,7 @@ public sealed class RoleRequirementSystem : EntitySystem
 
         // this whitelist trick only works because roles are components on the mind and not entities
         // if that gets reworked then this will need changing
-        if (_itemWhitelistSystem.IsWhitelistFail(comp.Roles, args.MindId))
+        if (_whitelistSystem.IsWhitelistFail(comp.Roles, args.MindId))
             args.Cancelled = true;
     }
 }

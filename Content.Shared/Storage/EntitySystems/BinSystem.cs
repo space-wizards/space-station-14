@@ -22,7 +22,7 @@ public sealed class BinSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _admin = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly ItemWhitelistSystem _itemWhitelistSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public const string BinContainerId = "bin-container";
 
@@ -132,7 +132,7 @@ public sealed class BinSystem : EntitySystem
         if (component.Items.Count >= component.MaxItems)
             return false;
 
-        if (_itemWhitelistSystem.IsWhitelistFail(component.Whitelist, toInsert))
+        if (_whitelistSystem.IsWhitelistFail(component.Whitelist, toInsert))
             return false;
 
         _container.Insert(toInsert, component.ItemContainer);

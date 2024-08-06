@@ -42,7 +42,7 @@ public sealed partial class BinComponent : Component
     /// A whitelist governing what items can be inserted into the bin.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ItemWhitelist? Whitelist;
+    public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// The maximum amount of items

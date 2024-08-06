@@ -14,10 +14,10 @@ public sealed partial class PolymorphOnCollideComponent : Component
     public ProtoId<PolymorphPrototype> Polymorph;
 
     [DataField(required: true)]
-    public ItemWhitelist Whitelist = default!;
+    public EntityWhitelist Whitelist = default!;
 
     [DataField]
-    public ItemWhitelist? Blacklist;
+    public EntityWhitelist? Blacklist;
 
     [DataField]
     public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Magic/forcewall.ogg");
