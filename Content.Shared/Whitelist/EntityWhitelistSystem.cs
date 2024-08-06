@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Item;
 using Content.Shared.Tag;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Whitelist;
 
@@ -77,10 +78,100 @@ public sealed class EntityWhitelistSystem : EntitySystem
 
         return list.RequireAll;
     }
+        /// <summary>
+    /// Checks if the prototype is valid.
+    /// </summary>
+    /// <param name="list">The list to check</param>
+    /// <param name="prototype">the prototype to check</param>
+    /// <returns>True if it is valid</returns>
+    public bool IsPrototypeValid(EntityWhitelist list, EntityPrototype prototype)
+    {
+        if (list.Components != null)
+            EnsureRegistrations(list);
+
+        if (list.Registrations != null)
+        {
+            foreach (var reg in list.Registrations)
+            {
+                if (prototype.Components.ContainsKey(reg.Type.ToString()))
+                {
+                    if (!list.RequireAll)
+                        return true;
+                }
+                else if (list.RequireAll)
+                    return false;
+            }
+        }
+
+        if (list.Sizes != null && prototype.Components.TryGetComponent("Item", out var itemComp) && itemComp is ItemComponent component)
+        {
+            if (list.Sizes.Contains(component.Size))
+                return true;
+        }
+
+        if (list.Tags != null)
+        {
+            if (prototype.Components.TryGetComponent("Tag", out var tagComponent) &&
+                tagComponent is TagComponent comp)
+            {
+                return list.RequireAll
+                    ? _tag.HasAllTags(comp, list.Tags)
+                    : _tag.HasAnyTag(comp, list.Tags);
+            }
+
+        }
+
+        return list.RequireAll;
+    }
+
     /// The following are a list of "helper functions" that are basically the same as each other
     /// to help make code that uses EntityWhitelist a bit more readable because at the moment
     /// it is quite clunky having to write out component.Whitelist == null ? true : _whitelist.IsValid(component.Whitelist, uid)
     /// several times in a row and makes comparisons easier to read
+
+    /// <summary>
+    /// Checks if a given EntityPrototype passes the given whitelist
+    /// </summary>
+    /// <param name="whitelist">The whitelist to check</param>
+    /// <param name="prototype">The prototype to check</param>
+    /// <returns>True if it passes the whitelist</returns>
+    public bool IsPrototypeWhitelistPass(EntityWhitelist? whitelist, EntityPrototype prototype)
+    {
+        return whitelist != null && IsPrototypeValid(whitelist, prototype);
+    }
+
+    /// <summary>
+    /// Checks if a given EntityPrototype passes the given whitelist
+    /// </summary>
+    /// <param name="whitelist">The whitelist to check</param>
+    /// <param name="prototype">The prototype to check</param>
+    /// <returns>True if it fails the whitelist</returns>
+    public bool IsPrototypeWhitelistFail(EntityWhitelist? whitelist, EntityPrototype prototype)
+    {
+        return whitelist != null && !IsPrototypeValid(whitelist, prototype);
+    }
+
+    /// <summary>
+    /// Checks if a given EntityPrototype passes the given blacklist
+    /// </summary>
+    /// <param name="blacklist">The whitelist to check</param>
+    /// <param name="prototype">The prototype to check</param>
+    /// <returns>True if it passes the blacklist</returns>
+    public bool IsPrototypeBlacklistPass(EntityWhitelist? blacklist, EntityPrototype prototype)
+    {
+        return IsPrototypeWhitelistPass(blacklist, prototype);
+    }
+
+    /// <summary>
+    /// Checks if a given EntityPrototype fails the given blacklist
+    /// </summary>
+    /// <param name="blacklist">The whitelist to check</param>
+    /// <param name="prototype">The prototype to check</param>
+    /// <returns>True if it fails the blacklist</returns>
+    public bool IsPrototypeBlacklistFail(EntityWhitelist? blacklist, EntityPrototype prototype)
+    {
+        return IsPrototypeWhitelistFail(blacklist, prototype);
+    }
 
     /// <summary>
     /// Helper function to determine if Whitelist is not null and entity is on list
@@ -153,7 +244,7 @@ public sealed class EntityWhitelistSystem : EntitySystem
         return IsWhitelistPassOrNull(blacklist, uid);
     }
 
-    /// <summary>                                        
+    /// <summary>
     /// Helper function to determine if Blacklist is either null or the entity is not on the list
     /// Duplicate of equivalent Whitelist function
     /// </summary>
