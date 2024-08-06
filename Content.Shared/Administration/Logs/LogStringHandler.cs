@@ -154,25 +154,29 @@ public ref struct LogStringHandler
     public void AppendFormatted(ICommonSession? value, [CallerArgumentExpression("value")] string? argument = null)
     {
         SerializablePlayer? player = value == null ? null : new(value, Logger.EntityManager);
-        AppendFormatted(player, argument);
+        AddFormat(null, player, argument);
+        _handler.AppendFormatted(value);
     }
 
     public void AppendFormatted(ICommonSession? value, string? format, [CallerArgumentExpression("value")] string? argument = null)
     {
         SerializablePlayer? player = value == null ? null : new(value, Logger.EntityManager);
-        AppendFormatted(player, format, argument);
+        AddFormat(null, player, argument);
+        _handler.AppendFormatted(value, format);
     }
 
     public void AppendFormatted(ICommonSession? value, int alignment, [CallerArgumentExpression("value")] string? argument = null)
     {
         SerializablePlayer? player = value == null ? null : new(value, Logger.EntityManager);
-        AppendFormatted(player, alignment, argument);
+        AddFormat(null, player, argument);
+        _handler.AppendFormatted(value, alignment);
     }
 
     public void AppendFormatted(ICommonSession? value, int alignment, string? format, [CallerArgumentExpression("value")] string? argument = null)
     {
         SerializablePlayer? player = value == null ? null : new(value, Logger.EntityManager);
-        AppendFormatted(player, alignment, format, argument);
+        AddFormat(null, player, argument);
+        _handler.AppendFormatted(value, alignment, format);
     }
     #endregion
 
