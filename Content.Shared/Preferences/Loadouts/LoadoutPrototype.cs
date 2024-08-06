@@ -33,6 +33,14 @@ public sealed partial class LoadoutPrototype : IPrototype, IEquipmentLoadout
 
     /// <inheritdoc />
     [DataField]
+    public string? Entity { get; set; }
+
+    /// <inheritdoc />
+    [DataField]
+    public string? EntityDummy { get; set; }
+
+    /// <inheritdoc />
+    [DataField]
     public List<EntProtoId> Inhand { get; set; } = new();
 
     /// <inheritdoc />

@@ -212,13 +212,10 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
                     {
                         continue;
                     }
-                    if (!_prototypeManager.TryIndex(loadoutProto.Equipment, out var startingEntity))
+
+                    if (loadoutProto.Entity != null)
                     {
-                        continue;
-                    }
-                    if (startingEntity.Entity != null)
-                    {
-                        var newEntity = SpawnEntity(startingEntity.Entity, coordinates, job);
+                        var newEntity = SpawnEntity(loadoutProto.Entity, coordinates, job);
                         EntityManager.DeleteEntity(entity); //entity isnt deleted before as the loadout is on this entity
                         entity = newEntity;
                         return entity.Value;

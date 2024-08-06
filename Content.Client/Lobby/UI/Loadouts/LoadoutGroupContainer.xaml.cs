@@ -74,12 +74,9 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
             if (!protoMan.TryIndex(loadoutProto, out var loadProto))
                 continue;
 
-            if (protoMan.TryIndex(loadProto.Equipment, out var startingEntity))
+            if (loadProto.EntityDummy != null)
             {
-                if (startingEntity.EntityDummy != null)
-                {
-                    loadoutDummy = startingEntity.EntityDummy;
-                }
+                loadoutDummy = loadProto.EntityDummy;
             }
 
             var matchingLoadout = selected.FirstOrDefault(e => e.Prototype == loadoutProto);

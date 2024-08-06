@@ -475,15 +475,10 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
                             continue;
                         }
 
-                        if (!_prototypeManager.TryIndex(loadoutProto.Equipment, out var equipment))
-                        {
-                            continue;
-                        }
-
-                        if (equipment.EntityDummy != String.Empty && equipment.EntityDummy != null)
+                        if (loadoutProto.EntityDummy != String.Empty && loadoutProto.EntityDummy != null)
                         {
                             isDummy = true;
-                            dummy = equipment.EntityDummy;
+                            dummy = loadoutProto.EntityDummy;
                             break;
                         }
                     }

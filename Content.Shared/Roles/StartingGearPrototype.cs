@@ -27,6 +27,16 @@ public sealed partial class StartingGearPrototype : IPrototype, IInheritingProto
     /// <inheritdoc />
     [DataField]
     [AlwaysPushInheritance]
+    public string? Entity { get; set; }
+
+    /// <inheritdoc />
+    [DataField]
+    [AlwaysPushInheritance]
+    public string? EntityDummy { get; set; }
+
+    /// <inheritdoc />
+    [DataField]
+    [AlwaysPushInheritance]
     public List<EntProtoId> Inhand { get; set; } = new();
 
     /// <inheritdoc />
@@ -48,16 +58,12 @@ public interface IEquipmentLoadout
     /// <summary>
     /// Overides the players entity
     /// </summary>
-    [DataField]
-    [AlwaysPushInheritance]
     public string? Entity { get; set; }
 
     /// <summary>
     /// Meant to be used in conjunction with Entity
     /// Entity to show as the players dummy in the lobby
     /// </summary>
-    [DataField]
-    [AlwaysPushInheritance]
     public string? EntityDummy { get; set; }
 
     /// <summary>
