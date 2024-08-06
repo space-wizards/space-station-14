@@ -34,6 +34,7 @@
 
 - type: entity
   id: DummyBorgGeneric
+  name: generic chassis
   noSpawn: true
   components:
   - type: Sprite
@@ -88,6 +89,7 @@
 
 - type: entity
   id: DummyBorgMining
+  name: mining chassis
   noSpawn: true
   components:
   - type: Sprite
@@ -143,6 +145,7 @@
 
 - type: entity
   id: DummyBorgEngineer
+  name: engineering chassis
   noSpawn: true
   components:
   - type: Sprite
@@ -197,6 +200,7 @@
 
 - type: entity
   id: DummyBorgJanitor
+  name: janitor chassis
   noSpawn: true
   components:
   - type: Sprite
@@ -252,6 +256,7 @@
 
 - type: entity
   id: DummyBorgMedical
+  name: medical chassis
   noSpawn: true
   components:
   - type: Sprite
@@ -307,6 +312,7 @@
 
 - type: entity
   id: DummyBorgService
+  name: service chassis
   noSpawn: true
   components:
   - type: Sprite

@@ -106,11 +106,16 @@ public sealed class LoadoutSystem : EntitySystem
         if (gear == null)
             return string.Empty;
 
+        if (gear.EntityDummy != null && _protoMan.TryIndex<EntityPrototype>(gear.EntityDummy, out var proto))
+        {
+            return proto.Name;
+        }
+
         var count = gear.Equipment.Count + gear.Storage.Values.Sum(o => o.Count) + gear.Inhand.Count;
 
         if (count == 1)
         {
-            if (gear.Equipment.Count == 1 && _protoMan.TryIndex<EntityPrototype>(gear.Equipment.Values.First(), out var proto))
+            if (gear.Equipment.Count == 1 && _protoMan.TryIndex<EntityPrototype>(gear.Equipment.Values.First(), out proto))
             {
                 return proto.Name;
             }
