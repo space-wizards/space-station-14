@@ -157,7 +157,6 @@ namespace Content.Server.Flash
         public void FlashArea(Entity<FlashComponent?> source, EntityUid? user, float range, float duration, float slowTo = 0.8f, bool displayPopup = false, float probability = 1f, SoundSpecifier? sound = null)
         {
             var transform = Transform(source);
-            var mapPosition = _transform.GetMapCoordinates(transform);
             var statusEffectsQuery = GetEntityQuery<StatusEffectsComponent>();
             var damagedByFlashingQuery = GetEntityQuery<DamagedByFlashingComponent>();
 
@@ -170,14 +169,9 @@ namespace Content.Server.Flash
                 if (!statusEffectsQuery.HasComponent(entity) && !damagedByFlashingQuery.HasComponent(entity))
                     continue;
 
-                if (!_containerSystem.IsInSameOrTransparentContainer((source, null), entity, userSeeInsideSelf: true))
-                {
-                    continue;
-                }
-
                 // Check for entites in view
                 // put damagedByFlashingComponent in the predicate because shadow anomalies block vision.
-                if (!_examine.InRangeUnOccluded(entity, mapPosition, range, predicate: (e) => damagedByFlashingQuery.HasComponent(e)))
+                if (!_examine.InRangeUnOccluded(entity, source, range, predicate: (e) => damagedByFlashingQuery.HasComponent(e)))
                     continue;
 
                 // They shouldn't have flash removed in between right?

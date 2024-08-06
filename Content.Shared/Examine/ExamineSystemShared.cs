@@ -230,6 +230,9 @@ namespace Content.Shared.Examine
             var ev = new InRangeOverrideEvent(origin, other);
             RaiseLocalEvent(origin, ref ev);
 
+            if (!_containerSystem.IsInSameOrTransparentContainer(origin, other, userSeeInsideSelf: true))
+                return false;
+
             if (ev.Handled)
             {
                 return ev.InRange;
