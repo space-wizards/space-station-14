@@ -77,6 +77,19 @@
     FoodTinEmpty: 1
     FoodMeatRat: 1
 
+# Chili
+
+- type: microwaveMealRecipe
+  id: RecipeTinMice
+  name: tin mice recipe
+  result: FoodTinMice
+  time: 15
+  reagents:
+    TableSalt: 5
+  solids:
+    FoodTinEmpty: 1
+    FoodChiliPepper: 2
+
 # Beans
 
 # - type: microwaveMealRecipe
