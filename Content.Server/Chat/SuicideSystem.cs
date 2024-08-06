@@ -40,19 +40,23 @@ public sealed class SuicideSystem : EntitySystem
     /// </summary>
     public bool Suicide(EntityUid victim, Entity<MindComponent> victimMind)
     {
-        // Checks to see if the CannotSuicide tag exits, ghosts instead.
+        // CannotSuicide tag will allow the user to ghost, but also return to their mind
+        // This is kind of weird, not sure what it applies to?
         if (_tagSystem.HasTag(victim, "CannotSuicide"))
+        {
+            _gameTicker.OnGhostAttempt(victimMind.Owner, true, mind: victimMind.Comp);
             return false;
+        }
 
-        // Checks to see if the player is dead.
+        // Can't suicide if we're already dead
         if (!TryComp<MobStateComponent>(victim, out var mobState) || _mobState.IsDead(victim, mobState))
             return false;
 
         _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} is attempting to suicide");
-
         var suicideEvent = new SuicideEvent(victim);
         RaiseLocalEvent(victim, suicideEvent);
 
+        // Suicide is considered a fail if the user wasn't able to ghost
         if (!_gameTicker.OnGhostAttempt(victimMind.Owner, false, mind: victimMind.Comp))
             return false;
 
@@ -70,7 +74,7 @@ public sealed class SuicideSystem : EntitySystem
 
         var suicideByEnvironmentEvent = new SuicideByEnvironmentEvent(victim);
 
-        // Suicide by held item
+        // Try to suicide by raising an event on the held item
         var itemQuery = GetEntityQuery<ItemComponent>();
         if (EntityManager.TryGetComponent(victim, out HandsComponent? handsComponent)
             && handsComponent.ActiveHandEntity is { } item)
@@ -83,7 +87,8 @@ public sealed class SuicideSystem : EntitySystem
             }
         }
 
-        // Suicide by nearby entity (ex: Microwave)
+        // Try to suicide by nearby entities, like Microwaves or Crematoriums, by raising an event on it
+        // Returns upon being handled by any entity
         foreach (var entity in _entityLookupSystem.GetEntitiesInRange(victim, 1, LookupFlags.Approximate | LookupFlags.Static))
         {
             // Skip any nearby items that can be picked up, we already checked the active held item above

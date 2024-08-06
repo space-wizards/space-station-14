@@ -262,14 +262,20 @@ namespace Content.Server.Kitchen.EntitySystems
             _deviceLink.EnsureSinkPorts(ent, ent.Comp.OnPort);
         }
 
+        /// <summary>
+        /// Kills the user by microwaving their head
+        /// TODO: Make this not awful, it keeps any items attached to your head still on and you can revive someone and cogni them so you have some dumb headless fuck running around. I've seen it happen.
+        /// </summary>
         private void OnSuicideByEnvironment(Entity<MicrowaveComponent> ent, ref SuicideByEnvironmentEvent args)
         {
             if (args.Handled)
                 return;
 
+            // The act of getting your head microwaved doesn't actually kill you
             if (!TryComp<DamageableComponent>(args.Victim, out var damageableComponent))
                 return;
 
+            // The application of lethal damage is what kills you...
             _suicide.ApplyLethalDamage((args.Victim, damageableComponent), "Heat");
 
             var victim = args.Victim;

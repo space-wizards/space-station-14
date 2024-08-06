@@ -16,6 +16,9 @@ public sealed class SharedSuicideSystem : EntitySystem
     /// </summary>
     public void ApplyLethalDamage(Entity<DamageableComponent> target, DamageSpecifier damageSpecifier)
     {
+        // Create a new damageSpecifier so that we don't make alterations to the original DamageSpecifier
+        // Failing  to do this will permanently change a weapon's damage making it insta-kill people
+        var appliedDamageSpecifier = new DamageSpecifier(damageSpecifier);
         if (!TryComp<MobThresholdsComponent>(target, out var mobThresholds))
             return;
 
@@ -23,19 +26,19 @@ public sealed class SharedSuicideSystem : EntitySystem
         // grabbing the last key will give us how much damage is needed to kill a target from zero
         // The exact lethal damage amount is adjusted based on their current damage taken
         var lethalAmountOfDamage = mobThresholds.Thresholds.Keys.Last() - target.Comp.TotalDamage;
-        var totalDamage = damageSpecifier.GetTotal();
+        var totalDamage = appliedDamageSpecifier.GetTotal();
 
         // Removing structural because it causes issues against entities that cannot take structural damage,
         // then getting the total to use in calculations for spreading out damage.
-        damageSpecifier.DamageDict.Remove("Structural");
+        appliedDamageSpecifier.DamageDict.Remove("Structural");
 
         // Split the total amount of damage needed to kill the target by every damage type in the DamageSpecifier
-        foreach (var (key, value) in damageSpecifier.DamageDict)
+        foreach (var (key, value) in appliedDamageSpecifier.DamageDict)
         {
-            damageSpecifier.DamageDict[key] = Math.Ceiling((double) (value * lethalAmountOfDamage / totalDamage));
+            appliedDamageSpecifier.DamageDict[key] = Math.Ceiling((double) (value * lethalAmountOfDamage / totalDamage));
         }
 
-        _damageableSystem.TryChangeDamage(target, damageSpecifier, true, origin: target);
+        _damageableSystem.TryChangeDamage(target, appliedDamageSpecifier, true, origin: target);
     }
 
     /// <summary>

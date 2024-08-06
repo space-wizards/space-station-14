@@ -40,8 +40,6 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-
-            var gameTicker = _e.System<GameTicker>();
             var suicideSystem = _e.System<SuicideSystem>();
 
             if (_e.HasComponent<AdminFrozenComponent>(victim))

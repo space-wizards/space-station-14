@@ -61,6 +61,9 @@ namespace Content.Server.Kitchen.EntitySystems
             args.CanDrop |= entity.Comp.Type != ButcheringType.Knife;
         }
 
+        /// <summary>
+        /// TODO: Update this so it actually meatspikes the user instead of applying lethal damage to them.
+        /// </summary>
         private void OnSuicideByEnvironment(Entity<KitchenSpikeComponent> entity, ref SuicideByEnvironmentEvent args)
         {
             if (args.Handled)
