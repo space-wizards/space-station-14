@@ -214,6 +214,9 @@ namespace Content.Shared.Examine
 
         public bool InRangeUnOccluded(EntityUid origin, EntityUid other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
+            if (!_containerSystem.IsInSameOrTransparentContainer(origin, other, userSeeInsideSelf: true))
+                return false;
+
             var originPos = _transform.GetMapCoordinates(origin);
             var otherPos = _transform.GetMapCoordinates(other);
 
