@@ -80,9 +80,9 @@
 # Chili
 
 - type: microwaveMealRecipe
-  id: RecipeTinMice
-  name: tin mice recipe
-  result: FoodTinMice
+  id: RecipeTinChili
+  name: tin chili recipe
+  result: FoodTinChili
   time: 15
   reagents:
     TableSalt: 5
