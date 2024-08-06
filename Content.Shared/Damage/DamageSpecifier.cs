@@ -21,12 +21,14 @@ namespace Content.Shared.Damage
     {
         // These exist solely so the wiki works. Please do not touch them or use them.
         [JsonPropertyName("types")]
-        [DataField("types", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageTypePrototype>))]
+        [DataField("types",
+            customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageTypePrototype>))]
         [UsedImplicitly]
-        private Dictionary<string,FixedPoint2>? _damageTypeDictionary;
+        private Dictionary<string, FixedPoint2>? _damageTypeDictionary;
 
         [JsonPropertyName("groups")]
-        [DataField("groups", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageGroupPrototype>))]
+        [DataField("groups",
+            customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageGroupPrototype>))]
         [UsedImplicitly]
         private Dictionary<string, FixedPoint2>? _damageGroupDictionary;
 
@@ -52,6 +54,7 @@ namespace Content.Shared.Damage
             {
                 total += value;
             }
+
             return total;
         }
 
@@ -78,6 +81,7 @@ namespace Content.Shared.Damage
         public bool Empty => DamageDict.Count == 0;
 
         #region constructors
+
         /// <summary>
         ///     Constructor that just results in an empty dictionary.
         /// </summary>
@@ -116,6 +120,7 @@ namespace Content.Shared.Damage
                 remainingTypes -= 1;
             }
         }
+
         #endregion constructors
 
         /// <summary>
@@ -131,7 +136,7 @@ namespace Content.Shared.Damage
             // duller as you hit walls. Neat, but not FixedPoint2ended. And confusing, when you realize your fists don't work no
             // more cause they're just bloody stumps.
             DamageSpecifier newDamage = new();
-            newDamage.DamageDict.EnsureCapacity(damageSpec.DamageDict.Count);
+            //newDamage.DamageDict.EnsureCapacity(damageSpec.DamageDict.Count);
 
             foreach (var (key, value) in damageSpec.DamageDict)
             {
@@ -144,16 +149,42 @@ namespace Content.Shared.Damage
                     continue;
                 }
 
-                float newValue = value.Float();
+                var newValue = value.Float();
 
                 if (modifierSet.FlatReduction.TryGetValue(key, out var reduction))
                     newValue = Math.Max(0f, newValue - reduction); // flat reductions can't heal you
 
                 if (modifierSet.Coefficients.TryGetValue(key, out var coefficient))
                     newValue *= coefficient; // coefficients can heal you, e.g. cauterizing bleeding
+                if (modifierSet.DamageConversions.TryGetValue(key, out var conversionDict))
+                {
+                    foreach (var conversion in conversionDict)
+                    {
+                        var damageAmount = Math.Min(newValue * Math.Max(0f, conversion.Value), newValue);
 
-                if(newValue != 0)
+                        var sw = IoCManager.Resolve<ILogManager>().GetSawmill("FAF");
+
+                        sw.Info(newValue.ToString());
+                        newValue -= damageAmount;
+                        sw.Info(newValue.ToString());
+
+
+                        if (!newDamage.DamageDict.TryAdd(conversion.Key, damageAmount))
+                        {
+                            newValue -= damageAmount;
+                            newDamage.DamageDict[conversion.Key] += damageAmount;
+                        }
+                    }
+                }
+
+                if (newValue == 0)
+                    continue;
+                if (newDamage.DamageDict.ContainsKey(key))
+                    newDamage.DamageDict[key] += FixedPoint2.New(newValue);
+                else
+                {
                     newDamage.DamageDict[key] = FixedPoint2.New(newValue);
+                }
             }
 
             return newDamage;
@@ -165,7 +196,8 @@ namespace Content.Shared.Damage
         /// <param name="damageSpec"></param>
         /// <param name="modifierSets"></param>
         /// <returns></returns>
-        public static DamageSpecifier ApplyModifierSets(DamageSpecifier damageSpec, IEnumerable<DamageModifierSet> modifierSets)
+        public static DamageSpecifier ApplyModifierSets(DamageSpecifier damageSpec,
+            IEnumerable<DamageModifierSet> modifierSets)
         {
             bool any = false;
             DamageSpecifier newDamage = damageSpec;
@@ -278,6 +310,7 @@ namespace Content.Shared.Damage
                     containsMemeber = true;
                 }
             }
+
             return containsMemeber;
         }
 
@@ -309,6 +342,7 @@ namespace Content.Shared.Damage
         }
 
         #region Operators
+
         public static DamageSpecifier operator *(DamageSpecifier damageSpec, FixedPoint2 factor)
         {
             DamageSpecifier newDamage = new();
@@ -316,6 +350,7 @@ namespace Content.Shared.Damage
             {
                 newDamage.DamageDict.Add(entry.Key, entry.Value * factor);
             }
+
             return newDamage;
         }
 
@@ -326,6 +361,7 @@ namespace Content.Shared.Damage
             {
                 newDamage.DamageDict.Add(entry.Key, entry.Value * factor);
             }
+
             return newDamage;
         }
 
@@ -336,6 +372,7 @@ namespace Content.Shared.Damage
             {
                 newDamage.DamageDict.Add(entry.Key, entry.Value / factor);
             }
+
             return newDamage;
         }
 
@@ -347,6 +384,7 @@ namespace Content.Shared.Damage
             {
                 newDamage.DamageDict.Add(entry.Key, entry.Value / factor);
             }
+
             return newDamage;
         }
 
@@ -364,6 +402,7 @@ namespace Content.Shared.Damage
                     newDamage.DamageDict[entry.Key] += entry.Value;
                 }
             }
+
             return newDamage;
         }
 
@@ -380,6 +419,7 @@ namespace Content.Shared.Damage
                     newDamage.DamageDict[entry.Key] -= entry.Value;
                 }
             }
+
             return newDamage;
         }
 
@@ -407,5 +447,6 @@ namespace Content.Shared.Damage
 
         public FixedPoint2 this[string key] => DamageDict[key];
     }
+
     #endregion
 }

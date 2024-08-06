@@ -29,7 +29,9 @@ public abstract class SharedArmorSystem : EntitySystem
         args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
     }
 
-    private void OnBorgDamageModify(EntityUid uid, ArmorComponent component,
+    private void OnBorgDamageModify(
+        EntityUid uid,
+        ArmorComponent component,
         ref BorgModuleRelayedEvent<DamageModifyEvent> args)
     {
         args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
@@ -45,8 +47,12 @@ public abstract class SharedArmorSystem : EntitySystem
         var ev = new ArmorExamineEvent(examineMarkup);
         RaiseLocalEvent(uid, ref ev);
 
-        _examine.AddDetailedExamineVerb(args, component, examineMarkup,
-            Loc.GetString("armor-examinable-verb-text"), "/Textures/Interface/VerbIcons/dot.svg.192dpi.png",
+        _examine.AddDetailedExamineVerb(
+            args,
+            component,
+            examineMarkup,
+            Loc.GetString("armor-examinable-verb-text"),
+            "/Textures/Interface/VerbIcons/dot.svg.192dpi.png",
             Loc.GetString("armor-examinable-verb-message"));
     }
 
@@ -54,14 +60,15 @@ public abstract class SharedArmorSystem : EntitySystem
     {
         var msg = new FormattedMessage();
 
-        msg.AddMarkup(Loc.GetString("armor-examine"));
+        msg.AddMarkupOrThrow(Loc.GetString("armor-examine"));
 
         foreach (var coefficientArmor in armorModifiers.Coefficients)
         {
             msg.PushNewline();
 
-            var armorType = Loc.GetString("armor-damage-type-" + coefficientArmor.Key.ToLower());
-            msg.AddMarkup(Loc.GetString("armor-coefficient-value",
+            var armorType =
+                Loc.GetString("armor-damage-type-" + coefficientArmor.Key.ToString().ToLower());
+            msg.AddMarkupOrThrow(Loc.GetString("armor-coefficient-value",
                 ("type", armorType),
                 ("value", MathF.Round((1f - coefficientArmor.Value) * 100, 1))
             ));
@@ -71,11 +78,29 @@ public abstract class SharedArmorSystem : EntitySystem
         {
             msg.PushNewline();
 
-            var armorType = Loc.GetString("armor-damage-type-" + flatArmor.Key.ToLower());
-            msg.AddMarkup(Loc.GetString("armor-reduction-value",
+            var armorType = Loc.GetString("armor-damage-type-" + flatArmor.ToString().ToLower());
+            msg.AddMarkupOrThrow(Loc.GetString("armor-reduction-value",
                 ("type", armorType),
                 ("value", flatArmor.Value)
             ));
+        }
+
+        foreach (var conversionArmor in armorModifiers.DamageConversions)
+        {
+            foreach (var conversionPair in conversionArmor.Value)
+            {
+                msg.PushNewline();
+
+                var convertedTo =
+                    Loc.GetString("armor-damage-type-" + conversionPair.Key.ToString().ToLower());
+                var convertedFrom =
+                    Loc.GetString("armor-damage-type-" + conversionArmor.Key.ToString().ToLower());
+                msg.AddMarkupOrThrow(Loc.GetString("armor-conversion-value",
+                    ("convertedTo", convertedTo),
+                    ("convertedFrom", convertedFrom),
+                    ("value", MathF.Round(conversionPair.Value * 100, 1))
+                ));
+            }
         }
 
         return msg;
