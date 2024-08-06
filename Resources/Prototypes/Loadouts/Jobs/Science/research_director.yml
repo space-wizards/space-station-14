@@ -2,24 +2,16 @@
 
 - type: loadout
   id: ResearchDirectorBeret
-  equipment: ScientificBeret
+  startingGear: ScientificBeret
 
 # Neck
 
 - type: loadout
   id: ResearchDirectorMantle
-  equipment: ResearchDirectorMantle
-
-- type: startingGear
-  id: ResearchDirectorMantle
   equipment:
     neck: ClothingNeckMantleRD
 
 - type: loadout
-  id: ResearchDirectorCloak
-  equipment: ResearchDirectorCloak
-
-- type: startingGear
   id: ResearchDirectorCloak
   equipment:
     neck: ClothingNeckCloakRd
@@ -27,18 +19,10 @@
 # Jumpsuit
 - type: loadout
   id: ResearchDirectorJumpsuit
-  equipment: ResearchDirectorJumpsuit
-
-- type: startingGear
-  id: ResearchDirectorJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitResearchDirector
 
 - type: loadout
-  id: ResearchDirectorJumpskirt
-  equipment: ResearchDirectorJumpskirt
-
-- type: startingGear
   id: ResearchDirectorJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtResearchDirector
@@ -46,18 +30,10 @@
 # OuterClothing
 - type: loadout
   id: ResearchDirectorLabCoat
-  equipment: ResearchDirectorLabCoat
-
-- type: startingGear
-  id: ResearchDirectorLabCoat
   equipment:
     outerClothing: ClothingOuterCoatRD
 
 - type: loadout
-  id: ResearchDirectorWintercoat
-  equipment: ResearchDirectorWintercoat
-
-- type: startingGear
   id: ResearchDirectorWintercoat
   equipment:
     outerClothing: ClothingOuterWinterRD

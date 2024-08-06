@@ -157,13 +157,13 @@
             Quantity: 10
           - ReagentId: Tricordrazine
             Quantity: 10
-    food:
-        maxVol: 40
-        reagents:
-          - ReagentId: Nicotine
-            Quantity: 10
-          - ReagentId: Tricordrazine
-            Quantity: 10
+      food:
+          maxVol: 40
+          reagents:
+            - ReagentId: Nicotine
+              Quantity: 10
+            - ReagentId: Tricordrazine
+              Quantity: 10
 
 - type: entity
   id: CigaretteDylovene
