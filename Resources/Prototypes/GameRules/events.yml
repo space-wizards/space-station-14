@@ -138,6 +138,7 @@
         prototype: Dragon
       - type: RoleBriefing
         briefing: dragon-role-briefing
+      resetMind: true
 
 - type: entity
   parent: BaseGameRule
@@ -188,6 +189,7 @@
       mindComponents:
       - type: NinjaRole
         prototype: SpaceNinja
+      resetMind: true
 
 - type: entity
   parent: BaseGameRule
@@ -480,6 +482,7 @@
       mindComponents:
       - type: NukeopsRole
         prototype: Nukeops
+      resetMind: true
 
 - type: entity
   parent: BaseTraitorRule

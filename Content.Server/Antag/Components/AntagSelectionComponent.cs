@@ -150,6 +150,12 @@ public partial struct AntagSelectionDefinition()
     public ComponentRegistry MindComponents = new();
 
     /// <summary>
+    /// Create a new mind for the antagonist;
+    /// </summary>
+    [DataField]
+    public bool ResetMind;
+
+    /// <summary>
     /// A set of starting gear that's equipped to the player.
     /// </summary>
     [DataField]
