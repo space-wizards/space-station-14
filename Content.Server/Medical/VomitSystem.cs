@@ -35,7 +35,7 @@ namespace Content.Server.Medical
         public void Vomit(EntityUid uid, float thirstAdded = -40f, float hungerAdded = -40f)
         {
             // Main requirement: You have a stomach
-            var stomachList = _body.GetBodyOrganComponents<StomachComponent>(uid);
+            var stomachList = _body.GetBodyOrganEntityComps<StomachComponent>(uid);
             if (stomachList.Count == 0)
                 return;
 
@@ -58,11 +58,11 @@ namespace Content.Server.Medical
             // Empty the stomach out into it
             foreach (var stomach in stomachList)
             {
-                if (_solutionContainer.ResolveSolution(stomach.Comp.Owner, StomachSystem.DefaultSolutionName, ref stomach.Comp.Solution, out var sol))
+                if (_solutionContainer.ResolveSolution(stomach.Owner, StomachSystem.DefaultSolutionName, ref stomach.Comp1.Solution, out var sol))
                 {
                     solution.AddSolution(sol, _proto);
                     sol.RemoveAllSolution();
-                    _solutionContainer.UpdateChemicals(stomach.Comp.Solution.Value);
+                    _solutionContainer.UpdateChemicals(stomach.Comp1.Solution.Value);
                 }
             }
             // Adds a tiny amount of the chem stream from earlier along with vomit
@@ -79,7 +79,7 @@ namespace Content.Server.Medical
                     vomitChemstreamAmount.ScaleSolution(chemMultiplier);
                     solution.AddSolution(vomitChemstreamAmount, _proto);
 
-                    vomitAmount -= (float) vomitChemstreamAmount.Volume;
+                    vomitAmount -= (float)vomitChemstreamAmount.Volume;
                 }
 
                 // Makes a vomit solution the size of 90% of the chemicals removed from the chemstream

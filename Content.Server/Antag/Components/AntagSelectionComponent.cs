@@ -1,6 +1,7 @@
 using Content.Server.Administration.Systems;
 using Content.Shared.Antag;
 using Content.Shared.Destructible.Thresholds;
+using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Storage;
 using Content.Shared.Whitelist;
@@ -153,6 +154,12 @@ public partial struct AntagSelectionDefinition()
     /// </summary>
     [DataField]
     public ProtoId<StartingGearPrototype>? StartingGear;
+
+    /// <summary>
+    /// A list of role loadouts, from which a randomly selected one will be equipped.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<RoleLoadoutPrototype>>? RoleLoadout;
 
     /// <summary>
     /// A briefing shown to the player.
