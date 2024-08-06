@@ -399,5 +399,13 @@ Entries:
   id: 49
   time: '2024-08-02T18:58:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30580
+- author: Mervill
+  changes:
+  - message: added a debug command to set either your hunger or thirst value to a
+      given threshold
+    type: Add
+  id: 50
+  time: '2024-08-05T07:36:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30563
 Name: Admin
 Order: 1

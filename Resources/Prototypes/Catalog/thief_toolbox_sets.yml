@@ -16,6 +16,7 @@
   - ClothingShoesChameleon
   - BarberScissors
   - ChameleonProjector
+  - AgentIDCard
 
 - type: thiefBackpackSet
   id: ToolsSet
@@ -57,9 +58,10 @@
     sprite: Objects/Specific/Syndicate/telecrystal.rsi
     state: telecrystal
   content:
-  - AgentIDCard
+  - RadioJammer
+  - TraitorCodePaper
   - Emag
-  - SyndicatePersonalAI
+  - Lighter
   - CigPackSyndicate
   - Telecrystal10 #The thief cannot use them, but it may induce communication with traitors
 

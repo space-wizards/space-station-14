@@ -1,28 +1,16 @@
 # Head
 - type: loadout
   id: ParamedicHead
-  equipment: ParamedicHead
-
-- type: startingGear
-  id: ParamedicHead
   equipment:
     head: ClothingHeadHatParamedicsoft
 
 # Jumpsuit
 - type: loadout
   id: ParamedicJumpsuit
-  equipment: ParamedicJumpsuit
-
-- type: startingGear
-  id: ParamedicJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitParamedic
 
 - type: loadout
-  id: ParamedicJumpskirt
-  equipment: ParamedicJumpskirt
-
-- type: startingGear
   id: ParamedicJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtParamedic
@@ -30,28 +18,16 @@
 # Outer clothing
 - type: loadout
   id: ParamedicWindbreaker
-  equipment: ParamedicWindbreaker
-
-- type: startingGear
-  id: ParamedicWindbreaker
   equipment:
     outerClothing: ClothingOuterCoatParamedicWB
 
 - type: loadout
-  id: ParamedicWintercoat
-  equipment: ParamedicWintercoat
-
-- type: startingGear
   id: ParamedicWintercoat
   equipment:
     outerClothing: ClothingOuterWinterPara
 
 # Shoes
 - type: loadout
-  id: BlueShoes
-  equipment: BlueShoes
-
-- type: startingGear
   id: BlueShoes
   equipment:
     shoes: ClothingShoesColorBlue
