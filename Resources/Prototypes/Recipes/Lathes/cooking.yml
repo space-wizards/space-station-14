@@ -104,3 +104,10 @@
   completetime: 0.4
   materials:
     Steel: 100
+
+- type: latheRecipe
+  id: FoodTinEmpty
+  result: FoodTinEmpty
+  completetime: 0.4
+  materials:
+    Steel: 100
