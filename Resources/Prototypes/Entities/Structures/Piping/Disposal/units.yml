@@ -17,10 +17,6 @@
       map: [ "enum.DisposalUnitVisualLayers.Base" ]
     - state: disposal-charging
       map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
-      visible: false
-    - state: disposal-flush
-      map: [ "enum.DisposalUnitVisualLayers.BaseFlush" ]
-      visible: false
     - state: disposal-flush
       map: [ "enum.DisposalUnitVisualLayers.OverlayFlush" ]
     - state: dispover-charge
@@ -106,10 +102,6 @@
         map: [ "enum.DisposalUnitVisualLayers.Base" ]
       - state: mailing-charging
         map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
-        visible: false
-      - state: mailing-flush
-        map: [ "enum.DisposalUnitVisualLayers.BaseFlush" ]
-        visible: false
       - state: mailing-flush
         map: [ "enum.DisposalUnitVisualLayers.OverlayFlush" ]
       - state: dispover-charge
