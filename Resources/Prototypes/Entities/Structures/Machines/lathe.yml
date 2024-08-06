@@ -1174,6 +1174,11 @@
         whitelist:
           components:
           - FitsInDispenser
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      beaker_slot: !type:ContainerSlot
   - type: Lathe
     reagentOutputSlotId: beaker_slot
     idleState: icon
