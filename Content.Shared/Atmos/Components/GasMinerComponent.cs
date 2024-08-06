@@ -8,6 +8,9 @@ namespace Content.Shared.Atmos.Components;
 [RegisterComponent]
 public sealed partial class GasMinerComponent : Component
 {
+    /// <summary>
+    ///     Operational state of the miner.
+    /// </summary>
     [AutoNetworkedField]
     [ViewVariables(VVAccess.ReadOnly)]
     public GasMinerState MinerState = GasMinerState.Disabled;
@@ -26,10 +29,16 @@ public sealed partial class GasMinerComponent : Component
     [DataField]
     public float MaxExternalPressure = Atmospherics.GasMinerDefaultMaxExternalPressure;
 
+    /// <summary>
+    ///     Gas to spawn.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public Gas? SpawnGas = null;
 
+    /// <summary>
+    ///     Temperature in Kelvin.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public float SpawnTemperature = Atmospherics.T20C;
