@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Dragons can now breathe fire.
-    type: Add
-  id: 6551
-  time: '2024-05-08T00:25:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26746
 - author: Cojoke-dot
   changes:
   - message: You can now shoot over racks
@@ -3780,3 +3773,10 @@
   id: 7050
   time: '2024-08-06T11:00:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30574
+- author: Flareguy
+  changes:
+  - message: Most hats are now automatically displaced on vox to look more fitting.
+    type: Tweak
+  id: 7051
+  time: '2024-08-06T13:12:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30699
