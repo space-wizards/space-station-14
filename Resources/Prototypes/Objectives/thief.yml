@@ -436,7 +436,7 @@
   id: BingusStealObjective
   components:
   - type: StealCondition
-    stealGroup: AnimalBingus
+    stealGroup: AnimalNamedCat
   - type: Objective
     difficulty: 1
 

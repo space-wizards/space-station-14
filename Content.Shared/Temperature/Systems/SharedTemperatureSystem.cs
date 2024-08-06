@@ -402,17 +402,3 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         return (newHeatThreshold, newColdThreshold);
     }
 }
-
-public sealed class OnTemperatureChangeEvent : EntityEventArgs
-{
-    public float CurrentTemperature { get; }
-    public float LastTemperature { get; }
-    public float TemperatureDelta { get; }
-
-    public OnTemperatureChangeEvent(float current, float last, float delta)
-    {
-        CurrentTemperature = current;
-        LastTemperature = last;
-        TemperatureDelta = delta;
-    }
-}

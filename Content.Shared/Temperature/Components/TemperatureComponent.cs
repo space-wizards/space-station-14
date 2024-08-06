@@ -1,4 +1,3 @@
-using Content.Shared.Temperature.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
@@ -59,15 +58,6 @@ public sealed partial class TemperatureComponent : Component
     [AutoNetworkedField]
     public float AtmosTemperatureTransferEfficiency = 0.1f;
 
-    [Obsolete("Use system method")]
-    public float HeatCapacity
-    {
-        get
-        {
-            return IoCManager.Resolve<IEntityManager>().System<SharedTemperatureSystem>().GetHeatCapacity(Owner, this);
-        }
-    }
-
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public DamageSpecifier ColdDamage = new();
@@ -81,7 +71,7 @@ public sealed partial class TemperatureComponent : Component
     /// </summary>
     /// <remarks>
     /// Okay it genuinely reaches this basically immediately for a plasma fire.
-    /// </summary>
+    /// </remarks>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public FixedPoint2 DamageCap = FixedPoint2.New(8);
@@ -91,7 +81,7 @@ public sealed partial class TemperatureComponent : Component
     /// </summary>
     [DataField]
     [AutoNetworkedField]
-    public bool TakingDamage = false;
+    public bool TakingDamage;
 
     [DataField]
     [AutoNetworkedField]
