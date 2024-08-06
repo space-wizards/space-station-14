@@ -1,0 +1,104 @@
+# Tomatoes
+
+- type: microwaveMealRecipe
+  id: RecipeTinTomatoes
+  name: tin tomatoes recipe
+  result: FoodTinTomatoes
+  time: 15
+  reagents:
+    TableSalt: 5
+  solids:
+    FoodTinEmpty: 1
+    FoodTomato: 2
+
+# Chanterelles
+
+- type: microwaveMealRecipe
+  id: RecipeTinChanterelles
+  name: tin сhanterelles recipe
+  result: FoodTinChanterelles
+  time: 15
+  reagents:
+    TableSalt: 5
+  solids:
+    FoodTinEmpty: 1
+    FoodMushroom: 2
+
+# Pineapple
+
+- type: microwaveMealRecipe
+  id: RecipeTinPineapple
+  name: tin pineapple recipe
+  result: FoodTinPineapple
+  time: 15
+  reagents:
+    Sugar: 5
+  solids:
+    FoodTinEmpty: 1
+    FoodPineappleSlice: 5
+
+# Corn
+
+- type: microwaveMealRecipe
+  id: RecipeTinCorn
+  name: tin corn recipe
+  result: FoodTinCorn
+  time: 15
+  reagents:
+    Sugar: 5
+    TableSalt: 5
+  solids:
+    FoodTinEmpty: 1
+    FoodCorn: 2
+
+# Сondensed Milk
+
+- type: microwaveMealRecipe
+  id: RecipeTinСondensedMilk
+  name: tin condensed milk recipe
+  result: СondensedMilk
+  time: 15
+  reagents:
+    Sugar: 20
+    Milk: 30
+  solids:
+    FoodTinEmpty: 1
+
+# Mouse
+
+- type: microwaveMealRecipe
+  id: RecipeTinMice
+  name: tin mice recipe
+  result: FoodTinMice
+  time: 15
+  reagents:
+    TableSalt: 5
+  solids:
+    FoodTinEmpty: 1
+    FoodMeatRat: 1
+
+# Beans
+
+# - type: microwaveMealRecipe
+#   id: RecipeTinBeans
+#   name: tin beans recipe
+#   result: FoodTinBeans
+#   time: 15
+#   reagents:
+#     TableSalt: 5
+#   solids:
+#     FoodTinEmpty: 1
+#     FoodSoybeans: 3 # Replace it with a more suitable one when it appears
+
+# Peaches
+
+# - type: microwaveMealRecipe
+#   id: RecipeTinPeaches
+#   name: tin peaches recipe
+#   result: FoodTinPeaches
+#   time: 15
+#   reagents:
+#     Sugar: 5
+#   solids:
+#     FoodTinEmpty: 1
+#     FoodOrange: 3 # Replace it with a more suitable one when it appears
