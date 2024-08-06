@@ -13,7 +13,7 @@ namespace Content.Shared.Chemistry.Reagent;
 [DataDefinition]
 public partial struct ReagentDef : IEquatable<ReagentDef>
 {
-    [DataField(required: true)]
+    [DataField("ReagentId",required: true)]
     public string Id { get; init; } = string.Empty;
 
     [Obsolete("Use Id Field instead")]
