@@ -48,7 +48,7 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
         // Avoid raising the event for the container if nothing changed.
         // We'll still set the values in case they're slightly different but within tolerance.
-        if (diff && _container.TryGetContainingContainer(uid, out var container))
+        if (diff && _container.TryGetContainingContainer((uid, null, null), out var container))
         {
             _movementSpeed.RefreshMovementSpeedModifiers(container.Owner);
         }
@@ -112,7 +112,7 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         // make sentient boots slow or fast too
         _movementSpeed.RefreshMovementSpeedModifiers(ent);
 
-        if (_container.TryGetContainingContainer(ent.Owner, out var container))
+        if (_container.TryGetContainingContainer((ent.Owner, null, null), out var container))
         {
             // inventory system will automatically hook into the event raised by this and update accordingly
             _movementSpeed.RefreshMovementSpeedModifiers(container.Owner);

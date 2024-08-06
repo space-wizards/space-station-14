@@ -2,7 +2,7 @@
   id: AutolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: autolathe machine board
-  description: A machine printed circuit board for an autolathe
+  description: A machine printed circuit board for an autolathe.
   components:
     - type: MachineBoard
       prototype: Autolathe
@@ -15,7 +15,7 @@
   parent: BaseMachineCircuitboard
   id: AutolatheHyperConvectionMachineCircuitboard
   name: hyper convection autolathe machine board
-  description: A machine printed circuit board for a hyper convection autolathe
+  description: A machine printed circuit board for a hyper convection autolathe.
   components:
   - type: MachineBoard
     prototype: AutolatheHyperConvection
@@ -64,8 +64,8 @@
 - type: entity
   id: BiofabricatorMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: biofabricator machine board
-  description: A machine printed circuit board for a biofabricator.
+  name: biocube fabricator machine board
+  description: A machine printed circuit board for a biocube fabricator.
   components:
     - type: MachineBoard
       prototype: Biofabricator
@@ -95,7 +95,7 @@
   id: AmmoTechFabCircuitboard
   parent: BaseMachineCircuitboard
   name: ammo techfab circuit board
-  description: A machine printed circuit board for an ammo techfab
+  description: A machine printed circuit board for an ammo techfab.
   components:
     - type: Sprite
       state: security
