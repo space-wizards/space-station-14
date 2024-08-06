@@ -13,7 +13,7 @@
   placementMode: SnapgridCenter
   canRotate: false
   canBuildInImpassable: false
-  itemWhitelist:
+  entityWhitelist:
     tags:
     - SpiderCraft
   conditions:
@@ -34,7 +34,7 @@
   placementMode: SnapgridCenter
   canRotate: false
   canBuildInImpassable: false
-  itemWhitelist:
+  entityWhitelist:
     tags:
     - SpiderCraft
   conditions:
@@ -55,7 +55,7 @@
   placementMode: SnapgridCenter
   canRotate: false
   canBuildInImpassable: false
-  itemWhitelist:
+  entityWhitelist:
     tags:
     - SpiderCraft
   conditions:
@@ -75,7 +75,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  itemWhitelist:
+  entityWhitelist:
     tags:
     - SpiderCraft
 
@@ -94,7 +94,7 @@
   placementMode: SnapgridCenter
   canRotate: false
   canBuildInImpassable: false
-  itemWhitelist:
+  entityWhitelist:
     tags:
     - SpiderCraft
 
@@ -112,7 +112,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  itemWhitelist:
+  entityWhitelist:
     tags:
     - SpiderCraft
   conditions:

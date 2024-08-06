@@ -6,7 +6,7 @@
   targetNode: tile
   category: construction-category-tiles
   description: "Nice and smooth."
-  itemWhitelist:
+  entityWhitelist:
     tags:
     - SpiderCraft
   icon:
@@ -22,7 +22,7 @@
   targetNode: coat
   category: construction-category-clothing
   description: "Surprisingly warm and durable."
-  itemWhitelist:
+  entityWhitelist:
     tags:
     - SpiderCraft
   icon:
@@ -38,7 +38,7 @@
   targetNode: jumpsuit
   category: construction-category-clothing
   description: "At least it's something."
-  itemWhitelist:
+  entityWhitelist:
     tags:
     - SpiderCraft
   icon:
@@ -54,7 +54,7 @@
   targetNode: jumpskirt
   category: construction-category-clothing
   description: "At least it's something."
-  itemWhitelist:
+  entityWhitelist:
     tags:
     - SpiderCraft
   icon:
@@ -70,7 +70,7 @@
   targetNode: cloth
   category: construction-category-materials
   description: "Feels just like cloth, strangely enough."
-  itemWhitelist:
+  entityWhitelist:
     tags:
     - SpiderCraft
   icon:
@@ -86,7 +86,7 @@
   targetNode: shield
   category: construction-category-clothing
   description: "It's thick enough to handle a few blows, but probably not heat."
-  itemWhitelist:
+  entityWhitelist:
     tags:
     - SpiderCraft
   icon:
@@ -102,7 +102,7 @@
   targetNode: boots
   category: construction-category-clothing
   description: "Tightly woven web should protect against the cold"
-  itemWhitelist:
+  entityWhitelist:
     tags:
     - SpiderCraft
   icon:
