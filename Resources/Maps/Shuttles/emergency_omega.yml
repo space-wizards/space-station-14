@@ -20,7 +20,7 @@ entities:
       name: NT Evac Box
     - type: Transform
       pos: 2.2710133,-2.4148211
-      parent: 604
+      parent: invalid
     - type: MapGrid
       chunks:
         -1,0:
@@ -668,18 +668,6 @@ entities:
     - type: GasTileOverlay
     - type: SpreaderGrid
     - type: GridPathfinding
-  - uid: 604
-    components:
-    - type: MetaData
-      name: Map Entity
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: PhysicsMap
-    - type: GridTree
-    - type: MovedGrids
-    - type: Broadphase
-    - type: OccluderTree
 - proto: AirCanister
   entities:
   - uid: 485
