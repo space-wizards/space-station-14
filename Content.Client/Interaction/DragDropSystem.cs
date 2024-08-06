@@ -42,6 +42,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     // how often to recheck possible targets (prevents calling expensive
     // check logic each update)
@@ -551,7 +552,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
         if (Exists(_dragShadow))
         {
             var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
-            Transform(_dragShadow.Value).WorldPosition = mousePos.Position;
+            _transformSystem.SetWorldPosition(_dragShadow.Value, mousePos.Position);
         }
     }
 }

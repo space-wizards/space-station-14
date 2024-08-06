@@ -5955,7 +5955,14 @@ entities:
     components:
     - type: Transform
       pos: -0.5,8.5
-      parent: 2
+      parent: 407
+- proto: CleanerDispenser
+  entities:
+  - uid: 2279
+    components:
+    - type: Transform
+      pos: -3.5,-5.5
+      parent: 407
 - proto: ClosetChefFilled
   entities:
   - uid: 877
