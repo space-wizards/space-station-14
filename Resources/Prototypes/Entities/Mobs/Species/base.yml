@@ -132,6 +132,8 @@
     - Pacified
     - StaminaModifier
     - Flashed
+    - RadiationProtection
+    - Drowsiness
   - type: Body
     prototype: Human
     requiredLegs: 2
@@ -162,7 +164,6 @@
   - type: SleepEmitSound
   - type: SSDIndicator
   - type: StandingState
-  - type: Fingerprint
   - type: Dna
   - type: MindContainer
     showExamineInfo: true
@@ -234,7 +235,7 @@
         Heat: -0.07
       groups:
         Brute: -0.07
-
+  - type: Fingerprint
   - type: Blindable
   # Other
   - type: Temperature
@@ -249,6 +250,11 @@
     heatDamage:
       types:
         Heat: 1.5 #per second, scales with temperature & other constants
+  - type: TemperatureSpeed
+    thresholds:
+      293: 0.8
+      280: 0.6
+      260: 0.4
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100

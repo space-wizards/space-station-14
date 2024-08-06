@@ -1,4 +1,3 @@
-using Content.Server.Temperature.Systems;
 using Content.Shared.Atmos;
 
 namespace Content.Server.Temperature.Components;
@@ -27,13 +26,4 @@ public sealed partial class TemperatureComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float AtmosTemperatureTransferEfficiency = 0.1f;
-
-    [Obsolete("Use system method")]
-    public float HeatCapacity
-    {
-        get
-        {
-            return IoCManager.Resolve<IEntityManager>().System<TemperatureSystem>().GetHeatCapacity(Owner, this);
-        }
-    }
 }
