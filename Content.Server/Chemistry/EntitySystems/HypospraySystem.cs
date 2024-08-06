@@ -42,7 +42,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
         if (args.Cancelled || args.Handled || args.Args.Target == null)
             return;
 
-        args.Handled = TryUseHypospray(entity, args.Args.Target.Value, args.Args.User);
+        args.Handled = TryDoInject(entity, args.Args.Target.Value, args.Args.User);
     }
 
     private bool TryUseHypospray(Entity<HyposprayComponent> entity, EntityUid target, EntityUid user)
