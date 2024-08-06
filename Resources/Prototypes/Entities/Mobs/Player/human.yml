@@ -41,6 +41,7 @@
   components:
   - type: Loadout
     prototypes: [SyndicateReinforcementMedic]
+    roleLoadout: [ RoleSurvivalSyndicate ]
 
 - type: entity
   parent: MobHumanSyndicateAgent
@@ -49,6 +50,7 @@
   components:
   - type: Loadout
     prototypes: [SyndicateReinforcementSpy]
+    roleLoadout: [ RoleSurvivalSyndicate ]
 
 - type: entity
   parent: MobHumanSyndicateAgent
@@ -57,6 +59,7 @@
   components:
   - type: Loadout
     prototypes: [SyndicateReinforcementThief]
+    roleLoadout: [ RoleSurvivalSyndicate ]
 
 - type: entity
   parent: MobHumanSyndicateAgentBase
