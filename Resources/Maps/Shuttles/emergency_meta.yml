@@ -24,7 +24,7 @@ entities:
       name: NT Evac Meta
     - type: Transform
       pos: -2.4375,0.859375
-      parent: 4
+      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -465,18 +465,6 @@ entities:
     - type: RadiationGridResistance
     - type: GravityShake
       shakeTimes: 10
-  - uid: 4
-    components:
-    - type: MetaData
-      name: Map Entity
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: PhysicsMap
-    - type: GridTree
-    - type: MovedGrids
-    - type: Broadphase
-    - type: OccluderTree
 - proto: AirCanister
   entities:
   - uid: 55
