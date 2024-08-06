@@ -42,16 +42,19 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
 
         if (keyHolder.Channels.Count == 0)
         {
-            if (TryComp<IntrinsicRadioReceiverComponent>(uid, out var intrinsicRadio) && intrinsicRadio == null)
-                RemComp<ActiveRadioComponent>(uid);
+
+            RemComp<ActiveRadioComponent>(uid);
+            TryComp<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
+            if (intrinsicRadio != null)
+                EnsureComp<ActiveRadioComponent>(uid).Channels = new(intrinsicRadio.Channels);
         }
         else
         {
-            HashSet<string> channels = keyHolder.Channels;
+            HashSet<string> channels = new(keyHolder.Channels);
             TryComp<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
             if (intrinsicRadio != null)
                 channels.UnionWith(intrinsicRadio.Channels);
-            EnsureComp<ActiveRadioComponent>(uid).Channels = new(keyHolder.Channels);
+            EnsureComp<ActiveRadioComponent>(uid).Channels = channels;
         }
     }
 

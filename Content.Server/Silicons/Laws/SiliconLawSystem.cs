@@ -96,9 +96,11 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     {
         _entityManager.TryGetComponent<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
 
+        if (!Resolve(uid, ref intrinsicRadio))
+            return;
         // Grab the intrinsic channels, or a default if missing
-        HashSet<string>? radioChannels = intrinsicRadio?.Channels ?? new HashSet<string> { "Binary" };
-        radioChannels.UnionWith(_entityManager.GetComponent<EncryptionKeyHolderComponent>(uid).Channels);
+        HashSet<string> radioChannels = new(intrinsicRadio.Channels);
+        radioChannels.UnionWith(_entityManager.GetComponent<ActiveRadioComponent>(uid).Channels);
         // Create a new state and set the default channel to local
         var state = new SiliconLawBuiState(GetLaws(uid).Laws, radioChannels, "Local");
         // Initialize UI state
