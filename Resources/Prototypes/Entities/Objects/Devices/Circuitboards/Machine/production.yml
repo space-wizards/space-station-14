@@ -64,8 +64,8 @@
 - type: entity
   id: BiofabricatorMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: biofabricator machine board
-  description: A machine printed circuit board for a biofabricator.
+  name: flesh cuboid mill machine board
+  description: A machine printed circuit board for a flesh cuboid mill.
   components:
     - type: MachineBoard
       prototype: Biofabricator
