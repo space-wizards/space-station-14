@@ -25,7 +25,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             var miner = ent.Comp;
 
-            if (!GetValidEnvironment(ent, out var environment) || !miner.SpawnGas.HasValue)
+            if (!GetValidEnvironment(ent, out var environment) || !Transform(ent).Anchored || !miner.SpawnGas.HasValue)
             {
                 if (miner.MinerState != GasMinerState.Disabled)
                 {
