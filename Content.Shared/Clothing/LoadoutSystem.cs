@@ -168,7 +168,6 @@ public sealed class LoadoutSystem : EntitySystem
 
     public void GearEquipped(EntityUid uid)
     {
-        // Internals try to auto-activate on this event
         var ev = new StartingGearEquippedEvent(uid);
         RaiseLocalEvent(uid, ref ev);
     }
