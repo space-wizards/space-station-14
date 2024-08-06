@@ -35,19 +35,21 @@ public sealed class GiveItemsForObjectiveSystem : EntitySystem
             return;
         }
 
-        if (!GetBackpackStorageAndSlot(mindOwner.Value, out var slot, out var storageComp))
-        {
-            args.Cancelled |= entity.Comp.CancelAssignmentOnNoSpace;
+        // It doesn't matter if the item can fit or not so just skip checking.
+        if (entity.Comp.CancelAssignmentOnNoSpace == false)
             return;
-        }
 
         // Check if all the items can fit!
         foreach (var item in entity.Comp.ItemsToSpawnPrototypes)
         {
             var obj = Spawn(item);
 
-            if (!_storage.CanInsert(slot.Value, obj, out _, storageComp: storageComp))
-                args.Cancelled |= entity.Comp.CancelAssignmentOnNoSpace;
+            if (!_inventorySystem.CanItemFitOnEntity(mindOwner.Value, obj))
+            {
+                Del(obj);
+                args.Cancelled = true;
+                return;
+            }
 
             Del(obj);
         }
@@ -56,7 +58,7 @@ public sealed class GiveItemsForObjectiveSystem : EntitySystem
 
     private void OnAddedToMind(Entity<GiveItemsForObjectiveComponent> entity, ref ObjectiveAddedToMindEvent args)
     {
-        // At this point we are always going to try to spawn the item. If the players backpack is full then the item
+        // At this point we are *always* going to try to spawn the item. If the player can't hold the item then
         // will just be dropped on the ground.
 
         var mindOwner = args.Mind.OwnedEntity;
@@ -66,7 +68,7 @@ public sealed class GiveItemsForObjectiveSystem : EntitySystem
 
         // Spawn the item at the players location.
         var cords = _transformSystem.GetMapCoordinates(mindOwner.Value);
-        EntityUid obj = Spawn(_random.Pick(entity.Comp.ItemsToSpawnPrototypes), cords);
+        var obj = Spawn(_random.Pick(entity.Comp.ItemsToSpawnPrototypes), cords);
 
         // The loop should never go more than a few times in very unlikely situations.
         var attempts = 30;
@@ -81,6 +83,7 @@ public sealed class GiveItemsForObjectiveSystem : EntitySystem
             Del(obj);
             obj = Spawn(_random.Pick(entity.Comp.ItemsToSpawnPrototypes), cords);
 
+            // This is on the final iteration of the loop.
             if (i == attempts - 1)
                 throw new Exception($"Could not spawn a valid entity within {attempts}.");
         }
@@ -88,35 +91,8 @@ public sealed class GiveItemsForObjectiveSystem : EntitySystem
         var evnt = new ObjectiveItemGivenEvent(obj);
         RaiseLocalEvent(entity, ref evnt);
 
-        // If this fails, thats OK. The item was already spawned on the ground.
-        if (!GetBackpackStorageAndSlot(mindOwner.Value, out var slot, out var storageComp))
-            return;
-
-        _storage.Insert(slot.Value, obj, out _, storageComp: storageComp, playSound: false);
-    }
-
-    /// <summary>
-    ///     If the backpack slot doesn't exist, is empty, or the is full (With a non storage item) will return null.
-    ///     Otherwise will return the storage slot and the storage itself.
-    /// </summary>
-    private bool GetBackpackStorageAndSlot(EntityUid uid, [NotNullWhen(true)] out EntityUid? slot, [NotNullWhen(true)] out StorageComponent? storage)
-    {
-        slot = null;
-        storage = null;
-
-        if (!TryComp<InventoryComponent>(uid, out var inventoryComp))
-            return false;
-
-        if (!(_inventorySystem.TryGetSlotEntity(uid, "back", out var slotEnt, inventoryComponent: inventoryComp) &&
-            TryComp<StorageComponent>(slotEnt, out var storageComp)))
-            return false;
-
-        if (slotEnt == null || storageComp == null)
-            return false;
-
-        slot = slotEnt.Value;
-        storage = storageComp;
-        return true;
+        // If their inventory is full, it will be spawned on the ground
+        _inventorySystem.GiveItemToEntity(mindOwner.Value, obj);
     }
 
 }
