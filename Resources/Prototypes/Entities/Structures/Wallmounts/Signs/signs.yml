@@ -1161,7 +1161,7 @@
   parent: BaseSign
   id: SignSmoking
   name: no smoking sign
-  description: A warning sign which reads 'NO SMOKING'
+  description: A warning sign which reads 'NO SMOKING'.
   components:
   - type: Sprite
     state: nosmoking2
@@ -1170,7 +1170,7 @@
   parent: BaseSign
   id: SignSomethingOld
   name: old sign
-  description: Technical information of some sort, shame its too worn-out to read.
+  description: Technical information of some sort, shame it's too worn-out to read.
   components:
   - type: Sprite
     state: something-old1
@@ -1179,7 +1179,7 @@
   parent: BaseSign
   id: SignSomethingOld2
   name: old sign
-  description: Looks like a planet crashing by some station above it. Its kinda scary.
+  description: Looks like a planet crashing by some station above it. It's kinda scary.
   components:
   - type: Sprite
     state: something-old2

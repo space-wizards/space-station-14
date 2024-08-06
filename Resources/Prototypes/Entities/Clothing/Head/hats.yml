@@ -62,7 +62,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatCasa
   name: casa
-  description: Cone-shaped hat
+  description: Cone-shaped hat.
   components:
     - type: Sprite
       sprite: Clothing/Head/Hats/casa.rsi
@@ -409,7 +409,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatSantahat
   name: santa hat
-  description: "A festive hat worn by Santa Claus"
+  description: A festive hat worn by Santa Claus.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/santahat.rsi
