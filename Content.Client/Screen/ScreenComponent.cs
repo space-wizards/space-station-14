@@ -1,10 +1,12 @@
+using Content.Shared.Screen;
 using System.Numerics;
+using System.Collections.Generic;
 using Robust.Client.Graphics;
 
-namespace Content.Client.TextScreen;
+namespace Content.Client.Screen;
 
 [RegisterComponent]
-public sealed partial class TextScreenVisualsComponent : Component
+public sealed partial class ScreenComponent : Component
 {
     /// <summary>
     ///     1/32 - the size of a pixel
@@ -12,13 +14,11 @@ public sealed partial class TextScreenVisualsComponent : Component
     public const float PixelSize = 1f / EyeManager.PixelsPerMeter;
 
     /// <summary>
-    ///     The color of the text drawn.
-    /// </summary>
-    /// <remarks>
+    ///     Color used for every ScreenUpdate that doesn't supply one
     ///     15,151,251 is the old ss13 color, from tg
-    /// </remarks>
-    [DataField("color"), ViewVariables(VVAccess.ReadWrite)]
-    public Color Color = new Color(15, 151, 251);
+    /// </summary>
+    [DataField("defaultColor"), ViewVariables(VVAccess.ReadWrite)]
+    public Color DefaultColor = new Color(15, 151, 251);
 
     /// <summary>
     ///     Offset for centering the text.
@@ -51,17 +51,6 @@ public sealed partial class TextScreenVisualsComponent : Component
     public int RowLength = 5;
 
     /// <summary>
-    ///     Text the screen should show when it finishes a timer.
-    /// </summary>
-    [DataField("text"), ViewVariables(VVAccess.ReadWrite)]
-    public string?[] Text = new string?[2];
-
-    /// <summary>
-    ///     Text the screen will draw whenever appearance is updated.
-    /// </summary>
-    public string?[] TextToDraw = new string?[2];
-
-    /// <summary>
     ///     Per-character layers, for mapping into the sprite component.
     /// </summary>
     [DataField("layerStatesToDraw")]
@@ -73,4 +62,9 @@ public sealed partial class TextScreenVisualsComponent : Component
     public string MinuteFormat = "D2";
     [DataField("secondFormat")]
     public string SecondFormat = "D2";
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public ScreenUpdate? ActiveUpdate;
+    [ViewVariables(VVAccess.ReadWrite)]
+    public SortedDictionary<ScreenPriority, ScreenUpdate> Updates = new();
 }

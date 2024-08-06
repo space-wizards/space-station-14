@@ -7,7 +7,6 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.Parallax;
-using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Spawners.Components;
@@ -22,6 +21,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Salvage;
+using Content.Shared.Screen;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
@@ -211,31 +211,29 @@ public sealed class ArrivalsSystem : EntitySystem
             TryComp<FTLComponent>(shuttleUid, out var ftlComp);
             var ftlTime = TimeSpan.FromSeconds(ftlComp?.TravelTime ?? _shuttles.DefaultTravelTime);
 
-            var payload = new NetworkPayload
-            {
-                [ShuttleTimerMasks.ShuttleMap] = shuttleUid,
-                [ShuttleTimerMasks.ShuttleTime] = ftlTime
-            };
-
             // unfortunate levels of spaghetti due to roundstart arrivals ftl behavior
+            // on the first arrivals ftl, need to get the dest map (the station), also the arrivals shuttle leaves 10 seconds earlier
             EntityUid? sourceMap;
             var arrivalsDelay = _cfgManager.GetCVar(CCVars.ArrivalsCooldown);
+            var updates = new ScreenUpdate[3];
 
             if (component.FirstRun)
             {
+                // shitty hack to get the station uid
                 var station = _station.GetLargestGrid(Comp<StationDataComponent>(component.Station));
                 sourceMap = station == null ? null : Transform(station.Value)?.MapUid;
                 arrivalsDelay += RoundStartFTLDuration;
                 component.FirstRun = false;
-                payload.Add(ShuttleTimerMasks.DestMap, Transform(args.TargetCoordinates.EntityId).MapUid);
-                payload.Add(ShuttleTimerMasks.DestTime, ftlTime);
+                updates[2] = new ScreenUpdate(GetNetEntity(Transform(args.TargetCoordinates.EntityId).MapUid),
+                    ScreenPriority.Shuttle, ScreenMasks.ETA, _timing.CurTime + ftlTime);
             }
             else
                 sourceMap = args.FromMapUid;
 
-            payload.Add(ShuttleTimerMasks.SourceMap, sourceMap);
-            payload.Add(ShuttleTimerMasks.SourceTime, ftlTime + TimeSpan.FromSeconds(arrivalsDelay));
+            updates[0] = new ScreenUpdate(GetNetEntity(shuttleUid), ScreenPriority.Shuttle, ScreenMasks.ETA, _timing.CurTime + ftlTime);
+            updates[1] = new ScreenUpdate(GetNetEntity(sourceMap), ScreenPriority.Shuttle, ScreenMasks.ETA, _timing.CurTime + ftlTime + TimeSpan.FromSeconds(arrivalsDelay));
 
+            var payload = new NetworkPayload { [ScreenMasks.Updates] = updates };
             _deviceNetworkSystem.QueuePacket(shuttleUid, null, payload, netComp.TransmitFrequency);
         }
 
@@ -282,14 +280,9 @@ public sealed class ArrivalsSystem : EntitySystem
 
         if (TryComp<DeviceNetworkComponent>(uid, out var netComp))
         {
-            var payload = new NetworkPayload
-            {
-                [ShuttleTimerMasks.ShuttleMap] = uid,
-                [ShuttleTimerMasks.ShuttleTime] = dockTime,
-                [ShuttleTimerMasks.SourceMap] = args.MapUid,
-                [ShuttleTimerMasks.SourceTime] = dockTime,
-                [ShuttleTimerMasks.Docked] = true
-            };
+            var shuttleUpdate = new ScreenUpdate(GetNetEntity(uid), ScreenPriority.Shuttle, ScreenMasks.ETD, _timing.CurTime + dockTime);
+            var sourceUpdate = new ScreenUpdate(GetNetEntity(args.MapUid), ScreenPriority.Shuttle, ScreenMasks.ETD, _timing.CurTime + dockTime);
+            var payload = new NetworkPayload { [ScreenMasks.Updates] = new ScreenUpdate[] { shuttleUpdate, sourceUpdate } };
             _deviceNetworkSystem.QueuePacket(uid, null, payload, netComp.TransmitFrequency);
         }
     }

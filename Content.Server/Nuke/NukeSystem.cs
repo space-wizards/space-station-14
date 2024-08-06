@@ -1,6 +1,8 @@
 using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Chat.Systems;
+using Content.Server.DeviceNetwork.Components;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
@@ -8,11 +10,13 @@ using Content.Server.Station.Systems;
 using Content.Shared.Audio;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Coordinates.Helpers;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Maps;
 using Content.Shared.Nuke;
 using Content.Shared.Popups;
+using Content.Shared.Screen;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -21,6 +25,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Nuke;
@@ -29,7 +34,9 @@ public sealed class NukeSystem : EntitySystem
 {
     [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
+    [Dependency] private readonly DeviceNetworkSystem _network = default!;
     [Dependency] private readonly ExplosionSystem _explosions = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
@@ -473,6 +480,15 @@ public sealed class NukeSystem : EntitySystem
         // enable the navmap beacon for people to find it
         _navMap.SetBeaconEnabled(uid, true);
 
+        // display nuke countdown on local screens
+        if (TryComp<DeviceNetworkComponent>(uid, out var nukeNet))
+        {
+            var update = new ScreenUpdate(GetNetEntity(nukeXform.MapUid), ScreenPriority.Nuke,
+                ScreenMasks.Nuke, _timing.CurTime + TimeSpan.FromSeconds(component.RemainingTime), Color.Red);
+            var payload = new NetworkPayload { [ScreenMasks.Updates] = new ScreenUpdate[] { update } };
+            _network.QueuePacket(uid, null, payload, nukeNet.TransmitFrequency);
+        }
+
         _itemSlots.SetLock(uid, component.DiskSlot, true);
         if (!nukeXform.Anchored)
         {
@@ -517,6 +533,14 @@ public sealed class NukeSystem : EntitySystem
         _pointLight.SetEnabled(uid, false);
         // disable the navmap beacon now that its disarmed
         _navMap.SetBeaconEnabled(uid, false);
+
+        // cancel the nuke countdown on local screens
+        if (TryComp<DeviceNetworkComponent>(uid, out var nukeNet))
+        {
+            var update = new ScreenUpdate(GetNetEntity(Transform(uid).MapUid), ScreenPriority.Nuke, ScreenMasks.Nuke, TimeSpan.Zero, Color.Red);
+            var payload = new NetworkPayload { [ScreenMasks.Updates] = new ScreenUpdate[] { update } };
+            _network.QueuePacket(uid, null, payload, nukeNet.TransmitFrequency);
+        }
 
         // start bomb cooldown
         _itemSlots.SetLock(uid, component.DiskSlot, false);
