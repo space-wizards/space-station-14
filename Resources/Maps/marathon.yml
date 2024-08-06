@@ -116543,9 +116543,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -9.5,-27.5
       parent: 30
-    - type: DeviceNetwork
-      configurators:
-      - invalid
     - type: SurveillanceCamera
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
