@@ -14,6 +14,7 @@
     offset: 0, 0.1
     nameGeneration: food-sequence-standart-gen
     nameSuffix: food-sequence-burger-suffix
+  - type: Appearance
 
 - type: entity
   id: FoodCustomBurgerElement
