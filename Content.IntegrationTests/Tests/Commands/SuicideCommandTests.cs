@@ -63,6 +63,7 @@ public sealed class SuicideCommandTests
         await using var pair = await PoolManager.GetServerClient(new PoolSettings
         {
             Connected = true,
+            Fresh = true,
             Destructive = true,
             DummyTicker = false
         });
@@ -112,6 +113,7 @@ public sealed class SuicideCommandTests
         await using var pair = await PoolManager.GetServerClient(new PoolSettings
         {
             Connected = true,
+            Fresh = true,
             Destructive = true,
             DummyTicker = false
         });
@@ -174,6 +176,7 @@ public sealed class SuicideCommandTests
         await using var pair = await PoolManager.GetServerClient(new PoolSettings
         {
             Connected = true,
+            Fresh = true,
             Destructive = true,
             DummyTicker = false
         });
@@ -223,6 +226,7 @@ public sealed class SuicideCommandTests
         await using var pair = await PoolManager.GetServerClient(new PoolSettings
         {
             Connected = true,
+            Fresh = true,
             Destructive = true,
             DummyTicker = false
         });
@@ -293,6 +297,7 @@ public sealed class SuicideCommandTests
         await using var pair = await PoolManager.GetServerClient(new PoolSettings
         {
             Connected = true,
+            Fresh = true,
             Destructive = true,
             DummyTicker = false
         });
