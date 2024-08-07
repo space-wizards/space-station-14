@@ -13,6 +13,7 @@ public sealed class GuidebookDataSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
+    private readonly Dictionary<ComponentRegistration, List<MemberInfo>> _tagged = [];
     private GuidebookData _cachedData = new();
 
     public override void Initialize()
@@ -53,17 +54,19 @@ public sealed class GuidebookDataSystem : EntitySystem
         var memberCount = 0;
         var prototypeCount = 0;
 
-        // Scan component registrations to find members tagged for extraction
-        var tagged = new Dictionary<ComponentRegistration, List<MemberInfo>>();
-        foreach (var registration in EntityManager.ComponentFactory.GetAllRegistrations())
+        if (_tagged.Count == 0)
         {
-            foreach (var member in registration.Type.GetMembers())
+            // Scan component registrations to find members tagged for extraction
+            foreach (var registration in EntityManager.ComponentFactory.GetAllRegistrations())
             {
-                if (member.HasCustomAttribute<GuidebookDataAttribute>())
+                foreach (var member in registration.Type.GetMembers())
                 {
-                    // Note this component-member pair for later
-                    tagged.GetOrNew(registration).Add(member);
-                    memberCount++;
+                    if (member.HasCustomAttribute<GuidebookDataAttribute>())
+                    {
+                        // Note this component-member pair for later
+                        _tagged.GetOrNew(registration).Add(member);
+                        memberCount++;
+                    }
                 }
             }
         }
@@ -72,7 +75,7 @@ public sealed class GuidebookDataSystem : EntitySystem
         var entityPrototypes = _protoMan.EnumeratePrototypes<EntityPrototype>();
         foreach (var prototype in entityPrototypes)
         {
-            foreach (var (type, members) in tagged)
+            foreach (var (type, members) in _tagged)
             {
                 if (!prototype.Components.TryGetValue(type.Name, out var registryEntry))
                     continue;
@@ -96,7 +99,7 @@ public sealed class GuidebookDataSystem : EntitySystem
             }
         }
 
-        Log.Debug($"Collected {cache.Count} Guidebook Protodata value(s) - {prototypeCount} matched prototype(s), {tagged.Count} component(s), {memberCount} member(s)");
+        Log.Debug($"Collected {cache.Count} Guidebook Protodata value(s) - {prototypeCount} matched prototype(s), {_tagged.Count} component(s), {memberCount} member(s)");
     }
 
     /// <summary>
