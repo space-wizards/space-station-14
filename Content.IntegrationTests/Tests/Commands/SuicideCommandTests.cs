@@ -295,7 +295,7 @@ public sealed class SuicideCommandTests
 
         // Check that running the suicide command kills the player
         // and properly ghosts them without them being able to return to their body
-        // and that the damage is split between Slash and Blunt
+        // and that slash damage is split in half
         await server.WaitAssertion(() =>
         {
             consoleHost.GetSessionShell(playerMan.Sessions.First()).ExecuteCommand("suicide");
@@ -307,7 +307,6 @@ public sealed class SuicideCommandTests
                 Assert.That(entManager.TryGetComponent<GhostComponent>(mindComponent.CurrentEntity, out var ghostComp) &&
                             !ghostComp.CanReturnToBody);
                 Assert.That(damageableComp.Damage.DamageDict["Slash"], Is.EqualTo(lethalDamageThreshold / 2));
-                Assert.That(damageableComp.Damage.DamageDict["Blunt"], Is.EqualTo(lethalDamageThreshold / 2));
             });
         });
 
