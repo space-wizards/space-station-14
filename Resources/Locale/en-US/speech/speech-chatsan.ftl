@@ -153,3 +153,6 @@ chatsan-replacement-54 = for sure
 
 chatsan-word-55 = ngl
 chatsan-replacement-55 = not gonna lie
+
+chatsan-word-56 = fml
+chatsan-replacement-56 = fuck my life
