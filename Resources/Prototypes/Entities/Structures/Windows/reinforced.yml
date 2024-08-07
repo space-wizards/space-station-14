@@ -74,6 +74,20 @@
   - type: Occluder
   - type: StaticPrice
     price: 44
+  - type: ToggleableOccluder
+  - type: DeviceLinkSink
+    ports:
+    - On
+    - Off
+    - Toggle
+
+- type: entity
+  parent: TintedWindow
+  id: TintedWindowTransparent
+  suffix: Transparent
+  components:
+  - type: Occluder
+    enabled: false
 
 - type: entity
   id: WindowReinforcedDirectional
