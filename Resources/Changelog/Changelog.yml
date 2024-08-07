@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Re-added supplybots.
-    type: Add
-  id: 6554
-  time: '2024-05-08T07:30:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27769
 - author: Hobbitmax
   changes:
   - message: Replaced Syndicate Jaws Of Life with a Pyjama bundle on the Train map.
@@ -3780,3 +3773,10 @@
   id: 7053
   time: '2024-08-07T07:42:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30658
+- author: ShadowCommander
+  changes:
+  - message: Rollerbeds can now be dragged to the player to fold and pick them up.
+    type: Add
+  id: 7054
+  time: '2024-08-07T09:19:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30002
