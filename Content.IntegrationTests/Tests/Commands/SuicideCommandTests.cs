@@ -100,8 +100,6 @@ public sealed class SuicideCommandTests
                             !ghostComp.CanReturnToBody);
             });
         });
-
-        await pair.CleanReturnAsync();
     }
 
     /// <summary>
@@ -164,8 +162,6 @@ public sealed class SuicideCommandTests
                 Assert.That(damageableComp.Damage.GetTotal(), Is.EqualTo(lethalDamageThreshold));
             });
         });
-
-        await pair.CleanReturnAsync();
     }
 
         /// <summary>
@@ -215,8 +211,6 @@ public sealed class SuicideCommandTests
                             !ghostComp.CanReturnToBody);
             });
         });
-
-        await pair.CleanReturnAsync();
     }
 
 
@@ -287,8 +281,6 @@ public sealed class SuicideCommandTests
                 Assert.That(damageableComp.Damage.DamageDict["Slash"], Is.EqualTo(lethalDamageThreshold));
             });
         });
-
-        await pair.CleanReturnAsync();
     }
 
     /// <summary>
@@ -359,7 +351,5 @@ public sealed class SuicideCommandTests
                 Assert.That(damageableComp.Damage.DamageDict["Slash"], Is.EqualTo(lethalDamageThreshold / 2));
             });
         });
-
-        await pair.CleanReturnAsync();
     }
 }
