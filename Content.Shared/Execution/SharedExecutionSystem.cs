@@ -121,7 +121,7 @@ public sealed class SharedExecutionSystem : EntitySystem
             return;
         }
 
-        var bonus = melee.Damage * entity.Comp.DamageModifier - melee.Damage;
+        var bonus = melee.Damage * entity.Comp.DamageMultiplier - melee.Damage;
         args.Damage += bonus;
         args.ResistanceBypass = true;
     }
