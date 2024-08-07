@@ -11,7 +11,7 @@
       sprite: Clothing/Neck/Misc/dinkystar.rsi
       clothingVisuals:
         neck:
-          - state: star-equipped
+          - state: icon-equipped
     - type: EmbeddableProjectile
       sound: /Audio/Weapons/dodgeball.ogg
       minimumSpeed: 3

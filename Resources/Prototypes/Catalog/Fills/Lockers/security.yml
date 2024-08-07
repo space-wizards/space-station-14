@@ -42,6 +42,7 @@
       - id: DoorRemoteArmory
       - id: HoloprojectorSecurity
       - id: BookSpaceLaw
+      - id: Dinkystar
 
 - type: entity
   id: LockerSecurityFilled

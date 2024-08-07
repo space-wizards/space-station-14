@@ -11,7 +11,7 @@
             "name": "icon"
         },
         {
-            "name": "star-equipped",
+            "name": "icon-equipped",
             "directions": 4
         }
     ]
