@@ -81,21 +81,21 @@ public sealed partial class TestPair
             await Server.WaitPost(() => gameTicker.RestartRound());
         }
 
-        if (settings.ShouldBeConnected)
-        {
-            Client.SetConnectTarget(Server);
-            await Client.WaitIdleAsync();
-            var netMgr = Client.ResolveDependency<IClientNetManager>();
+        // Always initially connect clients to generate an initial random set of preferences/profiles.
+        // This is to try and prevent issues where if the first test that connects the client is consistently some test
+        // that uses a fixed seed, it would effectively prevent it from beingrandomized.
 
-            await Client.WaitPost(() =>
-            {
-                if (!netMgr.IsConnected)
-                {
-                    netMgr.ClientConnect(null!, 0, null!);
-                }
-            });
+        Client.SetConnectTarget(Server);
+        await Client.WaitIdleAsync();
+        var netMgr = Client.ResolveDependency<IClientNetManager>();
+        await Client.WaitPost(() => netMgr.ClientConnect(null!, 0, null!));
+        await ReallyBeIdle(10);
+        await Client.WaitRunTicks(1);
+
+        if (!settings.ShouldBeConnected)
+        {
+            await Client.WaitPost(() => netMgr.ClientDisconnect("Initial disconnect"));
             await ReallyBeIdle(10);
-            await Client.WaitRunTicks(1);
         }
 
         var cRand = Client.ResolveDependency<IRobustRandom>();
