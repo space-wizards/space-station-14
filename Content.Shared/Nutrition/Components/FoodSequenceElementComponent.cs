@@ -1,5 +1,6 @@
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Nutrition.Components;
 
@@ -27,7 +28,7 @@ public partial record struct FoodSequenceElementEntry()
     /// <summary>
     /// state used to generate the appearance of the added layer
     /// </summary>
-    public string? State { get; set; } = null;
+    public SpriteSpecifier? Sprite { get; set; } = null;
 
     /// <summary>
     /// If the layer is the final one, it can be added over the limit, but no other layers can be added after it.

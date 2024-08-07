@@ -18,16 +18,10 @@ public sealed partial class FoodSequenceStartPointComponent : Component
     public string Key = string.Empty;
 
     /// <summary>
-    /// path to RSI, where sprites of all layers for this type of food are stored
-    /// </summary>
-    [DataField(required: true)]
-    public string RsiPath = string.Empty;
-
-    /// <summary>
     /// The maximum number of layers of food that can be placed on this item.
     /// </summary>
     [DataField]
-    public int MaxLayers = 5;
+    public int MaxLayers = 10;
 
     /// <summary>
     /// Start shift from the center of the sprite where the first layer of food will be placed.
@@ -40,6 +34,12 @@ public sealed partial class FoodSequenceStartPointComponent : Component
     /// </summary>
     [DataField]
     public Vector2 Offset = Vector2.Zero;
+
+    /// <summary>
+    /// Can we put more layers?
+    /// </summary>
+    [DataField]
+    public bool Finished;
 
     /// <summary>
     /// list of sprite states to be displayed on this object.

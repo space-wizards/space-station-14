@@ -36,15 +36,18 @@ public sealed class ClientFoodSequenceSystem : SharedFoodSequenceSystem
         var counter = 0;
         foreach (var state in start.Comp.FoodLayers)
         {
+            if (state.Sprite is null)
+                continue;
+
             counter++;
 
             var keyCode = $"food-layer-{counter}";
             start.Comp.RevealedLayers.Add(keyCode);
 
-            //Set image
             var index = sprite.LayerMapReserveBlank(keyCode);
-            sprite.LayerSetRSI(index, start.Comp.RsiPath);
-            sprite.LayerSetState(index, state.State);
+
+            //Set image
+            sprite.LayerSetSprite(index, state.Sprite);
 
             //Offset the layer
             var LayerPos = start.Comp.StartPosition;

@@ -29,13 +29,6 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
 
     private bool TryAddFoodElement(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element, EntityUid? user = null)
     {
-        if (start.Comp.FoodLayers.Count >= start.Comp.MaxLayers)
-        {
-            if (user is not null)
-                _popup.PopupEntity(Loc.GetString("food-sequence-no-space"), start, user.Value);
-            return false;
-        }
-
         FoodSequenceElementEntry? elementData = null;
         foreach (var entry in element.Comp.Entries)
         {
@@ -49,12 +42,22 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         if (elementData is null)
             return false;
 
-        if (elementData.Value.State is not null)
+        //if we run out of space, we can still put in one last, final finishing element.
+        if (start.Comp.FoodLayers.Count >= start.Comp.MaxLayers && !elementData.Value.Final || start.Comp.Finished)
+        {
+            if (user is not null)
+                _popup.PopupEntity(Loc.GetString("food-sequence-no-space"), start, user.Value);
+            return false;
+        }
+
+        if (elementData.Value.Sprite is not null)
         {
             start.Comp.FoodLayers.Add(elementData.Value);
             Dirty(start);
         }
 
+        if (elementData.Value.Final)
+            start.Comp.Finished = true;
 
         UpdateFoodName(start);
         MergeFoodSolutions(start, element);
