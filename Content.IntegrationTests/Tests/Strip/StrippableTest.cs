@@ -1,4 +1,5 @@
-﻿using Content.IntegrationTests.Tests.Interaction;
+﻿using Content.Client.Interaction;
+using Content.IntegrationTests.Tests.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
@@ -19,13 +20,15 @@ public sealed class StrippableTest : InteractionTest
         var userInterface = Comp<UserInterfaceComponent>(Target);
         Assert.That(userInterface.Actors.Count == 0);
 
+        // screenCoordinates diff needs to be larger than DragDropSystem._deadzone
+        var screenX = CEntMan.System<DragDropSystem>().Deadzone + 1f;
+
         // Start drag
         await SetKey(EngineKeyFunctions.Use,
             BoundKeyState.Down,
             TargetCoords,
             Target,
-            screenCoordinates: new ScreenCoordinates(50f, 0f, WindowId.Main));
-        // screenCoordinates diff needs to be larger than DragDropSystem._deadzone
+            screenCoordinates: new ScreenCoordinates(screenX, 0f, WindowId.Main));
 
         await RunTicks(5);
 

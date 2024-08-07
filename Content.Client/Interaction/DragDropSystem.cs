@@ -90,7 +90,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
     /// </summary>
     private bool _isReplaying;
 
-    private float _deadzone;
+    public float Deadzone;
 
     private DragState _state = DragState.NotDragging;
 
@@ -122,7 +122,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
 
     private void SetDeadZone(float deadZone)
     {
-        _deadzone = deadZone;
+        Deadzone = deadZone;
     }
 
     public override void Shutdown()
@@ -539,7 +539,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             case DragState.MouseDown:
             {
                 var screenPos = _inputManager.MouseScreenPosition;
-                if ((_mouseDownScreenPos!.Value.Position - screenPos.Position).Length() > _deadzone)
+                if ((_mouseDownScreenPos!.Value.Position - screenPos.Position).Length() > Deadzone)
                 {
                     StartDrag();
                 }
