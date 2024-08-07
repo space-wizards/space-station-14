@@ -18,7 +18,7 @@
   - type: GhostRole
     name: ghost-role-information-rat-king-name
     description: ghost-role-information-rat-king-description
-    rules: ghost-role-information-rat-king-rules
+    rules: ghost-role-information-freeagent-rules
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -39,7 +39,7 @@
   - type: GhostRole
     name: ghost-role-information-remilia-name
     description: ghost-role-information-remilia-description
-    rules: ghost-role-information-remilia-rules
+    rules: ghost-role-information-familiar-rules
     raffle:
       settings: short
   - type: GhostRoleMobSpawner
@@ -60,7 +60,7 @@
   - type: GhostRole
     name: ghost-role-information-cerberus-name
     description: ghost-role-information-cerberus-description
-    rules: ghost-role-information-cerberus-rules
+    rules: ghost-role-information-familiar-rules
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -73,7 +73,7 @@
         state: narsian
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu, Spawner ]
   id: SpawnPointGhostNukeOperative
   name: ghost role spawn point
   suffix: nukeops
@@ -93,7 +93,7 @@
         state: radiation
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner
   id: SpawnPointLoneNukeOperative
   components:
@@ -109,7 +109,7 @@
         state: radiation
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu, Spawner ]
   parent: SpawnPointLoneNukeOperative
   id: SpawnPointNukeopsCommander
   components:
@@ -118,7 +118,7 @@
     description: roles-antag-nuclear-operative-commander-objective
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu, Spawner ]
   parent: SpawnPointLoneNukeOperative
   id: SpawnPointNukeopsMedic
   components:
@@ -127,7 +127,7 @@
     description: roles-antag-nuclear-operative-agent-objective
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu, Spawner ]
   parent: SpawnPointLoneNukeOperative
   id: SpawnPointNukeopsOperative
   components:
@@ -136,14 +136,14 @@
     description: roles-antag-nuclear-operative-objective
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner
   id: SpawnPointGhostDragon
   components:
   - type: GhostRole
     name: ghost-role-information-space-dragon-name
     description: ghost-role-information-space-dragon-description
-    rules: ghost-role-component-default-rules
+    rules: ghost-role-information-space-dragon-rules
   - type: Sprite
     layers:
     - state: green
@@ -151,19 +151,16 @@
       state: alive
 
 - type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
   id: SpawnPointGhostSpaceNinja
-  name: ghost role spawn point
-  suffix: space ninja
-  parent: MarkerBase
   components:
   - type: GhostRole
     name: ghost-role-information-space-ninja-name
     description: ghost-role-information-space-ninja-description
-    rules: ghost-role-information-space-ninja-rules
+    rules: ghost-role-information-antagonist-rules
     raffle:
       settings: default
-  - type: GhostRoleMobSpawner
-    prototype: MobHumanSpaceNinja
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
