@@ -23,6 +23,12 @@ namespace Content.Shared.Chemistry.Components
         [DataField("reagents")]
         public List<ReagentQuantity> Contents;
 
+        [DataField]
+        public NetEntity? LinkedNetEntity;
+
+        [NonSerialized]
+        public EntityUid? LinkedSolutionEntity;
+
         /// <summary>
         ///     The calculated total volume of all reagents in the solution (ex. Total volume of liquid in beaker).
         /// </summary>
@@ -152,6 +158,14 @@ namespace Content.Shared.Chemistry.Components
         public Solution(string prototype, FixedPoint2 quantity, ReagentData? data = null) : this()
         {
             AddReagent(new ReagentId(prototype, data), quantity);
+        }
+
+        public Solution(SolutionContents contentsData)
+        {
+            Contents = [..contentsData.Reagents];
+            Temperature = contentsData.Temperature;
+            MaxVolume = contentsData.MaxVolume;
+            CanReact = contentsData.CanReact;
         }
 
         public Solution(IEnumerable<ReagentQuantity> reagents, bool setMaxVol = true)
@@ -887,6 +901,10 @@ namespace Content.Shared.Chemistry.Components
 
             ValidateSolution();
         }
+
+        public static implicit operator SolutionContents(Solution s) =>
+            new(s.Contents, s.MaxVolume, true,s.Temperature, s.CanReact);
+        public static implicit operator Solution(SolutionContents s) => new(s);
 
         [Obsolete("Use SharedSolutionSystem instead!")]
         public Dictionary<ReagentPrototype, FixedPoint2> GetReagentPrototypes(IPrototypeManager protoMan)

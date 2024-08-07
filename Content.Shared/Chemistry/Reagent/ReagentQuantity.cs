@@ -11,8 +11,8 @@ namespace Content.Shared.Chemistry.Reagent;
 [DataDefinition]
 public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
 {
-    [DataField("Quantity", required:true)]
-    public FixedPoint2 Quantity { get; private set; }
+    [DataField("Quantity", required: true)]
+    public FixedPoint2 Quantity;
 
 
     [ViewVariables, Obsolete("Use ReagentDef field instead")]

@@ -80,6 +80,17 @@ public partial class SharedSolutionSystem
         return true;
     }
 
+    public FixedPoint2 GetTotalQuantity(
+        Entity<SolutionComponent> solution,
+        Entity<ReagentDefinitionComponent> reagent)
+    {
+        FixedPoint2 totalQuantity = 0;
+        if (!TryGetReagentDataIndex(solution, reagent, out var index))
+            return totalQuantity;
+        totalQuantity = CollectionsMarshal.AsSpan(solution.Comp.Contents)[index].TotalQuantity;
+        return totalQuantity;
+    }
+
     /// <summary>
     /// Get the quantity of a reagent, returning -1 if a reagent is not found
     /// </summary>
@@ -121,18 +132,18 @@ public partial class SharedSolutionSystem
     /// <param name="includeVariants"></param>
     /// <returns></returns>
     [PublicAPI]
-    public IEnumerable<ReagentDef> EnumerateReagents(Entity<SolutionComponent> solution,
+    public IEnumerable<ReagentQuantity> EnumerateReagents(Entity<SolutionComponent> solution,
         bool includeVariants = false
         )
     {
         foreach (var reagentData in solution.Comp.Contents)
         {
-            yield return reagentData;
+            yield return new ReagentQuantity(reagentData, reagentData.Quantity);
             if (!includeVariants || reagentData.Variants == null)
                 continue;
             foreach (var variantData in reagentData.Variants)
             {
-                yield return new(reagentData.ReagentEnt, variantData.Variant);
+                yield return new (new ReagentDef(reagentData.ReagentEnt, variantData.Variant), variantData.Quantity);
             }
         }
     }
@@ -143,7 +154,7 @@ public partial class SharedSolutionSystem
     /// <param name="solution"></param>
     /// /// <returns></returns>
     [PublicAPI]
-    public IEnumerable<ReagentDef> EnumerateReagentVariants(Entity<SolutionComponent> solution)
+    public IEnumerable<ReagentQuantity> EnumerateReagentVariants(Entity<SolutionComponent> solution)
     {
         return EnumerateReagentVariantsOfType<ReagentVariant>(solution, true);
     }
@@ -155,7 +166,7 @@ public partial class SharedSolutionSystem
     /// <param name="includeChildTypes"></param>
     /// <returns></returns>
     [PublicAPI]
-    public IEnumerable<ReagentDef> EnumerateReagentVariantsOfType<T>(Entity<SolutionComponent> solution,
+    public IEnumerable<ReagentQuantity> EnumerateReagentVariantsOfType<T>(Entity<SolutionComponent> solution,
         bool includeChildTypes = false) where T: ReagentVariant
     {
         foreach (var reagentData in solution.Comp.Contents)
@@ -174,7 +185,7 @@ public partial class SharedSolutionSystem
                     if (variantData.Variant.GetType() == typeof(T))
                         continue;
                 }
-                yield return new ReagentDef(reagentData.ReagentEnt, variantData.Variant);
+                yield return new (new ReagentDef(reagentData.ReagentEnt, variantData.Variant), variantData.Quantity);
             }
         }
     }
@@ -251,6 +262,56 @@ public partial class SharedSolutionSystem
             newQuantity - variantData.Quantity,
             out overflow,
             force);
+    }
+
+
+    [PublicAPI]
+    public bool RemoveReagent(
+        Entity<SolutionComponent> solution,
+        Entity<ReagentDefinitionComponent> reagent,
+        FixedPoint2 quantity,
+        out FixedPoint2 underFlow,
+        ReagentVariant? variant = null,
+        bool force = true,
+        bool purge = false)
+    {
+        underFlow = 0;
+        if (quantity == 0 && !purge)
+        {
+            return true;
+        }
+
+        if (!TryGetReagentDataIndex(solution, reagent, out var reagentIndex))
+            return false;
+        ref var reagentData = ref CollectionsMarshal.AsSpan(solution.Comp.Contents)[reagentIndex];
+        if (variant == null)
+        {
+            if (quantity > 0)
+            {
+                ChangeReagentQuantity_Implementation(solution,
+                ref reagentData,
+                -quantity,
+                out underFlow,
+                force);
+            }
+
+            if (!purge)
+                return true;
+            PurgeReagent(solution, ref reagentData);
+            return true;
+        }
+        if (!TryGetVariantDataIndex(solution, reagent, variant, out var index))
+            return false;
+        ref var varData = ref CollectionsMarshal.AsSpan(reagentData.Variants)[index];
+        ChangeVariantQuantity_Implementation(solution,
+            ref reagentData,
+            ref varData,
+            -quantity,
+            out underFlow,
+            force);
+        if (purge)
+            PurgeReagent(solution, ref varData);
+        return true;
     }
 
     /// <summary>
@@ -342,6 +403,79 @@ public partial class SharedSolutionSystem
     }
 
     [PublicAPI]
+    public FixedPoint2 RemoveReagents(Entity<SolutionComponent> solution,
+        SolutionContents solutionContents)
+    {
+        var contentsSpan = CollectionsMarshal.AsSpan(solution.Comp.Contents);
+        FixedPoint2 overflow = 0;
+        foreach (ref var reagentQuant in CollectionsMarshal.AsSpan(solutionContents.Reagents))
+        {
+            if (!ResolveReagent(ref reagentQuant)
+                || !TryGetReagentDataIndex(solution, reagentQuant.ReagentDef.DefinitionEntity, out var index))
+                continue;
+            ref var reagentData = ref contentsSpan[index];
+            if (reagentQuant.ReagentDef.Variant != null)
+            {
+                if (!TryGetVariantDataIndex(solution, reagentQuant.ReagentDef.DefinitionEntity,
+                        reagentQuant.ReagentDef.Variant, out var varIndex))
+                    continue;
+                ref var variantData = ref CollectionsMarshal.AsSpan(reagentData.Variants)[varIndex];
+                ChangeVariantQuantity_Implementation(solution, ref reagentData, ref variantData,
+                    -reagentQuant.Quantity, out var localOverflow, true);
+                overflow += localOverflow;
+                continue;
+            }
+            ChangeReagentQuantity_Implementation(solution, ref reagentData, -reagentQuant.Quantity,
+                out var localOverflow2, true);
+            overflow += localOverflow2;
+        }
+        return overflow;
+    }
+
+    [PublicAPI]
+    public FixedPoint2 AddReagents(Entity<SolutionComponent> solution, SolutionContents solutionContents, bool force = true)
+    {
+        var contentsSpan = CollectionsMarshal.AsSpan(solution.Comp.Contents);
+        FixedPoint2 overflow = 0;
+        foreach (ref var reagentQuant in CollectionsMarshal.AsSpan(solutionContents.Reagents))
+        {
+            if (!ResolveReagent(ref reagentQuant))
+                continue;
+            ref var reagentData = ref contentsSpan[EnsureReagentData(solution, reagentQuant.ReagentDef.DefinitionEntity)];
+            if (reagentQuant.ReagentDef.Variant != null)
+            {
+                ref var variantData = ref CollectionsMarshal.AsSpan(reagentData.Variants)[EnsureVariantData(solution,
+                    reagentQuant.ReagentDef.DefinitionEntity,
+                    reagentQuant.ReagentDef.Variant)];
+                ChangeVariantQuantity_Implementation(solution, ref reagentData, ref variantData,
+                    reagentQuant.Quantity, out var localOverflow, force);
+                overflow += localOverflow;
+                continue;
+            }
+            ChangeReagentQuantity_Implementation(solution, ref reagentData, reagentQuant.Quantity,out var localOverflow2, force);
+            overflow += localOverflow2;
+        }
+        return overflow;
+    }
+
+    [PublicAPI]
+    public SolutionContents SplitSolution(Entity<SolutionComponent> originSolution)
+    {
+        ScaleSolution(originSolution, 0.5f, out var overflow, true, true);
+        return new SolutionContents(originSolution);
+    }
+
+    [PublicAPI]
+    public SolutionContents SplitSolution(Entity<SolutionComponent> solution, FixedPoint2 quantity)
+    {
+        var percentage = quantity.Float()/solution.Comp.Volume.Float();
+        var contents = new SolutionContents(solution, percentage);
+        var overFlow = RemoveReagents(solution, contents);
+        contents.Scale(100 - overFlow.Float() / contents.Volume.Float());
+        return contents;
+    }
+
+    [PublicAPI]
     public void SplitSolution(Entity<SolutionComponent> originSolution,
         Entity<SolutionComponent>? targetSolution,
         out FixedPoint2 overflow,
@@ -358,7 +492,6 @@ public partial class SharedSolutionSystem
             out overflow,
             force);
     }
-
 
     [PublicAPI]
     public void ScaleSolution(Entity<SolutionComponent> solution,
@@ -418,6 +551,25 @@ public partial class SharedSolutionSystem
         overflow -= missing;
         //we don't care about underflow here because it isn't possible
         ChangeAllDataQuantities(targetSolution, quantity - missing);
+    }
+
+    public void RemoveAllReagents(Entity<SolutionComponent> solution, bool purge = false)
+    {
+        foreach (ref var reagentData in CollectionsMarshal.AsSpan(solution.Comp.Contents))
+        {
+            reagentData.Quantity = 0;
+            reagentData.TotalQuantity = 0;
+            if (reagentData.Variants == null)
+                continue;
+            foreach (ref var variantData in CollectionsMarshal.AsSpan(reagentData.Variants))
+            {
+                variantData.Quantity = 0;
+            }
+        }
+        solution.Comp.Volume = 0;
+        Dirty(solution);
+        if (purge)
+            PurgeAllReagents(solution);
     }
 
     #endregion

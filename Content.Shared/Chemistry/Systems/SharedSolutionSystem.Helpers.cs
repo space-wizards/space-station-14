@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chemistry.Components;
+﻿using System.Runtime.InteropServices;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -38,7 +39,18 @@ public partial class SharedSolutionSystem
     #endregion
 
     #region ReagentDef
-
+    public FixedPoint2 GetTotalQuantity(
+        Entity<SolutionComponent> solution,
+        ReagentDef reagent)
+    {
+        if (ResolveReagent(ref reagent))
+            return 0;
+        FixedPoint2 totalQuantity = 0;
+        if (!TryGetReagentDataIndex(solution, reagent.DefinitionEntity, out var index))
+            return totalQuantity;
+        totalQuantity = CollectionsMarshal.AsSpan(solution.Comp.Contents)[index].TotalQuantity;
+        return totalQuantity;
+    }
 
     /// <inheritdoc cref="SharedSolutionSystem.EnsureReagent"/>
     [PublicAPI]
@@ -112,6 +124,33 @@ public partial class SharedSolutionSystem
         if (!ResolveReagent(ref quantity))
             return;
         SetReagent(solution, quantity.ReagentDef.DefinitionEntity, quantity.Quantity, quantity.ReagentDef.Variant);
+    }
+
+    public bool AddReagent(
+        Entity<SolutionComponent> solution,
+        ReagentQuantity quantity,
+        out FixedPoint2 overflow,
+        bool force = true)
+    {
+        overflow = 0;
+        return ResolveReagent(ref quantity)
+               && AddReagent(solution, quantity.ReagentDef.DefinitionEntity, quantity.Quantity,
+                   out overflow, quantity.ReagentDef.Variant, force);
+    }
+
+
+    [PublicAPI]
+    public bool RemoveReagent(
+        Entity<SolutionComponent> solution,
+        ReagentQuantity quantity,
+        out FixedPoint2 underFlow,
+        bool force = true,
+        bool purge = false)
+    {
+        underFlow = 0;
+        return ResolveReagent(ref quantity)
+               && RemoveReagent(solution, quantity.ReagentDef.DefinitionEntity, quantity.Quantity,
+                   out underFlow, quantity.ReagentDef.Variant, force, purge);
     }
 
     #endregion

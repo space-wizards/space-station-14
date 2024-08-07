@@ -23,7 +23,7 @@ public sealed partial class SolutionComponent : Component
     public Solution Solution = new(); //TODO: legacy remove this
 
     [DataField, AutoNetworkedField]
-    public EntityUid Parent = EntityUid.Invalid;
+    public EntityUid Container = EntityUid.Invalid;
 
     [DataField, AutoNetworkedField]
     public List<ReagentData> Contents;

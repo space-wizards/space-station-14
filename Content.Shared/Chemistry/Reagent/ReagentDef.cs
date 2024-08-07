@@ -120,6 +120,9 @@ public partial struct ReagentDef : IEquatable<ReagentDef>
         return !(left == right);
     }
 
+    public static implicit operator string(ReagentDef d) => d.Id;
+    public static implicit operator ReagentDef(string s) => new(s, null);
+
     public bool Validate(SharedChemistryRegistrySystem chemRegistry, bool logMissing = true)
     {
         if (IsValid)
