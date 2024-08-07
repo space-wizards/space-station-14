@@ -3,6 +3,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Light.Components
 {
+    /// <summary>
+    ///     Allows entities with OccluderComponent to toggle that component on and off.
+    /// </summary>
     [RegisterComponent]
     public sealed partial class ToggleableOccluderComponent : Component
     {

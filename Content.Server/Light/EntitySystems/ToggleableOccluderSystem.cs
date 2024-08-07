@@ -5,6 +5,9 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Light.EntitySystems
 {
+    /// <summary>
+    ///     Hadnles the logic between signals and toggling OccluderComponent
+    /// </summary>
     public sealed class ToggleableOccluderSystem : EntitySystem
     {
         [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
