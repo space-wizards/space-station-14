@@ -1,0 +1,39 @@
+- type: trait
+  id: BrassInstruments
+  name: trait-brass-instruments-name
+  description: trait-brass-instruments-desc
+  category: Music
+  cost: 1
+  components:
+  - type: AddInstrumentWhitelist
+    tag: BrassInstrument
+
+- type: trait
+  id: KeyedInstruments
+  name: trait-keyed-instruments-name
+  description: trait-keyed-instruments-desc
+  category: Music
+  cost: 1
+  components:
+  - type: AddInstrumentWhitelist
+    tag: KeyedInstrument
+
+- type: trait
+  id: StringInstruments
+  name: trait-string-instruments-name
+  description: trait-string-instruments-desc
+  category: Music
+  cost: 1
+  components:
+  - type: AddInstrumentWhitelist
+    tag: StringInstrument
+
+- type: trait
+  id: WindInstruments
+  name: trait-wind-instruments-name
+  description: trait-wind-instruments-desc
+  category: Music
+  cost: 1
+  components:
+  - type: AddInstrumentWhitelist
+    tag: WoodwindInstrument
