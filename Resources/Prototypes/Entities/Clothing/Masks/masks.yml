@@ -268,7 +268,7 @@
   parent: ClothingMaskBase
   id: ClothingMaskCardboard
   name: cardboard mask
-  description: A piece of cardboard, with two holes in it, held up by a wire. Ranked the second simplest masks of all time.
+  description: A piece of cardboard, with two holes in it, held up by a wire. Ranked the second simplest mask of all time.
   components:
   - type: Sprite
     sprite: Clothing/Mask/cardboard.rsi
