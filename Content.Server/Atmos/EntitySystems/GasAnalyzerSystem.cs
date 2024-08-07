@@ -170,8 +170,7 @@ namespace Content.Server.Atmos.EntitySystems
                     if (component.User is { } userId && component.Enabled)
                         _popup.PopupEntity(Loc.GetString("gas-analyzer-object-out-of-range"), userId, userId);
 
-                    DisableAnalyzer(uid, component, component.User);
-                    return false;
+                    component.Target = null;
                 }
             }
 
