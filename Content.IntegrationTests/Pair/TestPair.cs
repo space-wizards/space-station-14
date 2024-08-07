@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
 
@@ -27,6 +28,12 @@ public sealed partial class TestPair
     public PoolSettings Settings = default!;
     public TestMapData? TestMap;
     private List<NetUserId> _modifiedProfiles = new();
+
+    private int _nextServerSeed;
+    private int _nextClientSeed;
+
+    public int ServerSeed;
+    public int ClientSeed;
 
     public RobustIntegrationTest.ServerIntegrationInstance Server { get; private set; } = default!;
     public RobustIntegrationTest.ClientIntegrationInstance Client { get;  private set; } = default!;
@@ -90,6 +97,11 @@ public sealed partial class TestPair
             await ReallyBeIdle(10);
             await Client.WaitRunTicks(1);
         }
+
+        var cRand = Client.ResolveDependency<IRobustRandom>();
+        var sRand = Server.ResolveDependency<IRobustRandom>();
+        _nextClientSeed = cRand.Next();
+        _nextServerSeed = sRand.Next();
     }
 
     public void Kill()
@@ -128,5 +140,34 @@ public sealed partial class TestPair
         InUse = 1,
         CleanDisposed = 2,
         Dead = 3,
+    }
+
+    public void SetupSeed()
+    {
+        var sRand = Server.ResolveDependency<IRobustRandom>();
+        if (Settings.ServerSeed is { } severSeed)
+        {
+            ServerSeed = severSeed;
+            sRand.SetSeed(ServerSeed);
+        }
+        else
+        {
+            ServerSeed = _nextServerSeed;
+            sRand.SetSeed(ServerSeed);
+            _nextServerSeed = sRand.Next();
+        }
+
+        var cRand = Client.ResolveDependency<IRobustRandom>();
+        if (Settings.ClientSeed is { } clientSeed)
+        {
+            ClientSeed = clientSeed;
+            cRand.SetSeed(ClientSeed);
+        }
+        else
+        {
+            ClientSeed = _nextClientSeed;
+            cRand.SetSeed(ClientSeed);
+            _nextClientSeed = cRand.Next();
+        }
     }
 }
