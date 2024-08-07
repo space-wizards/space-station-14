@@ -1085,7 +1085,7 @@
   - type: IconSmooth
     key: walls
     base: necropolis
- 
+
 - type: entity
   parent: BaseWall
   id: WallMining
