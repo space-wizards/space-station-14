@@ -127,7 +127,7 @@ public sealed class LockSystem : EntitySystem
                     BreakOnDamage = true,
                     BreakOnMove = true,
                     NeedHand = true,
-                    BreakOnDropItem = false,
+                    BreakOnDropItem = false
                 });
         }
 
@@ -205,7 +205,7 @@ public sealed class LockSystem : EntitySystem
                     BreakOnDamage = true,
                     BreakOnMove = true,
                     NeedHand = true,
-                    BreakOnDropItem = false,
+                    BreakOnDropItem = false
                 });
         }
 
