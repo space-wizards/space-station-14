@@ -18,3 +18,4 @@ connecting-state-ResolvingHost = Resolving host
 connecting-state-EstablishingConnection = Establishing connection
 connecting-state-Handshake = Handshake
 connecting-state-Connected = Connected
+copy-reason = Copy Message
