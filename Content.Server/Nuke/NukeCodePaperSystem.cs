@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chat.Systems;
 using Content.Server.Fax;
 using Content.Shared.Fax.Components;
-using Content.Server.Paper;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Paper;
@@ -38,7 +37,8 @@ namespace Content.Server.Nuke
 
             if (TryGetRelativeNukeCode(uid, out var paperContent, station, onlyCurrentStation: component.AllNukesAvailable))
             {
-                _paper.SetContent(uid, paperContent);
+                if (TryComp<PaperComponent>(uid, out var paperComp))
+                    _paper.SetContent((uid, paperComp), paperContent);
             }
         }
 
