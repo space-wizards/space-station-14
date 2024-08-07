@@ -18,19 +18,52 @@ public sealed partial class ExecutionComponent : Component
     public float DamageModifier = 9f;
 
     /// <summary>
-    /// Locale IDs for initialization/completion of an execution from an internal/external viewpoint.
+    /// Shown to the person performing the melee execution (attacker) upon starting a melee execution.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public LocId DefaultInternalMeleeExecutionMessage = "execution-popup-melee-initial-internal";
+    [DataField]
+    public LocId InternalMeleeExecutionMessage = "execution-popup-melee-initial-internal";
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public LocId DefaultExternalMeleeExecutionMessage = "execution-popup-melee-initial-external";
+    /// <summary>
+    /// Shown to bystanders and the victim of a melee execution when a melee execution is started.
+    /// </summary>
+    [DataField]
+    public LocId ExternalMeleeExecutionMessage = "execution-popup-melee-initial-external";
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public LocId DefaultCompleteInternalMeleeExecutionMessage = "execution-popup-melee-complete-internal";
+    /// <summary>
+    /// Shown to the attacker upon completion of a melee execution.
+    /// </summary>
+    [DataField]
+    public LocId CompleteInternalMeleeExecutionMessage = "execution-popup-melee-complete-internal";
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public LocId DefaultCompleteExternalMeleeExecutionMessage = "execution-popup-melee-complete-external";
+    /// <summary>
+    /// Shown to bystanders and the victim of a melee execution when a melee execution is completed.
+    /// </summary>
+    [DataField]
+    public LocId CompleteExternalMeleeExecutionMessage = "execution-popup-melee-complete-external";
+
+    /// <summary>
+    /// Shown to the person performing the self execution when starting one.
+    /// </summary>
+    [DataField]
+    public LocId InternalSelfExecutionMessage = "execution-popup-self-initial-internal";
+
+    /// <summary>
+    /// Shown to bystanders near a self execution when one is started.
+    /// </summary>
+    [DataField]
+    public LocId ExternalSelfExecutionMessage = "execution-popup-self-initial-external";
+
+    /// <summary>
+    /// Shown to the person performing a self execution upon completion of a do-after or on use of /suicide with a weapon that has the Execution component.
+    /// </summary>
+    [DataField]
+    public LocId CompleteInternalSelfExecutionMessage = "execution-popup-self-complete-internal";
+
+    /// <summary>
+    /// Shown to bystanders when a self execution is completed or a suicide via execution weapon happens nearby.
+    /// </summary>
+    [DataField]
+    public LocId CompleteExternalSelfExecutionMessage = "execution-popup-self-complete-external";
 
     // Not networked because this is transient inside of a tick.
     /// <summary>

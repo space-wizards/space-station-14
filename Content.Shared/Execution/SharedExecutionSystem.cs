@@ -65,14 +65,16 @@ public sealed class SharedExecutionSystem : EntitySystem
         if (!CanBeExecuted(victim, attacker))
             return;
 
-        // TODO: This should just be on the weapons as a single execution message.
-        var defaultExecutionInternal = comp.DefaultInternalMeleeExecutionMessage;
-        var defaultExecutionExternal = comp.DefaultExternalMeleeExecutionMessage;
-
-        var internalMsg = defaultExecutionInternal;
-        var externalMsg = defaultExecutionExternal;
-        ShowExecutionInternalPopup(internalMsg, attacker, victim, weapon);
-        ShowExecutionExternalPopup(externalMsg, attacker, victim, weapon);
+        if (attacker == victim)
+        {
+            ShowExecutionInternalPopup(comp.InternalSelfExecutionMessage, attacker, victim, weapon);
+            ShowExecutionExternalPopup(comp.ExternalSelfExecutionMessage, attacker, victim, weapon);
+        }
+        else
+        {
+            ShowExecutionInternalPopup(comp.InternalMeleeExecutionMessage, attacker, victim, weapon);
+            ShowExecutionExternalPopup(comp.ExternalMeleeExecutionMessage, attacker, victim, weapon);
+        }
 
         var doAfter =
             new DoAfterArgs(EntityManager, attacker, comp.DoAfterDuration, new ExecutionDoAfterEvent(), weapon, target: victim, used: weapon)
@@ -129,8 +131,8 @@ public sealed class SharedExecutionSystem : EntitySystem
         if (!TryComp<MeleeWeaponComponent>(entity, out var melee))
             return;
 
-        string? internalMsg = entity.Comp.DefaultCompleteInternalMeleeExecutionMessage;
-        string? externalMsg = entity.Comp.DefaultCompleteExternalMeleeExecutionMessage;
+        string? internalMsg = entity.Comp.CompleteInternalSelfExecutionMessage;
+        string? externalMsg = entity.Comp.CompleteExternalSelfExecutionMessage;
 
         if (!TryComp<DamageableComponent>(args.Victim, out var damageableComponent))
             return;
