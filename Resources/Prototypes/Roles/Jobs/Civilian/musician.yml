@@ -14,6 +14,9 @@
   - !type:GiveItemOnHolidaySpecial
     holiday: MikuDay
     prototype: BoxPerformer
+  - !type:RemoveComponentSpecial # GreyStation
+    components:
+    - type: InstrumentWhitelist
 
 - type: startingGear
   id: MusicianGear
