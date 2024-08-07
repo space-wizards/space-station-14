@@ -1670,10 +1670,13 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 30
+        maxVol: 20
         reagents:
         - ReagentId: Sake
-          Quantity: 30
+          Quantity: 20
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/sake.rsi
+    state: icon
 
 - type: entity
   parent: DrinkGlass
@@ -2245,6 +2248,22 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/whiterussianglass.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkWhiteGilgameshGlass
+  suffix: white gilgamesh
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: WhiteGilgamesh
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/whitegilgamesh.rsi
     state: icon
 
 - type: entity

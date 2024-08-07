@@ -107,6 +107,7 @@
       - DrinkShakeWhite
       - DrinkTheMartinez
       - DrinkMoonshineGlass
+      - DrinkWhiteGilgameshGlass
     chance: 0.8
     offset: 0.0
     #rare
