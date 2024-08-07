@@ -13,13 +13,13 @@ public sealed partial class FoodSequenceStartPointComponent : Component
     /// <summary>
     /// A key that determines which types of food elements can be attached to a food.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public string Key = string.Empty;
 
     /// <summary>
     /// path to RSI, where sprites of all layers for this type of food are stored
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public string RsiPath = string.Empty;
 
     /// <summary>
@@ -43,7 +43,7 @@ public sealed partial class FoodSequenceStartPointComponent : Component
     /// <summary>
     /// list of sprite states to be displayed on this object.
     /// </summary>
-    [DataField]
+    [DataField(serverOnly: true)]
     public List<FoodSequenceElementEntry> FoodLayers = new();
 
     public HashSet<string> RevealedLayers = new();
@@ -62,7 +62,7 @@ public sealed partial class FoodSequenceStartPointComponent : Component
 }
 
 [Serializable, NetSerializable]
-public enum FoodSequenceState : byte
+public enum FoodSequenceVisuals : byte
 {
-    State
+    Layers
 }

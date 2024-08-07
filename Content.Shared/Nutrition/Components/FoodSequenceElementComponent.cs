@@ -12,7 +12,7 @@ public sealed partial class FoodSequenceElementComponent : Component
     /// <summary>
     /// the same object can be used in different sequences, and it will have a different sprite in different sequences.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public Dictionary<string, FoodSequenceElementEntry> Entries = new();
 }
 
@@ -33,10 +33,4 @@ public partial record struct FoodSequenceElementEntry()
     /// If the layer is the final one, it can be added over the limit, but no other layers can be added after it.
     /// </summary>
     public bool Final { get; set; } = false;
-}
-
-[Serializable, NetSerializable]
-public enum FoodSequenceVisuals : byte
-{
-    Layers
 }
