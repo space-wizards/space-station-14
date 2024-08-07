@@ -13,7 +13,7 @@ public sealed class GuidebookDataSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
-    private readonly Dictionary<ComponentRegistration, List<MemberInfo>> _tagged = [];
+    private readonly Dictionary<string, List<MemberInfo>> _tagged = [];
     private GuidebookData _cachedData = new();
 
     public override void Initialize()
@@ -64,7 +64,7 @@ public sealed class GuidebookDataSystem : EntitySystem
                     if (member.HasCustomAttribute<GuidebookDataAttribute>())
                     {
                         // Note this component-member pair for later
-                        _tagged.GetOrNew(registration).Add(member);
+                        _tagged.GetOrNew(registration.Name).Add(member);
                         memberCount++;
                     }
                 }
@@ -75,12 +75,10 @@ public sealed class GuidebookDataSystem : EntitySystem
         var entityPrototypes = _protoMan.EnumeratePrototypes<EntityPrototype>();
         foreach (var prototype in entityPrototypes)
         {
-            foreach (var (type, members) in _tagged)
+            foreach (var (component, entry) in prototype.Components)
             {
-                if (!prototype.Components.TryGetValue(type.Name, out var registryEntry))
+                if (!_tagged.TryGetValue(component, out var members))
                     continue;
-
-                var component = registryEntry.Component;
 
                 prototypeCount++;
 
@@ -89,12 +87,12 @@ public sealed class GuidebookDataSystem : EntitySystem
                     // It's dumb that we can't just do member.GetValue, but we can't, so
                     var value = member switch
                     {
-                        FieldInfo field => field.GetValue(component),
-                        PropertyInfo property => property.GetValue(component),
+                        FieldInfo field => field.GetValue(entry.Component),
+                        PropertyInfo property => property.GetValue(entry.Component),
                         _ => throw new NotImplementedException("Unsupported member type")
                     };
                     // Add it into the data cache
-                    cache.AddData(prototype.ID, type.Name, member.Name, value);
+                    cache.AddData(prototype.ID, component, member.Name, value);
                 }
             }
         }
