@@ -93,7 +93,7 @@ namespace Content.Client.Launcher
                 _clipboard.SetText(text);
             }
         }
-        
+
         private void ConnectFailReasonChanged(string? reason)
         {
             ConnectFailReason.SetMessage(reason == null
