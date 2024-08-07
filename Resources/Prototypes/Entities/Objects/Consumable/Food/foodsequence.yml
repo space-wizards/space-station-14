@@ -1,0 +1,34 @@
+- type: entity
+  id: FoodCustomBurger
+  name: custom burger
+  parent: FoodBreadBun
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/burger.rsi
+    layers:
+    - state: bun
+  - type: FoodSequenceStartPoint
+    key: burger
+    rsiPath: Objects/Consumable/Food/candy.rsi
+    startPosition: 0, 0
+    offset: 0, 0.1
+
+- type: entity
+  id: FoodCustomBurgerElement
+  parent: FoodBurgerJelly
+  components:
+  - type: FoodSequenceElement
+    entries:
+      burger:
+        name: can
+        state: cocoa
+
+- type: entity
+  id: FoodCustomBurgerElement2
+  parent: FoodBurgerAppendix
+  components:
+  - type: FoodSequenceElement
+    entries:
+      burger:
+        name: can
+        state: apple
