@@ -343,19 +343,11 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (session != null)
         {
             var curMind = session.GetMind();
-            if (curMind != null && TryComp<MindComponent>(curMind.Value, out var mindComp))
+            
+            if (curMind == null || 
+                !TryComp<MindComponent>(curMind.Value, out var mindComp) ||
+                mindComp.OwnedEntity != antagEnt)
             {
-                // Check if the mind is associated with a different entity
-                if (mindComp.OwnedEntity != antagEnt)
-                {
-                    // Create a new mind because the current one is tied to a different entity
-                    curMind = _mind.CreateMind(session.UserId, Name(antagEnt.Value));
-                    _mind.SetUserId(curMind.Value, session.UserId);
-                }
-            }
-            else
-            {
-                // Create a new mind because there was no existing mind
                 curMind = _mind.CreateMind(session.UserId, Name(antagEnt.Value));
                 _mind.SetUserId(curMind.Value, session.UserId);
             }
