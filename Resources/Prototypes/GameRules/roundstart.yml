@@ -193,30 +193,29 @@
       - type: TraitorRole
         prototype: Traitor
 
-# Disabling Revolutionary until it can be a better gamemode.
-#- type: entity
-#  id: Revolutionary
-#  parent: BaseGameRule
-#  components:
-#  - type: GameRule
-#    minPlayers: 15
-#  - type: RevolutionaryRule
-#  - type: AntagSelection
-#    definitions:
-#   - prefRoles: [ HeadRev ]
-#     max: 3
-#     playerRatio: 15
-#    briefing:
-#      text: head-rev-role-greeting
-#      color: CornflowerBlue
-#      sound: "/Audio/Ambience/Antag/headrev_start.ogg"
-#    startingGear: HeadRevGear
-#    components:
-#    - type: Revolutionary
-#    - type: HeadRevolutionary
-#    mindComponents:
-#    - type: RevolutionaryRole
-#      prototype: HeadRev
+- type: entity
+  id: Revolutionary
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+    minPlayers: 15
+  - type: RevolutionaryRule
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ HeadRev ]
+      max: 3
+      playerRatio: 15
+      briefing:
+        text: head-rev-role-greeting
+        color: CornflowerBlue
+        sound: "/Audio/Ambience/Antag/headrev_start.ogg"
+      startingGear: HeadRevGear
+      components:
+      - type: Revolutionary
+      - type: HeadRevolutionary
+      mindComponents:
+      - type: RevolutionaryRole
+        prototype: HeadRev
 
 - type: entity
   id: Sandbox
