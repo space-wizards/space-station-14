@@ -35,7 +35,7 @@ public sealed partial class GameTicker
     public GamePresetPrototype? CurrentPreset { get; private set; }
 
     /// <summary>
-    /// The saved preset that will be restored after the set number of rounds.
+    /// Countdown to the preset being reset to the server default.
     /// </summary>
     public int? ResetCountdown;
 
@@ -111,9 +111,11 @@ public sealed partial class GameTicker
         if (DummyTicker)
             return;
 
-        if (resetDelay is not null && (CurrentPreset is not null || Preset is not null))
+        if (resetDelay is not null)
         {
             ResetCountdown = resetDelay.Value;
+            // Reset counter is checked and changed at the end of each round
+            // So if the game is in the lobby, the first requested round will happen before the check, and we need one less check
             if (CurrentPreset is null)
                 ResetCountdown = resetDelay.Value -1;
         }
