@@ -61,6 +61,7 @@ public sealed class GeofencingSystem : EntitySystem
                     _popups.PopupEntity(diskwarning, uid);
                     geofence.LastPopup = _timing.CurTime;
                 }
+                // else do nothing and wait for next update
             }
             else
             {
