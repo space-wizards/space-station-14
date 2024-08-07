@@ -783,13 +783,6 @@
     damage:
       types:
         Blunt: 2
-  - type: FoodSequenceElement
-    entries:
-      burger:
-        name: food-sequence-burger-content-salami
-        sprite:
-          sprite: Objects/Consumable/Food/meat.rsi
-          state: salami
 
 - type: entity
   name: meat clown
