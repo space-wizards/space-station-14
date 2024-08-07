@@ -23,6 +23,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         /// <summary>
         /// Minimum moles of a gas to be sent to the client.
@@ -58,16 +59,20 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         /// <summary>
-        /// Activates the analyzer when used in the world, scanning either the target entity or the tile clicked
+        /// Activates the analyzer when used in the world, scanning the target entity (if it exists) and the tile the analyzer is in
         /// </summary>
         private void OnAfterInteract(EntityUid uid, GasAnalyzerComponent component, AfterInteractEvent args)
         {
-            if (!args.CanReach)
+            var target = args.Target;
+            // only show the cannot-reach message when we've actually clicked an object
+            if (target != null && !_interactionSystem.InRangeUnobstructed((args.User, null), (target.Value, null)))
             {
-                _popup.PopupEntity(Loc.GetString("gas-analyzer-component-player-cannot-reach-message"), args.User, args.User);
-                return;
+                //_popup.PopupEntity(Loc.GetString("gas-analyzer-component-player-cannot-reach-message"), args.User, args.User);
+                target = null; // if the target is out of reach, invalidate it
             }
-            ActivateAnalyzer(uid, component, args.User, args.Target);
+            // always run the analyzer, regardless of weather or not there is a target
+            // since we can always show the local environment.
+            ActivateAnalyzer(uid, component, args.User, target);
             args.Handled = true;
         }
 
@@ -76,7 +81,14 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void OnUseInHand(EntityUid uid, GasAnalyzerComponent component, UseInHandEvent args)
         {
-            ActivateAnalyzer(uid, component, args.User);
+            if (!component.Enabled)
+            {
+                ActivateAnalyzer(uid, component, args.User);
+            }
+            else
+            {
+                DisableAnalyzer(uid, component, args.User);
+            }
             args.Handled = true;
         }
 
@@ -90,10 +102,6 @@ namespace Content.Server.Atmos.EntitySystems
 
             component.Target = target;
             component.User = user;
-            if (target != null)
-                component.LastPosition = Transform(target.Value).Coordinates;
-            else
-                component.LastPosition = null;
             component.Enabled = true;
             Dirty(uid, component);
             UpdateAppearance(uid, component);
@@ -151,21 +159,17 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref component))
                 return false;
 
-            if (!TryComp(component.User, out TransformComponent? xform))
-            {
-                DisableAnalyzer(uid, component);
-                return false;
-            }
-
             // check if the user has walked away from what they scanned
-            var userPos = xform.Coordinates;
-            if (component.LastPosition.HasValue)
+            if (component.Target.HasValue)
             {
-                // Check if position is out of range => don't update and disable
-                if (!_transform.InRange(component.LastPosition.Value, userPos, SharedInteractionSystem.InteractionRange))
+                // Listen! Even if you don't want the Gas Analyzer to work on moving targets, you should use
+                // this code to determine if the object is still generally in range so that the check is consistent with the code
+                // in OnAfterInteract() and also consistent with interaction code in general.
+                if (!_interactionSystem.InRangeUnobstructed((component.User, null), (component.Target.Value, null)))
                 {
                     if (component.User is { } userId && component.Enabled)
-                        _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, userId);
+                        _popup.PopupEntity(Loc.GetString("gas-analyzer-object-out-of-range"), userId, userId);
+
                     DisableAnalyzer(uid, component, component.User);
                     return false;
                 }
@@ -196,6 +200,8 @@ namespace Content.Server.Atmos.EntitySystems
                     return false;
                 }
 
+                var validTarget = false;
+
                 // gas analyzed was used on an entity, try to request gas data via event for override
                 var ev = new GasAnalyzerScanEvent();
                 RaiseLocalEvent(component.Target.Value, ev);
@@ -205,7 +211,10 @@ namespace Content.Server.Atmos.EntitySystems
                     foreach (var mixes in ev.GasMixtures)
                     {
                         if (mixes.Item2 != null)
+                        {
                             gasMixList.Add(new GasMixEntry(mixes.Item1, mixes.Item2.Volume, mixes.Item2.Pressure, mixes.Item2.Temperature, GenerateGasEntryArray(mixes.Item2)));
+                            validTarget = true;
+                        }
                     }
 
                     deviceFlipped = ev.DeviceFlipped;
@@ -227,9 +236,17 @@ namespace Content.Server.Atmos.EntitySystems
                                 pipeAir.Multiply(pipeNode.Volume / pipeNode.Air.Volume);
                                 pipeAir.Volume = pipeNode.Volume;
                                 gasMixList.Add(new GasMixEntry(pair.Key, pipeAir.Volume, pipeAir.Pressure, pipeAir.Temperature, GenerateGasEntryArray(pipeAir)));
+                                validTarget = true;
                             }
                         }
                     }
+                }
+
+                // If the target doesn't actually have any gas mixes to add,
+                // invalidate it as the target
+                if (!validTarget)
+                {
+                    component.Target = null;
                 }
             }
 
