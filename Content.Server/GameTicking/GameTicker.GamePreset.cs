@@ -34,6 +34,11 @@ public sealed partial class GameTicker
     /// </summary>
     public GamePresetPrototype? CurrentPreset { get; private set; }
 
+    /// <summary>
+    /// The saved preset that will be restored after the set number of rounds.
+    /// </summary>
+    public int? ResetCountdown;
+
     private bool StartPreset(ICommonSession[] origReadyPlayers, bool force)
     {
         var startAttempt = new RoundStartAttemptEvent(origReadyPlayers, force);
@@ -100,11 +105,18 @@ public sealed partial class GameTicker
         SetGamePreset(LobbyEnabled ? _configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset) : "sandbox");
     }
 
-    public void SetGamePreset(GamePresetPrototype? preset, bool force = false)
+    public void SetGamePreset(GamePresetPrototype? preset, bool force = false, int? resetDelay = null)
     {
         // Do nothing if this game ticker is a dummy!
         if (DummyTicker)
             return;
+
+        if (resetDelay is not null && (CurrentPreset is not null || Preset is not null))
+        {
+            ResetCountdown = resetDelay.Value;
+            if (CurrentPreset is null)
+                ResetCountdown = resetDelay.Value -1;
+        }
 
         Preset = preset;
         ValidateMap();
@@ -186,6 +198,15 @@ public sealed partial class GameTicker
         }
 
         return true;
+    }
+
+    private void TryResetPreset()
+    {
+        if (ResetCountdown is null || ResetCountdown-- > 0)
+            return;
+
+        InitializeGamePreset();
+        ResetCountdown = null;
     }
 
     public void StartGamePresetRules()
