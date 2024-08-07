@@ -34,7 +34,7 @@ public sealed partial class GasMinerComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField(required: true)]
-    public Gas SpawnGas = null;
+    public Gas SpawnGas;
 
     /// <summary>
     ///     Temperature in Kelvin.
