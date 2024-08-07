@@ -6,11 +6,11 @@
     edges:
     - to: maskCardboard
       steps:
-      - material: Cardboard
-        amount: 1
-        doAfter: 2
       - material: Cable
         amount: 5
+        doAfter: 2
+      - material: Cardboard
+        amount: 1
         doAfter: 2
   - node: maskCardboard
     entity: ClothingMaskCardboard
