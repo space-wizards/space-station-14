@@ -75,9 +75,17 @@ public sealed class SuicideCommandTests
         // We need to know the player and whether they can be hurt, killed, and whether they have a mind
         var player = playerMan.Sessions.First().AttachedEntity!.Value;
         var mind = mindSystem.GetMind(player);
-        entManager.TryGetComponent<MindComponent>(mind, out var mindComponent);
-        entManager.TryGetComponent<MobStateComponent>(player, out var mobStateComp);
-        entManager.TryGetComponent<DamageableComponent>(player, out var damageableComp);
+
+        MindComponent mindComponent = default;
+        MobStateComponent mobStateComp = default;
+        await server.WaitPost(() =>
+        {
+            if (mind != null)
+                mindComponent = entManager.GetComponent<MindComponent>(mind.Value);
+
+            mobStateComp = entManager.GetComponent<MobStateComponent>(player);
+        });
+
 
         // Check that running the suicide command kills the player
         // and properly ghosts them without them being able to return to their body
@@ -120,10 +128,20 @@ public sealed class SuicideCommandTests
         // We need to know the player and whether they can be hurt, killed, and whether they have a mind
         var player = playerMan.Sessions.First().AttachedEntity!.Value;
         var mind = mindSystem.GetMind(player);
-        entManager.TryGetComponent<MindComponent>(mind, out var mindComponent);
-        entManager.TryGetComponent<MobStateComponent>(player, out var mobStateComp);
-        entManager.TryGetComponent<MobThresholdsComponent>(player, out var mobThresholdsComp);
-        entManager.TryGetComponent<DamageableComponent>(player, out var damageableComp);
+
+        MindComponent mindComponent = default;
+        MobStateComponent mobStateComp = default;
+        MobThresholdsComponent mobThresholdsComp = default;
+        DamageableComponent damageableComp = default;
+        await server.WaitPost(() =>
+        {
+            if (mind != null)
+                mindComponent = entManager.GetComponent<MindComponent>(mind.Value);
+
+            mobStateComp = entManager.GetComponent<MobStateComponent>(player);
+            mobThresholdsComp = entManager.GetComponent<MobThresholdsComponent>(player);
+            damageableComp = entManager.GetComponent<DamageableComponent>(player);
+        });
 
         if (protoMan.TryIndex<DamageTypePrototype>("Slash", out var slashProto))
             damageableSystem.TryChangeDamage(player, new DamageSpecifier(slashProto, FixedPoint2.New(46.5)));
@@ -171,9 +189,14 @@ public sealed class SuicideCommandTests
         // We need to know the player and whether they can be hurt, killed, and whether they have a mind
         var player = playerMan.Sessions.First().AttachedEntity!.Value;
         var mind = mindSystem.GetMind(player);
-        entManager.TryGetComponent<MindComponent>(mind, out var mindComponent);
-        entManager.TryGetComponent<MobStateComponent>(player, out var mobStateComp);
-        entManager.TryGetComponent<DamageableComponent>(player, out var damageableComp);
+        MindComponent mindComponent = default;
+        MobStateComponent mobStateComp = default;
+        await server.WaitPost(() =>
+        {
+            if (mind != null)
+                mindComponent = entManager.GetComponent<MindComponent>(mind.Value);
+            mobStateComp = entManager.GetComponent<MobStateComponent>(player);
+        });
 
         tagSystem.AddTag(player, "CannotSuicide");
 
@@ -217,12 +240,23 @@ public sealed class SuicideCommandTests
 
         // We need to know the player and whether they can be hurt, killed, and whether they have a mind
         var player = playerMan.Sessions.First().AttachedEntity!.Value;
-        var handsComponent = entManager.GetComponent<HandsComponent>(player);
         var mind = mindSystem.GetMind(player);
-        entManager.TryGetComponent<MindComponent>(mind, out var mindComponent);
-        entManager.TryGetComponent<MobStateComponent>(player, out var mobStateComp);
-        entManager.TryGetComponent<MobThresholdsComponent>(player, out var mobThresholdsComp);
-        entManager.TryGetComponent<DamageableComponent>(player, out var damageableComp);
+
+        MindComponent mindComponent = default;
+        MobStateComponent mobStateComp = default;
+        MobThresholdsComponent mobThresholdsComp = default;
+        DamageableComponent damageableComp = default;
+        HandsComponent handsComponent = default;
+        await server.WaitPost(() =>
+        {
+            if (mind != null)
+                mindComponent = entManager.GetComponent<MindComponent>(mind.Value);
+
+            mobStateComp = entManager.GetComponent<MobStateComponent>(player);
+            mobThresholdsComp = entManager.GetComponent<MobThresholdsComponent>(player);
+            damageableComp = entManager.GetComponent<DamageableComponent>(player);
+            handsComponent = entManager.GetComponent<HandsComponent>(player);
+        });
 
         // Spawn the weapon of choice and put it in the player's hands
         await server.WaitPost(() =>
@@ -277,12 +311,23 @@ public sealed class SuicideCommandTests
 
         // We need to know the player and whether they can be hurt, killed, and whether they have a mind
         var player = playerMan.Sessions.First().AttachedEntity!.Value;
-        var handsComponent = entManager.GetComponent<HandsComponent>(player);
         var mind = mindSystem.GetMind(player);
-        entManager.TryGetComponent<MindComponent>(mind, out var mindComponent);
-        entManager.TryGetComponent<MobStateComponent>(player, out var mobStateComp);
-        entManager.TryGetComponent<MobThresholdsComponent>(player, out var mobThresholdsComp);
-        entManager.TryGetComponent<DamageableComponent>(player, out var damageableComp);
+
+        MindComponent mindComponent = default;
+        MobStateComponent mobStateComp = default;
+        MobThresholdsComponent mobThresholdsComp = default;
+        DamageableComponent damageableComp = default;
+        HandsComponent handsComponent = default;
+        await server.WaitPost(() =>
+        {
+            if (mind != null)
+                mindComponent = entManager.GetComponent<MindComponent>(mind.Value);
+
+            mobStateComp = entManager.GetComponent<MobStateComponent>(player);
+            mobThresholdsComp = entManager.GetComponent<MobThresholdsComponent>(player);
+            damageableComp = entManager.GetComponent<DamageableComponent>(player);
+            handsComponent = entManager.GetComponent<HandsComponent>(player);
+        });
 
         // Spawn the weapon of choice and put it in the player's hands
         await server.WaitPost(() =>
