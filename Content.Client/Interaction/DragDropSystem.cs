@@ -212,7 +212,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
 
         _draggedEntity = entity;
         _state = DragState.MouseDown;
-        _mouseDownScreenPos = _inputManager.MouseScreenPosition;
+        _mouseDownScreenPos = args.ScreenCoordinates;
         _mouseDownTime = 0;
 
         // don't want anything else to process the click,
@@ -240,8 +240,13 @@ public sealed class DragDropSystem : SharedDragDropSystem
 
         if (TryComp<SpriteComponent>(_draggedEntity, out var draggedSprite))
         {
+            var screenPos = _inputManager.MouseScreenPosition;
+            // No _draggedEntity in null window (Happens in tests)
+            if (!screenPos.IsValid)
+                return;
+
             // pop up drag shadow under mouse
-            var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
+            var mousePos = _eyeManager.PixelToMap(screenPos);
             _dragShadow = EntityManager.SpawnEntity("dragshadow", mousePos);
             var dragSprite = Comp<SpriteComponent>(_dragShadow.Value);
             dragSprite.CopyFrom(draggedSprite);
