@@ -69678,9 +69678,6 @@ entities:
     - type: Transform
       pos: 40.5,4.5
       parent: 60
-    - type: DeviceNetwork
-      configurators:
-      - invalid
   - uid: 5466
     components:
     - type: Transform
