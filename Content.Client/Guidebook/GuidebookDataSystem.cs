@@ -26,6 +26,7 @@ public sealed class GuidebookDataSystem : EntitySystem
     {
         // Got new data from the server, either in response to our request, or because prototypes reloaded on the server
         _data = args.Data;
+        _data.Freeze();
     }
 
     /// <summary>
