@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Hobbitmax
-  changes:
-  - message: Replaced Syndicate Jaws Of Life with a Pyjama bundle on the Train map.
-    type: Tweak
-  id: 6555
-  time: '2024-05-08T07:30:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27734
 - author: Plykiya
   changes:
   - message: The ninja's katana dash is now more reliable.
@@ -3780,3 +3773,14 @@
   id: 7054
   time: '2024-08-07T09:19:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30002
+- author: Errant
+  changes:
+  - message: Survivors arriving via the Unknown Shuttle event, ERT and CBURN agents,
+      and Death Squad members are now equipped with the appropriate species-specific
+      survival gear.
+    type: Fix
+  - message: Unknown Shuttle event can once again spawn vox characters.
+    type: Tweak
+  id: 7055
+  time: '2024-08-07T09:26:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29746
