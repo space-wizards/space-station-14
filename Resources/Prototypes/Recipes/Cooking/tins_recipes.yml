@@ -56,7 +56,7 @@
 - type: microwaveMealRecipe
   id: RecipeTinСondensedMilk
   name: tin condensed milk recipe
-  result: СondensedMilk
+  result: FoodTinСondensedMilk
   time: 15
   reagents:
     Sugar: 20
