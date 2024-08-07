@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ShadowCommander
-  changes:
-  - message: Lizards now stop tail pulling when they are downed.
-    type: Fix
-  id: 6553
-  time: '2024-05-08T06:49:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27796
 - author: Plykiya
   changes:
   - message: Re-added supplybots.
@@ -3780,3 +3773,10 @@
   id: 7052
   time: '2024-08-07T03:41:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30702
+- author: Lyroth001
+  changes:
+  - message: Dragons are immune to flashes
+    type: Tweak
+  id: 7053
+  time: '2024-08-07T07:42:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30658
