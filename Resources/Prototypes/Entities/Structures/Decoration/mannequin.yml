@@ -1,0 +1,89 @@
+- type: entity
+  id: Mannequin
+  parent: [BaseStructureDynamic, StripableInventoryBase]
+  name: mannequin
+  description: It can wear any clothing with style.
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: Structures/Decoration/mannequin.rsi
+    state: mannequin
+    noRot: true
+    layers:
+    - map: [ "mannequin" ]
+      sprite: Structures/Decoration/mannequin.rsi
+      state: mannequin
+    - map: [ "jumpsuit" ]
+    - map: [ "outerClothing" ]
+    - map: [ "eyes" ]
+    - map: [ "neck" ]
+    - map: [ "back" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+  - type: Rotatable
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 200
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - BulletImpassable
+  - type: InteractionOutline
+  - type: Construction
+    graph: Mannequin
+    node: mannequin
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: ContainerContainer
+    containers:
+      jumpsuit: !type:ContainerSlot
+        showEnts: False
+        occludes: False
+        ent: null
+      outerClothing: !type:ContainerSlot
+        showEnts: False
+        occludes: False
+        ent: null
+      neck: !type:ContainerSlot
+        showEnts: False
+        occludes: False
+        ent: null
+      mask: !type:ContainerSlot
+        showEnts: False
+        occludes: False
+        ent: null
+      eyes: !type:ContainerSlot
+        showEnts: False
+        occludes: False
+        ent: null
+      head: !type:ContainerSlot
+        showEnts: False
+        occludes: False
+        ent: null
+      suitstorage: !type:ContainerSlot
+        showEnts: False
+        occludes: False
+        ent: null
+      back: !type:ContainerSlot
+        showEnts: False
+        occludes: False
+        ent: null
+  - type: Inventory
+    templateId: mannequin

@@ -10,6 +10,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Stacks;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -105,7 +106,7 @@ public sealed class StealConditionSystem : EntitySystem
             if (pulledEntity != null)
             {
                 // check if this is the item
-                if (CheckStealTarget(pulledEntity.Value, condition)) count++;
+                count += CheckStealTarget(pulledEntity.Value, condition);
 
                 //we don't check the inventories of sentient entity
                 if (!HasComp<MindContainerComponent>(pulledEntity))
@@ -126,7 +127,7 @@ public sealed class StealConditionSystem : EntitySystem
                 foreach (var entity in container.ContainedEntities)
                 {
                     // check if this is the item
-                    if (CheckStealTarget(entity, condition)) count++; //To Do: add support for stackable items
+                    count += CheckStealTarget(entity, condition);
 
                     // if it is a container check its contents
                     if (_containerQuery.TryGetComponent(entity, out var containerManager))
@@ -140,14 +141,14 @@ public sealed class StealConditionSystem : EntitySystem
         return result;
     }
 
-    private bool CheckStealTarget(EntityUid entity, StealConditionComponent condition)
+    private int CheckStealTarget(EntityUid entity, StealConditionComponent condition)
     {
         // check if this is the target
         if (!TryComp<StealTargetComponent>(entity, out var target))
-            return false;
+            return 0;
 
         if (target.StealGroup != condition.StealGroup)
-            return false;
+            return 0;
 
         // check if needed target alive
         if (condition.CheckAlive)
@@ -155,9 +156,10 @@ public sealed class StealConditionSystem : EntitySystem
             if (TryComp<MobStateComponent>(entity, out var state))
             {
                 if (!_mobState.IsAlive(entity, state))
-                    return false;
+                    return 0;
             }
         }
-        return true;
+
+        return TryComp<StackComponent>(entity, out var stack) ? stack.Count : 1;
     }
 }

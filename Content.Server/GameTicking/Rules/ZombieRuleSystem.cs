@@ -2,6 +2,7 @@ using Content.Server.Antag;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Popups;
+using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -35,7 +36,25 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     {
         base.Initialize();
 
+        SubscribeLocalEvent<InitialInfectedRoleComponent, GetBriefingEvent>(OnGetBriefing);
+        SubscribeLocalEvent<ZombieRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<IncurableZombieComponent, ZombifySelfActionEvent>(OnZombifySelf);
+    }
+
+    private void OnGetBriefing(EntityUid uid, InitialInfectedRoleComponent component, ref GetBriefingEvent args)
+    {
+        if (!TryComp<MindComponent>(uid, out var mind) || mind.OwnedEntity == null)
+            return;
+        if (HasComp<ZombieRoleComponent>(uid)) // don't show both briefings
+            return;
+        args.Append(Loc.GetString("zombie-patientzero-role-greeting"));
+    }
+
+    private void OnGetBriefing(EntityUid uid, ZombieRoleComponent component, ref GetBriefingEvent args)
+    {
+        if (!TryComp<MindComponent>(uid, out var mind) || mind.OwnedEntity == null)
+            return;
+        args.Append(Loc.GetString("zombie-infection-greeting"));
     }
 
     protected override void AppendRoundEndText(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule,

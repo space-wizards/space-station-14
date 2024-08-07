@@ -165,7 +165,6 @@
   components:
   - type: Clickable
   - type: Slippery
-    launchForwardsMultiplier: 2.0
   - type: Transform
     noRot: true
     anchored: true

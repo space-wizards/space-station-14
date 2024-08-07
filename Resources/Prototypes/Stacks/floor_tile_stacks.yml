@@ -65,12 +65,6 @@
   maxCount: 30
 
 - type: stack
-  id: FloorTileReinforced
-  name: reinforced tile
-  spawn: FloorTileItemReinforced
-  maxCount: 30
-
-- type: stack
   id: FloorTileMono
   name: mono tile
   spawn: FloorTileItemMono

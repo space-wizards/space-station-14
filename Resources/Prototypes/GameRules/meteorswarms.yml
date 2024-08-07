@@ -1,0 +1,105 @@
+- type: entity
+  parent: BaseGameRule
+  id: GameRuleMeteorScheduler
+  components:
+  - type: GameRule
+    minPlayers: 25
+    cancelPresetOnTooFewPlayers: false
+  - type: MeteorScheduler
+
+- type: weightedRandomEntity
+  id: DefaultConfig
+  weights:
+    GameRuleSpaceDustMinor: 44
+    GameRuleSpaceDustMajor: 22
+    GameRuleMeteorSwarmSmall: 18
+    GameRuleMeteorSwarmMedium: 10
+    GameRuleMeteorSwarmLarge: 5
+    GameRuleUristSwarm: 0.05
+
+- type: entity
+  parent: BaseGameRule
+  id: GameRuleMeteorSwarm
+  abstract: true
+  components:
+  - type: GameRule
+  - type: MeteorSwarm
+
+- type: entity
+  parent: GameRuleMeteorSwarm
+  id: GameRuleSpaceDustMinor
+  components:
+  - type: MeteorSwarm
+    announcement: null
+    announcementSound: null
+    nonDirectional: true
+    meteors:
+      MeteorSpaceDust: 1
+    waves:
+      min: 2
+      max: 3
+    meteorsPerWave:
+      min: 3
+      max: 5
+
+- type: entity
+  parent: GameRuleMeteorSwarm
+  id: GameRuleSpaceDustMajor
+  components:
+  - type: MeteorSwarm
+    announcement: station-event-space-dust-start-announcement
+    announcementSound: /Audio/Announcements/attention.ogg
+    nonDirectional: true
+    meteors:
+      MeteorSpaceDust: 1
+    waves:
+      min: 2
+      max: 3
+    meteorsPerWave:
+      min: 8
+      max: 12
+
+- type: entity
+  parent: GameRuleMeteorSwarm
+  id: GameRuleMeteorSwarmSmall
+  components:
+  - type: MeteorSwarm
+    meteors:
+      MeteorSmall: 7
+      MeteorMedium: 3
+
+- type: entity
+  parent: GameRuleMeteorSwarm
+  id: GameRuleMeteorSwarmMedium
+  components:
+  - type: MeteorSwarm
+    meteors:
+      MeteorSmall: 3
+      MeteorMedium: 6
+      MeteorLarge: 1
+
+- type: entity
+  parent: GameRuleMeteorSwarm
+  id: GameRuleMeteorSwarmLarge
+  components:
+  - type: MeteorSwarm
+    meteors:
+      MeteorSmall: 2
+      MeteorMedium: 4
+      MeteorLarge: 4
+
+- type: entity
+  parent: GameRuleMeteorSwarm
+  id: GameRuleUristSwarm
+  components:
+  - type: MeteorSwarm
+    announcement: station-event-meteor-urist-start-announcement
+    announcementSound: /Audio/Announcements/attention.ogg
+    meteors:
+      MeteorUrist: 1
+    waves:
+      min: 3
+      max: 3
+    meteorsPerWave:
+      min: 10
+      max: 10
