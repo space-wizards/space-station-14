@@ -19,7 +19,24 @@ public sealed partial class FoodSequenceElementComponent : Component
 [DataRecord, Serializable, NetSerializable]
 public partial record struct FoodSequenceElementEntry()
 {
+    /// <summary>
+    /// A localized name piece to build into the item name generator.
+    /// </summary>
     public LocId? Name { get; set; } = null;
 
+    /// <summary>
+    /// state used to generate the appearance of the added layer
+    /// </summary>
     public string? State { get; set; } = null;
+
+    /// <summary>
+    /// If the layer is the final one, it can be added over the limit, but no other layers can be added after it.
+    /// </summary>
+    public bool Final { get; set; } = false;
+}
+
+[Serializable, NetSerializable]
+public enum FoodSequenceVisuals : byte
+{
+    Layers
 }

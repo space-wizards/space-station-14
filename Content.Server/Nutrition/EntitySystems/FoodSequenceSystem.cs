@@ -8,11 +8,12 @@ using Content.Shared.Popups;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
-public partial class FoodSequenceSystem : SharedFoodSequenceSystem
+public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -50,10 +51,9 @@ public partial class FoodSequenceSystem : SharedFoodSequenceSystem
             return false;
 
         if (elementData.Value.State is not null)
-        {
             start.Comp.FoodLayers.Add(elementData.Value);
-            Dirty(start);
-        }
+
+        _appearance.SetData(start, FoodSequenceVisuals.Layers, start.Comp.FoodLayers);
 
         UpdateFoodName(start);
         MergeFoodSolutions(start, element);

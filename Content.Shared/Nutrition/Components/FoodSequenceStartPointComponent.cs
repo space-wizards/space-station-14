@@ -1,6 +1,5 @@
 using System.Numerics;
 using Content.Shared.Nutrition.EntitySystems;
-using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Nutrition.Components;
@@ -8,7 +7,7 @@ namespace Content.Shared.Nutrition.Components;
 /// <summary>
 /// A starting point for the creation of procedural food.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), Access(typeof(SharedFoodSequenceSystem))]
+[RegisterComponent, Access(typeof(SharedFoodSequenceSystem))]
 public sealed partial class FoodSequenceStartPointComponent : Component
 {
     /// <summary>
@@ -44,7 +43,7 @@ public sealed partial class FoodSequenceStartPointComponent : Component
     /// <summary>
     /// list of sprite states to be displayed on this object.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public List<FoodSequenceElementEntry> FoodLayers = new();
 
     public HashSet<string> RevealedLayers = new();

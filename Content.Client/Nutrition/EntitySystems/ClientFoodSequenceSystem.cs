@@ -4,22 +4,23 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Nutrition.EntitySystems;
 
-public sealed partial class ClientFoodSequenceSystem : SharedFoodSequenceSystem
+public sealed class ClientFoodSequenceSystem : SharedFoodSequenceSystem
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
     public override void Initialize()
     {
-        SubscribeLocalEvent<FoodSequenceStartPointComponent, AfterAutoHandleStateEvent>(OnHandleState);
+        SubscribeLocalEvent<FoodSequenceStartPointComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    private void OnHandleState(Entity<FoodSequenceStartPointComponent> start, ref AfterAutoHandleStateEvent args)
+    private void OnAppearanceChange(Entity<FoodSequenceStartPointComponent> ent, ref AppearanceChangeEvent args)
     {
-        if (!TryComp<SpriteComponent>(start, out var sprite))
+        if (!_appearance.TryGetData<List<FoodSequenceElementEntry>>(ent, FoodSequenceVisuals.Layers, out var layers, args.Component))
             return;
 
-        UpdateFoodVisuals(start, sprite);
+        UpdateFoodVisuals(ent, layers);
     }
 
-    private void UpdateFoodVisuals(Entity<FoodSequenceStartPointComponent> start, SpriteComponent? sprite = null)
+    private void UpdateFoodVisuals(Entity<FoodSequenceStartPointComponent> start, List<FoodSequenceElementEntry> layers, SpriteComponent? sprite = null)
     {
         if (!Resolve(start, ref sprite, false))
             return;
@@ -33,7 +34,7 @@ public sealed partial class ClientFoodSequenceSystem : SharedFoodSequenceSystem
 
         //Add new layers
         var counter = 0;
-        foreach (var state in start.Comp.FoodLayers)
+        foreach (var state in layers)
         {
             counter++;
 

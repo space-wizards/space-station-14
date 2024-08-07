@@ -1,5 +1,5 @@
 namespace Content.Shared.Nutrition.EntitySystems;
 
-public partial class SharedFoodSequenceSystem : EntitySystem
+public abstract class SharedFoodSequenceSystem : EntitySystem
 {
 }
