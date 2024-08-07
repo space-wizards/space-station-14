@@ -75,7 +75,6 @@ public sealed class SuicideSystem : EntitySystem
         var suicideByEnvironmentEvent = new SuicideByEnvironmentEvent(victim);
 
         // Try to suicide by raising an event on the held item
-        var itemQuery = GetEntityQuery<ItemComponent>();
         if (EntityManager.TryGetComponent(victim, out HandsComponent? handsComponent)
             && handsComponent.ActiveHandEntity is { } item)
         {
@@ -89,6 +88,7 @@ public sealed class SuicideSystem : EntitySystem
 
         // Try to suicide by nearby entities, like Microwaves or Crematoriums, by raising an event on it
         // Returns upon being handled by any entity
+        var itemQuery = GetEntityQuery<ItemComponent>();
         foreach (var entity in _entityLookupSystem.GetEntitiesInRange(victim, 1, LookupFlags.Approximate | LookupFlags.Static))
         {
             // Skip any nearby items that can be picked up, we already checked the active held item above
