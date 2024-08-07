@@ -81,6 +81,7 @@
   - type: Tag
     tags:
     - KeyedInstrument
+    - BasicInstrument # GreyStation - sci can mass produce them and its arguably a portable DAW, so let anyone use it
   - type: StaticPrice
     price: 90
 
