@@ -12,6 +12,8 @@
     rsiPath: Objects/Consumable/Food/candy.rsi
     startPosition: 0, 0
     offset: 0, 0.1
+    nameGeneration: food-sequence-standart-gen
+    nameSuffix: food-sequence-burger-suffix
 
 - type: entity
   id: FoodCustomBurgerElement
@@ -20,7 +22,7 @@
   - type: FoodSequenceElement
     entries:
       burger:
-        name: can
+        name: food-sequence-burger-content-cheese
         state: cocoa
 
 - type: entity
@@ -30,5 +32,5 @@
   - type: FoodSequenceElement
     entries:
       burger:
-        name: can
-        state: apple
+        name: food-sequence-burger-content-rat
+        state: corn

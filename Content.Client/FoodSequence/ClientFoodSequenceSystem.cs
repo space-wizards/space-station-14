@@ -42,7 +42,7 @@ public sealed partial class ClientFoodSequenceSystem : SharedFoodSequenceSystem
             //Set image
             var index = sprite.LayerMapReserveBlank(keyCode);
             sprite.LayerSetRSI(index, start.Comp.RsiPath);
-            sprite.LayerSetState(index, state);
+            sprite.LayerSetState(index, state.State);
 
             //Offset the layer
             var LayerPos = start.Comp.StartPosition;

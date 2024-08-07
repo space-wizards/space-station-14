@@ -44,9 +44,21 @@ public sealed partial class FoodSequenceStartPointComponent : Component
     /// list of sprite states to be displayed on this object.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<string> FoodLayers = new();
+    public List<FoodSequenceElementEntry> FoodLayers = new();
 
     public HashSet<string> RevealedLayers = new();
+
+    [DataField]
+    public LocId? NameGeneration;
+
+    [DataField]
+    public LocId? NamePrefix;
+
+    [DataField]
+    public LocId? ContentSeparator;
+
+    [DataField]
+    public LocId? NameSuffix;
 }
 
 [Serializable, NetSerializable]
