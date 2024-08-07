@@ -11,7 +11,6 @@ namespace Content.Server.Guidebook;
 /// </summary>
 public sealed class GuidebookDataSystem : EntitySystem
 {
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
     private GuidebookData _cachedData = new();
@@ -56,7 +55,7 @@ public sealed class GuidebookDataSystem : EntitySystem
 
         // Scan component registrations to find members tagged for extraction
         var tagged = new Dictionary<ComponentRegistration, List<MemberInfo>>();
-        foreach (var registration in _componentFactory.GetAllRegistrations())
+        foreach (var registration in EntityManager.ComponentFactory.GetAllRegistrations())
         {
             foreach (var member in registration.Type.GetMembers())
             {
