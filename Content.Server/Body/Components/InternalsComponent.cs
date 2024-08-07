@@ -26,5 +26,4 @@ namespace Content.Server.Body.Components
         public ProtoId<AlertPrototype> InternalsAlert = "Internals";
     }
 
-    public sealed partial class ToggleInternalsAlertEvent : BaseAlertEvent;
 }
