@@ -561,3 +561,4 @@ public abstract class SharedMindSystem : EntitySystem
 /// <param name="Dead"></param>
 [ByRefEvent]
 public record struct GetCharactedDeadIcEvent(bool? Dead);
+

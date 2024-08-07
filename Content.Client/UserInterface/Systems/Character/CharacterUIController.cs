@@ -7,7 +7,8 @@ using Content.Client.UserInterface.Systems.Character.Controls;
 using Content.Client.UserInterface.Systems.Character.Windows;
 using Content.Client.UserInterface.Systems.Objectives.Controls;
 using Content.Shared.Input;
-using Content.Shared.Objectives.Systems;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -24,6 +25,7 @@ namespace Content.Client.UserInterface.Systems.Character;
 [UsedImplicitly]
 public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<CharacterInfoSystem>
 {
+    [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
     [UISystemDependency] private readonly SpriteSystem _sprite = default!;
@@ -110,6 +112,27 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         var (entity, job, objectives, briefing, entityName) = data;
 
         _window.SpriteView.SetEntity(entity);
+
+        //TODO: Read data from MindComponent
+        if (!_ent.TryGetComponent<MindContainerComponent>(_player.LocalEntity, out var container))
+            return;
+
+        if (container.Mind is null)
+            return;
+
+        var role = _ent.EnsureComponent<MindComponent>(container.Mind.Value);
+
+        //TODO: SHITCODE!
+        string roleText = (!string.IsNullOrEmpty(role.MindRole.Name))? role.MindRole.Name : "mind-role-neutral-name";
+        string roleDetail = (role.MindRole.Details is not null) ? role.MindRole.Details : "";
+
+        // Crew member
+        _window.MindRole.Text = Loc.GetString(roleText);
+        _window.MindRoleDetail.Text = Loc.GetString(roleDetail);
+        _window.MindRole.FontColorOverride = role.MindRole.Color;
+
+
+
         _window.NameLabel.Text = entityName;
         _window.SubText.Text = job;
         _window.Objectives.RemoveAllChildren();

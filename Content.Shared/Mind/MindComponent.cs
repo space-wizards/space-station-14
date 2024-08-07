@@ -4,6 +4,7 @@ using Content.Shared.Mind.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mind;
 
@@ -99,10 +100,61 @@ public sealed partial class MindComponent : Component
     public bool PreventSuicide { get; set; }
 
     /// <summary>
+    ///     The mind's current role or antagonist status;
+    /// </summary>
+    [DataField]
+    public MindRolePrototype MindRole = new MindRolePrototype();
+
+    /// <summary>
     ///     The session of the player owning this mind.
     ///     Can be null, in which case the player is currently not logged in.
     /// </summary>
     [ViewVariables, Access(typeof(SharedMindSystem), typeof(SharedGameTicker))]
     // TODO remove this after moving IPlayerManager functions to shared
     public ICommonSession? Session { get; set; }
+}
+
+/// <summary>
+///     Describes antag status (or lack thereof)
+/// </summary>
+[Prototype]
+[Serializable]
+public sealed partial class MindRolePrototype : IPrototype
+{
+
+    [IdDataField]
+    public string ID { get; private set; } = default!;
+
+    [DataField]
+    public MindRoleType RoleType = MindRoleType.Neutral;
+
+    /// <summary>
+    ///     The role's name as displayed to players.
+    /// </summary>
+    [DataField(required: true)]
+    public string Name { get; private set; } = "mind-role-neutral-name";
+
+    /// <summary>
+    ///     Additional information about the role, such as what team it is or a familiar's owner.
+    ///     Keep this short.
+    /// </summary>
+    [DataField]
+    public string? Details { get; private set; } = null;
+
+    /// <summary>
+    ///     The role's displayed color.
+    /// </summary>
+    [DataField]
+    public Color Color { get; private set; } = Color.FromHex("#eeeeee");
+}
+
+public enum MindRoleType
+{
+    Neutral,
+    AntagSolo,
+    AntagTeam,
+    FreeAgent,
+    Familiar,
+    Silicon,
+    Observer
 }

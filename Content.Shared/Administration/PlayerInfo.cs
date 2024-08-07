@@ -1,3 +1,4 @@
+using Content.Shared.Mind;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 

@@ -3,7 +3,7 @@
     xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:windows="clr-namespace:Content.Client.UserInterface.Systems.Character.Windows"
     Title="{Loc 'character-info-title'}"
-    MinWidth="400"
+    MinWidth="450"
     MinHeight="545">
     <ScrollContainer>
         <BoxContainer Orientation="Vertical">
@@ -12,6 +12,11 @@
                 <BoxContainer Orientation="Vertical" VerticalAlignment="Top">
                     <Label Name="NameLabel" Access="Public"/>
                     <Label Name="SubText" VerticalAlignment="Top" StyleClasses="LabelSubText" Access="Public"/>
+                </BoxContainer>
+                <!-- TODO: fix the vertical alignment maybe, I don't care -->
+                <BoxContainer Orientation="Vertical" VerticalAlignment="Top" Margin="10, 0, 0, 0">
+                    <Label Name="MindRole" VerticalAlignment="Top" HorizontalAlignment="Left" StyleClasses="LabelHeading" Access="Public"/>
+                    <Label Name="MindRoleDetail" VerticalAlignment="Bottom" HorizontalAlignment="Left" Access="Public" StyleClasses="LabelSubText" />
                 </BoxContainer>
             </BoxContainer>
             <Label Name="ObjectivesLabel" Access="Public" Text="{Loc 'character-info-objectives-label'}" HorizontalAlignment="Center"/>
