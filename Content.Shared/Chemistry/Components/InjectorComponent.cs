@@ -87,6 +87,22 @@ public sealed partial class InjectorComponent : Component
     [AutoNetworkedField]
     [DataField]
     public InjectorToggleMode ToggleState = InjectorToggleMode.Draw;
+
+    #region Arguments for injection doafter
+
+    /// <inheritdoc cref=DoAfterArgs.NeedHand>
+    [DataField]
+    public bool NeedHand = true;
+
+    /// <inheritdoc cref=DoAfterArgs.BreakOnHandChange>
+    [DataField]
+    public bool BreakOnHandChange = true;
+
+    /// <inheritdoc cref=DoAfterArgs.MovementThreshold>
+    [DataField]
+    public float MovementThreshold = 0.1f;
+
+    #endregion
 }
 
 /// <summary>

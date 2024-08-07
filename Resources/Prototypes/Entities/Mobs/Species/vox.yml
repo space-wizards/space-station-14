@@ -108,6 +108,11 @@
           32:
             sprite: Mobs/Species/Vox/displacement.rsi
             state: hand
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: head
       back:
         sizeMaps:
           32:
@@ -127,7 +132,7 @@
 - type: entity
   parent: BaseSpeciesDummy
   id: MobVoxDummy
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: HumanoidAppearance
     species: Vox
@@ -151,6 +156,11 @@
           32:
             sprite: Mobs/Species/Vox/displacement.rsi
             state: hand
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: head
       back:
         sizeMaps:
           32:
