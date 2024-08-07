@@ -25,6 +25,7 @@ namespace Content.Client.Launcher
         // Pressing reconnect will redial instead of simply reconnecting.
         private bool _redial;
 
+        [Dependency] private readonly IClipboardManager _clipboard = null!;
         private readonly IRobustRandom _random;
         private readonly IPrototypeManager _prototype;
         private readonly IConfigurationManager _cfg;
@@ -38,14 +39,24 @@ namespace Content.Client.Launcher
             _cfg = config;
 
             RobustXamlLoader.Load(this);
+            IoCManager.InjectDependencies(this);
 
             LayoutContainer.SetAnchorPreset(this, LayoutContainer.LayoutPreset.Wide);
 
             Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
 
             ChangeLoginTip();
-            ReconnectButton.OnPressed += ReconnectButtonPressed;
-            RetryButton.OnPressed += ReconnectButtonPressed;
+            RetryButton.OnPressed += _ => _state.RetryConnect();
+            ReconnectButton.OnPressed += _ =>
+            {
+                if (!_redial || !_state.Redial())
+                {
+                    _state.RetryConnect();
+                }
+            };
+
+            CopyButton.OnPressed += CopyButtonPressed;
+            CopyButtonDisconnected.OnPressed += CopyButtonDisconnectedPressed;
             ExitButton.OnPressed += _ => _state.Exit();
 
             var addr = state.Address;
@@ -65,19 +76,24 @@ namespace Content.Client.Launcher
             LastNetDisconnectedArgsChanged(edim.LastNetDisconnectedArgs);
         }
 
-        // Just button, there's only one at once anyways :)
-        private void ReconnectButtonPressed(BaseButton.ButtonEventArgs args)
+        private void CopyButtonPressed(BaseButton.ButtonEventArgs args)
         {
-            if (_redial)
-            {
-                // Redial shouldn't fail, but if it does, try a reconnect (maybe we're being run from debug)
-                if (_state.Redial())
-                    return;
-            }
-
-            _state.RetryConnect();
+            CopyText(ConnectFailReason.Text);
         }
 
+        private void CopyButtonDisconnectedPressed(BaseButton.ButtonEventArgs args)
+        {
+            CopyText(DisconnectReason.Text);
+        }
+
+        private void CopyText(string? text)
+        {
+            if (!string.IsNullOrEmpty(text))
+            {
+                _clipboard.SetText(text);
+            }
+        }
+        
         private void ConnectFailReasonChanged(string? reason)
         {
             ConnectFailReason.SetMessage(reason == null
