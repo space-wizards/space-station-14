@@ -9,18 +9,18 @@ public sealed class ClientFoodSequenceSystem : SharedFoodSequenceSystem
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     public override void Initialize()
     {
-        SubscribeLocalEvent<FoodSequenceStartPointComponent, AppearanceChangeEvent>(OnAppearanceChange);
+        SubscribeLocalEvent<FoodSequenceStartPointComponent, AfterAutoHandleStateEvent>(OnHandleState);
     }
 
-    private void OnAppearanceChange(Entity<FoodSequenceStartPointComponent> ent, ref AppearanceChangeEvent args)
+    private void OnHandleState(Entity<FoodSequenceStartPointComponent> start, ref AfterAutoHandleStateEvent args)
     {
-        if (!_appearance.TryGetData<List<FoodSequenceElementEntry>>(ent, FoodSequenceVisuals.Layers, out var layers, args.Component))
+        if (!TryComp<SpriteComponent>(start, out var sprite))
             return;
 
-        UpdateFoodVisuals(ent, layers);
+        UpdateFoodVisuals(start, sprite);
     }
 
-    private void UpdateFoodVisuals(Entity<FoodSequenceStartPointComponent> start, List<FoodSequenceElementEntry> layers, SpriteComponent? sprite = null)
+    private void UpdateFoodVisuals(Entity<FoodSequenceStartPointComponent> start, SpriteComponent? sprite = null)
     {
         if (!Resolve(start, ref sprite, false))
             return;
@@ -34,7 +34,7 @@ public sealed class ClientFoodSequenceSystem : SharedFoodSequenceSystem
 
         //Add new layers
         var counter = 0;
-        foreach (var state in layers)
+        foreach (var state in start.Comp.FoodLayers)
         {
             counter++;
 
