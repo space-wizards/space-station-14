@@ -278,3 +278,27 @@
         - Spaceshroom
       chance: 0.6
       offset: 0.0
+
+- type: entity
+  name: Tins Loot Spawner
+  suffix: Tins
+  id: MaintenanceTinsSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Consumable/Food/Tins/maint_peaches.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+        - FoodTinPeaches
+        - FoodTinPeachesMaint
+        - FoodTinBeans
+        - FoodTinChanterelles
+        - FoodTinСhili
+        - FoodTinСondensedMilk
+        - FoodTinCorn
+        - FoodTinMice
+        - FoodTinPineapple
+        - FoodTinTomatoes
