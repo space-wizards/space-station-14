@@ -124,7 +124,7 @@ public sealed class FloorTileSystem : EntitySystem
 
             if (mapGrid != null)
             {
-                var gridUid = mapGrid.Owner;
+                var gridUid = location.EntityId;
 
                 if (!CanPlaceTile(gridUid, mapGrid, out var reason))
                 {
@@ -154,12 +154,11 @@ public sealed class FloorTileSystem : EntitySystem
                 if (_netManager.IsClient)
                     return;
 
-                mapGrid = _mapManager.CreateGrid(locationMap.MapId);
-                var gridUid = mapGrid.Owner;
-                var gridXform = Transform(gridUid);
-                _transform.SetWorldPosition(gridXform, locationMap.Position);
-                location = new EntityCoordinates(gridUid, Vector2.Zero);
-                PlaceAt(args.User, gridUid, mapGrid, location, _tileDefinitionManager[component.OutputTiles[0]].TileId, component.PlaceTileSound, mapGrid.TileSize / 2f);
+                var grid = _mapManager.CreateGridEntity(locationMap.MapId);
+                var gridXform = Transform(grid);
+                _transform.SetWorldPosition((grid, gridXform), locationMap.Position);
+                location = new EntityCoordinates(grid, Vector2.Zero);
+                PlaceAt(args.User, grid, grid.Comp, location, _tileDefinitionManager[component.OutputTiles[0]].TileId, component.PlaceTileSound, grid.Comp.TileSize / 2f);
                 return;
             }
         }

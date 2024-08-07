@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 using static Content.Shared.Disposal.Components.SharedDisposalTaggerComponent;
 
 namespace Content.Client.Disposal.UI
@@ -21,20 +22,17 @@ namespace Content.Client.Disposal.UI
         {
             base.Open();
 
-            _window = new DisposalTaggerWindow();
-
-            _window.OpenCentered();
-            _window.OnClose += Close;
+            _window = this.CreateWindow<DisposalTaggerWindow>();
 
             _window.Confirm.OnPressed += _ => ButtonPressed(UiAction.Ok, _window.TagInput.Text);
             _window.TagInput.OnTextEntered += args => ButtonPressed(UiAction.Ok, args.Text);
-
         }
 
         private void ButtonPressed(UiAction action, string tag)
         {
+            // TODO: This looks copy-pasted with the other mailing stuff...
             SendMessage(new UiActionMessage(action, tag));
-            _window?.Close();
+            Close();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -48,18 +46,5 @@ namespace Content.Client.Disposal.UI
 
             _window?.UpdateState(cast);
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (disposing)
-            {
-                _window?.Dispose();
-            }
-        }
-
-
     }
-
 }

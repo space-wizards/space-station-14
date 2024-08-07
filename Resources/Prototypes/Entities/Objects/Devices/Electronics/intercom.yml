@@ -2,7 +2,7 @@
   id: IntercomElectronics
   parent: BaseElectronics
   name: intercom electronics
-  description: An electronics board used in intercoms
+  description: An electronics board used in intercoms.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi

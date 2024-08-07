@@ -35,7 +35,7 @@ public sealed class StartingGearPrototypeStorageTest
         {
             foreach (var gearProto in protos)
             {
-                var backpackProto = gearProto.GetGear("back");
+                var backpackProto = ((IEquipmentLoadout) gearProto).GetGear("back");
                 if (backpackProto == string.Empty)
                     continue;
 
