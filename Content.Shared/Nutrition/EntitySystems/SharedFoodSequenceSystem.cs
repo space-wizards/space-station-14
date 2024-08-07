@@ -1,13 +1,16 @@
 using System.Text;
 using Content.Shared.Interaction;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
+using Robust.Shared.Network;
 
-namespace Content.Shared.FoodSequence;
+namespace Content.Shared.Nutrition.EntitySystems;
 
 public partial class SharedFoodSequenceSystem : EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -26,7 +29,7 @@ public partial class SharedFoodSequenceSystem : EntitySystem
     {
         if (start.Comp.FoodLayers.Count >= start.Comp.MaxLayers)
         {
-            if (user is not null)
+            if (user is not null && _net.IsServer)
                 _popup.PopupEntity(Loc.GetString("food-sequence-no-space"), start, user.Value);
             return false;
         }
@@ -51,7 +54,13 @@ public partial class SharedFoodSequenceSystem : EntitySystem
         }
 
         UpdateFoodName(start);
+        MergeFoodSolutions(start, element);
+        QueueDel(element);
         return true;
+    }
+
+    public virtual void MergeFoodSolutions(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element)
+    {
     }
 
     private void UpdateFoodName(Entity<FoodSequenceStartPointComponent> start)

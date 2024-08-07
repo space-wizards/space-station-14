@@ -1,6 +1,7 @@
+using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.FoodSequence;
+namespace Content.Shared.Nutrition.Components;
 
 /// <summary>
 /// Tndicates that this entity can be inserted into FoodSequence, which will transfer all reagents to the target.

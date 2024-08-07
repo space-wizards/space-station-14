@@ -1,8 +1,9 @@
 using System.Numerics;
+using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.FoodSequence;
+namespace Content.Shared.Nutrition.Components;
 
 /// <summary>
 /// A starting point for the creation of procedural food.

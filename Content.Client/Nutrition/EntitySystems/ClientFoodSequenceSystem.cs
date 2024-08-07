@@ -1,7 +1,8 @@
-using Content.Shared.FoodSequence;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.FoodSequence;
+namespace Content.Client.Nutrition.EntitySystems;
 
 public sealed partial class ClientFoodSequenceSystem : SharedFoodSequenceSystem
 {
