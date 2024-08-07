@@ -48,8 +48,8 @@ namespace Content.Server.Execution
             string? internalMsg = null;
             string? externalMsg = null;
 
-            internalMsg = entity.Comp.DefaultCompleteInternalMeleeExecutionMessage;
-            externalMsg = entity.Comp.DefaultCompleteExternalMeleeExecutionMessage;
+            internalMsg = entity.Comp.CompleteInternalMeleeExecutionMessage;
+            externalMsg = entity.Comp.CompleteExternalMeleeExecutionMessage;
 
             var userXform = Transform(attacker);
 
