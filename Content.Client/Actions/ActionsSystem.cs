@@ -107,7 +107,7 @@ namespace Content.Client.Actions
             UpdateAction(uid, component);
         }
 
-        protected override void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
+        public override void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
         {
             if (!ResolveActionData(actionId, ref action))
                 return;
@@ -293,7 +293,7 @@ namespace Content.Client.Actions
                     continue;
 
                 var action = _serialization.Read<BaseActionComponent>(actionNode, notNullableOverride: true);
-                var actionId = Spawn(null);
+                var actionId = Spawn();
                 AddComp(actionId, action);
                 AddActionDirect(user, actionId);
 

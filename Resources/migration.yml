@@ -350,7 +350,7 @@ DoorRemoteFirefight: null
 AirlockServiceCaptainLocked: AirlockCaptainLocked
 
 # 2024-06-15
-ClothingOuterCoatInspector: ClothingOuterCoatDetectiveLoadout
+ClothingOuterCoatInspector: ClothingOuterCoatJensen
 
 # 2024-06-23
 FloorTileItemReinforced: PartRodMetal1
@@ -361,3 +361,22 @@ BookChefGaming: BookHowToCookForFortySpaceman
 
 #2024-06-29
 IntercomAssesmbly: IntercomAssembly
+
+# 2024-07-7
+SignScience1: SignScience
+SignScience2: SignScience
+SignXenobio2: SignXenobio
+SignXenolab: SignXenobio
+SignToxins2: SignToxins
+SignMinerDock: SignShipDock
+SignChemistry1: SignChem
+SignChemistry2: SignChem
+SignCourt: SignLawyer
+SignAtmosMinsky: SignAtmos
+SignDrones: SignMaterials
+SignShield: null # what was this even for?
+SignHydro2: SignHydro1
+SignHydro3: SignHydro1
+
+# 2024-07-27
+LogicGate: LogicGateOr

@@ -62,11 +62,14 @@ public sealed class SmartEquipSystem : EntitySystem
         if (playerSession.AttachedEntity is not { Valid: true } uid || !Exists(uid))
             return;
 
-        if (!_actionBlocker.CanInteract(uid, null))
-            return;
-
         // early out if we don't have any hands or a valid inventory slot
         if (!TryComp<HandsComponent>(uid, out var hands) || hands.ActiveHand == null)
+            return;
+
+        var handItem = hands.ActiveHand.HeldEntity;
+
+        // can the user interact, and is the item interactable? e.g. virtual items
+        if (!_actionBlocker.CanInteract(uid, handItem))
             return;
 
         if (!TryComp<InventoryComponent>(uid, out var inventory) || !_inventory.HasSlot(uid, equipmentSlot, inventory))
@@ -74,8 +77,6 @@ public sealed class SmartEquipSystem : EntitySystem
             _popup.PopupClient(Loc.GetString("smart-equip-missing-equipment-slot", ("slotName", equipmentSlot)), uid, uid);
             return;
         }
-
-        var handItem = hands.ActiveHand.HeldEntity;
 
         // early out if we have an item and cant drop it at all
         if (handItem != null && !_hands.CanDropHeld(uid, hands.ActiveHand))
