@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Roles;
 
 [Prototype]
-public sealed partial class StartingGearPrototype : IPrototype, IInheritingPrototype
+public sealed partial class StartingGearPrototype : IPrototype, IInheritingPrototype, IEquipmentLoadout
 {
     /// <inheritdoc/>
     [ViewVariables]
@@ -19,26 +19,41 @@ public sealed partial class StartingGearPrototype : IPrototype, IInheritingProto
     [AbstractDataField]
     public bool Abstract { get; }
 
+    /// <inheritdoc />
+    [DataField]
+    [AlwaysPushInheritance]
+    public Dictionary<string, EntProtoId> Equipment { get; set; } = new();
+
+    /// <inheritdoc />
+    [DataField]
+    [AlwaysPushInheritance]
+    public List<EntProtoId> Inhand { get; set; } = new();
+
+    /// <inheritdoc />
+    [DataField]
+    [AlwaysPushInheritance]
+    public Dictionary<string, List<EntProtoId>> Storage { get; set; } = new();
+}
+
+/// <summary>
+/// Specifies the starting entity prototypes and where to equip them for the specified class.
+/// </summary>
+public interface IEquipmentLoadout
+{
     /// <summary>
     /// The slot and entity prototype ID of the equipment that is to be spawned and equipped onto the entity.
     /// </summary>
-    [DataField]
-    [AlwaysPushInheritance]
-    public Dictionary<string, EntProtoId> Equipment = new();
+    public Dictionary<string, EntProtoId> Equipment { get; set; }
 
     /// <summary>
     /// The inhand items that are equipped when this starting gear is equipped onto an entity.
     /// </summary>
-    [DataField]
-    [AlwaysPushInheritance]
-    public List<EntProtoId> Inhand = new(0);
+    public List<EntProtoId> Inhand { get; set; }
 
     /// <summary>
     /// Inserts entities into the specified slot's storage (if it does have storage).
     /// </summary>
-    [DataField]
-    [AlwaysPushInheritance]
-    public Dictionary<string, List<EntProtoId>> Storage = new();
+    public Dictionary<string, List<EntProtoId>> Storage { get; set; }
 
     /// <summary>
     /// Gets the entity prototype ID of a slot in this starting gear.
