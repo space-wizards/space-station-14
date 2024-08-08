@@ -347,7 +347,9 @@
           maxVol: 20
           reagents:
           - ReagentId: Omnizine
-            Quantity: 20
+            Quantity: 10
+          - ReagentId: Epinephrine
+            Quantity: 10
     - type: SolutionInjectOnTrigger
       solution: drink
       transferAmount: 20
