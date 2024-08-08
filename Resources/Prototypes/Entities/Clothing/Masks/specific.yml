@@ -29,10 +29,14 @@
   id: ClothingMaskGasVoiceChameleon
   suffix: Voice Mask, Chameleon
   components:
-    - type: VoiceMasker
+    - type: VoiceMask
     - type: HideLayerClothing
       slots:
       - Snout
+    - type: UserInterface
+      interfaces:
+        enum.VoiceMaskUIKey.Key:
+          type: VoiceMaskBoundUserInterface
 
 - type: entity
   parent: ClothingMaskBase
