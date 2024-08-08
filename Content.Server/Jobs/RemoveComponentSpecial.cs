@@ -5,7 +5,7 @@ namespace Content.Server.Jobs;
 
 public sealed partial class RemoveComponentSpecial : JobSpecial
 {
-    [DataField]
+    [DataField(required: true)]
     public ComponentRegistry Components { get; private set; } = new();
 
     public override void AfterEquip(EntityUid mob)
