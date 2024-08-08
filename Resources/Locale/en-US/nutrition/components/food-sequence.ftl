@@ -56,3 +56,15 @@ food-sequence-burger-content-rice = rice
 food-sequence-burger-content-soy = soy
 food-sequence-burger-content-koibean = koi
 food-sequence-burger-content-watermelon = water
+food-sequence-burger-content-cannabis = funny
+food-sequence-burger-content-rainbow-cannabis = FUNNY
+food-sequence-burger-content-tobacco = tobaco
+
+food-sequence-burger-content-cheese = cheese
+
+food-sequence-burger-content-brain = brain
+food-sequence-burger-content-tongue = tongue
+food-sequence-burger-content-appendix = appendi
+food-sequence-burger-content-ears = ear
+food-sequence-burger-content-stomach = stomach
+food-sequence-burger-content-liver = liver
