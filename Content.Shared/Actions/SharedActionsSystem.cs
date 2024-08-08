@@ -468,10 +468,10 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
 
         // if the client specified an entity it needs to be valid
-        var targetEntity = GetNetEntity(args.Input.EntityTarget);
+        var targetEntity = GetEntity(args.Input.EntityTarget);
         if (targetEntity != null && (
             !TryComp<EntityTargetActionComponent>(ent, out var entTarget) ||
-            !ValidateEntityTarget(user, targetEntity, (ent, entTarget))))
+            !ValidateEntityTarget(user, targetEntity.Value, (ent, entTarget))))
         {
             args.Invalid = true;
             return;

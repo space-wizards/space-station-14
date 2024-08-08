@@ -61,7 +61,7 @@ namespace Content.Client.Actions
             UpdateAction(ent, ent.Comp);
         }
 
-        public override void UpdateAction(EntityUid? actionId, ActionComponent? action = null)
+        protected override void UpdateAction(EntityUid? actionId, ActionComponent? action = null)
         {
             if (!ResolveActionData(actionId, ref action))
                 return;
@@ -222,11 +222,11 @@ namespace Content.Client.Actions
 
             args.Handled = true;
 
-            var (uid, world) = ent;
+            var (uid, comp) = ent;
             var action = args.Action;
             var coords = args.Input.Coordinates;
 
-            if (!ValidateWorldTarget(user, coords, (uid, world)))
+            if (!ValidateWorldTarget(user, coords, ent))
                 return;
 
             // optionally send the clicked entity too, if it matches its whitelist etc
@@ -241,13 +241,13 @@ namespace Content.Client.Actions
 
             if (action.ClientExclusive)
             {
-                if (world.Event is {} ev)
+                if (comp.Event is {} ev)
                 {
                     ev.Target = coords;
                     ev.Entity = targetEnt;
                 }
 
-                PerformAction(user, user.Comp, uid, action, world.Event, _timing.CurTime);
+                PerformAction(user, user.Comp, uid, action, comp.Event, _timing.CurTime);
             }
             else
                 RaisePredictiveEvent(new RequestPerformActionEvent(GetNetEntity(uid), GetNetEntity(targetEnt), GetNetCoordinates(coords)));
@@ -261,7 +261,8 @@ namespace Content.Client.Actions
                 return;
 
             // let world target component handle it
-            if (entityTarget.Event is {} not ev)
+            var (uid, comp) = ent;
+            if (comp.Event is not {} ev)
             {
                 DebugTools.Assert(HasComp<WorldTargetActionComponent>(ent), $"Action {ToPrettyString(ent)} requires WorldTargetActionComponent for entity-world targeting");
                 return;
@@ -269,17 +270,16 @@ namespace Content.Client.Actions
 
             args.Handled = true;
 
-            var (uid, entityTarget) = ent;
             var action = args.Action;
 
-            if (!ValidateEntityTarget(user, entity, (uid, entityTarget)))
+            if (!ValidateEntityTarget(user, entity, ent))
                 return;
 
             if (action.ClientExclusive)
             {
                 ev.Target = entity;
 
-                _actionsSystem.PerformAction(user, user.Comp, uid, action, entityTarget.Event, _timing.CurTime);
+                _actionsSystem.PerformAction(user, user.Comp, uid, action, comp.Event, _timing.CurTime);
             }
             else
                 RaisePredictiveEvent(new RequestPerformActionEvent(GetNetEntity(uid), GetNetEntity(entity)));
@@ -289,18 +289,4 @@ namespace Content.Client.Actions
 
         public record struct SlotAssignment(byte Hotbar, byte Slot, EntityUid ActionId);
     }
-
-    /// <summary>
-    /// Client-side event used to attempt to trigger a targeted action.
-    /// This only gets raised if the has <see cref="TargetActionComponent">.
-    /// Handlers must set <c>Handled</c> to true, then if the action has been performed,
-    /// i.e. a target is found, then FoundTarget must be set to true.
-    /// </summary>
-    [ByRefEvent]
-    public record struct ActionTargetAttemptEvent(
-        PointerInputCmdArgs Input,
-        Entity<ActionsComponent> User,
-        ActionComponent Action,
-        bool Handled = false;
-        bool FoundTarget = false);
 }
