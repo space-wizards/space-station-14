@@ -319,7 +319,7 @@
       prob: 0.02
     - id: MobSnailSpeed
       prob: 0.002
-    - id: MobSnoth
+    - id: MobSnailMoth
       prob: 0.002
 
 - type: entity
@@ -340,7 +340,7 @@
       prob: 0.02
     - id: MobSnailSpeed
       prob: 0.002
-    - id: MobSnoth
+    - id: MobSnailMoth
       prob: 0.002
     - id: MobSnailInstantDeath
       prob: 0.000001
