@@ -17,10 +17,11 @@
       time: 144000 #40 hrs
     - !type:AgeRequirement
       requiredAge: 20
-    - !type:TraitsRequirement # No Pacifist Sec
+    - !type:TraitsRequirement
       inverted: true
       traits:
       - Pacifist
+      - Blindness
   weight: 10
   startingGear: HoSGear
   icon: "JobIconHeadOfSecurity"

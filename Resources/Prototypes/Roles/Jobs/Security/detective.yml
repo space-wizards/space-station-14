@@ -4,13 +4,14 @@
   description: job-description-detective
   playTimeTracker: JobDetective
   requirements:
-  - !type:DepartmentTimeRequirement
-    department: Security
-    time: 54000 # 15 hours
-  - !type:TraitsRequirement # No Pacifist Sec
-    inverted: true
-    traits:
-    - Pacifist
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 54000 # 15 hours
+    - !type:TraitsRequirement
+      inverted: true
+      traits:
+      - Pacifist
+      - Blindness
   startingGear: DetectiveGear
   icon: "JobIconDetective"
   supervisors: job-supervisors-hos
