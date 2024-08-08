@@ -2,7 +2,7 @@
   parent: [MobObserver, InventoryBase]
   id: AdminObserver
   name: admin observer
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: ContentEye
     maxZoom: 8.916104, 8.916104
@@ -152,7 +152,7 @@
   parent: BaseAGhostAction
   id: ActionAGhostShowStationRecords
   name: Station Records Interface
-  description: View a station records Interface
+  description: View a station records Interface.
   components:
   - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.GeneralStationRecordConsoleKey.Key }

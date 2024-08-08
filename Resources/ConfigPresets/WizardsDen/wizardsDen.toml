@@ -39,5 +39,9 @@ deadmin_on_join = true
 new_player_threshold = 600
 alert.min_players_sharing_connection = 2
 
+[ahelp]
+admin_prefix = false
+admin_prefix_webhook = false
+
 [worldgen]
 enabled = true

@@ -73,14 +73,11 @@
   name: Toggle Light
   description: Turn the light on and off.
   components:
-<<<<<<< HEAD
   - type: Action
-=======
-  - type: InstantAction
     useDelay: 1
->>>>>>> 918709cb4742d02e9822a651cf8e74727ba997de
     icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
     iconOn: { sprite: Objects/Tools/flashlight.rsi, state: flashlight-on }
+  - type: InstantAction
 
 - type: entity
   parent: BaseAction
@@ -211,7 +208,13 @@
   name: Morph into Geras
   description:  Morphs you into a Geras - a miniature version of you which allows you to move fast, at the cost of your inventory.
   components:
+<<<<<<< HEAD
   - type: Action
+=======
+  - type: ConfirmableAction
+    popup: gera-transformation-popup
+  - type: InstantAction
+>>>>>>> 703c8840c405dd1f38ebea82565bbf2cbe17a7a6
     itemIconStyle: BigAction
     useDelay: 10 # prevent spam
     priority: -20

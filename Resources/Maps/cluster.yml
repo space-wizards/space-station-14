@@ -7605,6 +7605,18 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -44.5,3.5
       parent: 1
+  - uid: 3147
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,2.5
+      parent: 1
+  - uid: 3148
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -3.5,2.5
+      parent: 1
   - uid: 4816
     components:
     - type: Transform
@@ -7646,18 +7658,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 23.5,38.5
-      parent: 1
-- proto: AtmosDeviceFanTiny
-  entities:
-  - uid: 3147
-    components:
-    - type: Transform
-      pos: -0.5,2.5
-      parent: 1
-  - uid: 3148
-    components:
-    - type: Transform
-      pos: -3.5,2.5
       parent: 1
 - proto: AtmosFixBlockerMarker
   entities:
@@ -27930,48 +27930,6 @@ entities:
     components:
     - type: Transform
       pos: -39.356712,-24.532705
-      parent: 1
-- proto: ClothingOuterSanta
-  entities:
-  - uid: 8934
-    components:
-    - type: Transform
-      pos: 19.401697,12.696105
-      parent: 1
-  - uid: 9050
-    components:
-    - type: Transform
-      pos: 19.401697,12.696105
-      parent: 1
-  - uid: 9051
-    components:
-    - type: Transform
-      pos: 19.401697,12.696105
-      parent: 1
-  - uid: 9201
-    components:
-    - type: Transform
-      pos: 19.401697,12.696105
-      parent: 1
-  - uid: 9254
-    components:
-    - type: Transform
-      pos: 19.604822,12.571105
-      parent: 1
-  - uid: 9255
-    components:
-    - type: Transform
-      pos: 19.604822,12.571105
-      parent: 1
-  - uid: 9308
-    components:
-    - type: Transform
-      pos: 19.604822,12.571105
-      parent: 1
-  - uid: 9309
-    components:
-    - type: Transform
-      pos: 19.604822,12.571105
       parent: 1
 - proto: ClothingOuterWinterCap
   entities:

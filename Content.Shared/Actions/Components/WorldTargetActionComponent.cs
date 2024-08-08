@@ -6,6 +6,7 @@ namespace Content.Shared.Actions.Components;
 
 /// <summary>
 /// Used on action entities to define an action that triggers when targeting an entity coordinate.
+/// Can be combined with <see cref="EntityTargetActionComponent"/>, see its docs for more information.
 /// </summary>
 /// <remarks>
 /// Requires <see cref="TargetActionComponent"/>.

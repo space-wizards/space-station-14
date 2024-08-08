@@ -14,7 +14,6 @@ public sealed partial class MappingSystem : EntitySystem
 {
     [Dependency] private readonly IPlacementManager _placementMan = default!;
     [Dependency] private readonly ITileDefinitionManager _tileMan = default!;
-    [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     /// <summary>
@@ -27,22 +26,12 @@ public sealed partial class MappingSystem : EntitySystem
     /// </summary>
     private readonly SpriteSpecifier _deleteIcon = new SpriteSpecifier.Texture(new ("Interface/VerbIcons/delete.svg.192dpi.png"));
 
-    public string DefaultMappingActions = "/mapping_actions.yml";
-
-    [ValidatePrototypeId<EntityPrototype>]
-    public string ActionStartPlacement = "ActionStartPlacement";
-
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<FillActionSlotEvent>(OnFillActionSlot);
         SubscribeLocalEvent<StartPlacementActionEvent>(OnStartPlacementAction);
-    }
-
-    public void LoadMappingActions()
-    {
-        _actions.LoadActionAssignments(DefaultMappingActions, false);
     }
 
     /// <summary>

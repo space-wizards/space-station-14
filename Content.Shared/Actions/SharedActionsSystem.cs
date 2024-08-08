@@ -422,7 +422,14 @@ public abstract class SharedActionsSystem : EntitySystem
 
     private void OnEntityValidate(Entity<EntityTargetActionComponent> ent, ref ActionValidateEvent args)
     {
-        if (args.Input.EntityTarget is not { Valid: true } netTarget)
+        // let WorldTargetAction handle it
+        if (ent.Comp.Event is not {} ev)
+        {
+            DebugTools.Assert(HasComp<WorldTargetActionComponent>(ent), $"Entity-world targeting action {ToPrettyString(ent)} requires WorldTargetActionComponent");
+            return;
+        }
+
+        if (args.Input.EntityTarget is not {} netTarget)
         {
             args.Invalid = true;
             return;
@@ -441,11 +448,8 @@ public abstract class SharedActionsSystem : EntitySystem
         _adminLogger.Add(LogType.Action,
             $"{ToPrettyString(user):user} is performing the {Name(ent):action} action (provided by {ToPrettyString(args.Provider):provider}) targeted at {ToPrettyString(target):target}.");
 
-        if (ent.Comp.Event is {} ev)
-        {
-            ev.Target = target;
-            args.Event = ev;
-        }
+        ev.Target = target;
+        args.Event = ev;
     }
 
     private void OnWorldValidate(Entity<WorldTargetActionComponent> ent, ref ActionValidateEvent args)
@@ -460,16 +464,26 @@ public abstract class SharedActionsSystem : EntitySystem
         var target = GetCoordinates(netTarget);
         _rotateToFace.TryFaceCoordinates(user, target.ToMapPos(EntityManager, _transform));
 
-        var targetAction = Comp<TargetActionComponent>(ent);
-        if (!ValidateBaseTarget(user, target, (ent, targetAction)))
+        if (!ValidateWorldTarget(user, target, ent))
             return;
 
+        // if the client specified an entity it needs to be valid
+        var targetEntity = GetNetEntity(args.Input.EntityTarget);
+        if (targetEntity != null && (
+            !TryComp<EntityTargetActionComponent>(ent, out var entTarget) ||
+            !ValidateEntityTarget(user, targetEntity, (ent, entTarget))))
+        {
+            args.Invalid = true;
+            return;
+        }
+
         _adminLogger.Add(LogType.Action,
-            $"{ToPrettyString(user):user} is performing the {Name(ent):action} action (provided by {args.Provider}) targeted at {target:target}.");
+            $"{ToPrettyString(user):user} is performing the {Name(ent):action} action (provided by {args.Provider}) targeting {targetEntity} at {target:target}.");
 
         if (ent.Comp.Event is {} ev)
         {
             ev.Target = target;
+            ev.Entity = targetEntity;
             args.Event = ev;
         }
     }
@@ -483,7 +497,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (_whitelist.IsWhitelistFail(comp.Whitelist, target))
             return false;
 
-        if (_actionQuery.GetComponent(uid).CheckCanInteract && !_actionBlocker.CanInteract(user, target))
+        if (_actionQuery.Comp(uid).CheckCanInteract && !_actionBlocker.CanInteract(user, target))
             return false;
 
         if (user == target)

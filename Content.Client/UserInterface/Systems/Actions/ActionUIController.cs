@@ -166,96 +166,35 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (!_entMan.TryGetComponent<ActionsComponent>(user, out var comp))
             return false;
 
-        if (!_actionsSystem.TryGetActionData(actionId, out var baseAction) ||
-            !_entMan.TryGetComponent<TargetActionComponent>(actionId, out var action))
+        if (!_actionsSystem.TryGetActionData(actionId, out var action) ||
+            !_entMan.TryGetComponent<TargetActionComponent>(actionId, out var target))
         {
             return false;
         }
 
         // Is the action currently valid?
-        if (!baseAction.Enabled
-            || baseAction is { Charges: 0, RenewCharges: false }
-            || baseAction.Cooldown is {} cooldown && cooldown.End > _timing.CurTime)
+        if (!action.Enabled
+            || action is { Charges: 0, RenewCharges: false }
+            || action.Cooldown is {} cooldown && cooldown.End > _timing.CurTime)
         {
             // The user is targeting with this action, but it is not valid. Maybe mark this click as
             // handled and prevent further interactions.
             return !action.InteractOnMiss;
         }
 
-        // TODO: raise clientside event and then log if not handled
-        if (_entMan.TryGetComponent<WorldTargetActionComponent>(actionId, out var mapTarget))
-            return TryTargetWorld(args, (actionId, baseAction, action, mapTarget), (user, comp)) || !action.InteractOnMiss;
-
-        if (_entMan.TryGetComponent<EntityTargetActionComponent>(actionId, out var entTarget))
-            return TryTargetEntity(args, (actionId, baseAction, action, entTarget), (user, comp)) || !action.InteractOnMiss;
-
-        Logger.Error($"Unknown targeting action: {actionId}");
-        return false;
-    }
-
-    private bool TryTargetWorld(in PointerInputCmdArgs args, Entity<ActionComponent, TargetActionComponent, WorldTargetActionComponent> ent, Entity<ActionsComponent> user)
-    {
-        if (_actionsSystem == null)
-            return false;
-
-        var (uid, action, target, world) = ent;
-        var coords = args.Coordinates;
-
-        if (!_actionsSystem.ValidateWorldTarget(user, coords, (uid, world)))
+        var ev = new ActionTargetAttemptEvent(args, (user, comp), action);
+        _entMan.RaiseLocalEvent(actionId, ref ev);
+        if (!ev.Handled)
         {
-            // Invalid target.
-            if (target.DeselectOnMiss)
-                StopTargeting();
-
+            Logger.Error($"Action {ToPrettyString(actionId)} did not handle ActionTargetAttemptEvent!");
             return false;
         }
 
-        if (action.ClientExclusive)
-        {
-            if (world.Event is {} ev)
-                ev.Target = coords;
-
-            _actionsSystem.PerformAction(user, user.Comp, uid, action, world.Event, _timing.CurTime);
-        }
-        else
-            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(EntityManager.GetNetEntity(uid), EntityManager.GetNetCoordinates(coords)));
-
-        if (!target.Repeat)
+        // stop targeting when needed
+        if (ev.FoundTarget ? !target.Repeat : target.DeselectOnMiss)
             StopTargeting();
 
-        return true;
-    }
-
-    private bool TryTargetEntity(in PointerInputCmdArgs args, Entity<ActionComponent, TargetActionComponent, EntityTargetActionComponent> ent, Entity<ActionsComponent> user)
-    {
-        if (_actionsSystem == null)
-            return false;
-
-        var entity = args.EntityUid;
-        var (uid, action, target, entityTarget) = ent;
-
-        if (!_actionsSystem.ValidateEntityTarget(user, entity, (uid, entityTarget)))
-        {
-            if (target.DeselectOnMiss)
-                StopTargeting();
-
-            return false;
-        }
-
-        if (action.ClientExclusive)
-        {
-            if (entityTarget.Event is {} ev)
-                ev.Target = entity;
-
-            _actionsSystem.PerformAction(user, user.Comp, uid, action, entityTarget.Event, _timing.CurTime);
-        }
-        else
-            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(EntityManager.GetNetEntity(uid), EntityManager.GetNetEntity(args.EntityUid)));
-
-        if (!target.Repeat)
-            StopTargeting();
-
-        return true;
+        return ev.FoundTarget || !action.InteractOnMiss;
     }
 
     public void UnloadButton()
@@ -720,7 +659,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void LoadGui()
     {
-        DebugTools.Assert(_window == null);
+        UnloadGui();
         _window = UIManager.CreateWindow<ActionsWindow>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
 

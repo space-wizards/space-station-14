@@ -35,12 +35,16 @@
 - type: entity
   parent: ReinforcementRadio
   id: ReinforcementRadioSyndicateNukeops # Reinforcement radio exclusive to nukeops uplink
+  name: nuclear operative radio
+  description: Call in a nuclear operative of questionable quality, instantly! Basic nukeop equipment provided.
   suffix: NukeOps
   components:
   - type: GhostRole
-    name: ghost-role-information-syndicate-reinforcement-name
-    description: ghost-role-information-syndicate-reinforcement-description
-    rules: ghost-role-information-syndicate-reinforcement-rules
+    name: ghost-role-information-nukeop-reinforcement-name
+    description: ghost-role-information-nukeop-reinforcement-description
+    rules: ghost-role-information-nukeop-reinforcement-rules
+    raffle:
+      settings: default
   - type: GhostRoleMobSpawner
     prototype: MobHumanSyndicateAgentNukeops
 

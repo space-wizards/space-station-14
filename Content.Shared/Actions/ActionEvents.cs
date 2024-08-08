@@ -101,6 +101,13 @@ public sealed class RequestPerformActionEvent : EntityEventArgs
         Action = action;
         EntityCoordinatesTarget = entityCoordinatesTarget;
     }
+
+    public RequestPerformActionEvent(NetEntity action, NetEntity entityTarget, NetCoordinates entityCoordinatesTarget)
+    {
+        Action = action;
+        EntityTarget = entityTarget;
+        EntityCoordinatesTarget = entityCoordinatesTarget;
+    }
 }
 
 /// <summary>
@@ -142,6 +149,12 @@ public abstract partial class WorldTargetActionEvent : BaseActionEvent
     ///     The coordinates of the location that the user targeted.
     /// </summary>
     public EntityCoordinates Target;
+
+    /// <summary>
+    /// When combined with <see cref="EntityTargetAction"/> (and <c>Event</c> is null), the entity the client was hovering when clicked.
+    /// This can be null as the primary purpose of this event is for getting coordinates.
+    /// </summary>
+    public EntityUid? Entity;
 }
 
 /// <summary>

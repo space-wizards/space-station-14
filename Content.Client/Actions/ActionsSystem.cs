@@ -42,9 +42,6 @@ namespace Content.Client.Actions
         private readonly List<EntityUid> _removed = new();
         private readonly List<Entity<ActionComponent>> _added = new();
 
-        // template action to set name icon and event entity, for entity placement actions
-        public readonly EntProtoId<ActionComponent> ActionMappingPlaceEntity = "ActionMappingPlaceEntity";
-
         public override void Initialize()
         {
             base.Initialize();
@@ -54,6 +51,9 @@ namespace Content.Client.Actions
             SubscribeLocalEvent<ActionsComponent, ComponentHandleState>(OnHandleState);
 
             SubscribeLocalEvent<ActionComponent, AfterAutoHandleStateEvent>(OnActionAutoHandleState);
+
+            SubscribeLocalEvent<EntityTargetActionComponent, ActionTargetAttemptEvent>(OnEntityTargetAttempt);
+            SubscribeLocalEvent<WorldTargetActionComponent, ActionTargetAttemptEvent>(OnWorldTargetAttempt);
         }
 
         private void OnActionAutoHandleState(Entity<ActionComponent> ent, ref AfterAutoHandleStateEvent args)
@@ -61,7 +61,7 @@ namespace Content.Client.Actions
             UpdateAction(ent, ent.Comp);
         }
 
-        public override void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
+        public override void UpdateAction(EntityUid? actionId, ActionComponent? action = null)
         {
             if (!ResolveActionData(actionId, ref action))
                 return;
@@ -215,72 +215,92 @@ namespace Content.Client.Actions
             }
         }
 
-        /// <summary>
-        ///     Load actions and their toolbar assignments from a file.
-        /// </summary>
-        public void LoadActionAssignments(string path, bool userData)
+        private void OnWorldTargetAttempt(Entity<WorldTargetActionComponent> ent, ref ActionTargetAttemptEvent args)
         {
-            if (_playerManager.LocalEntity is not { } user)
+            if (args.Handled)
                 return;
 
-            var file = new ResPath(path).ToRootedPath();
-            TextReader reader = userData
-                ? _resources.UserData.OpenText(file)
-                : _resources.ContentFileReadText(file);
+            args.Handled = true;
 
-            var yamlStream = new YamlStream();
-            yamlStream.Load(reader);
+            var (uid, world) = ent;
+            var action = args.Action;
+            var coords = args.Input.Coordinates;
 
-            if (yamlStream.Documents[0].RootNode.ToDataNode() is not SequenceDataNode sequence)
+            if (!ValidateWorldTarget(user, coords, (uid, world)))
                 return;
 
-            ClearAssignments?.Invoke();
-
-            var assignments = new List<SlotAssignment>();
-
-            foreach (var entry in sequence.Sequence)
+            // optionally send the clicked entity too, if it matches its whitelist etc
+            // this is the actual entity-world targeting magic
+            EntityUid? targetEnt;
+            if (TryComp<EntityTargetActionComponent>(ent, out var entity) &&
+                args.Input.EntityUid != null &&
+                ValidateEntityTarget(user, args.Input.EntityUid, (uid, entity)))
             {
-                if (entry is not MappingDataNode map)
-                    continue;
-
-                // default to this template action to avoid copy pasting it with each entity placement action
-                var proto = ActionMappingPlaceEntity;
-                if (map.TryGet("action", out var actionNode))
-                    proto = _serialization.Read<EntProtoId<ActionComponent>>(actionNode);
-
-                var action = Spawn(proto);
-                if (map.TryGet("entity", out var entityNode))
-                {
-                    var id = _serialization.Read<EntProtoId>(entityNode);
-                    if (Comp<InstantActionComponent>(action).Event is not StartPlacementActionEvent ev)
-                    {
-                        Log.Error($"Entity placement template action {proto} used wrong event type!");
-                        Del(action);
-                        continue;
-                    }
-
-                    ev.EntityType = id;
-                    _metaData.SetEntityName(action, _proto.Index(id).Name);
-                    Comp<ActionComponent>(action).Icon = new SpriteSpecifier.EntityPrototype(id);
-                }
-
-                AddActionDirect(user, action);
-
-                if (!map.TryGet("assignments", out var assignmentNode))
-                    continue;
-
-                var nodeAssignments = _serialization.Read<List<(byte Hotbar, byte Slot)>>(assignmentNode, notNullableOverride: true);
-
-                foreach (var index in nodeAssignments)
-                {
-                    var assignment = new SlotAssignment(index.Hotbar, index.Slot, action);
-                    assignments.Add(assignment);
-                }
+                targetEnt = args.Input.EntityUid;
             }
 
-            AssignSlot?.Invoke(assignments);
+            if (action.ClientExclusive)
+            {
+                if (world.Event is {} ev)
+                {
+                    ev.Target = coords;
+                    ev.Entity = targetEnt;
+                }
+
+                PerformAction(user, user.Comp, uid, action, world.Event, _timing.CurTime);
+            }
+            else
+                RaisePredictiveEvent(new RequestPerformActionEvent(GetNetEntity(uid), GetNetEntity(targetEnt), GetNetCoordinates(coords)));
+
+            args.FoundTarget = true;
+        }
+
+        private void OnEntityTargetAttempt(Entity<EntityTargetActionComponent> ent, ref ActionTargetAttemptEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            // let world target component handle it
+            if (entityTarget.Event is {} not ev)
+            {
+                DebugTools.Assert(HasComp<WorldTargetActionComponent>(ent), $"Action {ToPrettyString(ent)} requires WorldTargetActionComponent for entity-world targeting");
+                return;
+            }
+
+            args.Handled = true;
+
+            var (uid, entityTarget) = ent;
+            var action = args.Action;
+
+            if (!ValidateEntityTarget(user, entity, (uid, entityTarget)))
+                return;
+
+            if (action.ClientExclusive)
+            {
+                ev.Target = entity;
+
+                _actionsSystem.PerformAction(user, user.Comp, uid, action, entityTarget.Event, _timing.CurTime);
+            }
+            else
+                RaisePredictiveEvent(new RequestPerformActionEvent(GetNetEntity(uid), GetNetEntity(entity)));
+
+            args.FoundTarget = true;
         }
 
         public record struct SlotAssignment(byte Hotbar, byte Slot, EntityUid ActionId);
     }
+
+    /// <summary>
+    /// Client-side event used to attempt to trigger a targeted action.
+    /// This only gets raised if the has <see cref="TargetActionComponent">.
+    /// Handlers must set <c>Handled</c> to true, then if the action has been performed,
+    /// i.e. a target is found, then FoundTarget must be set to true.
+    /// </summary>
+    [ByRefEvent]
+    public record struct ActionTargetAttemptEvent(
+        PointerInputCmdArgs Input,
+        Entity<ActionsComponent> User,
+        ActionComponent Action,
+        bool Handled = false;
+        bool FoundTarget = false);
 }
