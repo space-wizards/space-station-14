@@ -862,7 +862,7 @@
     layers:
     - state: green
     - state: running
-      sprite: Mobs/Aliens/Xenos/queen.rsi
+      sprite: Mobs/Aliens/Xenos/praetorian.rsi
   - type: ConditionalSpawner
     prototypes:
-    - MobXenoQueenNoGhost
+    - MobXenoLonePraetorianNoGhost

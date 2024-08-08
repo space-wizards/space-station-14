@@ -455,12 +455,13 @@
   - type: SolutionTransfer
     maxTransferAmount: 1
 
-# Xeno Queen that can not be ghostrole / pry
+# Mob mapped to Xeno Station that can not be ghostrole / pry
 
 - type: entity
-  name: Queen
+  name: Lone Praetorian
+  description: The last of its kind.
   parent: SimpleSpaceMobBase
-  id: MobXenoQueenNoGhost
+  id: MobXenoLonePraetorianNoGhost
   components:
   - type: Insulated
   - type: CombatMode
@@ -504,7 +505,7 @@
     animation: WeaponArcBite
     damage:
      groups:
-       Brute: 12
+       Brute: 5
   - type: DamageStateVisuals
     rotate: true
     states:
@@ -533,7 +534,7 @@
     speechVerb: LargeMob
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Aliens/Xenos/queen.rsi
+    sprite: Mobs/Aliens/Xenos/praetorian.rsi
     offset: 0,0.4
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -541,11 +542,12 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      300: Dead
+      150: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      150: 0.7
+      100: 0.7
   - type: MovementSpeedModifier
+    sprintSpeedModifier: 0.9
   - type: Fixtures
     fixtures:
       fix1:
@@ -560,3 +562,15 @@
   - type: Tag
     tags:
     - CannotSuicide
+  - type: SolutionContainerManager # Being hit speeds you up so you can escape
+    solutions:
+      bite:
+        reagents:
+        - ReagentId: Stimulants
+          Quantity: 50
+        - ReagentId: TranexamicAcid
+          Quantity: 50
+  - type: MeleeChemicalInjector
+    transferAmount: 1
+    solution: bite
+    pierceArmor: true
