@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Added the robotics console for remotely looking at, disabling or destroying
-      cyborgs!
-    type: Add
-  id: 6562
-  time: '2024-05-09T06:36:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24855
 - author: Killerqu00
   changes:
   - message: Revolutionaries can now cuff command members in order to seize control
@@ -3781,3 +3773,16 @@
   id: 7061
   time: '2024-08-08T11:39:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30361
+- author: TheShuEd
+  changes:
+  - message: Add "thieving beacon" to Thief antag - a device that counts objects within
+      a radius of itself as stolen.
+    type: Add
+  - message: Return thief structures stealing objectives.
+    type: Add
+  - message: Animal theft objectives can no longer appear if the animals are not on
+      the station.
+    type: Fix
+  id: 7062
+  time: '2024-08-08T13:17:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29997
