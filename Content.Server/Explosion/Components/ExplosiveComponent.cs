@@ -1,6 +1,6 @@
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Explosion;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Explosion.Components;
 
@@ -15,14 +15,8 @@ namespace Content.Server.Explosion.Components;
 [RegisterComponent]
 public sealed partial class ExplosiveComponent : Component
 {
-
-    /// <summary>
-    ///     The explosion prototype. This determines the damage types, the tile-break chance, and some visual
-    ///     information (e.g., the light that the explosion gives off).
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("explosionType", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<ExplosionPrototype>))]
-    public string ExplosionType = default!;
+    [DataField(required: true)]
+    public ProtoId<ExplosionPrototype> ExplosionType = default!;
 
     /// <summary>
     ///     The maximum intensity the explosion can have on a single tile. This limits the maximum damage and tile

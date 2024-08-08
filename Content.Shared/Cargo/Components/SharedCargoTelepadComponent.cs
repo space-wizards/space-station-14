@@ -2,7 +2,6 @@ using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Cargo.Components;
 
@@ -36,9 +35,9 @@ public sealed partial class CargoTelepadComponent : Component
     /// <summary>
     ///     The paper-type prototype to spawn with the order information.
     /// </summary>
-    [DataField("printerOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string PrinterOutput = "PaperCargoInvoice";
+    [DataField]
+    public EntProtoId PrinterOutput = "PaperCargoInvoice";
 
-    [DataField("receiverPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string ReceiverPort = "OrderReceiver";
+    [DataField]
+    public ProtoId<SinkPortPrototype> ReceiverPort = "OrderReceiver";
 }

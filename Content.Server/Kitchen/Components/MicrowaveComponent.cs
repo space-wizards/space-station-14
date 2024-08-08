@@ -4,7 +4,6 @@ using Content.Shared.Item;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Kitchen.Components
 {
@@ -20,8 +19,8 @@ namespace Content.Server.Kitchen.Components
         [DataField("objectHeatMultiplier"), ViewVariables(VVAccess.ReadWrite)]
         public float ObjectHeatMultiplier = 100;
 
-        [DataField("failureResult", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string BadRecipeEntityId = "FoodBadRecipe";
+        [DataField("failureResult")]
+        public EntProtoId BadRecipeEntityId = "FoodBadRecipe";
 
         #region  audio
         [DataField("beginCookingSound")]

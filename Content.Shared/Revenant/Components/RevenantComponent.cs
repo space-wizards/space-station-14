@@ -5,7 +5,6 @@ using Content.Shared.Store;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Revenant.Components;
 
@@ -21,14 +20,14 @@ public sealed partial class RevenantComponent : Component
     [AutoNetworkedField]
     public FixedPoint2 Essence = 75;
 
-    [DataField("stolenEssenceCurrencyPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<CurrencyPrototype>))]
-    public string StolenEssenceCurrencyPrototype = "StolenEssence";
+    [DataField]
+    public ProtoId<CurrencyPrototype> StolenEssenceCurrencyPrototype = "StolenEssence";
 
     /// <summary>
     /// Prototype to spawn when the entity dies.
     /// </summary>
-    [DataField("spawnOnDeathPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string SpawnOnDeathPrototype = "Ectoplasm";
+    [DataField]
+    public EntProtoId SpawnOnDeathPrototype = "Ectoplasm";
 
     /// <summary>
     /// The entity's current max amount of essence. Can be increased

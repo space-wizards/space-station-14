@@ -89,7 +89,7 @@ public sealed class FlatpackSystem : SharedFlatpackSystem
         else if (TryComp<ComputerBoardComponent>(board, out var computer) && computer.Prototype != null)
         {
             cost = GetFlatpackCreationCost(ent, null);
-            proto = computer.Prototype;
+            proto = computer.Prototype.Value;
         }
         else
         {

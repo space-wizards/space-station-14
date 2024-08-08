@@ -26,8 +26,8 @@ public sealed class AddAccentClothingSystem : EntitySystem
         AddComp(args.Wearer, accentComponent);
 
         // snowflake case for replacement accent
-        if (accentComponent is ReplacementAccentComponent rep)
-            rep.Accent = component.ReplacementPrototype!;
+        if (accentComponent is ReplacementAccentComponent rep && component.ReplacementPrototype != null)
+            rep.Accent = component.ReplacementPrototype.Value;
 
         component.IsActive = true;
     }

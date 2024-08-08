@@ -1,7 +1,6 @@
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
@@ -37,6 +36,6 @@ public sealed partial class SolutionAmmoProviderComponent : Component
     /// <summary>
     /// The prototype that's fired by the gun.
     /// </summary>
-    [DataField("proto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string Prototype = default!;
+    [DataField("proto")]
+    public EntProtoId Prototype = default!;
 }

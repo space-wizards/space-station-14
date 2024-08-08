@@ -1,7 +1,7 @@
 ﻿using Content.Shared.DisplacementMap;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Inventory;
 
@@ -9,8 +9,8 @@ namespace Content.Shared.Inventory;
 [Access(typeof(InventorySystem))]
 public sealed partial class InventoryComponent : Component
 {
-    [DataField("templateId", customTypeSerializer: typeof(PrototypeIdSerializer<InventoryTemplatePrototype>))]
-    public string TemplateId { get; private set; } = "human";
+    [DataField]
+    public ProtoId<InventoryTemplatePrototype> TemplateId { get; private set; } = "human";
 
     [DataField("speciesId")] public string? SpeciesId { get; set; }
 

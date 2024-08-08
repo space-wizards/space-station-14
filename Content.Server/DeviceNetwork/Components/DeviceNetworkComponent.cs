@@ -1,6 +1,6 @@
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.DeviceNetwork;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.DeviceNetwork.Components
 {
@@ -35,8 +35,8 @@ namespace Content.Server.DeviceNetwork.Components
         ///     frequency prototype. Used to select a default frequency to listen to on. Used when the map is
         ///     initialized.
         /// </summary>
-        [DataField("receiveFrequencyId", customTypeSerializer: typeof(PrototypeIdSerializer<DeviceFrequencyPrototype>))]
-        public string? ReceiveFrequencyId;
+        [DataField]
+        public ProtoId<DeviceFrequencyPrototype>? ReceiveFrequencyId;
 
         /// <summary>
         ///     The frequency that this device going to try transmit on.
@@ -49,8 +49,8 @@ namespace Content.Server.DeviceNetwork.Components
         ///     frequency prototype. Used to select a default frequency to transmit on. Used when the map is
         ///     initialized.
         /// </summary>
-        [DataField("transmitFrequencyId", customTypeSerializer: typeof(PrototypeIdSerializer<DeviceFrequencyPrototype>))]
-        public string? TransmitFrequencyId;
+        [DataField]
+        public ProtoId<DeviceFrequencyPrototype>? TransmitFrequencyId;
 
         /// <summary>
         ///     The address of the device, either on the network it is currently connected to or whatever address it

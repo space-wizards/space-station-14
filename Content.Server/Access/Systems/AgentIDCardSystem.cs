@@ -67,7 +67,7 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(uid, out var idCard))
                 return;
 
-            var state = new AgentIDCardBoundUserInterfaceState(idCard.FullName ?? "", idCard.JobTitle ?? "", idCard.JobIcon ?? "", component.Icons);
+            var state = new AgentIDCardBoundUserInterfaceState(idCard.FullName ?? "", idCard.JobTitle ?? "", idCard.JobIcon, component.Icons);
             _uiSystem.SetUiState(uid, AgentIDCardUiKey.Key, state);
         }
 

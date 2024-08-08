@@ -5,7 +5,7 @@ using Content.Shared.Explosion;
 using Content.Shared.Nuke;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Nuke
 {
@@ -90,9 +90,8 @@ namespace Content.Server.Nuke
         ///     The explosion prototype. This determines the damage types, the tile-break chance, and some visual
         ///     information (e.g., the light that the explosion gives off).
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("explosionType", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<ExplosionPrototype>))]
-        public string ExplosionType = default!;
+        [DataField(required: true)]
+        public ProtoId<ExplosionPrototype> ExplosionType = default!;
 
         /// <summary>
         ///     The maximum intensity the explosion can have on a single time. This limits the maximum damage and tile

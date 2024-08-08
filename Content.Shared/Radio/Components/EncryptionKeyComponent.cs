@@ -1,5 +1,5 @@
 using Content.Shared.Chat;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Shared.Radio.Components;
@@ -17,6 +17,6 @@ public sealed partial class EncryptionKeyComponent : Component
     /// <summary>
     ///     This is the channel that will be used when using the default/department prefix (<see cref="SharedChatSystem.DefaultChannelKey"/>).
     /// </summary>
-    [DataField("defaultChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
-    public string? DefaultChannel;
+    [DataField]
+    public ProtoId<RadioChannelPrototype>? DefaultChannel;
 }

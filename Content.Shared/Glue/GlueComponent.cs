@@ -2,7 +2,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Glue;
 
@@ -25,8 +25,8 @@ public sealed partial class GlueComponent : Component
     /// <summary>
     /// Reagent that will be used as glue.
     /// </summary>
-    [DataField("reagent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
-    public string Reagent = "SpaceGlue";
+    [DataField]
+    public ProtoId<ReagentPrototype> Reagent = "SpaceGlue";
 
     /// <summary>
     /// Reagent consumption per use.

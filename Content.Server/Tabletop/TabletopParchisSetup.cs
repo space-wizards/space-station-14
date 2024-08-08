@@ -1,6 +1,5 @@
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Tabletop
 {
@@ -8,17 +7,17 @@ namespace Content.Server.Tabletop
     public sealed partial class TabletopParchisSetup : TabletopSetup
     {
 
-        [DataField("redPiecePrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string RedPiecePrototype { get; private set; } = "RedTabletopPiece";
+        [DataField]
+        public EntProtoId RedPiecePrototype { get; private set; } = "RedTabletopPiece";
 
-        [DataField("greenPiecePrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string GreenPiecePrototype { get; private set; } = "GreenTabletopPiece";
+        [DataField]
+        public EntProtoId GreenPiecePrototype { get; private set; } = "GreenTabletopPiece";
 
-        [DataField("yellowPiecePrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string YellowPiecePrototype { get; private set; } = "YellowTabletopPiece";
+        [DataField]
+        public EntProtoId YellowPiecePrototype { get; private set; } = "YellowTabletopPiece";
 
-        [DataField("bluePiecePrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string BluePiecePrototype { get; private set; } = "BlueTabletopPiece";
+        [DataField]
+        public EntProtoId BluePiecePrototype { get; private set; } = "BlueTabletopPiece";
 
         public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
         {

@@ -9,7 +9,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Zombies;
 
@@ -53,14 +52,14 @@ public sealed partial class ZombieComponent : Component
     /// <summary>
     /// The attack arc of the zombie
     /// </summary>
-    [DataField("attackArc", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string AttackAnimation = "WeaponArcBite";
+    [DataField("attackArc")]
+    public EntProtoId AttackAnimation = "WeaponArcBite";
 
     /// <summary>
     /// The role prototype of the zombie antag role
     /// </summary>
-    [DataField("zombieRoleId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
-    public string ZombieRoleId = "Zombie";
+    [DataField]
+    public ProtoId<AntagPrototype> ZombieRoleId = "Zombie";
 
     /// <summary>
     /// The CustomBaseLayers of the humanoid to restore in case of cloning
@@ -80,8 +79,8 @@ public sealed partial class ZombieComponent : Component
     [DataField("beforeZombifiedEyeColor")]
     public Color BeforeZombifiedEyeColor;
 
-    [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
-    public string? EmoteSoundsId = "Zombie";
+    [DataField("emoteId")]
+    public ProtoId<EmoteSoundsPrototype>? EmoteSoundsId = "Zombie";
 
     public EmoteSoundsPrototype? EmoteSounds;
 
@@ -148,6 +147,6 @@ public sealed partial class ZombieComponent : Component
     /// <summary>
     /// The blood reagent to give the zombie. In case you want zombies that bleed milk, or something.
     /// </summary>
-    [DataField("newBloodReagent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
-    public string NewBloodReagent = "ZombieBlood";
+    [DataField]
+    public ProtoId<ReagentPrototype> NewBloodReagent = "ZombieBlood";
 }

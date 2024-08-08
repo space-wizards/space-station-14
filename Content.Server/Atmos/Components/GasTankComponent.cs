@@ -1,7 +1,6 @@
 using Content.Shared.Atmos;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Atmos.Components
 {
@@ -94,8 +93,8 @@ namespace Content.Server.Atmos.Components
         [DataField("tankFragmentScale"), ViewVariables(VVAccess.ReadWrite)]
         public float TankFragmentScale = 2 * Atmospherics.OneAtmosphere;
 
-        [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string ToggleAction = "ActionToggleInternals";
+        [DataField]
+        public EntProtoId ToggleAction = "ActionToggleInternals";
 
         [DataField("toggleActionEntity")] public EntityUid? ToggleActionEntity;
 

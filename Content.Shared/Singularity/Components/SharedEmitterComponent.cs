@@ -3,7 +3,6 @@ using Content.Shared.DeviceLinking;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
@@ -28,8 +27,8 @@ public sealed partial class EmitterComponent : Component
     /// <summary>
     /// The entity that is spawned when the emitter fires.
     /// </summary>
-    [DataField("boltType", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string BoltType = "EmitterBolt";
+    [DataField]
+    public EntProtoId BoltType = "EmitterBolt";
 
     [DataField("selectableTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string> SelectableTypes = new();
@@ -79,20 +78,20 @@ public sealed partial class EmitterComponent : Component
     /// <summary>
     /// Signal port that turns on the emitter.
     /// </summary>
-    [DataField("onPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
-    public string OnPort = "On";
+    [DataField]
+    public ProtoId<SinkPortPrototype> OnPort = "On";
 
     /// <summary>
     /// Signal port that turns off the emitter.
     /// </summary>
-    [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
-    public string OffPort = "Off";
+    [DataField]
+    public ProtoId<SinkPortPrototype> OffPort = "Off";
 
     /// <summary>
     /// Signal port that toggles the emitter on or off.
     /// </summary>
-    [DataField("togglePort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
-    public string TogglePort = "Toggle";
+    [DataField]
+    public ProtoId<SinkPortPrototype> TogglePort = "Toggle";
 
     /// <summary>
     /// Map of signal ports to entity prototype IDs of the entity that will be fired.
