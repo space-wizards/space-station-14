@@ -202,7 +202,7 @@ namespace Content.Shared.Cuffs
             if (cancelled || user != ent.Owner)
                 return;
 
-            if (!TryComp<HandsComponent>(ent, out var hands) || ent.Comp.CuffedHandCount != hands.Count)
+            if (!TryComp<HandsComponent>(ent, out var hands) || ent.Comp.CuffedHandCount < hands.Count)
                 return;
 
             cancelled = true;
