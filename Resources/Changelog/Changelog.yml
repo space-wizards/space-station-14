@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Killerqu00
-  changes:
-  - message: Revolutionaries can now cuff command members in order to seize control
-      of the station.
-    type: Tweak
-  id: 6563
-  time: '2024-05-09T06:48:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27627
 - author: vorkathbruh
   changes:
   - message: Nuclear operative agents now require time in Chemistry rather than time
@@ -3786,3 +3778,10 @@
   id: 7062
   time: '2024-08-08T13:17:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29997
+- author: lzk228
+  changes:
+  - message: RD labcoat added in RD's dresser.
+    type: Add
+  id: 7063
+  time: '2024-08-08T22:50:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30671
