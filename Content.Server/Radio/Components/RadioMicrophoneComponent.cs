@@ -1,7 +1,6 @@
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Chat;
 using Content.Shared.Radio;
-using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
@@ -41,10 +40,4 @@ public sealed partial class RadioMicrophoneComponent : Component
     /// </summary>
     [DataField("unobstructedRequired")]
     public bool UnobstructedRequired = false;
-
-    /// <summary>
-    /// The sound effect played when microphone listen
-    /// </summary>
-    [DataField]
-    public SoundSpecifier ListenSound = new SoundPathSpecifier("/Audio/Effects/radio_talk.ogg");
 }

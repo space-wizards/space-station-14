@@ -1,7 +1,6 @@
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Chat;
 using Content.Shared.Radio;
-using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Radio.Components;
@@ -25,10 +24,4 @@ public sealed partial class RadioSpeakerComponent : Component
 
     [DataField("enabled")]
     public bool Enabled;
-
-    /// <summary>
-    /// The sound effect played when speaker play
-    /// </summary>
-    [DataField]
-    public SoundSpecifier PlaySound = new SoundPathSpecifier("/Audio/Effects/radio_receive.ogg");
 }
