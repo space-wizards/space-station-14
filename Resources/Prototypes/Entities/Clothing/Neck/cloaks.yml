@@ -275,7 +275,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakFS
-  name: head of personnel's cloak
+  name: financial supervisor's cloak
   description: A pompous and elite green cloak with a nice gold trim, tailored to represent high command.
   components:
   - type: Sprite

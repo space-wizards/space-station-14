@@ -194,7 +194,10 @@
   name: blue shielder's over-ear headset
   description: A headset given only to trusted central command agents, defauting to allow radio access that helps you do your job.
   components:
-  - type: ContainerFill
+    - type: Headset
+    - type: EncryptionKeyHolder
+      keySlots: 7
+    - type: ContainerFill
     containers:
       key_slots:
       - EncryptionKeySecurity
