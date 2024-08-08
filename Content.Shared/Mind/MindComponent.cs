@@ -148,6 +148,9 @@ public sealed partial class MindRolePrototype : IPrototype
     public Color Color { get; private set; } = Color.FromHex("#eeeeee");
 }
 
+/// <summary>
+///     The possible roles a character can be in the round.
+/// </summary>
 public enum MindRoleType
 {
     Neutral,
