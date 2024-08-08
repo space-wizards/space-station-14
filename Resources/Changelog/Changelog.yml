@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: deltanedas
   changes:
-  - message: Ninja can now hack criminal records consoles to make everyone wanted.
-    type: Add
-  id: 6561
-  time: '2024-05-09T06:35:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24982
-- author: deltanedas
-  changes:
   - message: Added the robotics console for remotely looking at, disabling or destroying
       cyborgs!
     type: Add
@@ -3778,3 +3771,13 @@
   id: 7060
   time: '2024-08-08T10:04:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30660
+- author: Plykiya
+  changes:
+  - message: You can drop food or drinks from your hands to interrupt eating it, again.
+    type: Fix
+  - message: Barber scissors are now interrupted if the item is dropped or if the
+      user changes hands.
+    type: Tweak
+  id: 7061
+  time: '2024-08-08T11:39:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30361
