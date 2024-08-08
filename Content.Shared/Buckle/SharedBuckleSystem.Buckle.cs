@@ -9,6 +9,7 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Events;
+using Content.Shared.Rotation;
 using Content.Shared.Standing;
 using Content.Shared.Storage.Components;
 using Content.Shared.Stunnable;
@@ -40,6 +41,7 @@ public abstract partial class SharedBuckleSystem
         SubscribeLocalEvent<BuckleComponent, StartPullAttemptEvent>(OnPullAttempt);
         SubscribeLocalEvent<BuckleComponent, BeingPulledAttemptEvent>(OnBeingPulledAttempt);
         SubscribeLocalEvent<BuckleComponent, PullStartedMessage>(OnPullStarted);
+        SubscribeLocalEvent<BuckleComponent, UnbuckleAlertEvent>(OnUnbuckleAlert);
 
         SubscribeLocalEvent<BuckleComponent, InsertIntoEntityStorageAttemptEvent>(OnBuckleInsertIntoEntityStorageAttempt);
 
@@ -83,6 +85,13 @@ public abstract partial class SharedBuckleSystem
     private void OnPullStarted(Entity<BuckleComponent> ent, ref PullStartedMessage args)
     {
         Unbuckle(ent!, args.PullerUid);
+    }
+
+    private void OnUnbuckleAlert(Entity<BuckleComponent> ent, ref UnbuckleAlertEvent args)
+    {
+        if (args.Handled)
+            return;
+        args.Handled = TryUnbuckle(ent, ent, ent);
     }
 
     #endregion
@@ -360,10 +369,10 @@ public abstract partial class SharedBuckleSystem
         switch (strap.Comp.Position)
         {
             case StrapPosition.Stand:
-                _standing.Stand(buckle);
+                _standing.Stand(buckle, force: true);
                 break;
             case StrapPosition.Down:
-                _standing.Down(buckle, false, false);
+                _standing.Down(buckle, false, false, force: true);
                 break;
         }
 
@@ -457,7 +466,7 @@ public abstract partial class SharedBuckleSystem
         Appearance.SetData(buckle, BuckleVisuals.Buckled, false);
 
         if (HasComp<KnockedDownComponent>(buckle) || _mobState.IsIncapacitated(buckle))
-            _standing.Down(buckle);
+            _standing.Down(buckle, playSound: false);
         else
             _standing.Stand(buckle);
 

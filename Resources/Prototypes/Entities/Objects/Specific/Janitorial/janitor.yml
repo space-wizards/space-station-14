@@ -238,6 +238,7 @@
     embedOnThrow: True
   - type: ThrowingAngle
     angle: 0
+  - type: LandAtCursor
   - type: Ammo
     muzzleFlash: null
   - type: Projectile

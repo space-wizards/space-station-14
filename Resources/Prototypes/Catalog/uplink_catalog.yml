@@ -122,7 +122,7 @@
   name: uplink-sniper-bundle-name
   description: uplink-sniper-bundle-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi, state: base }
-  productEntity: BriefcaseSyndieSniperBundleFilled  
+  productEntity: BriefcaseSyndieSniperBundleFilled
   cost:
     Telecrystal: 12
   categories:
@@ -784,7 +784,7 @@
   description: uplink-slipocalypse-clustersoap-desc
   productEntity: SlipocalypseClusterSoap
   cost:
-    Telecrystal: 3
+    Telecrystal: 2
   categories:
   - UplinkDisruption
 
@@ -902,11 +902,11 @@
 - type: listing
   id: UplinkReinforcementRadioSyndicate
   name: uplink-reinforcement-radio-name
-  description: uplink-reinforcement-radio-desc
+  description: uplink-reinforcement-radio-traitor-desc
   productEntity: ReinforcementRadioSyndicate
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio-urist }
   cost:
-    Telecrystal: 16
+    Telecrystal: 14
   categories:
   - UplinkAllies
   conditions:
@@ -916,13 +916,13 @@
           - NukeOpsUplink
 
 - type: listing
-  id: UplinkReinforcementRadioSyndicateNukeops # Version for Nukeops that spawns an agent with the NukeOperative component.
-  name: uplink-reinforcement-radio-name
-  description: uplink-reinforcement-radio-desc
+  id: UplinkReinforcementRadioSyndicateNukeops # Version for Nukeops that spawns another nuclear operative without the uplink.
+  name: uplink-reinforcement-radio-nukeops-name
+  description: uplink-reinforcement-radio-nukeops-desc
   productEntity: ReinforcementRadioSyndicateNukeops
-  icon: { sprite: Objects/Devices/communication.rsi, state: old-radio-urist }
+  icon: { sprite: Objects/Devices/communication.rsi, state: old-radio-nukeop }
   cost:
-    Telecrystal: 16
+    Telecrystal: 35
   categories:
   - UplinkAllies
   conditions:
@@ -1004,7 +1004,7 @@
     Telecrystal: 6
   categories:
     - UplinkAllies
-  
+
 - type: listing
   id: UplinkSyndicatePersonalAI
   name: uplink-syndicate-pai-name
@@ -1299,13 +1299,29 @@
   - UplinkWearables
 
 - type: listing
+  id: UplinkClothingOuterArmorRaid
+  name: uplink-syndie-raid-name
+  description: uplink-syndie-raid-desc
+  icon: { sprite: /Textures/Clothing/OuterClothing/Armor/syndie-raid.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateRaidBundle
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkWearables
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
   id: UplinkHardsuitSyndieElite
   name: uplink-hardsuit-syndieelite-name
   description: uplink-hardsuit-syndieelite-desc
   icon: { sprite: /Textures/Clothing/OuterClothing/Hardsuits/syndieelite.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateEliteHardsuitBundle
   cost:
-    Telecrystal: 10
+    Telecrystal: 12
   categories:
   - UplinkWearables
 

@@ -59,6 +59,15 @@ public sealed partial class NpcFactionSystem : EntitySystem
             ent.Comp.FriendlyFactions.UnionWith(factionData.Friendly);
             ent.Comp.HostileFactions.UnionWith(factionData.Hostile);
         }
+        // Add additional factions if it is written in prototype
+        if (ent.Comp.AddFriendlyFactions != null)
+        {
+            ent.Comp.FriendlyFactions.UnionWith(ent.Comp.AddFriendlyFactions);
+        }
+        if (ent.Comp.AddHostileFactions != null)
+        {
+            ent.Comp.HostileFactions.UnionWith(ent.Comp.AddHostileFactions);
+        }
     }
 
     /// <summary>
