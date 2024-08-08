@@ -232,12 +232,12 @@ namespace Content.Server.Administration.Systems
             }
 
             var antag = false;
-            var mindRole = MindRoleType.Neutral;
+            MindRolePrototype mindRole = new(); //TODO:ERRANT LATER: decide if this should stay like this
             var startingRole = string.Empty;
             if (_minds.TryGetMind(session, out var mindId, out _))
             {
                 if (TryComp<MindComponent>(mindId, out var mindComp))
-                    mindRole = mindComp.MindRole.RoleType;
+                    mindRole = mindComp.MindRole;
                 else
                 {
                     //TODO:ERRANT LATER: generate error for logs

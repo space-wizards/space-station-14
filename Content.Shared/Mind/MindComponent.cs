@@ -125,21 +125,42 @@ public sealed partial class MindRolePrototype : IPrototype
     [IdDataField]
     public string ID { get; private set; } = default!;
 
-    [DataField]
-    public MindRoleType RoleType = MindRoleType.Neutral;
-
     /// <summary>
-    ///     The role's name as displayed to players.
+    ///     The role's specific antag-or-other-special category.
     /// </summary>
-    [DataField(required: true)]
-    public string Name { get; private set; } = "mind-role-neutral-name";
+    [DataField]
+    public MindRoleCorePrototype Prototype = new();
 
     /// <summary>
     ///     Additional information about the role, such as what team it is or a familiar's owner.
     ///     Keep this short.
     /// </summary>
     [DataField]
-    public string? Details { get; private set; } = null;
+    public string? Details { get; private set; } = "mind-role-neutral-details";
+}
+
+/// <summary>
+///     The core details of Mind Role Types are kept together on separate prototypes
+///     so "userspace" prototype definitnions need only refer to them collectively
+/// </summary>
+[Prototype]
+[Serializable]
+public sealed partial class MindRoleCorePrototype : IPrototype
+{
+    [IdDataField]
+    public string ID { get; private set; } = default!;
+
+    /// <summary>
+    ///     The role's specific antag-or-other-special category.
+    /// </summary>
+    [DataField(required: true)]
+    public MindRoleType RoleType = MindRoleType.Neutral;
+
+    /// <summary>
+    ///     The role's name as displayed on the UI.
+    /// </summary>
+    [DataField(required: true)]
+    public string Name { get; private set; } = "mind-role-neutral-name";
 
     /// <summary>
     ///     The role's displayed color.

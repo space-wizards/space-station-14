@@ -11,7 +11,7 @@ namespace Content.Shared.Administration
         string IdentityName,
         string StartingJob,
         bool Antag,
-        MindRoleType MindRoleType,
+        MindRolePrototype MindRole,
         NetEntity? NetEntity,
         NetUserId SessionId,
         bool Connected,

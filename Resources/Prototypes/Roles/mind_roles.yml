@@ -1,50 +1,45 @@
+# Mind Role Cores
+# For use by Mind Roles
+# Do not touch these
 
-# Jobs
-- type: mindRole
-  id: MindRoleNeutral
+- type: mindRoleCore
+  id: Neutral
   roleType: Neutral
   name: mind-role-neutral-name
-  color: '#00cc55'
-  details: Do your job.
+  color: '#eeeeee'
 
-- type: mindRole
-  id: MindRoleAntagSolo
-  roleType: AntagSolo
-  name: mind-role-antag-solo-name
+- type: mindRoleCore
+  id: SoloAntag
+  roleType: SoloAntag
+  name: mind-role-solo-antag-name
   color: '#d82000'
-  details: Complete your mission.
 
-- type: mindRole
-  id: MindRoleAntagTeam
-  roleType: AntagTeam
-  name: mind-role-antag-team-name
+- type: mindRoleCore
+  id: TeamAntag
+  roleType: TeamAntag
+  name: mind-role-team-antag-name
   color: '#d82000'
-  details: Work with your team.
 
-- type: mindRole
-  id: MindRoleFreeAgent
+- type: mindRoleCore
+  id: FreeAgent
   roleType: FreeAgent
   name: mind-role-free-agent-name
   color: '#ffff00'
-  details: Do what you want.
 
-- type: mindRole
-  id: MindRoleFamiliar
+- type: mindRoleCore
+  id: Familiar
   roleType: Familiar
   name: mind-role-familiar-name
-  color: '#ffff00'
-  details: Obey your owner.
+  color: '#6495ed'
 
-- type: mindRole
-  id: MindRoleSilicon
+- type: mindRoleCore
+  id: Silicon
   roleType: Silicon
   name: mind-role-silicon-name
   color: '#6495ed'
-  details: Follow your laws.
 
-- type: mindRole
-  id: MindRoleObserver
+- type: mindRoleCore
+  id: Observer
   roleType: Observer
   name: mind-role-observer-name
-  color: '#6495ed'
-  details: Divine light severed.
+  color: '#eeeeee'
