@@ -2,7 +2,7 @@
   parent: BaseItem
   id: NotekeeperCartridge
   name: notekeeper cartridge
-  description: A program for keeping notes
+  description: A program for keeping notes.
   components:
   - type: Sprite
     sprite: Objects/Devices/cartridge.rsi
@@ -20,7 +20,7 @@
   parent: BaseItem
   id: NewsReaderCartridge
   name: news cartridge
-  description: A program for reading news
+  description: A program for reading news.
   components:
   - type: Sprite
     sprite: Objects/Devices/cartridge.rsi
@@ -38,7 +38,7 @@
   parent: BaseItem
   id: CrewManifestCartridge
   name: crew manifest cartridge
-  description: A program for listing your fellow crewmembers
+  description: A program for listing your fellow crewmembers.
   components:
     - type: Sprite
       sprite: Objects/Devices/cartridge.rsi
@@ -56,7 +56,7 @@
   parent: BaseItem
   id: NetProbeCartridge
   name: NetProbe cartridge
-  description: A program for getting the address and frequency of network devices
+  description: A program for getting the address and frequency of network devices.
   components:
     - type: Sprite
       sprite: Objects/Devices/cartridge.rsi
@@ -74,7 +74,7 @@
   parent: BaseItem
   id: LogProbeCartridge
   name: LogProbe cartridge
-  description: A program for getting access logs from devices
+  description: A program for getting access logs from devices.
   components:
     - type: Sprite
       sprite: Objects/Devices/cartridge.rsi
@@ -92,4 +92,4 @@
     - type: LogProbeCartridge
     - type: GuideHelp
       guides:
-        - Forensics
+      - Forensics

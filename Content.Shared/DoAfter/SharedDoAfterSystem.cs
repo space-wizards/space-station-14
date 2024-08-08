@@ -393,5 +393,18 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         // networking whether a do-after has raised its events or not.
         return DoAfterStatus.Finished;
     }
+
+    public bool IsRunning(DoAfterId? id, DoAfterComponent? comp = null)
+    {
+        if (id == null)
+            return false;
+
+        return GetStatus(id.Value.Uid, id.Value.Index, comp) == DoAfterStatus.Running;
+    }
+
+    public bool IsRunning(EntityUid entity, ushort id, DoAfterComponent? comp = null)
+    {
+        return GetStatus(entity, id, comp) == DoAfterStatus.Running;
+    }
     #endregion
 }
