@@ -702,3 +702,68 @@
     whitelist:
       tags:
       - WizardWand
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltSecurity
+  name: security belt
+  description: A high utility belt, capable of holding countless tools and weapons of great use.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/blueshield.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/blueshield.rsi
+  - type: Storage
+    whitelist:
+      tags:
+        - CigPack
+        - Taser
+        - SecBeltEquip
+        - Radio
+        - Sidearm
+        - MagazinePistol
+        - MagazineMagnum
+        - CombatKnife
+        - Truncheon
+        - Stunbaton
+        - FlashOnTrigger
+        - SmokeOnTrigger
+        - Flash
+        - Handcuff
+        - BallisticAmmoProvider
+        - CartridgeAmmo
+        - DoorRemote
+        - Whistle
+        - HolosignProjector
+        - BalloonPopper
+        - Wirecutter
+        - Crowbar
+        - Screwdriver
+        - Flashlight
+        - Wrench
+        - GeigerCounter
+        - Flare
+        - CableCoil
+        - Powerdrill
+        - JawsOfLife
+        - CigPack
+        - Radio
+        - HolofanProjector
+        - Multitool
+        - AppraisalTool
+  - type: ItemMapper
+    mapLayers:
+      flashbang:
+        whitelist:
+          components:
+          - FlashOnTrigger
+      stunbaton:
+        whitelist:
+          components:
+          - Stunbaton
+      tear_gas_grenade:
+        whitelist:
+          components:
+          - SmokeOnTrigger
+    sprite: Clothing/Belt/belt_overlay.rsi
+  - type: Appearance

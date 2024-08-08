@@ -1115,3 +1115,19 @@
     - ClothMade
     - HamsterWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretBS
+  name: blue shield beret
+  description: A bright blue beret issued to any blue shield officers defending Nanotrasen.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_blue.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_blue.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon

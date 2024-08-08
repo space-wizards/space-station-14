@@ -178,3 +178,12 @@
     maxItemSize: Huge
     grid:
     - 0,0,19,9
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelBS
+  name: blue shield satchel
+  description: A extra robust satchel for agent related needs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/blueshield.rsi
