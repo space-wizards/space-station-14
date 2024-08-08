@@ -182,7 +182,6 @@
       - EncryptionKeyRobo
       - EncryptionKeySecurity
       - EncryptionKeyService
-      - EncryptionKeyCentCom
       - EncryptionKeyCommand
       - EncryptionKeyCommon
   - type: Sprite
