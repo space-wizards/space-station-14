@@ -24,7 +24,7 @@
   name: china lake
   parent: [BaseWeaponLauncher, BaseGunWieldable]
   id: WeaponLauncherChinaLake
-  description: PLOOP
+  description: PLOOP.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
@@ -166,6 +166,8 @@
     - type: TetherGun
       frequency: 5
       dampingRatio: 4
+    - type: ItemToggle
+      onUse: false
     - type: PowerCellDraw
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
@@ -211,6 +213,8 @@
         path: /Audio/Weapons/soup.ogg
         params:
           volume: 2
+    - type: ItemToggle
+      onUse: false
     - type: PowerCellDraw
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
@@ -247,6 +251,7 @@
     - type: Gun
       soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
       fireRate: 0.5
+      clumsyProof: true
     - type: BasicEntityAmmoProvider
       proto: GrapplingHook
       capacity: 1
@@ -355,7 +360,7 @@
   parent: WeaponLauncherMultipleRocket
   id: WeaponLauncherAdmemeMeteorLarge
   suffix: Admeme
-  description: It fires large meteors
+  description: It fires large meteors.
   components:
   - type: BallisticAmmoProvider
     whitelist:

@@ -2,7 +2,7 @@
   parent: [MobObserver, InventoryBase]
   id: AdminObserver
   name: admin observer
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: ContentEye
     maxZoom: 8.916104, 8.916104
@@ -69,6 +69,7 @@
   - type: RadarConsole
     followEntity: true
   - type: CargoOrderConsole
+  - type: BankClient
   - type: CrewMonitoringConsole
   - type: GeneralStationRecordConsole
     canDeleteEntries: true
@@ -154,7 +155,7 @@
 - type: entity
   id: ActionAGhostShowStationRecords
   name: Station Records Interface
-  description: View a station records Interface
+  description: View a station records Interface.
   components:
   - type: InstantAction
     icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }

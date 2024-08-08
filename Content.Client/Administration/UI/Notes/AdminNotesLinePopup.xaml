@@ -1,10 +1,10 @@
 <Popup xmlns="https://spacestation14.io"
        xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
-    <PanelContainer StyleClasses="BackgroundDark">
+    <PanelContainer>
         <PanelContainer.PanelOverride>
-            <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#18181B"/>
+            <gfx:StyleBoxFlat BorderThickness="2" BorderColor="#18181B" BackgroundColor="#25252a"/>
         </PanelContainer.PanelOverride>
-        <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Vertical" Margin="4 4 4 4">
             <Label Name="PlayerNameLabel"/>
             <Label Name="IdLabel"/>
             <Label Name="TypeLabel"/>
