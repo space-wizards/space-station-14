@@ -168,7 +168,7 @@
 
 - type: entity
   parent: ClothingHeadsetAlt
-  id: ClothingHeadsetAltBS
+  id: ClothingHeadsetAltFS
   name: financial supervisor's over-ear headset
   description: A headset given only to trusted central command members, this one specifically belongs to the central advisor for Nanotrasen.
   components:
