@@ -639,7 +639,7 @@
 - type: entity
   parent: BasePDA
   id: CentcomPDA
-  name: CentCom PDA
+  name: CentComm PDA
   description: Light green sign of walking bureaucracy.
   components:
   - type: Pda
