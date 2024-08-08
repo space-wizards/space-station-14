@@ -152,6 +152,14 @@
       "name": "metal-3"
     },
     {
+      "name": "metal-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "metal-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "tube"
     },
     {

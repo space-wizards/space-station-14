@@ -38,6 +38,7 @@
         map: [ "base" ]
   - type: Item
     size: Ginormous
+    heldPrefix: metal
   - type: MultiHandedItem
   - type: RandomSprite
     available:
