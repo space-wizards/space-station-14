@@ -736,19 +736,19 @@
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletLaserSpread
-    fireCost: 200
+    fireCost: 150
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: BulletLaserSpread
-      fireCost: 200
+      fireCost: 150
     - proto: BulletLaserHeavySpread
-      fireCost: 200
+      fireCost: 150
     - proto: BulletDisablerSmgSpread
-      fireCost: 200
+      fireCost: 150
   - type: Item
-    size: Normal
+    size: Large
     shape:
-    - 0,0,4,0
+    - 0,0,3,1
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
     heldPrefix: energy
   - type: Tag
@@ -757,3 +757,9 @@
   - type: StealTarget
     stealGroup: WeaponEnergyShotgun
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
+  - type: Battery
+    maxCharge: 1050
+    startingCharge: 1050
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 25 #takes 42 seconds to fully recharge, the answer to life, the universe and everything
