@@ -20,7 +20,7 @@
     disguiseProto: ChameleonDisguise
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   id: ChameleonDisguise
   name: Urist McKleiner
   components:

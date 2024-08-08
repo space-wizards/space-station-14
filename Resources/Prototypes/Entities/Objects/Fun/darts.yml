@@ -1,6 +1,6 @@
 - type: entity
   name: dart
-  description: light throwing dart for playing darts. Don't get in the eye!
+  description: Light throwing dart for playing darts. Don't get in the eye!
   parent: BaseItem
   id: Dart
   components:
@@ -84,6 +84,7 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: BalloonPopper
 
 - type: entity
   parent: Dart

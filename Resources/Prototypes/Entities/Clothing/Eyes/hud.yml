@@ -1,7 +1,7 @@
 - type: entity
   id: ShowSecurityIcons
   abstract: true
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: ShowJobIcons
   - type: ShowMindShieldIcons
@@ -10,7 +10,7 @@
 - type: entity
   id: ShowMedicalIcons
   abstract: true
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: ShowHealthBars
     damageContainers:

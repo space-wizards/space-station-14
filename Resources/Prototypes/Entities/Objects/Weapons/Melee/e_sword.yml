@@ -81,26 +81,25 @@
     temperature: 700
 
 - type: entity
-  name: pen
+  name: energy dagger
   parent: EnergySword
-  id: EnergyDagger
-  suffix: E-Dagger
-  description: 'A dark ink pen.'
+  id: EnergyDaggerLoud
+  description: A not as loud and dangerous dagger with a beam made of pure, concentrated plasma. This one is completely undisguised.
   components:
   - type: ItemToggle
     soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
       params:
-        volume: -6
+        volume: -3
     soundDeactivate:
       path: /Audio/Weapons/ebladeoff.ogg
       params:
-        volume: -6
+        volume: -3
   - type: ItemToggleMeleeWeapon
     activatedSoundOnSwing:
       path: /Audio/Weapons/eblademiss.ogg
       params:
-        volume: -6
+        volume: -3
         variation: 0.250
     activatedDamage:
         types:
@@ -111,14 +110,14 @@
     activeSound:
       path: /Audio/Weapons/ebladehum.ogg
       params:
-        volume: -6
+        volume: -3
   - type: ComponentToggler
     components:
     - type: Sharp
     - type: DisarmMalus
       malus: 0.4
   - type: Sprite
-    sprite: Objects/Weapons/Melee/e_dagger.rsi
+    sprite: Objects/Weapons/Melee/e_dagger_loud.rsi
     layers:
       - state: e_sword
       - state: e_sword_blade
@@ -135,7 +134,7 @@
         Blunt: 1
   - type: Item
     size: Tiny
-    sprite: Objects/Weapons/Melee/e_dagger.rsi
+    sprite: Objects/Weapons/Melee/e_dagger_loud.rsi
   - type: UseDelay
     delay: 1.0
   - type: PointLight
@@ -154,11 +153,45 @@
       right:
       - state: inhand-right-blade
         shader: unshaded
+  - type: DisarmMalus
+    malus: 0
+
+- type: entity
+  name: pen
+  parent: EnergyDaggerLoud
+  id: EnergyDagger
+  suffix: E-Dagger
+  description: 'A dark ink pen.'
+  components:
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Weapons/ebladeon.ogg
+      params:
+        volume: -6
+    soundDeactivate:
+      path: /Audio/Weapons/ebladeoff.ogg
+      params:
+        volume: -6
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+      params:
+        volume: -6
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_dagger.rsi
+    layers:
+      - state: e_sword
+      - state: e_sword_blade
+        color: "#FFFFFF"
+        visible: false
+        shader: unshaded
+        map: [ "blade" ]
+  - type: Item
+    size: Tiny
+    sprite: Objects/Weapons/Melee/e_dagger.rsi
   - type: Tag
     tags:
     - Write
-  - type: DisarmMalus
-    malus: 0
 
 - type: entity
   parent: BaseItem
@@ -284,3 +317,12 @@
       right:
       - state: inhand-right-blade
         shader: unshaded
+
+- type: entity
+  suffix: One-Handed, For Borgs
+  parent: EnergySwordDouble
+  id: CyborgEnergySwordDouble # why is this invalid if ID is BorgEnergySwordDouble
+  description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. Specially designed for syndicate cyborgs.
+  components: # could add energy-draining like the L6C
+  - type: Wieldable
+    freeHandsRequired: 0 # because borg has no off-hand to wield with.  Without this, it will be unable to activate the esword

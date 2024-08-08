@@ -72,7 +72,7 @@
   parent: DrinkGlassBase
   id: DrinkJar
   name: jar
-  description: The hipster's cup
+  description: The hipster's cup.
   components:
   - type: Drink
   - type: Sprite
