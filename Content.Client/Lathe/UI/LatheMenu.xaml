@@ -100,12 +100,9 @@
                             Margin="5 0 0 0"
                             Text="{Loc 'lathe-menu-fabricating-message'}">
                         </Label>
-                        <TextureRect
-                            Name="Icon"
-                            HorizontalExpand="True"
-                            SizeFlagsStretchRatio="2"
-                            Margin="100 0 0 0">
-                        </TextureRect>
+                        <BoxContainer Name="FabricatingDisplayContainer"
+                                      HorizontalAlignment="Left"
+                                      Margin="100 0 0 0"/>
                         <Label
                             Name="NameLabel"
                             RectClipContent="True"
@@ -114,12 +111,15 @@
                         </Label>
                     </PanelContainer>
                 </BoxContainer>
-                <ItemList
-                    Name="QueueList"
-                    VerticalExpand="True"
-                    SizeFlagsStretchRatio="3"
-                    SelectMode="None">
-                </ItemList>
+                <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                    <BoxContainer
+                        Name="QueueList"
+                        Orientation="Vertical"
+                        HorizontalExpand="True"
+                        VerticalExpand="True"
+                        RectClipContent="True">
+                    </BoxContainer>
+                </ScrollContainer>
             </BoxContainer>
             <BoxContainer
             VerticalExpand="True"

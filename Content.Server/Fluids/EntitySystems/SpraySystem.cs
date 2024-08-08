@@ -1,11 +1,11 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Extinguisher;
 using Content.Server.Fluids.Components;
 using Content.Server.Gravity;
 using Content.Server.Popups;
 using Content.Shared.FixedPoint;
+using Content.Shared.Fluids;
 using Content.Shared.Interaction;
 using Content.Shared.Timing;
 using Content.Shared.Vapor;
@@ -34,7 +34,7 @@ public sealed class SpraySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SprayComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(FireExtinguisherSystem) });
+        SubscribeLocalEvent<SprayComponent, AfterInteractEvent>(OnAfterInteract);
     }
 
     private void OnAfterInteract(Entity<SprayComponent> entity, ref AfterInteractEvent args)
@@ -48,7 +48,7 @@ public sealed class SpraySystem : EntitySystem
             return;
 
         var ev = new SprayAttemptEvent(args.User);
-        RaiseLocalEvent(entity, ev);
+        RaiseLocalEvent(entity, ref ev);
         if (ev.Cancelled)
             return;
 
@@ -146,15 +146,5 @@ public sealed class SpraySystem : EntitySystem
 
         _useDelay.SetLength(entity.Owner, TimeSpan.FromSeconds(cooldownTime));
         _useDelay.TryResetDelay((entity, useDelay));
-    }
-}
-
-public sealed class SprayAttemptEvent : CancellableEntityEventArgs
-{
-    public EntityUid User;
-
-    public SprayAttemptEvent(EntityUid user)
-    {
-        User = user;
     }
 }

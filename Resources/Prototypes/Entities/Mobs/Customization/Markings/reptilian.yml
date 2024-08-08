@@ -295,6 +295,15 @@
     state: horns_bighorn
 
 - type: marking
+  id: LizardHornsDemonic
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: horns_demonic
+
+- type: marking
   id: LizardHornsKoboldEars
   bodyPart: HeadTop
   markingCategory: HeadTop

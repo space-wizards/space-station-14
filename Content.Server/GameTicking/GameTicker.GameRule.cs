@@ -324,6 +324,13 @@ public sealed partial class GameTicker
 
         foreach (var rule in args)
         {
+            if (!_prototypeManager.HasIndex(rule))
+            {
+                shell.WriteError($"Invalid game rule {rule} was skipped.");
+
+                continue;
+            }
+
             if (shell.Player != null)
             {
                 _adminLogger.Add(LogType.EventStarted, $"{shell.Player} tried to add game rule [{rule}] via command");

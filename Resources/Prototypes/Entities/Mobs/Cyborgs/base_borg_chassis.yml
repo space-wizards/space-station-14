@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseMob
+  parent: [BaseMob, StripableInventoryBase]
   id: BaseBorgChassis
   name: cyborg
   description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
@@ -77,8 +77,6 @@
   - type: SiliconLawProvider
     laws: Crewsimov
   - type: IonStormTarget
-  - type: Strippable
-  - type: InventorySlots
   - type: Inventory
     templateId: borg
   - type: Hands
@@ -101,6 +99,11 @@
     doAfterDelay: 10
     allowSelfRepair: false
   - type: BorgChassis
+  - type: LockingWhitelist
+    blacklist:
+      components:
+      - BorgChassis
+      - RoboticsConsole
   - type: WiresPanel
   - type: ActivatableUIRequiresPanel
   - type: NameIdentifier
@@ -114,6 +117,13 @@
   - type: PowerCellSlot
     cellSlotId: cell_slot
     fitsInCharger: true
+  - type: ItemToggle
+    activated: false # gets activated when a mind is added
+    onUse: false # no item-borg toggling sorry
+    toggleLight: false
+  - type: AccessToggle
+  # TODO: refactor movement to just be based on toggle like speedboots but for the boots themselves
+  # TODO: or just have sentient speedboots be fast idk
   - type: PowerCellDraw
     drawRate: 0.6
   - type: ItemSlots
@@ -146,6 +156,8 @@
     - cell_slot
   - type: Lock
     locked: true
+    breakOnEmag: false
+    unlockOnClick: false
   - type: ActivatableUIRequiresLock
   - type: LockedWiresPanel
   - type: Damageable
@@ -215,7 +227,8 @@
   - type: Emoting
   - type: GuideHelp
     guides:
-      - Cyborgs
+    - Cyborgs
+    - Robotics
   - type: StepTriggerImmune
 
 - type: entity
@@ -227,9 +240,20 @@
     deviceNetId: Wireless
     receiveFrequencyId: CyborgControl
     transmitFrequencyId: RoboticsConsole
+  - type: OnUseTimerTrigger
+    delay: 10
+    examinable: false
+    beepSound:
+      path: /Audio/Effects/Cargo/buzz_two.ogg
+      params:
+        volume: -4
+  # prevent any funnies if someone makes a cyborg item...
+  - type: AutomatedTimer
+  - type: ExplodeOnTrigger
   # explosion does most of its damage in the center and less at the edges
   - type: Explosive
     explosionType: Minibomb
+    deleteAfterExplosion: false # let damage threshold gib the borg
     totalIntensity: 30
     intensitySlope: 20
     maxIntensity: 20

@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Resist;
-using Content.Server.Station.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
@@ -9,6 +8,7 @@ using Content.Shared.Coordinates;
 using Content.Shared.DoAfter;
 using Content.Shared.Lock;
 using Content.Shared.Mind.Components;
+using Content.Shared.Station.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Tools.Systems;

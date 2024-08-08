@@ -1,3 +1,4 @@
+admin-player-actions-reason = Reason
 admin-player-actions-bans = Ban List
 admin-player-actions-notes = Notes
 admin-player-actions-kick = Kick

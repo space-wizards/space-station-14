@@ -65,14 +65,13 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
     {
         if (_isClientTyping == isClientTyping)
             return;
-        _isClientTyping = isClientTyping;
 
-        // check if player controls any pawn
+        // check if player controls any entity.
         if (_playerManager.LocalEntity == null)
             return;
 
-        // send a networked event to server
-        RaiseNetworkEvent(new TypingChangedEvent(isClientTyping));
+        _isClientTyping = isClientTyping;
+        RaisePredictiveEvent(new TypingChangedEvent(isClientTyping));
     }
 
     private void OnShowTypingChanged(bool showTyping)
