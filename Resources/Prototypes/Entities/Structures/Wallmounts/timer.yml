@@ -101,7 +101,7 @@
 # Construction Frame
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   id: TimerFrame
   name: timer frame
   description: A construction frame for a timer.

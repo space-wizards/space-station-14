@@ -4519,6 +4519,12 @@ entities:
     - type: Transform
       pos: -8.5,-42.5
       parent: 31
+  - uid: 10766
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 31.5,-16.5
+      parent: 31
 - proto: AirlockExternalGlassShuttleLocked
   entities:
   - uid: 6995
@@ -5740,63 +5746,76 @@ entities:
     - type: Transform
       pos: 5.5,-32.5
       parent: 31
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
+  - uid: 950
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -14.5,-4.5
+      parent: 31
   - uid: 5157
     components:
     - type: Transform
-      pos: -14.5,-4.5
+      rot: -1.5707963267948966 rad
+      pos: -44.5,0.5
       parent: 31
   - uid: 6694
     components:
     - type: Transform
-      pos: -44.5,0.5
+      rot: -1.5707963267948966 rad
+      pos: -44.5,2.5
       parent: 31
   - uid: 7138
     components:
     - type: Transform
-      pos: -44.5,2.5
+      rot: -1.5707963267948966 rad
+      pos: -44.5,8.5
       parent: 31
   - uid: 7346
     components:
     - type: Transform
-      pos: -44.5,8.5
+      rot: -1.5707963267948966 rad
+      pos: -44.5,10.5
       parent: 31
   - uid: 7566
     components:
     - type: Transform
-      pos: -44.5,10.5
+      rot: 3.141592653589793 rad
+      pos: 20.5,28.5
       parent: 31
   - uid: 7567
     components:
     - type: Transform
+      rot: 3.141592653589793 rad
       pos: 22.5,28.5
       parent: 31
   - uid: 7943
     components:
     - type: Transform
-      pos: 20.5,28.5
+      rot: 3.141592653589793 rad
+      pos: -12.5,-2.5
       parent: 31
   - uid: 9923
     components:
     - type: Transform
-      pos: -12.5,-2.5
+      pos: -8.5,-42.5
       parent: 31
   - uid: 10583
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -8.5,-42.5
+      pos: -51.5,-12.5
       parent: 31
   - uid: 10765
     components:
     - type: Transform
       pos: -44.5,-12.5
       parent: 31
-  - uid: 10766
+  - uid: 11466
     components:
     - type: Transform
-      pos: -51.5,-12.5
+      rot: 3.141592653589793 rad
+      pos: 31.5,-16.5
       parent: 31
 - proto: AtmosFixBlockerMarker
   entities:
@@ -28720,6 +28739,20 @@ entities:
       parent: 31
     - type: NavMapBeacon
       text: Tesla Storage
+- proto: DefaultStationBeaconEscapePod
+  entities:
+  - uid: 11467
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 31.5,-17.5
+      parent: 31
+  - uid: 11468
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -8.5,-41.5
+      parent: 31
 - proto: DefaultStationBeaconEVAStorage
   entities:
   - uid: 7640
@@ -56347,8 +56380,6 @@ entities:
     - type: Transform
       pos: 18.5,-3.5
       parent: 31
-- proto: SignChemistry2
-  entities:
   - uid: 7291
     components:
     - type: Transform
@@ -56586,13 +56617,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -26.497889,6.2645836
       parent: 31
-- proto: SignDrones
-  entities:
-  - uid: 7224
-    components:
-    - type: Transform
-      pos: 26.5,2.5
-      parent: 31
 - proto: SignElectrical
   entities:
   - uid: 11377
@@ -56642,7 +56666,7 @@ entities:
     - type: Transform
       pos: 50.5,-1.5
       parent: 31
-- proto: SignHydro2
+- proto: SignHydro1
   entities:
   - uid: 10545
     components:
@@ -56685,20 +56709,19 @@ entities:
     - type: Transform
       pos: 32.5,23.5
       parent: 31
+- proto: SignMaterials
+  entities:
+  - uid: 7224
+    components:
+    - type: Transform
+      pos: 26.5,2.5
+      parent: 31
 - proto: SignMedical
   entities:
   - uid: 4151
     components:
     - type: Transform
       pos: 5.5,2.5
-      parent: 31
-- proto: SignMinerDock
-  entities:
-  - uid: 9941
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 34.5,38.5
       parent: 31
 - proto: SignMorgue
   entities:
@@ -56791,6 +56814,14 @@ entities:
     components:
     - type: Transform
       pos: 54.5,-10.5
+      parent: 31
+- proto: SignShipDock
+  entities:
+  - uid: 9941
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 34.5,38.5
       parent: 31
 - proto: SignSomethingOld2
   entities:
@@ -61590,11 +61621,6 @@ entities:
     components:
     - type: Transform
       pos: 53.5,-12.5
-      parent: 31
-  - uid: 950
-    components:
-    - type: Transform
-      pos: 31.5,-16.5
       parent: 31
   - uid: 951
     components:

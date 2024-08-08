@@ -89,6 +89,7 @@ namespace Content.Client.Crayon.UI
             if (obj.Button.Name == null) return;
 
             _selected = obj.Button.Name;
+            OnSelected?.Invoke(_selected);
             RefreshList();
         }
 

@@ -24,7 +24,7 @@
   id: *checkerboard
   name: checkerboard
   parent: BaseBoardTabletop
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chessboard_tabletop.rsi
