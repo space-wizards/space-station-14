@@ -198,15 +198,15 @@
     - type: EncryptionKeyHolder
       keySlots: 7
     - type: ContainerFill
-    containers:
-      key_slots:
-      - EncryptionKeySecurity
-      - EncryptionKeyCommand
-      - EncryptionKeyCentCom
-      - EncryptionKeyMedicalScience
-      - EncryptionKeyRobo
-      - EncryptionKeyCommon
-  - type: Sprite
-    sprite: Clothing/Ears/Headsets/blueshield.rsi
-  - type: Clothing
-    sprite: Clothing/Ears/Headsets/blueshield.rsi
+      containers:
+        key_slots:
+        - EncryptionKeySecurity
+        - EncryptionKeyCommand
+        - EncryptionKeyCentCom
+        - EncryptionKeyMedicalScience
+        - EncryptionKeyRobo
+        - EncryptionKeyCommon
+    - type: Sprite
+      sprite: Clothing/Ears/Headsets/blueshield.rsi
+    - type: Clothing
+      sprite: Clothing/Ears/Headsets/blueshield.rsi
