@@ -61,6 +61,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
 
         UpdateFoodName(start);
         MergeFoodSolutions(start, element);
+        MergeFlavorProfiles(start, element);
         QueueDel(element);
         return true;
     }
@@ -95,7 +96,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         _metaData.SetEntityName(start, newName);
     }
 
-    public void MergeFoodSolutions(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element)
+    private void MergeFoodSolutions(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element)
     {
         if (!TryComp<FoodComponent>(start, out var startFood))
             return;
@@ -106,10 +107,25 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         if (!_solutionContainer.TryGetSolution(start.Owner, startFood.Solution, out var startSolutionEntity, out var startSolution))
             return;
 
-        if (!_solutionContainer.TryGetSolution(element.Owner, elementFood.Solution, out var elementSolutionEntity, out var elementSolution))
+        if (!_solutionContainer.TryGetSolution(element.Owner, elementFood.Solution, out _, out var elementSolution))
             return;
 
         startSolution.MaxVolume += elementSolution.MaxVolume;
         _solutionContainer.TryAddSolution(startSolutionEntity.Value, elementSolution);
+    }
+
+    private void MergeFlavorProfiles(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element)
+    {
+        if (!TryComp<FlavorProfileComponent>(start, out var startProfile))
+            return;
+
+        if (!TryComp<FlavorProfileComponent>(element, out var elementProfile))
+            return;
+
+        foreach (var flavor in elementProfile.Flavors)
+        {
+            if (startProfile != null && !startProfile.Flavors.Contains(flavor))
+                startProfile.Flavors.Add(flavor);
+        }
     }
 }

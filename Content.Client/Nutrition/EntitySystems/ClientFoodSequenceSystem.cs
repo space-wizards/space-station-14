@@ -6,7 +6,6 @@ namespace Content.Client.Nutrition.EntitySystems;
 
 public sealed class ClientFoodSequenceSystem : SharedFoodSequenceSystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
     public override void Initialize()
     {
         SubscribeLocalEvent<FoodSequenceStartPointComponent, AfterAutoHandleStateEvent>(OnHandleState);
@@ -50,9 +49,9 @@ public sealed class ClientFoodSequenceSystem : SharedFoodSequenceSystem
             sprite.LayerSetSprite(index, state.Sprite);
 
             //Offset the layer
-            var LayerPos = start.Comp.StartPosition;
-            LayerPos += start.Comp.Offset * counter;
-            sprite.LayerSetOffset(index, LayerPos);
+            var layerPos = start.Comp.StartPosition;
+            layerPos += start.Comp.Offset * counter;
+            sprite.LayerSetOffset(index, layerPos);
         }
     }
 }
