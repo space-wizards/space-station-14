@@ -15,6 +15,12 @@ public sealed partial class FoodSequenceElementComponent : Component
     /// </summary>
     [DataField(required: true)]
     public Dictionary<string, FoodSequenceElementEntry> Entries = new();
+
+    /// <summary>
+    /// which solution we will add to the main dish
+    /// </summary>
+    [DataField]
+    public string Solution = "food";
 }
 
 [DataRecord, Serializable, NetSerializable]

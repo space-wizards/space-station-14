@@ -335,7 +335,7 @@ public sealed class FoodSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
-        if (string.IsNullOrEmpty(component.Trash))
+        if (component.Trash.Count == 0)
         {
             QueueDel(food);
             return;
@@ -343,16 +343,19 @@ public sealed class FoodSystem : EntitySystem
 
         //We're empty. Become trash.
         var position = _transform.GetMapCoordinates(food);
-        var finisher = Spawn(component.Trash, position);
-
-        // If the user is holding the item
-        if (_hands.IsHolding(user, food, out var hand))
+        foreach (var trash in component.Trash)
         {
-            Del(food);
+            var finisher = Spawn(trash, position);
 
-            // Put the trash in the user's hand
-            _hands.TryPickup(user, finisher, hand);
-            return;
+            // If the user is holding the item
+            if (_hands.IsHolding(user, food, out var hand))
+            {
+                Del(food);
+
+                // Put the trash in the user's hand
+                _hands.TryPickup(user, finisher, hand);
+                return;
+            }
         }
 
         QueueDel(food);

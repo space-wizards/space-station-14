@@ -50,6 +50,9 @@ public sealed partial class FoodSequenceStartPointComponent : Component
     public HashSet<string> RevealedLayers = new();
 
     [DataField]
+    public string Solution = "food";
+
+    [DataField]
     public LocId? NameGeneration;
 
     [DataField]

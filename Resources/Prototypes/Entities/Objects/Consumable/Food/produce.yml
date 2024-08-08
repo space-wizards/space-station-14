@@ -261,7 +261,8 @@
     flavors:
       - banana
   - type: Food
-    trash: TrashBananaPeel
+    trash: 
+    - TrashBananaPeel
   - type: SolutionContainerManager
     solutions:
       food:
@@ -303,7 +304,8 @@
       - banana
       - nothing
   - type: Food
-    trash: TrashMimanaPeel
+    trash: 
+    - TrashMimanaPeel
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1089,7 +1091,8 @@
     flavors:
       - corn
   - type: Food
-    trash: FoodCornTrash
+    trash: 
+    - FoodCornTrash
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1834,7 +1837,8 @@
   - type: Produce
     seedId: gatfruit
   - type: Food
-    trash: WeaponRevolverPython
+    trash: 
+    - WeaponRevolverPython
   - type: Tag
     tags:
     - Fruit # It's in the name
@@ -2148,7 +2152,8 @@
     flavors:
       - bungo
   - type: Food
-    trash: FoodBungoPit
+    trash: 
+    - FoodBungoPit
   - type: SolutionContainerManager
     solutions:
       food:

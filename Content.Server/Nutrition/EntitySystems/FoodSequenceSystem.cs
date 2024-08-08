@@ -98,16 +98,10 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
 
     private void MergeFoodSolutions(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element)
     {
-        if (!TryComp<FoodComponent>(start, out var startFood))
+        if (!_solutionContainer.TryGetSolution(start.Owner, start.Comp.Solution, out var startSolutionEntity, out var startSolution))
             return;
 
-        if (!TryComp<FoodComponent>(element, out var elementFood))
-            return;
-
-        if (!_solutionContainer.TryGetSolution(start.Owner, startFood.Solution, out var startSolutionEntity, out var startSolution))
-            return;
-
-        if (!_solutionContainer.TryGetSolution(element.Owner, elementFood.Solution, out _, out var elementSolution))
+        if (!_solutionContainer.TryGetSolution(element.Owner, element.Comp.Solution, out _, out var elementSolution))
             return;
 
         startSolution.MaxVolume += elementSolution.MaxVolume;
