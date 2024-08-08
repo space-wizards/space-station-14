@@ -505,6 +505,7 @@
       - ActionCritFakeDeath
       - ActionCritLastWords
   - type: Godmode
+  - type: MovementAlwaysTouching
 
 - type: entity
   parent: MobSnail
