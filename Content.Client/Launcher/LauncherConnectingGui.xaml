@@ -22,7 +22,7 @@
                     </BoxContainer>
                     <BoxContainer Orientation="Vertical" Name="ConnectFail" Visible="False" SeparationOverride="10">
                         <RichTextLabel Name="ConnectFailReason" VerticalAlignment="Stretch"/>
-                        <BoxContainer Orientation="Horizontal" Align="End">
+                        <BoxContainer Orientation="Horizontal" Align="Center">
                             <Button Name="RetryButton" Text="{Loc 'connecting-retry'}"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Bottom" />
