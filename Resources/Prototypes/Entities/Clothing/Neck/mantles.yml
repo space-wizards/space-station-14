@@ -74,3 +74,14 @@
     sprite: Clothing/Neck/mantles/qmmantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/qmmantle.rsi  
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleFS
+  name: financial supervisor's mantle
+  description: A pompous and elite green mantle with a nice gold trim, tailored to represent high command.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/mantles/financialmantle.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/mantles/financialmantle.rsi

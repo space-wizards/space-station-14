@@ -170,7 +170,7 @@
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltBS
   name: financial supervisor's over-ear headset
-  description: An over-ear, given only to the most trusted central command agents, defauting to allow radio access, that helps you do your job.
+  description: A headset given only to trusted central command members, this one specifically belongs to the central advisor for Nanotrasen.
   components:
     - type: Headset
     - type: EncryptionKeyHolder
@@ -187,3 +187,23 @@
       sprite: Clothing/Ears/Headsets/financial.rsi
     - type: Clothing
       sprite: Clothing/Ears/Headsets/financial.rsi
+
+- type: entity
+  parent: ClothingHeadsetALT
+  id: ClothingHeadsetAltBS
+  name: blue shielder's over-ear headset
+  description: A headset given only to trusted central command agents, defauting to allow radio access that helps you do your job.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySecurity
+      - EncryptionKeyCommand
+      - EncryptionKeyCentCom
+      - EncryptionKeyMedicalScience
+      - EncryptionKeyRobo
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/blueshield.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/blueshield.rsi

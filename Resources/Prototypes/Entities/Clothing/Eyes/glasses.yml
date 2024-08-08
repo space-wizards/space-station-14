@@ -243,3 +243,31 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
   - type: FlashImmunity
+
+- type: entity
+  parent: [ClothingEyesBase, ShowSecurityIcons, ShowMedicalIcons]]
+  id: ClothingEyesGlassesBS
+  name: command glasses
+  description: Modified security glasses that provide maximum information, and utility.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/blueglasses.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/blueglasses.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 7
+  - type: Construction
+    graph: GlassesSecHUD
+    node: glassesSec
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
+  - type: GuideHelp
+    guides:
+    - Security
+  - type: IdentityBlocker
+    coverage: EYES
+
+blueglasses.rsi
