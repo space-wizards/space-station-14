@@ -369,11 +369,10 @@ public abstract class SharedMagicSystem : EntitySystem
             if (HasComp(ev.Target, data.Component.GetType()))
                 continue;
 
-            var component = (Component) _compFact.GetComponent(name);
-            component.Owner = ev.Target;
-            var temp = (object) component;
+            var component = (Component)_compFact.GetComponent(name);
+            var temp = (object)component;
             _seriMan.CopyTo(data.Component, ref temp);
-            EntityManager.AddComponent(ev.Target, (Component) temp!);
+            EntityManager.AddComponent(ev.Target, (Component)temp!);
         }
     }
     // End Change Component Spells
