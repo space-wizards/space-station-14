@@ -64,10 +64,8 @@ namespace Content.Server.Atmos.EntitySystems
         private void OnAfterInteract(EntityUid uid, GasAnalyzerComponent component, AfterInteractEvent args)
         {
             var target = args.Target;
-            // only show the cannot-reach message when we've actually clicked an object
             if (target != null && !_interactionSystem.InRangeUnobstructed((args.User, null), (target.Value, null)))
             {
-                //_popup.PopupEntity(Loc.GetString("gas-analyzer-component-player-cannot-reach-message"), args.User, args.User);
                 target = null; // if the target is out of reach, invalidate it
             }
             // always run the analyzer, regardless of weather or not there is a target
