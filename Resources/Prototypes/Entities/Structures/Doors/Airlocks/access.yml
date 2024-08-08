@@ -90,6 +90,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsCargo ]
+  - type: Wires
+    layoutId: AirlockCargo
 
 - type: entity
   parent: AirlockExternal
@@ -99,6 +101,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsEngineering ]
+  - type: Wires
+    layoutId: AirlockEngineering
 
 - type: entity
   parent: AirlockExternal
@@ -108,6 +112,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsAtmospherics ]
+  - type: Wires
+    layoutId: AirlockEngineering
 
 - type: entity
   parent: AirlockExternal
@@ -117,6 +123,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsSyndicateAgent ]
+  - type: Wires
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockExternal
@@ -126,6 +134,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsNukeop ]
+  - type: Wires
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockFreezer
@@ -431,7 +441,7 @@
       board: [ DoorElectronicsTheatre ]
 
 - type: entity
-  parent: AirlockGlass
+  parent: AirlockServiceGlassLocked
   id: AirlockBarGlassLocked
   suffix: Bar, Locked
   components:
@@ -456,6 +466,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsCargo ]
+  - type: Wires
+    layoutId: AirlockCargo
 
 - type: entity
   parent: AirlockExternalGlass
@@ -465,6 +477,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsSyndicateAgent ]
+  - type: Wires
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockExternalGlass
@@ -474,6 +488,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsNukeop ]
+  - type: Wires
+    layoutId: AirlockSecurity
 
 - type: entity
   parent: AirlockExternalGlass
@@ -483,6 +499,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsEngineering ]
+  - type: Wires
+    layoutId: AirlockEngineering
 
 - type: entity
   parent: AirlockExternalGlass
@@ -492,6 +510,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsAtmospherics ]
+  - type: Wires
+    layoutId: AirlockEngineering
 
 - type: entity
   parent: AirlockServiceGlassLocked
@@ -1153,6 +1173,9 @@
   components:
   - type: PriorityDock
     tag: DockArrivals
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsExternal ]
 
 - type: entity
   parent: AirlockGlassShuttle
@@ -1164,6 +1187,9 @@
     - type: IFF
       flags:
       - HideLabel
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsExternal ]
 
 #HighSecDoors
 - type: entity

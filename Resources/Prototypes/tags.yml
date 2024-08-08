@@ -548,7 +548,7 @@
 - type: Tag
   id: DrinkSpaceGlue
 
-- type: Tag 
+- type: Tag
   id: Dropper
 
 - type: Tag
@@ -1119,6 +1119,15 @@
 
 - type: Tag
   id: SecBeltEquip
+
+- type: Tag
+  id: SecurePlasmaWindoor
+
+- type: Tag
+  id: SecureUraniumWindoor
+
+- type: Tag
+  id: SecureWindoor
 
 - type: Tag
   id: SecwayKeys
