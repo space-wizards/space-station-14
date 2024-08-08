@@ -260,7 +260,7 @@ namespace Content.Client.Actions
 
         private void OnEntityTargetAttempt(Entity<EntityTargetActionComponent> ent, ref ActionTargetAttemptEvent args)
         {
-            if (args.Handled || args.Input.EntityUid is not {} entity)
+            if (args.Handled || args.Input.EntityUid is not { Valid: true } entity)
                 return;
 
             // let world target component handle it
