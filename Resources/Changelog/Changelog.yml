@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: vorkathbruh
-  changes:
-  - message: Nuclear operative agents now require time in Chemistry rather than time
-      in the Medical department.
-    type: Tweak
-  id: 6564
-  time: '2024-05-09T06:48:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27098
 - author: deltanedas
   changes:
   - message: Firesuits and hardsuits now protect your skin from fire, you will instead
@@ -3785,3 +3777,19 @@
   id: 7063
   time: '2024-08-08T22:50:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30671
+- author: SlamBamActionman
+  changes:
+  - message: Animal DNA now shows up as "unknown DNA" in the Forensic Scanner.
+    type: Tweak
+  - message: Forensic Scanner can now scan fluid containers for DNA in reagents.
+    type: Tweak
+  - message: Fluids keep their DNA data when moved.
+    type: Fix
+  - message: Fluids now stain containers they're in with DNA. Make sure to scrub your
+      blood bucket after use!
+    type: Add
+  - message: Vomit now includes DNA!
+    type: Add
+  id: 7064
+  time: '2024-08-08T23:27:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26699
