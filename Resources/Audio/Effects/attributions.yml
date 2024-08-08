@@ -231,3 +231,13 @@
   copyright: '"beep_landmine.ogg" by kaktuscsc of Discord for SS14'
   license: "CC-BY-SA-3.0"
   source: https://github.com/YuriyKiss/space-station-14/commit/971a135a9c83aed46e967aac9302ab5b35562b5f
+
+- files: [radio_talk.ogg]
+  copyright: '"Walkie Talkie on/off.wav" by cs2975871 of Freesound.org. Cropped'
+  license: "CC-BY-4.0"
+  source: https://freesound.org/people/cs2975871/sounds/514185/
+
+- files: [radio_receive.ogg]
+  copyright: '"Radio Sign Off / Squelch" by JovianSounds of Freesound.org'
+  license: "CC0-1.0"
+  source: https://freesound.org/people/JovianSounds/sounds/524205/
