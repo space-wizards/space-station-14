@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: ClothingHeadset
   id: ClothingHeadsetAlt
@@ -178,11 +178,11 @@
     - type: ContainerFill
       containers:
         key_slots:
-      - EncryptionKeyCommand
-      - EncryptionKeyCentCom
-      - EncryptionKeySecurityF
-      - EncryptionKeyService
-      - EncryptionKeyCommon
+        - EncryptionKeyCommand
+        - EncryptionKeyCentCom
+        - EncryptionKeySecurityF
+        - EncryptionKeyService
+        - EncryptionKeyCommon
     - type: Sprite
       sprite: Clothing/Ears/Headsets/financial.rsi
     - type: Clothing
