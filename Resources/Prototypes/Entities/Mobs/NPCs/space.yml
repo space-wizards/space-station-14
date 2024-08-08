@@ -370,7 +370,6 @@
   components:
     - type: SalvageMobRestrictions
 
-
 - type: entity
   parent: SimpleSpaceMobBase
   id: MobSnail
@@ -389,10 +388,10 @@
   - type: GhostTakeoverAvailable
   - type: Sprite
     drawdepth: SmallMobs
+    sprite: Mobs/Animals/snail.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: snail
-      sprite: Mobs/Animals/snail.rsi
   - type: Item
     size: Tiny
   - type: NpcFactionMember
@@ -513,18 +512,13 @@
   suffix: Speed
   components:
   - type: GhostRole
-    makeSentient: true
-    allowSpeech: false
-    allowMovement: true
     name: ghost-role-information-snailspeed-name
     description: ghost-role-information-snailspeed-description
     rules: ghost-role-information-freeagent-rules
   - type: Sprite
-    drawdepth: SmallMobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: spacesnail
-      sprite: Mobs/Animals/snail.rsi
   - type: DamageStateVisuals
     states:
       Alive:
@@ -547,18 +541,13 @@
   - type: Body
     prototype: Mothroach
   - type: GhostRole
-    makeSentient: true
-    allowSpeech: false
-    allowMovement: true
     name: ghost-role-information-snoth-name
     description: ghost-role-information-snoth-description
     rules: ghost-role-information-freeagent-rules
   - type: Sprite
-    drawdepth: SmallMobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: snoth
-      sprite: Mobs/Animals/snail.rsi
   - type: DamageStateVisuals
     states:
       Alive:
