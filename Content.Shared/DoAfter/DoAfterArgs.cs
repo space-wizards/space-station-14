@@ -107,31 +107,31 @@ public sealed partial class DoAfterArgs
     /// <summary>
     ///     Threshold for user and target movement
     /// </summary>
-    [DataField("movementThreshold")]
+    [DataField]
     public float MovementThreshold = 0.3f;
 
     /// <summary>
     ///     Threshold for distance user from the used OR target entities.
     /// </summary>
-    [DataField("distanceThreshold")]
+    [DataField]
     public float? DistanceThreshold;
 
     /// <summary>
     ///     Whether damage will cancel the DoAfter. See also <see cref="DamageThreshold"/>.
     /// </summary>
-    [DataField("breakOnDamage")]
+    [DataField]
     public bool BreakOnDamage;
 
     /// <summary>
     ///     Threshold for user damage. This damage has to be dealt in a single event, not over time.
     /// </summary>
-    [DataField("damageThreshold")]
+    [DataField]
     public FixedPoint2 DamageThreshold = 1;
 
     /// <summary>
     ///     If true, this DoAfter will be canceled if the user can no longer interact with the target.
     /// </summary>
-    [DataField("requireCanInteract")]
+    [DataField]
     public bool RequireCanInteract = true;
     #endregion
 
@@ -143,7 +143,7 @@ public sealed partial class DoAfterArgs
     ///     Note that this will block even if the duplicate is cancelled because either DoAfter had
     ///     <see cref="CancelDuplicate"/> enabled.
     /// </remarks>
-    [DataField("blockDuplicate")]
+    [DataField]
     public bool BlockDuplicate = true;
 
     //TODO: User pref to not cancel on second use on specific doafters
@@ -151,7 +151,7 @@ public sealed partial class DoAfterArgs
     ///     If true, this will cancel any duplicate DoAfters when attempting to add a new DoAfter. See also
     ///     <see cref="DuplicateConditions"/>.
     /// </summary>
-    [DataField("cancelDuplicate")]
+    [DataField]
     public bool CancelDuplicate = true;
 
     /// <summary>
@@ -162,7 +162,7 @@ public sealed partial class DoAfterArgs
     ///     Note that both DoAfters may have their own conditions, and they will be considered duplicated if either set
     ///     of conditions is satisfied.
     /// </remarks>
-    [DataField("duplicateCondition")]
+    [DataField]
     public DuplicateConditions DuplicateCondition = DuplicateConditions.All;
     #endregion
 
