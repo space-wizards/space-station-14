@@ -180,7 +180,7 @@
         key_slots:
         - EncryptionKeyCommand
         - EncryptionKeyCentCom
-        - EncryptionKeySecurityF
+        - EncryptionKeySecurity
         - EncryptionKeyService
         - EncryptionKeyCommon
     - type: Sprite

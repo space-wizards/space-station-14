@@ -1354,6 +1354,6 @@
   description: A wonderful and eye catching suit of pristine greens and golds. So eye catching, even Nanotrasen corperate enemies are out for this central command crafted masterpiece.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/fs.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/financial.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/fs.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/financial.rsi
