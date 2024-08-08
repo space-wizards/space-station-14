@@ -291,7 +291,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 400 # 4 sheets
-      Plastic: 3 # 3 sheets
+      Plastic: 300 # 3 sheets
 
 - type: entity
   parent: BaseScrap
