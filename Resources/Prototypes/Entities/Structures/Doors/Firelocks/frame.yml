@@ -23,12 +23,12 @@
     node: frame1
   - type: InteractionOutline
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: RCDDeconstructable
     cost: 4
     delay: 6
-    fx: EffectRCDDeconstruct6    
+    fx: EffectRCDDeconstruct6
   - type: Destructible
     thresholds:
     - trigger:
