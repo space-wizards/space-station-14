@@ -175,16 +175,17 @@
     - type: Headset
     - type: EncryptionKeyHolder
       keySlots: 7
-  - type: ContainerFill
-    containers:
-      key_slots:
-      - EncryptionKeyMedical
-      - EncryptionKeyRobo
-      - EncryptionKeySecurity
-      - EncryptionKeyService
-      - EncryptionKeyCommand
-      - EncryptionKeyCommon
-  - type: Sprite
-    sprite: Clothing/Ears/Headsets/earshield.rsi
-  - type: Clothing
-    sprite: Clothing/Ears/Headsets/earshield.rsi
+    - type: ContainerFill
+      containers:
+        key_slots:
+        - EncryptionKeyMedical
+        - EncryptionKeyRobo
+        - EncryptionKeySecurity
+        - EncryptionKeyService
+        - EncryptionKeyCentCom
+        - EncryptionKeyCommand
+        - EncryptionKeyCommon
+    - type: Sprite
+      sprite: Clothing/Ears/Headsets/earshield.rsi
+    - type: Clothing
+      sprite: Clothing/Ears/Headsets/earshield.rsi
