@@ -122,7 +122,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
         var role = _ent.EnsureComponent<MindComponent>(container.Mind.Value);
 
-        //TODO: SHITCODE!
+        //TODO:ERRANT LATER: decide on localisation/integration
         string roleText = (!string.IsNullOrEmpty(role.MindRole.Name))? role.MindRole.Name : "mind-role-neutral-name";
         string roleDetail = (role.MindRole.Details is not null) ? role.MindRole.Details : "";
 

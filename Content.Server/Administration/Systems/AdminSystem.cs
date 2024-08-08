@@ -15,6 +15,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
+using Content.Shared.Mind;
 using Content.Shared.PDA;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Popups;
@@ -231,9 +232,16 @@ namespace Content.Server.Administration.Systems
             }
 
             var antag = false;
+            var mindRole = MindRoleType.Neutral;
             var startingRole = string.Empty;
             if (_minds.TryGetMind(session, out var mindId, out _))
             {
+                if (TryComp<MindComponent>(mindId, out var mindComp))
+                    mindRole = mindComp.MindRole.RoleType;
+                else
+                {
+                    //TODO:ERRANT LATER: generate error for logs
+                }
                 antag = _role.MindIsAntagonist(mindId);
                 startingRole = _jobs.MindTryGetJobName(mindId);
             }
@@ -247,7 +255,7 @@ namespace Content.Server.Administration.Systems
                 overallPlaytime = playTime;
             }
 
-            return new PlayerInfo(name, entityName, identityName, startingRole, antag, GetNetEntity(session?.AttachedEntity), data.UserId,
+            return new PlayerInfo(name, entityName, identityName, startingRole, antag, mindRole, GetNetEntity(session?.AttachedEntity), data.UserId,
                 connected, _roundActivePlayers.Contains(data.UserId), overallPlaytime);
         }
 

@@ -72,7 +72,7 @@ namespace Content.Client.Administration.UI.Bwoink
                     sb.Append(' ');
                 }
 
-                if (info.Antag && info.ActiveThisRound)
+                if (info.Antag && info.ActiveThisRound) //TODO:ERRANT LATER: bwoink what?
                     sb.Append(new Rune(0x1F5E1)); // 🗡
 
                 if (info.OverallPlaytime <= TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.NewPlayerThreshold)))
@@ -112,7 +112,7 @@ namespace Content.Client.Administration.UI.Bwoink
                     if (aNewPlayer != bNewPlayer)
                         return aNewPlayer ? -1 : 1;
 
-                    if (a.Antag != b.Antag)
+                    if (a.Antag != b.Antag) //TODO:ERRANT LATER: bwoink what?
                         return a.Antag ? -1 : 1;
                 }
 
@@ -243,7 +243,7 @@ namespace Content.Client.Administration.UI.Bwoink
                 sb.Append(' ');
             }
 
-            if (pl.Antag)
+            if (pl.Antag) //TODO:ERRANT LATER: bwoink what?
                 sb.Append(new Rune(0x1F5E1)); // 🗡
 
             if (pl.OverallPlaytime <= TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.NewPlayerThreshold)))
