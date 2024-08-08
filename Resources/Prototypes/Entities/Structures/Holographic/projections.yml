@@ -116,3 +116,33 @@
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
+
+- type: entity
+  id: HolosignBS
+  parent: HolosignWetFloor
+  name: holographic wall
+  description: A barrier of hard light that blocks all motion in its tracks, extremely tough and with a slow decay to boot.
+  components:
+    - type: Physics
+      bodyType: Static
+      canCollide: true
+    - type: Sprite
+      sprite: Structures/Holo/bluewall.rsi
+      state: icon
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.3,-0.3,0.3,0.3"
+          mask:
+            - TableMask
+          layer:
+            - TableLayer
+    - type: TimedDespawn
+      lifetime: 360
+    - type: PointLight
+      enabled: true
+      radius: 3
+      color: cyan
+    - type: Clickable
