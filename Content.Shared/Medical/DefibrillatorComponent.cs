@@ -12,13 +12,13 @@ namespace Content.Shared.Medical;
 /// person back into the world of the living.
 /// Uses <c>ItemToggleComponent</c>
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedDefibrillatorSystem)), AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedDefibrillatorSystem)), AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class DefibrillatorComponent : Component
 {
     /// <summary>
     /// The time at which the zap cooldown will be completed
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan? NextZapTime;
 
     /// <summary>
