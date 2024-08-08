@@ -60,6 +60,7 @@
   parent: ReinforcedWindow
   id: TintedWindow
   name: tinted window
+  description: Smart tinted window with state switching option. 
   components:
   - type: Sprite
     drawdepth: WallTops
