@@ -62,6 +62,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         UpdateFoodName(start);
         MergeFoodSolutions(start, element);
         MergeFlavorProfiles(start, element);
+        MergeTrash(start, element);
         QueueDel(element);
         return true;
     }
@@ -120,6 +121,20 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         {
             if (startProfile != null && !startProfile.Flavors.Contains(flavor))
                 startProfile.Flavors.Add(flavor);
+        }
+    }
+
+    private void MergeTrash(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element)
+    {
+        if (!TryComp<FoodComponent>(start, out var startFood))
+            return;
+
+        if (!TryComp<FoodComponent>(element, out var elementFood))
+            return;
+
+        foreach (var trash in elementFood.Trash)
+        {
+            startFood.Trash.Add(trash);
         }
     }
 }

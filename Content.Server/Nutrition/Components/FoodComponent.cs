@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Nutrition.Components;
 
-[RegisterComponent, Access(typeof(FoodSystem))]
+[RegisterComponent, Access(typeof(FoodSystem), typeof(FoodSequenceSystem))]
 public sealed partial class FoodComponent : Component
 {
     [DataField]
@@ -17,7 +17,7 @@ public sealed partial class FoodComponent : Component
     public SoundSpecifier UseSound = new SoundCollectionSpecifier("eating");
 
     [DataField]
-    public HashSet<EntProtoId> Trash = new();
+    public List<EntProtoId> Trash = new();
 
     [DataField]
     public FixedPoint2? TransferAmount = FixedPoint2.New(5);
