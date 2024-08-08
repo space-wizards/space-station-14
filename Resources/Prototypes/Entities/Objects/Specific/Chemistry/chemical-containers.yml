@@ -1,6 +1,6 @@
 - type: entity
   name: jug
-  parent: BaseItem
+  parent: [BaseItem, DrinkBottleVisualsOpenable]
   id: Jug
   description: Used to contain a very large amount of chemicals or solutions. Chugging is extremely ill-advised.
   components:
@@ -11,10 +11,17 @@
     - type: Sprite
       sprite: Objects/Specific/Chemistry/jug.rsi
       layers:
-        - state: jug
+        - state: icon
+          map: [ "enum.OpenableVisuals.Layer" ]
         - state: jug1
           map: [ "enum.SolutionContainerLayers.Fill" ]
           visible: false
+    - type: Openable
+      sound:
+        collection: bottleOpenSounds
+      closeable: true
+      closeSound:
+        collection: bottleCloseSounds
     - type: Item
       size: Normal
       sprite: Objects/Specific/Chemistry/jug.rsi
@@ -79,6 +86,7 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - type: Label
+    - type: Sealable
     - type: Tag
       tags:
       - ChemDispensable
