@@ -1,0 +1,8 @@
+﻿<mapping:MappingActionsButton
+    xmlns="https://spacestation14.io"
+    xmlns:mapping="clr-namespace:Content.Client.Mapping"
+    StyleClasses="ButtonSquare" ToggleMode="True" SetSize="32 32" Margin="0 0 5 0"
+    TooltipDelay="0">
+    <TextureRect Name="Texture" Access="Public" Stretch="Scale" SetSize="16 16"
+                 HorizontalAlignment="Center" VerticalAlignment="Center" />
+</mapping:MappingActionsButton>

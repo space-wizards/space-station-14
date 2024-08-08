@@ -15,9 +15,10 @@
 
 - type: entity
   parent: BaseLogicItem
-  id: LogicGate
+  id: LogicGateOr
   name: logic gate
   description: A logic gate with two inputs and one output. Technicians can change its mode of operation using a screwdriver.
+  suffix: Or
   components:
   - type: Sprite
     layers:
@@ -50,6 +51,71 @@
           Nor: { state: nor }
           Nand: { state: nand }
           Xnor: { state: xnor }
+
+- type: entity
+  parent: LogicGateOr
+  id: LogicGateAnd
+  suffix: And
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: and
+      map: [ "enum.LogicGateLayers.Gate" ]
+  - type: LogicGate
+    gate: And
+
+- type: entity
+  parent: LogicGateOr
+  id: LogicGateXor
+  suffix: Xor
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: xor
+      map: [ "enum.LogicGateLayers.Gate" ]
+  - type: LogicGate
+    gate: Xor
+
+- type: entity
+  parent: LogicGateOr
+  id: LogicGateNor
+  suffix: Nor
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: nor
+      map: [ "enum.LogicGateLayers.Gate" ]
+  - type: LogicGate
+    gate: Nor
+
+- type: entity
+  parent: LogicGateOr
+  id: LogicGateNand
+  suffix: Nand
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: nand
+      map: [ "enum.LogicGateLayers.Gate" ]
+  - type: LogicGate
+    gate: Nand
+
+- type: entity
+  parent: LogicGateOr
+  id: LogicGateXnor
+  suffix: Xnor
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: xnor
+      map: [ "enum.LogicGateLayers.Gate" ]
+  - type: LogicGate
+    gate: Xnor
 
 - type: entity
   parent: BaseLogicItem

@@ -23,12 +23,11 @@ namespace Content.Server.Jobs
             foreach (var (name, data) in Components)
             {
                 var component = (Component) factory.GetComponent(name);
-                component.Owner = mob;
 
-                var temp = (object) component;
+                var temp = (object)component;
                 serializationManager.CopyTo(data.Component, ref temp);
                 entityManager.RemoveComponent(mob, temp!.GetType());
-                entityManager.AddComponent(mob, (Component) temp);
+                entityManager.AddComponent(mob, (Component)temp);
             }
         }
     }

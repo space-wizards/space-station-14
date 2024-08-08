@@ -211,7 +211,7 @@
   parent: BasePlushie
   id: PlushieRouny
   name: rouny plushie
-  description: Rouny
+  description: Rouny.
   components:
   - type: Sprite
     state: plushie_rouny
@@ -263,7 +263,7 @@
   parent: BasePlushie
   id: PlushieLizard #Weh!
   name: lizard plushie
-  description: An adorable stuffed toy that resembles a lizardperson. Made by CentCom as a token initiative to combat speciesism in work environments. "Welcome your new colleagues as you do this plush, with open arms!"
+  description: An adorable stuffed toy that resembles a lizardperson. Made by CentComm as a token initiative to combat speciesism in work environments. "Welcome your new colleagues as you do this plush, with open arms!"
   components:
   - type: Sprite
     state: plushie_lizard
@@ -301,6 +301,12 @@
           Quantity: 10
         - ReagentId: JuiceThatMakesYouWeh
           Quantity: 10
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/toys.rsi
+    equippedPrefix: lizard
+    slots:
+    - HEAD
 
 - type: entity
   parent: PlushieLizard
@@ -315,7 +321,7 @@
   parent: BasePlushie
   id: PlushieSpaceLizard #ᵂᵉʰ!
   name: space lizard plushie
-  description: An adorable stuffed toy that resembles a lizardperson in an EVA suit. Made by CentCom as a token initiative to combat speciesism in space environments. "Welcome your new colleges as you do this plush, with open arms!"
+  description: An adorable stuffed toy that resembles a lizardperson in an EVA suit. Made by CentComm as a token initiative to combat speciesism in space environments. "Welcome your new colleges as you do this plush, with open arms!"
   components:
   - type: Sprite
     state: plushie_spacelizard
@@ -1267,7 +1273,7 @@
   parent: BasePlushie
   id: ToyAmongPequeno
   name: among pequeño
-  description: sus!
+  description: Sus!
   components:
   - type: Sprite
     sprite: Objects/Fun/pequeno.rsi

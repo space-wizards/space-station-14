@@ -48,6 +48,7 @@ namespace Content.Client.Actions
             SubscribeLocalEvent<InstantActionComponent, ComponentHandleState>(OnInstantHandleState);
             SubscribeLocalEvent<EntityTargetActionComponent, ComponentHandleState>(OnEntityTargetHandleState);
             SubscribeLocalEvent<WorldTargetActionComponent, ComponentHandleState>(OnWorldTargetHandleState);
+            SubscribeLocalEvent<EntityWorldTargetActionComponent, ComponentHandleState>(OnEntityWorldTargetHandleState);
         }
 
         private void OnInstantHandleState(EntityUid uid, InstantActionComponent component, ref ComponentHandleState args)
@@ -74,6 +75,18 @@ namespace Content.Client.Actions
                 return;
 
             BaseHandleState<WorldTargetActionComponent>(uid, component, state);
+        }
+
+        private void OnEntityWorldTargetHandleState(EntityUid uid,
+            EntityWorldTargetActionComponent component,
+            ref ComponentHandleState args)
+        {
+            if (args.Current is not EntityWorldTargetActionComponentState state)
+                return;
+
+            component.Whitelist = state.Whitelist;
+            component.CanTargetSelf = state.CanTargetSelf;
+            BaseHandleState<EntityWorldTargetActionComponent>(uid, component, state);
         }
 
         private void BaseHandleState<T>(EntityUid uid, BaseActionComponent component, BaseActionComponentState state) where T : BaseActionComponent
@@ -293,7 +306,7 @@ namespace Content.Client.Actions
                     continue;
 
                 var action = _serialization.Read<BaseActionComponent>(actionNode, notNullableOverride: true);
-                var actionId = Spawn(null);
+                var actionId = Spawn();
                 AddComp(actionId, action);
                 AddActionDirect(user, actionId);
 
