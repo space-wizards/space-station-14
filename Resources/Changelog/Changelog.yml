@@ -1,28 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: The ninja's katana dash is now more reliable.
-    type: Fix
-  id: 6556
-  time: '2024-05-08T10:21:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27793
-- author: K-Dynamic
-  changes:
-  - message: Bike Horns, Suspenders and the Clown Recorder are now available from
-      the Theatrical Performances Crate
-    type: Tweak
-  id: 6557
-  time: '2024-05-08T12:30:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27668
-- author: Riolume
-  changes:
-  - message: Added ability to drink from spray bottles
-    type: Add
-  - message: Can now see the amount of liquid in spray bottles
-    type: Add
-  id: 6558
-  time: '2024-05-09T05:56:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27815
 - author: Blackern5000
   changes:
   - message: Atmos metal pipes now deal blunt damage.
@@ -3784,3 +3760,24 @@
   id: 7055
   time: '2024-08-07T09:26:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29746
+- author: IProduceWidgets
+  changes:
+  - message: butter is slippery
+    type: Tweak
+  id: 7056
+  time: '2024-08-07T21:47:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29772
+- author: Mervill
+  changes:
+  - message: Gas Miners now have detailed examine text
+    type: Tweak
+  id: 7057
+  time: '2024-08-08T02:14:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30480
+- author: BackeTako
+  changes:
+  - message: "!, \u203D and multiple punctuations now work for Spanish."
+    type: Tweak
+  id: 7058
+  time: '2024-08-08T03:08:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30551

@@ -182,13 +182,12 @@ public sealed partial class ArtifactSystem
                 EntityManager.RemoveComponent(uid, reg.Type);
             }
 
-            var comp = (Component) _componentFactory.GetComponent(reg);
-            comp.Owner = uid;
+            var comp = (Component)_componentFactory.GetComponent(reg);
 
-            var temp = (object) comp;
+            var temp = (object)comp;
             _serialization.CopyTo(entry.Component, ref temp);
             EntityManager.RemoveComponent(uid, temp!.GetType());
-            EntityManager.AddComponent(uid, (Component) temp!);
+            EntityManager.AddComponent(uid, (Component)temp!);
         }
 
         node.Discovered = true;
@@ -218,12 +217,11 @@ public sealed partial class ArtifactSystem
             // if the entity prototype contained the component originally
             if (entityPrototype?.Components.TryGetComponent(name, out var entry) ?? false)
             {
-                var comp = (Component) _componentFactory.GetComponent(name);
-                comp.Owner = uid;
-                var temp = (object) comp;
+                var comp = (Component)_componentFactory.GetComponent(name);
+                var temp = (object)comp;
                 _serialization.CopyTo(entry, ref temp);
                 EntityManager.RemoveComponent(uid, temp!.GetType());
-                EntityManager.AddComponent(uid, (Component) temp);
+                EntityManager.AddComponent(uid, (Component)temp);
                 continue;
             }
 

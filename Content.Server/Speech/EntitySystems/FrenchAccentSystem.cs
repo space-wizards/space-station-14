@@ -27,10 +27,10 @@ public sealed class FrenchAccentSystem : EntitySystem
 
         msg = _replacement.ApplyReplacements(msg, "french");
 
-        // replaces th with dz
+        // replaces th with z
         msg = RegexTh.Replace(msg, "'z");
 
-        // removes the letter h from the start of words.
+        // replaces h with ' at the start of words.
         msg = RegexStartH.Replace(msg, "'");
 
         // spaces out ! ? : and ;.
