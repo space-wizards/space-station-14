@@ -13,6 +13,7 @@ public sealed class SolutionRandomFillSystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ChemistryRegistrySystem _chemistryRegistry = default!;
 
     public override void Initialize()
     {
@@ -31,7 +32,7 @@ public sealed class SolutionRandomFillSystem : EntitySystem
         var reagent = pick.reagent;
         var quantity = pick.quantity;
 
-        if (!_proto.HasIndex<ReagentPrototype>(reagent))
+        if (!_chemistryRegistry.HasIndex(reagent))
         {
             Log.Error($"Tried to add invalid reagent Id {reagent} using SolutionRandomFill.");
             return;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.Cargo.Systems;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction.Completions;
 using Content.Server.Construction.Components;
 using Content.Server.Destructible;
@@ -45,6 +46,7 @@ public sealed class MaterialArbitrageTest
         var stackSys = entManager.System<StackSystem>();
         var mapSystem = server.System<SharedMapSystem>();
         var compFact = server.ResolveDependency<IComponentFactory>();
+        var chemRegistry = server.System<ChemistryRegistrySystem>();
 
         Assert.That(mapSystem.IsInitialized(testMap.MapId));
 
@@ -397,8 +399,8 @@ public sealed class MaterialArbitrageTest
             double price = 0;
             foreach (var (id, num) in mats)
             {
-                var reagentProto = protoManager.Index<ReagentPrototype>(id);
-                price += num.Double() * reagentProto.PricePerUnit;
+                var reagentProto = chemRegistry.Index(id);
+                price += num.Double() * reagentProto.Comp.PricePerUnit;
             }
             return price;
         }

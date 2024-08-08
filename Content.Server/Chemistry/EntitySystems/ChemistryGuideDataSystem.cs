@@ -26,11 +26,11 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
     private void InitializeServerRegistry()
     {
         var changeset = new ReagentGuideChangeset(new Dictionary<string, ReagentGuideEntry>(), new HashSet<string>());
-        foreach (var proto in PrototypeManager.EnumeratePrototypes<ReagentPrototype>())
+        foreach (var (reagentDef,_) in ChemistryRegistry.EnumeratePrototypes())
         {
-            var entry = new ReagentGuideEntry(proto, PrototypeManager, EntityManager.EntitySysManager);
-            changeset.GuideEntries.Add(proto.ID, entry);
-            Registry[proto.ID] = entry;
+            var entry = new ReagentGuideEntry(reagentDef, PrototypeManager, EntityManager.EntitySysManager);
+            changeset.GuideEntries.Add(reagentDef.Id, entry);
+            Registry[reagentDef.Id] = entry;
         }
 
         var ev = new ReagentGuideRegistryChangedEvent(changeset);
@@ -46,7 +46,7 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
         RaiseNetworkEvent(sendEv, e.Session);
     }
 
-    private void PrototypeManagerReload(PrototypesReloadedEventArgs obj)
+    private void PrototypeManagerReload(PrototypesReloadedEventArgs obj)//TODO: hook chemregistry reload instead
     {
         if (!obj.ByType.TryGetValue(typeof(ReagentPrototype), out var reagents))
             return;
@@ -56,7 +56,12 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
         foreach (var (id, proto) in reagents.Modified)
         {
             var reagentProto = (ReagentPrototype) proto;
-            var entry = new ReagentGuideEntry(reagentProto, PrototypeManager, EntityManager.EntitySysManager);
+            if (!ChemistryRegistry.TryIndexPrototype(reagentProto.ID, out var reagentDef))
+            {
+                Log.Error($"{reagentProto.ID} could not be found in the reagent registry!");
+                continue;
+            }
+            var entry = new ReagentGuideEntry(reagentDef.ReagentDefinition, PrototypeManager, EntityManager.EntitySysManager);
             changeset.GuideEntries.Add(id, entry);
             Registry[id] = entry;
         }

@@ -1,10 +1,10 @@
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
@@ -25,6 +25,7 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly ChemistryRegistrySystem _chemistryRegistry = default!;
 
         private EntityQuery<OrganComponent> _organQuery;
         private EntityQuery<SolutionContainerManagerComponent> _solutionQuery;
@@ -149,11 +150,11 @@ namespace Content.Server.Body.Systems
             int reagents = 0;
             foreach (var (reagent, quantity) in list)
             {
-                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
+                if (!_chemistryRegistry.TryIndex(reagent.Prototype, out var reagentDef))
                     continue;
 
                 var mostToRemove = FixedPoint2.Zero;
-                if (proto.Metabolisms is null)
+                if (reagentDef.Value.Comp.Metabolisms is null)
                 {
                     if (ent.Comp1.RemoveEmpty)
                     {
@@ -174,7 +175,7 @@ namespace Content.Server.Body.Systems
 
                 foreach (var group in ent.Comp1.MetabolismGroups)
                 {
-                    if (!proto.Metabolisms.TryGetValue(group.Id, out var entry))
+                    if (!reagentDef.Value.Comp.Metabolisms.TryGetValue(group.Id, out var entry))
                         continue;
 
                     var rate = entry.MetabolismRate * group.MetabolismRateModifier;
@@ -189,12 +190,12 @@ namespace Content.Server.Body.Systems
                     // still remove reagents
                     if (TryComp<MobStateComponent>(solutionEntityUid.Value, out var state))
                     {
-                        if (!proto.WorksOnTheDead && _mobStateSystem.IsDead(solutionEntityUid.Value, state))
+                        if (!reagentDef.Value.Comp.WorksOnTheDead && _mobStateSystem.IsDead(solutionEntityUid.Value, state))
                             continue;
                     }
 
                     var actualEntity = ent.Comp2?.Body ?? solutionEntityUid.Value;
-                    var args = new EntityEffectReagentArgs(actualEntity, EntityManager, ent, solution, mostToRemove, proto, null, scale);
+                    var args = new EntityEffectReagentArgs(actualEntity, EntityManager, ent, solution, mostToRemove, reagentDef, null, scale);
 
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)
@@ -208,7 +209,7 @@ namespace Content.Server.Body.Systems
                                 LogType.ReagentEffect,
                                 effect.LogImpact,
                                 $"Metabolism effect {effect.GetType().Name:effect}"
-                                + $" of reagent {proto.LocalizedName:reagent}"
+                                + $" of reagent {reagentDef.Value.Comp.LocalizedName:reagent}"
                                 + $" applied on entity {actualEntity:entity}"
                                 + $" at {Transform(actualEntity).Coordinates:coordinates}"
                             );

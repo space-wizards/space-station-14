@@ -9,6 +9,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Collections.Frozen;
 using System.Linq;
+using Content.Shared.Chemistry.Components.Reagents;
+using Content.Shared.Chemistry.Systems;
 
 
 namespace Content.Shared.Chemistry.Reaction
@@ -24,6 +26,7 @@ namespace Content.Shared.Chemistry.Reaction
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private readonly SharedChemistryRegistrySystem _chemistryRegistry = default!;
 
         /// <summary>
         /// A cache of all reactions indexed by at most ONE of their required reactants.
@@ -196,7 +199,7 @@ namespace Content.Shared.Chemistry.Reaction
             return products;
         }
 
-        private void OnReaction(Entity<SolutionComponent> soln, ReactionPrototype reaction, ReagentPrototype? reagent, FixedPoint2 unitReactions)
+        private void OnReaction(Entity<SolutionComponent> soln, ReactionPrototype reaction, Entity<ReagentDefinitionComponent>? reagent, FixedPoint2 unitReactions)
         {
             var args = new EntityEffectReagentArgs(soln, EntityManager, null, soln.Comp.Solution, unitReactions, reagent, null, 1f);
 

@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.Chemistry.Systems;
 
 namespace Content.IntegrationTests.Tests.Fluids;
 
@@ -81,7 +82,7 @@ public sealed class AbsorbentTest
         var entityManager = server.ResolveDependency<IEntityManager>();
         var absorbentSystem = entityManager.System<AbsorbentSystem>();
         var solutionContainerSystem = entityManager.System<SharedSolutionContainerSystem>();
-        var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+        var chemistryRegistry = entityManager.System<SharedChemistryRegistrySystem>();
 
         EntityUid user = default;
         EntityUid absorbent = default;
@@ -112,8 +113,8 @@ public sealed class AbsorbentTest
             absorbentSystem.Mop(user, refillable, absorbent, component);
 
             // Assert
-            var absorbentComposition = absorbentSolution.GetReagentPrototypes(prototypeManager).ToDictionary(r => r.Key.ID, r => r.Value);
-            var refillableComposition = refillableSolution.GetReagentPrototypes(prototypeManager).ToDictionary(r => r.Key.ID, r => r.Value);
+            var absorbentComposition = absorbentSolution.GetReagents(chemistryRegistry).ToDictionary(r => r.Key.Comp.Id, r => r.Value);
+            var refillableComposition = refillableSolution.GetReagents(chemistryRegistry).ToDictionary(r => r.Key.Comp.Id, r => r.Value);
             Assert.Multiple(() =>
             {
                 Assert.That(VolumeOfPrototypeInComposition(absorbentComposition, EvaporablePrototypeId), Is.EqualTo(testCase.ExpectedAbsorbentSolution.VolumeOfEvaporable));
@@ -139,7 +140,7 @@ public sealed class AbsorbentTest
         var entityManager = server.ResolveDependency<IEntityManager>();
         var absorbentSystem = entityManager.System<AbsorbentSystem>();
         var solutionContainerSystem = entityManager.System<SharedSolutionContainerSystem>();
-        var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+        var chemistryRegistry = entityManager.System<SharedChemistryRegistrySystem>();
 
         EntityUid user = default;
         EntityUid absorbent = default;
@@ -169,8 +170,8 @@ public sealed class AbsorbentTest
             absorbentSystem.Mop(user, refillable, absorbent, component);
 
             // Assert
-            var absorbentComposition = absorbentSolution.GetReagentPrototypes(prototypeManager).ToDictionary(r => r.Key.ID, r => r.Value);
-            var refillableComposition = refillableSolution.GetReagentPrototypes(prototypeManager).ToDictionary(r => r.Key.ID, r => r.Value);
+            var absorbentComposition = absorbentSolution.GetReagents(chemistryRegistry).ToDictionary(r => r.Key.Comp.Id, r => r.Value);
+            var refillableComposition = refillableSolution.GetReagents(chemistryRegistry).ToDictionary(r => r.Key.Comp.Id, r => r.Value);
             Assert.Multiple(() =>
             {
                 Assert.That(VolumeOfPrototypeInComposition(absorbentComposition, EvaporablePrototypeId), Is.EqualTo(testCase.ExpectedAbsorbentSolution.VolumeOfEvaporable));

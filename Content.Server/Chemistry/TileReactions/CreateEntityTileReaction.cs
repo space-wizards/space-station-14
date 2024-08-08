@@ -8,6 +8,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using System.Numerics;
+using Content.Shared.Chemistry.Components.Reagents;
 
 namespace Content.Server.Chemistry.TileReactions;
 
@@ -36,7 +37,7 @@ public sealed partial class CreateEntityTileReaction : ITileReaction
     public float RandomOffsetMax = 0.0f;
 
     public FixedPoint2 TileReact(TileRef tile,
-        ReagentPrototype reagent,
+        Entity<ReagentDefinitionComponent> reagent,
         FixedPoint2 reactVolume,
         IEntityManager entityManager)
     {

@@ -26,7 +26,7 @@ public sealed partial class TransformableContainerComponent : Component
     /// It is used to help determine if a transformation is needed on solution update.
     /// </summary>
     [DataField("currentReagent")]
-    public ReagentPrototype? CurrentReagent;
+    public EntityUid? CurrentReagent;
 
     /// <summary>
     /// This returns whether this container in a transformed or initial state.

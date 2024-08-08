@@ -1,6 +1,7 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.EntityEffects.Effects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
@@ -54,6 +55,7 @@ public sealed class DrinkSystem : SharedDrinkSystem
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
     [Dependency] private readonly ForensicsSystem _forensics = default!;
+    [Dependency] private readonly ChemistryRegistrySystem _chemRegistry = default!;
 
     public override void Initialize()
     {
@@ -84,11 +86,11 @@ public sealed class DrinkSystem : SharedDrinkSystem
         var total = 0f;
         foreach (var quantity in solution.Contents)
         {
-            var reagent = _proto.Index<ReagentPrototype>(quantity.Reagent.Prototype);
-            if (reagent.Metabolisms == null)
+            var reagent = _chemRegistry.Index(quantity.Reagent.Prototype);
+            if (reagent.Comp.Metabolisms == null)
                 continue;
 
-            foreach (var entry in reagent.Metabolisms.Values)
+            foreach (var entry in reagent.Comp.Metabolisms.Values)
             {
                 foreach (var effect in entry.Effects)
                 {

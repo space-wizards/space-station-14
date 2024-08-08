@@ -6,6 +6,8 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System.Collections;
 using System.Linq;
+using Content.Shared.Chemistry.Components.Reagents;
+using Content.Shared.Chemistry.Systems;
 
 namespace Content.Shared.Chemistry.Components
 {
@@ -20,6 +22,12 @@ namespace Content.Shared.Chemistry.Components
         // a list than a dictionary, though contains-reagent checks are slightly slower,
         [DataField("reagents")]
         public List<ReagentQuantity> Contents;
+
+        [DataField]
+        public NetEntity? LinkedNetEntity;
+
+        [NonSerialized]
+        public EntityUid? LinkedSolutionEntity;
 
         /// <summary>
         ///     The calculated total volume of all reagents in the solution (ex. Total volume of liquid in beaker).
@@ -150,6 +158,14 @@ namespace Content.Shared.Chemistry.Components
         public Solution(string prototype, FixedPoint2 quantity, ReagentData? data = null) : this()
         {
             AddReagent(new ReagentId(prototype, data), quantity);
+        }
+
+        public Solution(SolutionContents contentsData)
+        {
+            Contents = [..contentsData.Reagents];
+            Temperature = contentsData.Temperature;
+            MaxVolume = contentsData.MaxVolume;
+            CanReact = contentsData.CanReact;
         }
 
         public Solution(IEnumerable<ReagentQuantity> reagents, bool setMaxVol = true)
@@ -886,12 +902,28 @@ namespace Content.Shared.Chemistry.Components
             ValidateSolution();
         }
 
+        public static implicit operator SolutionContents(Solution s) =>
+            new(s.Contents, s.MaxVolume, true,s.Temperature, s.CanReact);
+        public static implicit operator Solution(SolutionContents s) => new(s);
+
+        [Obsolete("Use SharedSolutionSystem instead!")]
         public Dictionary<ReagentPrototype, FixedPoint2> GetReagentPrototypes(IPrototypeManager protoMan)
         {
             var dict = new Dictionary<ReagentPrototype, FixedPoint2>(Contents.Count);
             foreach (var (reagent, quantity) in Contents)
             {
                 var proto = protoMan.Index<ReagentPrototype>(reagent.Prototype);
+                dict[proto] = quantity + dict.GetValueOrDefault(proto);
+            }
+            return dict;
+        }
+
+        public Dictionary<Entity<ReagentDefinitionComponent>, FixedPoint2> GetReagents(SharedChemistryRegistrySystem chemRegistry)
+        {
+            var dict = new Dictionary<Entity<ReagentDefinitionComponent>, FixedPoint2>(Contents.Count);
+            foreach (var (reagent, quantity) in Contents)
+            {
+                var proto = chemRegistry.Index(reagent.Id);
                 dict[proto] = quantity + dict.GetValueOrDefault(proto);
             }
             return dict;

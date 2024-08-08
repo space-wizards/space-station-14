@@ -9,7 +9,7 @@ namespace Content.Shared.Chemistry.Components.SolutionManager;
 /// <para>Every solution entity this maps should have a <see cref="SolutionComponent"/> to track its state and a <see cref="ContainedSolutionComponent"/> to track its container.</para>
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedSolutionContainerSystem))]
+[Access(typeof(SharedSolutionContainerSystem)), Obsolete]
 public sealed partial class SolutionContainerManagerComponent : Component
 {
     /// <summary>
