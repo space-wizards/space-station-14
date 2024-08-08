@@ -14,7 +14,7 @@ namespace Content.Server.EntityEffects.Effects
         public float Multiplier = 0.05f;
 
         [DataField]
-        public float MultiplierOnExisting = 1f;
+        public float MultiplierOnExisting = -1f;
 
         public override bool ShouldLog => true;
 
@@ -28,7 +28,7 @@ namespace Content.Server.EntityEffects.Effects
             if (!args.EntityManager.TryGetComponent(args.TargetEntity, out FlammableComponent? flammable))
                 return;
 
-            var multiplier = flammable.FireStacks == 0f ? Multiplier : MultiplierOnExisting;
+            var multiplier = flammable.FireStacks != 0f && MultiplierOnExisting >= 0 ? MultiplierOnExisting : Multiplier;
             var quantity = 1f;
             if (args is EntityEffectReagentArgs reagentArgs)
             {
