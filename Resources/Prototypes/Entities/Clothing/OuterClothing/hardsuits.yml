@@ -998,3 +998,34 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSanta
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitBS
+  name: blue shielded hardsuit
+  description: A lightweight hardsuit designed for fast paced, mass effect combat, aswell as space survival.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/bluesuit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/bluesuit.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.7
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.7
+        Cold: 0.7
+        Shock: 0.7
+        Radiation: 0.1
+        Caustic: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitBS

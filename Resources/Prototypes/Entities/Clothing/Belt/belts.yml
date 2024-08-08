@@ -706,7 +706,7 @@
 - type: entity
   parent: ClothingBeltStorageBase
   id: ClothingBeltBS
-  name: security belt
+  name: blue belt
   description: A high utility belt, capable of holding countless tools and weapons of great use.
   components:
   - type: Sprite
@@ -714,6 +714,8 @@
   - type: Clothing
     sprite: Clothing/Belt/blueshield.rsi
   - type: Storage
+    grid:
+    - 0,0,9,1
     whitelist:
       tags:
         - CigPack
@@ -725,17 +727,6 @@
         - MagazineMagnum
         - CombatKnife
         - Truncheon
-        - Stunbaton
-        - FlashOnTrigger
-        - SmokeOnTrigger
-        - Flash
-        - Handcuff
-        - BallisticAmmoProvider
-        - CartridgeAmmo
-        - DoorRemote
-        - Whistle
-        - HolosignProjector
-        - BalloonPopper
         - Wirecutter
         - Crowbar
         - Screwdriver
@@ -751,19 +742,28 @@
         - HolofanProjector
         - Multitool
         - AppraisalTool
-  - type: ItemMapper
-    mapLayers:
-      flashbang:
-        whitelist:
-          components:
-          - FlashOnTrigger
-      stunbaton:
-        whitelist:
-          components:
-          - Stunbaton
-      tear_gas_grenade:
-        whitelist:
-          components:
-          - SmokeOnTrigger
+      components:
+        - Stunbaton
+        - FlashOnTrigger
+        - SmokeOnTrigger
+        - Flash
+        - Handcuff
+        - BallisticAmmoProvider
+        - CartridgeAmmo
+        - DoorRemote
+        - Whistle
+        - HolosignProjector
+        - BalloonPopper
+        - SprayPainter
+        - NetworkConfigurator
+        - RCD
+        - RCDAmmo
+        - Welder
+        - Flash
+        - Handcuff
+        - PowerCell
+        - Geiger
+        - TrayScanner
+        - GasAnalyzer
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance

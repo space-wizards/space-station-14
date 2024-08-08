@@ -1357,3 +1357,14 @@
     sprite: Clothing/Uniforms/Jumpsuit/financial.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/financial.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBS
+  name: blue shield's padded jumpsuit
+  description: A lightly armored suit of blues and golds, only entrusted with central command agents, sent to protect commanding officers
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/blueshield.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/blueshield.rsi
