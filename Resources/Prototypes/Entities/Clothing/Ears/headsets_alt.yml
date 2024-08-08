@@ -169,7 +169,7 @@
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltBS
-  name: blue shield's over-ear headset
+  name: financial supervisor's over-ear headset
   description: An over-ear, given only to the most trusted central command agents, defauting to allow radio access, that helps you do your job.
   components:
     - type: Headset
@@ -178,14 +178,12 @@
     - type: ContainerFill
       containers:
         key_slots:
-        - EncryptionKeyMedical
-        - EncryptionKeyRobo
-        - EncryptionKeySecurity
-        - EncryptionKeyService
-        - EncryptionKeyCentCom
-        - EncryptionKeyCommand
-        - EncryptionKeyCommon
+      - EncryptionKeyCommand
+      - EncryptionKeyCentCom
+      - EncryptionKeySecurityF
+      - EncryptionKeyService
+      - EncryptionKeyCommon
     - type: Sprite
-      sprite: Clothing/Ears/Headsets/earshield.rsi
+      sprite: Clothing/Ears/Headsets/financial.rsi
     - type: Clothing
-      sprite: Clothing/Ears/Headsets/earshield.rsi
+      sprite: Clothing/Ears/Headsets/financial.rsi

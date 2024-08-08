@@ -843,3 +843,14 @@
     sprite: Clothing/Uniforms/Jumpskirt/musician.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/musician.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtFS
+  name: financial supervisor's premium jumpskirt
+  description: A wonderful and eye catching skirt of pristine greens and golds. So eye catching, even Nanotrasen corperate enemies are out for this central command crafted masterpiece.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/fs.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/fs.rsi
