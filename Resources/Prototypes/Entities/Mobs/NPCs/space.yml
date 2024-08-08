@@ -510,6 +510,7 @@
 - type: entity
   parent: MobSnail
   id: MobSnailSpeed
+  suffix: Speed
   components:
   - type: GhostRole
     makeSentient: true
