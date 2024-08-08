@@ -1,24 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Atmos metal pipes now deal blunt damage.
-    type: Add
-  id: 6559
-  time: '2024-05-09T06:00:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27673
-- author: Plykiya
-  changes:
-  - message: The emagged protolathe can now print truncheons and the new T3 portable
-      recharger.
-    type: Add
-  - message: The emagged circuit printer can now print ship guns.
-    type: Add
-  - message: Autolathe emagged recipes that are research gated have been moved over
-      to the protolathe.
-    type: Tweak
-  id: 6560
-  time: '2024-05-09T06:03:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27575
 - author: deltanedas
   changes:
   - message: Ninja can now hack criminal records consoles to make everyone wanted.
@@ -3781,3 +3761,20 @@
   id: 7058
   time: '2024-08-08T03:08:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30551
+- author: strO0pwafel
+  changes:
+  - message: Fixed inconsistent naming of CentComm.
+    type: Fix
+  id: 7059
+  time: '2024-08-08T10:04:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29217
+- author: Plykiya
+  changes:
+  - message: Buffed the range of EMP implants from a radius of 1.75 tiles to 2.75
+      tiles.
+    type: Tweak
+  - message: Buffed the range of EMP grenades from a radius of 4 tiles to 5.5 tiles.
+    type: Tweak
+  id: 7060
+  time: '2024-08-08T10:04:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30660
