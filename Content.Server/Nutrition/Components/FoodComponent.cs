@@ -17,7 +17,7 @@ public sealed partial class FoodComponent : Component
     public SoundSpecifier UseSound = new SoundCollectionSpecifier("eating");
 
     [DataField]
-    public List<EntProtoId> Trash = new();
+    public HashSet<EntProtoId> Trash = new();
 
     [DataField]
     public FixedPoint2? TransferAmount = FixedPoint2.New(5);
