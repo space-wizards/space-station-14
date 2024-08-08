@@ -375,7 +375,8 @@
     size: Small
   - type: PhysicalComposition
     materialComposition:
-      Plastic: 100 # 1 sheet
+      Gold: 100 # 1 sheet
+      Plastic: 400 # 4 sheets
 
 - type: entity
   parent: BaseScrap
