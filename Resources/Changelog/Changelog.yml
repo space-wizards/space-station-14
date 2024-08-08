@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Firesuits and hardsuits now protect your skin from fire, you will instead
-      die of heatstroke.
-    type: Tweak
-  id: 6565
-  time: '2024-05-09T07:12:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27161
 - author: Dutch-VanDerLinde
   changes:
   - message: Fixed non-inital infected getting the succumb to zombie action.
@@ -3793,3 +3785,12 @@
   id: 7064
   time: '2024-08-08T23:27:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26699
+- author: themias
+  changes:
+  - message: Butter can be sliced, cookie and toast recipes now use butter slices.
+    type: Tweak
+  - message: Chefvend butter reduced from 4 to 3.
+    type: Tweak
+  id: 7065
+  time: '2024-08-08T23:32:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30789
