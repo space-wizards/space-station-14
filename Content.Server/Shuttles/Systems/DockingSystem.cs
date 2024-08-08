@@ -281,24 +281,24 @@ namespace Content.Server.Shuttles.Systems
             {
                 if (_doorSystem.TryOpen(dockAUid, doorA))
                 {
-                    doorA.ChangeAirtight = false;
                     if (TryComp<DoorBoltComponent>(dockAUid, out var airlockA))
                     {
                         _doorSystem.SetBoltsDown((dockAUid, airlockA), true);
                     }
                 }
+                doorA.ChangeAirtight = false;
             }
 
             if (TryComp(dockBUid, out DoorComponent? doorB))
             {
                 if (_doorSystem.TryOpen(dockBUid, doorB))
                 {
-                    doorB.ChangeAirtight = false;
                     if (TryComp<DoorBoltComponent>(dockBUid, out var airlockB))
                     {
                         _doorSystem.SetBoltsDown((dockBUid, airlockB), true);
                     }
                 }
+                doorB.ChangeAirtight = false;
             }
 
             if (_pathfinding.TryCreatePortal(dockAXform.Coordinates, dockBXform.Coordinates, out var handle))

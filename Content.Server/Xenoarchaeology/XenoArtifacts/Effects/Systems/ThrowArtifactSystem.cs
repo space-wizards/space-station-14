@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Maps;
@@ -31,7 +31,7 @@ public sealed class ThrowArtifactSystem : EntitySystem
         if (TryComp<MapGridComponent>(xform.GridUid, out var grid))
         {
             var tiles = grid.GetTilesIntersecting(
-                Box2.CenteredAround(xform.WorldPosition, new Vector2(component.Range * 2, component.Range)));
+                Box2.CenteredAround(_transform.GetWorldPosition(xform), new Vector2(component.Range * 2, component.Range)));
 
             foreach (var tile in tiles)
             {
