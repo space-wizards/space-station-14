@@ -55,18 +55,18 @@ public abstract partial class SharedSalvageSystem : EntitySystem
 
         if (air.Description != string.Empty)
         {
-            mods.Add(air.Description);
+            mods.Add(Loc.GetString(air.Description));
         }
 
         // only show the description if there is an atmosphere since wont matter otherwise
         if (temp.Description != string.Empty && !air.Space)
         {
-            mods.Add(temp.Description);
+            mods.Add(Loc.GetString(temp.Description));
         }
 
         if (light.Description != string.Empty)
         {
-            mods.Add(light.Description);
+            mods.Add(Loc.GetString(light.Description));
         }
 
         var duration = TimeSpan.FromSeconds(CfgManager.GetCVar(CCVars.SalvageExpeditionDuration));

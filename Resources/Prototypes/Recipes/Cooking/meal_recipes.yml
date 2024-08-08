@@ -6,6 +6,24 @@
   solids:
     FoodDoughSlice: 1 # one third of a standard bread dough recipe
 
+#Bagels
+- type: microwaveMealRecipe
+  id: RecipeBagel
+  name: bagel recipe
+  result: FoodBagel
+  time: 5
+  solids:
+    FoodDoughRope: 1 # created by rolling a dough slice.
+
+- type: microwaveMealRecipe
+  id: RecipeBagelPoppy
+  name: poppyseed bagel recipe
+  result: FoodBagelPoppy
+  time: 5
+  solids:
+    FoodDoughRope: 1
+    PoppySeeds: 1
+
 #Burgers
 
 - type: microwaveMealRecipe
@@ -558,7 +576,7 @@
   time: 30
   solids:
     FoodDoughFlat: 1
-    FoodAmbrosiaVulgaris: 3
+    LeavesCannabis: 2
     FoodCheeseSlice: 1
     FoodTomato: 1
 
@@ -572,6 +590,17 @@
     FoodDonkpocketWarm: 3
     FoodCheeseSlice: 1
     FoodTomato: 1
+
+- type: microwaveMealRecipe
+  id: RecipeUraniumPizza
+  name: spicy rock pizza recipe
+  result: FoodPizzaUranium
+  time: 30
+  solids:
+    FoodDoughFlat: 1
+    FoodChiliPepper: 2
+    FoodTomato: 2
+    SheetUranium1: 2
 
 #Italian
 - type: microwaveMealRecipe
@@ -617,12 +646,13 @@
   name: chow mein recipe
   result: FoodNoodlesChowmein
   time: 10
+  reagents:
+    Egg: 6
   solids:
     FoodNoodlesBoiled: 1
     FoodEggplant: 1
     FoodCarrot: 1
     FoodCorn: 1
-    FoodEgg: 1
 
 - type: microwaveMealRecipe
   id: RecipeOatmeal
@@ -682,9 +712,10 @@
   name: egg-fried rice recipe
   result: FoodRiceEgg
   time: 15
+  reagents:
+    Egg: 6
   solids:
     FoodRiceBoiled: 1
-    FoodEgg: 1
     FoodCarrot: 1
 
 - type: microwaveMealRecipe
@@ -1418,10 +1449,10 @@
   reagents:
     Flour: 15
     Sugar: 30
+    Egg: 18
   solids:
     FoodButter: 2
     FoodSnackChocolateBar: 2
-    FoodEgg: 3
 
 #Donks i guess
 - type: microwaveMealRecipe
@@ -1858,10 +1889,10 @@
   reagents:
     Flour: 15
     Sugar: 30
+    Egg: 18
   solids:
     FoodCannabisButter: 2
     FoodSnackChocolateBar: 2
-    FoodEgg: 3
 
 - type: microwaveMealRecipe
   id: RecipeCornInButter

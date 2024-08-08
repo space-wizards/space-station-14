@@ -313,5 +313,99 @@ Entries:
   id: 38
   time: '2024-06-15T11:25:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28899
+- author: slarticodefast
+  changes:
+  - message: Added the "Make Inititial Infected" verb to the antag control.
+    type: Add
+  id: 39
+  time: '2024-06-21T05:42:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29259
+- author: nikthechampiongr
+  changes:
+  - message: It is now possible to issue BlacklistedRanges bans(This requires you
+      to edit the database manually at the moment.) Bans marked as BlacklistedRange
+      will lead to players joining for the first time who match an ip range to be
+      denied. Players that have joined the server before will be unaffected.
+    type: Add
+  id: 40
+  time: '2024-06-21T12:06:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29258
+- author: Chief-Engineer
+  changes:
+  - message: grant_connect_bypass now requires moderator permissions instead of admin.
+    type: Tweak
+  id: 41
+  time: '2024-06-24T21:56:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29406
+- author: Chief-Engineer
+  changes:
+  - message: Added the ability to alert for shared connections.
+    type: Add
+  id: 42
+  time: '2024-06-26T13:43:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29405
+- author: Repo
+  changes:
+  - message: Changed admin object tab from auto to manual refresh on tab change or
+      button press so that entries don't shift around when selecting an object.
+    type: Tweak
+  id: 43
+  time: '2024-06-28T03:32:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28681
+- author: Chief-Engineer
+  changes:
+  - message: Admin alert for unsafe AME injection rate was disabled.
+    type: Remove
+  id: 44
+  time: '2024-06-30T12:26:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29582
+- author: Chief-Engineer
+  changes:
+  - message: Baby jail no longer prevents accounts with no prior connections from
+      connecting
+    type: Fix
+  id: 45
+  time: '2024-07-11T05:14:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29896
+- author: Repo
+  changes:
+  - message: Added aHelp player pinning.
+    type: Add
+  - message: Added disconnection, reconnection, banning notice on relay and ahelp.
+    type: Add
+  - message: Fixed search clears on aHelp close.
+    type: Fix
+  id: 46
+  time: '2024-07-30T08:28:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28639
+- author: Repo
+  changes:
+  - message: Fixed Ahelp Sorting
+    type: Fix
+  id: 47
+  time: '2024-07-31T01:58:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30518
+- author: Mervill
+  changes:
+  - message: added a debug command to make you thirsty
+    type: Add
+  id: 48
+  time: '2024-08-02T15:49:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30562
+- author: Repo
+  changes:
+  - message: Players that aHelped in Current round stay at top of bwoink list.
+    type: Fix
+  id: 49
+  time: '2024-08-02T18:58:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30580
+- author: Mervill
+  changes:
+  - message: added a debug command to set either your hunger or thirst value to a
+      given threshold
+    type: Add
+  id: 50
+  time: '2024-08-05T07:36:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30563
 Name: Admin
 Order: 1

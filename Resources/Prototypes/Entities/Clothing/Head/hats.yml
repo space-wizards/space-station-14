@@ -28,7 +28,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretFrench
-  name: French beret
+  name: french beret
   description: A French beret, "vive la France".
   components:
   - type: Sprite
@@ -62,7 +62,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatCasa
   name: casa
-  description: Cone-shaped hat
+  description: Cone-shaped hat.
   components:
     - type: Sprite
       sprite: Clothing/Head/Hats/casa.rsi
@@ -391,7 +391,6 @@
   - type: HideLayerClothing
     slots:
     - Hair
-    - Snout
     - HeadTop
     - HeadSide
 
@@ -410,7 +409,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatSantahat
   name: santa hat
-  description: "A festive hat worn by Santa Claus"
+  description: A festive hat worn by Santa Claus.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/santahat.rsi
@@ -495,8 +494,6 @@
   - type: Appearance
   - type: AddAccentClothing
     accent: RussianAccent
-  - type: RussianAccent
-  - type: AccentWearerNameClothing
   - type: Foldable
     canFoldInsideContainer: true
   - type: FoldableClothing

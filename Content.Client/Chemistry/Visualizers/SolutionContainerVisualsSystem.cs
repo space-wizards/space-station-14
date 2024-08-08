@@ -2,6 +2,8 @@ using Content.Client.Items.Systems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Clothing;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Hands;
 using Content.Shared.Item;
 using Content.Shared.Rounding;
@@ -20,6 +22,7 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
         base.Initialize();
         SubscribeLocalEvent<SolutionContainerVisualsComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SolutionContainerVisualsComponent, GetInhandVisualsEvent>(OnGetHeldVisuals);
+        SubscribeLocalEvent<SolutionContainerVisualsComponent, GetEquipmentVisualsEvent>(OnGetClothingVisuals);
     }
 
     private void OnMapInit(EntityUid uid, SolutionContainerVisualsComponent component, MapInitEvent args)
@@ -169,6 +172,43 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
             layer.State = key;
 
             if (component.ChangeColor && AppearanceSystem.TryGetData<Color>(uid, SolutionContainerVisuals.Color, out var color, appearance))
+                layer.Color = color;
+
+            args.Layers.Add((key, layer));
+        }
+    }
+
+    private void OnGetClothingVisuals(Entity<SolutionContainerVisualsComponent> ent, ref GetEquipmentVisualsEvent args)
+    {
+        if (ent.Comp.EquippedFillBaseName == null)
+            return;
+
+        if (!TryComp<AppearanceComponent>(ent, out var appearance))
+            return;
+
+        if (!TryComp<ClothingComponent>(ent, out var clothing))
+            return;
+
+        if (!AppearanceSystem.TryGetData<float>(ent, SolutionContainerVisuals.FillFraction, out var fraction, appearance))
+            return;
+
+        var closestFillSprite = ContentHelpers.RoundToLevels(fraction, 1, ent.Comp.EquippedMaxFillLevels + 1);
+
+        if (closestFillSprite > 0)
+        {
+            var layer = new PrototypeLayerData();
+
+            var equippedPrefix = clothing.EquippedPrefix == null ? $"equipped-{args.Slot}" : $" {clothing.EquippedPrefix}-equipped-{args.Slot}";
+            var key = equippedPrefix + ent.Comp.EquippedFillBaseName + closestFillSprite;
+
+            // Make sure the sprite state is valid so we don't show a big red error message
+            // This saves us from having to make fill level sprites for every possible slot the item could be in (including pockets).
+            if (!TryComp<SpriteComponent>(ent, out var sprite) || sprite.BaseRSI == null || !sprite.BaseRSI.TryGetState(key, out _))
+                return;
+
+            layer.State = key;
+
+            if (ent.Comp.ChangeColor && AppearanceSystem.TryGetData<Color>(ent, SolutionContainerVisuals.Color, out var color, appearance))
                 layer.Color = color;
 
             args.Layers.Add((key, layer));
