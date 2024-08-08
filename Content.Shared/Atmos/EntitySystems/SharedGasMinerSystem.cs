@@ -6,14 +6,7 @@ namespace Content.Shared.Atmos.EntitySystems;
 
 public abstract class SharedGasMinerSystem : EntitySystem
 {
-    [Dependency] private readonly ExamineSystemShared _examineSystemShared = default!;
     [Dependency] private readonly SharedAtmosphereSystem _sharedAtmosphereSystem = default!;
-
-    // Gas miners are traditionally placed in a sealed room behind many layers of glass windows
-    // and empty space. Under normal conditions a player is usually at least 5 tiles from
-    // a gas miner. The standard examine range (3) is too small for the gas miner's examine text
-    // to be really useful, so we have an extended range for examining gas miners.
-    private const float MinerExamineRange = 6f;
 
     public override void Initialize()
     {
@@ -24,9 +17,6 @@ public abstract class SharedGasMinerSystem : EntitySystem
     private void OnExamine(Entity<GasMinerComponent> ent, ref ExaminedEvent args)
     {
         var component = ent.Comp;
-
-        if (!_examineSystemShared.InRangeUnOccluded(args.Examiner, args.Examined, MinerExamineRange))
-            return;
 
         using (args.PushGroup(nameof(GasMinerComponent)))
         {
