@@ -189,7 +189,7 @@
       sprite: Clothing/Ears/Headsets/financial.rsi
 
 - type: entity
-  parent: ClothingHeadsetALT
+  parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltBS
   name: blue shielder's over-ear headset
   description: A headset given only to trusted central command agents, defauting to allow radio access that helps you do your job.
