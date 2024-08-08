@@ -64,6 +64,15 @@
     - type: ReplacementAccent
       accent: liar
 
+- type: trait
+  id: SwedishAccent
+  name: trait-swedish-name
+  description: trait-swedish-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+    - type: SwedishAccent
+
 # 2 Cost
 
 - type: trait
