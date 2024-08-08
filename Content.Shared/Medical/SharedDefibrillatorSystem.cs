@@ -104,8 +104,6 @@ public abstract class SharedDefibrillatorSystem : EntitySystem
         return _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.DoAfterDuration, new DefibrillatorZapDoAfterEvent(),
             uid, target, uid)
         {
-            BlockDuplicate = true,
-            BreakOnHandChange = true,
             NeedHand = true,
             BreakOnMove = !component.AllowDoAfterMovement
         });
