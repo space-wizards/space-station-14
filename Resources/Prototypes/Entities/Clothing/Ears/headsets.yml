@@ -288,3 +288,24 @@
       sprite: Clothing/Ears/Headsets/freelance.rsi
     - type: Clothing
       sprite: Clothing/Ears/Headsets/freelance.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetCommand
+  name: blue shield headset
+  description: A headset given only to trusted central command agents, defauting to allow access to radios that help you do your job.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyMedical
+      - EncryptionKeyRobo
+      - EncryptionKeySecurity
+      - EncryptionKeyService
+      - EncryptionKeyCentCom
+      - EncryptionKeyCommand
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/earshield.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/earshield.rsi

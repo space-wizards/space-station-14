@@ -285,3 +285,29 @@
         Piercing: 15
   - type: Item
     sprite: Objects/Weapons/Melee/throwing_knife.rsi
+
+- type: entity
+  name: thousand degree knife
+  parent: CombatKnife
+  id: HotKnife
+  description: A super heated Chef's Knife, Guaranteed to stay a thousand degrees for years to come..
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/hot_knife.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.0
+    damage:
+      types:
+        Heat: 30
+        Caustic: 8
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Heat: 10
+        Caustic: 2
+  - type: Item
+    sprite: Objects/Weapons/Melee/hot_knife.rsi

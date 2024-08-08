@@ -1099,3 +1099,19 @@
     sprite: Clothing/Head/Hats/beret_medic.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_medic.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFinaCap
+  name: financial cap
+  description: A distinguished green cap, signifying the rank and role of the head of personnel. Its vibrant hue and polished design convey authority with a touch of style.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/fscap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/fscap.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon
