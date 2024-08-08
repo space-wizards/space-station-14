@@ -11,6 +11,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Radio.EntitySystems;
@@ -26,6 +27,7 @@ public sealed class RadioDeviceSystem : EntitySystem
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     // Used to prevent a shitter from using a bunch of radios to spam chat.
     private HashSet<(string, EntityUid)> _recentlySent = new();
@@ -190,7 +192,13 @@ public sealed class RadioDeviceSystem : EntitySystem
             return; // no feedback loops please.
 
         if (_recentlySent.Add((args.Message, args.Source)))
-            _radio.SendRadioMessage(args.Source, args.Message, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel), uid);
+        {
+            _audio.PlayGlobal(component.ListenSound, args.Source);
+            _radio.SendRadioMessage(args.Source,
+                args.Message,
+                _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel),
+                uid);
+        }
     }
 
     private void OnAttemptListen(EntityUid uid, RadioMicrophoneComponent component, ListenAttemptEvent args)
@@ -214,6 +222,7 @@ public sealed class RadioDeviceSystem : EntitySystem
             ("speaker", Name(uid)),
             ("originalName", nameEv.Name));
 
+        _audio.PlayPredicted(component.PlaySound, uid, args.RadioSource);
         // log to chat so people can identity the speaker/source, but avoid clogging ghost chat if there are many radios
         _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Whisper, ChatTransmitRange.GhostRangeLimit, nameOverride: name, checkRadioPrefix: false);
     }
