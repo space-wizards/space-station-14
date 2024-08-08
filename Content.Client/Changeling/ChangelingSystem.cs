@@ -20,12 +20,23 @@ public sealed partial class ChangelingSystem : EntitySystem
 
     private void OnUpdateAlert(EntityUid uid, ChangelingComponent comp, ref UpdateAlertSpriteEvent args)
     {
-        if (args.Alert.AlertKey.AlertType != "Chemicals")
-            return;
+        var stateNormalized = 0f;
 
-        var chemicalsNormalised = (int) (comp.Chemicals / comp.MaxChemicals * 16); // hardcoded because uhh umm
+        // hardcoded because uhh umm i don't know. send help.
+        switch (args.Alert.AlertKey.AlertType)
+        {
+            case "ChangelingChemicals":
+                stateNormalized = (int)(comp.Chemicals / comp.MaxChemicals * 18);
+                break;
+
+            case "ChangelingBiomass":
+                stateNormalized = (int)(comp.Biomass / comp.MaxBiomass * 16);
+                break;
+            default:
+                return;
+        }
         var sprite = args.SpriteViewEnt.Comp;
-        sprite.LayerSetState(AlertVisualLayers.Base, $"{chemicalsNormalised}");
+        sprite.LayerSetState(AlertVisualLayers.Base, $"{stateNormalized}");
     }
 
     private void GetChanglingIcon(Entity<ChangelingComponent> ent, ref GetStatusIconsEvent args)
