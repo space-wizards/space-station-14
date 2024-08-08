@@ -15,6 +15,7 @@ using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Sequence;
 using Robust.Shared.Serialization.Markdown.Value;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -25,6 +26,7 @@ namespace Content.Client.Actions
     {
         public delegate void OnActionReplaced(EntityUid actionId);
 
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IResourceManager _resources = default!;
@@ -225,13 +227,14 @@ namespace Content.Client.Actions
             var (uid, comp) = ent;
             var action = args.Action;
             var coords = args.Input.Coordinates;
+            var user = args.User;
 
             if (!ValidateWorldTarget(user, coords, ent))
                 return;
 
             // optionally send the clicked entity too, if it matches its whitelist etc
             // this is the actual entity-world targeting magic
-            EntityUid? targetEnt;
+            EntityUid? targetEnt = null;
             if (TryComp<EntityTargetActionComponent>(ent, out var entity) &&
                 args.Input.EntityUid != null &&
                 ValidateEntityTarget(user, args.Input.EntityUid, (uid, entity)))
@@ -257,7 +260,7 @@ namespace Content.Client.Actions
 
         private void OnEntityTargetAttempt(Entity<EntityTargetActionComponent> ent, ref ActionTargetAttemptEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || args.Input.EntityUid is not {} entity)
                 return;
 
             // let world target component handle it
@@ -271,6 +274,7 @@ namespace Content.Client.Actions
             args.Handled = true;
 
             var action = args.Action;
+            var user = args.User;
 
             if (!ValidateEntityTarget(user, entity, ent))
                 return;
@@ -279,7 +283,7 @@ namespace Content.Client.Actions
             {
                 ev.Target = entity;
 
-                _actionsSystem.PerformAction(user, user.Comp, uid, action, comp.Event, _timing.CurTime);
+                PerformAction(user, user.Comp, uid, action, comp.Event, _timing.CurTime);
             }
             else
                 RaisePredictiveEvent(new RequestPerformActionEvent(GetNetEntity(uid), GetNetEntity(entity)));

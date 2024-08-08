@@ -102,7 +102,7 @@ public sealed class RequestPerformActionEvent : EntityEventArgs
         EntityCoordinatesTarget = entityCoordinatesTarget;
     }
 
-    public RequestPerformActionEvent(NetEntity action, NetEntity entityTarget, NetCoordinates entityCoordinatesTarget)
+    public RequestPerformActionEvent(NetEntity action, NetEntity? entityTarget, NetCoordinates entityCoordinatesTarget)
     {
         Action = action;
         EntityTarget = entityTarget;

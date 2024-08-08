@@ -179,14 +179,14 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         {
             // The user is targeting with this action, but it is not valid. Maybe mark this click as
             // handled and prevent further interactions.
-            return !action.InteractOnMiss;
+            return !target.InteractOnMiss;
         }
 
         var ev = new ActionTargetAttemptEvent(args, (user, comp), action);
-        _entMan.RaiseLocalEvent(actionId, ref ev);
+        _entMan.EventBus.RaiseLocalEvent(actionId, ref ev);
         if (!ev.Handled)
         {
-            Logger.Error($"Action {ToPrettyString(actionId)} did not handle ActionTargetAttemptEvent!");
+            Logger.Error($"Action {actionId} did not handle ActionTargetAttemptEvent!");
             return false;
         }
 
@@ -194,7 +194,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (ev.FoundTarget ? !target.Repeat : target.DeselectOnMiss)
             StopTargeting();
 
-        return ev.FoundTarget || !action.InteractOnMiss;
+        return ev.FoundTarget || !target.InteractOnMiss;
     }
 
     public void UnloadButton()
@@ -558,10 +558,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             return;
         }
 
-        var ev = new FillActionSlotEvent();
-        EntityManager.EventBus.RaiseEvent(EventSource.Local, ev);
-        if (ev.Action != null)
-            SetAction(button, ev.Action);
+        // good job
     }
 
     private void OnActionUnpressed(GUIBoundKeyEventArgs args, ActionButton button)
