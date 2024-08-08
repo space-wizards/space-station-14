@@ -137,13 +137,22 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, RadiationCollectorComponent component, ExaminedEvent args)
     {
-        if (!TryGetLoadedGasTank(uid, out var gasTank))
+        using (args.PushGroup(nameof(RadiationCollectorComponent)))
         {
-            args.PushMarkup(Loc.GetString("power-radiation-collector-gas-tank-missing"));
-            return;
-        }
+            args.PushMarkup(Loc.GetString("power-radiation-collector-enabled", ("state", component.Enabled)));
 
-        args.PushMarkup(Loc.GetString("power-radiation-collector-gas-tank-present"));
+            if (!TryGetLoadedGasTank(uid, out var gasTank))
+            {
+                args.PushMarkup(Loc.GetString("power-radiation-collector-gas-tank-missing"));
+            }
+            else
+            {
+                _appearance.TryGetData<int>(uid, RadiationCollectorVisuals.PressureState, out var state);
+
+                args.PushMarkup(Loc.GetString("power-radiation-collector-gas-tank-present",
+                    ("fullness", state)));
+            }
+        }
     }
 
     private void OnAnalyzed(EntityUid uid, RadiationCollectorComponent component, GasAnalyzerScanEvent args)

@@ -1207,11 +1207,12 @@ public abstract partial class InteractionTest
         BoundKeyFunction key,
         BoundKeyState state,
         NetCoordinates? coordinates = null,
-        NetEntity? cursorEntity = null)
+        NetEntity? cursorEntity = null,
+        ScreenCoordinates? screenCoordinates = null)
     {
         var coords = coordinates ?? TargetCoords;
         var target = cursorEntity ?? Target ?? default;
-        ScreenCoordinates screen = default;
+        var screen = screenCoordinates ?? default;
 
         var funcId = InputManager.NetworkBindMap.KeyFunctionID(key);
         var message = new ClientFullInputCmdMessage(CTiming.CurTick, CTiming.TickFraction, funcId)

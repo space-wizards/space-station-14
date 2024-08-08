@@ -29,7 +29,7 @@ public sealed partial class SolutionTransferComponent : Component
     /// </summary>
     [DataField("maxTransferAmount")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 MaximumTransferAmount { get; set; } = FixedPoint2.New(50);
+    public FixedPoint2 MaximumTransferAmount { get; set; } = FixedPoint2.New(100);
 
     /// <summary>
     ///     Can this entity take reagent from reagent tanks?
