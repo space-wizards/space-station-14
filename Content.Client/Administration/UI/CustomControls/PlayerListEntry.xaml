@@ -1,0 +1,6 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              Orientation="Horizontal" HorizontalExpand="true">
+    <Label Name="PlayerEntryLabel" Text="" ClipText="True" HorizontalExpand="True" />
+    <TextureButton Name="PlayerEntryPinButton"
+                   HorizontalAlignment="Right" />
+</BoxContainer>

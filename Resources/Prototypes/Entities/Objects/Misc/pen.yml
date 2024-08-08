@@ -18,6 +18,14 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 25
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/pen_click.ogg
+      params:
+        volume: -4
+        maxDistance: 2
+  - type: UseDelay
+    delay: 1.5
 
 - type: entity
   parent: Pen
@@ -87,7 +95,7 @@
     state: pen_cap
 
 - type: entity
-  name: CentCom pen
+  name: CentComm pen
   parent: CyberPen
   id: PenCentcom
   description: In an attempt to keep up with the "power" of the cybersun bureaucracy, NT made a replica of cyber pen, in their corporate style.
