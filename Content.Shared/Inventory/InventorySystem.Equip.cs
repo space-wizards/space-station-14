@@ -170,7 +170,7 @@ public abstract partial class InventorySystem
                 itemUid)
             {
                 BreakOnMove = true,
-                NeedHand = true
+                NeedHand = true,
             };
 
             _doAfter.TryStartDoAfter(args);
@@ -417,7 +417,7 @@ public abstract partial class InventorySystem
                 removedItem.Value)
             {
                 BreakOnMove = true,
-                NeedHand = true
+                NeedHand = true,
             };
 
             _doAfter.TryStartDoAfter(args);
