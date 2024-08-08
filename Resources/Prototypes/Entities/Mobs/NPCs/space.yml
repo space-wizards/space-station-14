@@ -536,12 +536,13 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 7 #he go fast, also they cant slip so its probably fine.
     baseSprintSpeed : 5
-  - type: ActiveJetpack
+#  - type: ActiveJetpack # I think this will need a custom component to not make tests angry.
   - type: MovementAlwaysTouching
 
 - type: entity
   parent: MobSnail
   id: MobSnailMoth
+  name: Snoth
   components:
   - type: Body
     prototype: Mothroach
