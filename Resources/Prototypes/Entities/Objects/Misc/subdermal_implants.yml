@@ -173,7 +173,7 @@
       implantAction: ActionActivateEmpImplant
     - type: TriggerImplantAction
     - type: EmpOnTrigger
-      range: 2.75
+      range: 1.75
       energyConsumption: 50000
       disableDuration: 10
 
@@ -325,3 +325,32 @@
    - type: Tag
      tags:
        - MindShield
+
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LifeSaverImplant
+  name: life saver implant
+  description: This implant tries to save life.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: SubdermalImplant
+      whitelist:
+        components:
+        - MobState
+    - type: TriggerOnMobstateChange
+      mobState:
+      - Critical
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 20
+          reagents:
+          - ReagentId: Omnizine
+            Quantity: 20
+    - type: SolutionInjectOnTrigger
+      solution: drink
+      transferAmount: 20
+    - type: DeleteOnSolutionEmpty
+      solution: drink
+
