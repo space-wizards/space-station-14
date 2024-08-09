@@ -8,9 +8,6 @@
     sprite: GreyStation/Clothing/Hands/Gloves/Color/righthanded_insulated_glove.rsi
   - type: Clothing
     sprite: GreyStation/Clothing/Hands/Gloves/Color/righthanded_insulated_glove.rsi
-  - type: GloveHeatResistance
-    # can't take out lights using budgets
-    heatResistance: 0
   - type: RandomInsulation
     # Why repeated numbers? So some numbers are more common, of course!
     list:
