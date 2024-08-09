@@ -12,7 +12,7 @@ namespace Content.Server.Explosion.EntitySystems;
 // A good portion of it is focused around keeping track of what tile-indices on a grid correspond to tiles that border
 // space. AFAIK no other system currently needs to track these "edge-tiles". If they do, this should probably be a
 // property of the grid itself?
-public sealed partial class ExplosionSystem : SharedExplosionSystem
+public sealed partial class ExplosionSystem
 {
     /// <summary>
     ///     Set of tiles of each grid that are directly adjacent to space, along with the directions that face space.
