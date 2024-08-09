@@ -490,6 +490,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> DiscordRoundEndRoleWebhook =
             CVarDef.Create("discord.round_end_role", string.Empty, CVar.SERVERONLY);
 
+        /// <summary>
+        /// URL of the Discord webhook which will relay station news acticles. If left empty, disables the webhook.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordNewsWebhook =
+            CVarDef.Create("discord.news_webhook", "", CVar.SERVERONLY);
+
         /*
          * Tips
          */
