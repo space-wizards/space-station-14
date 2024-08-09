@@ -466,7 +466,7 @@
   time: 5
   solids:
     FoodBreadPlainSlice: 1
-    FoodButter: 1
+    FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeFrenchToast
@@ -487,7 +487,7 @@
   solids:
     FoodBreadPlainSlice: 1
     FoodGarlic: 1
-    FoodButter: 1
+    FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeJellyToast
@@ -1257,7 +1257,7 @@
     Flour: 5
     Sugar: 5
   solids:
-    FoodButter: 1
+    FoodButterSlice: 1
     FoodSnackChocolateBar: 1
 
 - type: microwaveMealRecipe
@@ -1269,7 +1269,7 @@
     Flour: 5
     Sugar: 10
   solids:
-    FoodButter: 1
+    FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeRaisinCookie
@@ -1291,7 +1291,7 @@
     Oats: 5
     Sugar: 5
   solids:
-    FoodButter: 1
+    FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeMuffinLemo
