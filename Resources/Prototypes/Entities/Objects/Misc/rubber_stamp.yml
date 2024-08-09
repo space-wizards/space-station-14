@@ -271,3 +271,16 @@
     stampState: "paper_stamp-detective"
   - type: Sprite
     state: stamp-detective
+
+- type: entity
+  name: head of greytide's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampGreytide
+  description: A crude stamp fashioned out of a bar of soap and a screwdriver. Ancient prophecy foretells that the one who controls this stamp, controls the universe.
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-greytide
+    stampedColor: "#323232"
+    stampState: "paper_stamp-greytide"
+  - type: Sprite
+    state: stamp-greytide
