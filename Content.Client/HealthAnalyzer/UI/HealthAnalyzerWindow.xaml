@@ -40,6 +40,12 @@
                 </GridContainer>
             </BoxContainer>
 
+            <PanelContainer Name="AlertsDivider" Visible="False" StyleClasses="LowDivider" />
+
+            <BoxContainer Name="AlertsContainer" Visible="False" Margin="0 5" Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Center">
+
+            </BoxContainer>
+
             <PanelContainer StyleClasses="LowDivider" />
 
             <BoxContainer
