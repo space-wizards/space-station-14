@@ -167,7 +167,7 @@
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterCentcom
-  name: CentCom winter coat
+  name: CentComm winter coat
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
@@ -797,7 +797,7 @@
   parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterSyndie
   name: syndicate's winter coat
-  description: Insulated winter coat, looks like a merch from "Syndieland"
+  description: Insulated winter coat, looks like a merch from "Syndieland".
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi

@@ -229,6 +229,10 @@
     guides:
       - Cyborgs
       - Robotics
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
   - type: ProtectedFromStepTriggers
 
 - type: entity
