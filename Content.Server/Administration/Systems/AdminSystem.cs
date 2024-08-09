@@ -28,6 +28,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 
@@ -90,12 +91,21 @@ namespace Content.Server.Administration.Systems
             Subs.CVar(_config, CCVars.BabyJailMaxAccountAge, OnBabyJailMaxAccountAgeChanged, true);
             Subs.CVar(_config, CCVars.BabyJailMaxOverallMinutes, OnBabyJailMaxOverallMinutesChanged, true);
 
+            SubscribeLocalEvent<GetSessionStateAttempt>(OnGetSessionsAttempt);
             SubscribeLocalEvent<IdentityChangedEvent>(OnIdentityChanged);
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
             SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
             SubscribeLocalEvent<RoleAddedEvent>(OnRoleEvent);
             SubscribeLocalEvent<RoleRemovedEvent>(OnRoleEvent);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
+        }
+
+        private void OnGetSessionsAttempt(ref GetSessionStateAttempt ev)
+        {
+            if (!_adminManager.IsAdmin(ev.Session))
+            {
+                ev.Cancelled = true;
+            }
         }
 
         private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
