@@ -1,7 +1,7 @@
-using Content.Server.Body.Components;
-using Content.Server.Temperature.Components;
-using Content.Server.Temperature.Systems;
+using Content.Shared.Body.Components;
+using Content.Shared.Temperature.Systems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Temperature.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems;
@@ -9,7 +9,7 @@ namespace Content.Server.Body.Systems;
 public sealed class ThermalRegulatorSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly TemperatureSystem _tempSys = default!;
+    [Dependency] private readonly SharedTemperatureSystem _tempSys = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSys = default!;
 
     public override void Initialize()
@@ -23,11 +23,13 @@ public sealed class ThermalRegulatorSystem : EntitySystem
     private void OnMapInit(Entity<ThermalRegulatorComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
+        Dirty(ent);
     }
 
     private void OnUnpaused(Entity<ThermalRegulatorComponent> ent, ref EntityUnpausedEvent args)
     {
         ent.Comp.NextUpdate += args.PausedTime;
+        Dirty(ent);
     }
 
     public override void Update(float frameTime)
@@ -39,6 +41,7 @@ public sealed class ThermalRegulatorSystem : EntitySystem
                 continue;
 
             regulator.NextUpdate += regulator.UpdateInterval;
+            Dirty(uid, regulator);
             ProcessThermalRegulation((uid, regulator));
         }
     }
