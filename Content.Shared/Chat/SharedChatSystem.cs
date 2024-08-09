@@ -1,4 +1,5 @@
 using System.Collections.Frozen;
+using System.Text.RegularExpressions;
 using Content.Shared.Popups;
 using Content.Shared.Radio;
 using Content.Shared.Speech;
@@ -237,6 +238,18 @@ public abstract class SharedChatSystem : EntitySystem
 
         return rawmsg;
     }
+
+    /// <summary>
+    /// Injects a tag around all found instances of a specific string in a ChatMessage.
+    /// Excludes strings inside other tags and brackets.
+    /// </summary>
+    public static string InjectTagAroundString(ChatMessage message, string targetString, string tag, string? tagParameter)
+    {
+        var rawmsg = message.WrappedMessage;
+        rawmsg = Regex.Replace(rawmsg, "(?i)(" + targetString + ")(?-i)(?![^[]*])", $"[{tag}={tagParameter}]$1[/{tag}]");
+        return rawmsg;
+    }
+
     public static string GetStringInsideTag(ChatMessage message, string tag)
     {
         var rawmsg = message.WrappedMessage;
