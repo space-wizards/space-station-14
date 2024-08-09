@@ -26,6 +26,8 @@ namespace Content.Server.GameTicking
 
         private WebhookIdentifier? _webhookIdentifier;
 
+        private WebhookIdentifier? _webhookIdentifierLastMessage;
+
         [ViewVariables]
         private string? RoundEndSoundCollection { get; set; }
 
@@ -70,6 +72,14 @@ namespace Content.Server.GameTicking
                 if (value == string.Empty)
                 {
                     DiscordRoundEndRole = null;
+                }
+            }, true);
+            //CCVar for DiscordLastMessageBeforeDeathWebhook
+            Subs.CVar(_configurationManager, CCVars.DiscordLastMessageBeforeDeathWebhook, value =>
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    _discord.GetWebhook(value, data => _webhookIdentifierLastMessage = data.ToIdentifier());
                 }
             }, true);
             Subs.CVar(_configurationManager, CCVars.RoundEndSoundCollection, value => RoundEndSoundCollection = value, true);

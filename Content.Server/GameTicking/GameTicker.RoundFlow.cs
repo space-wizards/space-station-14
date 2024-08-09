@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Announcements;
+using Content.Server.Chat.Systems;
 using Content.Server.Discord;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
@@ -341,6 +342,9 @@ namespace Content.Server.GameTicking
 
             ShowRoundEndScoreboard(text);
             SendRoundEndDiscordMessage();
+            // Call the OnEndRound to send the message through Last Message Before Death Webhook.
+            var lastMessageSystem = LastMessageBeforeDeathSystem.Instance;
+            lastMessageSystem.OnRoundEnd(_webhookIdentifierLastMessage);
         }
 
         public void ShowRoundEndScoreboard(string text = "")

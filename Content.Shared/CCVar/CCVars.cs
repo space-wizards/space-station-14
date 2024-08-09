@@ -490,6 +490,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> DiscordRoundEndRoleWebhook =
             CVarDef.Create("discord.round_end_role", string.Empty, CVar.SERVERONLY);
 
+        /// <summary>
+        /// URL of the Discord webhook which will relay last messages before death.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordLastMessageBeforeDeathWebhook =
+            CVarDef.Create("discord.last_message_before_death_webhook", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
+
         /*
          * Tips
          */
