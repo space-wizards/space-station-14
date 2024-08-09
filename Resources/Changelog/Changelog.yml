@@ -1,53 +1,4 @@
 ﻿Entries:
-- author: Hanzdegloker
-  changes:
-  - message: Added CMO turtleneck jumpsuit/jumpskirt.
-    type: Add
-  - message: Added a head mirror which may spawn in medical doctor's lockers
-    type: Add
-  id: 6567
-  time: '2024-05-09T21:53:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26153
-- author: PrPleGoo
-  changes:
-  - message: The crafted medsec hud now displays health icons too.
-    type: Tweak
-  - message: The health status icon now goes on the left for all types of med HUD.
-    type: Tweak
-  id: 6568
-  time: '2024-05-10T01:35:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27483
-- author: Moomoobeef
-  changes:
-  - message: CentCom has now started hiring crew who are short-sighted.
-    type: Add
-  id: 6569
-  time: '2024-05-10T01:40:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26037
-- author: whateverusername0
-  changes:
-  - message: Traitors now know their employers.
-    type: Tweak
-  id: 6570
-  time: '2024-05-10T02:01:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27855
-- author: Boaz1111
-  changes:
-  - message: Loneops now has a functioning ghost role raffle.
-    type: Fix
-  id: 6571
-  time: '2024-05-10T02:01:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27841
-- author: Boaz1111
-  changes:
-  - message: You can now actually spawn as a reporter on Oasis
-    type: Fix
-  - message: Oasis now has roundstart sec radios instead of handheld radios mapped
-      in sec, det now has a criminal records computer on box
-    type: Tweak
-  id: 6572
-  time: '2024-05-10T02:15:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27564
 - author: notquitehadouken
   changes:
   - message: You can now only use suit storage with hardsuits, softsuits, and armor
@@ -3794,3 +3745,50 @@
   id: 7066
   time: '2024-08-09T04:52:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29383
+- author: Plykiya
+  changes:
+  - message: Hardsuits and EVA suits now count as protection for unscrewing lightbulbs.
+    type: Add
+  - message: More gloves were given the ability to unscrew light bulbs.
+    type: Add
+  - message: Behonkers no longer hurt you when melee attacking them or interacting
+      with them.
+    type: Remove
+  id: 7067
+  time: '2024-08-09T05:32:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30244
+- author: Ian321
+  changes:
+  - message: The warden is now an important job.
+    type: Tweak
+  id: 7068
+  time: '2024-08-09T05:45:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30745
+- author: slarticodefast
+  changes:
+  - message: Added tooltips to the agent ID job icons
+    type: Add
+  id: 7069
+  time: '2024-08-09T06:14:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28575
+- author: stalengd
+  changes:
+  - message: Head bandana no longer blocks food eating.
+    type: Fix
+  id: 7070
+  time: '2024-08-09T06:17:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28910
+- author: Ubaser
+  changes:
+  - message: Oxygen and nitrogen canisters now have new sprites when worn.
+    type: Add
+  id: 7071
+  time: '2024-08-09T10:32:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30809
+- author: Plykiya
+  changes:
+  - message: Buckling someone now triggers a short do-after.
+    type: Tweak
+  id: 7072
+  time: '2024-08-09T15:43:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29621
