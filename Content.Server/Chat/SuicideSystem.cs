@@ -50,7 +50,8 @@ public sealed class SuicideSystem : EntitySystem
         RaiseLocalEvent(victim, suicideGhostEvent);
 
         // Suicide is considered a fail if the user wasn't able to ghost
-        if (!suicideGhostEvent.Handled)
+        // Suiciding with the CannotSuicide tag will ghost the player but not kill the body
+        if (!suicideGhostEvent.Handled || _tagSystem.HasTag(victim, "CannotSuicide"))
             return false;
 
         _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} is attempting to suicide");
@@ -79,9 +80,7 @@ public sealed class SuicideSystem : EntitySystem
         // CannotSuicide tag will allow the user to ghost, but also return to their mind
         // This is kind of weird, not sure what it applies to?
         if (_tagSystem.HasTag(victim, "CannotSuicide"))
-        {
             args.CanReturnToBody = true;
-        }
 
         if (_gameTicker.OnGhostAttempt(victim.Comp.Mind.Value, args.CanReturnToBody, mind: mindComponent))
             args.Handled = true;
