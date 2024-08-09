@@ -27,16 +27,6 @@ public sealed partial class StartingGearPrototype : IPrototype, IInheritingProto
     /// <inheritdoc />
     [DataField]
     [AlwaysPushInheritance]
-    public string? Entity { get; set; }
-
-    /// <inheritdoc />
-    [DataField]
-    [AlwaysPushInheritance]
-    public string? EntityDummy { get; set; }
-
-    /// <inheritdoc />
-    [DataField]
-    [AlwaysPushInheritance]
     public List<EntProtoId> Inhand { get; set; } = new();
 
     /// <inheritdoc />
@@ -54,17 +44,6 @@ public interface IEquipmentLoadout
     /// The slot and entity prototype ID of the equipment that is to be spawned and equipped onto the entity.
     /// </summary>
     public Dictionary<string, EntProtoId> Equipment { get; set; }
-
-    /// <summary>
-    /// Overides the players entity
-    /// </summary>
-    public string? Entity { get; set; }
-
-    /// <summary>
-    /// Meant to be used in conjunction with Entity
-    /// Entity to show as the players dummy in the lobby
-    /// </summary>
-    public string? EntityDummy { get; set; }
 
     /// <summary>
     /// The inhand items that are equipped when this starting gear is equipped onto an entity.

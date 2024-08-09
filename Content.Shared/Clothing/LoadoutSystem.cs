@@ -92,21 +92,23 @@ public sealed class LoadoutSystem : EntitySystem
     {
         if (_protoMan.TryIndex(loadout.StartingGear, out var gear))
         {
-            return GetName(gear);
+            return GetName(gear, loadout);
         }
 
-        return GetName((IEquipmentLoadout) loadout);
+        return GetName((IEquipmentLoadout) loadout, loadout);
     }
 
     /// <summary>
     /// Tries to get the name of a loadout.
     /// </summary>
-    public string GetName(IEquipmentLoadout? gear)
+    public string GetName(IEquipmentLoadout? gear, LoadoutPrototype? loadout = null)
     {
         if (gear == null)
             return string.Empty;
 
-        if (gear.EntityDummy != null && _protoMan.TryIndex<EntityPrototype>(gear.EntityDummy, out var proto))
+        if (loadout != null
+            && loadout.EntityDummy != null
+            && _protoMan.TryIndex<EntityPrototype>(loadout.EntityDummy, out var proto))
         {
             return proto.Name;
         }

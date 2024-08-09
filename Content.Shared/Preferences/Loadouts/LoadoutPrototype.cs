@@ -27,17 +27,22 @@ public sealed partial class LoadoutPrototype : IPrototype, IEquipmentLoadout
     [DataField]
     public List<LoadoutEffect> Effects = new();
 
-    /// <inheritdoc />
-    [DataField]
-    public Dictionary<string, EntProtoId> Equipment { get; set; } = new();
-
-    /// <inheritdoc />
+    /// <summary>
+    /// Overides the players entity
+    /// </summary>
     [DataField]
     public string? Entity { get; set; }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Meant to be used in conjunction with Entity
+    /// Entity to show as the players dummy in the lobby
+    /// </summary>
     [DataField]
     public string? EntityDummy { get; set; }
+
+    /// <inheritdoc />
+    [DataField]
+    public Dictionary<string, EntProtoId> Equipment { get; set; } = new();
 
     /// <inheritdoc />
     [DataField]
