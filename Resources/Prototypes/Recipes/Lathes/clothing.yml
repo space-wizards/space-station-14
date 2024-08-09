@@ -754,6 +754,14 @@
     Durathread: 400
 # Mantles
 - type: latheRecipe
+  id: ClothingNeckMantle
+  result: ClothingNeckMantle
+  completetime: 2.8
+  materials:
+    Cloth: 200
+    Durathread: 150
+
+- type: latheRecipe
   id: ClothingNeckMantleCap
   result: ClothingNeckMantleCap
   completetime: 2.8
