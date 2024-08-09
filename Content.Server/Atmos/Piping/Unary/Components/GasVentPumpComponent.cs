@@ -59,6 +59,97 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField("underPressureLockoutLeaking")]
         public float UnderPressureLockoutLeaking = 0.0001f;
 
+        #region fields used by GasVentPumpSystem.pressurizationLockout
+        /// <summary>
+        ///     The vent will be shut down if the increase in pressure is lower than X kPa/s.
+        ///     This value is supposed to be given as a negative, so it's actually pressure dropping which triggers this
+        ///     check.
+        /// </summary>
+        /// <remarks>
+        ///     With X<0, drops in pressure cause lockout,
+        ///     with X>0, vents only turn on when pressure is already rising.
+        ///
+        ///     This could be set to 0, but then the vents will stay locked for annoyingly long time whenever air flows
+        ///     from this vent to the surroundings. This may cause pressure drops in the order of E-5 kPa/s, causing lockouts
+        ///     while refilling rooms.
+        ///     I'm not entirely sure if I got the math right, so the value -1 may not be exactly -1 kPa/s
+        /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float PressurizationLockout { get; set; } = -0.1f;
+
+        /// <summary>
+        ///     There's some atmos equalization mechanic that equalizes the pressure of the entire room in one tick, and
+        ///     it often causes this lockout to fail even while the pressure is dropping.
+        ///     If the pressure increases faster than this rate (kPa/s), the averaging calculation is reset, and the
+        ///     unnatural pressure reading is discarded.
+        /// <summary>
+        /// <remarks>
+        ///     Surprisingly, this seems to have almost no effect on the refilling rate of rooms, in situations where
+        ///     the vents themselves trigger this check.
+        /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float SuddenPressureSpike { get; set; } = 10f;
+
+        /// <summary>
+        ///     Calculate the pressure change over X seconds.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float AveragingTime { get; set; } = 2.0f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float PressureDelta { get; set; } = 0f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float LastPressure { get; set; } = 101.325f;
+
+        /// <summary>
+        ///     Timer based check for spacing
+        /// </summary>
+        /// <remarks>
+        ///     This check is intended to catch the failures not handled by UnderPressureLockout or
+        ///     PressurizationLockout.
+        /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool OverheatTimerEnabled { get; set; } = true;
+
+        /// <summary>
+        ///     Defines for how many seconds the vent can move air uninterrupted.
+        /// </summary>
+        /// <remarks>
+        ///     If I made my testing correctly, a vent on a space tile wastes ~100 moles a second, so a total of 1000
+        ///     moles may be lost, and if I understood correctly, that's 2.5 seconds of miner output.
+        /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float OverheatMaxTime { get; set; } = 10f;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float OverheatCounter { get; set; } = 0f;
+
+        /// <summary>
+        ///     Defines how many seconds the vent will stay closed after moving air for <see cref=OverheatMaxTime>
+        ///     seconds.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float OverheatCooldownMaxTime { get; set; } = 1f;
+
+        /// <summary>
+        ///     Setting this property tells the vent to stop pumping air for X seconds.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float OverheatCooldownCounter { get; set; } = 0f;
+
+        /// <summary>
+        ///     The vent will stay locked up for X seconds after exiting <see cref=UnderPressureLockout>
+        ///     <seealso cref=UnderPressureLockoutThreshold>
+        /// </summary>
+        /// <remarks>
+        ///     This is supposed to stop the vent from trying to repressurize a spaced room just because someone opened
+        ///     a door and increased the room pressure above UPLO threshold for a tick.
+        /// </remarks>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float underPressureLockoutCooldown { get; set; } = 5f;
+
+        #endregion
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("externalPressureBound")]
         public float ExternalPressureBound
