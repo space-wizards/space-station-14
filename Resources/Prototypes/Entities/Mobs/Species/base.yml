@@ -210,6 +210,7 @@
     - CanPilot
     - FootstepSound
     - DoorBumpOpener
+  - type: Crawler
 
 - type: entity
   save: false
