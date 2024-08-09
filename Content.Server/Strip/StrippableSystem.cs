@@ -9,6 +9,7 @@ using Content.Shared.Ensnaring.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
@@ -23,6 +24,7 @@ namespace Content.Server.Strip
 {
     public sealed class StrippableSystem : SharedStrippableSystem
     {
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly EnsnareableSystem _ensnaringSystem = default!;
 
@@ -257,7 +259,7 @@ namespace Content.Server.Strip
             if (!_handsSystem.TryDrop(user, handsComp: user.Comp))
                 return;
 
-            _inventorySystem.TryEquip(user, target, held, slot);
+            _inventorySystem.TryEquip(user, target, held, slot, triggerHandContact: true);
             _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):actor} has placed the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s {slot} slot");
         }
 
@@ -319,6 +321,8 @@ namespace Content.Server.Strip
             var prefix = stealth ? "stealthily " : "";
             _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix}strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s {slot} slot");
 
+            _interactionSystem.DoContactInteraction(user, item);
+
             var doAfterArgs = new DoAfterArgs(EntityManager, user, time, new StrippableDoAfterEvent(false, true, slot), user, target, item)
             {
                 Hidden = stealth,
@@ -346,7 +350,7 @@ namespace Content.Server.Strip
             if (!CanStripRemoveInventory(user, target, item, slot))
                 return;
 
-            if (!_inventorySystem.TryUnequip(user, target, slot))
+            if (!_inventorySystem.TryUnequip(user, target, slot, triggerHandContact: true))
                 return;
 
             RaiseLocalEvent(item, new DroppedEvent(user), true); // Gas tank internals etc.
@@ -517,6 +521,8 @@ namespace Content.Server.Strip
 
             var prefix = stealth ? "stealthily " : "";
             _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix}strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
+
+            _interactionSystem.DoContactInteraction(user, item);
 
             var doAfterArgs = new DoAfterArgs(EntityManager, user, time, new StrippableDoAfterEvent(false, false, handName), user, target, item)
             {
