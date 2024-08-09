@@ -854,7 +854,6 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 25
           - 23
           - 22
           - 24
@@ -896,7 +895,6 @@ entities:
           - 315
           - 27
           - 28
-          - 30
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -963,22 +961,6 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
   - uid: 29
-    components:
-    - type: Transform
-      parent: 26
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-- proto: DeviceQuantumSpinInverter
-  entities:
-  - uid: 25
-    components:
-    - type: Transform
-      parent: 21
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 30
     components:
     - type: Transform
       parent: 26
