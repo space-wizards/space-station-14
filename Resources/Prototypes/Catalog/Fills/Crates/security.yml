@@ -1,8 +1,19 @@
 - type: entity
   id: CrateSecurityArmor
   parent: CrateSecgear
-  name: armor crate
-  description: Three vests of well-rounded, decently-protective armor. Requires Security access to open.
+  name: Type I vest crate
+  description: Contains three well-rounded Type I vests. Requires Security access to open.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterArmorBasic
+        amount: 3
+
+- type: entity
+  id: CrateSecurityArmorBulletproof
+  parent: CrateSecgear
+  name: Type III vest crate
+  description: Contains three bulletproof Type III vests. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
@@ -23,26 +34,26 @@
 - type: entity
   id: CrateSecurityNonlethal
   parent: CrateSecgear
-  name: nonlethals crate
-  description: Disabler weapons. Requires Security access to open.
+  name: nonlethal stun crate
+  description: Contains two disablers, stunbatons, flashes, and zipties. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
       - id: WeaponDisabler
-        amount: 3
+        amount: 2
       - id: Stunbaton
-        amount: 3
-      - id: BoxFlashbang
+        amount: 2
       - id: Flash
-        amount: 3
+        amount: 2
+      - id: Zipties # bare minimum, order actual restraints with your nonlethals
+        amount: 2
 #      - Pepperspray
-#      - GrenadeTeargas
 
 - type: entity
   id: CrateSecurityRiot
   parent: CrateSecgear
-  name: swat crate
-  description: Contains two sets of riot armor, helmets, shields, and enforcers loaded with beanbags. Extra ammo is included. Requires Armory access to open.
+  name: riot crate
+  description: Contains two sets of riot armor, helmets, shields, protective masks, enforcers with beanbags shells, and beanbag shell boxes. Requires Armory access to open.
   components:
   - type: StorageFill
     contents:
@@ -56,54 +67,100 @@
         amount: 2
       - id: RiotShield
         amount: 2
-#      - SecGasmask
+      - id: ClothingMaskGasSecurity
+        amount: 2
 
 - type: entity
   id: CrateSecuritySupplies
   parent: CrateSecgear
-  name: security supplies crate
-  description: Contains various supplies for the station's Security team. Requires Security access to open.
+  name: officer gear crate
+  description: Contains two SecGlasses, black gloves, combat boots, protective masks, and empty security belts. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
-      - id: BoxHandcuff
-      - id: BoxSechud
-#      - SecBelt
-#      - SecGasmask
-#      - SpacelawBook
+      - id: ClothingEyesGlassesSecurity
+        amount: 2
+      - id: ClothingHandsGlovesColorBlack
+        amount: 2
+      - id: ClothingShoesBootsCombatFilled
+        amount: 2 # yes they get knives
+      - id: ClothingMaskGasSecurity
+        amount: 2
+      - id: ClothingBeltSecurity
+        amount: 2
+      - id: BookSecurity
+        amount: 2
+
+- type: entity
+  id: CrateSecurityForensics
+  parent: CrateSecgear
+  name: forensics crate
+  description: Contains a forensic scanner, LogProde cartridge, box of forensic pads, and box of evidence markers. Requires Security access to open.
+  components:
+  - type: StorageFill
+    contents: # no gloves, suffer the fibres for losing your detective
+      - id: ForensicScanner
+      - id: LogProbeCartridge
+      - id: BoxForensicPad
+      - id: BoxEvidenceMarkers
+      - id: DrinkDetFlask
+        prob: 0.2 # so you're telling me the detective got drunk...
+      - id: ClothingBeltHolsterFilled
+        prob: 0.1 # ...lost their gun...
+      - id: MobRandomCargoCorpse
+        prob: 0.05 # ...and locked themselves in from the outside?
 
 - type: entity
   id: CrateRestraints
   parent: CrateSecgear
   name: restraints crate
-  description: Contains two boxes each of handcuffs and zipties. Requires Security access to open.
+  description: Contains a box of handcuffs, box of zipties, and two straitjackets. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
       - id: BoxHandcuff
-        amount: 2
+        amount: 1
       - id: BoxZiptie
+        amount: 1
+      - id: ClothingOuterStraightjacket
         amount: 2
 
 - type: entity
-  id: CrateSecurityBiosuit
+  id: CrateSecNonlethalThrowables
   parent: CrateSecgear
-  name: security bio suit crate
-  description: Contains 2 biohazard suits to ensure that no disease will distract you from your duties. Requires Security access to open.
+  name: nonlethal throwables crate
+  description: Contains a box of flashbangs, box of stingers, box of tear gas, and four bolas. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterBioSecurity
+      - id: BoxFlashbang
+        amount: 1
+      - id: BoxStinger
+        amount: 1
+      - id: BoxTearGas
+        amount: 1
+      - id: Bola # replace with 4 e-bolas or e-bola box
+        amount: 4
+
+- type: entity
+  id: CrateSecurityShield
+  parent: CrateSecgear
+  name: shield crate
+  description: Contains two riot, bulletproof, and reflective shields. Requires Security access to open.
+  components:
+  - type: StorageFill
+    contents:
+      - id: RiotShield
         amount: 2
-      - id: ClothingHeadHatHoodBioSecurity
+      - id: RiotBulletShield
         amount: 2
-      - id: ClothingMaskSterile
+      - id: RiotLaserShield
         amount: 2
 
 - type: entity
   id: CrateSecurityTrackingMindshieldImplants
   name: implanter crate
-  description: Contains 4 MindShield implants and 4 tracking implant. Requires Security access to open.
+  description: Contains four mindshield implants, and four tracking implants. Requires Security access to open.
   parent: CrateSecgear
   components:
   - type: StorageFill

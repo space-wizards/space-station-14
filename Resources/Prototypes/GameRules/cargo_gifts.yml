@@ -173,7 +173,8 @@
     description: cargo-gift-security-guns
     dest: cargo-gift-dest-sec
     gifts:
-      SecurityArmor: 3
+      SecurityArmor: 1
+      SecurityArmorBulletproof: 1
       ArmorySmg: 1
       ArmoryShotgun: 1
       ArmoryLaser: 1
@@ -192,5 +193,6 @@
     dest: cargo-gift-dest-sec
     gifts:
       SecurityRiot: 2
-      SecurityRestraints: 2
+      SecurityRestraints: 1
       SecurityNonLethal: 2
+      SecurityNonlethalThrowables: 1
