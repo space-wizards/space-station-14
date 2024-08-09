@@ -16,10 +16,16 @@ public sealed class ItemCabinetSystem : EntitySystem
     [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
+    private EntityQuery<ItemCabinetComponent> _cabinetQuery = default!;
+    private EntityQuery<ItemSlotsComponent> _slotsQuery = default!;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
+
+        _cabinetQuery = GetEntityQuery<ItemCabinetComponent>();
+        _slotsQuery = GetEntityQuery<ItemSlotsComponent>();
 
         SubscribeLocalEvent<ItemCabinetComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<ItemCabinetComponent, MapInitEvent>(OnMapInit);
@@ -37,12 +43,12 @@ public sealed class ItemCabinetSystem : EntitySystem
     private void OnMapInit(Entity<ItemCabinetComponent> ent, ref MapInitEvent args)
     {
         // update at mapinit to avoid copy pasting locked: true and locked: false for each closed/open prototype
-        SetSlotLock(ent, !_openable.IsOpen(ent));
+        SetSlotLock((ent, ent.Comp), !_openable.IsOpen(ent));
     }
 
     private void UpdateAppearance(Entity<ItemCabinetComponent> ent)
     {
-        _appearance.SetData(ent, ItemCabinetVisuals.ContainsItem, HasItem(ent));
+        _appearance.SetData(ent, ItemCabinetVisuals.ContainsItem, HasItem((ent, ent.Comp)));
     }
 
     private void OnContainerModified(EntityUid uid, ItemCabinetComponent component, ContainerModifiedMessage args)
@@ -53,21 +59,24 @@ public sealed class ItemCabinetSystem : EntitySystem
 
     private void OnOpened(Entity<ItemCabinetComponent> ent, ref OpenableOpenedEvent args)
     {
-        SetSlotLock(ent, false);
+        SetSlotLock((ent, ent.Comp), false);
     }
 
     private void OnClosed(Entity<ItemCabinetComponent> ent, ref OpenableClosedEvent args)
     {
-        SetSlotLock(ent, true);
+        SetSlotLock((ent, ent.Comp), true);
     }
 
     /// <summary>
     /// Tries to get the cabinet's item slot.
     /// </summary>
-    public bool TryGetSlot(Entity<ItemCabinetComponent> ent, [NotNullWhen(true)] out ItemSlot? slot)
+    public bool TryGetSlot(Entity<ItemCabinetComponent?> ent, [NotNullWhen(true)] out ItemSlot? slot)
     {
         slot = null;
-        if (!TryComp<ItemSlotsComponent>(ent, out var slots))
+        if (!_cabinetQuery.Resolve(ent, ref ent.Comp))
+            return false;
+
+        if (!_slotsQuery.TryComp(ent, out var slots))
             return false;
 
         return _slots.TryGetSlot(ent, ent.Comp.Slot, out slot, slots);
@@ -76,7 +85,7 @@ public sealed class ItemCabinetSystem : EntitySystem
     /// <summary>
     /// Returns true if the cabinet contains an item.
     /// </summary>
-    public bool HasItem(Entity<ItemCabinetComponent> ent)
+    public bool HasItem(Entity<ItemCabinetComponent?> ent)
     {
         return TryGetSlot(ent, out var slot) && slot.HasItem;
     }
@@ -86,7 +95,7 @@ public sealed class ItemCabinetSystem : EntitySystem
     /// </summary>
     public void SetSlotLock(Entity<ItemCabinetComponent> ent, bool closed)
     {
-        if (!TryComp<ItemSlotsComponent>(ent, out var slots))
+        if (!_slotsQuery.TryComp(ent, out var slots))
             return;
 
         if (_slots.TryGetSlot(ent, ent.Comp.Slot, out var slot, slots))

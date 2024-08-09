@@ -1,0 +1,10 @@
+- type: entity
+  parent: Screwdriver
+  id: ThinTippedScrewdriver
+  description: A screwdriver with an ultra thin tip that's carefully designed to boost screwing speed.
+  suffix: DO NOT MAP
+  components:
+  - type: Tool
+    qualities:
+    - Screwing
+    - FineScrewing
