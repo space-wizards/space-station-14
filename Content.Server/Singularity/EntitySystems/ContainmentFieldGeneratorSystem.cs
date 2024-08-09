@@ -24,7 +24,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly ContainmentAlarmSystem _alarm = default!;
-    
+
 
     public override void Initialize()
     {
@@ -79,12 +79,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         if (component.Enabled)
             args.PushMarkup(Loc.GetString("comp-containment-on"));
-
         else
             args.PushMarkup(Loc.GetString("comp-containment-off"));
-
-        if (HasComp<ContainmentAlarmComponent>(uid))
-            args.PushMarkup(Loc.GetString("comp-containment-alert-field-alarm"));
     }
 
     private void OnInteract(Entity<ContainmentFieldGeneratorComponent> generator, ref InteractHandEvent args)
@@ -112,18 +108,18 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         if(args.Handled)
             return;
 
-        if (!_tags.HasTag(args.Used, "ContainmentFieldAlarmUpgrade"))
+        if (!HasComp<ContainmentFieldUpgraderComponent>(args.Used))
             return;
 
-        if(!HasComp<ContainmentAlarmComponent>(generator))
+        args.Handled = true;
+
+        if (!EnsureComp<ContainmentAlarmComponent>(generator, out var _))
         {
-            AddComp<ContainmentAlarmComponent>(generator);
             _popupSystem.PopupEntity(Loc.GetString("comp-containment-alarm-upgrade-success"), args.User, args.User);
             QueueDel(args.Used);
         }
         else
             _popupSystem.PopupEntity(Loc.GetString("comp-containment-alarm-upgrade-fail"), args.User, args.User);
-        args.Handled = true;
     }
 
     private void OnAnchorChanged(Entity<ContainmentFieldGeneratorComponent> generator, ref AnchorStateChangedEvent args)
@@ -214,9 +210,9 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         if (component.PowerBuffer >= component.PowerMinimum)
         {
             var directions = Enum.GetValues<Direction>().Length;
-            for (int i = 0; i < directions-1; i+=2)
+            for (int i = 0; i < directions - 1; i += 2)
             {
-                var dir = (Direction)i;
+                var dir = (Direction) i;
 
                 if (component.Connections.ContainsKey(dir))
                     continue; // This direction already has an active connection
@@ -225,7 +221,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             }
         }
         if (TryComp<ContainmentAlarmComponent>(generator.Owner, out var alarm))
-            _alarm.ResetAlarm(generator.Owner, alarm);
+            _alarm.ResetAlarm(generator.Owner, alarm, component.PowerBuffer);
         ChangePowerVisualizer(power, generator);
     }
 

@@ -422,9 +422,6 @@
   id: ComputerTelevisionCircuitboard
 
 - type: Tag
-  id: ContainmentFieldAlarmUpgrade
-
-- type: Tag
   id: ConveyorAssembly
 
 - type: Tag
