@@ -439,3 +439,6 @@ uplink-barber-scissors-desc = A good tool to give your fellow agent a nice hairc
 
 uplink-backpack-syndicate-name = Syndicate backpack
 uplink-backpack-syndicate-desc = Lightweight explosion-proof а backpack for holding various traitor goods
+
+uplink-propaganda-bundle-name = Propaganda bundle
+uplink-propaganda-bundle-desc = Contains posters, clothing, flags and figures with syndicate thematics
