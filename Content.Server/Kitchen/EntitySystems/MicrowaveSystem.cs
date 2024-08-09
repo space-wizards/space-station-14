@@ -39,6 +39,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Shared.Stacks;
 using Content.Server.Construction.Components;
+using Content.Server.Nutrition.Components;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -246,6 +247,40 @@ namespace Content.Server.Kitchen.EntitySystems
                         }
                     }
                 }
+            }
+
+            //stack for storing containers to remove
+            Stack<EntityUid> entsToRemove = new Stack<EntityUid>();
+            //looking for food type  container  that  are  empty  and pushing  them to a stack, EGGHELL IS REAL
+            foreach (var item in component.Storage.ContainedEntities)
+            {
+                if (!TryComp<SolutionContainerManagerComponent>(item, out var solMan))
+                    continue;
+                if (!HasComp<FoodComponent>(item))
+                    continue;
+                var empty = true;
+
+                foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((item, solMan)))
+                {
+                    if (soln.Comp.Solution.Volume == 0)
+                        continue;
+                    empty = false;
+                }
+                if (!empty)
+                    continue;
+                entsToRemove.Push(item);
+
+
+
+            }
+            //removing food type  containers stored in the stack and spawning the trash version of the container if possible
+            while (entsToRemove.Count  > 0)
+            {
+                var entToRemove = entsToRemove.Pop();
+                _container.Remove(entToRemove, component.Storage);
+                if (TryComp<FoodComponent>(entToRemove, out var foodComp))
+                    Spawn(foodComp.Trash, Transform(entToRemove).Coordinates);
+                Del(entToRemove);
             }
         }
 
