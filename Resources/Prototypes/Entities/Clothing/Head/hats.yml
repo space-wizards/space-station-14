@@ -869,6 +869,10 @@
     - ClothMade
     - WhitelistChameleon
     - HamsterWearable
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-inanimate
+    weight: 0.0002 # 5,000 times less likely than 1 regular animal
+  - type: BlockMovement
 
 - type: entity
   parent: ClothingHeadBase
