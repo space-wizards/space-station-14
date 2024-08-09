@@ -14,7 +14,6 @@ public abstract class SharedPinpointerSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<PinpointerComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<PinpointerComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<PinpointerComponent, ExaminedEvent>(OnExamined);
     }
@@ -133,11 +132,5 @@ public abstract class SharedPinpointerSystem : EntitySystem
         var isActive = !pinpointer.IsActive;
         SetActive(uid, isActive, pinpointer);
         return isActive;
-    }
-
-    private void OnEmagged(EntityUid uid, PinpointerComponent component, ref GotEmaggedEvent args)
-    {
-        args.Handled = true;
-        component.CanRetarget = true;
     }
 }
