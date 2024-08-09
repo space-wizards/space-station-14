@@ -51,7 +51,7 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            if (suicideSystem.Suicide(victim, (mindId, mindComp)))
+            if (suicideSystem.Suicide(victim))
                 return;
 
             shell.WriteLine(Loc.GetString("ghost-command-denied"));

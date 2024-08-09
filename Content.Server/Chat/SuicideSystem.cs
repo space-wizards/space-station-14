@@ -40,7 +40,7 @@ public sealed class SuicideSystem : EntitySystem
     /// or by applying a lethal amount of damage to the user with the default method.
     /// Used when writing /suicide
     /// </summary>
-    public bool Suicide(EntityUid victim, Entity<MindComponent> victimMind)
+    public bool Suicide(EntityUid victim)
     {
         // Can't suicide if we're already dead
         if (!TryComp<MobStateComponent>(victim, out var mobState) || _mobState.IsDead(victim, mobState))
@@ -61,6 +61,10 @@ public sealed class SuicideSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Event subscription created to handle the ghosting aspect relating to suicides
+    /// Mainly useful when you can raise an event in Shared and can't call Suicide() directly
+    /// </summary>
     private void OnSuicideGhost(Entity<MindContainerComponent> victim, ref SuicideGhostEvent args)
     {
         if (args.Handled)
@@ -147,12 +151,5 @@ public sealed class SuicideSystem : EntitySystem
         args.DamageType ??= "Bloodloss";
         _suicide.ApplyLethalDamage(victim, args.DamageType);
         args.Handled = true;
-
-        /*if (!TryComp<MindContainerComponent>(victim, out var mindContainerComponent))
-            return;
-
-        if (mindContainerComponent.HasMind &&
-            TryComp<MindComponent>(mindContainerComponent.Mind, out var mindComponent))
-            _gameTicker.OnGhostAttempt(mindContainerComponent.Mind.Value, false, mind: mindComponent);*/
     }
 }
