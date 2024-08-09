@@ -487,9 +487,6 @@ namespace Content.Server.GameTicking
             if (_serverUpdates.RoundEnded())
                 return;
 
-            // Check if the GamePreset needs to be reset
-            TryResetPreset();
-
             _sawmill.Info("Restarting round!");
 
             SendServerMessage(Loc.GetString("game-ticker-restart-round"));
