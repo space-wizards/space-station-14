@@ -5,7 +5,6 @@
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="5">
         <BoxContainer Name="Editing" Orientation="Horizontal" HorizontalExpand="True" Align="Center" Margin="5">
             <Button Name="AddButton" Text="{Loc 'criminal-records-add-history'}"/>
-            <Button Name="DeleteButton" Text="{Loc 'criminal-records-delete-history'}" Disabled="True"/>
         </BoxContainer>
         <Label Name="NoHistory" Text="{Loc 'criminal-records-no-history'}" HorizontalExpand="True" HorizontalAlignment="Center"/>
         <ScrollContainer VerticalExpand="True">

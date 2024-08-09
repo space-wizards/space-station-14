@@ -49,5 +49,13 @@ criminal-records-prints-filter = Fingerprints
 criminal-records-dna-filter = DNA
 
 ## Arrest auto history lines
-criminal-records-console-auto-history = ARRESTED: {$reason}
+criminal-records-console-auto-history-detained = ARRESTED: {$reason}
+criminal-records-console-auto-history-suspected = SUSPECTED: {$reason}
+criminal-records-console-auto-history-paroled = PAROLED: {$reason}
+criminal-records-console-auto-history-released = RELEASED: {$reason}
+criminal-records-console-auto-history-wanted = WANTED: {$reason}
+criminal-records-console-auto-history-not-suspected = CLEARED: {$reason}
+criminal-records-console-auto-history-not-wanted = CLEARED: {$reason}
+criminal-records-console-auto-history-not-parole = DISCHARGED: {$reason}
+
 criminal-records-console-unspecified-reason = <unspecified reason>
