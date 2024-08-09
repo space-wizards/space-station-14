@@ -400,6 +400,14 @@
     FoodDough: 1
 
 - type: microwaveMealRecipe
+  id: RecipeBreadCotton
+  name: cotton bread recipe
+  result: FoodBreadCotton
+  time: 10
+  solids:
+    FoodDoughCotton: 1
+
+- type: microwaveMealRecipe
   id: RecipeSausageBread
   name: sausage bread recipe
   result: FoodBreadSausage
@@ -601,6 +609,15 @@
     FoodChiliPepper: 2
     FoodTomato: 2
     SheetUranium1: 2
+
+- type: microwaveMealRecipe
+  id: RecipeCottonPizza
+  name: cotton pizza recipe
+  result: FoodPizzaCotton
+  time: 30
+  solids:
+    FoodDoughCottonFlat: 1
+    CottonBol: 4
 
 #Italian
 - type: microwaveMealRecipe
