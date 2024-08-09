@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
@@ -10,7 +9,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using static Content.Shared.Atmos.Components.GasAnalyzerComponent;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -22,7 +20,6 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmo = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
-        [Dependency] private readonly TransformSystem _transform = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         /// <summary>
@@ -95,14 +92,14 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void ActivateAnalyzer(Entity<GasAnalyzerComponent> entity, EntityUid user, EntityUid? target = null)
         {
-            if (!TryOpenUserInterface(entity.Owner, user, entity.Comp))
+            if (!_userInterface.TryOpenUi(entity.Owner, GasAnalyzerUiKey.Key, user))
                 return;
 
             entity.Comp.Target = target;
             entity.Comp.User = user;
             entity.Comp.Enabled = true;
             Dirty(entity);
-            UpdateAppearance(entity.Owner, entity.Comp);
+            _appearance.SetData(entity.Owner, GasAnalyzerVisuals.Enabled, entity.Comp.Enabled);
             EnsureComp<ActiveGasAnalyzerComponent>(entity.Owner);
             UpdateAnalyzer(entity.Owner, entity.Comp);
         }
@@ -126,7 +123,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             entity.Comp.Enabled = false;
             Dirty(entity);
-            UpdateAppearance(entity.Owner, entity.Comp);
+            _appearance.SetData(entity.Owner, GasAnalyzerVisuals.Enabled, entity.Comp.Enabled);
             RemCompDeferred<ActiveGasAnalyzerComponent>(entity.Owner);
         }
 
@@ -136,14 +133,6 @@ namespace Content.Server.Atmos.EntitySystems
         private void OnDisabledMessage(Entity<GasAnalyzerComponent> entity, ref GasAnalyzerDisableMessage message)
         {
             DisableAnalyzer(entity);
-        }
-
-        private bool TryOpenUserInterface(EntityUid uid, EntityUid user, GasAnalyzerComponent? component = null)
-        {
-            if (!Resolve(uid, ref component, false))
-                return false;
-
-            return _userInterface.TryOpenUi(uid, GasAnalyzerUiKey.Key, user);
         }
 
         /// <summary>
@@ -254,14 +243,6 @@ namespace Content.Server.Atmos.EntitySystems
                     GetNetEntity(component.Target) ?? NetEntity.Invalid,
                     deviceFlipped));
             return true;
-        }
-
-        /// <summary>
-        /// Sets the appearance based on the analyzers Enabled state
-        /// </summary>
-        private void UpdateAppearance(EntityUid uid, GasAnalyzerComponent analyzer)
-        {
-            _appearance.SetData(uid, GasAnalyzerVisuals.Enabled, analyzer.Enabled);
         }
 
         /// <summary>
