@@ -70,7 +70,7 @@ namespace Content.Shared.Throwing
 
         private void PreventCollision(EntityUid uid, ThrownItemComponent component, ref PreventCollideEvent args)
         {
-            if (args.OtherEntity == component.Thrower)
+            if (args.OtherEntity == component.Thrower || HasComp<ThrownItemAvoidComponent>(args.OtherEntity))
             {
                 args.Cancelled = true;
             }
