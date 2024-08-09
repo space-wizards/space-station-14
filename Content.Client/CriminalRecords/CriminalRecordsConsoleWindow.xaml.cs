@@ -167,6 +167,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         if (listing == null)
         {
             RecordListing.Clear();
+            return;
         }
 
         var entries = listing!.ToList();
