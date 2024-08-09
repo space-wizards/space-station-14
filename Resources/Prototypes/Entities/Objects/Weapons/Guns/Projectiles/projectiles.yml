@@ -979,3 +979,48 @@
   - type: Tag
     tags:
       - HideContextMenu
+
+- type: entity
+  name : ion rifle bolt
+  id: BulletIonRifle
+  parent: BaseBulletTrigger
+  noSpawn: true
+  components:
+  - type: Reflective
+    reflective:
+    - Energy
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Sprite
+    sprite: Effects/emp.rsi
+    layers:
+    - state: emp_pulse
+      shader: unshaded
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by: *flybyfixture
+  - type: Ammo
+  - type: Projectile
+    impactEffect: BulletImpactEffectDisabler
+    damage:
+      types:
+        Shock: 5
+    soundHit:
+      collection: WeakHit
+    forceSound: true
+  - type: EmpOnTrigger
+    range: 2
+    energyConsumption: 200
+    disableDuration: 5
