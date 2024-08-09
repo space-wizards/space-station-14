@@ -37,12 +37,6 @@ public sealed class RoleBanListCommand : IConsoleCommand
             return;
         }
 
-        //var dbMan = IoCManager.Resolve<IServerDbManager>();
-
-        //var target = args[0];
-
-        //var locator = IoCManager.Resolve<IPlayerLocator>();
-
         var data = await _locator.LookupIdByNameOrIdAsync(args[0]);
 
         if (data == null)
