@@ -121,16 +121,16 @@ public sealed partial class BotanySystem : EntitySystem
         return seed;
     }
 
-    public IEnumerable<EntityUid> AutoHarvest(SeedData proto, EntityCoordinates position, int yieldMod = 1)
+    public IEnumerable<EntityUid> AutoHarvest(SeedData proto, float potencyBonus, EntityCoordinates position, float yieldMod = 1f)
     {
         if (position.IsValid(EntityManager) &&
             proto.ProductPrototypes.Count > 0)
-            return GenerateProduct(proto, position, yieldMod);
+            return GenerateProduct(proto, potencyBonus, position, yieldMod);
 
         return Enumerable.Empty<EntityUid>();
     }
 
-    public IEnumerable<EntityUid> Harvest(SeedData proto, EntityUid user, int yieldMod = 1)
+    public IEnumerable<EntityUid> Harvest(SeedData proto, float potencyBonus, EntityUid user, float yieldMod = 1f)
     {
         if (proto.ProductPrototypes.Count == 0 || proto.Yield <= 0)
         {
@@ -140,18 +140,18 @@ public sealed partial class BotanySystem : EntitySystem
 
         var name = Loc.GetString(proto.DisplayName);
         _popupSystem.PopupCursor(Loc.GetString("botany-harvest-success-message", ("name", name)), user, PopupType.Medium);
-        return GenerateProduct(proto, Transform(user).Coordinates, yieldMod);
+        return GenerateProduct(proto, potencyBonus, Transform(user).Coordinates, yieldMod);
     }
 
-    public IEnumerable<EntityUid> GenerateProduct(SeedData proto, EntityCoordinates position, int yieldMod = 1)
+    public IEnumerable<EntityUid> GenerateProduct(SeedData proto, float potencyBonus, EntityCoordinates position, float yieldMod = 1f)
     {
         var totalYield = 0;
         if (proto.Yield > -1)
         {
-            if (yieldMod < 0)
-                totalYield = proto.Yield;
+            if (yieldMod < 0f)
+                totalYield = 0;
             else
-                totalYield = proto.Yield * yieldMod;
+                totalYield = (int)Math.Round((float)proto.Yield * yieldMod);
 
             totalYield = Math.Max(1, totalYield);
         }
@@ -172,9 +172,10 @@ public sealed partial class BotanySystem : EntitySystem
             var produce = EnsureComp<ProduceComponent>(entity);
 
             produce.Seed = proto;
+            produce.ProducePotency = proto.Potency + potencyBonus;
             ProduceGrown(entity, produce);
 
-            _appearance.SetData(entity, ProduceVisuals.Potency, proto.Potency);
+            _appearance.SetData(entity, ProduceVisuals.Potency, produce.ProducePotency);
 
             if (proto.Mysterious)
             {
@@ -202,7 +203,7 @@ public sealed partial class BotanySystem : EntitySystem
                 var fixtures = EnsureComp<FixturesComponent>(entity);
                 var body = EnsureComp<PhysicsComponent>(entity);
                 var shape = fixtures.Fixtures["fix1"].Shape;
-                _fixtureSystem.TryCreateFixture(entity, shape, "slips", 1, false, (int) CollisionGroup.SlipLayer, manager: fixtures, body: body);
+                _fixtureSystem.TryCreateFixture(entity, shape, "slips", 1, false, (int)CollisionGroup.SlipLayer, manager: fixtures, body: body);
                 // Need to disable collision wake so that mobs can collide with and slip on it
                 var collisionWake = EnsureComp<CollisionWakeComponent>(entity);
                 _colWakeSystem.SetEnabled(entity, false, collisionWake);

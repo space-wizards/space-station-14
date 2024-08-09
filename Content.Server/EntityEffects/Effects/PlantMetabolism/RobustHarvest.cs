@@ -1,53 +1,63 @@
 using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.EntityEffects.Effects.PlantMetabolism;
 
-[UsedImplicitly]
-[DataDefinition]
-public sealed partial class RobustHarvest : EntityEffect
+namespace Content.Server.EntityEffects.Effects.PlantMetabolism
 {
-    [DataField]
-    public int PotencyLimit = 50;
-
-    [DataField]
-    public int PotencyIncrease = 3;
-
-    [DataField]
-    public int PotencySeedlessThreshold = 30;
-
-    public override void Effect(EntityEffectBaseArgs args)
+    [UsedImplicitly]
+    [DataDefinition]
+    public sealed partial class RobustHarvest : ReagentEffect
     {
-        if (!args.EntityManager.TryGetComponent(args.TargetEntity, out PlantHolderComponent? plantHolderComp)
-                                || plantHolderComp.Seed == null || plantHolderComp.Dead ||
-                                plantHolderComp.Seed.Immutable)
-            return;
+        ///<summary>
+        /// The maximum value of the potency bonus the plant can achieve with the reagent.
+        ///</summary>
+        [DataField]
+        public int PotencyLimit = 45;
 
+        ///<summary>
+        /// Increase of potency bonus per metabolism step.
+        ///</summary>
+        [DataField]
+        public int PotencyIncrease = 3;
 
-        var plantHolder = args.EntityManager.System<PlantHolderSystem>();
-        var random = IoCManager.Resolve<IRobustRandom>();
+        ///<summary>
+        /// The probability per metabolism step that the current plant's Yield will be reduced if the potency bonus is already maxed out.
+        ///</summary>
+        [DataField]
+        public float YieldReductionProbability = 0.1f;
 
-        if (plantHolderComp.Seed.Potency < PotencyLimit)
+        public override void Effect(ReagentEffectArgs args)
         {
-            plantHolder.EnsureUniqueSeed(args.TargetEntity, plantHolderComp);
-            plantHolderComp.Seed.Potency = Math.Min(plantHolderComp.Seed.Potency + PotencyIncrease, PotencyLimit);
+            if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out PlantHolderComponent? plantHolderComp)
+                                    || plantHolderComp.Seed == null || plantHolderComp.Dead ||
+                                    plantHolderComp.Seed.Immutable)
+                return;
 
-            if (plantHolderComp.Seed.Potency > PotencySeedlessThreshold)
+
+            var plantHolder = args.EntityManager.System<PlantHolderSystem>();
+            var random = IoCManager.Resolve<IRobustRandom>();
+
+            if (plantHolderComp.PotencyBonus < PotencyLimit)
             {
-                plantHolderComp.Seed.Seedless = true;
+                plantHolder.EnsureUniqueSeed(args.SolutionEntity, plantHolderComp);
+                plantHolderComp.PotencyBonus = Math.Min(plantHolderComp.PotencyBonus + PotencyIncrease, PotencyLimit);
+            }
+            else if (plantHolderComp.Seed.Yield * plantHolderComp.YieldMod > 1f && random.Prob(YieldReductionProbability))
+            {
+                // Too much of a good thing reduces yield
+                plantHolder.EnsureUniqueSeed(args.SolutionEntity, plantHolderComp);
+                if (plantHolderComp.Seed.Yield != 0)
+                {
+                    plantHolderComp.YieldMod -= 1f / (float)plantHolderComp.Seed.Yield; //Reduces the yield of the current plant by one by changing YieldMod.
+                }
             }
         }
-        else if (plantHolderComp.Seed.Yield > 1 && random.Prob(0.1f))
-        {
-            // Too much of a good thing reduces yield
-            plantHolder.EnsureUniqueSeed(args.TargetEntity, plantHolderComp);
-            plantHolderComp.Seed.Yield--;
-        }
+
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString("reagent-effect-guidebook-missing", ("chance", Probability));
     }
 
-    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString("reagent-effect-guidebook-plant-robust-harvest", ("seedlesstreshold", PotencySeedlessThreshold), ("limit", PotencyLimit), ("increase", PotencyIncrease), ("chance", Probability));
-}
