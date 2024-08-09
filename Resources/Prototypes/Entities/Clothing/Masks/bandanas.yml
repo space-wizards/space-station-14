@@ -15,6 +15,7 @@
     unfoldedHideLayers:
     - Snout
   - type: Mask
+    disableOnFolded: true
   - type: IngestionBlocker
   - type: IdentityBlocker
     coverage: MOUTH
