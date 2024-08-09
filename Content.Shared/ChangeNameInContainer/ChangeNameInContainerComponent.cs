@@ -1,8 +1,9 @@
 using Content.Shared.Whitelist;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.ChangeNameInContainer;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(ChangeNameInContainerSystem))]
 public sealed partial class ChangeNameInContainerComponent : Component
 {
     /// <summary>
