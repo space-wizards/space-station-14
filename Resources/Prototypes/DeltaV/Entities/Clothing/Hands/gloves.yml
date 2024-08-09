@@ -8,8 +8,6 @@
     sprite: DeltaV/Clothing/Hands/Gloves/inspection.rsi
   - type: Clothing
     sprite: DeltaV/Clothing/Hands/Gloves/inspection.rsi
-  - type: GloveHeatResistance
-    heatResistance: 1400
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-leather
