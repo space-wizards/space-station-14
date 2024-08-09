@@ -1103,3 +1103,18 @@
   id: paintthinner
   flavorType: Complex
   description: flavor-complex-paint-thinner
+
+- type: flavor
+  id: numbingtranquility
+  flavorType: Complex
+  description: flavor-complex-numbing-tranquility
+
+- type: flavor
+  id: truenature
+  flavorType: Complex
+  description: flavor-complex-true-nature
+
+- type: flavor
+  id: falsemeat
+  flavorType: Complex
+  description: flavor-complex-false-meat
