@@ -1,0 +1,25 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseTurfTaggerObjective
+  components:
+  - type: Objective
+    issuer: turfwar
+    difficulty: 1 # doesnt matter
+  - type: RoleRequirement
+    roles:
+      components:
+      - TurfTaggerRole
+
+- type: entity
+  noSpawn: true
+  parent: BaseTurfTaggerObjective
+  id: TurfTaggingObjective
+  name: Tag up turf
+  description: Spray over as many doors on the station to your colours as you can!
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Tools/spray_painter.rsi
+      state: spray_painter
+  - type: TurfTaggingCondition

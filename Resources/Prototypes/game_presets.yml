@@ -20,6 +20,7 @@
     - Traitor
     - Revolutionary
     - Zombie
+    - TurfWar
     - RampingStationEventScheduler
     - GameRuleMeteorScheduler
 
@@ -160,4 +161,19 @@
   - Zombie
   - BasicStationEventScheduler
   - GameRuleMeteorScheduler
+  - BasicRoundstartVariation
+
+# standalone preset for testing
+- type: gamePreset
+  id: TurfWar
+  alias:
+  - turf
+  - turfwar
+  - turftagging
+  name: turf-war-title
+  description: turf-war-description
+  showInVote: false
+  rules:
+  - TurfWar
+  - BasicStationEventScheduler
   - BasicRoundstartVariation
