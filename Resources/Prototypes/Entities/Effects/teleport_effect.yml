@@ -1,0 +1,22 @@
+- type: entity
+  id: TeleportEffect
+  noSpawn: true
+  components:
+  - type: TimedDespawn
+    lifetime: 0.4
+  - type: Sprite
+    drawdepth: Effects
+    noRot: true
+    layers:
+      - shader: unshaded
+        map: ["enum.EffectLayers.Unshaded"]
+        sprite: Effects/teleport_sparks.rsi
+        state: sparks
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
+  - type: EmitSoundOnSpawn
+    sound: 
+      path: /Audio/Effects/electrical_short_circuit2.ogg
+  - type: AnimationPlayer
