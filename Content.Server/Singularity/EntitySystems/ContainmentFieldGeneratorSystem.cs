@@ -24,6 +24,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly ContainmentAlarmSystem _alarm = default!;
+
 
     public override void Initialize()
     {
@@ -32,6 +34,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, StartCollideEvent>(HandleGeneratorCollide);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractHandEvent>(OnInteract);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ReAnchorEvent>(OnReanchorEvent);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
@@ -78,7 +81,6 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         if (component.Enabled)
             args.PushMarkup(Loc.GetString("comp-containment-on"));
-
         else
             args.PushMarkup(Loc.GetString("comp-containment-off"));
     }
@@ -101,6 +103,25 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 TurnOff(generator);
         }
         args.Handled = true;
+    }
+
+    private void OnInteractUsing(Entity<ContainmentFieldGeneratorComponent> generator, ref InteractUsingEvent args)
+    {
+        if(args.Handled)
+            return;
+
+        if (!HasComp<ContainmentFieldUpgraderComponent>(args.Used))
+            return;
+
+        args.Handled = true;
+
+        if (!EnsureComp<ContainmentAlarmComponent>(generator, out var _))
+        {
+            _popupSystem.PopupEntity(Loc.GetString("comp-containment-alarm-upgrade-success"), args.User, args.User);
+            QueueDel(args.Used);
+        }
+        else
+            _popupSystem.PopupEntity(Loc.GetString("comp-containment-alarm-upgrade-fail"), args.User, args.User);
     }
 
     private void OnAnchorChanged(Entity<ContainmentFieldGeneratorComponent> generator, ref AnchorStateChangedEvent args)
@@ -191,9 +212,9 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         if (component.PowerBuffer >= component.PowerMinimum)
         {
             var directions = Enum.GetValues<Direction>().Length;
-            for (int i = 0; i < directions-1; i+=2)
+            for (int i = 0; i < directions - 1; i += 2)
             {
-                var dir = (Direction)i;
+                var dir = (Direction) i;
 
                 if (component.Connections.ContainsKey(dir))
                     continue; // This direction already has an active connection
@@ -201,7 +222,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 TryGenerateFieldConnection(dir, generator, genXForm);
             }
         }
-
+        if (TryComp<ContainmentAlarmComponent>(generator.Owner, out var alarm))
+            _alarm.ResetAlarm(generator.Owner, alarm, component.PowerBuffer);
         ChangePowerVisualizer(power, generator);
     }
 
@@ -210,9 +232,22 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         var component = generator.Comp;
         component.PowerBuffer -= power;
 
-        if (component.PowerBuffer < component.PowerMinimum && component.Connections.Count != 0)
+        if(component.Connections.Count != 0)
         {
-            RemoveConnections(generator);
+            bool brokenLink = false;
+            if (component.PowerBuffer < component.PowerMinimum)
+            {
+                RemoveConnections(generator);
+                brokenLink = true;
+            }
+
+            if (TryComp<ContainmentAlarmComponent>(generator.Owner, out var alarm))
+            {
+                if (brokenLink)
+                    _alarm.BroadcastContainmentBreak((generator, alarm));
+                else
+                    _alarm.UpdateAlertLevel((generator, alarm), component.PowerBuffer);
+            }
         }
 
         ChangePowerVisualizer(power, generator);
