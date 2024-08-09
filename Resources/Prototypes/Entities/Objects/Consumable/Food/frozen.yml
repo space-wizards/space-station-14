@@ -88,7 +88,8 @@
     - state: popsicle
       color: orange
   - type: Food
-    trash: FoodFrozenPopsicleTrash
+    trash: 
+    - FoodFrozenPopsicleTrash
 
 - type: entity
   name: berry creamsicle
@@ -103,7 +104,8 @@
     - state: popsicle
       color: red
   - type: Food
-    trash: FoodFrozenPopsicleTrash
+    trash: 
+    - FoodFrozenPopsicleTrash
   - type: Tag
     tags:
     - Fruit
@@ -119,7 +121,8 @@
     - state: stick
     - state: jumbo
   - type: Food
-    trash: FoodFrozenPopsicleTrash
+    trash: 
+    - FoodFrozenPopsicleTrash
   - type: SolutionContainerManager
     solutions:
       food:
@@ -149,7 +152,8 @@
         - state: alpha-filling
     #      color: foo
     - type: Food
-      trash: FoodFrozenSnowconeTrash
+      trash: 
+      - FoodFrozenSnowconeTrash
     - type: SolutionContainerManager
       solutions:
         food:
@@ -187,7 +191,8 @@
     - state: cone
     - state: berry
   - type: Food
-    trash: FoodFrozenSnowconeTrash
+    trash: 
+    - FoodFrozenSnowconeTrash
   - type: Tag
     tags:
     - Fruit
@@ -203,7 +208,8 @@
     - state: cone
     - state: fruitsalad
   - type: Food
-    trash: FoodFrozenSnowconeTrash
+    trash: 
+    - FoodFrozenSnowconeTrash
   - type: Tag
     tags:
     - Fruit
@@ -219,7 +225,8 @@
     - state: cone
     - state: clown
   - type: Food
-    trash: FoodFrozenSnowconeTrash
+    trash: 
+    - FoodFrozenSnowconeTrash
 
 - type: entity
   name: mime snowcone
@@ -232,7 +239,8 @@
     - state: cone
     - state: mime
   - type: Food
-    trash: FoodFrozenSnowconeTrash
+    trash: 
+    - FoodFrozenSnowconeTrash
 
 - type: entity
   name: rainbow snowcone
@@ -245,7 +253,8 @@
     - state: cone
     - state: rainbow
   - type: Food
-    trash: FoodFrozenSnowconeTrash
+    trash: 
+    - FoodFrozenSnowconeTrash
 
 # Trash
 
