@@ -23,6 +23,7 @@
     - category: Hunger
     - category: Thirst
     - alertType: Magboots
+    - alertType: Crawling
     - alertType: Pacified
 
 - type: entity
@@ -418,6 +419,15 @@
   description: alerts-bleed-desc
   minSeverity: 0
   maxSeverity: 10
+
+- type: alert
+  id: Crawling
+  icons:
+  - sprite: /Textures/Interface/Alerts/crawling.rsi
+    state: icon
+  clickEvent: !type:CrawlingAlertEvent
+  name: alerts-crawling-name
+  description: alerts-crawling-desc
 
 - type: alert
   id: Pacified

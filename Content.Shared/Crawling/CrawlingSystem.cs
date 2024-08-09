@@ -7,6 +7,7 @@ using Robust.Shared.Serialization;
 using Content.Shared.Stunnable;
 using Robust.Shared.Player;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Alert;
 
 namespace Content.Shared.Crawling;
 public sealed partial class CrawlingSystem : EntitySystem
@@ -14,6 +15,7 @@ public sealed partial class CrawlingSystem : EntitySystem
     [Dependency] private readonly StandingStateSystem _standing = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -23,33 +25,46 @@ public sealed partial class CrawlingSystem : EntitySystem
         SubscribeLocalEvent<CrawlerComponent, DownAttemptEvent>(OnFall);
         SubscribeLocalEvent<CrawlerComponent, StunnedEvent>(OnStunned);
         SubscribeLocalEvent<CrawlerComponent, GetExplosionResistanceEvent>(OnGetExplosionResistance);
+        SubscribeLocalEvent<CrawlerComponent, CrawlingAlertEvent>(OnCrawlingAlertEvent);
+        SubscribeLocalEvent<CrawlerComponent, CrawlingKeybindEvent>(ToggleCrawling);
 
         SubscribeLocalEvent<CrawlingComponent, ComponentInit>(OnCrawlSlowdownInit);
         SubscribeLocalEvent<CrawlingComponent, ComponentShutdown>(OnCrawlSlowRemove);
         SubscribeLocalEvent<CrawlingComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
 
         CommandBinds.Builder
-            .Bind(ContentKeyFunctions.ToggleCrawling, InputCmdHandler.FromDelegate(ToggleCrawling, handle: false))
+            .Bind(ContentKeyFunctions.ToggleCrawling, InputCmdHandler.FromDelegate(ToggleCrawlingKeybind, handle: false))
             .Register<CrawlingSystem>();
     }
 
-    private void ToggleCrawling(ICommonSession? session)
+    private void ToggleCrawlingKeybind(ICommonSession? session)
     {
-        if (session?.AttachedEntity == null || !TryComp<CrawlerComponent>(session.AttachedEntity, out var crawler))
+        if (session?.AttachedEntity == null)
             return;
+        var ev = new CrawlingKeybindEvent();
+        RaiseLocalEvent(session.AttachedEntity.Value, ev);
+    }
+    private void ToggleCrawling(EntityUid uid, CrawlerComponent component, CrawlingKeybindEvent args)
+    {
         ///checks players standing state, downing player if they are standding and starts doafter with standing up if they are downed
-        switch (_standing.IsDown(session.AttachedEntity.Value))
+        switch (_standing.IsDown(uid))
         {
             case false:
-                _standing.Down(session.AttachedEntity.Value, dropHeldItems: false);
+                _standing.Down(uid, dropHeldItems: false);
                 break;
             case true:
-                _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, session.AttachedEntity.Value, crawler.StandUpTime, new CrawlStandupDoAfterEvent(), session.AttachedEntity.Value, used: session.AttachedEntity.Value)
+                _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.StandUpTime, new CrawlStandupDoAfterEvent(),
+                uid, used: uid)
                 {
                     BreakOnDamage = true
                 });
                 break;
         }
+    }
+    private void OnCrawlingAlertEvent(EntityUid uid, CrawlerComponent component, CrawlingAlertEvent args)
+    {
+        var ev = new CrawlingKeybindEvent();
+        RaiseLocalEvent(args.User, ev);
     }
     private void OnDoAfter(EntityUid uid, CrawlerComponent component, CrawlStandupDoAfterEvent args)
     {
@@ -62,11 +77,13 @@ public sealed partial class CrawlingSystem : EntitySystem
         if (args.Cancelled)
             return;
         RemCompDeferred<CrawlingComponent>(uid);
+        _alerts.ClearAlert(uid, component.CtawlingAlert);
     }
     private void OnFall(EntityUid uid, CrawlerComponent component, DownAttemptEvent args)
     {
         if (args.Cancelled)
             return;
+        _alerts.ShowAlert(uid, component.CtawlingAlert);
         if (!HasComp<CrawlingComponent>(uid))
             AddComp<CrawlingComponent>(uid);
         //TODO: add hiding under table
@@ -75,6 +92,7 @@ public sealed partial class CrawlingSystem : EntitySystem
     {
         if (!HasComp<CrawlingComponent>(uid))
             AddComp<CrawlingComponent>(uid);
+        _alerts.ShowAlert(uid, component.CtawlingAlert);
     }
     private void OnGetExplosionResistance(EntityUid uid, CrawlerComponent component, ref GetExplosionResistanceEvent args)
     {
@@ -104,4 +122,9 @@ public sealed partial class CrawlingSystem : EntitySystem
 public sealed partial class CrawlStandupDoAfterEvent : SimpleDoAfterEvent
 {
 }
+public sealed partial class CrawlingAlertEvent : BaseAlertEvent;
 
+[Serializable, NetSerializable]
+public sealed partial class CrawlingKeybindEvent
+{
+}
