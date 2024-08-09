@@ -1,31 +1,30 @@
-using Content.Server.Animals.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Server.Popups;
+using Content.Shared.Popups;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
+using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
-using Content.Shared.Popups;
+
 using Content.Shared.Udder;
 using Content.Shared.Verbs;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Animals.Systems;
-
+namespace Content.Shared.Animals;
 /// <summary>
-///     Gives ability to produce milkable reagents, produces endless if the
-///     owner has no HungerComponent
+///     Gives the ability to produce milkable reagents;
+///     produces endlessly if the owner does not have a HungerComponent.
 /// </summary>
-internal sealed class UdderSystem : EntitySystem
+public sealed class UdderSystem : EntitySystem
 {
     [Dependency] private readonly HungerSystem _hunger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     public override void Initialize()
     {
@@ -33,6 +32,7 @@ internal sealed class UdderSystem : EntitySystem
 
         SubscribeLocalEvent<UdderComponent, GetVerbsEvent<AlternativeVerb>>(AddMilkVerb);
         SubscribeLocalEvent<UdderComponent, MilkingDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<UdderComponent, ExaminedEvent>(OnExamine);
     }
 
     public override void Update(float frameTime)
@@ -51,6 +51,12 @@ internal sealed class UdderSystem : EntitySystem
             if (_mobState.IsDead(uid))
                 continue;
 
+            if (!_solutionContainerSystem.ResolveSolution(uid, udder.SolutionName, ref udder.Solution, out var solution))
+                continue;
+
+            if (solution.AvailableVolume == 0)
+                continue;
+
             // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
             if (EntityManager.TryGetComponent(uid, out HungerComponent? hunger))
             {
@@ -60,9 +66,6 @@ internal sealed class UdderSystem : EntitySystem
 
                 _hunger.ModifyHunger(uid, -udder.HungerUsage, hunger);
             }
-
-            if (!_solutionContainerSystem.ResolveSolution(uid, udder.SolutionName, ref udder.Solution))
-                continue;
 
             //TODO: toxins from bloodstream !?
             _solutionContainerSystem.TryAddReagent(udder.Solution.Value, udder.ReagentId, udder.QuantityPerUpdate, out _);
@@ -99,7 +102,7 @@ internal sealed class UdderSystem : EntitySystem
         var quantity = solution.Volume;
         if (quantity == 0)
         {
-            _popupSystem.PopupEntity(Loc.GetString("udder-system-dry"), entity.Owner, args.Args.User);
+            _popupSystem.PopupClient(Loc.GetString("udder-system-dry"), entity.Owner, args.Args.User);
             return;
         }
 
@@ -109,7 +112,7 @@ internal sealed class UdderSystem : EntitySystem
         var split = _solutionContainerSystem.SplitSolution(entity.Comp.Solution.Value, quantity);
         _solutionContainerSystem.TryAddSolution(targetSoln.Value, split);
 
-        _popupSystem.PopupEntity(Loc.GetString("udder-system-success", ("amount", quantity), ("target", Identity.Entity(args.Args.Used.Value, EntityManager))), entity.Owner,
+        _popupSystem.PopupClient(Loc.GetString("udder-system-success", ("amount", quantity), ("target", Identity.Entity(args.Args.Used.Value, EntityManager))), entity.Owner,
             args.Args.User, PopupType.Medium);
     }
 
@@ -133,5 +136,26 @@ internal sealed class UdderSystem : EntitySystem
             Priority = 2
         };
         args.Verbs.Add(verb);
+    }
+
+    private void OnExamine(Entity<UdderComponent> entity, ref ExaminedEvent args)
+    {
+        var entityIdentity = ("entity", Identity.Entity(args.Examined, EntityManager));
+
+        var message = EntityManager.TryGetComponent(entity, out HungerComponent? hunger) switch
+        {
+            true => _hunger.GetHungerThreshold(hunger) switch
+            {
+                HungerThreshold.Overfed => Loc.GetString("udder-system-examine-overfed", entityIdentity),
+                <= HungerThreshold.Peckish => Loc.GetString("udder-system-examine-hungry", entityIdentity),
+                _ => null
+            },
+            false => Loc.GetString("udder-system-examine-none", entityIdentity)
+        };
+
+        if (message != null)
+        {
+            args.PushMarkup(message);
+        }
     }
 }
