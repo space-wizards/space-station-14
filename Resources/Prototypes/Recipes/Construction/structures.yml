@@ -1260,6 +1260,40 @@
 
 #Airlocks
 - type: construction
+  name: turnstile
+  id: Turnstile
+  graph: Turnstile
+  startNode: start
+  targetNode: turnstile
+  category: construction-category-structures
+  description: One-way access - control the flow of foot traffic.
+  icon:
+    sprite: Structures/Doors/turnstile.rsi
+    state: idle
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: short turnstile
+  id: TurnstileShort
+  graph: TurnstileShort
+  startNode: start
+  targetNode: turnstileshort
+  category: construction-category-structures
+  description: A smaller, less-secure turnstile.
+  icon:
+    sprite: Structures/Doors/turnstile.rsi
+    state: idle_short
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
   name: airlock
   id: Airlock
   graph: Airlock
