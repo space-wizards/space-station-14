@@ -24,6 +24,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     private const string MaskSlot = "mask";
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<TransformSpeakerNameEvent>>(UpdateName);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeNameMessage>(OnChangeName);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeVerbMessage>(OnChangeVerb);
