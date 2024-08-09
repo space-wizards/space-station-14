@@ -2,6 +2,7 @@ using Content.Shared.Store;
 using JetBrains.Annotations;
 using System.Linq;
 using Content.Shared.Store.Components;
+using Content.Shared.StoreDiscount.Components;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
@@ -20,6 +21,9 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
     [ViewVariables]
     private HashSet<ListingData> _listings = new();
+
+    [ViewVariables]
+    private StoreDiscountData[] _discounts = default!;
 
     public StoreBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -66,8 +70,10 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         {
             case StoreUpdateState msg:
                 _listings = msg.Listings;
+                _discounts = msg.Discounts;
 
                 _menu?.UpdateBalance(msg.Balance);
+
                 UpdateListingsWithSearchFilter();
                 _menu?.SetFooterVisibility(msg.ShowFooter);
                 _menu?.UpdateRefund(msg.AllowRefund);
@@ -86,7 +92,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
             filteredListings.RemoveWhere(listingData => !ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listingData, _prototypeManager).Trim().ToLowerInvariant().Contains(_search) &&
                                                         !ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(listingData, _prototypeManager).Trim().ToLowerInvariant().Contains(_search));
         }
-        _menu.PopulateStoreCategoryButtons(filteredListings);
-        _menu.UpdateListing(filteredListings.ToList());
+        _menu.PopulateStoreCategoryButtons(filteredListings, _discounts);
+        _menu.UpdateListing(filteredListings.ToList(), _discounts);
     }
 }

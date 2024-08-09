@@ -2,6 +2,11 @@ using System.Linq;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Store;
@@ -24,6 +29,18 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// </summary>
     [DataField]
     public string? Name;
+
+    /// <summary>
+    /// Discount category for listing item. This marker describes chance of how often will item be discounted.
+    /// </summary>
+    [DataField("discountCategory")]
+    public DiscountCategory DiscountCategory = DiscountCategory.NoDiscounts;
+
+    /// <summary>
+    /// Options for discount - % of how much item costs can be cut by discount.
+    /// </summary>
+    [DataField("discountDownTo")]
+    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> DiscountDownTo = new();
 
     /// <summary>
     /// The description of the listing. If empty, uses the entity's description (if present)
@@ -166,6 +183,8 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
             ProductEvent = ProductEvent,
             PurchaseAmount = PurchaseAmount,
             RestockTime = RestockTime,
+            DiscountCategory = DiscountCategory,
+            DiscountDownTo = DiscountDownTo
         };
     }
 }
@@ -176,4 +195,30 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
 [Prototype("listing")]
 [Serializable, NetSerializable]
 [DataDefinition]
-public sealed partial class ListingPrototype : ListingData, IPrototype;
+public sealed partial class ListingPrototype : ListingData, IPrototype
+{
+}
+
+[Serializable, NetSerializable]
+public enum DiscountCategory : byte
+{
+    /// <summary>
+    /// Items should not be discounted in any way share or form for the love of humanity.
+    /// </summary>
+    NoDiscounts,
+
+    /// <summary>
+    /// Dirty-cheap items that are rarely used and can be discounted to 0-ish cost to encourage usage.
+    /// </summary>
+    RareDiscounts,
+
+    /// <summary>
+    /// Cheap items that are used not very often.
+    /// </summary>
+    UsualDiscounts,
+
+    /// <summary>
+    /// Casually used items that are widely used but can be (rarely) discounted for epic lulz.
+    /// </summary>
+    VeryRareDiscounts
+}
