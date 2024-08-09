@@ -10,16 +10,16 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Doors.Systems
 {
     public sealed class FirelockSystem : SharedFirelockSystem
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedMapSystem _mapping = default!;
-        [Dependency] private readonly PointLightSystem _pointLight = default!;
 
         private const int UpdateInterval = 30;
         private int _accumulatedTicks;
@@ -27,18 +27,14 @@ namespace Content.Server.Doors.Systems
         public override void Initialize()
         {
             base.Initialize();
-
             SubscribeLocalEvent<FirelockComponent, AtmosAlarmEvent>(OnAtmosAlarm);
-
             SubscribeLocalEvent<FirelockComponent, PowerChangedEvent>(PowerChanged);
-
         }
 
         private void PowerChanged(EntityUid uid, FirelockComponent component, ref PowerChangedEvent args)
         {
-            // TODO this should REALLLLY not be door specific appearance thing.
-            _appearance.SetData(uid, DoorVisuals.Powered, args.Powered);
             component.Powered = args.Powered;
+            UpdateDoorState(uid, component);
             Dirty(uid, component);
         }
 
@@ -51,67 +47,57 @@ namespace Content.Server.Doors.Systems
             _accumulatedTicks = 0;
 
             var airtightQuery = GetEntityQuery<AirtightComponent>();
-            var appearanceQuery = GetEntityQuery<AppearanceComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
-            var pointLightQuery = GetEntityQuery<PointLightComponent>();
-
             var query = EntityQueryEnumerator<FirelockComponent, DoorComponent>();
             while (query.MoveNext(out var uid, out var firelock, out var door))
             {
                 // only bother to check pressure on doors that are some variation of closed.
                 if (door.State != DoorState.Closed
                     && door.State != DoorState.Welded
-                    && door.State != DoorState.Denying)
+                    && door.State != DoorState.Denying
+                    && airtightQuery.TryGetComponent(uid, out var airtight)
+                    && xformQuery.TryGetComponent(uid, out var xform))
                 {
-                    continue;
-                }
-
-                if (airtightQuery.TryGetComponent(uid, out var airtight)
-                    && xformQuery.TryGetComponent(uid, out var xform)
-                    && appearanceQuery.TryGetComponent(uid, out var appearance))
-                {
-                    var (pressure, fire) = CheckPressureAndFire(uid, firelock, xform, airtight, airtightQuery);
-                    _appearance.SetData(uid, DoorVisuals.ClosedLights, fire || pressure, appearance);
-                    firelock.Temperature = fire;
-                    firelock.Pressure = pressure;
-                    Dirty(uid, firelock);
-
-                    if (pointLightQuery.TryComp(uid, out var pointLight))
+                    var pressure = CheckDiffPressure(uid, firelock, xform, airtight, airtightQuery);
+                    if (pressure != firelock.Pressure)
                     {
-                        _pointLight.SetEnabled(uid, fire | pressure, pointLight);
+                        firelock.Pressure = pressure;
+                        Dirty(uid, firelock);
                     }
                 }
+
+                // Always run this to re-close firelocks after they've been pried open.
+                UpdateDoorState(uid, firelock);
             }
         }
 
         private void OnAtmosAlarm(EntityUid uid, FirelockComponent component, AtmosAlarmEvent args)
         {
-            if (!this.IsPowered(uid, EntityManager))
-                return;
-
-            if (!TryComp<DoorComponent>(uid, out var doorComponent))
-                return;
-
             if (args.AlarmType == AtmosAlarmType.Normal)
-            {
-                if (doorComponent.State == DoorState.Closed)
-                    _doorSystem.TryOpen(uid);
-            }
+                component.ExtLocked = false;
             else if (args.AlarmType == AtmosAlarmType.Danger)
+                component.ExtLocked = true;
+            UpdateDoorState(uid, component);
+            Dirty(uid, component);
+        }
+
+        private void UpdateDoorState(EntityUid uid, FirelockComponent component)
+        {
+            if (!this.IsPowered(uid, EntityManager) || !TryComp<DoorComponent>(uid, out var door))
+                return;
+
+            if (component.IsLocked)
             {
-                EmergencyPressureStop(uid, component, doorComponent);
+                if (component.EmergencyCloseCooldown == null || _gameTiming.CurTime > component.EmergencyCloseCooldown)
+                    EmergencyPressureStop(uid, component, door);
+            }
+            else if (door.State == DoorState.Closed)
+            {
+                _doorSystem.TryOpen(uid);
             }
         }
 
-        public (bool Pressure, bool Fire) CheckPressureAndFire(EntityUid uid, FirelockComponent firelock)
-        {
-            var query = GetEntityQuery<AirtightComponent>();
-            if (query.TryGetComponent(uid, out AirtightComponent? airtight))
-                return CheckPressureAndFire(uid, firelock, Transform(uid), airtight, query);
-            return (false, false);
-        }
-
-        public (bool Pressure, bool Fire) CheckPressureAndFire(
+        public bool CheckDiffPressure(
         EntityUid uid,
         FirelockComponent firelock,
         TransformComponent xform,
@@ -119,24 +105,21 @@ namespace Content.Server.Doors.Systems
         EntityQuery<AirtightComponent> airtightQuery)
         {
             if (!airtight.AirBlocked)
-                return (false, false);
+                return false;
 
             if (TryComp(uid, out DockingComponent? dock) && dock.Docked)
             {
                 // Currently docking automatically opens the doors. But maybe in future, check the pressure difference before opening doors?
-                return (false, false);
+                return false;
             }
 
             if (!HasComp<GridAtmosphereComponent>(xform.ParentUid))
-                return (false, false);
+                return false;
 
             var grid = Comp<MapGridComponent>(xform.ParentUid);
             var pos = _mapping.CoordinatesToTile(xform.ParentUid, grid, xform.Coordinates);
             var minPressure = float.MaxValue;
             var maxPressure = float.MinValue;
-            var minTemperature = float.MaxValue;
-            var maxTemperature = float.MinValue;
-            var holdingFire = false;
             var holdingPressure = false;
 
             // We cannot simply use `_atmosSystem.GetAdjacentTileMixtures` because of how the `includeBlocked` option
@@ -165,7 +148,7 @@ namespace Content.Server.Doors.Systems
 
             var gasses = _atmosSystem.GetTileMixtures(xform.ParentUid, xform.MapUid, tiles);
             if (gasses == null)
-                return (false, false);
+                return false;
 
             for (var i = 0; i < count; i++)
             {
@@ -183,19 +166,16 @@ namespace Content.Server.Doors.Systems
                     var p = gas.Pressure;
                     minPressure = Math.Min(minPressure, p);
                     maxPressure = Math.Max(maxPressure, p);
-                    minTemperature = Math.Min(minTemperature, gas.Temperature);
-                    maxTemperature = Math.Max(maxTemperature, gas.Temperature);
                 }
 
                 holdingPressure |= maxPressure - minPressure > firelock.PressureThreshold;
-                holdingFire |= maxTemperature - minTemperature > firelock.TemperatureThreshold;
 
-                if (holdingPressure && holdingFire)
-                    return (holdingPressure, holdingFire);
+                if (holdingPressure)
+                    return holdingPressure;
             }
 
             if (airtight.AirBlockedDirection == AtmosDirection.All)
-                return (holdingPressure, holdingFire);
+                return holdingPressure;
 
             var local = gasses[count];
             if (local != null)
@@ -203,21 +183,16 @@ namespace Content.Server.Doors.Systems
                 var p = local.Pressure;
                 minPressure = Math.Min(minPressure, p);
                 maxPressure = Math.Max(maxPressure, p);
-                minTemperature = Math.Min(minTemperature, local.Temperature);
-                maxTemperature = Math.Max(maxTemperature, local.Temperature);
             }
             else
             {
                 minPressure = Math.Min(minPressure, 0);
                 maxPressure = Math.Max(maxPressure, 0);
-                minTemperature = Math.Min(minTemperature, 0);
-                maxTemperature = Math.Max(maxTemperature, 0);
             }
 
             holdingPressure |= maxPressure - minPressure > firelock.PressureThreshold;
-            holdingFire |= maxTemperature - minTemperature > firelock.TemperatureThreshold;
 
-            return (holdingPressure, holdingFire);
+            return holdingPressure;
         }
 
         private bool HasAirtightBlocker(IEnumerable<EntityUid> enumerable, AtmosDirection dir, EntityQuery<AirtightComponent> airtightQuery)

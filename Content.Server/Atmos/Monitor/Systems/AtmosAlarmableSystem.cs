@@ -61,11 +61,7 @@ public sealed class AtmosAlarmableSystem : EntitySystem
 
     private void OnPowerChange(EntityUid uid, AtmosAlarmableComponent component, ref PowerChangedEvent args)
     {
-        if (!args.Powered)
-        {
-            Reset(uid, component);
-        }
-        else
+        if (args.Powered)
         {
             // sussy
             _atmosDevNetSystem.Register(uid, null);
