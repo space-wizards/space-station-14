@@ -11,6 +11,8 @@ namespace Content.Server.Power.EntitySystems;
 public sealed partial class CableSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+
 
     private void InitializeCablePlacer()
     {
@@ -26,7 +28,7 @@ public sealed partial class CableSystem
         if (component.CablePrototypeId == null)
             return;
 
-        if(!TryComp<MapGridComponent>(args.ClickLocation.GetGridUid(EntityManager), out var grid))
+        if(!TryComp<MapGridComponent>(_transformSystem.GetGrid(args.ClickLocation), out var grid))
             return;
 
         var snapPos = grid.TileIndicesFor(args.ClickLocation);
