@@ -1,48 +1,58 @@
 - type: entity
+  parent: BaseAction
   id: ActionRevenantShop
   name: Shop
   description: Opens the ability shop.
   components:
-  - type: InstantAction
+  - type: Action
     icon: Interface/Actions/shop.png
+  - type: InstantAction
     event: !type:RevenantShopActionEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionRevenantDefile
   name: Defile
   description: Costs 30 Essence.
   components:
-  - type: InstantAction
-    icon: Interface/Actions/defile.png
-    event: !type:RevenantDefileActionEvent
+  - type: Action
     useDelay: 15
+    icon: Interface/Actions/defile.png
+  - type: InstantAction
+    event: !type:RevenantDefileActionEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionRevenantOverloadLights
   name: Overload Lights
   description: Costs 40 Essence.
   components:
-  - type: InstantAction
+  - type: Action
     icon: Interface/Actions/overloadlight.png
-    event: !type:RevenantOverloadLightsActionEvent
     useDelay: 20
+  - type: InstantAction
+    event: !type:RevenantOverloadLightsActionEvent
 
 #- type: entity
+#  parent: BaseAction
 #  id: ActionRevenantBlight
 #  name: Blight
 #  description: Costs 50 Essence.
 #  components:
-#  - type: InstantAction
+#  - type: Action
 #    icon: Interface/Actions/blight.png
-#    event: !type:RevenantBlightActionEvent
 #    useDelay: 20
+#  - type: InstantAction
+#    event: !type:RevenantBlightActionEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionRevenantMalfunction
   name: Malfunction
   description: Costs 60 Essence.
   components:
-  - type: InstantAction
+  - type: Action
     icon: Interface/Actions/malfunction.png
-    event: !type:RevenantMalfunctionActionEvent
     useDelay: 20
+  - type: InstantAction
+    event: !type:RevenantMalfunctionActionEvent

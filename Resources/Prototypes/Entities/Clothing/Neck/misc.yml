@@ -68,13 +68,16 @@
     proto: lawyer
 
 - type: entity
+  parent: BaseAction
   id: ActionStethoscope
   name: Listen with stethoscope
   components:
-  - type: EntityTargetAction
+  - type: Action
     icon:
       sprite: Clothing/Neck/Misc/stethoscope.rsi
       state: icon
-    event: !type:StethoscopeActionEvent
     checkCanInteract: false
     priority: -1
+  - type: TargetAction
+  - type: EntityTargetAction
+    event: !type:StethoscopeActionEvent

@@ -5,6 +5,7 @@ using Content.Server.Mind.Commands;
 using Content.Server.Nutrition;
 using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Buckle;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
@@ -111,8 +112,8 @@ public sealed partial class PolymorphSystem : EntitySystem
 
         if (_actions.AddAction(uid, ref component.Action, out var action, RevertPolymorphId))
         {
-            action.EntityIcon = component.Parent;
-            action.UseDelay = TimeSpan.FromSeconds(component.Configuration.Delay);
+            _actions.SetEntityIcon((component.Action.Value, action), component.Parent);
+            _actions.SetUseDelay(component.Action.Value, TimeSpan.FromSeconds(component.Configuration.Delay));
         }
     }
 
@@ -371,9 +372,8 @@ public sealed partial class PolymorphSystem : EntitySystem
         if (!_actions.TryGetActionData(actionId, out var baseAction))
             return;
 
-        baseAction.Icon = new SpriteSpecifier.EntityPrototype(polyProto.Configuration.Entity);
-        if (baseAction is InstantActionComponent action)
-            action.Event = new PolymorphActionEvent(id);
+        _actions.SetIcon((actionId.Value, baseAction), new SpriteSpecifier.EntityPrototype(polyProto.Configuration.Entity));
+        _actions.SetEvent(actionId.Value, new PolymorphActionEvent(id));
     }
 
     public void RemovePolymorphAction(ProtoId<PolymorphPrototype> id, Entity<PolymorphableComponent> target)

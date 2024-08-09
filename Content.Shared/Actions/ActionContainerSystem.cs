@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Actions.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -77,7 +78,7 @@ public sealed class ActionContainerSystem : EntitySystem
     /// <inheritdoc cref="EnsureAction(Robust.Shared.GameObjects.EntityUid,ref System.Nullable{Robust.Shared.GameObjects.EntityUid},string?,Content.Shared.Actions.ActionsContainerComponent?)"/>
     public bool EnsureAction(EntityUid uid,
         [NotNullWhen(true)] ref EntityUid? actionId,
-        [NotNullWhen(true)] out BaseActionComponent? action,
+        [NotNullWhen(true)] out ActionComponent? action,
         string? actionPrototypeId,
         ActionsContainerComponent? comp = null)
     {
@@ -129,7 +130,7 @@ public sealed class ActionContainerSystem : EntitySystem
     public void TransferAction(
         EntityUid actionId,
         EntityUid newContainer,
-        BaseActionComponent? action = null,
+        ActionComponent? action = null,
         ActionsContainerComponent? container = null)
     {
         if (!_actions.ResolveActionData(actionId, ref action))
@@ -180,7 +181,7 @@ public sealed class ActionContainerSystem : EntitySystem
         EntityUid actionId,
         EntityUid newContainer,
         EntityUid newAttached,
-        BaseActionComponent? action = null,
+        ActionComponent? action = null,
         ActionsContainerComponent? container = null)
     {
         if (!_actions.ResolveActionData(actionId, ref action))
@@ -227,7 +228,7 @@ public sealed class ActionContainerSystem : EntitySystem
     /// <summary>
     /// Adds a pre-existing action to an action container. If the action is already in some container it will first remove it.
     /// </summary>
-    public bool AddAction(EntityUid uid, EntityUid actionId, BaseActionComponent? action = null, ActionsContainerComponent? comp = null)
+    public bool AddAction(EntityUid uid, EntityUid actionId, ActionComponent? action = null, ActionsContainerComponent? comp = null)
     {
         if (!_actions.ResolveActionData(actionId, ref action))
             return false;
@@ -253,7 +254,7 @@ public sealed class ActionContainerSystem : EntitySystem
     /// <summary>
     /// Removes an action from its container and any action-performer and moves the action to null-space
     /// </summary>
-    public void RemoveAction(EntityUid actionId, BaseActionComponent? action = null)
+    public void RemoveAction(EntityUid actionId, ActionComponent? action = null)
     {
         if (!_actions.ResolveActionData(actionId, ref action))
             return;
@@ -342,9 +343,9 @@ public sealed class ActionContainerSystem : EntitySystem
 public readonly struct ActionAddedEvent
 {
     public readonly EntityUid Action;
-    public readonly BaseActionComponent Component;
+    public readonly ActionComponent Component;
 
-    public ActionAddedEvent(EntityUid action, BaseActionComponent component)
+    public ActionAddedEvent(EntityUid action, ActionComponent component)
     {
         Action = action;
         Component = component;
@@ -358,9 +359,9 @@ public readonly struct ActionAddedEvent
 public readonly struct ActionRemovedEvent
 {
     public readonly EntityUid Action;
-    public readonly BaseActionComponent Component;
+    public readonly ActionComponent Component;
 
-    public ActionRemovedEvent(EntityUid action, BaseActionComponent component)
+    public ActionRemovedEvent(EntityUid action, ActionComponent component)
     {
         Action = action;
         Component = component;

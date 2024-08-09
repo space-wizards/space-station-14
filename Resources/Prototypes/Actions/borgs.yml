@@ -1,12 +1,26 @@
 ﻿- type: entity
+  parent: BaseAction
   id: ActionViewLaws
   name: View Laws
   description: View the laws that you must follow.
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: NoItem
     icon:
       sprite: Interface/Actions/actions_borg.rsi
       state: state-laws
-    event: !type:ToggleLawsScreenEvent
     useDelay: 0.5
+  - type: InstantAction
+    event: !type:ToggleLawsScreenEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionBorgSwapModule
+  name: Swap Module
+  description: Select this module, enabling you to use the tools it provides.
+  components:
+  - type: Action
+    itemIconStyle: BigItem
+    useDelay: 0.5
+  - type: InstantAction
+    event: !type:BorgModuleActionSelectedEvent

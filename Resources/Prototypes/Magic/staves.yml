@@ -33,12 +33,15 @@
     radius: 2
 
 - type: entity
+  parent: BaseAction
   id: ActionRgbLight
   components:
-  - type: EntityTargetAction
-    whitelist: { components: [ PointLight ] }
+  - type: Action
     charges: 25
     sound: /Audio/Magic/blink.ogg
+  - type: TargetAction
+  - type: EntityTargetAction
+    whitelist: { components: [ PointLight ] }
     event: !type:ChangeComponentsSpellEvent
       toAdd:
       - type: RgbLightController

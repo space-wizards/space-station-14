@@ -1,4 +1,5 @@
 ﻿- type: entity
+  parent: BaseAction
   id: ActionRevertPolymorph
   name: Revert
   description: Revert back into your original form.
@@ -7,36 +8,42 @@
     event: !type:RevertPolymorphActionEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionPolymorph
   components:
+  - type: Action
+    itemIconStyle: NoItem
   - type: InstantAction
     event: !type:PolymorphActionEvent
-    itemIconStyle: NoItem
 
 - type: entity
+  parent: BaseAction
   id: ActionPolymorphWizardSpider
   name: Spider Polymorph
   description: Polymorphs you into a Spider.
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 60
-    event: !type:PolymorphActionEvent
-      protoId: WizardSpider
     itemIconStyle: NoItem
     icon:
       sprite: Mobs/Animals/spider.rsi
       state: tarantula
+  - type: InstantAction
+    event: !type:PolymorphActionEvent
+      protoId: WizardSpider
 
 - type: entity
+  parent: BaseAction
   id: ActionPolymorphWizardRod
   name: Rod Form
   description: CLANG!
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 60
-    event: !type:PolymorphActionEvent
-      protoId: WizardRod
     itemIconStyle: NoItem
     icon:
       sprite: Objects/Fun/immovable_rod.rsi
       state: icon
+  - type: InstantAction
+    event: !type:PolymorphActionEvent
+      protoId: WizardRod

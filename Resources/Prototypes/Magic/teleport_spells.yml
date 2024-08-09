@@ -1,18 +1,21 @@
 ﻿- type: entity
+  parent: BaseAction
   id: ActionBlink
   name: Blink
   description: Teleport to the clicked location.
   components:
-  - type: WorldTargetAction
+  - type: Action
     useDelay: 10
-    range: 16 # default examine-range.
-    # ^ should probably add better validation that the clicked location is on the users screen somewhere,
+    itemIconStyle: BigAction
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/blink.ogg
-    itemIconStyle: BigAction
-    checkCanAccess: false
-    repeat: false
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: blink
+  - type: TargetAction
+    range: 16 # default examine-range.
+    # ^ should probably add better validation that the clicked location is on the users screen somewhere,
+    repeat: false
+    checkCanAccess: false
+  - type: WorldTargetAction
     event: !type:TeleportSpellEvent
