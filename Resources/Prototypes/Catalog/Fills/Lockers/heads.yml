@@ -277,7 +277,7 @@
       - id: JetpackSecurityFilled
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
-      - id: BookSecretDocuments
+      - id: WeaponEnergyShotgun
       - id: BookSpaceLaw
 
 - type: entity
@@ -301,7 +301,7 @@
       - id: SecurityTechFabCircuitboard
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
-      - id: BookSecretDocuments
+      - id: WeaponEnergyShotgun 
       - id: BookSpaceLaw
 
 - type: entity
