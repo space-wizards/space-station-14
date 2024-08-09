@@ -125,3 +125,21 @@
   cost: 2
   components:
     - type: RussianAccent
+
+- type: trait
+  id: French
+  name: trait-french-name
+  description: trait-french-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+    - type: FrenchAccent
+
+- type: trait
+  id: Spanish
+  name: trait-spanish-name
+  description: trait-spanish-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+    - type: SpanishAccent
