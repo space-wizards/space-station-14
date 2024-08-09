@@ -7,7 +7,7 @@ namespace Content.Server.Speech.EntitySystems;
 
 public sealed class GermanAccentSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _rng = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
 
     private static readonly Regex RegexTh = new(@"(?<=\s|^)th", RegexOptions.IgnoreCase);
@@ -25,13 +25,13 @@ public sealed class GermanAccentSystem : EntitySystem
         // rarely, "the" should become "das" instead of "ze"
         foreach (Match match in RegexThe.Matches(msg))
         {
-            if (_rng.Prob(0.3f))
+            if (_random.Prob(0.3f))
             {
                 // just shift T, H and E over to D, A and S to preserve capitalization
                 msg = msg.Substring(0, match.Index) +
-                      (char) (msg[match.Index] - 16) +
-                      (char) (msg[match.Index + 1] - 7) +
-                      (char) (msg[match.Index + 2] + 14) +
+                      (char)(msg[match.Index] - 16) +
+                      (char)(msg[match.Index + 1] - 7) +
+                      (char)(msg[match.Index + 2] + 14) +
                       msg.Substring(match.Index + 3);
             }
         }
@@ -53,7 +53,7 @@ public sealed class GermanAccentSystem : EntitySystem
         {
             if (umlautCooldown == 0)
             {
-                if (_rng.Prob(0.15f)) // 15% of all eligible vowels become umlauts)
+                if (_random.Prob(0.15f)) // 15% of all eligible vowels become umlauts)
                 {
                     msgBuilder[i] = msgBuilder[i] switch
                     {
@@ -67,7 +67,8 @@ public sealed class GermanAccentSystem : EntitySystem
                     };
                     umlautCooldown = 4;
                 }
-            } else
+            }
+            else
             {
                 umlautCooldown--;
             }
@@ -76,7 +77,7 @@ public sealed class GermanAccentSystem : EntitySystem
         return msgBuilder.ToString();
     }
 
-    private void OnAccent(EntityUid uid, GermanAccentComponent component, AccentGetEvent args)
+    private void OnAccent(Entity<GermanAccentComponent> ent, ref AccentGetEvent args)
     {
         args.Message = Accentuate(args.Message);
     }
