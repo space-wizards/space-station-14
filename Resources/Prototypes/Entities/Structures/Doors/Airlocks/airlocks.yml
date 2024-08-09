@@ -64,6 +64,9 @@
   parent: AirlockMedical
   id: AirlockChemistry
   suffix: Chemistry
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/chemistry.rsi
 
 - type: entity
   parent: Airlock
@@ -210,6 +213,9 @@
   parent: AirlockMedicalGlass
   id: AirlockChemistryGlass
   suffix: Chemistry
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/chemistry.rsi
 
 - type: entity
   parent: AirlockMedicalGlass
