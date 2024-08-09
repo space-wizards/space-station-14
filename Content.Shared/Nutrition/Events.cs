@@ -59,3 +59,11 @@ public sealed partial class VapeDoAfterEvent : DoAfterEvent
 /// </summary>
 [ByRefEvent]
 public record struct SliceFoodEvent();
+
+/// <summary>
+/// is called after a successful attempt at slicing food.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class SliceFoodDoAfterEvent : SimpleDoAfterEvent
+{
+}
