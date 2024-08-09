@@ -19,6 +19,7 @@ using Content.Shared.Examine;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
@@ -38,6 +39,7 @@ namespace Content.Server.Flash
         [Dependency] private readonly TagSystem _tag = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
         public override void Initialize()
         {
@@ -155,7 +157,6 @@ namespace Content.Server.Flash
         public void FlashArea(Entity<FlashComponent?> source, EntityUid? user, float range, float duration, float slowTo = 0.8f, bool displayPopup = false, float probability = 1f, SoundSpecifier? sound = null)
         {
             var transform = Transform(source);
-            var mapPosition = _transform.GetMapCoordinates(transform);
             var statusEffectsQuery = GetEntityQuery<StatusEffectsComponent>();
             var damagedByFlashingQuery = GetEntityQuery<DamagedByFlashingComponent>();
 
@@ -170,7 +171,7 @@ namespace Content.Server.Flash
 
                 // Check for entites in view
                 // put damagedByFlashingComponent in the predicate because shadow anomalies block vision.
-                if (!_examine.InRangeUnOccluded(entity, mapPosition, range, predicate: (e) => damagedByFlashingQuery.HasComponent(e)))
+                if (!_examine.InRangeUnOccluded(entity, source, range, predicate: (e) => damagedByFlashingQuery.HasComponent(e)))
                     continue;
 
                 // They shouldn't have flash removed in between right?
