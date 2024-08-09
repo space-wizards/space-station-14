@@ -170,7 +170,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             return;
         }
 
-        var entries = listing!.ToList();
+        var entries = listing.ToList();
         entries.Sort((a, b) => string.Compare(a.Value, b.Value, StringComparison.Ordinal));
         // `entries` now contains the definitive list of items which should be in
         // our list of records and is in the order we want to present those items.
