@@ -46,4 +46,10 @@ public sealed partial class PacifiedComponent : Component
 
     [DataField]
     public ProtoId<AlertPrototype> PacifiedAlert = "Pacified";
+
+    /// <summary>
+    ///     The max amount of stamina damage a weapon can deal before the pacifist cannot use the weapon.
+    /// </summary>
+    [DataField]
+    public float MaxStaminaDamage = 10f;
 }
