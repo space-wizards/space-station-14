@@ -1,0 +1,29 @@
+- type: loadout
+  id: BorgGeneric
+  entity: PlayerBorgGeneric
+  entityDummy: DummyBorgGeneric
+
+- type: loadout
+  id: BorgMining
+  entity: PlayerBorgMining
+  entityDummy: DummyBorgMining
+
+- type: loadout
+  id: BorgEngineer
+  entity: PlayerBorgEngineer
+  entityDummy: DummyBorgEngineer
+
+- type: loadout
+  id: BorgJanitor
+  entity: PlayerBorgJanitor
+  entityDummy: DummyBorgJanitor
+
+- type: loadout
+  id: BorgMedical
+  entity: PlayerBorgMedical
+  entityDummy: DummyBorgMedical
+
+- type: loadout
+  id: BorgService
+  entity: PlayerBorgService
+  entityDummy: DummyBorgService
