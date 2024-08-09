@@ -97,3 +97,31 @@
   components:
     - type: ReplacementAccent
       accent: mobster
+
+- type: trait
+  id: Ratvarian
+  name: trait-ratvarian-name
+  description: trait-ratvarian-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+    - type: RatvarianLanguage
+
+- type: trait
+  id: Slime
+  name: trait-slime-name
+  description: trait-slime-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+    - type: ReplacementAccent
+      accent: slimes
+
+- type: trait
+  id: Russian
+  name: trait-russian-name
+  description: trait-russian-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+    - type: RussianAccent
