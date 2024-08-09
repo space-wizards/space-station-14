@@ -65,8 +65,6 @@
     - type: MeleeWeapon
       wideAnimationRotation: -135
       attackRate: 10
-      soundHit:
-        collection: ToySqueak
     - type: Item
       size: Ginormous
       sprite: Objects/Weapons/Melee/Throngler-in-hand.rsi
