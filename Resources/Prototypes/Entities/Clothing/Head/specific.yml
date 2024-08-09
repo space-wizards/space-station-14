@@ -18,3 +18,60 @@
       interfaces:
         enum.ChameleonUiKey.Key:
           type: ChameleonBoundUserInterface
+
+- type: entity
+  parent: ClothingHeadHatFedoraBrown
+  id: ClothingHeadHatDetGadget
+  name: DetGadget hat
+  description: GO GO GADGET!!!
+  components:
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: TriggerOnVoice
+    keyPhrase: "go go gadget"
+    listenRange: 0
+  - type: ActiveListener
+    range: 0
+  - type: ItemSlotVoiceControl
+  - type: ItemSlots
+    slots:
+      body_bag:
+        name: Body Bag
+        whitelist:
+          tags:
+          - BodyBag
+        disableEject: true
+      cigarette:
+        name: Cigarette
+        whitelist:
+          tags:
+          - CigPack
+        disableEject: true
+      flashlight:
+        name: Flashlight
+        whitelist:
+          tags:
+          - Flashlight
+        disableEject: true
+      lighter:
+        name: Lighter
+        whitelist:
+          tags:
+          - Lighter
+        disableEject: true
+      forensic_scanner:
+        name: Forensic Scanner
+        whitelist:
+          tags:
+          - ForensicScanner
+        disableEject: true
+      # Camera
+      # Audio Recorder
+  - type: ContainerContainer
+    containers:
+      cigarette: !type:ContainerSlot
+      body_bag: !type:ContainerSlot
+      flashlight: !type:ContainerSlot
+      lighter: !type:ContainerSlot
+      forensic_scanner: !type:ContainerSlot
+
