@@ -7,6 +7,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
 using Content.Shared.Voting;
+using Content.Shared.Voting.Events;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
@@ -56,16 +57,12 @@ namespace Content.Server.Voting.Managers
             var totalPlayers = _playerManager.Sessions.Count(session => session.Status != SessionStatus.Disconnected);
 
             var ghostVotePercentageRequirement = _cfg.GetCVar(CCVars.VoteRestartGhostPercentage);
-            var ghostCount = 0;
             
-            foreach (var player in _playerManager.Sessions)
-            {
-                _playerManager.UpdateState(player);
-                if (player.Status != SessionStatus.Disconnected && _entityManager.HasComponent<GhostComponent>(player.AttachedEntity))
-                {
-                    ghostCount++;
-                }
-            }
+            //Raised an event so that eligble players can be counted in their respective systems
+            var ev = new RestartVoteAttemptEvent();
+            _entityManager.EventBus.RaiseLocalEvent(EntityUid.Invalid,ref ev);
+            
+            var ghostCount = ev.DeadPlayers;
 
             var ghostPercentage = 0.0;
             if (totalPlayers > 0)
