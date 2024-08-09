@@ -1,0 +1,32 @@
+- type: entity
+  name: handheld panic button
+  parent: BaseHandheldComputer
+  id: HandheldPanicButton
+  description: A hand-held panic button that, when activated, sends a signal for help to the security radio channel.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Command/handheldpanicbutton.rsi
+    state: icon
+  - type: StaticPrice
+    price: 500
+  - type: PanicButton
+    radioChannel: Security
+    radioMessage: comp-panic-button-message
+    specifyLocation: true
+  - type: UseDelay
+    delay: 4
+  - type: PowerCellDraw
+    drawRate: 2
+    useRate: 0
+# - type: StealTarget
+#   stealGroup: HandheldCrewMonitor
+
+- type: entity
+  id: HandheldPanicButtonEmpty
+  parent: HandheldPanicButton
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
