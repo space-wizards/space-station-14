@@ -423,5 +423,13 @@ Entries:
   id: 52
   time: '2024-08-09T05:48:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30581
+- author: Simyon
+  changes:
+  - message: You can now view and edit the laws of silicons. Cyborg/Law bound entity
+      -> Admin -> Manage laws
+    type: Add
+  id: 53
+  time: '2024-08-09T06:16:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28483
 Name: Admin
 Order: 1
