@@ -44,6 +44,7 @@ public sealed class FlashSystem : SharedFlashSystem
         {
             _overlay.RequestScreenTexture = true;
             _overlayMan.AddOverlay(_overlay);
+            _overlay.ReceiveFlash();
         }
     }
 
