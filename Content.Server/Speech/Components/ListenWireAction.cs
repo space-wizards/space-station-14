@@ -4,6 +4,11 @@ using Content.Server.VoiceMask;
 using Content.Server.Wires;
 using Content.Shared.Speech;
 using Content.Shared.Wires;
+using Content.Server.Radio.EntitySystems;
+using Robust.Shared.Prototypes;
+using Content.Shared.Radio;
+using Content.Server.Radio.Components;
+
 
 namespace Content.Server.Speech;
 
@@ -11,6 +16,8 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
 {
     private WiresSystem _wires = default!;
     private ChatSystem _chat = default!;
+    private RadioSystem _radio = default!;
+    private IPrototypeManager _protoMan = default!;
 
     /// <summary>
     /// Length of the gibberish string sent when pulsing the wire
@@ -37,6 +44,8 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
 
         _wires = EntityManager.System<WiresSystem>();
         _chat = EntityManager.System<ChatSystem>();
+        _radio = EntityManager.System<RadioSystem>();
+        _protoMan = IoCManager.Resolve<IPrototypeManager>();
     }
     public override StatusLightState? GetLightState(Wire wire)
     {
@@ -72,46 +81,13 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
         if (!GetValue(wire.Owner) || !IsPowered(wire.Owner))
             return;
 
-        // We have to use a valid euid in the ListenEvent. The user seems
-        // like a sensible choice, but we need to mask their name.
-
-        // Save the user's existing voicemask if they have one
-        var oldEnabled = true;
-        var oldVoiceName = Loc.GetString("wire-listen-pulse-error-name");
-        string? oldSpeechVerb = null;
-        if (EntityManager.TryGetComponent<VoiceMaskComponent>(user, out var oldMask))
-        {
-            oldEnabled = oldMask.Enabled;
-            oldVoiceName = oldMask.VoiceName;
-            oldSpeechVerb = oldMask.SpeechVerb;
-        }
-
-        // Give the user a temporary voicemask component
-        var mask = EntityManager.EnsureComponent<VoiceMaskComponent>(user);
-        mask.Enabled = true;
-        mask.VoiceName = Loc.GetString("wire-listen-pulse-identifier");
-        mask.SpeechVerb = SpeechVerb;
-
         var chars = Loc.GetString("wire-listen-pulse-characters").ToCharArray();
         var noiseMsg = _chat.BuildGibberishString(chars, NoiseLength);
 
-        var attemptEv = new ListenAttemptEvent(wire.Owner);
-        EntityManager.EventBus.RaiseLocalEvent(wire.Owner, attemptEv);
-        if (!attemptEv.Cancelled)
-        {
-            var ev = new ListenEvent(noiseMsg, user);
-            EntityManager.EventBus.RaiseLocalEvent(wire.Owner, ev);
-        }
+        if (!EntityManager.TryGetComponent<RadioMicrophoneComponent>(wire.Owner, out var radioMicroPhoneComp))
+            return;
 
-        // Remove the voicemask component, or set it back to what it was before
-        if (oldMask == null)
-            EntityManager.RemoveComponent(user, mask);
-        else
-        {
-            mask.Enabled = oldEnabled;
-            mask.VoiceName = oldVoiceName;
-            mask.SpeechVerb = oldSpeechVerb;
-        }
+        _radio.SendRadioMessage(wire.Owner, noiseMsg, _protoMan.Index<RadioChannelPrototype>(radioMicroPhoneComp.BroadcastChannel), wire.Owner);
 
         base.Pulse(user, wire);
     }

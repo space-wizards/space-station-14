@@ -4,13 +4,13 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.VoiceMask;
 
 [RegisterComponent]
-public sealed partial class VoiceMaskerComponent : Component
+public sealed partial class VoiceMaskComponent : Component
 {
     [DataField]
-    public string LastSetName = "Unknown";
+    public string VoiceMaskName = "Unknown";
 
     [DataField]
-    public ProtoId<SpeechVerbPrototype>? LastSpeechVerb;
+    public ProtoId<SpeechVerbPrototype>? VoiceMaskSpeechVerb;
 
     [DataField]
     public EntProtoId Action = "ActionChangeVoiceMask";
