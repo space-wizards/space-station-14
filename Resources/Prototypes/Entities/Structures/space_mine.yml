@@ -1,0 +1,90 @@
+- type: entity
+  id: SpaceMine
+  parent: BaseStructureDynamic
+  name: space mine
+  suffix: Safe
+  description: Echoes of former wars... Mines hanging motionless in the space and waiting for careless shuttles.
+  components:
+  - type: InteractionOutline
+  - type: MovedByPressure
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+            radius: 0.25
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineMask
+  - type: Sprite
+    sprite: Structures/space_mine.rsi
+    layers:
+    - state: mine1
+      map: ["random"]
+    drawdepth: Mobs
+  - type: RandomSprite
+    available:
+    - random:
+        mine1: ""
+        mine2: ""
+        mine3: ""
+        mine4: ""
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: SpaceMine
+    node: start
+
+- type: entity
+  id: SpaceMineArmed
+  parent: SpaceMine
+  suffix: Armed
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 3
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: TriggerOnGridCollide
+  - type: TriggerOnCollide
+    fixtureID: fix1
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 15
+    intensitySlope: 3
+    totalIntensity: 150
+    canCreateVacuum: true
+
+- type: entity
+  id: RandomSpaceMine
+  name: space mine random spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Structures/space_mine.rsi
+      state: mine1
+  - type: RandomSpawner
+    offset: 0.5
+    prototypes:
+    - SpaceMine
+    chance: 0.8
+    rarePrototypes:
+    - SpaceMineArmed
+    rareChance: 0.4
