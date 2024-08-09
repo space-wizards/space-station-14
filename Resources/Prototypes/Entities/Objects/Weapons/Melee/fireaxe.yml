@@ -1,6 +1,6 @@
 - type: entity
   name: fireaxe
-  parent: BaseItem
+  parent: [BaseItem, BaseEngineeringContraband]
   id: FireAxe
   description: Truly, the weapon of a madman. Who would think to fight fire with an axe?
   components:

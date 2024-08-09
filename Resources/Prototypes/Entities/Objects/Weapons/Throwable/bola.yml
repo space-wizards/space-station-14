@@ -1,6 +1,6 @@
 - type: entity
   name: bola
-  parent: BaseItem
+  parent: [BaseItem, BaseRestrictedContraband]
   id: Bola
   description: Linked together with some spare cuffs and metal.
   components:

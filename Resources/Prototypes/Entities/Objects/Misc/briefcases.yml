@@ -25,7 +25,7 @@
     sprite: Objects/Storage/Briefcases/briefcase_brown.rsi
 
 - type: entity
-  parent: BriefcaseBrown
+  parent: [BriefcaseBrown, BaseSyndicateContraband]
   id: BriefcaseSyndie
   suffix: Syndicate, Empty
   components:

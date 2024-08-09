@@ -75,7 +75,7 @@
 
 - type: entity
   name: combat knife
-  parent: BaseKnife
+  parent: [BaseKnife, BaseRestrictedContraband]
   id: CombatKnife
   description: A deadly knife intended for melee confrontations.
   components:
@@ -106,7 +106,7 @@
 
 - type: entity
   name: survival knife
-  parent: CombatKnife
+  parent: [CombatKnife, BaseSecurityCargoContraband]
   id: SurvivalKnife
   description: Weapon of first and last resort for combatting space carp.
   components:
@@ -118,7 +118,7 @@
 
 - type: entity
   name: kukri knife
-  parent: CombatKnife
+  parent: [CombatKnife, BaseMinorContraband]
   id: KukriKnife
   description: Professionals have standards. Be polite. Be efficient. Have a plan to kill everyone you meet.
   components:
@@ -134,7 +134,7 @@
     sprite: Objects/Weapons/Melee/kukri_knife.rsi
 
 - type: entity
-  parent: ClothingHeadHatGreyFlatcap
+  parent: [ClothingHeadHatGreyFlatcap, BaseSyndicateContraband]
   id: BladedFlatcapGrey
   name: grey flatcap
   description: Fashionable for both the working class and old man Jenkins. It has glass shards hidden in the brim.
@@ -174,7 +174,7 @@
 
 - type: entity
   name: shiv
-  parent: BaseKnife
+  parent: [BaseKnife, BaseMinorContraband]
   id: Shiv
   description: A crude weapon fashioned from a piece of cloth and a glass shard.
   components:
@@ -259,7 +259,7 @@
 
 - type: entity
   name: throwing knife
-  parent: BaseKnife
+  parent: [BaseKnife, BaseSyndicateContraband]
   id: ThrowingKnife
   description: This bloodred knife is very aerodynamic and easy to throw, but good luck trying to fight someone hand-to-hand.
   components:

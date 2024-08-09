@@ -117,7 +117,7 @@
 - type: entity
   name: soap
   id: SoapSyndie
-  parent: Soap
+  parent: [Soap, BaseSyndicateContraband]
   description: An untrustworthy bar of soap. Smells of fear.
   components:
   - type: Sprite
