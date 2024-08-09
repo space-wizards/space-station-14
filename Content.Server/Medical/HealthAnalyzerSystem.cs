@@ -89,7 +89,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
         var doAfterCancelled = !_doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, uid.Comp.ScanDelay, new HealthAnalyzerDoAfterEvent(), uid, target: args.Target, used: uid)
         {
             NeedHand = true,
-            BreakOnMove = true,
+            BreakOnMove = true
         });
         
         if (args.Target == args.User || doAfterCancelled)
