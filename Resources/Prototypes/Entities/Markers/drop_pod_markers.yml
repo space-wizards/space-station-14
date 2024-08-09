@@ -1,0 +1,71 @@
+- type: entity
+  name: DropPod Beacon
+  id: DropPodBeacon
+  parent:  MarkerBase
+  components:
+  - type: Sprite
+    sprite: Markers/droppod.rsi
+    state: drop_pod_lighthouse
+  - type: DropPodBeacon
+
+- type: entity
+  name: Landing point
+  id: LandingPoint
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    sprite: Markers/droppod.rsi
+    state: drop_pod_point
+  - type: LandingPoint
+
+- type: entity
+  name: Landing point
+  id: LandingPointBrig
+  parent: LandingPoint
+  suffix: "BRIG"
+  components:
+  - type: Sprite
+    sprite: Markers/droppod.rsi
+    state: drop_pod_point_brig
+  - type: LandingPoint
+    name: brig
+    uin: 2
+
+- type: entity
+  name: Landing point
+  id: LandingPointCargo
+  parent: LandingPoint
+  suffix: "CARGO"
+  components:
+  - type: Sprite
+    sprite: Markers/droppod.rsi
+    state: drop_pod_point_cargo
+  - type: LandingPoint
+    name: cargo
+    uin: 3
+
+- type: entity
+  name: Landing point
+  id: LandingPointEng
+  parent: LandingPoint
+  suffix: "ENG"
+  components:
+  - type: Sprite
+    sprite: Markers/droppod.rsi
+    state: drop_pod_point_eng
+  - type: LandingPoint
+    name: eng
+    uin: 4
+
+- type: entity
+  name: Landing point
+  id: LandingPointMed
+  parent: LandingPoint
+  suffix: "MED"
+  components:
+  - type: Sprite
+    sprite: Markers/droppod.rsi
+    state: drop_pod_point_med
+  - type: LandingPoint
+    name: med
+    uin: 5
