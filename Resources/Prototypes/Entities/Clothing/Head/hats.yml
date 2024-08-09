@@ -261,6 +261,42 @@
     - WhitelistChameleon
 
 - type: entity
+  parent: ClothingHeadHatChef
+  id: ClothingHeadHatSousChef
+  name: sous-chef's hat
+  description: "It's a hat used by chefs on the path to mastery. This one is quite tall."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/chefhatsous.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/chefhatsous.rsi
+  - type: Storage
+    grid:
+    - 0,0,0,3
+
+- type: entity
+  parent: ClothingHeadHatChef
+  id: ClothingHeadHatHeadChef
+  name: head chef's hat
+  description: "It's a hat used by chefs who have truly mastered their craft. This one is shockingly tall."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/chefhathead.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/chefhathead.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 1.34375"
+  - type: Storage
+    grid:
+    - 0,0,0,9
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+
+- type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatFedoraBrown
   name: brown fedora
