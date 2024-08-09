@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: notquitehadouken
-  changes:
-  - message: You can now only use suit storage with hardsuits, softsuits, and armor
-      instead of all outer clothing
-    type: Tweak
-  id: 6573
-  time: '2024-05-10T02:19:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27546
 - author: aspiringLich
   changes:
   - message: The Chemical, Booze, and Soda Dispensers now have updated UIs.
@@ -3792,3 +3784,13 @@
   id: 7072
   time: '2024-08-09T15:43:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29621
+- author: Ubaser
+  changes:
+  - message: Normal crowbars cannot be placed in pockets, but can now fit in belts.
+    type: Tweak
+  - message: Depending on where you obtained the crowbars, they will now have different
+      colours.
+    type: Tweak
+  id: 7073
+  time: '2024-08-09T19:29:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28988
