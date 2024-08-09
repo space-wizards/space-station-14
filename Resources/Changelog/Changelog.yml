@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: whateverusername0
-  changes:
-  - message: Traitors now know their employers.
-    type: Tweak
-  id: 6570
-  time: '2024-05-10T02:01:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27855
 - author: Boaz1111
   changes:
   - message: Loneops now has a functioning ghost role raffle.
@@ -3795,3 +3788,10 @@
   id: 7069
   time: '2024-08-09T06:14:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28575
+- author: stalengd
+  changes:
+  - message: Head bandana no longer blocks food eating.
+    type: Fix
+  id: 7070
+  time: '2024-08-09T06:17:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28910
