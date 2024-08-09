@@ -375,6 +375,10 @@
         reagents:
         - ReagentId: Carbon
           Quantity: 20
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Diamond: 100
 
 - type: entity
   parent: MaterialDiamond

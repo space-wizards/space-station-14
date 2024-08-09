@@ -14,3 +14,23 @@
     Steel: 1000
     Glass: 500
     # If they get spammed make it cost silver.
+
+- type: latheRecipe
+  id: MiningDrill
+  result: MiningDrill
+  category: Tools
+  completetime: 3
+  materials:
+    Steel: 500
+    Plastic: 100
+
+- type: latheRecipe
+  id: MiningDrillDiamond
+  result: MiningDrillDiamond
+  category: Tools
+  completetime: 3
+  materials:
+    Steel: 600
+    Plastic: 200
+    Silver: 200
+    Diamond: 100
