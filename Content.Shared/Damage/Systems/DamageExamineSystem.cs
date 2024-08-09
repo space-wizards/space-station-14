@@ -57,11 +57,11 @@ public sealed class DamageExamineSystem : EntitySystem
 
         if (string.IsNullOrEmpty(type))
         {
-            msg.AddMarkup(Loc.GetString("damage-examine"));
+            msg.AddMarkupOrThrow(Loc.GetString("damage-examine"));
         }
         else
         {
-            msg.AddMarkup(Loc.GetString("damage-examine-type", ("type", type)));
+            msg.AddMarkupOrThrow(Loc.GetString("damage-examine-type", ("type", type)));
         }
 
         foreach (var damage in damageSpecifier.DamageDict)
@@ -69,7 +69,7 @@ public sealed class DamageExamineSystem : EntitySystem
             if (damage.Value != FixedPoint2.Zero)
             {
                 msg.PushNewline();
-                msg.AddMarkup(Loc.GetString("damage-value", ("type", _prototype.Index<DamageTypePrototype>(damage.Key).LocalizedName), ("amount", damage.Value)));
+                msg.AddMarkupOrThrow(Loc.GetString("damage-value", ("type", _prototype.Index<DamageTypePrototype>(damage.Key).LocalizedName), ("amount", damage.Value)));
             }
         }
 
