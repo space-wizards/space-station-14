@@ -99,6 +99,18 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatFakePoppy
+  name: fake poppy
+  description: A fake poppy. Can be worn on the head.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/poppy.rsi
+    state: produce
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/poppy.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatRichard
   name: richard
   description: 'Do you like hurting people?'
