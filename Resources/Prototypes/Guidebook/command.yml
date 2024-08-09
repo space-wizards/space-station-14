@@ -1,4 +1,11 @@
 - type: guideEntry
   id: Command
   name: guide-entry-command
-  text: "/ServerInfo/Guidebook/Command.xml"
+  text: "/ServerInfo/Guidebook/Command/Command.xml"
+  children:
+  - HeadOfPersonnel
+
+- type: guideEntry
+  id: HeadOfPersonnel
+  name: guide-entry-headofpersonnel 
+  text: "/ServerInfo/Guidebook/Command/HeadOfPersonnel.xml"

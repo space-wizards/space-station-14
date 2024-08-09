@@ -1,28 +1,21 @@
 <Document>
   # Traitors
-  
-  WHISKEY. ECHO. WHISKEY. LIMA. ALPHA. DELTA.
-  
-  - A Traitor is an antagonist employed by the Syndicate. They have access to various Syndicate tools and weapons through their [color=#a4885c]Uplink[/color].
-  - Traitors can use codewords to identify themselves to one another in order to cooperate.
-  - In a Traitor round, any player can be a Traitor aside from department heads, the captain, or any security officers.
-  - Traitors should focus primarily on completing their objectives successfully by the end of the round.
+  [color=#999999][italic]"WHISKEY. ECHO. WHISKEY. LIMA. ALPHA. DELTA. AGENT, YOU HAVE BEEN ACTIVATED."[/italic][/color]
+
+  Traitors are antagonists employed by the [color=#ff0000]Syndicate[/color]. They are sleeper agents who have access to various [color=#ff0000]Syndicate[/color] tools and weapons through their [color=cyan]uplink[/color].
+  They can be anyone besides [textlink="Command" link="Command"] and [textlink="Security" link="Security"].
+
+  They are also given codewords to identify other agents, and a coordinated team of traitors can take over the station if they play their cards right.
 
   ## Uplink
-  <Box>
-    <GuideEntityEmbed Entity="BaseUplinkRadio40TC" Caption="Uplink"/>
-  </Box>
-  - The [color=#a4885c]Uplink[/color] is the most important tool for a Traitor, as it can purchase tools and weapons with [color=#a4885c]telecrystals[/color](TC).
-  <Box>
-    <GuideEntityEmbed Entity="Telecrystal" Caption="Telecrystals"/>
-  </Box>
-  - [color=#a4885c]Telecrystals[/color] are given at the start to give traitors an edge on the station. Other traitors can trade their [color=#a4885c]telecrystals[/color] to each other exceeding the normal given amount.
-  - Using your [color=#a4885c]PDA[/color] and setting the ringtone as your uplink code gives you a variety of options to use at your disposal against the station and its crew.
+  The [color=cyan]uplink[/color] is the most important tool for a Traitor, as it can purchase tools and weapons with [color=red]telecrystals[/color] (TC).
+
+  20 [color=red]telecrystals[/color] are given to each Traitor, who can share with fellow Traitors. Setting your PDA's ringtone as your special code, which can be found by pressing [color=yellow][bold][keybind="OpenCharacterMenu"][/bold][/color], will open the uplink.
   <Box>
   <GuideEntityEmbed Entity="PassengerPDA" Caption="PDA"/>
+  <GuideEntityEmbed Entity="Telecrystal" Caption="Telecrystals"/>
   </Box>
-  Make sure to relock your [color=#a4885c]PDA[/color] to prevent anyone else from seeing it!
-  - Various gear include:
+  Make sure to relock your [color=cyan]PDA[/color] to prevent anyone else from seeing it. You wouldn't want anybody else to get their hands on these sick products!
   <Box>
     <GuideEntityEmbed Entity="WeaponPistolCobra" Caption="Weaponry"/>
     <GuideEntityEmbed Entity="MagazineBoxLightRifle" State="icon" Caption="Ammo"/>
@@ -39,53 +32,50 @@
   </Box>
 
   ## Objectives
+  When becoming a Traitor you will have a list of [color=cyan]objectives[/color] ranging from escaping alive, stealing something or killing someone. You can read your objectives by pressing [color=yellow][bold][keybind="OpenCharacterMenu"][/bold][/color].
 
-  - When becoming a Traitor, you will have a list of objectives, ranging from escaping alive, stealing something, and killing someone. Using the [color=#a4885c]Uplink[/color] will help you with most of these tasks.
+  Using your [bold]uplink[/bold] will help you with most of these tasks.
 
   ## List of Possible Tasks
-
-  - Kill or maroon a randomly selected non-traitor.
-  - Kill or maroon a randomly selected traitor.
-  - Kill or maroon a randomly selected department head.
+  - Kill or maroon (leave behind) a randomly selected person.
+  - Kill a randomly selected department head.
   - Keep a randomly selected traitor alive.
-  - Escape on the evacuation shuttle alive and uncuffed.
   - Help a randomly selected traitor finish half of their objectives.
+  - Escape to Central Command alive and unrestrained.
   - Die a glorious death.
-  - Steal the Captain's [color=#a4885c]ID Card[/color], [color=#a4885c]Antique Laser Pistol[/color], [color=#a4885c]Jetpack[/color], or [color=#a4885c]Nuke Disk[/color].
+  - Steal the Captain's [color=cyan]ID Card[/color], [color=cyan]antique laser pistol[/color], [color=cyan]jetpack[/color], or [color=cyan]nuclear authentication disk[/color].
   <Box>
-    <GuideEntityEmbed Entity="CaptainIDCard" Caption="Captain's ID Card"/>
-    <GuideEntityEmbed Entity="WeaponAntiqueLaser" Caption="Antique Laser Pistol"/>
+    <GuideEntityEmbed Entity="CaptainIDCard" Caption=""/>
+    <GuideEntityEmbed Entity="WeaponAntiqueLaser" Caption=""/>
+    <GuideEntityEmbed Entity="JetpackCaptainFilled" Caption=""/>
+    <GuideEntityEmbed Entity="NukeDisk" Caption=""/> 
  </Box>
+  - Steal the Chief Medical Officer's [color=cyan]hypospray[/color] or [color=cyan]handheld crew monitor[/color].
   <Box>
-    <GuideEntityEmbed Entity="JetpackCaptainFilled" Caption="Captain's Jetpack"/>
-    <GuideEntityEmbed Entity="NukeDisk" Caption="The Nuke Disk"/> 
- </Box>
-  - Steal the Chief Medical Officer's [color=#a4885c]Hypospray[/color] or [color=#a4885c]Handheld Crew Monitor[/color].
-  <Box>
-    <GuideEntityEmbed Entity="Hypospray" Caption="CMO's Hypospray"/>
-    <GuideEntityEmbed Entity="HandheldCrewMonitorEmpty" Caption="Handheld Crew Monitor"/>
+    <GuideEntityEmbed Entity="Hypospray" Caption=""/>
+    <GuideEntityEmbed Entity="HandheldCrewMonitorEmpty" Caption=""/>
   </Box>
-  - Steal the Research Director's [color=#a4885c]Hardsuit[/color] or [color=#a4885c]Hand Teleporter[/color].
+  - Steal the Research Director's [color=cyan]experimental hardsuit[/color] or [color=cyan]hand teleporter[/color].
   <Box>
-    <GuideEntityEmbed Entity="ClothingOuterHardsuitRd" Caption="RD's Hardsuit"/>
-    <GuideEntityEmbed Entity="HandTeleporter" Caption="Hand Teleporter"/>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitRd" Caption=""/>
+    <GuideEntityEmbed Entity="HandTeleporter" Caption=""/>
   </Box>
-  - Steal the Head of Security's [color=#a4885c]Secret Documents[/color].
+  - Steal the Head of Security's [color=cyan]secret documents[/color].
   <Box>
-    <GuideEntityEmbed Entity="BookSecretDocuments" Caption="Secret Documents"/>
+    <GuideEntityEmbed Entity="BookSecretDocuments" Caption=""/>
   </Box>
-  - Steal the Chief Engineer's [color=#a4885c]Advanced Magboots[/color].
+  - Steal the Chief Engineer's [color=cyan]advanced magboots[/color].
   <Box>
-    <GuideEntityEmbed Entity="ClothingShoesBootsMagAdv" Caption="Advanced Magboots"/>
+    <GuideEntityEmbed Entity="ClothingShoesBootsMagAdv" Caption=""/>
   </Box>
-  - Steal the Quartermaster's [color=#a4885c]Requisition Digi-Board[/color].
+  - Steal the Quartermaster's [color=cyan]requisition digi-board[/color].
   <Box>
-    <GuideEntityEmbed Entity="BoxFolderQmClipboard" Caption="Requisition Digi-Board"/>
+    <GuideEntityEmbed Entity="BoxFolderQmClipboard" Caption=""/>
   </Box>
-  - Steal the Head of Personnel's dog, Ian's [color=#a4885c]Corgi Meat[/color].
+  - Butcher Ian, the Head of Personnel's dog, and obtain [color=cyan]corgi meat[/color].
   <Box>
-  <GuideEntityEmbed Entity="MobCorgiIan" Caption="Ian the Corgi"/>
-  <GuideEntityEmbed Entity="FoodMeatCorgi" Caption="Corgi Meat"/>
+  <GuideEntityEmbed Entity="MobCorgiIan" Caption=""/>
+  <GuideEntityEmbed Entity="FoodMeatCorgi" Caption=""/>
   </Box>
 
 </Document>
