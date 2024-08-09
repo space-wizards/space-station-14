@@ -16,7 +16,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Database
 {
-    public sealed class ServerDbPostgres : ServerDbBase
+    public sealed partial class ServerDbPostgres : ServerDbBase
     {
         private readonly DbContextOptions<PostgresServerDbContext> _options;
         private readonly SemaphoreSlim _prefsSemaphore;
@@ -49,6 +49,8 @@ namespace Content.Server.Database
             });
 
             cfg.OnValueChanged(CCVars.DatabasePgFakeLag, v => _msLag = v, true);
+
+            InitNotificationListener(cfg);
         }
 
         #region Ban
