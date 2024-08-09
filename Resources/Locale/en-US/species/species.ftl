@@ -12,4 +12,4 @@ species-name-vox = Vox
 
 ## Misc species things
 
-snail-hurt-by-herbicide-popup = The salty solution burns like acid!
+snail-hurt-by-salt-popup = The salty solution burns like acid!

@@ -503,7 +503,7 @@
       - !type:PopupMessage
         type: Local
         visualType: Large
-        messages: [ "snail-hurt-by-herbicide-popup" ]
+        messages: [ "snail-hurt-by-salt-popup" ]
         probability: 0.66
     
 - type: entity
