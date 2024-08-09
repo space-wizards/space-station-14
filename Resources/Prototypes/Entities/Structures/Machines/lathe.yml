@@ -926,6 +926,7 @@
       - Hemostat
       - ClothingEyesGlassesChemical
       - WhiteCane
+      - GenderSwapImplanter
     dynamicRecipes:
       - ChemicalPayload
       - CryostasisBeaker

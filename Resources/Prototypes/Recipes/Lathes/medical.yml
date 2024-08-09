@@ -241,3 +241,11 @@
   materials:
     Steel: 100
     Plastic: 100
+
+- type: latheRecipe
+  id: GenderSwapImplanter
+  result: GenderSwapImplanter
+  completetime: 1
+  materials:
+    Glass: 600
+    Steel: 600

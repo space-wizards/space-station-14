@@ -89,3 +89,8 @@ public sealed partial class UseDnaScramblerImplantEvent : InstantActionEvent
 {
 
 }
+
+public sealed partial class UseGenderSwapImplantEvent : InstantActionEvent
+{
+
+}
