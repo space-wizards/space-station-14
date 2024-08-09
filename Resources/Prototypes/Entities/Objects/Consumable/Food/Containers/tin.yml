@@ -53,6 +53,26 @@
 
 - type: entity
   abstract: true
+  parent: FoodTinBase
+  id: FoodTinBaseMeat
+  name: tin
+  description: A tin of something, sealed tight.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
+
+- type: entity
+  abstract: true
   parent: BaseItem
   id: FoodTinBaseTrash
   name: empty tin
@@ -64,12 +84,58 @@
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
     size: Tiny
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    # if tinned food is nuked just delete it, no sound
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/unwrap.ogg
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodTinEmpty:
+            min: 1
+            max: 1
+        offset: 0
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
   - type: Tag
     tags:
     - Trash
+
+- type: entity
+  parent: FoodTinBaseTrash
+  id: FoodTinEmpty
+  name: empty tin
+  description: A thin rod of metal used to skewer just about anything and cook it.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Tins/empty.rsi
+    state: icon
+  - type: Destructible
+    thresholds:
+    # if tinned food is nuked just delete it, no sound
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
 
 # Tins
 
@@ -188,3 +254,193 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/Tins/meat.rsi
+
+# Player-created tins
+
+# Tomatoes
+
+- type: entity
+  parent: FoodTinBase
+  id: FoodTinTomatoes
+  name: tinned tomatoes
+  description: Just a nice can of ripe tomatoes swimming in their own juice.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Tins/tomatoes.rsi
+  - type: FlavorProfile
+    flavors:
+      - tomato
+  - type: Food
+    trash: FoodTinTomatoesTrash
+  - type: Tag
+    tags:
+    - Fruit
+    - Vegetable
+
+- type: entity
+  parent: FoodTinBaseTrash
+  id: FoodTinTomatoesTrash
+  name: tinned tomatoes
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Tins/tomatoes.rsi
+
+# Chanterelles
+
+- type: entity
+  parent: FoodTinBase
+  id: FoodTinChanterelles
+  name: tinned chanterelles
+  description: Just a nice can of ripe chanterelles swimming in their own juice.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Tins/chanterelles.rsi
+  - type: FlavorProfile
+    flavors:
+      - mushroom
+  - type: Food
+    trash: FoodTinChanterellesTrash
+  - type: Tag
+    tags:
+    - Vegetable
+
+- type: entity
+  parent: FoodTinBaseTrash
+  id: FoodTinChanterellesTrash
+  name: tinned chanterelles
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Tins/chanterelles.rsi
+
+# Pineapples
+
+- type: entity
+  parent: FoodTinBase
+  id: FoodTinPineapple
+  name: tinned pineapple
+  description: Just a nice can of ripe pineapple slices swimming in their own juice.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Tins/pineapple.rsi
+  - type: FlavorProfile
+    flavors:
+      - pineapple
+  - type: Food
+    trash: FoodTinPineappleTrash
+  - type: Tag
+    tags:
+    - Vegetable
+
+- type: entity
+  parent: FoodTinBaseTrash
+  id: FoodTinPineappleTrash
+  name: tinned pineapple
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Tins/pineapple.rsi
+
+# Corn
+
+- type: entity
+  parent: FoodTinBase
+  id: FoodTinCorn
+  name: tinned corn
+  description: Just a nice can of ripe corn pieces swimming in their own juice.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Tins/corn.rsi
+  - type: FlavorProfile
+    flavors:
+      - corn
+  - type: Food
+    trash: FoodTinCornTrash
+  - type: Tag
+    tags:
+    - Vegetable
+
+- type: entity
+  parent: FoodTinBaseTrash
+  id: FoodTinCornTrash
+  name: tinned corn
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Tins/corn.rsi
+
+# Chili
+
+- type: entity
+  parent: FoodTinBase
+  id: FoodTinСhili
+  name: tinned chili
+  description: Just a nice can of ripe chili swimming in their own juice.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Tins/chili.rsi
+  - type: FlavorProfile
+    flavors:
+      - spicy
+  - type: Food
+    trash: FoodTinСhiliTrash
+  - type: Tag
+    tags:
+    - Vegetable
+
+- type: entity
+  parent: FoodTinBaseTrash
+  id: FoodTinСhiliTrash
+  name: tinned chili
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Tins/chili.rsi
+
+# СondensedMilk
+
+- type: entity
+  parent: FoodTinBase
+  id: FoodTinСondensedMilk
+  name: tinned condensed milk
+  description: Just condensed milk, made, judging by the jar, a couple hundred years ago.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Tins/condensedmilk.rsi
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - milk
+  - type: Food
+    trash: FoodTinСondensedMilkTrash
+  - type: Tag
+    tags:
+    - Vegetable
+
+- type: entity
+  parent: FoodTinBaseTrash
+  id: FoodTinСondensedMilkTrash
+  name: tinned condensed milk
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Tins/condensedmilk.rsi
+
+# Mouse
+
+- type: entity
+  parent: FoodTinBaseMeat
+  id: FoodTinMice
+  name: tinned mice
+  description: There is a lot of protein, but sometimes there are paws and tails.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Tins/mouse.rsi
+  - type: FlavorProfile
+    flavors:
+      - meaty
+  - type: Food
+    trash: FoodTinMiceTrash
+
+- type: entity
+  parent: FoodTinBaseTrash
+  id: FoodTinMiceTrash
+  name: tinned mice
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Tins/mouse.rsi
