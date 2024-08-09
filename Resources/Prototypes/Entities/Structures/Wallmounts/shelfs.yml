@@ -22,7 +22,7 @@
   - type: Transform
   - type: Damageable
     damageModifierSet: Wood
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -70,7 +70,7 @@
       map: ["enum.StorageVisualLayers.Base"]
     - state: unlocked
       shader: unshaded
-      # used to keep the unlocked light visible while open. 
+      # used to keep the unlocked light visible while open.
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
     - state: locked
@@ -125,7 +125,7 @@
     state: base
   - type: Damageable
     damageModifierSet: Metallic
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -160,7 +160,7 @@
     state: base
   - type: Damageable
     damageModifierSet: Glass
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:

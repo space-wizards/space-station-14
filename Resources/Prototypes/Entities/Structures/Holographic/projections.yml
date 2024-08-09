@@ -16,7 +16,7 @@
   - type: TimedDespawn
     lifetime: 90
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
       - trigger:

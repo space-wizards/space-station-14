@@ -13,7 +13,7 @@
     - state: spike
       map: ["base"]
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:

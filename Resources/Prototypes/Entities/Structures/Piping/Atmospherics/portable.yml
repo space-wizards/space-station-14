@@ -67,7 +67,7 @@
   - type: Machine
     board: PortableScrubberMachineCircuitBoard
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
@@ -154,7 +154,7 @@
     temperatureTolerance: 0.2
     atmospheric: true
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:

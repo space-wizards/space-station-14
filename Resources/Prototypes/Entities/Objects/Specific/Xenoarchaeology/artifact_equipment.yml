@@ -54,7 +54,7 @@
     - type: PlaceableSurface
       isPlaceable: false
     - type: Damageable
-      damageContainer: Inorganic
+      damageContainer: StructuralInorganic
       damageModifierSet: Metallic
     - type: Destructible
       thresholds:
@@ -91,7 +91,7 @@
           enum.PaperLabelVisuals.Layer:
             True: { offset: "0.0,0.3125" }
             False: { offset: "0.0,0.0" }
-            
+
     - type: LockVisuals
     - type: ItemSlots
     - type: ContainerContainer

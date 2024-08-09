@@ -35,8 +35,8 @@
       path: /Audio/Effects/curtain_openclose.ogg
   - type: Appearance
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Wood  
+    damageContainer: StructuralInorganic
+    damageModifierSet: Wood
   - type: Destructible
     thresholds:
     - trigger:
@@ -52,7 +52,7 @@
             max: 2
   - type: WallMount
     arc: 360
-        
+
 - type: entity
   id: HospitalCurtains
   parent: BaseCurtains

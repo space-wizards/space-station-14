@@ -77,7 +77,7 @@
     graph: Intercom
     node: intercom
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
