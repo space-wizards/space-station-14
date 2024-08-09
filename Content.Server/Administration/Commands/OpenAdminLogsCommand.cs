@@ -16,7 +16,7 @@ public sealed class OpenAdminLogsCommand : IConsoleCommand
     {
         if (shell.Player is not { } player)
         {
-            shell.WriteLine("This does not work from the server console.");
+            shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
             return;
         }
 
