@@ -240,10 +240,10 @@ namespace Content.Shared.Containers.ItemSlots
                 // the popup messages will just all be the same, so it's probably fine.
                 //
                 // doing a check to make sure that they're all the same or something is probably frivolous
-                if (allLocked && lastFailedSlot.LockedFailPopup != null)
-                    _popupSystem.PopupClient(Loc.GetString(lastFailedSlot.LockedFailPopup), uid, args.User);
-                if (!allLocked && lastFailedSlot.WhitelistFailPopup != null)
+                if (lastFailedSlot.WhitelistFailPopup != null)
                     _popupSystem.PopupClient(Loc.GetString(lastFailedSlot.WhitelistFailPopup), uid, args.User);
+                else if (allLocked && lastFailedSlot.LockedFailPopup != null)
+                    _popupSystem.PopupClient(Loc.GetString(lastFailedSlot.LockedFailPopup), uid, args.User);
                 return;
             }
 
