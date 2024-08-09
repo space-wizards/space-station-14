@@ -168,8 +168,7 @@ public sealed class SharedExecutionSystem : EntitySystem
             _popup.PopupEntity(
                Loc.GetString(locString, ("attacker", attacker), ("victim", victim), ("weapon", weapon)),
                attacker,
-               Filter.Entities(attacker),
-               true,
+               attacker,
                PopupType.MediumCaution
                );
         }
