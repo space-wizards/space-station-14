@@ -15,6 +15,7 @@ namespace Content.Server.Nutrition.EntitySystems
 {
     public sealed class SliceableFoodSystem : EntitySystem
     {
+        [Dependency] private readonly FoodSystem _food = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly TransformSystem _xformSystem = default!;
@@ -79,7 +80,7 @@ namespace Content.Server.Nutrition.EntitySystems
             // If someone makes food proto with 1 slice...
             if (component.Count < 1)
             {
-                DeleteFood(uid, user, food);
+                _food.DeleteAndSpawnTrash((uid, food), user);
                 return true;
             }
 
@@ -92,7 +93,7 @@ namespace Content.Server.Nutrition.EntitySystems
             // Fill last slice with the rest of the solution
             FillSlice(sliceUid, solution);
 
-            DeleteFood(uid, user, food);
+            _food.DeleteAndSpawnTrash((uid, food), user);
             return true;
         }
 
@@ -113,32 +114,6 @@ namespace Content.Server.Nutrition.EntitySystems
             _xformSystem.SetLocalRotation(sliceUid, 0);
 
             return sliceUid;
-        }
-
-        private void DeleteFood(EntityUid uid, EntityUid user, FoodComponent foodComp)
-        {
-            var ev = new BeforeFullySlicedEvent
-            {
-                User = user
-            };
-            RaiseLocalEvent(uid, ev);
-            if (ev.Cancelled)
-                return;
-
-            if (string.IsNullOrEmpty(foodComp.Trash))
-            {
-                QueueDel(uid);
-                return;
-            }
-
-            // Locate the sliced food and spawn its trash
-            var trashUid = Spawn(foodComp.Trash, _xformSystem.GetMapCoordinates(uid));
-
-            // try putting the trash in the food's container too, to be consistent with slice spawning?
-            _xformSystem.DropNextTo(trashUid, uid);
-            _xformSystem.SetLocalRotation(trashUid, 0);
-
-            QueueDel(uid);
         }
 
         private void FillSlice(EntityUid sliceUid, Solution solution)
