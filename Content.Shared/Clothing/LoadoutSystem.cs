@@ -101,7 +101,7 @@ public sealed class LoadoutSystem : EntitySystem
     /// <summary>
     /// Tries to get the name of a loadout.
     /// </summary>
-    public string GetName(IEquipmentLoadout? gear, LoadoutPrototype? loadout = null)
+    public string GetName(IEquipmentLoadout? gear, LoadoutPrototype? loadout)
     {
         if (gear == null)
             return string.Empty;
