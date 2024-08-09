@@ -3,6 +3,7 @@ using Content.Server.DeviceLinking.Systems;
 using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Content.Shared.Conveyor;
+using Content.Shared.Destructible;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Controllers;
@@ -26,7 +27,7 @@ public sealed class ConveyorController : SharedConveyorController
         UpdatesAfter.Add(typeof(MoverController));
         SubscribeLocalEvent<ConveyorComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ConveyorComponent, ComponentShutdown>(OnConveyorShutdown);
-
+        SubscribeLocalEvent<ConveyorComponent, BreakageEventArgs>(OnBreakage);
 
         SubscribeLocalEvent<ConveyorComponent, SignalReceivedEvent>(OnSignalReceived);
         SubscribeLocalEvent<ConveyorComponent, PowerChangedEvent>(OnPowerChanged);
@@ -59,6 +60,11 @@ public sealed class ConveyorController : SharedConveyorController
             return;
 
         _fixtures.DestroyFixture(uid, ConveyorFixture, body: physics);
+    }
+
+    private void OnBreakage(Entity<ConveyorComponent> ent, ref BreakageEventArgs args)
+    {
+        SetState(ent, ConveyorState.Off, ent);
     }
 
     private void OnPowerChanged(EntityUid uid, ConveyorComponent component, ref PowerChangedEvent args)
@@ -96,12 +102,13 @@ public sealed class ConveyorController : SharedConveyorController
         if (!Resolve(uid, ref component))
             return;
 
+        if (!_materialReclaimer.SetReclaimerEnabled(uid, state != ConveyorState.Off))
+            return;
+
         component.State = state;
 
         if (TryComp<PhysicsComponent>(uid, out var physics))
             _broadphase.RegenerateContacts(uid, physics);
-
-        _materialReclaimer.SetReclaimerEnabled(uid, component.State != ConveyorState.Off);
 
         UpdateAppearance(uid, component);
         Dirty(uid, component);

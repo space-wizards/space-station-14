@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Whitelist;
+using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -26,6 +27,12 @@ public sealed partial class MaterialReclaimerComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public bool Enabled = true;
+
+    /// <summary>
+    /// A master control for whether or not the recycler is broken and can function.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Broken;
 
     /// <summary>
     /// How efficiently the materials are reclaimed.
@@ -59,8 +66,8 @@ public sealed partial class MaterialReclaimerComponent : Component
     /// <summary>
     /// The id of our output solution
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public string SolutionContainerId = "output";
+    [DataField]
+    public string? SolutionContainerId;
 
     /// <summary>
     /// a whitelist for what entities can be inserted into this reclaimer
@@ -114,11 +121,12 @@ public sealed partial class MaterialReclaimerComponent : Component
 [NetSerializable, Serializable]
 public enum RecyclerVisuals
 {
-    Bloody
+    Bloody,
+    Broken
 }
 
+[UsedImplicitly]
 public enum RecyclerVisualLayers : byte
 {
-    Main,
-    Bloody
+    Main
 }
