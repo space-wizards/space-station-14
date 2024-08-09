@@ -445,5 +445,16 @@ Entries:
   id: 55
   time: '2024-08-09T06:24:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30597
+- author: Errant
+  changes:
+  - message: The setgamepreset command now only sets the gamemode for a limited number
+      of rounds, specified by a second parameter. Afterwards it switches back to the
+      server default. Omitting the number parameter sets it for 1 round only. To change
+      the game mode for a longer period, either specify a high number or change the
+      game.fallbackpreset cvar so it will reset to what you want
+    type: Tweak
+  id: 56
+  time: '2024-08-09T07:04:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30756
 Name: Admin
 Order: 1
