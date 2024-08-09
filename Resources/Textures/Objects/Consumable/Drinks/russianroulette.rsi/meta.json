@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "size":
+    {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC0-1.0",
+    "copyright": "A modified version of EmoGarbage404 (github) water pistol: https://github.com/space-wizards/space-station-14/commit/4c2b521c905df97fd269d829e365cfa66650b841. Modified by Vaflo for Space Station 14",
+    "states":
+    [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "icon_empty"
+        },
+        {
+            "name": "fill-1"
+        },
+        {
+            "name": "fill-2"
+        }
+    ]
+}
