@@ -1,54 +1,68 @@
+
 <Document>
-# Cryogenics
-Cryogenics can be a bit daunting to understand, but hopefully, quick run through of this diagram, you'll learn how to work it! So, let's go over what each part does:
+  # Cryogenics
 
-- Air in: Air comes in here through the distro or an air tank, giving those inside something to breathe, and the freezer something to chill.
-- Gas pump: Limits the network pressure, so those in the tube aren't crushed.
-- Freezer: Chills the air, and by extension, patients in the tube, so Cryoxadone can activate.
-- Gas filters: Removes waste gas (Carbon Dioxide and Nitrous Oxide) from the loop.
-- Air out: Waste gasses go here, either into a storage tank, or into the waste network.
-<Box>
-<GuideEntityEmbed Entity="GasPipeBend" Rotation="90"/>
-<GuideEntityEmbed Entity="GasPipeStraight" Rotation="90"/>
-<GuideEntityEmbed Entity="GasPipeStraight" Rotation="90"/>
-<GuideEntityEmbed Entity="GasPipeBend" Rotation="0"/>
-<GuideEntityEmbed Entity="CryoPod" Caption="cryo pod" Rotation="0"/>
-<GuideEntityEmbed Entity="GasThermoMachineFreezerEnabled" Rotation="0"/>
-</Box>
-<Box>
-<GuideEntityEmbed Entity="GasPipeBend" Rotation="180"/>
-<GuideEntityEmbed Entity="GasFilterFlipped" Rotation="90"/>
-<GuideEntityEmbed Entity="GasFilterFlipped" Rotation="90"/>
-<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180"/>
-<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180"/>
-<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="270"/>
-</Box>
-<Box>
-<GuideEntityEmbed Entity="GasPort" Caption="air out" Rotation="90"/>
-<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180"/>
-<GuideEntityEmbed Entity="GasPipeBend" Rotation="270"/>
-<GuideEntityEmbed Entity="GasPort" Caption="air in" Rotation="90"/>
-<GuideEntityEmbed Entity="GasPressurePump" Rotation="90"/>
-<GuideEntityEmbed Entity="GasPipeBend" Rotation="270"/>
-</Box>
+  [color=cyan]Cryogenics[/color] is one of the most powerful things that Medical has at their disposal from the start of each round. The main pain comes from acquiring the chemicals from Chemistry and setting up the machine.
 
-Not every network will look like this, but hopefully, it's enough to give you the basic gist of how it's functioning.
+  It is not necessary for all patients, but is perfect for heavily injured patients who have a wide variety of damage types.
 
-An important thing to note, winter clothing (and hardsuits) will make cryogenic treatment less, or completely ineffective. Be sure to remove cold preventative clothing before placing people in the pod.
+  ## Using Cryogenics
 
-## Using the Pod
-Once things have been set up, you're going to require a specific medication, Cryoxadone. Cryoxadone heals all damage types when a patient is chilled, and can either be pre-adminsitered (with a pill), or loaded into the cell directly with a beaker. Do note, patients won't begin to heal until they've chilled to the appropriate temperature, it may be worthwhile to wait a bit before placing a beaker inside.
+  <Box>
+    <GuideEntityEmbed Entity="CryoPod"/>
+    <GuideEntityEmbed Entity="LargeBeaker"/>
+  </Box>
 
-## Additional Information:
+  <GuideReagentEmbed Reagent="Leporazine"/>
 
-The standard pressure for a gas pump is 100.325 kpa. Cryoxadone works at under 170K, but it is standard practice to set the freezer to 100K for faster freezing.
+  Assuming Cryogenics is set up, it is not too hard to use.
 
-<GuideReagentEmbed Reagent="Aloxadone"/>
-<GuideReagentEmbed Reagent="Cryoxadone"/>
-<GuideReagentEmbed Reagent="Doxarubixadone"/>
-<GuideReagentEmbed Reagent="Dexalin"/>
-<GuideReagentEmbed Reagent="Leporazine"/>
-<GuideReagentEmbed Reagent="Necrosol"/>
-<GuideReagentEmbed Reagent="Opporozidone"/>
+  - First, ensure the patient is not wearing any suits, as those stop them from freezing properly. Also, make sure they are not bleeding and have enough blood (~80% is a good number) to not die before freezing
+  - If you wish, you can administer the Cryogenic Medicine now through pills or syringe now if you wish to precalculate and minimize potential waste.
+  - Hold [color=yellow][keybind="Use" /][/color] and drag the patient into the [color=cyan]Cryo Pod[/color].
+  - Wait until the patient's [color=yellow]body temperature[/color] is under 213 kelvin, which is seen by using the [color=cyan]Medical Analyzer[/color] or [color=cyan]Medical PDA[/color] on the patient.
+  - If you didn't already administer, with the [color=cyan]Beaker[/color] in your hands, [color=yellow]insert[/color] it into the [color=cyan]Cryo Pod[/color] by pressing [color=yellow][keybind="Use" /][/color].
+  - Once the patient is fully healed, and take them out of the [color=cyan]Crypo Pod[/color] by pressing [color=yellow][keybind="AltActivateItemInWorld" /][/yellow].
+  - Take out the [color=cyan]Beaker[/color] by pressing [color=yellow][keybind="AltActivateItemInWorld" /][/yellow].
+  - The patient will begin taking Cold damage, and to deal with this, give them [color=cyan]Leporazine[/color] any similar medicine.
+  - Once their body temperature is back to normal, you can discharge them.
 
+  ## Setting Up
+
+  The amount of work that is necessary at the start of a shift is very dependant on the station. On some stations, it will come pre-built, and on others, you will have to do some basic setup.
+
+  It is highly recommended to get someone from [color=cyan]Atmos[/color] to come and help, as they can check and verify everything is working as intended.
+
+  On every station, the [color=cyan]Cryogenics[/color] should generally look like the diagram below:
+
+  - [bold]Air In[/bold]: Air comes in here through the distro or an air tank, giving those inside something to breathe, and the [color=cyan]Freezer[/color] something to chill.
+  - [bold]Gas Pump[/bold]: Limits the network pressure, so those in the tube aren't crushed.
+  - [bold]Freezer[/bold]: Chills the air, and by extension, patients in the tube, so the Cryogenic Medicine can activate.
+  - [bold]Gas Filters[/bold]: Removes waste gas (Carbon Dioxide and Nitrous Oxide) from the loop.
+  - [bold]Air Out[/bold]: Waste gasses go here, either into a storage tank, or into the waste network.
+
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeBend" Rotation="90" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Rotation="90" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Rotation="90" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPipeBend" Rotation="0" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="CryoPod" Rotation="0" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasThermoMachineFreezerEnabled" Rotation="0" Caption="" Margin="0"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeBend" Rotation="180" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasFilterFlipped" Rotation="90" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasFilterFlipped" Rotation="90" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="270" Caption="" Margin="0"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="GasPort" Caption="air out" Rotation="90" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPipeBend" Rotation="270" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPort" Caption="air in" Rotation="90" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPressurePump" Rotation="90" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPipeBend" Rotation="270" Caption="" Margin="0"/>
+  </Box>
 </Document>

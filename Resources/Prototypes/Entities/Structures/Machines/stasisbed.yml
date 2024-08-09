@@ -58,5 +58,5 @@
         - LowImpassable
   - type: GuideHelp
     guides:
-    - Medical Doctor
+    - Medical
   - type: PowerSwitch

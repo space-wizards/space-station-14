@@ -19,7 +19,7 @@
 
   The main struggle of any Cargo department is not having enough money.
 
-  Cargo makes their money by selling things at the [color=cyan]Trading Station[/color]. Almost everything on the station has economic value that you can sell, as seen via the [color=cyan]appraisal tool[/color]. That value then further increases when you sell it as part of a [textlink="bounty" link="CargoBounties"].
+  Cargo makes their money by selling things at the [color=cyan]Trading Station[/color]. Almost everything on the station has economic value that you can sell, as seen via the [color=cyan]appraisal tool[/color]. That value then further increases when you sell it as part of a [textlink="bounty" link="CargoBounties" /].
 
   <Box>
     <GuideEntityEmbed Entity="AppraisalTool"/>
@@ -41,7 +41,7 @@
 
   Now, you can take those spesos and bring them back to the station and deposit them into the [color=cyan]Cargo Request Computer[/color].
 
-  You can also make even more money by completing [textlink="bounties" link="CargoBounties"] or selling valuable items from [textlink="salvage" link="Salvage"].
+  You can also make even more money by completing [textlink="bounties" link="CargoBounties" /] or selling valuable items from [textlink="salvage" link="Salvage" /].
 
   ## Ordering
 
@@ -86,5 +86,5 @@
   - Then pilot the shuttle to the [color=cyan]Trade Station[/color].
   - Once you are there, [color=yellow]dock[/color] to the airlocks and you are done.
 
-  [textlink="Learn about bounties, a way to maximize your on-station profits." link="CargoBounties"]
+  [textlink="Learn about bounties, a way to maximize your on-station profits." link="CargoBounties" /]
 </Document>

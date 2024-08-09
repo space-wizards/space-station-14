@@ -1,0 +1,91 @@
+<Document>
+  # Paramedic
+
+  [color=cyan]Paramedics[/color] are the most active doctors in the Medical Department.
+
+  Using their [color=cyan]Rolling Beds[/color] and the [color=cyan]Crew Monitoring Console[/color], they track down critical and dead crew members to bring them back to Medical for revival. Without them, people dead in Maintenance would stay in Maintenance until the end of time.
+
+  ## Equipment
+
+  Paramedics need to use all the resources at their disposal to get to their patients promptly.
+
+  <Box>
+    <GuideEntityEmbed Entity="ClothingBeltMedicalEMTFilled"/>
+    <GuideEntityEmbed Entity="ClothingEyesHudMedical"/>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitVoidParamed"/>
+    <GuideEntityEmbed Entity="RollerBed"/>
+    <GuideEntityEmbed Entity="BodyBag"/>
+  </Box>
+
+  - [color=cyan]EMT Belt[/color]: This gives more storage space for holding emergency [color=cyan]MediPens[/color], [color=cyan]Topicals[/color], and whatever else you can fit.
+  - [color=cyan]Medical HUD[/color]: This lets you visually access the health of any personnel.
+  - [color=cyan]Paramedic Void Suit[/color]: This lets you survive spaced and other hostile environments.
+  - [color=cyan]Roller Bed[/color]: This lets you quickly transport dead or critical patients back to Medical for further treatment.
+  - [color=cyan]Body Bag[/color]: This lets you transport corpses without them rotting, extending the time they have left. [italic]Not all Paramedic shifts start with a Body Bag, but they can be acquired through the Medical TechFab[/italic]
+
+  ## Getting Access
+
+  One of the most important things to do as a Paramedic is to get access to as many departments as possible.
+
+  It is not an uncommon scenario for a crew member to die while in the duties of their department, and not being able to get to them hampers their survival chances a lot.
+
+  As such, go to the [color=cyan]Head of Personnel[/color] as soon as possible to request access to other departments. They will likely ask you to get stamps from the department heads, and you should do so.
+
+  ## Finding Action
+
+  <Box>
+    <GuideEntityEmbed Entity="ComputerCrewMonitoring"/>
+  </Box>
+
+  Now that you can respond to any situation around the station, it is time to find where the action is.
+
+  To do this, Paramedics have access to the [color=cyan]Crew Monitoring Console[/color], giving them access to the position and status of all crew members with their suit sensors on.
+
+  Evangelize for all crew members turning it on, as otherwise, you will not be able to find them when they die.
+
+  To use the [color=cyan]Crew Monitoring Console[/color]:
+
+  - Press [color=yellow][keybind="ActivateItemInWorld" /][/color] on it.
+  - On the left side, you will see a map with the crew member's coordinates.
+  - On the right side, you will see a list of all crew members and their current status.
+
+  ## Responding
+
+  <Box>
+    <GuideEntityEmbed Entity="EmergencyMedipen"/>
+    <GuideEntityEmbed Entity="RollerBed"/>
+    <GuideEntityEmbed Entity="BodyBag"/>
+  </Box>
+
+  Once you have discovered the action, Paramedics need to get there [bold]as fast as possible[/bold]. The longer it takes, the worse the situation will get.
+
+  Before arriving, see on the [color=cyan]Crew Monitoring Computer[/color] if the crew member is critical or dead.
+
+  - If they are critical, bring a [color=cyan]Roller Bed[/color], [color=cyan]Emergency MediPens[/color], and as many [color=cyan]Topicals[/color] as you can hold.
+  - If they are dead, bring a [color=cyan]Body Bag[/color]. If you do not have a [color=cyan]Body Bag[/color], bring a [color=cyan]Roller Bed[/color], a [color=cyan]Defibrillator[/color], and as many [color=cyan]Topicals[/color] as you can hold.
+
+  For [color=cyan]Critical[/color] patients, just try to stabilize them by injecting an [color=cyan]Emergency MediPen[/color] and applying [color=cyan]Gauze[/color] to stop bleeding. After this, transport them to Medical, and they will be fine.
+
+  For [color=cyan]Dead[/color] patients, if you have a [color=cyan]Body Bag[/color], you can just put the corpse inside, and it will not rot. This gives you more time to transport them and treat other patients.
+
+  Without a [color=cyan]Body Bag[/color], it is advisable to attempt revival as soon as possible. Even if they die again, their rotting timer increases, and they will have a higher chance of survival.
+
+  When there are multiple patients, always prioritize the [color=cyan]Dead[/color] patients (with [color=cyan]Souls[/color]). This is because there is a fixed timer until the corpse rots and cannot be revived.
+
+  ## Using Roller Beds and Body Bags
+
+  <Box>
+    <GuideEntityEmbed Entity="RollerBed"/>
+    <GuideEntityEmbed Entity="BodyBag"/>
+  </Box>
+
+  To put a patient on a [color=cyan]Roller Bed[/color] or a [color=cyan]Body Bag[/color]:
+
+  - Drop it by pressing [color=yellow][keybind="Drop" /][/color].
+  - Unfold it by pressing [color=yellow][keybind="AltActivateItemInWorld" /][/color].
+
+  - If it is a [color=cyan]Roller Bed[/color], just hold [color=yellow][keybind="Use" /][/color] and [color=yellow]drag[/color] the patient onto it.
+
+  - If it is a [color=cyan]Body Bag[/color], unzip the bag by pressing [color=yellow][keybind="ActivateItemInWorld" /][/color], and then [color=yellow]pull[/color] the corpse into the body bag by pressing [color=yellow][keybind="TryPullObject" /][/color].
+
+</Document>
