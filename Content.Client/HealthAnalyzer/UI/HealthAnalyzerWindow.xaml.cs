@@ -8,6 +8,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.MedicalScanner;
@@ -59,18 +60,31 @@ namespace Content.Client.HealthAnalyzer.UI
 
             NoPatientDataText.Visible = false;
 
+            // Scan Mode
+
+            ScanModeLabel.Text = msg.ScanMode.HasValue
+                ? msg.ScanMode.Value
+                    ? Loc.GetString("health-analyzer-window-scan-mode-active")
+                    : Loc.GetString("health-analyzer-window-scan-mode-inactive")
+                : Loc.GetString("health-analyzer-window-entity-unknown-text");
+
+            ScanModeLabel.FontColorOverride = msg.ScanMode.HasValue && msg.ScanMode.Value ? Color.Green : Color.Red;
+
             // Patient Information
 
             SpriteView.SetEntity(target.Value);
 
-            NameLabel.Text = _entityManager.HasComponent<MetaDataComponent>(target.Value)
+            var name = new FormattedMessage();
+            name.PushColor(Color.White);
+            name.AddText(_entityManager.HasComponent<MetaDataComponent>(target.Value)
                 ? Identity.Name(target.Value, _entityManager)
-                : Loc.GetString("health-analyzer-window-entity-unknown-text");
+                : Loc.GetString("health-analyzer-window-entity-unknown-text"));
+            NameLabel.SetMessage(name);
 
             SpeciesLabel.Text =
                 _entityManager.TryGetComponent<HumanoidAppearanceComponent>(target.Value,
                     out var humanoidAppearanceComponent)
-                    ? humanoidAppearanceComponent.Species
+                    ? Loc.GetString(_prototypes.Index<SpeciesPrototype>(humanoidAppearanceComponent.Species).Name)
                     : Loc.GetString("health-analyzer-window-entity-unknown-species-text");
 
             // Basic Diagnostic
@@ -91,6 +105,21 @@ namespace Content.Client.HealthAnalyzer.UI
             // Total Damage
 
             DamageLabel.Text = damageable.TotalDamage.ToString();
+
+            // Alerts
+
+            AlertsDivider.Visible = msg.Bleeding == true;
+            AlertsContainer.Visible = msg.Bleeding == true;
+
+            if (msg.Bleeding == true)
+            {
+                AlertsContainer.DisposeAllChildren();
+                AlertsContainer.AddChild(new Label
+                {
+                    Text = Loc.GetString("health-analyzer-window-entity-bleeding-text"),
+                    FontColorOverride = Color.Red,
+                });
+            }
 
             // Damage Groups
 
@@ -146,16 +175,16 @@ namespace Content.Client.HealthAnalyzer.UI
 
                 foreach (var type in group.DamageTypes)
                 {
-                    if (damageDict.TryGetValue(type, out var typeAmount) && typeAmount > 0)
-                    {
-                        var damageString = Loc.GetString(
-                            "health-analyzer-window-damage-type-text",
-                            ("damageType", _prototypes.Index<DamageTypePrototype>(type).LocalizedName),
-                            ("amount", typeAmount)
-                        );
+                    if (!damageDict.TryGetValue(type, out var typeAmount) || typeAmount <= 0)
+                        continue;
 
-                        groupContainer.AddChild(CreateDiagnosticItemLabel(damageString.Insert(0, " · ")));
-                    }
+                    var damageString = Loc.GetString(
+                        "health-analyzer-window-damage-type-text",
+                        ("damageType", _prototypes.Index<DamageTypePrototype>(type).LocalizedName),
+                        ("amount", typeAmount)
+                    );
+
+                    groupContainer.AddChild(CreateDiagnosticItemLabel(damageString.Insert(0, " · ")));
                 }
             }
         }
@@ -174,34 +203,25 @@ namespace Content.Client.HealthAnalyzer.UI
             return _spriteSystem.Frame0(rsiSprite);
         }
 
-        private static RichTextLabel CreateDiagnosticItemLabel(string text)
+        private static Label CreateDiagnosticItemLabel(string text)
         {
-            var label = new RichTextLabel
+            return new Label
             {
-                Margin = new Thickness(2, 2),
+                Text = text,
             };
-
-            // Force default color to white
-            var msg = new FormattedMessage();
-            msg.PushColor(Color.White);
-            msg.AddMarkupOrThrow(text);
-            msg.Pop();
-            label.SetMessage(msg);
-
-            return label;
         }
 
         private BoxContainer CreateDiagnosticGroupTitle(string text, string id)
         {
             var rootContainer = new BoxContainer
             {
+                Margin = new Thickness(0, 6, 0, 0),
                 VerticalAlignment = VAlignment.Bottom,
-                Orientation = BoxContainer.LayoutOrientation.Horizontal
+                Orientation = BoxContainer.LayoutOrientation.Horizontal,
             };
 
             rootContainer.AddChild(new TextureRect
             {
-                Margin = new Thickness(0, 3),
                 SetSize = new Vector2(30, 30),
                 Texture = GetTexture(id.ToLower())
             });
