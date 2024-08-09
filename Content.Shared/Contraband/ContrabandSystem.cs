@@ -21,7 +21,7 @@ public sealed class ContrabandSystem : EntitySystem
         SubscribeLocalEvent<ContrabandComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnExamined(EntityUid uid, ContrabandComponent component, ExaminedEvent args)
+    private void OnExamined(Entity<ContrabandComponent> ent, ref ExaminedEvent args)
     {
         // two strings:
         // one, the actual informative 'this is restricted'
@@ -29,17 +29,18 @@ public sealed class ContrabandSystem : EntitySystem
 
         using (args.PushGroup(nameof(ContrabandComponent)))
         {
-            if (component is { Severity: ContrabandSeverity.Restricted, AllowedDepartments: not null })
+            var severity = _proto.Index(ent.Comp.Severity);
+            if (severity.ShowDepartments && ent.Comp is {  AllowedDepartments: not null })
             {
                 // TODO shouldn't department prototypes have a localized name instead of just using the ID for this?
-                var list = ContentLocalizationManager.FormatList(component.AllowedDepartments.Select(p => Loc.GetString($"department-{p.Id}")).ToList());
+                var list = ContentLocalizationManager.FormatList(ent.Comp.AllowedDepartments.Select(p => Loc.GetString($"department-{p.Id}")).ToList());
 
                 // department restricted text
                 args.PushMarkup(Loc.GetString("contraband-examine-text-Restricted-department", ("departments", list)));
             }
             else
             {
-                args.PushMarkup(Loc.GetString($"contraband-examine-text-{component.Severity.ToString()}"));
+                args.PushMarkup(Loc.GetString(severity.ExamineText));
             }
 
             // text based on ID card
@@ -50,9 +51,9 @@ public sealed class ContrabandSystem : EntitySystem
             }
 
             // either its fully restricted, you have no departments, or your departments dont intersect with the restricted departments
-            if (component.AllowedDepartments is null
+            if (ent.Comp.AllowedDepartments is null
                 || departments is null
-                || !departments.Intersect(component.AllowedDepartments).Any())
+                || !departments.Intersect(ent.Comp.AllowedDepartments).Any())
             {
                 args.PushMarkup(Loc.GetString("contraband-examine-text-avoid-carrying-around"));
                 return;
