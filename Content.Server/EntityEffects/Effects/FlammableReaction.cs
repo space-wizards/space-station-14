@@ -13,6 +13,7 @@ namespace Content.Server.EntityEffects.Effects
         [DataField]
         public float Multiplier = 0.05f;
 
+        // The fire stack multiplier if fire stacks already exist on target, only works if 0 or greater
         [DataField]
         public float MultiplierOnExisting = -1f;
 
@@ -28,6 +29,7 @@ namespace Content.Server.EntityEffects.Effects
             if (!args.EntityManager.TryGetComponent(args.TargetEntity, out FlammableComponent? flammable))
                 return;
 
+            // Sets the multiplier for firestacks if firestacks are already on target only if MultiplierOnExisting is 0 or greater
             var multiplier = flammable.FireStacks != 0f && MultiplierOnExisting >= 0 ? MultiplierOnExisting : Multiplier;
             var quantity = 1f;
             if (args is EntityEffectReagentArgs reagentArgs)
