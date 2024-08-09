@@ -1,35 +1,4 @@
 ﻿Entries:
-- author: Killerqu00
-  changes:
-  - message: Revolutionaries can now cuff command members in order to seize control
-      of the station.
-    type: Tweak
-  id: 6563
-  time: '2024-05-09T06:48:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27627
-- author: vorkathbruh
-  changes:
-  - message: Nuclear operative agents now require time in Chemistry rather than time
-      in the Medical department.
-    type: Tweak
-  id: 6564
-  time: '2024-05-09T06:48:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27098
-- author: deltanedas
-  changes:
-  - message: Firesuits and hardsuits now protect your skin from fire, you will instead
-      die of heatstroke.
-    type: Tweak
-  id: 6565
-  time: '2024-05-09T07:12:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27161
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Fixed non-inital infected getting the succumb to zombie action.
-    type: Fix
-  id: 6566
-  time: '2024-05-09T21:45:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27820
 - author: Hanzdegloker
   changes:
   - message: Added CMO turtleneck jumpsuit/jumpskirt.
@@ -3786,3 +3755,42 @@
   id: 7062
   time: '2024-08-08T13:17:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29997
+- author: lzk228
+  changes:
+  - message: RD labcoat added in RD's dresser.
+    type: Add
+  id: 7063
+  time: '2024-08-08T22:50:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30671
+- author: SlamBamActionman
+  changes:
+  - message: Animal DNA now shows up as "unknown DNA" in the Forensic Scanner.
+    type: Tweak
+  - message: Forensic Scanner can now scan fluid containers for DNA in reagents.
+    type: Tweak
+  - message: Fluids keep their DNA data when moved.
+    type: Fix
+  - message: Fluids now stain containers they're in with DNA. Make sure to scrub your
+      blood bucket after use!
+    type: Add
+  - message: Vomit now includes DNA!
+    type: Add
+  id: 7064
+  time: '2024-08-08T23:27:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26699
+- author: themias
+  changes:
+  - message: Butter can be sliced, cookie and toast recipes now use butter slices.
+    type: Tweak
+  - message: Chefvend butter reduced from 4 to 3.
+    type: Tweak
+  id: 7065
+  time: '2024-08-08T23:32:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30789
+- author: EmoGarbage404
+  changes:
+  - message: You should have significantly less friction when moving in space.
+    type: Tweak
+  id: 7066
+  time: '2024-08-09T04:52:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29383

@@ -44,6 +44,7 @@
     sound: /Audio/SimpleStation14/Items/Handling/drinkglass_drop.ogg
   - type: EmitSoundOnLand
     sound: /Audio/SimpleStation14/Items/Handling/drinkglass_drop.ogg
+  - type: DnaSubstanceTrace
 
 - type: entity
   parent: DrinkBaseCup
