@@ -79,7 +79,8 @@ public sealed class SuicideSystem : EntitySystem
             args.CanReturnToBody = true;
         }
 
-        _gameTicker.OnGhostAttempt(victim.Comp.Mind.Value, args.CanReturnToBody, mind: mindComponent);
+        if (_gameTicker.OnGhostAttempt(victim.Comp.Mind.Value, args.CanReturnToBody, mind: mindComponent))
+            args.Handled = true;
     }
 
     /// <summary>
