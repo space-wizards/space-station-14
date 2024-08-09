@@ -108,7 +108,7 @@
       - BorgChassis
       - RoboticsConsole
   - type: WiresPanel
-    ExamineWhenOpenOnly: true
+    examineWhenOpenOnly: true
   - type: ActivatableUIRequiresPanel
   - type: NameIdentifier
     group: Silicon
@@ -268,11 +268,6 @@
   parent: [BaseBorgChassis, BaseBorgTransponder]
   abstract: true
   components:
-  - type: ContainerFill
-    containers:
-      key_slots:
-      - EncryptionKeyScience
-      - EncryptionKeyCommon
   - type: NpcFactionMember
     factions:
     - NanoTrasen

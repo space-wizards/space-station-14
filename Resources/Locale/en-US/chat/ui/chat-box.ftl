@@ -15,7 +15,6 @@ hud-chatbox-select-channel-OOC = OOC
 hud-chatbox-select-channel-Damage = Damage
 hud-chatbox-select-channel-Visual = Actions
 hud-chatbox-select-channel-Radio = Radio
-hud-borgui-state-law = State Law
 
 hud-chatbox-channel-Admin = Admin Misc
 hud-chatbox-channel-AdminAlert = Admin Alert

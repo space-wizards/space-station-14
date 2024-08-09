@@ -38,7 +38,7 @@ law-emag-cannot-emag-self = You cannot use the EMAG on yourself.
 
 laws-ui-menu-title = Laws
 laws-ui-law-header = Law {$id}
-laws-ui-state-law = State law:
+laws-ui-state-law = State law
 laws-ui-select-channel = Select Channel:
 
 laws-notify = You are bound to silicon laws, which you can view via the sidebar action. You are required to always follow your laws.

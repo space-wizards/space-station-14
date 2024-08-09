@@ -28,7 +28,7 @@ public sealed partial class WiresPanelComponent : Component
     ///     Should this entity's wires panel be examinable only when opened?
     /// </summary>
     [ViewVariables]
-    [DataField("ExamineWhenOpenOnly")]
+    [DataField]
     [AutoNetworkedField]
     public bool ExamineWhenOpenOnly;
 

@@ -3,34 +3,35 @@
                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                      Title="{Loc 'laws-ui-menu-title'}"
                      MinSize="200 100"
-                     SetSize="450 615">
+                     SetSize="450 680">
     <BoxContainer Orientation="Vertical"
                   HorizontalExpand="True"
                   VerticalExpand="True">
-        <BoxContainer
-            Name="LawDisplayHeader"
-            Orientation="Vertical"
-            HorizontalExpand="True"
-            SetHeight="40"
-            Margin="10 0 10 0">
-        </BoxContainer>
-        <PanelContainer VerticalExpand="True" Margin="10 0 10 10">
+        <PanelContainer VerticalExpand="True" Margin="10 10 10 10">
             <PanelContainer.PanelOverride>
                 <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
             </PanelContainer.PanelOverride>
-            
             <ScrollContainer
                 HScrollEnabled="False"
                 HorizontalExpand="True"
                 VerticalExpand="True"
-                Margin="10 0 10 10">
+                Margin="5 5 5 5">
                 <BoxContainer
                     Name="LawDisplayContainer"
                     Orientation="Vertical"
                     VerticalExpand="True"
-                    Margin="10 10 10 0">
+                    Margin="5 5 5 5">
                 </BoxContainer>
             </ScrollContainer>
         </PanelContainer>
+        <BoxContainer
+            Name="LawDisplayHeader"
+            Orientation="Horizontal"
+            HorizontalExpand="True"
+            SetHeight="30"
+            Margin="5 5 5 5">
+            <Label Text="{Loc laws-ui-select-channel}" StyleClasses="StatusFieldTitle" Margin="5 5 0 5"/>
+            <OptionButton Name="LawChannelSelector" HorizontalExpand="True" SetHeight="30" Margin="5 5 0 5"/>
+        </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

@@ -1,7 +1,7 @@
 <Control xmlns="https://spacestation14.io"
          xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
-         Margin="0 0 0 10">
-    <PanelContainer VerticalExpand="True" StyleClasses="BackgroundDark">
+         Margin="5 5 5 5">
+    <PanelContainer VerticalExpand="True" StyleClasses="AngleRect">
         <BoxContainer Orientation="Vertical"
                       HorizontalExpand="True"
                       VerticalExpand="True"
@@ -9,8 +9,8 @@
             <RichTextLabel Name="LawNumberLabel" StyleClasses="LabelKeyText"/>
             <customControls:HSeparator Margin="0 5 0 5"/>
             <RichTextLabel Name="LawLabel"/>
-            <BoxContainer Name="LawAnnouncementButtons" Orientation="Horizontal" HorizontalExpand="True" Margin="0 5 0 0">
-                <Control Margin="5 0 0 0" />
+            <BoxContainer Name="LawAnnouncementButtons" Orientation="Horizontal" HorizontalExpand="True" Margin="5 5 5 5">
+                <Control Margin="0 5 5 5" />
                 <!-- Buttons are added via C# code-->
             </BoxContainer>
         </BoxContainer>

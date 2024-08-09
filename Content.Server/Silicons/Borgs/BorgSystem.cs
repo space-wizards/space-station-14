@@ -75,7 +75,6 @@ public sealed partial class BorgSystem : SharedBorgSystem
         SubscribeLocalEvent<BorgChassisComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
         SubscribeLocalEvent<BorgChassisComponent, GetCharactedDeadIcEvent>(OnGetDeadIC);
         SubscribeLocalEvent<BorgChassisComponent, ItemToggledEvent>(OnToggled);
-        SubscribeLocalEvent<BorgChassisComponent, IsUnequippingAttemptEvent>(OnUnequippingAttempt);
 
         SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
         SubscribeLocalEvent<BorgBrainComponent, PointAttemptEvent>(OnBrainPointAttempt);
@@ -247,26 +246,6 @@ public sealed partial class BorgSystem : SharedBorgSystem
         }
 
         _mind.TransferTo(mindId, containerEnt, mind: mind);
-    }
-
-    // Specifically for checking if specific slots can be stripped with or without the panel being opened.
-    private void OnUnequippingAttempt(Entity<BorgChassisComponent> strippable, ref IsUnequippingAttemptEvent args)
-    {
-        // Check if the slot being unequipped is the ears (Use: Headset)
-        if (args.Slot == "ears") // Cause for some reason, it's a string and not the bit comparison of ItemSlot.EARS?
-        {
-            if (!TryComp<WiresPanelComponent>(strippable, out var panel)) // Grab the panel from the borg
-                return;
-            // Check if the borg is locked or unlocked:
-            if (!panel.Open)
-            {
-                // Display the appropriate error
-                Popup.PopupEntity(Loc.GetString("borg-panel-not-open"), strippable);
-                // Cancel the attempt
-                args.Cancel();
-                return;
-            }
-        }
     }
     private void OnBrainPointAttempt(EntityUid uid, BorgBrainComponent component, PointAttemptEvent args)
     {

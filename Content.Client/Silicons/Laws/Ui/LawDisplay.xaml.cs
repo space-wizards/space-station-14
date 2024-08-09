@@ -19,13 +19,11 @@ public sealed partial class LawDisplay : Control
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
-    private ISawmill _sawmill = default!;
 
     public LawDisplay(EntityUid uid, SiliconLaw law, HashSet<string>? radioChannels, string? selectedChannel)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
-        _sawmill = Logger.GetSawmill("silicon_debugging");
         var identifier = law.LawIdentifierOverride ?? $"{law.Order}";
         var lawIdentifier = Loc.GetString("laws-ui-law-header", ("id", identifier));
         var lawDescription = Loc.GetString(law.LawString);
@@ -42,7 +40,7 @@ public sealed partial class LawDisplay : Control
         // New unified button to work with drop down list
         var stateLawButton = new Button
         {
-            Text = Loc.GetString("hud-borgui-state-law"),
+            Text = Loc.GetString("laws-ui-state-law"),
             Modulate = Color.LightBlue,
             StyleClasses = { "chatSelectorOptionButton" },
             MinHeight = 35,
@@ -51,7 +49,6 @@ public sealed partial class LawDisplay : Control
 
         stateLawButton.OnPressed += _ =>
         {
-            _sawmill.Debug($"Selected channel detected as {selectedChannel}");
             // Local and Binary channels are added to the list outside of the Radio component, so we handle them uniquely
             if (selectedChannel == "Local")
                 _chatManager.SendMessage($"{lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Local);
@@ -62,19 +59,17 @@ public sealed partial class LawDisplay : Control
                 if (radioChannels == null)
                     return;
 
-                foreach (var radioChannel in radioChannels)
+                if (selectedChannel != null && radioChannels.Contains(selectedChannel))
                 {
-                    if (radioChannel == selectedChannel)
+                    _prototypeManager.TryIndex<RadioChannelPrototype>(selectedChannel, out var radioChannelProto);
+                    if (radioChannelProto == null)
+                        return;
+                    switch (radioChannelProto.ID)
                     {
-                        if (!_prototypeManager.TryIndex<RadioChannelPrototype>(radioChannel, out var radioChannelProto))
-                            continue;
-                        switch (radioChannel)
-                        {
-                            case SharedChatSystem.CommonChannel:
-                                _chatManager.SendMessage($"{SharedChatSystem.RadioCommonPrefix} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Radio); break;
-                            default:
-                                _chatManager.SendMessage($"{SharedChatSystem.RadioChannelPrefix}{radioChannelProto.KeyCode} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Radio); break;
-                        }
+                        case SharedChatSystem.CommonChannel:
+                            _chatManager.SendMessage($"{SharedChatSystem.RadioCommonPrefix} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Radio); break;
+                        default:
+                            _chatManager.SendMessage($"{SharedChatSystem.RadioChannelPrefix}{radioChannelProto.KeyCode} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Radio); break;
                     }
                 }
             }

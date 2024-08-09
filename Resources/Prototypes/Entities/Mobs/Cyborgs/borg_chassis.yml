@@ -74,12 +74,6 @@
     name: salvage cyborg
   - type: Construction
     node: mining
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Binary
-  - type: ActiveRadio
-    channels:
-    - Binary
   - type: AccessReader
     access: [["Cargo"], ["Salvage"], ["Command"], ["Research"]]
   - type: Inventory
@@ -121,12 +115,6 @@
     name: engineer cyborg
   - type: Construction
     node: engineer
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Binary
-  - type: ActiveRadio
-    channels:
-    - Binary
   - type: AccessReader
     access: [["Engineering"], ["Command"], ["Research"]]
   - type: Inventory
@@ -176,12 +164,6 @@
     name: janitor cyborg
   - type: Construction
     node: janitor
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Binary
-  - type: ActiveRadio
-    channels:
-    - Binary
   - type: AccessReader
     access: [["Service"], ["Command"], ["Research"]]
   - type: Inventory
@@ -231,12 +213,6 @@
     name: medical cyborg
   - type: Construction
     node: medical
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Binary
-  - type: ActiveRadio
-    channels:
-    - Binary
   - type: AccessReader
     access: [["Medical"], ["Command"], ["Research"]]
   - type: Inventory
@@ -282,12 +258,6 @@
     name: service cyborg
   - type: Construction
     node: service
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Binary
-  - type: ActiveRadio
-    channels:
-    - Binary
   - type: AccessReader
     access: [["Service"], ["Command"], ["Research"]]
   - type: Inventory

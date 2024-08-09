@@ -39,7 +39,7 @@ public sealed class SiliconLawBoundUserInterface : BoundUserInterface
             foreach (var law in msg.Laws)
             {
 
-                if (_laws.Find(oldLaw => oldLaw.Equals(law)) != null)
+                if (_laws.Contains(law))
                 {
                     continue;
                 }
