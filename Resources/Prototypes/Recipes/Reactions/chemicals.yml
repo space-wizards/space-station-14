@@ -295,7 +295,7 @@
     Desoxyephedrine: 4 #I kinda remember having to heat this up, and if you heated it up too much, it went boom, I can't remember the specific values tho.
 
 - type: reaction
-  id: Stimulants
+  id: Hyperzine
   impact: Medium
   minTemp: 370
   reactants:
@@ -306,7 +306,7 @@
     Oxygen:
       amount: 2
   products:
-    Stimulants: 2
+    Hyperzine: 2
 
 - type: reaction
   id: Ephedrine

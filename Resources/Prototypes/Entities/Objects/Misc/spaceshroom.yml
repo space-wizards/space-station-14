@@ -60,7 +60,7 @@
   - type: Extractable
     juiceSolution:
       reagents:
-      - ReagentId: SpaceDrugs
+      - ReagentId: SpaceMirage
         Quantity: 10
   - type: SolutionContainerManager
     solutions:
@@ -83,7 +83,7 @@
   - quantity: 10
     weight: 10
     reagents:
-    - SpaceDrugs
+    - SpaceMirage
   - quantity: 0
     weight: 5
     reagents:

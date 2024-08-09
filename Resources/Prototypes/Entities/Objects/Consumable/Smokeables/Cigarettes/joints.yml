@@ -44,7 +44,7 @@
       smokable:
         maxVol: 20
         reagents:
-        - ReagentId: SpaceDrugs
+        - ReagentId: SpaceMirage
           Quantity: 4
         - ReagentId: Lipolicide
           Quantity: 4
@@ -103,7 +103,7 @@
       smokable:
         maxVol: 20
         reagents:
-        - ReagentId: SpaceDrugs
+        - ReagentId: SpaceMirage
           Quantity: 4
         - ReagentId: Lipolicide
           Quantity: 4

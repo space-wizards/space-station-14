@@ -250,7 +250,7 @@
       prob: 0.70
     - id: CigaretteTricordrazine
       prob: 0.25
-    - id: CigaretteSpaceDrugs
+    - id: CigaretteSpaceMirage
       prob: 0.50
     - id: CigaretteLicoxide
       prob: 0.10
@@ -268,7 +268,7 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
   - type: StorageFill
     contents:
-    - id: CigaretteSpaceDrugs
+    - id: CigaretteSpaceMirage
       amount: 2
     - id: CigaretteWeldingFuel
       amount: 2

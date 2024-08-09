@@ -324,7 +324,7 @@
     MindbreakerToxin: 3
 
 - type: reaction
-  id: SpaceDrugs
+  id: SpaceMirage
   reactants:
     Mercury:
       amount: 1
@@ -333,7 +333,7 @@
     Lithium:
       amount: 1
   products:
-    SpaceDrugs: 3
+    SpaceMirage: 3
 
 - type: reaction
   id: Ultravasculine

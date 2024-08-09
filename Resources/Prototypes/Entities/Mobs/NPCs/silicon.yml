@@ -275,7 +275,7 @@
         quantity: 15
       # when you are crit, medibot will help you have fun
       Critical:
-        reagent: SpaceDrugs
+        reagent: SpaceMirage
         quantity: 25
   - type: Sprite
     sprite: Mobs/Silicon/Bots/medibot.rsi

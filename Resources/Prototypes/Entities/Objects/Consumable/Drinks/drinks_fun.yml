@@ -120,7 +120,7 @@
   - quantity: 10
     weight: 1
     reagents:
-    - SpaceDrugs
+    - SpaceMirage
     - Mold
     - SpaceLube
     - SpaceGlue
