@@ -436,6 +436,7 @@
 - type: roleLoadout
   id: JobChemist
   groups:
+  - ChemistHead
   - GroupTankHarness
   - MedicalMask
   - ChemistJumpsuit
