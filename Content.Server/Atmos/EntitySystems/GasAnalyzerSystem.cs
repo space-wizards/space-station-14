@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
@@ -10,7 +9,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using static Content.Shared.Atmos.Components.GasAnalyzerComponent;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -22,7 +20,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmo = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
-        [Dependency] private readonly TransformSystem _transform = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         /// <summary>
         /// Minimum moles of a gas to be sent to the client.
@@ -58,89 +56,83 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         /// <summary>
-        /// Activates the analyzer when used in the world, scanning either the target entity or the tile clicked
+        /// Activates the analyzer when used in the world, scanning the target entity (if it exists) and the tile the analyzer is in
         /// </summary>
-        private void OnAfterInteract(EntityUid uid, GasAnalyzerComponent component, AfterInteractEvent args)
+        private void OnAfterInteract(Entity<GasAnalyzerComponent> entity, ref AfterInteractEvent args)
         {
-            if (!args.CanReach)
+            var target = args.Target;
+            if (target != null && !_interactionSystem.InRangeUnobstructed((args.User, null), (target.Value, null)))
             {
-                _popup.PopupEntity(Loc.GetString("gas-analyzer-component-player-cannot-reach-message"), args.User, args.User);
-                return;
+                target = null; // if the target is out of reach, invalidate it
             }
-            ActivateAnalyzer(uid, component, args.User, args.Target);
+            // always run the analyzer, regardless of weather or not there is a target
+            // since we can always show the local environment.
+            ActivateAnalyzer(entity, args.User, target);
             args.Handled = true;
         }
 
         /// <summary>
         /// Activates the analyzer with no target, so it only scans the tile the user was on when activated
         /// </summary>
-        private void OnUseInHand(EntityUid uid, GasAnalyzerComponent component, UseInHandEvent args)
+        private void OnUseInHand(Entity<GasAnalyzerComponent> entity, ref UseInHandEvent args)
         {
-            ActivateAnalyzer(uid, component, args.User);
+            if (!entity.Comp.Enabled)
+            {
+                ActivateAnalyzer(entity, args.User);
+            }
+            else
+            {
+                DisableAnalyzer(entity, args.User);
+            }
             args.Handled = true;
         }
 
         /// <summary>
         /// Handles analyzer activation logic
         /// </summary>
-        private void ActivateAnalyzer(EntityUid uid, GasAnalyzerComponent component, EntityUid user, EntityUid? target = null)
+        private void ActivateAnalyzer(Entity<GasAnalyzerComponent> entity, EntityUid user, EntityUid? target = null)
         {
-            if (!TryOpenUserInterface(uid, user, component))
+            if (!_userInterface.TryOpenUi(entity.Owner, GasAnalyzerUiKey.Key, user))
                 return;
 
-            component.Target = target;
-            component.User = user;
-            if (target != null)
-                component.LastPosition = Transform(target.Value).Coordinates;
-            else
-                component.LastPosition = null;
-            component.Enabled = true;
-            Dirty(uid, component);
-            UpdateAppearance(uid, component);
-            EnsureComp<ActiveGasAnalyzerComponent>(uid);
-            UpdateAnalyzer(uid, component);
+            entity.Comp.Target = target;
+            entity.Comp.User = user;
+            entity.Comp.Enabled = true;
+            Dirty(entity);
+            _appearance.SetData(entity.Owner, GasAnalyzerVisuals.Enabled, entity.Comp.Enabled);
+            EnsureComp<ActiveGasAnalyzerComponent>(entity.Owner);
+            UpdateAnalyzer(entity.Owner, entity.Comp);
         }
 
         /// <summary>
         /// Close the UI, turn the analyzer off, and don't update when it's dropped
         /// </summary>
-        private void OnDropped(EntityUid uid, GasAnalyzerComponent component, DroppedEvent args)
+        private void OnDropped(Entity<GasAnalyzerComponent> entity, ref DroppedEvent args)
         {
-            if (args.User is var userId && component.Enabled)
+            if (args.User is var userId && entity.Comp.Enabled)
                 _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, userId);
-            DisableAnalyzer(uid, component, args.User);
+            DisableAnalyzer(entity, args.User);
         }
 
         /// <summary>
         /// Closes the UI, sets the icon to off, and removes it from the update list
         /// </summary>
-        private void DisableAnalyzer(EntityUid uid, GasAnalyzerComponent? component = null, EntityUid? user = null)
+        private void DisableAnalyzer(Entity<GasAnalyzerComponent> entity, EntityUid? user = null)
         {
-            if (!Resolve(uid, ref component))
-                return;
+            _userInterface.CloseUi(entity.Owner, GasAnalyzerUiKey.Key, user);
 
-            _userInterface.CloseUi(uid, GasAnalyzerUiKey.Key, user);
-
-            component.Enabled = false;
-            Dirty(uid, component);
-            UpdateAppearance(uid, component);
-            RemCompDeferred<ActiveGasAnalyzerComponent>(uid);
+            entity.Comp.Enabled = false;
+            Dirty(entity);
+            _appearance.SetData(entity.Owner, GasAnalyzerVisuals.Enabled, entity.Comp.Enabled);
+            RemCompDeferred<ActiveGasAnalyzerComponent>(entity.Owner);
         }
 
         /// <summary>
         /// Disables the analyzer when the user closes the UI
         /// </summary>
-        private void OnDisabledMessage(EntityUid uid, GasAnalyzerComponent component, GasAnalyzerDisableMessage message)
+        private void OnDisabledMessage(Entity<GasAnalyzerComponent> entity, ref GasAnalyzerDisableMessage message)
         {
-            DisableAnalyzer(uid, component);
-        }
-
-        private bool TryOpenUserInterface(EntityUid uid, EntityUid user, GasAnalyzerComponent? component = null)
-        {
-            if (!Resolve(uid, ref component, false))
-                return false;
-
-            return _userInterface.TryOpenUi(uid, GasAnalyzerUiKey.Key, user);
+            DisableAnalyzer(entity);
         }
 
         /// <summary>
@@ -151,23 +143,18 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref component))
                 return false;
 
-            if (!TryComp(component.User, out TransformComponent? xform))
-            {
-                DisableAnalyzer(uid, component);
-                return false;
-            }
-
             // check if the user has walked away from what they scanned
-            var userPos = xform.Coordinates;
-            if (component.LastPosition.HasValue)
+            if (component.Target.HasValue)
             {
-                // Check if position is out of range => don't update and disable
-                if (!_transform.InRange(component.LastPosition.Value, userPos, SharedInteractionSystem.InteractionRange))
+                // Listen! Even if you don't want the Gas Analyzer to work on moving targets, you should use
+                // this code to determine if the object is still generally in range so that the check is consistent with the code
+                // in OnAfterInteract() and also consistent with interaction code in general.
+                if (!_interactionSystem.InRangeUnobstructed((component.User, null), (component.Target.Value, null)))
                 {
                     if (component.User is { } userId && component.Enabled)
-                        _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, userId);
-                    DisableAnalyzer(uid, component, component.User);
-                    return false;
+                        _popup.PopupEntity(Loc.GetString("gas-analyzer-object-out-of-range"), userId, userId);
+
+                    component.Target = null;
                 }
             }
 
@@ -192,9 +179,11 @@ namespace Content.Server.Atmos.EntitySystems
                 if (Deleted(component.Target))
                 {
                     component.Target = null;
-                    DisableAnalyzer(uid, component, component.User);
+                    DisableAnalyzer((uid, component), component.User);
                     return false;
                 }
+
+                var validTarget = false;
 
                 // gas analyzed was used on an entity, try to request gas data via event for override
                 var ev = new GasAnalyzerScanEvent();
@@ -205,7 +194,10 @@ namespace Content.Server.Atmos.EntitySystems
                     foreach (var mixes in ev.GasMixtures)
                     {
                         if (mixes.Item2 != null)
+                        {
                             gasMixList.Add(new GasMixEntry(mixes.Item1, mixes.Item2.Volume, mixes.Item2.Pressure, mixes.Item2.Temperature, GenerateGasEntryArray(mixes.Item2)));
+                            validTarget = true;
+                        }
                     }
 
                     deviceFlipped = ev.DeviceFlipped;
@@ -227,9 +219,17 @@ namespace Content.Server.Atmos.EntitySystems
                                 pipeAir.Multiply(pipeNode.Volume / pipeNode.Air.Volume);
                                 pipeAir.Volume = pipeNode.Volume;
                                 gasMixList.Add(new GasMixEntry(pair.Key, pipeAir.Volume, pipeAir.Pressure, pipeAir.Temperature, GenerateGasEntryArray(pipeAir)));
+                                validTarget = true;
                             }
                         }
                     }
+                }
+
+                // If the target doesn't actually have any gas mixes to add,
+                // invalidate it as the target
+                if (!validTarget)
+                {
+                    component.Target = null;
                 }
             }
 
@@ -243,14 +243,6 @@ namespace Content.Server.Atmos.EntitySystems
                     GetNetEntity(component.Target) ?? NetEntity.Invalid,
                     deviceFlipped));
             return true;
-        }
-
-        /// <summary>
-        /// Sets the appearance based on the analyzers Enabled state
-        /// </summary>
-        private void UpdateAppearance(EntityUid uid, GasAnalyzerComponent analyzer)
-        {
-            _appearance.SetData(uid, GasAnalyzerVisuals.Enabled, analyzer.Enabled);
         }
 
         /// <summary>
