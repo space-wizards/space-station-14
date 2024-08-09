@@ -289,6 +289,10 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
+  - type: AddCompOnMobStateChange
+    mobState: Dead
+    components:
+    - type: Item
 
 - type: weightedRandomEntity
   id: RatKingLoot
