@@ -14,7 +14,7 @@ namespace Content.Server.Administration.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (shell.Player is not { } player)
+            if (shell.Player == null)
             {
                 shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
                 return;
