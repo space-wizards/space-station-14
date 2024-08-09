@@ -13,25 +13,13 @@ tilemap:
 entities:
 - proto: ""
   entities:
-  - uid: 1
-    components:
-    - type: MetaData
-      name: Cargo shuttle
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: PhysicsMap
-    - type: GridTree
-    - type: MovedGrids
-    - type: Broadphase
-    - type: OccluderTree
   - uid: 173
     components:
     - type: MetaData
       name: Cargo shuttle
     - type: Transform
       pos: 2.2710133,-2.4148211
-      parent: 1
+      parent: invalid
     - type: MapGrid
       chunks:
         -1,0:
@@ -67,6 +55,20 @@ entities:
       chunkCollection:
         version: 2
         nodes:
+        - node:
+            color: '#FFFFFFFF'
+            id: Box
+          decals:
+            14: 1,3
+            15: 1,2
+            16: 1,1
+        - node:
+            color: '#FFFFFFFF'
+            id: Delivery
+          decals:
+            17: 0,1
+            18: 0,2
+            19: 0,3
         - node:
             color: '#A4610696'
             id: MiniTileBoxOverlay
@@ -179,37 +181,20 @@ entities:
       parent: 173
 - proto: AirlockExternalLocked
   entities:
-  - uid: 43
+  - uid: 1
     components:
     - type: Transform
       pos: 1.5,2.5
       parent: 173
-    - type: DeviceLinkSink
-      links:
-      - 197
   - uid: 25
     components:
     - type: Transform
       pos: 1.5,1.5
       parent: 173
-    - type: DeviceLinkSink
-      links:
-      - 197
   - uid: 29
     components:
     - type: Transform
       pos: 1.5,3.5
-      parent: 173
-    - type: DeviceLinkSink
-      links:
-      - 197
-- proto: ButtonFrameCaution
-  entities:
-  - uid: 198
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 1.5,0.5
       parent: 173
 - proto: AirlockGlassShuttle
   entities:
@@ -244,45 +229,49 @@ entities:
     - type: Transform
       pos: -0.5,8.5
       parent: 173
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
   - uid: 6
     components:
     - type: Transform
-      pos: 1.5,-0.5
+      rot: 1.5707963267948966 rad
+      pos: 1.5,1.5
       parent: 173
   - uid: 11
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 1.5,1.5
+      rot: 1.5707963267948966 rad
+      pos: 1.5,2.5
       parent: 173
   - uid: 37
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
+      rot: 1.5707963267948966 rad
       pos: 1.5,3.5
       parent: 173
   - uid: 38
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 1.5,2.5
+      pos: -5.5,3.5
+      parent: 173
+  - uid: 43
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -5.5,1.5
       parent: 173
   - uid: 144
     components:
     - type: Transform
-      pos: 1.5,5.5
+      rot: 1.5707963267948966 rad
+      pos: 1.5,-0.5
       parent: 173
   - uid: 168
     components:
     - type: Transform
-      pos: -5.5,1.5
-      parent: 173
-  - uid: 169
-    components:
-    - type: Transform
-      pos: -5.5,3.5
+      rot: 1.5707963267948966 rad
+      pos: 1.5,5.5
       parent: 173
 - proto: BlastDoor
   entities:
@@ -291,17 +280,19 @@ entities:
     - type: Transform
       pos: -5.5,0.5
       parent: 173
-    - type: DeviceLinkSink
-      links:
-      - 192
   - uid: 196
     components:
     - type: Transform
       pos: -5.5,4.5
       parent: 173
-    - type: DeviceLinkSink
-      links:
-      - 191
+- proto: ButtonFrameCaution
+  entities:
+  - uid: 198
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 1.5,0.5
+      parent: 173
 - proto: CableApcExtension
   entities:
   - uid: 4
@@ -774,36 +765,24 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -4.5,0.5
       parent: 173
-    - type: DeviceLinkSink
-      links:
-      - 193
   - uid: 186
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,0.5
       parent: 173
-    - type: DeviceLinkSink
-      links:
-      - 193
   - uid: 187
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,4.5
       parent: 173
-    - type: DeviceLinkSink
-      links:
-      - 194
   - uid: 188
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,4.5
       parent: 173
-    - type: DeviceLinkSink
-      links:
-      - 194
 - proto: FoodDonkpocketStonkWarm
   entities:
   - uid: 180
@@ -1076,10 +1055,10 @@ entities:
       parent: 173
     - type: DeviceLinkSource
       linkedPorts:
-        43:
+        25:
         - Pressed: Toggle
         - Pressed: AutoClose
-        25:
+        1:
         - Pressed: Toggle
         - Pressed: AutoClose
         29:

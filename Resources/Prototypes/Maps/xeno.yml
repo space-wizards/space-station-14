@@ -2,8 +2,8 @@
   id: Xeno
   mapName: 'Xeno'
   mapPath: /Maps/xeno.yml
-  minPlayers: 15
-  maxPlayers: 60
+  minPlayers: 25
+  maxPlayers: 70
   stations:
     Xeno:
       stationProto: StandardNanotrasenStation
