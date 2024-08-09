@@ -1,0 +1,10 @@
+- type: inventoryTemplate
+  id: ratking
+  slots:
+  - name: id
+    slotTexture: id
+    slotFlags: IDCARD
+    stripTime: 6
+    uiWindowPos: 0,1
+    strippingWindowPos: 2,4
+    displayName: ID
