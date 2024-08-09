@@ -12,13 +12,13 @@ health-analyzer-window-entity-blood-level-text = Blood Level:
 health-analyzer-window-entity-status-text = Status:
 health-analyzer-window-entity-damage-total-text = Total Damage:
 
-health-analyzer-window-damage-group-text = [color=#A88B5E][bold]{$damageGroup}[/bold][/color]: {$amount}
+health-analyzer-window-damage-group-text = {$damageGroup}: {$amount}
 health-analyzer-window-damage-type-text = {$damageType}: {$amount}
 
 health-analyzer-window-entity-bleeding-text = Patient is bleeding!
 
 health-analyzer-window-scan-mode-text = Scan Mode:
-health-analyzer-window-scan-mode-active = ACTIVE
-health-analyzer-window-scan-mode-inactive = INACTIVE
+health-analyzer-window-scan-mode-active = Active
+health-analyzer-window-scan-mode-inactive = Inactive
 
 health-analyzer-popup-scan-target = {CAPITALIZE(THE($user))} is trying to scan you!
