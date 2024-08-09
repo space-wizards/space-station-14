@@ -394,3 +394,80 @@
   sprite:
     sprite: Mobs/Animals/crab.rsi
     state: crab
+
+- type: stealTargetGroup
+  id: ArrestLogs
+  name: arrest logs
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: RadioLogs
+  name: radio logs
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: StationMaintenceReport
+  name: station maintence report
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: ResesarchReport
+  name: research report
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: MedicalLogs
+  name: medical logs
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: SupplyReport
+  name: supply report
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: CentralCommandReport
+  name: central command report
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: CentralCommandAudit
+  name: central command audit
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: NuclearDeviceMaintainceReport
+  name: nuclear device maintaince report
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: ArmoryInspectionReport
+  name: armory inspection report
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: VaultInspectionReport
+  name: vault inspection report
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
