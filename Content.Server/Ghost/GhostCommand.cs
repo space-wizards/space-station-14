@@ -1,6 +1,7 @@
 using Content.Server.GameTicking;
 using Content.Server.Popups;
 using Content.Shared.Administration;
+using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Robust.Shared.Console;
 
@@ -10,6 +11,7 @@ namespace Content.Server.Ghost
     public sealed class GhostCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly GameTicker _ticker = default!;
 
         public string Command => "ghost";
         public string Description => Loc.GetString("ghost-command-description");
@@ -31,6 +33,13 @@ namespace Content.Server.Ghost
                 shell.WriteLine(deniedMessage);
                 _entities.System<PopupSystem>()
                     .PopupEntity(deniedMessage, frozen, frozen);
+                return;
+            }
+
+            if (_ticker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) &&
+                status != PlayerGameStatus.JoinedGame)
+            {
+                shell.WriteLine(Loc.GetString("ghost-command-lobby"));
                 return;
             }
 
