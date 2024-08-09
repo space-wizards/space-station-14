@@ -44,7 +44,6 @@ public sealed class NewsSystem : SharedNewsSystem
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly DiscordWebhook _discord = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly SharedGameTicker _gameTicker = default!;
     [Dependency] private readonly IBaseServer _baseServer = default!;
 
     private WebhookIdentifier? _webhookId;
@@ -53,12 +52,14 @@ public sealed class NewsSystem : SharedNewsSystem
     {
         base.Initialize();
 
+        // Discord hook
         _cfg.OnValueChanged(CCVars.DiscordNewsWebhook,
             value =>
             {
                 if (!string.IsNullOrWhiteSpace(value))
                     _discord.GetWebhook(value, data => _webhookId = data.ToIdentifier());
             }, true);
+        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextAppend);
 
         // News writer
         SubscribeLocalEvent<NewsWriterComponent, MapInitEvent>(OnMapInit);
@@ -196,7 +197,6 @@ public sealed class NewsSystem : SharedNewsSystem
             RaiseLocalEvent(readerUid, ref args);
         }
 
-        SendDiscordWebhook(article);
         UpdateWriterDevices();
     }
     #endregion
@@ -342,6 +342,21 @@ public sealed class NewsSystem : SharedNewsSystem
         return records.Select(record => (GetNetEntity(record.OriginStation), record.Id)).ToList();
     }
 
+    #region Discord Hook
+
+    private void OnRoundEndTextAppend(RoundEndTextAppendEvent ev)
+    {
+        var stationUid = _station.GetStationInMap(_ticker.DefaultMap);
+
+        if (TryComp<StationNewsComponent>(stationUid, out var stationNews))
+        {
+            foreach (var article in stationNews.Articles)
+            {
+                SendDiscordWebhook(article);
+            }
+        }
+    }
+
     private async void SendDiscordWebhook(NewsArticle article)
     {
         if (_webhookId is null) return;
@@ -358,7 +373,7 @@ public sealed class NewsSystem : SharedNewsSystem
                     Text = Loc.GetString("news-discord-footer",
                         ("author", article.Author ?? "???"),
                         ("server", _baseServer.ServerName),
-                        ("round", _gameTicker.RoundId))
+                        ("round", _ticker.RoundId))
                 }
             };
             var payload = new WebhookPayload { Embeds = [embed] };
@@ -370,4 +385,6 @@ public sealed class NewsSystem : SharedNewsSystem
             Log.Error($"Error while sending discord news article:\n{e}");
         }
     }
+
+    #endregion
 }
