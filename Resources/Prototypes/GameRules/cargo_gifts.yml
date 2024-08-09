@@ -1,3 +1,31 @@
+# Add your new event to this RandomRule if you want it to happen via the basic/ramping schedulers.
+- type: entity
+  parent: BaseGameRule
+  id: RandomCargoGiftsRule
+  components:
+  - type: RandomRule
+    selectableGameRules:
+    - id: GiftsEngineering
+      orGroup: Gifts
+    - id: GiftsFireProtection
+      orGroup: Gifts
+    - id: GiftsJanitor
+      orGroup: Gifts
+    - id: GiftsMedical
+      orGroup: Gifts
+    - id: GiftsPizzaPartyLarge
+      orGroup: Gifts
+    - id: GiftsPizzaPartySmall
+      orGroup: Gifts
+    - id: GiftsSecurityGuns
+      orGroup: Gifts
+    - id: GiftsSecurityRiot
+      orGroup: Gifts
+    - id: GiftsSpacingSupplies
+      orGroup: Gifts
+    - id: GiftsVendingRestock
+      orGroup: Gifts
+    
 - type: entity
   id: CargoGiftsBase
   parent: BaseGameRule

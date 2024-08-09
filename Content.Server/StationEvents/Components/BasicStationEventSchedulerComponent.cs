@@ -1,4 +1,6 @@
-﻿namespace Content.Server.StationEvents.Components;
+using Content.Shared.Storage;
+
+namespace Content.Server.StationEvents.Components;
 
 [RegisterComponent, Access(typeof(BasicStationEventSchedulerSystem))]
 public sealed partial class BasicStationEventSchedulerComponent : Component
@@ -11,4 +13,10 @@ public sealed partial class BasicStationEventSchedulerComponent : Component
     /// Default value is how long until first event is allowed
     [ViewVariables(VVAccess.ReadWrite)]
     public float TimeUntilNextEvent = MinimumTimeUntilFirstEvent;
+
+    /// <summary>
+    /// The gamerules that the scheduler can choose from
+    /// </summary>
+    [DataField(required: true)]
+    public List<EntitySpawnEntry> ScheduledGameRules = new();
 }

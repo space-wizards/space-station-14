@@ -1,3 +1,20 @@
+# Add your new event to this RandomRule if you want it to happen via the basic/ramping schedulers.
+- type: entity
+  parent: BaseGameRule
+  id: RandomUnknownShuttleRule
+  components:
+  - type: RandomRule
+    selectableGameRules:
+    - id: UnknownShuttleCargoLost
+      orGroup: Shuttles
+    - id: UnknownShuttleTravelingCuisine
+      orGroup: Shuttles
+    - id: UnknownShuttleDisasterEvacPod
+      prob: 1.2
+      orGroup: Shuttles
+    - id: UnknownShuttleSyndieEvacPod
+      orGroup: Shuttles
+
 - type: entity
   abstract: true
   parent: BaseGameRule
