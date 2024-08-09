@@ -210,40 +210,38 @@ namespace Content.Shared.Containers.ItemSlots
             if (itemSlots.Slots.Count == 0)
                 return;
 
+            // valid, insertable slots (if any)
             var slots = new List<ItemSlot>();
 
-            var allLocked = false;
             ItemSlot? lastFailedSlot = null;
+            ItemSlot? lastValidLockedSlot = null;
             foreach (var slot in itemSlots.Slots.Values)
             {
                 if (!slot.InsertOnInteract)
                     continue;
 
-                if (!CanInsert(uid, args.Used, args.User, slot, slot.Swap))
+                if (CanInsert(uid, args.Used, args.User, slot, slot.Swap))
+                    slots.Add(slot);
+                else
                 {
-                    if (!slot.Locked)
-                        allLocked = false;
+                    var allowed = _whitelistSystem.IsWhitelistPass(slot.Whitelist, args.Used) &&
+                                        _whitelistSystem.IsBlacklistFail(slot.Blacklist, args.Used);
+                    if (allowed && slot.Locked)
+                        lastValidLockedSlot = slot;
                     lastFailedSlot = slot;
-                    continue;
                 }
-
-                slots.Add(slot);
             }
 
             if (slots.Count == 0)
             {
-                // no slots failed, so uh,
-                if (lastFailedSlot == null)
-                    return;
-
                 // it's a bit weird that the popupMessage is stored with the item slots themselves, but in practice
                 // the popup messages will just all be the same, so it's probably fine.
                 //
                 // doing a check to make sure that they're all the same or something is probably frivolous
-                if (lastFailedSlot.WhitelistFailPopup != null)
+                if (lastValidLockedSlot?.LockedFailPopup != null)
+                    _popupSystem.PopupClient(Loc.GetString(lastValidLockedSlot.LockedFailPopup), uid, args.User);
+                else if (lastFailedSlot?.WhitelistFailPopup != null)
                     _popupSystem.PopupClient(Loc.GetString(lastFailedSlot.WhitelistFailPopup), uid, args.User);
-                else if (allLocked && lastFailedSlot.LockedFailPopup != null)
-                    _popupSystem.PopupClient(Loc.GetString(lastFailedSlot.LockedFailPopup), uid, args.User);
                 return;
             }
 
