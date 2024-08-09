@@ -231,3 +231,8 @@
   copyright: '"beep_landmine.ogg" by kaktuscsc of Discord for SS14'
   license: "CC-BY-SA-3.0"
   source: https://github.com/YuriyKiss/space-station-14/commit/971a135a9c83aed46e967aac9302ab5b35562b5f
+
+- files: ["slosh.ogg"]
+  copyright: TGStation at d34047a5ae911735e35cd44a210953c9563caa22
+  license: CC-BY-SA-3.0
+  source: https://github.com/tgstation/tgstation/blob/d34047a5ae911735e35cd44a210953c9563caa22/sound/effects/slosh.ogg
