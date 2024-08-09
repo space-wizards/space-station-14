@@ -20,6 +20,10 @@
       - id: ClothingOuterHardsuitWarden
       - id: HoloprojectorSecurity
       - id: BookSpaceLaw
+      - id: ClothingNeckShockCollar
+        amount: 2
+      - id: RemoteSignaller
+        amount: 2
 
 - type: entity
   id: LockerWardenFilled
@@ -42,6 +46,10 @@
       - id: DoorRemoteArmory
       - id: HoloprojectorSecurity
       - id: BookSpaceLaw
+      - id: ClothingNeckShockCollar
+        amount: 2
+      - id: RemoteSignaller
+        amount: 2
 
 - type: entity
   id: LockerSecurityFilled
