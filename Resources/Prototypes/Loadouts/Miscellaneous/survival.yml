@@ -177,7 +177,7 @@
   equipment:
     outerClothing: ClothingOuterVestTank
 
-# Breaths Tool On Face
+# Breath Tool On Face
 - type: loadout
   id: LoadoutSpeciesBreathTool
   effects:
