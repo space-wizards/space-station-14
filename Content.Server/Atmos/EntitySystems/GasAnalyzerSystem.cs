@@ -70,7 +70,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
             // always run the analyzer, regardless of weather or not there is a target
             // since we can always show the local environment.
-            ActivateAnalyzer(entity.Owner, entity.Comp, args.User, target);
+            ActivateAnalyzer(entity, args.User, target);
             args.Handled = true;
         }
 
@@ -81,11 +81,11 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (!entity.Comp.Enabled)
             {
-                ActivateAnalyzer(entity.Owner, entity.Comp, args.User);
+                ActivateAnalyzer(entity, args.User);
             }
             else
             {
-                DisableAnalyzer(entity.Owner, entity.Comp, args.User);
+                DisableAnalyzer(entity, args.User);
             }
             args.Handled = true;
         }
@@ -93,18 +93,18 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         /// Handles analyzer activation logic
         /// </summary>
-        private void ActivateAnalyzer(EntityUid uid, GasAnalyzerComponent component, EntityUid user, EntityUid? target = null)
+        private void ActivateAnalyzer(Entity<GasAnalyzerComponent> entity, EntityUid user, EntityUid? target = null)
         {
-            if (!TryOpenUserInterface(uid, user, component))
+            if (!TryOpenUserInterface(entity.Owner, user, entity.Comp))
                 return;
 
-            component.Target = target;
-            component.User = user;
-            component.Enabled = true;
-            Dirty(uid, component);
-            UpdateAppearance(uid, component);
-            EnsureComp<ActiveGasAnalyzerComponent>(uid);
-            UpdateAnalyzer(uid, component);
+            entity.Comp.Target = target;
+            entity.Comp.User = user;
+            entity.Comp.Enabled = true;
+            Dirty(entity);
+            UpdateAppearance(entity.Owner, entity.Comp);
+            EnsureComp<ActiveGasAnalyzerComponent>(entity.Owner);
+            UpdateAnalyzer(entity.Owner, entity.Comp);
         }
 
         /// <summary>
@@ -114,23 +114,20 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (args.User is var userId && entity.Comp.Enabled)
                 _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, userId);
-            DisableAnalyzer(entity.Owner, entity.Comp, args.User);
+            DisableAnalyzer(entity, args.User);
         }
 
         /// <summary>
         /// Closes the UI, sets the icon to off, and removes it from the update list
         /// </summary>
-        private void DisableAnalyzer(EntityUid uid, GasAnalyzerComponent? component = null, EntityUid? user = null)
+        private void DisableAnalyzer(Entity<GasAnalyzerComponent> entity, EntityUid? user = null)
         {
-            if (!Resolve(uid, ref component))
-                return;
+            _userInterface.CloseUi(entity.Owner, GasAnalyzerUiKey.Key, user);
 
-            _userInterface.CloseUi(uid, GasAnalyzerUiKey.Key, user);
-
-            component.Enabled = false;
-            Dirty(uid, component);
-            UpdateAppearance(uid, component);
-            RemCompDeferred<ActiveGasAnalyzerComponent>(uid);
+            entity.Comp.Enabled = false;
+            Dirty(entity);
+            UpdateAppearance(entity.Owner, entity.Comp);
+            RemCompDeferred<ActiveGasAnalyzerComponent>(entity.Owner);
         }
 
         /// <summary>
@@ -138,7 +135,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void OnDisabledMessage(Entity<GasAnalyzerComponent> entity, ref GasAnalyzerDisableMessage message)
         {
-            DisableAnalyzer(entity.Owner, entity.Comp);
+            DisableAnalyzer(entity);
         }
 
         private bool TryOpenUserInterface(EntityUid uid, EntityUid user, GasAnalyzerComponent? component = null)
@@ -193,7 +190,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (Deleted(component.Target))
                 {
                     component.Target = null;
-                    DisableAnalyzer(uid, component, component.User);
+                    DisableAnalyzer((uid, component), component.User);
                     return false;
                 }
 
