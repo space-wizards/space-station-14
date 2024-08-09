@@ -819,6 +819,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("admin.server_ban_default_severity", "High", CVar.ARCHIVE | CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
+        /// Default Roleban appeal information to player when banned
+        /// </summary>
+        public static readonly CVarDef<string> InstructionToAppeal =
+            CVarDef.Create("admin.server_ban_default_appeal_instructions", "Appeal On Forums.", CVar.ARCHIVE | CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
         /// Whether a server ban will ban the player's ip by default.
         /// </summary>
         public static readonly CVarDef<bool> ServerBanIpBanDefault =

@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Numerics;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -39,6 +40,9 @@ public sealed partial class BanPanel : DefaultWindow
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
+
+    private readonly string _antagCategory = Loc.GetString("ban-panel-role-selection-antag");
+    private readonly string _antagAllSelection = Loc.GetString("ban-panel-role-selection-antag-all-option");
 
     private enum TabNumbers
     {
@@ -142,6 +146,8 @@ public sealed partial class BanPanel : DefaultWindow
         TypeOption.AddItem(Loc.GetString("ban-panel-server"), (int) Types.Server);
         TypeOption.AddItem(Loc.GetString("ban-panel-role"), (int) Types.Role);
 
+
+
         ReasonTextEdit.Placeholder = new Rope.Leaf(Loc.GetString("ban-panel-reason"));
 
         var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
@@ -150,7 +156,9 @@ public sealed partial class BanPanel : DefaultWindow
             CreateRoleGroup(proto.ID, proto.Roles.Select(p =>  p.Id), proto.Color);
         }
 
-        CreateRoleGroup("Antagonist", prototypeManager.EnumeratePrototypes<AntagPrototype>().Select(p => p.ID), Color.Red);
+        var antagRoleList = prototypeManager.EnumeratePrototypes<AntagPrototype>().Select(p => p.ID).ToList();
+        antagRoleList.Insert(0, _antagAllSelection);
+        CreateRoleGroup(_antagCategory, antagRoleList, Color.Red);
     }
 
     private void CreateRoleGroup(string roleName, IEnumerable<string> roleList, Color color)
@@ -161,29 +169,48 @@ public sealed partial class BanPanel : DefaultWindow
             HorizontalExpand = true,
             VerticalExpand = true,
             Orientation = BoxContainer.LayoutOrientation.Vertical,
-            Margin = new Thickness(4)
+            Margin = new Thickness(4),
         };
         var departmentCheckbox = new CheckBox
         {
             Name = $"{roleName}GroupCheckbox",
             Text = roleName,
             Modulate = color,
-            HorizontalAlignment = HAlignment.Left
+            HorizontalAlignment = HAlignment.Left,
+            Margin = new Thickness(2),
         };
         outerContainer.AddChild(departmentCheckbox);
-        var innerContainer = new BoxContainer
+        var innerContainer = new GridContainer
         {
             Name = $"{roleName}GroupInnerBox",
             HorizontalExpand = true,
-            Orientation = BoxContainer.LayoutOrientation.Horizontal
+            Columns = 4,
+            Margin = new Thickness(2)
         };
         departmentCheckbox.OnToggled += args =>
         {
-            foreach (var child in innerContainer.Children)
+            if (args.Pressed && roleName == _antagCategory)
             {
-                if (child is CheckBox c)
+                foreach (var child in innerContainer.Children)
                 {
-                    c.Pressed = args.Pressed;
+                    if (child is CheckBox antagCheckbox && antagCheckbox.Name == $"{_antagAllSelection}RoleCheckbox")
+                    {
+                        antagCheckbox.Pressed = true;
+                    }
+                    else if (child is CheckBox otherAntagCheckbox)
+                    {
+                        otherAntagCheckbox.Pressed = false;
+                    }
+                }
+            }
+            else
+            {
+                foreach (var child in innerContainer.Children)
+                {
+                    if (child is CheckBox roleChildCheckbox)
+                    {
+                        roleChildCheckbox.Pressed = args.Pressed;
+                    }
                 }
             }
 
@@ -195,7 +222,7 @@ public sealed partial class BanPanel : DefaultWindow
                         .Warning("Departmental role ban severity could not be parsed from config!");
                     return;
                 }
-                SeverityOption.SelectId((int) newSeverity);
+                SeverityOption.SelectId((int)newSeverity);
             }
             else
             {
@@ -217,13 +244,15 @@ public sealed partial class BanPanel : DefaultWindow
                         .Warning("Role ban severity could not be parsed from config!");
                     return;
                 }
-                SeverityOption.SelectId((int) newSeverity);
+                SeverityOption.SelectId((int)newSeverity);
             }
         };
         outerContainer.AddChild(innerContainer);
+
+        var isAntagonistGroup = roleName == _antagCategory;
         foreach (var role in roleList)
         {
-            AddRoleCheckbox(role, innerContainer, departmentCheckbox);
+            AddRoleCheckbox(role, innerContainer, departmentCheckbox, isAntagonistGroup);
         }
         RolesContainer.AddChild(new PanelContainer
         {
@@ -236,19 +265,42 @@ public sealed partial class BanPanel : DefaultWindow
         RolesContainer.AddChild(new HSeparator());
     }
 
-    private void AddRoleCheckbox(string role, Control container, CheckBox header)
+    private void AddRoleCheckbox(string role, Control container, CheckBox header, bool isAntagonistGroup = false)
     {
         var roleCheckbox = new CheckBox
         {
             Name = $"{role}RoleCheckbox",
-            Text = role
+            Text = role,
+            Margin = new Thickness(2),
         };
+
         roleCheckbox.OnToggled += args =>
         {
-            if (args is { Pressed: true, Button.Parent: { } } && args.Button.Parent.Children.Where(e => e is CheckBox).All(e => ((CheckBox) e).Pressed))
-                header.Pressed = args.Pressed;
+            if (isAntagonistGroup && role == _antagAllSelection)
+            {
+                foreach (var child in container.Children)
+                {
+                    if (child is CheckBox c && c != roleCheckbox)
+                    {
+                        c.Pressed = false;
+                    }
+                }
+            }
+
+            if (args is { Pressed: true, Button.Parent: { } } && args.Button.Parent.Children.OfType<CheckBox>().All(e => e.Pressed))
+                header.Pressed = true;
             else
                 header.Pressed = false;
+
+            // Ensure "All" checkbox logic within the antagonist group
+            if (isAntagonistGroup && role != _antagAllSelection)
+            {
+                var allAntagsCheckbox = container.Children.OfType<CheckBox>().FirstOrDefault(c => c.Name == $"{_antagAllSelection}RoleCheckbox");
+                if (allAntagsCheckbox != null && args.Pressed)
+                {
+                    allAntagsCheckbox.Pressed = false;
+                }
+            }
         };
         container.AddChild(roleCheckbox);
         _roleCheckboxes.Add(roleCheckbox);

@@ -12,5 +12,9 @@ role-timer-blacklisted-species = Your character must not be one of the following
 role-timer-locked = Locked (hover for details)
 
 role-timer-department-unknown = Unknown Department
+role-banned-locked = Banned (hover for details)
+role-banned-expiration = Expires: {$expiration}
+role-banned-permanent = Indefinite Ban {$appealDetails}
+role-banned-reason = Reason: {$reason}
 
 role-ban = You have been banned from this role.
