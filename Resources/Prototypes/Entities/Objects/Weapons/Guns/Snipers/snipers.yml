@@ -27,6 +27,7 @@
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
   - type: BallisticAmmoProvider
     capacity: 10
+    autoCycle: false
     proto: CartridgeLightRifle
     whitelist:
       tags:
