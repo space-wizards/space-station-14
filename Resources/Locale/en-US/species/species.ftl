@@ -9,3 +9,7 @@ species-name-arachnid = Arachnid
 species-name-moth = Moth Person
 species-name-skeleton = Skeleton
 species-name-vox = Vox
+
+## Misc species things
+
+snail-hurt-by-herbicide-popup = The salty solution burns like acid!

@@ -490,6 +490,21 @@
   - type: Temperature
     heatDamageThreshold: 500
     coldDamageThreshold: 0
+  - type: Reactive
+    reactions:
+    - reagents: [TableSalt, Saline]
+      methods: [Touch, Ingestion, Injection]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        damage:
+          types:
+            Caustic: 1
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "snail-hurt-by-herbicide-popup" ]
+        probability: 0.66
     
 - type: entity
   parent: MobSnail
