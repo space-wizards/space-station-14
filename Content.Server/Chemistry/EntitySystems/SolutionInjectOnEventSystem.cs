@@ -8,6 +8,8 @@ using Content.Shared.Projectiles;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Collections;
+using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Implants.Components;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -29,6 +31,7 @@ public sealed class SolutionInjectOnCollideSystem : EntitySystem
         SubscribeLocalEvent<SolutionInjectOnProjectileHitComponent, ProjectileHitEvent>(HandleProjectileHit);
         SubscribeLocalEvent<SolutionInjectOnEmbedComponent, EmbedEvent>(HandleEmbed);
         SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(HandleMeleeHit);
+        SubscribeLocalEvent<SolutionInjectOnTriggerComponent, TriggerEvent>(HandleTrigger);
     }
 
     private void HandleProjectileHit(Entity<SolutionInjectOnProjectileHitComponent> entity, ref ProjectileHitEvent args)
@@ -47,6 +50,17 @@ public sealed class SolutionInjectOnCollideSystem : EntitySystem
         // hit something and aren't just examining the weapon.
         if (args.IsHit)
             TryInjectTargets((entity.Owner, entity.Comp), args.HitEntities, args.User);
+    }
+
+    private void HandleTrigger(Entity<SolutionInjectOnTriggerComponent> entity, ref TriggerEvent args)
+    {
+        if (!TryComp<SubdermalImplantComponent>(entity, out var implanted))
+            return;
+        if (implanted.ImplantedEntity == null)
+            return;
+
+        DoInjection((entity.Owner, entity.Comp), implanted.ImplantedEntity.Value, args.Triggered);
+        args.Handled = true;
     }
 
     private void DoInjection(Entity<BaseSolutionInjectOnEventComponent> injectorEntity, EntityUid target, EntityUid? source = null)
