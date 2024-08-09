@@ -110,4 +110,15 @@ public enum LogType
     /// A player did an item-use interaction of an item they were holding onto another object.
     /// </summary>
     InteractUsing = 92,
+
+    /// <summary>
+    /// Storage & entity-storage related interactions
+    /// </summary>
+    Storage = 93,
+    
+    /// <summary>
+    /// A player got hit by an explosion and was dealt damage.
+    /// </summary>
+    ExplosionHit = 94,
+
 }

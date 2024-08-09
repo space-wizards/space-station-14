@@ -17,7 +17,6 @@ namespace Content.Client.VendingMachines.UI
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
 
         private readonly Dictionary<EntProtoId, EntityUid> _dummies = [];
 

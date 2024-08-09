@@ -18,20 +18,20 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
 
     private readonly LinksRender _links;
 
-
     private readonly List<SourcePortPrototype> _sources = new();
 
     private readonly List<SinkPortPrototype> _sinks = new();
-
-    private readonly NetworkConfiguratorBoundUserInterface _userInterface;
 
     private (ButtonPosition position, string id, int index)? _selectedButton;
 
     private List<(string left, string right)>? _defaults;
 
-    public NetworkConfiguratorLinkMenu(NetworkConfiguratorBoundUserInterface userInterface)
+    public event Action? OnClearLinks;
+    public event Action<string, string>? OnToggleLink;
+    public event Action<List<(string left, string right)>>? OnLinkDefaults;
+
+    public NetworkConfiguratorLinkMenu()
     {
-        _userInterface = userInterface;
         RobustXamlLoader.Load(this);
 
         var footerStyleBox = new StyleBoxFlat()
@@ -52,7 +52,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
 
         ButtonOk.OnPressed += _ => Close();
         ButtonLinkDefault.OnPressed += _ => LinkDefaults();
-        ButtonClear.OnPressed += _ => _userInterface.SendMessage(new NetworkConfiguratorClearLinksMessage());
+        ButtonClear.OnPressed += _ => OnClearLinks?.Invoke();
     }
 
     public void UpdateState(DeviceLinkUserInterfaceState linkState)
@@ -98,7 +98,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         if (_defaults == default)
             return;
 
-        _userInterface.SendMessage(new NetworkConfiguratorLinksSaveMessage(_defaults));
+        OnLinkDefaults?.Invoke(_defaults);
     }
 
     private Button CreateButton(ButtonPosition position, string name, string description, string id, int index)
@@ -138,7 +138,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         var left = _selectedButton.Value.position == ButtonPosition.Left ? _selectedButton.Value.id : id;
         var right = _selectedButton.Value.position == ButtonPosition.Left ? id : _selectedButton.Value.id;
 
-        _userInterface.SendMessage(new NetworkConfiguratorToggleLinkMessage(left, right));
+        OnToggleLink?.Invoke(left, right);
 
         args.Button.Pressed = false;
 

@@ -89,7 +89,7 @@ public abstract class SharedCryostorageSystem : EntitySystem
             return;
         }
 
-        if (!TryComp<MindContainerComponent>(args.EntityUid, out var mindContainer))
+        if (!HasComp<CanEnterCryostorageComponent>(args.EntityUid) || !TryComp<MindContainerComponent>(args.EntityUid, out var mindContainer))
         {
             args.Cancel();
             return;

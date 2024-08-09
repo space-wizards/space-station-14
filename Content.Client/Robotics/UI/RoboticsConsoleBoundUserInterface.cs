@@ -1,5 +1,6 @@
 using Content.Shared.Robotics;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Robotics.UI;
 
@@ -16,7 +17,9 @@ public sealed class RoboticsConsoleBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _window = new RoboticsConsoleWindow(Owner);
+        _window = this.CreateWindow<RoboticsConsoleWindow>();
+        _window.SetEntity(Owner);
+
         _window.OnDisablePressed += address =>
         {
             SendMessage(new RoboticsConsoleDisableMessage(address));
@@ -25,9 +28,6 @@ public sealed class RoboticsConsoleBoundUserInterface : BoundUserInterface
         {
             SendMessage(new RoboticsConsoleDestroyMessage(address));
         };
-        _window.OnClose += Close;
-
-        _window.OpenCentered();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -37,14 +37,6 @@ public sealed class RoboticsConsoleBoundUserInterface : BoundUserInterface
         if (state is not RoboticsConsoleState cast)
             return;
 
-        _window?.UpdateState(cast);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-
-        if (disposing)
-            _window?.Dispose();
+        _window.UpdateState(cast);
     }
 }

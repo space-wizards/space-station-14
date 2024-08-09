@@ -3,6 +3,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Tag;
+using Content.Shared.Interaction.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 
@@ -125,15 +126,13 @@ public abstract partial class SharedHandsSystem
         var userXform = Transform(uid);
         var isInContainer = ContainerSystem.IsEntityOrParentInContainer(uid, xform: userXform);
 
+        DoDrop(uid, hand, doDropInteraction: doDropInteraction, handsComp);
+
         // drop the item inside the container if the user is in a container
         if (targetDropLocation == null || isInContainer)
-        {
-            TransformSystem.DropNextTo((entity, itemXform), (uid, userXform));
             return true;
-        }
 
         // otherwise, remove the item from their hands and place it at the calculated interaction range position
-        DoDrop(uid, hand, doDropInteraction: doDropInteraction, handsComp);
         var (itemPos, itemRot) = TransformSystem.GetWorldPositionRotation(entity);
         var origin = new MapCoordinates(itemPos, itemXform.MapID);
         var target = TransformSystem.ToMapCoordinates(targetDropLocation.Value);
