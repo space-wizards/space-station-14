@@ -46,16 +46,16 @@ public sealed class SuicideSystem : EntitySystem
         if (!TryComp<MobStateComponent>(victim, out var mobState) || _mobState.IsDead(victim, mobState))
             return false;
 
-        _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} is attempting to suicide");
-        var suicideEvent = new SuicideEvent(victim);
-        RaiseLocalEvent(victim, suicideEvent);
-
         var suicideGhostEvent = new SuicideGhostEvent(victim);
         RaiseLocalEvent(victim, suicideGhostEvent);
 
         // Suicide is considered a fail if the user wasn't able to ghost
         if (!suicideGhostEvent.Handled)
             return false;
+
+        _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} is attempting to suicide");
+        var suicideEvent = new SuicideEvent(victim);
+        RaiseLocalEvent(victim, suicideEvent);
 
         _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} suicided.");
         return true;
