@@ -1,10 +1,12 @@
 - type: entity
-  parent: BoxCardboard
+  parent: [BoxCardboard, ContentsExplosionResistanceBase]
   id: BoxSurvival
   name: survival box
   description: It's a box with basic internals inside.
   suffix: Standard
   components:
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
   - type: StorageFill
     contents:
     - id: ClothingMaskBreath
@@ -36,7 +38,7 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
-  parent: BoxCardboard
+  parent: BoxSurvival
   id: BoxSurvivalEngineering
   name: extended-capacity survival box
   description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
@@ -74,7 +76,7 @@
 
 - type: entity
 
-  parent: BoxCardboard
+  parent: BoxSurvival
   id: BoxSurvivalSecurity
   name: survival box
   description: It's a box with basic internals inside.
@@ -94,6 +96,7 @@
     - state: emergencytank
 
 - type: entity
+  name: survival box
   parent: BoxSurvivalSecurity
   id: BoxSurvivalSecurityNitrogen
   suffix: Security N2
@@ -112,7 +115,7 @@
 
 - type: entity
 
-  parent: BoxCardboard
+  parent: BoxSurvival
   id: BoxSurvivalMedical
   name: survival box
   description: It's a box with basic internals inside.
@@ -149,7 +152,7 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
-  parent: BoxCardboard
+  parent: BoxSurvival
   id: BoxHug
   name: box of hugs
   description: A special box for sensitive people.
@@ -190,7 +193,7 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
-  parent: BoxCardboard
+  parent: BoxSurvival
   id: BoxSurvivalSyndicate
   name: extended-capacity survival box
   description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
