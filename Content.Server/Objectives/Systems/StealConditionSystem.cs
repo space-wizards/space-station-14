@@ -27,7 +27,6 @@ public sealed class StealConditionSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
 
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // REMOVE ONE OF THESE!!!!!!!
     private EntityQuery<ContainerManagerComponent> _containerQuery;
 
     public override void Initialize()
@@ -197,7 +196,7 @@ public sealed class StealConditionSystem : EntitySystem
 
     public void UpdateStealCondition(Entity<StealConditionComponent> entity, string stealGroup)
     {
-        if (!_prototypeManager.TryIndex<StealTargetGroupPrototype>(stealGroup, out var stealGroupPrototype))
+        if (!_proto.TryIndex<StealTargetGroupPrototype>(stealGroup, out var stealGroupPrototype))
         {
             Log.Error($"Unknown steal prototype: {stealGroupPrototype}");
             return;
