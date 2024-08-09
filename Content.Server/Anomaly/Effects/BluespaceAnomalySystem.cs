@@ -6,9 +6,9 @@ using Content.Shared.Anomaly.Components;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Teleportation.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Collections;
+using Robust.Shared.Containers;
 using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
@@ -20,6 +20,7 @@ public sealed class BluespaceAnomalySystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -36,7 +37,11 @@ public sealed class BluespaceAnomalySystem : EntitySystem
         var range = component.MaxShuffleRadius * args.Severity * args.PowerModifier;
         var mobs = new HashSet<Entity<MobStateComponent>>();
         _lookup.GetEntitiesInRange(xform.Coordinates, range, mobs);
-        var allEnts = new ValueList<EntityUid>(mobs.Select(m => m.Owner)) { uid };
+        // list of all entities in range with the MobStateComponent
+        // we filter out those inside a ContainerSlot
+        // otherwise borg brains get removed from their body, or PAIs from a PDA
+        var allEnts = new ValueList<EntityUid>(mobs.Select(m => m.Owner)
+            .Where(m => !_container.TryGetContainingContainer((m, xformQuery.GetComponent(m), null), out var container) || container is not ContainerSlot)) { uid };
         var coords = new ValueList<Vector2>();
         foreach (var ent in allEnts)
         {
@@ -63,6 +68,8 @@ public sealed class BluespaceAnomalySystem : EntitySystem
         foreach (var comp in mobs)
         {
             var ent = comp.Owner;
+            if (_container.TryGetContainingContainer((ent, null, null), out var container) && container is ContainerSlot)
+                continue;
             var randomX = _random.NextFloat(gridBounds.Left, gridBounds.Right);
             var randomY = _random.NextFloat(gridBounds.Bottom, gridBounds.Top);
 
