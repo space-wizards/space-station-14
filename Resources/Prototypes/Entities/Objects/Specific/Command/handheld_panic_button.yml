@@ -1,6 +1,6 @@
 - type: entity
   name: handheld panic button
-  parent: BaseHandheldComputer
+  parent: [BaseItem, PowerCellSlotMediumItem] #It doesn't have a UI and runs out of battery all the time, so it's not a BaseHandheldComputer
   id: HandheldPanicButton
   description: A hand-held panic button that, when activated, sends a signal for help to the security radio channel.
   components:
@@ -14,12 +14,12 @@
     radioMessage: comp-panic-button-message
     specifyLocation: true
   - type: UseDelay
-    delay: 4
+    delay: 5
   - type: PowerCellDraw
     drawRate: 2
     useRate: 0
-# - type: StealTarget
-#   stealGroup: HandheldCrewMonitor
+  - type: StealTarget
+    stealGroup: HandheldPanicButton
 
 - type: entity
   id: HandheldPanicButtonEmpty

@@ -317,6 +317,15 @@
   - type: Objective
     difficulty: 1
 
+- type: entity
+  parent: BaseThiefStealObjective
+  id: HandheldPanicButtonStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: HandheldPanicButton
+  - type: Objective
+    difficulty: 1
+
 # Structures
 
 - type: entity

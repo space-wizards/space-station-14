@@ -272,6 +272,13 @@
     sprite: Clothing/Neck/Medals/clownmedal.rsi
     state: icon
 
+- type: stealTargetGroup
+  id: HandheldPanicButton
+  name: handheld panic button
+  sprite:
+    sprite: Objects/Specific/Command/handheldpanicbutton.rsi
+    state: icon
+
 #Thief structures
 
 - type: stealTargetGroup

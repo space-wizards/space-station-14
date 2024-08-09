@@ -85,6 +85,7 @@
     BibleStealObjective: 1
     ClothingNeckGoldmedalStealObjective: 1              #other
     ClothingNeckClownmedalStealObjective: 0.5
+    HandheldPanicButtonStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupStructure
