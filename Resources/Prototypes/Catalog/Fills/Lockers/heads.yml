@@ -20,6 +20,7 @@
       - id: RubberStampApproved
       - id: ClothingHeadsetAltCargo
       - id: BoxEncryptionKeyCargo
+      - id: HandheldPanicButton
 
 - type: entity
   id: LockerCaptainFilledHardsuit
@@ -48,6 +49,7 @@
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
       - id: MedalCase
+      - id: HandheldPanicButton
 
 - type: entity
   id: LockerCaptainFilled
@@ -74,6 +76,7 @@
       - id: WeaponAntiqueLaser
       - id: JetpackCaptainFilled
       - id: MedalCase
+      - id: HandheldPanicButton
 
 - type: entity
   id: LockerCaptainFilledNoLaser
@@ -99,6 +102,7 @@
       - id: RubberStampCaptain
       - id: JetpackCaptainFilled
       - id: MedalCase
+      - id: HandheldPanicButton
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -128,6 +132,7 @@
       - id: ClothingBackpackIan
         prob: 0.5
       - id: AccessConfigurator
+      - id: HandheldPanicButton
 
 - type: entity
   id: LockerChiefEngineerFilledHardsuit
@@ -152,6 +157,7 @@
       - id: AccessConfigurator
       - id: RCD
       - id: RCDAmmo
+      - id: HandheldPanicButton
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -172,6 +178,7 @@
       - id: AccessConfigurator
       - id: RCD
       - id: RCDAmmo
+      - id: HandheldPanicButton
 
 - type: entity
   id: LockerChiefMedicalOfficerFilledHardsuit
@@ -195,6 +202,7 @@
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
+      - id: HandheldPanicButton
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -215,6 +223,7 @@
       - id: RubberStampCMO
       - id: MedicalTechFabCircuitboard
       - id: BoxEncryptionKeyMedical
+      - id: HandheldPanicButton
 
 - type: entity
   id: LockerResearchDirectorFilledHardsuit
@@ -234,6 +243,7 @@
       - id: BoxEncryptionKeyScience
       - id: ClothingHeadsetAltScience
       - id: EncryptionKeyBinary
+      - id: HandheldPanicButton
 
 - type: entity
   id: LockerResearchDirectorFilled
@@ -252,6 +262,7 @@
       - id: BoxEncryptionKeyScience
       - id: ClothingHeadsetAltScience
       - id: EncryptionKeyBinary
+      - id: HandheldPanicButton
 
 - type: entity
   id: LockerHeadOfSecurityFilledHardsuit
@@ -279,6 +290,7 @@
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
       - id: BookSpaceLaw
+      - id: HandheldPanicButton
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -303,6 +315,7 @@
       - id: HoloprojectorSecurity
       - id: BookSecretDocuments
       - id: BookSpaceLaw
+      - id: HandheldPanicButton
 
 - type: entity
   id: LockerFreezerVaultFilled
