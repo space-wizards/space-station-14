@@ -49,6 +49,7 @@ public sealed class BurialSystem : EntitySystem
                 BreakOnMove = true,
                 BreakOnDamage = true,
                 NeedHand = true,
+                BreakOnHandChange = true
             };
 
             if (component.Stream == null)
