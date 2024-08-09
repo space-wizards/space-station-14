@@ -64,6 +64,8 @@
   components:
     - type: Damageable
       damageModifierSet: FlimsyMetallic #Syndicate boxes should have a bit of protection
+    - type: CardboardBox
+      quiet: true
     - type: Stealth
       hadOutline: true
     - type: StealthOnMove
