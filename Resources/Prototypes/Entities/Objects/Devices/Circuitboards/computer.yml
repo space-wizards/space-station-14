@@ -33,10 +33,24 @@
   name: power monitoring computer board
   description: A computer printed circuit board for a power monitoring computer.
   components:
-    - type: Sprite
-      state: cpu_engineering
-    - type: ComputerBoard
-      prototype: ComputerPowerMonitoring
+  - type: Sprite
+    state: cpu_engineering
+  - type: ComputerBoard
+    prototype: ComputerPowerMonitoring
+
+- type: entity
+  noSpawn: true
+  parent: ActionPAIBase
+  id: ActionPAIOpenPowerMonitor
+  name: Open Power Monitor
+  description: "View the station's power levels."
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Interface/Actions/pai-expansions.rsi
+      state: power_monitor
+    event: !type:OpenUiActionEvent
+      key: enum.PowerMonitoringConsoleUiKey.Key
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -55,10 +69,35 @@
   name: criminal records computer board
   description: A computer printed circuit board for a criminal records computer.
   components:
-    - type: Sprite
-      state: cpu_security
-    - type: ComputerBoard
-      prototype: ComputerCriminalRecords
+  - type: Sprite
+    state: cpu_security
+  - type: ComputerBoard
+    prototype: ComputerCriminalRecords
+  - type: PAIExpansionCard
+    action: ActionPAIOpenCriminalRecords
+    components:
+    - type: AddUserInterface
+      interfaces:
+        enum.CriminalRecordsConsoleKey.Key:
+          type: CriminalRecordsConsoleBoundUserInterface
+          requireInputValidation: false
+    - type: CriminalRecordsConsole
+    - type: AccessReader # read-only, unless you emag your little friend
+      access: [["Security"]]
+
+- type: entity
+  noSpawn: true
+  parent: ActionPAIBase
+  id: ActionPAIOpenCriminalRecords
+  name: Open Criminal Records
+  description: View the criminal records of any crewmember.
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Interface/Actions/pai-expansions.rsi
+      state: criminal_records
+    event: !type:OpenUiActionEvent
+      key: enum.CriminalRecordsConsoleKey.Key
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -225,8 +264,22 @@
   name: crew monitoring computer board
   description: A computer printed circuit board for a crew monitoring console.
   components:
-    - type: ComputerBoard
-      prototype: ComputerCrewMonitoring
+  - type: ComputerBoard
+    prototype: ComputerCrewMonitoring
+
+- type: entity
+  noSpawn: true
+  parent: ActionPAIBase
+  id: ActionPAIOpenCrewMonitor
+  name: Open Crew Monitor
+  description: Monitor the crew's vitals.
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Interface/Actions/pai-expansions.rsi
+      state: crew_monitor
+    event: !type:OpenUiActionEvent
+      key: enum.CrewMonitoringUIKey.Key
 
 - type: entity
   parent: BaseComputerCircuitboard

@@ -29,6 +29,21 @@
   - type: Input
     context: "human"
   - type: PAI
+  - type: PAIExpansionSlot
+  - type: WiresPanel
+  - type: ItemSlots
+    slots:
+      expansion:
+        name: pai-expansion-slot-name
+        whitelist:
+          components:
+          - PAIExpansionCard
+        disableEject: true
+        swap: false
+        insertSuccessPopup: pai-expansion-slot-inserted
+  - type: ContainerContainer
+    containers:
+      expansion: !type:ContainerSlot {}
   - type: BlockMovement
   - type: ToggleableGhostRole
     examineTextMindPresent: pai-system-pai-installed
@@ -136,25 +151,31 @@
     node: potatoai
 
 - type: entity
+  abstract: true
+  id: ActionPAIBase
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+
+- type: entity
+  parent: ActionPAIBase
   id: ActionPAIPlayMidi
   name: Play MIDI
   description: Open your portable MIDI interface to soothe your owner.
   components:
   - type: InstantAction
-    checkCanInteract: false
-    checkConsciousness: false
     icon: Interface/Actions/pai-midi.png
     event: !type:OpenUiActionEvent
       key: enum.InstrumentUiKey.Key
 
 - type: entity
+  parent: ActionPAIBase
   id: ActionPAIOpenMap
   name: Open Map
   description: Open your map interface and guide your owner.
   components:
     - type: InstantAction
-      checkCanInteract: false
-      checkConsciousness: false
       icon: { sprite: Interface/Actions/pai-map.rsi, state: icon }
       event: !type:OpenUiActionEvent
         key: enum.StationMapUiKey.Key
