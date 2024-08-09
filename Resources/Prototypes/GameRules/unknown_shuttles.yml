@@ -39,7 +39,7 @@
   id: UnknownShuttleHonki
   components:
   - type: StationEvent
-    weight: 2
+    weight: 0
   - type: LoadMapRule
     preloadedGrid: Honki
 
@@ -48,6 +48,6 @@
   id: UnknownShuttleSyndieEvacPod
   components:
   - type: StationEvent
-    weight: 2
+    weight: 0
   - type: LoadMapRule
     preloadedGrid: SyndieEvacPod
