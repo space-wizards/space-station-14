@@ -61,6 +61,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [Dependency] private readonly IdCardSystem _idSystem = default!;
     [Dependency] private readonly NavMapSystem _navMap = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -465,8 +466,9 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
 
         component.MapEntity = map;
+        _metaData.SetEntityName(map, Loc.GetString("job-supervisors-centcom")); // Look its "Central Command" okay and we already have another one too at id-card-access-level-central-command & admin-announce-announcer-default & chat-manager-sender-announcement & comms-console-announcement-title-centcom
         component.Entity = grid;
-        _shuttle.TryAddFTLDestination(mapId, false, out _);
+        _shuttle.TryAddFTLDestination(mapId, true, out _);
         Log.Info($"Created centcomm grid {ToPrettyString(grid)} on map {ToPrettyString(map)} for station {ToPrettyString(station)}");
     }
 
