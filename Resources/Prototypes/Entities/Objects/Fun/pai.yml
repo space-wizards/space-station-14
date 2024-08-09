@@ -73,6 +73,7 @@
           Searching: { state: pai-searching-overlay }
           On: { state: pai-on-overlay }
   - type: StationMap
+  - type: ChangeNameInContainer
 
 - type: entity
   parent: PersonalAI
