@@ -115,7 +115,7 @@
   name: light pulse test
   parent: BaseItem
   id: LightBehaviourTest1
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
@@ -146,7 +146,7 @@
   name: color cycle test
   parent: BaseItem
   id: LightBehaviourTest2
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
@@ -178,7 +178,7 @@
   name: multi-behaviour light test
   parent: BaseItem
   id: LightBehaviourTest3
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
@@ -218,7 +218,7 @@
   name: light fade in test
   parent: BaseItem
   id: LightBehaviourTest4
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
@@ -249,7 +249,7 @@
   name: light pulse radius test
   parent: BaseItem
   id: LightBehaviourTest5
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
@@ -280,7 +280,7 @@
   name: light randomize radius test
   parent: BaseItem
   id: LightBehaviourTest6
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi

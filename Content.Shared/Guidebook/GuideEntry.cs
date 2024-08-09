@@ -39,6 +39,8 @@ public class GuideEntry
     /// </summary>
     [DataField] public bool FilterEnabled = default!;
 
+    [DataField] public bool RuleEntry;
+
     /// <summary>
     ///     Priority for sorting top-level guides when shown in a tree / table of contents.
     ///     If the guide is the child of some other guide, the order simply determined by the order of children in <see cref="Children"/>.

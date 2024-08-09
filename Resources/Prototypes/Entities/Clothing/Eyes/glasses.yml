@@ -63,6 +63,8 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/meson.rsi
   - type: EyeProtection
+  - type: IdentityBlocker
+    coverage: EYES
 
 - type: entity
   parent: ClothingEyesBase
@@ -178,6 +180,7 @@
   - type: GuideHelp
     guides:
     - Security
+    - Antagonists
   - type: IdentityBlocker
     coverage: EYES
 
@@ -194,6 +197,8 @@
   - type: FlashImmunity
   - type: EyeProtection
     protectionTime: 5
+  - type: IdentityBlocker
+    coverage: EYES
 
 #Make a scanner category when these actually function and we get the trayson
 - type: entity
@@ -211,6 +216,8 @@
       coefficients:
         Heat: 0.95
   - type: GroupExamine
+  - type: IdentityBlocker
+    coverage: EYES
 
 - type: entity
   parent: ClothingEyesBase
@@ -223,6 +230,8 @@
     - type: Clothing
       sprite: Clothing/Eyes/Glasses/science.rsi
     - type: SolutionScanner
+    - type: IdentityBlocker
+      coverage: EYES
 
 - type: entity
   parent: ClothingEyesBase

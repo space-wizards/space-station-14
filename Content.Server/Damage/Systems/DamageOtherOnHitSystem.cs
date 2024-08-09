@@ -32,6 +32,9 @@ namespace Content.Server.Damage.Systems
 
         private void OnDoHit(EntityUid uid, DamageOtherOnHitComponent component, ThrowDoHitEvent args)
         {
+            if (TerminatingOrDeleted(args.Target))
+                return;
+
             var dmg = _damageable.TryChangeDamage(args.Target, component.Damage, component.IgnoreResistances, origin: args.Component.Thrower);
 
             // Log damage only for mobs. Useful for when people throw spears at each other, but also avoids log-spam when explosions send glass shards flying.
@@ -48,12 +51,6 @@ namespace Content.Server.Damage.Systems
             {
                 var direction = body.LinearVelocity.Normalized();
                 _sharedCameraRecoil.KickCamera(args.Target, direction);
-            }
-
-            // TODO: If more stuff touches this then handle it after.
-            if (TryComp<PhysicsComponent>(uid, out var physics))
-            {
-                _thrownItem.LandComponent(args.Thrown, args.Component, physics, false);
             }
         }
 

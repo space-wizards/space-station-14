@@ -4,7 +4,6 @@ using Content.Server.Chat.Managers;
 using Content.Server.Forensics;
 using Content.Server.GameTicking;
 using Content.Server.Hands.Systems;
-using Content.Server.IdentityManagement;
 using Content.Server.Mind;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Popups;
@@ -62,6 +61,7 @@ namespace Content.Server.Administration.Systems
 
         private readonly HashSet<NetUserId> _roundActivePlayers = new();
         public readonly PanicBunkerStatus PanicBunker = new();
+        public readonly BabyJailStatus BabyJail = new();
 
         public override void Initialize()
         {
@@ -69,14 +69,26 @@ namespace Content.Server.Administration.Systems
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _adminManager.OnPermsChanged += OnAdminPermsChanged;
+            _playTime.SessionPlayTimeUpdated += OnSessionPlayTimeUpdated;
 
+            // Panic Bunker Settings
             Subs.CVar(_config, CCVars.PanicBunkerEnabled, OnPanicBunkerChanged, true);
             Subs.CVar(_config, CCVars.PanicBunkerDisableWithAdmins, OnPanicBunkerDisableWithAdminsChanged, true);
             Subs.CVar(_config, CCVars.PanicBunkerEnableWithoutAdmins, OnPanicBunkerEnableWithoutAdminsChanged, true);
             Subs.CVar(_config, CCVars.PanicBunkerCountDeadminnedAdmins, OnPanicBunkerCountDeadminnedAdminsChanged, true);
-            Subs.CVar(_config, CCVars.PanicBunkerShowReason, OnShowReasonChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerShowReason, OnPanicBunkerShowReasonChanged, true);
             Subs.CVar(_config, CCVars.PanicBunkerMinAccountAge, OnPanicBunkerMinAccountAgeChanged, true);
-            Subs.CVar(_config, CCVars.PanicBunkerMinOverallHours, OnPanicBunkerMinOverallHoursChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerMinOverallMinutes, OnPanicBunkerMinOverallMinutesChanged, true);
+
+            /*
+             * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
+             */
+
+            // Baby Jail Settings
+            Subs.CVar(_config, CCVars.BabyJailEnabled, OnBabyJailChanged, true);
+            Subs.CVar(_config, CCVars.BabyJailShowReason, OnBabyJailShowReasonChanged, true);
+            Subs.CVar(_config, CCVars.BabyJailMaxAccountAge, OnBabyJailMaxAccountAgeChanged, true);
+            Subs.CVar(_config, CCVars.BabyJailMaxOverallMinutes, OnBabyJailMaxOverallMinutesChanged, true);
 
             SubscribeLocalEvent<IdentityChangedEvent>(OnIdentityChanged);
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
@@ -188,6 +200,7 @@ namespace Content.Server.Administration.Systems
             base.Shutdown();
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
             _adminManager.OnPermsChanged -= OnAdminPermsChanged;
+            _playTime.SessionPlayTimeUpdated -= OnSessionPlayTimeUpdated;
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -249,6 +262,17 @@ namespace Content.Server.Administration.Systems
             SendPanicBunkerStatusAll();
         }
 
+        private void OnBabyJailChanged(bool enabled)
+        {
+            BabyJail.Enabled = enabled;
+            _chat.SendAdminAlert(Loc.GetString(enabled
+                ? "admin-ui-baby-jail-enabled-admin-alert"
+                : "admin-ui-baby-jail-disabled-admin-alert"
+            ));
+
+            SendBabyJailStatusAll();
+        }
+
         private void OnPanicBunkerDisableWithAdminsChanged(bool enabled)
         {
             PanicBunker.DisableWithAdmins = enabled;
@@ -267,22 +291,40 @@ namespace Content.Server.Administration.Systems
             UpdatePanicBunker();
         }
 
-        private void OnShowReasonChanged(bool enabled)
+        private void OnPanicBunkerShowReasonChanged(bool enabled)
         {
             PanicBunker.ShowReason = enabled;
             SendPanicBunkerStatusAll();
         }
 
+        private void OnBabyJailShowReasonChanged(bool enabled)
+        {
+            BabyJail.ShowReason = enabled;
+            SendBabyJailStatusAll();
+        }
+
         private void OnPanicBunkerMinAccountAgeChanged(int minutes)
         {
-            PanicBunker.MinAccountAgeHours = minutes / 60;
+            PanicBunker.MinAccountAgeMinutes = minutes;
             SendPanicBunkerStatusAll();
         }
 
-        private void OnPanicBunkerMinOverallHoursChanged(int hours)
+        private void OnBabyJailMaxAccountAgeChanged(int minutes)
         {
-            PanicBunker.MinOverallHours = hours;
+            BabyJail.MaxAccountAgeMinutes = minutes;
+            SendBabyJailStatusAll();
+        }
+
+        private void OnPanicBunkerMinOverallMinutesChanged(int minutes)
+        {
+            PanicBunker.MinOverallMinutes = minutes;
             SendPanicBunkerStatusAll();
+        }
+
+        private void OnBabyJailMaxOverallMinutesChanged(int minutes)
+        {
+            BabyJail.MaxOverallMinutes = minutes;
+            SendBabyJailStatusAll();
         }
 
         private void UpdatePanicBunker()
@@ -320,6 +362,15 @@ namespace Content.Server.Administration.Systems
         private void SendPanicBunkerStatusAll()
         {
             var ev = new PanicBunkerChangedEvent(PanicBunker);
+            foreach (var admin in _adminManager.AllAdmins)
+            {
+                RaiseNetworkEvent(ev, admin);
+            }
+        }
+
+        private void SendBabyJailStatusAll()
+        {
+            var ev = new BabyJailChangedEvent(BabyJail);
             foreach (var admin in _adminManager.AllAdmins)
             {
                 RaiseNetworkEvent(ev, admin);
@@ -395,6 +446,11 @@ namespace Content.Server.Administration.Systems
             QueueDel(entity);
 
             _gameTicker.SpawnObserver(player);
+        }
+
+        private void OnSessionPlayTimeUpdated(ICommonSession session)
+        {
+            UpdatePlayerList(session);
         }
     }
 }

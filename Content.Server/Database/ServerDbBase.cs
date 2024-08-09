@@ -625,6 +625,11 @@ namespace Content.Server.Database
             return record == null ? null : MakePlayerRecord(record);
         }
 
+        protected async Task<bool> PlayerRecordExists(DbGuard db, NetUserId userId)
+        {
+            return await db.DbContext.Player.AnyAsync(p => p.UserId == userId);
+        }
+
         [return: NotNullIfNotNull(nameof(player))]
         protected PlayerRecord? MakePlayerRecord(Player? player)
         {
@@ -1029,6 +1034,30 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await using var db = await GetDb();
             var entry = await db.DbContext.Whitelist.SingleAsync(w => w.UserId == player);
             db.DbContext.Whitelist.Remove(entry);
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<DateTimeOffset?> GetLastReadRules(NetUserId player)
+        {
+            await using var db = await GetDb();
+
+            return NormalizeDatabaseTime(await db.DbContext.Player
+                .Where(dbPlayer => dbPlayer.UserId == player)
+                .Select(dbPlayer => dbPlayer.LastReadRules)
+                .SingleOrDefaultAsync());
+        }
+
+        public async Task SetLastReadRules(NetUserId player, DateTimeOffset date)
+        {
+            await using var db = await GetDb();
+
+            var dbPlayer = await db.DbContext.Player.Where(dbPlayer => dbPlayer.UserId == player).SingleOrDefaultAsync();
+            if (dbPlayer == null)
+            {
+                return;
+            }
+
+            dbPlayer.LastReadRules = date.UtcDateTime;
             await db.DbContext.SaveChangesAsync();
         }
 

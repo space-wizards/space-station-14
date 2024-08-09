@@ -52,7 +52,7 @@
   name: holoclown box
   parent: [BoxCardboard, BaseSyndicateContraband]
   id: BoxHoloclown
-  description: A box containing a holoclown injector
+  description: A box containing a holoclown injector.
   components:
   - type: StorageFill
     contents:

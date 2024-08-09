@@ -350,8 +350,21 @@
   components:
   - type: Stack
     stackType: Diamond
+    baseLayer: base
+    layerStates:
+    - diamond
+    - diamond_2
+    - diamond_3
   - type: Sprite
     state: diamond
+    layers:
+    - state: diamond
+      map: ["base"]
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 500
+  - type: Appearance
   - type: Item
     heldPrefix: diamond
   - type: Extractable
@@ -493,8 +506,6 @@
     layerStates:
       - bananium
       - bananium_1
-  - type: RadiationSource
-    intensity: 0.1
   - type: FlavorProfile
     flavors:
       - banana

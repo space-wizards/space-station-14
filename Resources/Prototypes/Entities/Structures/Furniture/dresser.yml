@@ -73,7 +73,56 @@
         orGroup: dressermainloot
       - id: ClothingUniformJumpskirtColorPink
         prob: 0.05
+        orGroup: dresserthirdloot
       - id: ClothingUniformJumpsuitLoungewear
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtBlackElegantDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtRedElegantDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtGreenElegantDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtBlueElegantDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtPurpleElegantDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtCyanStripedDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtRedStripedDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtGreenStripedDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtPinkStripedDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtOrangeStripedDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtPurpleTurtleneckDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtRedTurtleneckDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtGreenTurtleneckDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtBlueTurtleneckDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtYellowTurtleneckDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtYellowOldDress
         prob: 0.05
         orGroup: dressermainloot
       - id: Pen # It`s pen.

@@ -16,6 +16,8 @@
     - !type:DepartmentTimeRequirement
       department: Command
       time: 36000 # 10 hours
+    - !type:AgeRequirement
+      requiredAge: 20
   weight: 20
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"
@@ -66,5 +68,4 @@
     belt: BoxFolderClipboard
   storage:
     back:
-    - BoxSurvival
     - Flash

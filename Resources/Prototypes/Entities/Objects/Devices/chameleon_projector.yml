@@ -22,7 +22,7 @@
       entity: ChameleonDisguise
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BaseMob
   id: ChameleonDisguise
   name: Urist McKleiner

@@ -10,12 +10,14 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Medical;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
@@ -70,7 +72,6 @@ public sealed class HealingSystem : EntitySystem
             _bloodstreamSystem.TryModifyBleedAmount(entity.Owner, healing.BloodlossModifier);
             if (isBleeding != bloodstream.BleedAmount > 0)
             {
-                dontRepeat = true;
                 _popupSystem.PopupEntity(Loc.GetString("medical-item-stop-bleeding"), entity, args.User);
             }
         }
@@ -188,6 +189,12 @@ public sealed class HealingSystem : EntitySystem
                 AudioHelpers.WithVariation(0.125f, _random).WithVolume(1f));
 
         var isNotSelf = user != target;
+
+        if (isNotSelf)
+        {
+            var msg = Loc.GetString("medical-item-popup-target", ("user", Identity.Entity(user, EntityManager)), ("item", uid));
+            _popupSystem.PopupEntity(msg, target, target, PopupType.Medium);
+        }
 
         var delay = isNotSelf
             ? component.Delay

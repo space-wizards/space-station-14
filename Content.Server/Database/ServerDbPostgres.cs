@@ -78,7 +78,8 @@ namespace Content.Server.Database
             await using var db = await GetDbImpl();
 
             var exempt = await GetBanExemptionCore(db, userId);
-            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned: false, exempt)
+            var newPlayer = userId == null || !await PlayerRecordExists(db, userId.Value);
+            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned: false, exempt, newPlayer)
                 .OrderByDescending(b => b.BanTime);
 
             var ban = await query.FirstOrDefaultAsync();
@@ -98,7 +99,8 @@ namespace Content.Server.Database
             await using var db = await GetDbImpl();
 
             var exempt = await GetBanExemptionCore(db, userId);
-            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned, exempt);
+            var newPlayer = !await db.PgDbContext.Player.AnyAsync(p => p.UserId == userId);
+            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned, exempt, newPlayer);
 
             var queryBans = await query.ToArrayAsync();
             var bans = new List<ServerBanDef>(queryBans.Length);
@@ -122,7 +124,8 @@ namespace Content.Server.Database
             ImmutableArray<byte>? hwId,
             DbGuardImpl db,
             bool includeUnbanned,
-            ServerBanExemptFlags? exemptFlags)
+            ServerBanExemptFlags? exemptFlags,
+            bool newPlayer)
         {
             DebugTools.Assert(!(address == null && userId == null && hwId == null));
 
@@ -141,7 +144,9 @@ namespace Content.Server.Database
             {
                 var newQ = db.PgDbContext.Ban
                     .Include(p => p.Unban)
-                    .Where(b => b.Address != null && EF.Functions.ContainsOrEqual(b.Address.Value, address));
+                    .Where(b => b.Address != null
+                                && EF.Functions.ContainsOrEqual(b.Address.Value, address)
+                                && !(b.ExemptFlags.HasFlag(ServerBanExemptFlags.BlacklistedRange) && !newPlayer));
 
                 query = query == null ? newQ : query.Union(newQ);
             }
@@ -167,6 +172,9 @@ namespace Content.Server.Database
 
             if (exemptFlags is { } exempt)
             {
+                if (exempt != ServerBanExemptFlags.None)
+                    exempt |= ServerBanExemptFlags.BlacklistedRange; // Any kind of exemption should bypass BlacklistedRange
+
                 query = query.Where(b => (b.ExemptFlags & exempt) == 0);
             }
 

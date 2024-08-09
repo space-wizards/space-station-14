@@ -24,7 +24,7 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
     private readonly FlatpackSystem _flatpack;
     private readonly MaterialStorageSystem _materialStorage;
 
-    private readonly EntityUid _owner;
+    private EntityUid _owner;
 
     [ValidatePrototypeId<EntityPrototype>]
     public const string NoBoardEffectId = "FlatpackerNoBoardEffect";
@@ -33,7 +33,7 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
 
     public event Action? PackButtonPressed;
 
-    public FlatpackCreatorMenu(EntityUid uid)
+    public FlatpackCreatorMenu()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
@@ -42,12 +42,15 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
         _flatpack = _entityManager.System<FlatpackSystem>();
         _materialStorage = _entityManager.System<MaterialStorageSystem>();
 
-        _owner = uid;
-
         PackButton.OnPressed += _ => PackButtonPressed?.Invoke();
 
-        MaterialStorageControl.SetOwner(uid);
         InsertLabel.SetMarkup(Loc.GetString("flatpacker-ui-insert-board"));
+    }
+
+    public void SetEntity(EntityUid uid)
+    {
+        _owner = uid;
+        MaterialStorageControl.SetOwner(uid);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -68,7 +71,7 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
             if (_entityManager.TryGetComponent<MachineBoardComponent>(_currentBoard, out var machineBoardComp))
                 cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker), (_currentBoard.Value, machineBoardComp));
             else
-                cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker));
+                cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker), null);
 
             PackButton.Disabled = !_materialStorage.CanChangeMaterialAmount(_owner, cost);
         }
@@ -93,7 +96,7 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
             else if (_entityManager.TryGetComponent<ComputerBoardComponent>(_currentBoard, out var computerBoard))
             {
                 prototype = computerBoard.Prototype;
-                cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker));
+                cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker), null);
             }
 
             if (prototype is not null && cost is not null)

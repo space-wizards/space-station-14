@@ -1,4 +1,4 @@
-﻿-create-3rd-person =
+-create-3rd-person =
     { $chance ->
         [1] Creates
         *[other] create
@@ -345,11 +345,17 @@ reagent-effect-guidebook-reduce-rotting =
         *[other] regenerate
     } {NATURALFIXED($time, 3)} {MANY("second", $time)} of rotting
 
-reagent-effect-guidebook-missing =
+reagent-effect-guidebook-area-reaction =
     { $chance ->
         [1] Causes
         *[other] cause
-    } an unknown effect as nobody has written this effect yet
+    } a smoke or foam reaction for {NATURALFIXED($duration, 3)} {MANY("second", $duration)}
+
+reagent-effect-guidebook-add-to-solution-reaction =
+    { $chance ->
+        [1] Causes
+        *[other] cause
+    } chemicals applied to an object to be added to its internal solution container
 
 reagent-effect-guidebook-plant-attribute =
     { $chance ->

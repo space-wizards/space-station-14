@@ -121,7 +121,7 @@
 - type: entity
   name: space kangaroo
   id: MobKangarooSpace
-  parent: MobSpaceBasic
+  parent: [MobSpaceBasic, StripableInventoryBase]
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: Sprite
@@ -167,12 +167,6 @@
       collection: FootstepBounce
   - type: ReplacementAccent
     accent: kangaroo
-  - type: InventorySlots
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
 
 - type: entity
   id: MobKangarooSpaceSalvage

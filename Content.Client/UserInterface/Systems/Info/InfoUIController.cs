@@ -1,16 +1,10 @@
-﻿using System.Globalization;
 using Content.Client.Gameplay;
 using Content.Client.Info;
-using Content.Shared.Administration.Managers;
-using Content.Shared.CCVar;
 using Content.Shared.Guidebook;
 using Content.Shared.Info;
-using Robust.Client;
 using Robust.Client.Console;
-using Robust.Client.Player;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
@@ -18,25 +12,27 @@ namespace Content.Client.UserInterface.Systems.Info;
 
 public sealed class InfoUIController : UIController, IOnStateExited<GameplayState>
 {
-    [Dependency] private readonly IBaseClient _client = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
     [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly ISharedAdminManager _adminManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly ILogManager _logMan = default!;
 
     private RulesPopup? _rulesPopup;
     private RulesAndInfoWindow? _infoWindow;
+    private ISawmill _sawmill = default!;
 
-    private static DateTime NextRulesReadTime => DateTime.UtcNow + TimeSpan.FromDays(60);
+    [ValidatePrototypeId<GuideEntryPrototype>]
+    private const string DefaultRuleset = "DefaultRuleset";
+
+    public ProtoId<GuideEntryPrototype> RulesEntryId = DefaultRuleset;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        _client.PlayerJoinedServer += OnJoinedServer;
-        _netManager.RegisterNetMessage<ShowRulesPopupMessage>(OnShowRulesPopupMessage);
+        _sawmill = _logMan.GetSawmill("rules");
+        _netManager.RegisterNetMessage<RulesAcceptedMessage>();
+        _netManager.RegisterNetMessage<SendRulesInformationMessage>(OnRulesInformationMessage);
 
         _consoleHost.RegisterCommand("fuckrules",
             "",
@@ -47,25 +43,12 @@ public sealed class InfoUIController : UIController, IOnStateExited<GameplayStat
         });
     }
 
-    private void OnJoinedServer(object? sender, PlayerEventArgs args)
+    private void OnRulesInformationMessage(SendRulesInformationMessage message)
     {
-        if (_playerManager.LocalSession is not { } localSession)
-            return;
+        RulesEntryId = message.CoreRules;
 
-        if (_adminManager.IsAdmin(localSession) && _cfg.GetCVar(CCVars.RulesExemptLocal))
-            return;
-
-        var nextReadTarget = DateTime.Parse(_cfg.GetCVar(CCVars.RulesNextPopupTime));
-        if (nextReadTarget >= DateTime.UtcNow)
-            return;
-
-        var time = _cfg.GetCVar(CCVars.RulesWaitTime);
-        ShowRules(time);
-    }
-
-    private void OnShowRulesPopupMessage(ShowRulesPopupMessage message)
-    {
-        ShowRules(message.PopupTime);
+        if (message.ShouldShowRules)
+            ShowRules(message.PopupTime);
     }
 
     public void OnStateExited(GameplayState state)
@@ -100,8 +83,7 @@ public sealed class InfoUIController : UIController, IOnStateExited<GameplayStat
 
     private void OnAcceptPressed()
     {
-        _cfg.SetCVar(CCVars.RulesNextPopupTime, NextRulesReadTime.ToString(CultureInfo.InvariantCulture));
-        _cfg.SaveToFile();
+        _netManager.ClientSendMessage(new RulesAcceptedMessage());
 
         _rulesPopup?.Orphan();
         _rulesPopup = null;
@@ -109,8 +91,13 @@ public sealed class InfoUIController : UIController, IOnStateExited<GameplayStat
 
     public GuideEntryPrototype GetCoreRuleEntry()
     {
-        var guide = _cfg.GetCVar(CCVars.RulesFile);
-        var guideEntryPrototype = _prototype.Index<GuideEntryPrototype>(guide);
+        if (!_prototype.TryIndex(RulesEntryId, out var guideEntryPrototype))
+        {
+            guideEntryPrototype = _prototype.Index<GuideEntryPrototype>(DefaultRuleset);
+            _sawmill.Error($"Couldn't find the following prototype: {RulesEntryId}. Falling back to {DefaultRuleset}, please check that the server has the rules set up correctly");
+            return guideEntryPrototype;
+        }
+
         return guideEntryPrototype;
     }
 

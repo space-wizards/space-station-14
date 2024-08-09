@@ -751,6 +751,9 @@
   - type: Sprite
     layers:
     - state: moldy-slice
+  - type: Tag
+    tags:
+    - Trash
   - type: SolutionContainerManager
     solutions:
       food:
@@ -818,7 +821,7 @@
     name: ghost-role-information-BreadDog-name
     allowMovement: true
     description: ghost-role-information-BreadDog-description
-    rules: ghost-role-information-BreadDog-rules
+    rules: ghost-role-information-nonantagonist-rules
     raffle:
       settings: short
   - type: GhostTakeoverAvailable

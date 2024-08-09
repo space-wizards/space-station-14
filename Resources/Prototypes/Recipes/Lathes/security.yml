@@ -139,16 +139,16 @@
     Steel: 100
 
 - type: latheRecipe
-  id: ShellTranquilizer
-  result: ShellTranquilizer
+  id: BoxShellTranquilizer
+  result: BoxShellTranquilizer
   category: Ammo
-  completetime: 4
+  completetime: 5
   materials:
-    Plastic: 15
-    Steel: 10
-    Glass: 5
-    Plasma: 10
-    Silver: 5
+    Plastic: 240
+    Steel: 160
+    Glass: 80
+    Plasma: 160
+    Silver: 80
 
 - type: latheRecipe
   id: TargetHuman
