@@ -407,5 +407,43 @@ Entries:
   id: 50
   time: '2024-08-05T07:36:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30563
+- author: nikthechampiongr
+  changes:
+  - message: The player panel has now been added and can be invoked with the playerpanel
+      command. It will display general information on the selected player, as well
+      as allow for general actions to be performed on them.
+    type: Add
+  id: 51
+  time: '2024-08-09T05:33:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30238
+- author: Repo
+  changes:
+  - message: Accurate Panic bunker and Baby Jail conditions.
+    type: Fix
+  id: 52
+  time: '2024-08-09T05:48:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30581
+- author: Simyon
+  changes:
+  - message: You can now view and edit the laws of silicons. Cyborg/Law bound entity
+      -> Admin -> Manage laws
+    type: Add
+  id: 53
+  time: '2024-08-09T06:16:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28483
+- author: TsjipTsjip
+  changes:
+  - message: Explosion damage dealt to players is now logged again.
+    type: Add
+  id: 54
+  time: '2024-08-09T06:24:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29762
+- author: Repo
+  changes:
+  - message: Admin logs for Cubes and other rehydration.
+    type: Add
+  id: 55
+  time: '2024-08-09T06:24:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30597
 Name: Admin
 Order: 1
