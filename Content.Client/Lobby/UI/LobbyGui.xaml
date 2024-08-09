@@ -27,10 +27,9 @@
                                                  Margin="3 3 3 3" />
                                 <controls:StripeBack>
                                     <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="3 3 3 3">
-                                        <cc:UICommandButton Command="observe" Name="ObserveButton" Access="Public"
-                                                            Text="{Loc 'ui-lobby-observe-button'}"
-                                                            StyleClasses="ButtonBig"
-                                                            WindowType="{x:Type lobbyUi:ObserveWarningWindow}" />
+                                        <Button Name="ObserveButton" Access="Public" ToggleMode="True"
+                                                Text="{Loc 'ui-lobby-observe-button'}"
+                                                StyleClasses="ButtonBig" MinWidth="137" />
                                         <Label Name="StartTime"
                                                Access="Public"
                                                Align="Left"
@@ -80,8 +79,8 @@
                     <BoxContainer Orientation="Horizontal" MinSize="0 40" HorizontalAlignment="Right">
                         <Button Name="AHelpButton" Access="Public" Text="{Loc 'ui-lobby-ahelp-button'}"
                                 StyleClasses="ButtonBig" />
-                        <vote:VoteCallMenuButton Name="CallVoteButton" StyleClasses="ButtonBig" />
-                        <Button Name="OptionsButton" Access="Public" StyleClasses="ButtonBig"
+                        <vote:VoteCallMenuButton Name="CallVoteButton" StyleClasses="ButtonBig" ToggleMode="True" />
+                        <Button Name="OptionsButton" Access="Public" StyleClasses="ButtonBig" ToggleMode="True"
                                 Text="{Loc 'ui-lobby-options-button'}" />
                         <Button Name="LeaveButton" Access="Public" StyleClasses="ButtonBig"
                                 Text="{Loc 'ui-lobby-leave-button'}" />
