@@ -1,4 +1,6 @@
+using Content.Shared.Clothing.Components;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Whitelist;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -101,6 +103,11 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
         {
             walkSpeed /= entries;
             sprintSpeed /= entries;
+
+            var evMax = new GetSpeedModifierContactMaxSlowEvent(uid);
+            RaiseLocalEvent(uid, ref evMax);
+            walkSpeed = MathF.Max(walkSpeed, evMax.MaxWalkSlowdown);
+            sprintSpeed = MathF.Max(sprintSpeed, evMax.MaxSprintSlowdown);
 
             args.ModifySpeed(walkSpeed, sprintSpeed);
         }
