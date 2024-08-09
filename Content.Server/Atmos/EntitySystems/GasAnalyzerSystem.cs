@@ -61,7 +61,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         /// Activates the analyzer when used in the world, scanning the target entity (if it exists) and the tile the analyzer is in
         /// </summary>
-        private void OnAfterInteract(EntityUid uid, GasAnalyzerComponent component, AfterInteractEvent args)
+        private void OnAfterInteract(Entity<GasAnalyzerComponent> entity, ref AfterInteractEvent args)
         {
             var target = args.Target;
             if (target != null && !_interactionSystem.InRangeUnobstructed((args.User, null), (target.Value, null)))
@@ -70,22 +70,22 @@ namespace Content.Server.Atmos.EntitySystems
             }
             // always run the analyzer, regardless of weather or not there is a target
             // since we can always show the local environment.
-            ActivateAnalyzer(uid, component, args.User, target);
+            ActivateAnalyzer(entity.Owner, entity.Comp, args.User, target);
             args.Handled = true;
         }
 
         /// <summary>
         /// Activates the analyzer with no target, so it only scans the tile the user was on when activated
         /// </summary>
-        private void OnUseInHand(EntityUid uid, GasAnalyzerComponent component, UseInHandEvent args)
+        private void OnUseInHand(Entity<GasAnalyzerComponent> entity, ref UseInHandEvent args)
         {
-            if (!component.Enabled)
+            if (!entity.Comp.Enabled)
             {
-                ActivateAnalyzer(uid, component, args.User);
+                ActivateAnalyzer(entity.Owner, entity.Comp, args.User);
             }
             else
             {
-                DisableAnalyzer(uid, component, args.User);
+                DisableAnalyzer(entity.Owner, entity.Comp, args.User);
             }
             args.Handled = true;
         }
@@ -110,11 +110,11 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         /// Close the UI, turn the analyzer off, and don't update when it's dropped
         /// </summary>
-        private void OnDropped(EntityUid uid, GasAnalyzerComponent component, DroppedEvent args)
+        private void OnDropped(Entity<GasAnalyzerComponent> entity, ref DroppedEvent args)
         {
-            if (args.User is var userId && component.Enabled)
+            if (args.User is var userId && entity.Comp.Enabled)
                 _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, userId);
-            DisableAnalyzer(uid, component, args.User);
+            DisableAnalyzer(entity.Owner, entity.Comp, args.User);
         }
 
         /// <summary>
@@ -136,9 +136,9 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         /// Disables the analyzer when the user closes the UI
         /// </summary>
-        private void OnDisabledMessage(EntityUid uid, GasAnalyzerComponent component, GasAnalyzerDisableMessage message)
+        private void OnDisabledMessage(Entity<GasAnalyzerComponent> entity, ref GasAnalyzerDisableMessage message)
         {
-            DisableAnalyzer(uid, component);
+            DisableAnalyzer(entity.Owner, entity.Comp);
         }
 
         private bool TryOpenUserInterface(EntityUid uid, EntityUid user, GasAnalyzerComponent? component = null)
