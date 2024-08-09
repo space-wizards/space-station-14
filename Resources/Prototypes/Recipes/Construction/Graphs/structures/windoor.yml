@@ -370,7 +370,6 @@
       - tool: Screwing
         doAfter: 4
 
-
   - node: wiredSecure
     entity: WindoorAssemblySecure
     edges:
@@ -406,6 +405,10 @@
 
   - node: windoorSecure
     entity: WindoorSecure
+    doNotReplaceInheritingEntities: true
+    actions:
+    - !type:SetWiresPanelSecurity
+      wiresAccessible: true
     edges:
     - to: wiredSecure
       conditions:
@@ -422,6 +425,15 @@
       - tool: Anchoring
         doAfter: 4
 
+    - to: medSecurityUnfinished
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 2
+
+#Clockwork
   - node: assemblyClockwork
     entity: WindoorAssemblyClockwork
     actions:
@@ -580,6 +592,10 @@
 
   - node: pwindoorSecure
     entity: WindoorSecurePlasma
+    doNotReplaceInheritingEntities: true
+    actions:
+    - !type:SetWiresPanelSecurity
+      wiresAccessible: true
     edges:
     - to: pwiredSecure
       conditions:
@@ -619,7 +635,6 @@
       - tool: Screwing
         doAfter: 4
 
-
   - node: uwiredSecure
     entity: WindoorAssemblySecureUranium
     edges:
@@ -655,6 +670,10 @@
 
   - node: uwindoorSecure
     entity: WindoorSecureUranium
+    doNotReplaceInheritingEntities: true
+    actions:
+    - !type:SetWiresPanelSecurity
+      wiresAccessible: true
     edges:
     - to: uwiredSecure
       conditions:
@@ -670,3 +689,69 @@
       steps:
       - tool: Anchoring
         doAfter: 4
+
+#Security Panels
+  - node: medSecurityUnfinished
+    actions:
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level1
+      wiresAccessible: false
+    edges:
+    - to: windoorSecure
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      - !type:HasTag
+        tag: SecureWindoor
+      steps:
+      - tool: Prying
+        doAfter: 4
+
+    - to: pwindoorSecure
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      - !type:HasTag
+        tag: SecurePlasmaWindoor
+      steps:
+      - tool: Prying
+        doAfter: 4
+
+    - to: uwindoorSecure
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      - !type:HasTag
+        tag: SecureUraniumWindoor
+      steps:
+      - tool: Prying
+        doAfter: 4
+
+    - to: medSecurity
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - tool: Welding
+        doAfter: 3
+
+  - node: medSecurity
+    actions:
+    - !type:SetWiresPanelSecurity
+      examine: wires-panel-component-on-examine-security-level2
+      wiresAccessible: false
+    edges:
+    - to: medSecurityUnfinished
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - tool: Welding
+        doAfter: 10
