@@ -429,16 +429,16 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Animals/possum_old.rsi
+    sprite: Mobs/Animals/possum.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: possum_old
+      state: possum
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: possum_old
+        Base: possum
       Dead:
-        Base: possum_dead_old
+        Base: possum_dead
 
 - type: entity
   name: Poppy # the Safety Possum
@@ -486,7 +486,7 @@
     - VimPilot
 
 - type: entity
-  name: Alexander
+  name: VILE SHITPIG
   parent: MobPig
   id: MobAlexander
   description: Chef's finest colleague.
@@ -960,3 +960,55 @@
     - DoorBumpOpener
     - CannotSuicide
     - VimPilot
+
+- type: entity
+  name: Goji
+  parent: NiceMobCarp
+  id: MobGoji
+  description: Probably doesn't bite. Probably.
+  components:
+    - type: Sprite
+      sprite: Mobs/Aliens/Carps/sharkminnow.rsi
+      layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+      - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+        state: mouth
+        shader: unshaded
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.40
+          density: 100
+          mask:
+            - FlyingMobMask
+          layer:
+            - FlyingMobLayer
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        180: Dead
+    - type: Stamina
+      critThreshold: 150
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: alive
+          BaseUnshaded: mouth
+        Dead:
+          Base: dead
+          BaseUnshaded: dead_mouth
+    - type: Body
+      prototype: Bloodsucker
+      requiredLegs: 1
+    - type: Butcherable
+      spawned:
+        - id: FoodMeatFish
+          amount: 4
+    - type: MeleeWeapon
+      damage:
+        types:
+          Slash: 12
+          Bloodloss: 5
