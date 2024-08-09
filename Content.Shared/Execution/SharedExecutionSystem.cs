@@ -145,21 +145,34 @@ public sealed class SharedExecutionSystem : EntitySystem
         if (!TryComp<DamageableComponent>(args.Victim, out var damageableComponent))
             return;
 
-        ShowExecutionInternalPopup(internalMsg, args.Victim, args.Victim, entity);
+        ShowExecutionInternalPopup(internalMsg, args.Victim, args.Victim, entity, false);
         ShowExecutionExternalPopup(externalMsg, args.Victim, args.Victim, entity);
-        _melee.AttemptLightAttack(args.Victim, entity, melee, args.Victim);
+        _audio.PlayPredicted(melee.HitSound, args.Victim, args.Victim);
         _suicide.ApplyLethalDamage((args.Victim, damageableComponent), melee.Damage);
         args.Handled = true;
     }
 
-    private void ShowExecutionInternalPopup(string locString, EntityUid attacker, EntityUid victim, EntityUid weapon)
+    private void ShowExecutionInternalPopup(string locString, EntityUid attacker, EntityUid victim, EntityUid weapon, bool predict = true)
     {
-        _popup.PopupClient(
-            Loc.GetString(locString, ("attacker", attacker), ("victim", victim), ("weapon", weapon)),
-            attacker,
-            attacker,
-            PopupType.MediumCaution
-        );
+        if (predict)
+        {
+            _popup.PopupClient(
+               Loc.GetString(locString, ("attacker", attacker), ("victim", victim), ("weapon", weapon)),
+               attacker,
+               attacker,
+               PopupType.MediumCaution
+               );
+        }
+        else
+        {
+            _popup.PopupEntity(
+               Loc.GetString(locString, ("attacker", attacker), ("victim", victim), ("weapon", weapon)),
+               attacker,
+               Filter.Entities(attacker),
+               true,
+               PopupType.MediumCaution
+               );
+        }
     }
 
     private void ShowExecutionExternalPopup(string locString, EntityUid attacker, EntityUid victim, EntityUid weapon)
