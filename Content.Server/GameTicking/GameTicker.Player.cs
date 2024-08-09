@@ -4,6 +4,7 @@ using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
+using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
@@ -91,6 +92,21 @@ namespace Content.Server.GameTicking
                 case SessionStatus.InGame:
                 {
                     _userDb.ClientConnected(session);
+
+                    if (mind == null)
+                    {
+                        // try to load persistence saved mind for this player when joining
+                        var query = EntityManager.AllEntityQueryEnumerator<MindComponent>();
+                        while (query.MoveNext(out var mindComp))
+                        {
+                            if (mindComp.UserId == session.UserId)
+                            {
+                                // found a mind, later it will take over its entity
+                                mind = mindComp;
+                                break;
+                            }
+                        }
+                    }
 
                     if (mind == null)
                     {
