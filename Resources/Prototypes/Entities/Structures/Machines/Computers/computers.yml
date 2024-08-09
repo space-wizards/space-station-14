@@ -994,8 +994,6 @@
     interfaces:
       enum.CargoPalletConsoleUiKey.Sale:
         type: CargoPalletConsoleBoundUserInterface
-  - type: Computer
-    board: CargoSaleComputerCircuitboard
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -1003,6 +1001,12 @@
   - type: GuideHelp
     guides:
     - Cargo
+  # anti-shitters
+  - type: Destructible
+    thresholds: null
+  - type: Construction
+    graph: null
+    node: null
 
 - type: entity
   parent: BaseComputer
