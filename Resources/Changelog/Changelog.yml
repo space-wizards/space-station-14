@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Hanzdegloker
-  changes:
-  - message: Added CMO turtleneck jumpsuit/jumpskirt.
-    type: Add
-  - message: Added a head mirror which may spawn in medical doctor's lockers
-    type: Add
-  id: 6567
-  time: '2024-05-09T21:53:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26153
 - author: PrPleGoo
   changes:
   - message: The crafted medsec hud now displays health icons too.
@@ -3794,3 +3785,15 @@
   id: 7066
   time: '2024-08-09T04:52:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29383
+- author: Plykiya
+  changes:
+  - message: Hardsuits and EVA suits now count as protection for unscrewing lightbulbs.
+    type: Add
+  - message: More gloves were given the ability to unscrew light bulbs.
+    type: Add
+  - message: Behonkers no longer hurt you when melee attacking them or interacting
+      with them.
+    type: Remove
+  id: 7067
+  time: '2024-08-09T05:32:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30244

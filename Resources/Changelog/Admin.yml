@@ -407,5 +407,14 @@ Entries:
   id: 50
   time: '2024-08-05T07:36:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30563
+- author: nikthechampiongr
+  changes:
+  - message: The player panel has now been added and can be invoked with the playerpanel
+      command. It will display general information on the selected player, as well
+      as allow for general actions to be performed on them.
+    type: Add
+  id: 51
+  time: '2024-08-09T05:33:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30238
 Name: Admin
 Order: 1
