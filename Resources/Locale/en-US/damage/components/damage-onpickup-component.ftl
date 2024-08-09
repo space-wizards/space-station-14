@@ -1,0 +1,1 @@
+damage-onpickup-entity = You hurt yourself attempting to pickup the {$entity}.

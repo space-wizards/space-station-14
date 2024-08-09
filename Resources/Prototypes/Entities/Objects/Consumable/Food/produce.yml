@@ -243,7 +243,7 @@
     pierceArmor: true
   - type: Extractable
     grindableSolutionName: food
-  - type: Thorny
+  - type: DamageOnPickup
     sound: /Audio/Effects/lightburn.ogg
     damage:
       types:

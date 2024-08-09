@@ -1,2 +1,0 @@
-Content.Shared/Damage/System/DamageOnPickupSystem
-Content.Shared/Damage/System/DamageOnPickupComponent
