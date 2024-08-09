@@ -551,7 +551,7 @@
 - type: Tag
   id: DrinkSpaceGlue
 
-- type: Tag 
+- type: Tag
   id: Dropper
 
 - type: Tag
@@ -1187,6 +1187,9 @@
 
 - type: Tag
   id: SpeedLoaderRifle
+
+- type: Tag
+  id: SpeedLoaderShotgun
 
 - type: Tag
   id: SpiderCraft

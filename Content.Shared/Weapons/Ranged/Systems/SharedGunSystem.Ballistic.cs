@@ -49,10 +49,48 @@ public abstract partial class SharedGunSystem
             return;
 
         if (GetBallisticShots(component) >= component.Capacity)
+        {
+            Popup(Loc.GetString("gun-ballistic-transfer-target-full", ("entity", args.Target)), uid, args.User);
             return;
+        }
 
-        component.Entities.Add(args.Used);
-        Containers.Insert(args.Used, component.Container);
+        if (EntityManager.HasComponent<SpeedLoaderComponent>(args.Used))
+        {
+            var emptySlots = component.Capacity - component.UnspawnedCount - component.Entities.Count; // Number of empty slots in the shotgun
+
+            var ammo = new List<(EntityUid? Entity, IShootable Shootable)>();
+            var ev = new TakeAmmoEvent(emptySlots, ammo, Transform(uid).Coordinates, args.User);
+            RaiseLocalEvent(args.Used, ev);
+
+            // empty speedloader
+            if (ev.Ammo.Count == 0)
+            {
+                Popup(Loc.GetString("gun-speedloader-empty"), uid, args.User);
+                return;
+            }
+
+            foreach (var (ent, _) in ammo)
+            {
+                if (ent == null)
+                    continue;
+
+                component.Entities.Add(ent.Value);
+                Containers.Insert(ent.Value, component.Container);
+
+                if (IsClientSide(ent.Value))
+                    Del(ent.Value);
+
+                if (ev.Ammo.Count == 0)
+                    break;
+            }
+        }
+        // if not a speedloader just insert
+        else
+        {
+            component.Entities.Add(args.Used);
+            Containers.Insert(args.Used, component.Container);
+        }
+
         // Not predicted so
         Audio.PlayPredicted(component.SoundInsert, uid, args.User);
         args.Handled = true;
