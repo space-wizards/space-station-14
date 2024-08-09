@@ -6,6 +6,8 @@
   - type: StorageFill
     contents:
       - id: FlashlightSeclite
+      - id: BolaEnergy
+        amount: 2
       - id: WeaponDisabler
       - id: ClothingBeltSecurityFilled
       - id: Flash
@@ -29,6 +31,8 @@
   - type: StorageFill
     contents:
       - id: FlashlightSeclite
+      - id: BolaEnergy
+        amount: 2
       - id: WeaponDisabler
       - id: ClothingBeltSecurityFilled
       - id: Flash
@@ -52,6 +56,8 @@
     contents:
       - id: FlashlightSeclite
         prob: 0.8
+      - id: BolaEnergy
+        amount: 2
       - id: WeaponDisabler
       - id: ClothingUniformJumpsuitSecGrey
         prob: 0.3

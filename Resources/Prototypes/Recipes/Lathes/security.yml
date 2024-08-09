@@ -13,6 +13,13 @@
     Plastic: 200
 
 - type: latheRecipe
+  id: BolaEnergy
+  result: BolaEnergy
+  completetime: 2
+  materials:
+    Plastic: 300
+
+- type: latheRecipe
   id: Stunbaton
   result: Stunbaton
   category: Weapons
@@ -38,7 +45,7 @@
   materials:
     Steel: 250
     Plastic: 100
-    
+
 - type: latheRecipe
   id: WeaponLaserCarbine
   result: WeaponLaserCarbine
@@ -655,7 +662,7 @@
     Steel: 1000
     Glass: 500
     Plastic: 500
-     
+
 - type: latheRecipe
   id: MagazineGrenadeEmpty
   result: MagazineGrenadeEmpty
@@ -663,7 +670,7 @@
   materials:
      Steel: 150
      Plastic: 50
-     
+
 - type: latheRecipe
   id: GrenadeEMP
   result: GrenadeEMP
@@ -672,7 +679,7 @@
      Steel: 150
      Plastic: 100
      Glass: 20
-     
+
 - type: latheRecipe
   id: GrenadeBlast
   result: GrenadeBlast
@@ -681,7 +688,7 @@
      Steel: 450
      Plastic: 300
      Gold: 150
-     
+
 - type: latheRecipe
   id: GrenadeFlash
   result: GrenadeFlash
