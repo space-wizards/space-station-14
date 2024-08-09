@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Nimfar11 (github) for ss14",
+  "states": [
+    {
+      "name": "glow",
+	  "directions": 4
+    },
+	{
+      "name": "dead_glow"
+    },
+	{
+      "name": "dead"
+    },
+    {
+      "name": "luminous_person",
+      "directions": 4
+    }
+  ]
+}

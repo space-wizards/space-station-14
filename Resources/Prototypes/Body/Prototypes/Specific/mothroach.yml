@@ -1,0 +1,13 @@
+﻿- type: body
+  id: Mothroach
+  name: "mothroach"
+  root: torso
+  slots:
+    torso:
+      part: TorsoAnimal
+      organs:
+        lungs: OrganAnimalLungs
+        stomach: OrganMothStomach
+        liver: OrganAnimalLiver
+        heart: OrganAnimalHeart
+        kidneys: OrganAnimalKidneys

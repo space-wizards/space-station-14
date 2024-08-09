@@ -20,7 +20,7 @@ job-name-atmostech = Atmospheric Technician
 job-name-hop = Head of Personnel
 job-name-captain = Captain
 job-name-serviceworker = Service Worker
-job-name-centcomoff = CentCom Official
+job-name-centcomoff = CentComm Official
 job-name-reporter = Reporter
 job-name-musician = Musician
 job-name-librarian = Librarian
@@ -38,16 +38,26 @@ job-name-cargotech = Cargo Technician
 job-name-chef = Chef
 job-name-clown = Clown
 job-name-ertleader = ERT Leader
+job-name-ertchaplain = ERT Chaplain
 job-name-ertengineer = ERT Engineer
 job-name-ertsecurity = ERT Security
 job-name-ertmedic = ERT Medic
 job-name-ertjanitor = ERT Janitor
 job-name-boxer = Boxer
 job-name-zookeeper = Zookeeper
-job-name-senior-engineer = Senior Engineer
-job-name-senior-researcher = Senior Researcher
-job-name-senior-physician = Senior Physician
-job-name-senior-officer = Senior Officer
+job-name-visitor = Visitor
+
+# unused jobs
+# these are required for the agent ID job icon tooltips
+# I am keeping them for roleplaying opportunities
+job-name-geneticist = Geneticist
+job-name-no-id = No ID
+job-name-prisoner = Prisoner
+job-name-roboticist = Roboticist
+job-name-syndicate = Syndicate
+job-name-unknown = Unknown
+job-name-virologist = Virologist
+job-name-zombie = Zombie
 
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = Atmospheric Technician
@@ -66,6 +76,7 @@ JobChiefMedicalOfficer = Chief Medical Officer
 JobClown = Clown
 JobDetective = Detective
 JobBrigmedic = Brigmedic
+JobERTChaplain = ERT Chaplain
 JobERTEngineer = ERT Engineer
 JobERTJanitor = ERT Janitor
 JobERTLeader = ERT Leader
@@ -91,12 +102,9 @@ JobSalvageSpecialist = Salvage Specialist
 JobScientist = Scientist
 JobSecurityCadet = Security Cadet
 JobSecurityOfficer = Security Officer
-JobSeniorEngineer = Senior Engineer
-JobSeniorOfficer = Senior Officer
-JobSeniorPhysician = Senior Physician
-JobSeniorResearcher = Senior Researcher
 JobServiceWorker = Service Worker
 JobStationEngineer = Station Engineer
 JobTechnicalAssistant = Technical Assistant
+JobVisitor = Visitor
 JobWarden = Warden
 JobZookeeper = Zookeeper

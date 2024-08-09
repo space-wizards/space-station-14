@@ -2,11 +2,12 @@
   name: BaseWeaponHeavyMachineGun
   parent: BaseItem
   id: BaseWeaponHeavyMachineGun
-  description: Spray and pray
+  description: Spray and pray.
   abstract: true
   components:
   - type: Sprite
   - type: Item
+    size: Ginormous
   - type: Gun
     fireRate: 20
     selectedMode: FullAuto
@@ -33,7 +34,6 @@
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
     sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
-    size: 90
   - type: Gun
     fireRate: 15
     soundGunshot:

@@ -1,20 +1,20 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
 using Content.Server.MoMMI;
+using Content.Server.Players.RateLimiting;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Mind;
-using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 
@@ -23,7 +23,7 @@ namespace Content.Server.Chat.Managers
     /// <summary>
     ///     Dispatches chat messages to clients.
     /// </summary>
-    internal sealed class ChatManager : IChatManager
+    internal sealed partial class ChatManager : IChatManager
     {
         private static readonly Dictionary<string, string> PatronOocColors = new()
         {
@@ -42,6 +42,7 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly INetConfigurationManager _netConfigManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly PlayerRateLimitManager _rateLimitManager = default!;
 
         /// <summary>
         /// The maximum length a player-sent message can be sent
@@ -51,8 +52,7 @@ namespace Content.Server.Chat.Managers
         private bool _oocEnabled = true;
         private bool _adminOocEnabled = true;
 
-        public Dictionary<IPlayerSession, int> SenderKeys { get; } = new();
-        public Dictionary<IPlayerSession, HashSet<NetEntity>> SenderEntities { get; } = new();
+        private readonly Dictionary<NetUserId, ChatUser> _players = new();
 
         public void Initialize()
         {
@@ -61,6 +61,8 @@ namespace Content.Server.Chat.Managers
 
             _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
             _configurationManager.OnValueChanged(CCVars.AdminOocEnabled, OnAdminOocEnabledChanged, true);
+
+            RegisterRateLimits();
         }
 
         private void OnOocEnabledChanged(bool val)
@@ -79,13 +81,26 @@ namespace Content.Server.Chat.Managers
             DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-admin-ooc-chat-enabled-message" : "chat-manager-admin-ooc-chat-disabled-message"));
         }
 
-        public void DeleteMessagesBy(IPlayerSession player)
+        public void DeleteMessagesBy(ICommonSession player)
         {
-            var key = SenderKeys.GetValueOrDefault(player);
-            var entities = SenderEntities.GetValueOrDefault(player) ?? new HashSet<NetEntity>();
-            var msg = new MsgDeleteChatMessagesBy { Key = key, Entities = entities };
+            if (!_players.TryGetValue(player.UserId, out var user))
+                return;
 
+            var msg = new MsgDeleteChatMessagesBy { Key = user.Key, Entities = user.Entities };
             _netManager.ServerSendToAll(msg);
+        }
+
+        [return: NotNullIfNotNull(nameof(author))]
+        public ChatUser? EnsurePlayer(NetUserId? author)
+        {
+            if (author == null)
+                return null;
+
+            ref var user = ref CollectionsMarshal.GetValueRefOrAddDefault(_players, author.Value, out var exists);
+            if (!exists || user == null)
+                user = new ChatUser(_players.Count);
+
+            return user;
         }
 
         #region Server Announcements
@@ -102,15 +117,29 @@ namespace Content.Server.Chat.Managers
         public void DispatchServerMessage(ICommonSession player, string message, bool suppressLog = false)
         {
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", FormattedMessage.EscapeText(message)));
-            ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, player.ConnectedClient);
+            ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, player.Channel);
 
             if (!suppressLog)
                 _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server message to {player:Player}: {message}");
         }
 
-        public void SendAdminAnnouncement(string message)
+        public void SendAdminAnnouncement(string message, AdminFlags? flagBlacklist, AdminFlags? flagWhitelist)
         {
-            var clients = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient);
+            var clients = _adminManager.ActiveAdmins.Where(p =>
+            {
+                var adminData = _adminManager.GetAdminData(p);
+
+                DebugTools.AssertNotNull(adminData);
+
+                if (adminData == null)
+                    return false;
+
+                if (flagBlacklist != null && adminData.HasFlag(flagBlacklist.Value))
+                    return false;
+
+                return flagWhitelist == null || adminData.HasFlag(flagWhitelist.Value);
+
+            }).Select(p => p.Channel);
 
             var wrappedMessage = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
                 ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")), ("message", FormattedMessage.EscapeText(message)));
@@ -119,9 +148,17 @@ namespace Content.Server.Chat.Managers
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin announcement: {message}");
         }
 
+        public void SendAdminAnnouncementMessage(ICommonSession player, string message, bool suppressLog = true)
+        {
+            var wrappedMessage = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
+                ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
+                ("message", FormattedMessage.EscapeText(message)));
+            ChatMessageToOne(ChatChannel.Admin, message, wrappedMessage, default, false, player.Channel);
+        }
+
         public void SendAdminAlert(string message)
         {
-            var clients = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient);
+            var clients = _adminManager.ActiveAdmins.Select(p => p.Channel);
 
             var wrappedMessage = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
                 ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")), ("message", FormattedMessage.EscapeText(message)));
@@ -165,8 +202,11 @@ namespace Content.Server.Chat.Managers
         /// <param name="player">The player sending the message.</param>
         /// <param name="message">The message.</param>
         /// <param name="type">The type of message.</param>
-        public void TrySendOOCMessage(IPlayerSession player, string message, OOCChatType type)
+        public void TrySendOOCMessage(ICommonSession player, string message, OOCChatType type)
         {
+            if (HandleRateLimit(player) != RateLimitStatus.Allowed)
+                return;
+
             // Check if message exceeds the character limit
             if (message.Length > MaxMessageLength)
             {
@@ -189,7 +229,7 @@ namespace Content.Server.Chat.Managers
 
         #region Private API
 
-        private void SendOOC(IPlayerSession player, string message)
+        private void SendOOC(ICommonSession player, string message)
         {
             if (_adminManager.IsAdmin(player))
             {
@@ -210,23 +250,18 @@ namespace Content.Server.Chat.Managers
                 var prefs = _preferencesManager.GetPreferences(player.UserId);
                 colorOverride = prefs.AdminOOCColor;
             }
-            if (player.ConnectedClient.UserData.PatronTier is { } patron &&
-                     PatronOocColors.TryGetValue(patron, out var patronColor))
+            if (  _netConfigManager.GetClientCVar(player.Channel, CCVars.ShowOocPatronColor) && player.Channel.UserData.PatronTier is { } patron && PatronOocColors.TryGetValue(patron, out var patronColor))
             {
                 wrappedMessage = Loc.GetString("chat-manager-send-ooc-patron-wrap-message", ("patronColor", patronColor),("playerName", player.Name), ("message", FormattedMessage.EscapeText(message)));
             }
 
-            ref var key = ref CollectionsMarshal.GetValueRefOrAddDefault(SenderKeys, player, out var exists);
-            if (!exists)
-                key = SenderKeys.Count;
-
             //TODO: player.Name color, this will need to change the structure of the MsgChatMessage
-            ChatMessageToAll(ChatChannel.OOC, message, wrappedMessage, EntityUid.Invalid, hideChat: false, recordReplay: true, colorOverride: colorOverride, senderKey: key);
+            ChatMessageToAll(ChatChannel.OOC, message, wrappedMessage, EntityUid.Invalid, hideChat: false, recordReplay: true, colorOverride: colorOverride, author: player.UserId);
             _mommiLink.SendOOCMessage(player.Name, message);
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"OOC from {player:Player}: {message}");
         }
 
-        private void SendAdminChat(IPlayerSession player, string message)
+        private void SendAdminChat(ICommonSession player, string message)
         {
             if (!_adminManager.IsAdmin(player))
             {
@@ -234,18 +269,14 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
-            var clients = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient);
+            var clients = _adminManager.ActiveAdmins.Select(p => p.Channel);
             var wrappedMessage = Loc.GetString("chat-manager-send-admin-chat-wrap-message",
                                             ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
                                             ("playerName", player.Name), ("message", FormattedMessage.EscapeText(message)));
 
-            ref var key = ref CollectionsMarshal.GetValueRefOrAddDefault(SenderKeys, player, out var exists);
-            if (!exists)
-                key = SenderKeys.Count;
-
             foreach (var client in clients)
             {
-                var isSource = client != player.ConnectedClient;
+                var isSource = client != player.Channel;
                 ChatMessageToOne(ChatChannel.AdminChat,
                     message,
                     wrappedMessage,
@@ -253,7 +284,8 @@ namespace Content.Server.Chat.Managers
                     false,
                     client,
                     audioPath: isSource ? _netConfigManager.GetClientCVar(client, CCVars.AdminChatSoundPath) : default,
-                    audioVolume: isSource ? _netConfigManager.GetClientCVar(client, CCVars.AdminChatSoundVolume) : default, senderKey: key);
+                    audioVolume: isSource ? _netConfigManager.GetClientCVar(client, CCVars.AdminChatSoundVolume) : default,
+                    author: player.UserId);
             }
 
             _adminLogger.Add(LogType.Chat, $"Admin chat from {player:Player}: {message}");
@@ -263,9 +295,13 @@ namespace Content.Server.Chat.Managers
 
         #region Utility
 
-        public void ChatMessageToOne(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, INetChannel client, Color? colorOverride = null, bool recordReplay = false, string? audioPath = null, float audioVolume = 0, int? senderKey = null)
+        public void ChatMessageToOne(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, INetChannel client, Color? colorOverride = null, bool recordReplay = false, string? audioPath = null, float audioVolume = 0, NetUserId? author = null)
         {
-            var msg = new ChatMessage(channel, message, wrappedMessage, _entityManager.GetNetEntity(source), senderKey, hideChat, colorOverride, audioPath, audioVolume);
+            var user = author == null ? null : EnsurePlayer(author);
+            var netSource = _entityManager.GetNetEntity(source);
+            user?.AddEntity(netSource);
+
+            var msg = new ChatMessage(channel, message, wrappedMessage, netSource, user?.Key, hideChat, colorOverride, audioPath, audioVolume);
             _netManager.ServerSendMessage(new MsgChatMessage() { Message = msg }, client);
 
             if (!recordReplay)
@@ -278,12 +314,16 @@ namespace Content.Server.Chat.Managers
             }
         }
 
-        public void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, IEnumerable<INetChannel> clients, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0)
-            => ChatMessageToMany(channel, message, wrappedMessage, source, hideChat, recordReplay, clients.ToList(), colorOverride, audioPath, audioVolume);
+        public void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, IEnumerable<INetChannel> clients, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0, NetUserId? author = null)
+            => ChatMessageToMany(channel, message, wrappedMessage, source, hideChat, recordReplay, clients.ToList(), colorOverride, audioPath, audioVolume, author);
 
-        public void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, List<INetChannel> clients, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0)
+        public void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, List<INetChannel> clients, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0, NetUserId? author = null)
         {
-            var msg = new ChatMessage(channel, message, wrappedMessage, _entityManager.GetNetEntity(source), null, hideChat, colorOverride, audioPath, audioVolume);
+            var user = author == null ? null : EnsurePlayer(author);
+            var netSource = _entityManager.GetNetEntity(source);
+            user?.AddEntity(netSource);
+
+            var msg = new ChatMessage(channel, message, wrappedMessage, netSource, user?.Key, hideChat, colorOverride, audioPath, audioVolume);
             _netManager.ServerSendToMany(new MsgChatMessage() { Message = msg }, clients);
 
             if (!recordReplay)
@@ -305,15 +345,19 @@ namespace Content.Server.Chat.Managers
             var clients = new List<INetChannel>();
             foreach (var recipient in filter.Recipients)
             {
-                clients.Add(recipient.ConnectedClient);
+                clients.Add(recipient.Channel);
             }
 
             ChatMessageToMany(channel, message, wrappedMessage, source, hideChat, recordReplay, clients, colorOverride, audioPath, audioVolume);
         }
 
-        public void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0, int? senderKey = null)
+        public void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0, NetUserId? author = null)
         {
-            var msg = new ChatMessage(channel, message, wrappedMessage, _entityManager.GetNetEntity(source), senderKey, hideChat, colorOverride, audioPath, audioVolume);
+            var user = author == null ? null : EnsurePlayer(author);
+            var netSource = _entityManager.GetNetEntity(source);
+            user?.AddEntity(netSource);
+
+            var msg = new ChatMessage(channel, message, wrappedMessage, netSource, user?.Key, hideChat, colorOverride, audioPath, audioVolume);
             _netManager.ServerSendToAll(new MsgChatMessage() { Message = msg });
 
             if (!recordReplay)
@@ -326,7 +370,7 @@ namespace Content.Server.Chat.Managers
             }
         }
 
-        public bool MessageCharacterLimit(IPlayerSession? player, string message)
+        public bool MessageCharacterLimit(ICommonSession? player, string message)
         {
             var isOverLength = false;
 

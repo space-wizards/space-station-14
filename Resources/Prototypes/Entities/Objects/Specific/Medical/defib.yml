@@ -28,10 +28,14 @@
             True: { visible: true }
             False: { visible: false }
     - type: Item
-      size: 50
-    - type: ItemCooldown
+      size: Large
     - type: Speech
       speechVerb: Robotic
+    - type: ItemToggle
+      soundActivate:
+        path: /Audio/Items/Defib/defib_safety_on.ogg
+      soundDeactivate:
+        path: /Audio/Items/Defib/defib_safety_off.ogg
     - type: Defibrillator
       zapHeal:
         types:
@@ -39,7 +43,7 @@
     - type: DoAfter
     - type: UseDelay
     - type: StaticPrice
-      price: 100
+      price: 30
     - type: GuideHelp
       guides:
       - Medical Doctor

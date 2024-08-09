@@ -1,5 +1,4 @@
 ﻿using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Speech;
 
@@ -8,7 +7,7 @@ namespace Content.Shared.Speech;
 ///     on punctuation or by directly overriding the prototype.
 /// </summary>
 [Prototype("speechVerb")]
-public sealed class SpeechVerbPrototype : IPrototype
+public sealed partial class SpeechVerbPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 
@@ -44,4 +43,10 @@ public sealed class SpeechVerbPrototype : IPrototype
     /// </summary>
     [DataField("priority")]
     public int Priority = 0;
+
+    /// <summary>
+    /// Name shown in the voicemask UI for this verb.
+    /// </summary>
+    [DataField(required: true)]
+    public LocId Name = string.Empty;
 }

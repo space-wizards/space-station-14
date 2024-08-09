@@ -3,11 +3,26 @@
                       Title="{Loc 'gateway-window-title'}"
                       MinSize="800 360">
     <BoxContainer Orientation="Vertical">
-	    <BoxContainer Orientation="Horizontal">
-	        <Label Name="NextCloseLabel"
-	               Text="{Loc 'gateway-window-portal-closing'}"
-	               Margin="5"></Label>
-	        <ProgressBar Name="NextCloseBar"
+        <BoxContainer Orientation="Horizontal">
+            <!-- This is wide as shit but makes it consistent with the cooldown label +
+                   handles localisations a bit better -->
+            <Label Name="NextUnlockLabel"
+                   Text="{Loc 'gateway-window-portal-unlock'}"
+                   Margin="5"
+                   SetWidth="128"/>
+            <ProgressBar Name="NextUnlockBar"
+                         HorizontalExpand="True"
+                         MinValue="0"
+                         MaxValue="1"
+                         SetHeight="25"/>
+            <Label Name="NextUnlockText" Text="0" Margin="5"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="NextReadyLabel"
+                   Text="{Loc 'gateway-window-portal-cooldown'}"
+                   Margin="5"
+                   SetWidth="128"/>
+	        <ProgressBar Name="NextReadyBar"
 	                     HorizontalExpand="True"
 	                     MinValue="0"
 	                     MaxValue="1"

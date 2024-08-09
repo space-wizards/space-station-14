@@ -1,6 +1,0 @@
-LightningShock.ogg taken from Citadel Station at commit: https://github.com/Citadel-Station-13/Citadel-Station-13/commit/35a1723e98a60f375df590ca572cc90f1bb80bd5
-
-- files: ["LightningShock.ogg"]
-  license: "CC-BY-NC-SA-3.0"
-  copyright: "LightningShock.ogg taken from Citadel Station."
-  source: "https://github.com/Citadel-Station-13/Citadel-Station-13/commit/35a1723e98a60f375df590ca572cc90f1bb80bd5"

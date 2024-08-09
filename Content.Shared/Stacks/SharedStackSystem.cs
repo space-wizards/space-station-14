@@ -23,8 +23,8 @@ namespace Content.Shared.Stacks
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
         [Dependency] protected readonly SharedHandsSystem Hands = default!;
         [Dependency] protected readonly SharedTransformSystem Xform = default!;
-        [Dependency] private   readonly EntityLookupSystem _entityLookup = default!;
-        [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] protected readonly SharedPopupSystem Popup = default!;
         [Dependency] private readonly SharedStorageSystem _storage = default!;
 
@@ -175,7 +175,7 @@ namespace Content.Shared.Stacks
 
             // Server-side override deletes the entity if count == 0
             component.Count = amount;
-            Dirty(component);
+            Dirty(uid, component);
 
             Appearance.SetData(uid, StackVisuals.Actual, component.Count);
             RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count));
@@ -327,6 +327,9 @@ namespace Content.Shared.Stacks
         public bool TryAdd(EntityUid insertEnt, EntityUid targetEnt, int count, StackComponent? insertStack = null, StackComponent? targetStack = null)
         {
             if (!Resolve(insertEnt, ref insertStack) || !Resolve(targetEnt, ref targetStack))
+                return false;
+
+            if (insertStack.StackTypeId != targetStack.StackTypeId)
                 return false;
 
             var available = GetAvailableSpace(targetStack);

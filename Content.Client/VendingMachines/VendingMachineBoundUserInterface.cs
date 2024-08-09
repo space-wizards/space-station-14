@@ -1,8 +1,8 @@
 using Content.Client.VendingMachines.UI;
 using Content.Shared.VendingMachines;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using System.Linq;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.VendingMachines
 {
@@ -13,6 +13,9 @@ namespace Content.Client.VendingMachines
 
         [ViewVariables]
         private List<VendingMachineInventoryEntry> _cachedInventory = new();
+
+        [ViewVariables]
+        private List<int> _cachedFilteredIndex = new();
 
         public VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -26,15 +29,14 @@ namespace Content.Client.VendingMachines
 
             _cachedInventory = vendingMachineSys.GetAllInventory(Owner);
 
-            _menu = new VendingMachineMenu { Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName };
+            _menu = this.CreateWindow<VendingMachineMenu>();
+            _menu.OpenCenteredLeft();
+            _menu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
 
-            _menu.OnClose += Close;
             _menu.OnItemSelected += OnItemSelected;
             _menu.OnSearchChanged += OnSearchChanged;
 
-            _menu.Populate(_cachedInventory);
-
-            _menu.OpenCentered();
+            _menu.Populate(_cachedInventory, out _cachedFilteredIndex);
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -46,7 +48,7 @@ namespace Content.Client.VendingMachines
 
             _cachedInventory = newState.Inventory;
 
-            _menu?.Populate(_cachedInventory);
+            _menu?.Populate(_cachedInventory, out _cachedFilteredIndex, _menu.SearchBar.Text);
         }
 
         private void OnItemSelected(ItemList.ItemListSelectedEventArgs args)
@@ -54,7 +56,7 @@ namespace Content.Client.VendingMachines
             if (_cachedInventory.Count == 0)
                 return;
 
-            var selectedItem = _cachedInventory.ElementAtOrDefault(args.ItemIndex);
+            var selectedItem = _cachedInventory.ElementAtOrDefault(_cachedFilteredIndex.ElementAtOrDefault(args.ItemIndex));
 
             if (selectedItem == null)
                 return;
@@ -78,7 +80,7 @@ namespace Content.Client.VendingMachines
 
         private void OnSearchChanged(string? filter)
         {
-            _menu?.Populate(_cachedInventory, filter);
+            _menu?.Populate(_cachedInventory, out _cachedFilteredIndex, filter);
         }
     }
 }

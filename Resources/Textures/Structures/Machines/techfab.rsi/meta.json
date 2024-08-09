@@ -14,7 +14,22 @@
       "name": "med"
     },
     {
-        "name": "ammo"
+      "name": "sec"
+    },
+    {
+      "name": "sci"
+    },
+    {
+      "name": "engi"
+    },
+    {
+      "name": "service"
+    },
+    {
+      "name": "cargo"
+    },
+    {
+      "name": "ammo"
     },
     {
       "name": "panel"

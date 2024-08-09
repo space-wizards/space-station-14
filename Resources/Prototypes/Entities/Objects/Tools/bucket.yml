@@ -16,15 +16,18 @@
       state: fill-1
       visible: false
   - type: Item
-    size: 100
+    size: Normal
   - type: Clothing
     sprite: Objects/Tools/bucket.rsi
     slots:
     - HEAD
+    quickEquip: false
   - type: SolutionContainerManager
     solutions:
       bucket:
         maxVol: 250
+  - type: MixableSolution
+    solution: bucket
   - type: SolutionTransfer
     transferAmount: 100
     maxTransferAmount: 100
@@ -32,8 +35,8 @@
     canChangeTransferAmount: true
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: MeleeWeapon
     soundNoDamage:
       path: "/Audio/Effects/Fluids/splat.ogg"
@@ -42,11 +45,15 @@
         Blunt: 0
   - type: Spillable
     solution: bucket
+  - type: SpillWhenWorn
+    solution: bucket
   - type: DrawableSolution
     solution: bucket
   - type: RefillableSolution
     solution: bucket
   - type: DrainableSolution
+    solution: bucket
+  - type: SolutionItemStatus
     solution: bucket
   - type: Appearance
   - type: SolutionContainerVisuals
@@ -60,3 +67,4 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 50
+  - type: DnaSubstanceTrace

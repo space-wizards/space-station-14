@@ -1,5 +1,7 @@
+using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atmos.Components
 {
@@ -43,8 +45,16 @@ namespace Content.Server.Atmos.Components
         /// <summary>
         /// Whether the entity is immuned to pressure (i.e possess the PressureImmunity component)
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool HasImmunity = false;
 
+        [DataField]
+        public ProtoId<AlertPrototype> HighPressureAlert = "HighPressure";
+
+        [DataField]
+        public ProtoId<AlertPrototype> LowPressureAlert = "LowPressure";
+
+        [DataField]
+        public ProtoId<AlertCategoryPrototype> PressureAlertCategory = "Pressure";
     }
 }

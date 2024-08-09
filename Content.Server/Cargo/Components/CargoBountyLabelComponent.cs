@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Cargo.Components;
+using Content.Server.Station.Systems;
+
+namespace Content.Server.Cargo.Components;
 
 /// <summary>
 /// This is used for marking containers as
@@ -10,11 +12,17 @@ public sealed partial class CargoBountyLabelComponent : Component
     /// <summary>
     /// The ID for the bounty this label corresponds to.
     /// </summary>
-    [DataField("id"), ViewVariables(VVAccess.ReadWrite)]
-    public int Id;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public string Id = string.Empty;
 
     /// <summary>
     /// Used to prevent recursion in calculating the price.
     /// </summary>
     public bool Calculating;
+
+    /// <summary>
+    /// The Station System to check and remove bounties from
+    /// </summary>
+    [DataField]
+    public EntityUid? AssociatedStationId;
 }

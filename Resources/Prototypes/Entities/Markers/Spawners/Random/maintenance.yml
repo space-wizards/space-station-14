@@ -11,17 +11,28 @@
           state: icon-super
     - type: RandomSpawner
       rarePrototypes:
+        - ClothingUniformJumpsuitFamilyGuy
         - CigarGold
         - ClothingNeckCloakHerald
         - ClothingHeadHelmetTemplar
         - ClothingNeckCloakTrans
         - ClothingNeckCloakAdmin
         - ClothingNeckCloakMoth
+        - ClothingNeckCloakVoid
         - ClothingNeckCloakGoliathCloak
+        - ClothingNeckCloakAce
+        - ClothingNeckCloakAro
+        - ClothingNeckCloakBi
+        - ClothingNeckCloakIntersex
+        - ClothingNeckCloakLesbian
+        - ClothingNeckCloakGay
+        - ClothingNeckCloakEnby
+        - ClothingNeckCloakPan
         - ToySkeleton
         - Basketball
         - Football
         - BalloonCorgi
+        - BalloonNT
         - PonderingOrb
         - Skub
         - DrinkMugDog
@@ -52,6 +63,11 @@
         - ClothingShoesCult
         - ClothingUniformJumpsuitAncient
         - ClothingUniformJumpsuitPirate
+        - ClothingShoesBootsCowboyFancy
+        - ClothingHeadHatCowboyBountyHunter
+        - ClothingNeckAutismPin
+        - ClothingNeckGoldAutismPin
+        - WristwatchGold
       rareChance: 0.01
       prototypes:
         - Lighter
@@ -64,7 +80,7 @@
         - ClothingHeadHatCone
         - ClothingNeckBling
         - ClothingHeadHelmetCosmonaut
-        - ClothingHeadHelmetScaf
+        - ClothingHeadHelmetBasic
         - ClothingShoeSlippersDuck
         - ClothingUnderSocksBee
         - ClothingUnderSocksCoder
@@ -95,6 +111,7 @@
         - ClothingNeckTieRed
         - ClothingOuterCoatGentle
         - ClothingOuterCoatJensen
+        - ClothingEyesGlassesJensen
         - ClothingOuterCoatLab
         - ClothingOuterCoatPirate
         - ClothingOuterHoodieBlack
@@ -104,12 +121,15 @@
         - ClothingOuterFlannelGreen
         - ClothingOuterVestHazard
         - ClothingShoesBootsJack
+        - ClothingShoesHighheelBoots
         - ClothingShoesBootsLaceup
         - ClothingShoesLeather
         - ClothingShoesBootsSalvage
         - ClothingShoesBootsWork
         - ClothingShoesTourist
         - ClothingUniformJumpsuitLoungewear
+        - ClothingHeadHatCowboyRed
+        - Wristwatch
       chance: 0.6
       offset: 0.0
 
@@ -136,10 +156,13 @@
       rareChance: 0.08
       prototypes:
         - FlashlightLantern
-        - YellowOxygenTankFilled
+        - OxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
         - ToolboxEmergencyFilled
+        - ToolboxArtisticFilled
         - NitrogenTankFilled
+        - DoubleEmergencyNitrogenTankFilled
+        - EmergencyFunnyOxygenTankFilled
         - ToolboxElectricalFilled
         - ToolboxMechanicalFilled
         - ClothingBeltUtility
@@ -183,6 +206,7 @@
         - CableHVStack10
         - CableMVStack10
         - CableApcStack10
+        - PetCarrier
       chance: 0.6
       offset: 0.0
 
@@ -209,8 +233,10 @@
       rareChance: 0.05
       prototypes:
         - FlashlightLantern
-        - YellowOxygenTankFilled
+        - OxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
+        - NitrogenTankFilled
+        - DoubleEmergencyNitrogenTankFilled
         - Lighter
         - Matchbox
         - Crowbar

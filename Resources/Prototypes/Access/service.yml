@@ -26,6 +26,10 @@
   id: Chapel
   name: id-card-access-level-chapel
 
+- type: accessLevel
+  id: Lawyer
+  name: id-card-access-level-lawyer
+
 - type: accessGroup
   id: Service
   tags:
@@ -37,3 +41,4 @@
   - Janitor
   - Theatre
   - Chapel
+  - Lawyer

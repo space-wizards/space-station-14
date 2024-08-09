@@ -16,7 +16,8 @@ public partial class MobStateSystem
     /// <returns>If the entity can be set to that MobState</returns>
     public bool HasState(EntityUid entity, MobState mobState, MobStateComponent? component = null)
     {
-        return Resolve(entity, ref component, false) && component.AllowedStates.Contains(mobState);
+        return _mobStateQuery.Resolve(entity, ref component, false) &&
+               component.AllowedStates.Contains(mobState);
     }
 
     /// <summary>
@@ -27,7 +28,7 @@ public partial class MobStateSystem
     /// <param name="origin">Entity that caused the state update (if applicable)</param>
     public void UpdateMobState(EntityUid entity, MobStateComponent? component = null, EntityUid? origin = null)
     {
-        if (!Resolve(entity, ref component))
+        if (!_mobStateQuery.Resolve(entity, ref component))
             return;
 
         var ev = new UpdateMobStateEvent {Target = entity, Component = component, Origin = origin};
@@ -36,7 +37,8 @@ public partial class MobStateSystem
     }
 
     /// <summary>
-    /// Change the MobState and trigger MobState update events
+    /// Change the MobState without triggering UpdateMobState events.
+    /// WARNING: use this sparingly when you need to override other systems (MobThresholds)
     /// </summary>
     /// <param name="entity">Target Entity we want to change the MobState of</param>
     /// <param name="mobState">The new MobState we want to set</param>
@@ -45,12 +47,10 @@ public partial class MobStateSystem
     public void ChangeMobState(EntityUid entity, MobState mobState, MobStateComponent? component = null,
         EntityUid? origin = null)
     {
-        if (!Resolve(entity, ref component))
+        if (!_mobStateQuery.Resolve(entity, ref component))
             return;
 
-        var ev = new UpdateMobStateEvent {Target = entity, Component = component, Origin = origin, State = mobState};
-        RaiseLocalEvent(entity, ref ev);
-        ChangeState(entity, component, ev.State);
+        ChangeState(entity, component, mobState, origin: origin);
     }
 
     #endregion

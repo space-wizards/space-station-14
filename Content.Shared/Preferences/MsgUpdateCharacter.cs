@@ -19,7 +19,8 @@ namespace Content.Shared.Preferences
         {
             Slot = buffer.ReadInt32();
             var length = buffer.ReadVariableInt32();
-            using var stream = buffer.ReadAlignedMemory(length);
+            using var stream = new MemoryStream(length);
+            buffer.ReadAlignedMemory(stream, length);
             Profile = serializer.Deserialize<ICharacterProfile>(stream);
         }
 

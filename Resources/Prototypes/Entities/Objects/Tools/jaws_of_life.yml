@@ -11,26 +11,22 @@
     sprite: Objects/Tools/jaws_of_life.rsi
     state: jaws_pry
   - type: Item
-    size: 50
+    size: Normal
   - type: Clothing
     sprite: Objects/Tools/jaws_of_life.rsi
     quickEquip: false
     slots:
       - Belt
-  - type: TilePrying
-  - type: LatticeCutting
+  - type: ToolTileCompatible
+    delay: 0.5
   - type: Tool
     qualities:
       - Prying
-    speed: 1.5
     useSound: /Audio/Items/jaws_pry.ogg
   - type: Prying
-    pryPowered: !type:Bool
-      true
-    force: !type:Bool
-      true
+    speedModifier: 1.5
+    pryPowered: true
     useSound: /Audio/Items/jaws_pry.ogg
-  - type: ToolForcePowered
   - type: MultipleTool
     statusShowBehavior: true
     entries:
@@ -47,9 +43,12 @@
         useSound: /Audio/Items/jaws_cut.ogg
         changeSound: /Audio/Items/change_jaws.ogg
   - type: MeleeWeapon
+    wideAnimationRotation: 90
     damage:
       types:
         Blunt: 10
+    soundHit:
+      collection: MetalThud
 
 - type: entity
   name: syndicate jaws of life
@@ -61,11 +60,14 @@
     sprite: Objects/Tools/jaws_of_life.rsi
     state: syn_jaws_pry
   - type: Item
-    size: 35
-  - type: Tool
-    qualities:
-      - Prying
-    speed: 3.0
+    inhandVisuals:
+      left:
+      - state: syn_inhand-left
+      right:
+      - state: syn_inhand-right
+    size: Normal
+  - type: Prying
+    speedModifier: 3.0
   - type: MultipleTool
     entries:
       - behavior: Prying

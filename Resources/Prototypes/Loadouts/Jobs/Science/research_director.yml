@@ -1,0 +1,39 @@
+# Head
+
+- type: loadout
+  id: ResearchDirectorBeret
+  startingGear: ScientificBeret
+
+# Neck
+
+- type: loadout
+  id: ResearchDirectorMantle
+  equipment:
+    neck: ClothingNeckMantleRD
+
+- type: loadout
+  id: ResearchDirectorCloak
+  equipment:
+    neck: ClothingNeckCloakRd
+
+# Jumpsuit
+- type: loadout
+  id: ResearchDirectorJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitResearchDirector
+
+- type: loadout
+  id: ResearchDirectorJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtResearchDirector
+
+# OuterClothing
+- type: loadout
+  id: ResearchDirectorLabCoat
+  equipment:
+    outerClothing: ClothingOuterCoatRD
+
+- type: loadout
+  id: ResearchDirectorWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterRD

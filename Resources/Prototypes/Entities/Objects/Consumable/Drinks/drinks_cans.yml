@@ -1,3 +1,4 @@
+# When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_soda.yml
 - type: entity
   parent: BaseItem
   id: DrinkCanBaseFull
@@ -5,7 +6,7 @@
   components:
   - type: Drink
   - type: Openable
-  - type: PressurizedDrink
+  - type: Shakeable
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -13,13 +14,15 @@
         - ReagentId: Cola
           Quantity: 30
         maxVol: 30
+  - type: MixableSolution
+    solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 15
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Sprite
     state: icon
     layers:
@@ -32,6 +35,8 @@
   - type: RefillableSolution
     solution: drink
   - type: DrainableSolution
+    solution: drink
+  - type: PressurizedSolution
     solution: drink
   - type: Appearance
   - type: GenericVisualizer
@@ -51,14 +56,17 @@
   - type: Tool
     qualities:
     - Rolling
-    speed: 0.25 # its small so takes longer to roll the entire dough flat
-  - type: ItemCooldown
+    speedModifier: 0.25 # its small so takes longer to roll the entire dough flat
   - type: SpaceGarbage
-  - type: TrashOnEmpty
+  - type: TrashOnSolutionEmpty
     solution: drink
   - type: PhysicalComposition
     materialComposition:
       Steel: 50 #reduce, reuse, recycle
+  - type: Tag
+    tags:
+    - DrinkCan
+  - type: DnaSubstanceTrace
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -76,11 +84,37 @@
   - type: Tag
     tags:
     - Cola
+    - DrinkCan
     - Recyclable
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cola.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/cola.rsi
+
+# created when taking apart an ied
+- type: entity
+  parent: DrinkColaCan
+  id: DrinkColaCanEmpty
+  suffix: empty
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: Openable
+    opened: true
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/cola.rsi
+    layers:
+    - state: icon_open
+  - type: Item
+    sprite: Objects/Consumable/Drinks/cola.rsi
+  - type: Tag
+    tags:
+    - Cola
+    - DrinkCan
+    - Recyclable
+    - Trash
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -153,6 +187,9 @@
     sprite: Objects/Consumable/Drinks/rootbeer.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/rootbeer.rsi
+  - type: Tag
+    tags:
+    - Beer
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -209,6 +246,24 @@
 
 - type: entity
   parent: DrinkCanBaseFull
+  id: DrinkSolDryCan
+  name: sol dry
+  description: Sweet ginger soda from outer space!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: SolDry
+          Quantity: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/sol_dry.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/sol_dry.rsi
+
+- type: entity
+  parent: DrinkCanBaseFull
   id: DrinkStarkistCan
   name: starkist can
   description: The taste of a star in liquid form. And, a bit of tuna...?
@@ -245,7 +300,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkFourteenLokoCan
-  name: fourteen loko can
+  name: Fourteen Loko can
   description: The MBO has advised crew members that consumption of Fourteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly.
   components:
   - type: SolutionContainerManager
@@ -263,7 +318,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkChangelingStingCan
-  name: Changeling sting can
+  name: changeling sting can
   description: You take a tiny sip and feel a burning sensation...
   components:
   - type: SolutionContainerManager
@@ -317,6 +372,7 @@
           Quantity: 5
   - type: Tag
     tags:
+    - DrinkCan
     - Recyclable
   - type: Sprite
     sprite: Objects/Consumable/Drinks/robustnukie.rsi
@@ -370,12 +426,14 @@
         map: ["6pack6"]
         visible: false
   - type: Item
-    size: 6
+    size: Normal
   - type: Storage
-    capacity: 30
+    grid:
+    - 0,0,2,3
     whitelist:
       tags:
         - Cola
+    hideStackVisualsWhenClosed: false
   - type: StorageFill
     contents:
       - id: DrinkColaCan
@@ -430,3 +488,47 @@
     sprite: Objects/Consumable/Drinks/pwrgame.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/pwrgame.rsi
+
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkBeerCan
+  name: beer can
+  description: Small joy, big taste, no worries!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Beer
+          Quantity: 30
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/beer_can.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/beer_can.rsi
+  - type: Tag
+    tags:
+    - Beer
+
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkWineCan
+  name: wine can
+  description: Your way to forgetting all worries and having fun!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Wine
+          Quantity: 30
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/wine_can.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/wine_can.rsi
+  - type: Tag
+    tags:
+    - Wine

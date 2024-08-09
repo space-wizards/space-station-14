@@ -1,6 +1,8 @@
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
+using Content.Server.CriminalRecords.Systems;
 using Content.Server.Humanoid;
+using Content.Shared.Clothing;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Humanoid;
@@ -8,6 +10,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
 
@@ -16,12 +19,14 @@ namespace Content.Server.IdentityManagement;
 /// <summary>
 ///     Responsible for updating the identity of an entity on init or clothing equip/unequip.
 /// </summary>
-public class IdentitySystem : SharedIdentitySystem
+public sealed class IdentitySystem : SharedIdentitySystem
 {
     [Dependency] private readonly IdCardSystem _idCard = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
+    [Dependency] private readonly CriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
 
     private HashSet<EntityUid> _queuedIdentityUpdates = new();
 
@@ -33,6 +38,7 @@ public class IdentitySystem : SharedIdentitySystem
         SubscribeLocalEvent<IdentityComponent, DidEquipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, DidUnequipEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, DidUnequipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
+        SubscribeLocalEvent<IdentityComponent, WearerMaskToggledEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, MapInitEvent>(OnMapInit);
     }
 
@@ -56,8 +62,9 @@ public class IdentitySystem : SharedIdentitySystem
     {
         var ident = Spawn(null, Transform(uid).Coordinates);
 
+        _metaData.SetEntityName(ident, "identity");
         QueueIdentityUpdate(uid);
-        component.IdentityEntitySlot.Insert(ident);
+        _container.Insert(ident, component.IdentityEntitySlot);
     }
 
     /// <summary>
@@ -103,7 +110,9 @@ public class IdentitySystem : SharedIdentitySystem
         _metaData.SetEntityName(ident, name);
 
         _adminLog.Add(LogType.Identity, LogImpact.Medium, $"{ToPrettyString(uid)} changed identity to {name}");
-        RaiseLocalEvent(new IdentityChangedEvent(uid, ident));
+        var identityChangedEvent = new IdentityChangedEvent(uid, ident);
+        RaiseLocalEvent(uid, ref identityChangedEvent);
+        SetIdentityCriminalIcon(uid);
     }
 
     private string GetIdentityName(EntityUid target, IdentityRepresentation representation)
@@ -112,6 +121,16 @@ public class IdentitySystem : SharedIdentitySystem
 
         RaiseLocalEvent(target, ev);
         return representation.ToStringKnown(!ev.Cancelled);
+    }
+
+    /// <summary>
+    ///     When the identity of a person is changed, searches the criminal records to see if the name of the new identity
+    ///     has a record. If the new name has a criminal status attached to it, the person will get the criminal status
+    ///     until they change identity again.
+    /// </summary>
+    private void SetIdentityCriminalIcon(EntityUid uid)
+    {
+        _criminalRecordsConsole.CheckNewIdentity(uid);
     }
 
     /// <summary>
@@ -154,16 +173,4 @@ public class IdentitySystem : SharedIdentitySystem
     }
 
     #endregion
-}
-
-public sealed class IdentityChangedEvent : EntityEventArgs
-{
-    public EntityUid CharacterEntity;
-    public EntityUid IdentityEntity;
-
-    public IdentityChangedEvent(EntityUid characterEntity, EntityUid identityEntity)
-    {
-        CharacterEntity = characterEntity;
-        IdentityEntity = identityEntity;
-    }
 }

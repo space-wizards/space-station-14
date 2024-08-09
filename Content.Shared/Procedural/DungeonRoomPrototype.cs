@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Procedural;
 
 [Prototype("dungeonRoom")]
-public sealed class DungeonRoomPrototype : IPrototype
+public sealed partial class DungeonRoomPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = string.Empty;
 

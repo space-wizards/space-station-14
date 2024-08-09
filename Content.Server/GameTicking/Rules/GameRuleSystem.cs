@@ -1,20 +1,59 @@
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Rules.Components;
+using Content.Shared.GameTicking.Components;
+using Robust.Server.GameObjects;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
 
 public abstract partial class GameRuleSystem<T> : EntitySystem where T : IComponent
 {
+    [Dependency] protected readonly IRobustRandom RobustRandom = default!;
     [Dependency] protected readonly IChatManager ChatManager = default!;
     [Dependency] protected readonly GameTicker GameTicker = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
+
+    // Not protected, just to be used in utility methods
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly MapSystem _map = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<T, GameRuleAddedEvent>(OnGameRuleAdded);
         SubscribeLocalEvent<T, GameRuleStartedEvent>(OnGameRuleStarted);
         SubscribeLocalEvent<T, GameRuleEndedEvent>(OnGameRuleEnded);
+        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextAppend);
+    }
+
+    private void OnStartAttempt(RoundStartAttemptEvent args)
+    {
+        if (args.Forced || args.Cancelled)
+            return;
+
+        var query = QueryAllRules();
+        while (query.MoveNext(out var uid, out _, out var gameRule))
+        {
+            var minPlayers = gameRule.MinPlayers;
+            if (args.Players.Length >= minPlayers)
+                continue;
+
+            if (gameRule.CancelPresetOnTooFewPlayers)
+            {
+                ChatManager.SendAdminAnnouncement(Loc.GetString("preset-not-enough-ready-players",
+                    ("readyPlayersCount", args.Players.Length),
+                    ("minimumPlayers", minPlayers),
+                    ("presetName", ToPrettyString(uid))));
+                args.Cancel();
+            }
+            else
+            {
+                ForceEndSelf(uid, gameRule);
+            }
+        }
     }
 
     private void OnGameRuleAdded(EntityUid uid, T component, ref GameRuleAddedEvent args)
@@ -38,6 +77,17 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         Ended(uid, component, ruleData, args);
     }
 
+    private void OnRoundEndTextAppend(RoundEndTextAppendEvent ev)
+    {
+        var query = AllEntityQuery<T>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (!TryComp<GameRuleComponent>(uid, out var ruleData))
+                continue;
+
+            AppendRoundEndText(uid, comp, ruleData, ref ev);
+        }
+    }
 
     /// <summary>
     /// Called when the gamerule is added
@@ -64,41 +114,19 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     }
 
     /// <summary>
+    /// Called at the end of a round when text needs to be added for a game rule.
+    /// </summary>
+    protected virtual void AppendRoundEndText(EntityUid uid, T component, GameRuleComponent gameRule, ref RoundEndTextAppendEvent args)
+    {
+
+    }
+
+    /// <summary>
     /// Called on an active gamerule entity in the Update function
     /// </summary>
     protected virtual void ActiveTick(EntityUid uid, T component, GameRuleComponent gameRule, float frameTime)
     {
 
-    }
-
-    protected EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent> QueryActiveRules()
-    {
-        return EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent>();
-    }
-
-    protected bool TryRoundStartAttempt(RoundStartAttemptEvent ev, string localizedPresetName)
-    {
-        var query = EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent>();
-        while (query.MoveNext(out _, out _, out _, out var gameRule))
-        {
-            var minPlayers = gameRule.MinPlayers;
-            if (!ev.Forced && ev.Players.Length < minPlayers)
-            {
-                ChatManager.SendAdminAnnouncement(Loc.GetString("preset-not-enough-ready-players",
-                    ("readyPlayersCount", ev.Players.Length), ("minimumPlayers", minPlayers),
-                    ("presetName", localizedPresetName)));
-                ev.Cancel();
-                continue;
-            }
-
-            if (ev.Players.Length == 0)
-            {
-                ChatManager.DispatchServerAnnouncement(Loc.GetString("preset-no-one-ready"));
-                ev.Cancel();
-            }
-        }
-
-        return !ev.Cancelled;
     }
 
     public override void Update(float frameTime)

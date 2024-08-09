@@ -1,6 +1,5 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 
@@ -26,7 +25,7 @@ sealed class SalvageRulerCommand : IConsoleCommand
             return;
         }
 
-        if (shell.Player is not IPlayerSession player)
+        if (shell.Player is not { } player)
         {
             shell.WriteError(Loc.GetString("shell-only-players-can-run-this-command"));
             return;
@@ -45,7 +44,7 @@ sealed class SalvageRulerCommand : IConsoleCommand
         var first = true;
         foreach (var mapGrid in _maps.GetAllGrids(entityTransform.MapID))
         {
-            var aabb = _entities.GetComponent<TransformComponent>(mapGrid).WorldMatrix.TransformBox(mapGrid.Comp.LocalAABB);
+            var aabb = _entities.System<SharedTransformSystem>().GetWorldMatrix(mapGrid).TransformBox(mapGrid.Comp.LocalAABB);
             if (first)
             {
                 total = aabb;

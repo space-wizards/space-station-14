@@ -1,5 +1,7 @@
+using Content.Shared.Alert;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ensnaring.Components;
@@ -40,7 +42,12 @@ public sealed partial class EnsnareableComponent : Component
 
     [DataField("state")]
     public string? State;
+
+    [DataField]
+    public ProtoId<AlertPrototype> EnsnaredAlert = "Ensnared";
 }
+
+public sealed partial class RemoveEnsnareAlertEvent : BaseAlertEvent;
 
 [Serializable, NetSerializable]
 public sealed class EnsnareableComponentState : ComponentState

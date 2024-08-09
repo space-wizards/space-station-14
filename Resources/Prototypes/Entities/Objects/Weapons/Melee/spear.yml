@@ -5,9 +5,10 @@
   description: Definition of a Classic. Keeping murder affordable since 200,000 BCE.
   components:
   - type: EmbeddableProjectile
-    offset: 0.15,0.15
+    offset: -0.15,0.0
   - type: ThrowingAngle
     angle: 225
+  - type: LandAtCursor
   - type: Tag
     tags:
     - Spear
@@ -47,15 +48,15 @@
       types:
         Piercing: 15
   - type: Item
-    size: 95
+    size: Ginormous
   - type: Clothing
     quickEquip: false
     slots:
     - back
+    - suitStorage
   - type: Construction
     graph: Spear
     node: spear
-  - type: ItemCooldown
   - type: SolutionContainerManager
     solutions:
       melee:
@@ -66,9 +67,9 @@
     solution: melee
   - type: InjectableSolution
     solution: melee
-  - type: SolutionInjectOnCollide
+  - type: SolutionInjectOnEmbed
     transferAmount: 2
-    blockSlots: NONE
+    solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 2
   - type: Wieldable
@@ -93,6 +94,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -4
       - !type:SpawnEntitiesBehavior
         spawn:
           PartRodMetal1:
@@ -105,11 +108,15 @@
       types:
         Blunt: 5
   - type: UseDelay
-    delay: 1
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: spear
+    inHandsFillBaseName: -fill-
+    inHandsMaxFillLevels: 1
+    equippedFillBaseName: -fill-
+    equippedMaxFillLevels: 1
+
 
 - type: entity
   name: reinforced spear

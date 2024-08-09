@@ -9,7 +9,7 @@
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: Item
-    size: 5
+    size: Small
   - type: Clothing
     quickEquip: false
     slots:
@@ -29,7 +29,12 @@
         acts: ["Destruction"]
   - type: Appearance
   - type: AnimationPlayer
-  - type: TimerTriggerVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.Trigger.TriggerVisuals.VisualState:
+        enum.ConstructionVisuals.Layer:
+          Primed: { state: primed }
+          Unprimed: { state: icon }
 
 - type: entity
   name: explosive grenade
@@ -54,7 +59,7 @@
 
 - type: entity
   name: flashbang
-  description: Eeeeeeeeeeeeeeeeeeeeee
+  description: Eeeeeeeeeeeeeeeeeeeeee.
   parent: GrenadeBase
   id: GrenadeFlashBang
   components:
@@ -62,7 +67,7 @@
     sprite: Objects/Weapons/Grenades/flashbang.rsi
   - type: FlashOnTrigger
     range: 7
-  - type: EmitSoundOnTrigger
+  - type: SoundOnTrigger
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
   - type: DeleteOnTrigger
@@ -75,10 +80,11 @@
   - type: GuideHelp
     guides:
     - Security
+    - Antagonists
 
 - type: entity
   id: GrenadeFlashEffect
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: PointLight
       enabled: true
@@ -114,6 +120,30 @@
       path: /Audio/Effects/minibombcountdown.ogg
       params:
         volume: 12
+
+- type: entity
+  name: self destruct
+  description: Go out on your own terms!
+  parent: GrenadeBase
+  id: SelfDestructSeq
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Minibomb
+    totalIntensity: 400
+    intensitySlope: 30
+    maxIntensity: 125
+    canCreateVacuum: true
+  - type: OnUseTimerTrigger
+    delay: 4.5
+    beepSound:
+      path: /Audio/Effects/Grenades/SelfDestruct/SDS_Charge2.ogg
+      params:
+        volume: 30
+    initialBeepDelay: 0
+    beepInterval: 16
+
 
 - type: entity
   name: supermatter grenade
@@ -267,7 +297,7 @@
     - state: empty
       map: [ "enum.ConstructionVisuals.Layer" ]
   - type: Item
-    size: 8
+    size: Small
   - type: PayloadCase
   - type: Construction
     graph: ModularGrenadeGraph
@@ -291,11 +321,12 @@
           emptyCase: { state: empty }
           wiredCase: { state: wired }
           caseWithTrigger: { state: no-payload }
+          caseWithPayload: { state: no-trigger }
           grenade: { state: complete }
       enum.Trigger.TriggerVisuals.VisualState:
         enum.ConstructionVisuals.Layer:
           Primed: { state: primed }
-          Unprimed: { state: complete }
+          # Unprimed: <Use state determined by enum.ConstructionVisuals.Layer>
   - type: StaticPrice
     price: 25
 
@@ -308,7 +339,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/empgrenade.rsi
   - type: EmpOnTrigger
-    range: 4
+    range: 5.5
     energyConsumption: 50000
   - type: DeleteOnTrigger
   - type: Appearance
@@ -340,3 +371,108 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/hallelujah.ogg
+
+- type: entity
+  parent: GrenadeBase
+  id: SmokeGrenade
+  name: smoke grenade
+  description: A tactical grenade that releases a large, long-lasting cloud of smoke when used.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/smoke.rsi
+  - type: SmokeOnTrigger
+    duration: 30
+    spreadAmount: 50
+  - type: SoundOnTrigger
+    sound: /Audio/Items/smoke_grenade_smoke.ogg
+  - type: DeleteOnTrigger
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Items/smoke_grenade_prime.ogg
+
+- type: entity
+  parent: SmokeGrenade
+  id: CleanerGrenade
+  name: cleanade
+  description: Special grenade for janitors, releasing large cloud of space cleaner foam.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/janitor.rsi
+  - type: SmokeOnTrigger
+    duration: 15
+    spreadAmount: 50
+    smokePrototype: Foam
+    solution:
+      reagents:
+      - ReagentId: SpaceCleaner
+        Quantity: 30
+
+- type: entity
+  parent: SmokeGrenade
+  id: TearGasGrenade
+  name: tear gas grenade
+  description: A riot control tear gas grenade. Causes irritation, pain and makes you cry your eyes out.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/tear_gas.rsi
+  - type: SmokeOnTrigger
+    duration: 10
+    spreadAmount: 30
+    solution:
+      reagents:
+      - ReagentId: TearGas
+        Quantity: 50
+
+- type: entity
+  parent: SmokeGrenade
+  id: MetalFoamGrenade
+  name: metal foam grenade
+  description: An emergency tool used for patching up holes. Almost as good as real walls.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/metalfoam.rsi
+  - type: SmokeOnTrigger
+    duration: 10
+    spreadAmount: 13
+    smokePrototype: AluminiumMetalFoam
+  - type: StaticPrice
+    price: 350
+
+# Non-explosive "dummy" grenades to use as a distraction.
+
+- type: entity
+  name: trick grenade
+  description: All the grenade without any of the boom.
+  parent: GrenadeBase
+  id: GrenadeDummy
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/grenade.rsi
+  - type: DeleteOnTrigger
+  - type: SpawnOnTrigger
+    proto: GrenadeFlashEffect
+  - type: SoundOnTrigger
+    sound:
+      path: /Audio/Effects/Emotes/parp1.ogg
+  - type: Appearance
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/countdown.ogg
+
+- type: entity
+  name: syndicate trickybomb
+  description: A syndicate-manufactured explosive used to make an excellent distraction.
+  parent: GrenadeDummy
+  id: SyndieTrickyBomb
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/syndgrenade.rsi
+  - type: SoundOnTrigger
+    sound:
+      path: /Audio/Effects/Emotes/parp1.ogg
+  - type: Appearance
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/minibombcountdown.ogg
+      params:
+        volume: 12

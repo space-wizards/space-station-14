@@ -7,7 +7,6 @@
     state: extraction_pack
   spawn: Fulton1
   maxCount: 10
-  itemSize: 2
 
 # Entities
 - type: entity
@@ -28,7 +27,7 @@
           mask:
             - Impassable
     - type: Item
-      size: 30
+      size: Normal
     - type: Foldable
       folded: true
     - type: Clickable
@@ -58,7 +57,7 @@
   components:
   - type: Fulton
   - type: Item
-    size: 20
+    size: Normal
   - type: Stack
     stackType: Fulton
     count: 10
@@ -83,14 +82,12 @@
   name: fulton
   suffix: One
   components:
-  - type: Item
-    size: 2
   - type: Stack
     count: 1
 
 - type: entity
   id: FultonEffect
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: fulton effect
   components:
   - type: TimedDespawn

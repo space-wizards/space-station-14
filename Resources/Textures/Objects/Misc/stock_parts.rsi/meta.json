@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation at 0d9c9a8233dfc3fc55edc538955a761a6328bee0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation at 0d9c9a8233dfc3fc55edc538955a761a6328bee0, micro_mani by EmoGarbage404 (github)",
   "states": [
     {
       "name": "adv_capacitor"
@@ -65,76 +65,6 @@
     },
     {
       "name": "card_reader"
-    },
-    {
-      "name": "datadisk0",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "datadisk1",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "datadisk2",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "datadisk3",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "datadisk4",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "datadisk5",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "datadisk6",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
     },
     {
       "name": "electrolite",

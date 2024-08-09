@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Access.Components;
@@ -24,14 +25,13 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
-    private readonly TechnologyDatabaseComponent? _technologyDatabase;
     private readonly ResearchSystem _research;
     private readonly SpriteSystem _sprite;
     private readonly AccessReaderSystem _accessReader;
 
-    public readonly EntityUid Entity;
+    public EntityUid Entity;
 
-    public ResearchConsoleMenu(EntityUid entity)
+    public ResearchConsoleMenu()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
@@ -39,27 +39,23 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         _research = _entity.System<ResearchSystem>();
         _sprite = _entity.System<SpriteSystem>();
         _accessReader = _entity.System<AccessReaderSystem>();
-        Entity = entity;
 
         ServerButton.OnPressed += _ => OnServerButtonPressed?.Invoke();
-
-        _entity.TryGetComponent(entity, out _technologyDatabase);
     }
 
-    public void  UpdatePanels(ResearchConsoleBoundInterfaceState state)
+    public void SetEntity(EntityUid entity)
     {
-        var allTech = _research.GetAvailableTechnologies(Entity);
-        AvailableCardsContainer.Children.Clear();
+        Entity = entity;
+    }
+
+    public void UpdatePanels(ResearchConsoleBoundInterfaceState state)
+    {
         TechnologyCardsContainer.Children.Clear();
-        UnlockedCardsContainer.Children.Clear();
 
-        foreach (var tech in allTech)
-        {
-            var mini = new MiniTechnologyCardControl(tech, _prototype, _sprite, _research.GetTechnologyDescription(tech));
-            AvailableCardsContainer.AddChild(mini);
-        }
+        var availableTech = _research.GetAvailableTechnologies(Entity);
+        SyncTechnologyList(AvailableCardsContainer, availableTech);
 
-        if (_technologyDatabase == null)
+        if (!_entity.TryGetComponent(Entity, out TechnologyDatabaseComponent? database))
             return;
 
         // i can't figure out the spacing so here you go
@@ -68,10 +64,10 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
             MinHeight = 10
         });
 
-        var hasAccess = _player.LocalPlayer?.ControlledEntity is not { } local ||
+        var hasAccess = _player.LocalEntity is not { } local ||
                         !_entity.TryGetComponent<AccessReaderComponent>(Entity, out var access) ||
                         _accessReader.IsAllowed(local, Entity, access);
-        foreach (var techId in _technologyDatabase.CurrentTechnologyCards)
+        foreach (var techId in database.CurrentTechnologyCards)
         {
             var tech = _prototype.Index<TechnologyPrototype>(techId);
             var cardControl = new TechnologyCardControl(tech, _prototype, _sprite, _research.GetTechnologyDescription(tech, includeTier: false), state.Points, hasAccess);
@@ -79,43 +75,39 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
             TechnologyCardsContainer.AddChild(cardControl);
         }
 
-        foreach (var unlocked in _technologyDatabase.UnlockedTechnologies)
-        {
-            var tech = _prototype.Index<TechnologyPrototype>(unlocked);
-            var cardControl = new MiniTechnologyCardControl(tech, _prototype, _sprite, _research.GetTechnologyDescription(tech, false));
-            UnlockedCardsContainer.AddChild(cardControl);
-        }
+        var unlockedTech = database.UnlockedTechnologies.Select(x => _prototype.Index<TechnologyPrototype>(x));
+        SyncTechnologyList(UnlockedCardsContainer, unlockedTech);
     }
 
     public void UpdateInformationPanel(ResearchConsoleBoundInterfaceState state)
     {
         var amountMsg = new FormattedMessage();
-        amountMsg.AddMarkup(Loc.GetString("research-console-menu-research-points-text",
+        amountMsg.AddMarkupOrThrow(Loc.GetString("research-console-menu-research-points-text",
             ("points", state.Points)));
         ResearchAmountLabel.SetMessage(amountMsg);
 
-        if (_technologyDatabase == null)
+        if (!_entity.TryGetComponent(Entity, out TechnologyDatabaseComponent? database))
             return;
 
         var disciplineText = Loc.GetString("research-discipline-none");
         var disciplineColor = Color.Gray;
-        if (_technologyDatabase.MainDiscipline != null)
+        if (database.MainDiscipline != null)
         {
-            var discipline = _prototype.Index<TechDisciplinePrototype>(_technologyDatabase.MainDiscipline);
+            var discipline = _prototype.Index<TechDisciplinePrototype>(database.MainDiscipline);
             disciplineText = Loc.GetString(discipline.Name);
             disciplineColor = discipline.Color;
         }
 
         var msg = new FormattedMessage();
-        msg.AddMarkup(Loc.GetString("research-console-menu-main-discipline",
+        msg.AddMarkupOrThrow(Loc.GetString("research-console-menu-main-discipline",
             ("name", disciplineText), ("color", disciplineColor)));
         MainDisciplineLabel.SetMessage(msg);
 
         TierDisplayContainer.Children.Clear();
-        foreach (var disciplineId in _technologyDatabase.SupportedDisciplines)
+        foreach (var disciplineId in database.SupportedDisciplines)
         {
             var discipline = _prototype.Index<TechDisciplinePrototype>(disciplineId);
-            var tier = _research.GetHighestDisciplineTier(_technologyDatabase, discipline);
+            var tier = _research.GetHighestDisciplineTier(database, discipline);
 
             // don't show tiers with no available tech
             if (tier == 0)
@@ -144,6 +136,47 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
                 }
             };
             TierDisplayContainer.AddChild(control);
+        }
+    }
+
+    /// <summary>
+    ///     Synchronize a container for technology cards with a list of technologies,
+    ///     creating or removing UI cards as appropriate.
+    /// </summary>
+    /// <param name="container">The container which contains the UI cards</param>
+    /// <param name="technologies">The current set of technologies for which there should be cards</param>
+    private void SyncTechnologyList(BoxContainer container, IEnumerable<TechnologyPrototype> technologies)
+    {
+        // For the cards which already exist, build a map from technology prototype to the UI card
+        var currentTechControls = new Dictionary<TechnologyPrototype, Control>();
+        foreach (var child in container.Children)
+        {
+            if (child is MiniTechnologyCardControl)
+            {
+                currentTechControls.Add((child as MiniTechnologyCardControl)!.Technology, child);
+            }
+        }
+
+        foreach (var tech in technologies)
+        {
+            if (!currentTechControls.ContainsKey(tech))
+            {
+                // Create a card for any technology which doesn't already have one.
+                var mini = new MiniTechnologyCardControl(tech, _prototype, _sprite, _research.GetTechnologyDescription(tech));
+                container.AddChild(mini);
+            }
+            else
+            {
+                // The tech already exists in the UI; remove it from the set, so we won't revisit it below
+                currentTechControls.Remove(tech);
+            }
+        }
+
+        // Now, any items left in the dictionary are technologies which were previously
+        // available, but now are not. Remove them.
+        foreach (var (tech, techControl) in currentTechControls)
+        {
+            container.Children.Remove(techControl);
         }
     }
 }

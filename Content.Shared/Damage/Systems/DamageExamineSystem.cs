@@ -1,8 +1,10 @@
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Verbs;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Damage.Systems;
@@ -10,6 +12,7 @@ namespace Content.Shared.Damage.Systems;
 public sealed class DamageExamineSystem : EntitySystem
 {
     [Dependency] private readonly ExamineSystemShared _examine = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
@@ -66,7 +69,7 @@ public sealed class DamageExamineSystem : EntitySystem
             if (damage.Value != FixedPoint2.Zero)
             {
                 msg.PushNewline();
-                msg.AddMarkup(Loc.GetString("damage-value", ("type", damage.Key), ("amount", damage.Value)));
+                msg.AddMarkup(Loc.GetString("damage-value", ("type", _prototype.Index<DamageTypePrototype>(damage.Key).LocalizedName), ("amount", damage.Value)));
             }
         }
 

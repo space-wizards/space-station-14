@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Humanoid.Markings
 {
     [Prototype("marking")]
-    public sealed class MarkingPrototype : IPrototype
+    public sealed partial class MarkingPrototype : IPrototype
     {
         [IdDataField]
         public string ID { get; private set; } = "uwu";

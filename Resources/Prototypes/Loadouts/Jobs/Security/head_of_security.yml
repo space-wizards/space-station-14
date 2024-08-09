@@ -1,0 +1,63 @@
+# Jumpsuit
+- type: loadout
+  id: HeadofSecurityJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoS
+
+- type: loadout
+  id: HeadofSecurityJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHoS
+
+- type: loadout
+  id: HeadofSecurityTurtleneck
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoSAlt
+
+- type: loadout
+  id: HeadofSecurityTurtleneckSkirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHoSAlt
+
+- type: loadout
+  id: HeadofSecurityFormalSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHosFormal
+
+- type: loadout
+  id: HeadofSecurityFormalSkirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHosFormal
+
+# Head
+- type: loadout
+  id: HeadofSecurityHead
+  equipment:
+    head: ClothingHeadHatHoshat
+
+- type: loadout
+  id: HeadofSecurityBeret
+  equipment:
+    head: ClothingHeadHatBeretHoS
+
+# Neck
+- type: loadout
+  id: HeadofSecurityCloak
+  equipment:
+    neck: ClothingNeckCloakHos
+
+- type: loadout
+  id: HeadofSecurityMantle
+  equipment:
+    neck: ClothingNeckMantleHOS
+
+# OuterClothing
+- type: loadout
+  id: HeadofSecurityCoat
+  equipment:
+    outerClothing: ClothingOuterCoatHoSTrench
+
+- type: loadout
+  id: HeadofSecurityWinterCoat
+  equipment:
+    outerClothing: ClothingOuterWinterHoS

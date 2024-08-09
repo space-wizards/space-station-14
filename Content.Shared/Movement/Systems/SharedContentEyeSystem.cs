@@ -1,11 +1,12 @@
 using System.Numerics;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Managers;
+using Content.Shared.Camera;
 using Content.Shared.Ghost;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Players;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Movement.Systems;
@@ -16,6 +17,9 @@ namespace Content.Shared.Movement.Systems;
 public abstract class SharedContentEyeSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminManager _admin = default!;
+
+    // Admin flags required to ignore normal eye restrictions.
+    public const AdminFlags EyeFlag = AdminFlags.Debug;
 
     public const float ZoomMod = 1.5f;
     public static readonly Vector2 DefaultZoom = Vector2.One;
@@ -28,7 +32,8 @@ public abstract class SharedContentEyeSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<ContentEyeComponent, ComponentStartup>(OnContentEyeStartup);
         SubscribeAllEvent<RequestTargetZoomEvent>(OnContentZoomRequest);
-        SubscribeAllEvent<RequestFovEvent>(OnRequestFov);
+        SubscribeAllEvent<RequestPvsScaleEvent>(OnPvsScale);
+        SubscribeAllEvent<RequestEyeEvent>(OnRequestEye);
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.ZoomIn, InputCmdHandler.FromDelegate(ZoomIn, handle:false))
@@ -83,13 +88,19 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
     private void OnContentZoomRequest(RequestTargetZoomEvent msg, EntitySessionEventArgs args)
     {
-        var ignoreLimit = msg.IgnoreLimit && _admin.HasAdminFlag(args.SenderSession, AdminFlags.Debug);
+        var ignoreLimit = msg.IgnoreLimit && _admin.HasAdminFlag(args.SenderSession, EyeFlag);
 
         if (TryComp<ContentEyeComponent>(args.SenderSession.AttachedEntity, out var content))
             SetZoom(args.SenderSession.AttachedEntity.Value, msg.TargetZoom, ignoreLimit, eye: content);
     }
 
-    private void OnRequestFov(RequestFovEvent msg, EntitySessionEventArgs args)
+    private void OnPvsScale(RequestPvsScaleEvent ev, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession.AttachedEntity is {} uid && _admin.HasAdminFlag(args.SenderSession, EyeFlag))
+            _eye.SetPvsScale(uid, ev.Scale);
+    }
+
+    private void OnRequestEye(RequestEyeEvent msg, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity is not { } player)
             return;
@@ -99,7 +110,8 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
         if (TryComp<EyeComponent>(player, out var eyeComp))
         {
-            _eye.SetDrawFov(player, msg.Fov, eyeComp);
+            _eye.SetDrawFov(player, msg.DrawFov, eyeComp);
+            _eye.SetDrawLight((player, eyeComp), msg.DrawLight);
         }
     }
 
@@ -108,12 +120,13 @@ public abstract class SharedContentEyeSystem : EntitySystem
         if (!TryComp<EyeComponent>(uid, out var eyeComp))
             return;
 
-        component.TargetZoom = eyeComp.Zoom;
+        _eye.SetZoom(uid, component.TargetZoom, eyeComp);
         Dirty(uid, component);
     }
 
     public void ResetZoom(EntityUid uid, ContentEyeComponent? component = null)
     {
+        _eye.SetPvsScale(uid, 1);
         SetZoom(uid, DefaultZoom, eye: component);
     }
 
@@ -127,6 +140,13 @@ public abstract class SharedContentEyeSystem : EntitySystem
         Dirty(uid, component);
     }
 
+    public void UpdateEyeOffset(Entity<EyeComponent?> eye)
+    {
+        var ev = new GetEyeOffsetEvent();
+        RaiseLocalEvent(eye, ref ev);
+        _eye.SetOffset(eye, ev.Offset, eye);
+    }
+
     /// <summary>
     /// Sendable from client to server to request a target zoom.
     /// </summary>
@@ -138,11 +158,27 @@ public abstract class SharedContentEyeSystem : EntitySystem
     }
 
     /// <summary>
+    /// Client->Server request for new PVS scale.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class RequestPvsScaleEvent(float scale) : EntityEventArgs
+    {
+        public float Scale = scale;
+    }
+
+    /// <summary>
     /// Sendable from client to server to request changing fov.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class RequestFovEvent : EntityEventArgs
+    public sealed class RequestEyeEvent : EntityEventArgs
     {
-        public bool Fov;
+        public readonly bool DrawFov;
+        public readonly bool DrawLight;
+
+        public RequestEyeEvent(bool drawFov, bool drawLight)
+        {
+            DrawFov = drawFov;
+            DrawLight = drawLight;
+        }
     }
 }

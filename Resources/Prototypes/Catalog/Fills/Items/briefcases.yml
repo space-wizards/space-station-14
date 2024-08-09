@@ -1,6 +1,5 @@
 - type: entity
   id: BriefcaseBrownFilled
-  name: brown briefcase
   parent: BriefcaseBrown
   suffix: Filled, Paper
   components:
@@ -11,10 +10,15 @@
 
 - type: entity
   id: BriefcaseSyndieSniperBundleFilled
-  name: brown briefcase
   parent: BriefcaseSyndie
-  suffix: SniperBundle
+  suffix: Syndicate, Sniper Bundle
   components:
+  - type: Item
+    size: Ginormous
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,6,3
   - type: StorageFill
     contents:
       - id: WeaponSniperHristov
@@ -22,15 +26,36 @@
       - id: ClothingNeckTieRed
       - id: ClothingHandsGlovesLatex
       - id: ClothingUniformJumpsuitLawyerBlack
+      - id: BarberScissors
 
 - type: entity
   id: BriefcaseSyndieLobbyingBundleFilled
-  name: brown briefcase
   parent: BriefcaseSyndie
   suffix: Syndicate, Spesos
   components:
   - type: StorageFill
     contents:
       - id: ClothingEyesGlassesSunglasses
-      - id: SpaceCash1000
-        amount: 5
+      - id: SpaceCash30000
+        amount: 1
+      - id: EncryptionKeySyndie
+      - id: RubberStampTrader
+      - id: PhoneInstrumentSyndicate
+      - id: ClothingUniformJumpsuitTacticool
+      - id: ClothingOuterCoatJensen
+      - id: ClothingHandsGlovesCombat
+      - id: ClothingMaskNeckGaiter
+      - id: SyndieHandyFlag
+
+- type: entity
+  id: BriefcaseThiefBribingBundleFilled
+  parent: BriefcaseSyndie
+  suffix: Thief, Spesos
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingEyesGlassesSunglasses
+      - id: SpaceCash20000
+        amount: 1
+      - id: ClothingOuterCoatJensen
+      - id: ClothingHandsGlovesColorBlack

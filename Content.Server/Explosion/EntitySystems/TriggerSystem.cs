@@ -1,29 +1,38 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
-using Content.Server.Flash.Components;
+using Content.Server.Pinpointer;
+using Content.Shared.Flash.Components;
 using Content.Server.Radio.EntitySystems;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
+using Content.Shared.Explosion.Components;
+using Content.Shared.Explosion.Components.OnTrigger;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Payload.Components;
-using Robust.Shared.Prototypes;
 using Content.Shared.Radio;
 using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Trigger;
+using Content.Shared.Weapons.Ranged.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Weapons.Ranged.Events;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Player;
+using Content.Shared.Coordinates;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -60,8 +69,12 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly BodySystem _body = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private readonly NavMapSystem _navMap = default!;
         [Dependency] private readonly RadioSystem _radioSystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!;
 
         public override void Initialize()
         {
@@ -74,12 +87,14 @@ namespace Content.Server.Explosion.EntitySystems
             InitializeVoice();
             InitializeMobstate();
 
+            SubscribeLocalEvent<TriggerOnSpawnComponent, MapInitEvent>(OnSpawnTriggered);
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
             SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<TriggerImplantActionComponent, ActivateImplantEvent>(OnImplantTrigger);
-            SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredEvent>(OnStepTriggered);
+            SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredOffEvent>(OnStepTriggered);
             SubscribeLocalEvent<TriggerOnSlipComponent, SlipEvent>(OnSlipTriggered);
             SubscribeLocalEvent<TriggerWhenEmptyComponent, OnEmptyGunShotEvent>(OnEmptyTriggered);
+            SubscribeLocalEvent<RepeatingTriggerComponent, MapInitEvent>(OnRepeatInit);
 
             SubscribeLocalEvent<SpawnOnTriggerComponent, TriggerEvent>(OnSpawnTrigger);
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
@@ -94,9 +109,15 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
         {
-            _audio.PlayPvs(component.Sound, uid);
-            if (component.RemoveOnTrigger)
-                RemCompDeferred<SoundOnTriggerComponent>(uid);
+            if (component.RemoveOnTrigger) // if the component gets removed when it's triggered
+            {
+                var xform = Transform(uid);
+                _audio.PlayPvs(component.Sound, xform.Coordinates); // play the sound at its last known coordinates
+            }
+            else // if the component doesn't get removed when triggered
+            {
+                _audio.PlayPvs(component.Sound, uid); // have the sound follow the entity itself
+            }
         }
 
         private void OnAnchorTrigger(EntityUid uid, AnchorOnTriggerComponent component, TriggerEvent args)
@@ -133,7 +154,7 @@ namespace Content.Server.Explosion.EntitySystems
         private void HandleFlashTrigger(EntityUid uid, FlashOnTriggerComponent component, TriggerEvent args)
         {
             // TODO Make flash durations sane ffs.
-            _flashSystem.FlashArea(uid, args.User, component.Range, component.Duration * 1000f);
+            _flashSystem.FlashArea(uid, args.User, component.Range, component.Duration * 1000f, probability: component.Probability);
             args.Handled = true;
         }
 
@@ -145,11 +166,17 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void HandleGibTrigger(EntityUid uid, GibOnTriggerComponent component, TriggerEvent args)
         {
-            if (!TryComp<TransformComponent>(uid, out var xform))
+            if (!TryComp(uid, out TransformComponent? xform))
                 return;
-
-            _body.GibBody(xform.ParentUid, true, deleteItems: component.DeleteItems);
-
+            if (component.DeleteItems)
+            {
+                var items = _inventory.GetHandOrInventoryEntities(xform.ParentUid);
+                foreach (var item in items)
+                {
+                    Del(item);
+                }
+            }
+            _body.GibBody(xform.ParentUid, true);
             args.Handled = true;
         }
 
@@ -162,12 +189,7 @@ namespace Content.Server.Explosion.EntitySystems
                 return;
 
             // Gets location of the implant
-            var ownerXform = Transform(uid);
-            var pos = ownerXform.MapPosition;
-            var x = (int) pos.X;
-            var y = (int) pos.Y;
-            var posText = $"({x}, {y})";
-
+            var posText = FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString(uid));
             var critMessage = Loc.GetString(component.CritMessage, ("user", implanted.ImplantedEntity.Value), ("position", posText));
             var deathMessage = Loc.GetString(component.DeathMessage, ("user", implanted.ImplantedEntity.Value), ("position", posText));
 
@@ -189,8 +211,16 @@ namespace Content.Server.Explosion.EntitySystems
                 Trigger(uid);
         }
 
+        private void OnSpawnTriggered(EntityUid uid, TriggerOnSpawnComponent component, MapInitEvent args)
+        {
+            Trigger(uid);
+        }
+
         private void OnActivate(EntityUid uid, TriggerOnActivateComponent component, ActivateInWorldEvent args)
         {
+            if (args.Handled || !args.Complex)
+                return;
+
             Trigger(uid, args.User);
             args.Handled = true;
         }
@@ -200,7 +230,7 @@ namespace Content.Server.Explosion.EntitySystems
             args.Handled = Trigger(uid);
         }
 
-        private void OnStepTriggered(EntityUid uid, TriggerOnStepTriggerComponent component, ref StepTriggeredEvent args)
+        private void OnStepTriggered(EntityUid uid, TriggerOnStepTriggerComponent component, ref StepTriggeredOffEvent args)
         {
             Trigger(uid, args.Tripper);
         }
@@ -213,6 +243,11 @@ namespace Content.Server.Explosion.EntitySystems
         private void OnEmptyTriggered(EntityUid uid, TriggerWhenEmptyComponent component, ref OnEmptyGunShotEvent args)
         {
             Trigger(uid, args.EmptyGun);
+        }
+
+        private void OnRepeatInit(Entity<RepeatingTriggerComponent> ent, ref MapInitEvent args)
+        {
+            ent.Comp.NextTrigger = _timing.CurTime + ent.Comp.Delay;
         }
 
         public bool Trigger(EntityUid trigger, EntityUid? user = null)
@@ -230,7 +265,19 @@ namespace Content.Server.Explosion.EntitySystems
             comp.TimeRemaining += amount;
         }
 
-        public void HandleTimerTrigger(EntityUid uid, EntityUid? user, float delay , float beepInterval, float? initialBeepDelay, SoundSpecifier? beepSound)
+        /// <summary>
+        /// Start the timer for triggering the device.
+        /// </summary>
+        public void StartTimer(Entity<OnUseTimerTriggerComponent?> ent, EntityUid? user)
+        {
+            if (!Resolve(ent, ref ent.Comp, false))
+                return;
+
+            var comp = ent.Comp;
+            HandleTimerTrigger(ent, user, comp.Delay, comp.BeepInterval, comp.InitialBeepDelay, comp.BeepSound);
+        }
+
+        public void HandleTimerTrigger(EntityUid uid, EntityUid? user, float delay, float beepInterval, float? initialBeepDelay, SoundSpecifier? beepSound)
         {
             if (delay <= 0)
             {
@@ -250,12 +297,18 @@ namespace Content.Server.Explosion.EntitySystems
                     TryComp(container.ContainedEntities[0], out ChemicalPayloadComponent? chemicalPayloadComponent))
                 {
                     // If a beaker is missing, the entity won't explode, so no reason to log it
-                    if (!TryComp(chemicalPayloadComponent?.BeakerSlotA.Item, out SolutionContainerManagerComponent? beakerA) ||
-                        !TryComp(chemicalPayloadComponent?.BeakerSlotB.Item, out SolutionContainerManagerComponent? beakerB))
+                    if (chemicalPayloadComponent?.BeakerSlotA.Item is not { } beakerA ||
+                        chemicalPayloadComponent?.BeakerSlotB.Item is not { } beakerB ||
+                        !TryComp(beakerA, out SolutionContainerManagerComponent? containerA) ||
+                        !TryComp(beakerB, out SolutionContainerManagerComponent? containerB) ||
+                        !TryComp(beakerA, out FitsInDispenserComponent? fitsA) ||
+                        !TryComp(beakerB, out FitsInDispenserComponent? fitsB) ||
+                        !_solutionContainerSystem.TryGetSolution((beakerA, containerA), fitsA.Solution, out _, out var solutionA) ||
+                        !_solutionContainerSystem.TryGetSolution((beakerB, containerB), fitsB.Solution, out _, out var solutionB))
                         return;
 
                     _adminLogger.Add(LogType.Trigger,
-                        $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}, which contains [{string.Join(", ", beakerA.Solutions.Values.First())}] in one beaker and [{string.Join(", ", beakerB.Solutions.Values.First())}] in the other.");
+                        $"{ToPrettyString(user.Value):user} started a {delay} second timer trigger on entity {ToPrettyString(uid):timer}, which contains {SolutionContainerSystem.ToPrettyString(solutionA)} in one beaker and {SolutionContainerSystem.ToPrettyString(solutionB)} in the other.");
                 }
                 else
                 {
@@ -291,6 +344,7 @@ namespace Content.Server.Explosion.EntitySystems
             UpdateProximity();
             UpdateTimer(frameTime);
             UpdateTimedCollide(frameTime);
+            UpdateRepeat();
         }
 
         private void UpdateTimer(float frameTime)
@@ -323,6 +377,20 @@ namespace Content.Server.Explosion.EntitySystems
                 // In case this is a re-usable grenade, un-prime it.
                 if (TryComp<AppearanceComponent>(uid, out var appearance))
                     _appearance.SetData(uid, TriggerVisuals.VisualState, TriggerVisualState.Unprimed, appearance);
+            }
+        }
+
+        private void UpdateRepeat()
+        {
+            var now = _timing.CurTime;
+            var query = EntityQueryEnumerator<RepeatingTriggerComponent>();
+            while (query.MoveNext(out var uid, out var comp))
+            {
+                if (comp.NextTrigger > now)
+                    continue;
+
+                comp.NextTrigger = now + comp.Delay;
+                Trigger(uid);
             }
         }
     }

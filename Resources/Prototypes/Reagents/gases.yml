@@ -1,10 +1,10 @@
-﻿- type: reagent
+- type: reagent
   id: Oxygen
   name: reagent-name-oxygen
   desc: reagent-desc-oxygen
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
-  color: "#808080"
+  color: "#c4f5ff"
   boilingPoint: -183.0
   meltingPoint: -218.4
   metabolisms:
@@ -35,6 +35,25 @@
         ratios:
           CarbonDioxide: 1.0
           Oxygen: -1.0
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Vox
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Poison:
+              7
+      - !type:AdjustAlert
+        alertType: Toxins
+        conditions:
+          - !type:ReagentThreshold
+            min: 0.5
+          - !type:OrganType
+            type: Vox
+        clear: true
+        time: 5
 
 - type: reagent
   id: Plasma
@@ -68,9 +87,14 @@
           types:
             Poison:
               1
-      # Cant be added until I add metabolism effects on reagent removal
-      #- !type:AdjustAlert
-      #  alertType: Toxins
+      # We need a metabolism effect on reagent removal
+      - !type:AdjustAlert
+        alertType: Toxins
+        conditions:
+          - !type:ReagentThreshold
+            min: 1.5
+        clear: True
+        time: 5
   reactiveEffects:
     Flammable:
       methods: [ Touch ]
@@ -87,6 +111,12 @@
   tileReactions:
   - !type:FlammableTileReaction
     temperatureMultiplier: 2.0
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+        multiplier: 0.8
   metabolisms:
     Poison:
       effects:
@@ -103,9 +133,14 @@
           types:
             Radiation:
               1
-      # Cant be added until I add metabolism effects on reagent removal
-      #- !type:AdjustAlert
-      #  alertType: Toxins
+      # We need a metabolism effect on reagent removal
+      - !type:AdjustAlert
+        alertType: Toxins
+        conditions:
+          - !type:ReagentThreshold
+            min: 1.5
+        clear: True
+        time: 5
 
 - type: reagent
   id: CarbonDioxide
@@ -126,6 +161,9 @@
         - !type:OrganType
           type: Plant
           shouldHave: false
+        - !type:OrganType
+          type: Vox
+          shouldHave: false
         # Don't want people to get toxin damage from the gas they just
         # exhaled, right?
         - !type:ReagentThreshold
@@ -142,7 +180,7 @@
           type: Plant
           shouldHave: false
         factor: -4
-      # Cant be added until I add metabolism effects on reagent removal
+      # We need a metabolism effect on reagent removal
       #- !type:AdjustAlert
       #  alertType: CarbonDioxide
 
@@ -152,7 +190,7 @@
   desc: reagent-desc-nitrogen
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
-  color: "#808080"
+  color: "#a1e1ff"
   boilingPoint: -195.8
   meltingPoint: -210.0
   metabolisms:
@@ -178,7 +216,7 @@
         - !type:OrganType
           type: Vox
         ratios:
-          CarbonDioxide: 1.0
+          Ammonia: 1.0
           Nitrogen: -1.0
       - !type:ModifyLungGas
         conditions:
@@ -189,68 +227,12 @@
           Nitrogen: -1.0
 
 - type: reagent
-  id: Miasma
-  name: reagent-name-miasma
-  desc: reagent-desc-miasma
-  physicalDesc: reagent-physical-desc-gaseous
-  flavor: bitter
-  color: "#56941E"
-  boilingPoint: -195.8
-  meltingPoint: -210.0
-  metabolisms:
-    Gas:
-      effects:
-      - !type:HealthChange
-        conditions:
-        - !type:OrganType
-          type: Rat
-          shouldHave: false
-        - !type:ReagentThreshold
-          reagent: Miasma
-          min: 1
-        ignoreResistances: true
-        damage:
-          types:
-            Poison: 0.25
-      - !type:ChemVomit
-        probability: 0.12
-        conditions:
-        - !type:OrganType
-          type: Rat
-          shouldHave: false
-        - !type:ReagentThreshold
-          reagent: Miasma
-          min: 0.8
-      - !type:PopupMessage
-        type: Local
-        visualType: Medium
-        messages: [ "miasma-smell" ]
-        probability: 0.1
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Miasma
-          min: 0.25
-      - !type:HealthChange
-        conditions:
-        - !type:OrganType
-          type: Rat
-        - !type:ReagentThreshold
-          reagent: Miasma
-          min: 1
-        scaleByQuantity: true
-        ignoreResistances: true
-        damage:
-          Groups:
-            Brute: -5
-            Burn: -5
-
-- type: reagent
   id: NitrousOxide
   name: reagent-name-nitrous-oxide
   desc: reagent-desc-nitrous-oxide
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
-  color: "#808080"
+  color: "#5d88c9"
   boilingPoint: -88
   meltingPoint: -90
   metabolisms:
@@ -261,6 +243,9 @@
         - !type:ReagentThreshold
           reagent: NitrousOxide
           min: 0.2
+        - !type:OrganType
+          type: Slime
+          shouldHave: false
         emote: Laugh
         showInChat: true
         probability: 0.1
@@ -269,6 +254,9 @@
         - !type:ReagentThreshold
           reagent: NitrousOxide
           min: 0.2
+        - !type:OrganType
+          type: Slime
+          shouldHave: false
         emote: Scream
         showInChat: true
         probability: 0.01
@@ -340,7 +328,7 @@
         ignoreResistances: true
         damage:
           types:
-            Cellular: 0.01
+            Cellular: 0.5
       - !type:GenericStatusEffect
         conditions:
         - !type:ReagentThreshold
@@ -349,9 +337,10 @@
         key: SeeingRainbows
         component: SeeingRainbows
         type: Add
-        time: 5
+        time: 500
         refresh: false
       - !type:Drunk
+        boozePower: 500
         conditions:
         - !type:ReagentThreshold
           reagent: Frezon

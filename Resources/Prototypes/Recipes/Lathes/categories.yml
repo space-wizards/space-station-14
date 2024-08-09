@@ -1,0 +1,31 @@
+- type: latheCategory
+  id: Ammo
+  name: lathe-category-ammo
+
+- type: latheCategory
+  id: Circuitry
+  name: lathe-category-circuitry
+
+- type: latheCategory
+  id: Lights
+  name: lathe-category-lights
+
+- type: latheCategory
+  id: Mech
+  name: lathe-category-mechs
+
+- type: latheCategory
+  id: Parts
+  name: lathe-category-parts
+
+- type: latheCategory
+  id: Robotics
+  name: lathe-category-robotics
+
+- type: latheCategory
+  id: Tools
+  name: lathe-category-tools
+
+- type: latheCategory
+  id: Weapons
+  name: lathe-category-weapons

@@ -12,7 +12,7 @@
     slots: [ mask ]
     equippedPrefix: unlit
   - type: Item
-    size: 3
+    size: Tiny
     sprite: Objects/Consumable/Smokeables/Pipes/pipe.rsi
   - type: Appearance
   - type: BurnStateVisuals
@@ -22,6 +22,7 @@
   id: SmokingPipeFilledTobacco
   parent: SmokingPipe
   name: pipe
+  suffix: Tobacco
   description: Just like grandpappy used to smoke.
   components:
   - type: ContainerContainer
@@ -30,7 +31,7 @@
   - type: ItemSlots
   - type: SmokingPipe
     bowl_slot:
-      name: Bowl
+      name: smoking-pipe-slot-component-slot-name-bowl
       startingItem: GroundTobacco
       whitelist:
         tags:
@@ -44,6 +45,7 @@
   id: SmokingPipeFilledCannabis
   parent: SmokingPipe
   name: pipe
+  suffix: Cannabis
   description: Just like grandpappy used to smoke.
   components:
   - type: ContainerContainer
@@ -52,8 +54,31 @@
   - type: ItemSlots
   - type: SmokingPipe
     bowl_slot:
-      name: Bowl
+      name: smoking-pipe-slot-component-slot-name-bowl
       startingItem: GroundCannabis
+      whitelist:
+        tags:
+          - Smokable
+      insertSound:
+        path: /Audio/Weapons/Guns/Empty/empty.ogg
+      ejectSound:
+        path: /Audio/Weapons/Guns/Empty/empty.ogg
+
+- type: entity
+  id: SmokingPipeFilledCannabisRainbow
+  parent: SmokingPipe
+  name: pipe
+  suffix: Rainbow Cannabis
+  description: Just like grandpappy used to smoke.
+  components:
+  - type: ContainerContainer
+    containers:
+      bowl_slot: !type:ContainerSlot
+  - type: ItemSlots
+  - type: SmokingPipe
+    bowl_slot:
+      name: smoking-pipe-slot-component-slot-name-bowl
+      startingItem: GroundCannabisRainbow
       whitelist:
         tags:
           - Smokable

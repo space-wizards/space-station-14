@@ -16,8 +16,6 @@ namespace Content.Client.IconSmoothing
     [UsedImplicitly]
     public sealed partial class IconSmoothSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-
         private readonly Queue<EntityUid> _dirtyEntities = new();
         private readonly Queue<EntityUid> _anchorChangedEntities = new();
 
@@ -47,7 +45,7 @@ namespace Content.Client.IconSmoothing
             var xform = Transform(uid);
             if (xform.Anchored)
             {
-                component.LastPosition = _mapManager.TryGetGrid(xform.GridUid, out var grid)
+                component.LastPosition = TryComp<MapGridComponent>(xform.GridUid, out var grid)
                     ? (xform.GridUid.Value, grid.TileIndicesFor(xform.Coordinates))
                     : (null, new Vector2i(0, 0));
 
@@ -56,6 +54,33 @@ namespace Content.Client.IconSmoothing
 
             if (component.Mode != IconSmoothingMode.Corners || !TryComp(uid, out SpriteComponent? sprite))
                 return;
+
+            SetCornerLayers(sprite, component);
+
+            if (component.Shader != null)
+            {
+                sprite.LayerSetShader(CornerLayers.SE, component.Shader);
+                sprite.LayerSetShader(CornerLayers.NE, component.Shader);
+                sprite.LayerSetShader(CornerLayers.NW, component.Shader);
+                sprite.LayerSetShader(CornerLayers.SW, component.Shader);
+            }
+        }
+
+        public void SetStateBase(EntityUid uid, IconSmoothComponent component, string newState)
+        {
+            if (!TryComp<SpriteComponent>(uid, out var sprite))
+                return;
+
+            component.StateBase = newState;
+            SetCornerLayers(sprite, component);
+        }
+
+        private void SetCornerLayers(SpriteComponent sprite, IconSmoothComponent component)
+        {
+            sprite.LayerMapRemove(CornerLayers.SE);
+            sprite.LayerMapRemove(CornerLayers.NE);
+            sprite.LayerMapRemove(CornerLayers.NW);
+            sprite.LayerMapRemove(CornerLayers.SW);
 
             var state0 = $"{component.StateBase}0";
             sprite.LayerMapSet(CornerLayers.SE, sprite.AddLayerState(state0));
@@ -66,14 +91,6 @@ namespace Content.Client.IconSmoothing
             sprite.LayerSetDirOffset(CornerLayers.NW, DirectionOffset.Flip);
             sprite.LayerMapSet(CornerLayers.SW, sprite.AddLayerState(state0));
             sprite.LayerSetDirOffset(CornerLayers.SW, DirectionOffset.Clockwise);
-
-            if (component.Shader != null)
-            {
-                sprite.LayerSetShader(CornerLayers.SE, component.Shader);
-                sprite.LayerSetShader(CornerLayers.NE, component.Shader);
-                sprite.LayerSetShader(CornerLayers.NW, component.Shader);
-                sprite.LayerSetShader(CornerLayers.SW, component.Shader);
-            }
         }
 
         private void OnShutdown(EntityUid uid, IconSmoothComponent component, ComponentShutdown args)
@@ -134,7 +151,7 @@ namespace Content.Client.IconSmoothing
 
             Vector2i pos;
 
-            if (transform.Anchored && _mapManager.TryGetGrid(transform.GridUid, out var grid))
+            if (transform.Anchored && TryComp<MapGridComponent>(transform.GridUid, out var grid))
             {
                 pos = grid.CoordinatesToTile(transform.Coordinates);
             }
@@ -144,7 +161,7 @@ namespace Content.Client.IconSmoothing
                 if (comp.LastPosition is not (EntityUid gridId, Vector2i oldPos))
                     return;
 
-                if (!_mapManager.TryGetGrid(gridId, out grid))
+                if (!TryComp(gridId, out grid))
                     return;
 
                 pos = oldPos;
@@ -206,7 +223,7 @@ namespace Content.Client.IconSmoothing
                 {
                     var directions = DirectionFlag.None;
 
-                    if (_mapManager.TryGetGrid(xform.GridUid, out grid))
+                    if (TryComp(xform.GridUid, out grid))
                     {
                         var pos = grid.TileIndicesFor(xform.Coordinates);
 
@@ -231,7 +248,7 @@ namespace Content.Client.IconSmoothing
 
             if (!spriteQuery.TryGetComponent(uid, out var sprite))
             {
-                Logger.Error($"Encountered a icon-smoothing entity without a sprite: {ToPrettyString(uid)}");
+                Log.Error($"Encountered a icon-smoothing entity without a sprite: {ToPrettyString(uid)}");
                 RemCompDeferred(uid, smooth);
                 return;
             }
@@ -240,9 +257,9 @@ namespace Content.Client.IconSmoothing
 
             if (xform.Anchored)
             {
-                if (!_mapManager.TryGetGrid(xform.GridUid, out grid))
+                if (!TryComp(xform.GridUid, out grid))
                 {
-                    Logger.Error($"Failed to calculate IconSmoothComponent sprite in {uid} because grid {xform.GridUid} was missing.");
+                    Log.Error($"Failed to calculate IconSmoothComponent sprite in {uid} because grid {xform.GridUid} was missing.");
                     return;
                 }
             }

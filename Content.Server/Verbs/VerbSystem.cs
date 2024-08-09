@@ -5,8 +5,8 @@ using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Verbs;
-using Robust.Server.Player;
 
 namespace Content.Server.Verbs
 {
@@ -25,7 +25,7 @@ namespace Content.Server.Verbs
 
         private void HandleVerbRequest(RequestServerVerbsEvent args, EntitySessionEventArgs eventArgs)
         {
-            var player = (IPlayerSession) eventArgs.SenderSession;
+            var player = eventArgs.SenderSession;
 
             if (!EntityManager.EntityExists(GetEntity(args.EntityUid)))
             {
@@ -43,7 +43,7 @@ namespace Content.Server.Verbs
             // this, and some verbs (e.g. view variables) won't even care about whether an entity is accessible through
             // the entity menu or not.
 
-            var force = args.AdminRequest && eventArgs.SenderSession is IPlayerSession playerSession &&
+            var force = args.AdminRequest && eventArgs.SenderSession is { } playerSession &&
                         _adminMgr.HasAdminFlag(playerSession, AdminFlags.Admin);
 
             List<Type> verbTypes = new();
@@ -59,7 +59,7 @@ namespace Content.Server.Verbs
 
             var response =
                 new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(GetEntity(args.EntityUid), attached, verbTypes, force));
-            RaiseNetworkEvent(response, player.ConnectedClient);
+            RaiseNetworkEvent(response, player.Channel);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Content.Server.Verbs
             }
 
             // if this is a virtual pull, get the held entity
-            if (holding != null && TryComp(holding, out HandVirtualItemComponent? pull))
+            if (holding != null && TryComp(holding, out VirtualItemComponent? pull))
                 holding = pull.BlockingEntity;
 
             var verbText = $"{verb.Category?.Text} {verb.Text}".Trim();

@@ -1,5 +1,6 @@
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
+using Content.Shared.Access.Components;
 using Content.Shared.CardboardBox;
 using Content.Shared.CardboardBox.Components;
 using Content.Shared.Damage;
@@ -10,6 +11,8 @@ using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -31,42 +34,49 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         SubscribeLocalEvent<CardboardBoxComponent, StorageAfterOpenEvent>(AfterStorageOpen);
         SubscribeLocalEvent<CardboardBoxComponent, StorageBeforeOpenEvent>(BeforeStorageOpen);
         SubscribeLocalEvent<CardboardBoxComponent, StorageAfterCloseEvent>(AfterStorageClosed);
-		SubscribeLocalEvent<CardboardBoxComponent, ActivateInWorldEvent>(OnInteracted);
-        SubscribeLocalEvent<CardboardBoxComponent, InteractedNoHandEvent>(OnNoHandInteracted);
+        SubscribeLocalEvent<CardboardBoxComponent, GetAdditionalAccessEvent>(OnGetAdditionalAccess);
+        SubscribeLocalEvent<CardboardBoxComponent, ActivateInWorldEvent>(OnInteracted);
         SubscribeLocalEvent<CardboardBoxComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<CardboardBoxComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
 
         SubscribeLocalEvent<CardboardBoxComponent, DamageChangedEvent>(OnDamage);
     }
 
-	private void OnInteracted(EntityUid uid, CardboardBoxComponent component, ActivateInWorldEvent args)
+    private void OnInteracted(EntityUid uid, CardboardBoxComponent component, ActivateInWorldEvent args)
     {
-		if (!TryComp<EntityStorageComponent>(uid, out var box))
+        if (args.Handled)
             return;
+
+        if (!TryComp<EntityStorageComponent>(uid, out var box))
+            return;
+
+        if (!args.Complex)
+        {
+            if (box.Open || !box.Contents.Contains(args.User))
+                return;
+        }
 
         args.Handled = true;
         _storage.ToggleOpen(args.User, uid, box);
 
-		if (box.Contents.Contains(args.User) && !box.Open)
-		{
-			_mover.SetRelay(args.User, uid);
-			component.Mover = args.User;
-		}
+        if (box.Contents.Contains(args.User) && !box.Open)
+        {
+            _mover.SetRelay(args.User, uid);
+            component.Mover = args.User;
+        }
     }
 
-    private void OnNoHandInteracted(EntityUid uid, CardboardBoxComponent component, InteractedNoHandEvent args)
+    private void OnGetAdditionalAccess(EntityUid uid, CardboardBoxComponent component, ref GetAdditionalAccessEvent args)
     {
-        //Free the mice please
-        if (!TryComp<EntityStorageComponent>(uid, out var box) || box.Open || !box.Contents.Contains(args.User))
+        if (component.Mover == null)
             return;
-
-        _storage.OpenStorage(uid);
+        args.Entities.Add(component.Mover.Value);
     }
 
     private void BeforeStorageOpen(EntityUid uid, CardboardBoxComponent component, ref StorageBeforeOpenEvent args)
     {
-		if (component.Quiet)
-			return;
+        if (component.Quiet)
+            return;
 
         //Play effect & sound
         if (component.Mover != null)
@@ -113,7 +123,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         if (component.Mover == null)
         {
             _mover.SetRelay(args.Entity, uid);
-			component.Mover = args.Entity;
+            component.Mover = args.Entity;
         }
     }
 

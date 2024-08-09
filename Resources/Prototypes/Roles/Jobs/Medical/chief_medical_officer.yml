@@ -17,6 +17,8 @@
       time: 36000 #10 hrs
     - !type:OverallPlaytimeRequirement
       time: 144000 #40 hrs
+    - !type:AgeRequirement
+      requiredAge: 20
   weight: 10
   startingGear: CMOGear
   icon: "JobIconChiefMedicalOfficer"
@@ -29,6 +31,8 @@
   - Maintenance
   - Chemistry
   - ChiefMedicalOfficer
+  - Brig
+  - Cryogenics
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
@@ -39,13 +43,9 @@
 - type: startingGear
   id: CMOGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitCMO
-    back: ClothingBackpackCMOFilled
-    shoes: ClothingShoesColorBrown
-    outerClothing: ClothingOuterCoatLabCmo
     id: CMOPDA
     ears: ClothingHeadsetCMO
     belt: ClothingBeltMedicalFilled
-  innerClothingSkirt: ClothingUniformJumpskirtCMO
-  satchel: ClothingBackpackSatchelCMOFilled
-  duffelbag: ClothingBackpackDuffelCMOFilled
+  storage:
+    back:
+    - Flash

@@ -1,9 +1,8 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Containers;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Silicons.Borgs;
 
@@ -30,7 +29,7 @@ public sealed partial class BorgSystem
 
         if (!TryComp<BorgChassisComponent>(chassis, out var chassisComp) ||
             args.Container != chassisComp.ModuleContainer ||
-            !chassisComp.Activated)
+            !Toggle.IsActivated(chassis))
             return;
 
         if (!_powerCell.HasDrawCharge(uid))
@@ -89,18 +88,19 @@ public sealed partial class BorgSystem
         if (!TryComp<BorgChassisComponent>(chassis, out var chassisComp))
             return;
 
-        args.Handled = true;
-        if (chassisComp.SelectedModule == uid)
-        {
-            UnselectModule(chassis, chassisComp);
-            return;
-        }
+        var selected = chassisComp.SelectedModule;
 
-        SelectModule(chassis, uid, chassisComp, component);
+        args.Handled = true;
+        UnselectModule(chassis, chassisComp);
+
+        if (selected != uid)
+        {
+            SelectModule(chassis, uid, chassisComp, component);
+        }
     }
 
     /// <summary>
-    /// Selects a module, enablind the borg to use its provided abilities.
+    /// Selects a module, enabling the borg to use its provided abilities.
     /// </summary>
     public void SelectModule(EntityUid chassis,
         EntityUid moduleUid,
@@ -143,6 +143,7 @@ public sealed partial class BorgSystem
         var ev = new BorgModuleSelectedEvent(chassis);
         RaiseLocalEvent(moduleUid, ref ev);
         chassisComp.SelectedModule = moduleUid;
+        Dirty(chassis, chassisComp);
     }
 
     /// <summary>
@@ -162,6 +163,7 @@ public sealed partial class BorgSystem
         var ev = new BorgModuleUnselectedEvent(chassis);
         RaiseLocalEvent(chassisComp.SelectedModule.Value, ref ev);
         chassisComp.SelectedModule = null;
+        Dirty(chassis, chassisComp);
     }
 
     private void OnItemModuleSelected(EntityUid uid, ItemBorgModuleComponent component, ref BorgModuleSelectedEvent args)
@@ -201,7 +203,7 @@ public sealed partial class BorgSystem
                     continue;
                 }
 
-                component.ProvidedContainer.Remove(item, EntityManager, force: true);
+                _container.Remove(item, component.ProvidedContainer, force: true);
             }
 
             if (!item.IsValid())
@@ -229,7 +231,7 @@ public sealed partial class BorgSystem
         if (!TryComp<HandsComponent>(chassis, out var hands))
             return;
 
-        if (LifeStage(uid) >= EntityLifeStage.Terminating)
+        if (TerminatingOrDeleted(uid))
         {
             foreach (var (hand, item) in component.ProvidedItems)
             {
@@ -245,7 +247,7 @@ public sealed partial class BorgSystem
             if (LifeStage(item) <= EntityLifeStage.MapInitialized)
             {
                 RemComp<UnremoveableComponent>(item);
-                component.ProvidedContainer.Insert(item, EntityManager);
+                _container.Insert(item, component.ProvidedContainer);
             }
             _hands.RemoveHand(chassis, handId, hands);
         }
@@ -267,11 +269,28 @@ public sealed partial class BorgSystem
             return false;
         }
 
-        if (component.ModuleWhitelist?.IsValid(module, EntityManager) == false)
+        if (_whitelistSystem.IsWhitelistFail(component.ModuleWhitelist, module))
         {
             if (user != null)
                 Popup.PopupEntity(Loc.GetString("borg-module-whitelist-deny"), uid, user.Value);
             return false;
+        }
+
+        if (TryComp<ItemBorgModuleComponent>(module, out var itemModuleComp))
+        {
+            foreach (var containedModuleUid in component.ModuleContainer.ContainedEntities)
+            {
+                if (!TryComp<ItemBorgModuleComponent>(containedModuleUid, out var containedItemModuleComp))
+                    continue;
+
+                if (containedItemModuleComp.Items.Count == itemModuleComp.Items.Count &&
+                    containedItemModuleComp.Items.All(itemModuleComp.Items.Contains))
+                {
+                    if (user != null)
+                        Popup.PopupEntity(Loc.GetString("borg-module-duplicate"), uid, user.Value);
+                    return false;
+                }
+            }
         }
 
         return true;

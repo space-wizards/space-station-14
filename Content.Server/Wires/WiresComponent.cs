@@ -1,4 +1,5 @@
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Wires;
 
@@ -15,7 +16,7 @@ public sealed partial class WiresComponent : Component
     ///     The layout ID of this entity's wires.
     /// </summary>
     [DataField(required: true)]
-    public string LayoutId { get; set; } = default!;
+    public ProtoId<WireLayoutPrototype> LayoutId { get; set; } = default!;
 
     /// <summary>
     ///     The serial number of this board. Randomly generated upon start,

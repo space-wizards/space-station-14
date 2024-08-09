@@ -4,13 +4,13 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.StatusEffect
 {
     [Prototype("statusEffect")]
-    public sealed class StatusEffectPrototype : IPrototype
+    public sealed partial class StatusEffectPrototype : IPrototype
     {
         [IdDataField]
         public string ID { get; private set; } = default!;
 
         [DataField("alert")]
-        public AlertType? Alert { get; private set; }
+        public ProtoId<AlertPrototype>? Alert { get; private set; }
 
         /// <summary>
         ///     Whether a status effect should be able to apply to any entity,

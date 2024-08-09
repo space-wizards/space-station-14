@@ -10,18 +10,18 @@
   - type: Sprite
     sprite: Objects/Tools/Cowtools/haycutters.rsi
     state: haycutters
-  - type: ItemCooldown
   - type: MeleeWeapon
+    wideAnimationRotation: -90
     damage:
       types:
-        Pierce: 0
+        Piercing: 0
     attackRate: 2
   - type: Tool
     qualities:
     - Cutting
     useSound:
       path: /Audio/Items/wirecutter.ogg
-    speed: 0.05
+    speedModifier: 0.05
   - type: Item
     sprite: Objects/Tools/Cowtools/haycutters.rsi
 
@@ -36,7 +36,6 @@
     state: moodriver
   - type: Item
     sprite: Objects/Tools/Cowtools/moodriver.rsi
-  - type: ItemCooldown
   - type: MeleeWeapon
     attackRate: 1.5
     damage:
@@ -47,7 +46,7 @@
     - Screwing
     useSound:
       collection: Screwdriver
-    speed: 0.05
+    speedModifier: 0.05
 
 - type: entity
   name: wronch
@@ -60,7 +59,6 @@
     state: wronch
   - type: Item
     sprite: Objects/Tools/Cowtools/wronch.rsi
-  - type: ItemCooldown
   - type: MeleeWeapon
     attackRate: 1.5
     damage:
@@ -71,7 +69,7 @@
     - Anchoring
     useSound:
       path: /Audio/Items/ratchet.ogg
-    speed: 0.05
+    speedModifier: 0.05
 
 - type: entity
   name: cowbar
@@ -84,7 +82,6 @@
     state: cowbar
   - type: Item
     sprite: Objects/Tools/Cowtools/cowbar.rsi
-  - type: ItemCooldown
   - type: MeleeWeapon
     damage:
       types:
@@ -94,11 +91,10 @@
   - type: Tool
     qualities:
     - Prying
-    useSound:
-      path: /Audio/Items/crowbar.ogg
-    speed: 0.05
-  - type: TilePrying
+  - type: ToolTileCompatible
+    delay: 10
   - type: Prying
+    speedModifier: 0.05
 
 - type: entity
   name: mooltitool
@@ -127,15 +123,10 @@
   - type: Sprite
     sprite: Objects/Tools/Cowtools/cowelder.rsi
   - type: Item
-    size: 10
+    size: Small
     sprite: Objects/Tools/Cowtools/cowelder.rsi
   - type: Tool
-    speed: 0.05
-  - type: Welder
-    litMeleeDamageBonus:
-      types: # When lit, negate standard melee damage and replace with heat
-        Heat: 0.5
-        Blunt: -5
+    speedModifier: 0.05
 
 - type: entity
   name: milkalyzer
@@ -150,8 +141,8 @@
   - type: GasAnalyzer
   - type: UserInterface
     interfaces:
-    - key: enum.GasAnalyzerUiKey.Key
-      type: GasAnalyzerBoundUserInterface
+      enum.GasAnalyzerUiKey.Key:
+        type: GasAnalyzerBoundUserInterface
   - type: Appearance
 
 - type: entity
@@ -185,4 +176,3 @@
     - id: Mooltitool
     - id: Cowelder
     - id: Milkalyzer
-

@@ -1,6 +1,5 @@
 using Content.Server.Mind;
 using Content.Shared.Administration;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
@@ -16,7 +15,7 @@ namespace Content.Server.Administration.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (shell.Player is not IPlayerSession player)
+            if (shell.Player is not { } player)
             {
                 shell.WriteLine("shell-server-cannot");
                 return;
@@ -34,15 +33,15 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var target = new EntityUid(targetId);
+            var targetNet = new NetEntity(targetId);
 
-            if (!target.IsValid() || !_entities.EntityExists(target))
+            if (!_entities.TryGetEntity(targetNet, out var target))
             {
                 shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
                 return;
             }
 
-            _entities.System<MindSystem>().ControlMob(player.UserId, target);
+            _entities.System<MindSystem>().ControlMob(player.UserId, target.Value);
         }
     }
 }

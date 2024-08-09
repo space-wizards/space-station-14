@@ -6,6 +6,9 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -24,9 +27,11 @@ public abstract partial class SharedFultonSystem : EntitySystem
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private   readonly FoldableSystem _foldable = default!;
+    [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] private   readonly SharedPopupSystem _popup = default!;
     [Dependency] private   readonly SharedStackSystem _stack = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     [ValidatePrototypeId<EntityPrototype>] public const string EffectProto = "FultonEffect";
     protected static readonly Vector2 EffectOffset = Vector2.Zero;
@@ -37,7 +42,6 @@ public abstract partial class SharedFultonSystem : EntitySystem
 
         SubscribeLocalEvent<FultonedDoAfterEvent>(OnFultonDoAfter);
 
-        SubscribeLocalEvent<FultonedComponent, EntityUnpausedEvent>(OnFultonUnpaused);
         SubscribeLocalEvent<FultonedComponent, GetVerbsEvent<InteractionVerb>>(OnFultonedGetVerbs);
         SubscribeLocalEvent<FultonedComponent, ExaminedEvent>(OnFultonedExamine);
         SubscribeLocalEvent<FultonedComponent, EntGotInsertedIntoContainerMessage>(OnFultonContainerInserted);
@@ -103,11 +107,6 @@ public abstract partial class SharedFultonSystem : EntitySystem
         Audio.PlayPredicted(fulton.FultonSound, args.Target.Value, args.User);
     }
 
-    private void OnFultonUnpaused(EntityUid uid, FultonedComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextFulton += args.PausedTime;
-    }
-
     private void OnFultonInteract(EntityUid uid, FultonComponent component, AfterInteractEvent args)
     {
         if (args.Target == null || args.Handled || !args.CanReach)
@@ -136,7 +135,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
             return;
         }
 
-        if (!CanFulton(args.Target.Value, uid, component))
+        if (!CanApplyFulton(args.Target.Value, component))
         {
             _popup.PopupClient(Loc.GetString("fulton-invalid"), uid, uid);
             return;
@@ -154,10 +153,8 @@ public abstract partial class SharedFultonSystem : EntitySystem
         _doAfter.TryStartDoAfter(
             new DoAfterArgs(EntityManager, args.User, component.ApplyFultonDuration, ev, args.Target, args.Target, args.Used)
             {
-                CancelDuplicate = true,
                 MovementThreshold = 0.5f,
-                BreakOnUserMove = true,
-                BreakOnTargetMove = true,
+                BreakOnMove = true,
                 Broadcast = true,
                 NeedHand = true,
             });
@@ -175,15 +172,27 @@ public abstract partial class SharedFultonSystem : EntitySystem
         return;
     }
 
-    private bool CanFulton(EntityUid targetUid, EntityUid uid, FultonComponent component)
+    protected bool CanApplyFulton(EntityUid targetUid, FultonComponent component)
     {
-        if (Transform(targetUid).Anchored)
+        if (!CanFulton(targetUid))
             return false;
 
-        if (component.Whitelist?.IsValid(targetUid, EntityManager) != true)
-        {
+        if (_whitelistSystem.IsWhitelistFailOrNull(component.Whitelist, targetUid))
             return false;
-        }
+
+        return true;
+    }
+
+    protected bool CanFulton(EntityUid uid)
+    {
+        var xform = Transform(uid);
+
+        if (xform.Anchored)
+            return false;
+
+        // Shouldn't need recursive container checks I think.
+        if (Container.IsEntityInContainer(uid))
+            return false;
 
         return true;
     }

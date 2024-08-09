@@ -18,11 +18,23 @@ materials-durathread = durathread
 materials-plasma = plasma
 materials-plastic = plastic
 materials-wood = wood
+materials-paper = paper
 materials-uranium = uranium
 materials-bananium = bananium
 materials-meat = meat
 materials-web = silk
 materials-bones = bone
+materials-coal = coal
+materials-diamond = diamond
+materials-gunpowder = gunpowder
 
-# Material Reclaimer
-material-reclaimer-upgrade-process-rate = process rate
+# Ores
+materials-raw-iron = raw iron
+materials-raw-quartz = raw quartz
+materials-raw-gold = raw gold
+materials-raw-silver = raw silver
+materials-raw-plasma = raw plasma
+materials-raw-uranium = raw uranium
+materials-raw-bananium = raw bananium
+materials-raw-salt = raw salt
+materials-raw-diamond = raw diamond

@@ -11,34 +11,33 @@ namespace Content.Server.Singularity.Components;
 public sealed partial class RadiationCollectorComponent : Component
 {
     /// <summary>
-    ///     How much joules will collector generate for each rad.
+    ///     Power output (in Watts) per unit of radiation collected.
     /// </summary>
-    [DataField("chargeModifier")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float ChargeModifier = 30000f;
 
     /// <summary>
-    ///     Cooldown time between users interaction.
+    ///     Number of power ticks that the power supply can remain active for. This is needed since
+    ///     power and radiation don't update at the same tickrate, and since radiation does not provide
+    ///     an update when radiation is removed. When this goes to zero, zero out the power supplier
+    ///     to model the radiation source going away.
     /// </summary>
-    [DataField("cooldown")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan Cooldown = TimeSpan.FromSeconds(0.81f);
+    public int PowerTicksLeft = 0;
 
     /// <summary>
-    ///     Was machine activated by user?
+    ///     Is the machine enabled.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
+    [ViewVariables]
     public bool Enabled;
-
-    /// <summary>
-    ///     Timestamp when machine can be deactivated again.
-    /// </summary>
-    public TimeSpan CoolDownEnd;
 
     /// <summary>
     ///     List of gases that will react to the radiation passing through the collector
     /// </summary>
-    [DataField("radiationReactiveGases")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public List<RadiationReactiveGas>? RadiationReactiveGases;
 }
@@ -50,15 +49,15 @@ public sealed partial class RadiationCollectorComponent : Component
 public sealed partial class RadiationReactiveGas
 {
     /// <summary>
-    ///     The reactant gas 
+    ///     The reactant gas
     /// </summary>
-    [DataField("reactantPrototype", required: true)]
-    public Gas Reactant = Gas.Plasma;
+    [DataField(required: true)]
+    public Gas ReactantPrototype;
 
     /// <summary>
     ///     Multipier for the amount of power produced by the radiation collector when using this gas
     /// </summary>
-    [DataField("powerGenerationEfficiency")]
+    [DataField]
     public float PowerGenerationEfficiency = 1f;
 
     /// <summary>
@@ -67,7 +66,7 @@ public sealed partial class RadiationReactiveGas
     /// /// <remarks>
     ///     Set to zero if the reactant does not deplete
     /// </remarks>
-    [DataField("reactantBreakdownRate")]
+    [DataField]
     public float ReactantBreakdownRate = 1f;
 
     /// <summary>
@@ -76,12 +75,12 @@ public sealed partial class RadiationReactiveGas
     /// <remarks>
     ///     Leave null if the reactant no byproduct gas is to be formed
     /// </remarks>
-    [DataField("byproductPrototype")]
-    public Gas? Byproduct = null;
+    [DataField]
+    public Gas? Byproduct;
 
     /// <summary>
     ///     The molar ratio of the byproduct gas generated from the reactant gas
     /// </summary>
-    [DataField("molarRatio")]
+    [DataField]
     public float MolarRatio = 1f;
 }

@@ -1,3 +1,4 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_baked_whole.yml & food_baked_single.yml
 # Base
 
 - type: entity
@@ -28,12 +29,14 @@
   abstract: true
   components:
   - type: Item
-    size: 1
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - bread
   - type: Tag
-    tags: [] #override bread
+    tags:
+    - Bread
+    - Slice
   - type: SolutionContainerManager
     solutions:
       food:
@@ -115,6 +118,8 @@
   - type: Tag
     tags:
     - Fruit
+    - Bread
+    - Slice
 
 - type: entity
   name: cornbread
@@ -273,6 +278,8 @@
   - type: Tag
     tags:
     - Meat
+    - Bread
+    - Slice
 
 - type: entity
   name: mimana bread
@@ -417,6 +424,8 @@
   - type: Tag
     tags:
     - Meat
+    - Bread
+    - Slice
 
 - type: entity
   name: spider meat bread
@@ -437,14 +446,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 60
+        maxVol: 45
         reagents:
         - ReagentId: Nutriment
           Quantity: 30
         - ReagentId: Vitamin
           Quantity: 5
-        - ReagentId: Toxin
-          Quantity: 15
   - type: Tag
     tags:
     - Meat
@@ -468,17 +475,17 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 12
         reagents:
         - ReagentId: Nutriment
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 1.2
-        - ReagentId: Toxin
-          Quantity: 3
   - type: Tag
     tags:
     - Meat
+    - Bread
+    - Slice
 
 - type: entity
   name: tofu bread
@@ -588,6 +595,8 @@
   - type: Tag
     tags:
     - Meat
+    - Bread
+    - Slice
 
 # Other than bread/slices
 
@@ -597,9 +606,6 @@
   id: FoodBreadBaguette
   description: Bon appétit!
   components:
-  - type: Tag
-    tags:
-    - Baguette
   - type: Sprite
     state: baguette
   - type: SliceableFood
@@ -745,6 +751,9 @@
   - type: Sprite
     layers:
     - state: moldy-slice
+  - type: Tag
+    tags:
+    - Trash
   - type: SolutionContainerManager
     solutions:
       food:
@@ -777,3 +786,68 @@
         - ReagentId: Wine
           Quantity: 5
 # Tastes like decaying fungus.
+
+- type: entity
+  name: bread dog
+  id: MobBreadDog
+  parent: FoodBreadSausage
+  description: It's a bread. It's a dog. It's a... breaddog?
+  components:
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+    sprite: Mobs/Pets/breaddog.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: base
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: RotationVisuals
+    defaultRotation: 0
+    horizontalRotation: 0
+  - type: Item
+    size: Ginormous
+  - type: GhostRole
+    prob: 1
+    name: ghost-role-information-BreadDog-name
+    allowMovement: true
+    description: ghost-role-information-BreadDog-description
+    rules: ghost-role-information-nonantagonist-rules
+    raffle:
+      settings: short
+  - type: GhostTakeoverAvailable
+  - type: BarkAccent
+  - type: Speech
+    speechSounds: Dog
+    speechVerb: SmallMob
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 3
+  - type: Tag
+    tags:
+    - VimPilot
+    - DoorBumpOpener
+    - Bread
+  - type: CanEscapeInventory
+    baseResistTime: 2
+  - type: Puller
+    needsHands: false
+  - type: Examiner
+  - type: DoAfter
+  - type: CombatMode
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Animals/dog_bark1.ogg
+    hidden: true
+    damage:
+      groups:
+        Brute: 1

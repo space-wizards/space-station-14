@@ -1,8 +1,12 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_meal.yml
+
 - type: entity
   parent: FoodBase
   id: FoodBowlBase
   abstract: true
   components:
+  - type: Item
+    storedRotation: -90
   - type: Food
     trash: FoodBowlBig
     utensil: Spoon
@@ -46,6 +50,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -8
       - !type:SpillBehavior { }
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -79,7 +85,7 @@
         maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 5
 
@@ -800,6 +806,10 @@
             Quantity: 4
           - ReagentId: Allicin
             Quantity: 3
+  - type: Tag
+    tags:
+    - ChiliBowl
+
 
 - type: entity
   name: cold chili
@@ -824,6 +834,9 @@
             Quantity: 8
           - ReagentId: Vitamin
             Quantity: 4
+  - type: Tag
+    tags:
+    - ChiliBowl
 
 - type: entity
   name: chili con carnival
@@ -854,6 +867,9 @@
             Quantity: 4
           - ReagentId: Allicin
             Quantity: 3
+  - type: Tag
+    tags:
+    - ChiliBowl
 
 - type: entity
   name: monkey's delight

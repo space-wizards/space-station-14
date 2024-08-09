@@ -1,5 +1,4 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Clothing.Components;
 using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork;
@@ -23,6 +22,9 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Audio.Systems;
+using Content.Shared.Damage.Systems;
+using Content.Shared.Damage.Components;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -32,11 +34,8 @@ namespace Content.Server.Light.EntitySystems
     public sealed class PoweredLightSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
         [Dependency] private readonly LightBulbSystem _bulbSystem = default!;
-        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -44,7 +43,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly PointLightSystem _pointLight = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly InventorySystem _inventory = default!;
+        [Dependency] private readonly DamageOnInteractSystem _damageOnInteractSystem = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
         public const string LightBulbContainer = "light_bulb";
@@ -81,7 +80,7 @@ namespace Content.Server.Light.EntitySystems
             if (light.HasLampOnSpawn != null)
             {
                 var entity = EntityManager.SpawnEntity(light.HasLampOnSpawn, EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
-                light.LightBulbContainer.Insert(entity);
+                _containerSystem.Insert(entity, light.LightBulbContainer);
             }
             // need this to update visualizers
             UpdateLight(uid, light);
@@ -105,39 +104,7 @@ namespace Content.Server.Light.EntitySystems
             if (bulbUid == null)
                 return;
 
-            // check if it's possible to apply burn damage to user
             var userUid = args.User;
-            if (EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
-            {
-                // get users heat resistance
-                var res = int.MinValue;
-                if (_inventory.TryGetSlotEntity(userUid, "gloves", out var slotEntity) &&
-                    TryComp<GloveHeatResistanceComponent>(slotEntity, out var gloves))
-                {
-                    res = gloves.HeatResistance;
-                }
-
-                // check heat resistance against user
-                var burnedHand = light.CurrentLit && res < lightBulb.BurningTemperature;
-                if (burnedHand)
-                {
-                    // apply damage to users hands and show message with sound
-                    var burnMsg = Loc.GetString("powered-light-component-burn-hand");
-                    _popupSystem.PopupEntity(burnMsg, uid, userUid);
-
-                    var damage = _damageableSystem.TryChangeDamage(userUid, light.Damage, origin: userUid);
-
-                    if (damage != null)
-                        _adminLogger.Add(LogType.Damaged, $"{ToPrettyString(args.User):user} burned their hand on {ToPrettyString(args.Target):target} and received {damage.Total:damage} damage");
-
-                    _audio.Play(light.BurnHandSound, Filter.Pvs(uid), uid, true);
-
-                    args.Handled = true;
-                    return;
-                }
-            }
-
-
             //removing a broken/burned bulb, so allow instant removal
             if(TryComp<LightBulbComponent>(bulbUid.Value, out var bulb) && bulb.State != LightBulbState.Normal)
             {
@@ -148,7 +115,7 @@ namespace Content.Server.Light.EntitySystems
             // removing a working bulb, so require a delay
             _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, userUid, light.EjectBulbDelay, new PoweredLightDoAfterEvent(), uid, target: uid)
             {
-                BreakOnUserMove = true,
+                BreakOnMove = true,
                 BreakOnDamage = true,
             });
 
@@ -176,7 +143,7 @@ namespace Content.Server.Light.EntitySystems
                 return false;
 
             // try to insert bulb in container
-            if (!light.LightBulbContainer.Insert(bulbUid))
+            if (!_containerSystem.Insert(bulbUid, light.LightBulbContainer))
                 return false;
 
             UpdateLight(uid, light);
@@ -197,7 +164,7 @@ namespace Content.Server.Light.EntitySystems
                 return null;
 
             // try to remove bulb from container
-            if (!light.LightBulbContainer.Remove(bulb))
+            if (!_containerSystem.Remove(bulb, light.LightBulbContainer))
                 return null;
 
             // try to place bulb in hands
@@ -205,6 +172,21 @@ namespace Content.Server.Light.EntitySystems
 
             UpdateLight(uid, light);
             return bulb;
+        }
+
+        /// <summary>
+        ///     Replaces the spawned prototype of a pre-mapinit powered light with a different variant.
+        /// </summary>
+        public bool ReplaceSpawnedPrototype(Entity<PoweredLightComponent> light, string bulb)
+        {
+            if (light.Comp.LightBulbContainer.ContainedEntity != null)
+                return false;
+
+            if (LifeStage(light.Owner) >= EntityLifeStage.MapInitialized)
+                return false;
+
+            light.Comp.HasLampOnSpawn = bulb;
+            return true;
         }
 
         /// <summary>
@@ -234,6 +216,17 @@ namespace Content.Server.Light.EntitySystems
         /// </summary>
         public bool TryDestroyBulb(EntityUid uid, PoweredLightComponent? light = null)
         {
+            if (!Resolve(uid, ref light, false))
+                return false;
+
+            // if we aren't mapinited,
+            // just null the spawned bulb
+            if (LifeStage(uid) < EntityLifeStage.MapInitialized)
+            {
+                light.HasLampOnSpawn = null;
+                return true;
+            }
+
             // check bulb state
             var bulbUid = GetBulb(uid, light);
             if (bulbUid == null || !EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
@@ -281,7 +274,7 @@ namespace Content.Server.Light.EntitySystems
                         if (time > light.LastThunk + ThunkDelay)
                         {
                             light.LastThunk = time;
-                            _audio.Play(light.TurnOnSound, Filter.Pvs(uid), uid, true, AudioParams.Default.WithVolume(-10f));
+                            _audio.PlayEntity(light.TurnOnSound, Filter.Pvs(uid), uid, true, AudioParams.Default.WithVolume(-10f));
                         }
                     }
                     else
@@ -343,7 +336,9 @@ namespace Content.Server.Light.EntitySystems
         private void OnPowerChanged(EntityUid uid, PoweredLightComponent component, ref PowerChangedEvent args)
         {
             // TODO: Power moment
-            if (MetaData(uid).EntityPaused)
+            var metadata = MetaData(uid);
+
+            if (metadata.EntityPaused || TerminatingOrDeleted(uid, metadata))
                 return;
 
             UpdateLight(uid, component);
@@ -405,6 +400,10 @@ namespace Content.Server.Light.EntitySystems
                 if (softness != null)
                     _pointLight.SetSoftness(uid, (float) softness, pointLight);
             }
+
+            // light bulbs burn your hands!
+            if (TryComp<DamageOnInteractComponent>(uid, out var damageOnInteractComp))
+                _damageOnInteractSystem.SetIsDamageActiveTo((uid, damageOnInteractComp), value);
         }
 
         public void ToggleLight(EntityUid uid, PoweredLightComponent? light = null)

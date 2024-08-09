@@ -3,8 +3,6 @@ using Content.Shared.Actions;
 using Content.Shared.CombatMode;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Players;
-using PlayerManager = Robust.Client.Player.PlayerManager;
 
 namespace Content.IntegrationTests.Tests.Actions;
 
@@ -20,18 +18,18 @@ public sealed class ActionsAddedTest
     [Test]
     public async Task TestCombatActionsAdded()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, DummyTicker = false});
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, DummyTicker = false });
         var server = pair.Server;
         var client = pair.Client;
         var sEntMan = server.ResolveDependency<IEntityManager>();
         var cEntMan = client.ResolveDependency<IEntityManager>();
-        var clientSession = client.ResolveDependency<Robust.Client.Player.IPlayerManager>().LocalPlayer?.Session;
-        var serverSession = server.ResolveDependency<IPlayerManager>().ServerSessions.Single();
+        var clientSession = client.Session;
+        var serverSession = server.ResolveDependency<IPlayerManager>().Sessions.Single();
         var sActionSystem = server.System<SharedActionsSystem>();
         var cActionSystem = client.System<SharedActionsSystem>();
 
         // Dummy ticker is disabled - client should be in control of a normal mob.
-        Assert.NotNull(serverSession.AttachedEntity);
+        Assert.That(serverSession.AttachedEntity, Is.Not.Null);
         var serverEnt = serverSession.AttachedEntity!.Value;
         var clientEnt = clientSession!.AttachedEntity!.Value;
         Assert.That(sEntMan.EntityExists(serverEnt));
@@ -59,8 +57,8 @@ public sealed class ActionsAddedTest
         var sAct = sActions[0].Comp;
         var cAct = cActions[0].Comp;
 
-        Assert.NotNull(sAct);
-        Assert.NotNull(cAct);
+        Assert.That(sAct, Is.Not.Null);
+        Assert.That(cAct, Is.Not.Null);
 
         // Finally, these two actions are not the same object
         // required, because integration tests do not respect the [NonSerialized] attribute and will simply events by reference.

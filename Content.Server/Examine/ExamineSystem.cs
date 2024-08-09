@@ -3,8 +3,7 @@ using Content.Server.Verbs;
 using Content.Shared.Examine;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Examine
@@ -41,14 +40,14 @@ namespace Content.Server.Examine
                 GetNetEntity(target), 0, message, verbs?.ToList(), centerAtCursor
             );
 
-            RaiseNetworkEvent(ev, session.ConnectedClient);
+            RaiseNetworkEvent(ev, session.Channel);
         }
 
         private void ExamineInfoRequest(ExamineSystemMessages.RequestExamineInfoMessage request, EntitySessionEventArgs eventArgs)
         {
-            var player = (IPlayerSession) eventArgs.SenderSession;
+            var player = eventArgs.SenderSession;
             var session = eventArgs.SenderSession;
-            var channel = player.ConnectedClient;
+            var channel = player.Channel;
             var entity = GetEntity(request.NetEntity);
 
             if (session.AttachedEntity is not {Valid: true} playerEnt

@@ -11,6 +11,24 @@
       map: [ "enum.ToggleVisuals.Layer" ]
   - type: Stunbaton
     energyPerUse: 50
+  - type: ItemToggle
+    predictable: false
+    soundActivate:
+      collection: sparks
+      params:
+        variation: 0.250
+    soundDeactivate:
+      collection: sparks
+      params:
+        variation: 0.250
+    soundFailToActivate:
+      path: /Audio/Machines/button.ogg
+      params:
+        variation: 0.250
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Blunt: 0
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -25,13 +43,14 @@
   - type: StaminaDamageOnCollide
     damage: 35
     sound: /Audio/Weapons/egloves.ogg
+  - type: LandAtCursor # it deals stamina damage when thrown
   - type: Battery
     maxCharge: 1000
     startingCharge: 1000
-  - type: ItemCooldown
+  - type: UseDelay
   - type: Item
     heldPrefix: off
-    size: 20
+    size: Normal
   - type: Clothing
     sprite: Objects/Weapons/Melee/stunbaton.rsi
     quickEquip: false
@@ -47,7 +66,7 @@
           True: {state: stunbaton_on}
           False: {state: stunbaton_off}
   - type: StaticPrice
-    price: 100
+    price: 80
   - type: Riggable
   - type: SolutionContainerManager
     solutions:
@@ -61,9 +80,14 @@
     explosionType: Default
     intensitySlope: 1.5
     maxIntensity: 200
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+      Plastic: 100
   - type: GuideHelp
     guides:
     - Security
+    - Antagonists
 
 - type: entity
   name: truncheon
@@ -79,11 +103,16 @@
     damage:
       types:
         Blunt: 20
+    soundHit:
+      collection: MetalThud
     bluntStaminaDamageFactor: 1.5
   - type: Item
-    size: 20
+    size: Normal
+  - type: Tag
+    tags:
+    - Truncheon
   - type: Clothing
-    sprite: Objects\Weapons\Melee\truncheon.rsi
+    sprite: Objects/Weapons/Melee/truncheon.rsi
     quickEquip: false
     slots:
     - Belt
@@ -91,10 +120,11 @@
     malus: 0.225
   - type: Appearance
   - type: StaticPrice
-    price: 100
+    price: 80
   - type: GuideHelp
     guides:
     - Security
+    - Antagonists
 
 - type: entity
   name: flash
@@ -122,9 +152,9 @@
           Blunt: 0 # melee weapon to allow flashing individual targets
       angle: 10
     - type: Item
-      size: 5
+      size: Small
       sprite: Objects/Weapons/Melee/flash.rsi
-    - type: ItemCooldown
+    - type: UseDelay
     - type: StaticPrice
       price: 40
     - type: Appearance
@@ -140,6 +170,7 @@
     - type: GuideHelp
       guides:
       - Security
+      - Antagonists
 
 - type: entity
   name: flash
@@ -153,7 +184,7 @@
 
 - type: entity
   name: portable flasher
-  parent: BaseStructure
+  parent: BaseMachine
   id: PortableFlasher
   description: An ultrabright flashbulb with a proximity trigger, useful for making an area security-only.
   components:
@@ -161,7 +192,6 @@
       sound:
         path: /Audio/Weapons/flash.ogg
     - type: FlashOnTrigger
-      repeating: true
       range: 3
     - type: TriggerOnProximity
       enabled: true
@@ -169,14 +199,12 @@
       shape:
         !type:PhysShapeCircle
           radius: 2
-    - type: Anchorable
+      repeating: true
     - type: Sprite
       sprite: Objects/Weapons/pflash.rsi
       layers:
         - state: "off"
           map: ["enum.ProximityTriggerVisualLayers.Base"]
-    - type: InteractionOutline
-    - type: Physics
     - type: Fixtures
       fixtures:
         fix1:
@@ -198,3 +226,4 @@
     - type: GuideHelp
       guides:
       - Security
+      - Antagonists

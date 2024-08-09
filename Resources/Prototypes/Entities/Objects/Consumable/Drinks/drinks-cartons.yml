@@ -1,0 +1,211 @@
+- type: entity
+  parent: DrinkBase
+  id: DrinkCartonBaseFull
+  abstract: true
+  suffix: Full
+  components:
+  - type: Openable
+    sound:
+      collection: bottleOpenSounds #Could use a new sound someday ¯\_(ツ)_/¯
+    closeable: true
+    closeSound:
+      collection: bottleCloseSounds
+  - type: Sealable
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+  - type: PressurizedSolution
+    solution: drink
+  - type: Shakeable
+  - type: Sprite
+    state: icon
+  - type: Item
+    size: Small
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:SpillBehavior { }
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+        #In future maybe add generic plastic scrap trash/debris
+  - type: TrashOnSolutionEmpty
+    solution: drink
+  - type: DnaSubstanceTrace
+
+- type: entity
+  parent: DrinkCartonBaseFull
+  id: DrinkCartonBaseLargeFull
+  abstract: true
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+  - type: Item
+    size: Normal
+
+- type: entity
+  id: DrinkCartonVisualsOpenable
+  abstract: true
+  components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon"}
+  - type: Sprite
+    layers:
+      - state: icon
+        map: ["enum.OpenableVisuals.Layer"]
+
+- type: entity
+  parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
+  id: DrinkJuiceLimeCarton
+  name: lime juice
+  description: Sweet-sour goodness.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: JuiceLime
+          Quantity: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/limejuice.rsi
+
+- type: entity
+  parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
+  id: DrinkJuiceOrangeCarton
+  name: orange juice
+  description: Full of vitamins and deliciousness!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: JuiceOrange
+          Quantity: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/orangejuice.rsi
+
+- type: entity
+  parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
+  id: DrinkJuiceTomatoCarton
+  name: tomato juice
+  description: Well, at least it LOOKS like tomato juice. You can't tell with all that redness.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: JuiceTomato
+          Quantity: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/tomatojuice.rsi
+
+- type: entity
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkCoconutWaterCarton
+  name: coconut water
+  description: It's the inside of the coconut that counts.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: CoconutWater
+          Quantity: 50
+  - type: Drink
+  - type: Label
+    currentLabel: reagent-name-coconut-water
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/coconutwater.rsi
+
+- type: entity
+  parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
+  id: DrinkCreamCarton
+  name: milk cream
+  description: It's cream. Made from milk. What else did you think you'd find in there?
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Cream
+          Quantity: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/cream.rsi
+
+- type: entity
+  parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseLargeFull]
+  id: DrinkMilkCarton
+  name: milk
+  description: An opaque white liquid produced by the mammary glands of mammals.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Milk
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/milk.rsi
+
+- type: entity
+  parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseLargeFull]
+  id: DrinkSoyMilkCarton
+  name: soy milk
+  description: White and nutritious soy goodness!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: MilkSoy
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/soymilk.rsi
+
+- type: entity
+  parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseLargeFull]
+  id: DrinkOatMilkCarton
+  name: oat milk
+  description: It's oat milk. Tan and nutritious goodness!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: MilkOat
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/oatmilk.rsi
+    
+- type: entity
+  parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
+  id: DrinkJuiceLemonCarton
+  name: lemon juice
+  description: First it's sour, then it's still sour.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: JuiceLemon
+          Quantity: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/lemonjuice.rsi

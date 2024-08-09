@@ -26,6 +26,9 @@ public sealed class StressTestMovementSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var stressTest, out var transform))
         {
+            if (!transform.ParentUid.IsValid())
+                continue;
+
             stressTest.Progress += frameTime;
 
             if (stressTest.Progress > 1)
@@ -36,7 +39,7 @@ public sealed class StressTestMovementSystem : EntitySystem
             var x = MathF.Sin(stressTest.Progress * MathHelper.TwoPi);
             var y = MathF.Cos(stressTest.Progress * MathHelper.TwoPi);
 
-            _transform.SetWorldPosition(transform, stressTest.Origin + new Vector2(x, y) * 5);
+            _transform.SetWorldPosition((uid, transform), stressTest.Origin + new Vector2(x, y) * 5);
         }
     }
 }

@@ -4,7 +4,6 @@
   - name: head
     slotTexture: head
     slotFlags: HEAD
-    slotGroup: MainHotbar
-    uiWindowPos: 0,0
+    uiWindowPos: 0,1
     strippingWindowPos: 0,0
     displayName: Head

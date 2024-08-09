@@ -30,6 +30,14 @@
     {
       "name": "gradient_l_leg",
       "directions": 4
+    },
+    {
+      "name": "gradient_r_foot",
+      "directions": 4
+    },
+    {
+      "name": "gradient_l_foot",
+      "directions": 4
     }
   ]
 }

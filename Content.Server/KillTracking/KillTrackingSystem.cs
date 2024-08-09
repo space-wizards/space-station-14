@@ -1,8 +1,9 @@
-﻿using Content.Server.NPC.HTN;
+using Content.Server.NPC.HTN;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
-using Robust.Server.GameObjects;
+using Content.Shared.Mobs.Systems;
+using Robust.Shared.Player;
 
 namespace Content.Server.KillTracking;
 
@@ -14,7 +15,8 @@ public sealed class KillTrackingSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<KillTrackerComponent, DamageChangedEvent>(OnDamageChanged);
+        // Add damage to LifetimeDamage before MobStateChangedEvent gets raised
+        SubscribeLocalEvent<KillTrackerComponent, DamageChangedEvent>(OnDamageChanged, before: [ typeof(MobThresholdSystem) ]);
         SubscribeLocalEvent<KillTrackerComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
@@ -27,7 +29,7 @@ public sealed class KillTrackingSystem : EntitySystem
         {
             foreach (var key in component.LifetimeDamage.Keys)
             {
-                component.LifetimeDamage[key] -= args.DamageDelta.Total;
+                component.LifetimeDamage[key] -= args.DamageDelta.GetTotal();
             }
 
             return;
@@ -35,7 +37,7 @@ public sealed class KillTrackingSystem : EntitySystem
 
         var source = GetKillSource(args.Origin);
         var damage = component.LifetimeDamage.GetValueOrDefault(source);
-        component.LifetimeDamage[source] = damage + args.DamageDelta.Total;
+        component.LifetimeDamage[source] = damage + args.DamageDelta.GetTotal();
     }
 
     private void OnMobStateChanged(EntityUid uid, KillTrackerComponent component, MobStateChangedEvent args)
@@ -50,7 +52,7 @@ public sealed class KillTrackingSystem : EntitySystem
         var largestSource = GetLargestSource(component.LifetimeDamage);
         largestSource ??= killImpulse;
 
-        KillSource? killSource;
+        KillSource killSource;
         KillSource? assistSource = null;
 
         if (killImpulse is KillEnvironmentSource)
@@ -69,13 +71,13 @@ public sealed class KillTrackingSystem : EntitySystem
             killSource = killImpulse;
 
             // no assist is given to environmental kills
-            if (largestSource is not KillEnvironmentSource)
+            if (largestSource is not KillEnvironmentSource
+                && component.LifetimeDamage.TryGetValue(largestSource, out var largestDamage))
             {
-                // you have to do at least 50% of largest source's damage to get the assist.
-                if (component.LifetimeDamage[largestSource] >= component.LifetimeDamage[killSource] / 2)
-                {
+                var killDamage = component.LifetimeDamage.GetValueOrDefault(killSource);
+                // you have to do at least twice as much damage as the killing source to get the assist.
+                if (largestDamage >= killDamage / 2)
                     assistSource = largestSource;
-                }
             }
         }
 

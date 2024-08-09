@@ -18,7 +18,7 @@
 
 - type: marking
   id: SlimeGradientLeftLeg
-  bodyPart: LFoot
+  bodyPart: LLeg
   markingCategory: Legs
   speciesRestriction: [SlimePerson]
   sprites:
@@ -27,12 +27,30 @@
 
 - type: marking
   id: SlimeGradientRightLeg
-  bodyPart: RFoot
+  bodyPart: RLeg
   markingCategory: Legs
   speciesRestriction: [SlimePerson]
   sprites:
   - sprite: Mobs/Customization/slime_parts.rsi
     state: gradient_r_leg
+
+- type: marking
+  id: SlimeGradientLeftFoot
+  bodyPart: LFoot
+  markingCategory: Legs
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: Mobs/Customization/slime_parts.rsi
+    state: gradient_l_foot
+
+- type: marking
+  id: SlimeGradientRightFoot
+  bodyPart: RFoot
+  markingCategory: Legs
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: Mobs/Customization/slime_parts.rsi
+    state: gradient_r_foot
 
 - type: marking
   id: SlimeGradientLeftHand

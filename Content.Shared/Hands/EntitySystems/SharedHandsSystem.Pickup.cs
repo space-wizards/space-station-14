@@ -108,13 +108,13 @@ public abstract partial class SharedHandsSystem : EntitySystem
             var xform = Transform(uid);
             var coordinateEntity = xform.ParentUid.IsValid() ? xform.ParentUid : uid;
             var itemXform = Transform(entity);
-            var itemPos = itemXform.MapPosition;
+            var itemPos = TransformSystem.GetMapCoordinates(entity, xform: itemXform);
 
             if (itemPos.MapId == xform.MapID
-                && (itemPos.Position - xform.MapPosition.Position).Length() <= MaxAnimationRange
+                && (itemPos.Position - TransformSystem.GetMapCoordinates(uid, xform: xform).Position).Length() <= MaxAnimationRange
                 && MetaData(entity).VisibilityMask == MetaData(uid).VisibilityMask) // Don't animate aghost pickups.
             {
-                var initialPosition = EntityCoordinates.FromMap(coordinateEntity, itemPos, EntityManager);
+                var initialPosition = EntityCoordinates.FromMap(coordinateEntity, itemPos, TransformSystem, EntityManager);
                 _storage.PlayPickupAnimation(entity, initialPosition, xform.Coordinates, itemXform.LocalRotation, uid);
             }
         }
@@ -217,7 +217,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (handContainer == null || handContainer.ContainedEntity != null)
             return;
 
-        if (!handContainer.Insert(entity, EntityManager))
+        if (!ContainerSystem.Insert(entity, handContainer))
         {
             Log.Error($"Failed to insert {ToPrettyString(entity)} into users hand container when picking up. User: {ToPrettyString(uid)}. Hand: {hand.Name}.");
             return;

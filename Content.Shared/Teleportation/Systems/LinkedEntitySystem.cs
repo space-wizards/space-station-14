@@ -54,11 +54,27 @@ public sealed class LinkedEntitySystem : EntitySystem
         _appearance.SetData(first, LinkedEntityVisuals.HasAnyLinks, true);
         _appearance.SetData(second, LinkedEntityVisuals.HasAnyLinks, true);
 
-        Dirty(firstLink);
-        Dirty(secondLink);
+        Dirty(first, firstLink);
+        Dirty(second, secondLink);
 
         return firstLink.LinkedEntities.Add(second)
             && secondLink.LinkedEntities.Add(first);
+    }
+
+    /// <summary>
+    /// Does a one-way link from source to target.
+    /// </summary>
+    /// <param name="deleteOnEmptyLinks">Whether both entities should now delete once their links are removed</param>
+    public bool OneWayLink(EntityUid source, EntityUid target, bool deleteOnEmptyLinks=false)
+    {
+        var firstLink = EnsureComp<LinkedEntityComponent>(source);
+        firstLink.DeleteOnEmptyLinks = deleteOnEmptyLinks;
+
+        _appearance.SetData(source, LinkedEntityVisuals.HasAnyLinks, true);
+
+        Dirty(source, firstLink);
+
+        return firstLink.LinkedEntities.Add(target);
     }
 
     /// <summary>
@@ -71,7 +87,7 @@ public sealed class LinkedEntitySystem : EntitySystem
     /// <param name="secondLink">Resolve comp</param>
     /// <returns>Whether unlinking was successful (e.g. they both were actually linked to one another)</returns>
     public bool TryUnlink(EntityUid first, EntityUid second,
-        LinkedEntityComponent? firstLink=null, LinkedEntityComponent? secondLink=null)
+        LinkedEntityComponent? firstLink = null, LinkedEntityComponent? secondLink = null)
     {
         if (!Resolve(first, ref firstLink))
             return false;
@@ -85,8 +101,8 @@ public sealed class LinkedEntitySystem : EntitySystem
         _appearance.SetData(first, LinkedEntityVisuals.HasAnyLinks, firstLink.LinkedEntities.Any());
         _appearance.SetData(second, LinkedEntityVisuals.HasAnyLinks, secondLink.LinkedEntities.Any());
 
-        Dirty(firstLink);
-        Dirty(secondLink);
+        Dirty(first, firstLink);
+        Dirty(second, secondLink);
 
         if (firstLink.LinkedEntities.Count == 0 && firstLink.DeleteOnEmptyLinks)
             QueueDel(first);

@@ -5,8 +5,6 @@ using Content.Server.Stack;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
-using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
 using CableCuttingFinishedEvent = Content.Shared.Tools.Systems.CableCuttingFinishedEvent;
 using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
@@ -15,7 +13,6 @@ namespace Content.Server.Power.EntitySystems;
 
 public sealed partial class CableSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileManager = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly StackSystem _stack = default!;
@@ -47,17 +44,24 @@ public sealed partial class CableSystem : EntitySystem
         if (args.Cancelled)
             return;
 
+        var xform = Transform(uid);
+        var ev = new CableAnchorStateChangedEvent(xform);
+        RaiseLocalEvent(uid, ref ev);
+
         if (_electrocutionSystem.TryDoElectrifiedAct(uid, args.User))
             return;
 
-        _adminLogs.Add(LogType.CableCut, LogImpact.Medium, $"The {ToPrettyString(uid)} at {Transform(uid).Coordinates} was cut by {ToPrettyString(args.User)}.");
+        _adminLogs.Add(LogType.CableCut, LogImpact.Medium, $"The {ToPrettyString(uid)} at {xform.Coordinates} was cut by {ToPrettyString(args.User)}.");
 
-        Spawn(cable.CableDroppedOnCutPrototype, Transform(uid).Coordinates);
+        Spawn(cable.CableDroppedOnCutPrototype, xform.Coordinates);
         QueueDel(uid);
     }
 
     private void OnAnchorChanged(EntityUid uid, CableComponent cable, ref AnchorStateChangedEvent args)
     {
+        var ev = new CableAnchorStateChangedEvent(args.Transform, args.Detaching);
+        RaiseLocalEvent(uid, ref ev);
+
         if (args.Anchored)
             return; // huh? it wasn't anchored?
 

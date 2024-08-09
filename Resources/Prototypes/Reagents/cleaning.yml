@@ -39,6 +39,32 @@
     - !type:CleanDecalsReaction {}
 
 - type: reagent
+  id: SoapReagent
+  name: reagent-name-soap
+  desc: reagent-desc-soap
+  physicalDesc: reagent-physical-desc-soapy
+  flavor: clean
+  color: "#c8dfc9"
+  recognizable: true
+  boilingPoint: 100.0
+  meltingPoint: 60.0
+  metabolisms:
+    Food:
+      effects:
+      - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 6
+        probability: 0.20
+    Drink:
+      effects:
+      - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 6
+        probability: 0.20
+
+- type: reagent
   id: SpaceLube
   name: reagent-name-space-lube
   desc: reagent-desc-space-lube
@@ -51,9 +77,8 @@
   meltingPoint: 18.2
   tileReactions:
     - !type:SpillTileReaction
-      paralyzeTime: 3
-      launchForwardsMultiplier: 2
       requiredSlipSpeed: 1
+      superSlippery: true
 
 - type: reagent
   id: SpaceGlue
@@ -91,3 +116,7 @@
         type: Add
         time: 5
         refresh: false
+  footstepSound:
+    collection: FootstepSticky
+    params:
+      volume: 6

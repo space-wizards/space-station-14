@@ -1,3 +1,4 @@
+# When adding new food also add to the appropriate random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\
 # Base
 
 - type: entity
@@ -16,7 +17,7 @@
         - ReagentId: Nutriment
           Quantity: 5
   - type: Item
-    size: 1
+    size: Tiny
 
 # Muffins/Buns
 
@@ -162,9 +163,6 @@
 
 # Nuggets
 
-- type: Tag
-  id: Nugget
-
 - type: entity
   name: chicken nugget
   parent: FoodBakedBase
@@ -183,11 +181,8 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           tendie: ""
-      - enum.DamageStateVisualLayers.Base:
           lizard: ""
-      - enum.DamageStateVisualLayers.Base:
           star: ""
-      - enum.DamageStateVisualLayers.Base:
           corgi: ""
   - type: SolutionContainerManager
     solutions:
@@ -262,14 +257,12 @@
 
 - type: entity
   name: blueberry pancake
-  parent: FoodBakedBase
+  parent: FoodBakedPancake
   id: FoodBakedPancakeBb
   description: A fluffy and delicious blueberry pancake.
   components:
   - type: Stack
-    stackType: Pancake
-    count: 1
-    composite: true
+    stackType: PancakeBb
     layerStates:
     - pancakesbb1
     - pancakesbb2
@@ -286,7 +279,6 @@
     - state: pancakesbb3
       map: ["pancakesbb3"]
       visible: false
-  - type: Appearance
   - type: Tag
     tags:
     - Pancake
@@ -294,14 +286,12 @@
 
 - type: entity
   name: chocolate chip pancake
-  parent: FoodBakedBase
+  parent: FoodBakedPancake
   id: FoodBakedPancakeCc
   description: A fluffy and delicious chocolate chip pancake.
   components:
   - type: Stack
-    stackType: Pancake
-    count: 1
-    composite: true
+    stackType: PancakeCc
     layerStates:
     - pancakescc1
     - pancakescc2
@@ -318,7 +308,6 @@
     - state: pancakescc3
       map: ["pancakescc3"]
       visible: false
-  - type: Appearance
   - type: SolutionContainerManager
     solutions:
       food:
@@ -328,9 +317,6 @@
           Quantity: 5
         - ReagentId: Theobromine
           Quantity: 1
-  - type: Tag
-    tags:
-    - Pancake
 
 - type: entity
   name: waffles
@@ -532,6 +518,9 @@
           Quantity: 5
         - ReagentId: Theobromine
           Quantity: 3
+  - type: Tag
+    tags:
+    - Slice
 
 - type: entity
   name: special brownies
@@ -587,6 +576,9 @@
           Quantity: 3
         - ReagentId: THC
           Quantity: 25
+  - type: Tag
+    tags:
+    - Slice
 
 - type: entity
   name: onion rings
@@ -603,7 +595,7 @@
     - type: SolutionContainerManager
       solutions:
         food:
-          maxVol: 1
+          maxVol: 4
           reagents:
           - ReagentId: Nutriment
             Quantity: 1

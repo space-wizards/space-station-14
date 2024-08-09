@@ -60,7 +60,7 @@
   id: BulletDebug
   name: bang, ded bullet
   parent: BaseBullet
-  noSpawn: true
+  categories: [ Debug, HideSpawnMenu ]
   suffix: DEBUG
   components:
   - type: Tag
@@ -101,7 +101,7 @@
       types:
         Blunt: 20000
   - type: Item
-    size: 1
+    size: Tiny
     sprite: Objects/Weapons/Melee/debug.rsi
 
 - type: entity

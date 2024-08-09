@@ -10,6 +10,8 @@
   canBeAntag: false
   accessGroups:
   - AllAccess
+  access:
+  - CentralCommand
 
 - type: startingGear
   id: CentcomGear
@@ -22,5 +24,6 @@
     outerClothing: ClothingOuterArmorBasic
     id: CentcomPDA
     ears: ClothingHeadsetAltCentCom
+    belt: WeaponPistolN1984
     pocket1: BoxFolderBlack
     pocket2: PenCentcom

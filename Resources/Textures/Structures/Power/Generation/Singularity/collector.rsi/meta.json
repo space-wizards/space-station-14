@@ -13,6 +13,9 @@
     {
       "name": "ca_on"
     },
+	{
+      "name": "static"
+    },
     {
       "name": "ca_active",
       "delays": [

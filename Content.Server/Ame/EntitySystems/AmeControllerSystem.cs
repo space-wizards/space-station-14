@@ -1,21 +1,20 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Managers;
 using Content.Server.Ame.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
-using Content.Shared.Ame;
+using Content.Shared.Ame.Components;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
-using Content.Shared.Hands.Components;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction;
 using Content.Shared.Mind.Components;
-using Content.Shared.Popups;
-using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ame.EntitySystems;
@@ -23,23 +22,29 @@ namespace Content.Server.Ame.EntitySystems;
 public sealed class AmeControllerSystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AmeControllerComponent, ComponentStartup>(OnComponentStartup);
-        SubscribeLocalEvent<AmeControllerComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<AmeControllerComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<AmeControllerComponent, ComponentRemove>(OnRemove);
+        SubscribeLocalEvent<AmeControllerComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
+        SubscribeLocalEvent<AmeControllerComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<AmeControllerComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<AmeControllerComponent, UiButtonPressedMessage>(OnUiButtonPressed);
+    }
+
+    private void OnInit(EntityUid uid, AmeControllerComponent component, ComponentInit args)
+    {
+        _itemSlots.AddItemSlot(uid, SharedAmeControllerComponent.FuelSlotId, component.FuelSlot);
+
+        UpdateUi(uid, component);
     }
 
     public override void Update(float frameTime)
@@ -55,6 +60,22 @@ public sealed class AmeControllerSystem : EntitySystem
         }
     }
 
+    private void OnRemove(EntityUid uid, AmeControllerComponent component, ComponentRemove args)
+    {
+        _itemSlots.RemoveItemSlot(uid, component.FuelSlot);
+    }
+
+    private void OnItemSlotChanged(EntityUid uid, AmeControllerComponent component, ContainerModifiedMessage args)
+    {
+        if (!component.Initialized)
+            return;
+
+        if (args.Container.ID != component.FuelSlot.ID)
+            return;
+
+        UpdateUi(uid, component);
+    }
+
     private void UpdateController(EntityUid uid, TimeSpan curTime, AmeControllerComponent? controller = null, NodeContainerComponent? nodes = null)
     {
         if (!Resolve(uid, ref controller))
@@ -67,23 +88,24 @@ public sealed class AmeControllerSystem : EntitySystem
 
         if (!controller.Injecting)
             return;
+
         if (!TryGetAMENodeGroup(uid, out var group, nodes))
             return;
 
-        if (TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var fuelJar))
+        if (TryComp<AmeFuelContainerComponent>(controller.FuelSlot.Item, out var fuelContainer))
         {
             // if the jar is empty shut down the AME
-            if (fuelJar.FuelAmount <= 0)
+            if (fuelContainer.FuelAmount <= 0)
             {
                 SetInjecting(uid, false, null, controller);
             }
             else
             {
-                var availableInject = Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
+                var availableInject = Math.Min(controller.InjectionAmount, fuelContainer.FuelAmount);
                 var powerOutput = group.InjectFuel(availableInject, out var overloading);
                 if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
                     powerOutlet.MaxSupply = powerOutput;
-                fuelJar.FuelAmount -= availableInject;
+                fuelContainer.FuelAmount -= availableInject;
                 // only play audio if we actually had an injection
                 if (availableInject > 0)
                     _audioSystem.PlayPvs(controller.InjectSound, uid, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
@@ -105,11 +127,11 @@ public sealed class AmeControllerSystem : EntitySystem
         if (!Resolve(uid, ref controller))
             return;
 
-        if (!_userInterfaceSystem.TryGetUi(uid, AmeControllerUiKey.Key, out var bui))
+        if (!_userInterfaceSystem.HasUi(uid, AmeControllerUiKey.Key))
             return;
 
         var state = GetUiState(uid, controller);
-        _userInterfaceSystem.SetUiState(bui, state);
+        _userInterfaceSystem.SetUiState(uid, AmeControllerUiKey.Key, state);
 
         controller.NextUIUpdate = _gameTiming.CurTime + controller.UpdateUIPeriod;
     }
@@ -134,11 +156,28 @@ public sealed class AmeControllerSystem : EntitySystem
             currentPowerSupply = powerOutlet.CurrentSupply / 1000;
         }
 
-        var hasJar = Exists(controller.JarSlot.ContainedEntity);
-        if (!hasJar || !TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var jar))
-            return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), false, hasJar, 0, controller.InjectionAmount, coreCount, currentPowerSupply, targetedPowerSupply);
+        var fuelContainerInSlot = controller.FuelSlot.Item;
+        var hasFuelContainerInSlot = Exists(fuelContainerInSlot);
+        if (!hasFuelContainerInSlot || !TryComp<AmeFuelContainerComponent>(fuelContainerInSlot, out var fuelContainer))
+            return new AmeControllerBoundUserInterfaceState(powered,
+                                                            IsMasterController(uid),
+                                                            false,
+                                                            hasFuelContainerInSlot,
+                                                            0,
+                                                            controller.InjectionAmount,
+                                                            coreCount,
+                                                            currentPowerSupply,
+                                                            targetedPowerSupply);
 
-        return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), controller.Injecting, hasJar, jar.FuelAmount, controller.InjectionAmount, coreCount, currentPowerSupply, targetedPowerSupply);
+        return new AmeControllerBoundUserInterfaceState(powered,
+                                                        IsMasterController(uid),
+                                                        controller.Injecting,
+                                                        hasFuelContainerInSlot,
+                                                        fuelContainer.FuelAmount,
+                                                        controller.InjectionAmount,
+                                                        coreCount,
+                                                        currentPowerSupply,
+                                                        targetedPowerSupply);
     }
 
     private bool IsMasterController(EntityUid uid)
@@ -166,23 +205,23 @@ public sealed class AmeControllerSystem : EntitySystem
     {
         if (!Resolve(uid, ref controller))
             return;
+
         if (controller.Injecting)
             return;
 
-        var jar = controller.JarSlot.ContainedEntity;
-        if (!Exists(jar))
+        if (!Exists(controller.FuelSlot.Item))
             return;
 
-        controller.JarSlot.Remove(jar!.Value);
+        _itemSlots.TryEjectToHands(uid, controller.FuelSlot, user);
+
         UpdateUi(uid, controller);
-        if (Exists(user))
-            _handsSystem.PickupOrDrop(user, jar!.Value);
     }
 
     public void SetInjecting(EntityUid uid, bool value, EntityUid? user = null, AmeControllerComponent? controller = null)
     {
         if (!Resolve(uid, ref controller))
             return;
+
         if (controller.Injecting == value)
             return;
 
@@ -192,6 +231,8 @@ public sealed class AmeControllerSystem : EntitySystem
             powerOut.MaxSupply = 0;
 
         UpdateUi(uid, controller);
+
+        _itemSlots.SetLock(uid, controller.FuelSlot, value);
 
         // Logging
         if (!HasComp<MindContainerComponent>(user))
@@ -227,19 +268,41 @@ public sealed class AmeControllerSystem : EntitySystem
         var humanReadableState = controller.Injecting ? "Inject" : "Not inject";
         _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{EntityManager.ToPrettyString(user.Value):player} has set the AME to inject {controller.InjectionAmount} while set to {humanReadableState}");
 
+        /* This needs to be information which an admin is very likely to want to be informed about in order to be an admin alert or have a sound notification.
+        At the time of editing, players regularly "overclock" the AME and those cases require no admin attention.
+
         // Admin alert
-        var safeLimit = 0;
+        var safeLimit = int.MaxValue;
         if (TryGetAMENodeGroup(uid, out var group))
-            safeLimit = group.CoreCount * 2;
+            safeLimit = group.CoreCount * 4;
 
         if (oldValue <= safeLimit && value > safeLimit)
-            _chatManager.SendAdminAlert(user.Value, $"increased AME over safe limit to {controller.InjectionAmount}");
+        {
+            if (_gameTiming.CurTime > controller.EffectCooldown)
+            {
+                _chatManager.SendAdminAlert(user.Value, $"increased AME over safe limit to {controller.InjectionAmount}");
+                _audioSystem.PlayGlobal("/Audio/Misc/adminlarm.ogg",
+                    Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-8f));
+                controller.EffectCooldown = _gameTiming.CurTime + controller.CooldownDuration;
+            }
+        }
+        */
     }
 
-    public void AdjustInjectionAmount(EntityUid uid, int delta, int min = 0, int max = int.MaxValue, EntityUid? user = null, AmeControllerComponent? controller = null)
+    public void AdjustInjectionAmount(EntityUid uid, int delta, EntityUid? user = null, AmeControllerComponent? controller = null)
     {
-        if (Resolve(uid, ref controller))
-            SetInjectionAmount(uid, MathHelper.Clamp(controller.InjectionAmount + delta, min, max), user, controller);
+        if (!Resolve(uid, ref controller))
+            return;
+
+        var max = GetMaxInjectionAmount((uid, controller));
+        SetInjectionAmount(uid, MathHelper.Clamp(controller.InjectionAmount + delta, 0, max), user, controller);
+    }
+
+    public int GetMaxInjectionAmount(Entity<AmeControllerComponent> ent)
+    {
+        if (!TryGetAMENodeGroup(ent, out var group))
+            return 0;
+        return  group.CoreCount * 8;
     }
 
     private void UpdateDisplay(EntityUid uid, int stability, AmeControllerComponent? controller = null, AppearanceComponent? appearance = null)
@@ -251,6 +314,7 @@ public sealed class AmeControllerSystem : EntitySystem
         {
             < 10 => AmeControllerState.Fuck,
             < 50 => AmeControllerState.Critical,
+            < 80 => AmeControllerState.Warning,
             _ => AmeControllerState.On,
         };
 
@@ -265,38 +329,6 @@ public sealed class AmeControllerSystem : EntitySystem
         );
     }
 
-    private void OnComponentStartup(EntityUid uid, AmeControllerComponent comp, ComponentStartup args)
-    {
-        // TODO: Fix this bad name. I'd update maps but then people get mad.
-        comp.JarSlot = _containerSystem.EnsureContainer<ContainerSlot>(uid, AmeControllerComponent.FuelContainerId);
-    }
-
-    private void OnInteractUsing(EntityUid uid, AmeControllerComponent comp, InteractUsingEvent args)
-    {
-        if (!HasComp<HandsComponent>(args.User))
-        {
-            _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-no-hands-text"), uid, args.User);
-            return;
-        }
-
-        if (!HasComp<AmeFuelContainerComponent>(args.Used))
-        {
-            _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-fail"), uid, args.User);
-            return;
-        }
-
-        if (Exists(comp.JarSlot.ContainedEntity))
-        {
-            _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-already-has-jar"), uid, args.User);
-            return;
-        }
-
-        comp.JarSlot.Insert(args.Used);
-        _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-success"), uid, args.User, PopupType.Medium);
-
-        UpdateUi(uid, comp);
-    }
-
     private void OnPowerChanged(EntityUid uid, AmeControllerComponent comp, ref PowerChangedEvent args)
     {
         UpdateUi(uid, comp);
@@ -304,7 +336,7 @@ public sealed class AmeControllerSystem : EntitySystem
 
     private void OnUiButtonPressed(EntityUid uid, AmeControllerComponent comp, UiButtonPressedMessage msg)
     {
-        var user = msg.Session.AttachedEntity;
+        var user = msg.Actor;
         if (!Exists(user))
             return;
 
@@ -314,7 +346,7 @@ public sealed class AmeControllerSystem : EntitySystem
             _ => true,
         };
 
-        if (!PlayerCanUseController(uid, user!.Value, needsPower, comp))
+        if (!PlayerCanUseController(uid, user, needsPower, comp))
             return;
 
         _audioSystem.PlayPvs(comp.ClickSound, uid, AudioParams.Default.WithVolume(-2f));

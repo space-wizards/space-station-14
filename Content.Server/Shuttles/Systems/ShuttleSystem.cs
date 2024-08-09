@@ -1,5 +1,8 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
 using Content.Server.Doors.Systems;
+using Content.Server.Parallax;
+using Content.Server.Procedural;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Stunnable;
@@ -9,31 +12,44 @@ using Content.Shared.Shuttles.Systems;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Server.GameStates;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Shuttles.Systems;
 
 [UsedImplicitly]
 public sealed partial class ShuttleSystem : SharedShuttleSystem
 {
+    [Dependency] private readonly IAdminLogManager _logger = default!;
+    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly MapSystem _mapSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly BiomeSystem _biomes = default!;
     [Dependency] private readonly BodySystem _bobby = default!;
     [Dependency] private readonly DockingSystem _dockSystem = default!;
-    [Dependency] private readonly DoorSystem _doors = default!;
-    [Dependency] private readonly DoorBoltSystem _bolts = default!;
+    [Dependency] private readonly DungeonSystem _dungeon = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
+    [Dependency] private readonly PvsOverrideSystem _pvs = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
@@ -43,14 +59,15 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly ThrusterSystem _thruster = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
-    private ISawmill _sawmill = default!;
+    private EntityQuery<MapGridComponent> _gridQuery;
 
     public const float TileMassMultiplier = 0.5f;
 
     public override void Initialize()
     {
         base.Initialize();
-        _sawmill = Logger.GetSawmill("shuttles");
+
+        _gridQuery = GetEntityQuery<MapGridComponent>();
 
         InitializeFTL();
         InitializeGridFills();
@@ -60,28 +77,14 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(OnShuttleStartup);
         SubscribeLocalEvent<ShuttleComponent, ComponentShutdown>(OnShuttleShutdown);
 
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
-
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
         SubscribeLocalEvent<FixturesComponent, GridFixtureChangeEvent>(OnGridFixtureChange);
     }
 
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        ShutdownGridFills();
-    }
-
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        UpdateHyperspace(frameTime);
-    }
-
-    private void OnRoundRestart(RoundRestartCleanupEvent ev)
-    {
-        CleanupHyperspace();
+        UpdateHyperspace();
     }
 
     private void OnGridFixtureChange(EntityUid uid, FixturesComponent manager, GridFixtureChangeEvent args)
@@ -115,7 +118,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 
         if (component.Enabled)
         {
-            Enable(uid, physicsComponent, component);
+            Enable(uid, component: physicsComponent, shuttle: component);
         }
     }
 
@@ -128,31 +131,33 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 
         if (component.Enabled)
         {
-            Enable(uid, physicsComponent, component);
+            Enable(uid, component: physicsComponent, shuttle: component);
         }
         else
         {
-            Disable(uid, physicsComponent);
+            Disable(uid, component: physicsComponent);
         }
     }
 
-    private void Enable(EntityUid uid, PhysicsComponent component, ShuttleComponent shuttle)
+    public void Enable(EntityUid uid, FixturesComponent? manager = null, PhysicsComponent? component = null, ShuttleComponent? shuttle = null)
     {
-        FixturesComponent? manager = null;
+        if (!Resolve(uid, ref manager, ref component, ref shuttle, false))
+            return;
 
         _physics.SetBodyType(uid, BodyType.Dynamic, manager: manager, body: component);
-        _physics.SetBodyStatus(component, BodyStatus.InAir);
+        _physics.SetBodyStatus(uid, component, BodyStatus.InAir);
         _physics.SetFixedRotation(uid, false, manager: manager, body: component);
-        _physics.SetLinearDamping(component, shuttle.LinearDamping);
-        _physics.SetAngularDamping(component, shuttle.AngularDamping);
+        _physics.SetLinearDamping(uid, component, shuttle.LinearDamping);
+        _physics.SetAngularDamping(uid, component, shuttle.AngularDamping);
     }
 
-    private void Disable(EntityUid uid, PhysicsComponent component)
+    public void Disable(EntityUid uid, FixturesComponent? manager = null, PhysicsComponent? component = null)
     {
-        FixturesComponent? manager = null;
+        if (!Resolve(uid, ref manager, ref component, false))
+            return;
 
         _physics.SetBodyType(uid, BodyType.Static, manager: manager, body: component);
-        _physics.SetBodyStatus(component, BodyStatus.OnGround);
+        _physics.SetBodyStatus(uid, component, BodyStatus.OnGround);
         _physics.SetFixedRotation(uid, true, manager: manager, body: component);
     }
 
@@ -162,11 +167,6 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         if (EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating)
             return;
 
-        if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
-        {
-            return;
-        }
-
-        Disable(uid, physicsComponent);
+        Disable(uid);
     }
 }

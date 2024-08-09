@@ -14,23 +14,6 @@
       - id: Scalpel
 
 - type: entity
-  id: ClothingBackpackDuffelCBURN
-  parent: ClothingBackpackDuffel
-  name: CBURN duffel bag
-  description: A duffel bag containing a variety of biological containment equipment.
-  components:
-  - type: StorageFill
-    contents:
-      - id: WeaponShotgunDoubleBarreled
-      - id: BoxShotgunIncendiary
-        amount: 2
-      - id: GrenadeFlashBang
-        amount: 2
-      - id: PillAmbuzolPlus
-      - id: PillAmbuzol
-        amount: 4
-
-- type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
   id: ClothingBackpackDuffelSyndicateFilledMedical
   name: syndicate surgical duffel bag
@@ -44,6 +27,8 @@
       - id: Cautery
       - id: Retractor
       - id: ScalpelAdvanced
+      - id: ClothingHandsGlovesNitrile
+      - id: EmergencyRollerBedSpawnFolded
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -145,21 +130,21 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSyndicateCostumeCentcom
-  name: CentCom official costume duffel bag
-  description: "Contains a full CentCom Official uniform set, headset and clipboard included. Encryption keys and ID access are not included."
+  name: CentComm official costume duffel bag
+  description: "Contains a full CentComm Official uniform set, headset and clipboard included. Encryption keys and ID access are not included."
   suffix: DO NOT MAP
   components:
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
   - type: StorageFill
     contents:
+      - id: ClothingOuterArmorBasic
       - id: ClothingHeadHatCentcom
       - id: ClothingEyesGlassesSunglasses
       - id: ClothingUniformJumpsuitCentcomOfficial
       - id: ClothingShoesBootsJack
       - id: ClothingHandsGlovesColorBlack
       - id: ClothingHeadsetAltCentComFake
-      - id: ClothingOuterArmorBasic
       - id: Paper
       - id: Pen
       - id: CentcomPDAFake
@@ -198,6 +183,9 @@
   name: syndicate pyjama duffel bag
   description: Contains 3 pairs of syndicate pyjamas and 3 plushies for the ultimate sleepover.
   components:
+  - type: Storage
+    grid:
+    - 0,0,8,4
   - type: StorageFill
     contents:
       - id: ClothingUniformJumpsuitPyjamaSyndicateRed
@@ -242,6 +230,7 @@
         - id: ClothingEyesChameleon
         - id: ClothingHeadsetChameleon
         - id: ClothingShoesChameleon
+        - id: BarberScissors
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -254,7 +243,22 @@
       - id: ClothingHeadHelmetSyndicate
       - id: ClothingOuterHardsuitSyndicate
       - id: ClothingMaskGasSyndicate
+      - id: ClothingHandsGlovesColorYellowBudget
       - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateRaidBundle
+  name: syndicate raid suit bundle
+  description: "Contains the Syndicate's durable raid armor suit."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterArmorRaid
+      - id: ClothingHeadHelmetRaid
+      - id: ClothingMaskGasSyndicate
+      - id: ClothingHandsGlovesCombat
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -267,6 +271,35 @@
       - id: ClothingOuterHardsuitSyndie
       - id: ClothingMaskGasSyndicate
       - id: ClothingHandsGlovesCombat
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateEliteHardsuitBundle
+  name: syndicate elite hardsuit bundle
+  description: "Contains the Syndicate's elite hardsuit, which comes with some more stuff in it."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitSyndieElite
+      - id: ClothingMaskGasSyndicate
+      - id: ClothingHandsGlovesCombat
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateHardsuitExtrasBundle
+  name: syndicate hardsuit extras bundle
+  description: "Contains stuff that you will absolutely want to have when purchasing a hardsuit."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingMaskGasSyndicate
+      - id: ClothingHandsGlovesCombat
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -284,37 +317,6 @@
         amount: 3
 
 - type: entity
-  parent: ClothingBackpackDuffelSyndicateBundle
-  id: ClothingBackpackDuffelSyndicateOperative
-  name: operative duffelbag
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvivalSyndicate
-      - id: WeaponPistolViper
-      - id: PinpointerNuclear
-      - id: MicroBombImplanter
-
-
-- type: entity
-  parent: ClothingBackpackDuffelSyndicateMedicalBundle
-  id: ClothingBackpackDuffelSyndicateOperativeMedic
-  name: operative medic duffelbag
-  description: A large duffel bag for holding extra medical supplies.
-  components:
-  - type: StorageFill
-    contents:
-      - id: BoxSurvivalSyndicate
-      - id: SawAdvanced
-      - id: Cautery
-      - id: CombatKnife
-      - id: WeaponPistolViper
-      - id: PinpointerNuclear
-      - id: HandheldHealthAnalyzer
-      - id: CombatMedipen
-      - id: MicroBombImplanter
-
-- type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
   id: ClothingBackpackDuffelSyndicateMedicalBundleFilled
   name: medical bundle
@@ -326,6 +328,25 @@
       - id: Defibrillator
       - id: CombatMedipen
         amount: 3
-      - id: ClothingHandsGlovesLatex
+      - id: ClothingHandsGlovesNitrile
       - id: SyringeTranexamicAcid
       - id: SyringeHyronalin
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateDecoyKitFilled
+  name: decoy bundle
+  description: "Contains distractions, both auditory and visual. Smell coming soon."
+  components:
+  - type: StorageFill
+    contents:
+      - id: BalloonOperative
+      - id: BalloonAgent
+      - id: BalloonElite
+      - id: BalloonJuggernaut
+      - id: BalloonCommander
+      - id: SnapPopBox
+      - id: GrenadeDummy
+        amount: 2
+      - id: SyndieTrickyBomb
+        amount: 2

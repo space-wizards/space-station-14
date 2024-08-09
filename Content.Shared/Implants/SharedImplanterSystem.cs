@@ -3,11 +3,14 @@ using System.Linq;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants.Components;
 using Content.Shared.Popups;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Implants;
 
@@ -17,6 +20,7 @@ public abstract class SharedImplanterSystem : EntitySystem
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -60,17 +64,21 @@ public abstract class SharedImplanterSystem : EntitySystem
         var implantedComp = EnsureComp<ImplantedComponent>(target);
         var implantContainer = implantedComp.ImplantContainer;
 
-        component.ImplanterSlot.ContainerSlot?.Remove(implant.Value);
+        if (component.ImplanterSlot.ContainerSlot != null)
+            _container.Remove(implant.Value, component.ImplanterSlot.ContainerSlot);
         implantComp.ImplantedEntity = target;
         implantContainer.OccludesLight = false;
-        implantContainer.Insert(implant.Value);
+        _container.Insert(implant.Value, implantContainer);
 
         if (component.CurrentMode == ImplanterToggleMode.Inject && !component.ImplantOnly)
             DrawMode(implanter, component);
         else
             ImplantMode(implanter, component);
 
-        Dirty(component);
+        var ev = new TransferDnaEvent { Donor = target, Recipient = implanter };
+        RaiseLocalEvent(target, ref ev);
+
+        Dirty(implanter, component);
     }
 
     public bool CanImplant(
@@ -81,13 +89,25 @@ public abstract class SharedImplanterSystem : EntitySystem
         [NotNullWhen(true)] out EntityUid? implant,
         [NotNullWhen(true)] out SubdermalImplantComponent? implantComp)
     {
-        implant = component.ImplanterSlot.ContainerSlot?.ContainedEntities.FirstOrDefault();
+        implant = component.ImplanterSlot.ContainerSlot?.ContainedEntities.FirstOrNull();
         if (!TryComp(implant, out implantComp))
             return false;
+
+        if (!CheckTarget(target, component.Whitelist, component.Blacklist) ||
+            !CheckTarget(target, implantComp.Whitelist, implantComp.Blacklist))
+        {
+            return false;
+        }
 
         var ev = new AddImplantAttemptEvent(user, target, implant.Value, implanter);
         RaiseLocalEvent(target, ev);
         return !ev.Cancelled;
+    }
+
+    protected bool CheckTarget(EntityUid target, EntityWhitelist? whitelist, EntityWhitelist? blacklist)
+    {
+        return _whitelistSystem.IsWhitelistPassOrNull(whitelist, target) &&
+            _whitelistSystem.IsBlacklistFailOrNull(blacklist, target);
     }
 
     //Draw the implant out of the target
@@ -122,10 +142,14 @@ public abstract class SharedImplanterSystem : EntitySystem
                     continue;
                 }
 
-                implantContainer.Remove(implant);
+                _container.Remove(implant, implantContainer);
                 implantComp.ImplantedEntity = null;
-                implanterContainer.Insert(implant);
+                _container.Insert(implant, implanterContainer);
                 permanentFound = implantComp.Permanent;
+
+                var ev = new TransferDnaEvent { Donor = target, Recipient = implanter };
+                RaiseLocalEvent(target, ref ev);
+
                 //Break so only one implant is drawn
                 break;
             }
@@ -133,7 +157,7 @@ public abstract class SharedImplanterSystem : EntitySystem
             if (component.CurrentMode == ImplanterToggleMode.Draw && !component.ImplantOnly && !permanentFound)
                 ImplantMode(implanter, component);
 
-            Dirty(component);
+            Dirty(implanter, component);
         }
     }
 

@@ -24,7 +24,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         SubscribeLocalEvent<FTLCompletedEvent>(OnLocateTarget);
     }
 
-    public bool TogglePinpointer(EntityUid uid, PinpointerComponent? pinpointer = null)
+    public override bool TogglePinpointer(EntityUid uid, PinpointerComponent? pinpointer = null)
     {
         if (!Resolve(uid, ref pinpointer))
             return false;
@@ -45,10 +45,15 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
     private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
     {
+        if (args.Handled || !args.Complex)
+            return;
+
         TogglePinpointer(uid, component);
 
         if (!component.CanRetarget)
             LocateTarget(uid, component);
+
+        args.Handled = true;
     }
 
     private void OnLocateTarget(ref FTLCompletedEvent ev)
@@ -128,26 +133,13 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
     }
 
     /// <summary>
-    ///     Set pinpointers target to track
+    ///     Update direction from pinpointer to selected target (if it was set)
     /// </summary>
-    public void SetTarget(EntityUid uid, EntityUid? target, PinpointerComponent? pinpointer = null)
+    protected override void UpdateDirectionToTarget(EntityUid uid, PinpointerComponent? pinpointer = null)
     {
         if (!Resolve(uid, ref pinpointer))
             return;
 
-        if (pinpointer.Target == target)
-            return;
-
-        pinpointer.Target = target;
-        if (pinpointer.IsActive)
-            UpdateDirectionToTarget(uid, pinpointer);
-    }
-
-    /// <summary>
-    ///     Update direction from pinpointer to selected target (if it was set)
-    /// </summary>
-    private void UpdateDirectionToTarget(EntityUid uid, PinpointerComponent pinpointer)
-    {
         if (!pinpointer.IsActive)
             return;
 

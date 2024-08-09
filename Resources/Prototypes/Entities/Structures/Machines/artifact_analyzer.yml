@@ -1,6 +1,6 @@
-﻿- type: entity
+- type: entity
   id: MachineArtifactAnalyzer
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   name: artifact analyzer
   description: A platform capable of performing analysis on various types of artifacts.
   components:
@@ -28,6 +28,14 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
+        mask:
+        - Impassable
+        - HighImpassable
+        - MidImpassable
+      fix2:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.35,0.35,0.35"
         density: 190
         mask:
         - MachineMask
@@ -35,17 +43,15 @@
         - Impassable
         - MidImpassable
         - LowImpassable
+        - BulletImpassable
         hard: False
   - type: Transform
     anchored: true
-    noRot: false
   - type: ApcPowerReceiver
-    powerLoad: 15000
+    powerLoad: 12000
     needsPower: false #only turns on when scanning
-  - type: UpgradePowerDraw
-    powerDrawMultiplier: 0.80
-    scaling: Exponential
   - type: ArtifactAnalyzer
+  - type: TraversalDistorter
   - type: ItemPlacer
     whitelist:
       components:
@@ -76,60 +82,76 @@
           False: { visible: false }
 
 - type: entity
-  id: MachineTraversalDistorter
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
-  name: traversal distorter
-  description: A machine capable of distorting the traversal of artifact nodes.
+  id: MachineArtifactCrusher
+  parent: [ ConstructibleMachine, BaseMachinePowered ]
+  name: artifact crusher
+  description: Best not to let your fingers get stuck...
   components:
+  - type: ArtifactCrusher
+    crushingWhitelist:
+      components:
+      - Artifact
+    crushingDamage:
+      types:
+        Blunt: 10
+  - type: Machine
+    board: ArtifactCrusherMachineCircuitboard
+  - type: WiresPanel
   - type: Sprite
+    sprite: Structures/Machines/artifact_crusher.rsi
+    offset: 0,0.5
     noRot: true
-    sprite: Structures/Machines/traversal_distorter.rsi
-    drawdepth: FloorObjects
     layers:
-    - state: icon
-    - state: unshaded
-      shader: unshaded
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: door-closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: piston
+      map: ["pistonlayer"]
+    - state: glass
+    - state: lights
       map: ["enum.PowerDeviceVisualLayers.Powered"]
-  - type: Physics
-    bodyType: Static
-    canCollide: true
+      shader: unshaded
   - type: Fixtures
     fixtures:
       fix1:
         shape:
-          !type:PhysShapeAabb
-          bounds: "-0.35,-0.35,0.35,0.35"
-        density: 190
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 50
         mask:
-        - MachineMask
+        - HighImpassable
         layer:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        hard: False
-  - type: Transform
-    noRot: false
-  - type: UpgradePowerDraw
-    powerDrawMultiplier: 0.80
-    scaling: Exponential
-  - type: TraversalDistorter
-  - type: ItemPlacer
-    # don't limit the number of artifacts that can be biased
-    maxEntities: 0
+        - HighImpassable
+  - type: EntityStorage
+    capacity: 1
     whitelist:
       components:
       - Artifact
-  - type: PlaceableSurface
-    placeCentered: true
-  - type: Machine
-    board: TraversalDistorterMachineCircuitboard
   - type: Appearance
-  - type: GuideHelp
-    guides:
-    - TraversalDistorter
   - type: GenericVisualizer
     visuals:
+      enum.ArtifactCrusherVisuals.Crushing:
+        pistonlayer:
+          True: {state: piston-push}
+          False: {state: piston}
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
+  - type: EntityStorageVisuals
+    stateDoorClosed: door-closed
+    openDrawDepth: 0
+    closedDrawDepth: 4
+  - type: Construction
+    containers:
+    - machine_board
+    - machine_parts
+    - entity_storage
+    - output_container
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      entity_storage: !type:Container
+      output_container: !type:Container

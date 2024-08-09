@@ -1,15 +1,13 @@
-using Content.Shared.Salvage.Expeditions.Modifiers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.Salvage.Expeditions;
 
 [Prototype("salvageFaction")]
-public sealed class SalvageFactionPrototype : IPrototype
+public sealed partial class SalvageFactionPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 
-    [DataField("desc")] public string Description { get; private set; } = string.Empty;
+    [DataField("desc")] public LocId Description { get; private set; } = string.Empty;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("entries", required: true)]
     public List<SalvageMobEntry> MobGroups = new();

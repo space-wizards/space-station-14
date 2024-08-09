@@ -1,4 +1,4 @@
-﻿using Content.Server.GameTicking;
+using Content.Server.GameTicking;
 using Content.Shared.Eye;
 using Content.Shared.Revenant.Components;
 using Content.Shared.Revenant.EntitySystems;
@@ -17,8 +17,8 @@ public sealed class CorporealSystem : SharedCorporealSystem
 
         if (TryComp<VisibilityComponent>(uid, out var visibility))
         {
-            _visibilitySystem.RemoveLayer(uid, visibility, (int) VisibilityFlags.Ghost, false);
-            _visibilitySystem.AddLayer(uid, visibility, (int) VisibilityFlags.Normal, false);
+            _visibilitySystem.RemoveLayer((uid, visibility), (int) VisibilityFlags.Ghost, false);
+            _visibilitySystem.AddLayer((uid, visibility), (int) VisibilityFlags.Normal, false);
             _visibilitySystem.RefreshVisibility(uid, visibility);
         }
     }
@@ -29,8 +29,8 @@ public sealed class CorporealSystem : SharedCorporealSystem
 
         if (TryComp<VisibilityComponent>(uid, out var visibility) && _ticker.RunLevel != GameRunLevel.PostRound)
         {
-            _visibilitySystem.AddLayer(uid, visibility, (int) VisibilityFlags.Ghost, false);
-            _visibilitySystem.RemoveLayer(uid, visibility, (int) VisibilityFlags.Normal, false);
+            _visibilitySystem.AddLayer((uid, visibility), (int) VisibilityFlags.Ghost, false);
+            _visibilitySystem.RemoveLayer((uid, visibility), (int) VisibilityFlags.Normal, false);
             _visibilitySystem.RefreshVisibility(uid, visibility);
         }
     }

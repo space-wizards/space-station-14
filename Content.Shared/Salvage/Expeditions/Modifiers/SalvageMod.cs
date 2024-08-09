@@ -6,11 +6,11 @@ namespace Content.Shared.Salvage.Expeditions.Modifiers;
 /// Generic modifiers with no additional data
 /// </summary>
 [Prototype("salvageMod")]
-public sealed class SalvageMod : IPrototype, ISalvageMod
+public sealed partial class SalvageMod : IPrototype, ISalvageMod
 {
     [IdDataField] public string ID { get; } = default!;
 
-    [DataField("desc")] public string Description { get; private set; } = string.Empty;
+    [DataField("desc")] public LocId Description { get; private set; } = string.Empty;
 
     /// <summary>
     /// Cost for difficulty modifiers.

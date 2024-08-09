@@ -1,0 +1,69 @@
+- files: ["beep.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Pól, converted to OGG and Mono by EmoGarbage"
+  source: "https://freesound.org/people/P%C3%B3l/sounds/385927/"
+
+- files: ["locator_beep.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by MATRIXXX_, converted to OGG, shortened, sped up, and pitched up by EmoGarbage404 (github)"
+  source: "https://freesound.org/people/MATRIXXX_/sounds/657947/"
+
+- files: ["trayhit1.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Time immemorial"
+  source: "https://github.com/tgstation/tgstation/blob/172b533d0257fcc1f8a05406f1c9fad514c14d88/sound/items/trayhit1.ogg"
+
+- files: ["trayhit2.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Time immemorial"
+  source: "https://github.com/tgstation/tgstation/blob/172b533d0257fcc1f8a05406f1c9fad514c14d88/sound/items/trayhit2.ogg"
+
+- files: ["rped.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Cuboos"
+  source: "https://github.com/tgstation/tgstation/blob/172b533d0257fcc1f8a05406f1c9fad514c14d88/sound/items/rped.ogg"
+
+- files: ["scary_horn.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by theOperand (github) for tgstation, modified by brainfood1183 (github) for ss14"
+  source: "https://github.com/tgstation/tgstation/blob/9a378933d2cfcb2c6692f5c60fbce979ac4e47c5/sound/spookoween/scary_horn.ogg"
+
+- files: ["airhorn.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation, modified by brainfood1183 (github) for ss14"
+  source: "https://github.com/tgstation/tgstation/blob/529d97cb1c105bcd548e95a9c9070bbf5253dd81/sound/items/AirHorn.ogg"
+
+- files: ["desk_bell_ring.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by SamKolber, shortened and converted to OGG and mono"
+  source: "https://freesound.org/people/SamKolber/sounds/210022/"
+
+- files: ["sitcom_laugh.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Kinoton, clipped by github Henri215, turned into mono by github lapatison"
+  source: "https://freesound.org/people/Kinoton/sounds/371562/"
+
+- files: ["sitcom_laugh2.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by mrrap4food. clipped by Henri215"
+  source: "https://freesound.org/people/mrrap4food/sounds/618972/"
+
+- files: ["skates"]
+  license: "CC-BY-4.0"
+  copyright: "Created by PeteBarry, shortened by brainfood1183 (github)"
+  source: "https://freesound.org/people/PeteBarry/sounds/464857/"
+
+- files: ["weh.ogg", "muffled_weh.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by BlackMajor (github) for ss14, muffled_weh.ogg modified from weh.ogg by Slorkito (ss14 discord)"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Items/Toys/weh.ogg"
+
+- files: ["skub.ogg", "skub3.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by BlackMajor (github) for ss14"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Items/Toys/skub.ogg"
+
+- files: ["skub2.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by unusualcrow for ss14"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Items/Toys/skub2.ogg"

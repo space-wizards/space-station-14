@@ -5,7 +5,7 @@
             Text="{Loc 'ghost-roles-window-request-role-button'}"
             StyleClasses="OpenRight"
             HorizontalAlignment="Left"
-            SetWidth="150"/>
+            SetWidth="300"/>
     <Button Name="FollowButton"
             Access="Public"
             Text="{Loc 'ghost-roles-window-follow-role-button'}"

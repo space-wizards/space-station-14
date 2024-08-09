@@ -32,6 +32,7 @@
   - type: ContainerContainer
     containers:
       board: !type:Container
+  - type: NavMapDoor
   - type: Door
     openDrawDepth: BlastDoors
     closedDrawDepth: BlastDoors
@@ -55,15 +56,14 @@
   - type: Appearance
   - type: UserInterface
     interfaces:
-    - key: enum.WiresUiKey.Key
-      type: WiresBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: Airtight
-    fixVacuum: true
   - type: RadiationBlocker
     resistance: 2
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -89,11 +89,14 @@
   - type: DeviceLinkSource
     ports:
     - DoorStatus
+    lastSignals:
+      DoorStatus: false
   - type: InteractionPopup
     interactSuccessString: comp-window-knock
     messagePerceivedByOthers: comp-window-knock
     interactSuccessSound:
       path: /Audio/Effects/glass_knock.ogg
+  - type: BlockWeather
 
 - type: entity
   id: ShuttersNormal
@@ -139,6 +142,8 @@
     node: ShuttersRadiation
     containers:
     - board
+  - type: RadiationBlocker
+    resistance: 4
 
 - type: entity
   id: ShuttersRadiationOpen
@@ -172,6 +177,8 @@
     node: ShuttersWindow
     containers:
     - board
+  - type: RadiationBlocker
+    resistance: 1
 
 - type: entity
   id: ShuttersWindowOpen

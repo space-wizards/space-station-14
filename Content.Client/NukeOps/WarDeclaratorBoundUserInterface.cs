@@ -1,6 +1,9 @@
-﻿using Content.Shared.NukeOps;
+﻿using Content.Shared.CCVar;
+using Content.Shared.Chat;
+using Content.Shared.NukeOps;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
+using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
 
 namespace Content.Client.NukeOps;
@@ -8,6 +11,8 @@ namespace Content.Client.NukeOps;
 [UsedImplicitly]
 public sealed class WarDeclaratorBoundUserInterface : BoundUserInterface
 {
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+
     [ViewVariables]
     private WarDeclaratorWindow? _window;
 
@@ -17,13 +22,7 @@ public sealed class WarDeclaratorBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _window = new WarDeclaratorWindow();
-        if (State != null)
-            UpdateState(State);
-
-        _window.OpenCentered();
-
-        _window.OnClose += Close;
+        _window = this.CreateWindow<WarDeclaratorWindow>();
         _window.OnActivated += OnWarDeclaratorActivated;
     }
 
@@ -36,14 +35,10 @@ public sealed class WarDeclaratorBoundUserInterface : BoundUserInterface
         _window?.UpdateState(cast);
     }
 
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (disposing) _window?.Dispose();
-    }
-
     private void OnWarDeclaratorActivated(string message)
     {
-        SendMessage(new WarDeclaratorActivateMessage(message));
+        var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
+        var msg = SharedChatSystem.SanitizeAnnouncement(message, maxLength);
+        SendMessage(new WarDeclaratorActivateMessage(msg));
     }
 }

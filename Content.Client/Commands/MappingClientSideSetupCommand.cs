@@ -1,33 +1,32 @@
-using JetBrains.Annotations;
-using System;
+using Content.Client.Actions;
+using Content.Client.Mapping;
 using Content.Client.Markers;
+using JetBrains.Annotations;
 using Robust.Client.Graphics;
+using Robust.Client.State;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Commands;
 
-/// <summary>
-/// Sent by mapping command to client.
-/// This is because the debug commands for some of these options are on toggles.
-/// </summary>
 [UsedImplicitly]
-internal sealed class MappingClientSideSetupCommand : IConsoleCommand
+internal sealed class MappingClientSideSetupCommand : LocalizedCommands
 {
-    // ReSharper disable once StringLiteralTypo
-    public string Command => "mappingclientsidesetup";
-    public string Description => "Sets up the lighting control and such settings client-side. Sent by 'mapping' to client.";
-    public string Help => "";
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+    [Dependency] private readonly ILightManager _lightManager = default!;
+    [Dependency] private readonly IStateManager _stateManager = default!;
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "mappingclientsidesetup";
+
+    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var mgr = IoCManager.Resolve<ILightManager>();
-        if (!mgr.LockConsoleAccess)
+        if (!_lightManager.LockConsoleAccess)
         {
-            EntitySystem.Get<MarkerSystem>().MarkersVisible = true;
-            mgr.Enabled = false;
+            _entitySystemManager.GetEntitySystem<MarkerSystem>().MarkersVisible = true;
+            _lightManager.Enabled = false;
             shell.ExecuteCommand("showsubfloorforever");
-            shell.ExecuteCommand("loadmapacts");
+            _entitySystemManager.GetEntitySystem<ActionsSystem>().LoadActionAssignments("/mapping_actions.yml", false);
         }
     }
 }

@@ -7,6 +7,8 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Throwing;
 using Content.Shared.Toggleable;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -19,17 +21,17 @@ namespace Content.Shared.Weapons.Misc;
 
 public abstract partial class SharedTetherGunSystem : EntitySystem
 {
-    [Dependency] private   readonly INetManager _netManager = default!;
-    [Dependency] private   readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private   readonly MobStateSystem _mob = default!;
-    [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private   readonly SharedAudioSystem _audio = default!;
-    [Dependency] private   readonly SharedContainerSystem _container = default!;
-    [Dependency] private   readonly SharedJointSystem _joints = default!;
-    [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private readonly MobStateSystem _mob = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedJointSystem _joints = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
-    [Dependency] private   readonly ThrowingSystem _throwing = default!;
-    [Dependency] private   readonly ThrownItemSystem _thrown = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private readonly ThrownItemSystem _thrown = default!;
 
     private const string TetherJoint = "tether";
 
@@ -150,6 +152,9 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
     private void OnTetherActivate(EntityUid uid, TetherGunComponent component, ActivateInWorldEvent args)
     {
+        if (!args.Complex)
+            return;
+
         StopTether(uid, component);
     }
 
@@ -205,12 +210,12 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         TransformSystem.Unanchor(target, targetXform);
         component.Tethered = target;
         var tethered = EnsureComp<TetheredComponent>(target);
-        _physics.SetBodyStatus(targetPhysics, BodyStatus.InAir, false);
+        _physics.SetBodyStatus(target, targetPhysics, BodyStatus.InAir, false);
         _physics.SetSleepingAllowed(target, targetPhysics, false);
         tethered.Tetherer = gunUid;
         tethered.OriginalAngularDamping = targetPhysics.AngularDamping;
-        _physics.SetAngularDamping(targetPhysics, 0f);
-        _physics.SetLinearDamping(targetPhysics, 0f);
+        _physics.SetAngularDamping(target, targetPhysics, 0f);
+        _physics.SetLinearDamping(target, targetPhysics, 0f);
         _physics.SetAngularVelocity(target, SpinVelocity, body: targetPhysics);
         _physics.WakeBody(target, body: targetPhysics);
         var thrown = EnsureComp<ThrownItemComponent>(component.Tethered.Value);
@@ -218,7 +223,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         _blocker.UpdateCanMove(target);
 
         // Invisible tether entity
-        var tether = Spawn("TetherEntity", Transform(target).MapPosition);
+        var tether = Spawn("TetherEntity", TransformSystem.GetMapCoordinates(target));
         var tetherPhysics = Comp<PhysicsComponent>(tether);
         component.TetherEntity = tether;
         _physics.WakeBody(tether);
@@ -232,10 +237,10 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
         // Sad...
         if (_netManager.IsServer && component.Stream == null)
-            component.Stream = _audio.PlayPredicted(component.Sound, gunUid, null);
+            component.Stream = _audio.PlayPredicted(component.Sound, gunUid, null)?.Entity;
 
-        Dirty(tethered);
-        Dirty(component);
+        Dirty(target, tethered);
+        Dirty(gunUid, component);
     }
 
     protected virtual void StopTether(EntityUid gunUid, BaseForceGunComponent component, bool land = true, bool transfer = false)
@@ -262,14 +267,14 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
                 _thrown.StopThrow(component.Tethered.Value, thrown);
             }
 
-            _physics.SetBodyStatus(targetPhysics, BodyStatus.OnGround);
+            _physics.SetBodyStatus(component.Tethered.Value, targetPhysics, BodyStatus.OnGround);
             _physics.SetSleepingAllowed(component.Tethered.Value, targetPhysics, true);
-            _physics.SetAngularDamping(targetPhysics, Comp<TetheredComponent>(component.Tethered.Value).OriginalAngularDamping);
+            _physics.SetAngularDamping(component.Tethered.Value, targetPhysics, Comp<TetheredComponent>(component.Tethered.Value).OriginalAngularDamping);
         }
 
         if (!transfer)
         {
-            component.Stream?.Stop();
+            _audio.Stop(component.Stream);
             component.Stream = null;
         }
 
@@ -280,7 +285,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         RemComp<TetheredComponent>(component.Tethered.Value);
         _blocker.UpdateCanMove(component.Tethered.Value);
         component.Tethered = null;
-        Dirty(component);
+        Dirty(gunUid, component);
     }
 
     [Serializable, NetSerializable]

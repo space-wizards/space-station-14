@@ -222,4 +222,5 @@
   - type: Pullable
   - type: GuideHelp
     guides:
+    - Cyborgs
     - Robotics

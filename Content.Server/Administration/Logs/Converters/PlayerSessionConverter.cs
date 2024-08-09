@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 
 namespace Content.Server.Administration.Logs.Converters;
 
@@ -36,9 +36,9 @@ public sealed class PlayerSessionConverter : AdminLogConverter<SerializablePlaye
 
 public readonly struct SerializablePlayer
 {
-    public readonly IPlayerSession Player;
+    public readonly ICommonSession Player;
 
-    public SerializablePlayer(IPlayerSession player)
+    public SerializablePlayer(ICommonSession player)
     {
         Player = player;
     }

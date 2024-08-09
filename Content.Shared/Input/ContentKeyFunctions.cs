@@ -25,18 +25,25 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction CycleChatChannelBackward = "CycleChatChannelBackward";
         public static readonly BoundKeyFunction EscapeContext = "EscapeContext";
         public static readonly BoundKeyFunction OpenCharacterMenu = "OpenCharacterMenu";
+        public static readonly BoundKeyFunction OpenEmotesMenu = "OpenEmotesMenu";
         public static readonly BoundKeyFunction OpenCraftingMenu = "OpenCraftingMenu";
         public static readonly BoundKeyFunction OpenGuidebook = "OpenGuidebook";
         public static readonly BoundKeyFunction OpenInventoryMenu = "OpenInventoryMenu";
         public static readonly BoundKeyFunction SmartEquipBackpack = "SmartEquipBackpack";
         public static readonly BoundKeyFunction SmartEquipBelt = "SmartEquipBelt";
+        public static readonly BoundKeyFunction OpenBackpack = "OpenBackpack";
+        public static readonly BoundKeyFunction OpenBelt = "OpenBelt";
         public static readonly BoundKeyFunction OpenAHelp = "OpenAHelp";
         public static readonly BoundKeyFunction SwapHands = "SwapHands";
+        public static readonly BoundKeyFunction MoveStoredItem = "MoveStoredItem";
+        public static readonly BoundKeyFunction RotateStoredItem = "RotateStoredItem";
+        public static readonly BoundKeyFunction SaveItemLocation = "SaveItemLocation";
         public static readonly BoundKeyFunction ThrowItemInHand = "ThrowItemInHand";
         public static readonly BoundKeyFunction TryPullObject = "TryPullObject";
         public static readonly BoundKeyFunction MovePulledObject = "MovePulledObject";
         public static readonly BoundKeyFunction ReleasePulledObject = "ReleasePulledObject";
         public static readonly BoundKeyFunction MouseMiddle = "MouseMiddle";
+        public static readonly BoundKeyFunction ToggleRoundEndSummaryWindow = "ToggleRoundEndSummaryWindow";
         public static readonly BoundKeyFunction OpenEntitySpawnWindow = "OpenEntitySpawnWindow";
         public static readonly BoundKeyFunction OpenSandboxWindow = "OpenSandboxWindow";
         public static readonly BoundKeyFunction OpenTileSpawnWindow = "OpenTileSpawnWindow";
@@ -84,23 +91,6 @@ namespace Content.Shared.Input
                 Hotbar1, Hotbar2, Hotbar3, Hotbar4, Hotbar5, Hotbar6, Hotbar7, Hotbar8, Hotbar9, Hotbar0
             };
 
-        public static readonly BoundKeyFunction Loadout0 = "Loadout0";
-        public static readonly BoundKeyFunction Loadout1 = "Loadout1";
-        public static readonly BoundKeyFunction Loadout2 = "Loadout2";
-        public static readonly BoundKeyFunction Loadout3 = "Loadout3";
-        public static readonly BoundKeyFunction Loadout4 = "Loadout4";
-        public static readonly BoundKeyFunction Loadout5 = "Loadout5";
-        public static readonly BoundKeyFunction Loadout6 = "Loadout6";
-        public static readonly BoundKeyFunction Loadout7 = "Loadout7";
-        public static readonly BoundKeyFunction Loadout8 = "Loadout8";
-        public static readonly BoundKeyFunction Loadout9 = "Loadout9";
-
-        public static BoundKeyFunction[] GetLoadoutBoundKeys() =>
-            new[]
-            {
-                Loadout1, Loadout2, Loadout3, Loadout4, Loadout5, Loadout6, Loadout7, Loadout8, Loadout9, Loadout0
-            };
-
         public static readonly BoundKeyFunction Vote0 = "Vote0";
         public static readonly BoundKeyFunction Vote1 = "Vote1";
         public static readonly BoundKeyFunction Vote2 = "Vote2";
@@ -114,5 +104,14 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction EditorCopyObject = "EditorCopyObject";
         public static readonly BoundKeyFunction EditorFlipObject = "EditorFlipObject";
         public static readonly BoundKeyFunction InspectEntity = "InspectEntity";
+
+        public static readonly BoundKeyFunction MappingUnselect = "MappingUnselect";
+        public static readonly BoundKeyFunction SaveMap = "SaveMap";
+        public static readonly BoundKeyFunction MappingEnablePick = "MappingEnablePick";
+        public static readonly BoundKeyFunction MappingEnableDelete = "MappingEnableDelete";
+        public static readonly BoundKeyFunction MappingPick = "MappingPick";
+        public static readonly BoundKeyFunction MappingRemoveDecal = "MappingRemoveDecal";
+        public static readonly BoundKeyFunction MappingCancelEraseDecal = "MappingCancelEraseDecal";
+        public static readonly BoundKeyFunction MappingOpenContextMenu = "MappingOpenContextMenu";
     }
 }

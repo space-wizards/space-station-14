@@ -20,8 +20,9 @@ namespace Content.Client.Verbs
     public sealed class VerbSystem : SharedVerbSystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly ExamineSystem _examineSystem = default!;
+        [Dependency] private readonly ExamineSystem _examine = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -57,7 +58,7 @@ namespace Content.Client.Verbs
             if (_stateManager.CurrentState is not GameplayStateBase gameScreenBase)
                 return false;
 
-            var player = _playerManager.LocalPlayer?.ControlledEntity;
+            var player = _playerManager.LocalEntity;
             if (player == null)
                 return false;
 
@@ -77,7 +78,7 @@ namespace Content.Client.Verbs
                 bool Predicate(EntityUid e) => e == player || entitiesUnderMouse.Contains(e);
 
                 // first check the general location.
-                if (!_examineSystem.CanExamine(player.Value, targetPos, Predicate))
+                if (!_examine.CanExamine(player.Value, targetPos, Predicate))
                     return false;
 
                 TryComp(player.Value, out ExaminerComponent? examiner);
@@ -86,7 +87,7 @@ namespace Content.Client.Verbs
                 entities = new();
                 foreach (var ent in _entityLookup.GetEntitiesInRange(targetPos, EntityMenuLookupSize))
                 {
-                    if (_examineSystem.CanExamine(player.Value, targetPos, Predicate, ent, examiner))
+                    if (_examine.CanExamine(player.Value, targetPos, Predicate, ent, examiner))
                         entities.Add(ent);
                 }
             }
@@ -122,7 +123,6 @@ namespace Content.Client.Verbs
             if ((visibility & MenuVisibility.Invisible) == 0)
             {
                 var spriteQuery = GetEntityQuery<SpriteComponent>();
-                var tagQuery = GetEntityQuery<TagComponent>();
 
                 for (var i = entities.Count - 1; i >= 0; i--)
                 {
@@ -130,7 +130,7 @@ namespace Content.Client.Verbs
 
                     if (!spriteQuery.TryGetComponent(entity, out var spriteComponent) ||
                         !spriteComponent.Visible ||
-                        _tagSystem.HasTag(entity, "HideContextMenu", tagQuery))
+                        _tagSystem.HasTag(entity, "HideContextMenu"))
                     {
                         entities.RemoveSwap(i);
                     }
@@ -141,15 +141,15 @@ namespace Content.Client.Verbs
             if ((visibility & MenuVisibility.NoFov) == 0)
             {
                 var xformQuery = GetEntityQuery<TransformComponent>();
-                var playerPos = xformQuery.GetComponent(player.Value).MapPosition;
+                var playerPos = _transform.GetMapCoordinates(player.Value, xform: xformQuery.GetComponent(player.Value));
 
                 for (var i = entities.Count - 1; i >= 0; i--)
                 {
                     var entity = entities[i];
 
-                    if (!ExamineSystemShared.InRangeUnOccluded(
+                    if (!_examine.InRangeUnOccluded(
                         playerPos,
-                        xformQuery.GetComponent(entity).MapPosition,
+                        _transform.GetMapCoordinates(entity, xform: xformQuery.GetComponent(entity)),
                         ExamineSystemShared.ExamineRange,
                         null))
                     {
@@ -166,31 +166,24 @@ namespace Content.Client.Verbs
         }
 
         /// <summary>
-        ///     Asks the server to send back a list of server-side verbs, for the given verb type.
-        /// </summary>
-        public SortedSet<Verb> GetVerbs(EntityUid target, EntityUid user, Type type, bool force = false)
-        {
-            return GetVerbs(target, user, new List<Type>() { type }, force);
-        }
-
-        /// <summary>
         ///     Ask the server to send back a list of server-side verbs, and for now return an incomplete list of verbs
         ///     (only those defined locally).
         /// </summary>
-        public SortedSet<Verb> GetVerbs(EntityUid target, EntityUid user, List<Type> verbTypes,
-            bool force = false)
+        public SortedSet<Verb> GetVerbs(NetEntity target, EntityUid user, List<Type> verbTypes, out List<VerbCategory> extraCategories, bool force = false)
         {
-            if (!IsClientSide(target))
-            {
-                RaiseNetworkEvent(new RequestServerVerbsEvent(GetNetEntity(target), verbTypes, adminRequest: force));
-            }
+            if (!target.IsClientSide())
+                RaiseNetworkEvent(new RequestServerVerbsEvent(target, verbTypes, adminRequest: force));
 
             // Some admin menu interactions will try get verbs for entities that have not yet been sent to the player.
-            if (!Exists(target))
+            if (!TryGetEntity(target, out var local))
+            {
+                extraCategories = new();
                 return new();
+            }
 
-            return GetLocalVerbs(target, user, verbTypes, force);
+            return GetLocalVerbs(local.Value, user, verbTypes, out extraCategories, force);
         }
+
 
         /// <summary>
         ///     Execute actions associated with the given verb.
@@ -200,8 +193,18 @@ namespace Content.Client.Verbs
         /// </remarks>
         public void ExecuteVerb(EntityUid target, Verb verb)
         {
-            var user = _playerManager.LocalPlayer?.ControlledEntity;
-            if (user == null)
+            ExecuteVerb(GetNetEntity(target), verb);
+        }
+
+        /// <summary>
+        ///     Execute actions associated with the given verb.
+        /// </summary>
+        /// <remarks>
+        ///     Unless this is a client-exclusive verb, this will also tell the server to run the same verb.
+        /// </remarks>
+        public void ExecuteVerb(NetEntity target, Verb verb)
+        {
+            if ( _playerManager.LocalEntity is not {} user)
                 return;
 
             // is this verb actually valid?
@@ -209,16 +212,16 @@ namespace Content.Client.Verbs
             {
                 // maybe send an informative pop-up message.
                 if (!string.IsNullOrWhiteSpace(verb.Message))
-                    _popupSystem.PopupEntity(verb.Message, user.Value);
+                    _popupSystem.PopupEntity(verb.Message, user);
 
                 return;
             }
 
-            if (verb.ClientExclusive || IsClientSide(target))
+            if (verb.ClientExclusive || target.IsClientSide())
                 // is this a client exclusive (gui) verb?
-                ExecuteVerb(verb, user.Value, target);
+                ExecuteVerb(verb, user, GetEntity(target));
             else
-                EntityManager.RaisePredictiveEvent(new ExecuteVerbEvent(GetNetEntity(target), verb));
+                EntityManager.RaisePredictiveEvent(new ExecuteVerbEvent(target, verb));
         }
 
         private void HandleVerbResponse(VerbsResponseEvent msg)

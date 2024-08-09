@@ -8,7 +8,7 @@ namespace Content.Shared.DeviceNetwork;
 /// </summary>
 [Prototype("deviceFrequency")]
 [Serializable, NetSerializable]
-public sealed class DeviceFrequencyPrototype : IPrototype
+public sealed partial class DeviceFrequencyPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;

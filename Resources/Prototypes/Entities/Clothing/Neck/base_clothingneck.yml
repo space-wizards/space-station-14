@@ -4,7 +4,7 @@
   id: ClothingNeckBase
   components:
   - type: Item
-    size: 10
+    size: Small
   - type: Clothing
     quickEquip: true
     slots:
@@ -27,5 +27,16 @@
           Quantity: 10
   - type: Tag
     tags:
+    - ClothMade
+    - WhitelistChameleon
+
+- type: entity
+  abstract: true
+  parent: ClothingNeckBase
+  id: ClothingScarfBase
+  components:
+  - type: Tag
+    tags:
+    - Scarf
     - ClothMade
     - WhitelistChameleon

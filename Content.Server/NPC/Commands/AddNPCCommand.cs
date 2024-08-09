@@ -24,11 +24,11 @@ namespace Content.Server.NPC.Commands
                 return;
             }
 
-            var entId = new EntityUid(int.Parse(args[0]));
+            var nent = new NetEntity(int.Parse(args[0]));
 
-            if (!_entities.EntityExists(entId))
+            if (!_entities.TryGetEntity(nent, out var entId))
             {
-                shell.WriteError($"Unable to find entity with uid {entId}");
+                shell.WriteError($"Unable to find entity {nent}");
                 return;
             }
 
@@ -38,7 +38,7 @@ namespace Content.Server.NPC.Commands
                 return;
             }
 
-            var comp = _entities.AddComponent<HTNComponent>(entId);
+            var comp = _entities.AddComponent<HTNComponent>(entId.Value);
             comp.RootTask = new HTNCompoundTask()
             {
                 Task = args[1]

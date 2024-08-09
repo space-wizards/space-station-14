@@ -8,6 +8,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
@@ -17,6 +18,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     {
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()
@@ -35,10 +37,11 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             if (Loc.TryGetString("gas-valve-system-examined", out var str,
-                        ("statusColor", valve.Open ? "green" : "orange"),
-                        ("open", valve.Open)
-            ))
+                    ("statusColor", valve.Open ? "green" : "orange"),
+                    ("open", valve.Open)))
+            {
                 args.PushMarkup(str);
+            }
         }
 
         private void OnStartup(EntityUid uid, GasValveComponent component, ComponentStartup args)
@@ -49,16 +52,19 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnActivate(EntityUid uid, GasValveComponent component, ActivateInWorldEvent args)
         {
+            if (args.Handled || !args.Complex)
+                return;
+
             Toggle(uid, component);
-            SoundSystem.Play(component.ValveSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.25f));
+            _audio.PlayPvs(component.ValveSound, uid, AudioParams.Default.WithVariation(0.25f));
+            args.Handled = true;
         }
 
         public void Set(EntityUid uid, GasValveComponent component, bool value)
         {
             component.Open = value;
-            if (TryComp(uid, out NodeContainerComponent? nodeContainer)
-                && _nodeContainer.TryGetNode(nodeContainer, component.InletName, out PipeNode? inlet)
-                && _nodeContainer.TryGetNode(nodeContainer, component.OutletName, out PipeNode? outlet))
+
+            if (_nodeContainer.TryGetNodes(uid, component.InletName, component.OutletName, out PipeNode? inlet, out PipeNode? outlet))
             {
                 if (TryComp<AppearanceComponent>(uid, out var appearance))
                 {

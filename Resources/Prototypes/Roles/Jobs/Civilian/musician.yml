@@ -17,11 +17,10 @@
 - type: startingGear
   id: MusicianGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitMusician
-    back: ClothingBackpackMusicianFilled
     eyes: ClothingEyesGlassesSunglasses
     shoes: ClothingShoesBootsLaceup
     id: MusicianPDA
     ears: ClothingHeadsetService
-  satchel: ClothingBackpackSatchelMusicianFilled
-  duffelbag: ClothingBackpackDuffelMusicianFilled
+  #storage:
+    #back:
+    #- Stuff

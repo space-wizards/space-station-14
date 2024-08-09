@@ -7,6 +7,21 @@
   description: survival-description
   rules:
     - RampingStationEventScheduler
+    - GameRuleMeteorScheduler
+    - BasicRoundstartVariation
+
+- type: gamePreset
+  id: AllAtOnce
+  name: all-at-once-title
+  description: all-at-once-description
+  showInVote: false
+  rules:
+    - Nukeops
+    - Traitor
+    - Revolutionary
+    - Zombie
+    - RampingStationEventScheduler
+    - GameRuleMeteorScheduler
 
 - type: gamePreset
   id: Extended
@@ -18,6 +33,19 @@
   description: extended-description
   rules:
   - BasicStationEventScheduler
+  - GameRuleMeteorScheduler
+  - BasicRoundstartVariation
+
+- type: gamePreset
+  id: Greenshift
+  alias:
+  - greenshift
+  - shittersafarideluxeedition
+  name: greenshift-title
+  showInVote: false #4boring4vote
+  description: greenshift-description
+  rules:
+  - BasicRoundstartVariation
 
 - type: gamePreset
   id: Secret
@@ -31,12 +59,31 @@
     - Secret
 
 - type: gamePreset
+  id: SecretExtended #For Admin Use: Runs Extended but shows "Secret" in lobby.
+  alias:
+    - secretextended
+  name: secret-title
+  showInVote: false #Admin Use
+  description: secret-description
+  rules:
+    - BasicStationEventScheduler
+    - GameRuleMeteorScheduler
+
+- type: gamePreset
+  id: SecretGreenshift #For Admin Use: Runs Greenshift but shows "Secret" in lobby.
+  alias:
+  - secretgreenshift
+  name: secret-title
+  showInVote: false #Admin Use
+  description: secret-description
+
+- type: gamePreset
   id: Sandbox
   alias:
     - sandbox
   name: sandbox-title
   description: sandbox-description
-  showInVote: true
+  showInVote: false # Not suitable for use without admin intervention, since entity spamming can quickly crash a server
   maxPlayers: 5
   rules:
     - Sandbox
@@ -50,7 +97,10 @@
   showInVote: false
   rules:
     - Traitor
+    - SubGamemodesRule
     - BasicStationEventScheduler
+    - GameRuleMeteorScheduler
+    - BasicRoundstartVariation
 
 - type: gamePreset
   id: Deathmatch
@@ -74,7 +124,10 @@
   showInVote: false
   rules:
     - Nukeops
+    - SubGamemodesRule
     - BasicStationEventScheduler
+    - GameRuleMeteorScheduler
+    - BasicRoundstartVariation
 
 - type: gamePreset
   id: Revolutionary
@@ -87,7 +140,10 @@
   showInVote: false
   rules:
     - Revolutionary
+    - SubGamemodesRule
     - BasicStationEventScheduler
+    - GameRuleMeteorScheduler
+    - BasicRoundstartVariation
 
 - type: gamePreset
   id: Zombie
@@ -103,14 +159,5 @@
   rules:
   - Zombie
   - BasicStationEventScheduler
-
-- type: gamePreset
-  id: Pirates
-  alias:
-    - pirates
-  name: pirates-title
-  description: pirates-description
-  showInVote: false
-  rules:
-    - Pirates
-    - BasicStationEventScheduler
+  - GameRuleMeteorScheduler
+  - BasicRoundstartVariation

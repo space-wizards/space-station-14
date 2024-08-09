@@ -4,6 +4,9 @@ using Content.Shared.DoAfter;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
+using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
 
@@ -15,7 +18,8 @@ public abstract class SharedDevourSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -29,7 +33,7 @@ public abstract class SharedDevourSystem : EntitySystem
     {
         //Devourer doesn't actually chew, since he sends targets right into his stomach.
         //I did it mom, I added ERP content into upstream. Legally!
-        component.Stomach = _containerSystem.EnsureContainer<Container>(uid, "stomach");
+        component.Stomach = ContainerSystem.EnsureContainer<Container>(uid, "stomach");
 
         _actionsSystem.AddAction(uid, ref component.DevourActionEntity, component.DevourAction);
     }
@@ -39,7 +43,7 @@ public abstract class SharedDevourSystem : EntitySystem
     /// </summary>
     protected void OnDevourAction(EntityUid uid, DevourerComponent component, DevourActionEvent args)
     {
-        if (args.Handled || component.Whitelist?.IsValid(args.Target, EntityManager) != true)
+        if (args.Handled || _whitelistSystem.IsWhitelistFailOrNull(component.Whitelist, args.Target))
             return;
 
         args.Handled = true;
@@ -55,8 +59,7 @@ public abstract class SharedDevourSystem : EntitySystem
 
                     _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.DevourTime, new DevourDoAfterEvent(), uid, target: target, used: uid)
                     {
-                        BreakOnTargetMove = true,
-                        BreakOnUserMove = true,
+                        BreakOnMove = true,
                     });
                     break;
                 default:
@@ -74,8 +77,7 @@ public abstract class SharedDevourSystem : EntitySystem
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.StructureDevourTime, new DevourDoAfterEvent(), uid, target: target, used: uid)
         {
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
+            BreakOnMove = true,
         });
     }
 }

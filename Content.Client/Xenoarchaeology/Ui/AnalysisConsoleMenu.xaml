@@ -1,29 +1,45 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
-                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
-                      Title="{Loc 'analysis-console-menu-title'}"
-                      MinSize="620 280"
-                      SetSize="620 280">
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Title="{Loc 'analysis-console-menu-title'}"
+    MinSize="620 280"
+    SetSize="620 280">
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
-        <BoxContainer Margin="10 10 10 10" MinWidth="150" Orientation="Vertical" VerticalExpand="True" SizeFlagsStretchRatio="1">
+        <BoxContainer Margin="10 10 10 10" MinWidth="150" Orientation="Vertical"
+            VerticalExpand="True" SizeFlagsStretchRatio="1">
             <BoxContainer Orientation="Vertical" VerticalExpand="True">
                 <Button Name="ServerSelectionButton"
-                        Text="{Loc 'analysis-console-server-list-button'}"></Button>
+                    Text="{Loc 'analysis-console-server-list-button'}"></Button>
                 <BoxContainer MinHeight="5"></BoxContainer>
                 <Button Name="ScanButton"
-                        Text="{Loc 'analysis-console-scan-button'}"
-                        ToolTip="{Loc 'analysis-console-scan-tooltip-info'}">
+                    Text="{Loc 'analysis-console-scan-button'}"
+                    ToolTip="{Loc 'analysis-console-scan-tooltip-info'}">
                 </Button>
                 <BoxContainer MinHeight="5"></BoxContainer>
                 <Button Name="PrintButton"
-                        Text="{Loc 'analysis-console-print-button'}"
-                        ToolTip="{Loc 'analysis-console-print-tooltip-info'}">
+                    Text="{Loc 'analysis-console-print-button'}"
+                    ToolTip="{Loc 'analysis-console-print-tooltip-info'}">
                 </Button>
                 <BoxContainer MinHeight="5"></BoxContainer>
+                <BoxContainer Orientation="Horizontal">
+                    <Button Name="UpBiasButton"
+                        Text="{Loc 'analysis-console-bias-up'}"
+                        ToolTip="{Loc 'analysis-console-bias-button-info-up'}"
+                        HorizontalExpand="True"
+                        StyleClasses="OpenRight">
+                    </Button>
+                    <Button Name="DownBiasButton"
+                        Text="{Loc 'analysis-console-bias-down'}"
+                        ToolTip="{Loc 'analysis-console-bias-button-info-down'}"
+                        HorizontalExpand="True"
+                        StyleClasses="OpenLeft">
+                    </Button>
+                </BoxContainer>
+                <BoxContainer MinHeight="15"></BoxContainer>
                 <Button Name="ExtractButton"
-                        Text="{Loc 'analysis-console-extract-button'}"
-                        ToolTip="{Loc 'analysis-console-extract-button-info'}">
+                    Text="{Loc 'analysis-console-extract-button'}"
+                    ToolTip="{Loc 'analysis-console-extract-button-info'}">
                 </Button>
             </BoxContainer>
             <BoxContainer Orientation="Vertical">
@@ -36,13 +52,13 @@
                 </ProgressBar>
             </BoxContainer>
         </BoxContainer>
-        <customControls:VSeparator StyleClasses="LowDivider"/>
+        <customControls:VSeparator StyleClasses="LowDivider" />
         <PanelContainer Margin="10 10 10 10" HorizontalExpand="True" SizeFlagsStretchRatio="3">
             <PanelContainer.PanelOverride>
                 <gfx:StyleBoxFlat BackgroundColor="#000000FF" />
             </PanelContainer.PanelOverride>
             <BoxContainer Margin="10 10 10 10" Orientation="Horizontal">
-                <BoxContainer Orientation="Vertical" HorizontalExpand="True" >
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                     <BoxContainer VerticalExpand="True">
                         <RichTextLabel Name="Information"> </RichTextLabel>
                     </BoxContainer>

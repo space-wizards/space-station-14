@@ -163,6 +163,26 @@ namespace Content.Client.Atmos.UI
             parent.AddChild(panel);
             panel.AddChild(dataContainer);
 
+            // Volume label
+            var volBox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal };
+
+            volBox.AddChild(new Label
+            {
+                Text = Loc.GetString("gas-analyzer-window-volume-text")
+            });
+            volBox.AddChild(new Control
+            {
+                MinSize = new Vector2(10, 0),
+                HorizontalExpand = true
+            });
+            volBox.AddChild(new Label
+            {
+                Text = Loc.GetString("gas-analyzer-window-volume-val-text", ("volume", $"{gasMix.Volume:0.##}")),
+                Align = Label.AlignMode.Right,
+                HorizontalExpand = true
+            });
+            dataContainer.AddChild(volBox);
+
             // Pressure label
             var presBox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal };
 
@@ -241,6 +261,10 @@ namespace Content.Client.Atmos.UI
             {
                 Orientation = BoxContainer.LayoutOrientation.Vertical
             };
+            var tablePercent = new BoxContainer
+            {
+                Orientation = BoxContainer.LayoutOrientation.Vertical
+            };
             dataContainer.AddChild(new BoxContainer
             {
                 Orientation = BoxContainer.LayoutOrientation.Horizontal,
@@ -252,7 +276,13 @@ namespace Content.Client.Atmos.UI
                         MinSize = new Vector2(10, 0),
                         HorizontalExpand = true
                     },
-                    tableVal
+                    tableVal,
+                    new Control
+                    {
+                        MinSize = new Vector2(10, 0),
+                        HorizontalExpand = true
+                    },
+                    tablePercent
                 }
             });
             // This is the gas bar thingy
@@ -260,6 +290,7 @@ namespace Content.Client.Atmos.UI
             var gasBar = new SplitBar
             {
                 MinHeight = height,
+                MinBarSize = new Vector2(12, 0)
             };
             // Separator
             dataContainer.AddChild(new Control
@@ -274,6 +305,17 @@ namespace Content.Client.Atmos.UI
                 totalGasAmount += gas.Amount;
             }
 
+            tableKey.AddChild(new Label
+                { Text = Loc.GetString("gas-analyzer-window-gas-column-name"), Align = Label.AlignMode.Center });
+            tableVal.AddChild(new Label
+                { Text = Loc.GetString("gas-analyzer-window-molarity-column-name"), Align = Label.AlignMode.Center });
+            tablePercent.AddChild(new Label
+                { Text = Loc.GetString("gas-analyzer-window-percentage-column-name"), Align = Label.AlignMode.Center });
+
+            tableKey.AddChild(new StripeBack());
+            tableVal.AddChild(new StripeBack());
+            tablePercent.AddChild(new StripeBack());
+
             for (var j = 0; j < gasMix.Gases.Length; j++)
             {
                 var gas = gasMix.Gases[j];
@@ -286,10 +328,14 @@ namespace Content.Client.Atmos.UI
                 tableVal.AddChild(new Label
                 {
                     Text = Loc.GetString("gas-analyzer-window-molarity-text",
-                        ("mol", $"{gas.Amount:0.##}"),
-                        ("percentage", $"{(gas.Amount / totalGasAmount * 100):0.#}")),
+                        ("mol", $"{gas.Amount:0.00}")),
                     Align = Label.AlignMode.Right,
-                    HorizontalExpand = true
+                });
+                tablePercent.AddChild(new Label
+                {
+                    Text = Loc.GetString("gas-analyzer-window-percentage-text",
+                        ("percentage", $"{(gas.Amount / totalGasAmount * 100):0.0}")),
+                    Align = Label.AlignMode.Right
                 });
 
                 // Add to the gas bar //TODO: highlight the currently hover one

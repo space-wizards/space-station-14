@@ -1,4 +1,5 @@
 using Content.Client.Interactable.Components;
+using Content.Client.StatusIcon;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Robust.Client.GameObjects;
@@ -10,6 +11,7 @@ namespace Content.Client.Stealth;
 public sealed class StealthSystem : SharedStealthSystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     private ShaderInstance _shader = default!;
 
@@ -18,6 +20,7 @@ public sealed class StealthSystem : SharedStealthSystem
         base.Initialize();
 
         _shader = _protoMan.Index<ShaderPrototype>("Stealth").InstanceUnique();
+
         SubscribeLocalEvent<StealthComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<StealthComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StealthComponent, BeforePostShaderRenderEvent>(OnShaderRender);
@@ -79,7 +82,7 @@ public sealed class StealthSystem : SharedStealthSystem
         if (!parent.IsValid())
             return; // should never happen, but lets not kill the client.
         var parentXform = Transform(parent);
-        var reference = args.Viewport.WorldToLocal(parentXform.WorldPosition);
+        var reference = args.Viewport.WorldToLocal(_transformSystem.GetWorldPosition(parentXform));
         reference.X = -reference.X;
         var visibility = GetVisibility(uid, component);
 
@@ -93,4 +96,3 @@ public sealed class StealthSystem : SharedStealthSystem
         args.Sprite.Color = new Color(visibility, visibility, 1, 1);
     }
 }
-

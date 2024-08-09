@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Research.Components;
-using Robust.Server.Player;
 
 namespace Content.Server.Research.Systems;
 
@@ -46,7 +45,7 @@ public sealed partial class ResearchSystem
         if (!this.IsPowered(uid, EntityManager))
             return;
 
-        _uiSystem.TryToggleUi(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
+        _uiSystem.TryToggleUi(uid, ResearchClientUiKey.Key, args.Actor);
     }
     #endregion
 
@@ -83,14 +82,13 @@ public sealed partial class ResearchSystem
         if (!Resolve(uid, ref component, false))
             return;
 
-        if (!TryGetClientServer(uid, out _, out var serverComponent, component))
-            return;
+        TryGetClientServer(uid, out _, out var serverComponent, component);
 
         var names = GetServerNames();
         var state = new ResearchClientBoundInterfaceState(names.Length, names,
-            GetServerIds(), component.ConnectedToServer ? serverComponent.Id : -1);
+            GetServerIds(), serverComponent?.Id ?? -1);
 
-        _uiSystem.TrySetUiState(uid, ResearchClientUiKey.Key, state);
+        _uiSystem.SetUiState(uid, ResearchClientUiKey.Key, state);
     }
 
     /// <summary>

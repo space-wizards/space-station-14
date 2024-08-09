@@ -19,6 +19,9 @@ public sealed class LightBehaviorSystem : EntitySystem
 
     private void OnBehaviorAnimationCompleted(EntityUid uid, LightBehaviourComponent component, AnimationCompletedEvent args)
     {
+        if (!args.Finished)
+            return;
+
         var container = component.Animations.FirstOrDefault(x => x.FullKey == args.Key);
 
         if (container == null)

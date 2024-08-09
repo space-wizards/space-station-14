@@ -21,7 +21,7 @@
 
 - files: ["atomicamnesiammx.ogg"]
   license: "CC-BY-NC-SA-3.0"
-  copyright: "Atomic Amnesia MMX by Phillip Dyer. Converted from MP3 to OGG."
+  copyright: "Atomic Amnesia MMX by Philip Dyer. Converted from MP3 to OGG."
   source: "https://soundcloud.com/3kliksphilip/atomic-amnesia-mmx-1"
 
 - files: ["singuloose.ogg"]
@@ -29,20 +29,15 @@
   copyright: "Singuloose by Janis Schiedková. Converted from MP3 to OGG."
   source: "https://soundcloud.com/js_m/singuloose"
 
-- files: ["vibe_ace.ogg"]
-  license: "CC-BY-3.0"
-  copyright: "Vibe Ace by Kevin MacLeod. Converted from MP3 to OGG."
-  source: "https://freemusicarchive.org/music/Kevin_MacLeod/Jazz_Sampler/Vibe_Ace"
+- files: ["title2.ogg"]
+  license: "Custom"
+  copyright: "Originally composed by Jonathan Dunn for Robocop 2 Gameboy published by Ocean Software. Remixed by Eric Shumaker for his video Dilbert 3. As of October 9th, 2008 nobody owns the rights to this song and copyright action has never been taken against anyone using this song in their projects."
+  source: "https://www.youtube.com/watch?v=4o6_8Unj2mQ"
 
 - files: ["title3.ogg"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "Title3 by Cuboos. It is a remix of the song 'Tintin on the Moon'. Converted from MP3 to OGG."
   source: "https://www.youtube.com/watch?v=YKVmXn-Gv0M"
-
-- files: ["marhaba.ogg"]
-  license: "CC-BY-NC-SA-3.0"
-  copyright: "Marhaba by Ian Alex Mac. Converted from MP3 to OGG."
-  source: "https://freemusicarchive.org/music/Ian_Alex_Mac/Cues/Marhaba"
 
 - files: ["comet_haley.ogg"]
   license: "CC-BY-NC-SA-3.0"
@@ -53,11 +48,6 @@
   license: "Custom"
   copyright: "Flip Flap by X-ceed is licensed under a short but clear license (see flip-flap.txt in this directory) and is free for non-commercial use. It was converted from MOD to WAV using Schism Tracker, in 16 Bit, Non-Interpolated mode, no output equalizer settings, Ramp volume at start of sample enabled. From there it was converted to OGG Vorbis with `ffmpeg -i flip-flap.wav -q 2.9 flip-flap-renc.ogg` (quality scale chosen to match size of the OGG file being replaced). Non-interpolated mode was chosen as the module has a high enough sample rate to balance it out, but seems muffled in other interpolation modes. If 'Ramp volume at start of sample' is not enabled, a clicking phenomenon results."
   source: "http://aminet.net/package/mods/xceed/Flipflap"
-
-- files: ["Monument.ogg"]
-  license: "CC-BY-NC-SA-3.0"
-  copyright: "Monument by Six Umbrellas."
-  source: "https://sixumbrellas.bandcamp.com/album/the-psychedelic-and"
 
 - files: ["Spac_Stac.ogg"]
   license: "CC-BY-NC-SA-3.0"

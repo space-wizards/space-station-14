@@ -9,7 +9,9 @@
       - state: icon-0
         map: ["enum.StorageFillLayers.Fill"]
   - type: Storage
-    capacity: 125
+    maxItemSize: Normal
+    grid:
+    - 0,0,7,5
     quickInsert: true
     areaInsert: true
     storageOpenSound:
@@ -20,10 +22,11 @@
       tags:
         - Cartridge
         - Trash
+  - type: UseDelay
+    delay: 0.5
   - type: Tag
     tags:
     - TrashBag
-    - DroneUsable
   - type: Appearance
   - type: StorageFillVisualizer
     maxFillLevels: 4
@@ -33,7 +36,7 @@
     slots: [belt]
     sprite: Objects/Specific/Janitorial/trashbag.rsi
   - type: Item
-    size: 125
+    size: Normal
 
 - type: entity
   name: trash bag
@@ -55,7 +58,9 @@
   parent: TrashBagBlue
   components:
   - type: Storage
-    capacity: 125000
+    maxItemSize: Huge
+    grid:
+    - 0,0,19,9
     quickInsert: true
     areaInsert: true
-    areaInsertRadius: 1000
+    areaInsertRadius: 5

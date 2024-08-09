@@ -14,7 +14,7 @@
         Structural: 2
     animation: WeaponArcPunch
   - type: Item
-    size: 5
+    size: Small
   - type: PointLight
     radius: 1.5
     energy: 3

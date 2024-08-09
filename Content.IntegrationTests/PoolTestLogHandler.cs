@@ -36,8 +36,15 @@ public sealed class PoolTestLogHandler : ILogHandler
         _prefix = prefix != null ? $"{prefix}: " : "";
     }
 
+    public bool ShuttingDown;
+
     public void Log(string sawmillName, LogEvent message)
     {
+        var level = message.Level.ToRobust();
+
+        if (ShuttingDown && (FailureLevel == null || level < FailureLevel))
+            return;
+
         if (ActiveContext is not { } testContext)
         {
             // If this gets hit it means something is logging to this instance while it's "between" tests.
@@ -45,7 +52,6 @@ public sealed class PoolTestLogHandler : ILogHandler
             throw new InvalidOperationException("Log to pool test log handler without active test context");
         }
 
-        var level = message.Level.ToRobust();
         var name = LogMessage.LogLevelToName(level);
         var seconds = _stopwatch.Elapsed.TotalSeconds;
         var rendered = message.RenderMessage();

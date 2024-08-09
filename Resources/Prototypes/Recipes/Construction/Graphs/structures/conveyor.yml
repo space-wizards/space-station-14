@@ -23,7 +23,6 @@
         - !type:SetAnchor
           value: true
         - !type:SnapToGrid
-          offset: Center
       edges:
         - to: item
           steps:

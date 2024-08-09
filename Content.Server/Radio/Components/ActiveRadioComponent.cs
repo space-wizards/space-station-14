@@ -16,6 +16,13 @@ public sealed partial class ActiveRadioComponent : Component
     public HashSet<string> Channels = new();
 
     /// <summary>
+    /// A toggle for globally receiving all radio channels.
+    /// Overrides <see cref="Channels"/>
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool ReceiveAllChannels;
+
+    /// <summary>
     ///     If this radio can hear all messages on all maps
     /// </summary>
     [DataField("globalReceive")]

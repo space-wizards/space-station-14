@@ -203,7 +203,7 @@
   parent: EncryptionKey
   id: EncryptionKeySyndie
   name: blood-red encryption key
-  description: An encryption key used by... wait... Who is owner of this chip?
+  description: An encryption key used by... wait... Who is the owner of this chip?
   components:
   - type: EncryptionKey
     channels:
@@ -228,3 +228,18 @@
     layers:
     - state: crypt_silver
     - state: rd_label
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyFreelance
+  name: freelancer encryption key
+  description: An encryption key used by freelancers, who may or may not have an affiliation. It looks like it's worn out.
+  components:
+    - type: EncryptionKey
+      channels:
+        - Freelance
+      defaultChannel: Freelance
+    - type: Sprite
+      layers:
+        - state: crypt_rusted
+        - state: pirate_label

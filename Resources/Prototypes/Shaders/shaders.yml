@@ -2,11 +2,22 @@
   id: CircleMask
   kind: source
   path: "/Textures/Shaders/circle_mask.swsl"
+  params:
+    CircleRadius: 15.0
+    CircleMinDist: 0.0
+    CirclePow: 0.5
+    CircleMax: 4.0
+    CircleMult: 0.5
 
 - type: shader
   id: GradientCircleMask
   kind: source
   path: "/Textures/Shaders/gradient_circle_mask.swsl"
+
+- type: shader
+  id: WorldGradientCircle
+  kind: source
+  path: "/Textures/Shaders/world_gradient_circle.swsl"
 
 - type: shader
   id: ColoredScreenBorder
@@ -47,6 +58,11 @@
   path: "/Textures/Shaders/drunk.swsl"
 
 - type: shader
+  id: Drowsiness
+  kind: source
+  path: "/Textures/Shaders/radial_blur.swsl"
+
+- type: shader
   id: Texture
   kind: source
   path: "/Textures/Shaders/texture.swsl"
@@ -76,9 +92,15 @@
   id: PaperStamp
   kind: source
   path: "/Textures/Shaders/paperstamp.swsl"
-  
+
 # Simple horizontal cut
 - type: shader
   id: HorizontalCut
   kind: source
   path: "/Textures/Shaders/hcut.swsl"
+
+# Stylized simulation of blindness
+- type: shader
+  id: Cataracts
+  kind: source
+  path: "/Textures/Shaders/cataracts.swsl"

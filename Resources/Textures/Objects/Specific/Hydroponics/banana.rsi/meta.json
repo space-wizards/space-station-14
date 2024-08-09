@@ -34,6 +34,23 @@
       "directions": 4
     },
     {
+      "name": "baked-peel"
+    },
+    {
+      "name": "baked-peel2"
+    },
+    {
+      "name": "baked-peel3"
+    },
+    {
+      "name": "baked-peel-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "baked-peel-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "seed"
     },
     {

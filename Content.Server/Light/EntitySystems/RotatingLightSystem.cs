@@ -19,6 +19,6 @@ public sealed class RotatingLightSystem : SharedRotatingLightSystem
             return;
 
         comp.Enabled = args.Enabled;
-        Dirty(comp);
+        Dirty(uid, comp);
     }
 }

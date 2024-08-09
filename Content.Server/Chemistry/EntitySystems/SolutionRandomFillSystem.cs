@@ -1,5 +1,5 @@
 using Content.Server.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
@@ -21,13 +21,12 @@ public sealed class SolutionRandomFillSystem : EntitySystem
         SubscribeLocalEvent<RandomFillSolutionComponent, MapInitEvent>(OnRandomSolutionFillMapInit);
     }
 
-    private void OnRandomSolutionFillMapInit(EntityUid uid, RandomFillSolutionComponent component, MapInitEvent args)
+    private void OnRandomSolutionFillMapInit(Entity<RandomFillSolutionComponent> entity, ref MapInitEvent args)
     {
-        if (component.WeightedRandomId == null)
+        if (entity.Comp.WeightedRandomId == null)
             return;
 
-        var target = _solutionsSystem.EnsureSolution(uid, component.Solution);
-        var pick = _proto.Index<WeightedRandomFillSolutionPrototype>(component.WeightedRandomId).Pick(_random);
+        var pick = _proto.Index<WeightedRandomFillSolutionPrototype>(entity.Comp.WeightedRandomId).Pick(_random);
 
         var reagent = pick.reagent;
         var quantity = pick.quantity;
@@ -38,6 +37,7 @@ public sealed class SolutionRandomFillSystem : EntitySystem
             return;
         }
 
-        target.AddReagent(reagent, quantity);
+        var target = _solutionsSystem.EnsureSolutionEntity(entity.Owner, entity.Comp.Solution, pick.quantity, null, out _);
+        _solutionsSystem.TryAddReagent(target, reagent, quantity, out _);
     }
 }

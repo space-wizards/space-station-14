@@ -1,4 +1,4 @@
-﻿- type: reaction
+- type: reaction
   id: Carpetium
   reactants:
     SpaceDrugs:
@@ -107,3 +107,97 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: SheetPlastic1
+
+- type: reaction
+  id: FlashFreezeIce
+  quantized: true
+  reactants:
+    Fresium:
+      amount: 1
+    Water:
+      amount: 1
+  effects:
+  - !type:CreateGas
+    gas: Frezon
+  products:
+    Ice: 5
+
+- type: reaction
+  id: Fresium
+  priority: 20
+  maxTemp: 300
+  reactants:
+    Frezon:
+      amount: 3
+    Plasma:
+      amount: 1
+      catalyst: true
+    Nitrogen:
+      amount: 2
+    Cryoxadone:
+      amount: 0.22
+    TableSalt:
+      amount: 0.08
+    Water:
+      amount: 1.5
+  effects:
+  - !type:CreateGas
+    gas: Nitrogen
+  products:
+    Fresium: 5
+
+- type: reaction
+  id: FiberBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    Fiber:
+      amount: 5
+    Water:
+      amount: 10
+      catalyst: true
+  products:
+    Carbon: 3
+    Sugar: 2
+
+- type: reaction
+  id: Laughter
+  reactants:
+    JuiceBanana:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Laughter: 2
+
+- type: reaction
+  id: CreateCrystals
+  quantized: true
+  minTemp: 374
+  reactants:
+    Sugar:
+      amount: 15
+    Water:
+      amount: 15
+    Ethanol:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: ShardCrystalRandom
+
+- type: reaction
+  id: Gunpowder
+  impact: Low
+  quantized: true
+  minTemp: 374
+  reactants:
+    Potassium:
+      amount: 6
+    Sulfur:
+      amount: 2
+    Charcoal:
+      amount: 2
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: MaterialGunpowder

@@ -1,7 +1,6 @@
 ﻿using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.EntityList;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
@@ -22,7 +21,7 @@ namespace Content.Server.EntityList
                 return;
             }
 
-            if (shell.Player is not IPlayerSession player)
+            if (shell.Player is not { } player)
             {
                 shell.WriteError("You must be a player to run this command.");
                 return;

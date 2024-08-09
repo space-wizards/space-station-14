@@ -45,9 +45,11 @@
     contents:
       - id: HandheldHealthAnalyzer
         prob: 0.6
+      - id: ClothingHeadMirror
+        prob: 0.1
       - id: ClothingHandsGlovesLatex
       - id: ClothingHeadsetMedical
-     # - id: ClothingEyesHudMedical #Removed until working properly
+      - id: ClothingEyesHudMedical
       - id: ClothingBeltMedical
       - id: ClothingHeadHatSurgcapGreen
         prob: 0.1
@@ -81,7 +83,7 @@
         prob: 0.6
       - id: ClothingHandsGlovesLatex
       - id: ClothingHeadsetMedical
-     # - id: ClothingEyesHudMedical #Removed until working properly
+      - id: ClothingEyesHudMedical
       - id: ClothingBeltMedical
       - id: ClothingHeadHatSurgcapGreen
         prob: 0.1
@@ -116,6 +118,7 @@
         prob: 0.3
       - id: BoxPillCanister
       - id: BoxBottle
+      - id: BoxVial
       - id: ChemBag
       - id: ClothingHandsGlovesLatex
       - id: ClothingHeadsetMedical
@@ -130,15 +133,16 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingHeadHelmetVoidParamed
       - id: ClothingOuterHardsuitVoidParamed
       - id: ClothingOuterCoatParamedicWB
       - id: ClothingHeadHatParamedicsoft
+      - id: ClothingOuterWinterPara
       - id: ClothingUniformJumpsuitParamedic
       - id: ClothingUniformJumpskirtParamedic
       - id: ClothingEyesHudMedical
       - id: ClothingHandsGlovesLatex
       - id: ClothingHeadsetMedical
       - id: ClothingMaskSterile
+      - id: HandheldGPSBasic
       - id: MedkitFilled
         prob: 0.3

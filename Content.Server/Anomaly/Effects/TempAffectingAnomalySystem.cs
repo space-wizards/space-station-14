@@ -22,7 +22,7 @@ public sealed class TempAffectingAnomalySystem : EntitySystem
         {
             var grid = xform.GridUid;
             var map = xform.MapUid;
-            var indices = _xform.GetGridOrMapTilePosition(ent, xform);
+            var indices = _xform.GetGridTilePositionOrDefault((ent, xform));
             var mixture = _atmosphere.GetTileMixture(grid, map, indices, true);
 
             if (mixture is { })

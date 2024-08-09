@@ -1,3 +1,4 @@
+using Content.Server.GameTicking;
 using Content.Shared.Follower;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -21,6 +22,7 @@ public sealed class FollowerSystemTest
         var mapMan = server.ResolveDependency<IMapManager>();
         var sysMan = server.ResolveDependency<IEntitySystemManager>();
         var logMan = server.ResolveDependency<ILogManager>();
+        var mapSys = server.System<SharedMapSystem>();
         var logger = logMan.RootSawmill;
 
         await server.WaitPost(() =>
@@ -28,19 +30,19 @@ public sealed class FollowerSystemTest
             var followerSystem = sysMan.GetEntitySystem<FollowerSystem>();
 
             // Create a map to spawn the observers on.
-            var map = mapMan.CreateMap();
+            mapSys.CreateMap(out var map);
 
             // Spawn an observer to be followed.
-            var followed = entMan.SpawnEntity("MobObserver", new MapCoordinates(0, 0, map));
+            var followed = entMan.SpawnEntity(GameTicker.ObserverPrototypeName, new MapCoordinates(0, 0, map));
             logger.Info($"Spawned followed observer: {entMan.ToPrettyString(followed)}");
 
             // Spawn an observer to follow another observer.
-            var follower = entMan.SpawnEntity("MobObserver", new MapCoordinates(0, 0, map));
+            var follower = entMan.SpawnEntity(GameTicker.ObserverPrototypeName, new MapCoordinates(0, 0, map));
             logger.Info($"Spawned follower observer: {entMan.ToPrettyString(follower)}");
 
             followerSystem.StartFollowingEntity(follower, followed);
 
-            entMan.DeleteEntity(mapMan.GetMapEntityId(map));
+            entMan.DeleteEntity(mapSys.GetMap(map));
         });
         await pair.CleanReturnAsync();
     }

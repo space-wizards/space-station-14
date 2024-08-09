@@ -1,4 +1,4 @@
-﻿using Content.Client.Stylesheets;
+using Content.Client.Stylesheets;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -21,7 +21,7 @@ namespace Content.Client.Actions.UI
         /// </summary>
         public (TimeSpan Start, TimeSpan End)? Cooldown { get; set; }
 
-        public ActionAlertTooltip(FormattedMessage name, FormattedMessage? desc, string? requires = null)
+        public ActionAlertTooltip(FormattedMessage name, FormattedMessage? desc, string? requires = null, FormattedMessage? charges = null)
         {
             _gameTiming = IoCManager.Resolve<IGameTiming>();
 
@@ -52,6 +52,17 @@ namespace Content.Client.Actions.UI
                 vbox.AddChild(description);
             }
 
+            if (charges != null && !string.IsNullOrWhiteSpace(charges.ToString()))
+            {
+                var chargesLabel = new RichTextLabel
+                {
+                    MaxWidth = TooltipTextMaxWidth,
+                    StyleClasses = { StyleNano.StyleClassTooltipActionCharges }
+                };
+                chargesLabel.SetMessage(charges);
+                vbox.AddChild(chargesLabel);
+            }
+
             vbox.AddChild(_cooldownLabel = new RichTextLabel
             {
                 MaxWidth = TooltipTextMaxWidth,
@@ -66,9 +77,12 @@ namespace Content.Client.Actions.UI
                     MaxWidth = TooltipTextMaxWidth,
                     StyleClasses = {StyleNano.StyleClassTooltipActionRequirements}
                 };
-                requiresLabel.SetMessage(FormattedMessage.FromMarkup("[color=#635c5c]" +
-                                                                     requires +
-                                                                     "[/color]"));
+
+                if (!FormattedMessage.TryFromMarkup("[color=#635c5c]" + requires + "[/color]", out var markup))
+                    return;
+
+                requiresLabel.SetMessage(markup);
+
                 vbox.AddChild(requiresLabel);
             }
         }
@@ -86,8 +100,11 @@ namespace Content.Client.Actions.UI
             if (timeLeft > TimeSpan.Zero)
             {
                 var duration = Cooldown.Value.End - Cooldown.Value.Start;
-                _cooldownLabel.SetMessage(FormattedMessage.FromMarkup(
-                    $"[color=#a10505]{(int) duration.TotalSeconds} sec cooldown ({(int) timeLeft.TotalSeconds + 1} sec remaining)[/color]"));
+
+                if (!FormattedMessage.TryFromMarkup($"[color=#a10505]{(int) duration.TotalSeconds} sec cooldown ({(int) timeLeft.TotalSeconds + 1} sec remaining)[/color]", out var markup))
+                    return;
+
+                _cooldownLabel.SetMessage(markup);
                 _cooldownLabel.Visible = true;
             }
             else

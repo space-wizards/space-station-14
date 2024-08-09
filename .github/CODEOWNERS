@@ -15,6 +15,7 @@
 /Content.*/GameTicking/ @moonheart08 @EmoGarbage404
 /Resources/ServerInfo/ @moonheart08 @Chief-Engineer
 /Resources/ServerInfo/Guidebook/ @moonheart08 @EmoGarbage404
+/Resources/ServerInfo/Guidebook/ServerRules/ @Chief-Engineer
 /Resources/engineCommandPerms.yml @moonheart08 @Chief-Engineer
 /Resources/clientCommandPerms.yml @moonheart08 @Chief-Engineer
 
@@ -23,21 +24,12 @@
 /Resources/Prototypes/Body/ @DrSmugleaf # suffering
 /Resources/Prototypes/Entities/Mobs/Player/ @DrSmugleaf
 /Resources/Prototypes/Entities/Mobs/Species/ @DrSmugleaf
+/Resources/Prototypes/Guidebook/rules.yml @Chief-Engineer
 /Content.*/Body/ @DrSmugleaf
 /Content.YAMLLinter @DrSmugleaf
+/Content.Shared/Damage/ @DrSmugleaf
 
-/Content.*/Verbs/ @ElectroJr
-/Content.Client/ContextMenu/ @ElectroJr
-/Content.Shared/Damage/ @ElectroJr @DrSmugleaf
-/Content.Shared/Containers/ItemSlot/ @ElectroJr
-/Content.*/PowerCell/ @ElectroJr
-/Content.*/Doors/ @ElectroJr
-/Content.*/Interaction/ @ElectroJr
-/Content.*/Hands/ @ElectroJr
-/Content.*/Actions/ @ElectroJr
-/Content.*/Explosion/ @ElectroJr
-
-/Content.*/Anomaly/ @EmoGarbage404
+/Content.*/Anomaly/ @EmoGarbage404 @TheShuEd
 /Content.*/Lathe/ @EmoGarbage404
 /Content.*/Materials/ @EmoGarbage404
 /Content.*/Mech/ @EmoGarbage404
@@ -45,7 +37,7 @@
 /Content.*/Stack/ @EmoGarbage404
 /Content.*/Xenoarchaeology/ @EmoGarbage404
 /Content.*/Zombies/ @EmoGarbage404
-/Resources/Prototypes/Entities/Structures/Specific/anomalies.yml @EmoGarbage404
+/Resources/Prototypes/Entities/Structures/Specific/anomalies.yml @EmoGarbage404 @TheShuEd
 /Resources/Prototypes/Research/ @EmoGarbage404
 
 /Content.*/Forensics/ @ficcialfaint
@@ -63,3 +55,10 @@
 #Jezi
 /Content.*/Medical @Jezithyr
 /Content.*/Body @Jezithyr
+
+# Sloth
+/Content.*/Audio @metalgearsloth
+/Content.*/Movement @metalgearsloth
+/Content.*/NPC @metalgearsloth
+/Content.*/Shuttles @metalgearsloth
+/Content.*/Weapons @metalgearsloth

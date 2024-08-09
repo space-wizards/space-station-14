@@ -14,29 +14,31 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
 
     public List<SprayPainterEntry> Entries { get; private set; } = new();
 
-    public override void Initialize()
+    protected override void CacheStyles()
     {
-        base.Initialize();
+        base.CacheStyles();
 
-        foreach (string style in Styles)
+        Entries.Clear();
+        foreach (var style in Styles)
         {
+            var name = style.Name;
             string? iconPath = Groups
-              .FindAll(x => x.StylePaths.ContainsKey(style))?
-              .MaxBy(x => x.IconPriority)?.StylePaths[style];
+              .FindAll(x => x.StylePaths.ContainsKey(name))?
+              .MaxBy(x => x.IconPriority)?.StylePaths[name];
             if (iconPath == null)
             {
-                Entries.Add(new SprayPainterEntry(style, null));
+                Entries.Add(new SprayPainterEntry(name, null));
                 continue;
             }
 
             RSIResource doorRsi = _resourceCache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / new ResPath(iconPath));
             if (!doorRsi.RSI.TryGetState("closed", out var icon))
             {
-                Entries.Add(new SprayPainterEntry(style, null));
+                Entries.Add(new SprayPainterEntry(name, null));
                 continue;
             }
 
-            Entries.Add(new SprayPainterEntry(style, icon.Frame0));
+            Entries.Add(new SprayPainterEntry(name, icon.Frame0));
         }
     }
 }

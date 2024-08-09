@@ -4,11 +4,11 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Salvage.Expeditions.Modifiers;
 
 [Prototype("salvageLightMod")]
-public sealed class SalvageLightMod : IPrototype, IBiomeSpecificMod
+public sealed partial class SalvageLightMod : IPrototype, IBiomeSpecificMod
 {
     [IdDataField] public string ID { get; } = default!;
 
-    [DataField("desc")] public string Description { get; private set; } = string.Empty;
+    [DataField("desc")] public LocId Description { get; private set; } = string.Empty;
 
     /// <inheritdoc/>
     [DataField("cost")]

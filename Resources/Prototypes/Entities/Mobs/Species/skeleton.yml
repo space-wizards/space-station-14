@@ -46,6 +46,7 @@
       80: 0.7
   - type: Speech
     speechVerb: Skeleton
+  - type: ZombieImmune
   - type: Vocal
     sounds:
       Male: Skeleton
@@ -80,11 +81,11 @@
       methods: [ Touch ]
       effects: # TODO: when magic is around - make a milk transformation to a skeleton monster
       - !type:HealthChange
-        scaled: true
+        scaleByQuantity: true
         damage:
           groups:
-            Burn: -1 # healing obviously up to discussion
-            Brute: -1 # these groups are the only 2 possible ways to damage a skeleton
+            Burn: -2 # healing obviously up to discussion
+            Brute: -1.5 # these groups are the only 2 possible ways to damage a skeleton
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -98,11 +99,28 @@
           visualType: Large
           messages: [ "skeleton-sprayed-by-oat-milk-popup" ]
           probability: 0.5
+  - type: FireVisuals
+    alternateState: Standing
+  - type: FlashImmunity
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
 
 - type: entity
   parent: BaseSpeciesDummy
   id: MobSkeletonPersonDummy
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
-    - type: HumanoidAppearance
-      species: Skeleton
+  - type: HumanoidAppearance
+    species: Skeleton
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female

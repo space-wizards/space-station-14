@@ -15,10 +15,7 @@
         mask:
         - TabletopMachineMask
         layer:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        hard: false
+        - TabletopMachineLayer
   - type: ApcPowerReceiver
     powerLoad: 300
   - type: Appearance
@@ -43,6 +40,7 @@
       map: ["enum.SolutionHeaterVisuals.IsOn"]
       shader: unshaded
   - type: SolutionHeater
+    heatPerSecond: 160
   - type: ItemPlacer
     whitelist:
       components:

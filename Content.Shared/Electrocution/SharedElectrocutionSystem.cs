@@ -20,7 +20,7 @@ namespace Content.Shared.Electrocution
                 return;
 
             insulated.Coefficient = siemensCoefficient;
-            Dirty(insulated);
+            Dirty(uid, insulated);
         }
 
         /// <param name="uid">Entity being electrocuted.</param>

@@ -1,13 +1,11 @@
 using Content.Server.Administration;
-using Content.Server.Damage.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Damage.Systems;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Damage.Commands
 {
-    [AdminCommand(AdminFlags.Admin)]
+    [AdminCommand(AdminFlags.Fun)]
     public sealed class GodModeCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
@@ -18,7 +16,7 @@ namespace Content.Server.Damage.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player;
             EntityUid entity;
 
             switch (args.Length)

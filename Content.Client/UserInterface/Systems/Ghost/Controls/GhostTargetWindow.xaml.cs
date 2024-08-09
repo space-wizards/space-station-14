@@ -12,12 +12,17 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
     public sealed partial class GhostTargetWindow : DefaultWindow
     {
         private List<(string, NetEntity)> _warps = new();
+        private string _searchText = string.Empty;
 
         public event Action<NetEntity>? WarpClicked;
+        public event Action? OnGhostnadoClicked;
 
         public GhostTargetWindow()
         {
             RobustXamlLoader.Load(this);
+            SearchBar.OnTextChanged += OnSearchTextChanged;
+
+            GhostnadoButton.OnPressed += _ => OnGhostnadoClicked?.Invoke();
         }
 
         public void UpdateWarps(IEnumerable<GhostWarp> warps)
@@ -60,9 +65,33 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
                 };
 
                 currentButtonRef.OnPressed += _ => WarpClicked?.Invoke(warpTarget);
+                currentButtonRef.Visible = ButtonIsVisible(currentButtonRef);
 
                 ButtonContainer.AddChild(currentButtonRef);
             }
+        }
+
+        private bool ButtonIsVisible(Button button)
+        {
+            return string.IsNullOrEmpty(_searchText) || button.Text == null || button.Text.Contains(_searchText, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private void UpdateVisibleButtons()
+        {
+            foreach (var child in ButtonContainer.Children)
+            {
+                if (child is Button button)
+                    button.Visible = ButtonIsVisible(button);
+            }
+        }
+
+        private void OnSearchTextChanged(LineEdit.LineEditEventArgs args)
+        {
+            _searchText = args.Text;
+
+            UpdateVisibleButtons();
+            // Reset scroll bar so they can see the relevant results.
+            GhostScroll.SetScrollValue(Vector2.Zero);
         }
     }
 }

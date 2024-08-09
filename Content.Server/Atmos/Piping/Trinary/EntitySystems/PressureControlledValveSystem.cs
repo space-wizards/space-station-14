@@ -31,13 +31,9 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             UpdateAppearance(uid, comp);
         }
 
-        private void OnUpdate(EntityUid uid, PressureControlledValveComponent comp, AtmosDeviceUpdateEvent args)
+        private void OnUpdate(EntityUid uid, PressureControlledValveComponent comp, ref AtmosDeviceUpdateEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                || !EntityManager.TryGetComponent(uid, out AtmosDeviceComponent? device)
-                || !_nodeContainer.TryGetNode(nodeContainer, comp.InletName, out PipeNode? inletNode)
-                || !_nodeContainer.TryGetNode(nodeContainer, comp.ControlName, out PipeNode? controlNode)
-                || !_nodeContainer.TryGetNode(nodeContainer, comp.OutletName, out PipeNode? outletNode))
+            if (!_nodeContainer.TryGetNodes(uid, comp.InletName, comp.ControlName, comp.OutletName, out PipeNode? inletNode, out PipeNode? controlNode, out PipeNode? outletNode))
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 comp.Enabled = false;
@@ -62,7 +58,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             else
             {
                 comp.Enabled = true;
-                transferRate = Math.Min(control * comp.Gain, comp.MaxTransferRate);
+                transferRate = Math.Min(control * comp.Gain, comp.MaxTransferRate * _atmosphereSystem.PumpSpeedup());
             }
             UpdateAppearance(uid, comp);
 
@@ -79,7 +75,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             _atmosphereSystem.Merge(outletNode.Air, removed);
         }
 
-        private void OnFilterLeaveAtmosphere(EntityUid uid, PressureControlledValveComponent comp, AtmosDeviceDisabledEvent args)
+        private void OnFilterLeaveAtmosphere(EntityUid uid, PressureControlledValveComponent comp, ref AtmosDeviceDisabledEvent args)
         {
             comp.Enabled = false;
             UpdateAppearance(uid, comp);

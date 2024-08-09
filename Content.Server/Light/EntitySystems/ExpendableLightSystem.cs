@@ -1,3 +1,4 @@
+using Content.Server.IgnitionSource;
 using Content.Server.Light.Components;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
@@ -9,6 +10,9 @@ using Content.Shared.Temperature;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Light.EntitySystems
@@ -75,7 +79,7 @@ namespace Content.Server.Light.EntitySystems
 
                         if (TryComp<ItemComponent>(ent, out var item))
                         {
-                            _item.SetHeldPrefix(ent, "unlit", item);
+                            _item.SetHeldPrefix(ent, "unlit", component: item);
                         }
 
                         break;
@@ -93,8 +97,11 @@ namespace Content.Server.Light.EntitySystems
             {
                 if (TryComp<ItemComponent>(ent, out var item))
                 {
-                    _item.SetHeldPrefix(ent, "lit", item);
+                    _item.SetHeldPrefix(ent, "lit", component: item);
                 }
+
+                var ignite = new IgnitionEvent(true);
+                RaiseLocalEvent(ent, ref ignite);
 
                 component.CurrentState = ExpendableLightState.Lit;
                 component.StateExpiryTime = component.GlowDuration;
@@ -128,8 +135,8 @@ namespace Content.Server.Light.EntitySystems
 
                 case ExpendableLightState.Dead:
                     _appearance.SetData(ent, ExpendableLightVisuals.Behavior, string.Empty, appearance);
-                    var isHotEvent = new IsHotEvent() {IsHot = true};
-                    RaiseLocalEvent(ent, isHotEvent);
+                    var ignite = new IgnitionEvent(false);
+                    RaiseLocalEvent(ent, ref ignite);
                     break;
             }
         }
@@ -160,7 +167,7 @@ namespace Content.Server.Light.EntitySystems
         {
             if (TryComp<ItemComponent>(uid, out var item))
             {
-                _item.SetHeldPrefix(uid, "unlit", item);
+                _item.SetHeldPrefix(uid, "unlit", component: item);
             }
 
             component.CurrentState = ExpendableLightState.BrandNew;
@@ -172,8 +179,6 @@ namespace Content.Server.Light.EntitySystems
             if (args.Handled)
                 return;
 
-            var isHotEvent = new IsHotEvent() {IsHot = true};
-            RaiseLocalEvent(ent, isHotEvent);
             if (TryActivate(ent))
                 args.Handled = true;
         }

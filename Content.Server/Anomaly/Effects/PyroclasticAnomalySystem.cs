@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos.Components;
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
@@ -24,14 +24,14 @@ public sealed class PyroclasticAnomalySystem : EntitySystem
     private void OnPulse(EntityUid uid, PyroclasticAnomalyComponent component, ref AnomalyPulseEvent args)
     {
         var xform = Transform(uid);
-        var ignitionRadius = component.MaximumIgnitionRadius * args.Stability;
+        var ignitionRadius = component.MaximumIgnitionRadius * args.Stability * args.PowerModifier;
         IgniteNearby(uid, xform.Coordinates, args.Severity, ignitionRadius);
     }
 
     private void OnSupercritical(EntityUid uid, PyroclasticAnomalyComponent component, ref AnomalySupercriticalEvent args)
     {
         var xform = Transform(uid);
-        IgniteNearby(uid, xform.Coordinates, 1, component.MaximumIgnitionRadius * 2);
+        IgniteNearby(uid, xform.Coordinates, 1, component.MaximumIgnitionRadius * 2 * args.PowerModifier);
     }
 
     public void IgniteNearby(EntityUid uid, EntityCoordinates coordinates, float severity, float radius)

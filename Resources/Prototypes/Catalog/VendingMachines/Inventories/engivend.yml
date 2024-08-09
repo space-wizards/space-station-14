@@ -7,5 +7,5 @@
     NetworkConfigurator: 5
     PowerCellMedium: 5
     ClothingHandsGlovesColorYellow: 6
-    InflatableWallStack1: 24
-    InflatableDoorStack1: 8
+    BoxInflatable: 2
+    ClothingHeadHatCone: 4

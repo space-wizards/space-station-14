@@ -1,6 +1,8 @@
 <Document>
   # Traitors
-
+  
+  WHISKEY. ECHO. WHISKEY. LIMA. ALPHA. DELTA.
+  
   - A Traitor is an antagonist employed by the Syndicate. They have access to various Syndicate tools and weapons through their [color=#a4885c]Uplink[/color].
   - Traitors can use codewords to identify themselves to one another in order to cooperate.
   - In a Traitor round, any player can be a Traitor aside from department heads, the captain, or any security officers.
@@ -10,7 +12,7 @@
   <Box>
     <GuideEntityEmbed Entity="BaseUplinkRadio40TC" Caption="Uplink"/>
   </Box>
-  - The [color=#a4885c]Uplink[/color] is the most important tool as a Traitor, as it can purchase tools and weapons with [color=#a4885c]telecrystals[/color](TC).
+  - The [color=#a4885c]Uplink[/color] is the most important tool for a Traitor, as it can purchase tools and weapons with [color=#a4885c]telecrystals[/color](TC).
   <Box>
     <GuideEntityEmbed Entity="Telecrystal" Caption="Telecrystals"/>
   </Box>
@@ -22,16 +24,23 @@
   Make sure to relock your [color=#a4885c]PDA[/color] to prevent anyone else from seeing it!
   - Various gear include:
   <Box>
-    <GuideEntityEmbed Entity="WeaponPistolViper" Caption="Guns"/>
-    <GuideEntityEmbed Entity="FireAxe" State="icon" Caption="Melee"/>
-    <GuideEntityEmbed Entity="C4" Caption=" Explosives"/>
-    <GuideEntityEmbed Entity="Syringe" Caption="Implants"/>
-    <GuideEntityEmbed Entity="ClothingBackpackDuffelSyndicate" Caption="Bundles"/>
+    <GuideEntityEmbed Entity="WeaponPistolCobra" Caption="Weaponry"/>
+    <GuideEntityEmbed Entity="MagazineBoxLightRifle" State="icon" Caption="Ammo"/>
+    <GuideEntityEmbed Entity="C4" Caption="Explosives"/>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndie" Caption="Wearables"/>
+    <GuideEntityEmbed Entity="Stimpack" Caption="Chemicals"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="ChameleonProjector" Caption="Deception"/>
+    <GuideEntityEmbed Entity="Emag" Caption="Disruption"/>
+    <GuideEntityEmbed Entity="StorageImplanter" Caption="Implants"/>
+    <GuideEntityEmbed Entity="MobMonkeySyndicateAgentNukeops" Caption="Allies"/>
+    <GuideEntityEmbed Entity="ClothingEyesGlassesOutlawGlasses" Caption="Pointless"/>
   </Box>
 
   ## Objectives
 
-  - When becoming a Traitor, you will have a list of objectives, ranging from escape alive, stealing something, and killing someone. Using the [color=#a4885c]Uplink[/color] will help you with most of these tasks.
+  - When becoming a Traitor, you will have a list of objectives, ranging from escaping alive, stealing something, and killing someone. Using the [color=#a4885c]Uplink[/color] will help you with most of these tasks.
 
   ## List of Possible Tasks
 
@@ -40,30 +49,25 @@
   - Kill or maroon a randomly selected department head.
   - Keep a randomly selected traitor alive.
   - Escape on the evacuation shuttle alive and uncuffed.
-  - Help a randomly selected traitor finish 2/3 of their objectives.
+  - Help a randomly selected traitor finish half of their objectives.
   - Die a glorious death.
-  - Steal the Captain's [color=#a4885c]ID Card[/color].
+  - Steal the Captain's [color=#a4885c]ID Card[/color], [color=#a4885c]Antique Laser Pistol[/color], [color=#a4885c]Jetpack[/color], or [color=#a4885c]Nuke Disk[/color].
   <Box>
     <GuideEntityEmbed Entity="CaptainIDCard" Caption="Captain's ID Card"/>
-  </Box>
-  - Steal the Captain's [color=#a4885c]Antique Laser Pistol[/color].
-  <Box>
-    <GuideEntityEmbed Entity="WeaponAntiqueLaser" Caption="Captain's Antique Laser Pistol"/>
-  </Box>
-  - Steal the Captain's [color=#a4885c]Jetpack[/color].
+    <GuideEntityEmbed Entity="WeaponAntiqueLaser" Caption="Antique Laser Pistol"/>
+ </Box>
   <Box>
     <GuideEntityEmbed Entity="JetpackCaptainFilled" Caption="Captain's Jetpack"/>
-  </Box>
-  - Steal the Chief Medical Officer's [color=#a4885c]Hypospray[/color].
+    <GuideEntityEmbed Entity="NukeDisk" Caption="The Nuke Disk"/> 
+ </Box>
+  - Steal the Chief Medical Officer's [color=#a4885c]Hypospray[/color] or [color=#a4885c]Handheld Crew Monitor[/color].
   <Box>
     <GuideEntityEmbed Entity="Hypospray" Caption="CMO's Hypospray"/>
+    <GuideEntityEmbed Entity="HandheldCrewMonitorEmpty" Caption="Handheld Crew Monitor"/>
   </Box>
-  - Steal the Research Director's [color=#a4885c]Hardsuit[/color].
+  - Steal the Research Director's [color=#a4885c]Hardsuit[/color] or [color=#a4885c]Hand Teleporter[/color].
   <Box>
     <GuideEntityEmbed Entity="ClothingOuterHardsuitRd" Caption="RD's Hardsuit"/>
-  </Box>
-  - Steal the Research Director's [color=#a4885c]Hand Teleporter[/color].
-  <Box>
     <GuideEntityEmbed Entity="HandTeleporter" Caption="Hand Teleporter"/>
   </Box>
   - Steal the Head of Security's [color=#a4885c]Secret Documents[/color].
@@ -74,13 +78,13 @@
   <Box>
     <GuideEntityEmbed Entity="ClothingShoesBootsMagAdv" Caption="Advanced Magboots"/>
   </Box>
-  - Steal the [color=#a4885c]Nuke Disk[/color].
+  - Steal the Quartermaster's [color=#a4885c]Requisition Digi-Board[/color].
   <Box>
-    <GuideEntityEmbed Entity="NukeDisk" Caption="Nuke Disk"/>
+    <GuideEntityEmbed Entity="BoxFolderQmClipboard" Caption="Requisition Digi-Board"/>
   </Box>
-  - Steal [color=#a4885c]Corgi Meat[/color].
+  - Steal the Head of Personnel's dog, Ian's [color=#a4885c]Corgi Meat[/color].
   <Box>
-  <GuideEntityEmbed Entity="MobCorgiIan" Caption="Corgi"/>
+  <GuideEntityEmbed Entity="MobCorgiIan" Caption="Ian the Corgi"/>
   <GuideEntityEmbed Entity="FoodMeatCorgi" Caption="Corgi Meat"/>
   </Box>
 

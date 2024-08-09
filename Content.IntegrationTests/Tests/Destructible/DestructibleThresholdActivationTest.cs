@@ -6,6 +6,8 @@ using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototypes;
@@ -104,7 +106,6 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.Multiple(() =>
                 {
                     Assert.That(actsThreshold.Acts, Is.EqualTo(ThresholdActs.Breakage));
-                    Assert.That(audio.GetSound(soundThreshold.Sound), Is.EqualTo("/Audio/Effects/woodhit.ogg"));
                     Assert.That(spawnThreshold.Spawn, Is.Not.Null);
                     Assert.That(spawnThreshold.Spawn, Has.Count.EqualTo(1));
                     Assert.That(spawnThreshold.Spawn.Single().Key, Is.EqualTo(SpawnedEntityId));
@@ -171,7 +172,6 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.Multiple(() =>
                 {
                     Assert.That(actsThreshold.Acts, Is.EqualTo(ThresholdActs.Breakage));
-                    Assert.That(audio.GetSound(soundThreshold.Sound), Is.EqualTo("/Audio/Effects/woodhit.ogg"));
                     Assert.That(spawnThreshold.Spawn, Is.Not.Null);
                     Assert.That(spawnThreshold.Spawn, Has.Count.EqualTo(1));
                     Assert.That(spawnThreshold.Spawn.Single().Key, Is.EqualTo(SpawnedEntityId));
@@ -234,7 +234,6 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.Multiple(() =>
                 {
                     Assert.That(actsThreshold.Acts, Is.EqualTo(ThresholdActs.Breakage));
-                    Assert.That(audio.GetSound(soundThreshold.Sound), Is.EqualTo("/Audio/Effects/woodhit.ogg"));
                     Assert.That(spawnThreshold.Spawn, Is.Not.Null);
                     Assert.That(spawnThreshold.Spawn, Has.Count.EqualTo(1));
                     Assert.That(spawnThreshold.Spawn.Single().Key, Is.EqualTo(SpawnedEntityId));

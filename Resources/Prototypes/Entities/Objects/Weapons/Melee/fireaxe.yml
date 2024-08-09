@@ -12,24 +12,25 @@
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: -90
+    wideAnimationRotation: 135
     swingLeft: true
     attackRate: 0.75
     damage:
       types:
         # axes are kinda like sharp hammers, you know?
         Blunt: 5
-        Slash: 13
-        Structural: 7
+        Slash: 10
+        Structural: 10
+    soundHit:
+      collection: MetalThud
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Blunt: 2.5
-        Slash: 10.5
-        Structural: 60
+        Slash: 10
+        Structural: 40
   - type: Item
-    size: 150
+    size: Ginormous
   - type: Clothing
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     quickEquip: false
@@ -38,11 +39,14 @@
   - type: Tool
     qualities:
       - Prying
-  - type: TilePrying
-    advanced: true
+  - type: ToolTileCompatible
   - type: Prying
   - type: UseDelay
     delay: 1
+  - type: StealTarget
+    stealGroup: FireAxe
+  - type: IgniteOnMeleeHit
+    fireStacks: -4
 
 - type: entity
   id: FireAxeFlaming
@@ -50,6 +54,8 @@
   parent: FireAxe
   description: Why fight fire with an axe when you can fight with fire and axe? Now featuring rugged rubberized handle!
   components:
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
   - type: IgniteOnMeleeHit
     fireStacks: 1
   - type: Sprite

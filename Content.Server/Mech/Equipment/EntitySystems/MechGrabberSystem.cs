@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Interaction;
 using Content.Server.Mech.Equipment.Components;
 using Content.Server.Mech.Systems;
@@ -10,6 +10,8 @@ using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Wall;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -38,7 +40,7 @@ public sealed class MechGrabberSystem : EntitySystem
         SubscribeLocalEvent<MechGrabberComponent, MechEquipmentRemovedEvent>(OnEquipmentRemoved);
         SubscribeLocalEvent<MechGrabberComponent, AttemptRemoveMechEquipmentEvent>(OnAttemptRemove);
 
-        SubscribeLocalEvent<MechGrabberComponent, InteractNoHandEvent>(OnInteract);
+        SubscribeLocalEvent<MechGrabberComponent, UserActivateInWorldEvent>(OnInteract);
         SubscribeLocalEvent<MechGrabberComponent, GrabberDoAfterEvent>(OnMechGrab);
     }
 
@@ -76,14 +78,14 @@ public sealed class MechGrabberSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        component.ItemContainer.Remove(toRemove);
+        _container.Remove(toRemove, component.ItemContainer);
         var mechxform = Transform(mech);
         var xform = Transform(toRemove);
         _transform.AttachToGridOrMap(toRemove, xform);
         var (mechPos, mechRot) = _transform.GetWorldPositionRotation(mechxform);
 
         var offset = mechPos + mechRot.RotateVec(component.DepositOffset);
-        _transform.SetWorldPositionRotation(xform, offset, Angle.Zero);
+        _transform.SetWorldPositionRotation(toRemove, offset, Angle.Zero);
         _mech.UpdateUserInterface(mech);
     }
 
@@ -121,9 +123,13 @@ public sealed class MechGrabberSystem : EntitySystem
         args.States.Add(GetNetEntity(uid), state);
     }
 
-    private void OnInteract(EntityUid uid, MechGrabberComponent component, InteractNoHandEvent args)
+    private void OnInteract(EntityUid uid, MechGrabberComponent component, UserActivateInWorldEvent args)
     {
-        if (args.Handled || args.Target is not {} target)
+        if (args.Handled)
+            return;
+        var target = args.Target;
+
+        if (args.Target == args.User || component.DoAfter != null)
             return;
 
         if (TryComp<PhysicsComponent>(target, out var physics) && physics.BodyType == BodyType.Static ||
@@ -149,19 +155,22 @@ public sealed class MechGrabberSystem : EntitySystem
             return;
 
         args.Handled = true;
-        component.AudioStream = _audio.PlayPvs(component.GrabSound, uid);
-        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.GrabDelay, new GrabberDoAfterEvent(), uid, target: target, used: uid)
+        component.AudioStream = _audio.PlayPvs(component.GrabSound, uid).Value.Entity;
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.GrabDelay, new GrabberDoAfterEvent(), uid, target: target, used: uid)
         {
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true
-        });
+            BreakOnMove = true
+        };
+
+        _doAfter.TryStartDoAfter(doAfterArgs, out component.DoAfter);
     }
 
     private void OnMechGrab(EntityUid uid, MechGrabberComponent component, DoAfterEvent args)
     {
+        component.DoAfter = null;
+
         if (args.Cancelled)
         {
-            component.AudioStream?.Stop();
+            component.AudioStream = _audio.Stop(component.AudioStream);
             return;
         }
 
@@ -173,7 +182,7 @@ public sealed class MechGrabberSystem : EntitySystem
         if (!_mech.TryChangeEnergy(equipmentComponent.EquipmentOwner.Value, component.GrabEnergyDelta))
             return;
 
-        component.ItemContainer.Insert(args.Args.Target.Value);
+        _container.Insert(args.Args.Target.Value, component.ItemContainer);
         _mech.UpdateUserInterface(equipmentComponent.EquipmentOwner.Value);
 
         args.Handled = true;

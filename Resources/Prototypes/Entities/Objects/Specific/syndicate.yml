@@ -10,7 +10,7 @@
     state: telecrystal
   - type: Item
     sprite: Objects/Specific/Syndicate/telecrystal.rsi
-    size: 20
+    size: Tiny
   - type: Stack
     count: 20
     stackType: Telecrystal
@@ -29,8 +29,6 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: Telecrystal
@@ -39,8 +37,6 @@
   components:
   - type: Stack
     count: 5
-  - type: Item
-    size: 5
 
 - type: entity
   parent: Telecrystal
@@ -49,12 +45,10 @@
   components:
   - type: Stack
     count: 10
-  - type: Item
-    size: 10
 
 # Uplinks
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, StorePresetUplink ]
   id: BaseUplinkRadio
   name: syndicate uplink
   description: Suspiciously looking old radio...
@@ -69,12 +63,11 @@
     heldPrefix: old-radio
   - type: UserInterface
     interfaces:
-    - key: enum.StoreUiKey.Key
-      type: StoreBoundUserInterface
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
   - type: ActivatableUI
     key: enum.StoreUiKey.Key
   - type: Store
-    preset: StorePresetUplink
     balance:
       Telecrystal: 0
 
@@ -84,7 +77,6 @@
   suffix: 20 TC
   components:
   - type: Store
-    preset: StorePresetUplink
     balance:
       Telecrystal: 20
 
@@ -94,7 +86,6 @@
   suffix: 25 TC
   components:
   - type: Store
-    preset: StorePresetUplink
     balance:
       Telecrystal: 25
 
@@ -105,7 +96,6 @@
   suffix: 40 TC, NukeOps
   components:
   - type: Store
-    preset: StorePresetUplink
     balance:
       Telecrystal: 40
   - type: Tag
@@ -114,10 +104,21 @@
 
 - type: entity
   parent: BaseUplinkRadio
-  id: BaseUplinkRadioDebug
-  suffix: Debug
+  id: BaseUplinkRadio60TC
+  suffix: 60 TC, LoneOps
   components:
   - type: Store
-    preset: StorePresetUplink
+    balance:
+      Telecrystal: 60
+  - type: Tag
+    tags:
+    - NukeOpsUplink
+
+- type: entity
+  parent: BaseUplinkRadio
+  id: BaseUplinkRadioDebug
+  suffix: DEBUG
+  components:
+  - type: Store
     balance:
       Telecrystal: 99999

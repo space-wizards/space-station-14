@@ -12,6 +12,34 @@
       effects:
       - !type:SatiateThirst
         factor: 2
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 2.0
+        type: Remove
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.05
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/coffeeglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
+  id: HotCocoa
+  name: reagent-name-hot-cocoa
+  parent: BaseDrink
+  desc: reagent-desc-hot-cocoa
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: chocolate
+  color: "#664300"
+  recognizable: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
       - !type:AdjustReagent
         reagent: Theobromine
         amount: 0.05
@@ -31,6 +59,34 @@
         factor: 1
 
 - type: reagent
+  id: CoconutWater
+  name: reagent-name-coconut-water
+  parent: BaseDrink
+  desc: reagent-desc-coconut-water
+  physicalDesc: reagent-physical-desc-milky
+  flavor: nutty
+  color: "#f4eadb"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4 # Coconut water is 94% water
+
+- type: reagent
+  id: CreamOfCoconut
+  name: reagent-name-cream-of-coconut
+  parent: BaseDrink
+  desc: reagent-desc-cream-of-coconut
+  physicalDesc: reagent-physical-desc-syrupy
+  flavor: creamy
+  color: "#FFEABF"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+
+- type: reagent
   id: CafeLatte
   name: reagent-name-cafe-latte
   parent: BaseDrink
@@ -40,7 +96,19 @@
   color: "#664300"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/cafe_latte.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 1
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 2.0
+        type: Remove
 
 - type: reagent
   id: GreenTea
@@ -49,10 +117,13 @@
   desc: reagent-desc-green-tea
   physicalDesc: reagent-physical-desc-aromatic
   flavor: tea
-  color: "#C33F00"
+  color: "#7EB626"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/glass_green.rsi
-    state: icon
+    sprite: Objects/Consumable/Drinks/greenteaglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: Grenadine
@@ -64,7 +135,14 @@
   color: "#EA1D26"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/grenadineglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  footstepSound:
+    collection: FootstepSticky
+    params:
+      volume: 6
 
 - type: reagent
   id: IcedCoffee
@@ -76,7 +154,19 @@
   color: "#102838"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/icedcoffeeglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 2.0
+        type: Remove
 
 - type: reagent
   id: IcedGreenTea
@@ -85,10 +175,13 @@
   desc: reagent-desc-iced-green-tea
   physicalDesc: reagent-physical-desc-aromatic
   flavor: icedtea
-  color: "#CE4200"
+  color: "#5B821B"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/glass_green.rsi
-    state: icon
+    sprite: Objects/Consumable/Drinks/icedgreenteaglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: IcedTea
@@ -97,10 +190,13 @@
   desc: reagent-desc-iced-tea
   physicalDesc: reagent-physical-desc-aromatic
   flavor: icedtea
-  color: "#104038"
+  color: "#6C3916"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/icedteaglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -112,6 +208,7 @@
 
 - type: reagent
   id: JuiceBerryPoison
+  parent: BaseJuice
   name: reagent-name-juice-berry-poison
   group: Drinks
   desc: reagent-desc-juice-berry-poison
@@ -131,6 +228,7 @@
 
 - type: reagent
   id: Lemonade
+  parent: BaseJuice
   name: reagent-name-lemonade
   group: Drinks
   desc: reagent-desc-lemonade
@@ -139,7 +237,10 @@
   color: "#FFFF00"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/lemonadeglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -216,9 +317,6 @@
   desc: reagent-desc-nothing
   group: Drinks
   physicalDesc: reagent-physical-desc-nothing
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/nothing.rsi
-    state: icon
   metabolisms:
     Drink:
       effects:
@@ -228,6 +326,7 @@
 
 - type: reagent
   id: NuclearCola
+  parent: BaseSoda
   name: reagent-name-nuclear-cola
   group: Drinks
   desc: reagent-desc-nuclear-cola
@@ -236,18 +335,26 @@
   color: "#100800"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/nuclear_colaglass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
       - !type:SatiateThirst
         factor: 6
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 3.0
+        type: Remove
     Poison:
       effects:
       - !type:HealthChange
         damage:
           types:
             Poison: 1
+  fizziness: 0.5
 
 - type: reagent
   id: SodaWater
@@ -257,6 +364,7 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: fizzy
   color: "#619494"
+  fizziness: 0.8
 
 - type: reagent
   id: SoyLatte
@@ -268,7 +376,19 @@
   color: "#664300"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/soy_latte.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 1
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 2.0
+        type: Remove
 
 - type: reagent
   id: Tea
@@ -287,6 +407,12 @@
       - !type:AdjustReagent
         reagent: Theobromine
         amount: 0.05
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/teaglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: TonicWater
@@ -294,8 +420,15 @@
   parent: BaseDrink
   desc: reagent-desc-tonic-water
   physicalDesc: reagent-physical-desc-fizzy
-  flavor: water
+  flavor: tonicwater
   color: "#0064C8"
+  fizziness: 0.4
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/tonicglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: Water
@@ -328,6 +461,12 @@
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 1
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/iceglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: DryRamen
@@ -358,6 +497,26 @@
         factor: 4
 
 - type: reagent
+  id: ArnoldPalmer
+  name: reagent-name-arnold-palmer
+  parent: BaseAlcohol
+  desc: reagent-desc-arnold-palmer
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: arnoldpalmer
+  color: "#d8cc5d"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/arnoldpalmer.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.05
+
+- type: reagent
   id: Pilk
   name: reagent-name-pilk
   parent: BaseDrink
@@ -370,6 +529,7 @@
       effects:
         - !type:SatiateThirst
           factor: 1
+  fizziness: 0.3
 
 - type: reagent
   id: Posca
@@ -379,9 +539,6 @@
   physicalDesc: reagent-physical-desc-sour
   flavor: bitter
   color: "#B3B599"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/glass_light_yellow.rsi
-    state: icon
 
 - type: reagent
   id: KiraSpecial
@@ -393,7 +550,11 @@
   color: "#CCCC99"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/kiraspecial.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  fizziness: 0.3
 
 - type: reagent
   id: Rewriter
@@ -404,31 +565,23 @@
   flavor: sweet
   color: "#485000"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/rewriter.rsi
-    state: icon
+    sprite: Objects/Consumable/Drinks/beerstein.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  fizziness: 0.3
 
 - type: reagent
-  id: TheMartinez
-  name: reagent-name-the-martinez
+  id: Mopwata
+  name: reagent-name-mopwata
   parent: BaseDrink
-  desc: reagent-desc-the-martinez
-  physicalDesc: reagent-physical-desc-vibrant
-  flavor: themartinez
-  color: "#75b1f0"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/the_martinez.rsi
-    state: icon
-
-- type: reagent
-  id: WhiteGilgamesh
-  name: reagent-name-white-gilgamesh
-  parent: BaseDrink
-  desc: reagent-desc-white-gilgamesh
-  physicalDesc: reagent-physical-desc-creamy
-  flavor: white-gilgamesh
-  color: "#e5d27e"
+  desc: reagent-desc-mopwata
+  physicalDesc: reagent-physical-desc-murky
+  flavor: mopwata
+  color: "#59502b"
   metabolisms:
     Drink:
       effects:
-        - !type:SatiateThirst
-          factor: 1
+      - !type:SatiateThirst
+        factor: 0.6

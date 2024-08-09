@@ -1,1 +1,31 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "license": "CC-BY-SA-3.0", "copyright": "https://github.com/vgstation-coders/vgstation13/blob/02ff588d59b3c560c685d9ca75e882d32a72d8cb/icons/mob/human_face.dmi", "states": [{"name": "vox_beard_s", "directions": 4}, {"name": "vox_colonel_s", "directions": 4}, {"name": "vox_fu_s", "directions": 4}, {"name": "vox_neck_s", "directions": 4}, {"name": "vox_ruff_beard_s", "directions": 4}, {"name": "vox_ruff_beard_s2", "directions": 4}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/0f9ef5962f4422836c0a42f289fb24d018918cbc/icons/mob/sprite_accessories/vox/vox_facial_hair.dmi and greyscaled",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "colonel_s",
+      "directions": 4
+    },
+    {
+      "name": "fu_s",
+      "directions": 4
+    },
+    {
+      "name": "neck_s",
+      "directions": 4
+    },
+    {
+      "name": "beard_s",
+      "directions": 4
+    },
+    {
+      "name": "mane_s",
+      "directions": 4
+    }
+  ]
+}

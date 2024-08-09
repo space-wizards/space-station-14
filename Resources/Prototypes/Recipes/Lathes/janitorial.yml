@@ -18,7 +18,7 @@
   result: Bucket
   completetime: 2
   materials:
-    Steel: 100
+    Plastic: 100
 
 - type: latheRecipe
   id: WetFloorSign
@@ -66,7 +66,7 @@
 
 - type: latheRecipe
   id: Holoprojector
-  result: Holoprojector
+  result: HoloprojectorEmpty
   completetime: 3
   materials:
     Plastic: 250

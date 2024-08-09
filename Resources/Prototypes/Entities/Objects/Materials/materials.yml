@@ -8,10 +8,9 @@
     sprite: Objects/Materials/materials.rsi
   - type: Item
     sprite: Objects/Materials/materials.rsi
-    size: 30
+    size: Normal
   - type: Tag
     tags:
-      - DroneUsable
       - RawMaterial
   - type: Damageable
     damageContainer: Inorganic
@@ -47,8 +46,14 @@
     - state: cardboard_3
       map: ["base"]
   - type: Appearance
-  - type: Item
-    size: 30
+  - type: Extractable
+    grindableSolutionName: cardboard
+  - type: SolutionContainerManager
+    solutions:
+      cardboard:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 6
 
 - type: entity
   parent: MaterialCardboard
@@ -59,8 +64,6 @@
     state: cardboard
   - type: Stack
     count: 10
-  - type: Item
-    size: 10
 
 - type: entity
   parent: MaterialCardboard
@@ -71,8 +74,6 @@
     state: cardboard
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: MaterialBase
@@ -114,8 +115,6 @@
     - state: cloth_3
       map: ["base"]
   - type: Appearance
-  - type: Item
-    size: 30
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
@@ -128,7 +127,6 @@
   - type: Tag
     tags:
       - ClothMade
-      - DroneUsable
       - Gauze
       - RawMaterial
   - type: Construction
@@ -144,8 +142,6 @@
     state: cloth
   - type: Stack
     count: 10
-  - type: Item
-    size: 10
 
 - type: entity
   parent: MaterialCloth
@@ -156,8 +152,6 @@
     state: cloth
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: MaterialBase
@@ -197,7 +191,6 @@
   - type: Tag
     tags:
       - ClothMade
-      - DroneUsable
       - RawMaterial
 
 - type: entity
@@ -209,8 +202,13 @@
     state: durathread
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents: #Hell if I know what durathread is made out of.
+        - ReagentId: Fiber
+          Quantity: 6
 
 - type: entity
   parent: MaterialBase
@@ -237,6 +235,18 @@
   - type: Appearance
   - type: Item
     heldPrefix: wood
+  - type: Tag
+    tags:
+    - Wooden
+    - RawMaterial
+  - type: Extractable
+    grindableSolutionName: wood
+  - type: SolutionContainerManager
+    solutions:
+      wood:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 10
 
 - type: entity
   parent: MaterialWoodPlank
@@ -245,8 +255,6 @@
   components:
   - type: Stack
     count: 10
-  - type: Item
-    size: 10
 
 - type: entity
   parent: MaterialWoodPlank
@@ -255,8 +263,6 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: MaterialBase
@@ -278,8 +284,6 @@
   - type: GuideHelp
     guides:
     - Cloning
-  - type: Item
-    size: 100
 
 - type: entity
   parent: MaterialBiomass
@@ -288,8 +292,6 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 # Following not used currently
 - type: entity
@@ -348,11 +350,31 @@
   components:
   - type: Stack
     stackType: Diamond
+    baseLayer: base
+    layerStates:
+    - diamond
+    - diamond_2
+    - diamond_3
   - type: Sprite
     state: diamond
+    layers:
+    - state: diamond
+      map: ["base"]
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 500
+  - type: Appearance
   - type: Item
     heldPrefix: diamond
-    size: 60
+  - type: Extractable
+    grindableSolutionName: diamond
+  - type: SolutionContainerManager
+    solutions:
+      diamond:
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 20
 
 - type: entity
   parent: MaterialDiamond
@@ -361,8 +383,6 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 2
 
 - type: entity
   parent: MaterialBase
@@ -383,8 +403,6 @@
     - state: cotton_3
       map: ["base"]
   - type: Appearance
-  - type: Item
-    size: 30
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
@@ -394,12 +412,15 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 3
   - type: Tag
     tags:
       - ClothMade
-      - DroneUsable
       - RawMaterial
-
 
 - type: entity
   parent: MaterialCotton
@@ -410,8 +431,58 @@
     state: cotton
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialPyrotton
+  name: pyrotton
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Pyrotton
+    baseLayer: base
+    layerStates:
+    - pyrotton
+    - pyrotton_2
+    - pyrotton_3
+  - type: Sprite
+    state: pyrotton_3
+    layers:
+    - state: pyrotton_3
+      map: ["base"]
+  - type: Appearance
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+        - ReagentId: Phlogiston
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 3
+      - ReagentId: Phlogiston
+        Quantity: 3
+  - type: Tag
+    tags:
+      - ClothMade
+      - RawMaterial
+
+- type: entity
+  parent: MaterialPyrotton
+  id: MaterialPyrotton1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: pyrotton
+  - type: Stack
+    count: 1
 
 - type: entity
   parent: MaterialBase
@@ -435,8 +506,6 @@
     layerStates:
       - bananium
       - bananium_1
-  - type: RadiationSource
-    intensity: 0.1
   - type: FlavorProfile
     flavors:
       - banana
@@ -462,8 +531,6 @@
       - ReagentId: Honk
         Quantity: 5
   - type: Appearance
-  - type: Item
-    size: 20
 
 - type: entity
   parent: MaterialBananium
@@ -474,14 +541,12 @@
     state: bananium
   - type: Stack
     count: 1
-  - type: Item
-    size: 2
 
 - type: entity
   parent: MaterialBase
   id: MaterialWebSilk
   name: silk
-  description: A webby material
+  description: A webby material.
   suffix: Full
   components:
   - type: PhysicalComposition
@@ -493,8 +558,6 @@
   - type: Stack
     count: 50
     stackType: WebSilk
-  - type: Item
-    size: 50
   - type: Food
     requiresSpecialDigestion: true
   - type: FlavorProfile
@@ -502,6 +565,11 @@
       - cobwebs
     ignoreReagents:
       - Fiber
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 3
   - type: SolutionContainerManager
     solutions:
       food:
@@ -512,7 +580,6 @@
   - type: Tag
     tags:
       - ClothMade
-      - DroneUsable
       - RawMaterial
 
 - type: entity
@@ -522,8 +589,6 @@
   components:
   - type: Stack
     count: 25
-  - type: Item
-    size: 25
 
 - type: entity
   parent: MaterialWebSilk
@@ -532,8 +597,6 @@
   components:
   - type: Stack
     count: 1
-  - type: Item
-    size: 1
 
 - type: entity
   parent: MaterialBase
@@ -554,8 +617,6 @@
     - state: cotton_3
       map: ["base"]
   - type: Appearance
-  - type: Item
-    size: 30
   - type: Food
   - type: BadFood
   - type: SolutionContainerManager
@@ -573,5 +634,22 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialGunpowder
+  name: gunpowder
+  description: An explosive compound.
+  components:
+  - type: Stack
+    stackType: Gunpowder
+    count: 1
+  - type: Sprite
+    sprite: Objects/Misc/reagent_fillings.rsi
+    state: powderpile
+    color: darkgray
+  - type: PhysicalComposition
+    materialComposition:
+      Gunpowder: 100
   - type: Item
-    size: 1
+    size: Tiny

@@ -1,4 +1,4 @@
-using Robust.Server.Player;
+using Robust.Shared.Player;
 
 
 namespace Content.Server.Voting
@@ -16,7 +16,7 @@ namespace Content.Server.Voting
         /// <summary>
         ///     The player that started the vote. Used to keep track of player cooldowns to avoid vote spam.
         /// </summary>
-        public IPlayerSession? InitiatorPlayer { get; set; }
+        public ICommonSession? InitiatorPlayer { get; set; }
 
         /// <summary>
         ///     The shown title of the vote.
@@ -43,13 +43,13 @@ namespace Content.Server.Voting
         ///     Sets <see cref="InitiatorPlayer"/> and <see cref="InitiatorText"/>
         ///     by setting the latter to the player's name.
         /// </summary>
-        public void SetInitiator(IPlayerSession player)
+        public void SetInitiator(ICommonSession player)
         {
             InitiatorPlayer = player;
             InitiatorText = player.Name;
         }
 
-        public void SetInitiatorOrServer(IPlayerSession? player)
+        public void SetInitiatorOrServer(ICommonSession? player)
         {
             if (player != null)
             {

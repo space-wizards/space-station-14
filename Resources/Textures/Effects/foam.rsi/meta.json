@@ -1,1 +1,99 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "license": "CC-BY-SA-3.0", "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/81b3a082ccdfb425f36bbed6e5bc1f0faed346ec/icons/effects/effects.dmi", "states": [{"name": "foam", "directions": 1}, {"name": "foam-dissolve", "directions": 1, "delays": [[0.1, 0.1, 0.1, 0.1, 0.1, 0.1]]}, {"name": "ironfoam", "directions": 1}, {"name": "metalfoam", "directions": 1}, {"name": "mfoam", "directions": 1}, {"name": "mfoam-dissolve", "directions": 1, "delays": [[0.1, 0.1, 0.1, 0.1, 0.1, 0.1]]}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/81b3a082ccdfb425f36bbed6e5bc1f0faed346ec/icons/effects/effects.dmi, foam_directionals by brainfood1183 (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
+        {
+            "name": "foam"
+        },
+        {
+            "name": "foam-west"
+        },
+        {
+            "name": "foam-east"
+        },
+        {
+            "name": "foam-north"
+        },
+        {
+            "name": "foam-south"
+        },
+        {
+            "name": "iron_foam"
+        },
+        {
+            "name": "iron_foam-north"
+        },
+        {
+            "name": "iron_foam-east"
+        },
+        {
+            "name": "iron_foam-south"
+        },
+        {
+            "name": "iron_foam-west"
+        },
+        {
+            "name": "metal_foam"
+        },
+        {
+            "name": "metal_foam-north"
+        },
+        {
+            "name": "metal_foam-east"
+        },
+        {
+            "name": "metal_foam-south"
+        },
+        {
+            "name": "metal_foam-west"
+        },
+        {
+            "name": "m_foam"
+        },
+        {
+            "name": "m_foam-north"
+        },
+        {
+            "name": "m_foam-east"
+        },
+        {
+            "name": "m_foam-south"
+        },
+        {
+            "name": "m_foam-west"
+        },
+        {
+            "name": "m_foam-dissolve",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "foam-dissolve",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
+}

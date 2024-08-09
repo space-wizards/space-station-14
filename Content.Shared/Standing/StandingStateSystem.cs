@@ -2,6 +2,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Physics;
 using Content.Shared.Rotation;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 
@@ -24,7 +25,10 @@ namespace Content.Shared.Standing
             return !standingState.Standing;
         }
 
-        public bool Down(EntityUid uid, bool playSound = true, bool dropHeldItems = true,
+        public bool Down(EntityUid uid,
+            bool playSound = true,
+            bool dropHeldItems = true,
+            bool force = false,
             StandingStateComponent? standingState = null,
             AppearanceComponent? appearance = null,
             HandsComponent? hands = null)
@@ -48,14 +52,17 @@ namespace Content.Shared.Standing
                 RaiseLocalEvent(uid, new DropHandItemsEvent(), false);
             }
 
-            var msg = new DownAttemptEvent();
-            RaiseLocalEvent(uid, msg, false);
+            if (!force)
+            {
+                var msg = new DownAttemptEvent();
+                RaiseLocalEvent(uid, msg, false);
 
-            if (msg.Cancelled)
-                return false;
+                if (msg.Cancelled)
+                    return false;
+            }
 
             standingState.Standing = false;
-            Dirty(standingState);
+            Dirty(uid, standingState);
             RaiseLocalEvent(uid, new DownedEvent(), false);
 
             // Seemed like the best place to put it
@@ -81,7 +88,7 @@ namespace Content.Shared.Standing
 
             if (playSound)
             {
-                _audio.PlayPredicted(standingState.DownSound, uid, uid, AudioParams.Default.WithVariation(0.25f));
+                _audio.PlayPredicted(standingState.DownSound, uid, uid);
             }
 
             return true;

@@ -25,19 +25,26 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Storage
-    capacity: 50
+    grid:
+    - 0,0,6,3
+    maxItemSize: Normal
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
   - type: UserInterface
     interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
   - type: InteractionOutline
   - type: Clickable
   - type: Tag
     tags:
     - Wooden
+  - type: Anchorable
+  - type: Rotatable
+  - type: Construction
+    graph: Dresser
+    node: dresser
 
 - type: entity
   id: DresserFilled
@@ -66,8 +73,57 @@
         orGroup: dressermainloot
       - id: ClothingUniformJumpskirtColorPink
         prob: 0.05
+        orGroup: dresserthirdloot
       - id: ClothingUniformJumpsuitLoungewear
-        prob: 0.05    
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtBlackElegantDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtRedElegantDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtGreenElegantDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtBlueElegantDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtPurpleElegantDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtCyanStripedDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtRedStripedDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtGreenStripedDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtPinkStripedDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtOrangeStripedDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtPurpleTurtleneckDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtRedTurtleneckDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtGreenTurtleneckDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtBlueTurtleneckDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtYellowTurtleneckDress
+        prob: 0.05
+        orGroup: dressermainloot
+      - id: ClothingUniformJumpskirtYellowOldDress
+        prob: 0.05
         orGroup: dressermainloot
       - id: Pen # It`s pen.
         prob: 0.03
@@ -97,7 +153,7 @@
         prob: 0.03
         orGroup: dressermainloot
       - id: ClothingUniformJumpsuitColorRed
-        prob: 0.03 
+        prob: 0.03
         orGroup: dressermainloot
       - id: ClothingUniformJumpskirtColorRed
         prob: 0.03
@@ -184,7 +240,7 @@
         prob: 0.03
         orGroup: dresserthirdloot
       - id: ClothingUnderSocksCoder
-        prob: 0.03 
+        prob: 0.03
         orGroup: dressermainloot
       - id: ClothingUnderSocksBee
         prob: 0.03
@@ -224,7 +280,7 @@
         orGroup: dresserthirdloot
       - id: PlushieLizard
         prob: 0.03
-        orGroup: dresserthirdloot 
+        orGroup: dresserthirdloot
       - id: ClothingOuterSuitShrineMaiden
         prob: 0.03
         orGroup: dressersecondloot
@@ -423,7 +479,7 @@
       - id: BrokenBottle
         prob: 0.001
         orGroup: dressersecondloot
-      - id: FoodMeatRotten 
+      - id: FoodMeatRotten
         prob: 0.001
         orGroup: dressersecondloot
       - id: ClothingOuterSkub

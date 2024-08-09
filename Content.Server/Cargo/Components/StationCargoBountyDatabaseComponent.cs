@@ -1,4 +1,5 @@
 using Content.Shared.Cargo;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Cargo.Components;
 
@@ -11,30 +12,37 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     /// <summary>
     /// Maximum amount of bounties a station can have.
     /// </summary>
-    [DataField("maxBounties"), ViewVariables(VVAccess.ReadWrite)]
-    public int MaxBounties = 3;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public int MaxBounties = 6;
 
     /// <summary>
     /// A list of all the bounties currently active for a station.
     /// </summary>
-    [DataField("bounties"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public List<CargoBountyData> Bounties = new();
 
     /// <summary>
     /// Used to determine unique order IDs
     /// </summary>
-    [DataField("totalBounties")]
+    [DataField]
     public int TotalBounties;
 
     /// <summary>
-    /// The minimum amount of time the bounty lasts before being removed.
+    /// A list of bounty IDs that have been checked this tick.
+    /// Used to prevent multiplying bounty prices.
     /// </summary>
-    [DataField("minBountyTime"), ViewVariables(VVAccess.ReadWrite)]
-    public float MinBountyTime = 600f;
+    [DataField]
+    public HashSet<string> CheckedBounties = new();
 
     /// <summary>
-    /// The maxmium amount of time the bounty lasts before being removed.
+    /// The time at which players will be able to skip the next bounty.
     /// </summary>
-    [DataField("maxBountyTime"), ViewVariables(VVAccess.ReadWrite)]
-    public float MaxBountyTime = 905f;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextSkipTime = TimeSpan.Zero;
+
+    /// <summary>
+    /// The time between skipping bounties.
+    /// </summary>
+    [DataField]
+    public TimeSpan SkipDelay = TimeSpan.FromMinutes(15);
 }

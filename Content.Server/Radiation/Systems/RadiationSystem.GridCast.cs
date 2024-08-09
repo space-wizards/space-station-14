@@ -44,6 +44,9 @@ public partial class RadiationSystem
         var sourcesData = new ValueList<(EntityUid, RadiationSourceComponent, TransformComponent, Vector2)>();
         while (sources.MoveNext(out var uid, out var source, out var sourceTrs))
         {
+            if (!source.Enabled)
+                continue;
+
             var worldPos = _transform.GetWorldPosition(sourceTrs, transformQuery);
             var data = (uid, source, sourceTrs, worldPos);
             sourcesData.Add(data);
@@ -192,11 +195,11 @@ public partial class RadiationSystem
 
         Vector2 srcLocal = sourceTrs.ParentUid == grid.Owner
             ? sourceTrs.LocalPosition
-            : gridTrs.InvLocalMatrix.Transform(ray.Source);
+            : Vector2.Transform(ray.Source, gridTrs.InvLocalMatrix);
 
         Vector2 dstLocal = destTrs.ParentUid == grid.Owner
             ? destTrs.LocalPosition
-            : gridTrs.InvLocalMatrix.Transform(ray.Destination);
+            : Vector2.Transform(ray.Destination, gridTrs.InvLocalMatrix);
 
         Vector2i sourceGrid = new(
             (int) Math.Floor(srcLocal.X / grid.Comp.TileSize),

@@ -1,4 +1,4 @@
-﻿- type: reagent
+- type: reagent
   id: Carpetium
   name: reagent-name-carpetium
   group: Special
@@ -41,7 +41,6 @@
         conditions:
         - !type:OrganType
           type: Moth
-     
 
 - type: reagent
   id: BuzzochloricBees
@@ -165,4 +164,188 @@
     Poison:
       effects:
       - !type:Electrocute
+        probability: 0.35
+
+- type: reagent
+  id: Razorium
+  name: reagent-name-razorium
+  group: Toxins
+  slippery: true
+  desc: reagent-desc-razorium
+  physicalDesc: reagent-physical-desc-reflective
+  flavor: sharp
+  color: "#e3fffb"
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Slash: 0.5
+      - !type:Emote
+        emote: Scream
+        probability: 0.7
+  metabolisms:
+    Poison:
+      metabolismRate : 3.00
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+             Slash : 9
+      - !type:PopupMessage
+        type: Local
+        visualType: LargeCaution
+        messages: [ "generic-reagent-effect-slicing-insides"]
+        probability: 0.33
+      - !type:Emote
+        emote: Scream
+        probability: 0.3
+
+- type: reagent
+  id: Fresium
+  name: reagent-name-fresium
+  group: Toxins
+  slippery: true
+  desc: reagent-desc-fresium
+  physicalDesc: reagent-physical-desc-frosty
+  flavor: cold
+  color: "#b3f1ff"
+  boilingPoint: 50.0
+  meltingPoint: 45.0
+  tileReactions:
+  - !type:CreateEntityTileReaction
+    entity: IceCrust
+    maxOnTileWhitelist:
+      tags: [ Ice ]
+  - !type:ExtinguishTileReaction { }
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Cold: 0.05
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          min: 160.15
+        amount: -30000
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:ExtinguishReaction # cold
+  metabolisms:
+    Poison:
+      metabolismRate : 0.45
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+             Cold: 0.01 # slightly nips directly, other cold damage comes from the temp change
+             Heat: -3 # ghetto burn chem. i don't think anyone would use this intentionally but it's funny
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Fresium
+          max: 35
+        type: Local
+        visualType: LargeCaution
+        messages: [ "fresium-effect-freeze-insides"]
+        probability: 0.05
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Fresium
+          max: 35
+        type: Local
+        visualType: LargeCaution
+        messages: [ "fresium-effect-slow"]
+        probability: 0.2
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          min: 160.15 # not quite enough for cryo, but can speed it up if you wanna take the risk
+        amount: -10000
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Fresium
+          max: 40 # slows when less than 40
+        walkSpeedModifier: 0.6
+        sprintSpeedModifier: 0.6
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Fresium
+          min: 40 # your legs stop working when above 40
+        walkSpeedModifier: 0.00
+        sprintSpeedModifier: 0.00
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Fresium
+          min: 40
+        type: Local
+        visualType: LargeCaution
+        messages: [ "fresium-effect-frozen"]
+        probability: 0.4
+
+- type: reagent
+  id: Laughter
+  name: reagent-name-laughter
+  group: Special
+  desc: reagent-desc-laughter
+  physicalDesc: reagent-physical-desc-funny
+  flavor: funny
+  color: "#FF4DD2"
+  slippery: true #clown juice gotta slip
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:Emote
+        emote: Laugh
+        probability: 0.3
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "laughter-effect-control-laughter" ]
+        probability: 0.2
+
+- type: reagent
+  id: JuiceThatMakesYouWeh
+  name: reagent-name-weh
+  group: Toxins
+  desc: reagent-desc-weh
+  physicalDesc: reagent-physical-desc-vibrant
+  flavor: weh
+  color: "#59b23a"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.25
+      effects:
+      - !type:Emote
+        emote: Weh
+        showInChat: true
+        force: true
         probability: 0.5
+      - !type:Polymorph
+        prototype: ArtifactLizard # Does the same thing as the original YML I made for this reagent.
+        conditions:
+        - !type:OrganType
+          type: Animal
+          shouldHave: false
+        - !type:ReagentThreshold
+          min: 50
+      - !type:AdjustReagent
+        reagent: JuiceThatMakesYouWeh
+        amount: -20
+        conditions:
+        - !type:ReagentThreshold
+          min: 50

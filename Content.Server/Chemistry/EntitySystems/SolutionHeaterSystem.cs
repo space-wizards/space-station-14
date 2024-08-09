@@ -1,10 +1,9 @@
 using Content.Server.Chemistry.Components;
-using Content.Server.Construction;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Placeable;
 
 namespace Content.Server.Chemistry.EntitySystems;
@@ -13,7 +12,7 @@ public sealed class SolutionHeaterSystem : EntitySystem
 {
     [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SolutionContainerSystem _solution = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -21,8 +20,6 @@ public sealed class SolutionHeaterSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SolutionHeaterComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<SolutionHeaterComponent, RefreshPartsEvent>(OnRefreshParts);
-        SubscribeLocalEvent<SolutionHeaterComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         SubscribeLocalEvent<SolutionHeaterComponent, ItemPlacedEvent>(OnItemPlaced);
         SubscribeLocalEvent<SolutionHeaterComponent, ItemRemovedEvent>(OnItemRemoved);
     }
@@ -51,41 +48,29 @@ public sealed class SolutionHeaterSystem : EntitySystem
         RemComp<ActiveSolutionHeaterComponent>(uid);
     }
 
-    private void OnPowerChanged(EntityUid uid, SolutionHeaterComponent component, ref PowerChangedEvent args)
+    private void OnPowerChanged(Entity<SolutionHeaterComponent> entity, ref PowerChangedEvent args)
     {
-        var placer = Comp<ItemPlacerComponent>(uid);
+        var placer = Comp<ItemPlacerComponent>(entity);
         if (args.Powered && placer.PlacedEntities.Count > 0)
         {
-            TurnOn(uid);
+            TurnOn(entity);
         }
         else
         {
-            TurnOff(uid);
+            TurnOff(entity);
         }
     }
 
-    private void OnRefreshParts(EntityUid uid, SolutionHeaterComponent component, RefreshPartsEvent args)
+    private void OnItemPlaced(Entity<SolutionHeaterComponent> entity, ref ItemPlacedEvent args)
     {
-        var heatRating = args.PartRatings[component.MachinePartHeatMultiplier] - 1;
-
-        component.HeatPerSecond = component.BaseHeatPerSecond * MathF.Pow(component.PartRatingHeatMultiplier, heatRating);
+        TryTurnOn(entity);
     }
 
-    private void OnUpgradeExamine(EntityUid uid, SolutionHeaterComponent component, UpgradeExamineEvent args)
+    private void OnItemRemoved(Entity<SolutionHeaterComponent> entity, ref ItemRemovedEvent args)
     {
-        args.AddPercentageUpgrade("solution-heater-upgrade-heat", component.HeatPerSecond / component.BaseHeatPerSecond);
-    }
-
-    private void OnItemPlaced(EntityUid uid, SolutionHeaterComponent comp, ref ItemPlacedEvent args)
-    {
-        TryTurnOn(uid);
-    }
-
-    private void OnItemRemoved(EntityUid uid, SolutionHeaterComponent component, ref ItemRemovedEvent args)
-    {
-        var placer = Comp<ItemPlacerComponent>(uid);
+        var placer = Comp<ItemPlacerComponent>(entity);
         if (placer.PlacedEntities.Count == 0) // Last entity was removed
-            TurnOff(uid);
+            TurnOff(entity);
     }
 
     public override void Update(float frameTime)
@@ -97,13 +82,13 @@ public sealed class SolutionHeaterSystem : EntitySystem
         {
             foreach (var heatingEntity in placer.PlacedEntities)
             {
-                if (!TryComp<SolutionContainerManagerComponent>(heatingEntity, out var solution))
+                if (!TryComp<SolutionContainerManagerComponent>(heatingEntity, out var container))
                     continue;
 
                 var energy = heater.HeatPerSecond * frameTime;
-                foreach (var s in solution.Solutions.Values)
+                foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((heatingEntity, container)))
                 {
-                    _solution.AddThermalEnergy(heatingEntity, s, energy);
+                    _solutionContainer.AddThermalEnergy(soln, energy);
                 }
             }
         }

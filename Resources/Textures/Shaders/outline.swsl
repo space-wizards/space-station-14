@@ -34,10 +34,6 @@ uniform highp float light_boost; // = 4.0;
 uniform highp float light_gamma; // = 1.0;
 uniform highp float light_whitepoint; // = 1.0;
 
-highp float grayscale(highp vec3 col) {
-	return mix(0.0, 1.0, (col.r * 0.299) + (col.g * 0.587) + (col.b * 0.114)); //These luminance values are taken from Rec. ITU-R BT.601-7. This isn't suitable for player-facing grayscaling due to SDTV having a funky colorspace, but it's perfect for outlines.
-}
-
 void fragment() {
 	highp vec4 col = zTexture(UV);
 	highp vec2 ps = TEXTURE_PIXEL_SIZE;
@@ -78,7 +74,7 @@ void fragment() {
     maxa = max(a, maxa);
     mina = min(a, mina);
 
-	lowp float sampledLight = outline_fullbright ? 1.0 : clamp( (pow( grayscale(lightSample.rgb) * light_whitepoint, light_gamma) / light_whitepoint ) * light_boost, 0.0, 1.0);
+	lowp float sampledLight = outline_fullbright ? 1.0 : clamp( (pow( zGrayscale_BT601(lightSample.rgb) * light_whitepoint, light_gamma) / light_whitepoint ) * light_boost, 0.0, 1.0);
 	COLOR = mix(col, outline_color * vec4(vec3(1.0), sampledLight), maxa - col.a);
 	lightSample = vec3(1.0);
 }

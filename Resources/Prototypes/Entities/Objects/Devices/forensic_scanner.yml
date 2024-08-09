@@ -8,7 +8,8 @@
     sprite: Objects/Devices/forensic_scanner.rsi
     state: forensicnew
   - type: Item
-    size: 5
+    size: Small
+    storedRotation: 90
   - type: Clothing
     sprite: Objects/Devices/forensic_scanner.rsi
     quickEquip: false
@@ -17,21 +18,23 @@
   - type: ActivatableUI
     key: enum.ForensicScannerUiKey.Key
     inHandsOnly: true
-    closeOnHandDeselect: false
+    requireActiveHand: false
   - type: UserInterface
     interfaces:
-    - key: enum.ForensicScannerUiKey.Key
-      type: ForensicScannerBoundUserInterface
+      enum.ForensicScannerUiKey.Key:
+        type: ForensicScannerBoundUserInterface
   - type: ForensicScanner
   - type: GuideHelp
     guides:
-    - DNA
+    - Forensics
+  - type: StealTarget
+    stealGroup: ForensicScanner
 
 - type: entity
   name: forensic scanner report
   parent: Paper
   id: ForensicReportPaper
-  description: 'Circumstantial evidence, at best'
+  description: Circumstantial evidence, at best.
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -53,4 +56,4 @@
     maxWritableArea: 368.0, 256.0
   - type: GuideHelp
     guides:
-    - DNA
+    - Forensics

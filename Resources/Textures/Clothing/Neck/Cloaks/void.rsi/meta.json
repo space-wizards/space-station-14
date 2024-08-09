@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from TGstation at commit https://github.com/tgstation/tgstation/commit/8b1ffd1e49a2d30a0aab63264106a3ec0e07f415",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-NECK",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.5
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.5
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.5
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.5
+        ]
+      ]
+    }
+  ]
+}

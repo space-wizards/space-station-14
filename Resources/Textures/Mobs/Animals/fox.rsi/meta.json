@@ -11,14 +11,40 @@
   [
     {
       "name": "fox",
-      "directions": 4,
-      "delays": [[1],[1],[1],[1]]
-    },
-
+      "directions": 4
+	},
     {
-      "name": "fox_dead",
-      "directions": 1,
-      "delays": [[1]]
+      "name": "fox-moving",
+      "directions": 4,
+      "delays": [
+	    [
+	      0.2,
+		  0.2,
+		  0.2,
+		  0.2
+	    ],
+	    [
+	      0.2,
+		  0.2,
+		  0.2,
+		  0.2
+	    ],      
+		[
+	      0.2,
+		  0.2,
+		  0.2,
+		  0.2
+	    ],
+	    [
+	      0.2,
+		  0.2,
+		  0.2,
+		  0.2
+	    ]
+	  ]
+    },
+    {
+      "name": "fox_dead"
     }
   ]
 }

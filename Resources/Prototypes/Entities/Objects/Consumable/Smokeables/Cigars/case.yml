@@ -35,10 +35,14 @@
       map: ["cigar8"]
       visible: false
   - type: Storage
-    capacity: 8
+    grid:
+    - 0,0,3,1
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigars/case.rsi
-    size: 8
+    size: Normal
+    shape:
+    - 0,0,2,1
+    storedRotation: 90
   - type: StorageFill
     contents:
     - id: Cigar

@@ -20,7 +20,7 @@ namespace Content.Tests.Shared
         private static Dictionary<string, float> _resistanceCoefficientDict = new()
         {
             // "missing" blunt entry
-            { "Piercing", -2 }, // negative multipliers just cause the damage to be ignored.
+            { "Piercing", -2 },// Turn Piercing into Healing
             { "Slash", 3 },
             { "Radiation", 1.5f },
         };
@@ -61,7 +61,7 @@ namespace Content.Tests.Shared
 
             // Check that it properly split up the groups into types
             FixedPoint2 damage;
-            Assert.That(damageSpec.Total, Is.EqualTo(FixedPoint2.New(8)));
+            Assert.That(damageSpec.GetTotal(), Is.EqualTo(FixedPoint2.New(8)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(2)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
@@ -73,7 +73,7 @@ namespace Content.Tests.Shared
 
             // check that integer multiplication works
             damageSpec = damageSpec * 2;
-            Assert.That(damageSpec.Total, Is.EqualTo(FixedPoint2.New(16)));
+            Assert.That(damageSpec.GetTotal(), Is.EqualTo(FixedPoint2.New(16)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(4)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
@@ -93,7 +93,7 @@ namespace Content.Tests.Shared
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(4.4)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Radiation", out damage));
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(13.2)));
-            Assert.That(damageSpec.Total, Is.EqualTo(FixedPoint2.New(8.8 + 8.8 + 4.4 + 13.2)));
+            Assert.That(damageSpec.GetTotal(), Is.EqualTo(FixedPoint2.New(8.8 + 8.8 + 4.4 + 13.2)));
 
             // check that integer division works
             damageSpec = damageSpec / 2;
@@ -121,9 +121,9 @@ namespace Content.Tests.Shared
             damageSpec = new(_prototypeManager.Index<DamageGroupPrototype>("Brute"), 4);
             Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(1.33)));
-            Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
-            Assert.That(damage, Is.EqualTo(FixedPoint2.New(1.33)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Slash", out damage));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(1.33)));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(1.34))); // doesn't divide evenly, so the 0.01 goes to the last one
 
             damageSpec = new(_prototypeManager.Index<DamageTypePrototype>("Piercing"), 4);
@@ -152,61 +152,73 @@ namespace Content.Tests.Shared
             // Apply once
             damageSpec = DamageSpecifier.ApplyModifierSet(damageSpec, modifierSet);
             Assert.That(damageSpec.DamageDict["Blunt"], Is.EqualTo(FixedPoint2.New(25)));
-            Assert.That(!damageSpec.DamageDict.ContainsKey("Piercing"));  // Cannot convert damage into healing.
+            Assert.That(damageSpec.DamageDict["Piercing"], Is.EqualTo(FixedPoint2.New(-40))); // became healing
             Assert.That(damageSpec.DamageDict["Slash"], Is.EqualTo(FixedPoint2.New(6)));
             Assert.That(damageSpec.DamageDict["Radiation"], Is.EqualTo(FixedPoint2.New(44.25)));
 
             // And again, checking for some other behavior
             damageSpec = DamageSpecifier.ApplyModifierSet(damageSpec, modifierSet);
             Assert.That(damageSpec.DamageDict["Blunt"], Is.EqualTo(FixedPoint2.New(30)));
-            Assert.That(!damageSpec.DamageDict.ContainsKey("Piercing"));
+            Assert.That(damageSpec.DamageDict["Piercing"], Is.EqualTo(FixedPoint2.New(-40))); // resistances don't apply to healing
             Assert.That(!damageSpec.DamageDict.ContainsKey("Slash"));  // Reduction reduced to 0, and removed from specifier
-            Assert.That(damageSpec.DamageDict["Radiation"], Is.EqualTo(FixedPoint2.New(65.63)));
+            Assert.That(damageSpec.DamageDict["Radiation"], Is.EqualTo(FixedPoint2.New(65.62)));
         }
 
         // Default damage Yaml
         private string _damagePrototypes = @"
 - type: damageType
   id: Blunt
+  name: damage-type-blunt
 
 - type: damageType
   id: Slash
+  name: damage-type-slash
 
 - type: damageType
   id: Piercing
+  name: damage-type-piercing
 
 - type: damageType
   id: Heat
+  name: damage-type-heat
 
 - type: damageType
   id: Shock
+  name: damage-type-shock
 
 - type: damageType
   id: Cold
+  name: damage-type-cold
 
 # Poison damage. Generally caused by various reagents being metabolised.
 - type: damageType
   id: Poison
+  name: damage-type-poison
 
 - type: damageType
   id: Radiation
+  name: damage-type-radiation
 
 # Damage due to being unable to breathe.
 # Represents not enough oxygen (or equivalent) getting to the blood.
 # Usually healed automatically if entity can breathe
 - type: damageType
   id: Asphyxiation
+  name: damage-type-asphyxiation
 
 # Damage representing not having enough blood.
 # Represents there not enough blood to supply oxygen (or equivalent).
 - type: damageType
   id: Bloodloss
+  name: damage-type-bloodloss
 
 - type: damageType
   id: Cellular
+  name: damage-type-cellular
 
 - type: damageGroup
   id: Brute
+  name: damage-group-brute
   damageTypes:
     - Blunt
     - Slash
@@ -214,6 +226,7 @@ namespace Content.Tests.Shared
 
 - type: damageGroup
   id: Burn
+  name: damage-group-burn
   damageTypes:
     - Heat
     - Shock
@@ -225,6 +238,7 @@ namespace Content.Tests.Shared
 # bloodloss, not this whole group, unless you have a wonder drug that affects both.
 - type: damageGroup
   id: Airloss
+  name: damage-group-airloss
   damageTypes:
     - Asphyxiation
     - Bloodloss
@@ -233,12 +247,14 @@ namespace Content.Tests.Shared
 # Though there are probably some radioactive poisons.
 - type: damageGroup
   id: Toxin
+  name: damage-group-toxin
   damageTypes:
     - Poison
     - Radiation
 
 - type: damageGroup
   id: Genetic
+  name: damage-group-genetic
   damageTypes:
     - Cellular
 

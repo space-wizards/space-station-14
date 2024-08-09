@@ -15,19 +15,15 @@
   access:
   - Medical
   - Maintenance
-  - External
   extendedAccess:
   - Chemistry
 
 - type: startingGear
   id: ParamedicGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitParamedic
-    back: ClothingBackpackMedicalFilled
-    shoes: ClothingShoesColorWhite
     id: ParamedicPDA
     ears: ClothingHeadsetMedical
-    belt: ClothingBeltParamedicFilled
-  innerClothingSkirt: ClothingUniformJumpskirtParamedic
-  satchel: ClothingBackpackSatchelMedicalFilled
-  duffelbag: ClothingBackpackDuffelMedicalFilled
+    belt: ClothingBeltMedicalEMTFilled
+  storage:
+    back:
+    - EmergencyRollerBedSpawnFolded

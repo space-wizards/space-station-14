@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using Content.Server.Administration;
+﻿using Content.Server.Administration;
 using Content.Server.Body.Systems;
 using Content.Server.Cargo.Components;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -12,10 +12,11 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Stacks;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Linq;
+using Content.Shared.Research.Prototypes;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -26,10 +27,10 @@ public sealed class PricingSystem : EntitySystem
 {
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -106,13 +107,36 @@ public sealed class PricingSystem : EntitySystem
         args.Price += (component.Price - partPenalty) * (_mobStateSystem.IsAlive(uid, state) ? 1.0 : component.DeathPenalty);
     }
 
+    private double GetSolutionPrice(Entity<SolutionContainerManagerComponent> entity)
+    {
+        if (Comp<MetaDataComponent>(entity).EntityLifeStage < EntityLifeStage.MapInitialized)
+            return GetSolutionPrice(entity.Comp);
+
+        var price = 0.0;
+
+        foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((entity.Owner, entity.Comp)))
+        {
+            var solution = soln.Comp.Solution;
+            foreach (var (reagent, quantity) in solution.Contents)
+            {
+                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var reagentProto))
+                    continue;
+
+                // TODO check ReagentData for price information?
+                price += (float) quantity * reagentProto.PricePerUnit;
+            }
+        }
+
+        return price;
+    }
+
     private double GetSolutionPrice(SolutionContainerManagerComponent component)
     {
         var price = 0.0;
 
-        foreach (var solution in component.Solutions.Values)
+        foreach (var (_, prototype) in _solutionContainerSystem.EnumerateSolutions(component))
         {
-            foreach (var (reagent, quantity) in solution.Contents)
+            foreach (var (reagent, quantity) in prototype.Contents)
             {
                 if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var reagentProto))
                     continue;
@@ -132,6 +156,26 @@ public sealed class PricingSystem : EntitySystem
         {
             price += _prototypeManager.Index<MaterialPrototype>(id).Price * quantity;
         }
+        return price;
+    }
+
+    public double GetLatheRecipePrice(LatheRecipePrototype recipe)
+    {
+        var price = 0.0;
+
+        if (recipe.Result is { } result)
+        {
+            price += GetEstimatedPrice(_prototypeManager.Index(result));
+        }
+
+        if (recipe.ResultReagents is { } resultReagents)
+        {
+            foreach (var (reagent, amount) in resultReagents)
+            {
+                price += (_prototypeManager.Index(reagent).PricePerUnit * amount).Double();
+            }
+        }
+
         return price;
     }
 
@@ -176,7 +220,7 @@ public sealed class PricingSystem : EntitySystem
     /// This fires off an event to calculate the price.
     /// Calculating the price of an entity that somehow contains itself will likely hang.
     /// </remarks>
-    public double GetPrice(EntityUid uid)
+    public double GetPrice(EntityUid uid, bool includeContents = true)
     {
         var ev = new PriceCalculationEvent();
         RaiseLocalEvent(uid, ref ev);
@@ -199,7 +243,7 @@ public sealed class PricingSystem : EntitySystem
             price += GetStaticPrice(uid);
         }
 
-        if (TryComp<ContainerManagerComponent>(uid, out var containers))
+        if (includeContents && TryComp<ContainerManagerComponent>(uid, out var containers))
         {
             foreach (var container in containers.Containers.Values)
             {
@@ -257,7 +301,7 @@ public sealed class PricingSystem : EntitySystem
 
         if (TryComp<SolutionContainerManagerComponent>(uid, out var solComp))
         {
-            price += GetSolutionPrice(solComp);
+            price += GetSolutionPrice((uid, solComp));
         }
 
         return price;
@@ -342,8 +386,8 @@ public sealed class PricingSystem : EntitySystem
     {
         var xform = Transform(grid);
         var price = 0.0;
-
-        foreach (var child in xform.ChildEntities)
+        var enumerator = xform.ChildEnumerator;
+        while (enumerator.MoveNext(out var child))
         {
             if (predicate is null || predicate(child))
             {

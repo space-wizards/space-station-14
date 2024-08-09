@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
@@ -14,7 +15,7 @@ namespace Content.MapRenderer.Painters;
 
 public sealed class EntityPainter
 {
-    private readonly IResourceCache _cResourceCache;
+    private readonly IResourceManager _resManager;
 
     private readonly Dictionary<(string path, string state), Image> _images;
     private readonly Image _errorImage;
@@ -23,12 +24,12 @@ public sealed class EntityPainter
 
     public EntityPainter(ClientIntegrationInstance client, ServerIntegrationInstance server)
     {
-        _cResourceCache = client.ResolveDependency<IResourceCache>();
+        _resManager = client.ResolveDependency<IResourceManager>();
 
         _sEntityManager = server.ResolveDependency<IEntityManager>();
 
         _images = new Dictionary<(string path, string state), Image>();
-        _errorImage = Image.Load<Rgba32>(_cResourceCache.ContentFileRead("/Textures/error.rsi/error.png"));
+        _errorImage = Image.Load<Rgba32>(_resManager.ContentFileRead("/Textures/error.rsi/error.png"));
     }
 
     public void Run(Image canvas, List<EntityData> entities)
@@ -81,7 +82,7 @@ public sealed class EntityPainter
 
                 if (!_images.TryGetValue(key, out image!))
                 {
-                    var stream = _cResourceCache.ContentFileRead($"{rsi.Path}/{state.StateId}.png");
+                    var stream = _resManager.ContentFileRead($"{rsi.Path}/{state.StateId}.png");
                     image = Image.Load<Rgba32>(stream);
 
                     _images[key] = image;
@@ -114,7 +115,7 @@ public sealed class EntityPainter
             var (x, y, width, height) = GetRsiFrame(rsi, image, entity, layer, dir);
 
             var rect = new Rectangle(x, y, width, height);
-            if (!new Rectangle(Point.Empty, image.Size()).Contains(rect))
+            if (!new Rectangle(Point.Empty, image.Size).Contains(rect))
             {
                 Console.WriteLine($"Invalid layer {rsi!.Path}/{layer.RsiState.Name}.png for entity {_sEntityManager.ToPrettyString(entity.Owner)} at ({entity.X}, {entity.Y})");
                 return;
@@ -122,19 +123,28 @@ public sealed class EntityPainter
 
             image.Mutate(o => o.Crop(rect));
 
+            var spriteRotation = 0f;
+            if (!entity.Sprite.NoRotation && !entity.Sprite.SnapCardinals && entity.Sprite.GetLayerDirectionCount(layer) == 1)
+            {
+                spriteRotation = (float) worldRotation.Degrees;
+            }
+
             var colorMix = entity.Sprite.Color * layer.Color;
             var imageColor = Color.FromRgba(colorMix.RByte, colorMix.GByte, colorMix.BByte, colorMix.AByte);
             var coloredImage = new Image<Rgba32>(image.Width, image.Height);
             coloredImage.Mutate(o => o.BackgroundColor(imageColor));
 
             var (imgX, imgY) = rsi?.Size ?? (EyeManager.PixelsPerMeter, EyeManager.PixelsPerMeter);
+            var offsetX = (int) (entity.Sprite.Offset.X * EyeManager.PixelsPerMeter);
+            var offsetY = (int) (entity.Sprite.Offset.Y * EyeManager.PixelsPerMeter);
             image.Mutate(o => o
                 .DrawImage(coloredImage, PixelColorBlendingMode.Multiply, PixelAlphaCompositionMode.SrcAtop, 1)
                 .Resize(imgX, imgY)
-                .Flip(FlipMode.Vertical));
+                .Flip(FlipMode.Vertical)
+                .Rotate(spriteRotation));
 
-            var pointX = (int) entity.X - imgX / 2 + EyeManager.PixelsPerMeter / 2;
-            var pointY = (int) entity.Y - imgY / 2 + EyeManager.PixelsPerMeter / 2;
+            var pointX = (int) entity.X + offsetX - imgX / 2;
+            var pointY = (int) entity.Y + offsetY - imgY / 2;
             canvas.Mutate(o => o.DrawImage(image, new Point(pointX, pointY), 1));
         }
     }

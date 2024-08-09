@@ -3,16 +3,17 @@ using Content.Shared.Damage;
 using Content.Shared.Electrocution;
 using Content.Shared.Explosion;
 using Content.Shared.Eye.Blinding.Systems;
+using Content.Shared.Gravity;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.Systems;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Overlays;
 using Content.Shared.Radio;
 using Content.Shared.Slippery;
 using Content.Shared.Strip.Components;
 using Content.Shared.Temperature;
 using Content.Shared.Verbs;
-using Robust.Shared.Containers;
 
 namespace Content.Shared.Inventory;
 
@@ -28,9 +29,11 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, SeeIdentityAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetDefaultRadioChannelEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, RefreshNameModifiersEvent>(RelayInventoryEvent);
 
         // by-ref events
         SubscribeLocalEvent<InventoryComponent, GetExplosionResistanceEvent>(RefRelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, IsWeightlessEvent>(RefRelayInventoryEvent);
 
         // Eye/vision events
         SubscribeLocalEvent<InventoryComponent, CanSeeAttemptEvent>(RelayInventoryEvent);
@@ -39,67 +42,67 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, SolutionScanEvent>(RelayInventoryEvent);
 
         // ComponentActivatedClientSystems
-        SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowSecurityIconsComponent>>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowJobIconsComponent>>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowHealthBarsComponent>>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowHealthIconsComponent>>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowHungerIconsComponent>>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowThirstIconsComponent>>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowMindShieldIconsComponent>>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowSyndicateIconsComponent>>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowCriminalRecordIconsComponent>>(RelayInventoryEvent);
 
         SubscribeLocalEvent<InventoryComponent, GetVerbsEvent<EquipmentVerb>>(OnGetEquipmentVerbs);
     }
 
     protected void RefRelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, ref T args) where T : IInventoryRelayEvent
     {
-        var containerEnumerator = new ContainerSlotEnumerator(uid, component.TemplateId, _prototypeManager, this, args.TargetSlots);
+        RelayEvent((uid, component), ref args);
+    }
 
-        // this copies the by-ref event
+    protected void RelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, T args) where T : IInventoryRelayEvent
+    {
+        RelayEvent((uid, component), args);
+    }
+
+    public void RelayEvent<T>(Entity<InventoryComponent> inventory, ref T args) where T : IInventoryRelayEvent
+    {
+        if (args.TargetSlots == SlotFlags.NONE)
+            return;
+
+        // this copies the by-ref event if it is a struct
         var ev = new InventoryRelayedEvent<T>(args);
-
-        while (containerEnumerator.MoveNext(out var container))
+        var enumerator = new InventorySlotEnumerator(inventory, args.TargetSlots);
+        while (enumerator.NextItem(out var item))
         {
-            if (!container.ContainedEntity.HasValue) continue;
-            RaiseLocalEvent(container.ContainedEntity.Value, ev);
+            RaiseLocalEvent(item, ev);
         }
 
         // and now we copy it back
         args = ev.Args;
     }
 
-    protected void RelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, T args) where T : IInventoryRelayEvent
+    public void RelayEvent<T>(Entity<InventoryComponent> inventory, T args) where T : IInventoryRelayEvent
     {
         if (args.TargetSlots == SlotFlags.NONE)
             return;
 
-        var containerEnumerator = new ContainerSlotEnumerator(uid, component.TemplateId, _prototypeManager, this, args.TargetSlots);
         var ev = new InventoryRelayedEvent<T>(args);
-        while (containerEnumerator.MoveNext(out var container))
+        var enumerator = new InventorySlotEnumerator(inventory, args.TargetSlots);
+        while (enumerator.NextItem(out var item))
         {
-            if (!container.ContainedEntity.HasValue) continue;
-            RaiseLocalEvent(container.ContainedEntity.Value, ev);
+            RaiseLocalEvent(item, ev);
         }
     }
 
     private void OnGetEquipmentVerbs(EntityUid uid, InventoryComponent component, GetVerbsEvent<EquipmentVerb> args)
     {
         // Automatically relay stripping related verbs to all equipped clothing.
-
-        if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? proto))
-            return;
-
-        if (!TryComp(uid, out ContainerManagerComponent? containers))
-            return;
-
         var ev = new InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>>(args);
-        foreach (var slotDef in proto.Slots)
+        var enumerator = new InventorySlotEnumerator(component);
+        while (enumerator.NextItem(out var item, out var slotDef))
         {
-            if (slotDef.StripHidden && args.User != uid)
-                continue;
-
-            if (!containers.TryGetContainer(slotDef.Name, out var container))
-                continue;
-
-            if (container is not ContainerSlot slot || slot.ContainedEntity is not { } ent)
-                continue;
-
-            RaiseLocalEvent(ent, ev);
+            if (!slotDef.StripHidden || args.User == uid)
+                RaiseLocalEvent(item, ev);
         }
     }
 
@@ -122,6 +125,11 @@ public sealed class InventoryRelayedEvent<TEvent> : EntityEventArgs
     {
         Args = args;
     }
+}
+
+public interface IClothingSlots
+{
+    SlotFlags Slots { get; }
 }
 
 /// <summary>

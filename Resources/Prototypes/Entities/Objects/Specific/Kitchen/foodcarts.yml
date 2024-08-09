@@ -1,5 +1,5 @@
 - type: entity
-  name: Food Cart
+  name: food cart
   id: FoodCartBase
   abstract: true
   parent: BaseStructureDynamic
@@ -40,17 +40,19 @@
               acts: ["Destruction"]
             - !type:PlaySoundBehavior
               sound:
-                path: /Audio/Effects/metalbreak.ogg
+                collection: MetalBreak
     - type: Appearance
     - type: UserInterface
       interfaces:
-      - key: enum.StorageUiKey.Key
-        type: StorageBoundUserInterface
+        enum.StorageUiKey.Key:
+          type: StorageBoundUserInterface
     - type: Storage
-      capacity: 30
+      maxItemSize: Normal
+      grid:
+      - 0,0,7,4
     - type: TileFrictionModifier
-      modifier: 0.4 # makes it slide 
-    
+      modifier: 0.4 # makes it slide
+
 # Add this if freezing/heating container/objects thermodynamics becomes a thing
 
     #- type: PowerCellSlot
@@ -63,9 +65,9 @@
     #    cell_slot:
     #      name: power-cell-slot-component-slot-name-default
     #      startingItem: PowerCellMedium
-  
+
 - type: entity
-  name: Hot Food Cart
+  name: hot food cart
   id: FoodCartHot
   parent: FoodCartBase
   description: Get out there and slang some dogs.
@@ -73,11 +75,11 @@
     - type: Sprite
       netSync: false
       noRot: true
-      sprite: Objects/Specific/Kitchen/food_carts.rsi 
+      sprite: Objects/Specific/Kitchen/food_carts.rsi
       layers:
         - state: stand-food
     - type: Storage
-      blacklist: 
+      blacklist:
         tags:
           - Coldsauce
           - Hotsauce
@@ -86,7 +88,7 @@
     - type: ItemSlots
       slots:
         coldsauce_slot:
-          name: Cold Sauce
+          name: foodcart-slot-component-slot-name-coldsauce
           insertSound: /Audio/Items/bottle_clunk.ogg
           ejectSound: /Audio/Items/bottle_clunk_2.ogg
           whitelist:
@@ -94,29 +96,29 @@
               - Coldsauce
           priority: 6
         hotsauce_slot:
-          name: Hot Sauce
+          name: foodcart-slot-component-slot-name-hotsauce
           insertSound: /Audio/Items/bottle_clunk.ogg
           ejectSound: /Audio/Items/bottle_clunk_2.ogg
           whitelist:
             tags:
               - Hotsauce
-          priority: 5 
+          priority: 5
         bbqsauce_slot:
-          name: BBQ Sauce
+          name: foodcart-slot-component-slot-name-bbqsauce
           insertSound: /Audio/Items/bottle_clunk.ogg
           ejectSound: /Audio/Items/bottle_clunk_2.ogg
           whitelist:
             tags:
               - BBQsauce
-          priority: 4  
+          priority: 4
         ketchup_slot:
-          name: Ketchup
+          name: foodcart-slot-component-slot-name-ketchup
           insertSound: /Audio/Items/bottle_clunk.ogg
           ejectSound: /Audio/Items/bottle_clunk_2.ogg
           whitelist:
             tags:
               - Ketchup
-          priority: 3 
+          priority: 3
     - type: ItemMapper
       mapLayers:
         cart_hotsauce:
@@ -146,7 +148,7 @@
         ketchup_slot: !type:ContainerSlot {}
 
 - type: entity
-  name: Cold Food Cart
+  name: cold food cart
   id: FoodCartCold
   parent: FoodCartBase
   description: It's the Ice Cream Man! It's the Ice Cream Man!
@@ -154,9 +156,10 @@
     - type: Sprite
       netSync: false
       noRot: true
-      sprite: Objects/Specific/Kitchen/food_carts.rsi 
+      sprite: Objects/Specific/Kitchen/food_carts.rsi
       layers:
         - state: stand-ice
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
+    - type: AntiRottingContainer

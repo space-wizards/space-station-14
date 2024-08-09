@@ -1,0 +1,74 @@
+- type: constructionGraph
+  id: PowerCellPotato
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: potatobattery
+          steps:
+            - tag: Potato
+              name: a potato
+              icon:
+                sprite: Objects/Specific/Hydroponics/potato.rsi
+                state: produce
+              doAfter: 1
+            - material: MetalRod
+              amount: 2
+              doAfter: 1
+            - material: Cable
+              amount: 1
+              doAfter: 1
+    - node: potatobattery
+      entity: PowerCellPotato
+
+- type: constructionGraph
+  id: PotatoAI
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: potatoai
+          steps:
+            - tag: PotatoBattery
+              name: a potato battery
+              icon:
+                sprite: Objects/Power/power_cells.rsi
+                state: potato
+              doAfter: 1
+            - tag: SmallAIChip
+              name: a super-compact AI chip
+              icon:
+                sprite: Objects/Misc/potatoai_chip.rsi
+                state: icon
+    - node: potatoai
+      entity: PotatoAI
+
+- type: constructionGraph
+  id: PotatoAIChip
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: potatoaichip
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+            - material: Glass
+              amount: 1
+              doAfter: 1
+            - material: Cable
+              amount: 2
+              doAfter: 1
+            - tag: CapacitorStockPart
+              name: capacitor
+              icon:
+                sprite: Objects/Misc/stock_parts.rsi
+                state: capacitor
+            - tag: CapacitorStockPart
+              name: capacitor
+              icon:
+                sprite: Objects/Misc/stock_parts.rsi
+                state: capacitor
+    - node: potatoaichip
+      entity: PotatoAIChip

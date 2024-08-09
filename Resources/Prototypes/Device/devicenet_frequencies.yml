@@ -1,4 +1,14 @@
 - type: deviceFrequency
+  id: ShuttleTimer
+  name: device-frequency-prototype-name-shuttle-timer
+  frequency: 2450
+
+- type: deviceFrequency
+  id: ArrivalsShuttleTimer
+  name: device-frequency-prototype-name-arrivals-shuttle-timer
+  frequency: 2451
+
+- type: deviceFrequency
   id: SurveillanceCamera
   name: device-frequency-prototype-name-surveillance-camera
   frequency: 1926 # i only have so many of these, y'know?
@@ -65,6 +75,17 @@
   name: device-frequency-prototype-name-crew-monitor
   frequency: 1261
 
+# Cyborgs broadcast to consoles on this frequency
+- type: deviceFrequency
+  id: RoboticsConsole
+  name: device-frequency-prototype-name-robotics-console
+  frequency: 1291
+
+# Console sends commands to cyborgs on this frequency
+- type: deviceFrequency
+  id: CyborgControl
+  name: device-frequency-prototype-name-cyborg-control
+  frequency: 1292
 
 # This frequency will likely have a LARGE number of listening entities. Please don't broadcast on this frequency.
 - type: deviceFrequency

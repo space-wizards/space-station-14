@@ -24,7 +24,7 @@
         - ReagentId: Fat
           Quantity: 5
   - type: Item
-    size: 5
+    size: Tiny
   - type: Fixtures
     fixtures:
       fix1:
@@ -62,7 +62,7 @@
   - type: Perishable
     # raw meat rots in 5 minutes, get it into the freezer fast
     rotAfter: 300
-    # don't want meat giving off miasma only bodies
+    # don't want meat giving off ammonia only bodies
     molsPerSecondPerUnitMass: 0
   - type: RotInto
     entity: FoodMeatRotten
@@ -209,7 +209,7 @@
     graph: BearSteak
     node: start
     defaultTarget: filet migrawr
-    
+
 
 - type: entity
   name: raw penguin meat
@@ -229,7 +229,7 @@
           Quantity: 9
   - type: SliceableFood
     count: 3
-    slice: FoodMeatPenguinCutletSlice
+    slice: FoodMeatPenguinCutlet
   - type: Construction
     graph: PenguinSteak
     node: start
@@ -307,6 +307,8 @@
           Quantity: 20
   - type: StaticPrice
     price: 750
+  - type: StealTarget
+    stealGroup: FoodMeatCorgi
 
 - type: entity
   name: raw crab meat
@@ -359,7 +361,7 @@
   name: dragon flesh
   parent: FoodMeatBase
   id: FoodMeatDragon
-  description: The dense meat of the space-era apex predator is oozing with it's mythical ichor. Ironically, best eaten raw.
+  description: The dense meat of the space-era apex predator is oozing with its mythical ichor. Ironically, best eaten raw.
   components:
   - type: Tag
     tags:
@@ -375,12 +377,12 @@
       food:
         reagents:
         - ReagentId: Ichor
-          Quantity: 2
+          Quantity: 10
   - type: Extractable
     juiceSolution:
       reagents:
       - ReagentId: Ichor
-        Quantity: 2
+        Quantity: 10
 
 - type: entity
   name: raw rat meat
@@ -398,6 +400,9 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 3
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatCutlet
 
 - type: entity
   name: raw lizard meat
@@ -442,6 +447,8 @@
     tags:
     - Raw
     - Meat
+    - Trash
+    - Recyclable
   - type: Sprite
     state: rotten
   - type: SolutionContainerManager
@@ -450,7 +457,7 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
-        - ReagentId: Toxin
+        - ReagentId: GastroToxin
           Quantity: 4
         - ReagentId: Fat
           Quantity: 4
@@ -506,6 +513,26 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 1
+
+- type: entity
+  name: raw snake meat
+  parent: FoodMeatBase
+  id: FoodMeatSnake
+  description: A long piece of snake meat, hopefully not poisonous.
+  components:
+  - type: Tag
+    tags:
+    - Raw
+  - type: Sprite
+    state: snake
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 10
+        - ReagentId: Toxin
+          Quantity: 2
 
 - type: entity
   name: raw xeno meat
@@ -574,6 +601,8 @@
   - type: SliceableFood
     count: 3
     slice: FoodMeatTomatoCutlet
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   name: salami
@@ -586,9 +615,20 @@
     - Raw
     - Meat
   - type: Sprite
+    sprite: Objects/Consumable/Food/salami.rsi
     state: salami
   - type: SliceableFood
     slice: FoodMeatSalamiSlice
+  - type: MeleeWeapon
+    wideAnimationRotation: 100
+    damage:
+      types:
+        Blunt: 6
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 2
 
 - type: entity
   name: meat clown
@@ -682,6 +722,7 @@
     tags:
     - Cooked
     - Meat
+    - Steak
   - type: Sprite
     layers:
     - state: plain-cooked
@@ -718,7 +759,6 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           bacon-cooked: ""
-      - enum.DamageStateVisualLayers.Base:
           bacon2-cooked: ""
   - type: SolutionContainerManager
     solutions:
@@ -742,6 +782,7 @@
     tags:
     - Cooked
     - Meat
+    - Steak
   - type: Sprite
     layers:
     - state: product-cooked
@@ -834,7 +875,6 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           chicken-fried: ""
-      - enum.DamageStateVisualLayers.Base:
           chicken2-fried: ""
   - type: SolutionContainerManager
     solutions:
@@ -911,6 +951,7 @@
     tags:
     - Cooked
     - Meat
+    - Steak
   - type: Sprite
     layers:
     - state: goliath-cooked
@@ -940,6 +981,7 @@
     tags:
     - Cooked
     - Meat
+    - Steak
   - type: Sprite
     layers:
     - state: rouny-cooked
@@ -965,6 +1007,7 @@
     tags:
     - Cooked
     - Meat
+    - Steak
   - type: Sprite
     layers:
     - state: lizard-cooked
@@ -1231,6 +1274,8 @@
   - type: Sprite
     state: salami-slice
     color: red
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   name: salami slice

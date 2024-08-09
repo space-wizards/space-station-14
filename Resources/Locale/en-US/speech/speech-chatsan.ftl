@@ -10,8 +10,8 @@ chatsan-replacement-3 = on god
 chatsan-word-4 = wtf
 chatsan-replacement-4 = what the fuck
 
-chatsan-word-5 = ffs
-chatsan-replacement-5 = for fuck's sake
+chatsan-word-5 = wth
+chatsan-replacement-5 = what the heck
 
 chatsan-word-6 = tf
 chatsan-replacement-6 = the fuck
@@ -31,14 +31,14 @@ chatsan-replacement-10 = i don't care
 chatsan-word-12 = tbh
 chatsan-replacement-12 = to be honest
 
-chatsan-word-13 = u
-chatsan-replacement-13 = you
+chatsan-word-13 = lmk
+chatsan-replacement-13 = let me know
 
 chatsan-word-14 = ur
 chatsan-replacement-14 = your
 
-chatsan-word-15 = mk
-chatsan-replacement-15 = mmm, okay
+chatsan-word-15 = ffs
+chatsan-replacement-15 = for fuck's sake
 
 chatsan-word-16 = iirc
 chatsan-replacement-16 = if i remember correctly
@@ -109,8 +109,50 @@ chatsan-word-39 = etc
 chatsan-word-40 = etc.
 chatsan-replacement-etcetera = etcetera
 
-chatsan-word-41 = fyi
-chatsan-replacement-41 = for your information
+chatsan-word-41 = wyd
+chatsan-replacement-41 = what are you doing
 
-chatsan-word-42 = wyd
-chatsan-replacement-42 = what you doing
+chatsan-word-42 = ofc
+chatsan-replacement-42 = of course
+
+chatsan-word-43 = ig
+chatsan-replacement-43 = i guess
+
+chatsan-word-44 = tbf
+chatsan-replacement-44 = to be fair
+
+chatsan-word-45 = tysm
+chatsan-replacement-45 = thank you so much
+
+chatsan-word-46 = tyvm
+chatsan-replacement-46 = thank you very much
+
+chatsan-word-47 = cya
+chatsan-replacement-47 = see ya
+
+chatsan-word-48 = rn
+chatsan-replacement-48 = right now
+
+chatsan-word-49 = atm
+chatsan-replacement-49 = at the moment
+
+chatsan-word-50 = istg
+chatsan-replacement-50 = I swear to god
+
+chatsan-word-51 = rq
+chatsan-replacement-51 = real quick
+
+chatsan-word-52 = dw
+chatsan-replacement-52 = don't worry
+
+chatsan-word-53 = wru
+chatsan-replacement-53 = where are you
+
+chatsan-word-54 = fs
+chatsan-replacement-54 = for sure
+
+chatsan-word-55 = ngl
+chatsan-replacement-55 = not gonna lie
+
+chatsan-word-56 = fml
+chatsan-replacement-56 = fuck my life

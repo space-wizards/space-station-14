@@ -1,13 +1,13 @@
 ﻿- type: body
   id: Aghost
-  name: "aGhost"
+  name: "aghost"
   root: torso
   slots:
     torso:
       part: TorsoHuman
       connections:
-      - left_arm
       - right_arm
+      - left_arm
     right_arm:
       part: RightArmHuman
       connections:

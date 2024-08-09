@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Speech
 {
     [Prototype("speechSounds")]
-    public sealed class SpeechSoundsPrototype : IPrototype
+    public sealed partial class SpeechSoundsPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataField]

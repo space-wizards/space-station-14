@@ -1,6 +1,7 @@
 <DefaultWindow
     xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:ui="clr-namespace:Content.Client.Materials.UI"
     Title="{Loc 'lathe-menu-title'}"
     MinSize="550 450"
     SetSize="750 500">
@@ -25,14 +26,10 @@
                         PlaceHolder="{Loc 'lathe-menu-search-designs'}"
                         HorizontalExpand="True">
                     </LineEdit>
-                    <Button
-                        Name="FilterButton"
-                        Text="{Loc 'lathe-menu-search-filter'}"
-                        TextAlign="Center"
-                        Margin="5 0 0 0"
-                        Disabled="True"
-                        StyleClasses="ButtonSquare">
-                    </Button>
+                    <OptionButton
+                        Name="FilterOption"
+                        MinWidth="100"
+                        StyleClasses="ButtonSquare"/>
                 </BoxContainer>
                 <BoxContainer Orientation="Vertical"
                     MinHeight="225"
@@ -103,12 +100,9 @@
                             Margin="5 0 0 0"
                             Text="{Loc 'lathe-menu-fabricating-message'}">
                         </Label>
-                        <TextureRect
-                            Name="Icon"
-                            HorizontalExpand="True"
-                            SizeFlagsStretchRatio="2"
-                            Margin="100 0 0 0">
-                        </TextureRect>
+                        <BoxContainer Name="FabricatingDisplayContainer"
+                                      HorizontalAlignment="Left"
+                                      Margin="100 0 0 0"/>
                         <Label
                             Name="NameLabel"
                             RectClipContent="True"
@@ -117,32 +111,26 @@
                         </Label>
                     </PanelContainer>
                 </BoxContainer>
-                <ItemList
-                    Name="QueueList"
-                    VerticalExpand="True"
-                    SizeFlagsStretchRatio="3"
-                    SelectMode="None">
-                </ItemList>
+                <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                    <BoxContainer
+                        Name="QueueList"
+                        Orientation="Vertical"
+                        HorizontalExpand="True"
+                        VerticalExpand="True"
+                        RectClipContent="True">
+                    </BoxContainer>
+                </ScrollContainer>
             </BoxContainer>
             <BoxContainer
             VerticalExpand="True"
             HorizontalExpand="True"
-            Orientation="Vertical"
-            MinHeight="225"
-            >
+            Orientation="Vertical">
             <Label Text="{Loc 'lathe-menu-materials-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
             <BoxContainer
                 Orientation="Vertical"
                 VerticalExpand="True"
                 HorizontalExpand="True">
-                <BoxContainer
-                Name="MaterialsList"
-                Orientation="Vertical"
-                SizeFlagsStretchRatio="8"
-                HorizontalExpand="True"
-                VerticalExpand="True">
-                <!-- Materials populated in C# file -->
-                </BoxContainer>
+                <ui:MaterialStorageControl Name="MaterialsList" SizeFlagsStretchRatio="8"/>
             </BoxContainer>
         </BoxContainer>
         </BoxContainer>

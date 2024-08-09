@@ -1,7 +1,7 @@
 using System.Numerics;
 using Content.Server.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Tabletop
@@ -31,7 +31,7 @@ namespace Content.Server.Tabletop
             // Since this is the first time opening this session, set up the game
             tabletop.Setup.SetupTabletop(session, EntityManager);
 
-            Logger.Info($"Created tabletop session number {tabletop} at position {session.Position}.");
+            Log.Info($"Created tabletop session number {tabletop} at position {session.Position}.");
 
             return session;
         }
@@ -66,7 +66,7 @@ namespace Content.Server.Tabletop
         /// </summary>
         /// <param name="player">The player session in question.</param>
         /// <param name="uid">The UID of the tabletop game entity.</param>
-        public void OpenSessionFor(IPlayerSession player, EntityUid uid)
+        public void OpenSessionFor(ICommonSession player, EntityUid uid)
         {
             if (!EntityManager.TryGetComponent(uid, out TabletopGameComponent? tabletop) || player.AttachedEntity is not {Valid: true} attachedEntity)
                 return;
@@ -89,7 +89,7 @@ namespace Content.Server.Tabletop
             session.Players[player] = new TabletopSessionPlayerData { Camera = camera };
 
             // Tell the gamer to open a viewport for the tabletop game
-            RaiseNetworkEvent(new TabletopPlayEvent(GetNetEntity(uid), GetNetEntity(camera), Loc.GetString(tabletop.BoardName), tabletop.Size), player.ConnectedClient);
+            RaiseNetworkEvent(new TabletopPlayEvent(GetNetEntity(uid), GetNetEntity(camera), Loc.GetString(tabletop.BoardName), tabletop.Size), player.Channel);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Content.Server.Tabletop
         /// <param name="player">The player in question.</param>
         /// <param name="uid">The UID of the tabletop game entity.</param>
         /// <param name="removeGamerComponent">Whether to remove the <see cref="TabletopGamerComponent"/> from the player's attached entity.</param>
-        public void CloseSessionFor(IPlayerSession player, EntityUid uid, bool removeGamerComponent = true)
+        public void CloseSessionFor(ICommonSession player, EntityUid uid, bool removeGamerComponent = true)
         {
             if (!EntityManager.TryGetComponent(uid, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
                 return;
@@ -129,7 +129,7 @@ namespace Content.Server.Tabletop
         /// <param name="player">The player in question.</param>
         /// <param name="offset">An offset from the tabletop position for the camera. Zero by default.</param>
         /// <returns>The UID of the camera entity.</returns>
-        private EntityUid CreateCamera(TabletopGameComponent tabletop, IPlayerSession player, Vector2 offset = default)
+        private EntityUid CreateCamera(TabletopGameComponent tabletop, ICommonSession player, Vector2 offset = default)
         {
             DebugTools.AssertNotNull(tabletop.Session);
 

@@ -9,12 +9,11 @@
     state: icon
   - type: Item
     sprite: Objects/Fun/bikehorn.rsi
-    size: 5
+    size: Tiny
   - type: Clothing
     sprite: Objects/Fun/bikehorn.rsi
     slots: [Belt]
     quickEquip: false
-  - type: ItemCooldown
   - type: EmitSoundOnUse
     sound:
       collection: BikeHorn
@@ -52,13 +51,13 @@
   name: broken bike horn
   description: A broken horn off of a bicycle.
   components:
-  - type: ItemCooldown
+  - type: UseDelay
   - type: Sprite
     sprite: Objects/Fun/cluwnehorn.rsi
     state: icon
   - type: Item
     sprite: Objects/Fun/cluwnehorn.rsi
-    size: 5
+    size: Tiny
   - type: Clothing
     sprite: Objects/Fun/cluwnehorn.rsi
     slots: [Belt]
@@ -100,13 +99,18 @@
     state: icon
   - type: Item
     sprite: Objects/Fun/goldbikehorn.rsi
-    size: 5
+    size: Tiny
   - type: Clothing
     sprite: Objects/Fun/goldbikehorn.rsi
     slots: [Belt]
   - type: Prayable
   - type: StaticPrice
     price: 1000
+  - type: PointLight
+    radius: 1.2
+    energy: 1
+    castShadows: false
+    color: "#eef066"
 
 - type: entity
   parent: BikeHorn
@@ -119,12 +123,17 @@
     state: icon
   - type: Item
     sprite: Objects/Fun/bananiumhorn.rsi
-    size: 5
+    size: Small
   - type: Clothing
     sprite: Objects/Fun/bananiumhorn.rsi
     slots: [Belt]
     quickEquip: false
   - type: EmitSoundOnUse
+    sound:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+  - type: EmitSoundOnTrigger
     sound:
       collection: BananiumHorn
       params:

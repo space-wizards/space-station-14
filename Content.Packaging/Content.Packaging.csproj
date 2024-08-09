@@ -3,6 +3,7 @@
     <OutputType>Exe</OutputType>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ServerGarbageCollection>True</ServerGarbageCollection>
   </PropertyGroup>
 
   <ItemGroup>

@@ -4,6 +4,8 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Throwing;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Weapons.Melee.Balloon;
 
@@ -21,6 +23,7 @@ public sealed class BalloonPopperSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<BalloonPopperComponent, MeleeHitEvent>(OnMeleeHit);
+        SubscribeLocalEvent<BalloonPopperComponent, ThrowDoHitEvent>(OnThrowHit);
     }
 
     private void OnMeleeHit(EntityUid uid, BalloonPopperComponent component, MeleeHitEvent args)
@@ -35,6 +38,15 @@ public sealed class BalloonPopperSystem : EntitySystem
 
             if (_tag.HasTag(entity, component.BalloonTag))
                 PopBallooon(uid, entity, component);
+        }
+    }
+
+    private void OnThrowHit(EntityUid uid, BalloonPopperComponent component, ThrowDoHitEvent args)
+    {
+        foreach (var held in _hands.EnumerateHeld(args.Target))
+        {
+            if (_tag.HasTag(held, component.BalloonTag))
+                PopBallooon(uid, held, component);
         }
     }
 

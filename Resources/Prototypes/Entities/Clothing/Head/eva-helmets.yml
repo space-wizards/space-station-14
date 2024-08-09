@@ -54,7 +54,7 @@
 - type: entity
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetVoidParamed
-  name: Paramedic Void Helmet
+  name: paramedic void helmet
   description: A void helmet made for paramedics.
   components:
   - type: Sprite
@@ -66,7 +66,6 @@
   - type: Armor
     modifiers:
       coefficients:
-        Slash: 0.95
         Heat: 0.90
         Radiation: 0.75
 
@@ -75,7 +74,7 @@
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetAncient
   name: NTSRA void helmet
-  description: An ancient space helmet, designed by the NTSRA branch of CentCom.
+  description: An ancient space helmet, designed by the NTSRA branch of CentComm.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/ancientvoidsuit.rsi

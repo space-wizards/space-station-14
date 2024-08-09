@@ -1,6 +1,6 @@
 - type: entity
   name: hydroponics tray
-  parent: [ hydroponicsSoil, ConstructibleMachine]
+  parent: [ hydroponicsSoil, SmallConstructibleMachine]
   id: hydroponicsTray
   description: An interstellar-grade space farmplot allowing for rapid growth and selective breeding of crops. Just... keep in mind the space weeds.
   components:
@@ -14,6 +14,8 @@
         hard: true
         mask:
         - MachineMask
+        layer:
+        - BulletImpassable
   - type: Anchorable
   - type: Pullable
   - type: Sprite
@@ -73,14 +75,14 @@
       behaviors:
       - !type:ChangeConstructionNodeBehavior
         node: machineFrame
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Machine
     board: HydroponicsTrayMachineCircuitboard
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-hydroponicstray
-    layoutId: HydroponicsTray
   - type: AmbientSound
     volume: -9
     range: 5
@@ -89,6 +91,7 @@
   - type: GuideHelp
     guides:
     - Botany
+    - Chemicals
 
 - type: entity
   parent: hydroponicsTray

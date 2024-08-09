@@ -61,7 +61,7 @@ public sealed partial class SingularityComponent : Component
     /// The audio stream that plays the sound specified by <see cref="AmbientSound"/> on loop.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public IPlayingAudioStream? AmbientSoundStream = null;
+    public EntityUid? AmbientSoundStream = null;
 
     /// <summary>
     ///     The sound that the singularity produces when it forms.
@@ -81,26 +81,4 @@ public sealed partial class SingularityComponent : Component
     );
 
     #endregion Audio
-
-    #region Update Timing
-
-    /// <summary>
-    /// The amount of time that should elapse between automated updates to this singularity.
-    /// </summary>
-    [DataField("updatePeriod")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan TargetUpdatePeriod = TimeSpan.FromSeconds(1.0);
-
-    /// <summary>
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public TimeSpan NextUpdateTime = default!;
-
-    /// <summary>
-    /// The last time this singularity was updated.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public TimeSpan LastUpdateTime = default!;
-
-    #endregion Update Timing
 }

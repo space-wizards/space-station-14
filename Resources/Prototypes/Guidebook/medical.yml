@@ -28,8 +28,11 @@
   name: guide-entry-chemist
   text: "/ServerInfo/Guidebook/Medical/Chemist.xml"
   children:
-  - Medicine
+  # - Medicine
+  # Duplicate guide entries are currently not supported
+  # TODO GUIDEBOOK Maybe allow duplicate entries?
   - Botanicals
+  - AdvancedBrute
 
 - type: guideEntry
   id: Medicine
@@ -42,3 +45,8 @@
   name: guide-entry-botanicals
   text: "/ServerInfo/Guidebook/Medical/Botanicals.xml"
   filterEnabled: True
+
+- type: guideEntry
+  id: AdvancedBrute
+  name: guide-entry-brute
+  text: "/ServerInfo/Guidebook/Medical/AdvancedBrute.xml"

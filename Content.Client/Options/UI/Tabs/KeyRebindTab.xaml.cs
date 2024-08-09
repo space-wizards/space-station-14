@@ -97,6 +97,12 @@ namespace Content.Client.Options.UI.Tabs
             _deferCommands.Add(_inputManager.SaveToUserData);
         }
 
+        private void HandleStaticStorageUI(BaseButton.ButtonToggledEventArgs args)
+        {
+            _cfg.SetCVar(CCVars.StaticStorageUI, args.Pressed);
+            _cfg.SaveToFile();
+        }
+
         public KeyRebindTab()
         {
             IoCManager.InjectDependencies(this);
@@ -175,10 +181,15 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(ContentKeyFunctions.Drop);
             AddButton(ContentKeyFunctions.ExamineEntity);
             AddButton(ContentKeyFunctions.SwapHands);
+            AddButton(ContentKeyFunctions.MoveStoredItem);
+            AddButton(ContentKeyFunctions.RotateStoredItem);
+            AddButton(ContentKeyFunctions.SaveItemLocation);
 
             AddHeader("ui-options-header-interaction-adv");
             AddButton(ContentKeyFunctions.SmartEquipBackpack);
             AddButton(ContentKeyFunctions.SmartEquipBelt);
+            AddButton(ContentKeyFunctions.OpenBackpack);
+            AddButton(ContentKeyFunctions.OpenBelt);
             AddButton(ContentKeyFunctions.ThrowItemInHand);
             AddButton(ContentKeyFunctions.TryPullObject);
             AddButton(ContentKeyFunctions.MovePulledObject);
@@ -204,6 +215,8 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(ContentKeyFunctions.OpenInventoryMenu);
             AddButton(ContentKeyFunctions.OpenAHelp);
             AddButton(ContentKeyFunctions.OpenActionsMenu);
+            AddButton(ContentKeyFunctions.OpenEmotesMenu);
+            AddButton(ContentKeyFunctions.ToggleRoundEndSummaryWindow);
             AddButton(ContentKeyFunctions.OpenEntitySpawnWindow);
             AddButton(ContentKeyFunctions.OpenSandboxWindow);
             AddButton(ContentKeyFunctions.OpenTileSpawnWindow);
@@ -221,10 +234,6 @@ namespace Content.Client.Options.UI.Tabs
 
             AddHeader("ui-options-header-hotbar");
             foreach (var boundKey in ContentKeyFunctions.GetHotbarBoundKeys())
-            {
-                AddButton(boundKey);
-            }
-            foreach (var boundKey in ContentKeyFunctions.GetLoadoutBoundKeys())
             {
                 AddButton(boundKey);
             }
@@ -397,7 +406,7 @@ namespace Content.Client.Options.UI.Tabs
                 Mod1 = mods[0],
                 Mod2 = mods[1],
                 Mod3 = mods[2],
-                Priority = 0,
+                Priority = _currentlyRebinding.Binding?.Priority ?? 0,
                 Type = bindType,
                 CanFocus = key == Keyboard.Key.MouseLeft
                            || key == Keyboard.Key.MouseRight

@@ -1,15 +1,14 @@
 - type: entity
-  parent: BaseItem
   id: BaseSubdermalImplant
   name: implant
   description: A microscopic chip that's injected under the skin.
   abstract: true
   components:
-    - type: SubdermalImplant
-    - type: Tag
-      tags:
-        - SubdermalImplant
-        - HideContextMenu
+  - type: SubdermalImplant
+  - type: Tag
+    tags:
+    - SubdermalImplant
+    - HideContextMenu
 
 #Fun implants
 
@@ -18,9 +17,12 @@
   id: SadTromboneImplant
   name: sad trombone implant
   description: This implant plays a sad tune when the user dies.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
+      whitelist:
+        components:
+        - MobState # admeme implanting a chair with trombone implant needs to give the chair mobstate so it can die first
     - type: TriggerOnMobstateChange
       mobState:
       - Dead
@@ -35,7 +37,7 @@
   id: LightImplant
   name: light implant
   description: This implant emits light from the user's skin on activation.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       implantAction: ActionToggleLight
@@ -57,7 +59,7 @@
   id: BikeHornImplant
   name: bike horn implant
   description: This implant lets the user honk anywhere at any time.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateHonkImplant
@@ -78,9 +80,12 @@
   id: TrackingImplant
   name: tracking implant
   description: This implant has a tracking device attached to the suit sensor network, as well as a condition monitor for the Security radio channel.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
+      whitelist:
+        components:
+        - MobState # admeme implanting a chair with tracking implant needs to give the chair mobstate so it can die first
     - type: SuitSensor
       randomMode: false
       controlsLocked: true
@@ -105,21 +110,23 @@
   id: StorageImplant
   name: storage implant
   description: This implant grants hidden storage within a person's body using bluespace technology.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       implantAction: ActionOpenStorageImplant
-    - type: Item
-      size: 9999
+      whitelist:
+        components:
+        - Hands # no use giving a mouse a storage implant, but a monkey is another story...
     - type: Storage
-      capacity: 20 #10-20 should be more than enough for this
+      grid:
+      - 0,0,2,2
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
           ents: [ ]
     - type: UserInterface
       interfaces:
-        - key: enum.StorageUiKey.Key
+        enum.StorageUiKey.Key:
           type: StorageBoundUserInterface
 
 - type: entity
@@ -127,53 +134,73 @@
   id: FreedomImplant
   name: freedom implant
   description: This implant lets the user break out of hand restraints up to three times before ceasing to function anymore.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateFreedomImplant
+      whitelist:
+        components:
+        - Cuffable # useless if you cant be cuffed
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: [ BaseSubdermalImplant, StorePresetUplink ]
   id: UplinkImplant
   name: uplink implant
   description: This implant lets the user access a hidden Syndicate uplink at will.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: SubdermalImplant
     implantAction: ActionOpenUplinkImplant
+    whitelist:
+      components:
+      - Hands # prevent mouse buying grenade penguin since its not telepathic
   - type: Store
-    preset: StorePresetUplink
     balance:
       Telecrystal: 0
   - type: UserInterface
     interfaces:
-    - key: enum.StoreUiKey.Key
-      type: StoreBoundUserInterface
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
 
 - type: entity
   parent: BaseSubdermalImplant
   id: EmpImplant
   name: EMP implant
   description: This implant creates an electromagnetic pulse when activated.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateEmpImplant
     - type: TriggerImplantAction
     - type: EmpOnTrigger
-      range: 1.75
+      range: 2.75
       energyConsumption: 50000
       disableDuration: 10
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: ScramImplant
+  name: scram implant
+  description: This implant randomly teleports the user within a large radius when activated.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionActivateScramImplant
+    - type: TriggerImplantAction
+    - type: ScramImplant
 
 - type: entity
   parent: BaseSubdermalImplant
   id: DnaScramblerImplant
   name: DNA scrambler implant
   description: This implant lets the user randomly change their appearance and name once.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateDnaScramblerImplant
+      whitelist:
+        components:
+        - HumanoidAppearance # syndies cant turn hamlet into a human
 
 #Nuclear Operative/Special Exclusive implants
 
@@ -181,8 +208,8 @@
   parent: BaseSubdermalImplant
   id: MicroBombImplant
   name: micro-bomb implant
-  description: This implant detonates the user upon death.
-  noSpawn: true
+  description: This implant detonates the user upon activation or upon death.
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       permanent: true
@@ -212,7 +239,7 @@
   id: MacroBombImplant
   name: macro-bomb implant
   description: This implant creates a large explosion on death after a preprogrammed countdown.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       permanent: true
@@ -223,9 +250,10 @@
     - type: OnUseTimerTrigger
       delay: 7
       initialBeepDelay: 0
-      beepSound: /Audio/Machines/Nuke/general_beep.ogg
-      params:
-        volume: -2
+      beepSound:
+        path: /Audio/Machines/Nuke/general_beep.ogg
+        params:
+          volume: -2
     - type: ExplodeOnTrigger
     - type: GibOnTrigger
       deleteItems: true
@@ -243,13 +271,40 @@
 
 - type: entity
   parent: BaseSubdermalImplant
+  id: DeathAcidifierImplant
+  name: death-acidifier implant
+  description: This implant melts the user and their equipment upon death.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    permanent: true
+    implantAction: ActionActivateDeathAcidifier
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Dead
+  - type: TriggerImplantAction
+  - type: GibOnTrigger
+    deleteItems: true
+  - type: SpawnOnTrigger
+    proto: Acidifier
+  - type: Tag
+    tags:
+    - SubdermalImplant
+    - HideContextMenu
+    - DeathAcidifier
+
+- type: entity
+  parent: BaseSubdermalImplant
   id: DeathRattleImplant
   name: death rattle implant
   description: This implant will inform the Syndicate radio channel should the user fall into critical condition or die.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       permanent: true
+      whitelist:
+        components:
+        - MobState # admeme implanting a chair with rattle implant needs to give the chair mobstate so it can die first
     - type: TriggerOnMobstateChange
       mobState:
       - Critical
@@ -261,9 +316,9 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: MindShieldImplant
-  name: mind-shield implant
+  name: mindshield implant
   description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
    - type: SubdermalImplant
      permanent: true

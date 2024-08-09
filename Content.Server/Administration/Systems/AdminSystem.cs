@@ -4,7 +4,6 @@ using Content.Server.Chat.Managers;
 using Content.Server.Forensics;
 using Content.Server.GameTicking;
 using Content.Server.Hands.Systems;
-using Content.Server.IdentityManagement;
 using Content.Server.Mind;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Popups;
@@ -26,6 +25,7 @@ using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
@@ -39,7 +39,6 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IChatManager _chat = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly AudioSystem _audio = default!;
         [Dependency] private readonly HandsSystem _hands = default!;
         [Dependency] private readonly SharedJobSystem _jobs = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
@@ -49,6 +48,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly PlayTimeTrackingManager _playTime = default!;
         [Dependency] private readonly SharedRoleSystem _role = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
 
@@ -60,7 +60,8 @@ namespace Content.Server.Administration.Systems
         public IReadOnlySet<NetUserId> RoundActivePlayers => _roundActivePlayers;
 
         private readonly HashSet<NetUserId> _roundActivePlayers = new();
-        private readonly PanicBunkerStatus _panicBunker = new();
+        public readonly PanicBunkerStatus PanicBunker = new();
+        public readonly BabyJailStatus BabyJail = new();
 
         public override void Initialize()
         {
@@ -68,14 +69,26 @@ namespace Content.Server.Administration.Systems
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _adminManager.OnPermsChanged += OnAdminPermsChanged;
+            _playTime.SessionPlayTimeUpdated += OnSessionPlayTimeUpdated;
 
-            _config.OnValueChanged(CCVars.PanicBunkerEnabled, OnPanicBunkerChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerDisableWithAdmins, OnPanicBunkerDisableWithAdminsChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerEnableWithoutAdmins, OnPanicBunkerEnableWithoutAdminsChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerCountDeadminnedAdmins, OnPanicBunkerCountDeadminnedAdminsChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerShowReason, OnShowReasonChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerMinAccountAge, OnPanicBunkerMinAccountAgeChanged, true);
-            _config.OnValueChanged(CCVars.PanicBunkerMinOverallHours, OnPanicBunkerMinOverallHoursChanged, true);
+            // Panic Bunker Settings
+            Subs.CVar(_config, CCVars.PanicBunkerEnabled, OnPanicBunkerChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerDisableWithAdmins, OnPanicBunkerDisableWithAdminsChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerEnableWithoutAdmins, OnPanicBunkerEnableWithoutAdminsChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerCountDeadminnedAdmins, OnPanicBunkerCountDeadminnedAdminsChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerShowReason, OnPanicBunkerShowReasonChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerMinAccountAge, OnPanicBunkerMinAccountAgeChanged, true);
+            Subs.CVar(_config, CCVars.PanicBunkerMinOverallMinutes, OnPanicBunkerMinOverallMinutesChanged, true);
+
+            /*
+             * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
+             */
+
+            // Baby Jail Settings
+            Subs.CVar(_config, CCVars.BabyJailEnabled, OnBabyJailChanged, true);
+            Subs.CVar(_config, CCVars.BabyJailShowReason, OnBabyJailShowReasonChanged, true);
+            Subs.CVar(_config, CCVars.BabyJailMaxAccountAge, OnBabyJailMaxAccountAgeChanged, true);
+            Subs.CVar(_config, CCVars.BabyJailMaxOverallMinutes, OnBabyJailMaxOverallMinutesChanged, true);
 
             SubscribeLocalEvent<IdentityChangedEvent>(OnIdentityChanged);
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
@@ -105,11 +118,11 @@ namespace Content.Server.Administration.Systems
 
             foreach (var admin in _adminManager.ActiveAdmins)
             {
-                RaiseNetworkEvent(updateEv, admin.ConnectedClient);
+                RaiseNetworkEvent(updateEv, admin.Channel);
             }
         }
 
-        public void UpdatePlayerList(IPlayerSession player)
+        public void UpdatePlayerList(ICommonSession player)
         {
             _playerList[player.UserId] = GetPlayerInfo(player.Data, player);
 
@@ -120,7 +133,7 @@ namespace Content.Server.Administration.Systems
 
             foreach (var admin in _adminManager.ActiveAdmins)
             {
-                RaiseNetworkEvent(playerInfoChangedEvent, admin.ConnectedClient);
+                RaiseNetworkEvent(playerInfoChangedEvent, admin.Channel);
             }
         }
 
@@ -133,7 +146,7 @@ namespace Content.Server.Administration.Systems
             return value ?? null;
         }
 
-        private void OnIdentityChanged(IdentityChangedEvent ev)
+        private void OnIdentityChanged(ref IdentityChangedEvent ev)
         {
             if (!TryComp<ActorComponent>(ev.CharacterEntity, out var actor))
                 return;
@@ -156,7 +169,7 @@ namespace Content.Server.Administration.Systems
 
             if (!obj.IsAdmin)
             {
-                RaiseNetworkEvent(new FullPlayerListEvent(), obj.Player.ConnectedClient);
+                RaiseNetworkEvent(new FullPlayerListEvent(), obj.Player.Channel);
                 return;
             }
 
@@ -187,14 +200,7 @@ namespace Content.Server.Administration.Systems
             base.Shutdown();
             _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
             _adminManager.OnPermsChanged -= OnAdminPermsChanged;
-
-            _config.UnsubValueChanged(CCVars.PanicBunkerEnabled, OnPanicBunkerChanged);
-            _config.UnsubValueChanged(CCVars.PanicBunkerDisableWithAdmins, OnPanicBunkerDisableWithAdminsChanged);
-            _config.UnsubValueChanged(CCVars.PanicBunkerEnableWithoutAdmins, OnPanicBunkerEnableWithoutAdminsChanged);
-            _config.UnsubValueChanged(CCVars.PanicBunkerCountDeadminnedAdmins, OnPanicBunkerCountDeadminnedAdminsChanged);
-            _config.UnsubValueChanged(CCVars.PanicBunkerShowReason, OnShowReasonChanged);
-            _config.UnsubValueChanged(CCVars.PanicBunkerMinAccountAge, OnPanicBunkerMinAccountAgeChanged);
-            _config.UnsubValueChanged(CCVars.PanicBunkerMinOverallHours, OnPanicBunkerMinOverallHoursChanged);
+            _playTime.SessionPlayTimeUpdated -= OnSessionPlayTimeUpdated;
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -203,16 +209,16 @@ namespace Content.Server.Administration.Systems
             UpdatePanicBunker();
         }
 
-        private void SendFullPlayerList(IPlayerSession playerSession)
+        private void SendFullPlayerList(ICommonSession playerSession)
         {
             var ev = new FullPlayerListEvent();
 
             ev.PlayersInfo = _playerList.Values.ToList();
 
-            RaiseNetworkEvent(ev, playerSession.ConnectedClient);
+            RaiseNetworkEvent(ev, playerSession.Channel);
         }
 
-        private PlayerInfo GetPlayerInfo(IPlayerData data, IPlayerSession? session)
+        private PlayerInfo GetPlayerInfo(SessionData data, ICommonSession? session)
         {
             var name = data.UserName;
             var entityName = string.Empty;
@@ -247,7 +253,7 @@ namespace Content.Server.Administration.Systems
 
         private void OnPanicBunkerChanged(bool enabled)
         {
-            _panicBunker.Enabled = enabled;
+            PanicBunker.Enabled = enabled;
             _chat.SendAdminAlert(Loc.GetString(enabled
                 ? "admin-ui-panic-bunker-enabled-admin-alert"
                 : "admin-ui-panic-bunker-disabled-admin-alert"
@@ -256,54 +262,96 @@ namespace Content.Server.Administration.Systems
             SendPanicBunkerStatusAll();
         }
 
+        private void OnBabyJailChanged(bool enabled)
+        {
+            BabyJail.Enabled = enabled;
+            _chat.SendAdminAlert(Loc.GetString(enabled
+                ? "admin-ui-baby-jail-enabled-admin-alert"
+                : "admin-ui-baby-jail-disabled-admin-alert"
+            ));
+
+            SendBabyJailStatusAll();
+        }
+
         private void OnPanicBunkerDisableWithAdminsChanged(bool enabled)
         {
-            _panicBunker.DisableWithAdmins = enabled;
+            PanicBunker.DisableWithAdmins = enabled;
             UpdatePanicBunker();
         }
 
         private void OnPanicBunkerEnableWithoutAdminsChanged(bool enabled)
         {
-            _panicBunker.EnableWithoutAdmins = enabled;
+            PanicBunker.EnableWithoutAdmins = enabled;
             UpdatePanicBunker();
         }
 
         private void OnPanicBunkerCountDeadminnedAdminsChanged(bool enabled)
         {
-            _panicBunker.CountDeadminnedAdmins = enabled;
+            PanicBunker.CountDeadminnedAdmins = enabled;
             UpdatePanicBunker();
         }
 
-        private void OnShowReasonChanged(bool enabled)
+        private void OnPanicBunkerShowReasonChanged(bool enabled)
         {
-            _panicBunker.ShowReason = enabled;
+            PanicBunker.ShowReason = enabled;
             SendPanicBunkerStatusAll();
+        }
+
+        private void OnBabyJailShowReasonChanged(bool enabled)
+        {
+            BabyJail.ShowReason = enabled;
+            SendBabyJailStatusAll();
         }
 
         private void OnPanicBunkerMinAccountAgeChanged(int minutes)
         {
-            _panicBunker.MinAccountAgeHours = minutes / 60;
+            PanicBunker.MinAccountAgeMinutes = minutes;
             SendPanicBunkerStatusAll();
         }
 
-        private void OnPanicBunkerMinOverallHoursChanged(int hours)
+        private void OnBabyJailMaxAccountAgeChanged(int minutes)
         {
-            _panicBunker.MinOverallHours = hours;
+            BabyJail.MaxAccountAgeMinutes = minutes;
+            SendBabyJailStatusAll();
+        }
+
+        private void OnPanicBunkerMinOverallMinutesChanged(int minutes)
+        {
+            PanicBunker.MinOverallMinutes = minutes;
             SendPanicBunkerStatusAll();
+        }
+
+        private void OnBabyJailMaxOverallMinutesChanged(int minutes)
+        {
+            BabyJail.MaxOverallMinutes = minutes;
+            SendBabyJailStatusAll();
         }
 
         private void UpdatePanicBunker()
         {
-            var admins = _panicBunker.CountDeadminnedAdmins
+            var admins = PanicBunker.CountDeadminnedAdmins
                 ? _adminManager.AllAdmins
                 : _adminManager.ActiveAdmins;
             var hasAdmins = admins.Any();
 
-            if (hasAdmins && _panicBunker.DisableWithAdmins)
+            // TODO Fix order dependent Cvars
+            // Please for the sake of my sanity don't make cvars & order dependent.
+            // Just make a bool field on the system instead of having some cvars automatically modify other cvars.
+            //
+            // I.e., this:
+            //   /sudo cvar game.panic_bunker.enabled true
+            //   /sudo cvar game.panic_bunker.disable_with_admins true
+            // and this:
+            //   /sudo cvar game.panic_bunker.disable_with_admins true
+            //   /sudo cvar game.panic_bunker.enabled true
+            //
+            // should have the same effect, but currently setting the disable_with_admins can modify enabled.
+
+            if (hasAdmins && PanicBunker.DisableWithAdmins)
             {
                 _config.SetCVar(CCVars.PanicBunkerEnabled, false);
             }
-            else if (!hasAdmins && _panicBunker.EnableWithoutAdmins)
+            else if (!hasAdmins && PanicBunker.EnableWithoutAdmins)
             {
                 _config.SetCVar(CCVars.PanicBunkerEnabled, true);
             }
@@ -313,7 +361,16 @@ namespace Content.Server.Administration.Systems
 
         private void SendPanicBunkerStatusAll()
         {
-            var ev = new PanicBunkerChangedEvent(_panicBunker);
+            var ev = new PanicBunkerChangedEvent(PanicBunker);
+            foreach (var admin in _adminManager.AllAdmins)
+            {
+                RaiseNetworkEvent(ev, admin);
+            }
+        }
+
+        private void SendBabyJailStatusAll()
+        {
+            var ev = new BabyJailChangedEvent(BabyJail);
             foreach (var admin in _adminManager.AllAdmins)
             {
                 RaiseNetworkEvent(ev, admin);
@@ -326,7 +383,7 @@ namespace Content.Server.Administration.Systems
         ///     chat messages and showing a popup to other players.
         ///     Their items are dropped on the ground.
         /// </summary>
-        public void Erase(IPlayerSession player)
+        public void Erase(ICommonSession player)
         {
             var entity = player.AttachedEntity;
             _chat.DeleteMessagesBy(player);
@@ -340,7 +397,7 @@ namespace Content.Server.Administration.Systems
                     _popup.PopupCoordinates(Loc.GetString("admin-erase-popup", ("user", name)), coordinates, PopupType.LargeCaution);
                     var filter = Filter.Pvs(coordinates, 1, EntityManager, _playerManager);
                     var audioParams = new AudioParams().WithVolume(3);
-                    _audio.Play("/Audio/Effects/pop_high.ogg", filter, coordinates, true, audioParams);
+                    _audio.PlayStatic("/Audio/Effects/pop_high.ogg", filter, coordinates, true, audioParams);
                 }
 
                 foreach (var item in _inventory.GetHandOrInventoryEntities(entity.Value))
@@ -348,7 +405,7 @@ namespace Content.Server.Administration.Systems
                     if (TryComp(item, out PdaComponent? pda) &&
                         TryComp(pda.ContainedId, out StationRecordKeyStorageComponent? keyStorage) &&
                         keyStorage.Key is { } key &&
-                        _stationRecords.TryGetRecord(key.OriginStation, key, out GeneralStationRecord? record))
+                        _stationRecords.TryGetRecord(key, out GeneralStationRecord? record))
                     {
                         if (TryComp(entity, out DnaComponent? dna) &&
                             dna.DNA != record.DNA)
@@ -362,20 +419,17 @@ namespace Content.Server.Administration.Systems
                             continue;
                         }
 
-                        _stationRecords.RemoveRecord(key.OriginStation, key);
+                        _stationRecords.RemoveRecord(key);
                         Del(item);
                     }
                 }
 
-                if (TryComp(entity.Value, out InventoryComponent? inventory) &&
-                    _inventory.TryGetSlots(entity.Value, out var slots, inventory))
+                if (_inventory.TryGetContainerSlotEnumerator(entity.Value, out var enumerator))
                 {
-                    foreach (var slot in slots)
+                    while (enumerator.NextItem(out var item, out var slot))
                     {
-                        if (_inventory.TryUnequip(entity.Value, entity.Value, slot.Name, out var item, true, true))
-                        {
-                            _physics.ApplyAngularImpulse(item.Value, ThrowingSystem.ThrowAngularImpulse);
-                        }
+                        if (_inventory.TryUnequip(entity.Value, entity.Value, slot.Name, true, true))
+                            _physics.ApplyAngularImpulse(item, ThrowingSystem.ThrowAngularImpulse);
                     }
                 }
 
@@ -392,6 +446,11 @@ namespace Content.Server.Administration.Systems
             QueueDel(entity);
 
             _gameTicker.SpawnObserver(player);
+        }
+
+        private void OnSessionPlayTimeUpdated(ICommonSession session)
+        {
+            UpdatePlayerList(session);
         }
     }
 }
