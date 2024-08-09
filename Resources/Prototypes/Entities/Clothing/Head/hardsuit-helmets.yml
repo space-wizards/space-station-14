@@ -759,11 +759,11 @@
   description: A special hardsuit helmet worn by members of a centcom agency.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardsuits/Head/Hardsuits/bluehelm.rsi
+    sprite: Clothing/Head/Hardsuits/bluehelm.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardsuits/Head/Hardsuits/bluehelm.rsi
+    sprite: Clothing/Head/Hardsuits/bluehelm.rsi
   - type: PointLight
-    color: "#f4ffad"
+    color: "#30D5C8"
     radius: 4
     energy: 2
   - type: Armor

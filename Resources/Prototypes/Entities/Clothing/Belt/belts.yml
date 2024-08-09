@@ -706,7 +706,7 @@
 - type: entity
   parent: ClothingBeltStorageBase
   id: ClothingBeltBS
-  name: blue belt
+  name: blue shield's belt
   description: A high utility belt, capable of holding countless tools and weapons of great use.
   components:
   - type: Sprite
