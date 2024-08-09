@@ -207,9 +207,12 @@ namespace Content.Shared.Containers.ItemSlots
             if (!EntityManager.TryGetComponent(args.User, out HandsComponent? hands))
                 return;
 
+            if (itemSlots.Slots.Count == 0)
+                return;
+
             var slots = new List<ItemSlot>();
-            // if itemSlots.Slots.Count == 0, we wouldn't want to show the locked popup that would be weird
-            var allLocked = itemSlots.Slots.Count != 0;
+
+            var allLocked = false;
             ItemSlot? lastFailedSlot = null;
             foreach (var slot in itemSlots.Slots.Values)
             {
