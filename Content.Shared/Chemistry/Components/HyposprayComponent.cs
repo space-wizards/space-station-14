@@ -1,3 +1,4 @@
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -37,4 +38,15 @@ public sealed partial class HyposprayComponent : Component
     /// </summary>
     [DataField]
     public bool InjectOnly = false;
+
+    /// <summary>
+    ///  If set over 0, enables a doafter for the hypospray which must be completed for injection.
+    /// </summary>
+    [DataField]
+    public float DoAfterTime = 0f;
+}
+
+[Serializable, NetSerializable]
+public sealed partial class HyposprayDoAfterEvent : SimpleDoAfterEvent
+{
 }

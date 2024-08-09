@@ -3,6 +3,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Forensics;
 using Content.Shared.IdentityManagement;
@@ -25,6 +26,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
 {
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
     public override void Initialize()
     {
@@ -33,6 +35,14 @@ public sealed class HypospraySystem : SharedHypospraySystem
         SubscribeLocalEvent<HyposprayComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<HyposprayComponent, MeleeHitEvent>(OnAttack);
         SubscribeLocalEvent<HyposprayComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<HyposprayComponent, HyposprayDoAfterEvent>(OnHyposprayDoAfter);
+    }
+    private void OnHyposprayDoAfter(Entity<HyposprayComponent> entity, ref HyposprayDoAfterEvent args)
+    {
+        if (args.Cancelled || args.Handled || args.Args.Target == null)
+            return;
+
+        args.Handled = TryDoInject(entity, args.Args.Target.Value, args.Args.User);
     }
 
     private bool TryUseHypospray(Entity<HyposprayComponent> entity, EntityUid target, EntityUid user)
@@ -42,6 +52,29 @@ public sealed class HypospraySystem : SharedHypospraySystem
             && _solutionContainers.TryGetDrawableSolution(target, out var drawableSolution, out _))
         {
             return TryDraw(entity, target, drawableSolution.Value, user);
+        }
+
+        // No doAfter for self-injection
+        if (entity.Comp.DoAfterTime > 0 && target != user)
+        {
+            // Is the target a mob? If yes, use a do-after to give them time to respond.
+            if (HasComp<MobStateComponent>(target) || HasComp<BloodstreamComponent>(target))
+            {
+                //If the injection would fail the doAfter can be skipped at this step
+                if (InjectionFailureCheck(entity, target, user, out _, out _, out _, out _))
+                {
+                    _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, entity.Comp.DoAfterTime, new HyposprayDoAfterEvent(), entity.Owner, target: target, used: entity.Owner)
+                    {
+                        BreakOnMove = true,
+                        BreakOnWeightlessMove = false,
+                        BreakOnDamage = true,
+                        NeedHand = true,
+                        BreakOnHandChange = true,
+                        Hidden = true
+                    });
+                }
+                return true;
+            }
         }
 
         return TryDoInject(entity, target, user);
@@ -94,17 +127,11 @@ public sealed class HypospraySystem : SharedHypospraySystem
             target = user;
         }
 
-        if (!_solutionContainers.TryGetSolution(uid, component.SolutionName, out var hypoSpraySoln, out var hypoSpraySolution) || hypoSpraySolution.Volume == 0)
-        {
-            _popup.PopupEntity(Loc.GetString("hypospray-component-empty-message"), target, user);
-            return true;
-        }
-
-        if (!_solutionContainers.TryGetInjectableSolution(target, out var targetSoln, out var targetSolution))
-        {
-            _popup.PopupEntity(Loc.GetString("hypospray-cant-inject", ("target", Identity.Entity(target, EntityManager))), target, user);
-            return false;
-        }
+        if (!InjectionFailureCheck(entity, target, user, out var hypoSpraySoln, out var targetSoln, out var targetSolution, out var returnValue)
+            || hypoSpraySoln == null
+            || targetSoln == null
+            || targetSolution == null)
+            return returnValue;
 
         _popup.PopupEntity(Loc.GetString(msgFormat ?? "hypospray-component-inject-other-message", ("other", target)), target, user);
 
@@ -191,5 +218,29 @@ public sealed class HypospraySystem : SharedHypospraySystem
             ? entMan.HasComponent<SolutionContainerManagerComponent>(entity) &&
               entMan.HasComponent<MobStateComponent>(entity)
             : entMan.HasComponent<SolutionContainerManagerComponent>(entity);
+    }
+
+    private bool InjectionFailureCheck(Entity<HyposprayComponent> entity, EntityUid target, EntityUid user, out Entity<SolutionComponent>? hypoSpraySoln, out Entity<SolutionComponent>? targetSoln, out Solution? targetSolution, out bool returnValue)
+    {
+        hypoSpraySoln = null;
+        targetSoln = null;
+        targetSolution = null;
+        returnValue = false;
+
+        if (!_solutionContainers.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out hypoSpraySoln, out var hypoSpraySolution) || hypoSpraySolution.Volume == 0)
+        {
+            _popup.PopupEntity(Loc.GetString("hypospray-component-empty-message"), target, user);
+            returnValue = true;
+            return false;
+        }
+
+        if (!_solutionContainers.TryGetInjectableSolution(target, out targetSoln, out targetSolution))
+        {
+            _popup.PopupEntity(Loc.GetString("hypospray-cant-inject", ("target", Identity.Entity(target, EntityManager))), target, user);
+            returnValue = false;
+            return false;
+        }
+
+        return true;
     }
 }
