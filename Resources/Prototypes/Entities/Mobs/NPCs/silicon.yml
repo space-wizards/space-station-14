@@ -38,7 +38,6 @@
   - type: ActiveRadio
     channels:
     - Binary
-    - Common
   - type: HealthExaminable
     examinableTypes:
     - Blunt

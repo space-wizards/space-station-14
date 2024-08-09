@@ -11,8 +11,10 @@ using Content.Shared.Chat;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Radio.Components;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
@@ -38,6 +40,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -93,9 +96,15 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     private void OnBoundUIOpened(EntityUid uid, SiliconLawBoundComponent component, BoundUIOpenedEvent args)
     {
         _entityManager.TryGetComponent<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
-        var radioChannels = intrinsicRadio?.Channels;
 
-        var state = new SiliconLawBuiState(GetLaws(uid).Laws, radioChannels);
+        if (!Resolve(uid, ref intrinsicRadio))
+            return;
+        // Grab the intrinsic channels, or a default if missing
+        HashSet<string> radioChannels = new(intrinsicRadio.Channels);
+        radioChannels.UnionWith(_entityManager.GetComponent<ActiveRadioComponent>(uid).Channels);
+        // Create a new state and set the default channel to local
+        var state = new SiliconLawBuiState(GetLaws(uid).Laws, radioChannels, "Local");
+        // Initialize UI state
         _userInterface.SetUiState(args.Entity, SiliconLawsUiKey.Key, state);
     }
 

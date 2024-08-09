@@ -24,6 +24,14 @@ public sealed partial class WiresPanelComponent : Component
     [AutoNetworkedField]
     public bool Visible = true;
 
+    /// <summary>
+    ///     Should this entity's wires panel be examinable only when opened?
+    /// </summary>
+    [ViewVariables]
+    [DataField("ExamineWhenOpenOnly")]
+    [AutoNetworkedField]
+    public bool ExamineWhenOpenOnly;
+
     [DataField("screwdriverOpenSound")]
     public SoundSpecifier ScrewdriverOpenSound = new SoundPathSpecifier("/Audio/Machines/screwdriveropen.ogg");
 
