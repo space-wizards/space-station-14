@@ -50,3 +50,6 @@ trait-cowboy-desc = You speak with a distinct cowboy accent!
 
 trait-italian-name = Italian accent
 trait-italian-desc = Mamma mia! You seem to have lived in space italy!
+
+trait-swedish-name = Swedish accent
+trait-swedish-desc = Forces the language center of the subject's brain to construct sentences in a vaguely norse manner.
