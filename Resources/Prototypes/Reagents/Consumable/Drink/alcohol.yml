@@ -334,6 +334,12 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: sake
   color: "#DDDDDD"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/sake.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 1
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: Tequila
@@ -1730,24 +1736,6 @@
   fizziness: 0.4
 
 - type: reagent
-  id: WhiteGilgamesh
-  name: reagent-name-white-gilgamesh
-  parent: BaseDrink
-  desc: reagent-desc-white-gilgamesh
-  physicalDesc: reagent-physical-desc-creamy
-  flavor: white-gilgamesh
-  color: "#e5d27e"
-  metabolisms:
-    Drink:
-      effects:
-        - !type:SatiateThirst
-          factor: 1
-        - !type:AdjustReagent
-          reagent: Ethanol
-          amount: 0.15
-  fizziness: 0.5
-
-- type: reagent
   id: WhiteRussian
   name: reagent-name-white-russian
   parent: BaseAlcohol
@@ -1769,6 +1757,30 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.15
+
+- type: reagent
+  id: WhiteGilgamesh
+  name: reagent-name-white-gilgamesh
+  parent: BaseAlcohol
+  desc: reagent-desc-white-gilgamesh
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: white-gilgamesh
+  color: "#d5cbbc"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/whitegilgamesh.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+  fizziness: 0.5
 
 - type: reagent
   id: VodkaRedBool
