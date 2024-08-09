@@ -6,9 +6,6 @@
   components:
   - type: PoweredLight
     hasLampOnSpawn: BlueLightTube
-    damage:
-      types:
-        Heat: 0.2
 
 - type: entity
   parent: AlwaysPoweredWallLight
@@ -30,9 +27,6 @@
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightBulbMaintenance
-    damage:
-      types:
-        Heat: 0.2
 
 - type: entity
   parent: SmallLight
@@ -56,9 +50,6 @@
   components:
   - type: PoweredLight
     hasLampOnSpawn: ColoredLightTubeRed
-    damage:
-      types:
-        Heat: 0.2
 
 - type: entity
   id: AlwaysPoweredLightColoredRed
@@ -80,9 +71,6 @@
   components:
   - type: PoweredLight
     hasLampOnSpawn: ColoredLightTubeFrostyBlue
-    damage:
-      types:
-        Heat: 0.2
 
 - type: entity
   id: AlwaysPoweredLightColoredFrostyBlue
@@ -104,9 +92,6 @@
   components:
   - type: PoweredLight
     hasLampOnSpawn: ColoredLightTubeBlackLight
-    damage:
-      types:
-        Heat: 0.2
 
 - type: entity
   id: AlwaysPoweredLightColoredBlack
@@ -132,9 +117,6 @@
     state: empty
   - type: PoweredLight
     hasLampOnSpawn: ColoredLightTubeRed
-    damage:
-      types:
-        Heat: 2
   - type: StaticPrice #DynamicPrice
     price: 25
 
@@ -163,9 +145,6 @@
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightBulbMaintenanceRed
-    damage:
-      types:
-        Heat: 0.2
 
 - type: entity
   parent: SmallLight
