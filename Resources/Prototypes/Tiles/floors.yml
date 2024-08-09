@@ -1948,3 +1948,66 @@
     collection: BarestepWood
   itemDrop: FloorTileItemWoodLarge
   heatCapacity: 10000
+
+# Concrete
+
+- type: tile
+  id: FloorAstroConcrete
+  name: tiles-astro-concrete
+  parent: FloorConcrete
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemAstroConcrete
+  weather: false
+
+- type: tile
+  id: FloorAstroConcreteMono
+  name: tiles-astro-concrete-slab
+  parent: FloorConcreteMono
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemAstroConcreteMono
+  weather: false
+
+- type: tile
+  id: FloorAstroGrayConcrete
+  name: tiles-astro-gray-concrete
+  parent: FloorGrayConcrete
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemAstroGrayConcrete
+  weather: false
+
+- type: tile
+  id: FloorAstroGrayConcreteMono
+  name: tiles-astro-gray-concrete-slab
+  parent: FloorGrayConcreteMono
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemAstroGrayConcreteMono
+  weather: false
+
+- type: tile
+  id: FloorAstroOldConcrete
+  name: tiles-astro-old-concrete
+  parent: FloorOldConcrete
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemAstroOldConcrete
+  weather: false
+
+
+- type: tile
+  id: FloorAstroOldConcreteMono
+  name: tiles-astro-old-concrete-slab
+  parent: FloorOldConcreteMono
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemAstroOldConcreteMono
+  weather: false

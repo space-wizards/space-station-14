@@ -538,6 +538,15 @@
     },
     {
       "name": "wood-large"
+    },
+    {
+      "name": "concreteslab"
+    },
+    {
+      "name": "grayconcreteslab"
+    },
+    {
+      "name": "oldconcreteslab"
     }
   ]
 }

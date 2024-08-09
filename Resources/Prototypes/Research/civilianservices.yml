@@ -116,6 +116,12 @@
   - FauxTileJungleAstroGrass
   - FauxTileAstroIce
   - FauxTileAstroSnow
+  - FauxTileConcrete
+  - FauxTileConcreteSlab
+  - FauxTileGrayConcrete
+  - FauxTileGrayConcreteSlab
+  - FauxTileOldConcrete
+  - FauxTileOldConcreteSlab
 
 - type: technology
   id: BiochemicalStasis
