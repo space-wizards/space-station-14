@@ -25,21 +25,21 @@ namespace Content.Client.Launcher
         // Pressing reconnect will redial instead of simply reconnecting.
         private bool _redial;
 
-        [Dependency] private readonly IClipboardManager _clipboard = null!;
         private readonly IRobustRandom _random;
         private readonly IPrototypeManager _prototype;
         private readonly IConfigurationManager _cfg;
+        private readonly IClipboardManager _clipboard;
 
         public LauncherConnectingGui(LauncherConnecting state, IRobustRandom random,
-            IPrototypeManager prototype, IConfigurationManager config)
+            IPrototypeManager prototype, IConfigurationManager config, IClipboardManager clipboard)
         {
             _state = state;
             _random = random;
             _prototype = prototype;
             _cfg = config;
+            _clipboard = clipboard;
 
             RobustXamlLoader.Load(this);
-            IoCManager.InjectDependencies(this);
 
             LayoutContainer.SetAnchorPreset(this, LayoutContainer.LayoutPreset.Wide);
 
