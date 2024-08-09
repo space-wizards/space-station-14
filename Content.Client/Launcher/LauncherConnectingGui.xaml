@@ -23,20 +23,32 @@
                     <BoxContainer Orientation="Vertical" Name="ConnectFail" Visible="False" SeparationOverride="10">
                         <RichTextLabel Name="ConnectFailReason" VerticalAlignment="Stretch"/>
                         <BoxContainer Orientation="Horizontal" Align="Center">
-                            <Button Name="RetryButton" Text="{Loc 'connecting-retry'}"
+                            <Button Name="RetryButton"
+                                    Text="{Loc 'connecting-retry'}"
                                     HorizontalAlignment="Center"
-                                    VerticalAlignment="Bottom" />
-                            <Button Name="CopyButton" Text="{Loc 'copy-reason'}"
+                                    VerticalAlignment="Bottom"
+                                    StyleClasses="OpenRight"/>
+                            <Button Name="CopyButton"
+                                    Text="{Loc 'connecting-copy'}"
                                     HorizontalAlignment="Center"
-                                    VerticalAlignment="Bottom" />
+                                    VerticalAlignment="Bottom"
+                                    StyleClasses="OpenLeft"/>
                         </BoxContainer>
                     </BoxContainer>
                     <BoxContainer Orientation="Vertical" Name="Disconnected" Visible="False" SeparationOverride="10">
                         <Label Text="{Loc 'connecting-disconnected'}" Align="Center" />
                         <Label Name="DisconnectReason" Align="Center" />
                         <BoxContainer Orientation="Horizontal" Align="Center" VerticalAlignment="Bottom">
-                            <Button Name="ReconnectButton" Text="{Loc 'connecting-reconnect'}" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
-                            <Button Name="CopyButtonDisconnected" Text="{Loc 'copy-reason'}" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                            <Button Name="ReconnectButton"
+                                    Text="{Loc 'connecting-reconnect'}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    StyleClasses="OpenRight"/>
+                            <Button Name="CopyButtonDisconnected"
+                                    Text="{Loc 'connecting-copy'}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    StyleClasses="OpenLeft"/>
                         </BoxContainer>
                     </BoxContainer>
                 </Control>
