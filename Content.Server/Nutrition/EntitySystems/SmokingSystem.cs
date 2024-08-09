@@ -35,6 +35,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly ForensicsSystem _forensics = default!;
 
         private const float UpdateTimer = 3f;
+        private const float SmokableDuration = 360f;
 
         private float _timer;
 
@@ -42,6 +43,7 @@ namespace Content.Server.Nutrition.EntitySystems
         ///     We keep a list of active smokables, because iterating all existing smokables would be dumb.
         /// </summary>
         private readonly HashSet<EntityUid> _active = new();
+        private readonly Dictionary<EntityUid, FixedPoint2> _initialVolume = new();
 
         public override void Initialize()
         {
@@ -119,6 +121,11 @@ namespace Content.Server.Nutrition.EntitySystems
                     continue;
                 }
 
+                if (!_initialVolume.ContainsKey(uid))
+                {
+                    _initialVolume[uid] = solution.Volume;
+                }
+
                 if (smokable.ExposeTemperature > 0 && smokable.ExposeVolume > 0)
                 {
                     var transform = Transform(uid);
@@ -130,11 +137,14 @@ namespace Content.Server.Nutrition.EntitySystems
                     }
                 }
 
-                var inhaledSolution = _solutionContainerSystem.SplitSolution(soln.Value, smokable.InhaleAmount * _timer);
+                var storedVolume = _initialVolume[uid];
+                var inhaleAmount = storedVolume / (SmokableDuration / UpdateTimer);
+                var inhaledSolution = _solutionContainerSystem.SplitSolution(soln.Value, inhaleAmount);
 
                 if (solution.Volume == FixedPoint2.Zero)
                 {
                     RaiseLocalEvent(uid, new SmokableSolutionEmptyEvent(), true);
+                    _initialVolume.Remove(uid);
                 }
 
                 if (inhaledSolution.Volume == FixedPoint2.Zero)
