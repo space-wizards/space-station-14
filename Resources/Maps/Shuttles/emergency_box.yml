@@ -64,7 +64,7 @@ entities:
     - type: DeviceNetwork
       configurators: []
       deviceLists: []
-      transmitFrequencyId: ShuttleTimer
+      transmitFrequencyId: Screen
     - type: DecalGrid
       chunkCollection:
         version: 2

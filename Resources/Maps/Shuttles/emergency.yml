@@ -50,7 +50,7 @@ entities:
     - type: DeviceNetwork
       configurators: []
       deviceLists: []
-      transmitFrequencyId: ShuttleTimer
+      transmitFrequencyId: Screen
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg

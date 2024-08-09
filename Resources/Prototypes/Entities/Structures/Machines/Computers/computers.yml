@@ -575,7 +575,7 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
   - type: DeviceNetwork
-    transmitFrequencyId: ShuttleTimer
+    transmitFrequencyId: Screen
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
   - type: UserInterface

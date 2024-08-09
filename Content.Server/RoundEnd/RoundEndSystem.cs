@@ -4,11 +4,9 @@ using Content.Server.AlertLevel;
 using Content.Shared.CCVar;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
-using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
-using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
@@ -16,6 +14,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.GameTicking;
+using Content.Shared.Screen;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
@@ -202,15 +201,12 @@ namespace Content.Server.RoundEnd
             var shuttle = _shuttle.GetShuttle();
             if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle, out var net))
             {
-                var payload = new NetworkPayload
-                {
-                    [ShuttleTimerMasks.ShuttleMap] = shuttle,
-                    [ShuttleTimerMasks.SourceMap] = GetCentcomm(),
-                    [ShuttleTimerMasks.DestMap] = GetStation(),
-                    [ShuttleTimerMasks.ShuttleTime] = countdownTime,
-                    [ShuttleTimerMasks.SourceTime] = countdownTime + TimeSpan.FromSeconds(_shuttle.TransitTime + _cfg.GetCVar(CCVars.EmergencyShuttleDockTime)),
-                    [ShuttleTimerMasks.DestTime] = countdownTime,
-                };
+                var shuttleUpdate = new ScreenUpdate(GetNetEntity(shuttle), ScreenPriority.Shuttle, ScreenMasks.ETA, _gameTiming.CurTime + countdownTime);
+                var sourceUpdate = new ScreenUpdate(GetNetEntity(GetCentcomm()), ScreenPriority.Shuttle, ScreenMasks.ETA,
+                    _gameTiming.CurTime + countdownTime + TimeSpan.FromSeconds(_shuttle.TransitTime + _cfg.GetCVar(CCVars.EmergencyShuttleDockTime)));
+                var destUpdate = new ScreenUpdate(GetNetEntity(GetStation()), ScreenPriority.Shuttle, ScreenMasks.ETA, _gameTiming.CurTime + countdownTime);
+
+                var payload = new NetworkPayload { [ScreenMasks.Updates] = new ScreenUpdate[] { shuttleUpdate, sourceUpdate, destUpdate } };
                 _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
             }
         }
@@ -243,20 +239,16 @@ namespace Content.Server.RoundEnd
             ActivateCooldown();
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
 
-            // remove active clientside evac shuttle timers by zeroing the target time
+            // remove evac shuttle timers by zeroing the target time
             var zero = TimeSpan.Zero;
             var shuttle = _shuttle.GetShuttle();
             if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle, out var net))
             {
-                var payload = new NetworkPayload
-                {
-                    [ShuttleTimerMasks.ShuttleMap] = shuttle,
-                    [ShuttleTimerMasks.SourceMap] = GetCentcomm(),
-                    [ShuttleTimerMasks.DestMap] = GetStation(),
-                    [ShuttleTimerMasks.ShuttleTime] = zero,
-                    [ShuttleTimerMasks.SourceTime] = zero,
-                    [ShuttleTimerMasks.DestTime] = zero,
-                };
+                var shuttleUpdate = new ScreenUpdate(GetNetEntity(shuttle), ScreenPriority.Shuttle, ScreenMasks.ETA, zero);
+                var sourceUpdate = new ScreenUpdate(GetNetEntity(GetCentcomm()), ScreenPriority.Shuttle, ScreenMasks.ETA, zero);
+                var destUpdate = new ScreenUpdate(GetNetEntity(GetStation()), ScreenPriority.Shuttle, ScreenMasks.ETA, zero);
+
+                var payload = new NetworkPayload { [ScreenMasks.Updates] = new ScreenUpdate[] { shuttleUpdate, sourceUpdate, destUpdate } };
                 _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
             }
         }
