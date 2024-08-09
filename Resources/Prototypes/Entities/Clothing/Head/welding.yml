@@ -1,14 +1,22 @@
 - type: entity
-  parent: ClothingHeadBase
-  id: WeldingMaskBase
+  parent: [ClothingHeadBase, BaseFoldable]
+  id: WeldingMaskBaseFlippable
   name: welding mask
   abstract: true
   components:
+  - type: Appearance
   - type: Item
     storedRotation: 0
+  - type: Foldable
+    canFoldInsideContainer: true
+  - type: FoldableClothing
+    foldedEquippedPrefix: up
+    foldedHeldPrefix: up
+  - type: Mask
   - type: IngestionBlocker
   - type: FlashImmunity
   - type: IdentityBlocker
+    coverage: FULL
   - type: EyeProtection
   - type: PhysicalComposition
     materialComposition:
@@ -16,6 +24,16 @@
       Glass: 100
   - type: StaticPrice
     price: 50
+  - type: WeldingMask
+    innerDiameter: 2
+    outerDiameter: 6
+  - type: Sprite
+    layers:
+    - state: icon
+      map: [ "unfoldedLayer" ]
+    - state: icon-up
+      map: ["foldedLayer"]
+      visible: false
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -24,8 +42,19 @@
     slots:
     - Snout
 
+- type: entity 
+  id: ActionToggleWelding
+  name: Flip Welding Mask
+  description: For when you like to live dangerously and risk arc eye.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon: { sprite: Clothing/Head/Welding/welding.rsi, state: icon }
+    iconOn: { sprite: Clothing/Head/Welding/welding.rsi, state: icon-up }
+    event: !type:ToggleWeldingEvent
+
 - type: entity
-  parent: WeldingMaskBase
+  parent: WeldingMaskBaseFlippable
   id: ClothingHeadHatWelding
   name: welding mask
   description: A head-mounted face cover designed to protect the wearer completely from space-arc eye.
@@ -41,7 +70,7 @@
     - WeldingMask
 
 - type: entity
-  parent: WeldingMaskBase
+  parent: WeldingMaskBaseFlippable
   id: ClothingHeadHatWeldingMaskFlame
   name: flame welding mask
   description: A painted welding helmet, this one has flames on it.
@@ -52,7 +81,7 @@
     sprite: Clothing/Head/Welding/flame_welding_mask.rsi
 
 - type: entity
-  parent: WeldingMaskBase
+  parent: WeldingMaskBaseFlippable
   id: ClothingHeadHatWeldingMaskFlameBlue
   name: blue-flame welding mask
   description: A painted welding helmet, this one has blue flames on it.
@@ -63,7 +92,7 @@
     sprite: Clothing/Head/Welding/blue_flame_welding_mask.rsi
 
 - type: entity
-  parent: WeldingMaskBase
+  parent: WeldingMaskBaseFlippable
   id: ClothingHeadHatWeldingMaskPainted
   name: painted welding mask
   description: A welding helmet, painted in crimson.

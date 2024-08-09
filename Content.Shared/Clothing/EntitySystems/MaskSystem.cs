@@ -53,9 +53,6 @@ public sealed class MaskSystem : EntitySystem
     // set to untoggled when unequipped, so it isn't left in a 'pulled down' state
     private void OnGotUnequipped(EntityUid uid, MaskComponent mask, GotUnequippedEvent args)
     {
-        if (!mask.IsToggled)
-            return;
-
         mask.IsToggled = false;
         ToggleMaskComponents(uid, mask, args.Equipee, mask.EquippedPrefix, true);
     }

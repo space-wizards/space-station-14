@@ -1,0 +1,25 @@
+
+light_mode unshaded;
+
+uniform highp float InDiameter;
+uniform highp float OutDiameter;
+uniform highp float Zoom;
+uniform sampler2D SCREEN_TEXTURE;
+
+//i genuinely do not know what i am doing.
+void fragment() 
+{
+
+	highp float superZoom = Zoom;
+
+	highp vec2 pixelSize = vec2(1.0 / SCREEN_PIXEL_SIZE.x, 1.0 / SCREEN_PIXEL_SIZE.y);
+	highp vec2 pixelCenter = pixelSize * vec2(0.5, 0.5);
+	
+	vec4 preColor = zTextureSpec(SCREEN_TEXTURE, Pos);
+
+	highp float circle = zCircleGradient(pixelSize, FRAGCOORD.xy, 1., (32.0 * OutDiameter) / superZoom, 0 / superZoom, 1); //how does this magic work?????
+	
+	highp vec4 mask = mix(vec4(1.0), vec4(vec3(0.0), 1.0), clamp(circle, 0.0, 1.0));
+	
+	COLOR = preColor * vec4(mask.x, mask.x, (mask.x * 0.5), 1.0);
+}
