@@ -10635,7 +10635,7 @@ entities:
       pos: -42.5,29.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -99.68158
+      secondsUntilStateChange: -206.70142
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -62287,6 +62287,13 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 19.5,-38.5
+      parent: 5350
+- proto: ComputerRoboticsControl
+  entities:
+  - uid: 24793
+    components:
+    - type: Transform
+      pos: 21.5,-34.5
       parent: 5350
 - proto: ComputerSalvageExpedition
   entities:

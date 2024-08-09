@@ -158,7 +158,7 @@
   parent: ExtendedEmergencyOxygenTank
   id: DoubleEmergencyOxygenTank
   name: double emergency oxygen tank
-  description: A high-grade dual-tank emergency life support container. It holds a decent amount of oxygen for it's small size. It can hold 2.5 L of gas.
+  description: A high-grade dual-tank emergency life support container. It holds a decent amount of oxygen for its small size. It can hold 2.5 L of gas.
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_double.rsi

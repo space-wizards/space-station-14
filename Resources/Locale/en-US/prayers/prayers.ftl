@@ -4,7 +4,7 @@ prayer-verbs-call = Call
 prayer-verbs-rub = Rub
 prayer-chat-notify-pray = PRAYER
 prayer-chat-notify-honkmother = HONKMOTHER
-prayer-chat-notify-centcom = CENTCOM
+prayer-chat-notify-centcom = CENTCOMM
 prayer-chat-notify-syndicate = SYNDICATE
 prayer-chat-notify-lamp = LAMP
 
