@@ -46,14 +46,8 @@ namespace Content.Client.Launcher
             Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
 
             ChangeLoginTip();
-            RetryButton.OnPressed += _ => _state.RetryConnect();
-            ReconnectButton.OnPressed += _ =>
-            {
-                if (!_redial || !_state.Redial())
-                {
-                    _state.RetryConnect();
-                }
-            };
+            RetryButton.OnPressed += ReconnectButtonPressed;
+            ReconnectButton.OnPressed += ReconnectButtonPressed;
 
             CopyButton.OnPressed += CopyButtonPressed;
             CopyButtonDisconnected.OnPressed += CopyButtonDisconnectedPressed;
@@ -74,6 +68,19 @@ namespace Content.Client.Launcher
             var edim = IoCManager.Resolve<ExtendedDisconnectInformationManager>();
             edim.LastNetDisconnectedArgsChanged += LastNetDisconnectedArgsChanged;
             LastNetDisconnectedArgsChanged(edim.LastNetDisconnectedArgs);
+        }
+
+        // Just button, there's only one at once anyways :)
+        private void ReconnectButtonPressed(BaseButton.ButtonEventArgs args)
+        {
+            if (_redial)
+            {
+                // Redial shouldn't fail, but if it does, try a reconnect (maybe we're being run from debug)
+                if (_state.Redial())
+                    return;
+            }
+
+            _state.RetryConnect();
         }
 
         private void CopyButtonPressed(BaseButton.ButtonEventArgs args)
