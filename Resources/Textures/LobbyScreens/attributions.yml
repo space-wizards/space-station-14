@@ -57,3 +57,8 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "GetOutMarutak,aka.Snicket on Discord/github/Cara/Ko-fi"
   source: "https://github.com/space-wizards/space-station-14"
+  
+- files: ["breakingspace.webp"]
+  license: "CC-BY-SA-4.0"
+  copyright: "p.r.ospector on discord / Prospector on SS14"
+  source: "https://github.com/space-wizards/space-station-14" 
