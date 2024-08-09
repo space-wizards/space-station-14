@@ -12,6 +12,7 @@ using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chat;
+using Content.Shared.Mind.Components;
 
 namespace Content.Server.Chat;
 
@@ -31,6 +32,7 @@ public sealed class SuicideSystem : EntitySystem
 
         SubscribeLocalEvent<DamageableComponent, SuicideEvent>(OnDamageableSuicide);
         SubscribeLocalEvent<MobStateComponent, SuicideEvent>(OnEnvironmentalSuicide);
+        SubscribeLocalEvent<MindContainerComponent, SuicideGhostEvent>(OnSuicideGhost);
     }
 
     /// <summary>
@@ -40,14 +42,6 @@ public sealed class SuicideSystem : EntitySystem
     /// </summary>
     public bool Suicide(EntityUid victim, Entity<MindComponent> victimMind)
     {
-        // CannotSuicide tag will allow the user to ghost, but also return to their mind
-        // This is kind of weird, not sure what it applies to?
-        if (_tagSystem.HasTag(victim, "CannotSuicide"))
-        {
-            _gameTicker.OnGhostAttempt(victimMind.Owner, true, mind: victimMind.Comp);
-            return false;
-        }
-
         // Can't suicide if we're already dead
         if (!TryComp<MobStateComponent>(victim, out var mobState) || _mobState.IsDead(victim, mobState))
             return false;
@@ -56,12 +50,36 @@ public sealed class SuicideSystem : EntitySystem
         var suicideEvent = new SuicideEvent(victim);
         RaiseLocalEvent(victim, suicideEvent);
 
+        var suicideGhostEvent = new SuicideGhostEvent(victim);
+        RaiseLocalEvent(victim, suicideGhostEvent);
+
         // Suicide is considered a fail if the user wasn't able to ghost
-        if (!_gameTicker.OnGhostAttempt(victimMind.Owner, false, mind: victimMind.Comp))
+        if (!suicideGhostEvent.Handled)
             return false;
 
         _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} suicided.");
         return true;
+    }
+
+    private void OnSuicideGhost(Entity<MindContainerComponent> victim, ref SuicideGhostEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (victim.Comp.Mind == null)
+            return;
+
+        if (!TryComp<MindComponent>(victim.Comp.Mind, out var mindComponent))
+            return;
+
+        // CannotSuicide tag will allow the user to ghost, but also return to their mind
+        // This is kind of weird, not sure what it applies to?
+        if (_tagSystem.HasTag(victim, "CannotSuicide"))
+        {
+            args.CanReturnToBody = true;
+        }
+
+        _gameTicker.OnGhostAttempt(victim.Comp.Mind.Value, args.CanReturnToBody, mind: mindComponent);
     }
 
     /// <summary>
@@ -128,5 +146,12 @@ public sealed class SuicideSystem : EntitySystem
         args.DamageType ??= "Bloodloss";
         _suicide.ApplyLethalDamage(victim, args.DamageType);
         args.Handled = true;
+
+        /*if (!TryComp<MindContainerComponent>(victim, out var mindContainerComponent))
+            return;
+
+        if (mindContainerComponent.HasMind &&
+            TryComp<MindComponent>(mindContainerComponent.Mind, out var mindComponent))
+            _gameTicker.OnGhostAttempt(mindContainerComponent.Mind.Value, false, mind: mindComponent);*/
     }
 }

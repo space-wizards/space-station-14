@@ -29,3 +29,13 @@ public sealed class SuicideByEnvironmentEvent : HandledEntityEventArgs
     public EntityUid Victim { get; set; }
 }
 
+public sealed class SuicideGhostEvent : HandledEntityEventArgs
+{
+    public SuicideGhostEvent(EntityUid victim)
+    {
+        Victim = victim;
+    }
+
+    public EntityUid Victim { get; set; }
+    public bool CanReturnToBody;
+}
