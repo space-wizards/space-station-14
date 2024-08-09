@@ -1,33 +1,17 @@
 - type: entity
   save: false
   abstract: true
+  parent: BaseMob
   id: MobSiliconBase
   components:
-  - type: LagCompensation
   - type: Reactive
     groups:
       Acidic: [Touch]
-  - type: Clickable
   - type: Damageable
     damageContainer: Inorganic
-  - type: InteractionOutline
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 50
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
     baseSprintSpeed : 4
-  - type: Sprite
-    noRot: true
-    drawdepth: Mobs
   - type: NpcFactionMember
     factions:
     - SimpleNeutral
@@ -58,7 +42,7 @@
     - Stutter
     - Electrocution
   - type: NameIdentifier
-    group: GenericNumber
+    group: Silicon
   - type: Repairable
     doAfterDelay: 8
     fuelCost: 15
@@ -66,6 +50,7 @@
   - type: Tag
     tags:
     - DoorBumpOpener
+    - SiliconEmotes
   - type: MobState
     allowedStates:
       - Alive
@@ -92,10 +77,6 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Input
-    context: "human"
-  - type: InputMover
-  - type: MobMover
   - type: Body
     prototype: Bot
   - type: GuideHelp
@@ -103,8 +84,13 @@
     - Robotics
   - type: Speech
     speechVerb: Robotic
+    speechSounds: Pai
   - type: TypingIndicator
     proto: robot
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
+  - type: Emoting
   - type: ZombieImmune
   - type: StepTriggerImmune
   - type: NoSlip
@@ -306,10 +292,8 @@
   description: Why not give the mimebot a friendly wave?
   components:
   - type: Sprite
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: mimebot
-      sprite: Mobs/Silicon/Bots/mimebot.rsi
+    sprite: Mobs/Silicon/Bots/mimebot.rsi
+    state: mimebot
   - type: MimePowers
   - type: Construction
     graph: MimeBot
@@ -337,7 +321,7 @@
   - type: Sprite
     sprite: Mobs/Silicon/Bots/supplybot.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+    - map: ["movement"]
       state: supplybot
   - type: SpriteMovement
     movementLayers:
@@ -389,6 +373,7 @@
     tags:
     - DoorBumpOpener
     - FootstepSound
+    - SiliconEmotes
   - type: ActiveRadio
     channels:
     - Binary
