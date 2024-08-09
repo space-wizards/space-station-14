@@ -7162,7 +7162,7 @@ entities:
       pos: 24.5,-39.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -191.21292
+      secondsUntilStateChange: -432.36554
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8885,13 +8885,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 28.5,7.5
       parent: 2
-  - uid: 4309
-    components:
-    - type: MetaData
-      name: Singulo APC
-    - type: Transform
-      pos: 17.5,-37.5
-      parent: 2
   - uid: 4325
     components:
     - type: MetaData
@@ -9062,6 +9055,14 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 2.5,-4.5
+      parent: 2
+  - uid: 5577
+    components:
+    - type: MetaData
+      name: Singulo APC
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 15.5,-39.5
       parent: 2
   - uid: 5648
     components:
@@ -10681,6 +10682,11 @@ entities:
     - type: Transform
       pos: 56.5,-3.5
       parent: 2
+  - uid: 4318
+    components:
+    - type: Transform
+      pos: 16.5,-39.5
+      parent: 2
   - uid: 4677
     components:
     - type: Transform
@@ -11546,16 +11552,6 @@ entities:
     - type: Transform
       pos: 40.5,-44.5
       parent: 2
-  - uid: 5577
-    components:
-    - type: Transform
-      pos: 17.5,-37.5
-      parent: 2
-  - uid: 5578
-    components:
-    - type: Transform
-      pos: 17.5,-38.5
-      parent: 2
   - uid: 5579
     components:
     - type: Transform
@@ -12075,6 +12071,11 @@ entities:
     components:
     - type: Transform
       pos: 42.5,-10.5
+      parent: 2
+  - uid: 6769
+    components:
+    - type: Transform
+      pos: 15.5,-39.5
       parent: 2
   - uid: 6829
     components:
@@ -18967,6 +18968,11 @@ entities:
     - type: Transform
       pos: 17.5,-40.5
       parent: 2
+  - uid: 4308
+    components:
+    - type: Transform
+      pos: 16.5,-37.5
+      parent: 2
   - uid: 4335
     components:
     - type: Transform
@@ -22402,6 +22408,16 @@ entities:
     - type: Transform
       pos: 43.5,27.5
       parent: 2
+  - uid: 8446
+    components:
+    - type: Transform
+      pos: 16.5,-36.5
+      parent: 2
+  - uid: 8447
+    components:
+    - type: Transform
+      pos: 16.5,-35.5
+      parent: 2
   - uid: 8818
     components:
     - type: Transform
@@ -23872,15 +23888,10 @@ entities:
     - type: Transform
       pos: 22.5,7.5
       parent: 2
-  - uid: 4308
+  - uid: 4309
     components:
     - type: Transform
-      pos: 17.5,-37.5
-      parent: 2
-  - uid: 4312
-    components:
-    - type: Transform
-      pos: 17.5,-36.5
+      pos: 15.5,-39.5
       parent: 2
   - uid: 4605
     components:
@@ -24237,10 +24248,10 @@ entities:
     - type: Transform
       pos: 62.5,-6.5
       parent: 2
-  - uid: 5576
+  - uid: 5578
     components:
     - type: Transform
-      pos: 17.5,-35.5
+      pos: 13.5,-41.5
       parent: 2
   - uid: 5608
     components:
@@ -24277,15 +24288,15 @@ entities:
     - type: Transform
       pos: 19.5,-13.5
       parent: 2
+  - uid: 6766
+    components:
+    - type: Transform
+      pos: 14.5,-41.5
+      parent: 2
   - uid: 6768
     components:
     - type: Transform
-      pos: 15.5,-42.5
-      parent: 2
-  - uid: 6769
-    components:
-    - type: Transform
-      pos: 14.5,-42.5
+      pos: 15.5,-41.5
       parent: 2
   - uid: 6770
     components:
@@ -24321,6 +24332,21 @@ entities:
     components:
     - type: Transform
       pos: 21.5,-39.5
+      parent: 2
+  - uid: 6942
+    components:
+    - type: Transform
+      pos: 16.5,-41.5
+      parent: 2
+  - uid: 6943
+    components:
+    - type: Transform
+      pos: 16.5,-40.5
+      parent: 2
+  - uid: 6944
+    components:
+    - type: Transform
+      pos: 16.5,-39.5
       parent: 2
   - uid: 6955
     components:
@@ -25261,6 +25287,16 @@ entities:
     components:
     - type: Transform
       pos: -15.5,-15.5
+      parent: 2
+  - uid: 7781
+    components:
+    - type: Transform
+      pos: 16.5,-38.5
+      parent: 2
+  - uid: 7782
+    components:
+    - type: Transform
+      pos: 16.5,-37.5
       parent: 2
   - uid: 8287
     components:
@@ -32780,6 +32816,23 @@ entities:
     components:
     - type: Transform
       pos: 52.52299,8.566419
+      parent: 2
+- proto: ClothingOuterHardsuitSecurity
+  entities:
+  - uid: 9478
+    components:
+    - type: Transform
+      pos: 38.48357,28.698536
+      parent: 2
+  - uid: 9883
+    components:
+    - type: Transform
+      pos: 38.48357,28.698536
+      parent: 2
+  - uid: 9884
+    components:
+    - type: Transform
+      pos: 38.48357,28.698536
       parent: 2
 - proto: ClothingOuterHospitalGown
   entities:
@@ -68308,12 +68361,12 @@ entities:
       currentSupply: 60.000237
 - proto: SubstationWallBasic
   entities:
-  - uid: 6766
+  - uid: 5576
     components:
     - type: MetaData
-      name: Singulo Emitter Substation
+      name: Singulo Substation
     - type: Transform
-      pos: 15.5,-42.5
+      pos: 16.5,-37.5
       parent: 2
 - proto: SuitStorageAtmos
   entities:
@@ -81160,15 +81213,15 @@ entities:
     - type: Transform
       pos: 28.5,-20.5
       parent: 2
+  - uid: 4312
+    components:
+    - type: Transform
+      pos: 17.5,-37.5
+      parent: 2
   - uid: 4313
     components:
     - type: Transform
       pos: 16.5,-37.5
-      parent: 2
-  - uid: 4318
-    components:
-    - type: Transform
-      pos: 17.5,-37.5
       parent: 2
   - uid: 4319
     components:
