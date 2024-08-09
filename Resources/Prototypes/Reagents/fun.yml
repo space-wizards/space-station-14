@@ -349,3 +349,14 @@
         conditions:
         - !type:ReagentThreshold
           min: 50
+
+- type: reagent
+  id: Sand
+  name: reagent-name-sand
+  desc: reagent-desc-sand
+  physicalDesc: reagent-physical-desc-grainy
+  flavor: salty
+  color: "#c2b280"
+  recognizable: true
+  boilingPoint: 2962.0
+  meltingPoint: 1638.0
