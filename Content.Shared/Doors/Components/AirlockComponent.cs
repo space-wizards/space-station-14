@@ -25,6 +25,64 @@ public sealed partial class AirlockComponent : Component
     public bool EmergencyAccess = false;
 
     /// <summary>
+    /// Used to hold the state of emergency access on the door prior to a station-destroying event.  This allows us to return to the saved state
+    /// after the station-destroying threat is eliminated.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
+    public bool PreDeltaAlertEmergencyAccessState = false;
+
+    /// <summary>
+    ///     Time before delta alert emergency access is reverted, in seconds, after a station-destroying threat is averted.
+    /// </summary>
+    [DataField("deltaemergencytimer")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public int PostDeltaAlertEmergencyAccessTimer = 10;
+
+    /// <summary>
+    ///     Time remaining until the door reverts its emergency access settings after a station-destroying threat is averted.
+    /// </summary>
+    [DataField("deltaemergencyaccesstimeremaining")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float PostDeltaAlertRemainingEmergencyAccessTimer;
+
+    /// <summary>
+    /// Tells us if the a station-destroying threat was recently averted on this airlock's grid.
+    /// </summary>
+    [DataField("deltarecentlyended")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool DeltaAlertRecentlyEnded;
+
+    /// <summary>
+    /// Tells us if the a station-destroying threat is currently ongoing.
+    /// </summary>
+    [DataField("deltaongoing")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool DeltaAlertOngoing;
+
+    /// <summary>
+    /// Determines how long to wait during a delta-level event before triggering emergency access.
+    /// </summary>
+    [DataField("deltaeadelaytime")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public int DeltaAlertEmergencyAccessDelayTime = 180;
+
+    /// <summary>
+    /// Timer that keeps track of how long until the door enters emergency access.
+    /// </summary>
+    [DataField("deltaeadelaytimetimer")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float DeltaAlertRemainingEmergencyAccessTimer;
+    /// <summary>
+    /// Determines if the door is currently under delta-level emergency access rules.
+    /// </summary>
+    [DataField("deltaeaenabled")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool DeltaEmergencyAccessEnabled;
+
+
+
+    /// <summary>
     /// Pry modifier for a powered airlock.
     /// Most anything that can pry powered has a pry speed bonus,
     /// so this default is closer to 6 effectively on e.g. jaws (9 seconds when applied to other default.)

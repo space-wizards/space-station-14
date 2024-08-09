@@ -12,6 +12,30 @@ public abstract class SharedAirlockSystem : EntitySystem
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly SharedWiresSystem _wiresSystem = default!;
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<AirlockComponent>();
+        while (query.MoveNext(out var uid, out var airlock))
+        {
+            if (airlock.DeltaAlertOngoing)
+            {
+                airlock.DeltaAlertRemainingEmergencyAccessTimer -= frameTime;
+                if (airlock.DeltaAlertRemainingEmergencyAccessTimer <= 0 && !airlock.DeltaEmergencyAccessEnabled)
+                {
+                    SetDeltaEmergencyAccessOn(uid, airlock);
+                }
+            }
+            if (!airlock.DeltaAlertRecentlyEnded)
+                continue;
+            else
+            {
+                AttemptRemoveDeltaEmergencyAccess(uid, frameTime, airlock);
+            }
+        }
+
+    }
     public override void Initialize()
     {
         base.Initialize();
@@ -123,9 +147,9 @@ public abstract class SharedAirlockSystem : EntitySystem
         Appearance.SetData(uid, DoorVisuals.EmergencyLights, component.EmergencyAccess);
     }
 
-    public void ToggleEmergencyAccess(EntityUid uid, AirlockComponent component)
+    public void ToggleEmergencyAccess(EntityUid uid, AirlockComponent component, bool? forceState = null)
     {
-        component.EmergencyAccess = !component.EmergencyAccess;
+        component.EmergencyAccess = forceState ?? !component.EmergencyAccess;
         Dirty(uid, component); // This only runs on the server apparently so we need this.
         UpdateEmergencyLightStatus(uid, component);
     }
@@ -146,5 +170,26 @@ public abstract class SharedAirlockSystem : EntitySystem
     public bool CanChangeState(EntityUid uid, AirlockComponent component)
     {
         return component.Powered && !DoorSystem.IsBolted(uid);
+    }
+
+    private void AttemptRemoveDeltaEmergencyAccess(EntityUid uid, float frameTime, AirlockComponent? airlock = null)
+    {
+        if (airlock == null) return;
+        airlock.PostDeltaAlertRemainingEmergencyAccessTimer -= frameTime;
+        if (airlock.PostDeltaAlertRemainingEmergencyAccessTimer <= 0)
+        {
+            ToggleEmergencyAccess(uid, airlock, airlock.PreDeltaAlertEmergencyAccessState);
+            UpdateEmergencyLightStatus(uid, airlock);
+            airlock.DeltaAlertRecentlyEnded = false;
+            airlock.DeltaEmergencyAccessEnabled = false;
+        }
+    }
+
+    public void SetDeltaEmergencyAccessOn(EntityUid uid, AirlockComponent component)
+    {
+        component.DeltaEmergencyAccessEnabled = true;
+        component.PreDeltaAlertEmergencyAccessState = component.EmergencyAccess;
+        ToggleEmergencyAccess(uid, component, true);
+        UpdateEmergencyLightStatus(uid, component);
     }
 }

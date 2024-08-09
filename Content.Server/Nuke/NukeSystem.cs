@@ -43,6 +43,7 @@ public sealed class NukeSystem : EntitySystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly IEntityManager _entMan = default!;
 
     /// <summary>
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
@@ -629,6 +630,8 @@ public sealed class NukeSystem : EntitySystem
         else
             args.PushMarkup(Loc.GetString("examinable-unanchored"));
     }
+
+
 }
 
 public sealed class NukeExplodedEvent : EntityEventArgs
