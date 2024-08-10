@@ -47,8 +47,7 @@ public sealed class RadioSystem : EntitySystem
     private void OnIntrinsicSpeak(EntityUid uid, IntrinsicRadioTransmitterComponent component, EntitySpokeEvent args)
     {
         HashSet<string> channels = new(component.Channels);
-        TryComp<EncryptionKeyHolderComponent>(uid, out var keyholder);
-        if (keyholder != null)
+        if (TryComp<EncryptionKeyHolderComponent>(uid, out var keyholder))
             channels.UnionWith(keyholder.Channels);
         if (args.Channel != null && channels.Contains(args.Channel.ID))
         {

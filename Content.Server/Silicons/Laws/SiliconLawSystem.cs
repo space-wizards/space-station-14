@@ -103,7 +103,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         HashSet<string> radioChannels = new(intrinsicRadio.Channels);
         radioChannels.UnionWith(_entityManager.GetComponent<ActiveRadioComponent>(uid).Channels);
         // Create a new state and set the default channel to local
-        var state = new SiliconLawBuiState(GetLaws(uid).Laws, radioChannels, "Local");
+        var state = new SiliconLawBuiState(GetLaws(uid).Laws, radioChannels, SharedChatSystem.LocalChannel);
         // Initialize UI state
         _userInterface.SetUiState(args.Entity, SiliconLawsUiKey.Key, state);
     }

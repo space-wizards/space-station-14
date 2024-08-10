@@ -50,9 +50,9 @@ public sealed partial class LawDisplay : Control
         stateLawButton.OnPressed += _ =>
         {
             // Local and Binary channels are added to the list outside of the Radio component, so we handle them uniquely
-            if (selectedChannel == "Local")
+            if (selectedChannel == SharedChatSystem.LocalChannel)
                 _chatManager.SendMessage($"{lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Local);
-            else if (selectedChannel == "Binary")
+            else if (selectedChannel == SharedChatSystem.BinaryChannel)
                 _chatManager.SendMessage($"{SharedChatSystem.RadioChannelPrefix}b {lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Radio);
             else
             {
