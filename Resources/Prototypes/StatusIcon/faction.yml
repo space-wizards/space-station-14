@@ -1,4 +1,4 @@
-- type: statusIcon
+- type: factionIcon
   id: ZombieFaction
   priority: 11
   showTo:
@@ -10,7 +10,7 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Zombie
 
-- type: statusIcon
+- type: factionIcon
   id: InitialInfectedFaction
   priority: 11
   showTo:
@@ -21,7 +21,7 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: InitialInfected
 
-- type: statusIcon
+- type: factionIcon
   id: RevolutionaryFaction
   isShaded: true
   priority: 11
@@ -33,7 +33,7 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Revolutionary
 
-- type: statusIcon
+- type: factionIcon
   id: HeadRevolutionaryFaction
   isShaded: true
   priority: 11
@@ -45,17 +45,7 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: HeadRevolutionary
 
-- type: statusIcon
-  id: MindShieldIcon
-  priority: 2
-  locationPreference: Right
-  layer: Mod
-  isShaded: true
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: MindShield
-
-- type: statusIcon
+- type: factionIcon
   id: SyndicateFaction
   priority: 0
   locationPreference: Left

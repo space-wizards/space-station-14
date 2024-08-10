@@ -1,7 +1,7 @@
 figurines-hop-1 = Papers, please.
 figurines-hop-2 = You are fired.
 
-figurines-passenger-1 = How to change hands?
+figurines-passenger-1 = Insuls please.
 figurines-passenger-2 = Call evac.
 
 figurines-greytider-1 = Man, this party stinks. I fucking hate these people.
