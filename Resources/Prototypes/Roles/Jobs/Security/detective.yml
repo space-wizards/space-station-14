@@ -24,6 +24,7 @@
     id: DetectivePDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltHolsterFilled
+    pocket2: ClothingNeckDetectiveBadge # GreyStation Addition
   storage:
     back:
     - Flash

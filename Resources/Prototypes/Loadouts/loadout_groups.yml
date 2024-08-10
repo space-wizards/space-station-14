@@ -1025,6 +1025,7 @@
   loadouts:
   - DetectiveArmorVest
   - DetectiveCoat
+  - DetectiveGreyCoat # GreyStation Added
 
 - type: loadoutGroup
   id: SecurityCadetJumpsuit
