@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Jajsha
-  changes:
-  - message: Emagged cyborgs no longer reveal that they have been emagged by simply
-      examining their internals.
-    type: Tweak
-  id: 6575
-  time: '2024-05-10T02:57:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27816
 - author: RiceMar
   changes:
   - message: Larger guns are now wieldable and suffer an inaccuracy when not wielded.
@@ -3794,3 +3786,10 @@
   id: 7074
   time: '2024-08-10T01:10:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30830
+- author: EmoGarbage404
+  changes:
+  - message: Maintenance closets have more variety in what they can contain.
+    type: Tweak
+  id: 7075
+  time: '2024-08-10T02:12:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30579
