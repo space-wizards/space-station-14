@@ -1,8 +1,6 @@
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Salvage.Magnet;
-using Content.Shared.Store;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -40,12 +38,13 @@ public abstract partial class SharedSalvageSystem
                         rand.Next();
                         break;
                     case BiomeMarkerLayerDunGen marker:
-                        for (var i = 0; i < marker.Count; i++)
+
+                        var genTemplates = marker.GetMarkers(_proto, seed);
+                        foreach (var gen in genTemplates)
                         {
-                            var proto = _proto.Index(marker.MarkerTemplate).Pick(rand);
-                            var layerCount = layers.GetOrNew(proto);
+                            var layerCount = layers.GetOrNew(gen);
                             layerCount++;
-                            layers[proto] = layerCount;
+                            layers[gen] = layerCount;
                         }
                         break;
                 }

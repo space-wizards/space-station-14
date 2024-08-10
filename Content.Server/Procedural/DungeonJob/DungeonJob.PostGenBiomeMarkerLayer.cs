@@ -4,7 +4,6 @@ using Content.Shared.Parallax.Biomes;
 using Content.Shared.Parallax.Biomes.Markers;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
-using Content.Shared.Random.Helpers;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
@@ -15,7 +14,7 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="BiomeMarkerLayerDunGen"/>
     /// </summary>
-    private async Task PostGen(BiomeMarkerLayerDunGen dunGen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(BiomeMarkerLayerDunGen dunGen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random, int seed)
     {
         // If we're adding biome then disable it and just use for markers.
         if (_entManager.EnsureComponent(_gridUid, out BiomeComponent biomeComp))
@@ -24,16 +23,15 @@ public sealed partial class DungeonJob
         }
 
         var biomeSystem = _entManager.System<BiomeSystem>();
-        var weightedRandom = _prototype.Index(dunGen.MarkerTemplate);
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
         var templates = new Dictionary<string, int>();
 
-        for (var i = 0; i < dunGen.Count; i++)
+        var genTemplates = dunGen.GetMarkers(_prototype, seed);
+        foreach (var gen in genTemplates)
         {
-            var template = weightedRandom.Pick(random);
-            var count = templates.GetOrNew(template);
+            var count = templates.GetOrNew(gen);
             count++;
-            templates[template] = count;
+            templates[gen] = count;
         }
 
         foreach (var (template, count) in templates)

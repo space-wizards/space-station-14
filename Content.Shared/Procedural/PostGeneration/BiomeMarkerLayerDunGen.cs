@@ -1,4 +1,5 @@
 using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Procedural.PostGeneration;
@@ -16,4 +17,13 @@ public sealed partial class BiomeMarkerLayerDunGen : IDunGenLayer
 
     [DataField(required: true)]
     public ProtoId<WeightedRandomPrototype> MarkerTemplate;
+
+    public IEnumerable<string> GetMarkers(IPrototypeManager prototypeManager, int seed)
+    {
+        var rand = new System.Random(seed);
+        for (var i = 0; i < Count; i++)
+        {
+            yield return prototypeManager.Index(MarkerTemplate).Pick(rand);
+        }
+    }
 }

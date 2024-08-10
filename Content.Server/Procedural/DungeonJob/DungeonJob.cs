@@ -192,7 +192,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 await PostGen(cabling, data, dungeons[^1], reservedTiles, random);
                 break;
             case BiomeMarkerLayerDunGen markerPost:
-                await PostGen(markerPost, data, dungeons[^1], reservedTiles, random);
+                await PostGen(markerPost, data, dungeons[^1], reservedTiles, random, seed);
                 break;
             case BiomeDunGen biome:
                 await PostGen(biome, data, dungeons[^1], reservedTiles, random);
