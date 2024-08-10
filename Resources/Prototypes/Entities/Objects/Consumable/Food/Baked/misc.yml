@@ -608,7 +608,7 @@
   name: croissant
   parent: FoodBakedBase
   id: FoodBakedCroissant
-  description: Flakey, buttery goodness.
+  description: Buttery, flaky goodness.
   components:
   - type: FlavorProfile
     flavors:

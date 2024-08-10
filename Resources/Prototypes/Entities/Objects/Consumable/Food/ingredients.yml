@@ -754,7 +754,7 @@
   name: raw croissant
   parent: FoodBakingBase
   id: FoodCroissantRaw
-  description: Buttery, flakey goodness waiting to happen.
+  description: Buttery, flaky goodness waiting to happen.
   components:
   - type: FlavorProfile
     flavors:
