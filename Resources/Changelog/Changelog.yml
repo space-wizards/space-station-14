@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: aspiringLich
-  changes:
-  - message: The Chemical, Booze, and Soda Dispensers now have updated UIs.
-    type: Add
-  id: 6574
-  time: '2024-05-10T02:37:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27831
-- author: Jajsha
-  changes:
-  - message: Emagged cyborgs no longer reveal that they have been emagged by simply
-      examining their internals.
-    type: Tweak
-  id: 6575
-  time: '2024-05-10T02:57:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27816
-- author: RiceMar
-  changes:
-  - message: Larger guns are now wieldable and suffer an inaccuracy when not wielded.
-    type: Add
-  id: 6576
-  time: '2024-05-10T02:58:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26970
-- author: Doctor-Cpu
-  changes:
-  - message: Atlas has been reworked.
-    type: Tweak
-  id: 6577
-  time: '2024-05-10T08:12:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27702
 - author: TheShuEd
   changes:
   - message: 'New events added to the game: Random ships with new ghost roles can
@@ -3794,3 +3765,31 @@
   id: 7073
   time: '2024-08-09T19:29:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28988
+- author: lzk228
+  changes:
+  - message: Hotplate works again.
+    type: Fix
+  id: 7074
+  time: '2024-08-10T01:10:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30830
+- author: EmoGarbage404
+  changes:
+  - message: Maintenance closets have more variety in what they can contain.
+    type: Tweak
+  id: 7075
+  time: '2024-08-10T02:12:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30579
+- author: Ko4erga
+  changes:
+  - message: Changed chemistry airlock color.
+    type: Tweak
+  id: 7076
+  time: '2024-08-10T03:23:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30666
+- author: Blackern5000
+  changes:
+  - message: Bent pipes now deal 8 thrown damage instead of 3.
+    type: Tweak
+  id: 7077
+  time: '2024-08-10T03:30:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30634
