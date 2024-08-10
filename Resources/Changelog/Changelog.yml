@@ -1,37 +1,4 @@
 ﻿Entries:
-- author: ike709
-  changes:
-  - message: UIs can now link to a Guidebook entry via a help button in the top right
-      corner.
-    type: Add
-  - message: Added the help button to the reagent dispenser UI.
-    type: Add
-  id: 6582
-  time: '2024-05-11T02:21:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27891
-- author: Vasilis
-  changes:
-  - message: NPC's activly being controlled by a player wont return to their AI behevior
-      if the player disconnects.
-    type: Fix
-  id: 6583
-  time: '2024-05-11T15:01:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27651
-- author: ShadowCommander
-  changes:
-  - message: Fixed screen freeze in some cases when getting gibbed or butchered.
-    type: Fix
-  id: 6584
-  time: '2024-05-11T15:03:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27617
-- author: DrSmugleaf
-  changes:
-  - message: Bullets no longer hit mobs that are in crit, unless they are directly
-      clicked on while shooting.
-    type: Tweak
-  id: 6585
-  time: '2024-05-11T15:42:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27905
 - author: metalgearsloth
   changes:
   - message: Add a reset button to character setup.
@@ -3791,3 +3758,31 @@
   id: 7081
   time: '2024-08-10T15:00:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29091
+- author: lzk228
+  changes:
+  - message: Standartized some clothing recipes.
+    type: Tweak
+  id: 7082
+  time: '2024-08-10T18:16:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29315
+- author: TheShuEd
+  changes:
+  - message: You cat cut burger bun into two halfs, and make custom burgers now!
+    type: Add
+  id: 7083
+  time: '2024-08-10T19:31:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30755
+- author: thetolbean
+  changes:
+  - message: Updated Core's boxing ring beacon label to be correct
+    type: Tweak
+  id: 7084
+  time: '2024-08-10T19:50:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30800
+- author: Flareguy
+  changes:
+  - message: Added vox sprites for most of the remaining common mask items.
+    type: Add
+  id: 7085
+  time: '2024-08-10T21:06:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30838
