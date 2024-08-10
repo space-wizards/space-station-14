@@ -648,6 +648,7 @@
 - type: entity
   parent: RealCapfruitSeeds
   id: FakeCapfruitSeeds
+  suffix: Fake
   components:
     - type: Seed
       seedId: fakecapfruit

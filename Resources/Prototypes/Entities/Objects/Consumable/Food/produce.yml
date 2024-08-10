@@ -1611,6 +1611,7 @@
   name: capfruit
   parent: FoodProduceBase
   id: FoodFakeCapfruit
+  suffix: Fake
   description: A soft but smooth gun-shaped fruit.
   components:
   - type: FlavorProfile

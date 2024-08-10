@@ -1103,3 +1103,8 @@
   id: paintthinner
   flavorType: Complex
   description: flavor-complex-paint-thinner
+
+- type: flavor
+  id: capfruit
+  flavorType: Complex
+  description: flavor-complex-capfruit
