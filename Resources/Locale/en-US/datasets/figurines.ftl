@@ -31,11 +31,11 @@ figurines-musician-2 = Never gonna let you down!
 
 figurines-captain-1 = Glory to NT!
 figurines-captain-2 = How did I get hired? Yes.
-figurines-captain-3 = The nuclear disk is secure, where? somewhere.
+figurines-captain-3 = The nuclear disk is secure, where? Somewhere.
 
 figurines-hos-1 = Space law? What?
 figurines-hos-2 = Shoot the clown.
-figurines-hos-3 = Yes, I shot the clown. no, I don't regret it.
+figurines-hos-3 = Yes, I shot the clown. No, I don't regret it.
 
 figurines-warden-1 = Execute him for breaking in!
 figurines-warden-2 = Perma the fucker for insulting me!
