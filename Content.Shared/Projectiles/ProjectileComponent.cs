@@ -73,4 +73,7 @@ public sealed partial class ProjectileComponent : Component
     /// </summary>
     [DataField]
     public bool DamagedEntity;
+
+    [DataField]
+    public bool Breach = false;
 }
