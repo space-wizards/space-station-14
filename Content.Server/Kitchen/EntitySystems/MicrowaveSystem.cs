@@ -251,7 +251,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             //stack for storing containers to remove
             Stack<EntityUid> entsToRemove = new Stack<EntityUid>();
-            //looking for food type  container  that  are  empty  and pushing  them to a stack, EGGHELL IS REAL
+            //looking for food type  container  that  are  empty  and pushing  them to a stack so they can be deleted later
             foreach (var item in component.Storage.ContainedEntities)
             {
                 if (!TryComp<SolutionContainerManagerComponent>(item, out var solMan))
@@ -273,8 +273,8 @@ namespace Content.Server.Kitchen.EntitySystems
 
 
             }
-            //removing food type  containers stored in the stack and spawning the trash version of the container if possible
-            while (entsToRemove.Count  > 0)
+            //removing food type containers stored in the stack so they dont remain after being used in cooking and spawning the trash version of the container if possible
+            while (entsToRemove.Count > 0)
             {
                 var entToRemove = entsToRemove.Pop();
                 _container.Remove(entToRemove, component.Storage);
