@@ -49,6 +49,18 @@ public sealed partial class FoodSequenceStartPointComponent : Component
 
     public HashSet<string> RevealedLayers = new();
 
+    /// <summary>
+    /// target layer, where new layers will be added. This allows you to control the order of generative layers and static layers.
+    /// </summary>
+    [DataField]
+    public string TargetLayerMap = "foodSequenceLayers";
+
+    /// <summary>
+    /// If true, the generative layers will be placed in reverse order.
+    /// </summary>
+    [DataField]
+    public bool InverseLayers;
+
     [DataField]
     public string Solution = "food";
 

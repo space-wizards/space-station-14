@@ -9,6 +9,7 @@
   - type: Item
     storedRotation: -90
   - type: Food
+    transferAmount: 3
   - type: Sprite
     sprite: Objects/Consumable/Food/taco.rsi
     layers:
@@ -19,7 +20,15 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6.66 # Just using the same values as the bun values, since the recipe for taco shells is roughly the same as buns.
+          Quantity: 6.66
+  #- type: FoodSequenceStartPoint
+  #  key: taco
+  #  maxLayers: 3
+  #  startPosition: 0, 0
+  #  offset: 0, 0
+  #  nameGeneration: food-sequence-standart-gen
+  #  nameSuffix: food-sequence-burger-suffix
+  #- type: Appearance
 # Base
 
 - type: entity
@@ -32,7 +41,6 @@
       - meaty
       - cheesy
   - type: Food
-    transferAmount: 3
   - type: Sprite
     sprite: Objects/Consumable/Food/taco.rsi
   - type: SolutionContainerManager

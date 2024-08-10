@@ -43,9 +43,13 @@ public sealed class ClientFoodSequenceSystem : SharedFoodSequenceSystem
             var keyCode = $"food-layer-{counter}";
             start.Comp.RevealedLayers.Add(keyCode);
 
-            var index = sprite.LayerMapReserveBlank(keyCode);
+            sprite.LayerMapTryGet(start.Comp.TargetLayerMap, out var index);
 
-            //Set image
+            if (start.Comp.InverseLayers)
+                index++;
+            
+            sprite.AddBlankLayer(index);
+            sprite.LayerMapSet(keyCode, index);
             sprite.LayerSetSprite(index, state.Sprite);
 
             //Offset the layer

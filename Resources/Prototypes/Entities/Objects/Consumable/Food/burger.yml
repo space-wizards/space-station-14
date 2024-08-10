@@ -40,8 +40,10 @@
     sprite: Objects/Consumable/Food/burger.rsi
     layers:
     - state: bun_bottom
+    - map: ["foodSequenceLayers"]
   - type: FoodSequenceStartPoint
     key: burger
+    inverseLayers: true
     maxLayers: 20
     startPosition: 0, 0
     offset: 0, 0.1
