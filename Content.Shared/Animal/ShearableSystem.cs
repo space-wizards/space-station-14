@@ -1,4 +1,3 @@
-using Content.Shared.Animals;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
@@ -17,7 +16,7 @@ namespace Content.Shared.Animals;
 ///     Lets an entity be sheared by a tool to consume a reagent to spawn an amount of an item.
 ///     For example, sheep can be sheared to consume woolSolution to spawn cotton.
 /// </summary>
-public sealed class ShearableSystem : EntitySystem
+public sealed class SharedShearableSystem : EntitySystem
 {
     [Dependency]
     private readonly SharedToolSystem _tool = default!;
@@ -45,12 +44,18 @@ public sealed class ShearableSystem : EntitySystem
     /// <summary>
     ///     Checks if the target entity can currently be sheared.
     /// </summary>
+    /// <param name="targetEntity">The shearable entity that will be checked.</param>
+    /// <param name="comp">The shearable component (e.g. ent.Comp).</param>
+    /// <param name="usedItem">The held item that is being used to shear the target entity.</param>
     /// <returns>
     ///     A <c>ShearableComponent.CheckShearReturns</c> enum of the result.
     /// </returns>
-    /// <seealso cref="ShearableComponent.CheckShearReturns"> </seealso>
-    ///
-    public ShearableComponent.CheckShearReturns CheckShear(EntityUid targetEntity, ShearableComponent comp, EntityUid? usedItem)
+    /// <seealso cref="ShearableComponent.CheckShearReturns"/>
+    public ShearableComponent.CheckShearReturns CheckShear(
+        EntityUid targetEntity,
+        ShearableComponent comp,
+        EntityUid? usedItem
+    )
     {
         if (
             // Is the player holding an item?
@@ -120,62 +125,56 @@ public sealed class ShearableSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Handles shearing when left-click the entity.
-    ///     Only checks if there's an item being held and that is has the specified quality,
-    ///     then calls AttemptShear()
+    ///     Handles shearing when the player left-clicks an entity.
+    ///     Doesn't run any checks, those are handled by AttemptShear.
     /// </summary>
     private void OnClicked(Entity<ShearableComponent> ent, ref InteractUsingEvent args)
     {
-        // Run all shearing checks.
-        switch (CheckShear(ent.Owner, ent.Comp, args.Used))
-        {
-            // ALL SYSTEMS GO!
-            case ShearableComponent.CheckShearReturns.Success:
-                AttemptShear(ent.Owner, args.User, args.Used);
-                break;
-
-            case ShearableComponent.CheckShearReturns.InsufficientSolution:
-                // Create a stack object so we can reference its name in localisation.
-                _prototypeManager.TryIndex(ent.Comp.ShearedProductID, out var shearedProductStack);
-                if (shearedProductStack == null)
-                {
-                    // Whatever, this animal has an invalid product defined and it's already logged so  just fail silently.
-                    break;
-                }
-                // NO WOOL LEFT.
-                _popup.PopupEntity(
-                    Loc.GetString(
-                        "shearable-system-no-product",
-                        ("target", Identity.Entity(ent.Owner, EntityManager)),
-                        ("product", shearedProductStack.Name)
-                    ),
-                    ent.Owner,
-                    args.User
-                );
-                break;
-        }
+        // All checks run from AttemptShear.
+        AttemptShear(ent, args.User, args.Used);
     }
 
     /// <summary>
     ///     Attempts to shear the target animal, checking if it is shearable and building arguments for calling TryStartDoAfter.
     ///     Called by the "shear" verb.
     /// </summary>
-    private void AttemptShear(Entity<ShearableComponent?> shearable, EntityUid userUid, EntityUid containerUid)
+    private void AttemptShear(Entity<ShearableComponent> ent, EntityUid userUid, EntityUid toolUsed)
     {
-        // Check the target creature has the shearable component.
-        if (!Resolve(shearable, ref shearable.Comp))
-            return;
+        // Run all shearing checks.
+        switch (CheckShear(ent, ent.Comp, toolUsed))
+        {
+            case ShearableComponent.CheckShearReturns.Success:
+                // ALL SYSTEMS GO!
+                break;
+            case ShearableComponent.CheckShearReturns.WrongTool:
+                return;
+            case ShearableComponent.CheckShearReturns.SolutionError:
+                return;
+            case ShearableComponent.CheckShearReturns.StackError:
+                return;
+            case ShearableComponent.CheckShearReturns.InsufficientSolution:
+                // Create a stack object so we can reference its name in localisation.
+                _prototypeManager.TryIndex(ent.Comp.ShearedProductID, out var shearedProductStack);
+                if (shearedProductStack == null)
+                {
+                    // Whatever, this animal has an invalid product defined and it's already logged so just fail silently.
+                    return;
+                }
+                // NO WOOL LEFT.
+                _popup.PopupClient(
+                    Loc.GetString(
+                        "shearable-system-no-product",
+                        ("target", Identity.Entity(ent.Owner, EntityManager)),
+                        ("product", shearedProductStack.Name)
+                    ),
+                    ent.Owner,
+                    userUid
+                );
+                return;
+        }
 
         // Build arguments for calling TryStartDoAfter
-        var doargs = new DoAfterArgs(
-            EntityManager,
-            userUid,
-            5,
-            new ShearingDoAfterEvent(),
-            shearable,
-            shearable,
-            used: containerUid
-        )
+        var doargs = new DoAfterArgs(EntityManager, userUid, 5, new ShearingDoAfterEvent(), ent, ent, used: toolUsed)
         {
             BreakOnMove = true,
             BreakOnDamage = true,
@@ -210,7 +209,7 @@ public sealed class ShearableSystem : EntitySystem
             {
                 Act = () =>
                 {
-                    AttemptShear(uid, user, used);
+                    AttemptShear(ent, user, used);
                 },
                 Text = Loc.GetString("shearable-system-verb-shear"),
                 Icon = new SpriteSpecifier.Texture(

@@ -15,6 +15,9 @@ public sealed class ShearableSystem : EntitySystem
     private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
     [Dependency]
+    private readonly SharedShearableSystem _sharedShearableSystem = default!;
+
+    [Dependency]
     private readonly IPrototypeManager _prototypeManager = default!;
 
     [Dependency]
@@ -32,14 +35,47 @@ public sealed class ShearableSystem : EntitySystem
 
     /// <summary>
     ///     Called by the ShearingDoAfter event.
-    ///     Checks the action hasn't been cancelled, already handled, and that there's an item in the player's hand.
-    ///     Checks that the target shearable creature contains a shearable solution.
-    ///     Performs solution calcuations, then creates a corresponding pop-up message, and if successful spawns shearedProductID under the shearable creature.
+    ///     Checks for shearbility using the CheckShear method.
+    ///     This method is held server-side because the shared method is unable to spawn stacks.
     /// </summary>
     private void OnSheared(Entity<ShearableComponent> ent, ref ShearingDoAfterEvent args)
     {
+        // Run all shearing checks.
+        // This might be duplicated, but it helps avoid client-side exploits or accidental duplication by two people shearing the same animal.
+        switch (_sharedShearableSystem.CheckShear(ent, ent.Comp, args.Used))
+        {
+            case ShearableComponent.CheckShearReturns.Success:
+                // ALL SYSTEMS GO!
+                break;
+            case ShearableComponent.CheckShearReturns.WrongTool:
+                return;
+            case ShearableComponent.CheckShearReturns.SolutionError:
+                return;
+            case ShearableComponent.CheckShearReturns.StackError:
+                return;
+            case ShearableComponent.CheckShearReturns.InsufficientSolution:
+                // Create a stack object so we can reference its name in localisation.
+                _prototypeManager.TryIndex(ent.Comp.ShearedProductID, out var tmpShearedProductStack);
+                if (tmpShearedProductStack == null)
+                {
+                    // Whatever, this animal has an invalid product defined and it's already logged so just fail silently.
+                    return;
+                }
+                // NO WOOL LEFT.
+                _popup.PopupClient(
+                    Loc.GetString(
+                        "shearable-system-no-product",
+                        ("target", Identity.Entity(ent.Owner, EntityManager)),
+                        ("product", tmpShearedProductStack.Name)
+                    ),
+                    ent,
+                    args.User
+                );
+                return;
+        }
+
         // Check the action hasn't been cancelled, or hasn't already been handled, or that the player's hand is empty.
-        if (args.Cancelled || args.Handled || args.Args.Used == null)
+        if (args.Cancelled || args.Handled)
             return;
 
         // Resolves the targetSolutionName as a solution inside the shearable creature. Outputs the "solution" variable.
