@@ -22,7 +22,6 @@ artifact-effect-hint-polymorph = Transmogrificational activity
 artifact-effect-hint-magnet = Magnetic waves
 artifact-effect-hint-visual = Visual distortions
 
-
 # the triggers should be more obvious than the effects
 # gives people an idea of what to do: don't be too specific (i.e. no "welders")
 
@@ -45,4 +44,3 @@ artifact-trigger-hint-ph = Extreme pH level
 artifact-trigger-hint-bioreactive = Bioreactive chemicals
 artifact-trigger-hint-energetic = Highly energetic chemicals
 # this one may be bad
-
