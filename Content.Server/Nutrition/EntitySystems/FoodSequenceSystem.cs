@@ -43,20 +43,21 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
             return false;
 
         //if we run out of space, we can still put in one last, final finishing element.
-        if (start.Comp.FoodLayers.Count >= start.Comp.MaxLayers && !elementData.Value.Final || start.Comp.Finished)
+        if (start.Comp.FoodLayers.Count >= start.Comp.MaxLayers && !elementData.Final || start.Comp.Finished)
         {
             if (user is not null)
                 _popup.PopupEntity(Loc.GetString("food-sequence-no-space"), start, user.Value);
             return false;
         }
 
-        if (elementData.Value.Sprite is not null)
-        {
-            start.Comp.FoodLayers.Add(elementData.Value);
-            Dirty(start);
-        }
+        //If no specific sprites are specified, standard sprites will be used.
+        if (elementData.Sprite is null && element.Comp.Sprite is not null)
+            elementData.Sprite = element.Comp.Sprite;
 
-        if (elementData.Value.Final)
+        start.Comp.FoodLayers.Add(elementData);
+        Dirty(start);
+
+        if (elementData.Final)
             start.Comp.Finished = true;
 
         UpdateFoodName(start);

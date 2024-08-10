@@ -18,12 +18,12 @@
         - ReagentId: THC
           Quantity: 15
   - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Specific/Hydroponics/cannabis.rsi
+      state: produce
     entries:
       burger:
         name: food-sequence-burger-content-cannabis
-        sprite:
-          sprite: Objects/Specific/Hydroponics/cannabis.rsi
-          state: produce
 
 
 - type: entity
@@ -45,12 +45,12 @@
     sprite: Objects/Specific/Hydroponics/tobacco.rsi
     state: dried
   - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Specific/Hydroponics/tobacco.rsi
+      state: dried
     entries:
       burger:
         name: food-sequence-burger-content-cannabis
-        sprite:
-          sprite: Objects/Specific/Hydroponics/tobacco.rsi
-          state: dried
 
 - type: entity
   name: ground cannabis
@@ -119,12 +119,12 @@
         - ReagentId: Psicodine
           Quantity: 0.6
   - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+      state: produce
     entries:
       burger:
         name: food-sequence-burger-content-rainbow-cannabis
-        sprite:
-          sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
-          state: produce
 
 - type: entity
   name: dried rainbow cannabis leaves
@@ -156,12 +156,12 @@
     sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
     state: dried
   - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+      state: dried
     entries:
       burger:
         name: food-sequence-burger-content-rainbow-cannabis
-        sprite:
-          sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
-          state: dried
 
 - type: entity
   name: ground rainbow cannabis
@@ -196,12 +196,12 @@
     graph: smokeableGroundCannabisRainbow
     node: groundRainbow
   - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+      state: powderpile_rainbow
     entries:
       burger:
         name: food-sequence-burger-content-rainbow-cannabis
-        sprite:
-          sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
-          state: powderpile_rainbow
 
 - type: entity
   name: tobacco leaves
@@ -260,10 +260,3 @@
       - Smokable
   - type: Item
     size: Tiny
-  - type: FoodSequenceElement
-    entries:
-      burger:
-        name: food-sequence-burger-content-tobacco
-        sprite:
-          sprite: Objects/Misc/reagent_fillings.rsi
-          state: powderpile

@@ -21,10 +21,16 @@ public sealed partial class FoodSequenceElementComponent : Component
     /// </summary>
     [DataField]
     public string Solution = "food";
+
+    /// <summary>
+    /// state used to generate the appearance of the added layer
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier? Sprite;
 }
 
 [DataRecord, Serializable, NetSerializable]
-public partial record struct FoodSequenceElementEntry()
+public sealed class FoodSequenceElementEntry
 {
     /// <summary>
     /// A localized name piece to build into the item name generator.
@@ -32,7 +38,7 @@ public partial record struct FoodSequenceElementEntry()
     public LocId? Name { get; set; } = null;
 
     /// <summary>
-    /// state used to generate the appearance of the added layer
+    /// overriding default sprite
     /// </summary>
     public SpriteSpecifier? Sprite { get; set; } = null;
 
