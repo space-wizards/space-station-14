@@ -116,7 +116,6 @@
   - type: Physics
     bodyType: Static
   - type: InteractionOutline
-  - type: Examinable
   - type: Sprite
     sprite: Mobs/Aliens/Asteroid/goliath.rsi
     layers:
