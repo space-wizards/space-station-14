@@ -28,7 +28,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     {
         // This is so entities that shouldn't get a collision are ignored.
         if (args.OurFixtureId != ProjectileFixture || !args.OtherFixture.Hard
-            || component.DamagedEntity || component is { Weapon: null, OnlyCollideWhenShot: true })
+            || component.DamagedEntity.Contains(args.OtherEntity) || component is { Weapon: null, OnlyCollideWhenShot: true })
             return;
 
         var target = args.OtherEntity;
@@ -67,6 +67,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             _sharedCameraRecoil.KickCamera(target, direction);
         }
 
+        component.DamagedEntity.Add(args.OtherEntity);
         if (component is { DeleteOnCollide: true, Breach: false } || component.DeleteOnCollide && !EntityManager.IsQueuedForDeletion(target))
         {
             QueueDel(uid);
