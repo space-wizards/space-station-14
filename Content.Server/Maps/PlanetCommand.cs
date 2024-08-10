@@ -55,6 +55,7 @@ public sealed class PlanetCommand : IConsoleCommand
 
         if (!_protoManager.TryIndex<BiomeTemplatePrototype>(args[1], out var biomeTemplate))
         {
+            // WARNING: Localized string is not defined and could result in missing/incorrect translations.
             shell.WriteError(Loc.GetString("cmd-planet-map-prototype", ("prototype", args[1])));
             return;
         }

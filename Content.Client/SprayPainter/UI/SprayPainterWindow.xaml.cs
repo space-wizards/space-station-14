@@ -35,6 +35,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
     private static string GetColorLocString(string? colorKey)
     {
         if (string.IsNullOrEmpty(colorKey))
+            // WARNING: Localized string is not defined and could result in missing/incorrect translations.
             return Loc.GetString("pipe-painter-no-color-selected");
         var locKey = colorLocKeyPrefix + colorKey;
 

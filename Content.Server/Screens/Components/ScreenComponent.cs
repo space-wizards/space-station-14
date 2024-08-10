@@ -12,6 +12,7 @@ public sealed partial class ScreenComponent : Component
 public sealed class ScreenMasks
 {
     public static readonly string Text = Loc.GetString("screen-text");
+    // WARNING: Localized string is not defined and could result in missing/incorrect translations.
     public static readonly string Color = Loc.GetString("screen-color");
 }
 

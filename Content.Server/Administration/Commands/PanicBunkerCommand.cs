@@ -187,6 +187,7 @@ public sealed class PanicBunkerMinOverallMinutesCommand : LocalizedCommands
         }
 
         _cfg.SetCVar(CCVars.PanicBunkerMinOverallMinutes, minutes);
+        // WARNING: Localized string is not defined and could result in missing/incorrect translations.
         shell.WriteLine(Loc.GetString("panicbunker-command-overall-minutes-age-set", ("minutes", minutes)));
     }
 }

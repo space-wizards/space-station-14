@@ -134,6 +134,7 @@ public sealed class BabyJailMinOverallHoursCommand : LocalizedCommands
         }
 
         _cfg.SetCVar(CCVars.BabyJailMaxOverallMinutes, hours);
+        // WARNING: Localized string is not defined and could result in missing/incorrect translations.
         shell.WriteLine(Loc.GetString("babyjail-command-overall-minutes-set", ("hours", hours)));
     }
 }

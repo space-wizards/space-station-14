@@ -12,6 +12,7 @@ internal sealed class UpgradeActionCommand : IConsoleCommand
 
     public string Command => "upgradeaction";
     public string Description => Loc.GetString("upgradeaction-command-description");
+    // WARNING: Localized string is not defined and could result in missing/incorrect translations.
     public string Help => Loc.GetString("upgradeaction-command-help");
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)

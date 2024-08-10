@@ -46,12 +46,14 @@ namespace Content.Server.Sandbox.Commands
 
             if (!_entManager.TryGetComponent(eUid, out NodeContainerComponent? nodeContainerComponent))
             {
+                // WARNING: Localized string is not defined and could result in missing/incorrect translations.
                 shell.WriteLine(Loc.GetString("shell-entity-is-not-node-container"));
                 return;
             }
 
             if (!Enum.TryParse(args[1], out NodeGroupID nodeGroupId))
             {
+                // WARNING: Localized string is not defined and could result in missing/incorrect translations.
                 shell.WriteLine(Loc.GetString("shell-node-group-is-invalid"));
                 return;
             }

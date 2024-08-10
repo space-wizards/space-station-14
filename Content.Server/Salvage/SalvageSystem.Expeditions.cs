@@ -129,6 +129,7 @@ public sealed partial class SalvageSystem
     {
         var component = expedition.Comp;
         component.NextOffer = _timing.CurTime + TimeSpan.FromSeconds(_cooldown);
+        // WARNING: Localized string is not defined and could result in missing/incorrect translations.
         Announce(uid, Loc.GetString("salvage-expedition-mission-completed"));
         component.ActiveMission = 0;
         component.Cooldown = true;
