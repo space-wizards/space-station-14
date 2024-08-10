@@ -67,10 +67,10 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             _sharedCameraRecoil.KickCamera(target, direction);
         }
 
-        component.DamagedEntity = true;
-
-        if (component.DeleteOnCollide)
+        if (component is { DeleteOnCollide: true, Health: true } || component.DeleteOnCollide && !EntityManager.IsQueuedForDeletion(target))
+        {
             QueueDel(uid);
+        }
 
         if (component.ImpactEffect != null && TryComp(uid, out TransformComponent? xform))
         {
