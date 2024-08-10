@@ -14,7 +14,7 @@ public sealed partial class DefusableComponent : Component
     ///     The bomb will play this sound on defusal.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly), DataField("defusalSound")]
-    public SoundSpecifier DefusalSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
+    public SoundSpecifier DefusalSound = new SoundPathSpecifier("/Audio/Announcements/notice2.ogg");
 
     /// <summary>
     ///     The bomb will play this sound on bolt.

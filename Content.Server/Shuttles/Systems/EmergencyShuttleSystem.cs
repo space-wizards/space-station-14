@@ -277,7 +277,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid)} unable to dock with station {ToPrettyString(stationUid)}");
             _chatSystem.DispatchStationAnnouncement(stationUid, Loc.GetString("emergency-shuttle-good-luck"), playDefaultSound: false);
             // TODO: Need filter extensions or something don't blame me.
-            _audio.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast(), true);
+            _audio.PlayGlobal("/Audio/Announcements/notice1.ogg", Filter.Broadcast(), true);
             return;
         }
 
@@ -326,7 +326,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
             _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid)} unable to find a valid docking port for {ToPrettyString(stationUid)}");
             // TODO: Need filter extensions or something don't blame me.
-            _audio.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast(), true);
+            _audio.PlayGlobal("/Audio/Announcements/notice1.ogg", Filter.Broadcast(), true);
         }
     }
 

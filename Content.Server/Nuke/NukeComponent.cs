@@ -73,10 +73,10 @@ namespace Content.Server.Nuke
         public SoundSpecifier AlertSound = new SoundPathSpecifier("/Audio/Machines/Nuke/nuke_alarm.ogg");
 
         [DataField("armSound")]
-        public SoundSpecifier ArmSound = new SoundPathSpecifier("/Audio/Misc/notice1.ogg");
+        public SoundSpecifier ArmSound = new SoundPathSpecifier("/Audio/Announcements/notice1.ogg");
 
         [DataField("disarmSound")]
-        public SoundSpecifier DisarmSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
+        public SoundSpecifier DisarmSound = new SoundPathSpecifier("/Audio/Announcements/notice2.ogg");
 
         [DataField("armMusic")]
         public SoundSpecifier ArmMusic = new SoundCollectionSpecifier("NukeMusic");
