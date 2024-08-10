@@ -32,7 +32,7 @@ reagent-name-mute-toxin = mute toxin
 reagent-desc-mute-toxin = A thick chemical that coats the vocal cords, making the user unable to speak during metabolization.
 
 reagent-name-norepinephric-acid = norepinephric acid
-reagent-desc-norepinephric-acid = A smooth chemical that blocks the optical receptors, rendering the user blind during metabolization.
+reagent-desc-norepinephric-acid = A smooth chemical that blocks the optical receptors, rendering the user blind during metabolization. pH = 3
 
 reagent-name-tear-gas = tear gas
 reagent-desc-tear-gas = A chemical that causes severe irritation and crying, commonly used in riot control.
