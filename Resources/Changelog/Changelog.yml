@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Vasilis
-  changes:
-  - message: NPC's activly being controlled by a player wont return to their AI behevior
-      if the player disconnects.
-    type: Fix
-  id: 6583
-  time: '2024-05-11T15:01:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27651
 - author: ShadowCommander
   changes:
   - message: Fixed screen freeze in some cases when getting gibbed or butchered.
@@ -3788,3 +3780,10 @@
   id: 7082
   time: '2024-08-10T18:16:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29315
+- author: TheShuEd
+  changes:
+  - message: You cat cut burger bun into two halfs, and make custom burgers now!
+    type: Add
+  id: 7083
+  time: '2024-08-10T19:31:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30755
