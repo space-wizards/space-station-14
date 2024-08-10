@@ -2,10 +2,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
-using Content.Shared.Chemistry.Reagent;
 using System.Linq;
 using Content.Shared.Atmos;
-using FastAccessors;
 
 namespace Content.Server.Botany;
 
@@ -42,6 +40,7 @@ public sealed class MutationSystem : EntitySystem
         // Add up everything in the bits column and put the number here.
         const int totalbits = 275;
 
+        #pragma warning disable IDE0055 // disable formatting warnings because this looks more readable
         // Tolerances (55)
         MutateFloat(ref seed.NutrientConsumption  , 0.05f, 1.2f, 5, totalbits, severity);
         MutateFloat(ref seed.WaterConsumption     , 3f   , 9f  , 5, totalbits, severity);
@@ -75,6 +74,7 @@ public sealed class MutationSystem : EntitySystem
         MutateBool(ref seed.TurnIntoKudzu , true , 10, totalbits, severity);
         MutateBool(ref seed.CanScream     , true , 10, totalbits, severity);
         seed.BioluminescentColor = RandomColor(seed.BioluminescentColor, 10, totalbits, severity);
+        #pragma warning restore IDE0055
 
         // ConstantUpgade (10)
         MutateHarvestType(ref seed.HarvestRepeat, 10, totalbits, severity);
@@ -261,7 +261,7 @@ public sealed class MutationSystem : EntitySystem
         {
             var pick = _randomChems.Pick(_robustRandom);
             string chemicalId = pick.reagent;
-            int amount = _robustRandom.Next(1, ((int)pick.quantity));
+            int amount = _robustRandom.Next(1, (int)pick.quantity);
             SeedChemQuantity seedChemQuantity = new SeedChemQuantity();
             if (chemicals.ContainsKey(chemicalId))
             {
@@ -274,7 +274,7 @@ public sealed class MutationSystem : EntitySystem
                 seedChemQuantity.Max = 1 + amount;
                 seedChemQuantity.Inherent = false;
             }
-            int potencyDivisor = (int) Math.Ceiling(100.0f / seedChemQuantity.Max);
+            int potencyDivisor = (int)Math.Ceiling(100.0f / seedChemQuantity.Max);
             seedChemQuantity.PotencyDivisor = potencyDivisor;
             chemicals[chemicalId] = seedChemQuantity;
         }

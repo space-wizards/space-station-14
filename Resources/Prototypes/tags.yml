@@ -510,6 +510,9 @@
   id: DiscreteHealthAnalyzer #So construction recipes don't eat medical PDAs
 
 - type: Tag
+  id: DNASolutionScannable
+
+- type: Tag
   id: DockArrivals
 
 - type: Tag
@@ -541,6 +544,9 @@
 
 - type: Tag
   id: DrinkCan
+
+- type: Tag
+  id: DrinkGlass
 
 - type: Tag
   id: DrinkSpaceGlue
@@ -763,6 +769,9 @@
 
 - type: Tag
   id: Igniter
+
+- type: Tag
+  id: Ingredient
 
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete

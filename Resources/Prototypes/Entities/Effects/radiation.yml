@@ -1,7 +1,7 @@
 - type: entity
   name: shimmering anomaly
   id: RadiationPulse
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   description: Looking at this anomaly makes you feel strange, like something is pushing at your eyes.
   components:
   - type: RadiationSource
