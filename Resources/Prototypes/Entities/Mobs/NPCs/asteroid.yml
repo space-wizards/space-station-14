@@ -147,6 +147,7 @@
     anchored: True
   - type: Physics
     bodyType: Static
+    canCollide: false
   - type: Sprite
     sprite: Mobs/Aliens/Asteroid/goliath.rsi
   - type: InteractionOutline
