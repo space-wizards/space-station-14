@@ -141,9 +141,9 @@ public abstract class SharedRoleSystem : EntitySystem
     }
 
     //TODO:ERRANT. testing
-    public void SetMindRole(EntityUid ent, RoleTypePrototype role)
+    public void SetRoleType(EntityUid ent, RoleTypePrototype role)
     {
-        var comp = CheckMindRoles(ent);
+        var comp = CheckRoleTypes(ent);
 
         if ( comp is null || comp.OwnedEntity is null)
             return;
@@ -154,7 +154,7 @@ public abstract class SharedRoleSystem : EntitySystem
         Dirty(comp.Owner, comp); //TODO:ERRANT remove obsolete
     }
 
-    public MindComponent? CheckMindRoles(EntityUid ent)
+    public MindComponent? CheckRoleTypes(EntityUid ent)
     {
 
         if (TryComp<MindComponent>(ent, out var mind))
@@ -164,7 +164,7 @@ public abstract class SharedRoleSystem : EntitySystem
         else if (TryComp<MindContainerComponent>(ent, out var container))
         {
             if (container.HasMind)
-                return(CheckMindRoles(container.Mind.Value));
+                return(CheckRoleTypes(container.Mind.Value));
         }
 
         return (null);

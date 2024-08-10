@@ -242,8 +242,8 @@ namespace Content.Server.Administration.Systems
             {
                 if (TryComp<MindComponent>(mindId, out var mindComp))
                 {
-                    var b = _proto.TryIndex(mindComp.RoleType.RoleId, out var def);
-                    // roleType =
+                    if (_proto.TryIndex(mindComp.RoleType.RoleId, out var role))
+                        roleType = role;
 
                     roleDetails = mindComp.RoleType.Details;
                 }

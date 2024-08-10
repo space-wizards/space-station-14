@@ -354,12 +354,16 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             }
 
             _mind.TransferTo(curMind.Value, antagEnt, ghostCheckOverride: true);
+
+            // Update the mind's Role Type
+            if (def.RoleId is not null && _proto.TryIndex(def.RoleId, out var roleType))
+                _role.SetRoleType(curMind.Value, roleType);
+            //TODO:ERRANT. LATER: Put Role Types on the mind role components instead, so they can persist
+
+            // Add individual Antagonist Roles to the MindEntity.
+            // PlayerInfo update for the Admin Panel is also triggered from this call
             _role.MindAddRoles(curMind.Value, def.MindComponents, null, true);
             ent.Comp.SelectedMinds.Add((curMind.Value, Name(player)));
-
-            if (def.RoleId is not null && _proto.TryIndex(def.RoleId, out var roleType))
-                _role.SetMindRole(curMind.Value, roleType);
-                //TODO:ERRANT. LATER: Put RoleType on the mind role components instead so they are persistent
 
             SendBriefing(session, def.Briefing);
         }
