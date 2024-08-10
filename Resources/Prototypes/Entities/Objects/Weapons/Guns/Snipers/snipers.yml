@@ -66,7 +66,7 @@
 
 - type: entity
   name: musket
-  parent: BaseWeaponSniper
+  parent: [BaseWeaponSniper, BaseGunWieldable]
   id: Musket
   description: This should've been in a museum long before you were born. Uses .60 anti-materiel ammo.
   components:

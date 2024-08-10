@@ -30,7 +30,6 @@
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Reflect
-    enabled: true
     reflectProb: .1
     spread: 90
   - type: Item
@@ -155,7 +154,7 @@
   - type: DisarmMalus
 
 - type: entity
-  name: The Throngler
+  name: Throngler
   parent: BaseSword
   id: Throngler
   description: Why would you make this?
@@ -175,10 +174,12 @@
       soundHit:
         path: /Audio/Effects/explosion_small1.ogg
     - type: Reflect
-      enabled: true
       reflectProb: .25
       spread: 90
     - type: Item
       size: Ginormous
       sprite: Objects/Weapons/Melee/Throngler-in-hand.rsi
     - type: DisarmMalus
+    - type: Grammar
+      attributes:
+        proper: true

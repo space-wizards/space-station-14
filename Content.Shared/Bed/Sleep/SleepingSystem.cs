@@ -34,8 +34,8 @@ public sealed partial class SleepingSystem : EntitySystem
     [Dependency] private readonly SharedEmitSoundSystem _emitSound = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
 
-    public static readonly ProtoId<EntityPrototype> SleepActionId = "ActionSleep";
-    public static readonly ProtoId<EntityPrototype> WakeActionId = "ActionWake";
+    public static readonly EntProtoId SleepActionId = "ActionSleep";
+    public static readonly EntProtoId WakeActionId = "ActionWake";
 
     public override void Initialize()
     {

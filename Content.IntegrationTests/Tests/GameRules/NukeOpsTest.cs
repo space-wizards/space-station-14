@@ -5,7 +5,6 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
-using Content.Server.Pinpointer;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
@@ -18,6 +17,8 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.NPC.Systems;
 using Content.Shared.NukeOps;
+using Content.Shared.Pinpointer;
+using Content.Shared.Station.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map.Components;
@@ -104,8 +105,6 @@ public sealed class NukeOpsTest
         // Maps now exist
         Assert.That(entMan.Count<MapComponent>(), Is.GreaterThan(0));
         Assert.That(entMan.Count<MapGridComponent>(), Is.GreaterThan(0));
-        Assert.That(entMan.Count<StationDataComponent>(), Is.EqualTo(2)); // The main station & nukie station
-        Assert.That(entMan.Count<StationMemberComponent>(), Is.GreaterThan(3)); // Each station has at least 1 grid, plus some shuttles
         Assert.That(entMan.Count<StationCentcommComponent>(), Is.EqualTo(1));
 
         // And we now have nukie related components
@@ -159,7 +158,6 @@ public sealed class NukeOpsTest
         {
             Assert.That(entMan.EntityExists(grid));
             Assert.That(entMan.HasComponent<MapGridComponent>(grid));
-            Assert.That(entMan.HasComponent<StationMemberComponent>(grid));
         }
         Assert.That(entMan.EntityExists(ruleComp.TargetStation));
 
@@ -180,12 +178,7 @@ public sealed class NukeOpsTest
             }
         }
 
-        Assert.That(entMan.EntityExists(nukieStationEnt));
-        var nukieStation = entMan.GetComponent<StationMemberComponent>(nukieStationEnt!.Value);
-
-        Assert.That(entMan.EntityExists(nukieStation.Station));
-        Assert.That(nukieStation.Station, Is.Not.EqualTo(ruleComp.TargetStation));
-
+        Assert.That(!entMan.EntityExists(nukieStationEnt)); // its not supposed to be a station!
         Assert.That(server.MapMan.MapExists(gridsRule.Map));
         var nukieMap = mapSys.GetMap(gridsRule.Map!.Value);
 
@@ -195,7 +188,6 @@ public sealed class NukeOpsTest
         Assert.That(targetMap, Is.Not.EqualTo(nukieMap));
 
         Assert.That(entMan.GetComponent<TransformComponent>(player).MapUid, Is.EqualTo(nukieMap));
-        Assert.That(entMan.GetComponent<TransformComponent>(nukieStationEnt.Value).MapUid, Is.EqualTo(nukieMap));
         Assert.That(entMan.GetComponent<TransformComponent>(nukieShuttlEnt).MapUid, Is.EqualTo(nukieMap));
 
         // The maps are all map-initialized, including the player
@@ -209,7 +201,6 @@ public sealed class NukeOpsTest
         Assert.That(LifeStage(player), Is.GreaterThan(EntityLifeStage.Initialized));
         Assert.That(LifeStage(nukieMap), Is.GreaterThan(EntityLifeStage.Initialized));
         Assert.That(LifeStage(targetMap), Is.GreaterThan(EntityLifeStage.Initialized));
-        Assert.That(LifeStage(nukieStationEnt.Value), Is.GreaterThan(EntityLifeStage.Initialized));
         Assert.That(LifeStage(nukieShuttlEnt), Is.GreaterThan(EntityLifeStage.Initialized));
         Assert.That(LifeStage(ruleComp.TargetStation), Is.GreaterThan(EntityLifeStage.Initialized));
 

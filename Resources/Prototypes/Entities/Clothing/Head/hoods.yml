@@ -89,7 +89,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatHoodChaplainHood
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: chaplain's hood
   description: Maximum piety in this star system.
   components:
@@ -155,6 +155,7 @@
       coefficients:
         Heat: 0.95
         Radiation: 0.65
+  - type: IdentityBlocker
   - type: BreathMask
   - type: HideLayerClothing
     slots:
@@ -183,7 +184,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatHoodIan
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: ian hood
   description: A hood to complete the 'Good boy' look.
   components:
@@ -198,7 +199,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatHoodCarp
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: carp hood
   description: A gnarly hood adorned with plastic space carp teeth.
   components:
@@ -213,7 +214,7 @@
 - type: entity
   parent: ClothingHeadHatHoodCarp
   id: ClothingHeadHelmetHardsuitCarp
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: PressureProtection
     highPressureMultiplier: 0.6
@@ -251,7 +252,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterDefault
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: default winter coat hood
   components:
   - type: Sprite
@@ -262,7 +263,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterBartender
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: bartender winter coat hood
   components:
   - type: Sprite
@@ -273,7 +274,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCaptain
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: captain's winter coat hood
   description: An expensive hood, to keep the captain's head warm.
   components:
@@ -285,7 +286,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCargo
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: cargo winter coat hood
   components:
   - type: Sprite
@@ -296,7 +297,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCE
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: chief engineer's winter coat hood
   components:
   - type: Sprite
@@ -307,8 +308,8 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCentcom
-  noSpawn: true
-  name: Centcom winter coat hood
+  categories: [ HideSpawnMenu ]
+  name: CentComm winter coat hood
   description: A hood for keeping the central comander's head warm.
   components:
   - type: Sprite
@@ -319,7 +320,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterChem
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: chemist winter coat hood
   components:
   - type: Sprite
@@ -330,7 +331,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCMO
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: chief medical officer's winter coat hood
   components:
   - type: Sprite
@@ -341,7 +342,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterEngineer
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: engineer winter coat hood
   components:
   - type: Sprite
@@ -352,7 +353,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterHOP
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: head of personel's winter coat hood
   components:
   - type: Sprite
@@ -363,7 +364,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterHOS
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: head of security's winter coat hood
   components:
   - type: Sprite
@@ -374,7 +375,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterHydro
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: hydroponics coat hood
   components:
   - type: Sprite
@@ -385,7 +386,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterJani
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: janitor coat hood
   components:
   - type: Sprite
@@ -396,7 +397,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterMed
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: medic coat hood
   components:
   - type: Sprite
@@ -407,7 +408,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterMime
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: mime coat hood
   components:
   - type: Sprite
@@ -418,7 +419,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterMiner
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: miner coat hood
   components:
   - type: Sprite
@@ -429,7 +430,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterPara
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: paramedic coat hood
   components:
   - type: Sprite
@@ -440,7 +441,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterQM
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: quartermaster's coat hood
   components:
   - type: Sprite
@@ -451,7 +452,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterRD
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: research director's coat hood
   components:
   - type: Sprite
@@ -462,7 +463,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterRobo
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: robotics coat hood
   components:
   - type: Sprite
@@ -473,7 +474,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterSci
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: scientist coat hood
   components:
   - type: Sprite
@@ -484,7 +485,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterSec
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: security coat hood
   components:
   - type: Sprite
@@ -495,7 +496,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterSyndie
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: syndicate coat hood
   components:
   - type: Sprite
@@ -506,7 +507,7 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterWarden
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: warden's coat hood
   components:
   - type: Sprite
@@ -517,10 +518,230 @@
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterWeb
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: web coat hood
   components:
   - type: Sprite
     sprite: Clothing/Head/Hoods/Coat/hoodweb.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodweb.rsi
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterColorBlack
+  noSpawn: true
+  name: black winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    layers:
+    - state: coatybits-icon
+      color: "#3f3f3f"
+    - state: winterbits-icon
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    clothingVisuals:
+      head:
+      - state: coatybits-equipped-HELMET
+        color: "#3f3f3f"
+      - state: winterbits-equipped-HELMET
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterColorPurple
+  noSpawn: true
+  name: purple winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    layers:
+    - state: coatybits-icon
+      color: "#9C0DE1"
+    - state: winterbits-icon
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    clothingVisuals:
+      head:
+      - state: coatybits-equipped-HELMET
+        color: "#9C0DE1"
+      - state: winterbits-equipped-HELMET
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterColorRed
+  noSpawn: true
+  name: red winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    layers:
+    - state: coatybits-icon
+      color: "#940000"
+    - state: winterbits-icon
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    clothingVisuals:
+      head:
+      - state: coatybits-equipped-HELMET
+        color: "#940000"
+      - state: winterbits-equipped-HELMET
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterColorBlue
+  noSpawn: true
+  name: blue winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    layers:
+    - state: coatybits-icon
+      color: "#0089EF"
+    - state: winterbits-icon
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    clothingVisuals:
+      head:
+      - state: coatybits-equipped-HELMET
+        color: "#0089EF"
+      - state: winterbits-equipped-HELMET
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterColorBrown
+  noSpawn: true
+  name: brown winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    layers:
+    - state: coatybits-icon
+      color: "#723A02"
+    - state: winterbits-icon
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    clothingVisuals:
+      head:
+      - state: coatybits-equipped-HELMET
+        color: "#723A02"
+      - state: winterbits-equipped-HELMET
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterColorGray
+  noSpawn: true
+  name: gray winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    layers:
+    - state: coatybits-icon
+      color: "#999999"
+    - state: winterbits-icon
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    clothingVisuals:
+      head:
+      - state: coatybits-equipped-HELMET
+        color: "#999999"
+      - state: winterbits-equipped-HELMET
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterColorGreen
+  noSpawn: true
+  name: green winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    layers:
+    - state: coatybits-icon
+      color: "#5ABF2F"
+    - state: winterbits-icon
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    clothingVisuals:
+      head:
+      - state: coatybits-equipped-HELMET
+        color: "#5ABF2F"
+      - state: winterbits-equipped-HELMET
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterColorLightBrown
+  noSpawn: true
+  name: light brown winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    layers:
+    - state: coatybits-icon
+      color: "#C09F72"
+    - state: winterbits-icon
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    clothingVisuals:
+      head:
+      - state: coatybits-equipped-HELMET
+        color: "#C09F72"
+      - state: winterbits-equipped-HELMET
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterColorOrange
+  noSpawn: true
+  name: orange winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    layers:
+    - state: coatybits-icon
+      color: "#EF8100"
+    - state: winterbits-icon
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    clothingVisuals:
+      head:
+      - state: coatybits-equipped-HELMET
+        color: "#EF8100"
+      - state: winterbits-equipped-HELMET
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterColorWhite
+  noSpawn: true
+  name: white winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    layers:
+    - state: coatybits-icon
+      color: "#EAE8E8"
+    - state: winterbits-icon
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    clothingVisuals:
+      head:
+      - state: coatybits-equipped-HELMET
+        color: "#EAE8E8"
+      - state: winterbits-equipped-HELMET
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterColorYellow
+  noSpawn: true
+  name: yellow winter coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    layers:
+    - state: coatybits-icon
+      color: "#EBE216"
+    - state: winterbits-icon
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
+    clothingVisuals:
+      head:
+      - state: coatybits-equipped-HELMET
+        color: "#EBE216"
+      - state: winterbits-equipped-HELMET

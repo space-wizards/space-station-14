@@ -21,13 +21,9 @@ public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        if (_window is null)
-        {
-            _window = new OfferingWindow();
-            _window.Title = Loc.GetString("salvage-magnet-window-title");
-            _window.OnClose += Close;
-            _window.OpenCenteredLeft();
-        }
+        _window = this.CreateWindow<OfferingWindow>();
+        _window.Title = Loc.GetString("salvage-magnet-window-title");
+        _window.OpenCenteredLeft();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -110,17 +106,6 @@ public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
             }
 
             _window.AddOption(option);
-        }
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-
-        if (disposing)
-        {
-            _window?.Close();
-            _window?.Dispose();
         }
     }
 }

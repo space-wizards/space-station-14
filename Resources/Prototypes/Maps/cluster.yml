@@ -9,7 +9,7 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_transit.yml
+          emergencyShuttlePath: /Maps/Shuttles/emergency_cluster.yml
         - type: StationNameSetup
           mapNameTemplate: '{0} Cluster Station {1}'
           nameGenerator:

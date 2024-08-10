@@ -58,8 +58,8 @@ public sealed class JointVisualsOverlay : Overlay
             coordsA = coordsA.Offset(rotA.RotateVec(visuals.OffsetA));
             coordsB = coordsB.Offset(rotB.RotateVec(visuals.OffsetB));
 
-            var posA = coordsA.ToMapPos(_entManager, xformSystem);
-            var posB = coordsB.ToMapPos(_entManager, xformSystem);
+            var posA = xformSystem.ToMapCoordinates(coordsA).Position;
+            var posB = xformSystem.ToMapCoordinates(coordsB).Position;
             var diff = (posB - posA);
             var length = diff.Length();
 
