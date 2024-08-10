@@ -29,7 +29,7 @@ namespace Content.Server.EntityEffects.Effects
             if (!args.EntityManager.TryGetComponent(args.TargetEntity, out FlammableComponent? flammable))
                 return;
 
-            // Sets the multiplier for firestacks if firestacks are already on target only if MultiplierOnExisting is 0 or greater
+            // Sets the multiplier for FireStacks to MultiplierOnExisting is 0 or greater and target already has FireStacks
             var multiplier = flammable.FireStacks != 0f && MultiplierOnExisting >= 0 ? MultiplierOnExisting : Multiplier;
             var quantity = 1f;
             if (args is EntityEffectReagentArgs reagentArgs)
