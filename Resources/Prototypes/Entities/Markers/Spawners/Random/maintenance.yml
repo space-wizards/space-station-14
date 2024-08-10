@@ -67,6 +67,7 @@
         - ClothingHeadHatCowboyBountyHunter
         - ClothingNeckAutismPin
         - ClothingNeckGoldAutismPin
+        - WristwatchGold
       rareChance: 0.01
       prototypes:
         - Lighter
@@ -128,6 +129,7 @@
         - ClothingShoesTourist
         - ClothingUniformJumpsuitLoungewear
         - ClothingHeadHatCowboyRed
+        - Wristwatch
       chance: 0.6
       offset: 0.0
 

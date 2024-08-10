@@ -12,18 +12,20 @@ public sealed partial class MechMenu : FancyWindow
 {
     [Dependency] private readonly IEntityManager _ent = default!;
 
-    private readonly EntityUid _mech;
+    private EntityUid _mech;
 
     public event Action<EntityUid>? OnRemoveButtonPressed;
 
-    public MechMenu(EntityUid mech)
+    public MechMenu()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+    }
 
-        _mech = mech;
-
-        MechView.SetEntity(mech);
+    public void SetEntity(EntityUid uid)
+    {
+        MechView.SetEntity(uid);
+        _mech = uid;
     }
 
     public void UpdateMechStats()

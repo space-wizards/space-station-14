@@ -99,6 +99,11 @@
     doAfterDelay: 10
     allowSelfRepair: false
   - type: BorgChassis
+  - type: LockingWhitelist
+    blacklist:
+      components:
+      - BorgChassis
+      - RoboticsConsole
   - type: WiresPanel
   - type: ActivatableUIRequiresPanel
   - type: NameIdentifier
@@ -113,7 +118,9 @@
     cellSlotId: cell_slot
     fitsInCharger: true
   - type: ItemToggle
+    activated: false # gets activated when a mind is added
     onUse: false # no item-borg toggling sorry
+    toggleLight: false
   - type: AccessToggle
   # TODO: refactor movement to just be based on toggle like speedboots but for the boots themselves
   # TODO: or just have sentient speedboots be fast idk
@@ -150,6 +157,7 @@
   - type: Lock
     locked: true
     breakOnEmag: false
+    unlockOnClick: false
   - type: ActivatableUIRequiresLock
   - type: LockedWiresPanel
   - type: Damageable
@@ -219,8 +227,13 @@
   - type: Emoting
   - type: GuideHelp
     guides:
-      - Cyborgs
+    - Cyborgs
+    - Robotics
   - type: StepTriggerImmune
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
 
 - type: entity
   abstract: true

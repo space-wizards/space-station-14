@@ -82,6 +82,12 @@
       count: 50
       minGroupSize: 2
       maxGroupSize: 4
+    - !type:OreDunGen
+      replacement: IronRock
+      entity: IronRockDiamond
+      count: 15
+      minGroupSize: 1
+      maxGroupSize: 2
 
 # Configs
 - type: dungeonConfig
