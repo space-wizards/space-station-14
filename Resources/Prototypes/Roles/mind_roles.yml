@@ -9,15 +9,15 @@
   color: '#eeeeee'
 
 - type: mindRoleCore
-  id: SoloAntag
-  roleType: SoloAntag
-  name: mind-role-solo-antag-name
+  id: SoloAntagonist
+  roleType: SoloAntagonist
+  name: mind-role-antagonist-solo-name
   color: '#d82000'
 
 - type: mindRoleCore
-  id: TeamAntag
-  roleType: TeamAntag
-  name: mind-role-team-antag-name
+  id: TeamAntagonist
+  roleType: TeamAntagonist
+  name: mind-role-antagonist-team-name
   color: '#d82000'
 
 - type: mindRoleCore
@@ -43,3 +43,24 @@
   roleType: Observer
   name: mind-role-observer-name
   color: '#eeeeee'
+
+#TODO:ERRANT move this somewhere
+- type: mindRole
+  id: MindRoleDragon
+  prototype: TeamAntagonist
+  details: Help your carps swarm the station
+
+- type: mindRole
+  id: MindRoleNinja
+  prototype: SoloAntagonist
+  details: Bring honor to your clan
+
+- type: mindRole
+  id: MindRoleTraitor
+  prototype: SoloAntagonist
+  details: There IS an I in "traitor teamwork"
+
+- type: mindRole
+  id: MindRoleReinforcement
+  prototype: TeamAntagonist
+  details: Bring honor to your clan

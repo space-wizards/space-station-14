@@ -26,6 +26,7 @@ using Content.Shared.Whitelist;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -343,8 +344,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (session != null)
         {
             var curMind = session.GetMind();
-            
-            if (curMind == null || 
+
+            if (curMind == null ||
                 !TryComp<MindComponent>(curMind.Value, out var mindComp) ||
                 mindComp.OwnedEntity != antagEnt)
             {
@@ -355,6 +356,11 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             _mind.TransferTo(curMind.Value, antagEnt, ghostCheckOverride: true);
             _role.MindAddRoles(curMind.Value, def.MindComponents, null, true);
             ent.Comp.SelectedMinds.Add((curMind.Value, Name(player)));
+
+            if (def.RoleType is not null && _proto.TryIndex<MindRolePrototype>(def.RoleType, out var roleType))
+                _role.SetMindRole(curMind.Value, roleType);
+                //TODO:ERRANT LATER: Put RoleType on the mind role components instead so they are persistent
+
             SendBriefing(session, def.Briefing);
         }
 

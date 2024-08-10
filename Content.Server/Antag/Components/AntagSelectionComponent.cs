@@ -1,6 +1,7 @@
 using Content.Server.Administration.Systems;
 using Content.Shared.Antag;
 using Content.Shared.Destructible.Thresholds;
+using Content.Shared.Mind;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Storage;
@@ -176,6 +177,16 @@ public partial struct AntagSelectionDefinition()
     /// </remarks>
     [DataField]
     public EntProtoId? SpawnerPrototype;
+
+    /// <summary>
+    /// If set, the Mind that controls this antagonist will be changed to this Role Type.
+    /// </summary>
+    /// <remarks>
+    /// TODO It would be better if this was set on individual MindRoleComponents, so it can be persistent
+    /// Would be useful in situation where a SoloAntagonist is converted then deconverted
+    /// </remarks>
+    [DataField]
+    public ProtoId<MindRolePrototype>? RoleType;
 }
 
 /// <summary>

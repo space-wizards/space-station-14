@@ -3,6 +3,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Ghost.Roles;
 using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -137,6 +138,34 @@ public abstract class SharedRoleSystem : EntitySystem
 
         _adminLogger.Add(LogType.Mind, LogImpact.Low,
             $"'Role {component}' added to mind of {_minds.MindOwnerLoggingString(mind)}");
+    }
+
+    //TODO:ERRANT testing
+    public void SetMindRole(EntityUid ent, MindRolePrototype proto)
+    {
+        var comp = CheckMindRoles(ent);
+
+        if ( comp is null || comp.OwnedEntity is null)
+            return;
+
+        comp.MindRole = proto;
+        Dirty(comp.Owner, comp); //TODO:ERRANT
+    }
+
+    public MindComponent? CheckMindRoles(EntityUid ent)
+    {
+
+        if (TryComp<MindComponent>(ent, out var mind))
+        {
+            return (mind);
+        }
+        else if (TryComp<MindContainerComponent>(ent, out var container))
+        {
+            if (container.HasMind)
+                return(CheckMindRoles(container.Mind.Value));
+        }
+
+        return (null);
     }
 
     /// <summary>

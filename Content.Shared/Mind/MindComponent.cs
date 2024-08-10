@@ -102,8 +102,8 @@ public sealed partial class MindComponent : Component
     /// <summary>
     ///     The mind's current role or antagonist status;
     /// </summary>
-    [DataField]
-    public MindRolePrototype MindRole = new MindRolePrototype();
+    [DataField, AutoNetworkedField]
+    public MindRolePrototype MindRole = new MindRolePrototype(); //TODO:ERRANT Rename this
 
     /// <summary>
     ///     The session of the player owning this mind.
@@ -129,22 +129,21 @@ public sealed partial class MindRolePrototype : IPrototype
     ///     The role's specific antag-or-other-special category.
     /// </summary>
     [DataField]
-    public MindRoleCorePrototype Prototype = new();
+    public ProtoId<MindRoleCorePrototype> Prototype = "Neutral";
 
     /// <summary>
     ///     Additional information about the role, such as what team it is or a familiar's owner.
     ///     Keep this short.
     /// </summary>
     [DataField]
-    public string? Details { get; private set; } = "mind-role-neutral-details";
+    public string? Details { get; private set; } = null;
 }
 
 /// <summary>
 ///     The core details of Mind Role Types are kept together on separate prototypes
 ///     so "userspace" prototype definitnions need only refer to them collectively
 /// </summary>
-[Prototype]
-[Serializable]
+[Prototype, Serializable]
 public sealed partial class MindRoleCorePrototype : IPrototype
 {
     [IdDataField]
@@ -160,7 +159,7 @@ public sealed partial class MindRoleCorePrototype : IPrototype
     ///     The role's name as displayed on the UI.
     /// </summary>
     [DataField(required: true)]
-    public string Name { get; private set; } = "mind-role-neutral-name";
+    public string Name = "mind-role-neutral-name";
 
     /// <summary>
     ///     The role's displayed color.
@@ -175,8 +174,8 @@ public sealed partial class MindRoleCorePrototype : IPrototype
 public enum MindRoleType
 {
     Neutral,
-    AntagSolo,
-    AntagTeam,
+    SoloAntagonist,
+    TeamAntagonist,
     FreeAgent,
     Familiar,
     Silicon,

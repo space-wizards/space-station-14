@@ -16,6 +16,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Content.Client.CharacterInfo.CharacterInfoSystem;
 using static Robust.Client.UserInterface.Controls.BaseButton;
@@ -27,6 +28,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 {
     [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
     [UISystemDependency] private readonly SpriteSystem _sprite = default!;
 
@@ -122,15 +124,23 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
         var role = _ent.EnsureComponent<MindComponent>(container.Mind.Value);
 
-        //TODO:ERRANT LATER: decide on localisation/integration
-        string roleText = (!string.IsNullOrEmpty(role.MindRole.Prototype.Name))? role.MindRole.Prototype.Name : "mind-role-neutral-name";
+        string? roleText = null;
+        var color = Color.White;
+        if (_prototypeManager.TryIndex<MindRoleCorePrototype>(role.MindRole.Prototype, out var proto))
+        {
+            roleText = proto.Name;
+            color = proto.Color;
+        }
+
+
+        roleText = (!string.IsNullOrEmpty(roleText))? roleText : "mind-role-neutral-name";
         string roleDetail = (role.MindRole.Details is not null) ? role.MindRole.Details : "";
 
         // Crew member
         _window.MindRole.Text = Loc.GetString(roleText);
         _window.MindRoleDetail.Text = Loc.GetString(roleDetail);
-        _window.MindRole.FontColorOverride = role.MindRole.Prototype.Color;
-
+        _window.MindRole.FontColorOverride = color;
+        //TODO:ERRANT LATER: Mouseover tooltip and Guidebook link
 
 
         _window.NameLabel.Text = entityName;
