@@ -4,6 +4,7 @@ using System.Numerics;
 using Content.Server.Administration.Managers;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
+using Content.Server.Shuttles.Components;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
@@ -274,9 +275,11 @@ namespace Content.Server.GameTicking
                     Loc.GetString("job-greet-station-name", ("stationName", metaData.EntityName)));
             }
 
+
             // Arrivals is unable to do this during spawning as no actor is attached yet.
             // We also want this message last.
-            if (!silent && lateJoin && _arrivals.Enabled)
+            // Arrival System adds a PendingClockInComponent, while the Cryosleep System does not.
+            if (!silent && lateJoin && HasComp(mob, typeof(PendingClockInComponent)))
             {
                 var arrival = _arrivals.NextShuttleArrival();
                 if (arrival == null)
