@@ -142,6 +142,10 @@
     {
       "name": "gauze_moth_lowerleg_l",
       "directions": 4
+    },
+    {
+      "name": "gauze_head",
+      "directions": 4
     }
   ]
 }
