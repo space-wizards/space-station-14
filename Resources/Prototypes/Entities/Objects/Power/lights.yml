@@ -193,6 +193,20 @@
     PowerUse: 25
 
 - type: entity
+  parent: BaseLightTube
+  name: fluorescent disco light tube
+  id: DiscoLightTube
+  description: A disco light fixture.
+  components:
+  - type: LightBulb
+    bulb: discoTube
+    color: "#7a00eb" # 5000K color temp
+    lightEnergy: 0.8
+    lightRadius: 15
+    lightSoftness: 1
+    PowerUse: 25
+
+- type: entity
   parent: LightTube
   name: old fluorescent light tube
   id: LightTubeOld

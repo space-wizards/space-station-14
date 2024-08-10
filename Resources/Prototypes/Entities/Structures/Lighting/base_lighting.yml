@@ -43,7 +43,7 @@
   - type: RCDDeconstructable
     cost: 4
     delay: 2
-    fx: EffectRCDDeconstruct2  
+    fx: EffectRCDDeconstruct2
   - type: Destructible
     thresholds:
     - trigger:
@@ -74,7 +74,7 @@
     mode: SnapgridCenter
     snap:
     - Wallmount
-    
+
 - type: entity
   name: light
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
@@ -200,6 +200,24 @@
     energy: 4.5
     softness: 0.5
     color: "#B4FCF0"
+
+#Disco lights
+- type: entity
+  id: PoweredlightDisco
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: Disco
+  parent: Poweredlight
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: DiscoLightTube
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+  - type: PointLight
+    radius: 15
+    energy: 2.5
+    softness: 0.9
 
 #Sodium lights
 - type: entity

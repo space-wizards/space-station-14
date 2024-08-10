@@ -85,6 +85,20 @@
         amount: 6
 
 - type: entity
+  name: disco lights box
+  parent: BoxLightbulb
+  id: BoxLightDisco
+  components:
+  - type: Sprite
+    layers:
+    - state: box
+    - state: lighttube
+  - type: StorageFill
+    contents:
+    - id: DiscoLightTube
+      amount: 6
+
+- type: entity
   name: PDA box
   parent: BoxCardboard
   id: BoxPDA
