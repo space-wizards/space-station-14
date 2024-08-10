@@ -1,6 +1,8 @@
-﻿namespace Content.Shared.Storage.Components;
+﻿using Robust.Shared.GameStates;
 
-[RegisterComponent]
+namespace Content.Shared.Storage.Components;
+
+[RegisterComponent, NetworkedComponent]
 public sealed partial class StoreAfterFailedInteractComponent : Component
 {
 }
