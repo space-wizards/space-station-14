@@ -76,7 +76,7 @@
   - type: Drain
     autoDrain: false
   - type: StaticPrice
-    price: 25
+    price: 100
   - type: UserInterface
     interfaces:
       enum.DisposalUnitUiKey.Key:
