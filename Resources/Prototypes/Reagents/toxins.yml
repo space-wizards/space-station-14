@@ -78,6 +78,39 @@
             Poison: 1.5
 
 - type: reagent
+  id: DrifterToxin
+  name: reagent-name-drifter-toxin
+  group: Toxins
+  desc: reagent-desc-drifter-toxin
+  flavor: sour
+  color: "#000067"
+  physicalDesc: reagent-physical-desc-nondescript
+  metabolisms:
+    Poison:
+      effects:
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          reagent: DrifterToxin
+          min: 0.5
+        type: Local
+        visualType: Medium
+        messages: [ "effect-drifter" ]
+        probability: 0.1
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: DrifterToxin
+          min: 7 #More efficient than Chloral Hydrate, and it doesn't OD you. Could be useful.
+        key: ForcedSleep
+        component: ForcedSleeping
+        refresh: false
+        type: Add
+
+- type: reagent
   id: GastroToxin
   name: reagent-name-gastrotoxin
   group: Toxins

@@ -1,0 +1,22 @@
+- type: entity
+  parent: ClothingOuterEVASuitBase
+  id: ClothingOuterSuitPressureEmergency
+  name: emergency pressure suit
+  description: An suit capable of protecting from oceanic pressure, but lacks insulation for the cold.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Pressuresuits/emergencypressure.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Pressuresuits/emergencypressure.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: TemperatureProtection
+    coefficient: 0.3
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetEVALarge
+    slot: head
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}

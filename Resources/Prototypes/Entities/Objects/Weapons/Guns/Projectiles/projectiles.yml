@@ -367,7 +367,7 @@
     layers:
     - state: omnilaser_greyscale
       shader: unshaded
-      color: orangered
+      color: yellow
   - type: Projectile
     #   soundHit:  Waiting on serv3
     impactEffect: BulletImpactEffectOrangeDisabler

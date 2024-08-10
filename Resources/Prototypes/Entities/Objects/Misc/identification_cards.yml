@@ -40,6 +40,18 @@
     job: Passenger
 
 - type: entity
+  parent: IDCardStandard
+  id: SettlerIDCard
+  name: Settler ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idpassenger
+  - type: PresetIdCard
+    job: Passenger
+
+- type: entity
   parent: PassengerIDCard
   id: TechnicalAssistantIDCard
   name: technical assistant ID card

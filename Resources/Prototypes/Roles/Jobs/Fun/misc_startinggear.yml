@@ -268,6 +268,17 @@
     ears: ClothingHeadsetService
     belt: ClothingBeltChef
 
+#settler
+- type: startingGear
+  id: Settler
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLoungewear
+    shoes: ClothingShoesLeather
+    id: SettlerIDCard
+    back: ClothingBackpackSatchelLeather
+    outerClothing: ClothingOuterCoatBomber
+    gloves: ClothingHandsGlovesFingerless
+
 #CMO Disaster Victim
 - type: startingGear
   id: DisasterVictimCMO
