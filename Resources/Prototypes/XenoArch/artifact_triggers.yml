@@ -222,6 +222,21 @@
       - !type:ActivateArtifact
 
 - type: artifactTrigger
+  id: TriggerPyrotechnic
+  targetDepth: 3
+  triggerHint: artifact-trigger-hint-energetic
+  components:
+  - type: reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Thermite, Napalm, Phlogiston, ChlorineTrifluoride ] # Ignored other pyrotechnic classed chems as they aren't as 'fun'
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+
+- type: artifactTrigger
   id: TriggerHighDamage
   targetDepth: 3
   triggerHint: artifact-trigger-hint-physical
