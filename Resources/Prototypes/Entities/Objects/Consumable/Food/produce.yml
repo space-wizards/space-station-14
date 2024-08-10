@@ -1582,6 +1582,60 @@
     - Fruit # It's in the name
 
 - type: entity
+  name: capfruit
+  parent: FoodProduceBase
+  id: FoodRealCapfruit
+  description: A soft but smooth gun-shaped fruit.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - capfruit
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/capfruit.rsi
+  - type: Produce
+    seedId: realcapfruit
+  - type: Food
+    trash: RevolverCapGun
+  - type: Tag
+    tags:
+    - Fruit
+
+- type: entity
+  name: capfruit
+  parent: FoodProduceBase
+  id: FoodFakeCapfruit
+  description: A soft but smooth gun-shaped fruit.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - capfruit
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Sulfur
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/capfruit.rsi
+  - type: Produce
+    seedId: fakecapfruit
+  - type: Food
+    trash: RevolverCapGunFake
+  - type: Tag
+    tags:
+    - Fruit
+
+- type: entity
   name: rice bushel
   description: Can be ground into rice, perfect for pudding or sake.
   id: RiceBushel
