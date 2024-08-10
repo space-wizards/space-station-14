@@ -2,35 +2,21 @@
   id: LockerFillQuarterMaster
   table: !type:AllSelector
     children:
-    - !type:EntSelector
-      id: BoxEncryptionKeyCargo
-    - !type:EntSelector
-      id: BoxFolderQmClipboard
-    - !type:EntSelector
-      id: CargoBountyComputerCircuitboard
-    - !type:EntSelector
-      id: CargoRequestComputerCircuitboard
-    - !type:EntSelector
-      id: CargoSaleComputerCircuitboard
-    - !type:EntSelector
-      id: CargoShuttleComputerCircuitboard
-    - !type:EntSelector
-      id: CargoShuttleConsoleCircuitboard
-    - !type:EntSelector
-      id: CigPackGreen
+    - id: BoxEncryptionKeyCargo
+    - id: BoxFolderQmClipboard
+    - id: CargoBountyComputerCircuitboard
+    - id: CargoRequestComputerCircuitboard
+    - id: CargoSaleComputerCircuitboard
+    - id: CargoShuttleComputerCircuitboard
+    - id: CargoShuttleConsoleCircuitboard
+    - id: CigPackGreen
       prob: 0.50
-    - !type:EntSelector
-      id: ClothingHeadsetAltCargo
-    - !type:EntSelector
-      id: DoorRemoteCargo
-    - !type:EntSelector
-      id: RubberStampApproved
-    - !type:EntSelector
-      id: RubberStampDenied
-    - !type:EntSelector
-      id: RubberStampQm
-    - !type:EntSelector
-      id: SalvageShuttleConsoleCircuitboard
+    - id: ClothingHeadsetAltCargo
+    - id: DoorRemoteCargo
+    - id: RubberStampApproved
+    - id: RubberStampDenied
+    - id: RubberStampQm
+    - id: SalvageShuttleConsoleCircuitboard
 
 - type: entity
   id: LockerQuarterMasterFilled
@@ -47,50 +33,32 @@
   id: FillCaptainHardsuit
   table: !type:AllSelector
     children:
-    - !type:EntSelector
-      id: ClothingOuterHardsuitCap
-    - !type:EntSelector
-      id: ClothingMaskGasCaptain
-    - !type:EntSelector
-      id: JetpackCaptainFilled
-    - !type:EntSelector
-      id: OxygenTankFilled
+    - id: ClothingOuterHardsuitCap
+    - id: ClothingMaskGasCaptain
+    - id: JetpackCaptainFilled
+    - id: OxygenTankFilled
 
 # No laser table
 - type: entityTable
   id: LockerFillCaptainNoLaser
   table: !type:AllSelector
     children:
-    - !type:EntSelector
-      id: CaptainIDCard
-    - !type:EntSelector
-      id: CigarGoldCase
+    - id: CaptainIDCard
+    - id: CigarGoldCase
       prob: 0.25
-    - !type:EntSelector
-      id: ClothingBeltSheathFilled
-    - !type:EntSelector
-      id: ClothingHeadsetAltCommand
-    - !type:EntSelector
-      id: ClothingOuterArmorCaptainCarapace
-    - !type:EntSelector
-      id: CommsComputerCircuitboard
-    - !type:EntSelector
-      id: DoorRemoteCommand
-    - !type:EntSelector
-      id: MedalCase
-    - !type:EntSelector
-      id: NukeDisk
-    - !type:EntSelector
-      id: PinpointerNuclear
-    - !type:EntSelector
-      id: PlushieNuke
+    - id: ClothingBeltSheathFilled
+    - id: ClothingHeadsetAltCommand
+    - id: ClothingOuterArmorCaptainCarapace
+    - id: CommsComputerCircuitboard
+    - id: DoorRemoteCommand
+    - id: MedalCase
+    - id: NukeDisk
+    - id: PinpointerNuclear
+    - id: PlushieNuke
       prob: 0.1
-    - !type:EntSelector
-      id: RubberStampCaptain
-    - !type:EntSelector
-      id: SpaceCash1000
-    - !type:EntSelector
-      id: WeaponDisabler
+    - id: RubberStampCaptain
+    - id: SpaceCash1000
+    - id: WeaponDisabler
 
 # No laser table + Laser table
 - type: entityTable
@@ -99,8 +67,7 @@
     children:
     - !type:NestedSelector
       tableId: LockerFillCaptainNoLaser
-    - !type:EntSelector
-      id: WeaponAntiqueLaser
+    - id: WeaponAntiqueLaser
 
 # Laser table + Hardsuit table
 - type: entityTable
@@ -149,44 +116,27 @@
   id: LockerFillHeadOfPersonnel
   table: !type:AllSelector
     children:
-    - !type:EntSelector
-      id: AccessConfigurator
-    - !type:EntSelector
-      id: BoxEncryptionKeyPassenger
-    - !type:EntSelector
-      id: BoxEncryptionKeyService
-    - !type:EntSelector
-      id: BoxHeadset
-    - !type:EntSelector
-      id: BoxID
-    - !type:EntSelector
-      id: BoxPDA
-    - !type:EntSelector
-      id: CigarGoldCase
+    - id: AccessConfigurator
+    - id: BoxEncryptionKeyPassenger
+    - id: BoxEncryptionKeyService
+    - id: BoxHeadset
+    - id: BoxID
+    - id: BoxPDA
+    - id: CigarGoldCase
       prob: 0.25
       # Fuck the HoP they don't deserve fucking cigars.
       # Yes they do fuck you.
-    - !type:EntSelector
-      id: ClothingBackpackIan
+    - id: ClothingBackpackIan
       prob: 0.5
-    - !type:EntSelector
-      id: ClothingHeadsetCommand
-    - !type:EntSelector
-      id: ClothingNeckGoldmedal
-    - !type:EntSelector
-      id: DoorRemoteService
-    - !type:EntSelector
-      id: HoPIDCard
-    - !type:EntSelector
-      id: IDComputerCircuitboard
-    - !type:EntSelector
-      id: RubberStampApproved
-    - !type:EntSelector
-      id: RubberStampDenied
-    - !type:EntSelector
-      id: RubberStampHop
-    - !type:EntSelector
-      id: WeaponDisabler
+    - id: ClothingHeadsetCommand
+    - id: ClothingNeckGoldmedal
+    - id: DoorRemoteService
+    - id: HoPIDCard
+    - id: IDComputerCircuitboard
+    - id: RubberStampApproved
+    - id: RubberStampDenied
+    - id: RubberStampHop
+    - id: WeaponDisabler
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -203,45 +153,29 @@
   id: LockerFillChiefEngineerNoHardsuit
   table: !type:AllSelector
     children:
-    - !type:EntSelector
-      id: AccessConfigurator
-    - !type:EntSelector
-      id: BoxEncryptionKeyEngineering
-    - !type:EntSelector
-      id: CigarCase
+    - id: AccessConfigurator
+    - id: BoxEncryptionKeyEngineering
+    - id: CigarCase
       prob: 0.15
-    - !type:EntSelector
-      id: ClothingBeltChiefEngineerFilled
-    - !type:EntSelector
-      id: ClothingEyesGlassesMeson
-    - !type:EntSelector
-      id: ClothingHandsGlovesColorYellow
-    - !type:EntSelector
-      id: ClothingHeadsetAltEngineering
-    - !type:EntSelector
-      id: DoorRemoteEngineering
-    - !type:EntSelector
-      id: RCD
-    - !type:EntSelector
-      id: RCDAmmo
-    - !type:EntSelector
-      id: RubberStampCE
+    - id: ClothingBeltChiefEngineerFilled
+    - id: ClothingEyesGlassesMeson
+    - id: ClothingHandsGlovesColorYellow
+    - id: ClothingHeadsetAltEngineering
+    - id: DoorRemoteEngineering
+    - id: RCD
+    - id: RCDAmmo
+    - id: RubberStampCE
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
   id: FillChiefEngineerHardsuit
   table: !type:AllSelector
     children:
-    - !type:EntSelector
-      id: ClothingMaskBreath
-    - !type:EntSelector
-      id: ClothingOuterHardsuitEngineeringWhite
-    - !type:EntSelector
-      id: ClothingShoesBootsMagAdv
-    - !type:EntSelector
-      id: JetpackVoidFilled
-    - !type:EntSelector
-      id: OxygenTankFilled
+    - id: ClothingMaskBreath
+    - id: ClothingOuterHardsuitEngineeringWhite
+    - id: ClothingShoesBootsMagAdv
+    - id: JetpackVoidFilled
+    - id: OxygenTankFilled
 
 # No hardsuit table + hardsuit table
 - type: entityTable
@@ -280,46 +214,29 @@
   id: LockerFillChiefMedicalOfficerNoHardsuit
   table: !type:AllSelector
     children:
-    - !type:EntSelector
-      id: BoxEncryptionKeyMedical
-    - !type:EntSelector
-      id: ClothingBackpackDuffelSurgeryFilled
-    - !type:EntSelector
-      id: ClothingCloakCmo
-    - !type:EntSelector
-      id: ClothingEyesHudMedical
-    - !type:EntSelector
-      id: ClothingHandsGlovesNitrile
-    - !type:EntSelector
-      id: ClothingHeadHatBeretCmo
-    - !type:EntSelector
-      id: ClothingHeadsetAltMedical
-    - !type:EntSelector
-      id: ClothingMaskSterile
-    - !type:EntSelector
-      id: DoorRemoteMedical
-    - !type:EntSelector
-      id: HandheldCrewMonitor
-    - !type:EntSelector
-      id: Hypospray
-    - !type:EntSelector
-      id: MedicalTechFabCircuitboard
-    - !type:EntSelector
-      id: MedkitFilled
-    - !type:EntSelector
-      id: RubberStampCMO
+    - id: BoxEncryptionKeyMedical
+    - id: ClothingBackpackDuffelSurgeryFilled
+    - id: ClothingCloakCmo
+    - id: ClothingEyesHudMedical
+    - id: ClothingHandsGlovesNitrile
+    - id: ClothingHeadHatBeretCmo
+    - id: ClothingHeadsetAltMedical
+    - id: ClothingMaskSterile
+    - id: DoorRemoteMedical
+    - id: HandheldCrewMonitor
+    - id: Hypospray
+    - id: MedicalTechFabCircuitboard
+    - id: MedkitFilled
+    - id: RubberStampCMO
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
   id: FillChiefMedicalOfficerHardsuit
   table: !type:AllSelector
     children:
-    - !type:EntSelector
-      id: ClothingMaskBreathMedical
-    - !type:EntSelector
-      id: ClothingOuterHardsuitMedical
-    - !type:EntSelector
-      id: OxygenTankFilled
+    - id: ClothingMaskBreathMedical
+    - id: ClothingOuterHardsuitMedical
+    - id: OxygenTankFilled
 
 # No hardsuit table + hardsuit table
 - type: entityTable
@@ -358,38 +275,25 @@
   id: LockerFillResearchDirectorNoHardsuit
   table: !type:AllSelector
     children:
-    - !type:EntSelector
-      id: BoxEncryptionKeyScience
-    - !type:EntSelector
-      id: CircuitImprinterMachineCircuitboard
-    - !type:EntSelector
-      id: ClothingBeltUtilityFilled
-    - !type:EntSelector
-      id: ClothingHeadsetAltScience
-    - !type:EntSelector
-      id: DoorRemoteResearch
-    - !type:EntSelector
-      id: EncryptionKeyBinary
-    - !type:EntSelector
-      id: HandTeleporter
-    - !type:EntSelector
-      id: ProtolatheMachineCircuitboard
-    - !type:EntSelector
-      id: ResearchComputerCircuitboard
-    - !type:EntSelector
-      id: RubberStampRd
+    - id: BoxEncryptionKeyScience
+    - id: CircuitImprinterMachineCircuitboard
+    - id: ClothingBeltUtilityFilled
+    - id: ClothingHeadsetAltScience
+    - id: DoorRemoteResearch
+    - id: EncryptionKeyBinary
+    - id: HandTeleporter
+    - id: ProtolatheMachineCircuitboard
+    - id: ResearchComputerCircuitboard
+    - id: RubberStampRd
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
   id: FillResearchDirectorHardsuit
   table: !type:AllSelector
     children:
-    - !type:EntSelector
-      id: ClothingMaskBreath
-    - !type:EntSelector
-      id: ClothingOuterHardsuitRd
-    - !type:EntSelector
-      id: OxygenTankFilled
+    - id: ClothingMaskBreath
+    - id: ClothingOuterHardsuitRd
+    - id: OxygenTankFilled
 
 # No hardsuit table + hardsuit table
 - type: entityTable
@@ -428,51 +332,32 @@
   id: LockerFillHeadOfSecurityNoHardsuit
   table: !type:AllSelector
     children:
-    - !type:EntSelector
-      id: BookSecretDocuments
-    - !type:EntSelector
-      id: BookSpaceLaw
-    - !type:EntSelector
-      id: BoxEncryptionKeySecurity
-    - !type:EntSelector
-      id: CigarGoldCase
+    - id: BookSecretDocuments
+    - id: BookSpaceLaw
+    - id: BoxEncryptionKeySecurity
+    - id: CigarGoldCase
       prob: 0.50
-    - !type:EntSelector
-      id: ClothingBeltSecurityFilled
-    - !type:EntSelector
-      id: ClothingEyesGlassesSecurity
-    - !type:EntSelector
-      id: ClothingHeadsetAltSecurity
-    - !type:EntSelector
-      id: ClothingMaskNeckGaiter
-    - !type:EntSelector
-      id: ClothingOuterCoatHoSTrench
-    - !type:EntSelector
-      id: ClothingShoesBootsJack
-    - !type:EntSelector
-      id: DoorRemoteSecurity
-    - !type:EntSelector
-      id: HoloprojectorSecurity
-    - !type:EntSelector
-      id: RubberStampHos
-    - !type:EntSelector
-      id: SecurityTechFabCircuitboard
-    - !type:EntSelector
-      id: WeaponDisabler
+    - id: ClothingBeltSecurityFilled
+    - id: ClothingEyesGlassesSecurity
+    - id: ClothingHeadsetAltSecurity
+    - id: ClothingMaskNeckGaiter
+    - id: ClothingOuterCoatHoSTrench
+    - id: ClothingShoesBootsJack
+    - id: DoorRemoteSecurity
+    - id: HoloprojectorSecurity
+    - id: RubberStampHos
+    - id: SecurityTechFabCircuitboard
+    - id: WeaponDisabler
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
   id: FillHeadOfSecurityHardsuit
   table: !type:AllSelector
     children:
-    - !type:EntSelector
-      id: ClothingMaskGasSwat
-    - !type:EntSelector
-      id: ClothingOuterHardsuitSecurityRed
-    - !type:EntSelector
-      id: JetpackSecurityFilled
-    - !type:EntSelector
-      id: OxygenTankFilled
+    - id: ClothingMaskGasSwat
+    - id: ClothingOuterHardsuitSecurityRed
+    - id: JetpackSecurityFilled
+    - id: OxygenTankFilled
 
 # No hardsuit table + hardsuit table
 - type: entityTable
