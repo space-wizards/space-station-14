@@ -122,7 +122,7 @@
   targetDepth: 2
   triggerHint: artifact-trigger-hint-bioreactive
   components:
-  - type: reactive
+  - type: Reactive
   groups:
     Acidic: [ Touch ]
   reactions:
@@ -198,7 +198,7 @@
   targetDepth: 3
   triggerHint: artifact-trigger-hint-bioreactive
   components:
-  - type: reactive
+  - type: Reactive
     groups:
       Acidic: [ Touch ]
     reactions:
@@ -212,7 +212,7 @@
   targetDepth: 3 # D3s are due to illegality/restrictions of some reactants
   triggerHint: artifact-trigger-hint-bioreactive
   components:
-  - type: reactive
+  - type: Reactive
     groups:
       Acidic: [ Touch ]
     reactions:
@@ -226,7 +226,7 @@
   targetDepth: 3
   triggerHint: artifact-trigger-hint-energetic
   components:
-  - type: reactive
+  - type: Reactive
     groups:
       Acidic: [ Touch ]
     reactions:
