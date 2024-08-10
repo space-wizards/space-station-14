@@ -39,6 +39,7 @@
     - id: PlushieMoth
     - id: PlushieArachind
     - id: PlushiePenguin
+    - id: PlushieMothRandom # Nyanotrasen - Random Moth Plushies
 
 - type: entity
   id: CrateFunPlushie

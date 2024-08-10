@@ -115,6 +115,7 @@
       - id: BalloonNT
       - id: BalloonCorgi
       - id: MysteryFigureBox
+      - id: CoinQuarter #GreyStation Addition
 
       # Cult
       - !type:AllSelector
@@ -168,6 +169,7 @@
   suffix: Fluff+Clothes
   id: MaintenanceFluffSpawner
   parent: MarkerBase
+  components:
   - type: Sprite
     layers:
       - state: red
