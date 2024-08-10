@@ -118,6 +118,35 @@
       - !type:ActivateArtifact
 
 - type: artifactTrigger
+  id: TriggerAcidic
+  targetDepth: 2
+  triggerHint: artifact-trigger-hint-pH
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+      - reagents: [ Vinegar, PolytrinicAcid, FerrochromicAcid, FluorosulfuricAcid, SulfuricAcid, Artifexium ]
+        methods: [ Touch ]
+        effects:
+        - !type:ActivateArtifact
+        # artifexium should activate as its an acid. But. Its artifexium anyway lmao
+
+- type: artifactTrigger
+  id: TriggerBasic
+  targetDepth: 2
+  triggerHint: artifact-trigger-hint-ph
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ SodiumCarbonate, Hydroxide, SodiumHydroxide ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
   id: TriggerGas
   targetDepth: 2
   triggerHint: artifact-trigger-hint-regular-gases

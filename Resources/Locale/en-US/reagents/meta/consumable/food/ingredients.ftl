@@ -23,7 +23,7 @@ reagent-name-blackpepper = black pepper
 reagent-desc-blackpepper = Often used to flavor food or make people sneeze.
 
 reagent-name-vinegar = vinegar
-reagent-desc-vinegar = Often used to flavor food.
+reagent-desc-vinegar = Often used to flavor food. pH = 2.4
 
 reagent-name-rice = rice
 reagent-desc-rice = Hard, small white grains.
