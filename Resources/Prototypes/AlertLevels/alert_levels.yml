@@ -9,28 +9,28 @@
       shuttleTime: 600
     blue:
       announcement: alert-level-blue-announcement
-      sound: /Audio/Misc/bluealert.ogg
+      sound: /Audio/Announcements/Alerts/bluealert.ogg
       color: DodgerBlue
       forceEnableEmergencyLights: true
       emergencyLightColor: DodgerBlue
       shuttleTime: 600
     violet:
       announcement: alert-level-violet-announcement
-      sound: /Audio/Misc/notice1.ogg
+      sound: /Audio/Announcements/notice1.ogg
       color: Violet
       emergencyLightColor: Violet
       forceEnableEmergencyLights: true
       shuttleTime: 600
     yellow:
       announcement: alert-level-yellow-announcement
-      sound: /Audio/Misc/notice1.ogg
+      sound: /Audio/Announcements/notice1.ogg
       color: Yellow
       emergencyLightColor: Goldenrod
       forceEnableEmergencyLights: true
       shuttleTime: 600
     red:
       announcement: alert-level-red-announcement
-      sound: /Audio/Misc/redalert.ogg
+      sound: /Audio/Announcements/Alerts/redalert.ogg
       color: Red
       emergencyLightColor: Red
       forceEnableEmergencyLights: true
@@ -39,7 +39,7 @@
       announcement: alert-level-gamma-announcement
       selectable: false
       sound:
-        path: /Audio/Misc/gamma.ogg
+        path: /Audio/Announcements/Alerts/gamma.ogg
         params:
           volume: -2
       disableSelection: true
@@ -50,7 +50,7 @@
       announcement: alert-level-delta-announcement
       selectable: false
       sound:
-        path: /Audio/Misc/delta.ogg
+        path: /Audio/Announcements/Alerts/delta.ogg
         params:
           volume: -3
       disableSelection: true
@@ -62,7 +62,7 @@
       announcement: alert-level-epsilon-announcement
       selectable: false
       sound:
-        path: /Audio/Misc/epsilon.ogg
+        path: /Audio/Announcements/Alerts/epsilon.ogg
         params:
           volume: -2
       disableSelection: true
