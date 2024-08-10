@@ -15,7 +15,6 @@ public sealed partial class GatherableSystem
     {
         if (!args.OtherFixture.Hard ||
             args.OurFixtureId != SharedProjectileSystem.ProjectileFixture ||
-            gathering.Comp.Amount <= 0 ||
             !TryComp<GatherableComponent>(args.OtherEntity, out var gatherable))
         {
             return;
@@ -23,8 +22,5 @@ public sealed partial class GatherableSystem
 
         Gather(args.OtherEntity, gathering, gatherable);
         gathering.Comp.Amount--;
-
-        if (gathering.Comp.Amount <= 0)
-            QueueDel(gathering);
     }
 }
