@@ -10,7 +10,7 @@
     tags:
       - WhitelistChameleon
   - type: StaticPrice
-    price: 25
+    price: 10
 
 - type: entity
   abstract: true
