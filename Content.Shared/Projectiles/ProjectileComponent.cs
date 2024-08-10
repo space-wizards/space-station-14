@@ -72,7 +72,7 @@ public sealed partial class ProjectileComponent : Component
     ///     Whether this projectile has already damaged an entity.
     /// </summary>
     [DataField]
-    public bool DamagedEntity;
+    public List<EntityUid> DamagedEntity;
 
     [DataField]
     public bool Breach = false;
