@@ -4,7 +4,7 @@
   id: ShelfBase
   parent: BaseStructure
   name: shelf
-  description: a strange place to place, well, anything really. You feel like you shouldn't be seeing this.'
+  description: A strange place to place, well, anything really. You feel like you shouldn't be seeing this.'
   components:
   - type: Sprite
     drawdepth: WallMountedItems
@@ -189,7 +189,7 @@
   id: ShelfRWood
   parent: ShelfBaseReinforced
   name: sturdy wood shelf
-  description: A safe place to put your favorite bottle of whiskey
+  description: A safe place to put your favorite bottle of whiskey.
   components:
   - type: Sprite
     sprite: Structures/Storage/Shelfs/wood.rsi
@@ -226,7 +226,7 @@
   id: ShelfRMetal
   parent: ShelfBaseReinforced
   name: sturdy metal shelf
-  description: A strong & shiny place to keep all your vials safe
+  description: A strong & shiny place to keep all your vials safe.
   components:
   - type: Sprite
     sprite: Structures/Storage/Shelfs/metal.rsi

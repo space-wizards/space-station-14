@@ -33,6 +33,9 @@ namespace Content.Shared.Lathe
         [DataField]
         public SoundSpecifier? ProducingSound;
 
+        [DataField]
+        public string? ReagentOutputSlotId;
+
         #region Visualizer info
         [DataField]
         public string? IdleState;
