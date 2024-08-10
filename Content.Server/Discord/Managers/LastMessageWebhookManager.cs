@@ -8,6 +8,8 @@ namespace Content.Server.Discord.Managers
 {
     public class LastMessageWebhookManager
     {
+        private readonly DiscordWebhook _discordWebhook = new DiscordWebhook();
+
         public const int MaxMessageSize = 2000; // CAN'T BE MORE THAN 2000! DISCORD LIMIT.
         private const int MaxMessagesPerBatch = 15;
         private const int MessageDelayMilliseconds = 2000;
@@ -20,7 +22,6 @@ namespace Content.Server.Discord.Managers
         /// <returns>A task representing the asynchronous operation.  :nerd:</returns>
         public async Task SendMessagesAsync(WebhookIdentifier webhookId, List<string> messages)
         {
-            var discordWebhook = new DiscordWebhook();
             int messageCount = 0;
 
             foreach (var message in messages)
@@ -32,7 +33,7 @@ namespace Content.Server.Discord.Managers
                 }
 
                 var payload = new WebhookPayload { Content = message };
-                var response = await discordWebhook.CreateMessage(webhookId, payload);
+                var response = await _discordWebhook.CreateMessage(webhookId, payload);
                 messageCount++;
 
                 await Task.Delay(MessageDelayMilliseconds); // Small delay between messages to mitigate rate limiting.
