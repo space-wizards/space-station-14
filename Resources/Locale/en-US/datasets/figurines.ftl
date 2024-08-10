@@ -35,7 +35,7 @@ figurines-captain-3 = The nuclear disk is secure, where? somewhere.
 
 figurines-hos-1 = Space law? What?
 figurines-hos-2 = Shoot the clown.
-figurines-hos-3 = Yes, i shot the clown. no, i don't regret it.
+figurines-hos-3 = Yes, I shot the clown. no, I don't regret it.
 
 figurines-warden-1 = Execute him for breaking in!
 figurines-warden-2 = Perma the fucker for insulting me!
