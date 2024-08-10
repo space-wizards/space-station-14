@@ -1,100 +1,33 @@
-using Content.Server.Animals.Components;
-using Content.Server.Popups;
 using Content.Server.Stack;
+using Content.Shared.Animals;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Shearing;
-using Content.Shared.Tools.Systems;
-using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
-namespace Content.Server.Animals.Systems;
+namespace Content.Server.Animals;
 
-/// <summary>
-///     Lets an entity be sheared by a tool to consume a reagent to spawn an amount of an item.
-///     For example, sheep can be sheared to consume woolSolution to spawn cotton.
-/// </summary>
 public sealed class ShearableSystem : EntitySystem
 {
     [Dependency]
     private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
     [Dependency]
-    private readonly SharedToolSystem _tool = default!;
+    private readonly IPrototypeManager _prototypeManager = default!;
 
     [Dependency]
-    private readonly SharedDoAfterSystem _doAfterSystem = default!;
-
-    [Dependency]
-    private readonly PopupSystem _popup = default!;
+    private readonly SharedPopupSystem _popup = default!;
 
     [Dependency]
     private readonly StackSystem _stackSystem = default!;
-
-    [Dependency]
-    private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ShearableComponent, GetVerbsEvent<AlternativeVerb>>(AddShearVerb);
         SubscribeLocalEvent<ShearableComponent, ShearingDoAfterEvent>(OnSheared);
-        SubscribeLocalEvent<ShearableComponent, InteractUsingEvent>(OnClicked);
-    }
-
-    /// <summary>
-    ///     Attempts to shear the target animal, checking if it is shearable and building arguments for calling TryStartDoAfter.
-    ///     Called by the "shear" verb.
-    /// </summary>
-    private void AttemptShear(Entity<ShearableComponent?> shearable, EntityUid userUid, EntityUid containerUid)
-    {
-        // Check the target creature has the shearable component.
-        if (!Resolve(shearable, ref shearable.Comp))
-            return;
-
-        // Build arguments for calling TryStartDoAfter
-        var doargs = new DoAfterArgs(
-            EntityManager,
-            userUid,
-            5,
-            new ShearingDoAfterEvent(),
-            shearable,
-            shearable,
-            used: containerUid
-        )
-        {
-            BreakOnMove = true,
-            BreakOnDamage = true,
-            MovementThreshold = 1.0f,
-        };
-
-        // Triggers the ShearingDoAfter event.
-        _doAfterSystem.TryStartDoAfter(doargs);
-    }
-
-    /// <summary>
-    ///     Handles shearing when left-click the entity.
-    ///     Only checks if there's an item being held and that is has the specified quality,
-    ///     then calls AttemptShear()
-    /// </summary>
-    private void OnClicked(Entity<ShearableComponent> ent, ref InteractUsingEvent args)
-    {
-        // Check the player is holding an item and that it has the defined quality.
-        if (
-            args.Used == null
-            ||
-            // Checks if you're using an item with the toolQuality component quality.
-            !_tool.HasQuality(args.Used, ent.Comp.ToolQuality)
-        )
-            return;
-
-        AttemptShear(ent.Owner, args.User, args.Used);
     }
 
     /// <summary>
@@ -105,7 +38,7 @@ public sealed class ShearableSystem : EntitySystem
     /// </summary>
     private void OnSheared(Entity<ShearableComponent> ent, ref ShearingDoAfterEvent args)
     {
-        // Check the action hasn't been cancelled, already handled, and that there's an item in the player's hand.
+        // Check the action hasn't been cancelled, or hasn't already been handled, or that the player's hand is empty.
         if (args.Cancelled || args.Handled || args.Args.Used == null)
             return;
 
@@ -197,41 +130,5 @@ public sealed class ShearableSystem : EntitySystem
             args.Args.User,
             PopupType.Medium
         );
-    }
-
-    /// <summary>
-    ///     Adds the "shear" verb to the player.
-    ///     Checks first if the player is holding an item with the specified toolQuality.
-    /// </summary>
-    private void AddShearVerb(Entity<ShearableComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
-    {
-        if (
-            args.Using == null
-            || !args.CanInteract
-            ||
-            // Checks if you're using an item with the toolQuality component quality.
-            !_tool.HasQuality(args.Using.Value, ent.Comp.ToolQuality)
-        )
-            return;
-
-        var uid = ent.Owner;
-        var user = args.User;
-        var used = args.Using.Value;
-        // Construct verb object.
-        AlternativeVerb verb =
-            new()
-            {
-                Act = () =>
-                {
-                    AttemptShear(uid, user, used);
-                },
-                Text = Loc.GetString("shearable-system-verb-shear"),
-                Icon = new SpriteSpecifier.Texture(
-                    new ResPath("/Textures/Interface/VerbIcons/scissors.svg.236dpi.png")
-                ),
-                Priority = 2
-            };
-        // Add verb to the player.
-        args.Verbs.Add(verb);
     }
 }
