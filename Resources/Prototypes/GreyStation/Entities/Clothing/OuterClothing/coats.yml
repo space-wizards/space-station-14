@@ -26,3 +26,13 @@
     sprite: GreyStation/Clothing/OuterClothing/Coats/cc_large_winter_coat.rsi
   - type: Clothing
     sprite: GreyStation/Clothing/OuterClothing/Coats/cc_large_winter_coat.rsi
+
+- type: entity
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatDetective]
+  id: ClothingOuterCoatDetectiveOpened
+  name: detective trenchcoat
+
+- type: entity
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatDetectiveLoadoutGrey]
+  id: ClothingOuterCoatDetectiveGreyOpened
+  name: noir trenchcoat

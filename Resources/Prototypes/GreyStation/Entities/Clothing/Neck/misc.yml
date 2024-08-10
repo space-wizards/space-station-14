@@ -34,3 +34,15 @@
     - Spray
     - ClothMade
     - WhitelistChameleon
+
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckDetectiveBadge
+  name: detective badge
+  description: A badge for the station's detectives and investigators.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Neck/Misc/detectivebadge.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Neck/Misc/detectivebadge.rsi
