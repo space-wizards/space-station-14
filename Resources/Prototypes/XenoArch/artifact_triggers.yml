@@ -208,7 +208,7 @@
       - !type:ActivateArtifact
 
 - type: artifactTrigger
-  id: TriggerPsychadelic
+  id: TriggerPsychedelic
   targetDepth: 3 # D3s are due to illegality/restrictions of some reactants
   triggerHint: artifact-trigger-hint-bioreactive
   components:
