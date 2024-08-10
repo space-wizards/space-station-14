@@ -4,7 +4,6 @@
   noSpawn: true
   components:
   - type: StationEvent
-    startDelay: 5
     earliestStart: 15
     minimumPlayers: 35
     weight: 5
@@ -65,7 +64,7 @@
       0: Alive
       300: Dead
   - type: Stamina
-    excess: 150
+    critThreshold: 150
   - type: DamageStateVisuals
     states:
       Alive:
@@ -135,19 +134,14 @@
     tags:
       - CannotSuicide
       - DoorBumpOpener
-  - type: Tool # Open door from xeno.yml.
-    speed: 1.5
+  - type: Tool
     qualities:
       - Prying
-    useSound:
-      path: /Audio/Items/crowbar.ogg
+    useSound: /Audio/Items/jaws_pry.ogg
   - type: Prying
-    pryPowered: !type:Bool
-        true
-    force: !type:Bool
-      true
-    useSound:
-      path: /Audio/Items/crowbar.ogg
+    speedModifier: 1.5
+    pryPowered: true
+    useSound: /Audio/Items/jaws_pry.ogg
   - type: Barotrauma #Damage
     damage:
       types:
@@ -272,7 +266,7 @@
       0: Alive
       85: Dead   #HP
   - type: Stamina
-    excess: 150
+    critThreshold: 150
   - type: DamageStateVisuals
     states:
       Alive:
@@ -338,7 +332,7 @@
       0: Alive
       110: Dead   
   - type: Stamina
-    excess: 150
+    critThreshold: 150
   - type: DamageStateVisuals
     states:
       Alive:
@@ -402,7 +396,7 @@
       0: Alive
       100: Dead   
   - type: Stamina
-    excess: 150
+    critThreshold: 150
   - type: DamageStateVisuals
     states:
       Alive:
@@ -482,7 +476,7 @@
       0: Alive
       80: Dead   
   - type: Stamina
-    excess: 150
+    critThreshold: 150
   - type: DamageStateVisuals
     states:
       Alive:
@@ -574,7 +568,7 @@
       0: Alive
       15: Dead   
   - type: Stamina
-    excess: 150
+    critThreshold: 150
   - type: DamageStateVisuals
     states:
       Alive:
@@ -890,7 +884,6 @@
   - type: WorldTargetAction
     useDelay: 8 
     range: 1.5
-    hungerCost: 15 
     itemIconStyle: BigAction
     icon:
       sprite: Structures/Walls/web.rsi
@@ -900,11 +893,9 @@
       useDelay: 25
       prototypes:
       - id: FloorTileItemWebSpiders
-        doAfter: 5
         amount: 1
         useDelay: 25
       offset: 0, 1
-      doAfter: 5
       speech: action-speech-spell-spider
 
 - type: entity
@@ -915,21 +906,15 @@
   - type: WorldTargetAction
     useDelay: 10 
     range: 1.5
-    hungerCost: 15 
     itemIconStyle: BigAction
     icon:
       sprite: Structures/Walls/web.rsi
       state: full
-      useDelay: 30
     event: !type:WorldSpawnSpellEvent
-      useDelay: 25
       prototypes:
       - id: FloorTileItemWebSpiders2
-        doAfter: 5
         amount: 1
-        useDelay: 25
       offset: 0, 1
-      doAfter: 5
       speech: action-speech-spell-spider
 
 - type: entity
@@ -1336,7 +1321,7 @@
   - type: MovedByPressure
   - type: EmitSoundOnCollide
     sound:
-      path: /Audio/Effects/wall_bonk.ogg
+      path: /Audio/Effects/drop.ogg
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Effects/drop.ogg
@@ -1456,7 +1441,7 @@
   name: web
   description: web
   components:
-  - type: Clickable
+  - type: Clickable 
   - type: MeleeSound
     soundGroups:
       Brute:
@@ -1494,4 +1479,4 @@
     base: wall
   - type: Construction
     graph: WebStructures
-    node: wall
+    node: wall 
