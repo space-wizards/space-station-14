@@ -60,6 +60,8 @@ namespace Content.Shared.Movement.Systems
         protected EntityQuery<FootstepModifierComponent> FootstepModifierQuery;
         protected EntityQuery<MapGridComponent> MapGridQuery;
 
+        private readonly HashSet<Entity<PhysicsComponent>> _weightlessNearby = new();
+
         /// <summary>
         /// <see cref="CCVars.StopSpeed"/>
         /// </summary>
@@ -89,6 +91,7 @@ namespace Content.Shared.Movement.Systems
             FootstepModifierQuery = GetEntityQuery<FootstepModifierComponent>();
             MapGridQuery = GetEntityQuery<MapGridComponent>();
 
+            InitializeActive();
             InitializeInput();
             InitializeRelay();
             Subs.CVar(_configManager, CCVars.RelativeMovement, value => _relativeMovement = value, true);
@@ -122,6 +125,7 @@ namespace Content.Shared.Movement.Systems
             var canMove = mover.CanMove;
             if (RelayTargetQuery.TryGetComponent(uid, out var relayTarget))
             {
+                // TODO: Shitty sleep hardcoded in here, use the eventbus
                 if (_mobState.IsIncapacitated(relayTarget.Source) ||
                     TryComp<SleepingComponent>(relayTarget.Source, out _) ||
                     !MoverQuery.TryGetComponent(relayTarget.Source, out var relayedMover))
@@ -155,7 +159,6 @@ namespace Content.Shared.Movement.Systems
                 return;
             }
 
-
             UsedMobMovement[uid] = true;
             // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.
             var weightless = _gravity.IsWeightless(physicsUid, physicsComponent, xform);
@@ -175,8 +178,8 @@ namespace Content.Shared.Movement.Systems
                     // No gravity: is our entity touching anything?
                     touching = ev.CanMove;
 
-                    if (!touching && TryComp<MobMoverComponent>(uid, out var mobMover))
-                        touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, physicsUid, physicsComponent);
+                    if (!touching && MobMoverQuery.TryComp(uid, out var mobMover))
+                        touching |= IsAroundCollider(xform, mobMover, physicsComponent);
                 }
             }
 
@@ -214,7 +217,7 @@ namespace Content.Shared.Movement.Systems
 
             if (weightless)
             {
-                if (gridComp == null && !MapGridQuery.HasComp(xform.GridUid))
+                if (gridComp == null)
                     friction = moveSpeedComponent?.OffGridFriction ?? MovementSpeedModifierComponent.DefaultOffGridFriction;
                 else if (worldTotal != Vector2.Zero && touching)
                     friction = moveSpeedComponent?.WeightlessFriction ?? MovementSpeedModifierComponent.DefaultWeightlessFriction;
@@ -363,21 +366,25 @@ namespace Content.Shared.Movement.Systems
         /// <summary>
         ///     Used for weightlessness to determine if we are near a wall.
         /// </summary>
-        private bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, TransformComponent transform, MobMoverComponent mover, EntityUid physicsUid, PhysicsComponent collider)
+        private bool IsAroundCollider(TransformComponent transform, MobMoverComponent mover, PhysicsComponent collider)
         {
-            var enlargedAABB = _lookup.GetWorldAABB(physicsUid, transform).Enlarged(mover.GrabRangeVV);
+            _weightlessNearby.Clear();
+            _lookup.GetEntitiesInRange(transform.Coordinates, mover.GrabRangeVV, _weightlessNearby, LookupFlags.Static | LookupFlags.Approximate);
 
-            foreach (var otherCollider in broadPhaseSystem.GetCollidingEntities(transform.MapID, enlargedAABB))
+            foreach (var other in _weightlessNearby)
             {
-                if (otherCollider == collider)
+                var otherCollider = other.Comp;
+
+                if (other.Owner == collider.Owner)
                     continue; // Don't try to push off of yourself!
 
+                DebugTools.Assert(otherCollider.BodyType == BodyType.Static);
+
                 // Only allow pushing off of anchored things that have collision.
-                if (otherCollider.BodyType != BodyType.Static ||
-                    !otherCollider.CanCollide ||
+                if (!otherCollider.CanCollide ||
                     ((collider.CollisionMask & otherCollider.CollisionLayer) == 0 &&
-                    (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
-                    (TryComp(otherCollider.Owner, out PullableComponent? pullable) && pullable.BeingPulled))
+                     (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
+                    (PullableQuery.TryComp(other.Owner, out var pullable) && pullable.BeingPulled))
                 {
                     continue;
                 }

@@ -97,7 +97,8 @@ namespace Content.Client.Physics.Controllers
         private void HandleClientsideMovement(EntityUid player, float frameTime)
         {
             if (!MoverQuery.TryGetComponent(player, out var mover) ||
-                !XformQuery.TryGetComponent(player, out var xform))
+                !XformQuery.TryGetComponent(player, out var xform) ||
+                !HasComp<ActiveInputMoverComponent>(player))
             {
                 return;
             }

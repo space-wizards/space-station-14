@@ -26,9 +26,6 @@ namespace Content.Shared.Gravity
             if ((body?.BodyType & (BodyType.Static | BodyType.Kinematic)) != 0)
                 return false;
 
-            if (TryComp<MovementIgnoreGravityComponent>(uid, out var ignoreGravityComponent))
-                return ignoreGravityComponent.Weightless;
-
             var ev = new IsWeightlessEvent(uid);
             RaiseLocalEvent(uid, ref ev);
             if (ev.Handled)

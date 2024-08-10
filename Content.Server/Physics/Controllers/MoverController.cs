@@ -26,8 +26,6 @@ namespace Content.Server.Physics.Controllers
             base.Initialize();
             SubscribeLocalEvent<RelayInputMoverComponent, PlayerAttachedEvent>(OnRelayPlayerAttached);
             SubscribeLocalEvent<RelayInputMoverComponent, PlayerDetachedEvent>(OnRelayPlayerDetached);
-            SubscribeLocalEvent<InputMoverComponent, PlayerAttachedEvent>(OnPlayerAttached);
-            SubscribeLocalEvent<InputMoverComponent, PlayerDetachedEvent>(OnPlayerDetached);
         }
 
         private void OnRelayPlayerAttached(Entity<RelayInputMoverComponent> entity, ref PlayerAttachedEvent args)
@@ -42,13 +40,15 @@ namespace Content.Server.Physics.Controllers
                 SetMoveInput((entity.Owner, inputMover), MoveButtons.None);
         }
 
-        private void OnPlayerAttached(Entity<InputMoverComponent> entity, ref PlayerAttachedEvent args)
+        protected override void OnInputPlayerAttached(Entity<InputMoverComponent> entity, ref PlayerAttachedEvent args)
         {
+            base.OnInputPlayerAttached(entity, ref args);
             SetMoveInput(entity, MoveButtons.None);
         }
 
-        private void OnPlayerDetached(Entity<InputMoverComponent> entity, ref PlayerDetachedEvent args)
+        protected override void OnInputPlayerDetached(Entity<InputMoverComponent> entity, ref PlayerDetachedEvent args)
         {
+            base.OnInputPlayerDetached(entity, ref args);
             SetMoveInput(entity, MoveButtons.None);
         }
 
@@ -61,9 +61,9 @@ namespace Content.Server.Physics.Controllers
         {
             base.UpdateBeforeSolve(prediction, frameTime);
 
-            var inputQueryEnumerator = AllEntityQuery<InputMoverComponent>();
+            var inputQueryEnumerator = AllEntityQuery<ActiveInputMoverComponent, InputMoverComponent>();
 
-            while (inputQueryEnumerator.MoveNext(out var uid, out var mover))
+            while (inputQueryEnumerator.MoveNext(out var uid, out _, out var mover))
             {
                 var physicsUid = uid;
 

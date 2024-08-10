@@ -1,4 +1,5 @@
-﻿using Content.Shared.Movement.Components;
+﻿using Content.Shared.Gravity;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Robust.Shared.GameStates;
 
@@ -8,26 +9,18 @@ public sealed class MovementIgnoreGravitySystem : EntitySystem
 {
     public override void Initialize()
     {
-        SubscribeLocalEvent<MovementIgnoreGravityComponent, ComponentGetState>(GetState);
-        SubscribeLocalEvent<MovementIgnoreGravityComponent, ComponentHandleState>(HandleState);
         SubscribeLocalEvent<MovementAlwaysTouchingComponent, CanWeightlessMoveEvent>(OnWeightless);
+        SubscribeLocalEvent<MovementIgnoreGravityComponent, IsWeightlessEvent>(OnIsWeightless);
+    }
+
+    private void OnIsWeightless(Entity<MovementIgnoreGravityComponent> ent, ref IsWeightlessEvent args)
+    {
+        args.Handled = true;
+        args.IsWeightless = false;
     }
 
     private void OnWeightless(EntityUid uid, MovementAlwaysTouchingComponent component, ref CanWeightlessMoveEvent args)
     {
         args.CanMove = true;
-    }
-
-    private void HandleState(EntityUid uid, MovementIgnoreGravityComponent component, ref ComponentHandleState args)
-    {
-        if (args.Next is null)
-            return;
-
-        component.Weightless = ((MovementIgnoreGravityComponentState) args.Next).Weightless;
-    }
-
-    private void GetState(EntityUid uid, MovementIgnoreGravityComponent component, ref ComponentGetState args)
-    {
-        args.State = new MovementIgnoreGravityComponentState(component);
     }
 }
