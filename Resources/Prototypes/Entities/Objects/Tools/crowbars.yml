@@ -101,6 +101,7 @@
   parent: BaseCrowbar
   id: CrowbarGreen
   description: A multipurpose tool to pry open doors and fight interdimensional invaders. #GreyStation Change
+  components:
   - type: Sprite #GreyStation Change
     state: icon
   - type: Item
@@ -138,6 +139,7 @@
   parent: BaseCrowbar
   id: CrowbarOrange
   description: A multipurpose tool to pry open doors and fight interdimensional invaders. #GreyStation Change
+  components:
   - type: Sprite #GreyStation Change
     state: icon
   - type: Item
@@ -175,6 +177,7 @@
   parent: BaseCrowbar
   id: CrowbarYellow
   description: A multipurpose tool to pry open doors and fight interdimensional invaders. #GreyStation Change
+  components:
   - type: Sprite #GreyStation Change
     state: icon
   - type: Item
