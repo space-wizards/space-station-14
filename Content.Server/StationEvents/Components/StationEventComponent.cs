@@ -81,4 +81,10 @@ public sealed partial class StationEventComponent : Component
     [DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
     public TimeSpan? EndTime;
+
+    /// <summary>
+    /// If false, the event won't trigger during ongoing evacuation.
+    /// </summary>
+    [DataField]
+    public bool OccursDuringRoundEnd = true;
 }

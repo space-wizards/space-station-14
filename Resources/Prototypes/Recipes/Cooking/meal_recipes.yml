@@ -457,7 +457,7 @@
   time: 5
   solids:
     FoodBreadPlainSlice: 1
-    FoodButter: 1
+    FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeFrenchToast
@@ -478,7 +478,7 @@
   solids:
     FoodBreadPlainSlice: 1
     FoodGarlic: 1
-    FoodButter: 1
+    FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeJellyToast
@@ -576,7 +576,7 @@
   time: 30
   solids:
     FoodDoughFlat: 1
-    FoodAmbrosiaVulgaris: 3
+    LeavesCannabis: 2
     FoodCheeseSlice: 1
     FoodTomato: 1
 
@@ -590,6 +590,17 @@
     FoodDonkpocketWarm: 3
     FoodCheeseSlice: 1
     FoodTomato: 1
+
+- type: microwaveMealRecipe
+  id: RecipeUraniumPizza
+  name: spicy rock pizza recipe
+  result: FoodPizzaUranium
+  time: 30
+  solids:
+    FoodDoughFlat: 1
+    FoodChiliPepper: 2
+    FoodTomato: 2
+    SheetUranium1: 2
 
 #Italian
 - type: microwaveMealRecipe
@@ -635,12 +646,13 @@
   name: chow mein recipe
   result: FoodNoodlesChowmein
   time: 10
+  reagents:
+    Egg: 6
   solids:
     FoodNoodlesBoiled: 1
     FoodEggplant: 1
     FoodCarrot: 1
     FoodCorn: 1
-    FoodEgg: 1
 
 - type: microwaveMealRecipe
   id: RecipeOatmeal
@@ -700,9 +712,10 @@
   name: egg-fried rice recipe
   result: FoodRiceEgg
   time: 15
+  reagents:
+    Egg: 6
   solids:
     FoodRiceBoiled: 1
-    FoodEgg: 1
     FoodCarrot: 1
 
 - type: microwaveMealRecipe
@@ -1205,7 +1218,7 @@
     Flour: 5
     Sugar: 5
   solids:
-    FoodButter: 1
+    FoodButterSlice: 1
     FoodSnackChocolateBar: 1
 
 - type: microwaveMealRecipe
@@ -1217,7 +1230,7 @@
     Flour: 5
     Sugar: 10
   solids:
-    FoodButter: 1
+    FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeRaisinCookie
@@ -1239,7 +1252,7 @@
     Oats: 5
     Sugar: 5
   solids:
-    FoodButter: 1
+    FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeChocolateChipPancake
@@ -1436,10 +1449,10 @@
   reagents:
     Flour: 15
     Sugar: 30
+    Egg: 18
   solids:
     FoodButter: 2
     FoodSnackChocolateBar: 2
-    FoodEgg: 3
 
 #Donks i guess
 - type: microwaveMealRecipe
@@ -1876,10 +1889,10 @@
   reagents:
     Flour: 15
     Sugar: 30
+    Egg: 18
   solids:
     FoodCannabisButter: 2
     FoodSnackChocolateBar: 2
-    FoodEgg: 3
 
 - type: microwaveMealRecipe
   id: RecipeCornInButter

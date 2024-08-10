@@ -131,6 +131,7 @@
             types:
               Blunt: 0
         - type: Item
+    - !type:RemoveAnchoredFilter
   considerations:
     - !type:TargetMeleeCon
       curve: !type:QuadraticCurve

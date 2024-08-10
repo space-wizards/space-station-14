@@ -3,6 +3,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Tag;
+using Content.Shared.Interaction.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 
@@ -110,7 +111,10 @@ public abstract partial class SharedHandsSystem
             return false;
 
         var entity = hand.HeldEntity!.Value;
-        DoDrop(uid, hand, doDropInteraction: doDropInteraction, handsComp);
+
+        // if item is a fake item (like with pulling), just delete it rather than bothering with trying to drop it into the world
+        if (TryComp(entity, out VirtualItemComponent? @virtual))
+            _virtualSystem.DeleteVirtualItem((entity, @virtual), uid);
 
         if (TerminatingOrDeleted(entity))
             return true;
@@ -122,16 +126,16 @@ public abstract partial class SharedHandsSystem
         var userXform = Transform(uid);
         var isInContainer = ContainerSystem.IsEntityOrParentInContainer(uid, xform: userXform);
 
-        if (targetDropLocation == null || isInContainer)
-        {
-            // If user is in a container, drop item into that container. Otherwise, attach to grid or map.
-            TransformSystem.DropNextTo((entity, itemXform), (uid, userXform));
-            return true;
-        }
+        DoDrop(uid, hand, doDropInteraction: doDropInteraction, handsComp);
 
+        // drop the item inside the container if the user is in a container
+        if (targetDropLocation == null || isInContainer)
+            return true;
+
+        // otherwise, remove the item from their hands and place it at the calculated interaction range position
         var (itemPos, itemRot) = TransformSystem.GetWorldPositionRotation(entity);
         var origin = new MapCoordinates(itemPos, itemXform.MapID);
-        var target = targetDropLocation.Value.ToMap(EntityManager, TransformSystem);
+        var target = TransformSystem.ToMapCoordinates(targetDropLocation.Value);
         TransformSystem.SetWorldPositionRotation(entity, GetFinalDropCoordinates(uid, origin, target), itemRot);
         return true;
     }

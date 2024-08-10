@@ -148,7 +148,7 @@
   description: A geras of a slime - the name is ironic, isn't it?
   id: MobSlimesGeras
   parent: BaseMobAdultSlimes
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   # they portable...
   - type: MovementSpeedModifier

@@ -31,18 +31,6 @@ public sealed partial class CartridgeAmmoComponent : AmmoComponent
     public bool Spent;
 
     /// <summary>
-    /// How much the ammo spreads when shot, in degrees. Does nothing if count is 0.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
-    public Angle Spread = Angle.FromDegrees(5);
-
-    /// <summary>
-    /// How many prototypes are spawned when shot.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
-    public int Count = 1;
-
-    /// <summary>
     /// Caseless ammunition.
     /// </summary>
     [DataField]
