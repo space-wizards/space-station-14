@@ -262,19 +262,6 @@
           id: ClothingNeckAutismPin
         - !type:EntSelector
           id: ClothingNeckGoldAutismPin
-    # Rare Group
-    - !type:GroupSelector
-      weight: 2
-      children:
-  - type: Sprite
-    layers:
-      - state: red
-      - sprite: Clothing/Eyes/Glasses/gar.rsi
-        state: icon-super
-  - type: EntityTableSpawner
-    table: !type:NestedSelector
-      tableId: MaintFluffTable
-      prob: 0.6
 
 - type: entityTable
   id: MaintToolsTable

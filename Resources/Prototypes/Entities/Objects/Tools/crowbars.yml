@@ -11,9 +11,6 @@
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/crowbar_drop.ogg
-  - type: EmitSoundOnLand
-    sound:
-      path: /Audio/Items/crowbar_drop.ogg
   - type: Tag
     tags:
     - Crowbar
@@ -104,6 +101,12 @@
   parent: BaseCrowbar
   id: CrowbarGreen
   description: A multipurpose tool to pry open doors and fight interdimensional invaders. #GreyStation Change
+  - type: Sprite #GreyStation Change
+    state: icon
+  - type: Item
+    storedSprite:
+      sprite: Objects/Tools/crowbar.rsi
+      state: storage
 #  components:
 #  - type: Sprite
 #    layers:
@@ -135,6 +138,12 @@
   parent: BaseCrowbar
   id: CrowbarOrange
   description: A multipurpose tool to pry open doors and fight interdimensional invaders. #GreyStation Change
+  - type: Sprite #GreyStation Change
+    state: icon
+  - type: Item
+    storedSprite:
+      sprite: Objects/Tools/crowbar.rsi
+      state: storage
 #  components:
 #  - type: Sprite
 #    layers:
@@ -166,6 +175,12 @@
   parent: BaseCrowbar
   id: CrowbarYellow
   description: A multipurpose tool to pry open doors and fight interdimensional invaders. #GreyStation Change
+  - type: Sprite #GreyStation Change
+    state: icon
+  - type: Item
+    storedSprite:
+      sprite: Objects/Tools/crowbar.rsi
+      state: storage
 #  components:
 #  - type: Sprite
 #    layers:

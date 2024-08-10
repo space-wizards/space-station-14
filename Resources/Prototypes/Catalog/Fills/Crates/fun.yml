@@ -3,9 +3,6 @@
   table: !type:GroupSelector
     children:
     - !type:EntSelector
-      id: PlushieMothRandom # Nyanotrasen - Random Moth Plushies
-      amount: 2
-    - !type:EntSelector
       id: PlushieBee
     - !type:EntSelector
       id: PlushieNar
@@ -66,6 +63,8 @@
       id: PlushieArachind
     - !type:EntSelector
       id: PlushiePenguin
+    - !type:EntSelector
+      id: PlushieMothRandom # Nyanotrasen - Random Moth Plushies
 
 - type: entity
   id: CrateFunPlushie
