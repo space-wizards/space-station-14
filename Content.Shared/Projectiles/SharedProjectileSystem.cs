@@ -78,7 +78,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         {
             projectile.Shooter = null;
             projectile.Weapon = null;
-            projectile.DamagedEntity = false;
+            projectile.DamagedEntity = new List<EntityUid?>();;
         }
 
         // Land it just coz uhhh yeah
