@@ -196,7 +196,6 @@
   parent: BaseLightTube
   name: fluorescent disco light tube
   id: DiscoLightTube
-  bulb: discoTube
   description: A disco light fixture.
   components:
   - type: LightBulb
