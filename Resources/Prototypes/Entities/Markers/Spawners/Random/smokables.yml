@@ -1,0 +1,74 @@
+- type: entity
+  id: RandomSmokables
+  name: random smokable spawner
+  parent: MarkerBase
+  placement:
+    mode: PlaceFree
+  components:
+  - type: Transform
+    anchored: false
+  - type: Sprite
+    layers:
+      - sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
+        state: closed
+  - type: RandomSpawner
+    prototypes:
+      - Cigarette
+      - Cigar
+      - CigPackGreen
+      - CigPackRed
+      - CigPackBlue
+      - CigPackBlack
+      - PackPaperRollingFilters
+    chance: 0.95
+    rarePrototypes:
+      - RandomSoakedCigarette
+      - Joint
+      - JointRainbow
+      - Blunt
+      - BluntRainbow
+      - CigPackMixedMedical
+      - CigPackMixed
+      - CigPackMixedNasty
+      - CigarGold
+      - CigaretteSpent
+      - CigarSpent
+    rareChance: 0.05
+
+- type: entity
+  id: RandomSoakedCigarette
+  name: random soaked cigarette spawner
+  parent: MarkerBase
+  placement:
+    mode: PlaceFree
+  components:
+  - type: Transform
+    anchored: false
+  - type: Sprite
+    layers:
+      - sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
+        state: unlit-icon
+  - type: RandomSpawner
+    prototypes:
+      - CigaretteOmnizine
+      - CigaretteIron
+      - CigaretteDylovene
+      - CigaretteDermaline
+      - CigaretteIpecac
+      - CigaretteBicaridine
+      - CigaretteDermaline
+      - CigaretteDexalin
+      - CigarettePax
+      - CigaretteBbqSauce
+      - CigaretteBlackPepper
+      - CigaretteOmnizine
+      - CigaretteCapsaicinOil
+      - CigaretteBread
+      - CigaretteMilk
+      - CigaretteBanana
+      - CigaretteSpaceDrugs
+      - CigaretteMuteToxin
+      - CigaretteMold
+      - CigaretteLicoxide
+      - CigaretteWeldingFuel
+      - CigaretteTHC
