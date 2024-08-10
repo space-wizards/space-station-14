@@ -397,6 +397,7 @@
       types:
         Blunt: 25
         Structural: 30
+      breach: true
   # Short lifespan
   - type: TimedDespawn
     lifetime: 0.4
