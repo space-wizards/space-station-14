@@ -140,11 +140,11 @@
     groups:
       Acidic: [ Touch ]
     reactions:
-      - reagents: [ Vinegar, PolytrinicAcid, FerrochromicAcid, FluorosulfuricAcid, SulfuricAcid, Artifexium, NorepinephricAcid ]
-        methods: [ Touch ]
-        effects:
-        - !type:ActivateArtifact
-        # artifexium should activate as its an acid. But. Its artifexium anyway.
+    - reagents: [ Vinegar, PolytrinicAcid, FerrochromicAcid, FluorosulfuricAcid, SulfuricAcid, Artifexium, NorepinephricAcid ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+      # artifexium should activate as its an acid. But. Its artifexium anyway.
 
 - type: artifactTrigger
   id: TriggerBasic
