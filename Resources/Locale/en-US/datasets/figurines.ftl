@@ -30,16 +30,23 @@ figurines-musician-2 = Never gonna let you down!
 # figurines-boxer-
 
 figurines-captain-1 = Glory to NT!
+figurines-captain-2 = Gib the cmo!
+figurines-captain-3 = The nuclear disk is secure, where? somewhere.
 
 figurines-hos-1 = Space law? What?
-figurines-hos-2 = Shot the clown.
+figurines-hos-2 = Shoot the clown.
+figurines-hos-3 = yes, i shot the clown. no, i don't regret it.
 
 figurines-warden-1 = Execute him for breaking in!
+figurines-warden-2 = Perma the fucker for insulting me!
+figurines-warden-3 = We totally treat everyone fairly and do NOT mistreat our prisoners.
 
 figurines-detective-1 = The butler did it.
+figurines-detective-2 = I need some whiskey after this.
 
 figurines-security-1 = I am the law!
 figurines-security-2 = You have violated article 1984.
+figurines-security-3 = Whenever i get bored i use the clown as target practice.
 
 figurines-lawyer-1 = Better Call Saul!
 figurines-lawyer-2 = Objection!
