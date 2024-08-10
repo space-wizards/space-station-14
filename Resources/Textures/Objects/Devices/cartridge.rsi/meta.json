@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d , cart-log made by Skarletto (github)",
+  "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d and tgstation at tgstation at https://github.com/tgstation/tgstation/commit/0c15d9dbcf0f2beb230eba5d9d889ef2d1945bb8, cart-log made by Skarletto (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -50,10 +50,16 @@
       "name": "cart-lib"
     },
     {
+      "name": "cart-log"
+    },
+    {
       "name": "cart-m"
     },
     {
       "name": "cart-mi"
+    },
+    {
+      "name": "cart-ord"
     },
     {
       "name": "cart-q"
@@ -74,7 +80,7 @@
       "name": "cart-y"
     },
     {
-      "name": "cart-log"
+      "name": "insert_overlay"
     }
   ]
 }

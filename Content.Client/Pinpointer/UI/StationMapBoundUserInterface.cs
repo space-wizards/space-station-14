@@ -1,3 +1,4 @@
+using Content.Shared.Pinpointer;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Pinpointer.UI;
@@ -23,6 +24,9 @@ public sealed class StationMapBoundUserInterface : BoundUserInterface
 
         _window = this.CreateWindow<StationMapWindow>();
         _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
-        _window.Set(gridUid, Owner);
+        if (EntMan.TryGetComponent<StationMapComponent>(Owner, out var comp) && comp.ShowLocation)
+            _window.Set(gridUid, Owner);
+        else
+            _window.Set(gridUid, null);
     }
 }
