@@ -28,16 +28,6 @@
       entity_storage: !type:NestedSelector
         tableId: LockerFillQuarterMaster
 
-# Hardsuit table, used for suit storage as well
-- type: entityTable
-  id: FillCaptainHardsuit
-  table: !type:AllSelector
-    children:
-    - id: ClothingOuterHardsuitCap
-    - id: ClothingMaskGasCaptain
-    - id: JetpackCaptainFilled
-    - id: OxygenTankFilled
-
 # No laser table
 - type: entityTable
   id: LockerFillCaptainNoLaser
@@ -69,15 +59,15 @@
       tableId: LockerFillCaptainNoLaser
     - id: WeaponAntiqueLaser
 
-# Laser table + Hardsuit table
+# Hardsuit table, used for suit storage as well
 - type: entityTable
-  id: LockerFillCaptainHardsuitLaser
+  id: FillCaptainHardsuit
   table: !type:AllSelector
     children:
-    - !type:NestedSelector
-      tableId: LockerFillCaptainLaser
-    - !type:NestedSelector
-      tableId: FillCaptainHardsuit
+    - id: ClothingOuterHardsuitCap
+    - id: ClothingMaskGasCaptain
+    - id: JetpackCaptainFilled
+    - id: OxygenTankFilled
 
 # No laser locker, used when the antique laser is placed in the special display crate
 - type: entity
@@ -109,8 +99,12 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:NestedSelector
-        tableId: LockerFillCaptainHardsuitLaser
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: LockerFillCaptainLaser
+        - !type:NestedSelector
+          tableId: FillCaptainHardsuit
 
 - type: entityTable
   id: LockerFillHeadOfPersonnel
@@ -177,16 +171,6 @@
     - id: JetpackVoidFilled
     - id: OxygenTankFilled
 
-# No hardsuit table + hardsuit table
-- type: entityTable
-  id: LockerFillChiefEngineerHardsuit
-  table: !type:AllSelector
-    children:
-    - !type:NestedSelector
-      tableId: LockerFillChiefEngineerNoHardsuit
-    - !type:NestedSelector
-      tableId: FillChiefEngineerHardsuit
-
 # No hardsuit locker
 - type: entity
   id: LockerChiefEngineerFilled
@@ -206,8 +190,12 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:NestedSelector
-        tableId: LockerFillChiefEngineerHardsuit
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: LockerFillChiefEngineerNoHardsuit
+        - !type:NestedSelector
+          tableId: FillChiefEngineerHardsuit
 
 # No hardsuit table
 - type: entityTable
@@ -238,16 +226,6 @@
     - id: ClothingOuterHardsuitMedical
     - id: OxygenTankFilled
 
-# No hardsuit table + hardsuit table
-- type: entityTable
-  id: LockerFillChiefMedicalOfficerHardsuit
-  table: !type:AllSelector
-    children:
-    - !type:NestedSelector
-      tableId: LockerFillChiefMedicalOfficerNoHardsuit
-    - !type:NestedSelector
-      tableId: FillChiefMedicalOfficerHardsuit
-
 # No hardsuit locker
 - type: entity
   id: LockerChiefMedicalOfficerFilled
@@ -267,8 +245,12 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:NestedSelector
-        tableId: LockerFillChiefMedicalOfficerHardsuit
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: LockerFillChiefMedicalOfficerNoHardsuit
+        - !type:NestedSelector
+          tableId: FillChiefMedicalOfficerHardsuit
 
 # No hardsuit table
 - type: entityTable
@@ -295,16 +277,6 @@
     - id: ClothingOuterHardsuitRd
     - id: OxygenTankFilled
 
-# No hardsuit table + hardsuit table
-- type: entityTable
-  id: LockerFillResearchDirectorHardsuit
-  table: !type:AllSelector
-    children:
-    - !type:NestedSelector
-      tableId: LockerFillResearchDirectorNoHardsuit
-    - !type:NestedSelector
-      tableId: FillResearchDirectorHardsuit
-
 # No hardsuit locker
 - type: entity
   id: LockerResearchDirectorFilled
@@ -324,8 +296,12 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:NestedSelector
-        tableId: LockerFillResearchDirectorHardsuit
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: LockerFillResearchDirectorNoHardsuit
+        - !type:NestedSelector
+          tableId: FillResearchDirectorHardsuit
 
 # No hardsuit table
 - type: entityTable
@@ -359,16 +335,6 @@
     - id: JetpackSecurityFilled
     - id: OxygenTankFilled
 
-# No hardsuit table + hardsuit table
-- type: entityTable
-  id: LockerFillHeadOfSecurityHardsuit
-  table: !type:AllSelector
-    children:
-    - !type:NestedSelector
-      tableId: LockerFillHeadOfSecurityNoHardsuit
-    - !type:NestedSelector
-      tableId: FillHeadOfSecurityHardsuit
-
 # No hardsuit locker
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -388,8 +354,12 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:NestedSelector
-        tableId: LockerFillHeadOfSecurityHardsuit
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: LockerFillHeadOfSecurityNoHardsuit
+        - !type:NestedSelector
+          tableId: FillHeadOfSecurityHardsuit
 
 - type: entity
   id: LockerFreezerVaultFilled
