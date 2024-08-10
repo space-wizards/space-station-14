@@ -13,7 +13,7 @@
                     <Label Name="NameLabel" Access="Public"/>
                     <Label Name="SubText" VerticalAlignment="Top" StyleClasses="LabelSubText" Access="Public"/>
                 </BoxContainer>
-                <!-- TODO:ERRANT LATER: fix vertical alignment, this looks horrible-->
+                <!-- TODO:ERRANT. LATER: fix vertical alignment, this looks horrible-->
                 <BoxContainer Orientation="Vertical" VerticalAlignment="Top" Margin="10, 0, 0, 0">
                     <Label Name="MindRole" VerticalAlignment="Top" HorizontalAlignment="Left" StyleClasses="LabelHeading" Access="Public"/>
                     <Label Name="MindRoleDetail" VerticalAlignment="Bottom" HorizontalAlignment="Left" Access="Public" StyleClasses="LabelSubText" />

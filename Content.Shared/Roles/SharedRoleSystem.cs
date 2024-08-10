@@ -140,15 +140,15 @@ public abstract class SharedRoleSystem : EntitySystem
             $"'Role {component}' added to mind of {_minds.MindOwnerLoggingString(mind)}");
     }
 
-    //TODO:ERRANT testing
-    public void SetMindRole(EntityUid ent, MindRolePrototype proto)
+    //TODO:ERRANT. testing
+    public void SetMindRole(EntityUid ent, RoleTypePrototype role)
     {
         var comp = CheckMindRoles(ent);
 
         if ( comp is null || comp.OwnedEntity is null)
             return;
 
-        comp.MindRole = proto;
+        comp.RoleType = role;
         Dirty(comp.Owner, comp); //TODO:ERRANT
     }
 

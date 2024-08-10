@@ -357,9 +357,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             _role.MindAddRoles(curMind.Value, def.MindComponents, null, true);
             ent.Comp.SelectedMinds.Add((curMind.Value, Name(player)));
 
-            if (def.RoleType is not null && _proto.TryIndex<MindRolePrototype>(def.RoleType, out var roleType))
+            if (def.RoleId is not null && _proto.TryIndex(def.RoleId, out var roleType))
                 _role.SetMindRole(curMind.Value, roleType);
-                //TODO:ERRANT LATER: Put RoleType on the mind role components instead so they are persistent
+                //TODO:ERRANT. LATER: Put RoleType on the mind role components instead so they are persistent
 
             SendBriefing(session, def.Briefing);
         }

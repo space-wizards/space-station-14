@@ -1,0 +1,50 @@
+# For use by Role Types
+# Do not touch these
+
+- type: immutableRoleType
+  id: Neutral
+  roleRule: Neutral
+  name: role-type-neutral-name
+  color: '#eeeeee'
+
+- type: immutableRoleType
+  id: SoloAntagonist
+  roleRule: SoloAntagonist
+  name: role-type-solo-antagonist-name
+  color: '#d82000'
+
+- type: immutableRoleType
+  id: TeamAntagonist
+  roleRule: TeamAntagonist
+  name: role-type-team-antagonist-name
+  color: '#d82000'
+
+- type: immutableRoleType
+  id: FreeAgent
+  roleRule: FreeAgent
+  name: role-type-free-agent-name
+  color: '#ffff00'
+
+- type: immutableRoleType
+  id: Familiar
+  roleRule: Familiar
+  name: role-type-familiar-name
+  color: '#6495ed' # TODO:ERRANT. should Silicon and Familiar be the same color?
+
+- type: immutableRoleType
+  id: Silicon
+  roleRule: Silicon
+  name: role-type-silicon-name
+  color: '#6495ed'
+
+#- type: immutableRoleType # TODO:ERRANT. should this stay?
+#  id: MalfSilicon
+#  roleRule: MalfSilicon
+#  name: role-type-silicon-altered-name
+#  color: '#c832e6'
+
+- type: immutableRoleType
+  id: Observer
+  roleRule: Observer
+  name: role-type-observer-name
+  color: '#eeeeee'

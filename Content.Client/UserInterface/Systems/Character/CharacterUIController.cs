@@ -122,25 +122,28 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         if (container.Mind is null)
             return;
 
-        var role = _ent.EnsureComponent<MindComponent>(container.Mind.Value);
+        var mind = _ent.EnsureComponent<MindComponent>(container.Mind.Value);
 
         string? roleText = null;
         var color = Color.White;
-        if (_prototypeManager.TryIndex<MindRoleCorePrototype>(role.MindRole.Prototype, out var proto))
+        if (_prototypeManager.TryIndex(mind.RoleType.RoleId, out var proto))
         {
             roleText = proto.Name;
             color = proto.Color;
         }
+        else
+        {
+            roleText = "role-type-neutral-name-fallback";
+            //TODO:ERRANT. log error here? but this will potentially be processed a lot
+        }
 
-
-        roleText = (!string.IsNullOrEmpty(roleText))? roleText : "mind-role-neutral-name";
-        string roleDetail = (role.MindRole.Details is not null) ? role.MindRole.Details : "";
+        string roleDetail = (mind.RoleType.Details is not null) ? mind.RoleType.Details : "";
 
         // Crew member
         _window.MindRole.Text = Loc.GetString(roleText);
         _window.MindRoleDetail.Text = Loc.GetString(roleDetail);
         _window.MindRole.FontColorOverride = color;
-        //TODO:ERRANT LATER: Mouseover tooltip and Guidebook link
+        //TODO:ERRANT. LATER: Mouseover tooltip and Guidebook link
 
 
         _window.NameLabel.Text = entityName;

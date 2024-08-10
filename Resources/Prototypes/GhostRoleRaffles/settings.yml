@@ -2,7 +2,7 @@
 - type: ghostRoleRaffleSettings
   id: default
   settings:
-    initialDuration: 30
+    initialDuration: 3 #30 TODO:ERRANT. change this back
     joinExtendsDurationBy: 10
     maxDuration: 90
 
@@ -10,6 +10,6 @@
 - type: ghostRoleRaffleSettings
   id: short
   settings:
-    initialDuration: 10
+    initialDuration: 1 #10 TODO:ERRANT. change this back
     joinExtendsDurationBy: 2
     maxDuration: 15

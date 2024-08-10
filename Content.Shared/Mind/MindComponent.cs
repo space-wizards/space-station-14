@@ -100,10 +100,10 @@ public sealed partial class MindComponent : Component
     public bool PreventSuicide { get; set; }
 
     /// <summary>
-    ///     The mind's current role or antagonist status;
+    ///     The mind's current antagonist/special role, or lack thereof;
     /// </summary>
     [DataField, AutoNetworkedField]
-    public MindRolePrototype MindRole = new MindRolePrototype(); //TODO:ERRANT Rename this
+    public RoleTypePrototype RoleType = new RoleTypePrototype();
 
     /// <summary>
     ///     The session of the player owning this mind.
@@ -119,7 +119,7 @@ public sealed partial class MindComponent : Component
 /// </summary>
 [Prototype]
 [Serializable]
-public sealed partial class MindRolePrototype : IPrototype
+public sealed partial class RoleTypePrototype : IPrototype
 {
 
     [IdDataField]
@@ -128,8 +128,8 @@ public sealed partial class MindRolePrototype : IPrototype
     /// <summary>
     ///     The role's specific antag-or-other-special category.
     /// </summary>
-    [DataField]
-    public ProtoId<MindRoleCorePrototype> Prototype = "Neutral";
+    [DataField("role")]
+    public ProtoId<ImmutableRoleTypePrototype> RoleId { get; private set; }= "Neutral";
 
     /// <summary>
     ///     Additional information about the role, such as what team it is or a familiar's owner.
@@ -140,11 +140,10 @@ public sealed partial class MindRolePrototype : IPrototype
 }
 
 /// <summary>
-///     The core details of Mind Role Types are kept together on separate prototypes
-///     so "userspace" prototype definitnions need only refer to them collectively
+///     The core properties of Role Types, not intended to be alterable or uploadable under any conditions
 /// </summary>
 [Prototype, Serializable]
-public sealed partial class MindRoleCorePrototype : IPrototype
+public sealed partial class ImmutableRoleTypePrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;
@@ -153,13 +152,13 @@ public sealed partial class MindRoleCorePrototype : IPrototype
     ///     The role's specific antag-or-other-special category.
     /// </summary>
     [DataField(required: true)]
-    public MindRoleType RoleType = MindRoleType.Neutral;
+    public RoleEnum RoleRule = RoleEnum.Neutral; //TODO:ERRANT. LATER do I actually need this for anything?
 
     /// <summary>
     ///     The role's name as displayed on the UI.
     /// </summary>
     [DataField(required: true)]
-    public string Name = "mind-role-neutral-name";
+    public string Name = "role-type-neutral-name";
 
     /// <summary>
     ///     The role's displayed color.
@@ -171,7 +170,7 @@ public sealed partial class MindRoleCorePrototype : IPrototype
 /// <summary>
 ///     The possible roles a character can be in the round.
 /// </summary>
-public enum MindRoleType
+public enum RoleEnum
 {
     Neutral,
     SoloAntagonist,
@@ -179,5 +178,6 @@ public enum MindRoleType
     FreeAgent,
     Familiar,
     Silicon,
+    AlteredSilicon,
     Observer
 }

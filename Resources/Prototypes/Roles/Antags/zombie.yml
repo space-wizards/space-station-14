@@ -6,6 +6,11 @@
   objective: roles-antag-initial-infected-objective
   guides: [ Zombies ]
 
+- type: roleType
+  id: RoleTypeInitialInfected
+  role: TeamAntagonist
+  details: role-type-initial-infected-details
+
 - type: antag
   id: Zombie
   name: roles-antag-zombie-name
@@ -13,3 +18,8 @@
   setPreference: false
   objective: roles-antag-zombie-objective
   guides: [ Zombies ]
+
+- type: roleType
+  id: RoleTypeZombie
+  role: TeamAntagonist
+  details: role-type-zombie-details

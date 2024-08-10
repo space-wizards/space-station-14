@@ -9,6 +9,11 @@
     time: 18000 # 5h
   guides: [ NuclearOperatives ]
 
+- type: roleType
+  id: RoleTypeNukie
+  role: TeamAntagonist
+  details: role-type-nukie-details
+
 - type: antag
   id: NukeopsMedic
   name: roles-antag-nuclear-operative-agent-name

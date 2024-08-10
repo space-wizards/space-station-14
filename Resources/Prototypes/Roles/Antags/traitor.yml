@@ -6,12 +6,22 @@
   objective: roles-antag-syndicate-agent-objective
   guides: [ Traitors ]
 
+- type: roleType
+  id: RoleTypeTraitor
+  role: SoloAntagonist
+  details: role-type-traitor-details
+
 - type: antag
   id: TraitorSleeper
   name: roles-antag-syndicate-agent-sleeper-name
   antagonist: true
   setPreference: true
   objective: roles-antag-syndicate-agent-sleeper-objective
+
+- type: roleType
+  id: RoleTypeReinforcement
+  role: TeamAntagonist
+  details: role-type-traitor-reinforcement-details
 
 # Syndicate Operative Outfit - Monkey
 - type: startingGear

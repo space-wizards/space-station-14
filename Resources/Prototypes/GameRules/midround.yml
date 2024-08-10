@@ -20,6 +20,7 @@
     - prefRoles: [ Thief ]
       max: 3
       playerRatio: 15
+      role: RoleTypeThief
       lateJoinAdditional: true
       allowNonHumans: true
       multiAntagSetting: NotExclusive

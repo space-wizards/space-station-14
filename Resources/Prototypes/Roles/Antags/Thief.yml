@@ -5,6 +5,11 @@
   setPreference: true
   objective: roles-antag-thief-objective
 
+- type: roleType
+  id: RoleTypeThief
+  role: SoloAntagonist
+  details: role-type-thief-details
+
 - type: startingGear
   id: ThiefGear
   storage:

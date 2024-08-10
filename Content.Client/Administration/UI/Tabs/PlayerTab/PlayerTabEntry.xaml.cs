@@ -27,15 +27,11 @@ public sealed partial class PlayerTabEntry : PanelContainer
         CharacterLabel.Text = player.CharacterName;
         if (player.IdentityName != player.CharacterName)
             CharacterLabel.Text += $" [{player.IdentityName}]";
-        AntagonistLabel.Text = Loc.GetString(player.Antag ? "player-tab-is-antag-yes" : "player-tab-is-antag-no"); // TODO:ERRANT LATER: Decide to remove this (and all of its ilk) or not
+        AntagonistLabel.Text = Loc.GetString(player.Antag ? "player-tab-is-antag-yes" : "player-tab-is-antag-no"); // TODO:ERRANT. LATER: Player Tab Antag Row
 
-        var protoId = player.MindRole.Prototype.ToString();
-        //TODO:ERRANT shit why is this always null
-        if (_prototypeManager is not null && _prototypeManager.TryIndex<MindRoleCorePrototype>(protoId, out var proto1212))
-        {
-            MindRoleLabel.Text = Loc.GetString(proto1212.Name);
-            MindRoleLabel.FontColorOverride = proto1212.Color;
-        }
+        MindRoleLabel.Text = Loc.GetString(player.RoleProto.Name);
+        MindRoleLabel.FontColorOverride = player.RoleProto.Color;
+
         BackgroundColorPanel.PanelOverride = styleBoxFlat;
         OverallPlaytimeLabel.Text = player.PlaytimeString;
         PlayerEntity = player.NetEntity;

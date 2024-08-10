@@ -185,8 +185,8 @@ public partial struct AntagSelectionDefinition()
     /// TODO It would be better if this was set on individual MindRoleComponents, so it can be persistent
     /// Would be useful in situation where a SoloAntagonist is converted then deconverted
     /// </remarks>
-    [DataField]
-    public ProtoId<MindRolePrototype>? RoleType;
+    [DataField("role")]
+    public ProtoId<RoleTypePrototype>? RoleId;
 }
 
 /// <summary>

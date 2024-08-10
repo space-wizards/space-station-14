@@ -31,6 +31,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Systems
 {
@@ -47,6 +48,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PhysicsSystem _physics = default!;
         [Dependency] private readonly PlayTimeTrackingManager _playTime = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly SharedRoleSystem _role = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -231,16 +233,23 @@ namespace Content.Server.Administration.Systems
                 identityName = Identity.Name(session.AttachedEntity.Value, EntityManager);
             }
 
-            var antag = false;
-            MindRolePrototype mindRole = new(); //TODO:ERRANT LATER: decide if this should stay like this
+            var antag = false; //TODO:ERRANT. LATER: Player Tab Antag Row
+            ImmutableRoleTypePrototype roleType = new();
+            string? roleDetails = null;
+
             var startingRole = string.Empty;
             if (_minds.TryGetMind(session, out var mindId, out _))
             {
                 if (TryComp<MindComponent>(mindId, out var mindComp))
-                    mindRole = mindComp.MindRole;
+                {
+                    var b = _proto.TryIndex(mindComp.RoleType.RoleId, out var def);
+                    // roleType =
+
+                    roleDetails = mindComp.RoleType.Details;
+                }
                 else
                 {
-                    //TODO:ERRANT LATER: generate error for logs
+                    //TODO:ERRANT. LATER: generate error for logs
                 }
                 antag = _role.MindIsAntagonist(mindId);
                 startingRole = _jobs.MindTryGetJobName(mindId);
@@ -255,7 +264,7 @@ namespace Content.Server.Administration.Systems
                 overallPlaytime = playTime;
             }
 
-            return new PlayerInfo(name, entityName, identityName, startingRole, antag, mindRole, GetNetEntity(session?.AttachedEntity), data.UserId,
+            return new PlayerInfo(name, entityName, identityName, startingRole, antag, roleType, roleDetails, GetNetEntity(session?.AttachedEntity), data.UserId,
                 connected, _roundActivePlayers.Contains(data.UserId), overallPlaytime);
         }
 
