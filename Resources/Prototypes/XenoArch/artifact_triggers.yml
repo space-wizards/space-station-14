@@ -118,6 +118,13 @@
       - !type:ActivateArtifact
 
 - type: artifactTrigger
+  id: TriggerMedical
+  targetDepth: 2
+  triggerHint: artifact-trigger-hint-bioreactive
+  components:
+  - type: reactive
+
+- type: artifactTrigger
   id: TriggerAcidic
   targetDepth: 2
   triggerHint: artifact-trigger-hint-pH
@@ -178,6 +185,34 @@
   components:
   - type: ArtifactPressureTrigger
     minPressureThreshold: 50
+
+- type: artifactTrigger
+  id: TriggerStimulant
+  targetDepth: 3
+  triggerHint: artifact-trigger-hint-bioreactive
+  components:
+  - type: reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Desoxyephedrine, Ephedrine, Stimulants ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerPsychadelic
+  targetDepth: 3 # D3s are due to illegality/restrictions of some reactants
+  triggerHint: artifact-trigger-hint-bioreactive
+  components:
+  - type: reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Impedrezene, SpaceDrugs, Bananadine, Happiness, HeartbreakerToxin, MindbreakerToxin, Pax ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
 
 - type: artifactTrigger
   id: TriggerHighDamage
