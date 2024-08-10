@@ -10,7 +10,7 @@ public sealed partial class EntityTableSpawnerComponent : Component
     /// <summary>
     /// Table that determines what gets spawned.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public EntityTableSelector Table = default!;
 
     /// <summary>

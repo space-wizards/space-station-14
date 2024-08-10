@@ -9,13 +9,13 @@ namespace Content.Shared.EntityTable.EntitySelectors;
 public sealed partial class GroupSelector : EntityTableSelector
 {
     [DataField(required: true)]
-    public List<EntityTableSelector> Children;
+    public List<EntityTableSelector> Children = new();
 
     protected override IEnumerable<EntProtoId> GetSpawnsImplementation(System.Random rand,
         IEntityManager entMan,
         IPrototypeManager proto)
     {
-        var children = new Dictionary<EntityTableSelector, float>();
+        var children = new Dictionary<EntityTableSelector, float>(Children.Count);
         foreach (var child in Children)
         {
             children.Add(child, child.Weight);
