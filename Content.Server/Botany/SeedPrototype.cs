@@ -232,7 +232,7 @@ public partial class SeedData
     /// base class is SoundSpecifier
     /// </summary>
     [DataField("screamSound")]
-    public SoundSpecifier ScreamSound = new SoundCollectionSpecifier("PlantScreams");
+    public SoundSpecifier ScreamSound = new SoundCollectionSpecifier("PlantScreams", AudioParams.Default.WithVolume(-10));
 
     [DataField("screaming")] public bool CanScream;
 
