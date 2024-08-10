@@ -1,9 +1,7 @@
 food-sequence-no-space = You can't put any more!
 
-food-sequence-standart-gen = {$prefix}{$content}{$suffix}
-
-#Burger
-food-sequence-burger-suffix = burger
+food-sequence-burger-gen = {$content}burger
+food-sequence-taco-gen = taco with {$content}
 
 food-sequence-burger-content-raw-meat = raw
 food-sequence-burger-content-carp = carpo

@@ -71,7 +71,7 @@ public sealed partial class FoodSequenceStartPointComponent : Component
     public LocId? NamePrefix;
 
     [DataField]
-    public LocId? ContentSeparator;
+    public string? ContentSeparator;
 
     [DataField]
     public LocId? NameSuffix;

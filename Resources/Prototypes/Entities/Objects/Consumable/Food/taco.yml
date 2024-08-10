@@ -28,6 +28,6 @@
     maxLayers: 3
     startPosition: 0, 0
     offset: 0, 0
-    nameGeneration: food-sequence-standart-gen
-    nameSuffix: food-sequence-burger-suffix
+    nameGeneration: food-sequence-taco-gen
+    contentSeparator: ", "
   - type: Appearance
