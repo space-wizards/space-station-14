@@ -4,7 +4,6 @@ using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Mind;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
-using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;

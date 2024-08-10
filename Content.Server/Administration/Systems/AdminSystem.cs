@@ -233,7 +233,7 @@ namespace Content.Server.Administration.Systems
                 identityName = Identity.Name(session.AttachedEntity.Value, EntityManager);
             }
 
-            var antag = false; //TODO:ERRANT. LATER: Player Tab Antag Row
+            var antag = false; //TODO:ERRANT. LATER: Remove? Player Tab Antag Row
             ImmutableRoleTypePrototype roleType = new();
             string? roleDetails = null;
 
@@ -249,7 +249,7 @@ namespace Content.Server.Administration.Systems
                 }
                 else
                 {
-                    //TODO:ERRANT. LATER: generate error for logs
+                    //TODO:ERRANT. LATER: generate error log
                 }
                 antag = _role.MindIsAntagonist(mindId);
                 startingRole = _jobs.MindTryGetJobName(mindId);

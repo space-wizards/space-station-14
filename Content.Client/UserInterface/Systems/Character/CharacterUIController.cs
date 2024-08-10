@@ -6,6 +6,8 @@ using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Character.Controls;
 using Content.Client.UserInterface.Systems.Character.Windows;
 using Content.Client.UserInterface.Systems.Objectives.Controls;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Input;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -26,6 +28,7 @@ namespace Content.Client.UserInterface.Systems.Character;
 [UsedImplicitly]
 public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<CharacterInfoSystem>
 {
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -115,11 +118,8 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
         _window.SpriteView.SetEntity(entity);
 
-        //TODO: Read data from MindComponent
-        if (!_ent.TryGetComponent<MindContainerComponent>(_player.LocalEntity, out var container))
-            return;
-
-        if (container.Mind is null)
+        if (!_ent.TryGetComponent<MindContainerComponent>(_player.LocalEntity, out var container)
+            || container.Mind is null)
             return;
 
         var mind = _ent.EnsureComponent<MindComponent>(container.Mind.Value);
@@ -132,16 +132,10 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             color = proto.Color;
         }
         else
-        {
-            roleText = "role-type-neutral-name-fallback";
-            //TODO:ERRANT. log error here? but this will potentially be processed a lot
-            // _adminLogger.Add(LogType.Mind, LogImpact.Low,
-            //     $"Role components {string.Join(components.Keys.ToString(), ", ")} added to mind of {_minds.MindOwnerLoggingString(mind)}");
-        }
+            roleText = "role-type-name-fallback"; //TODO:ERRANT Decide what to do in this fail state
 
         string roleDetail = (mind.RoleType.Details is not null) ? mind.RoleType.Details : "";
 
-        // Crew member
         _window.RoleType.Text = Loc.GetString(roleText);
         _window.RoleTypeDetails.Text = Loc.GetString(roleDetail);
         _window.RoleType.FontColorOverride = color;

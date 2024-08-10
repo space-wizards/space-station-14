@@ -20,7 +20,6 @@ using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Players;
-using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Whitelist;
 using Robust.Server.Audio;
@@ -30,7 +29,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
