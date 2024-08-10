@@ -149,7 +149,9 @@ public abstract class SharedRoleSystem : EntitySystem
             return;
 
         comp.RoleType = role;
-        Dirty(comp.Owner, comp); //TODO:ERRANT
+        // _adminLogger.Add(LogType.Mind, LogImpact.Low,
+        //     $"Role components {string.Join(components.Keys.ToString(), ", ")} added to mind of {_minds.MindOwnerLoggingString(mind)}");
+        Dirty(comp.Owner, comp); //TODO:ERRANT remove obsolete
     }
 
     public MindComponent? CheckMindRoles(EntityUid ent)

@@ -135,6 +135,8 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         {
             roleText = "role-type-neutral-name-fallback";
             //TODO:ERRANT. log error here? but this will potentially be processed a lot
+            // _adminLogger.Add(LogType.Mind, LogImpact.Low,
+            //     $"Role components {string.Join(components.Keys.ToString(), ", ")} added to mind of {_minds.MindOwnerLoggingString(mind)}");
         }
 
         string roleDetail = (mind.RoleType.Details is not null) ? mind.RoleType.Details : "";

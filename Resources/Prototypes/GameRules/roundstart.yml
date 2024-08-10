@@ -180,7 +180,6 @@
   components:
   - type: GameRule
     minPlayers: 5
-    role: RoleTypeTraitor
     delay:
       min: 240
       max: 420
@@ -189,6 +188,7 @@
     - prefRoles: [ Traitor ]
       max: 8
       playerRatio: 10
+      role: RoleTypeTraitor
       blacklist:
         components:
         - AntagImmune
