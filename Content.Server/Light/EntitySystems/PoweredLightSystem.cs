@@ -37,7 +37,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
         [Dependency] private readonly LightBulbSystem _bulbSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -49,6 +49,16 @@ namespace Content.Server.Light.EntitySystems
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
         public const string LightBulbContainer = "light_bulb";
+
+        private const float UpdateLightCycleTimer = 0.2f;
+        private float _lightCycleTimer;
+
+        private const float UpdateTimer = 0.05f;
+        private float _timer;
+
+        private float _frameTime;
+
+        private Color _newColor = Color.White;
 
         public override void Initialize()
         {
@@ -70,6 +80,83 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<PoweredLightComponent, EmpPulseEvent>(OnEmpPulse);
         }
 
+        public override void Update(float frameTime)
+        {
+            _frameTime = frameTime;
+            _timer += frameTime;
+
+            if (_timer < UpdateTimer)
+            {
+                return;
+            }
+
+            _timer -= UpdateTimer;
+
+            HandleExistingDiscoLights();
+        }
+
+        private void HandleExistingDiscoLights()
+        {
+            _lightCycleTimer += _frameTime;
+
+            var query =
+                EntityQueryEnumerator<PoweredLightComponent, AppearanceComponent, ApcPowerReceiverComponent>();
+            while (query.MoveNext(out var uid,
+                       out var light,
+                       out var appearance,
+                       out var powerReceiver))
+            {
+                if (!Resolve(uid, ref light, ref powerReceiver, false))
+                    return;
+
+                // Optional component.
+                Resolve(uid, ref appearance, false);
+
+                // check if light has bulb
+                var bulbUid = GetBulb(uid, light);
+                if (bulbUid == null || !EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
+                {
+                    return;
+                }
+
+                if (_lightCycleTimer is > UpdateLightCycleTimer or 0)
+                {
+                    _newColor = GetRandomColor();
+                    if (_lightCycleTimer > 0)
+                    {
+                        _lightCycleTimer = 0;
+                    }
+                }
+
+                if (lightBulb.Type == LightBulbType.DiscoTube)
+                {
+                    // Check if powered and light is on
+                    if (powerReceiver.Powered && light.On)
+                    {
+                        var startColor = lightBulb.Color;
+                        var animatedColor = Lerp(startColor, _newColor, _lightCycleTimer);
+
+                        lightBulb.Color = animatedColor;
+
+                        SetLight(uid,
+                            true,
+                            animatedColor,
+                            light,
+                            lightBulb.LightRadius + 5,
+                            lightBulb.LightEnergy,
+                            lightBulb.LightSoftness + 1);
+
+                        _appearance.SetData(uid, LightBulbVisuals.Color, animatedColor, appearance);
+                    }
+                    else
+                    {
+                        // Power is out or light is off
+                        SetLight(uid, false, light: light);
+                    }
+                }
+            }
+        }
+
         private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
         {
             light.LightBulbContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, LightBulbContainer);
@@ -81,9 +168,11 @@ namespace Content.Server.Light.EntitySystems
             // TODO: Use ContainerFill dog
             if (light.HasLampOnSpawn != null)
             {
-                var entity = EntityManager.SpawnEntity(light.HasLampOnSpawn, EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
+                var entity = EntityManager.SpawnEntity(light.HasLampOnSpawn,
+                    EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
                 _containerSystem.Insert(entity, light.LightBulbContainer);
             }
+
             // need this to update visualizers
             UpdateLight(uid, light);
         }
@@ -127,10 +216,10 @@ namespace Content.Server.Light.EntitySystems
                     // If damage is null then the entity could not take heat damage so they did not get burned.
                     if (damage != null)
                     {
-
                         var burnMsg = Loc.GetString("powered-light-component-burn-hand");
                         _popupSystem.PopupEntity(burnMsg, uid, userUid);
-                        _adminLogger.Add(LogType.Damaged, $"{ToPrettyString(args.User):user} burned their hand on {ToPrettyString(args.Target):target} and received {damage.GetTotal():damage} damage");
+                        _adminLogger.Add(LogType.Damaged,
+                            $"{ToPrettyString(args.User):user} burned their hand on {ToPrettyString(args.Target):target} and received {damage.GetTotal():damage} damage");
                         _audio.PlayEntity(light.BurnHandSound, Filter.Pvs(uid), uid, true);
 
                         args.Handled = true;
@@ -141,14 +230,19 @@ namespace Content.Server.Light.EntitySystems
 
 
             //removing a broken/burned bulb, so allow instant removal
-            if(TryComp<LightBulbComponent>(bulbUid.Value, out var bulb) && bulb.State != LightBulbState.Normal)
+            if (TryComp<LightBulbComponent>(bulbUid.Value, out var bulb) && bulb.State != LightBulbState.Normal)
             {
                 args.Handled = EjectBulb(uid, userUid, light) != null;
                 return;
             }
 
             // removing a working bulb, so require a delay
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, userUid, light.EjectBulbDelay, new PoweredLightDoAfterEvent(), uid, target: uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
+                userUid,
+                light.EjectBulbDelay,
+                new PoweredLightDoAfterEvent(),
+                uid,
+                target: uid)
             {
                 BreakOnMove = true,
                 BreakOnDamage = true,
@@ -158,6 +252,7 @@ namespace Content.Server.Light.EntitySystems
         }
 
         #region Bulb Logic API
+
         /// <summary>
         ///     Inserts the bulb if possible.
         /// </summary>
@@ -174,7 +269,7 @@ namespace Content.Server.Light.EntitySystems
             // check if bulb fits
             if (!EntityManager.TryGetComponent(bulbUid, out LightBulbComponent? lightBulb))
                 return false;
-            if (lightBulb.Type != light.BulbType)
+            if (lightBulb.Type != light.BulbType && lightBulb.Type != LightBulbType.DiscoTube)
                 return false;
 
             // try to insert bulb in container
@@ -275,7 +370,32 @@ namespace Content.Server.Light.EntitySystems
             UpdateLight(uid, light);
             return true;
         }
+
         #endregion
+
+        private Color Lerp(Color startColor, Color endColor, float time)
+        {
+            time = Math.Clamp(time, 0, 1);
+            var r = startColor.R + (endColor.R - startColor.R) * time;
+            var g = startColor.G + (endColor.G - startColor.G) * time;
+            var b = startColor.B + (endColor.B - startColor.B) * time;
+            return new Color(r, g, b);
+        }
+
+        private Color GetRandomColor()
+        {
+            var random = new Random();
+
+            // Add more colors, or change existing
+            var colors = new List<Color>
+            {
+                Color.Violet, Color.Tomato, Color.Purple, Color.Yellow, Color.Blue,
+                Color.HotPink, Color.Pink, Color.DeepPink, Color.DeepSkyBlue,
+            };
+
+            var rand = random.Next(0, colors.Count);
+            return colors[rand];
+        }
 
         private void UpdateLight(EntityUid uid,
             PoweredLightComponent? light = null,
@@ -303,13 +423,23 @@ namespace Content.Server.Light.EntitySystems
                 case LightBulbState.Normal:
                     if (powerReceiver.Powered && light.On)
                     {
-                        SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius, lightBulb.LightEnergy, lightBulb.LightSoftness);
+                        SetLight(uid,
+                            true,
+                            lightBulb.Color,
+                            light,
+                            lightBulb.LightRadius,
+                            lightBulb.LightEnergy,
+                            lightBulb.LightSoftness);
                         _appearance.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.On, appearance);
                         var time = _gameTiming.CurTime;
                         if (time > light.LastThunk + ThunkDelay)
                         {
                             light.LastThunk = time;
-                            _audio.PlayEntity(light.TurnOnSound, Filter.Pvs(uid), uid, true, AudioParams.Default.WithVolume(-10f));
+                            _audio.PlayEntity(light.TurnOnSound,
+                                Filter.Pvs(uid),
+                                uid,
+                                true,
+                                AudioParams.Default.WithVolume(-10f));
                         }
                     }
                     else
@@ -317,6 +447,7 @@ namespace Content.Server.Light.EntitySystems
                         SetLight(uid, false, light: light);
                         _appearance.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.Off, appearance);
                     }
+
                     break;
                 case LightBulbState.Broken:
                     SetLight(uid, false, light: light);
@@ -360,10 +491,11 @@ namespace Content.Server.Light.EntitySystems
             light.LastGhostBlink = time;
 
             ToggleBlinkingLight(uid, light, true);
-            uid.SpawnTimer(light.GhostBlinkingTime, () =>
-            {
-                ToggleBlinkingLight(uid, light, false);
-            });
+            uid.SpawnTimer(light.GhostBlinkingTime,
+                () =>
+                {
+                    ToggleBlinkingLight(uid, light, false);
+                });
 
             args.Handled = true;
         }
@@ -408,13 +540,22 @@ namespace Content.Server.Light.EntitySystems
         /// </summary>
         private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, DeviceNetworkPacketEvent args)
         {
-            if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
-            if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled)) return;
+            if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) ||
+                command != DeviceNetworkConstants.CmdSetState)
+                return;
+            if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled))
+                return;
 
             SetState(uid, enabled, component);
         }
 
-        private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null, float? radius = null, float? energy = null, float? softness = null)
+        private void SetLight(EntityUid uid,
+            bool value,
+            Color? color = null,
+            PoweredLightComponent? light = null,
+            float? radius = null,
+            float? energy = null,
+            float? softness = null)
         {
             if (!Resolve(uid, ref light))
                 return;
@@ -429,11 +570,11 @@ namespace Content.Server.Light.EntitySystems
                 if (color != null)
                     _pointLight.SetColor(uid, color.Value, pointLight);
                 if (radius != null)
-                    _pointLight.SetRadius(uid, (float) radius, pointLight);
+                    _pointLight.SetRadius(uid, (float)radius, pointLight);
                 if (energy != null)
-                    _pointLight.SetEnergy(uid, (float) energy, pointLight);
+                    _pointLight.SetEnergy(uid, (float)energy, pointLight);
                 if (softness != null)
-                    _pointLight.SetSoftness(uid, (float) softness, pointLight);
+                    _pointLight.SetSoftness(uid, (float)softness, pointLight);
             }
         }
 
