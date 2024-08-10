@@ -4,6 +4,13 @@
   id: BaseCrowbar
   abstract: true
   components:
+  - type: EmitSoundOnPickup # GreyStation - Sound PR
+    sound: /Audio/SimpleStation14/Items/Handling/crowbar_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound: /Audio/SimpleStation14/Items/Handling/crowbar_drop.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/crowbar_drop.ogg
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/crowbar_drop.ogg
@@ -96,91 +103,91 @@
 - type: entity
   parent: BaseCrowbar
   id: CrowbarGreen
-  description: A multipurpose tool to pry open doors and fight interdimensional invaders, printed from an autolathe.
-  components:
-  - type: Sprite
-    layers:
-    - state: icon
-    - state: cover-icon
-      color: "#00621c"
-  - type: Item
-    storedSprite:
-      state: green-storage
-      sprite: Objects/Tools/crowbar.rsi
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      - state: cover-inhand-left
-        color: "#00621c"
-      right:
-      - state: inhand-right
-      - state: cover-inhand-right
-        color: "#00621c"
-  - type: Clothing
-    clothingVisuals:
-      belt:
-      - state: equipped-BELT
-      - state: cover-equipped-BELT
-        color: "#00621c"
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders. #GreyStation Change
+#  components:
+#  - type: Sprite
+#    layers:
+#    - state: icon
+#    - state: cover-icon
+#      color: "#00621c"
+#  - type: Item
+#    storedSprite:
+#      state: green-storage
+#      sprite: Objects/Tools/crowbar.rsi
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left
+#      - state: cover-inhand-left
+#        color: "#00621c"
+#      right:
+#      - state: inhand-right
+#      - state: cover-inhand-right
+#        color: "#00621c"
+#  - type: Clothing
+#    clothingVisuals:
+#      belt:
+#      - state: equipped-BELT
+#      - state: cover-equipped-BELT
+#        color: "#00621c"
 
 # Toolbox (orange) Crowbar
 - type: entity
   parent: BaseCrowbar
   id: CrowbarOrange
-  description: A multipurpose tool to pry open doors and fight interdimensional invaders, found in toolboxes.
-  components:
-  - type: Sprite
-    layers:
-    - state: icon
-    - state: cover-icon
-      color: "#673800"
-  - type: Item
-    storedSprite:
-      state: orange-storage
-      sprite: Objects/Tools/crowbar.rsi
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      - state: cover-inhand-left
-        color: "#673800"
-      right:
-      - state: inhand-right
-      - state: cover-inhand-right
-        color: "#673800"
-  - type: Clothing
-    clothingVisuals:
-      belt:
-      - state: equipped-BELT
-      - state: cover-equipped-BELT
-        color: "#673800"
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders. #GreyStation Change
+#  components:
+#  - type: Sprite
+#    layers:
+#    - state: icon
+#    - state: cover-icon
+#      color: "#673800"
+#  - type: Item
+#    storedSprite:
+#      state: orange-storage
+#      sprite: Objects/Tools/crowbar.rsi
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left
+#      - state: cover-inhand-left
+#        color: "#673800"
+#      right:
+#      - state: inhand-right
+#      - state: cover-inhand-right
+#        color: "#673800"
+#  - type: Clothing
+#    clothingVisuals:
+#      belt:
+#      - state: equipped-BELT
+#      - state: cover-equipped-BELT
+#        color: "#673800"
 
 # Engineering (yellow) Crowbar
 - type: entity
   parent: BaseCrowbar
   id: CrowbarYellow
-  description: A pocket crowbar designed to pry open doors and firelocks during power outages, dispensed from Engineering.
-  components:
-  - type: Sprite
-    layers:
-    - state: icon
-    - state: cover-icon
-      color: "#968000"
-  - type: Item
-    storedSprite:
-      state: yellow-storage
-      sprite: Objects/Tools/crowbar.rsi
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      - state: cover-inhand-left
-        color: "#968000"
-      right:
-      - state: inhand-right
-      - state: cover-inhand-right
-        color: "#968000"
-  - type: Clothing
-    clothingVisuals:
-      belt:
-      - state: equipped-BELT
-      - state: cover-equipped-BELT
-        color: "#968000"
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders. #GreyStation Change
+#  components:
+#  - type: Sprite
+#    layers:
+#    - state: icon
+#    - state: cover-icon
+#      color: "#968000"
+#  - type: Item
+#    storedSprite:
+#      state: yellow-storage
+#      sprite: Objects/Tools/crowbar.rsi
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left
+#      - state: cover-inhand-left
+#        color: "#968000"
+#      right:
+#      - state: inhand-right
+#      - state: cover-inhand-right
+#        color: "#968000"
+#  - type: Clothing
+#    clothingVisuals:
+#      belt:
+#      - state: equipped-BELT
+#      - state: cover-equipped-BELT
+#        color: "#968000"
