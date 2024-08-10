@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: youtissoum
-  changes:
-  - message: Spiders can now wideswing.
-    type: Tweak
-  - message: Slimes can now wideswing.
-    type: Tweak
-  id: 6580
-  time: '2024-05-10T23:49:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27856
 - author: Dutch-VanDerLinde
   changes:
   - message: Fix firesuits, ninja suits, and some armor not allowing suit storage.
@@ -3792,3 +3783,11 @@
   id: 7079
   time: '2024-08-10T12:51:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30709
+- author: Unkn0wnGh0st333
+  changes:
+  - message: ERT Chaplain starting gear was fixed and will no longer give the ERT
+      Engineer gear
+    type: Fix
+  id: 7080
+  time: '2024-08-10T12:55:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30855
