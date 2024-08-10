@@ -24,7 +24,7 @@
                HorizontalExpand="True"
                ClipText="True"/>
         <customControls:VSeparator/>
-        <Label Name="MindRoleLabel"
+        <Label Name="RoleTypeLabel"
                SizeFlagsStretchRatio="1"
                HorizontalExpand="True"
                ClipText="True"/>

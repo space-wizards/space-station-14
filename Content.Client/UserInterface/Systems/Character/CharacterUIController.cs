@@ -142,9 +142,9 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         string roleDetail = (mind.RoleType.Details is not null) ? mind.RoleType.Details : "";
 
         // Crew member
-        _window.MindRole.Text = Loc.GetString(roleText);
-        _window.MindRoleDetail.Text = Loc.GetString(roleDetail);
-        _window.MindRole.FontColorOverride = color;
+        _window.RoleType.Text = Loc.GetString(roleText);
+        _window.RoleTypeDetails.Text = Loc.GetString(roleDetail);
+        _window.RoleType.FontColorOverride = color;
         //TODO:ERRANT. LATER: Mouseover tooltip and Guidebook link
 
 
