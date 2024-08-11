@@ -21,4 +21,8 @@
   - type: Item
     sprite: Objects/Specific/Xenobiology/biopsy.rsi
   - type: CellCollector
+    damage:
+      types:
+        Blunt: 2
+        Bloodloss: 5
   - type: CellContainer

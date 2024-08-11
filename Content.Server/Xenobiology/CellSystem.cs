@@ -1,5 +1,6 @@
 ﻿using Content.Server.DoAfter;
 using Content.Server.Popups;
+using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Whitelist;
@@ -11,6 +12,7 @@ namespace Content.Server.Xenobiology;
 
 public sealed class CellSystem : SharedCellSystem
 {
+    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
@@ -64,6 +66,9 @@ public sealed class CellSystem : SharedCellSystem
                 CollectCells(ent.Owner, args.Target.Value);
 
                 _popup.PopupEntity(Loc.GetString("cell-collector-collected"), ent);
+
+                if (ent.Comp.Damage is not null)
+                    _damageable.TryChangeDamage(args.Target.Value, ent.Comp.Damage);
 
                 ent.Comp.Usages--;
                 break;
