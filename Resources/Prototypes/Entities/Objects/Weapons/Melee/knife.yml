@@ -7,6 +7,8 @@
     tags:
     - Knife
   - type: Sharp
+  - type: Execution
+    doAfterDuration: 4.0
   - type: Utensil
     types:
       - Knife
@@ -44,6 +46,7 @@
   - type: GuideHelp
     guides:
     - Chef
+    - FoodRecipes
 
 - type: entity
   name: butcher's cleaver
@@ -70,6 +73,7 @@
   - type: GuideHelp
     guides:
     - Chef
+    - FoodRecipes
 
 - type: entity
   name: combat knife
