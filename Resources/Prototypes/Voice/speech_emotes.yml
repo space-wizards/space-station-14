@@ -79,6 +79,29 @@
     - chortling!
 
 - type: emote
+  id: Cough
+  name: chat-emote-name-cough
+  category: Vocal
+  icon: Interface/Emotes/cough.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-cough"]
+  chatTriggers:
+    - cough
+    - coughs
+    - coughed 
+    - cough.
+    - coughs.
+    - coughed.
+    - cough!
+    - coughs!
+    - coughed!
+
+- type: emote
   id: Honk
   name: chat-emote-name-honk
   category: Vocal
@@ -355,29 +378,6 @@
    - gasped
    - gasped.
    - gasped!
-
-- type: emote
-  id: Cough
-  name: chat-emote-name-cough
-  category: Vocal
-  icon: Interface/Emotes/cough.png
-  whitelist:
-    components:
-    - Vocal
-  blacklist:
-    components:
-    - BorgChassis
-  chatMessages: ["chat-emote-msg-cough"]
-  chatTriggers:
-    - cough
-    - coughs
-    - coughed 
-    - cough.
-    - coughs.
-    - coughed.
-    - cough!
-    - coughs!
-    - coughed!
 
 - type: emote
   id: DefaultDeathgasp
