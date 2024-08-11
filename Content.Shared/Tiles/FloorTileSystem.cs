@@ -156,7 +156,7 @@ public sealed class FloorTileSystem : EntitySystem
 
                 var grid = _mapManager.CreateGridEntity(locationMap.MapId);
                 var gridXform = Transform(grid);
-                _transform.SetWorldPosition(gridXform, locationMap.Position);
+                _transform.SetWorldPosition((grid, gridXform), locationMap.Position);
                 location = new EntityCoordinates(grid, Vector2.Zero);
                 PlaceAt(args.User, grid, grid.Comp, location, _tileDefinitionManager[component.OutputTiles[0]].TileId, component.PlaceTileSound, grid.Comp.TileSize / 2f);
                 return;
