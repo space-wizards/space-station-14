@@ -24,13 +24,13 @@ public sealed class StoreUpdateState : BoundUserInterfaceState
 
     public readonly bool AllowRefund;
 
-    public StoreUpdateState(HashSet<ListingData> listings, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance, StoreDiscountData[] discounts, bool showFooter, bool allowRefund)
+    public StoreUpdateState(HashSet<ListingData> listings, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance, StoreDiscountData[]? discounts, bool showFooter, bool allowRefund)
     {
         Listings = listings;
         Balance = balance;
         ShowFooter = showFooter;
         AllowRefund = allowRefund;
-        Discounts = discounts;
+        Discounts = discounts ?? Array.Empty<StoreDiscountData>();
     }
 }
 

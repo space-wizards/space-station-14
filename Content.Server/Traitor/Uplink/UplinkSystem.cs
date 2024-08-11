@@ -1,11 +1,9 @@
-using System.Linq;
 using Content.Server.Store.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
-using Robust.Shared.Random;
 using Content.Shared.Store.Components;
 
 namespace Content.Server.Traitor.Uplink
@@ -54,9 +52,12 @@ namespace Content.Server.Traitor.Uplink
                 _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance.Value } }, uplinkEntity.Value, store);
             }
 
-            var uplinkInitializedEvent = new StoreInitializedEvent(TargetUser: user,
+            var uplinkInitializedEvent = new StoreInitializedEvent(
+                TargetUser: user,
                 Store: uplinkEntity.Value,
-                UseDiscounts: giveDiscounts);
+                UseDiscounts: giveDiscounts,
+                Listings: _store.GetAvailableListings(user, uplinkEntity.Value, store)
+            );
             RaiseLocalEvent(ref uplinkInitializedEvent);
             // TODO add BUI. Currently can't be done outside of yaml -_-
 
@@ -94,5 +95,5 @@ namespace Content.Server.Traitor.Uplink
     }
 
     [ByRefEvent]
-    public record struct StoreInitializedEvent(EntityUid TargetUser, EntityUid Store, bool UseDiscounts);
+    public record struct StoreInitializedEvent(EntityUid TargetUser, EntityUid Store, bool UseDiscounts, IEnumerable<ListingData> Listings);
 }

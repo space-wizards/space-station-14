@@ -16,11 +16,8 @@ namespace Content.Server.StoreDiscount.Systems;
 public sealed class StoreDiscountSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    private readonly DiscountSettings _discountSettings = new();
-    
     /// <inheritdoc />
     public override void Initialize()
     {
@@ -29,6 +26,15 @@ public sealed class StoreDiscountSystem : EntitySystem
         SubscribeLocalEvent<StoreInitializedEvent>(OnStoreInitialized);
         SubscribeLocalEvent<StoreBuyAttemptEvent>(OnBuyRequest);
         SubscribeLocalEvent<StoreBuyFinishedEvent>(OnBuyFinished);
+        SubscribeLocalEvent<GetDiscountsEvent>(OnGetDiscounts);
+    }
+
+    private void OnGetDiscounts(GetDiscountsEvent ev)
+    {
+        if (TryComp<StoreDiscountComponent>(ev.Store, out var discountsComponent))
+        {
+            ev.DiscountsData = discountsComponent.Discounts;
+        }
     }
 
     /// <summary> Decrements discounted item count. </summary>
@@ -94,57 +100,17 @@ public sealed class StoreDiscountSystem : EntitySystem
         }
 
         var discountComponent = EnsureComp<StoreDiscountComponent>(ev.Store);
-        var availableListings = _store.GetAvailableListings(ev.TargetUser, store.Listings, store.Categories, null);
-        discountComponent.Discounts = InitializeDiscounts(availableListings, _discountSettings);
+        discountComponent.Discounts = InitializeDiscounts(ev.Listings);
     }
 
     private StoreDiscountData[] InitializeDiscounts(
         IEnumerable<ListingData> listings,
-        DiscountSettings settings
+        int totalAvailableDiscounts = 3
     )
     {
-        List<DiscountCategoryWithCumulativeWeight> discountCumulativeWeightByDiscountCategoryId = new();
-        
-        var cumulativeWeight = 0;
-        foreach (var discountCategory in _prototypeManager.EnumeratePrototypes<DiscountCategoryPrototype>())
-        {
-            if (discountCategory.Weight == 0 || discountCategory.MaxItems == 0)
-            {
-                continue;
-            }
+        var (discountCumulativeWeightByDiscountCategoryId, cumulativeWeight) = PreCalculateDiscountCategoriesWithCumulativeWeights();
 
-            cumulativeWeight += discountCategory.Weight;
-            discountCumulativeWeightByDiscountCategoryId.Add(new(discountCategory, cumulativeWeight));
-        }
-
-        var chosenDiscounts = new Dictionary<ProtoId<DiscountCategoryPrototype>, int>();
-        for (var i = 0; i < settings.TotalAvailableDiscounts; i++)
-        {
-            var roll = _random.Next(cumulativeWeight);
-            for (var discountCategoryIndex = 0; discountCategoryIndex < discountCumulativeWeightByDiscountCategoryId.Count; discountCategoryIndex++)
-            {
-                var container = discountCumulativeWeightByDiscountCategoryId[discountCategoryIndex];
-                if (roll <= container.CumulativeWeight)
-                {
-                    continue;
-                }
-
-                if (!chosenDiscounts.TryGetValue(container.DiscountCategory.ID, out var alreadySelectedCount))
-                {
-                    chosenDiscounts[container.DiscountCategory.ID] = 1;
-                }
-                else if(alreadySelectedCount < container.DiscountCategory.MaxItems)
-                {
-                    var newDiscountCount = chosenDiscounts[container.DiscountCategory.ID] + 1;
-                    chosenDiscounts[container.DiscountCategory.ID] = newDiscountCount;
-                    if (newDiscountCount == container.DiscountCategory.MaxItems)
-                    {
-                        discountCumulativeWeightByDiscountCategoryId.Remove(container);
-                    }
-                    break;
-                }
-            }
-        }
+        var chosenDiscounts = PickCategoriesToRoll(totalAvailableDiscounts, cumulativeWeight, discountCumulativeWeightByDiscountCategoryId);
 
         var listingsByDiscountCategory = listings.Where(x => x.DiscountDownTo?.Count > 0)
                                                  .GroupBy(x => x.DiscountCategory)
@@ -197,21 +163,78 @@ public sealed class StoreDiscountSystem : EntitySystem
         return list.ToArray();
     }
 
+    private Dictionary<ProtoId<DiscountCategoryPrototype>, int> PickCategoriesToRoll(
+        int totalAvailableDiscounts,
+        int cumulativeWeight,
+        List<DiscountCategoryWithCumulativeWeight> discountCumulativeWeightByDiscountCategoryId
+    )
+    {
+        var chosenDiscounts = new Dictionary<ProtoId<DiscountCategoryPrototype>, int>();
+        for (var i = 0; i < totalAvailableDiscounts; i++)
+        {
+            var roll = _random.Next(cumulativeWeight);
+            for (var discountCategoryIndex = 0;
+                 discountCategoryIndex < discountCumulativeWeightByDiscountCategoryId.Count;
+                 discountCategoryIndex++)
+            {
+                var container = discountCumulativeWeightByDiscountCategoryId[discountCategoryIndex];
+                if (roll <= container.CumulativeWeight)
+                {
+                    continue;
+                }
+
+                if (!chosenDiscounts.TryGetValue(container.DiscountCategory.ID, out var alreadySelectedCount))
+                {
+                    chosenDiscounts[container.DiscountCategory.ID] = 1;
+                }
+                else if (alreadySelectedCount < container.DiscountCategory.MaxItems)
+                {
+                    var newDiscountCount = chosenDiscounts[container.DiscountCategory.ID] + 1;
+                    chosenDiscounts[container.DiscountCategory.ID] = newDiscountCount;
+                    if (newDiscountCount == container.DiscountCategory.MaxItems)
+                    {
+                        discountCumulativeWeightByDiscountCategoryId.Remove(container);
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        return chosenDiscounts;
+    }
+
+    private (List<DiscountCategoryWithCumulativeWeight> List, int cumulativeWeight) PreCalculateDiscountCategoriesWithCumulativeWeights()
+    {
+        List<DiscountCategoryWithCumulativeWeight> discountCumulativeWeightByDiscountCategoryId = new();
+
+        var cumulativeWeight = 0;
+        foreach (var discountCategory in _prototypeManager.EnumeratePrototypes<DiscountCategoryPrototype>())
+        {
+            if (discountCategory.Weight == 0 || discountCategory.MaxItems == 0)
+            {
+                continue;
+            }
+
+            cumulativeWeight += discountCategory.Weight;
+            discountCumulativeWeightByDiscountCategoryId.Add(new(discountCategory, cumulativeWeight));
+        }
+
+        return (discountCumulativeWeightByDiscountCategoryId, cumulativeWeight);
+    }
+
     private sealed class DiscountCategoryWithCumulativeWeight(DiscountCategoryPrototype discountCategory, int cumulativeWeight)
     {
         public DiscountCategoryPrototype DiscountCategory { get; set; } = discountCategory;
         public int CumulativeWeight { get; set; } = cumulativeWeight;
     }
 
-    /// <summary>
-    /// Settings for discount initializations.
-    /// </summary>
-    public sealed class DiscountSettings
-    {
-        /// <summary>
-        /// Total count of discounts that can be attached to uplink.
-        /// </summary>
-        public int TotalAvailableDiscounts { get; set; } = 3;
-    }
+}
 
+public sealed partial class GetDiscountsEvent(EntityUid store)
+{
+    public EntityUid Store { get; } = store;
+
+
+    public StoreDiscountData[]? DiscountsData { get; set; }
 }
