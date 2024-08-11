@@ -1,0 +1,408 @@
+- type: entity
+  parent: BaseItem
+  id: BaseScrap
+  abstract: true
+  name: scrap
+  description: Worthless junk. You could probably get some materials out of it though.
+  suffix: Scrap
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/Scrap/generic.rsi
+  - type: Item
+    sprite: Objects/Materials/Scrap/generic.rsi
+    size: Normal
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: FlimsyMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Recyclable
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapSteel
+  name: blasted steel pile
+  description: An pile of steel welded together in extreme heat. It's of a decent size overall; you could probably get a fair amount of sheets out of it.
+  components:
+  - type: Sprite
+    layers:
+      - state: metal-1
+        map: [ "base" ]
+  - type: Item
+    size: Ginormous
+    heldPrefix: metal
+  - type: MultiHandedItem
+  - type: RandomSprite
+    available:
+    - base:
+        metal-1: ""
+        metal-2: ""
+        metal-3: ""
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 3000 # 30 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapGlass
+  name: scrap circuitry
+  description: A huge lump of various circuits, strangely fused together. You could likely extract some materials out of this.
+  components:
+  - type: Sprite
+    layers:
+    - state: glass-1
+      map: [ "base" ]
+  - type: Item
+    heldPrefix: "glass"
+    size: Large
+    shape:
+    - 0,0,2,2 # 3x3
+  - type: RandomSprite
+    available:
+    - base:
+        glass-1: ""
+        glass-2: ""
+        glass-3: ""
+        glass-4: ""
+        glass-5: ""
+        glass-6: ""
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 1500 # 15 sheets
+      Steel: 500 # 5 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapAirlock1
+  name: airlock door
+  description: This used to keep air in. Now it doesn't seem to be doing anything at all.
+  components:
+  - type: Sprite
+    layers:
+    - state: junk-airlock-1
+      map: [ "base" ]
+  - type: RandomSprite
+    available:
+    - base:
+        junk-airlock-1: ""
+        junk-airlock-2: ""
+  - type: Item
+    size: Ginormous
+    heldPrefix: "airlock"
+  - type: MultiHandedItem
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 1500 # 15 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapAirlock2
+  name: airlock light
+  description: Serves it right for flashing red all those times.
+  components:
+  - type: Sprite
+    layers:
+    - state: junk-airlock-3
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,3,0
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 200 # 2 sheets
+      Glass: 500 # 5 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapBucket
+  name: busted bucket
+  description: Dear god...
+  components:
+  - type: Sprite
+    layers:
+    - state: junk-bucket
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 300 # 3 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapCamera
+  name: broken camera
+  description: It might still be watching.
+  components:
+  - type: Sprite
+    layers:
+    - state: junk-camera
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 500 # 5 sheets
+      Glass: 100 # 1 sheet
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapCanister1
+  name: canister handle
+  description: Helpful for holding a canister. Now you just need the actual canister part.
+  components:
+  - type: Sprite
+    layers:
+    - state: junk-canister-1
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 300 # 3 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapCanister2
+  name: canister valve
+  description: A valve from a gas canister.
+  components:
+  - type: Sprite
+    layers:
+    - state: junk-canister-2
+  - type: Item
+    size: Small
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 200 # 2 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapCloset
+  name: closet door
+  description: A blown off door from a maintenance closet. Looks like a nice piece of wall decor.
+  components:
+  - type: Sprite
+    layers:
+    - state: junk-closet
+  - type: MultiHandedItem
+  - type: Item
+    heldPrefix: closet
+    size: Huge
+    shape:
+    - 0,0,5,2
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 1500 # 15 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapFaxMachine
+  name: fax machine
+  description: The unfortunate result of one too many ASCII arts being sent to Central Command.
+  components:
+  - type: Sprite
+    layers:
+    - state: junk-fax
+  - type: Item
+    size: Huge
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 800 # 8 sheets
+      Steel: 200 # 2 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapFireExtinguisher
+  name: split fire extinguisher
+  description: The large gash down the center makes you worry for the previous user.
+  components:
+  - type: Sprite
+    layers:
+    - state: junk-fireextinguisher
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 600 # 6 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapFirelock1
+  name: firelock door
+  description: At least you still know what it's meant for.
+  components:
+  - type: Sprite
+    layers:
+    - state: junk-firelock-1
+  - type: Item
+    size: Ginormous
+    heldPrefix: firelock-1
+  - type: MultiHandedItem
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 2000 # 20 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapFirelock2
+  name: firelock door
+  description: OH! That's where the other half went!
+  components:
+  - type: Sprite
+    layers:
+    - state: junk-firelock-2
+  - type: Item
+    size: Ginormous
+    heldPrefix: firelock-2
+  - type: MultiHandedItem
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 2000 # 20 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapFirelock3
+  name: firelock frame
+  components:
+  - type: Sprite
+    layers:
+    - state: junk-firelock-3
+  - type: Item
+    size: Large
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 700 # 7 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapIntercom
+  name: intercom scrap
+  description: You wish it at least came with some encryption keys.
+  components:
+  - type: Sprite
+    layers:
+    - state: junk-intercom-1
+      map: [ "base" ]
+  - type: RandomSprite
+    available:
+    - base:
+        junk-intercom-1: ""
+        junk-intercom-2: ""
+        junk-intercom-3: ""
+  - type: Item
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 400 # 4 sheets
+      Plastic: 300 # 3 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapJetpack
+  name: busted jetpack
+  description: Looks like it won't be flying any more.
+  components:
+  - type: Sprite
+    layers:
+    - state: junk-jetpack
+  - type: Item
+    size: Huge
+    heldPrefix: jetpack
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 1000 # 10 sheets
+      Plastic: 200 # 2 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapMedkit
+  name: snapped medkit
+  description: Hopefully they got some use out of it.
+  components:
+  - type: Sprite
+    layers:
+    - state: junk-medkit-1
+      map: [ "base" ]
+  - type: RandomSprite
+    available:
+    - base:
+        junk-medkit-1: ""
+        junk-medkit-2: ""
+  - type: Item
+    size: Large
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 500 # 5 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapMopBucket
+  name: half a mop bucket
+  description: Tiders die. Janitors survive.
+  components:
+  - type: Sprite
+    layers:
+    - state: junk-mop-bucket
+  - type: Item
+    size: Huge
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 1500 # 15 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapPAI
+  name: personal ai device
+  description: A buddy! You still in there? Hello? Buddy???
+  components:
+  - type: Sprite
+    layers:
+    - state: junk-pai
+  - type: Item
+    size: Small
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 300 # 3 sheets
+      Plastic: 200 # 2 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapPAIGold
+  name: gilded personal ai device
+  description: Wow! What a one-in-a-million find! This would be worth a fortune... if it was in good condition.
+  components:
+  - type: Sprite
+    layers:
+    - state: junk-pai-gold
+  - type: Item
+    size: Small
+  - type: PhysicalComposition
+    materialComposition:
+      Gold: 100 # 1 sheet
+      Plastic: 400 # 4 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapTube
+  name: shattered sample tube
+  description: A glass tube containing some kind of rare sample. Or at least, it used to contain it. Not much left in there now.
+  components:
+  - type: Sprite
+    layers:
+    - state: tube
+      map: [ "base" ]
+  - type: RandomSprite
+    available:
+    - base:
+        tube: ""
+        tube-bl: ""
+        tube-bk: ""
+        tube-g: ""
+        tube-r: ""
+        tube-y: ""
+  - type: Item
+    size: Small
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 500 # 5 sheets
+      Plastic: 100 # 1 sheet
+
+
+

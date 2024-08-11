@@ -186,6 +186,12 @@ namespace Content.Server.GameTicking
             // update server info to reflect new ready count
             UpdateInfoText();
         }
+
+        public bool UserHasJoinedGame(ICommonSession session)
+            => UserHasJoinedGame(session.UserId);
+
+        public bool UserHasJoinedGame(NetUserId userId)
+            => PlayerGameStatuses[userId] == PlayerGameStatus.JoinedGame;
     }
 
     public sealed class PlayerToggleReadyEvent : EntityEventArgs

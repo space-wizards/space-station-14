@@ -117,7 +117,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     private void OnUnanchorAttempt(EntityUid uid, ContainmentFieldGeneratorComponent component,
         UnanchorAttemptEvent args)
     {
-        if (component.Enabled)
+        if (component.Enabled || component.IsConnected)
         {
             _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, args.User, PopupType.LargeCaution);
             args.Cancel();
