@@ -2,6 +2,7 @@ using System.Text;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
@@ -13,6 +14,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -41,6 +43,12 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
 
         if (elementData is null)
             return false;
+
+        if (TryComp<FoodComponent>(element, out var elementFood) && elementFood.RequireDead)
+        {
+            if (_mobState.IsAlive(element))
+                return false;
+        }
 
         //if we run out of space, we can still put in one last, final finishing element.
         if (start.Comp.FoodLayers.Count >= start.Comp.MaxLayers && !elementData.Final || start.Comp.Finished)

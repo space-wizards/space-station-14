@@ -12,6 +12,7 @@ food-sequence-content-salami = salami
 food-sequence-content-slime = slime
 food-sequence-content-clown = clown
 food-sequence-content-pea = pea
+food-sequence-content-bungo = bungo
 food-sequence-content-banana = banana
 food-sequence-content-mimana = mimana
 food-sequence-content-lemon = lemon
