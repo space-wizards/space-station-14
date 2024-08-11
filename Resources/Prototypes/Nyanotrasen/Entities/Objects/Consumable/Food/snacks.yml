@@ -214,7 +214,8 @@
     sprite: Nyanotrasen/Objects/Consumable/Food/Snacks/boritopie.rsi
     state: borito-pie
   - type: Food
-    trash: FoodPacketBoritosTrash
+    trash: 
+    - FoodPacketBoritosTrash
   - type: SolutionContainerManager
     solutions:
       food:
