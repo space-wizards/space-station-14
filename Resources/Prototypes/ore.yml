@@ -6,19 +6,19 @@
   id: OreSteel
   oreEntity: SteelOre1
   minOreYield: 1
-  maxOreYield: 4
+  maxOreYield: 5
 
 - type: ore
   id: OreSpaceQuartz
   oreEntity: SpaceQuartz1
   minOreYield: 1
-  maxOreYield: 4
+  maxOreYield: 5
 
 - type: ore
   id: OreCoal
   oreEntity: Coal1
   minOreYield: 1
-  maxOreYield: 4
+  maxOreYield: 45
 
 # Medium yields
 - type: ore
