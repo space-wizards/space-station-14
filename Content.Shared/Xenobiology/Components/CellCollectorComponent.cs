@@ -9,5 +9,5 @@ public sealed partial class CellCollectorComponent : Component
     public TimeSpan Delay = TimeSpan.FromSeconds(4f);
 
     [DataField]
-    public bool Used;
+    public int Usages = 1;
 }

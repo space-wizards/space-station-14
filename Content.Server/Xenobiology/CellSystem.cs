@@ -43,7 +43,7 @@ public sealed class CellSystem : SharedCellSystem
             BreakOnDamage = true,
             BreakOnMove = true,
             MovementThreshold = 0.5f,
-            CancelDuplicate = true,
+            BlockDuplicate = true,
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
@@ -65,7 +65,7 @@ public sealed class CellSystem : SharedCellSystem
 
                 _popup.PopupEntity(Loc.GetString("cell-collector-collected"), ent);
 
-                ent.Comp.Used = true;
+                ent.Comp.Usages--;
                 break;
 
             case CellCollectorDirection.Transfer:
@@ -94,7 +94,7 @@ public sealed class CellSystem : SharedCellSystem
         switch (direction)
         {
             case CellCollectorDirection.Collection:
-                if (ent.Comp1.Used)
+                if (ent.Comp1.Usages == 0)
                 {
                     if (!popup)
                         return false;
