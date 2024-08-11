@@ -137,9 +137,8 @@ public abstract partial class SharedHandsSystem
         DoDrop(uid, hand, doDropInteraction: doDropInteraction, handsComp);
 
         // if there's no drop location stop here
-        if (targetDropLocation == null) {
+        if (targetDropLocation == null)
             return true;
-        }
         
         // otherwise, also move dropped item and rotate it properly according to grid/map
         var (itemPos, itemRot) = TransformSystem.GetWorldPositionRotation(entity);
