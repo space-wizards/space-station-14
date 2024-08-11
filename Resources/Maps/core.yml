@@ -69277,8 +69277,8 @@ entities:
       pos: 41.5,-23.5
       parent: 2
     - type: FaxMachine
-      destinationAddress: Head of Personel
-      name: Head of Personel
+      destinationAddress: Head of Personnel
+      name: Head of Personnel
 - proto: FaxMachineCaptain
   entities:
   - uid: 4581
@@ -119538,7 +119538,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraCommand
       nameSet: True
-      id: Head of Personel's office
+      id: Head of Personnel's office
   - uid: 8978
     components:
     - type: Transform
@@ -119549,7 +119549,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraCommand
       nameSet: True
-      id: Head of Personel's room
+      id: Head of Personnel's room
   - uid: 8979
     components:
     - type: Transform
