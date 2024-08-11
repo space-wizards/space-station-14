@@ -42,6 +42,7 @@ using Content.Server.Construction.Components;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
+using Robust.Shared.Map;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -59,7 +60,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ExplosionSystem _explosion = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
         [Dependency] private readonly TagSystem _tag = default!;
         [Dependency] private readonly TemperatureSystem _temperature = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
@@ -285,6 +286,11 @@ namespace Content.Server.Kitchen.EntitySystems
                     Spawn(foodComp.Trash, Transform(entToRemove).Coordinates);
                 Del(entToRemove);
             }
+        }
+
+        private void Spawn(List<EntProtoId> trash, EntityCoordinates coordinates)
+        {
+            throw new NotImplementedException();
         }
 
         private void OnInit(Entity<MicrowaveComponent> ent, ref ComponentInit args)
