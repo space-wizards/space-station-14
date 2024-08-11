@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: nikthechampiongr
-  changes:
-  - message: Fixed records consoles sometimes failing to show crew records.
-    type: Fix
-  id: 6587
-  time: '2024-05-12T15:07:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27883
 - author: ShadowCommander
   changes:
   - message: Fixed cyborg laws window and other UIs breaking when the built in light
@@ -3782,3 +3775,11 @@
   id: 7086
   time: '2024-08-11T03:05:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30104
+- author: Plykiya
+  changes:
+  - message: Cooking shelves have been renamed to Kitchen shelves, you can now put
+      more drinks and cutlery in them.
+    type: Tweak
+  id: 7087
+  time: '2024-08-11T06:21:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30858
