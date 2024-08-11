@@ -82,8 +82,6 @@
           - MobMask
         layer:
           - MobLayer
-  - type: Inventory
-    templateId: diona
   - type: Speech
     speechVerb: Plant
   - type: Vocal
@@ -101,13 +99,27 @@
     actionPrototype: DionaGibAction
     allowedStates:
     - Dead
+  - type: Inventory
+    templateId: diona
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
 
 - type: entity
   parent: BaseSpeciesDummy
   id: MobDionaDummy
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
-  - type: Inventory
-    templateId: diona
   - type: HumanoidAppearance
     species: Diona
+  - type: Inventory
+    templateId: diona
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female

@@ -5,6 +5,7 @@ comms-console-menu-announcement-button = Announce
 comms-console-menu-broadcast-button = Broadcast
 comms-console-menu-call-shuttle = Call emergency shuttle
 comms-console-menu-recall-shuttle = Recall emergency shuttle
+comms-console-menu-time-remaining = Time remaining: {$time}
 
 # Popup
 comms-console-permission-denied = Permission denied

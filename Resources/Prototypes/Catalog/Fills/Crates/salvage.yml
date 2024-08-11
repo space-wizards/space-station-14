@@ -26,7 +26,7 @@
 - type: entity
   id: CrateSalvageAssortedGoodies
   suffix: Filled, Salvage Random
-  noSpawn: true # You should use SalvageMaterialCrateSpawner instead
+  categories: [ HideSpawnMenu ] # You should use SalvageMaterialCrateSpawner instead
   parent: CrateGenericSteel
   components:
   - type: StorageFill

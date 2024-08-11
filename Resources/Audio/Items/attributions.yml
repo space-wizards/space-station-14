@@ -134,3 +134,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from tgstation."
   source: "https://github.com/tgstation/tgstation/blob/a7f525bce9a359ab5282fc754078cd4b5678a006/sound/items"
+
+- files: ["pen_click.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by dslrguide, converted to ogg and mono by Themias"
+  source: "https://freesound.org/people/dslrguide/sounds/321484"

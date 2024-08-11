@@ -1,4 +1,4 @@
-﻿<Document>
+<Document>
   # Space Law: Crime Listing
   Crime codes are organized by a Category Code (_-xx) which is a collection of non-stackable crimes on a row, prefixed
   by the Severity Number (X-__).
@@ -42,22 +42,22 @@
     </ColorBox>
     <ColorBox Color="#593a4e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Failure to Comply
+        Failure to Comply (E)
       </Box>
     </ColorBox>
     <ColorBox Color="#593a4e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Breach of Arrest
+        Breach of Arrest (E)
       </Box>
     </ColorBox>
     <ColorBox Color="#593a4e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Breach of Custody
+        Breach of Custody (E)
       </Box>
     </ColorBox>
     <ColorBox Color="#593a4e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Refusal of Mental Shielding
+        Refusal of Mental Shielding (E)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -67,17 +67,17 @@
     </ColorBox>
     <ColorBox Color="#2f3832">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Possession: Substances
+        Possession: Substances (P)
       </Box>
     </ColorBox>
     <ColorBox Color="#2f3832">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Possession: Gear
+        Possession: Gear (P)
       </Box>
     </ColorBox>
     <ColorBox Color="#2f3832">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Possession: Weaponry
+        Possession: Weaponry (P)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -95,7 +95,7 @@
     </ColorBox>
     <ColorBox Color="#2e422e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Petty Theft
+        Petty Theft (H)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -104,7 +104,7 @@
     </ColorBox>
     <ColorBox Color="#2e422e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Grand Theft
+        Grand Theft (H)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -123,17 +123,17 @@
     </ColorBox>
     <ColorBox Color="#453a59">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Vandalism
+        Vandalism (D)
       </Box>
     </ColorBox>
     <ColorBox Color="#453a59">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Damage of Property
+        Damage of Property (D)
       </Box>
     </ColorBox>
     <ColorBox Color="#453a59">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Mass Destruction
+        Mass Destruction (D)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -142,7 +142,7 @@
     </ColorBox>
     <ColorBox Color="#453a59">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Terrorism
+        Terrorism (D)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -152,7 +152,7 @@
     </ColorBox>
     <ColorBox Color="#59563a">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Trespass
+        Trespass (T)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -161,7 +161,7 @@
     </ColorBox>
     <ColorBox Color="#59563a">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Secure Trespass
+        Secure Trespass (T)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -183,22 +183,22 @@
     </ColorBox>
     <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Endangerment
+        Endangerment (V)
       </Box>
     </ColorBox>
     <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Assault
+        Assault (V)
       </Box>
     </ColorBox>
     <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Attempted Murder
+        Attempted Murder (V)
       </Box>
     </ColorBox>
     <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Prevention of Revival
+        Prevention of Revival (V)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -216,17 +216,17 @@
     </ColorBox>
     <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Manslaughter
+        Manslaughter (V)
       </Box>
     </ColorBox>
     <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Murder
+        Murder (V)
       </Box>
     </ColorBox>
     <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Mass Murder
+        Mass Murder (V)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -236,7 +236,7 @@
     </ColorBox>
     <ColorBox Color="#3b4354">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Disturbance
+        Disturbance (R)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -245,7 +245,7 @@
     </ColorBox>
     <ColorBox Color="#3b4354">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Rioting
+        Rioting (R)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -321,7 +321,7 @@
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         Combat enhancing drugs are those that benefit stun times, or movement speed, and are restricted. Poisons are
-        restricted. Substances such as Ephedrine, Desoxyephedrine, and stimulants are restricted. The captain or highest
+        restricted. Substances such as Ephedrine, Desoxyephedrine, and Hyperzine are restricted. The captain or highest
         standing command staff may publicly restrict other harmful substances.
       </Box>
     </ColorBox>

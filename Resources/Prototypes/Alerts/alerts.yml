@@ -24,7 +24,6 @@
     - category: Thirst
     - alertType: Magboots
     - alertType: Pacified
-    - alertType: Deflecting
 
 - type: entity
   id: AlertSpriteView
@@ -88,7 +87,7 @@
 - type: alert
   id: Fire
   icons: [ /Textures/Interface/Alerts/Fire/fire.png ]
-  onClick: !type:ResistFire  { }
+  clickEvent: !type:ResistFireAlertEvent
   name: alerts-on-fire-name
   description: alerts-on-fire-desc
 
@@ -137,14 +136,14 @@
 
 - type: alert
   id: Handcuffed
-  onClick: !type:RemoveCuffs  { }
+  clickEvent: !type:RemoveCuffsAlertEvent
   icons: [ /Textures/Interface/Alerts/Handcuffed/Handcuffed.png ]
   name: alerts-handcuffed-name
   description: alerts-handcuffed-desc
 
 - type: alert
   id: Ensnared
-  onClick: !type:RemoveEnsnare  { }
+  clickEvent: !type:RemoveEnsnareAlertEvent
   icons:
   - sprite: /Textures/Interface/Alerts/ensnared.rsi
     state: ensnared
@@ -154,7 +153,7 @@
 - type: alert
   id: Buckled
   category: Buckled
-  onClick: !type:Unbuckle  { }
+  clickEvent: !type:UnbuckleAlertEvent
   icons: [ /Textures/Interface/Alerts/Buckle/buckled.png ]
   name: alerts-buckled-name
   description: alerts-buckled-desc
@@ -276,7 +275,7 @@
 - type: alert
   id: Internals
   category: Internals
-  onClick: !type:ToggleInternals {}
+  clickEvent: !type:ToggleInternalsAlertEvent
   icons:
   - sprite: /Textures/Interface/Alerts/internals.rsi
     state: internal0
@@ -292,7 +291,7 @@
 - type: alert
   id: PilotingShuttle
   category: Piloting
-  onClick: !type:StopPiloting { }
+  clickEvent: !type:StopPilotingAlertEvent
   icons: [ /Textures/Interface/Alerts/piloting.png ]
   name: alerts-piloting-name
   description: alerts-piloting-desc
@@ -366,27 +365,27 @@
   id: VowOfSilence
   icons: [ /Textures/Interface/Alerts/Abilities/silenced.png ]
   name: alerts-vow-silence-name
-  onClick: !type:BreakVow  { }
+  clickEvent: !type:BreakVowAlertEvent
   description: alerts-vow-silence-desc
 
 - type: alert
   id: VowBroken
   icons: [ /Textures/Interface/Actions/scream.png ]
   name: alerts-vow-broken-name
-  onClick: !type:RetakeVow  { }
+  clickEvent: !type:RetakeVowAlertEvent
   description: alerts-vow-broken-desc
 
 - type: alert
   id: Pulled
   icons: [ /Textures/Interface/Alerts/Pull/pulled.png ]
-  onClick: !type:StopBeingPulled  { }
+  clickEvent: !type:StopBeingPulledAlertEvent
   name: alerts-pulled-name
   description: alerts-pulled-desc
 
 - type: alert
   id: Pulling
   icons: [ /Textures/Interface/Alerts/Pull/pulling.png ]
-  onClick: !type:StopPulling  { }
+  clickEvent: !type:StopPullingAlertEvent
   name: alerts-pulling-name
   description: alerts-pulling-desc
 
@@ -475,11 +474,3 @@
     state: critical
   name: Debug6
   description: Debug
-
-- type: alert
-  id: Deflecting
-  icons:
-  - sprite: /Textures/Interface/Alerts/deflecting.rsi
-    state: deflecting0
-  name: alerts-deflecting-name
-  description: alerts-deflecting-desc

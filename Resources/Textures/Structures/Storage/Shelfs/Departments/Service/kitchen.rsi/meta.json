@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Kezu",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "kitchen-0"
+    },
+    {
+      "name": "kitchen-1"
+    },
+    {
+      "name": "kitchen-2"
+    },
+    {
+      "name": "kitchen-3"
+    },
+    {
+      "name": "kitchen-4"
+    },
+    {
+      "name": "kitchen-5"
+    },
+    {
+      "name": "kitchen-6"
+    },
+    {
+      "name": "kitchen-7"
+    },
+    {
+      "name": "kitchen-8"
+    },
+    {
+      "name": "kitchen-9"
+    },
+    {
+      "name": "kitchen-10"
+    },
+    {
+      "name": "kitchen-11"
+    },
+    {
+      "name": "kitchen-12"
+    }
+  ]
+}

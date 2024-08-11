@@ -11,14 +11,14 @@ whitelist-playercount-invalid = {$min ->
 whitelist-not-whitelisted-rp = You are not whitelisted. To become whitelisted, visit our Discord (which can be found at https://spacestation14.io) and check the #rp-whitelist channel.
 
 cmd-whitelistadd-desc = Adds the player with the given username to the server whitelist.
-cmd-whitelistadd-help = Usage: whitelistadd <username>
+cmd-whitelistadd-help = Usage: whitelistadd <username or User ID>
 cmd-whitelistadd-existing = {$username} is already on the whitelist!
 cmd-whitelistadd-added = {$username} added to the whitelist
 cmd-whitelistadd-not-found = Unable to find '{$username}'
 cmd-whitelistadd-arg-player = [player]
 
 cmd-whitelistremove-desc = Removes the player with the given username from the server whitelist.
-cmd-whitelistremove-help = Usage: whitelistremove <username>
+cmd-whitelistremove-help = Usage: whitelistremove <username or User ID>
 cmd-whitelistremove-existing = {$username} is not on the whitelist!
 cmd-whitelistremove-removed = {$username} removed from the whitelist
 cmd-whitelistremove-not-found = Unable to find '{$username}'
@@ -38,4 +38,10 @@ soft-player-cap-full = The server is full!
 panic-bunker-account-denied = This server is in panic bunker mode, often enabled as a precaution against raids. New connections by accounts not meeting certain requirements are temporarily not accepted. Try again later
 panic-bunker-account-denied-reason = This server is in panic bunker mode, often enabled as a precaution against raids. New connections by accounts not meeting certain requirements are temporarily not accepted. Try again later. Reason: "{$reason}"
 panic-bunker-account-reason-account = Your Space Station 14 account is too new. It must be older than {$minutes} minutes
-panic-bunker-account-reason-overall = Your overall playtime on the server must be greater than {$hours} hours
+panic-bunker-account-reason-overall = Your overall playtime on the server must be greater than {$minutes} $minutes
+
+baby-jail-account-denied = This server is a newbie server, intended for new players and those who want to help them. New connections by accounts that are too old or are not on a whitelist are not accepted. Check out some other servers and see everything Space Station 14 has to offer. Have fun!
+baby-jail-account-denied-reason = This server is a newbie server, intended for new players and those who want to help them. New connections by accounts that are too old or are not on a whitelist are not accepted. Check out some other servers and see everything Space Station 14 has to offer. Have fun! Reason: "{$reason}"
+baby-jail-account-reason-account = Your Space Station 14 account is too old. It must be younger than {$minutes} minutes
+baby-jail-account-reason-overall = Your overall playtime on the server must be younger than {$minutes} $minutes
+

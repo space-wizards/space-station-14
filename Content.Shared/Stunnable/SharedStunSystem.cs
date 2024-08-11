@@ -54,7 +54,7 @@ public abstract class SharedStunSystem : EntitySystem
         // Attempt event subscriptions.
         SubscribeLocalEvent<StunnedComponent, ChangeDirectionAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<StunnedComponent, UpdateCanMoveEvent>(OnMoveAttempt);
-        SubscribeLocalEvent<StunnedComponent, InteractionAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<StunnedComponent, InteractionAttemptEvent>(OnAttemptInteract);
         SubscribeLocalEvent<StunnedComponent, UseAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<StunnedComponent, ThrowAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<StunnedComponent, DropAttemptEvent>(OnAttempt);
@@ -65,7 +65,10 @@ public abstract class SharedStunSystem : EntitySystem
         SubscribeLocalEvent<MobStateComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
-
+    private void OnAttemptInteract(Entity<StunnedComponent> ent, ref InteractionAttemptEvent args)
+    {
+        args.Cancelled = true;
+    }
 
     private void OnMobStateChanged(EntityUid uid, MobStateComponent component, MobStateChangedEvent args)
     {
