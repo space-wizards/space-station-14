@@ -60,7 +60,7 @@ public sealed class ItemSystem : SharedItemSystem
         if (!item.InhandVisuals.TryGetValue(args.Location, out var layers))
         {
             // get defaults
-            if (!TryGetDefaultVisuals(uid, item, defaultKey,  out layers))
+            if (!TryGetDefaultVisuals(uid, item, defaultKey, out layers))
                 return;
         }
 
@@ -109,10 +109,6 @@ public sealed class ItemSystem : SharedItemSystem
         layer.RsiPath = rsi.Path.ToString();
         layer.State = state;
         layer.MapKeys = new() { state };
-        if (TryComp(uid, out AtmosPipeColorComponent? pipeColor))
-        {
-            layer.Color = pipeColor.Color;
-        }
 
         result = new() { layer };
         return true;
