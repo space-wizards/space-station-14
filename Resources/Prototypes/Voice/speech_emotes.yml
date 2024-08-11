@@ -80,7 +80,7 @@
 
 - type: emote
   id: Cough
-  name: chat-emote-name-cough
+  name: chat-emote-name-coughs
   category: Vocal
   icon: Interface/Emotes/cough.png
   whitelist:
