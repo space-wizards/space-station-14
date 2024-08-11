@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ShadowCommander
-  changes:
-  - message: Fixed cyborg laws window and other UIs breaking when the built in light
-      was on.
-    type: Fix
-  id: 6588
-  time: '2024-05-12T22:14:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27956
 - author: mirrorcult
   changes:
   - message: The open slot storage keybinds (V, shift+V) now close the window if it's
@@ -3783,3 +3775,11 @@
   id: 7087
   time: '2024-08-11T06:21:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30858
+- author: BombasterDS
+  changes:
+  - message: You can now change the suit's sensors on incapacitated people without
+      taking it off
+    type: Tweak
+  id: 7088
+  time: '2024-08-11T09:04:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29668
