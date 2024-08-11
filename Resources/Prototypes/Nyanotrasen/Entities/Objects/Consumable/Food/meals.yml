@@ -73,7 +73,8 @@
     count: 6
     slice: FoodMothGreenLasagneSlice
   - type: Food
-    trash: FoodPlate
+    trash: 
+    - FoodPlate
   - type: Sprite
     sprite: Nyanotrasen/Objects/Consumable/Food/meal.rsi
     state: greenlasagne
