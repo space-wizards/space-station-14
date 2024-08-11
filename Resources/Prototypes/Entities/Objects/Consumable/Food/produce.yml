@@ -671,7 +671,7 @@
       state: produce
     entries:
       burger:
-        name: food-sequence-burger-content-lemon
+        name: food-sequence-content-lemon
       taco:
         name: food-sequence-content-lemon
 

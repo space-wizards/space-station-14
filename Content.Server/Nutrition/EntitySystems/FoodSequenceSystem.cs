@@ -87,19 +87,20 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
             separator = Loc.GetString(start.Comp.ContentSeparator);
 
         HashSet<LocId> existedContentNames = new();
-        var layerCounter = 1;
         foreach (var layer in start.Comp.FoodLayers)
         {
             if (layer.Name is not null && !existedContentNames.Contains(layer.Name.Value))
-            {
-                content.Append(Loc.GetString(layer.Name.Value));
                 existedContentNames.Add(layer.Name.Value);
+        }
 
-                if (layerCounter < start.Comp.FoodLayers.Count)
-                    content.Append(separator);
-                layerCounter++;
-            }
-            
+        var nameCounter = 1;
+        foreach (var name in existedContentNames)
+        {
+            content.Append(Loc.GetString(name));
+
+            if (nameCounter < existedContentNames.Count)
+                content.Append(separator);
+            nameCounter++;
         }
 
         var newName = Loc.GetString(start.Comp.NameGeneration.Value,
