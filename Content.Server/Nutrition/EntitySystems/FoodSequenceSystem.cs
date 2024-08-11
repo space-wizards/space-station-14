@@ -99,6 +99,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
                     content.Append(separator);
                 layerCounter++;
             }
+            
         }
 
         var newName = Loc.GetString(start.Comp.NameGeneration.Value,

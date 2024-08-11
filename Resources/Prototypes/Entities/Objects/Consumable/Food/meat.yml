@@ -117,7 +117,7 @@
       burger:
         name: food-sequence-burger-content-raw-meat
       taco:
-        name: food-sequence-taco-content-raw-meat
+        name: food-sequence-content-raw-meat
 
 - type: entity
   name: raw human meat
