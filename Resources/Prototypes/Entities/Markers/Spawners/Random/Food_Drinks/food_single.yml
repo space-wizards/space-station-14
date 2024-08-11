@@ -32,9 +32,6 @@
       - FoodBurgerChicken
       - FoodBurgerDuck
       - FoodBurgerCheese
-      - FoodMeatHawaiianKebab
-      - FoodMeatKebab
-      - FoodMeatFiestaKebab
       - FoodNoodlesBoiled
       - FoodNoodles
       - FoodNoodlesCopy
@@ -68,11 +65,6 @@
       - FoodBurgerSpell
       - FoodBurgerSuper
       - FoodBurgerCrazy
-      - FoodMeatHumanKebab
-      - FoodMeatLizardtailKebab
-      - FoodMeatRatKebab
-      - FoodMeatRatdoubleKebab
-      - FoodMeatSnakeKebab
       - FoodPizzaArnoldSlice
       - FoodPizzaUraniumSlice
     rareChance: 0.05
