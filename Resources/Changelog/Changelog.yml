@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Fixed color jumpskirts female mask.
-    type: Fix
-  id: 6590
-  time: '2024-05-13T19:25:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27984
 - author: aspiringLich
   changes:
   - message: Tweaked the Chemical, Booze, and Soda Dispenser UIs to aid readability.
@@ -3782,3 +3775,12 @@
   id: 7089
   time: '2024-08-11T09:15:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30861
+- author: TokenStyle
+  changes:
+  - message: Pax reagent now refresh pacified.
+    type: Tweak
+  - message: Pax reagent pacified duration has been changed from 2 seconds to 4 seconds.
+    type: Tweak
+  id: 7090
+  time: '2024-08-11T09:19:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30778
