@@ -61,6 +61,7 @@ food-sequence-content-watermelon = watermelon
 food-sequence-content-cannabis = cannabis
 food-sequence-content-rainbow-cannabis = rainbow cannabis
 food-sequence-content-tobacco = tobacco
+food-sequence-content-hamster = hamster
 
 #BURGERS
 food-sequence-burger-gen = {$content}burger

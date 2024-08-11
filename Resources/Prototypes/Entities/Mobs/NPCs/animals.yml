@@ -3201,6 +3201,15 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Mobs/Animals/hamster.rsi
+      state: dead-0
+    entries:
+      burger:
+        name: food-sequence-content-hamster
+      taco:
+        name: food-sequence-content-hamster
 
 - type: entity
   name: pig
