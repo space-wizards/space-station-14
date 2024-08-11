@@ -44,4 +44,3 @@ artifact-trigger-hint-ph = Extreme pH level
 artifact-trigger-hint-medical = Therapeutic chemicals
 artifact-trigger-hint-drugs = Psychoactive substances
 artifact-trigger-hint-energetic = Highly energetic chemicals
-# this one may be bad
