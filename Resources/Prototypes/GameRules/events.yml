@@ -133,12 +133,15 @@
       min: 1
       max: 1
       pickPlayer: false
-      roleType: TeamAntagonist
+      roleType: TeamAntagonist # Remove
       mindComponents:
       - type: DragonRole
         prototype: Dragon
+        roleType: TeamAntagonist
       - type: RoleBriefing
         briefing: dragon-role-briefing
+        roleType: TeamAntagonist
+
 
 - type: entity
   parent: BaseGameRule
@@ -167,7 +170,7 @@
       min: 1
       max: 1
       pickPlayer: false
-      roleType: SoloAntagonist
+      roleType: SoloAntagonist # Remove
       startingGear: SpaceNinjaGear
       roleLoadout:
       - RoleSurvivalEVA
@@ -190,6 +193,8 @@
       mindComponents:
       - type: NinjaRole
         prototype: SpaceNinja
+        roleType: SoloAntagonist
+
 
 - type: entity
   parent: BaseGameRule
@@ -430,7 +435,7 @@
     - prefRoles: [ InitialInfected ]
       max: 3
       playerRatio: 10
-      roleType: TeamAntagonist
+      roleType: TeamAntagonist # Remove
       blacklist:
         components:
         - ZombieImmune
@@ -449,6 +454,7 @@
       mindComponents:
       - type: InitialInfectedRole
         prototype: InitialInfected
+        roleType: TeamAntagonist
 
 - type: entity
   parent: BaseNukeopsRule
@@ -469,7 +475,7 @@
     - spawnerPrototype: SpawnPointLoneNukeOperative
       min: 1
       max: 1
-      roleType: TeamAntagonist
+      roleType: TeamAntagonist # Remove
       pickPlayer: false
       startingGear: SyndicateLoneOperativeGearFull
       components:
@@ -484,6 +490,7 @@
       mindComponents:
       - type: NukeopsRole
         prototype: Nukeops
+        roleType: TeamAntagonist
 
 - type: entity
   parent: BaseTraitorRule
@@ -506,7 +513,7 @@
       fallbackRoles: [ Traitor ]
       min: 1
       max: 2
-      roleType: SoloAntagonist
+      roleType: SoloAntagonist # Remove
       playerRatio: 10
       blacklist:
         components:
@@ -514,6 +521,7 @@
       mindComponents:
       - type: TraitorRole
         prototype: TraitorSleeper
+        roleType: SoloAntagonist
 
 - type: entity
   id: MassHallucinations

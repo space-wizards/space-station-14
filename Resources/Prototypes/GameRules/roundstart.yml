@@ -102,7 +102,7 @@
     - prefRoles: [ NukeopsCommander ]
       fallbackRoles: [ Nukeops, NukeopsMedic ]
       spawnerPrototype: SpawnPointNukeopsCommander
-      roleType: TeamAntagonist
+      roleType: TeamAntagonist # Remove
       startingGear: SyndicateCommanderGearFull
       roleLoadout:
       - RoleSurvivalSyndicate
@@ -118,11 +118,12 @@
       mindComponents:
       - type: NukeopsRole
         prototype: NukeopsCommander
+        roleType: TeamAntagonist
     - prefRoles: [ NukeopsMedic ]
       fallbackRoles: [ Nukeops, NukeopsCommander ]
       spawnerPrototype: SpawnPointNukeopsMedic
       startingGear: SyndicateOperativeMedicFull
-      roleType: TeamAntagonist
+      roleType: TeamAntagonist # Remove
       roleLoadout:
       - RoleSurvivalSyndicate
       components:
@@ -137,13 +138,14 @@
       mindComponents:
       - type: NukeopsRole
         prototype: NukeopsMedic
+        roleType: TeamAntagonist
     - prefRoles: [ Nukeops ]
       fallbackRoles: [ NukeopsCommander, NukeopsMedic ]
       spawnerPrototype: SpawnPointNukeopsOperative
       max: 3
       playerRatio: 10
       startingGear: SyndicateOperativeGearFull
-      roleType: TeamAntagonist
+      roleType: TeamAntagonist # Remove
       roleLoadout:
       - RoleSurvivalSyndicate
       components:
@@ -158,6 +160,7 @@
       mindComponents:
       - type: NukeopsRole
         prototype: Nukeops
+        roleType: TeamAntagonist
 
 - type: entity
   abstract: true
@@ -188,7 +191,7 @@
     - prefRoles: [ Traitor ]
       max: 8
       playerRatio: 10
-      roleType: SoloAntagonist
+      roleType: SoloAntagonist # Remove
       blacklist:
         components:
         - AntagImmune
@@ -196,6 +199,7 @@
       mindComponents:
       - type: TraitorRole
         prototype: Traitor
+        roleType: SoloAntagonist
 
 - type: entity
   id: Revolutionary
@@ -209,7 +213,7 @@
     - prefRoles: [ HeadRev ]
       max: 3
       playerRatio: 15
-      roleType: TeamAntagonist
+      roleType: TeamAntagonist # Remove
       briefing:
         text: head-rev-role-greeting
         color: CornflowerBlue
@@ -221,6 +225,7 @@
       mindComponents:
       - type: RevolutionaryRole
         prototype: HeadRev
+        roleType: TeamAntagonist
 
 - type: entity
   id: Sandbox
@@ -249,7 +254,7 @@
     - prefRoles: [ InitialInfected ]
       max: 6
       playerRatio: 10
-      roleType: TeamAntagonist
+      roleType: TeamAntagonist # Remove
       blacklist:
         components:
         - ZombieImmune
@@ -266,6 +271,7 @@
       mindComponents:
       - type: InitialInfectedRole
         prototype: InitialInfected
+        roleType: TeamAntagonist
 
 # event schedulers
 - type: entity

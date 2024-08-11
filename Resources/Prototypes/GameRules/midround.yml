@@ -20,7 +20,7 @@
     - prefRoles: [ Thief ]
       max: 3
       playerRatio: 15
-      roleType: SoloAntagonist
+      roleType: SoloAntagonist # Remove
       lateJoinAdditional: true
       allowNonHumans: true
       multiAntagSetting: NotExclusive
@@ -30,5 +30,6 @@
       mindComponents:
       - type: ThiefRole
         prototype: Thief
+        roleType: SoloAntagonist
       briefing:
         sound: "/Audio/Misc/thief_greeting.ogg"

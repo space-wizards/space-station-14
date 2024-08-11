@@ -3,7 +3,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Roles;
 
-public abstract partial class AntagonistRoleComponent : Component
+public abstract partial class AntagonistRoleComponent : BaseRoleComponent
 {
     [DataField("prototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
     public string? PrototypeId;
