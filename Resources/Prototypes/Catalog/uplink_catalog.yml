@@ -47,9 +47,6 @@
   name: uplink-rifle-mosin-name
   description: uplink-rifle-mosin-desc
   productEntity: WeaponSniperMosin
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -237,9 +234,6 @@
   name: uplink-flash-grenade-name
   description: uplink-flash-grenade-desc
   productEntity: GrenadeFlashBang
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -250,9 +244,6 @@
   name: uplink-smoke-grenade-name
   description: uplink-smoke-grenade-desc
   productEntity: SmokeGrenade
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -477,9 +468,6 @@
   description: uplink-pistol-magazine-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi, state: red-icon }
   productEntity: MagazinePistol
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -492,9 +480,6 @@
   description: uplink-pistol-magazine-c20r-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag.rsi, state: red-icon }
   productEntity: MagazinePistolSubMachineGun
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -507,9 +492,6 @@
   description: uplink-pistol-magazine-caseless-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi, state: red-icon }
   productEntity: MagazinePistolCaselessRifle
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -522,9 +504,6 @@
   description: uplink-speedloader-magnu-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi, state: icon }
   productEntity: SpeedLoaderMagnumAP
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 3
   categories:
@@ -536,9 +515,6 @@
   name: uplink-mosin-ammo-name
   description: uplink-mosin-ammo-desc
   productEntity: MagazineBoxLightRifle
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -550,9 +526,6 @@
   name: uplink-sniper-ammo-name
   description: uplink-sniper-ammo-desc
   productEntity: MagazineBoxAntiMateriel
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -802,9 +775,6 @@
   description: uplink-binary-translator-key-desc
   icon: { sprite: /Textures/Objects/Devices/encryption_keys.rsi, state: rd_label }
   productEntity: EncryptionKeyBinary
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -815,9 +785,6 @@
   name: uplink-cyberpen-name
   description: uplink-cyberpen-desc
   productEntity: CyberPen
-  discountCategory: usualDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -828,9 +795,6 @@
   name: uplink-decoy-disk-name
   description: uplink-decoy-disk-desc
   productEntity: NukeDiskFake
-  discountCategory: usualDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -959,9 +923,6 @@
   name: uplink-soap-name
   description: uplink-soap-desc
   productEntity: SoapSyndie
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -1236,9 +1197,6 @@
   description: uplink-syndicate-pai-desc
   icon: { sprite: /Textures/Objects/Fun/pai.rsi, state: syndicate-icon-pai-off }
   productEntity: SyndicatePersonalAI
-  discountCategory: usualDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -1451,9 +1409,6 @@
   name: uplink-holster-name
   description: uplink-holster-desc
   productEntity: ClothingBeltSyndieHolster
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -1464,9 +1419,6 @@
   name: uplink-chest-rig-name
   description: uplink-chest-rig-desc
   productEntity: ClothingBeltMilitaryWebbing
-  discountCategory: veryRareDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -1644,9 +1596,6 @@
   name: uplink-clothing-conducting-gloves-name
   description: uplink-clothing-conducting-gloves-desc
   productEntity: ClothingHandsGlovesConducting
-  discountCategory: usualDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -1657,9 +1606,6 @@
   name: uplink-backpack-syndicate-name
   description: uplink-backpack-syndicate-desc
   productEntity: ClothingBackpackSyndicate
-  discountCategory: usualDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 2
   categories:
@@ -1672,9 +1618,6 @@
   name: uplink-barber-scissors-name
   description: uplink-barber-scissors-desc
   productEntity: BarberScissors
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:
@@ -1685,9 +1628,6 @@
   name: uplink-snack-box-name
   description: uplink-snack-box-desc
   productEntity: HappyHonkNukieSnacks
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 0
   cost:
     Telecrystal: 1
   categories:

@@ -17,7 +17,8 @@ namespace Content.Client.Store.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class StoreMenu : DefaultWindow
 {
-    private const string DiscountedCategoryPrototypeKey = "DiscountedItems";
+    [ValidatePrototypeId<StoreCategoryPrototype>]
+    private const string DiscountedStoreCategoryPrototypeKey = "DiscountedItems";
 
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -95,7 +96,7 @@ public sealed partial class StoreMenu : DefaultWindow
             storeDiscounts.TryGetValue(item.ID, out var discountData);
             if (discountData != null)
             {
-                item.Categories.Add(DiscountedCategoryPrototypeKey);
+                item.Categories.Add(DiscountedStoreCategoryPrototypeKey);
             }
             AddListingGui(item, discountData);
         }
@@ -263,7 +264,7 @@ public sealed partial class StoreMenu : DefaultWindow
 
         if (discounts.Any(x => x.Count > 0))
         {
-            var proto = _prototypeManager.Index<StoreCategoryPrototype>(DiscountedCategoryPrototypeKey);
+            var proto = _prototypeManager.Index<StoreCategoryPrototype>(DiscountedStoreCategoryPrototypeKey);
             allCategories.Add(proto);
         }
 

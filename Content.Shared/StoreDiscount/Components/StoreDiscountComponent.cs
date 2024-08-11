@@ -1,8 +1,8 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.StoreDiscount.Components;
 
@@ -29,7 +29,7 @@ public sealed partial class StoreDiscountData
     /// Id of listing item to be discounted.
     /// </summary>
     [DataField("listingId")]
-    public string ListingId = default!;
+    public ProtoId<ListingPrototype> ListingId = default!;
 
     /// <summary>
     /// Amount of discounted items. Each buy will decrement this counter.
@@ -40,6 +40,6 @@ public sealed partial class StoreDiscountData
     /// <summary>
     /// Map of currencies to flat amount of discount.
     /// </summary>
-    [DataField("discountAmountByCurrency", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, CurrencyPrototype>))]
-    public Dictionary<string, FixedPoint2> DiscountAmountByCurrency = new();
+    [DataField("discountAmountByCurrency")]
+    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> DiscountAmountByCurrency = new();
 }

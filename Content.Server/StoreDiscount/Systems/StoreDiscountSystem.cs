@@ -17,9 +17,10 @@ public sealed class StoreDiscountSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly StoreSystem _store = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private readonly DiscountSettings _discountSettings = new();
-
+    
     /// <inheritdoc />
     public override void Initialize()
     {
@@ -98,58 +99,59 @@ public sealed class StoreDiscountSystem : EntitySystem
     }
 
     private StoreDiscountData[] InitializeDiscounts(
-        IEnumerable<ListingData> storeComponent,
+        IEnumerable<ListingData> listings,
         DiscountSettings settings
     )
     {
-        var listingsByDiscountCategory = storeComponent.Where(x => x.DiscountDownTo?.Count > 0)
-                                                       .GroupBy(x => x.DiscountCategory)
-                                                       .ToDictionary(
-                                                           x => x.Key,
-                                                           x => x.ToArray()
-                                                       );
-        var chosenDiscounts = new Dictionary<DiscountCategory, int>
+        List<DiscountCategoryWithCumulativeWeight> discountCumulativeWeightByDiscountCategoryId = new();
+        
+        var cumulativeWeight = 0;
+        foreach (var discountCategory in _prototypeManager.EnumeratePrototypes<DiscountCategoryPrototype>())
         {
-            [DiscountCategory.RareDiscounts] = 0,
-            [DiscountCategory.UsualDiscounts] = 0,
-            [DiscountCategory.VeryRareDiscounts] = 0,
-        };
-        var veryRareDiscountCount = 0;
-        var rareDiscountCount = 0;
+            if (discountCategory.Weight == 0 || discountCategory.MaxItems == 0)
+            {
+                continue;
+            }
+
+            cumulativeWeight += discountCategory.Weight;
+            discountCumulativeWeightByDiscountCategoryId.Add(new(discountCategory, cumulativeWeight));
+        }
+
+        var chosenDiscounts = new Dictionary<ProtoId<DiscountCategoryPrototype>, int>();
         for (var i = 0; i < settings.TotalAvailableDiscounts; i++)
         {
-            var roll = _random.Next(100);
+            var roll = _random.Next(cumulativeWeight);
+            for (var discountCategoryIndex = 0; discountCategoryIndex < discountCumulativeWeightByDiscountCategoryId.Count; discountCategoryIndex++)
+            {
+                var container = discountCumulativeWeightByDiscountCategoryId[discountCategoryIndex];
+                if (roll <= container.CumulativeWeight)
+                {
+                    continue;
+                }
 
-            if (roll <= settings.VeryRareDiscountChancePercent)
-            {
-                chosenDiscounts[DiscountCategory.VeryRareDiscounts]++;
-                if (veryRareDiscountCount >= settings.MaxVeryRareDiscounts)
+                if (!chosenDiscounts.TryGetValue(container.DiscountCategory.ID, out var alreadySelectedCount))
                 {
-                    chosenDiscounts[DiscountCategory.UsualDiscounts]++;
+                    chosenDiscounts[container.DiscountCategory.ID] = 1;
                 }
-                else
+                else if(alreadySelectedCount < container.DiscountCategory.MaxItems)
                 {
-                    veryRareDiscountCount++;
+                    var newDiscountCount = chosenDiscounts[container.DiscountCategory.ID] + 1;
+                    chosenDiscounts[container.DiscountCategory.ID] = newDiscountCount;
+                    if (newDiscountCount == container.DiscountCategory.MaxItems)
+                    {
+                        discountCumulativeWeightByDiscountCategoryId.Remove(container);
+                    }
+                    break;
                 }
-            }
-            else if (roll <= settings.RareDiscountChancePercent)
-            {
-                if (rareDiscountCount <= settings.MaxRareDiscounts)
-                {
-                    chosenDiscounts[DiscountCategory.RareDiscounts]++;
-                    rareDiscountCount++;
-                }
-                else
-                {
-                    chosenDiscounts[DiscountCategory.UsualDiscounts]++;
-                }
-            }
-            else
-            {
-                chosenDiscounts[DiscountCategory.UsualDiscounts]++;
             }
         }
 
+        var listingsByDiscountCategory = listings.Where(x => x.DiscountDownTo?.Count > 0)
+                                                 .GroupBy(x => x.DiscountCategory)
+                                                 .ToDictionary(
+                                                     x => x.Key,
+                                                     x => x.ToArray()
+                                                 );
         var list = new List<StoreDiscountData>();
         foreach (var (discountCategory, itemsCount) in chosenDiscounts)
         {
@@ -167,20 +169,19 @@ public sealed class StoreDiscountSystem : EntitySystem
             foreach (var listingData in chosen)
             {
                 var cost = listingData.Cost;
-                var discountAmountByCurrencyId = new Dictionary<string, FixedPoint2>();
-                foreach (var kvp in cost)
+                var discountAmountByCurrencyId = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>();
+                foreach (var (currency, amount) in cost)
                 {
-                    if (!listingData.DiscountDownTo.TryGetValue(kvp.Key, out var discountUntilValue))
+                    if (!listingData.DiscountDownTo.TryGetValue(currency, out var discountUntilValue))
                     {
                         continue;
                     }
 
-                    var discountUntilRolledValue =
-                        _random.NextDouble(discountUntilValue.Double(), kvp.Value.Double());
+                    var discountUntilRolledValue = _random.NextDouble(discountUntilValue.Double(), amount.Double());
                     var leftover = discountUntilRolledValue % 1;
-                    var discountedCost = kvp.Value - (discountUntilRolledValue - leftover);
+                    var discountedCost = amount - (discountUntilRolledValue - leftover);
 
-                    discountAmountByCurrencyId.Add(kvp.Key.Id, discountedCost);
+                    discountAmountByCurrencyId.Add(currency.Id, discountedCost);
                 }
 
                 var discountData = new StoreDiscountData
@@ -196,6 +197,12 @@ public sealed class StoreDiscountSystem : EntitySystem
         return list.ToArray();
     }
 
+    private sealed class DiscountCategoryWithCumulativeWeight(DiscountCategoryPrototype discountCategory, int cumulativeWeight)
+    {
+        public DiscountCategoryPrototype DiscountCategory { get; set; } = discountCategory;
+        public int CumulativeWeight { get; set; } = cumulativeWeight;
+    }
+
     /// <summary>
     /// Settings for discount initializations.
     /// </summary>
@@ -205,27 +212,6 @@ public sealed class StoreDiscountSystem : EntitySystem
         /// Total count of discounts that can be attached to uplink.
         /// </summary>
         public int TotalAvailableDiscounts { get; set; } = 3;
-
-        /// <summary>
-        /// Maximum count of category 2 (not cheap stuff) items to be discounted.
-        /// </summary>
-        public int MaxVeryRareDiscounts { get; set; } = 1;
-
-        /// <summary>
-        /// Maximum count of category 0 (very low-costing stuff) items to be discounted.
-        /// </summary>
-        public int MaxRareDiscounts { get; set; } = 2;
-
-        /// <summary>
-        /// % chance (out of 100) to roll discount on listing item with category <see cref="DiscountCategory.RareDiscounts"/>.
-        /// Is considered only after comparing roll result with <see cref="VeryRareDiscountChancePercent"/>.
-        /// </summary>
-        public int RareDiscountChancePercent { get; set; } = 20;
-
-        /// <summary>
-        /// % chance (out of 100) to roll discount on listing item with category <see cref="DiscountCategory.VeryRareDiscounts"/>. 
-        /// </summary>
-        public int VeryRareDiscountChancePercent { get; set; } = 2;
     }
 
 }

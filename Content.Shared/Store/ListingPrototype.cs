@@ -34,7 +34,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// Discount category for listing item. This marker describes chance of how often will item be discounted.
     /// </summary>
     [DataField("discountCategory")]
-    public DiscountCategory DiscountCategory = DiscountCategory.NoDiscounts;
+    public ProtoId<DiscountCategoryPrototype> DiscountCategory;
 
     /// <summary>
     /// Options for discount - % of how much item costs can be cut by discount.
@@ -199,26 +199,26 @@ public sealed partial class ListingPrototype : ListingData, IPrototype
 {
 }
 
-[Serializable, NetSerializable]
-public enum DiscountCategory : byte
+/// <summary>
+/// 
+/// </summary>
+[Prototype("discountCategory")]
+[DataDefinition, Serializable, NetSerializable]
+public sealed partial class DiscountCategoryPrototype : IPrototype
 {
-    /// <summary>
-    /// Items should not be discounted in any way share or form for the love of humanity.
-    /// </summary>
-    NoDiscounts,
+    [ViewVariables]
+    [IdDataField]
+    public string ID { get; private set; } = default!;
 
     /// <summary>
-    /// Dirty-cheap items that are rarely used and can be discounted to 0-ish cost to encourage usage.
+    /// 
     /// </summary>
-    RareDiscounts,
+    [DataField("weight")]
+    public int Weight { get; private set; }
 
     /// <summary>
-    /// Cheap items that are used not very often.
+    /// 
     /// </summary>
-    UsualDiscounts,
-
-    /// <summary>
-    /// Casually used items that are widely used but can be (rarely) discounted for epic lulz.
-    /// </summary>
-    VeryRareDiscounts
+    [DataField("maxItems")]
+    public int? MaxItems { get; private set; }
 }
