@@ -18,7 +18,7 @@
   id: OreCoal
   oreEntity: Coal1
   minOreYield: 1
-  maxOreYield: 45
+  maxOreYield: 5
 
 # Medium yields
 - type: ore
