@@ -62,6 +62,7 @@ food-sequence-content-cannabis = cannabis
 food-sequence-content-rainbow-cannabis = rainbow cannabis
 food-sequence-content-tobacco = tobacco
 food-sequence-content-hamster = hamster
+food-sequence-content-suppermatter = suppermatter
 
 #BURGERS
 food-sequence-burger-gen = {$content}burger
@@ -92,6 +93,7 @@ food-sequence-burger-content-watermelon = water
 food-sequence-burger-content-cannabis = funny
 food-sequence-burger-content-rainbow-cannabis = FUNNY
 food-sequence-burger-content-tobacco = tobaco
+food-sequence-burger-content-suppermatter = supper
 
 #TACO
 food-sequence-taco-gen = taco with {$content}
