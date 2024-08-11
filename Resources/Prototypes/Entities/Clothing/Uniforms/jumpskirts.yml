@@ -481,7 +481,7 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCentcomFormalDress
   name: central command formal dress
-  description: A dress for special occasions
+  description: A dress for special occasions.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/centcomformaldress.rsi
@@ -843,3 +843,14 @@
     sprite: Clothing/Uniforms/Jumpskirt/musician.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/musician.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPsychologist
+  name: psychologist suitskirt
+  description: I don't lose things. I place things in locations which later elude me.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/psychologist.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/psychologist.rsi
