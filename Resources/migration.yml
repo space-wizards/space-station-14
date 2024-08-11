@@ -377,3 +377,6 @@ SignDrones: SignMaterials
 SignShield: null # what was this even for?
 SignHydro2: SignHydro1
 SignHydro3: SignHydro1
+
+# 2024-07-27
+LogicGate: LogicGateOr
