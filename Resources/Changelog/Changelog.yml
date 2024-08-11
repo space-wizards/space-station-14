@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Bullets no longer hit mobs that are in crit, unless they are directly
-      clicked on while shooting.
-    type: Tweak
-  id: 6585
-  time: '2024-05-11T15:42:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27905
-- author: metalgearsloth
-  changes:
-  - message: Add a reset button to character setup.
-    type: Add
-  - message: Actually get the import / export character buttons working.
-    type: Add
-  - message: Fix performance drop in the eye color picker.
-    type: Fix
-  - message: Fix instances where role timers don't load properly in character setup.
-    type: Fix
-  id: 6586
-  time: '2024-05-11T23:18:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27576
 - author: nikthechampiongr
   changes:
   - message: Fixed records consoles sometimes failing to show crew records.
@@ -3787,3 +3766,19 @@
   id: 7084
   time: '2024-08-10T19:50:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30800
+- author: Flareguy
+  changes:
+  - message: Added vox sprites for most of the remaining common mask items.
+    type: Add
+  id: 7085
+  time: '2024-08-10T21:06:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30838
+- author: Scribbles0, Plykiya, nikthechampiongr
+  changes:
+  - message: You can now execute incapacitated/cuffed entities or yourself with certain
+      sharp weapons. Executions require a do-after, deal 9x the damage of a normal
+      attack, and ignore damage resistances.
+    type: Add
+  id: 7086
+  time: '2024-08-11T03:05:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30104
