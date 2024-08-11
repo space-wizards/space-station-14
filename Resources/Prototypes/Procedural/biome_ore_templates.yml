@@ -96,7 +96,7 @@
     WallRockChromite: WallRockChromitePlasma
     WallRockSand: WallRockSandPlasma
     WallRockSnow: WallRockSnowPlasma
-  count: 12
+  maxCount: 12
   minGroupSize: 4
   maxGroupSize: 8
   radius: 4
@@ -111,7 +111,7 @@
     WallRockChromite: WallRockChromiteUranium
     WallRockSand: WallRockSandUranium
     WallRockSnow: WallRockSnowUranium
-  count: 15
+  maxCount: 15
   minGroupSize: 4
   maxGroupSize: 8
   radius: 4
