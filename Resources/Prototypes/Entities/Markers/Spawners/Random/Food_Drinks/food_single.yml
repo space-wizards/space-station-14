@@ -51,11 +51,7 @@
       - FoodBakedDumplings
       - FoodBakedChevreChaud
       - FoodBakedNugget
-      - FoodTacoBeef
-      - FoodTacoChicken
-      - FoodTacoFish
-      - FoodTacoBeefSupreme
-      - FoodTacoChickenSupreme
+      - FoodTacoShell
     chance: 0.8
     offset: 0.0
     #rare
@@ -79,5 +75,4 @@
       - FoodMeatSnakeKebab
       - FoodPizzaArnoldSlice
       - FoodPizzaUraniumSlice
-      - FoodTacoRat
     rareChance: 0.05
