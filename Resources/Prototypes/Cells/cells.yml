@@ -1,0 +1,4 @@
+- type: cell
+  id: MurineCells
+  modifiers: # Just for test remove later
+    - !type:CellPacifismModifier

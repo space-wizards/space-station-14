@@ -1519,6 +1519,9 @@
   components:
   - type: Body
     prototype: Mouse
+  - type: CellGeneration
+    cells:
+      - MurineCells
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
