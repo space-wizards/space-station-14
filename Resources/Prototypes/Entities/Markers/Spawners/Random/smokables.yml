@@ -14,6 +14,8 @@
   - type: RandomSpawner
     prototypes:
       - Cigarette
+      - Cigarette
+      - Cigarette
       - Cigar
       - CigPackGreen
       - CigPackRed
