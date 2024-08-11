@@ -120,7 +120,7 @@
 - type: artifactTrigger
   id: TriggerMedical
   targetDepth: 2
-  triggerHint: artifact-trigger-hint-bioreactive
+  triggerHint: artifact-trigger-hint-medical
   components:
   - type: Reactive
     groups:
@@ -134,7 +134,7 @@
 - type: artifactTrigger
   id: TriggerAcidic
   targetDepth: 2
-  triggerHint: artifact-trigger-hint-pH
+  triggerHint: artifact-trigger-hint-ph
   components:
   - type: Reactive
     groups:
@@ -196,7 +196,7 @@
 - type: artifactTrigger
   id: TriggerStimulant
   targetDepth: 3
-  triggerHint: artifact-trigger-hint-bioreactive
+  triggerHint: artifact-trigger-hint-drugs
   components:
   - type: Reactive
     groups:
@@ -210,7 +210,7 @@
 - type: artifactTrigger
   id: TriggerPsychedelic
   targetDepth: 3 # D3s are due to illegality/restrictions of some reactants
-  triggerHint: artifact-trigger-hint-bioreactive
+  triggerHint: artifact-trigger-hint-drugs
   components:
   - type: Reactive
     groups:

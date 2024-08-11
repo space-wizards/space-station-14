@@ -41,6 +41,7 @@ artifact-trigger-hint-plasma = Gaseous plasma
 artifact-trigger-hint-land = Active deceleration
 artifact-trigger-hint-examine = Examination
 artifact-trigger-hint-ph = Extreme pH level
-artifact-trigger-hint-bioreactive = Bioreactive chemicals
+artifact-trigger-hint-medical = Therapeutic chemicals
+artifact-trigger-hint-drugs = Psychoactive substances
 artifact-trigger-hint-energetic = Highly energetic chemicals
 # this one may be bad
