@@ -6,6 +6,7 @@ using Content.Shared.Throwing;
 using Content.Shared.Damage;
 using Robust.Shared.Random;
 using Content.Shared.Popups;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Shared.Damage.Systems;
 
@@ -33,6 +34,7 @@ public sealed class DamageOnPickupSystem : EntitySystem
         // However, entities like monkeys and kobolds have a hand slot, but no gloves slot.
         if (_inventory.TryGetSlotContainer(user, "gloves", out var containerSlot, out var slotDefinition))
         {
+            // Check if the the gloves slot contains an item with a component which grants immunity to being affected.
             if (TryComp<DamageOnPickupImmuneComponent>(containerSlot.ContainedEntity, out var immunity))
             {
                 return;
@@ -44,12 +46,19 @@ public sealed class DamageOnPickupSystem : EntitySystem
         }
 
         args.Cancel();
-        _audio.PlayPvs(entity.Comp.Sound, entity);
-        _transform.SetCoordinates(entity, Transform(user).Coordinates);
-        _transform.AttachToGridOrMap(entity);
-        _throwing.TryThrow(entity, _random.NextVector2(), recoil: false);
-        var tookDamage = _damageableSystem.TryChangeDamage(user, entity.Comp.Damage, origin: user);
-        string pickupResponse = Loc.GetString("damage-onpickup-entity", ("entity", entity.ToString()));
-        _popupSystem.PopupEntity(pickupResponse, entity, user);
+        _audio.PlayPvs(entity.Comp.FailSound, entity);
+
+        if (entity.Comp.Throw)
+        {
+            _transform.SetCoordinates(entity, Transform(user).Coordinates);
+            _transform.AttachToGridOrMap(entity);
+            _throwing.TryThrow(entity, _random.NextVector2(), entity.Comp.ThrowSpeed, recoil: false);
+        }
+
+        if (entity.Comp.TakeDamage)
+        {
+            _damageableSystem.TryChangeDamage(user, entity.Comp.Damage, origin: user);
+        }
+        _popupSystem.PopupEntity(Loc.GetString("damage-onpickup-entity", ("entity", Identity.Entity(entity, EntityManager))), entity, user);
     }
 }

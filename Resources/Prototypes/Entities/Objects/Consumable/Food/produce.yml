@@ -251,11 +251,14 @@
   - type: Extractable
     grindableSolutionName: food
   - type: DamageOnPickup
-    sound: /Audio/Effects/lightburn.ogg
+    failsound: /Audio/Effects/lightburn.ogg
+    takedamage: true
     damage:
       types:
         Heat: 4
         Caustic: 4
+    throw: true
+    throwspeed: 10
 
 
 - type: entity
