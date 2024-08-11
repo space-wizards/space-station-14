@@ -166,6 +166,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-carp
+      taco:
+        name: food-sequence-content-carp
   - type: Extractable
     juiceSolution:
       reagents:
@@ -208,6 +210,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-carp
+      taco:
+        name: food-sequence-content-carp
 
 - type: entity
   name: raw bear meat
@@ -239,6 +243,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-bear
+      taco:
+        name: food-sequence-content-bear
 
 - type: entity
   name: raw penguin meat
@@ -270,6 +276,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-penguin
+      taco:
+        name: food-sequence-content-penguin
 - type: entity
   name: raw chicken meat
   parent: FoodMeatRawBase
@@ -302,6 +310,8 @@
     entries:
       burger:
         name: food-sequence-content-chiken
+      taco:
+        name: food-sequence-content-chiken
 
 - type: entity
   name: raw duck meat
@@ -333,6 +343,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-penguin
+      taco:
+        name: food-sequence-content-penguin
 
 - type: entity
   name: prime-cut corgi meat
@@ -365,6 +377,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-corgi
+      taco:
+        name: food-sequence-content-corgi
 
 - type: entity
   name: raw crab meat
@@ -396,6 +410,8 @@
     entries:
       burger:
         name: food-sequence-content-crab
+      taco:
+        name: food-sequence-content-crab
 
 - type: entity
   name: raw goliath meat
@@ -426,6 +442,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-goliath
+      taco:
+        name: food-sequence-content-goliath
 
 - type: entity
   name: dragon flesh
@@ -460,6 +478,8 @@
     entries:
       burger:
         name: food-sequence-content-dragon
+      taco:
+        name: food-sequence-content-dragon
 
 - type: entity
   name: raw rat meat
@@ -487,6 +507,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-rat
+      taco:
+        name: food-sequence-content-rat
 
 - type: entity
   name: raw lizard meat
@@ -518,6 +540,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-lizard
+      taco:
+        name: food-sequence-content-lizard
 
 - type: entity
   name: raw plant meat
@@ -534,6 +558,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-plant
+      taco:
+        name: food-sequence-content-plant
 
 - type: entity
   name: rotten meat
@@ -566,6 +592,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-rotten
+      taco:
+        name: food-sequence-content-rotten
 
 - type: entity
   name: raw spider meat
@@ -593,6 +621,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-spider
+      taco:
+        name: food-sequence-content-spider
 
 - type: entity
   name: raw spider leg
@@ -617,6 +647,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-spider
+      taco:
+        name: food-sequence-content-spider
 
 - type: entity
   name: meatwheat clump
@@ -638,7 +670,9 @@
       state: clump
     entries:
       burger:
-        name: food-sequence-burger-content-clump
+        name: food-sequence-content-clump
+      taco:
+        name: food-sequence-content-clump
 
 - type: entity
   name: raw snake meat
@@ -665,6 +699,8 @@
       state: snake
     entries:
       burger:
+        name: food-sequence-content-snake
+      taco:
         name: food-sequence-content-snake
 
 - type: entity
@@ -699,6 +735,8 @@
       state: xeno
     entries:
       burger:
+        name: food-sequence-content-xeno
+      taco:
         name: food-sequence-content-xeno
 
 - type: entity
@@ -736,6 +774,8 @@
     entries:
       burger:
         name: food-sequence-content-xeno
+      taco:
+        name: food-sequence-content-xeno
 
 - type: entity
   name: killer tomato meat
@@ -756,6 +796,8 @@
       state: tomato
     entries:
       burger:
+        name: food-sequence-content-tomato
+      taco:
         name: food-sequence-content-tomato
 
 - type: entity
@@ -809,6 +851,8 @@
     entries:
       burger:
         name: food-sequence-content-clown
+      taco:
+        name: food-sequence-content-clown
 
 - type: entity
   name: meatball
@@ -851,6 +895,8 @@
       state: slime
     entries:
       burger:
+        name: food-sequence-content-slime
+      taco:
         name: food-sequence-content-slime
 
 # Cooked
@@ -922,6 +968,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-meat
+      taco:
+        name: food-sequence-content-meat
 
 - type: entity
   name: bacon
@@ -960,6 +1008,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-meat
+      taco:
+        name: food-sequence-content-meat
 
 - type: entity
   name: cooked bear
@@ -996,6 +1046,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-bear
+      taco:
+        name: food-sequence-content-bear
 
 - type: entity
   name: penguin filet
@@ -1031,6 +1083,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-penguin
+      taco:
+        name: food-sequence-content-penguin
 
 - type: entity
   name: cooked chicken
@@ -1065,6 +1119,8 @@
       state: bird-cooked
     entries:
       burger:
+        name: food-sequence-content-chiken
+      taco:
         name: food-sequence-content-chiken
 
 - type: entity
@@ -1101,6 +1157,8 @@
     entries:
       burger:
         name: food-sequence-content-chiken
+      taco:
+        name: food-sequence-content-chiken
 
 - type: entity
   name: cooked duck
@@ -1135,6 +1193,8 @@
       state: bird-cooked
     entries:
       burger:
+        name: food-sequence-content-duck
+      taco:
         name: food-sequence-content-duck
 
 - type: entity
@@ -1171,6 +1231,8 @@
     entries:
       burger:
         name: food-sequence-content-crab
+      taco:
+        name: food-sequence-content-crab
 
 - type: entity
   name: goliath steak
@@ -1204,6 +1266,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-goliath
+      taco:
+        name: food-sequence-content-goliath
 
 - type: entity
   name: rouny steak
@@ -1241,6 +1305,8 @@
     entries:
       burger:
         name: food-sequence-content-xeno
+      taco:
+        name: food-sequence-content-xeno
 
 - type: entity
   name: lizard steak
@@ -1277,6 +1343,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-lizard
+      taco:
+        name: food-sequence-content-lizard
 
 - type: entity
   name: boiled spider leg
@@ -1306,6 +1374,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-spider
+      taco:
+        name: food-sequence-content-spider
 
 - type: entity
   name: meatball
@@ -1334,6 +1404,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-meat
+      taco:
+        name: food-sequence-content-meat
 
 # Cutlets
 
@@ -1367,6 +1439,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-meat
+      taco:
+        name: food-sequence-content-meat
 
 - type: entity
   name: raw bear cutlet
@@ -1400,6 +1474,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-bear
+      taco:
+        name: food-sequence-content-bear
 
 - type: entity
   name: raw penguin cutlet
@@ -1431,6 +1507,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-penguin
+      taco:
+        name: food-sequence-content-penguin
 
 - type: entity
   name: raw chicken cutlet
@@ -1462,6 +1540,8 @@
     entries:
       burger:
         name: food-sequence-content-chiken
+      taco:
+        name: food-sequence-content-chiken
 
 - type: entity
   name: raw duck cutlet
@@ -1492,6 +1572,8 @@
       color: white
     entries:
       burger:
+        name: food-sequence-content-duck
+      taco:
         name: food-sequence-content-duck
 
 - type: entity
@@ -1527,6 +1609,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-lizard
+      taco:
+        name: food-sequence-content-lizard
 
 - type: entity
   name: raw spider cutlet
@@ -1556,6 +1640,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-spider
+      taco:
+        name: food-sequence-content-spider
 
 - type: entity
   name: raw xeno cutlet
@@ -1587,6 +1673,8 @@
     entries:
       burger:
         name: food-sequence-content-xeno
+      taco:
+        name: food-sequence-content-xeno
 
 - type: entity
   name: raw killer tomato cutlet
@@ -1609,6 +1697,8 @@
       state: salami-slice
     entries:
       burger:
+        name: food-sequence-content-tomato
+      taco:
         name: food-sequence-content-tomato
 
 - type: entity
@@ -1638,6 +1728,8 @@
       state: salami-slice
     entries:
       burger:
+        name: food-sequence-content-salami
+      taco:
         name: food-sequence-content-salami
 
 # Cooked
@@ -1704,6 +1796,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-bear
+      taco:
+        name: food-sequence-content-bear
 
 - type: entity
   name: penguin cutlet
@@ -1734,6 +1828,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-penguin
+      taco:
+        name: food-sequence-content-penguin
 
 - type: entity
   name: chicken cutlet
@@ -1763,6 +1859,8 @@
       state: cutlet-cooked
     entries:
       burger:
+        name: food-sequence-content-chiken
+      taco:
         name: food-sequence-content-chiken
 
 - type: entity

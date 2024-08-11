@@ -112,13 +112,6 @@
     - state: appendix
     - state: appendix-inflamed
       visible: false
-  - type: FoodSequenceElement
-    entries:
-      burger:
-        name: food-sequence-burger-content-appendix
-        sprite:
-          sprite: Mobs/Species/Human/organs.rsi
-          state: appendix
 
 - type: entity
   id: OrganHumanEars

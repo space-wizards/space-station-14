@@ -24,10 +24,10 @@
         - ReagentId: Nutriment
           Quantity: 6.66
   - type: FoodSequenceStartPoint
-    key: burger
+    key: taco
     maxLayers: 3
-    startPosition: 0, 0
-    offset: 0, 0
+    startPosition: -0.3, 0
+    offset: 0.1, 0
     nameGeneration: food-sequence-taco-gen
     contentSeparator: ", "
   - type: Appearance
