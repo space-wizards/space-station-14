@@ -1,0 +1,14 @@
+- type: entity
+  parent: BaseItem
+  id: Biopsy
+  name: biopsy tool
+  description: Used to retrieve cell lines from organisms. Don't worry, it won't sting.
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Xenobiology/biopsy.rsi
+      state: icon
+    - type: Item
+      sprite: Objects/Specific/Xenobiology/biopsy.rsi
+    - type: CellCollector
+    - type: UseDelay
+      delay: 3
