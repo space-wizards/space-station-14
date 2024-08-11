@@ -28,6 +28,8 @@
     maxLayers: 3
     startPosition: -0.3, 0
     offset: 0.1, 0
+    minLayerOffset: 0, 0
+    maxLayerOffset: 0, 0.05
     nameGeneration: food-sequence-taco-gen
     contentSeparator: ", "
   - type: Appearance
