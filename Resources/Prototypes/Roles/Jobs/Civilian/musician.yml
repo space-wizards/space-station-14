@@ -17,6 +17,7 @@
   - !type:RemoveComponentSpecial # GreyStation
     components:
     - type: InstrumentWhitelist
+      whitelist: null
 
 - type: startingGear
   id: MusicianGear
