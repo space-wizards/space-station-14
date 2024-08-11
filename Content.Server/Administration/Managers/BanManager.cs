@@ -130,8 +130,6 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         if (!_cachedRoleBans.TryGetValue(userId, out var roleBans))
             return;
         roleBans.RemoveWhere(ban => DateTimeOffset.UtcNow > ban.ExpirationTime);
-        // Do not remove the user entry, just clear the role bans if they are expired
-        _cachedRoleBans[userId] = roleBans;
     }
 
     #region Server Bans
