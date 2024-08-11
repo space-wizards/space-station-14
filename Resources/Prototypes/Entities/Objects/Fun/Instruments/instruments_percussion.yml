@@ -26,6 +26,9 @@
   - type: Sprite
     sprite: Objects/Fun/Instruments/musicbox.rsi
     state: icon
+  - type: Tag # GreyStation
+    tags:
+    - BasicInstrument
 
 - type: entity
   parent: BaseHandheldInstrument

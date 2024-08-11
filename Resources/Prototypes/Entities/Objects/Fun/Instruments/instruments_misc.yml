@@ -11,6 +11,9 @@
     program: 121
   - type: Item
     size: Small
+  - type: Tag # GreyStation
+    tags:
+    - BasicInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -25,6 +28,9 @@
     program: 122
   - type: Item
     size: Normal
+  - type: Tag # GreyStation
+    tags:
+    - BasicInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -40,6 +46,9 @@
   - type: Item
     size: Small
     storedRotation: 90
+  - type: Tag # GreyStation
+    tags:
+    - WoodwindInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -62,6 +71,9 @@
     notificationPrefix: prayer-chat-notify-centcom
     verb: prayer-verbs-call
     verbImage: null
+  - type: Tag # GreyStation
+    tags:
+    - BasicInstrument
 
 - type: entity
   parent: PhoneInstrument
@@ -90,6 +102,9 @@
   - type: Item
     size: Small
     storedRotation: -90
+  - type: Tag # GreyStation
+    tags:
+    - BasicInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -104,6 +119,9 @@
     program: 126
   - type: Item
     size: Tiny
+  - type: Tag # GreyStation
+    tags:
+    - BasicInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -124,6 +142,7 @@
     tags:
     - Sidearm
     - BrassInstrument
+    - BaseInstrument # GreyStation
 
 - type: entity
   parent: BaseHandheldInstrument
