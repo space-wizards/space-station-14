@@ -12,7 +12,8 @@
       - tofu
       - leafy
   - type: Food
-    trash: FoodPlateSmall
+    trash: 
+    - FoodPlateSmall
   - type: Sprite
     sprite: Nyanotrasen/Objects/Consumable/Food/Snacks/moth.rsi
     state: squeakingstirfry
