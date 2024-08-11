@@ -547,45 +547,30 @@
     templateId: hamster
     displacements:
       head:
-        layer:
-          sprite: Mobs/Animals/mothroach/displacement.rsi
-          state: head
-          copyToShaderParameters:
-            layerKey: dummy
-            parameterTexture: displacementMap
-            parameterUV: displacementUV
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: head
       mask:
-        layer:
-          sprite: Mobs/Animals/mothroach/displacement.rsi
-          state: mask
-          copyToShaderParameters:
-            layerKey: dummy
-            parameterTexture: displacementMap
-            parameterUV: displacementUV
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: mask
       suitstorage:
-        layer:
-          sprite: Mobs/Animals/mothroach/displacement.rsi
-          state: suitstorage
-          copyToShaderParameters:
-            layerKey: dummy
-            parameterTexture: displacementMap
-            parameterUV: displacementUV
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: suitstorage
       eyes:
-        layer:
-          sprite: Mobs/Animals/mothroach/displacement.rsi
-          state: eyes
-          copyToShaderParameters:
-            layerKey: dummy
-            parameterTexture: displacementMap
-            parameterUV: displacementUV
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: eyes
       neck:
-        layer:
-          sprite: Mobs/Animals/mothroach/displacement.rsi
-          state: neck
-          copyToShaderParameters:
-            layerKey: dummy
-            parameterTexture: displacementMap
-            parameterUV: displacementUV
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: neck
 
 
 # Note that the mallard duck is actually a male drake mallard, with the brown duck being the female variant of the same species, however ss14 lacks sex specific textures
