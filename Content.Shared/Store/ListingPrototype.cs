@@ -34,10 +34,10 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// Discount category for listing item. This marker describes chance of how often will item be discounted.
     /// </summary>
     [DataField("discountCategory")]
-    public ProtoId<DiscountCategoryPrototype> DiscountCategory;
+    public ProtoId<DiscountCategoryPrototype> DiscountCategory = "noDiscounts";
 
     /// <summary>
-    /// Options for discount - % of how much item costs can be cut by discount.
+    /// Options for discount - from max amount down to how much item costs can be cut by discount, absolute value.
     /// </summary>
     [DataField("discountDownTo")]
     public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> DiscountDownTo = new();
@@ -200,7 +200,7 @@ public sealed partial class ListingPrototype : ListingData, IPrototype
 }
 
 /// <summary>
-/// 
+///     Defines set of rules for <see cref="ListingPrototype"/> discount.
 /// </summary>
 [Prototype("discountCategory")]
 [DataDefinition, Serializable, NetSerializable]
@@ -211,13 +211,13 @@ public sealed partial class DiscountCategoryPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     /// <summary>
-    /// 
+    /// Weight that sets chance to roll discount of that category.
     /// </summary>
     [DataField("weight")]
     public int Weight { get; private set; }
 
     /// <summary>
-    /// 
+    /// Maximum amount of items that are allowed to be picked from this category.
     /// </summary>
     [DataField("maxItems")]
     public int? MaxItems { get; private set; }

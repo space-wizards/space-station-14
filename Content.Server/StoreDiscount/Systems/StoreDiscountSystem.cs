@@ -29,6 +29,7 @@ public sealed class StoreDiscountSystem : EntitySystem
         SubscribeLocalEvent<GetDiscountsEvent>(OnGetDiscounts);
     }
 
+    /// <summary> Extracts discount data if there any on <see cref="GetDiscountsEvent.Store"/>. </summary>
     private void OnGetDiscounts(GetDiscountsEvent ev)
     {
         if (TryComp<StoreDiscountComponent>(ev.Store, out var discountsComponent))
@@ -231,10 +232,18 @@ public sealed class StoreDiscountSystem : EntitySystem
 
 }
 
+/// <summary> Attempt to get list of discounts. </summary>
 public sealed partial class GetDiscountsEvent(EntityUid store)
 {
+    /// <summary>
+    /// EntityUid for which discounts should be retrieved
+    /// </summary>
+
     public EntityUid Store { get; } = store;
 
+    /// <summary>
+    /// Collection of discounts to fill.
+    /// </summary>
 
     public StoreDiscountData[]? DiscountsData { get; set; }
 }
