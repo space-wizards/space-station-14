@@ -70,7 +70,7 @@
   - type: FoodSequenceElement
     entries:
       burger:
-        name: food-sequence-burger-content-brain
+        name: food-sequence-content-brain
         sprite:
           sprite: Mobs/Species/Human/organs.rsi
           state: brain
@@ -97,7 +97,7 @@
   - type: FoodSequenceElement
     entries:
       burger:
-        name: food-sequence-burger-content-tongue
+        name: food-sequence-content-tongue
         sprite:
           sprite: Mobs/Species/Human/organs.rsi
           state: tongue
@@ -131,7 +131,7 @@
   - type: FoodSequenceElement
     entries:
       burger:
-        name: food-sequence-burger-content-ears
+        name: food-sequence-content-ears
         sprite:
           sprite: Mobs/Species/Human/organs.rsi
           state: ears
@@ -220,7 +220,7 @@
   - type: FoodSequenceElement
     entries:
       burger:
-        name: food-sequence-burger-content-stomach
+        name: food-sequence-content-stomach
         sprite:
           sprite: Mobs/Species/Human/organs.rsi
           state: stomach
@@ -242,7 +242,7 @@
   - type: FoodSequenceElement
     entries:
       burger:
-        name: food-sequence-burger-content-liver
+        name: food-sequence-content-liver
         sprite:
           sprite: Mobs/Species/Human/organs.rsi
           state: liver

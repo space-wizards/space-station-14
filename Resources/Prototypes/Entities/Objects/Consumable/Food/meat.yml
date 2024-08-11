@@ -106,6 +106,9 @@
     graph: MeatSteak
     node: start
     defaultTarget: meat steak
+  - type: Tag
+    tags:
+    - Meat
   - type: FoodSequenceElement
     sprite:
       sprite: Objects/Consumable/Food/meat.rsi
@@ -113,9 +116,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-raw-meat
-  - type: Tag
-    tags:
-    - Meat
+      taco:
+        name: food-sequence-taco-content-raw-meat
 
 - type: entity
   name: raw human meat
@@ -299,7 +301,7 @@
       state: bird
     entries:
       burger:
-        name: food-sequence-burger-content-chiken
+        name: food-sequence-content-chiken
 
 - type: entity
   name: raw duck meat
@@ -393,7 +395,7 @@
       state: crab
     entries:
       burger:
-        name: food-sequence-burger-content-crab
+        name: food-sequence-content-crab
 
 - type: entity
   name: raw goliath meat
@@ -457,7 +459,7 @@
       state: dragon
     entries:
       burger:
-        name: food-sequence-burger-content-dragon
+        name: food-sequence-content-dragon
 
 - type: entity
   name: raw rat meat
@@ -663,7 +665,7 @@
       state: snake
     entries:
       burger:
-        name: food-sequence-burger-content-snake
+        name: food-sequence-content-snake
 
 - type: entity
   name: raw xeno meat
@@ -697,7 +699,7 @@
       state: xeno
     entries:
       burger:
-        name: food-sequence-burger-content-xeno
+        name: food-sequence-content-xeno
 
 - type: entity
   name: raw rouny meat
@@ -733,7 +735,7 @@
       state: xeno
     entries:
       burger:
-        name: food-sequence-burger-content-xeno
+        name: food-sequence-content-xeno
 
 - type: entity
   name: killer tomato meat
@@ -754,7 +756,7 @@
       state: tomato
     entries:
       burger:
-        name: food-sequence-burger-content-tomato
+        name: food-sequence-content-tomato
 
 - type: entity
   name: salami
@@ -806,7 +808,7 @@
       state: clown
     entries:
       burger:
-        name: food-sequence-burger-content-clown
+        name: food-sequence-content-clown
 
 - type: entity
   name: meatball
@@ -849,7 +851,7 @@
       state: slime
     entries:
       burger:
-        name: food-sequence-burger-content-slime
+        name: food-sequence-content-slime
 
 # Cooked
 
@@ -1063,7 +1065,7 @@
       state: bird-cooked
     entries:
       burger:
-        name: food-sequence-burger-content-chiken
+        name: food-sequence-content-chiken
 
 - type: entity
   name: fried chicken
@@ -1098,7 +1100,7 @@
       state: chicken-fried
     entries:
       burger:
-        name: food-sequence-burger-content-chiken
+        name: food-sequence-content-chiken
 
 - type: entity
   name: cooked duck
@@ -1133,7 +1135,7 @@
       state: bird-cooked
     entries:
       burger:
-        name: food-sequence-burger-content-duck
+        name: food-sequence-content-duck
 
 - type: entity
   name: cooked crab
@@ -1168,7 +1170,7 @@
       state: crab-cooked
     entries:
       burger:
-        name: food-sequence-burger-content-crab
+        name: food-sequence-content-crab
 
 - type: entity
   name: goliath steak
@@ -1238,7 +1240,7 @@
       state: rouny-cooked
     entries:
       burger:
-        name: food-sequence-burger-content-xeno
+        name: food-sequence-content-xeno
 
 - type: entity
   name: lizard steak
@@ -1459,7 +1461,7 @@
       color: white
     entries:
       burger:
-        name: food-sequence-burger-content-chiken
+        name: food-sequence-content-chiken
 
 - type: entity
   name: raw duck cutlet
@@ -1490,7 +1492,7 @@
       color: white
     entries:
       burger:
-        name: food-sequence-burger-content-duck
+        name: food-sequence-content-duck
 
 - type: entity
   name: raw lizard cutlet
@@ -1584,7 +1586,7 @@
       state: xenocutlet
     entries:
       burger:
-        name: food-sequence-burger-content-xeno
+        name: food-sequence-content-xeno
 
 - type: entity
   name: raw killer tomato cutlet
@@ -1607,7 +1609,7 @@
       state: salami-slice
     entries:
       burger:
-        name: food-sequence-burger-content-tomato
+        name: food-sequence-content-tomato
 
 - type: entity
   name: salami slice
@@ -1636,7 +1638,7 @@
       state: salami-slice
     entries:
       burger:
-        name: food-sequence-burger-content-salami
+        name: food-sequence-content-salami
 
 # Cooked
 
@@ -1761,7 +1763,7 @@
       state: cutlet-cooked
     entries:
       burger:
-        name: food-sequence-burger-content-chiken
+        name: food-sequence-content-chiken
 
 - type: entity
   name: duck cutlet
@@ -1791,7 +1793,7 @@
       state: cutlet-cooked
     entries:
       burger:
-        name: food-sequence-burger-content-duck
+        name: food-sequence-content-duck
 
 - type: entity
   name: lizard cutlet
@@ -1880,4 +1882,4 @@
       state: xenocutlet-cooked
     entries:
       burger:
-        name: food-sequence-burger-content-xeno
+        name: food-sequence-content-xeno

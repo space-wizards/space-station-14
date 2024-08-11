@@ -570,13 +570,6 @@
   - type: SliceableFood
     count: 3
     slice: FoodCheeseSlice
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/ingredients.rsi
-      state: cheesewheel
-    entries:
-      burger:
-        name: food-sequence-burger-content-cheese
 
 - type: entity
   name: cheese wedge
@@ -605,7 +598,9 @@
       state: cheesewedge
     entries:
       burger:
-        name: food-sequence-burger-content-cheese
+        name: food-sequence-content-cheese
+      taco: 
+        name: food-sequence-content-cheese
 
 - type: entity
   name: chèvre log
