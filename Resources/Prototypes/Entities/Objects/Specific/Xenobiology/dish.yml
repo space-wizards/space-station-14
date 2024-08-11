@@ -1,0 +1,20 @@
+- type: entity
+  parent: BaseItem
+  id: PetriDish
+  name: petri dish
+  description: This makes you feel well-cultured.
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: Objects/Specific/Xenobiology/petri_dish.rsi
+    layers:
+    - state: icon-back
+    - state: cells
+      visible: false
+    - state: icon
+  - type: Item
+    sprite: Objects/Specific/Xenobiology/petri_dish.rsi
+  - type: CellContainer
+    toolsTransferWhitelist:
+      components:
+        - CellCollector

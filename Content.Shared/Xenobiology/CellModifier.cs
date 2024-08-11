@@ -6,5 +6,13 @@ namespace Content.Shared.Xenobiology;
 [Serializable, NetSerializable, ImplicitDataDefinitionForInheritors]
 public abstract partial class CellModifier
 {
-    public abstract void Modify(Entity<CellContainerComponent> ent, Cell cell, IEntityManager entityManager);
+    public virtual void OnAdd(Entity<CellContainerComponent> ent, Cell cell, IEntityManager entityManager)
+    {
+        // Literally do nothing
+    }
+
+    public virtual void OnRemove(Entity<CellContainerComponent> ent, Cell cell, IEntityManager entityManager)
+    {
+        // Literally do nothing
+    }
 }
