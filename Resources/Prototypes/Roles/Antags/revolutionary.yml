@@ -14,11 +14,6 @@
   objective: roles-antag-rev-objective
   guides: [ Revolutionaries ]
 
-- type: roleType
-  id: RoleTypeRevolutionary
-  role: TeamAntagonist
-  details: role-type-revolutionary-details
-
 - type: startingGear
   id: HeadRevGear
   storage:

@@ -126,18 +126,15 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
         string? roleText = null;
         var color = Color.White;
-        if (_prototypeManager.TryIndex(mind.RoleType.RoleId, out var proto))
+        if (_prototypeManager.TryIndex(mind.RoleType, out var proto))
         {
-            roleText = proto.Name;
+            roleText = proto.Name; //TODO:ERRANT if this was just for roletext, I could compress it into the variable declaration
             color = proto.Color;
         }
         else
             roleText = "role-type-name-fallback"; //TODO:ERRANT Decide what to do in this fail state
 
-        string roleDetail = (mind.RoleType.Details is not null) ? mind.RoleType.Details : "";
-
         _window.RoleType.Text = Loc.GetString(roleText);
-        _window.RoleTypeDetails.Text = Loc.GetString(roleDetail);
         _window.RoleType.FontColorOverride = color;
         //TODO:ERRANT. LATER: Mouseover tooltip and Guidebook link
 

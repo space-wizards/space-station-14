@@ -141,14 +141,20 @@ public abstract class SharedRoleSystem : EntitySystem
     }
 
     //TODO:ERRANT. testing
-    public void SetRoleType(EntityUid ent, RoleTypePrototype role)
+    public void SetRoleType(EntityUid ent, ProtoId<RoleTypePrototype> roleTypeId)
     {
+        if (!_prototypes.TryIndex(roleTypeId, out var dontcare)) //TODO:ERRANT surely there is one that actually does this?
+        {
+           // TODO:ERRANT Uh oh, failed RoleType change
+           return;
+        }
+
         var comp = CheckRoleTypes(ent);
 
         if ( comp is null || comp.OwnedEntity is null)
             return;
 
-        comp.RoleType = role;
+        comp.RoleType = roleTypeId;
         // _adminLogger.Add(LogType.Mind, LogImpact.Low,
         //     $"Role components {string.Join(components.Keys.ToString(), ", ")} added to mind of {_minds.MindOwnerLoggingString(mind)}");
         Dirty(comp.Owner, comp); //TODO:ERRANT remove obsolete

@@ -11,7 +11,6 @@ using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
 using Content.Server.Shuttles.Components;
-using Content.Server.Station.Systems;
 using Content.Shared.Antag;
 using Content.Shared.Clothing;
 using Content.Shared.GameTicking;
@@ -39,15 +38,12 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IServerPreferencesManager _pref = default!;
-    [Dependency] private readonly ActorSystem _actors = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly GhostRoleSystem _ghostRole = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly LoadoutSystem _loadout = default!;
     [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly RoleSystem _role = default!;
-    [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
@@ -354,8 +350,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             _mind.TransferTo(curMind.Value, antagEnt, ghostCheckOverride: true);
 
             // Update the mind's Role Type
-            if (def.RoleId is not null && _proto.TryIndex(def.RoleId, out var roleType))
-                _role.SetRoleType(curMind.Value, roleType);
+            if (def.RoleType is not null)
+                _role.SetRoleType(curMind.Value, def.RoleType.Value);
             //TODO:ERRANT. LATER: Put Role Types on the mind role components instead, so they can persist
 
             // Add individual Antagonist Roles to the MindEntity.

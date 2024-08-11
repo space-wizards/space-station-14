@@ -3,8 +3,3 @@
   name: roles-antag-dragon-name
   antagonist: true
   objective: roles-antag-dragon-objective
-
-- type: roleType
-  id: RoleTypeDragon
-  role: TeamAntagonist
-  details: role-type-dragon-details

@@ -6,11 +6,6 @@
   objective: roles-antag-space-ninja-objective
   guides: [ SpaceNinja ]
 
-- type: roleType
-  id: RoleTypeNinja
-  role: SoloAntagonist
-  details: role-type-ninja-details
-
 #Ninja Gear
 - type: startingGear
   id: SpaceNinjaGear

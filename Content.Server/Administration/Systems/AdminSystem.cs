@@ -234,22 +234,15 @@ namespace Content.Server.Administration.Systems
             }
 
             var antag = false; //TODO:ERRANT. LATER: Remove? Player Tab Antag Row
-            ImmutableRoleTypePrototype roleType = new();
-            string? roleDetails = null;
 
+            RoleTypePrototype roleType = new();
             var startingRole = string.Empty;
             if (_minds.TryGetMind(session, out var mindId, out _))
             {
                 if (TryComp<MindComponent>(mindId, out var mindComp))
                 {
-                    if (_proto.TryIndex(mindComp.RoleType.RoleId, out var role))
+                    if (_proto.TryIndex(mindComp.RoleType, out var role))
                         roleType = role;
-
-                    roleDetails = mindComp.RoleType.Details;
-                }
-                else
-                {
-                    //TODO:ERRANT. LATER: generate error log
                 }
                 antag = _role.MindIsAntagonist(mindId);
                 startingRole = _jobs.MindTryGetJobName(mindId);
@@ -264,7 +257,7 @@ namespace Content.Server.Administration.Systems
                 overallPlaytime = playTime;
             }
 
-            return new PlayerInfo(name, entityName, identityName, startingRole, antag, roleType, roleDetails, GetNetEntity(session?.AttachedEntity), data.UserId,
+            return new PlayerInfo(name, entityName, identityName, startingRole, antag, roleType, GetNetEntity(session?.AttachedEntity), data.UserId,
                 connected, _roundActivePlayers.Contains(data.UserId), overallPlaytime);
         }
 

@@ -14,10 +14,7 @@
                     <Label Name="SubText" VerticalAlignment="Top" StyleClasses="LabelSubText" Access="Public"/>
                 </BoxContainer>
                 <!-- TODO:ERRANT. LATER: fix vertical alignment, this looks horrible-->
-                <BoxContainer Orientation="Vertical" VerticalAlignment="Top" Margin="10, 0, 0, 0">
-                    <Label Name="RoleType" VerticalAlignment="Top" HorizontalAlignment="Left" StyleClasses="LabelHeading" Access="Public"/>
-                    <Label Name="RoleTypeDetails" VerticalAlignment="Bottom" HorizontalAlignment="Left" Access="Public" StyleClasses="LabelSubText" />
-                </BoxContainer>
+                <Label Name="RoleType" VerticalAlignment="Top" Margin="10, 0, 0, 0" HorizontalAlignment="Left" StyleClasses="LabelHeading" Access="Public"/>
             </BoxContainer>
             <Label Name="ObjectivesLabel" Access="Public" Text="{Loc 'character-info-objectives-label'}" HorizontalAlignment="Center"/>
             <BoxContainer Orientation="Vertical" Name="Objectives" Access="Public"/>

@@ -102,7 +102,7 @@
     - prefRoles: [ NukeopsCommander ]
       fallbackRoles: [ Nukeops, NukeopsMedic ]
       spawnerPrototype: SpawnPointNukeopsCommander
-      role: RoleTypeNukie
+      roleType: TeamAntagonist
       startingGear: SyndicateCommanderGearFull
       roleLoadout:
       - RoleSurvivalSyndicate
@@ -122,7 +122,7 @@
       fallbackRoles: [ Nukeops, NukeopsCommander ]
       spawnerPrototype: SpawnPointNukeopsMedic
       startingGear: SyndicateOperativeMedicFull
-      role: RoleTypeNukie
+      roleType: TeamAntagonist
       roleLoadout:
       - RoleSurvivalSyndicate
       components:
@@ -143,7 +143,7 @@
       max: 3
       playerRatio: 10
       startingGear: SyndicateOperativeGearFull
-      role: RoleTypeNukie
+      roleType: TeamAntagonist
       roleLoadout:
       - RoleSurvivalSyndicate
       components:
@@ -188,7 +188,7 @@
     - prefRoles: [ Traitor ]
       max: 8
       playerRatio: 10
-      role: RoleTypeTraitor
+      roleType: SoloAntagonist
       blacklist:
         components:
         - AntagImmune
@@ -209,7 +209,7 @@
     - prefRoles: [ HeadRev ]
       max: 3
       playerRatio: 15
-      role: RoleTypeRevolutionary
+      roleType: TeamAntagonist
       briefing:
         text: head-rev-role-greeting
         color: CornflowerBlue
@@ -249,7 +249,7 @@
     - prefRoles: [ InitialInfected ]
       max: 6
       playerRatio: 10
-      role: RoleTypeInitialInfected
+      roleType: TeamAntagonist
       blacklist:
         components:
         - ZombieImmune

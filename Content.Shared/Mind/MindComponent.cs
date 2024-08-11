@@ -102,7 +102,7 @@ public sealed partial class MindComponent : Component
     ///     The mind's current antagonist/special role, or lack thereof;
     /// </summary>
     [DataField, AutoNetworkedField]
-    public RoleTypePrototype RoleType = new RoleTypePrototype();
+    public ProtoId<RoleTypePrototype> RoleType = "Neutral";
 
     /// <summary>
     ///     The session of the player owning this mind.
@@ -114,35 +114,10 @@ public sealed partial class MindComponent : Component
 }
 
 /// <summary>
-///     Describes antag status (or lack thereof)
-/// </summary>
-[Prototype]
-[Serializable]
-public sealed partial class RoleTypePrototype : IPrototype
-{
-
-    [IdDataField]
-    public string ID { get; private set; } = default!;
-
-    /// <summary>
-    ///     The role's specific antag-or-other-special category.
-    /// </summary>
-    [DataField("role")]
-    public ProtoId<ImmutableRoleTypePrototype> RoleId { get; private set; }= "Neutral";
-
-    /// <summary>
-    ///     Additional information about the role, such as what team it is or a familiar's owner.
-    ///     Keep this short.
-    /// </summary>
-    [DataField]
-    public string? Details { get; private set; } = null;
-}
-
-/// <summary>
 ///     The core properties of Role Types, not intended to be alterable or uploadable under any conditions
 /// </summary>
 [Prototype, Serializable]
-public sealed partial class ImmutableRoleTypePrototype : IPrototype
+public sealed partial class RoleTypePrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;

@@ -133,7 +133,7 @@
       min: 1
       max: 1
       pickPlayer: false
-      role: RoleTypeDragon
+      roleType: TeamAntagonist
       mindComponents:
       - type: DragonRole
         prototype: Dragon
@@ -167,7 +167,7 @@
       min: 1
       max: 1
       pickPlayer: false
-      role: RoleTypeNinja
+      roleType: SoloAntagonist
       startingGear: SpaceNinjaGear
       roleLoadout:
       - RoleSurvivalEVA
@@ -430,7 +430,7 @@
     - prefRoles: [ InitialInfected ]
       max: 3
       playerRatio: 10
-      role: RoleTypeInitialInfected
+      roleType: TeamAntagonist
       blacklist:
         components:
         - ZombieImmune
@@ -469,7 +469,7 @@
     - spawnerPrototype: SpawnPointLoneNukeOperative
       min: 1
       max: 1
-      role: RoleTypeNukie
+      roleType: TeamAntagonist
       pickPlayer: false
       startingGear: SyndicateLoneOperativeGearFull
       components:
@@ -506,7 +506,7 @@
       fallbackRoles: [ Traitor ]
       min: 1
       max: 2
-      role: RoleTypeTraitor
+      roleType: SoloAntagonist
       playerRatio: 10
       blacklist:
         components:
