@@ -42,7 +42,7 @@ public sealed class IdBindSystem : EntitySystem
 
         _pdaSystem.SetOwner(uPda.Value, pDA, data.EntityName);
         //Remove after running once
-        EntityManager.RemoveComponent(ent, ent.Comp);
+        EntityManager.RemoveComponentDeferred<IdBindComponent>(ent);
     }
 }
 

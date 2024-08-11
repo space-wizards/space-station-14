@@ -1,6 +1,7 @@
 using Robust.Shared.GameStates;
 
 namespace Content.Server.Access.Components;
+
 /// <summary>
 /// Makes it so when starting gear loads up, the name on a PDA/Id (if present) is changed to the character's name.
 /// </summary>
@@ -13,6 +14,5 @@ public sealed partial class IdBindComponent : Component
     /// </summary>
     [DataField]
     public bool BindPDAOwner = true;
-
 }
 
