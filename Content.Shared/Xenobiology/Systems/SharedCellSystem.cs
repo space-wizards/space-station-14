@@ -1,8 +1,9 @@
 ﻿using Content.Shared.Xenobiology.Components;
 using Content.Shared.Xenobiology.Events;
+using Content.Shared.Xenobiology.Visuals;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Xenobiology;
+namespace Content.Shared.Xenobiology.Systems;
 
 public abstract partial class SharedCellSystem : EntitySystem
 {
@@ -43,10 +44,10 @@ public abstract partial class SharedCellSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
+        ent.Comp.Cells.Add(cell);
+
         var ev = new CellAdded(GetNetEntity(ent), cell);
         RaiseLocalEvent(ent, ev);
-
-        ent.Comp.Cells.Add(cell);
 
         foreach (var modifier in cell.Modifiers)
         {

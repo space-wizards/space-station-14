@@ -5,6 +5,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Whitelist;
 using Content.Shared.Xenobiology;
 using Content.Shared.Xenobiology.Components;
+using Content.Shared.Xenobiology.Systems;
 
 namespace Content.Server.Xenobiology;
 

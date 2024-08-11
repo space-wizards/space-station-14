@@ -5,11 +5,20 @@
   description: This makes you feel well-cultured.
   components:
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.CellDishVisuals.DishVisibility:
+        enum.CellDishVisuals.DishLayer:
+          True:
+            visible: true
+          False:
+            visible: false
   - type: Sprite
     sprite: Objects/Specific/Xenobiology/petri_dish.rsi
     layers:
     - state: icon-back
-    - state: cells
+    - map: ["enum.CellDishVisuals.DishLayer"]
+      state: cells
       visible: false
     - state: icon
   - type: Item
@@ -18,3 +27,4 @@
     toolsTransferWhitelist:
       components:
         - CellCollector
+  - type: CellDishVisuals

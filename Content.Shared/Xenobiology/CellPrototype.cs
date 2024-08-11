@@ -12,5 +12,8 @@ public sealed class CellPrototype : IPrototype
     public float Stability = 1;
 
     [DataField]
+    public Color Color = Color.White;
+
+    [DataField]
     public List<CellModifier> Modifiers = [];
 }

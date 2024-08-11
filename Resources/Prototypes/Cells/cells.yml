@@ -1,4 +1,5 @@
 - type: cell
   id: MurineCells
+  color: "#494546"
   modifiers: # Just for test remove later
     - !type:CellPacifismModifier
