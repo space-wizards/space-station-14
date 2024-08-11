@@ -355,21 +355,22 @@ public sealed class FoodSystem : EntitySystem
         {
             var spawnedTrash = Spawn(trash, position);
 
-            var spawnedEv = new FoodSpawnedTrashEvent(trash, user);
+            var spawnedEv = new FoodSpawnedTrashEvent(spawnedTrash, user);
             RaiseLocalEvent(food, ref spawnedEv);
-            
+
             spawned.Add(spawnedTrash);
         }
 
+        var isHolding = user is {} userUid && _hands.IsHolding(userUid, food, out _);
         Del(food);
 
-        if (_hands.IsHolding(user, food, out _))
+        if (!isHolding)
+            return;
+
+        foreach (var ent in spawned)
         {
-            foreach (var ent in spawned)
-            {
-                // Put the trash in the user's hand
-                _hands.TryPickupAnyHand(user, ent);
-            }
+            // Put the trash in the user's hand
+            _hands.TryPickupAnyHand(userUid, ent);
         }
     }
 
