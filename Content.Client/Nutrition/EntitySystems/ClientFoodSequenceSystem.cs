@@ -39,8 +39,6 @@ public sealed class ClientFoodSequenceSystem : SharedFoodSequenceSystem
             if (state.Sprite is null)
                 continue;
 
-            counter++;
-
             var keyCode = $"food-layer-{counter}";
             start.Comp.RevealedLayers.Add(keyCode);
 
@@ -57,6 +55,8 @@ public sealed class ClientFoodSequenceSystem : SharedFoodSequenceSystem
             var layerPos = start.Comp.StartPosition;
             layerPos += (start.Comp.Offset * counter) + state.LocalOffset;
             sprite.LayerSetOffset(index, layerPos);
+
+            counter++;
         }
     }
 }

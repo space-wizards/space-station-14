@@ -312,6 +312,11 @@
         name: food-sequence-content-chiken
       taco:
         name: food-sequence-content-chiken
+      skewer:
+        name: food-sequence-content-chiken
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-meat
 
 - type: entity
   name: raw duck meat
@@ -542,6 +547,11 @@
         name: food-sequence-burger-content-lizard
       taco:
         name: food-sequence-content-lizard
+      skewer:
+        name: food-sequence-content-lizard
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-tail
 
 - type: entity
   name: raw plant meat
@@ -702,6 +712,11 @@
         name: food-sequence-content-snake
       taco:
         name: food-sequence-content-snake
+      skewer:
+        name: food-sequence-content-snake
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-snake
 
 - type: entity
   name: raw xeno meat
@@ -970,6 +985,11 @@
         name: food-sequence-burger-content-meat
       taco:
         name: food-sequence-content-meat
+      skewer:
+        name: food-sequence-content-meat
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-meat
 
 - type: entity
   name: bacon
@@ -1010,6 +1030,11 @@
         name: food-sequence-burger-content-meat
       taco:
         name: food-sequence-content-meat
+      skewer:
+        name: food-sequence-content-meat
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-meat
 
 - type: entity
   name: cooked bear
@@ -1122,6 +1147,11 @@
         name: food-sequence-content-chiken
       taco:
         name: food-sequence-content-chiken
+      skewer:
+        name: food-sequence-content-chiken
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-meat
 
 - type: entity
   name: fried chicken
@@ -1159,6 +1189,11 @@
         name: food-sequence-content-chiken
       taco:
         name: food-sequence-content-chiken
+      skewer:
+        name: food-sequence-content-chiken
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-meat
 
 - type: entity
   name: cooked duck
@@ -1196,6 +1231,11 @@
         name: food-sequence-content-duck
       taco:
         name: food-sequence-content-duck
+      skewer:
+        name: food-sequence-content-duck
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-meat
 
 - type: entity
   name: cooked crab
@@ -1345,6 +1385,11 @@
         name: food-sequence-burger-content-lizard
       taco:
         name: food-sequence-content-lizard
+      skewer:
+        name: food-sequence-content-lizard
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-tail-cook
 
 - type: entity
   name: boiled spider leg
@@ -1406,6 +1451,11 @@
         name: food-sequence-burger-content-meat
       taco:
         name: food-sequence-content-meat
+      skewer:
+        name: food-sequence-content-meat
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-meat
 
 # Cutlets
 
@@ -1441,6 +1491,11 @@
         name: food-sequence-burger-content-meat
       taco:
         name: food-sequence-content-meat
+      skewer:
+        name: food-sequence-content-meat
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-meat
 
 - type: entity
   name: raw bear cutlet
@@ -1542,6 +1597,11 @@
         name: food-sequence-content-chiken
       taco:
         name: food-sequence-content-chiken
+      skewer:
+        name: food-sequence-content-chiken
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-meat
 
 - type: entity
   name: raw duck cutlet
@@ -1575,6 +1635,11 @@
         name: food-sequence-content-duck
       taco:
         name: food-sequence-content-duck
+      skewer:
+        name: food-sequence-content-duck
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-meat
 
 - type: entity
   name: raw lizard cutlet
@@ -1611,6 +1676,11 @@
         name: food-sequence-burger-content-lizard
       taco:
         name: food-sequence-content-lizard
+      skewer:
+        name: food-sequence-content-lizard
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-tail
 
 - type: entity
   name: raw spider cutlet
@@ -1862,6 +1932,11 @@
         name: food-sequence-content-chiken
       taco:
         name: food-sequence-content-chiken
+      skewer:
+        name: food-sequence-content-chiken
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-meat
 
 - type: entity
   name: duck cutlet
@@ -1892,6 +1967,13 @@
     entries:
       burger:
         name: food-sequence-content-duck
+      taco:
+        name: food-sequence-content-duck
+      skewer:
+        name: food-sequence-content-duck
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-meat
 
 - type: entity
   name: lizard cutlet
@@ -1923,6 +2005,13 @@
     entries:
       burger:
         name: food-sequence-burger-content-lizard
+      taco:
+        name: food-sequence-content-lizard
+      skewer:
+        name: food-sequence-content-lizard
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-tail-cook
 
 - type: entity
   name: spider cutlet

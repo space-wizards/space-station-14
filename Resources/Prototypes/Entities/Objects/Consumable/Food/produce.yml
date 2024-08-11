@@ -847,6 +847,11 @@
         name: food-sequence-content-tomato
       taco:
         name: food-sequence-content-tomato
+      skewer:
+        name: food-sequence-content-tomato
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-tomato
 
 - type: entity
   name: blue tomato
@@ -953,6 +958,11 @@
         name: food-sequence-content-tomato
       taco:
         name: food-sequence-content-tomato
+      skewer:
+        name: food-sequence-content-tomato
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-tomato
 
 - type: entity
   name: eggplant
@@ -1019,7 +1029,7 @@
       burger:
         name: food-sequence-content-apple
       taco:
-        name: food-sequence-content-tomato
+        name: food-sequence-content-apple
 
 - type: entity
   name: golden apple
@@ -1154,6 +1164,11 @@
         name: food-sequence-content-corn
       taco:
         name: food-sequence-content-corn
+      skewer:
+        name: food-sequence-content-corn
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-corn
 
 - type: entity
   name: corn cob
@@ -1294,6 +1309,11 @@
         name: food-sequence-content-mushroom
       taco:
         name: food-sequence-content-mushroom
+      skewer:
+        name: food-sequence-content-mushroom
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-mushroom
 
 # Slices
 
@@ -1455,6 +1475,11 @@
         name: food-sequence-content-chili
       taco:
         name: food-sequence-content-chili
+      skewer:
+        name: food-sequence-content-chili
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-pepper
 
 - type: entity
   name: chilly pepper
@@ -1490,6 +1515,11 @@
         name: food-sequence-content-chilly
       taco:
         name: food-sequence-content-chilly
+      skewer:
+        name: food-sequence-content-chilly
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-bluepepper
 
 - type: entity
   name: aloe
@@ -1640,6 +1670,11 @@
         name: food-sequence-content-mushroom
       taco:
         name: food-sequence-content-mushroom
+      skewer:
+        name: food-sequence-content-mushroom
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-mushroom
 
 - type: entity
   name: ambrosia vulgaris
@@ -1876,6 +1911,11 @@
         name: food-sequence-content-mushroom
       taco:
         name: food-sequence-content-mushroom
+      skewer:
+        name: food-sequence-content-mushroom
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-mushroom
 
 - type: entity
   name: gatfruit

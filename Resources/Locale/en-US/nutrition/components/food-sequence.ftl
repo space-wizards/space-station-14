@@ -95,3 +95,6 @@ food-sequence-burger-content-tobacco = tobaco
 
 #TACO
 food-sequence-taco-gen = taco with {$content}
+
+#SKEWER
+food-sequence-skewer-gen = {$content} kebab
