@@ -59,7 +59,7 @@
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:NestedSelector
-        tableId: BeltSecEntityTable
+        tableId: BeltSecurityEntityTable
 
 - type: entity
   id: ClothingBeltSecurityWebbingFilled
@@ -69,7 +69,7 @@
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:NestedSelector
-        tableId: BeltSecEntityTable
+        tableId: BeltSecurityEntityTable
 
 - type: entity
   id: ClothingBeltJanitorFilled
