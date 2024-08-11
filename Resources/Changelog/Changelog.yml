@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Failing to fire a gun that requires wielding will no longer delay the
-      next shot.
-    type: Tweak
-  id: 6593
-  time: '2024-05-14T04:53:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27973
 - author: lzk228
   changes:
   - message: Grill and hotplate can be anchored on the table.
@@ -3785,3 +3777,10 @@
   id: 7092
   time: '2024-08-11T09:23:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29133
+- author: Moomoobeef
+  changes:
+  - message: Added The Throngler (Plushie) to the grand lottery!!
+    type: Add
+  id: 7093
+  time: '2024-08-11T10:26:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29978
