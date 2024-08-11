@@ -79,13 +79,6 @@
       - Smokable
   - type: Item
     size: Tiny
-  - type: FoodSequenceElement
-    entries:
-      burger:
-        name: food-sequence-burger-content-cannabis
-        sprite:
-          sprite: Objects/Misc/reagent_fillings.rsi
-          state: powderpile
     
 - type: entity
   name: rainbow cannabis leaves
@@ -155,13 +148,6 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
     state: dried
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
-      state: dried
-    entries:
-      burger:
-        name: food-sequence-burger-content-rainbow-cannabis
 
 - type: entity
   name: ground rainbow cannabis
@@ -195,13 +181,6 @@
   - type: Construction
     graph: smokeableGroundCannabisRainbow
     node: groundRainbow
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
-      state: powderpile_rainbow
-    entries:
-      burger:
-        name: food-sequence-burger-content-rainbow-cannabis
 
 - type: entity
   name: tobacco leaves

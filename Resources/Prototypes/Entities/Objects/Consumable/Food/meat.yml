@@ -919,9 +919,7 @@
       state: plain-cooked
     entries:
       burger:
-        sprite:
-          sprite: Objects/Consumable/Food/meat.rsi
-          state: plain-cooked
+        name: food-sequence-burger-content-meat
 
 - type: entity
   name: bacon
@@ -959,9 +957,7 @@
       state: bacon-cooked
     entries:
       burger:
-        sprite:
-          sprite: Objects/Consumable/Food/meat.rsi
-          state: bacon-cooked
+        name: food-sequence-burger-content-meat
 
 - type: entity
   name: cooked bear
@@ -1335,9 +1331,7 @@
       state: meatball-cooked
     entries:
       burger:
-        sprite:
-          sprite: Objects/Consumable/Food/meat.rsi
-          state: meatball-cooked
+        name: food-sequence-burger-content-meat
 
 # Cutlets
 
@@ -1370,9 +1364,7 @@
       state: cutlet
     entries:
       burger:
-        sprite:
-          sprite: Objects/Consumable/Food/meat.rsi
-          state: cutlet
+        name: food-sequence-burger-content-meat
 
 - type: entity
   name: raw bear cutlet
