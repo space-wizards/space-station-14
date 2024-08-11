@@ -55,10 +55,6 @@
 
 - type: loadout
   id: CigPackNewport
-  equipment: CigPackNewport
-
-- type: startingGear
-  id: CigPackNewport
   storage:
     back:
     - CigPackNewport
@@ -149,10 +145,6 @@
     - ClothingNeckGoldAutismPin
 
 - type: loadout
-  id: PersonalAI
-  equipment: PersonalAI
-
-- type: startingGear
   id: PersonalAI
   storage:
     back:
