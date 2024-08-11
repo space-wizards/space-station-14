@@ -3212,7 +3212,7 @@
       state: dead-0
     entries:
       burger:
-        name: food-sequence-content-hamster
+        name: food-sequence-burger-content-hamster
       taco:
         name: food-sequence-content-hamster
 
