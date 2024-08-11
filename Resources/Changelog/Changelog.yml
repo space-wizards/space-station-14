@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Add a reset button to character setup.
-    type: Add
-  - message: Actually get the import / export character buttons working.
-    type: Add
-  - message: Fix performance drop in the eye color picker.
-    type: Fix
-  - message: Fix instances where role timers don't load properly in character setup.
-    type: Fix
-  id: 6586
-  time: '2024-05-11T23:18:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27576
 - author: nikthechampiongr
   changes:
   - message: Fixed records consoles sometimes failing to show crew records.
@@ -3786,3 +3773,12 @@
   id: 7085
   time: '2024-08-10T21:06:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30838
+- author: Scribbles0, Plykiya, nikthechampiongr
+  changes:
+  - message: You can now execute incapacitated/cuffed entities or yourself with certain
+      sharp weapons. Executions require a do-after, deal 9x the damage of a normal
+      attack, and ignore damage resistances.
+    type: Add
+  id: 7086
+  time: '2024-08-11T03:05:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30104
