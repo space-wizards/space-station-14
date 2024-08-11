@@ -116,7 +116,7 @@ namespace Content.Client.Launcher
         private void ChangeLoginTip()
         {
             var tipsDataset = _cfg.GetCVar(CCVars.LoginTipsDataset);
-            var loginTipsEnabled = _prototype.TryIndex<DatasetPrototype>(tipsDataset, out var tips);
+            var loginTipsEnabled = _prototype.TryIndex<LocalizedDatasetPrototype>(tipsDataset, out var tips);
 
             LoginTips.Visible = loginTipsEnabled;
             if (!loginTipsEnabled)
@@ -131,7 +131,7 @@ namespace Content.Client.Launcher
 
             var randomIndex = _random.Next(tipList.Count);
             var tip = tipList[randomIndex];
-            LoginTip.SetMessage(tip);
+            LoginTip.SetMessage(Loc.GetString(tip));
 
             LoginTipTitle.Text = Loc.GetString("connecting-window-tip", ("numberTip", randomIndex));
         }

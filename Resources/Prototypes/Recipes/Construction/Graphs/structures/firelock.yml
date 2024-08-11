@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: Firelock
   start: start
   graph:
@@ -50,7 +50,7 @@
           steps:
             - tag: FirelockElectronics
               store: board
-              name: Firelock Electronics
+              name: firelock electronics
               icon:
                 sprite: "Objects/Misc/module.rsi"
                 state: "mainboard"

@@ -126,20 +126,18 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         var xform = Transform(uid);
         var mapId = xform.MapID;
 
-        if (mapId != MapId.Nullspace && TryComp(uid, out MapGridComponent? mapGrid))
+        if (mapId != MapId.Nullspace && HasComp<MapGridComponent>(uid))
         {
             var setTiles = new List<(Vector2i Index, Tile tile)>();
 
-            foreach (var grid in _mapManager.GetAllMapGrids(mapId))
+            foreach (var grid in _mapManager.GetAllGrids(mapId))
             {
-                var gridUid = grid.Owner;
-
-                if (!_fixturesQuery.TryGetComponent(gridUid, out var fixtures))
+                if (!_fixturesQuery.TryGetComponent(grid.Owner, out var fixtures))
                     continue;
 
                 // Don't want shuttles flying around now do we.
-                _shuttles.Disable(gridUid);
-                var pTransform = _physics.GetPhysicsTransform(gridUid);
+                _shuttles.Disable(grid.Owner);
+                var pTransform = _physics.GetPhysicsTransform(grid.Owner);
 
                 foreach (var fixture in fixtures.Fixtures.Values)
                 {
@@ -810,7 +808,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 // At least for now unless we do lookups or smth, only work with anchoring.
                 if (_xformQuery.TryGetComponent(ent, out var xform) && !xform.Anchored)
                 {
-                    _transform.AnchorEntity(ent, xform, gridUid, grid, indices);
+                    _transform.AnchorEntity((ent, xform), (gridUid, grid), indices);
                 }
 
                 loadedEntities.Add(ent, indices);

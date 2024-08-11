@@ -724,15 +724,7 @@ public sealed partial class AdminVerbSystem
                         if (!int.TryParse(amount, out var result))
                             return;
 
-                        if (result > 0)
-                        {
-                            ballisticAmmo.UnspawnedCount = result;
-                        }
-                        else
-                        {
-                            ballisticAmmo.UnspawnedCount = 0;
-                        }
-
+                        _gun.SetBallisticUnspawned((args.Target, ballisticAmmo), result);
                         _gun.UpdateBallisticAppearance(args.Target, ballisticAmmo);
                     });
                 },
