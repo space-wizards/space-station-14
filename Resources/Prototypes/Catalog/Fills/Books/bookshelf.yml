@@ -25,7 +25,7 @@
       - id: BookTheBookOfControl
     # Handwritten books
     - !type:GroupSelector
-      amount: !type:RangeNumberSelector
+      rolls: !type:RangeNumberSelector
         range: 0, 2
       children:
       - id: BookAurora
