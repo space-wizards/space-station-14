@@ -30089,13 +30089,6 @@ entities:
     - type: Transform
       pos: 28.730742,-41.454163
       parent: 4812
-- proto: ClothingHeadHelmetTemplar
-  entities:
-  - uid: 11881
-    components:
-    - type: Transform
-      pos: -1.477562,-34.543083
-      parent: 4812
 - proto: ClothingHeadsetEngineering
   entities:
   - uid: 10764

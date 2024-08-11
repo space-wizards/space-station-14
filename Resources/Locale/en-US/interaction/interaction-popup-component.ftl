@@ -8,6 +8,7 @@ petting-success-soft-floofy = You pet {THE($target)} on {POSS-ADJ($target)} soft
 petting-success-bingus = You pet {THE($target)} on {POSS-ADJ($target)} wrinkly little head.
 petting-success-bird = You pet {THE($target)} on {POSS-ADJ($target)} cute feathery head.
 petting-success-carp = You pet {THE($target)} on {POSS-ADJ($target)} fishy little head.
+petting-success-nicecarp = You pet {THE($target)} on {POSS-ADJ($target)} friendly wet head.
 petting-success-cat = You pet {THE($target)} on {POSS-ADJ($target)} fuzzy little head.
 petting-success-corrupted-corgi = In an act of hubris, you pet {THE($target)} on {POSS-ADJ($target)} cursed little head.
 petting-success-crab = You pet {THE($target)} on {POSS-ADJ($target)} smooth little head.

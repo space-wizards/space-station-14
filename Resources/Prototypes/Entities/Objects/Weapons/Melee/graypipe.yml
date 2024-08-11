@@ -4,9 +4,6 @@
   id: PVC
   description: Percision Velocity Channeler.
   components:
-  - type: Tag
-    tags:
-    - PVC
   - type: Sprite
     sprite: Objects/Weapons/Melee/pvc.rsi
   - type: MeleeWeapon

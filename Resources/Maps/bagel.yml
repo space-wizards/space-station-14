@@ -58729,18 +58729,6 @@ entities:
     - type: Transform
       pos: -24.644444,1.636905
       parent: 60
-- proto: ClothingHeadHelmetTemplar
-  entities:
-  - uid: 5205
-    components:
-    - type: Transform
-      pos: 2.5191827,-75.49361
-      parent: 60
-  - uid: 19495
-    components:
-    - type: Transform
-      pos: 25.51098,26.439768
-      parent: 60
 - proto: ClothingHeadHelmetThunderdome
   entities:
   - uid: 7867
