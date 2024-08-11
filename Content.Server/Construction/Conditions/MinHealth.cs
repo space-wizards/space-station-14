@@ -18,12 +18,13 @@ namespace Content.Server.Construction.Conditions;
 public sealed partial class MinHealth : IGraphCondition
 {
     /// <summary>
-    /// If ByProportion is true, Threshold is a value less than or equal to 1, but more than 0.
-    /// Else, Threshold is any positive value with at most 2 decimal points of percision.
+    /// If ByProportion is true, Threshold is a value less than or equal to 1, but more than 0,
+    /// which is compared to the percent of health remaining in the structure.
+    /// Else, Threshold is any positive value with at most 2 decimal points of percision,
+    /// which is compared to the current health of the structure.
     /// </summary>
     [DataField]
     public FixedPoint2 Threshold = 1;
-
     [DataField]
     public bool ByProportion = false;
 
