@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: aspiringLich
-  changes:
-  - message: Tweaked the Chemical, Booze, and Soda Dispenser UIs to aid readability.
-    type: Tweak
-  id: 6591
-  time: '2024-05-13T21:46:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27958
-- author: deltanedas
-  changes:
-  - message: Fixed fire spreading being insane.
-    type: Fix
-  id: 6592
-  time: '2024-05-13T21:49:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27986
 - author: DrSmugleaf
   changes:
   - message: Failing to fire a gun that requires wielding will no longer delay the
@@ -3784,3 +3770,18 @@
   id: 7090
   time: '2024-08-11T09:19:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30778
+- author: osjarw
+  changes:
+  - message: You can once again pull and buckle pets.
+    type: Fix
+  id: 7091
+  time: '2024-08-11T09:22:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30066
+- author: slarticodefast
+  changes:
+  - message: The sentient plant mutation can no longer be propagated to other trays
+      via seeds or swabs. It has also been made more rare.
+    type: Tweak
+  id: 7092
+  time: '2024-08-11T09:23:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29133
