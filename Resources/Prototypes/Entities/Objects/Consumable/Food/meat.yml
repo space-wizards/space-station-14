@@ -1389,7 +1389,7 @@
         name: food-sequence-content-lizard
         sprite: 
           sprite: Objects/Consumable/Food/skewer.rsi
-          state: skewer-tail-cook
+          state: skewer-tail-cooked
 
 - type: entity
   name: boiled spider leg
@@ -2011,7 +2011,7 @@
         name: food-sequence-content-lizard
         sprite: 
           sprite: Objects/Consumable/Food/skewer.rsi
-          state: skewer-tail-cook
+          state: skewer-tail-cooked
 
 - type: entity
   name: spider cutlet

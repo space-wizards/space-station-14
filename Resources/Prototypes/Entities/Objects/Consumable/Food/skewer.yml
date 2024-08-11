@@ -13,6 +13,15 @@
     layers:
     - state: skewer
     - map: ["foodSequenceLayers"]
+  - type: MeleeWeapon
+    wideAnimationRotation: -120
+    damage:
+      types:
+        Piercing: 4
+    angle: 0
+    animation: WeaponArcThrust
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
   - type: Tag
     tags:
     - Trash
