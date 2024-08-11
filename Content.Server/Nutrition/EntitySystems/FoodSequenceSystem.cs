@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Text;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -6,6 +7,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
+using Robust.Shared.Random;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -15,6 +17,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -61,6 +64,10 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         //If no specific sprites are specified, standard sprites will be used.
         if (elementData.Sprite is null && element.Comp.Sprite is not null)
             elementData.Sprite = element.Comp.Sprite;
+
+        elementData.LocalOffset = new Vector2(
+            _random.NextFloat(start.Comp.MinLayerOffset.X,start.Comp.MaxLayerOffset.X),
+            _random.NextFloat(start.Comp.MinLayerOffset.Y,start.Comp.MaxLayerOffset.Y));
 
         start.Comp.FoodLayers.Add(elementData);
         Dirty(start);

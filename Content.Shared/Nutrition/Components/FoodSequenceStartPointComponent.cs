@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -60,6 +61,18 @@ public sealed partial class FoodSequenceStartPointComponent : Component
     /// </summary>
     [DataField]
     public bool InverseLayers;
+
+    /// <summary>
+    /// each layer will get a random offset in the specified range
+    /// </summary>
+    [DataField]
+    public Vector2 MaxLayerOffset = Vector2.Zero;
+
+    /// <summary>
+    /// each layer will get a random offset in the specified range
+    /// </summary>
+    [DataField]
+    public Vector2 MinLayerOffset = Vector2.Zero;
 
     [DataField]
     public string Solution = "food";

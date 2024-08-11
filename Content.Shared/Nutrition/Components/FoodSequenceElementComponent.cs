@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -46,4 +47,9 @@ public sealed class FoodSequenceElementEntry
     /// If the layer is the final one, it can be added over the limit, but no other layers can be added after it.
     /// </summary>
     public bool Final { get; set; } = false;
+
+    /// <summary>
+    /// the shear of a particular layer. Allows a little "randomization" of each layer.
+    /// </summary>
+    public Vector2 LocalOffset { get; set; } = Vector2.Zero;
 }
