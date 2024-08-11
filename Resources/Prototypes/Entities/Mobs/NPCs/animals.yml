@@ -1521,7 +1521,7 @@
     prototype: Mouse
   - type: CellGeneration
     cells:
-      - MurineCells
+      - Murine
   - type: GhostRole
     makeSentient: true
     allowSpeech: true

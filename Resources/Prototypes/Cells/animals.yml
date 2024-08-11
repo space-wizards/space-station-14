@@ -1,0 +1,61 @@
+- type: cell
+  id: Murine
+  color: "#494546"
+  modifiers: # Just for test remove later
+    - !type:CellPacifismModifier
+
+- type: cell
+  id: Galliform
+  color: "#744331"
+
+- type: cell
+  id: Bovine
+  color: "#744331"
+
+- type: cell
+  id: Feliform
+  color: "#744331"
+
+- type: cell
+  id: Canid
+  color: "#744331"
+
+- type: cell
+  id: Ursine
+  color: "#744331"
+
+- type: cell
+  id: Cyprinid
+  color: "#744331"
+
+- type: cell
+  id: CartilaginousCyprinid
+  color: "#744331"
+
+- type: cell
+  id: Ophidic
+  color: "#744331"
+
+- type: cell
+  id: Anura
+  color: "#744331"
+
+- type: cell
+  id: Caudata
+  color: "#744331"
+
+- type: cell
+  id: Atypical
+  color: "#744331"
+
+- type: cell
+  id: Atypical
+  color: "#744331"
+
+- type: cell
+  id: Aphid
+  color: "#744331"
+
+- type: cell
+  id: Pseudoarachnoid
+  color: "#744331"
