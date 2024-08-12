@@ -10,17 +10,17 @@ namespace Content.Client.MassMedia.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class NewsWriterMenu : FancyWindow
 {
-    private readonly IGameTiming _gameTiming;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     private TimeSpan? _nextPublish;
 
     public event Action<int>? DeleteButtonPressed;
 
-    public NewsWriterMenu(IGameTiming gameTiming)
+    public NewsWriterMenu()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
-        _gameTiming = gameTiming;
         ContentsContainer.RectClipContent = false;
 
         // Customize scrollbar width and margin. This is not possible in xaml

@@ -565,7 +565,7 @@
 
 - type: entity
   id: HappyHonkNukie
-  parent: HappyHonk
+  parent: [HappyHonk, BaseSyndicateContraband]
   name: robust nukie meal
   description: A sus meal with a potentially explosive surprise.
   suffix: Toy Unsafe
@@ -669,7 +669,7 @@
   id: FoodMealHappyHonkClown
   parent: HappyHonk
   suffix: random food spawner meal
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: StorageFill
     contents:
