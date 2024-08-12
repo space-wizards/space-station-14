@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EdenTheLiznerd
-  changes:
-  - message: Removed the throngler from the grand lottery
-    type: Tweak
-  id: 6597
-  time: '2024-05-15T21:02:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28060
 - author: deltanedas
   changes:
   - message: Fixed ninja criminal records hack not changing sechud icons.
@@ -3795,3 +3788,10 @@
   id: 7096
   time: '2024-08-12T03:57:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28688
+- author: DieselMohawk
+  changes:
+  - message: Resprited Security vest and helmet
+    type: Tweak
+  id: 7097
+  time: '2024-08-12T06:20:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30291
