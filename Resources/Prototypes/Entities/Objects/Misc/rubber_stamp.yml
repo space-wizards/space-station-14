@@ -107,7 +107,7 @@
 
 - type: entity
   name: chief engineer's rubber stamp
-  parent: []RubberStampBase, BaseCommandContraband]
+  parent: [RubberStampBase, BaseCommandContraband]
   id: RubberStampCE
   suffix: DO NOT MAP
   components:
