@@ -9,8 +9,13 @@ public sealed class Cell
     [ViewVariables]
     public readonly ProtoId<CellPrototype> Id;
 
+    [ViewVariables]
     public Color Color;
+
+    [ViewVariables]
     public float Stability;
+
+    [ViewVariables]
     public List<CellModifier> Modifiers;
 
     public Cell(CellPrototype cell)
