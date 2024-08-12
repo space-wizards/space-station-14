@@ -1340,7 +1340,7 @@
       PotencyDivisor: 20
 
 - type: seed
-  id: fakecapfruit
+  id: fakeCapfruit
   name: seeds-capfruit-name
   noun: seeds-noun-seeds
   displayName: seeds-capfruit-display-name
@@ -1366,7 +1366,7 @@
       PotencyDivisor: 20
 
 - type: seed
-  id: realcapfruit
+  id: realCapfruit
   name: seeds-capfruit-name
   noun: seeds-noun-seeds
   displayName: seeds-capfruit-display-name
