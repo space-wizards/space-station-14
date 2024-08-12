@@ -26,3 +26,4 @@
         Blunt: 2
         Bloodloss: 5
   - type: CellContainer
+    allowModifiers: false

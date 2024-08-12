@@ -13,5 +13,8 @@ public sealed partial class CellContainerComponent : Component
     public List<Cell> Cells = [];
 
     [DataField]
+    public bool AllowModifiers = true;
+
+    [DataField]
     public EntityWhitelist? ToolsTransferWhitelist;
 }

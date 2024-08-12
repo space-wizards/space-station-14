@@ -24,6 +24,7 @@
   - type: Item
     sprite: Objects/Specific/Xenobiology/petri_dish.rsi
   - type: CellContainer
+    allowModifiers: false
     toolsTransferWhitelist:
       components:
         - CellCollector

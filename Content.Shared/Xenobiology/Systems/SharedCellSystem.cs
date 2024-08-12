@@ -45,16 +45,18 @@ public abstract partial class SharedCellSystem : EntitySystem
             return;
 
         ent.Comp.Cells.Add(cell);
+        Dirty(ent);
 
         var ev = new CellAdded(GetNetEntity(ent), cell);
         RaiseLocalEvent(ent, ev);
+
+        if (!ent.Comp.AllowModifiers)
+            return;
 
         foreach (var modifier in cell.Modifiers)
         {
             modifier.OnAdd(ent!, cell, EntityManager);
         }
-
-        Dirty(ent);
     }
 
     public void RemoveCell(Entity<CellContainerComponent?> ent, Cell cell)
@@ -65,15 +67,18 @@ public abstract partial class SharedCellSystem : EntitySystem
         if (!ent.Comp.Cells.Remove(cell))
             return;
 
+        Dirty(ent);
+
         var ev = new CellRemoved(GetNetEntity(ent), cell);
         RaiseLocalEvent(ent, ev);
+
+        if (!ent.Comp.AllowModifiers)
+            return;
 
         foreach (var modifier in cell.Modifiers)
         {
             modifier.OnRemove(ent!, cell, EntityManager);
         }
-
-        Dirty(ent);
     }
 
     public void ClearCells(Entity<CellContainerComponent?> ent)
