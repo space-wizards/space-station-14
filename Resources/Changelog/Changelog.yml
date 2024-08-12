@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Vermidia
-  changes:
-  - message: Shuttle roles get PDAs and headsets now
-    type: Fix
-  id: 6596
-  time: '2024-05-15T10:30:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28045
 - author: EdenTheLiznerd
   changes:
   - message: Removed the throngler from the grand lottery
@@ -3793,3 +3786,12 @@
   id: 7095
   time: '2024-08-12T01:49:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30814
+- author: mirrorcult
+  changes:
+  - message: With space law being overhauled, you can now examine items to see their
+      contraband status, and whether with your current access you'd be accosted by
+      Security for owning it. This will also clearly show non-stealth syndicate items.
+    type: Add
+  id: 7096
+  time: '2024-08-12T03:57:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28688
