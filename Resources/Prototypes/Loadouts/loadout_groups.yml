@@ -1041,7 +1041,7 @@
   name: loadout-group-security-star
   minLimit: 0
   loadouts:
-    - SecStar
+  - SecStar
 
 # Medical
 - type: loadoutGroup
