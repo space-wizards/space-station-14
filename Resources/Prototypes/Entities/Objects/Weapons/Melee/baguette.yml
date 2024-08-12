@@ -1,0 +1,17 @@
+- type: entity
+  name: baguette
+  parent: FoodBreadBaguette
+  id: WeaponBaguette
+  description: Bon appétit!
+  suffix: Weapon
+  components:
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 18 # that's some hard crust
+        Structural: 10
+    soundHit:
+      collection: MetalThud
+  - type: Clothing
+    quickEquip: true # default to putting away rather than eating

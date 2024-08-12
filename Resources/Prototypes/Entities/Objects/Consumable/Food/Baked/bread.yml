@@ -638,7 +638,7 @@
     wideAnimationRotation: -135
     damage:
       types:
-        Blunt: 1 #bonk
+        Blunt: 1 # bonk
 # Tastes like France.
 
 - type: entity
