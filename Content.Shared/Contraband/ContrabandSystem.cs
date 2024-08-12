@@ -37,6 +37,7 @@ public sealed class ContrabandSystem : EntitySystem
         if (!_contrabandExamineEnabled)
             return;
 
+        // CanAccess is not used here, because we want people to be able to examine legality in strip menu.
         if (!args.CanInteract)
             return;
 
