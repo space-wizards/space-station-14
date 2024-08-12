@@ -103,7 +103,7 @@
 
 - type: entity
   name: echis
-  parent: BaseItem
+  parent: [ BaseItem, BaseSyndicateContraband ]
   id: WeaponPistolEchis
   description: A viper for use by cyborgs. Creates .35 ammo on the fly from an internal ammo fabricator, which slowly self-charges.
   components:
@@ -138,7 +138,7 @@
 
 - type: entity
   name: cobra
-  parent: BaseWeaponPistol
+  parent: [ BaseWeaponPistol, BaseSyndicateContraband ]
   id: WeaponPistolCobra
   description: A rugged, robust operator handgun with inbuilt silencer. Uses .25 caseless ammo.
   components:

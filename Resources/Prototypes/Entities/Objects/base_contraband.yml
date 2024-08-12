@@ -18,6 +18,15 @@
     # according to space law no dept is authorized to have
     allowedDepartments: null
 
+# major contraband, for things like guns or weaponry that don't belong to any department and aren't syndicate specific
+- type: entity
+  id: BaseMajorContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Major
+    allowedDepartments: null
+
 # minor contraband by default restricted to security only
 - type: entity
   id: BaseRestrictedContraband

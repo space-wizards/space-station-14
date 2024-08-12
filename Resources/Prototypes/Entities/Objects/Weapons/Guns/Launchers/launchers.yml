@@ -55,7 +55,7 @@
 
 - type: entity
   name: RPG-7
-  parent: BaseWeaponLauncher
+  parent: [ BaseWeaponLauncher, BaseMajorContraband ]
   id: WeaponLauncherRocket
   description: A modified ancient rocket-propelled grenade launcher.
   components:

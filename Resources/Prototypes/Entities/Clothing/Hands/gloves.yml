@@ -79,7 +79,7 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: [ClothingHandsGlovesBoxingBlue, BaseSyndicateContraband]
+  parent: ClothingHandsGlovesBoxingBlue
   id: ClothingHandsGlovesBoxingRigged
   suffix: Rigged
   components:
