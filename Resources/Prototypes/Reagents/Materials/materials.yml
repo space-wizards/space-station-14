@@ -131,4 +131,4 @@
   unit: materials-unit-piece
   icon: { sprite: Objects/Materials/materials.rsi, state: diamond }
   color: "#80ffff"
-  price: 2.5 # This should probably be a lot more but I'll leave that to a different pr
+  price: 20 # big diamond gaslit us so hard diamonds actually became extremely rare

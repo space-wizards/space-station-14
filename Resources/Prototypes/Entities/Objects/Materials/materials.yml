@@ -360,10 +360,6 @@
     layers:
     - state: diamond
       map: ["base"]
-  - type: StaticPrice
-    price: 0
-  - type: StackPrice
-    price: 500
   - type: Appearance
   - type: Item
     heldPrefix: diamond
