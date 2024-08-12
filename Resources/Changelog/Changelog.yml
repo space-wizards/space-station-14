@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Fixed ninja criminal records hack not changing sechud icons.
-    type: Fix
-  id: 6598
-  time: '2024-05-16T20:51:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28021
 - author: EmoGarbage404
   changes:
   - message: Fixed a bug that would cause items in your inventory to get stuck to
@@ -3795,3 +3788,14 @@
   id: 7097
   time: '2024-08-12T06:20:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30291
+- author: Ubaser
+  changes:
+  - message: Mantles are now available in loadouts, requiring 20 hours of that head
+      of department's time.
+    type: Add
+  - message: Mantles are no longer spawned in dressers or able to be printed at uniform
+      lathes.
+    type: Remove
+  id: 7098
+  time: '2024-08-12T07:14:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30929
