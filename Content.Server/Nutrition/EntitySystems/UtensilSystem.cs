@@ -4,6 +4,7 @@ using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Tools.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
@@ -25,30 +26,30 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<UtensilComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(ItemSlotsSystem) });
+            SubscribeLocalEvent<UtensilComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(ItemSlotsSystem), typeof(ToolOpenableSystem) });
         }
 
         /// <summary>
         /// Clicked with utensil
         /// </summary>
-        private void OnAfterInteract(EntityUid uid, UtensilComponent component, AfterInteractEvent ev)
+        private void OnAfterInteract(Entity<UtensilComponent> entity, ref AfterInteractEvent ev)
         {
             if (ev.Handled || ev.Target == null || !ev.CanReach)
                 return;
 
-            var result = TryUseUtensil(ev.User, ev.Target.Value, component);
+            var result = TryUseUtensil(ev.User, ev.Target.Value, entity);
             ev.Handled = result.Handled;
         }
 
-        public (bool Success, bool Handled) TryUseUtensil(EntityUid user, EntityUid target, UtensilComponent component)
+        public (bool Success, bool Handled) TryUseUtensil(EntityUid user, EntityUid target, Entity<UtensilComponent> utensil)
         {
             if (!EntityManager.TryGetComponent(target, out FoodComponent? food))
                 return (false, true);
 
             //Prevents food usage with a wrong utensil
-            if ((food.Utensil & component.Types) == 0)
+            if ((food.Utensil & utensil.Comp.Types) == 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("food-system-wrong-utensil", ("food", target), ("utensil", component.Owner)), user, user);
+                _popupSystem.PopupEntity(Loc.GetString("food-system-wrong-utensil", ("food", target), ("utensil", utensil.Owner)), user, user);
                 return (false, true);
             }
 

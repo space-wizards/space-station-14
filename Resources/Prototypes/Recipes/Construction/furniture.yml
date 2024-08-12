@@ -899,9 +899,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
-  canBuildInImpassable: false
+  canBuildInImpassable: true
   conditions:
-    - !type:TileNotBlocked
+    - !type:WallmountCondition
 
 - type: construction
   id: Mannequin

@@ -66,7 +66,7 @@
       - Flashlight
 
 - type: entity
-  parent: Lantern
+  parent: [Lantern, BaseSyndicateContraband]
   id: LanternFlash
   suffix: Flash
   components:

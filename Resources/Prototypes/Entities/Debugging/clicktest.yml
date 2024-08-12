@@ -1,11 +1,11 @@
-﻿# Entities specifically for testing click detection with ClickableComponent.
+# Entities specifically for testing click detection with ClickableComponent.
 #
 # Each entity has a bounding box AND texture equivalent.
 # Note that bounding box versions still have dots on the outside or center to make it possible to... see them.
 # These dots' texture detection should not interfere with the actual bounding box being tested.
 
 - type: entity
-  noSpawn: true
+  categories: [ Debug, HideSpawnMenu ]
   id: ClickTestBase
   suffix: DEBUG
   components:
