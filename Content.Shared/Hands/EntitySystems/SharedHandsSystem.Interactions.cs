@@ -205,7 +205,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
             .Select(itemName =>
             {
                 // Check if the item name starts with "the" to prevent grammar issues
-                if (itemName.StartsWith("the", StringComparison.OrdinalIgnoreCase))
+                if (itemName.StartsWith("the ", StringComparison.OrdinalIgnoreCase))
                 {
                     // If name begins with "the", use wrapper with no indefinite
                     return Loc.GetString("comp-hands-examine-wrapper-exempt", ("item", itemName));
