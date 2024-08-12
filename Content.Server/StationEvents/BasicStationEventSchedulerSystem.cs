@@ -23,8 +23,8 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly EventManagerSystem _event = default!;
 
-        public const float MinEventTime = 60 * 3;
-        public const float MaxEventTime = 60 * 10;
+        public const float MinEventTime = 15; //60 * 3; // Yell at me if I dont change these back to these values.
+        public const float MaxEventTime = 30; //60 * 10;
 
         protected override void Ended(EntityUid uid, BasicStationEventSchedulerComponent component, GameRuleComponent gameRule,
             GameRuleEndedEvent args)

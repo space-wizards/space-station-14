@@ -1,30 +1,21 @@
-# Add your new event to this RandomRule if you want it to happen via the basic/ramping schedulers.
-- type: entity
-  parent: BaseGameRule
-  id: RandomCargoGiftsRule
-  components:
-  - type: RandomRule
-    selectableGameRules:
+# Tables --  Add your new event to this Table if you want it to happen via the basic/ramping schedulers.
+
+- type: entityTable
+  id: CargoGiftsTable
+  table: !type:GroupSelector # ~~we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp~~ But we arent doing that shit yet, it picks a random one StationEventComp be damned.
+    children:
     - id: GiftsEngineering
-      orGroup: Gifts
     - id: GiftsFireProtection
-      orGroup: Gifts
     - id: GiftsJanitor
-      orGroup: Gifts
     - id: GiftsMedical
-      orGroup: Gifts
     - id: GiftsPizzaPartyLarge
-      orGroup: Gifts
     - id: GiftsPizzaPartySmall
-      orGroup: Gifts
     - id: GiftsSecurityGuns
-      orGroup: Gifts
     - id: GiftsSecurityRiot
-      orGroup: Gifts
     - id: GiftsSpacingSupplies
-      orGroup: Gifts
     - id: GiftsVendingRestock
-      orGroup: Gifts
+
+# Game Rules
     
 - type: entity
   id: CargoGiftsBase

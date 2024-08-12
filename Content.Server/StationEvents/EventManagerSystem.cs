@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
@@ -9,7 +8,8 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Shared.Storage;
+using Content.Shared.EntityTable.EntitySelectors;
+using Content.Shared.EntityTable;
 
 namespace Content.Server.StationEvents;
 
@@ -19,7 +19,7 @@ public sealed class EventManagerSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly EntityTableSystem _entityTable = default!;
     [Dependency] public readonly GameTicker GameTicker = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
 
@@ -53,20 +53,20 @@ public sealed class EventManagerSystem : EntitySystem
     /// <summary>
     /// Randomly runs an event from provided EntitySpawnCollection.
     /// </summary>
-    public void RunRandomEvent(List<EntitySpawnEntry> limitedEventsList)
+    public void RunRandomEvent(EntityTableSelector limitedEventsList)
     {
         var availableEvents = AvailableEvents(); // handles the player counts and individual event restrictions
 
-        if (availableEvents.Count == 0)
-        {
-            Log.Warning("No events were available to run!");
+        //if (availableEvents.Count == 0) // Yell at me if I dont uncomment this.
+        //{
+        //    Log.Warning("No events were available to run!");
+        //    return;
+        //}
+
+        var selectedEvents = _entityTable.GetSpawns(limitedEventsList);
+
+        if (selectedEvents.Any() != true) // This is here so if you fuck up the table it wont die.
             return;
-        }
-
-        var selectedEvents = EntitySpawnCollection.GetSpawns(limitedEventsList, _random); // storage function for game rules, smh my head.
-                                                                                          // fuck it though, it works and gives us all the random selection utility we want.
-
-        Log.Info($"Picking from {limitedEventsList.Count} subsetted events");
 
         var limitedEvents = new Dictionary<EntityPrototype, StationEventComponent>();
         foreach (var eventid in selectedEvents)
@@ -77,14 +77,17 @@ public sealed class EventManagerSystem : EntitySystem
                 continue;
             }
 
+            if (limitedEvents.ContainsKey(eventproto)) // This stops it from dying if you add duplicate entries in a fucked table
+                continue;
+
             if (eventproto.Abstract)
                 continue;
 
             if (!eventproto.TryGetComponent<StationEventComponent>(out var stationEvent, EntityManager.ComponentFactory))
                 continue;
 
-            if (!availableEvents.ContainsKey(eventproto))
-                continue;
+            //if (!availableEvents.ContainsKey(eventproto)) // Yell at me if I dont uncomment this.
+            //    continue;
 
             limitedEvents.Add(eventproto, stationEvent);
         }
