@@ -48,7 +48,7 @@
       0: Alive
       200: Dead
   - type: MeleeWeapon
-    altDisarm: false
+#    altDisarm: false - GreyStation
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
     angle: 0
@@ -142,7 +142,7 @@
       0: Alive
       350: Dead
   - type: MeleeWeapon
-    altDisarm: false
+#    altDisarm: false - GreyStation
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh2.ogg
     angle: 0
