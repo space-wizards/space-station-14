@@ -1881,33 +1881,15 @@
 
 - type: entity
   name: capfruit
-  parent: FoodProduceBase
+  parent: FoodRealCapfruit
   id: FoodFakeCapfruit
   suffix: Fake
-  description: A soft but smooth gun-shaped fruit.
   components:
-  - type: FlavorProfile
-    flavors:
-      - plastic
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Sulfur
-          Quantity: 5
-  - type: Sprite
-    sprite: Objects/Specific/Hydroponics/capfruit.rsi
   - type: Produce
     seedId: fakeCapfruit
   - type: Food
     trash:
     - RevolverCapGunFake
-  - type: Tag
-    tags:
-    - Fruit
 
 - type: entity
   name: rice bushel
