@@ -7,12 +7,9 @@
     contents:
       - id: ClothingHeadHatCaptain
       - id: ClothingHeadHatCapcap
-      - id: ClothingNeckCloakCap
-      - id: ClothingNeckCloakCapFormal
       - id: ClothingUniformJumpsuitCapFormal
       - id: ClothingUniformJumpskirtCapFormalDress
       - id: ClothingHandsGlovesCaptain
-      - id: ClothingNeckMantleCap
       - id: ClothingOuterWinterCap
 
 - type: entity
@@ -22,10 +19,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingNeckMantleCE
       - id: ClothingUniformJumpsuitChiefEngineerTurtle
       - id: ClothingUniformJumpskirtChiefEngineerTurtle
-      - id: ClothingNeckCloakCe
       - id: ClothingHeadHatBeretEngineering
       - id: ClothingOuterWinterCE
 
@@ -36,8 +31,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingNeckMantleCMO
-      - id: ClothingCloakCmo
       - id: ClothingOuterCoatLabCmo
       - id: ClothingUniformJumpsuitCMOTurtle
       - id: ClothingUniformJumpskirtCMOTurtle
@@ -53,8 +46,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingNeckMantleHOP
-      - id: ClothingNeckCloakHop
       - id: ClothingHeadHatHopcap
       - id: ClothingOuterWinterHoP
       - id: ClothingEyesGlasses
@@ -66,10 +57,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingNeckMantleHOS
       - id: ClothingHeadHatBeretHoS
       - id: ClothingHeadHatHoshat
-      - id: ClothingNeckCloakHos
       - id: ClothingUniformJumpskirtHoSAlt
       - id: ClothingUniformJumpsuitHoSAlt
       - id: ClothingUniformJumpskirtHosFormal
@@ -83,13 +72,11 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingNeckCloakQm
       - id: ClothingHeadHatBeretQM
       - id: ClothingUniformJumpsuitQMFormal
       - id: ClothingUniformJumpsuitQMTurtleneck
       - id: ClothingUniformJumpskirtQMTurtleneck
       - id: ClothingHandsGlovesColorBrown
-      - id: ClothingNeckMantleQM
       - id: ClothingOuterWinterQM
 
 - type: entity
@@ -99,8 +86,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingNeckMantleRD
-      - id: ClothingNeckCloakRd
       - id: ClothingHeadHatBeretRND
       - id: ClothingHandsGlovesColorPurple
       - id: ClothingEyesGlasses
