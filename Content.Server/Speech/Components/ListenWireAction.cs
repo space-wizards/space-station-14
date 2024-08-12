@@ -87,7 +87,7 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
         if (!EntityManager.TryGetComponent<RadioMicrophoneComponent>(wire.Owner, out var radioMicroPhoneComp))
             return;
 
-        _radio.SendRadioMessage(wire.Owner, noiseMsg, _protoMan.Index<RadioChannelPrototype>(radioMicroPhoneComp.BroadcastChannel), wire.Owner);
+        _radio.SendRadioMessage(wire.Owner, noiseMsg, _protoMan.Index<RadioChannelPrototype>(radioMicroPhoneComp.BroadcastChannel), wire.Owner, nameOverride: Loc.GetString("wire-listen-pulse-identifier"), verbOverride: SpeechVerb);
 
         base.Pulse(user, wire);
     }
