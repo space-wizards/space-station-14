@@ -201,8 +201,18 @@ public abstract partial class SharedHandsSystem : EntitySystem
         var heldItemNames = EnumerateHeld(examinedUid, handsComp)
             .Where(entity => !HasComp<VirtualItemComponent>(entity))
             .Select(item => FormattedMessage.EscapeText(Identity.Name(item, EntityManager)))
-            .Select(itemName => Loc.GetString("comp-hands-examine-wrapper", ("item", itemName)))
-            .ToList();
+            .Select(itemName =>
+            {
+                // Check if the item name starts with "the" or contains "gloves" to prevent grammar issues
+                if (itemName.StartsWith("the", StringComparison.OrdinalIgnoreCase)
+                {
+                    return Loc.GetString("comp-hands-examine-wrapper-exempt", ("item", itemName));
+                }
+                else
+                {
+                    return Loc.GetString("comp-hands-examine-wrapper", ("item", itemName));
+                }
+            }).ToList();
 
         var locKey = heldItemNames.Count != 0 ? "comp-hands-examine" : "comp-hands-examine-empty";
         var locUser = ("user", Identity.Entity(examinedUid, EntityManager));
