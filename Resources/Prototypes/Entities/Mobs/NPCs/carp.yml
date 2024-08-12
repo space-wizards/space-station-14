@@ -164,6 +164,7 @@
       name: ghost-role-information-sentient-carp-name
       description: ghost-role-information-sentient-carp-description
       rules: ghost-role-information-space-dragon-summoned-carp-rules
+      roleType: TeamAntagonist
       raffle:
         settings: short
     - type: GhostTakeoverAvailable

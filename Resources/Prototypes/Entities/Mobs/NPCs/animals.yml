@@ -422,6 +422,7 @@
     name: ghost-role-information-mothroach-name
     description: ghost-role-information-mothroach-description
     rules: ghost-role-information-freeagent-rules
+    roleType: FreeAgent
   - type: Fixtures
     fixtures:
       fix1:
@@ -1320,6 +1321,7 @@
     name: ghost-role-information-monkey-name
     description: ghost-role-information-monkey-description
     rules: ghost-role-information-syndicate-monkey-reinforcement-rules
+    #roleType: TeamAntagonist TODO:ERRANT
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -1526,6 +1528,7 @@
     name: ghost-role-information-mouse-name
     description: ghost-role-information-mouse-description
     rules: ghost-role-information-freeagent-rules
+    roleType: FreeAgent
   - type: GhostTakeoverAvailable
   - type: Speech
     speechSounds: Squeak
@@ -2320,6 +2323,7 @@
       name: ghost-role-information-giant-spider-name
       description: ghost-role-information-giant-spider-description
       rules: ghost-role-information-giant-spider-rules
+      roleType: TeamAntagonist
       raffle:
         settings: short
     - type: GhostTakeoverAvailable
@@ -2828,6 +2832,7 @@
     allowMovement: true
     description: ghost-role-information-SyndiCat-description
     rules: ghost-role-information-SyndiCat-rules
+    roleType: TeamAntagonist
     raffle:
       settings: default
   - type: GhostTakeoverAvailable

@@ -38,6 +38,7 @@
     roleName: pai-system-role-name
     roleDescription: pai-system-role-description
     roleRules: ghost-role-information-familiar-rules
+    roleType: Familiar
     wipeVerbText: pai-system-wipe-device-verb-text
     wipeVerbPopup: pai-system-wiped-device
     stopSearchVerbText: pai-system-stop-searching-verb-text
