@@ -354,8 +354,8 @@
     state: ian
 
 - type: stealTargetGroup
-  id: AnimalBingus
-  name: Bingus
+  id: AnimalNamedCat
+  name: CMO's Cat
   sprite:
     sprite: Mobs/Pets/bingus.rsi
     state: bingus
