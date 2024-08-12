@@ -2,6 +2,7 @@
 using Content.Shared.APC;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Power.APC
 {
@@ -19,9 +20,8 @@ namespace Content.Client.Power.APC
         {
             base.Open();
 
-            _menu = new ApcMenu(this);
-            _menu.OnClose += Close;
-            _menu.OpenCentered();
+            _menu = this.CreateWindow<ApcMenu>();
+            _menu.OnBreaker += BreakerPressed;
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -35,16 +35,6 @@ namespace Content.Client.Power.APC
         public void BreakerPressed()
         {
             SendMessage(new ApcToggleMainBreakerMessage());
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (disposing)
-            {
-                _menu?.Dispose();
-            }
         }
     }
 }

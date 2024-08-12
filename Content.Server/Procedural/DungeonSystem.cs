@@ -33,7 +33,6 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     [Dependency] private readonly AnchorableSystem _anchorable = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly TileSystem _tile = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;

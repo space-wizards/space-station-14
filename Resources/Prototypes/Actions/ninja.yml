@@ -2,7 +2,7 @@
 - type: entity
   id: ActionToggleNinjaGloves
   name: Toggle ninja gloves
-  description: Toggles all glove actions on left click. Includes your doorjack, draining power, stunning enemies, downloading research and calling in a threat.
+  description: Toggles all glove actions on left click. Includes your doorjack, draining power, stunning enemies and hacking certain computers.
   components:
   - type: InstantAction
     priority: -13
@@ -21,7 +21,7 @@
       state: icon
     itemIconStyle: NoItem
     priority: -10
-    event: !type:CreateThrowingStarEvent {}
+    event: !type:CreateItemEvent {}
 
 - type: entity
   id: ActionRecallKatana
@@ -59,7 +59,7 @@
     # have to plan (un)cloaking ahead of time
     useDelay: 5
     priority: -9
-    event: !type:ToggleStealthEvent
+    event: !type:ToggleActionEvent
 
 # katana
 - type: entity
@@ -72,6 +72,10 @@
       sprite: Objects/Magic/magicactions.rsi
       state: blink
     itemIconStyle: NoItem
+    sound:
+      path: /Audio/Magic/blink.ogg
+      params:
+        volume: 5
     priority: -12
     event: !type:DashEvent
     checkCanAccess: false

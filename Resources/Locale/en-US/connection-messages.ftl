@@ -11,14 +11,14 @@ whitelist-playercount-invalid = {$min ->
 whitelist-not-whitelisted-rp = You are not whitelisted. To become whitelisted, visit our Discord (which can be found at https://spacestation14.io) and check the #rp-whitelist channel.
 
 cmd-whitelistadd-desc = Adds the player with the given username to the server whitelist.
-cmd-whitelistadd-help = Usage: whitelistadd <username>
+cmd-whitelistadd-help = Usage: whitelistadd <username or User ID>
 cmd-whitelistadd-existing = {$username} is already on the whitelist!
 cmd-whitelistadd-added = {$username} added to the whitelist
 cmd-whitelistadd-not-found = Unable to find '{$username}'
 cmd-whitelistadd-arg-player = [player]
 
 cmd-whitelistremove-desc = Removes the player with the given username from the server whitelist.
-cmd-whitelistremove-help = Usage: whitelistremove <username>
+cmd-whitelistremove-help = Usage: whitelistremove <username or User ID>
 cmd-whitelistremove-existing = {$username} is not on the whitelist!
 cmd-whitelistremove-removed = {$username} removed from the whitelist
 cmd-whitelistremove-not-found = Unable to find '{$username}'
