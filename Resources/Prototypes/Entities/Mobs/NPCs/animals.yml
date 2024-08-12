@@ -2067,7 +2067,7 @@
 
 - type: entity
   name: grenade penguin
-  parent: [ MobPenguin, MobCombat ]
+  parent: [ MobPenguin, MobCombat, BaseSyndicateContraband ]
   id: MobGrenadePenguin
   description: A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
   components:

@@ -107,7 +107,7 @@
 #Empty black
 - type: entity
   id: JetpackBlack
-  parent: BaseJetpack
+  parent: [BaseJetpack, BaseSyndicateContraband]
   name: jetpack
   suffix: Empty
   components:
@@ -140,7 +140,7 @@
 #Empty captain
 - type: entity
   id: JetpackCaptain
-  parent: BaseJetpack
+  parent: [BaseJetpack, BaseGrandTheftContraband]
   name: captain's jetpack
   suffix: Empty
   components:
