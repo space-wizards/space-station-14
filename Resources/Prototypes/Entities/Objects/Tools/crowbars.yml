@@ -60,7 +60,7 @@
   name: emergency crowbar
   parent: BaseCrowbar
   id: CrowbarRed
-  description: A pocket crowbar designed to pry open doors and firelocks during power outages.
+  description: An emergency crowbar designed to pry open doors and firelocks during power outages.
   components:
   - type: Tag
     tags:
@@ -157,7 +157,7 @@
 - type: entity
   parent: BaseCrowbar
   id: CrowbarYellow
-  description: A pocket crowbar designed to pry open doors and firelocks during power outages, dispensed from Engineering.
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders, dispensed from Engineering.
   components:
   - type: Sprite
     layers:
