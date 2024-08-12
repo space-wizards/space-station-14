@@ -757,56 +757,6 @@
   completetime: 3.2
   materials:
     Cloth: 500
-    Durathread: 400
-
-# Mantles
-- type: latheRecipe
-  id: ClothingNeckMantleCap
-  result: ClothingNeckMantleCap
-  completetime: 2.8
-  materials:
-    Cloth: 200
-    Durathread: 150
-
-- type: latheRecipe
-  id: ClothingNeckMantleCE
-  result: ClothingNeckMantleCE
-  completetime: 2.8
-  materials:
-    Cloth: 200
-    Durathread: 150
-
-- type: latheRecipe
-  id: ClothingNeckMantleCMO
-  result: ClothingNeckMantleCMO
-  completetime: 2.8
-  materials:
-    Cloth: 200
-    Durathread: 150
-
-- type: latheRecipe
-  id: ClothingNeckMantleHOP
-  result: ClothingNeckMantleHOP
-  completetime: 2.8
-  materials:
-    Cloth: 200
-    Durathread: 150
-
-- type: latheRecipe
-  id: ClothingNeckMantleHOS
-  result: ClothingNeckMantleHOS
-  completetime: 2.8
-  materials:
-    Cloth: 200
-    Durathread: 150
-
-- type: latheRecipe
-  id: ClothingNeckMantleRD
-  result: ClothingNeckMantleRD
-  completetime: 2.8
-  materials:
-    Cloth: 200
-    Durathread: 150
     Durathread: 300
 
 # Winter coats
