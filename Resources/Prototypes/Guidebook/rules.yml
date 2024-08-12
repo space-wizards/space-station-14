@@ -393,9 +393,6 @@
   children:
   - SpaceLawCrimeList
   - SpaceLawProcessingPrisoners #GreyStation
-  - SpaceLawControlledSubstances
-  - SpaceLawRestrictedGear
-  - SpaceLawRestrictedWeapons
 
 - type: guideEntry
   id: SpaceLawCrimeList
