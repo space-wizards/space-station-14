@@ -1878,6 +1878,13 @@
   - type: Tag
     tags:
     - Fruit
+  - type: FoodSequenceElement
+    entries:
+      burger:
+        name: food-sequence-burger-content-capfruit
+        sprite:
+          sprite: Objects/Specific/Hydroponics/capfruit.rsi
+          state: produce
 
 - type: entity
   name: capfruit

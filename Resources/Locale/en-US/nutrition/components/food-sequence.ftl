@@ -52,6 +52,7 @@ food-sequence-burger-content-ambrosia = ambro
 food-sequence-burger-content-galaxy = galaxy
 food-sequence-burger-content-glasstle = glass
 food-sequence-burger-content-gatfruit = gat
+food-sequence-burger-content-capfruit = cap
 food-sequence-burger-content-rice = rice
 food-sequence-burger-content-soy = soy
 food-sequence-burger-content-koibean = koi
