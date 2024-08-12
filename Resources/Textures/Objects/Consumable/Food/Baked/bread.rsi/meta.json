@@ -34,9 +34,17 @@
     {
       "name": "baguette"
     },
-	{
+    {
       "name": "baguette-equipped-BELT",
-	  "directions": 4
+      "directions": 4
+    },
+    {
+      "name": "baguette-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "baguette-inhand-right",
+      "directions": 4
     },
     {
       "name": "banana"
