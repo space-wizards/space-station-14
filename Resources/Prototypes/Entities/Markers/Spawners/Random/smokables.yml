@@ -54,20 +54,32 @@
       - id: CigPackBlue
       - id: CigPackBlack
       - id: PackPaperRollingFilters
+    #Butts
+    - !type:GroupSelector
+      weight: 3
+      children:
+      - id: CigaretteSpent
+      - id: CigarSpent
+        weight: 0.2
     #Rare
     - !type:GroupSelector
       children:
       - id: RandomSoakedCigarette
-      - id: Joint
-      - id: JointRainbow
-      - id: Blunt
-      - id: BluntRainbow
-      - id: CigPackMixedMedical
-      - id: CigPackMixed
-      - id: CigPackMixedNasty
+      - !type:GroupSelector
+        children:
+        - id: Joint
+        - id: JointRainbow
+          weight: 0.5
+        - id: Blunt
+        - id: BluntRainbow
+          weight: 0.5
+      - !type:GroupSelector
+        children:
+        - id: CigPackMixedMedical
+        - id: CigPackMixed
+        - id: CigPackMixedNasty
       - id: CigarGold
-      - id: CigaretteSpent
-      - id: CigarSpent
+          weight: 0.10
 
 - type: entityTable
   id: SoakedSmokesTable
