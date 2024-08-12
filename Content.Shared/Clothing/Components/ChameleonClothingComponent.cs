@@ -44,6 +44,17 @@ public sealed partial class ChameleonClothingComponent : Component
     [ViewVariables]
     [DataField]
     public bool EmpAffected = true;
+
+    /// <summary>
+    ///     Intensity of clothes change on EMP.
+    ///     Can be interpreted as "How many times clothes will change every second?".
+    ///     Useless without <see cref="EmpAffected"/> set to true.
+    /// </summary>
+    [ViewVariables]
+    [DataField]
+    public int EmpChangeIntensity = 7;
+
+    public TimeSpan NextEmpChange = TimeSpan.Zero; // When we need to change outfit next time
 }
 
 [Serializable, NetSerializable]

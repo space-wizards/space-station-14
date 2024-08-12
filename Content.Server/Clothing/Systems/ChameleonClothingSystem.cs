@@ -61,6 +61,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     {
         if (component.EmpAffected)
         {
+            component.NextEmpChange = _timing.CurTime + TimeSpan.FromMilliseconds(MathF.Floor(1000 / component.EmpChangeIntensity));
             args.Affected = true;
             args.Disabled = true;
         }
@@ -120,6 +121,9 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         {
             if (_timing.CurTime < emp.DisabledUntil)
             {
+                if (_timing.CurTime < chameleon.NextEmpChange)
+                    continue;
+
                 // randomly pick cloth element from available
                 var variants = GetValidTargets(chameleon.Slot);
                 var clothPickIndex = _random.Next(variants.Count());
@@ -127,6 +131,8 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
                 // and apply it
                 SetSelectedPrototype(uid, pick, component: chameleon);
+
+                chameleon.NextEmpChange += TimeSpan.FromMilliseconds(MathF.Floor(1000 / chameleon.EmpChangeIntensity));
             }
         }
     }
