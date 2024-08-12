@@ -52686,10 +52686,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: Construction
-      containers:
-      - EntityStorageComponent
-      - entity_storage
   - uid: 7840
     components:
     - type: Transform
@@ -52723,10 +52719,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: Construction
-      containers:
-      - EntityStorageComponent
-      - entity_storage
   - uid: 22442
     components:
     - type: Transform
@@ -52782,10 +52774,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: Construction
-      containers:
-      - EntityStorageComponent
-      - entity_storage
 - proto: CrateFilledSpawner
   entities:
   - uid: 3505
@@ -52852,10 +52840,6 @@ entities:
     - type: Transform
       pos: -28.5,17.5
       parent: 30
-    - type: Construction
-      containers:
-      - EntityStorageComponent
-      - entity_storage
     - type: EntityStorage
       air:
         volume: 200
@@ -52933,10 +52917,6 @@ entities:
     - type: Transform
       pos: -32.5,12.5
       parent: 30
-    - type: Construction
-      containers:
-      - EntityStorageComponent
-      - entity_storage
     - type: EntityStorage
       air:
         volume: 200
@@ -52960,10 +52940,6 @@ entities:
     - type: Transform
       pos: 46.5,23.5
       parent: 30
-    - type: Construction
-      containers:
-      - EntityStorageComponent
-      - entity_storage
     - type: EntityStorage
       air:
         volume: 200
