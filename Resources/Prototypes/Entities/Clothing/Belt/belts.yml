@@ -643,7 +643,7 @@
     sprite: Clothing/Belt/salvagewebbing.rsi
 
 - type: entity
-  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase]
+  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseSyndicateContraband]
   id: ClothingBeltMilitaryWebbing
   name: chest rig
   description: A set of tactical webbing worn by Syndicate boarding parties.

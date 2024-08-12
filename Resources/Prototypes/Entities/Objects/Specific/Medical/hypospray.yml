@@ -436,7 +436,7 @@
     handle: false # don't want the sound to stop the self-inject from triggering
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseSyndicateContraband ]
   id: HypopenBox
   name: hypopen box
   description: A small box containing a hypopen. Packaging disintegrates when opened, leaving no evidence behind.
