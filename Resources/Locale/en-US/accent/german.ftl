@@ -119,11 +119,8 @@ accent-german-words-replace-38 = artefakt
 accent-german-words-39 = dumb
 accent-german-words-replace-39 = dumm
 
-accent-german-words-39 = stupid
-accent-german-words-replace-39 = doof
-
-accent-german-words-40 = car
-accent-german-words-replace-40 = auto
+accent-german-words-40 = stupid
+accent-german-words-replace-40 = doof
 
 accent-german-words-41 = wonderful
 accent-german-words-replace-41 = wunderbar
@@ -197,3 +194,6 @@ accent-german-words-61-3 = lightning ball
 accent-german-words-61-4 = ball lightning
 accent-german-words-61-5 = tesla
 accent-german-words-replace-61 = kugelblitz
+
+accent-german-words-62 = car
+accent-german-words-replace-62 = auto

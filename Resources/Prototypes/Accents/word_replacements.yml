@@ -564,9 +564,6 @@
     accent-german-words-61-3: accent-german-words-replace-61
     accent-german-words-61-4: accent-german-words-replace-61
     accent-german-words-62: accent-german-words-replace-62
-    accent-german-words-63: accent-german-words-replace-63
-    accent-german-words-64: accent-german-words-replace-64
-    accent-german-words-64-2: accent-german-words-replace-64
 
 - type: accent
   id: russian
