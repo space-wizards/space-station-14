@@ -7,11 +7,6 @@
     - !type:DepartmentTimeRequirement
       department: Security
       time: 36000 #10 hrs
-    - !type:TraitsRequirement
-      inverted: true
-      traits:
-      - Pacifist
-      - Blindness
   startingGear: SecurityOfficerGear
   icon: "JobIconSecurityOfficer"
   supervisors: job-supervisors-hos
