@@ -53,7 +53,8 @@
 
 - type: loadout
   id: CaptainMantle
-  equipment: CaptainMantle
+  equipment:
+    neck: CaptainMantle
   effects:
   - !type:GroupLoadoutEffect
     proto: MasterCap

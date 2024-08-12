@@ -16,7 +16,8 @@
 # Neck
 - type: loadout
   id: ResearchDirectorMantle
-  equipment: ResearchDirectorMantle
+  equipment:
+    neck: ResearchDirectorMantle
   effects:
   - !type:GroupLoadoutEffect
     proto: MasterRD

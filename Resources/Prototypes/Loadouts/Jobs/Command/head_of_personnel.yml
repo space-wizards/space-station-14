@@ -43,7 +43,8 @@
 
 - type: loadout
   id: HoPMantle
-  equipment: HoPMantle
+  equipment:
+    neck: HoPMantle
   effects:
   - !type:GroupLoadoutEffect
     proto: MasterHoP

@@ -53,7 +53,8 @@
 
 - type: loadout
   id: QuartermasterMantle
-  equipment: QuartermasterMantle
+  equipment: 
+    neck: QuartermasterMantle
   effects:
   - !type:GroupLoadoutEffect
     proto: MasterQM

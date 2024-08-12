@@ -48,7 +48,8 @@
 
 - type: loadout
   id: ChiefMedicalOfficerMantle
-  equipment: ChiefMedicalOfficerMantle
+  equipment:
+    neck: ChiefMedicalOfficerMantle
   effects:
   - !type:GroupLoadoutEffect
     proto: MasterCMO

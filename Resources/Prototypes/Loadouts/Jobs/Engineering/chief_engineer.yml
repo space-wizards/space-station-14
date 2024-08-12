@@ -47,7 +47,8 @@
 
 - type: loadout
   id: ChiefEngineerMantle
-  equipment: ChiefEngineerMantle
+  equipment:
+    neck: ChiefEngineerMantle
   effects:
   - !type:GroupLoadoutEffect
     proto: MasterCE
