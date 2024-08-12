@@ -204,7 +204,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
             .Select(itemName =>
             {
                 // Check if the item name starts with "the" or contains "gloves" to prevent grammar issues
-                if (itemName.StartsWith("the", StringComparison.OrdinalIgnoreCase)
+                if (itemName.StartsWith("the", StringComparison.OrdinalIgnoreCase))
                 {
                     return Loc.GetString("comp-hands-examine-wrapper-exempt", ("item", itemName));
                 }
