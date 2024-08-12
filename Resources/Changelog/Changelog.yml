@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Fixed a bug that would cause items in your inventory to get stuck to
-      your cursor.
-    type: Fix
-  id: 6599
-  time: '2024-05-17T07:51:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27960
 - author: lzk228
   changes:
   - message: Fixed bug with pathological liar and zombie accents.
@@ -3799,3 +3791,11 @@
   id: 7098
   time: '2024-08-12T07:14:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30929
+- author: LeoSantich
+  changes:
+  - message: Updated 'narsie' and 'ratvar' to 'Nar'Sie' and 'Ratvar' in randomly generated
+      storybook content.
+    type: Tweak
+  id: 7099
+  time: '2024-08-12T23:20:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30954
