@@ -403,9 +403,9 @@ public abstract class SharedStorageSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var storageOpened = _ui.IsUiOpen(uid, StorageComponent.StorageUiKey.Key, args.Performer);
+        var uiOpen = _ui.IsUiOpen(uid, StorageComponent.StorageUiKey.Key, args.Performer);
 
-        if (storageOpened)
+        if (uiOpen)
             _ui.CloseUi(uid, StorageComponent.StorageUiKey.Key, args.Performer);
         else
             OpenStorageUI(uid, args.Performer, storageComp, false);
