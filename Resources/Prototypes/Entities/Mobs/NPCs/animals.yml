@@ -1321,7 +1321,7 @@
     name: ghost-role-information-monkey-name
     description: ghost-role-information-monkey-description
     rules: ghost-role-information-syndicate-monkey-reinforcement-rules
-    #roleType: TeamAntagonist TODO:ERRANT
+    roleType: TeamAntagonist
     raffle:
       settings: default
   - type: GhostTakeoverAvailable

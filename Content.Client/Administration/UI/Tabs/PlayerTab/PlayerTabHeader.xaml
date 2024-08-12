@@ -33,7 +33,7 @@
                MouseFilter="Pass"/>
         <cc:VSeparator/>
         <Label Name="RoleTypeLabel"
-               SizeFlagsStretchRatio="1"
+               SizeFlagsStretchRatio="2"
                HorizontalExpand="True"
                ClipText="True"
                Text="{Loc player-tab-roletype}"

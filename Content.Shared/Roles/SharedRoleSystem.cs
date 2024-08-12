@@ -6,7 +6,9 @@ using Content.Shared.Roles.Jobs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Roles;
@@ -191,15 +193,15 @@ public abstract class SharedRoleSystem : EntitySystem
 
     private void SetRoleType(EntityUid mindEnt, ProtoId<RoleTypePrototype> roleTypeId)
     {
-        if (!_prototypes.TryIndex(roleTypeId, out var dontcare)) //TODO:ERRANT surely there is one that actually does this?
+        if (!_prototypes.HasIndex(roleTypeId))
         {
-            // TODO:ERRANT Uh oh, failed RoleType change
+            // TODO:ERRANT Log failed RoleType change - wrong ProtoId
            return;
         }
 
         if (!TryComp<MindComponent>(mindEnt, out var comp))
         {
-            // TODO:ERRANT Uh oh, failed RoleType change
+            // TODO:ERRANT Decide if this needs logging (shouldn't even be possible)
             return;
         }
 
@@ -207,9 +209,24 @@ public abstract class SharedRoleSystem : EntitySystem
             return;
 
         comp.RoleType = roleTypeId;
-        // _adminLogger.Add(LogType.Mind, LogImpact.Low,
-        //     $"Role components {string.Join(components.Keys.ToString(), ", ")} added to mind of {_minds.MindOwnerLoggingString(mind)}");
-        Dirty(comp.Owner, comp); //TODO:ERRANT remove obsolete
+        Dirty(mindEnt, comp);
+
+        if (_minds.TryGetSession(mindEnt, out var session))
+        {
+            RaiseNetworkEvent(new MindRoleTypeChangedEvent(), session.Channel);
+
+            // TODO:ERRANT Adminlog Roly Type change
+            // _adminLogger.Add(LogType.Mind, LogImpact.Low, //TODO:ERRANT log the successful role type change
+            //     $"Role components {string.Join(components.Keys.ToString(), ", ")} added to mind of {_minds.MindOwnerLoggingString(mind)}");
+
+        }
+        else
+        {
+            // TODO:ERRANT Adminlog Role Type change without immediate clientside update
+            // _adminLogger.Add(LogType.Mind, LogImpact.Low, //TODO:ERRANT log the successful role type change
+            //     $"Role components {string.Join(components.Keys.ToString(), ", ")} added to mind of {_minds.MindOwnerLoggingString(mind)}");
+        }
+
     }
 
     /// <summary>
@@ -387,4 +404,14 @@ public abstract class SharedRoleSystem : EntitySystem
 
         return antag.Requirements;
     }
+}
+
+
+/// <summary>
+/// Raised on the client to update Role Type on the character window, in case it happened to be open.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class MindRoleTypeChangedEvent : EntityEventArgs
+{
+
 }

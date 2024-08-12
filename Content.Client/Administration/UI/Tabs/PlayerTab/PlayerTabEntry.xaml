@@ -25,7 +25,7 @@
                ClipText="True"/>
         <customControls:VSeparator/>
         <Label Name="RoleTypeLabel"
-               SizeFlagsStretchRatio="1"
+               SizeFlagsStretchRatio="2"
                HorizontalExpand="True"
                ClipText="True"/>
         <customControls:VSeparator/>

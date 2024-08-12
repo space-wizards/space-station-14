@@ -10,7 +10,7 @@ namespace Content.Shared.Roles;
 [ByRefEvent]
 public readonly record struct MindGetAllRolesEvent(List<RoleInfo> Roles);
 
-[ByRefEvent] //TODO:ERRANT Move this out of here
+[ByRefEvent] //TODO:ERRANT This should probably be merged with MindGetAllRolesEvent
 public readonly record struct GetAllRoleTypesEvent(List<RoleTypePrototype> RoleTypes);
 
 /// <summary>

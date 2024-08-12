@@ -11,6 +11,7 @@ using Content.Shared.Database;
 using Content.Shared.Input;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -34,6 +35,13 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
     [UISystemDependency] private readonly SpriteSystem _sprite = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeNetworkEvent<MindRoleTypeChangedEvent>(OnRoleTypeChanged);
+    }
 
     private CharacterWindow? _window;
     private MenuButton? CharacterButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.CharacterButton;
@@ -118,26 +126,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
         _window.SpriteView.SetEntity(entity);
 
-        if (!_ent.TryGetComponent<MindContainerComponent>(_player.LocalEntity, out var container)
-            || container.Mind is null)
-            return;
-
-        var mind = _ent.EnsureComponent<MindComponent>(container.Mind.Value);
-
-        string? roleText = null;
-        var color = Color.White;
-        if (_prototypeManager.TryIndex(mind.RoleType, out var proto))
-        {
-            roleText = proto.Name; //TODO:ERRANT if this was just for roletext, I could compress it into the variable declaration
-            color = proto.Color;
-        }
-        else
-            roleText = "role-type-name-fallback"; //TODO:ERRANT Decide what to do in this fail state
-
-        _window.RoleType.Text = Loc.GetString(roleText);
-        _window.RoleType.FontColorOverride = color;
-        //TODO:ERRANT. LATER: Mouseover tooltip and Guidebook link
-
+        UpdateRoleType();
 
         _window.NameLabel.Text = entityName;
         _window.SubText.Text = job;
@@ -200,6 +189,38 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         }
 
         _window.RolePlaceholder.Visible = briefing == null && !controls.Any() && !objectives.Any();
+    }
+
+    private void OnRoleTypeChanged(MindRoleTypeChangedEvent ev,EntitySessionEventArgs _)
+    {
+        UpdateRoleType();
+    }
+
+    private void UpdateRoleType()
+    {
+        if (_window == null || !_window.IsOpen)
+            return;
+
+        if (!_ent.TryGetComponent<MindContainerComponent>(_player.LocalEntity, out var container)
+            || container.Mind is null)
+            return;
+
+        var mind = _ent.EnsureComponent<MindComponent>(container.Mind.Value);
+
+        var roleText = Loc.GetString("role-type-neutral-name");
+        var color = Color.White;
+        if (_prototypeManager.TryIndex(mind.RoleType, out var proto))
+        {
+            roleText = Loc.GetString(proto.Name);
+            color = proto.Color;
+        }
+        else
+        {
+            // TODO:ERRANT Adminlog Player UI failed to get RoleType - displayed Neutral instead
+        }
+
+        _window.RoleType.Text = roleText;
+        _window.RoleType.FontColorOverride = color;
     }
 
     private void CharacterDetached(EntityUid uid)
