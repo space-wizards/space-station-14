@@ -92,7 +92,6 @@
       weight: 23
       children:
       - id: ClothingNeckCloakHerald
-      - id: ClothingHeadHelmetTemplar
       # Cloaks
       - !type:GroupSelector
         children:
