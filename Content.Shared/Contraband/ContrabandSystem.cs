@@ -34,7 +34,7 @@ public sealed class ContrabandSystem : EntitySystem
 
     private void OnDetailedExamine(EntityUid ent,ContrabandComponent component, ref GetVerbsEvent<ExamineVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess)
+        if (!args.CanInteract)
             return;
 
         var severity = _proto.Index(component.Severity);
