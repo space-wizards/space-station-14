@@ -1749,7 +1749,7 @@
   name: uplink-combat-bakery-name
   description: uplink-combat-bakery-desc
   icon: { sprite:  Objects/Consumable/Food/Baked/bread.rsi, state: baguette}
-  productEntity: WeaponBaguette
+  productEntity: CopmbatBakeryKit
   cost:
     Telecrystal: 6
   categories:

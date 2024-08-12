@@ -9,9 +9,10 @@
     wideAnimationRotation: -135
     damage:
       types:
-        Blunt: 18 # that's some hard crust
+        Blunt: 20 # that's some hard crust
         Structural: 10
     soundHit:
       collection: MetalThud
-  - type: Clothing
-    quickEquip: true # default to putting away rather than eating
+  - type: Reflect
+    reflectProb: 0.05
+    spread: 90
