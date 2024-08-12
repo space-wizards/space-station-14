@@ -86,7 +86,7 @@
     #Species that do not work with nukies should be included in this list.
     #Once the issues are fixed the species should be removed from this list to be enabled.
     #Balance concerns are not a valid reason to disable a species, except for high-impact Nukie-specific exploits.
-    - Vox
+    #- Vox
 
 - type: entity
   parent: BaseNukeopsRule
@@ -103,6 +103,8 @@
       fallbackRoles: [ Nukeops, NukeopsMedic ]
       spawnerPrototype: SpawnPointNukeopsCommander
       startingGear: SyndicateCommanderGearFull
+      roleLoadout:
+      - RoleSurvivalSyndicate
       components:
       - type: NukeOperative
       - type: RandomMetadata
@@ -119,6 +121,8 @@
       fallbackRoles: [ Nukeops, NukeopsCommander ]
       spawnerPrototype: SpawnPointNukeopsMedic
       startingGear: SyndicateOperativeMedicFull
+      roleLoadout:
+      - RoleSurvivalSyndicate
       components:
       - type: NukeOperative
       - type: RandomMetadata
@@ -137,6 +141,8 @@
       max: 3
       playerRatio: 10
       startingGear: SyndicateOperativeGearFull
+      roleLoadout:
+      - RoleSurvivalSyndicate
       components:
       - type: NukeOperative
       - type: RandomMetadata
