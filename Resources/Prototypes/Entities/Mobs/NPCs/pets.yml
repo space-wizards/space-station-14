@@ -1012,3 +1012,49 @@
         types:
           Slash: 12
           Bloodloss: 5
+
+
+- type: entity
+  name: major
+  id: MobBearSpaceMajor
+  parent: MobSpaceNice
+  description: Nanotrasen's majority shareholder.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/major.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: major
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: major_glow
+      shader: unshaded
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: major
+        BaseUnshaded: glow_major
+      Critical:
+        Base: major_dead
+      Dead:
+        Base: major_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatBear
+      amount: 3
+    - id: MaterialHideBear
+      amount: 1
+    - id: ClothingHeadHatCentcom
+      amount: 1
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: Vocal
+    sounds:
+      Unsexed: Bear
+  - type: InteractionPopup
+    successChance: 0.25
+    interactSuccessString: petting-success-bear
+    interactFailureString: petting-failure-bear
+    interactSuccessSound:
+      path: /Audio/Animals/sloth_squeak.ogg
+
