@@ -70,7 +70,7 @@
       map: ["enum.StorageVisualLayers.Base"]
     - state: unlocked
       shader: unshaded
-      # used to keep the unlocked light visible while open. 
+      # used to keep the unlocked light visible while open.
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
     - state: locked
@@ -342,7 +342,7 @@
 - type: entity
   id: ShelfKitchen
   parent: ShelfBase
-  name: cooking shelf
+  name: kitchen shelf
   description: Holds knifes, spice, and everything nice!
   components:
   - type: Sprite
@@ -385,6 +385,9 @@
     maxItemSize: Normal
     whitelist:
       tags:
+        - DrinkBottle
+        - DrinkCan
+        - DrinkCup
         - DrinkGlass
         - BoxCardboard
         - MonkeyCube
@@ -397,6 +400,7 @@
         - RollingPin
         - Ingredient
         - Trash
+        - Plastic
   - type: Construction
     graph: Shelf
     node: ShelfKitchen

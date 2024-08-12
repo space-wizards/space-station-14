@@ -92,6 +92,7 @@
         Blunt: 5
   - type: StaticPrice
     price: 30
+  - type: DnaSubstanceTrace
 
 - type: entity
   parent: BaseItem
@@ -153,6 +154,7 @@
     damageModifierSet: Glass
   - type: StaticPrice
     price: 30
+  - type: DnaSubstanceTrace
 
 - type: entity
   name: beaker
@@ -303,6 +305,7 @@
     inHandsFillBaseName: -fill-
   - type: StaticPrice
     price: 40
+  - type: DnaSubstanceTrace
   - type: Tag
     tags:
     - Dropper
