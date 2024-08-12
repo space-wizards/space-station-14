@@ -499,6 +499,7 @@
     accent-german-words-7: accent-german-words-replace-7
     accent-german-words-8: accent-german-words-replace-8
     accent-german-words-9: accent-german-words-replace-9
+    accent-german-words-9-2: accent-german-words-replace-9
     accent-german-words-10: accent-german-words-replace-10
     accent-german-words-10-2: accent-german-words-replace-10
     accent-german-words-11: accent-german-words-replace-11
@@ -529,6 +530,7 @@
     accent-german-words-36: accent-german-words-replace-36
     accent-german-words-37: accent-german-words-replace-37
     accent-german-words-38: accent-german-words-replace-38
+    accent-german-words-38-2: accent-german-words-replace-38
     accent-german-words-39: accent-german-words-replace-39
     accent-german-words-40: accent-german-words-replace-40
     accent-german-words-41: accent-german-words-replace-41
@@ -538,11 +540,11 @@
     accent-german-words-45: accent-german-words-replace-45
     accent-german-words-46: accent-german-words-replace-46
     accent-german-words-47: accent-german-words-replace-47
+    accent-german-words-47-2: accent-german-words-replace-47
     accent-german-words-48: accent-german-words-replace-48
     accent-german-words-49: accent-german-words-replace-49
     accent-german-words-50: accent-german-words-replace-50
     accent-german-words-51: accent-german-words-replace-51
-    accent-german-words-51-2: accent-german-words-replace-51
     accent-german-words-52: accent-german-words-replace-52
     accent-german-words-53: accent-german-words-replace-53
     accent-german-words-53-2: accent-german-words-replace-53
@@ -565,13 +567,6 @@
     accent-german-words-63: accent-german-words-replace-63
     accent-german-words-64: accent-german-words-replace-64
     accent-german-words-64-2: accent-german-words-replace-64
-    accent-german-words-65: accent-german-words-replace-65
-    accent-german-words-66: accent-german-words-replace-66
-    accent-german-words-66-2: accent-german-words-replace-66
-    accent-german-words-67: accent-german-words-replace-67
-    accent-german-words-67-2: accent-german-words-replace-67
-    accent-german-words-68: accent-german-words-replace-68
-    accent-german-words-69: accent-german-words-replace-69
 
 - type: accent
   id: russian

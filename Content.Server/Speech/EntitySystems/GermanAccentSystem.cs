@@ -47,33 +47,6 @@ public sealed class GermanAccentSystem : EntitySystem
             msgBuilder[match.Index] = (char) (msgBuilder[match.Index] + 6);
         }
 
-        // Random Umlaut Time!
-        var umlautCooldown = 0;
-        for (var i = 0; i < msgBuilder.Length; i++)
-        {
-            if (umlautCooldown == 0)
-            {
-                if (_random.Prob(0.15f)) // 15% of all eligible vowels become umlauts)
-                {
-                    msgBuilder[i] = msgBuilder[i] switch
-                    {
-                        'A' => 'Ä',
-                        'a' => 'ä',
-                        'O' => 'Ö',
-                        'o' => 'ö',
-                        'U' => 'Ü',
-                        'u' => 'ü',
-                        _ => msgBuilder[i]
-                    };
-                    umlautCooldown = 4;
-                }
-            }
-            else
-            {
-                umlautCooldown--;
-            }
-        }
-
         return msgBuilder.ToString();
     }
 

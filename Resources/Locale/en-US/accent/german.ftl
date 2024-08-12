@@ -17,24 +17,25 @@ accent-german-words-replace-5 = krankenhaus
 accent-german-words-6 = sausage
 accent-german-words-replace-6 = wurst
 
-accent-german-words-7 = sausages
-accent-german-words-replace-7 = wieners
+accent-german-words-7 = man
+accent-german-words-replace-7 = mann
 
-accent-german-words-8 = steak
-accent-german-words-replace-8 = schnitzel
+accent-german-words-8 = men
+accent-german-words-replace-8 = männer
 
-accent-german-words-9 = steaks
-accent-german-words-replace-9 = schnitzels
+accent-german-words-9 = woman
+accent-german-words-9-2 = lady
+accent-german-words-replace-9 = frau
 
-accent-german-words-10 = beer
-accent-german-words-10-2 = beers
-accent-german-words-replace-10 = bier
+accent-german-words-10 = women
+accent-german-words-10-2 = ladies
+accent-german-words-replace-10 = frauen
 
-accent-german-words-11 = that was an order
-accent-german-words-replace-11 = das war ein Befehl
+accent-german-words-11 = gentleman
+accent-german-words-replace-11 = herr
 
-accent-german-words-12 = butterfly
-accent-german-words-replace-12 = schmetterling
+accent-german-words-12 = gentlemen
+accent-german-words-replace-12 = herren
 
 accent-german-words-13 = my god
 accent-german-words-replace-13 = mein gott
@@ -51,8 +52,8 @@ accent-german-words-replace-16 = dummkopf
 accent-german-words-17 = idiots
 accent-german-words-replace-17 = dummköpfe
 
-accent-german-words-18 = sec
-accent-german-words-replace-18 = sek
+accent-german-words-18 = butterfly
+accent-german-words-replace-18 = schmetterling
 
 accent-german-words-19 = machine
 accent-german-words-replace-19 = maschine
@@ -105,17 +106,21 @@ accent-german-words-replace-34 = rucksack
 accent-german-words-35 = medicine
 accent-german-words-replace-35 = medizin
 
-accent-german-words-36 = doc
-accent-german-words-replace-36 = dok
+accent-german-words-36 = accent
+accent-german-words-replace-36 = akzent
 
-accent-german-words-37 = doctor
-accent-german-words-replace-37 = doktor
+accent-german-words-37 = anomaly
+accent-german-words-replace-37 = anomalie
 
-accent-german-words-38 = doctors
-accent-german-words-replace-38 = doktors
+accent-german-words-38 = artifact
+accent-german-words-38-2 = artefact
+accent-german-words-replace-38 = artefakt
+
+accent-german-words-39 = dumb
+accent-german-words-replace-39 = dumm
 
 accent-german-words-39 = stupid
-accent-german-words-replace-39 = dumm
+accent-german-words-replace-39 = doof
 
 accent-german-words-40 = car
 accent-german-words-replace-40 = auto
@@ -138,8 +143,9 @@ accent-german-words-replace-45 = offizier
 accent-german-words-46 = commander
 accent-german-words-replace-46 = kommandant
 
-accent-german-words-47 = command
-accent-german-words-replace-47 = kommando
+accent-german-words-47 = beer
+accent-german-words-47-2 = beers
+accent-german-words-replace-47 = bier
 
 accent-german-words-48 = hi
 accent-german-words-replace-48 = hallo
@@ -151,7 +157,6 @@ accent-german-words-50 = ambulance
 accent-german-words-replace-50 = krankenwagen
 
 accent-german-words-51 = goodbye
-accent-german-words-51-2 = farewell
 accent-german-words-replace-51 = auf Wiedersehen
 
 accent-german-words-52 = bye
@@ -192,30 +197,3 @@ accent-german-words-61-3 = lightning ball
 accent-german-words-61-4 = ball lightning
 accent-german-words-61-5 = tesla
 accent-german-words-replace-61 = kugelblitz
-
-accent-german-words-62 = accent
-accent-german-words-replace-62 = akzent
-
-accent-german-words-63 = anomaly
-accent-german-words-replace-63 = anomalie
-
-accent-german-words-64 = artifact
-accent-german-words-64-2 = artefact
-accent-german-words-replace-64 = artefakt
-
-accent-german-words-65 = man
-accent-german-words-replace-65 = mann
-
-accent-german-words-66 = woman
-accent-german-words-66-2 = lady
-accent-german-words-replace-66 = fräulein
-
-accent-german-words-67 = women
-accent-german-words-67-2 = ladies
-accent-german-words-replace-67 = fräuleins
-
-accent-german-words-68 = gentleman
-accent-german-words-replace-68 = herr
-
-accent-german-words-69 = gentlemen
-accent-german-words-replace-69 = herren
