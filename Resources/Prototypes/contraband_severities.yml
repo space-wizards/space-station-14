@@ -4,6 +4,11 @@
   id: Minor
   examineText: contraband-examine-text-Minor
 
+# Dangerous fucking shit that doesn't belong to CyberSun or NanoTrasen, RPGs, retro laser blasters, unholy things
+- type: contrabandSeverity
+  id: Major
+  examineText: contraband-examine-text-Major
+
 # Having this without a good reason might get you yelled at by security. (spears, shivs, etc).
 # or, Having this as a regular crew member, not the department it was made for, is considered theft IC. (rcd, sec gear, etc)
 - type: contrabandSeverity

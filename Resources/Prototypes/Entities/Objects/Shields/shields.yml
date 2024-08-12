@@ -64,7 +64,7 @@
 
 - type: entity
   name: riot shield
-  parent: BaseShield
+  parent: [ BaseShield, BaseRestrictedContraband ]
   id: RiotShield
   description: A large tower shield. Good for controlling crowds.
   components:
@@ -85,7 +85,7 @@
 
 - type: entity
   name: riot laser shield
-  parent: BaseShield
+  parent: [ BaseShield, BaseRestrictedContraband ]
   id: RiotLaserShield
   description: A riot shield built for withstanding lasers, but not much else.
   components:
@@ -105,7 +105,7 @@
 
 - type: entity
   name: riot bullet shield
-  parent: BaseShield
+  parent: [ BaseShield, BaseRestrictedContraband ]
   id: RiotBulletShield
   description: A ballistic riot shield built for withstanding bullets, but not much else.
   components:

@@ -4,7 +4,7 @@
   name: implanter
   description: A syringe exclusively designed for the injection and extraction of subdermal implants.
   id: BaseImplanter
-  parent: [BaseItem, BaseRestrictedContraband]
+  parent: BaseItem
   abstract: true
   components:
     - type: ItemSlots
@@ -153,7 +153,7 @@
 - type: entity
   id: TrackingImplanter
   name: tracking implanter
-  parent: BaseImplantOnlyImplanter
+  parent: [ BaseImplantOnlyImplanter, BaseRestrictedContraband]
   components:
     - type: Implanter
       implant: TrackingImplant
@@ -247,7 +247,7 @@
 - type: entity
   id: MindShieldImplanter
   name: mindshield implanter
-  parent: BaseImplantOnlyImplanter
+  parent: [ BaseImplantOnlyImplanter, BaseSecurityCommandContraband]
   components:
     - type: Implanter
       implant: MindShieldImplant

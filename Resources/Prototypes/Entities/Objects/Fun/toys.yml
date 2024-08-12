@@ -215,7 +215,7 @@
         shader: unshaded
 
 - type: entity
-  parent: BasePlushie
+  parent: [ BasePlushie, BaseSyndicateContraband ]
   id: PlushieNuke
   name: nukie plushie
   description: A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious.
