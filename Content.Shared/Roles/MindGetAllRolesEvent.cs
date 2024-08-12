@@ -1,4 +1,5 @@
-﻿using Content.Shared.Players.PlayTimeTracking;
+﻿using Content.Shared.Mind;
+using Content.Shared.Players.PlayTimeTracking;
 
 namespace Content.Shared.Roles;
 
@@ -8,6 +9,9 @@ namespace Content.Shared.Roles;
 /// <param name="Roles">The list of roles on the player.</param>
 [ByRefEvent]
 public readonly record struct MindGetAllRolesEvent(List<RoleInfo> Roles);
+
+[ByRefEvent] //TODO:ERRANT Move this out of here
+public readonly record struct GetAllRoleTypesEvent(List<RoleTypePrototype> RoleTypes);
 
 /// <summary>
 ///     Returned by <see cref="MindGetAllRolesEvent"/> to give some information about a player's role.

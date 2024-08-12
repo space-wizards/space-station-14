@@ -1,4 +1,6 @@
 using Content.Shared.Roles;
+using Content.Server.Ghost;
+using Content.Server.Ghost.Roles;
 
 namespace Content.Server.Roles;
 
@@ -18,6 +20,19 @@ public sealed class RoleSystem : SharedRoleSystem
         SubscribeAntagEvents<TraitorRoleComponent>();
         SubscribeAntagEvents<ZombieRoleComponent>();
         SubscribeAntagEvents<ThiefRoleComponent>();
+
+        // TODO:ERRANT This is extremely not ideal
+        SubscribeMindRoleEvents<DragonRoleComponent>();
+        SubscribeMindRoleEvents<InitialInfectedRoleComponent>();
+        SubscribeMindRoleEvents<NinjaRoleComponent>();
+        SubscribeMindRoleEvents<NukeopsRoleComponent>();
+        SubscribeMindRoleEvents<RevolutionaryRoleComponent>();
+        SubscribeMindRoleEvents<SubvertedSiliconRoleComponent>();
+        SubscribeMindRoleEvents<TraitorRoleComponent>();
+        SubscribeMindRoleEvents<ZombieRoleComponent>();
+        SubscribeMindRoleEvents<ThiefRoleComponent>();
+        SubscribeMindRoleEvents<GhostRoleMarkerRoleComponent>();
+        SubscribeMindRoleEvents<ObserverRoleComponent>();
     }
 
     public string? MindGetBriefing(EntityUid? mindId)

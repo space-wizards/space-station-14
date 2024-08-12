@@ -1,9 +1,7 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.Ghost.Roles;
 using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -82,6 +80,26 @@ public abstract class SharedRoleSystem : EntitySystem
         _antagTypes.Add(typeof(T));
     }
 
+    protected void SubscribeMindRoleEvents<T>() where T : BaseRoleComponent
+    {
+        SubscribeLocalEvent((EntityUid _, T component, ref GetAllRoleTypesEvent args) =>
+        {
+            var name = "game-ticker-unknown-role";
+            var prototype = "";
+            name = Loc.GetString(name);
+
+            if(component.RoleType is null)
+                return;
+
+            if(_prototypes.TryIndex(component.RoleType.Value, out var proto))
+                args.RoleTypes.Add(proto);
+            else
+            {
+                //TODO:ERRANT Log protoid indexing failure
+            }
+        });
+    }
+
     public void MindAddRoles(EntityUid mindId, ComponentRegistry components, MindComponent? mind = null, bool silent = false)
     {
         if (!Resolve(mindId, ref mind))
@@ -104,11 +122,14 @@ public abstract class SharedRoleSystem : EntitySystem
         var mindEv = new MindRoleAddedEvent(silent);
         RaiseLocalEvent(mindId, ref mindEv);
 
+        MindRolesChanged(mindId);
         var message = new RoleAddedEvent(mindId, mind, antagonist, silent);
         if (mind.OwnedEntity != null)
         {
             RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
         }
+
+
 
         _adminLogger.Add(LogType.Mind, LogImpact.Low,
             $"Role components {string.Join(components.Keys.ToString(), ", ")} added to mind of {_minds.MindOwnerLoggingString(mind)}");
@@ -130,6 +151,7 @@ public abstract class SharedRoleSystem : EntitySystem
         var mindEv = new MindRoleAddedEvent(silent);
         RaiseLocalEvent(mindId, ref mindEv);
 
+        MindRolesChanged(mindId);
         var message = new RoleAddedEvent(mindId, mind, antagonist, silent);
         if (mind.OwnedEntity != null)
         {
@@ -141,39 +163,53 @@ public abstract class SharedRoleSystem : EntitySystem
     }
 
     //TODO:ERRANT. testing
-    public void SetRoleType(EntityUid ent, ProtoId<RoleTypePrototype> roleTypeId)
+
+    public void MindRolesChanged(EntityUid mindId)
+    {
+        var a = MindGetAllRoles(mindId); //TODO:ERRANT delete this
+        var roles = GetAllRoleTypes(mindId);
+        var roleType = SortRoleTypes(roles);
+
+        SetRoleType(mindId, roleType);
+
+    }
+
+    public ProtoId<RoleTypePrototype> SortRoleTypes(List<RoleTypePrototype> input)
+    {
+        var sortList = new List<(RoleEnum, ProtoId<RoleTypePrototype>)> {(RoleEnum.Neutral, "Neutral")} ;
+
+        foreach (var role in input)
+        {
+            sortList.Add((role.RoleRule, role.ID));
+        }
+
+        // Sort by RoleEnum definition
+        sortList.Sort();
+
+        return (sortList[0].Item2);
+    }
+
+    private void SetRoleType(EntityUid mindEnt, ProtoId<RoleTypePrototype> roleTypeId)
     {
         if (!_prototypes.TryIndex(roleTypeId, out var dontcare)) //TODO:ERRANT surely there is one that actually does this?
         {
-           // TODO:ERRANT Uh oh, failed RoleType change
+            // TODO:ERRANT Uh oh, failed RoleType change
            return;
         }
 
-        var comp = CheckRoleTypes(ent);
+        if (!TryComp<MindComponent>(mindEnt, out var comp))
+        {
+            // TODO:ERRANT Uh oh, failed RoleType change
+            return;
+        }
 
-        if ( comp is null || comp.OwnedEntity is null)
+        if (comp.RoleType == roleTypeId)
             return;
 
         comp.RoleType = roleTypeId;
         // _adminLogger.Add(LogType.Mind, LogImpact.Low,
         //     $"Role components {string.Join(components.Keys.ToString(), ", ")} added to mind of {_minds.MindOwnerLoggingString(mind)}");
         Dirty(comp.Owner, comp); //TODO:ERRANT remove obsolete
-    }
-
-    public MindComponent? CheckRoleTypes(EntityUid ent)
-    {
-
-        if (TryComp<MindComponent>(ent, out var mind))
-        {
-            return (mind);
-        }
-        else if (TryComp<MindContainerComponent>(ent, out var container))
-        {
-            if (container.HasMind)
-                return(CheckRoleTypes(container.Mind.Value));
-        }
-
-        return (null);
     }
 
     /// <summary>
@@ -203,6 +239,7 @@ public abstract class SharedRoleSystem : EntitySystem
         var mindEv = new MindRoleAddedEvent(silent);
         RaiseLocalEvent(mindId, ref mindEv);
 
+        MindRolesChanged(mindId);
         var message = new RoleAddedEvent(mindId, mind, antagonist, silent);
         if (mind.OwnedEntity != null)
         {
@@ -232,10 +269,12 @@ public abstract class SharedRoleSystem : EntitySystem
         var antagonist = IsAntagonistRole<T>();
         var message = new RoleRemovedEvent(mindId, mind, antagonist);
 
+        MindRolesChanged(mindId);
         if (mind.OwnedEntity != null)
         {
             RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
         }
+
         _adminLogger.Add(LogType.Mind, LogImpact.Low,
             $"'Role {typeof(T).Name}' removed from mind of {_minds.MindOwnerLoggingString(mind)}");
     }
@@ -261,6 +300,14 @@ public abstract class SharedRoleSystem : EntitySystem
         var ev = new MindGetAllRolesEvent(new List<RoleInfo>());
         RaiseLocalEvent(mindId, ref ev);
         return ev.Roles;
+    }
+
+    public List<RoleTypePrototype> GetAllRoleTypes(EntityUid mindId)
+    {
+        DebugTools.Assert(HasComp<MindComponent>(mindId));
+        var ev = new GetAllRoleTypesEvent(new List<RoleTypePrototype>());
+        RaiseLocalEvent(mindId, ref ev);
+        return ev.RoleTypes;
     }
 
     public bool MindIsAntagonist(EntityUid? mindId)

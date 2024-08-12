@@ -146,12 +146,11 @@ public sealed partial class RoleTypePrototype : IPrototype
 /// </summary>
 public enum RoleEnum
 {
-    Neutral,
-    SoloAntagonist,
+    AlteredSilicon,
+    Silicon,
     TeamAntagonist,
+    SoloAntagonist,
     FreeAgent,
     Familiar,
-    Silicon,
-    AlteredSilicon,
-    Observer
+    Neutral
 }

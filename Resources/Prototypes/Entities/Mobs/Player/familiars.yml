@@ -8,6 +8,7 @@
     makeSentient: true
     allowMovement: true
     allowSpeech: true
+    roleType: Familiar
     name: ghost-role-information-remilia-name
     description: ghost-role-information-remilia-description
     rules: ghost-role-information-familiar-rules

@@ -51,6 +51,7 @@
     name: ghost-role-information-closet-skeleton-name
     description: ghost-role-information-closet-skeleton-description
     rules: ghost-role-information-freeagent-rules
+    roleType: FreeAgent
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
