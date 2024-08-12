@@ -124,3 +124,5 @@ seeds-cotton-name = cotton
 seeds-cotton-display-name = cotton plant
 seeds-pyrotton-name = pyrotton
 seeds-pyrotton-display-name = pyrotton plant
+seeds-glowshroom-name = glowshroom
+seeds-glowshroom-display-name = glowshroom

@@ -1,0 +1,35 @@
+# For stuff like glowshrooms & spaceshrooms.
+- type: entity
+  parent: BaseStructure
+  id: BaseGatherableFlora
+  abstract: true
+  description: Alien flora. You could probably pick this & do something with it.
+  components:
+    - type: Transform
+      anchored: true
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.2
+    - type: InteractionOutline
+#    - type: Gatherable
+#      toolWhitelist:
+#        components:
+#          - Hands
+#      loot:
+#        All: SpaceshroomGather
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Wood
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 150
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]

@@ -1687,3 +1687,26 @@
       Min: 4
       Max: 8
       PotencyDivisor: 30
+
+- type: seed
+  id: glowshroom
+  name: seeds-glowshroom-name
+  noun: seeds-noun-spores
+  displayName: seeds-glowshroom-display-name
+  plantRsi: Objects/Misc/glowshroom.rsi
+  packetPrototype: GlowshroomSeeds
+  productPrototypes:
+    - FoodGlowshroom
+  lifespan: 60
+  maturation: 12
+  production: 3
+  yield: 2
+  potency: 30
+  idealLight: 2
+  growthStages: 4
+  waterConsumption: 0.80
+  chemicals:
+    Radium:
+      Min: 4
+      Max: 12
+      PotencyDivisor: 20

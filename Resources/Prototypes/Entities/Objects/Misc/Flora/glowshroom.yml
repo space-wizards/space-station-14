@@ -1,0 +1,75 @@
+- type: entity
+  parent: BaseGatherableFlora
+  id: Glowshroom
+  name: glowshroom
+  suffix: Structure
+  description: A highly-resilient species of mushroom that glows in the dark.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/glowshroom.rsi
+      state: structure
+    - type: Gatherable
+      toolWhitelist:
+        components:
+          - Hands
+      loot:
+        All: GlowshroomGather
+    - type: PointLight
+      radius: 1.5
+      energy: 0.5
+      softness: 0.5
+      color: "#AFDDAF"
+    - type: Construction
+      graph: GlowshroomStructure
+      node: plantedGlowshrooms
+
+# Wallmounts are not currently robust enough to allow this to exist.
+# (You can gather the glowshrooms from the other side of the wall, and they're also visible from the other side)
+#- type: entity
+#  parent: Glowshroom
+#  id: GlowshroomWall
+#  suffix: Structure, Wallmount
+#  placement:
+#    mode: SnapgridCenter
+#    snap:
+#    - Wallmount
+#  components:
+#    - type: WallMount
+#    - type: Sprite
+#      sprite: Objects/Misc/glowshroom.rsi
+#      state: structure-wall-1
+#    - type: PointLight
+#      autoRot: true
+#      offset: "0, -0.8" # shine from the bottom of the wall
+
+- type: entityLootTable
+  id: GlowshroomGather
+  entries:
+  - id: FoodGlowshroom
+    amount: 1
+    maxAmount: 1
+
+- type: entity
+  name: glowshroom
+  parent: FoodProduceBase
+  id: FoodGlowshroom
+  description: A highly-resilient species of mushroom that glows in the dark.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/glowshroom.rsi
+    state: produce
+  - type: FlavorProfile
+    flavors:
+      - mushroom
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Radium #maybe DON'T eat weird glowing mushrooms, actually
+          Quantity: 12
+  - type: StaticPrice
+    price: 20
+  - type: BadFood
+  - type: Produce
+    seedId: glowshroom

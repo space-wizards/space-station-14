@@ -63,3 +63,19 @@
   description: A high powered light tube containing a green crystal
   icon: { sprite: Objects/Power/light_tube.rsi, state: normal }
   objectType: Item
+
+- type: construction
+  name: glowshroom
+  id: GlowshroomConstruction
+  graph: GlowshroomStructure
+  startNode: start
+  targetNode: plantedGlowshrooms
+  category: construction-category-utilities
+  description: Mushrooms that glow in the dark.
+  icon: { sprite: Objects/Misc/glowshroom.rsi, state: structure }
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
