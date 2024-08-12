@@ -3,67 +3,60 @@
   suffix: Filled
   parent: LockerSyndicatePersonal
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingBeltMilitaryWebbing
-      - id: ClothingHandsGlovesCombat
-      - id: JetpackBlackFilled
-      - id: ClothingUniformJumpsuitOperative
-      - id: ClothingUniformJumpskirtOperative
-      - id: ClothingHeadsetAltSyndicate
-      - id: ClothingEyesHudSyndicate
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingBeltMilitaryWebbing
+        - id: ClothingHandsGlovesCombat
+        - id: JetpackBlackFilled
+        - id: ClothingUniformJumpsuitOperative
+        - id: ClothingUniformJumpskirtOperative
+        - id: ClothingHeadsetAltSyndicate
+        - id: ClothingEyesHudSyndicate
+
+- type: entityTable
+  id: FillLockerEmergencyStandard
+  table: !type:AllSelector
+    children:
+    - id: ClothingMaskBreath
+    - id: ClothingOuterSuitEmergency
+    - !type:GroupSelector
+      children:
+      - id: EmergencyOxygenTankFilled
+      - id: OxygenTankFilled
+    - id: ToolboxEmergencyFilled
+      prob: 0.5
+    - id: MedkitOxygenFilled
+      prob: 0.2
+    - id: WeaponFlareGun
+      prob: 0.05
+    - id: BoxMRE
+      prob: 0.1
 
 - type: entity
   id: ClosetEmergencyFilledRandom
   parent: ClosetEmergency
   suffix: Filled, Random
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterSuitEmergency
-      - id: ClothingMaskBreath
-      - id: EmergencyOxygenTankFilled
-        prob: 0.80
-        orGroup: EmergencyTankOrRegularTank
-      - id: OxygenTankFilled
-        prob: 0.20
-        orGroup: EmergencyTankOrRegularTank
-      - id: ToolboxEmergencyFilled
-        prob: 0.4
-      - id: MedkitOxygenFilled
-        prob: 0.2
-      - id: WeaponFlareGun
-        prob: 0.05
-      - id: BoxMRE
-        prob: 0.1
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerEmergencyStandard
 
 - type: entity
   id: ClosetWallEmergencyFilledRandom
   parent: ClosetWallEmergency
   suffix: Filled, Random
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterSuitEmergency
-      - id: ClothingMaskBreath
-      - id: EmergencyOxygenTankFilled
-        prob: 0.80
-        orGroup: EmergencyTankOrRegularTank
-      - id: OxygenTankFilled
-        prob: 0.20
-        orGroup: EmergencyTankOrRegularTank
-      - id: ToolboxEmergencyFilled
-        prob: 0.4
-      - id: MedkitOxygenFilled
-        prob: 0.2
-      - id: WeaponFlareGun
-        prob: 0.05
-      - id: BoxMRE
-        prob: 0.1
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerEmergencyStandard
 
 - type: entity
-  id: ClosetEmergencyN2FilledRandom
-  parent: ClosetEmergencyN2
+  id: ClosetWallEmergencyN2FilledRandom
+  parent: ClosetWallEmergencyNitrogen
   suffix: Filled, Random
   components:
   - type: StorageFill
@@ -75,33 +68,121 @@
       - id: NitrogenTankFilled
         prob: 0.20
         orGroup: EmergencyTankOrRegularTank
+      - id: ToolboxEmergencyFilled
+        prob: 0.4
+      - id: MedkitNitrogenFilled
+        prob: 0.2
+      - id: WeaponFlareGun
+        prob: 0.05
+      - id: BoxMRE
+        prob: 0.1
+
+- type: entity
+  id: ClosetEmergencyN2FilledRandom
+  parent: ClosetEmergencyN2
+  suffix: Filled, Random
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingMaskBreath
+        - id: ClothingOuterSuitEmergency
+        - !type:GroupSelector
+          children:
+          - id: EmergencyNitrogenTankFilled
+          - id: NitrogenTankFilled
+
+- type: entityTable
+  id: FillLockerFireStandard
+  table: !type:AllSelector
+    children:
+    - id: ClothingOuterSuitFire
+    - id: ClothingHeadHelmetFire
+    - id: ClothingMaskGas
+    - !type:GroupSelector
+      children:
+      - id: EmergencyOxygenTankFilled
+      - id: OxygenTankFilled
+    - id: CrowbarRed
+    - !type:GroupSelector
+      children:
+      - id: FireExtinguisher
+        weight: 98
+      - id: SprayBottleWater #It's just budget cut after budget cut man
+        weight: 2
 
 - type: entity
   id: ClosetFireFilled
   parent: ClosetFire
   suffix: Filled
   components:
-    - type: StorageFill
-      contents:
-        - id: ClothingOuterSuitFire
-        - id: ClothingHeadHelmetFire
-        - id: ClothingMaskGas
-        - id: OxygenTankFilled
-        - id: FireExtinguisher
-          prob: 0.25
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerFireStandard
+
 - type: entity
   id: ClosetWallFireFilledRandom
   parent: ClosetWallFire
   suffix: Filled
   components:
-    - type: StorageFill
-      contents:
-        - id: ClothingOuterSuitFire
-        - id: ClothingHeadHelmetFire
-        - id: ClothingMaskGas
-        - id: OxygenTankFilled
-        - id: FireExtinguisher
-          prob: 0.25
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerFireStandard
+
+- type: entityTable
+  id: SyndieMaintLoot
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      children:
+      - id: ClothingUniformJumpsuitOperative
+      - id: ClothingUniformJumpskirtOperative
+    - id: ClothingBackpackDuffelSyndicate
+    - id: CyberPen
+    - id: CigPackSyndicate
+    - id: ClothingBackpackDuffelSyndicatePyjamaBundle
+    - id: ClothingBeltMilitaryWebbing
+    - id: ClothingShoesBootsCombatFilled
+    - id: ToolboxSyndicateFilled
+    - id: BalloonSyn
+    - id: WeaponSniperMosin
+      weight: 2
+
+- type: entityTable
+  id: MaintenanceLockerLoot
+  table: !type:AllSelector
+    children:
+    - id: StrangePill
+      prob: 0.20
+    # Tools
+    - !type:NestedSelector
+      tableId: MaintToolsTable
+      rolls: !type:RangeNumberSelector
+        range: 1, 5
+    # Fluff
+    - !type:NestedSelector
+      tableId: MaintFluffTable
+      prob: 0.33
+      rolls: !type:RangeNumberSelector
+        range: 0, 2
+    # Plushies
+    - !type:NestedSelector
+      tableId: AllPlushiesTable
+      prob: 0.10
+      rolls: !type:RangeNumberSelector
+        range: 1, 2
+    # Weapons
+    - !type:NestedSelector
+      tableId: MaintWeaponTable
+      prob: 0.075
+    # Syndie Loot
+    - !type:NestedSelector
+      tableId: SyndieMaintLoot
+      prob: 0.05
+
 - type: entity
   id: ClosetMaintenanceFilledRandom
   suffix: Filled, Random
@@ -140,8 +221,6 @@
         - id: PlushieRainbowCarp
           prob: 0.03
           orGroup: carp
-        - id: PlushieFinfin
-          prob: 0.03
         - id: PlushieSlime
           prob: 0.2
         - id: PlushieSnake
@@ -176,8 +255,6 @@
           prob: 0.05
         - id: BookRandomStory
           prob: 0.1
-        - id: TomatoGrenade
-          prob: 0.01
         # Syndicate loot
         - id: null
           prob: 0.95
@@ -254,8 +331,6 @@
         - id: PlushieRainbowCarp
           prob: 0.03
           orGroup: carp
-        - id: PlushieFinfin
-          prob: 0.03
         - id: PlushieSlime
           prob: 0.2
         - id: PlushieSnake
@@ -278,8 +353,6 @@
           prob: 0.20
         - id: ModularReceiver
           prob: 0.1
-        - id: TomatoGrenade
-          prob: 0.01
         # Syndicate loot
         - id: null
           prob: 0.95

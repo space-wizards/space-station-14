@@ -86,7 +86,7 @@
     #Species that do not work with nukies should be included in this list.
     #Once the issues are fixed the species should be removed from this list to be enabled.
     #Balance concerns are not a valid reason to disable a species, except for high-impact Nukie-specific exploits.
-    - Vox
+    #- Vox
 
 - type: entity
   parent: BaseNukeopsRule
@@ -103,6 +103,8 @@
       fallbackRoles: [ Nukeops, NukeopsMedic ]
       spawnerPrototype: SpawnPointNukeopsCommander
       startingGear: SyndicateCommanderGearFull
+      roleLoadout:
+      - RoleSurvivalSyndicate
       components:
       - type: NukeOperative
       - type: RandomMetadata
@@ -119,6 +121,8 @@
       fallbackRoles: [ Nukeops, NukeopsCommander ]
       spawnerPrototype: SpawnPointNukeopsMedic
       startingGear: SyndicateOperativeMedicFull
+      roleLoadout:
+      - RoleSurvivalSyndicate
       components:
       - type: NukeOperative
       - type: RandomMetadata
@@ -137,6 +141,8 @@
       max: 3
       playerRatio: 10
       startingGear: SyndicateOperativeGearFull
+      roleLoadout:
+      - RoleSurvivalSyndicate
       components:
       - type: NukeOperative
       - type: RandomMetadata
@@ -158,6 +164,21 @@
   - type: TraitorRule
   # TODO: codewords in yml
   # TODO: uplink in yml
+  - type: AntagRandomObjectives
+    sets:
+    - groups: TraitorObjectiveGroups
+    maxDifficulty: 5
+  - type: AntagSelection
+    agentName: traitor-round-end-agent-name
+
+- type: entity
+  abstract: true
+  parent: BaseGameRule
+  id: BaseTraitorRuleNoRandomObjectives
+  components:
+  - type: TraitorRule
+  # TODO: codewords in yml
+  # TODO: uplink in yml
   - type: AntagSelection
     agentName: traitor-round-end-agent-name
 
@@ -170,10 +191,6 @@
     delay:
       min: 240
       max: 420
-  - type: AntagRandomObjectives
-    sets:
-    - groups: TraitorObjectiveGroups
-    maxDifficulty: 5
   - type: AntagSelection
     definitions:
     - prefRoles: [ Traitor ]
@@ -188,9 +205,69 @@
         prototype: Traitor
 
 - type: entity
-  parent: BaseTraitorRule
+  parent: BaseTraitorRuleNoRandomObjectives
+  id: SpyVsSpyDefaultTC
+  components:
+  - type: GameRule
+    minPlayers: 15
+    delay:
+      min: 240
+      max: 420
+  - type: AntagObjectives
+    objectives:
+    - KillRandomTraitorSvSObjective
+    - RandomTraitorAliveSvSObjective
+    - EscapeShuttleObjective
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Traitor ]
+      max: 100
+      playerRatio: 1
+      blacklist:
+        components:
+        - AntagImmune
+      lateJoinAdditional: true
+      forceAllPossible: true
+      mindComponents:
+      - type: TraitorRole
+        prototype: Traitor
+
+- type: entity
+  parent: BaseTraitorRuleNoRandomObjectives
+  id: SpyVsSpy5TC
+  components:
+  - type: TraitorRule
+    startingBalance: 5
+  - type: GameRule
+    minPlayers: 15
+    delay:
+      min: 240
+      max: 420
+  - type: AntagObjectives
+    objectives:
+    - KillRandomTraitorSvSObjective
+    - RandomTraitorAliveSvSObjective
+    - EscapeShuttleObjective
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Traitor ]
+      max: 100
+      playerRatio: 1
+      blacklist:
+        components:
+        - AntagImmune
+      lateJoinAdditional: true
+      forceAllPossible: true
+      mindComponents:
+      - type: TraitorRole
+        prototype: Traitor
+
+- type: entity
+  parent: BaseTraitorRuleNoRandomObjectives
   id: SpyVsSpy
   components:
+  - type: TraitorRule
+    startingBalance: 0
   - type: GameRule
     minPlayers: 15
     delay:

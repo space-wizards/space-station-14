@@ -100,6 +100,8 @@
     - id: FoodMeatCorgi
       amount: 2
     - id: MaterialHideCorgi
+  - type: StealTarget
+    stealGroup: AnimalIan
 
 - type: entity
   name: Runtime
@@ -121,6 +123,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalNamedCat
 
 - type: entity
   name: Exception
@@ -139,6 +143,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalNamedCat
 
 - type: entity
   name: Floppa
@@ -164,6 +170,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalNamedCat
 
 - type: entity
   name: Bandito
@@ -235,7 +243,7 @@
     - CannotSuicide
     - VimPilot
   - type: StealTarget
-    stealGroup: AnimalBingus
+    stealGroup: AnimalNamedCat
 
 - type: entity
   name: McGriff
@@ -421,16 +429,16 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Animals/possum_old.rsi
+    sprite: Mobs/Animals/possum.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: possum_old
+      state: possum
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: possum_old
+        Base: possum
       Dead:
-        Base: possum_dead_old
+        Base: possum_dead
 
 - type: entity
   name: Poppy # the Safety Possum
@@ -478,7 +486,7 @@
     - VimPilot
 
 - type: entity
-  name: Alexander
+  name: VILE SHITPIG
   parent: MobPig
   id: MobAlexander
   description: Chef's finest colleague.
@@ -949,5 +957,104 @@
       gender: male
   - type: Tag
     tags:
+    - DoorBumpOpener
     - CannotSuicide
     - VimPilot
+
+- type: entity
+  name: Goji
+  parent: NiceMobCarp
+  id: MobGoji
+  description: Probably doesn't bite. Probably.
+  components:
+    - type: Sprite
+      sprite: Mobs/Aliens/Carps/sharkminnow.rsi
+      layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+      - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+        state: mouth
+        shader: unshaded
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.40
+          density: 100
+          mask:
+            - FlyingMobMask
+          layer:
+            - FlyingMobLayer
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        180: Dead
+    - type: Stamina
+      critThreshold: 150
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: alive
+          BaseUnshaded: mouth
+        Dead:
+          Base: dead
+          BaseUnshaded: dead_mouth
+    - type: Body
+      prototype: Bloodsucker
+      requiredLegs: 1
+    - type: Butcherable
+      spawned:
+        - id: FoodMeatFish
+          amount: 4
+    - type: MeleeWeapon
+      damage:
+        types:
+          Slash: 12
+          Bloodloss: 5
+
+
+- type: entity
+  name: major
+  id: MobBearSpaceMajor
+  parent: MobSpaceNice
+  description: Nanotrasen's majority shareholder.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/major.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: major
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: major_glow
+      shader: unshaded
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: major
+        BaseUnshaded: glow_major
+      Critical:
+        Base: major_dead
+      Dead:
+        Base: major_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatBear
+      amount: 3
+    - id: MaterialHideBear
+      amount: 1
+    - id: ClothingHeadHatCentcom
+      amount: 1
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: Vocal
+    sounds:
+      Unsexed: Bear
+  - type: InteractionPopup
+    successChance: 0.25
+    interactSuccessString: petting-success-bear
+    interactFailureString: petting-failure-bear
+    interactSuccessSound:
+      path: /Audio/Animals/sloth_squeak.ogg
+

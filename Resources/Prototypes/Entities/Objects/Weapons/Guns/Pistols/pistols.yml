@@ -76,9 +76,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
-    availableModes:
-    - FullAuto
-    - SemiAuto
   - type: ItemSlots
     slots:
       gun_magazine:

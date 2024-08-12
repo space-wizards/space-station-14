@@ -19779,15 +19779,6 @@ entities:
     - type: Transform
       pos: 22.560492,23.524494
       parent: 30
-- proto: ClothingHeadHelmetTemplar
-  entities:
-  - uid: 4127
-    components:
-    - type: Transform
-      pos: 24.456139,-14.492622
-      parent: 30
-    - type: Physics
-      canCollide: False
 - proto: ClothingHeadHelmetWizardHelm
   entities:
   - uid: 4130
@@ -20529,10 +20520,6 @@ entities:
     - type: Transform
       pos: -14.5,-18.5
       parent: 30
-    - type: Construction
-      containers:
-      - EntityStorageComponent
-      - entity_storage
   - uid: 7864
     components:
     - type: Transform
@@ -39890,7 +39877,7 @@ entities:
       parent: 30
     - type: Paper
       content: >-
-        CentCom slashed the AME budget so we need to set up another engine now. Head into maintenance and then west, you'll find the engine and a guide for it.
+        CentComm slashed the AME budget so we need to set up another engine now. Head into maintenance and then west, you'll find the engine and a guide for it.
 
         As usual solars will still help out a lot.
 
