@@ -44,7 +44,7 @@ public sealed partial class LawDisplay : Control
             Modulate = Color.LightBlue,
             StyleClasses = { "chatSelectorOptionButton" },
             MinHeight = 35,
-            MinWidth = 100
+            MinWidth = 100,
         };
 
         stateLawButton.OnPressed += _ =>
