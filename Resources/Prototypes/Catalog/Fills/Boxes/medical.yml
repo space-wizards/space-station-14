@@ -37,13 +37,7 @@
   - type: StorageFill
     contents:
       - id: ChemistryEmptyBottle01
-        amount: 2
-      - id: ChemistryEmptyBottle02
-        amount: 2
-      - id: ChemistryEmptyBottle03
-        amount: 2
-      - id: ChemistryEmptyBottle04
-        amount: 2
+        amount: 6
   - type: Sprite
     layers:
       - state: box
