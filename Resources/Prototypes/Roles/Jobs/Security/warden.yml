@@ -7,11 +7,6 @@
     - !type:RoleTimeRequirement
       role: JobSecurityOfficer
       time: 36000 #10 hrs
-    - !type:TraitsRequirement
-      inverted: true
-      traits:
-      - Pacifist
-      - Blindness
   startingGear: WardenGear
   icon: "JobIconWarden"
   supervisors: job-supervisors-hos
