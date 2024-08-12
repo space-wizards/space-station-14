@@ -152,6 +152,5 @@ public enum RoleEnum
     SoloAntagonist,
     FreeAgent,
     Familiar,
-    Observer,
     Neutral
 }

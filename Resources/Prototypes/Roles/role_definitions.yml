@@ -42,9 +42,3 @@
   roleRule: SubvertedSilicon
   name: role-type-silicon-antagonist-name
   color: '#c832e6'
-
-- type: roleType
-  id: Observer
-  roleRule: Observer
-  name: role-type-observer-name
-  color: '#eeeeee'
