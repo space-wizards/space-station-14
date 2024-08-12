@@ -128,64 +128,6 @@
     price: 22
 
 - type: entity
-  name: crowbar
-  parent: BaseItem
-  id: Crowbar
-  description: A multipurpose tool to pry open doors and fight interdimensional invaders.
-  components:
-  - type: EmitSoundOnLand
-    sound:
-      path: /Audio/Items/crowbar_drop.ogg
-  - type: Tag
-    tags:
-    - Crowbar
-  - type: Sprite
-    sprite: Objects/Tools/crowbar.rsi
-    state: icon
-  - type: Item
-    sprite: Objects/Tools/crowbar.rsi
-    size: Small
-    storedSprite:
-      sprite: Objects/Tools/crowbar.rsi
-      state: storage
-  - type: MeleeWeapon
-    wideAnimationRotation: -135
-    damage:
-      types:
-        Blunt: 8
-    soundHit:
-      collection: MetalThud
-  - type: Tool
-    qualities:
-      - Prying
-    useSound:
-      path: /Audio/Items/crowbar.ogg
-  - type: ToolTileCompatible
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 100
-  - type: StaticPrice
-    price: 22
-  - type: Prying
-
-- type: entity
-  parent: Crowbar
-  id: CrowbarRed
-  name: emergency crowbar
-  components:
-  - type: Tag
-    tags:
-    - Crowbar
-    - CrowbarRed
-  - type: Sprite
-    state: red-icon
-  - type: Item
-    heldPrefix: red
-    storedSprite:
-      sprite: Objects/Tools/crowbar.rsi
-      state: red-storage
-
-- type: entity
   name: multitool
   parent: BaseItem
   id: Multitool
@@ -392,6 +334,7 @@
       enum.RcdUiKey.Key:
         type: RCDMenuBoundUserInterface
   - type: ActivatableUI
+    inHandsOnly: true
     key: enum.RcdUiKey.Key
 
 - type: entity
