@@ -196,6 +196,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     }
 
     //TODO: Actually shows all items/clothing/etc.
+    //TODO: Rework linq query to not use itemName when determining indefinite exemption, but item component
     private void HandleExamined(EntityUid examinedUid, HandsComponent handsComp, ExaminedEvent args)
     {
         var heldItemNames = EnumerateHeld(examinedUid, handsComp)
