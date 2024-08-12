@@ -7,7 +7,7 @@ namespace Content.Server.VoiceMask;
 public sealed partial class VoiceMaskComponent : Component
 {
     [DataField]
-    public string VoiceMaskName = "Unknown";
+    public string? VoiceMaskName = null;
 
     [DataField]
     public ProtoId<SpeechVerbPrototype>? VoiceMaskSpeechVerb;

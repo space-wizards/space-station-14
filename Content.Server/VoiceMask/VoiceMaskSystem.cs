@@ -34,38 +34,38 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
     private void OnTransformSpeakerName(Entity<VoiceMaskComponent> entity, ref InventoryRelayedEvent<TransformSpeakerNameEvent> args)
     {
-        args.Args.VoiceName = entity.Comp.VoiceMaskName;
+        args.Args.VoiceName = GetCurrentVoiceName(entity);
         args.Args.SpeechVerb = entity.Comp.VoiceMaskSpeechVerb ?? args.Args.SpeechVerb;
     }
 
     #region User inputs from UI
-    private void OnChangeVerb(Entity<VoiceMaskComponent> ent, ref VoiceMaskChangeVerbMessage msg)
+    private void OnChangeVerb(Entity<VoiceMaskComponent> entity, ref VoiceMaskChangeVerbMessage msg)
     {
         if (msg.Verb is { } id && !_proto.HasIndex<SpeechVerbPrototype>(id))
             return;
 
-        ent.Comp.VoiceMaskSpeechVerb = msg.Verb;
+        entity.Comp.VoiceMaskSpeechVerb = msg.Verb;
         // verb is only important to metagamers so no need to log as opposed to name
 
-        _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-success"), ent, msg.Actor);
+        _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-success"), entity, msg.Actor);
 
-        UpdateUI(ent, ent.Comp);
+        UpdateUI(entity);
     }
 
-    private void OnChangeName(EntityUid uid, VoiceMaskComponent component, VoiceMaskChangeNameMessage message)
+    private void OnChangeName(Entity<VoiceMaskComponent> entity, ref VoiceMaskChangeNameMessage message)
     {
         if (message.Name.Length > HumanoidCharacterProfile.MaxNameLength || message.Name.Length <= 0)
         {
-            _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-failure"), uid, message.Actor, PopupType.SmallCaution);
+            _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-failure"), entity, message.Actor, PopupType.SmallCaution);
             return;
         }
 
-        component.VoiceMaskName = message.Name;
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(message.Actor):player} set voice of {ToPrettyString(uid):mask}: {component.VoiceMaskName}");
+        entity.Comp.VoiceMaskName = message.Name;
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(message.Actor):player} set voice of {ToPrettyString(entity):mask}: {entity.Comp.VoiceMaskName}");
 
-        _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-success"), uid, message.Actor);
+        _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-success"), entity, message.Actor);
 
-        UpdateUI(uid, component);
+        UpdateUI(entity);
     }
     #endregion
 
@@ -80,20 +80,25 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         if (!_inventory.TryGetSlotEntity(ev.Performer, MaskSlot, out var maskEntity))
             return;
 
-        if (!_uiSystem.HasUi(maskEntity.Value, VoiceMaskUIKey.Key))
+        if (!_uiSystem.HasUi(maskEntity.Value, VoiceMaskUIKey.Key)
+            || !TryComp<VoiceMaskComponent>(maskEntity.Value, out var voiceMaskComp) || voiceMaskComp == null)
             return;
 
         _uiSystem.OpenUi(maskEntity.Value, VoiceMaskUIKey.Key, ev.Performer);
-        UpdateUI(maskEntity.Value);
+        UpdateUI((maskEntity.Value, voiceMaskComp));
     }
 
-    private void UpdateUI(EntityUid owner, VoiceMaskComponent? component = null)
+    private void UpdateUI(Entity<VoiceMaskComponent> entity)
     {
-        if (!Resolve(owner, ref component))
-            return;
+        if (_uiSystem.HasUi(entity, VoiceMaskUIKey.Key))
+            _uiSystem.SetUiState(entity.Owner, VoiceMaskUIKey.Key, new VoiceMaskBuiState(GetCurrentVoiceName(entity), entity.Comp.VoiceMaskSpeechVerb));
+    }
+    #endregion
 
-        if (_uiSystem.HasUi(owner, VoiceMaskUIKey.Key))
-            _uiSystem.SetUiState(owner, VoiceMaskUIKey.Key, new VoiceMaskBuiState(component.VoiceMaskName, component.VoiceMaskSpeechVerb));
+    #region Helper functions
+    private string GetCurrentVoiceName(Entity<VoiceMaskComponent> entity)
+    {
+        return entity.Comp.VoiceMaskName ?? Loc.GetString("voice-mask-default-name-overide");
     }
     #endregion
 }
