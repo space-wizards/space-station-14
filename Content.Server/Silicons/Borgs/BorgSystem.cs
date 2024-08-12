@@ -5,6 +5,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Hands.Systems;
 using Content.Server.PowerCell;
+using Content.Server.Radio.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Database;
@@ -19,6 +20,8 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Pointing;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
+using Content.Shared.Radio;
+using Content.Shared.Radio.Components;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
@@ -30,7 +33,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Silicons.Borgs;
 
@@ -75,6 +77,8 @@ public sealed partial class BorgSystem : SharedBorgSystem
         SubscribeLocalEvent<BorgChassisComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
         SubscribeLocalEvent<BorgChassisComponent, GetCharactedDeadIcEvent>(OnGetDeadIC);
         SubscribeLocalEvent<BorgChassisComponent, ItemToggledEvent>(OnToggled);
+
+        SubscribeLocalEvent<BorgChassisComponent, EncryptionChannelsChangedEvent>(OnKeysChanged);
 
         SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
         SubscribeLocalEvent<BorgBrainComponent, PointAttemptEvent>(OnBrainPointAttempt);
@@ -304,5 +308,32 @@ public sealed partial class BorgSystem : SharedBorgSystem
             return false;
 
         return true;
+    }
+
+    private void OnKeysChanged(EntityUid uid, BorgChassisComponent component, EncryptionChannelsChangedEvent args)
+    {
+        UpdateRadioChannels(uid, component, args.Component);
+    }
+
+    private void UpdateRadioChannels(EntityUid uid, BorgChassisComponent chassis, EncryptionKeyHolderComponent? keyHolder = null)
+    {
+        if (!Resolve(uid, ref keyHolder))
+            return;
+
+        if (keyHolder.Channels.Count == 0)
+        {
+            RemComp<ActiveRadioComponent>(uid);
+            TryComp<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
+            if (intrinsicRadio != null)
+                EnsureComp<ActiveRadioComponent>(uid).Channels = new(intrinsicRadio.Channels);
+        }
+        else
+        {
+            HashSet<string> channels = new(keyHolder.Channels);
+            TryComp<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
+            if (intrinsicRadio != null)
+                channels.UnionWith(intrinsicRadio.Channels);
+            EnsureComp<ActiveRadioComponent>(uid).Channels = channels;
+        }
     }
 }

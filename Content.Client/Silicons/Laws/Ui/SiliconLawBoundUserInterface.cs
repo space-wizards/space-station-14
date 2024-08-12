@@ -38,12 +38,8 @@ public sealed class SiliconLawBoundUserInterface : BoundUserInterface
             var isSame = true;
             foreach (var law in msg.Laws)
             {
-
                 if (_laws.Contains(law))
-                {
                     continue;
-                }
-
                 isSame = false;
                 break;
             }

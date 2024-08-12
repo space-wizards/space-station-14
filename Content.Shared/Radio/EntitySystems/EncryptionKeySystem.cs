@@ -174,14 +174,14 @@ public sealed partial class EncryptionKeySystem : EntitySystem
 
     private void OnHolderExamined(EntityUid uid, EncryptionKeyHolderComponent component, ExaminedEvent args)
     {
+        if (!args.IsInDetailsRange)
+            return;
+
         if (TryComp<WiresPanelComponent>(uid, out var panel))
         {
             if (panel.ExamineWhenOpenOnly && !panel.Open)
                 return;
         }
-
-        if (!args.IsInDetailsRange)
-            return;
 
         if (component.KeyContainer.ContainedEntities.Count == 0)
         {

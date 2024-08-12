@@ -86,8 +86,6 @@
     channels:
     - Binary
     - Common
-  - type: WearingHeadset
-  - type: Headset
   - type: EncryptionKeyHolder
     keySlots: 8
     keysExtractionMethod: Prying
