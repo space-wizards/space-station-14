@@ -203,13 +203,15 @@ public abstract partial class SharedHandsSystem : EntitySystem
             .Select(item => FormattedMessage.EscapeText(Identity.Name(item, EntityManager)))
             .Select(itemName =>
             {
-                // Check if the item name starts with "the" or contains "gloves" to prevent grammar issues
-                if (itemName.StartsWith("the", StringComparison.OrdinalIgnoreCase)
+                // Check if the item name starts with "the" to prevent grammar issues
+                if (itemName.StartsWith("the", StringComparison.OrdinalIgnoreCase))
                 {
+                    // If name begins with "the", use wrapper with no indefinite
                     return Loc.GetString("comp-hands-examine-wrapper-exempt", ("item", itemName));
                 }
                 else
                 {
+                    // Otherwise, use wrapper with indefinite
                     return Loc.GetString("comp-hands-examine-wrapper", ("item", itemName));
                 }
             }).ToList();
