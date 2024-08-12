@@ -177,3 +177,21 @@
   color: "#9e6b38"
   boilingPoint: 190.0 # Perfluorooctanoic Acid.
   meltingPoint: 45.0
+
+- type: reagent
+  id: Incendinol
+  name: reagent-name-incendinol
+  parent: BasePyrotechnic
+  desc: reagent-desc-incendinol
+  physicalDesc: reagent-physical-desc-burning
+  flavor: spicy
+  color: "#FF7171"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 1
+      - !type:FlammableReaction # not meant to be highly flammable, just meant for igniting
+      - !type:Ignite #this all only works when brought into the bloodstream, by using a pill/syringe/smoke

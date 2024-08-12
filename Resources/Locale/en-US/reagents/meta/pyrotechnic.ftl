@@ -18,3 +18,6 @@ reagent-desc-welding-fuel = Used by welders to weld.
 
 reagent-name-fluorosurfactant = fluorosurfactant
 reagent-desc-fluorosurfactant = A perfluoronated sulfonic acid that forms a foam when mixed with water.
+
+reagent-name-incendinol = incendinol
+reagent-desc-incendinol = Highly enhanced capsaicin oil that ignites the consumer. Deadly when paired with welding fuel. 

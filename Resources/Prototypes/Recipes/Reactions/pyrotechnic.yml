@@ -73,3 +73,15 @@
     Ethanol: 5
     Hydrogen: 3
     Sulfur: 2
+
+- type: reaction
+  id: Incendinol
+  reactants:
+    CapsaicinOil: #will require cooperation with botany.
+      amount: 1
+    WeldingFuel: #can be obtained by anyone.
+      amount: 1
+    Hydroxide: #needs to be heated, so either needs a hotplate from chem, or another method of heating.
+      amount: 1
+  products:
+    Incendinol: 3
