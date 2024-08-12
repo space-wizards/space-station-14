@@ -43,7 +43,7 @@
     - map: ["foodSequenceLayers"]
   - type: FoodSequenceStartPoint
     key: burger
-    maxLayers: 20
+    maxLayers: 4
     startPosition: 0, 0
     offset: 0, 0.1
     minLayerOffset: -0.05, 0
