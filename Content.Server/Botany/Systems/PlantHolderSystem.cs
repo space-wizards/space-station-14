@@ -304,8 +304,8 @@ public sealed class PlantHolderSystem : EntitySystem
             var displayName = Loc.GetString(component.Seed.DisplayName);
             _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
                 ("seedName", displayName)), args.User);
-            if (component.Seed.CanScream)
-                DoScream(entity.Owner, component.Seed);
+            
+            DoScream(entity.Owner, component.Seed);
 
             if (_random.Prob(0.3f))
                 component.Sampled = true;
@@ -735,7 +735,7 @@ public sealed class PlantHolderSystem : EntitySystem
     /// <returns></returns>
     public bool DoScream(EntityUid plantholder, SeedData? seed = null)
     {
-        if (seed == null)
+        if (seed == null || seed.CanScream == false)
             return false;
 
         _audio.PlayPvs(seed.ScreamSound, plantholder);
@@ -762,8 +762,7 @@ public sealed class PlantHolderSystem : EntitySystem
         component.Harvest = false;
         component.LastProduce = component.Age;
 
-        if (component.Seed?.CanScream == true)
-            DoScream(uid, component.Seed);
+        DoScream(uid, component.Seed);
 
         if (component.Seed?.HarvestRepeat == HarvestType.NoRepeat)
             RemovePlant(uid, component);
