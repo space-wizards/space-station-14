@@ -2,67 +2,43 @@
   id: AllPlushiesTable
   table: !type:GroupSelector
     children:
-    - !type:EntSelector
-      id: PlushieBee
-    - !type:EntSelector
-      id: PlushieNar
+    - id: PlushieBee
+    - id: PlushieNar
       weight: 0.5
-    - !type:EntSelector
-      id: PlushieRatvar
+    - id: PlushieRatvar
       weight: 0.5
-    - !type:EntSelector
-      id: PlushieNuke
-    - !type:EntSelector
-      id: PlushieSlime
-    - !type:EntSelector
-      id: PlushieSnake
+    - id: PlushieNuke
+    - id: PlushieSlime
+    - id: PlushieSnake
     - !type:GroupSelector
       children:
-      - !type:EntSelector
-        id: PlushieLizard
+      - id: PlushieLizard
         weight: 9
-      - !type:EntSelector
-        id: PlushieSpaceLizard
+      - id: PlushieSpaceLizard
         weight: 1
     - !type:GroupSelector
       children:
-      - !type:EntSelector
-        id: PlushieCarp
-      - !type:EntSelector
-        id: PlushieHolocarp
+      - id: PlushieCarp
+      - id: PlushieHolocarp
         weight: 0.25
-      - !type:EntSelector
-        id: PlushieMagicarp
+      - id: PlushieMagicarp
         weight: 0.25
-      - !type:EntSelector
-        id: PlushieRainbowCarp
+      - id: PlushieRainbowCarp
         weight: 0.15
-    - !type:EntSelector
-      id: PlushieVox
-    - !type:EntSelector
-      id: PlushieRouny
+    - id: PlushieVox
+    - id: PlushieRouny
     - !type:GroupSelector
       children:
-      - !type:EntSelector
-        id: PlushieSharkBlue
-      - !type:EntSelector
-        id: PlushieSharkGrey
-      - !type:EntSelector
-        id: PlushieSharkPink
-    - !type:EntSelector
-      id: PlushieAtmosian
-    - !type:EntSelector
-      id: PlushieDiona
-    - !type:EntSelector
-      id: PlushieXeno
-    - !type:EntSelector
-      id: PlushieHampter
-    - !type:EntSelector
-      id: PlushieMoth
-    - !type:EntSelector
-      id: PlushieArachind
-    - !type:EntSelector
-      id: PlushiePenguin
+      - id: PlushieSharkBlue
+      - id: PlushieSharkGrey
+      - id: PlushieSharkPink
+    - id: PlushieAtmosian
+    - id: PlushieDiona
+    - id: PlushieXeno
+    - id: PlushieHampter
+    - id: PlushieMoth
+    - id: PlushieArachind
+    - id: PlushiePenguin
 
 - type: entity
   id: CrateFunPlushie
@@ -87,12 +63,10 @@
     containers:
       entity_storage: !type:AllSelector
         children:
-        - !type:EntSelector
-          id: PlushieLizard
+        - id: PlushieLizard
           amount: !type:ConstantNumberSelector
             value: 3
-        - !type:EntSelector
-          id: PlushieSpaceLizard
+        - id: PlushieSpaceLizard
           amount: !type:ConstantNumberSelector
             value: 3
 
