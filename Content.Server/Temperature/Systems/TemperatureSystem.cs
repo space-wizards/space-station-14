@@ -294,7 +294,7 @@ public sealed class TemperatureSystem : EntitySystem
     private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component,
         InventoryRelayedEvent<ModifyChangedTemperatureEvent> args)
     {
-        var coefficient = MathF.Sign(args.Args.TemperatureDelta) < 0
+        var coefficient = args.Args.TemperatureDelta < 0
             ? component.CoolingCoefficient
             : component.HeatingCoefficient;
 
