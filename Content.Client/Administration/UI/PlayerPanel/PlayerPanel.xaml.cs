@@ -124,7 +124,7 @@ public sealed partial class PlayerPanel : FancyWindow
         NotesButton.Disabled = !_adminManager.CanCommand("adminnotes");
         ShowBansButton.Disabled = !_adminManager.CanCommand("banlist");
         WhitelistToggle.Disabled =
-            !(_adminManager.CanCommand("addwhitelist") && _adminManager.CanCommand("removewhitelist"));
+            !(_adminManager.CanCommand("whitelistadd") && _adminManager.CanCommand("whitelistremove"));
         LogsButton.Disabled = !_adminManager.CanCommand("adminlogs");
         RejuvenateButton.Disabled = !_adminManager.HasFlag(AdminFlags.Debug);
         DeleteButton.Disabled = !_adminManager.HasFlag(AdminFlags.Debug);
