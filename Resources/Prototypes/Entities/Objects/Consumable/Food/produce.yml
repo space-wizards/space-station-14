@@ -1858,7 +1858,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - capfruit
+      - plastic
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1866,12 +1866,15 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
+        - ReagentId: Sulfur
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/capfruit.rsi
   - type: Produce
-    seedId: realcapfruit
+    seedId: realCapfruit
   - type: Food
-    trash: RevolverCapGun
+    trash:
+    - RevolverCapGun
   - type: Tag
     tags:
     - Fruit
@@ -1885,7 +1888,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - capfruit
+      - plastic
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1898,9 +1901,10 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/capfruit.rsi
   - type: Produce
-    seedId: fakecapfruit
+    seedId: fakeCapfruit
   - type: Food
-    trash: RevolverCapGunFake
+    trash:
+    - RevolverCapGunFake
   - type: Tag
     tags:
     - Fruit

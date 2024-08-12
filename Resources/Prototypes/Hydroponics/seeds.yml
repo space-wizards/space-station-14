@@ -1320,8 +1320,8 @@
   productPrototypes:
     - FoodGatfruit
   mutationPrototypes:
-    - fakecapfruit
-    - realcapfruit
+    - fakeCapfruit
+    - realCapfruit
   lifespan: 65
   maturation: 25
   production: 25

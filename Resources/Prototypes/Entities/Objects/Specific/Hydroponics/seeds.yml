@@ -641,7 +641,7 @@
   description: "Is it real, or is it fake?"
   components:
     - type: Seed
-      seedId: realcapfruit
+      seedId: realCapfruit
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/capfruit.rsi
 
@@ -651,4 +651,4 @@
   suffix: Fake
   components:
     - type: Seed
-      seedId: fakecapfruit
+      seedId: fakeCapfruit
