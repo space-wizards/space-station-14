@@ -126,13 +126,21 @@ public abstract partial class SharedHandsSystem
         var userXform = Transform(uid);
         var isInContainer = ContainerSystem.IsEntityOrParentInContainer(uid, xform: userXform);
 
+        // if the user is in a container, drop the item inside the container
+        if (isInContainer) {
+            TransformSystem.DropNextTo((entity, itemXform), (uid, userXform));
+            return true;
+        }
+        
+        // drop the item with heavy calculations from their hands and place it at the calculated interaction range position
+        // The DoDrop is handle if there's no drop target
         DoDrop(uid, hand, doDropInteraction: doDropInteraction, handsComp);
 
-        // drop the item inside the container if the user is in a container
-        if (targetDropLocation == null || isInContainer)
+        // if there's no drop location stop here
+        if (targetDropLocation == null)
             return true;
-
-        // otherwise, remove the item from their hands and place it at the calculated interaction range position
+        
+        // otherwise, also move dropped item and rotate it properly according to grid/map
         var (itemPos, itemRot) = TransformSystem.GetWorldPositionRotation(entity);
         var origin = new MapCoordinates(itemPos, itemXform.MapID);
         var target = TransformSystem.ToMapCoordinates(targetDropLocation.Value);

@@ -55,7 +55,7 @@
     sound: /Audio/SimpleStation14/Items/Handling/book_drop.ogg
 
 - type: entity
-  parent: Bible
+  parent: [Bible, BaseSyndicateContraband]
   name: necronomicon
   description: "There's a note: Klatuu, Verata, Nikto -- Don't forget it again!"
   id: BibleNecronomicon
