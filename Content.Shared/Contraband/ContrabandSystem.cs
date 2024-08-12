@@ -71,8 +71,8 @@ public sealed class ContrabandSystem : EntitySystem
 
         var examineMarkup = GetContrabandExamine(departmentExamineMessage, carryingMessage);
         _examine.AddDetailedExamineVerb(args, component, examineMarkup,
-            Loc.GetString("armor-examinable-verb-text"), "/Textures/Interface/VerbIcons/dot.svg.192dpi.png",
-            Loc.GetString("armor-examinable-verb-message"));
+            Loc.GetString("contraband-examinable-verb-text"), "/Textures/Interface/VerbIcons/knife.svg.png",
+            Loc.GetString("contraband-examinable-verb-message"));
     }
 
     private FormattedMessage GetContrabandExamine(String deptMessage, String carryMessage)
