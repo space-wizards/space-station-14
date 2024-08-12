@@ -80,6 +80,27 @@
     Glass: 50
 
 - type: latheRecipe
+  id: ChemistryEmptyBottle02
+  result: ChemistryEmptyBottle02
+  completetime: 2
+  materials:
+    Glass: 50
+
+- type: latheRecipe
+  id: ChemistryEmptyBottle03
+  result: ChemistryEmptyBottle03
+  completetime: 2
+  materials:
+    Glass: 50
+
+- type: latheRecipe
+  id: ChemistryEmptyBottle04
+  result: ChemistryEmptyBottle04
+  completetime: 2
+  materials:
+    Glass: 50
+
+- type: latheRecipe
   id: Vape
   icon:
     sprite: Objects/Consumable/Smokeables/Vapes/vape-standard.rsi
