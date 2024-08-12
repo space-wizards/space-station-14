@@ -1,4 +1,4 @@
-using Content.Shared.Storage;
+using Content.Shared.EntityTable.EntitySelectors;
 
 namespace Content.Server.StationEvents.Components;
 
@@ -18,5 +18,5 @@ public sealed partial class BasicStationEventSchedulerComponent : Component
     /// The gamerules that the scheduler can choose from
     /// </summary>
     [DataField(required: true)]
-    public List<EntitySpawnEntry> ScheduledGameRules = new();
+    public EntityTableSelector ScheduledGameRules = default!;
 }
