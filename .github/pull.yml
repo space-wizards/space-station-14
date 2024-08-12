@@ -3,3 +3,5 @@ rules:
   - base: master
     upstream: space-wizards:master    # change `wei` to the owner of upstream repo
     mergeMethod: merge
+    conflictReviewers:      # Optional, on merge conflict assign a reviewer
+      - MWGMorningwood
