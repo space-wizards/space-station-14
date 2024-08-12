@@ -54,7 +54,7 @@
 - type: loadout
   id: CaptainMantle
   equipment:
-    neck: CaptainMantle
+    neck: ClothingNeckMantleCap
   effects:
   - !type:GroupLoadoutEffect
     proto: MasterCap

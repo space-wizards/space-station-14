@@ -59,7 +59,7 @@
 - type: loadout
   id: HeadofSecurityMantle
   equipment:
-    neck: HeadofSecurityMantle
+    neck: ClothingNeckMantleHOS
   effects:
   - !type:GroupLoadoutEffect
     proto: MasterHoS
