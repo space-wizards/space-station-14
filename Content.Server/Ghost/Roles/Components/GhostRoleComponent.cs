@@ -74,6 +74,12 @@ public sealed partial class GhostRoleComponent : Component
         }
     }
 
+    /// <summary>
+    /// If set, the mob's mind entity will start with this Role Type.
+    /// </summary>
+    [DataField, Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends TODO:ERRANT this is my problem now...
+    public ProtoId<RoleTypePrototype>? RoleType;
+
     [DataField("allowSpeech")]
     [ViewVariables(VVAccess.ReadWrite)]
     public bool AllowSpeech { get; set; } = true;
@@ -101,11 +107,5 @@ public sealed partial class GhostRoleComponent : Component
     [DataField("raffle")]
     [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
     public GhostRoleRaffleConfig? RaffleConfig { get; set; }
-
-    /// <summary>
-    /// If set, the mob's mind entity will start with this Role Type.
-    /// </summary>
-    [DataField]
-    public ProtoId<RoleTypePrototype>? RoleType;
 }
 

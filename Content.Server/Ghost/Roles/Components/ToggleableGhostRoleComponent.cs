@@ -6,36 +6,39 @@
 [RegisterComponent, Access(typeof(ToggleableGhostRoleSystem))]
 public sealed partial class ToggleableGhostRoleComponent : Component
 {
-    [DataField("examineTextMindPresent")]
+    [DataField]
     public string ExamineTextMindPresent = string.Empty;
 
-    [DataField("examineTextMindSearching")]
+    [DataField]
     public string ExamineTextMindSearching = string.Empty;
 
-    [DataField("examineTextNoMind")]
+    [DataField]
     public string ExamineTextNoMind = string.Empty;
 
-    [DataField("beginSearchingText")]
+    [DataField]
     public string BeginSearchingText = string.Empty;
 
-    [DataField("roleName")]
+    [DataField]
     public string RoleName = string.Empty;
 
-    [DataField("roleDescription")]
+    [DataField]
     public string RoleDescription = string.Empty;
 
-    [DataField("roleRules")]
+    [DataField]
     public string RoleRules = string.Empty;
 
-    [DataField("wipeVerbText")]
+    [DataField]
+    public string RoleType = string.Empty;
+
+    [DataField]
     public string WipeVerbText = string.Empty;
 
-    [DataField("wipeVerbPopup")]
+    [DataField]
     public string WipeVerbPopup = string.Empty;
 
-    [DataField("stopSearchVerbText")]
+    [DataField]
     public string StopSearchVerbText = string.Empty;
 
-    [DataField("stopSearchVerbPopup")]
+    [DataField]
     public string StopSearchVerbPopup = string.Empty;
 }
