@@ -1009,6 +1009,7 @@
     collection: FootstepTile
   itemDrop: FloorTileItemGrayConcreteSmooth
   heatCapacity: 10000
+
 - type: tile
   id: FloorOldConcrete
   name: tiles-old-concrete-tile
