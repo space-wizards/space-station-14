@@ -54,6 +54,15 @@ public sealed partial class ChameleonClothingComponent : Component
     [DataField]
     public int EmpChangeIntensity = 7;
 
+    /// <summary>
+    ///     Should the EMP-change happen continiously, or only once?
+    ///     (False = once, True = continiously)
+    ///     Useless without <see cref="EmpAffected"/>
+    /// </summary>
+    [ViewVariables]
+    [DataField]
+    public bool EmpContinious = false;
+
     public TimeSpan NextEmpChange = TimeSpan.Zero; // When we need to change outfit next time
 }
 
