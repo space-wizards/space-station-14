@@ -51,7 +51,7 @@
     state: stamp-cap
 
 - type: entity
-  name: CentCom rubber stamp
+  name: CentComm rubber stamp
   parent: RubberStampBase
   id: RubberStampCentcom
   suffix: DO NOT MAP
@@ -75,6 +75,19 @@
     stampState: "paper_stamp-chaplain"
   - type: Sprite
     state: stamp-chaplain
+
+- type: entity
+  name: lawyer's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampLawyer
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-lawyer
+    stampedColor: "#233D57"
+    stampState: "paper_stamp-lawyer"
+  - type: Sprite
+    state: stamp-lawyer
 
 - type: entity
   name: clown's rubber stamp
@@ -198,7 +211,7 @@
 
 - type: entity
   name: syndicate rubber stamp
-  parent: RubberStampBase
+  parent: [RubberStampBase, BaseSyndicateContraband]
   id: RubberStampSyndicate
   suffix: DO NOT MAP
   components:
@@ -245,3 +258,16 @@
     stampState: "paper_stamp-deny"
   - type: Sprite
     state: stamp-deny
+
+- type: entity
+  name: detective's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampDetective
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-detective
+    stampedColor: "#754d36"
+    stampState: "paper_stamp-detective"
+  - type: Sprite
+    state: stamp-detective

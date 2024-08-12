@@ -97,11 +97,12 @@ namespace Content.Server.Administration.Commands
                 foreach (var slot in slots)
                 {
                     invSystem.TryUnequip(target, slot.Name, true, true, false, inventoryComponent);
-                    var gearStr = startingGear.GetGear(slot.Name, profile);
+                    var gearStr = ((IEquipmentLoadout) startingGear).GetGear(slot.Name);
                     if (gearStr == string.Empty)
                     {
                         continue;
                     }
+
                     var equipmentEntity = entityManager.SpawnEntity(gearStr, entityManager.GetComponent<TransformComponent>(target).Coordinates);
                     if (slot.Name == "id" &&
                         entityManager.TryGetComponent(equipmentEntity, out PdaComponent? pdaComponent) &&

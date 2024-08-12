@@ -11,6 +11,30 @@
       "name": "dark"
     },
     {
+      "name": "dark-diagonal-mini"
+    },
+    {
+      "name": "dark-diagonal"
+    },
+    {
+      "name": "dark-herringbone"
+    },
+    {
+      "name": "dark-mini"
+    },
+    {
+      "name": "dark-mono"
+    },
+    {
+      "name": "dark-pavement"
+    },
+    {
+      "name": "dark-pavement-vertical"
+    },
+    {
+      "name": "dark-offset"
+    },
+    {
       "name": "dirty"
     },
     {
@@ -23,10 +47,28 @@
       "name": "concrete"
     },
     {
+      "name": "concrete-mono"
+    },
+    {
+      "name": "concrete-smooth"
+    },
+    {
       "name": "grayconcrete"
     },
     {
+      "name": "grayconcrete-mono"
+    },
+    {
+      "name": "grayconcrete-smooth"
+    },
+    {
       "name": "oldconcrete"
+    },
+    {
+      "name": "oldconcrete-mono"
+    },
+    {
+      "name": "oldconcrete-smooth"
     },
     {
       "name": "gcircuit"
@@ -37,6 +79,15 @@
     {
       "name": "blue"
     },
+	  {
+	    "name": "brass"
+	  },
+	  {
+	    "name": "brass-filled"
+	  },
+	  {
+	    "name": "reebe"
+	  },
     {
       "name": "lime"
     },
@@ -133,6 +184,12 @@
       "name": "carpet-pink"
     },
     {
+      "name": "carpet-cyan"
+    },
+    {
+      "name": "carpet-white"
+    },
+    {
       "name": "hydro"
     },
     {
@@ -154,6 +211,30 @@
       "name": "steel"
     },
     {
+      "name": "steel-offset"
+    },
+    {
+      "name": "steel-diagonal-mini"
+    },
+    {
+      "name": "steel-diagonal"
+    },
+    {
+      "name": "steel-herringbone"
+    },
+    {
+      "name": "steel-mini"
+    },
+    {
+      "name": "steel-mono"
+    },
+    {
+      "name": "steel-pavement"
+    },
+    {
+      "name": "steel-pavement-vertical"
+    },
+    {
       "name": "silver"
     },
     {
@@ -161,6 +242,30 @@
     },
     {
       "name": "white"
+    },
+    {
+      "name": "white-offset"
+    },
+    {
+      "name": "white-diagonal-mini"
+    },
+    {
+      "name": "white-diagonal"
+    },
+    {
+      "name": "white-herringbone"
+    },
+    {
+      "name": "white-mini"
+    },
+    {
+      "name": "white-mono"
+    },
+    {
+      "name": "white-pavement"
+    },
+    {
+      "name": "white-pavement-vertical"
     },
     {
       "name": "monofloor"
@@ -194,6 +299,12 @@
     },
     {
       "name": "shuttlered"
+    },
+    {
+      "name": "shuttlegrey"
+    },
+    {
+      "name": "shuttleblack"
     },
     {
       "name": "carpetclown"
@@ -295,6 +406,22 @@
     },
     {
       "name": "carpet-pink-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "carpet-cyan-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "carpet-cyan-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "carpet-white-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "carpet-white-inhand-right",
       "directions": 4
     },
     {
@@ -408,6 +535,9 @@
     {
       "name": "hydro-inhand-left",
       "directions": 4
+    },
+    {
+      "name": "wood-large"
     }
   ]
 }

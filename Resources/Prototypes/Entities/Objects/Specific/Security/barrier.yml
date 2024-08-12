@@ -10,15 +10,11 @@
   - type: Sprite
     sprite: Objects/Specific/Security/barrier.rsi
     layers:
-    - state: "idle"
-      map: ["deployableBarrierBase"]
+    - state: idle
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
   - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.DeployableBarrierVisuals.State:
-        deployableBarrierBase:
-          enum.DeployableBarrierState.Idle: {state: "idle"}
-          enum.DeployableBarrierState.Deployed: {state: "deployed"}
+  - type: LockVisuals
   - type: InteractionOutline
   - type: Physics
     bodyType: Dynamic

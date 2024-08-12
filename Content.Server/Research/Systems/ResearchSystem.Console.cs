@@ -20,8 +20,7 @@ public sealed partial class ResearchSystem
 
     private void OnConsoleUnlock(EntityUid uid, ResearchConsoleComponent component, ConsoleUnlockTechnologyMessage args)
     {
-        if (args.Session.AttachedEntity is not { } ent)
-            return;
+        var act = args.Actor;
 
         if (!this.IsPowered(uid, EntityManager))
             return;
@@ -29,13 +28,13 @@ public sealed partial class ResearchSystem
         if (!PrototypeManager.TryIndex<TechnologyPrototype>(args.Id, out var technologyPrototype))
             return;
 
-        if (TryComp<AccessReaderComponent>(uid, out var access) && !_accessReader.IsAllowed(ent, uid, access))
+        if (TryComp<AccessReaderComponent>(uid, out var access) && !_accessReader.IsAllowed(act, uid, access))
         {
-            _popup.PopupEntity(Loc.GetString("research-console-no-access-popup"), ent);
+            _popup.PopupEntity(Loc.GetString("research-console-no-access-popup"), act);
             return;
         }
 
-        if (!UnlockTechnology(uid, args.Id, ent))
+        if (!UnlockTechnology(uid, args.Id, act))
             return;
 
         var message = Loc.GetString("research-console-unlock-technology-radio-broadcast",
@@ -68,7 +67,7 @@ public sealed partial class ResearchSystem
             state = new ResearchConsoleBoundInterfaceState(default);
         }
 
-        _uiSystem.TrySetUiState(uid, ResearchConsoleUiKey.Key, state);
+        _uiSystem.SetUiState(uid, ResearchConsoleUiKey.Key, state);
     }
 
     private void OnPointsChanged(EntityUid uid, ResearchConsoleComponent component, ref ResearchServerPointsChangedEvent args)

@@ -77,6 +77,17 @@
         amount: 3
 
 - type: entity
+  id: CrateEngineeringFoamGrenade
+  parent: CrateEngineeringSecure
+  name: sealant grenade crate
+  description: 5 metal foam sealant grenades.
+  components:
+  - type: StorageFill
+    contents:
+    - id: MetalFoamGrenade
+      amount: 5
+
+- type: entity
   id: CrateEngineeringCableBulk
   parent: CrateElectrical
   name: bulk cable crate
@@ -166,8 +177,8 @@
 - type: entity
   id: CrateRCDAmmo
   parent: CrateEngineering
-  name: RCD ammo crate
-  description: 3 RCD ammo, each restoring 5 charges.
+  name: compressed matter crate
+  description: Contains three compressed matter cartridges.
   components:
   - type: StorageFill
     contents:
@@ -178,7 +189,7 @@
   id: CrateRCD
   parent: CrateEngineeringSecure
   name: RCD crate
-  description: A crate containing a single Rapid Construction Device.
+  description: A crate containing a single rapid construction device.
   components:
   - type: StorageFill
     contents:
@@ -194,3 +205,13 @@
     contents:
     - id: WeaponParticleDecelerator
       amount: 3
+
+- type: entity
+  id: CrateEngineeringSpaceHeater
+  parent: CrateEngineering
+  name: space heater crate
+  description: Contains a space heater for climate control.
+  components:
+  - type: StorageFill
+    contents:
+      - id: SpaceHeaterFlatpack

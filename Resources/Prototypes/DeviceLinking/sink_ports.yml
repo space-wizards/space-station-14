@@ -107,3 +107,8 @@
   id: SetParticleZeta
   name: signal-port-name-set-particle-zeta
   description: signal-port-description-set-particle-zeta
+
+- type: sinkPort
+  id: SetParticleSigma
+  name: signal-port-name-set-particle-sigma
+  description: signal-port-description-set-particle-sigma

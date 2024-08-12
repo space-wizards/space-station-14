@@ -5,7 +5,7 @@ namespace Content.Server.Roles;
 /// <summary>
 ///     Added to mind entities to tag that they are a Revolutionary.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, ExclusiveAntagonist]
 public sealed partial class RevolutionaryRoleComponent : AntagonistRoleComponent
 {
     /// <summary>

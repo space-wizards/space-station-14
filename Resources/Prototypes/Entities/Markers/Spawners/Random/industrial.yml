@@ -1,0 +1,87 @@
+#Industrial spawners
+- type: entity
+  name: industrial fluff spawner
+  id: LootSpawnerIndustrialFluff
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Tools/flashlight.rsi
+          state: flashlight
+    - type: RandomSpawner
+      rarePrototypes:
+        - CheapLighter
+        - Pen
+        - Cigar
+        - CigarSpent
+        - Cigarette
+        - CigaretteSpent
+        - Paper
+        - FolderSpawner
+      rareChance: 0.1
+      prototypes:
+        - RemoteSignaller
+        - GeigerCounter
+        - trayScanner
+        - FlashlightLantern
+        - ClothingHandsGlovesColorBlack
+        - Lighter
+        - ClothingMaskGas
+        - HandheldGPSBasic
+      chance: 0.85
+      offset: 0.0
+
+- type: entity
+  name: industrial loot spawner
+  suffix: Tools + Materials
+  id: LootSpawnerIndustrial
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Tools/welder.rsi
+          state: icon
+    - type: RandomSpawner
+      rarePrototypes:
+        - CapacitorStockPart
+        - MicroManipulatorStockPart
+        - MatterBinStockPart
+        - CableHVStack10
+        - WelderIndustrial
+        - PowerCellHigh
+        - PowerCellSmall
+        - ClothingHandsGlovesColorYellowBudget
+      rareChance: 0.2
+      prototypes:
+        - ClothingHeadHatWelding
+        - WelderMini
+        - Crowbar
+        - CrowbarRed
+        - Screwdriver
+        - Wrench
+        - Wirecutter
+        - Welder
+        - RemoteSignaller
+        - GeigerCounter
+        - GasAnalyzer
+        - Multitool
+        - trayScanner
+        - FlashlightLantern
+        - ClothingHandsGlovesColorBlack
+        - ClothingMaskGas
+        - HandheldGPSBasic
+        - FireExtinguisher
+        - PowerCellMedium
+        - SheetSteel10
+        - SheetGlass10
+        - SheetPlastic10
+        - SheetPlasteel10
+        - PartRodMetal10
+        - CableApcStack10
+        - CableMVStack10
+        - ToolboxElectricalFilled
+        - ToolboxMechanicalFilled
+      chance: 0.8
+      offset: 0.0

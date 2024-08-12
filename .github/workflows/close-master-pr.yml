@@ -1,4 +1,4 @@
-name: Close PR's on master
+name: Close PRs on master
 
 on:
   pull_request_target:

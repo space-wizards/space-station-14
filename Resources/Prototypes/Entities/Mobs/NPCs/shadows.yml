@@ -1,0 +1,67 @@
+- type: entity
+  id: BaseShadowMob
+  abstract: true
+  parent: [ BaseMob, BaseShadow ]
+  components:
+  - type: Sprite
+    color: "#793a80dd"
+  - type: PointLight
+    color: "#793a80dd"
+    radius: 1.1
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 2
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 120
+        mask:
+        - Opaque
+        layer:
+        - None
+  - type: StandingState
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      60: 0.7
+      80: 0.5
+      
+- type: entity
+  name: shadow cat
+  parent: BaseShadowMob
+  id: MobCatShadow
+  description: A lovely piece of darkness. Hope he doesn't bring you a curse.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/cat.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: cat
+  - type: Physics
+  - type: ReplacementAccent
+    accent: cat
+  - type: InteractionPopup
+    successChance: 0.01 # you cant pet shadow cat... almost
+    interactSuccessString: petting-success-cat
+    interactFailureString: petting-failure-shadow
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/cat_meow.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: Tag
+    tags:
+    - VimPilot

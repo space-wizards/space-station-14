@@ -43,7 +43,7 @@ public sealed partial class BuyerDepartmentCondition : ListingCondition
         {
             foreach (var department in prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
             {
-                if (department.Roles.Contains(job.Prototype) && Blacklist.Contains(department.ID))
+                if (department.Roles.Contains(job.Prototype.Value) && Blacklist.Contains(department.ID))
                     return false;
             }
         }
@@ -56,7 +56,7 @@ public sealed partial class BuyerDepartmentCondition : ListingCondition
             {
                 foreach (var department in prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
                 {
-                    if (department.Roles.Contains(job.Prototype) && Whitelist.Contains(department.ID))
+                    if (department.Roles.Contains(job.Prototype.Value) && Whitelist.Contains(department.ID))
                     {
                         found = true;
                         break;

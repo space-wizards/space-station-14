@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Salvage;
 
 [Prototype]
-public sealed class SalvageMapPrototype : IPrototype
+public sealed partial class SalvageMapPrototype : IPrototype
 {
     [ViewVariables] [IdDataField] public string ID { get; } = default!;
 

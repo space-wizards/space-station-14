@@ -1,7 +1,9 @@
-﻿using Content.Server.NPC.Components;
+using Content.Server.NPC.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Components;
+using Content.Shared.NPC.Components;
+using Content.Shared.NPC.Systems;
 using Robust.Shared.Collections;
 using Robust.Shared.Timing;
 
@@ -22,37 +24,35 @@ public sealed class NPCRetaliationSystem : EntitySystem
         SubscribeLocalEvent<NPCRetaliationComponent, DisarmedEvent>(OnDisarmed);
     }
 
-    private void OnDamageChanged(EntityUid uid, NPCRetaliationComponent component, DamageChangedEvent args)
+    private void OnDamageChanged(Entity<NPCRetaliationComponent> ent, ref DamageChangedEvent args)
     {
         if (!args.DamageIncreased)
             return;
 
-        if (args.Origin is not { } origin)
+        if (args.Origin is not {} origin)
             return;
 
-        TryRetaliate(uid, origin, component);
+        TryRetaliate(ent, origin);
     }
 
-    private void OnDisarmed(EntityUid uid, NPCRetaliationComponent component, DisarmedEvent args)
+    private void OnDisarmed(Entity<NPCRetaliationComponent> ent, ref DisarmedEvent args)
     {
-        TryRetaliate(uid, args.Source, component);
+        TryRetaliate(ent, args.Source);
     }
 
-    public bool TryRetaliate(EntityUid uid, EntityUid target, NPCRetaliationComponent? component = null)
+    public bool TryRetaliate(Entity<NPCRetaliationComponent> ent, EntityUid target)
     {
-        if (!Resolve(uid, ref component))
-            return false;
-
         // don't retaliate against inanimate objects.
         if (!HasComp<MobStateComponent>(target))
             return false;
 
-        if (_npcFaction.IsEntityFriendly(uid, target))
+        // don't retaliate against the same faction
+        if (_npcFaction.IsEntityFriendly(ent.Owner, target))
             return false;
 
-        _npcFaction.AggroEntity(uid, target);
-        if (component.AttackMemoryLength is { } memoryLength)
-            component.AttackMemories[target] = _timing.CurTime + memoryLength;
+        _npcFaction.AggroEntity(ent.Owner, target);
+        if (ent.Comp.AttackMemoryLength is {} memoryLength)
+            ent.Comp.AttackMemories[target] = _timing.CurTime + memoryLength;
 
         return true;
     }
@@ -64,12 +64,14 @@ public sealed class NPCRetaliationSystem : EntitySystem
         var query = EntityQueryEnumerator<NPCRetaliationComponent, FactionExceptionComponent>();
         while (query.MoveNext(out var uid, out var retaliationComponent, out var factionException))
         {
+            // TODO: can probably reuse this allocation and clear it
             foreach (var entity in new ValueList<EntityUid>(retaliationComponent.AttackMemories.Keys))
             {
                 if (!TerminatingOrDeleted(entity) && _timing.CurTime < retaliationComponent.AttackMemories[entity])
                     continue;
 
-                _npcFaction.DeAggroEntity(uid, entity, factionException);
+                _npcFaction.DeAggroEntity((uid, factionException), entity);
+                // TODO: should probably remove the AttackMemory, thats the whole point of the ValueList right??
             }
         }
     }

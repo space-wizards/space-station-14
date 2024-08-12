@@ -65,3 +65,21 @@
   - type: ReagentTank
   - type: Transform
     noRot: true
+
+# For highcap tanks
+- type: entity
+  id: StorageTankBig
+  parent: StorageTank
+  abstract: true
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 455 #very heavy, they store 10k units of reagents after all.
+        mask:
+        - MachineMask
+        layer:
+        - WallLayer

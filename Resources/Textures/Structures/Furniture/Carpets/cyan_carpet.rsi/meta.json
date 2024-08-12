@@ -1,0 +1,46 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by Hqlle (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "full"
+        },
+        {
+            "name": "carpet_0",
+            "directions": 4
+        },
+        {
+            "name": "carpet_1",
+            "directions": 4
+        },
+        {
+            "name": "carpet_2",
+            "directions": 4
+        },
+        {
+            "name": "carpet_3",
+            "directions": 4
+        },
+        {
+            "name": "carpet_4",
+            "directions": 4
+        },
+        {
+            "name": "carpet_5",
+            "directions": 4
+        },
+        {
+            "name": "carpet_6",
+            "directions": 4
+        },
+        {
+            "name": "carpet_7",
+            "directions": 4
+        }
+    ]
+}

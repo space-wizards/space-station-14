@@ -11,7 +11,6 @@
     size: Normal
   - type: Tag
     tags:
-      - DroneUsable
       - RawMaterial
   - type: Damageable
     damageContainer: Inorganic
@@ -128,7 +127,6 @@
   - type: Tag
     tags:
       - ClothMade
-      - DroneUsable
       - Gauze
       - RawMaterial
   - type: Construction
@@ -193,7 +191,6 @@
   - type: Tag
     tags:
       - ClothMade
-      - DroneUsable
       - RawMaterial
 
 - type: entity
@@ -212,7 +209,7 @@
         reagents: #Hell if I know what durathread is made out of.
         - ReagentId: Fiber
           Quantity: 6
-          
+
 - type: entity
   parent: MaterialBase
   id: MaterialWoodPlank
@@ -241,7 +238,6 @@
   - type: Tag
     tags:
     - Wooden
-    - DroneUsable
     - RawMaterial
   - type: Extractable
     grindableSolutionName: wood
@@ -354,8 +350,17 @@
   components:
   - type: Stack
     stackType: Diamond
+    baseLayer: base
+    layerStates:
+    - diamond
+    - diamond_2
+    - diamond_3
   - type: Sprite
     state: diamond
+    layers:
+    - state: diamond
+      map: ["base"]
+  - type: Appearance
   - type: Item
     heldPrefix: diamond
   - type: Extractable
@@ -366,6 +371,10 @@
         reagents:
         - ReagentId: Carbon
           Quantity: 20
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Diamond: 100
 
 - type: entity
   parent: MaterialDiamond
@@ -411,9 +420,7 @@
   - type: Tag
     tags:
       - ClothMade
-      - DroneUsable
       - RawMaterial
-
 
 - type: entity
   parent: MaterialCotton
@@ -422,6 +429,58 @@
   components:
   - type: Sprite
     state: cotton
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialPyrotton
+  name: pyrotton
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Pyrotton
+    baseLayer: base
+    layerStates:
+    - pyrotton
+    - pyrotton_2
+    - pyrotton_3
+  - type: Sprite
+    state: pyrotton_3
+    layers:
+    - state: pyrotton_3
+      map: ["base"]
+  - type: Appearance
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+        - ReagentId: Phlogiston
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 3
+      - ReagentId: Phlogiston
+        Quantity: 3
+  - type: Tag
+    tags:
+      - ClothMade
+      - RawMaterial
+
+- type: entity
+  parent: MaterialPyrotton
+  id: MaterialPyrotton1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: pyrotton
   - type: Stack
     count: 1
 
@@ -447,13 +506,12 @@
     layerStates:
       - bananium
       - bananium_1
-  - type: RadiationSource
-    intensity: 0.1
   - type: FlavorProfile
     flavors:
       - banana
   - type: Food
-    trash: TrashBananiumPeel
+    trash: 
+    - TrashBananiumPeel
   - type: BadFood
   - type: SolutionContainerManager
     solutions:
@@ -489,7 +547,7 @@
   parent: MaterialBase
   id: MaterialWebSilk
   name: silk
-  description: A webby material
+  description: A webby material.
   suffix: Full
   components:
   - type: PhysicalComposition
@@ -523,7 +581,6 @@
   - type: Tag
     tags:
       - ClothMade
-      - DroneUsable
       - RawMaterial
 
 - type: entity
@@ -578,3 +635,22 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialGunpowder
+  name: gunpowder
+  description: An explosive compound.
+  components:
+  - type: Stack
+    stackType: Gunpowder
+    count: 1
+  - type: Sprite
+    sprite: Objects/Misc/reagent_fillings.rsi
+    state: powderpile
+    color: darkgray
+  - type: PhysicalComposition
+    materialComposition:
+      Gunpowder: 100
+  - type: Item
+    size: Tiny

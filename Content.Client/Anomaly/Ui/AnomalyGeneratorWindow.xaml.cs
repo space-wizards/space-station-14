@@ -11,7 +11,6 @@ namespace Content.Client.Anomaly.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class AnomalyGeneratorWindow : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     private TimeSpan _cooldownEnd = TimeSpan.Zero;
@@ -19,15 +18,19 @@ public sealed partial class AnomalyGeneratorWindow : FancyWindow
 
     public Action? OnGenerateButtonPressed;
 
-    public AnomalyGeneratorWindow(EntityUid gen)
+    public AnomalyGeneratorWindow()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        EntityView.SetEntity(gen);
         EntityView.SpriteOffset = false;
 
         GenerateButton.OnPressed += _ => OnGenerateButtonPressed?.Invoke();
+    }
+
+    public void SetEntity(EntityUid uid)
+    {
+        EntityView.SetEntity(uid);
     }
 
     public void UpdateState(AnomalyGeneratorUserInterfaceState state)

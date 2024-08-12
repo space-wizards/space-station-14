@@ -23,6 +23,10 @@
     tags:
     - ClothMade
     - WhitelistChameleon
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 5 # the average lightbulb only does around four damage!
 
 - type: entity
   abstract: true
@@ -34,3 +38,13 @@
     spawned:
     - id: MaterialCloth1
       amount: 1
+
+# gloves that cover the fingertips and have synthetic fibers
+- type: entity
+  abstract: true
+  parent: ClothingHandsButcherable
+  id: ClothingHandsGlovesSyntheticBase
+  components:
+  - type: Fiber
+    fiberMaterial: fibers-synthetic
+  - type: FingerprintMask

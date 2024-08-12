@@ -6,6 +6,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Commands;
 
@@ -14,6 +15,7 @@ public sealed class PlayGlobalSoundCommand : IConsoleCommand
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IResourceManager _res = default!;
 
     public string Command => "playglobalsound";
@@ -95,7 +97,7 @@ public sealed class PlayGlobalSoundCommand : IConsoleCommand
         {
             var hint = Loc.GetString("play-global-sound-command-arg-path");
 
-            var options = CompletionHelper.ContentFilePath(args[0], _res);
+            var options = CompletionHelper.AudioFilePath(args[0], _protoManager, _res);
 
             return CompletionResult.FromHintOptions(options, hint);
         }

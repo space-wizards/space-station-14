@@ -1,5 +1,4 @@
 using Content.Client.Verbs;
-using Content.Shared.Eye.Blinding;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
@@ -16,8 +15,6 @@ using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
 using System.Threading;
-using Content.Shared.Eye.Blinding.Components;
-using Robust.Client;
 using static Content.Shared.Interaction.SharedInteractionSystem;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Content.Shared.Interaction.Events;
@@ -33,7 +30,6 @@ namespace Content.Client.Examine
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly VerbSystem _verbSystem = default!;
-        [Dependency] private readonly IBaseClient _client = default!;
 
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
@@ -47,6 +43,8 @@ namespace Content.Client.Examine
 
         public override void Initialize()
         {
+            base.Initialize();
+
             UpdatesOutsidePrediction = true;
 
             SubscribeLocalEvent<GetVerbsEvent<ExamineVerb>>(AddExamineVerb);
@@ -66,12 +64,10 @@ namespace Content.Client.Examine
         {
             if (!args.User.Valid)
                 return;
-            if (_playerManager.LocalPlayer == null)
-                return;
             if (_examineTooltipOpen == null)
                 return;
 
-            if (item == _examinedEntity && args.User == _playerManager.LocalPlayer.ControlledEntity)
+            if (item == _examinedEntity && args.User == _playerManager.LocalEntity)
                 CloseTooltip();
         }
 
@@ -118,7 +114,7 @@ namespace Content.Client.Examine
                 return false;
             }
 
-            _playerEntity = _playerManager.LocalPlayer?.ControlledEntity ?? default;
+            _playerEntity = _playerManager.LocalEntity ?? default;
 
             if (_playerEntity == default || !CanExamine(_playerEntity, entity))
             {
@@ -149,7 +145,7 @@ namespace Content.Client.Examine
 
         private void OnExamineInfoResponse(ExamineSystemMessages.ExamineInfoResponseMessage ev)
         {
-            var player = _playerManager.LocalPlayer?.ControlledEntity;
+            var player = _playerManager.LocalEntity;
             if (player == null)
                 return;
 
@@ -215,14 +211,16 @@ namespace Content.Client.Examine
             var vBox = new BoxContainer
             {
                 Name = "ExaminePopupVbox",
-                Orientation = LayoutOrientation.Vertical
+                Orientation = LayoutOrientation.Vertical,
+                MaxWidth = _examineTooltipOpen.MaxWidth
             };
             panel.AddChild(vBox);
 
             var hBox = new BoxContainer
             {
                 Orientation = LayoutOrientation.Horizontal,
-                SeparationOverride = 5
+                SeparationOverride = 5,
+                Margin = new Thickness(6, 0, 6, 0)
             };
 
             vBox.AddChild(hBox);
@@ -232,8 +230,7 @@ namespace Content.Client.Examine
                 var spriteView = new SpriteView
                 {
                     OverrideDirection = Direction.South,
-                    SetSize = new Vector2(32, 32),
-                    Margin = new Thickness(2, 0, 2, 0),
+                    SetSize = new Vector2(32, 32)
                 };
                 spriteView.SetEntity(target);
                 hBox.AddChild(spriteView);
@@ -241,19 +238,17 @@ namespace Content.Client.Examine
 
             if (knowTarget)
             {
-                hBox.AddChild(new Label
-                {
-                    Text = Identity.Name(target, EntityManager, player),
-                    HorizontalExpand = true,
-                });
+                var itemName = FormattedMessage.EscapeText(Identity.Name(target, EntityManager, player));
+                var labelMessage = FormattedMessage.FromMarkupPermissive($"[bold]{itemName}[/bold]");
+                var label = new RichTextLabel();
+                label.SetMessage(labelMessage);
+                hBox.AddChild(label);
             }
             else
             {
-                hBox.AddChild(new Label
-                {
-                    Text = "???",
-                    HorizontalExpand = true,
-                });
+                var label = new RichTextLabel();
+                label.SetMessage(FormattedMessage.FromMarkupOrThrow("[bold]???[/bold]"));
+                hBox.AddChild(label);
             }
 
             panel.Measure(Vector2Helpers.Infinity);
@@ -356,16 +351,13 @@ namespace Content.Client.Examine
 
         public void DoExamine(EntityUid entity, bool centeredOnCursor = true, EntityUid? userOverride = null)
         {
-            var playerEnt = userOverride ?? _playerManager.LocalPlayer?.ControlledEntity;
+            var playerEnt = userOverride ?? _playerManager.LocalEntity;
             if (playerEnt == null)
                 return;
 
             FormattedMessage message;
 
-            // Basically this just predicts that we can't make out the entity if we have poor vision.
-            var canSeeClearly = !HasComp<BlurryVisionComponent>(playerEnt);
-
-            OpenTooltip(playerEnt.Value, entity, centeredOnCursor, false, knowTarget: canSeeClearly);
+            OpenTooltip(playerEnt.Value, entity, centeredOnCursor, false);
 
             // Always update tooltip info from client first.
             // If we get it wrong, server will correct us later anyway.

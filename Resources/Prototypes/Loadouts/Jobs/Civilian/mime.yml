@@ -1,0 +1,64 @@
+# Head
+- type: loadout
+  id: MimeHead
+  equipment:
+    head: ClothingHeadHatBeret
+
+- type: loadout
+  id: MimeFrenchBeret
+  equipment:
+    head: ClothingHeadHatBeretFrench
+
+- type: loadout
+  id: MimeCap
+  equipment:
+    head: ClothingHeadHatMimesoft
+
+# Mask
+- type: loadout
+  id: MimeMask
+  equipment:
+    mask: ClothingMaskMime
+
+- type: loadout
+  id: MimeMaskSad
+  equipment:
+    mask: ClothingMaskSadMime
+
+- type: loadout
+  id: MimeMaskScared
+  equipment:
+    mask: ClothingMaskScaredMime
+
+# Jumpsuit
+- type: loadout
+  id: MimeJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMime
+
+- type: loadout
+  id: MimeJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtMime
+
+# Back
+- type: loadout
+  id: MimeBackpack
+  equipment:
+    back: ClothingBackpackMime
+
+- type: loadout
+  id: MimeSatchel
+  equipment:
+    back: ClothingBackpackSatchelMime
+
+- type: loadout
+  id: MimeDuffel
+  equipment:
+    back: ClothingBackpackDuffelMime
+
+# Outerclothing
+- type: loadout
+  id: MimeWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterMime

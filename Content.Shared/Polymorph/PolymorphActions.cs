@@ -1,18 +1,20 @@
 ﻿using Content.Shared.Actions;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Polymorph;
 
 public sealed partial class PolymorphActionEvent : InstantActionEvent
 {
     /// <summary>
-    /// The polymorph prototype containing all the information about
-    /// the specific polymorph.
+    ///     The polymorph proto id, containing all the information about
+    ///     the specific polymorph.
     /// </summary>
-    public PolymorphPrototype Prototype = default!;
+    [DataField]
+    public ProtoId<PolymorphPrototype>? ProtoId;
 
-    public PolymorphActionEvent(PolymorphPrototype prototype) : this()
+    public PolymorphActionEvent(ProtoId<PolymorphPrototype> protoId) : this()
     {
-        Prototype = prototype;
+        ProtoId = protoId;
     }
 }
 

@@ -75,6 +75,17 @@
   name: device-frequency-prototype-name-crew-monitor
   frequency: 1261
 
+# Cyborgs broadcast to consoles on this frequency
+- type: deviceFrequency
+  id: RoboticsConsole
+  name: device-frequency-prototype-name-robotics-console
+  frequency: 1291
+
+# Console sends commands to cyborgs on this frequency
+- type: deviceFrequency
+  id: CyborgControl
+  name: device-frequency-prototype-name-cyborg-control
+  frequency: 1292
 
 # This frequency will likely have a LARGE number of listening entities. Please don't broadcast on this frequency.
 - type: deviceFrequency

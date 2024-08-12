@@ -4,3 +4,78 @@
   antagonist: true
   setPreference: true
   objective: roles-antag-syndicate-agent-objective
+  guides: [ Traitors ]
+
+- type: antag
+  id: TraitorSleeper
+  name: roles-antag-syndicate-agent-sleeper-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-syndicate-agent-sleeper-objective
+
+# Syndicate Operative Outfit - Monkey
+- type: startingGear
+  id: SyndicateOperativeGearMonkey
+  equipment:
+    head: ClothingHeadHatOutlawHat
+    jumpsuit: ClothingUniformJumpsuitOperative
+    mask: CigaretteSyndicate
+
+# Syndicate Operative Outfit - Barratry
+- type: startingGear
+  id: SyndicateOperativeGearExtremelyBasic
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackSyndicate
+    shoes: ClothingShoesBootsCombatFilled
+    gloves: ClothingHandsGlovesColorBlack
+  storage:
+    back:
+    - WeaponPistolViper
+    - PinpointerSyndicateNuclear
+    - DeathAcidifierImplanter
+
+- type: startingGear
+  id: SyndicateOperativeClothing
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackSyndicate
+    shoes: ClothingShoesBootsSyndieFilled
+    gloves: ClothingHandsGlovesColorBlack
+
+- type: startingGear
+  id: SyndicateReinforcementMedic
+  parent: SyndicateOperativeClothing
+  equipment:
+    pocket1: WeaponPistolViper
+  inhand:
+    - MedkitCombatFilled
+
+- type: startingGear
+  id: SyndicateReinforcementSpy
+  parent: SyndicateOperativeClothing
+  equipment:
+    id: AgentIDCard
+    mask: ClothingMaskGasVoiceChameleon
+    pocket1: WeaponPistolViper
+
+- type: startingGear
+  id: SyndicateReinforcementThief
+  parent: SyndicateOperativeClothing
+  equipment:
+    pocket1: WeaponPistolViper
+  inhand:
+    - ToolboxSyndicateFilled
+  storage:
+    back:
+    - SyndicateJawsOfLife
+
+#Syndicate Operative Outfit - Basic
+- type: startingGear
+  id: SyndicateOperativeGearBasic
+  parent: SyndicateOperativeGearExtremelyBasic
+  equipment:
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    pocket1: BaseUplinkRadio40TC
+    id: SyndiPDA

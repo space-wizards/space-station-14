@@ -52,7 +52,7 @@
 
 - type: entity
   id: HotPotatoEffect
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
     lifetime: 0.6
@@ -117,3 +117,6 @@
     - id: TrashBananaPeelExplosive
     sound:
       path: /Audio/Effects/unwrap.ogg
+  - type: Tag
+    tags:
+    - Banana

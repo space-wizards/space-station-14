@@ -11,9 +11,11 @@
   cost: 7500
   recipeUnlocks:
   - MiningDrill
+  - WeaponGrapplingGun
   - BorgModuleMining
+  - BorgModuleGrapplingGun
   - OreProcessorIndustrialMachineCircuitboard
-  - OreBagOfHolding
+  - ClothingMaskWeldingGas
 
 - type: technology
   id: AdvancedPowercells
@@ -52,6 +54,7 @@
   recipeUnlocks:
   - AutolatheHyperConvectionMachineCircuitboard
   - ProtolatheHyperConvectionMachineCircuitboard
+  - CircuitImprinterHyperConvectionMachineCircuitboard
   - SheetifierMachineCircuitboard
 
 - type: technology
@@ -82,7 +85,6 @@
   tier: 1
   cost: 7500
   recipeUnlocks:
-  - BorgModuleGasAnalyzer
   - ThermomachineFreezerMachineCircuitBoard
   - GasRecyclerMachineCircuitboard
 
@@ -108,17 +110,18 @@
 # Tier 2
 
 - type: technology
-  id: Grappling
-  name: research-technology-grappling
+  id: SpaceScanning
+  name: research-technology-space-scanning
   icon:
-    sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
-    state: base
+    sprite: Objects/Tools/handheld_mass_scanner.rsi
+    state: icon
   discipline: Industrial
   tier: 2
-  cost: 5000
+  cost: 7500
   recipeUnlocks:
-  - WeaponGrapplingGun
-  - BorgModuleGrapplingGun
+  - RadarConsoleCircuitboard
+  - HandHeldMassScanner
+  - BorgModuleGPS
 
 - type: technology
   id: Shuttlecraft
@@ -131,7 +134,6 @@
   cost: 10000
   recipeUnlocks:
   - ShuttleConsoleCircuitboard
-  - RadarConsoleCircuitboard
   - ThrusterMachineCircuitboard
   - GyroscopeMachineCircuitboard
   - MiniGravityGeneratorCircuitboard
@@ -165,6 +167,19 @@
     - JawsOfLife
     - BorgModuleAdvancedTool
     - BorgModuleRCD
+
+- type: technology
+  id: MassExcavation
+  name: research-technology-excavation
+  icon:
+    sprite: Objects/Tools/handdrilldiamond.rsi
+    state: handdrill
+  discipline: Industrial
+  tier: 2
+  cost: 12500
+  recipeUnlocks:
+    - OreBagOfHolding
+    - MiningDrillDiamond
 
 # Tier 3
 

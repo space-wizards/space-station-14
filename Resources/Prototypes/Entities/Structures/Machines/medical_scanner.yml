@@ -69,9 +69,6 @@
   - type: Machine
     board: MedicalScannerMachineCircuitboard
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-medicalscanner
-    layoutId: MedicalScanner
   - type: Appearance
   - type: Climbable
   - type: ApcPowerReceiver

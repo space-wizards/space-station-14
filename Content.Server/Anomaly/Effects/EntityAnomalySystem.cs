@@ -2,7 +2,6 @@ using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
 using Content.Shared.Anomaly.Effects.Components;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
@@ -12,7 +11,6 @@ namespace Content.Server.Anomaly.Effects;
 public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
 {
     [Dependency] private readonly SharedAnomalySystem _anomaly = default!;
-    [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
@@ -37,7 +35,7 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
             if (!entry.Settings.SpawnOnPulse)
                 continue;
 
-            SpawnEntities(component, entry, args.Stability, args.Severity);
+            SpawnEntities(component, entry, args.Stability, args.Severity, args.PowerModifier);
         }
     }
 
@@ -48,7 +46,7 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
             if (!entry.Settings.SpawnOnSuperCritical)
                 continue;
 
-            SpawnEntities(component, entry, 1, 1);
+            SpawnEntities(component, entry, 1, 1, args.PowerModifier);
         }
     }
 
@@ -59,7 +57,7 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
             if (!entry.Settings.SpawnOnShutdown || args.Supercritical)
                 continue;
 
-            SpawnEntities(component, entry, 1, 1);
+            SpawnEntities(component, entry, 1, 1, 1);
         }
     }
 
@@ -70,7 +68,7 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
             if (!entry.Settings.SpawnOnStabilityChanged)
                 continue;
 
-            SpawnEntities(component, entry, args.Stability, args.Severity);
+            SpawnEntities(component, entry, args.Stability, args.Severity, 1);
         }
     }
 
@@ -81,17 +79,17 @@ public sealed class EntityAnomalySystem : SharedEntityAnomalySystem
             if (!entry.Settings.SpawnOnSeverityChanged)
                 continue;
 
-            SpawnEntities(component, entry, args.Stability, args.Severity);
+            SpawnEntities(component, entry, args.Stability, args.Severity, 1);
         }
     }
 
-    private void SpawnEntities(Entity<EntitySpawnAnomalyComponent> anomaly, EntitySpawnSettingsEntry entry, float stability, float severity)
+    private void SpawnEntities(Entity<EntitySpawnAnomalyComponent> anomaly, EntitySpawnSettingsEntry entry, float stability, float severity, float powerMod)
     {
         var xform = Transform(anomaly);
         if (!TryComp(xform.GridUid, out MapGridComponent? grid))
             return;
 
-        var tiles = _anomaly.GetSpawningPoints(anomaly, stability, severity, entry.Settings);
+        var tiles = _anomaly.GetSpawningPoints(anomaly, stability, severity, entry.Settings, powerMod);
         if (tiles == null)
             return;
 

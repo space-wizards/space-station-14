@@ -66,3 +66,112 @@
       interactFailureString: petting-failure-generic
       interactSuccessSound:
         path: /Audio/Animals/lizard_happy.ogg
+
+- type: entity
+  id: MobTomatoKiller
+  parent: 
+  - BaseSimpleMob
+  - MobDamageable
+  - MobBloodstream
+  - MobFlammable
+  - MobCombat
+  name: tomato killer
+  description: Looks like it's not you eating tomatoes today, it's the tomatoes eating you.
+  components:
+  - type: Item
+  - type: NpcFactionMember
+    factions:
+      - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: KillerTomatoCompound
+  - type: NPCImprintingOnSpawnBehaviour
+    whitelist:
+      components:
+      - HumanoidAppearance
+  - type: Sprite
+    sprite: Mobs/Demons/tomatokiller.rsi 
+    noRot: true
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+  - type: Bloodstream
+    bloodReagent: JuiceTomato
+    bloodMaxVolume: 50
+    chemicalMaxVolume: 30
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatTomato
+      amount: 2
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 40
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodMeatTomato:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: gib
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      35: Dead
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.30
+        density: 80
+        mask:
+          - MobMask
+        layer:
+          - MobLayer
+  - type: MeleeWeapon
+    hidden: true
+    damage:
+      groups:
+        Brute: 9
+    animation: WeaponArcBite
+  - type: Climbing
+  - type: NameIdentifier
+    group: GenericNumber
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Effects/Footsteps/slime1.ogg
+      params:
+        volume: 3
+  - type: Tag
+    tags:
+      - FootstepSound
+      - Fruit
+  - type: Extractable
+    grindableSolutionName: bloodstream
+  - type: PotencyVisuals
+  - type: Appearance
+  - type: Produce
+    seedId: killerTomato
+  - type: PassiveDamage # Slight passive damage. 35 hp \ 5 min \ 60 sec = 0.08
+    allowedStates:
+    - Alive
+    - Dead
+    damageCap: 50
+    damage:
+      types:
+        Blunt: 0.11
+  - type: StaticPrice
+    price: 400

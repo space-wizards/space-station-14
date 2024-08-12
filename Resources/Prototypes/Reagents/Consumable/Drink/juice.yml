@@ -63,6 +63,12 @@
   physicalDesc: reagent-physical-desc-citric
   flavor: sour
   color: "#fff690"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/lemonjuiceglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: JuiceLime
@@ -89,6 +95,12 @@
   physicalDesc: reagent-physical-desc-citric
   flavor: orange
   color: "#E78108"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/orangejuiceglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: JuicePineapple
@@ -125,3 +137,9 @@
   physicalDesc: reagent-physical-desc-sweet
   flavor: watermelon
   color: "#EF3520"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/watermelonglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false

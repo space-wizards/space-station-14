@@ -5,7 +5,6 @@
   name: EVA helmet
   description: An old-but-gold helmet designed for extravehicular activites. Infamous for making security officers paranoid.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Helmets/eva.rsi
   - type: Clothing
@@ -22,7 +21,6 @@
   name: EVA helmet
   description: An old-but-gold helmet designed for extravehicular activites.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Helmets/eva_large.rsi
   - type: Clothing
@@ -30,12 +28,11 @@
 
 #Syndicate EVA Helmet
 - type: entity
-  parent: ClothingHeadEVAHelmetBase
+  parent: [ ClothingHeadEVAHelmetBase, BaseSyndicateContraband ]
   id: ClothingHeadHelmetSyndicate
   name: syndicate EVA helmet
   description: A simple, stylish EVA helmet. Designed for maximum humble space-badassery.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Helmets/eva_syndicate.rsi
   - type: Clothing
@@ -48,7 +45,6 @@
   name: cosmonaut helmet
   description: Ancient design, but advanced manufacturing. #Description here originally started with " A deceptively well armored space helmet." Potentially had armor values in SS13 that weren't brought over?
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Helmets/cosmonaut.rsi
   - type: Clothing
@@ -61,7 +57,6 @@
   name: paramedic void helmet
   description: A void helmet made for paramedics.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Helmets/paramedhelm.rsi
   - type: Clothing
@@ -79,9 +74,8 @@
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetAncient
   name: NTSRA void helmet
-  description: An ancient space helmet, designed by the NTSRA branch of CentCom.
+  description: An ancient space helmet, designed by the NTSRA branch of CentComm.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Helmets/ancientvoidsuit.rsi
   - type: Clothing

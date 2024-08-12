@@ -3,7 +3,7 @@
   id: ClothingNeckPinBase
   abstract: true
   name: pin
-  description: be nothing do crime
+  description: Be nothing do crime.
   components:
   - type: Item
     size: Tiny
@@ -12,7 +12,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckLGBTPin
   name: LGBT pin
-  description: be gay do crime
+  description: Be gay do crime.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -28,7 +28,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckAromanticPin
   name: aromantic pin
-  description: be aro do crime
+  description: Be aro do crime.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -44,7 +44,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckAsexualPin
   name: asexual pin
-  description: be ace do crime
+  description: Be ace do crime.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -60,7 +60,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckBisexualPin
   name: bisexual pin
-  description: be bi do crime
+  description: Be bi do crime.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -76,7 +76,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckIntersexPin
   name: intersex pin
-  description: be intersex do crime
+  description: Be intersex do crime.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -92,7 +92,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckLesbianPin
   name: lesbian pin
-  description: be lesbian do crime
+  description: Be lesbian do crime.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -124,7 +124,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckPansexualPin
   name: pansexual pin
-  description: be pan do crime
+  description: Be pan do crime.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -140,7 +140,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckTransPin
   name: transgender pin
-  description: be trans do crime
+  description: Be trans do crime.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -151,3 +151,35 @@
     clothingVisuals:
       neck:
       - state: trans-equipped
+ 
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckAutismPin
+  name: autism pin
+  description: Be autism do crime.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/autismpin.rsi
+    layers:
+    - state: autism
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/autismpin.rsi
+    clothingVisuals:
+      neck:
+      - state: autism-equipped
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckGoldAutismPin
+  name: golden autism pin
+  description: Be autism do warcrime.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/goldautismpin.rsi
+    layers:
+    - state: goldautism
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/goldautismpin.rsi
+    clothingVisuals:
+      neck:
+      - state: goldautism-equipped

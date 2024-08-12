@@ -71,3 +71,10 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from tgstation"
   source: "https://github.com/tgstation/tgstation/tree/1e8d511946d194f92f744f5f957a7c41683d84a6/sound/effects/footstep"
+
+- files:
+  - borgwalk1.ogg
+  - borgwalk2.ogg
+  license: "CC-BY-SA-4.0"
+  copyright: "Taken from IENBA freesound.org and modified by https://github.com/MilenVolf"
+  source: "https://freesound.org/people/IENBA/sounds/697379/"

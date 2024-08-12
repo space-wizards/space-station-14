@@ -505,3 +505,11 @@
           steps:
             - tool: Welding
               doAfter: 5
+
+    - node: reinforcedWallRust
+      entity: WallReinforcedRust
+      edges:
+        - to: reinforcedWall
+          steps:
+            - tool: Welding
+              doAfter: 5

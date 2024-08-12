@@ -6,17 +6,16 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
-using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using DroneConsoleComponent = Content.Server.Shuttles.DroneConsoleComponent;
 using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Physics.Controllers
 {
     public sealed class MoverController : SharedMoverController
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ThrusterSystem _thruster = default!;
         [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
@@ -31,26 +30,26 @@ namespace Content.Server.Physics.Controllers
             SubscribeLocalEvent<InputMoverComponent, PlayerDetachedEvent>(OnPlayerDetached);
         }
 
-        private void OnRelayPlayerAttached(EntityUid uid, RelayInputMoverComponent component, PlayerAttachedEvent args)
+        private void OnRelayPlayerAttached(Entity<RelayInputMoverComponent> entity, ref PlayerAttachedEvent args)
         {
-            if (MoverQuery.TryGetComponent(component.RelayEntity, out var inputMover))
-                SetMoveInput(inputMover, MoveButtons.None);
+            if (MoverQuery.TryGetComponent(entity.Comp.RelayEntity, out var inputMover))
+                SetMoveInput((entity.Owner, inputMover), MoveButtons.None);
         }
 
-        private void OnRelayPlayerDetached(EntityUid uid, RelayInputMoverComponent component, PlayerDetachedEvent args)
+        private void OnRelayPlayerDetached(Entity<RelayInputMoverComponent> entity, ref PlayerDetachedEvent args)
         {
-            if (MoverQuery.TryGetComponent(component.RelayEntity, out var inputMover))
-                SetMoveInput(inputMover, MoveButtons.None);
+            if (MoverQuery.TryGetComponent(entity.Comp.RelayEntity, out var inputMover))
+                SetMoveInput((entity.Owner, inputMover), MoveButtons.None);
         }
 
-        private void OnPlayerAttached(EntityUid uid, InputMoverComponent component, PlayerAttachedEvent args)
+        private void OnPlayerAttached(Entity<InputMoverComponent> entity, ref PlayerAttachedEvent args)
         {
-            SetMoveInput(component, MoveButtons.None);
+            SetMoveInput(entity, MoveButtons.None);
         }
 
-        private void OnPlayerDetached(EntityUid uid, InputMoverComponent component, PlayerDetachedEvent args)
+        private void OnPlayerDetached(Entity<InputMoverComponent> entity, ref PlayerDetachedEvent args)
         {
-            SetMoveInput(component, MoveButtons.None);
+            SetMoveInput(entity, MoveButtons.None);
         }
 
         protected override bool CanSound()
@@ -272,11 +271,11 @@ namespace Content.Server.Physics.Controllers
                     consoleEnt = cargoConsole.Entity;
                 }
 
-                if (!TryComp<TransformComponent>(consoleEnt, out var xform)) continue;
+                if (!TryComp(consoleEnt, out TransformComponent? xform)) continue;
 
                 var gridId = xform.GridUid;
                 // This tries to see if the grid is a shuttle and if the console should work.
-                if (!_mapManager.TryGetGrid(gridId, out var _) ||
+                if (!TryComp<MapGridComponent>(gridId, out var _) ||
                     !shuttleQuery.TryGetComponent(gridId, out var shuttleComponent) ||
                     !shuttleComponent.Enabled)
                     continue;

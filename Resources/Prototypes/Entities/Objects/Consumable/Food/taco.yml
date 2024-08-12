@@ -6,6 +6,8 @@
   id: FoodTacoShell
   description: A taco shell, easy to hold, but falls on its side when put down.
   components:
+  - type: Item
+    storedRotation: -90
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/taco.rsi
@@ -44,6 +46,7 @@
           Quantity: 4
   - type: Item
     sprite: Objects/Consumable/Food/taco.rsi
+    storedRotation: -90
   - type: Tag
     tags:
       - Meat

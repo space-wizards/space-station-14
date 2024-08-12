@@ -26,7 +26,7 @@ public sealed partial class PrayableComponent : Component
     /// <summary>
     /// Prefix used in the notification to admins
     /// </summary>
-    [DataField("notifiactionPrefix")]
+    [DataField("notificationPrefix")]
     [ViewVariables(VVAccess.ReadWrite)]
     public string NotificationPrefix = "prayer-chat-notify-pray";
 

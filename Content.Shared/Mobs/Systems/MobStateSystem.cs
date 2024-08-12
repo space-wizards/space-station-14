@@ -2,7 +2,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Standing;
-using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
@@ -20,13 +19,14 @@ public partial class MobStateSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     private ISawmill _sawmill = default!;
 
+    private EntityQuery<MobStateComponent> _mobStateQuery;
+
     public override void Initialize()
     {
         _sawmill = _logManager.GetSawmill("MobState");
+        _mobStateQuery = GetEntityQuery<MobStateComponent>();
         base.Initialize();
         SubscribeEvents();
-        SubscribeLocalEvent<MobStateComponent, ComponentGetState>(OnGetComponentState);
-        SubscribeLocalEvent<MobStateComponent, ComponentHandleState>(OnHandleComponentState);
     }
 
     #region Public API
@@ -39,7 +39,7 @@ public partial class MobStateSystem : EntitySystem
     /// <returns>If the entity is alive</returns>
     public bool IsAlive(EntityUid target, MobStateComponent? component = null)
     {
-        if (!Resolve(target, ref component, false))
+        if (!_mobStateQuery.Resolve(target, ref component, false))
             return false;
         return component.CurrentState == MobState.Alive;
     }
@@ -52,7 +52,7 @@ public partial class MobStateSystem : EntitySystem
     /// <returns>If the entity is Critical</returns>
     public bool IsCritical(EntityUid target, MobStateComponent? component = null)
     {
-        if (!Resolve(target, ref component, false))
+        if (!_mobStateQuery.Resolve(target, ref component, false))
             return false;
         return component.CurrentState == MobState.Critical;
     }
@@ -65,7 +65,7 @@ public partial class MobStateSystem : EntitySystem
     /// <returns>If the entity is Dead</returns>
     public bool IsDead(EntityUid target, MobStateComponent? component = null)
     {
-        if (!Resolve(target, ref component, false))
+        if (!_mobStateQuery.Resolve(target, ref component, false))
             return false;
         return component.CurrentState == MobState.Dead;
     }
@@ -78,7 +78,7 @@ public partial class MobStateSystem : EntitySystem
     /// <returns>If the entity is Critical or Dead</returns>
     public bool IsIncapacitated(EntityUid target, MobStateComponent? component = null)
     {
-        if (!Resolve(target, ref component, false))
+        if (!_mobStateQuery.Resolve(target, ref component, false))
             return false;
         return component.CurrentState is MobState.Critical or MobState.Dead;
     }
@@ -91,32 +91,9 @@ public partial class MobStateSystem : EntitySystem
     /// <returns>If the entity is in an Invalid State</returns>
     public bool IsInvalidState(EntityUid target, MobStateComponent? component = null)
     {
-        if (!Resolve(target, ref component, false))
+        if (!_mobStateQuery.Resolve(target, ref component, false))
             return false;
         return component.CurrentState is MobState.Invalid;
-    }
-
-    #endregion
-
-    #region Private Implementation
-
-    private void OnHandleComponentState(EntityUid uid, MobStateComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not MobStateComponentState state)
-            return;
-
-        component.CurrentState = state.CurrentState;
-
-        if (!component.AllowedStates.SetEquals(state.AllowedStates))
-        {
-            component.AllowedStates.Clear();
-            component.AllowedStates.UnionWith(state.AllowedStates);
-        }
-    }
-
-    private void OnGetComponentState(EntityUid uid, MobStateComponent component, ref ComponentGetState args)
-    {
-        args.State = new MobStateComponentState(component.CurrentState, component.AllowedStates);
     }
 
     #endregion

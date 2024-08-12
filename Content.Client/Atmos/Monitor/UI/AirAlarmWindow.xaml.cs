@@ -22,7 +22,6 @@ public sealed partial class AirAlarmWindow : FancyWindow
     public event Action<string, AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? AtmosAlarmThresholdChanged;
     public event Action<AirAlarmMode>? AirAlarmModeChanged;
     public event Action<bool>? AutoModeChanged;
-    public event Action<string>? ResyncDeviceRequested;
     public event Action? ResyncAllRequested;
     public event Action<AirAlarmTab>? AirAlarmTabChange;
 
@@ -48,7 +47,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
 
     private CheckBox _autoMode => AutoModeCheckBox;
 
-    public AirAlarmWindow(BoundUserInterface owner)
+    public AirAlarmWindow()
     {
         RobustXamlLoader.Load(this);
 
@@ -96,8 +95,11 @@ public sealed partial class AirAlarmWindow : FancyWindow
             _sensors.Clear();
             ResyncAllRequested!.Invoke();
         };
+    }
 
-        EntityView.SetEntity(owner.Owner);
+    public void SetEntity(EntityUid uid)
+    {
+        EntityView.SetEntity(uid);
     }
 
     public void UpdateState(AirAlarmUIState state)

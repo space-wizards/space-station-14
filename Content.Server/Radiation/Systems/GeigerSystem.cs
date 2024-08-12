@@ -35,7 +35,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
 
     private void OnActivate(Entity<GeigerComponent> geiger, ref ActivateInWorldEvent args)
     {
-        if (args.Handled || geiger.Comp.AttachedToSuit)
+        if (args.Handled || !args.Complex || geiger.Comp.AttachedToSuit)
             return;
         args.Handled = true;
 

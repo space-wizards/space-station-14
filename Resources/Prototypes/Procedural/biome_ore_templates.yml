@@ -40,6 +40,20 @@
   maxGroupSize: 20
   radius: 4
 
+- type: biomeMarkerLayer
+  id: OreSalt
+  entityMask:
+    AsteroidRock: AsteroidRockSalt
+    WallRock: WallRockSalt
+    WallRockBasalt: WallRockBasaltSalt
+    WallRockChromite: WallRockChromiteSalt
+    WallRockSand: WallRockSandSalt
+    WallRockSnow: WallRockSnowSalt
+  maxCount: 30
+  minGroupSize: 10
+  maxGroupSize: 20
+  radius: 4
+
 # Medium value
 # Gold
 - type: biomeMarkerLayer
@@ -114,6 +128,20 @@
   maxCount: 12
   minGroupSize: 5
   maxGroupSize: 10
+  radius: 4
+
+- type: biomeMarkerLayer
+  id: OreDiamond
+  entityMask:
+    AsteroidRock: AsteroidRockDiamond
+    WallRock: WallRockDiamond
+    WallRockBasalt: WallRockBasaltDiamond
+    WallRockChromite: WallRockChromiteDiamond
+    WallRockSand: WallRockSandDiamond
+    WallRockSnow: WallRockSnowDiamond
+  maxCount: 6
+  minGroupSize: 1
+  maxGroupSize: 2
   radius: 4
 
 # Artifact Fragment

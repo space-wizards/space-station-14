@@ -36,7 +36,6 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         SubscribeLocalEvent<CardboardBoxComponent, StorageAfterCloseEvent>(AfterStorageClosed);
         SubscribeLocalEvent<CardboardBoxComponent, GetAdditionalAccessEvent>(OnGetAdditionalAccess);
         SubscribeLocalEvent<CardboardBoxComponent, ActivateInWorldEvent>(OnInteracted);
-        SubscribeLocalEvent<CardboardBoxComponent, InteractedNoHandEvent>(OnNoHandInteracted);
         SubscribeLocalEvent<CardboardBoxComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<CardboardBoxComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
 
@@ -45,8 +44,17 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
 
     private void OnInteracted(EntityUid uid, CardboardBoxComponent component, ActivateInWorldEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (!TryComp<EntityStorageComponent>(uid, out var box))
             return;
+
+        if (!args.Complex)
+        {
+            if (box.Open || !box.Contents.Contains(args.User))
+                return;
+        }
 
         args.Handled = true;
         _storage.ToggleOpen(args.User, uid, box);
@@ -56,15 +64,6 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
             _mover.SetRelay(args.User, uid);
             component.Mover = args.User;
         }
-    }
-
-    private void OnNoHandInteracted(EntityUid uid, CardboardBoxComponent component, InteractedNoHandEvent args)
-    {
-        //Free the mice please
-        if (!TryComp<EntityStorageComponent>(uid, out var box) || box.Open || !box.Contents.Contains(args.User))
-            return;
-
-        _storage.OpenStorage(uid);
     }
 
     private void OnGetAdditionalAccess(EntityUid uid, CardboardBoxComponent component, ref GetAdditionalAccessEvent args)

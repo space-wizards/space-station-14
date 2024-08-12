@@ -70,25 +70,11 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
                     args.Sprite.LayerSetState(StorageVisualLayers.Base, comp.StateBaseClosed);
             }
         }
-
-        // Lock state for the storage entity. TODO: Split into its own visualizer.
-        if (AppearanceSystem.TryGetData<bool>(uid, StorageVisuals.CanLock, out var canLock, args.Component) && canLock)
-        {
-            if (!AppearanceSystem.TryGetData<bool>(uid, StorageVisuals.Locked, out var locked, args.Component))
-                locked = true;
-
-            args.Sprite.LayerSetVisible(StorageVisualLayers.Lock, !open);
-            if (!open)
-            {
-                args.Sprite.LayerSetState(StorageVisualLayers.Lock, locked ? comp.StateLocked : comp.StateUnlocked);
-            }
-        }
     }
 }
 
 public enum StorageVisualLayers : byte
 {
     Base,
-    Door,
-    Lock
+    Door
 }

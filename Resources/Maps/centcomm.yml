@@ -27185,13 +27185,6 @@ entities:
     - type: Transform
       pos: -25.604141,8.625723
       parent: 1668
-- proto: HandheldCrewMonitor
-  entities:
-  - uid: 1461
-    components:
-    - type: Transform
-      pos: 13.504195,-12.438507
-      parent: 1668
 - proto: HandLabeler
   entities:
   - uid: 2228

@@ -1,5 +1,6 @@
 ﻿using Content.Shared.StatusIcon;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.SSDIndicator;
@@ -16,6 +17,6 @@ public sealed partial class SSDIndicatorComponent : Component
     public bool IsSSD = true;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("icon", customTypeSerializer: typeof(PrototypeIdSerializer<StatusIconPrototype>))]
-    public string Icon = "SSDIcon";
+    [DataField]
+    public ProtoId<SsdIconPrototype> Icon = "SSDIcon";
 }

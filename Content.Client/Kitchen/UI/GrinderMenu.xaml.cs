@@ -12,41 +12,34 @@ namespace Content.Client.Kitchen.UI
     [GenerateTypedNameReferences]
     public sealed partial class GrinderMenu : FancyWindow
     {
-        private readonly IEntityManager _entityManager;
-        private readonly IPrototypeManager _prototypeManager;
-        private readonly ReagentGrinderBoundUserInterface _owner;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private readonly Dictionary<int, EntityUid> _chamberVisualContents = new();
 
-        public GrinderMenu(ReagentGrinderBoundUserInterface owner, IEntityManager entityManager, IPrototypeManager prototypeManager)
+        public event Action? OnToggleAuto;
+        public event Action? OnGrind;
+        public event Action? OnJuice;
+        public event Action? OnEjectAll;
+        public event Action? OnEjectBeaker;
+        public event Action<EntityUid>? OnEjectChamber;
+
+        public GrinderMenu()
         {
             RobustXamlLoader.Load(this);
-            _entityManager = entityManager;
-            _prototypeManager = prototypeManager;
-            _owner = owner;
-            GrindButton.OnPressed += owner.StartGrinding;
-            JuiceButton.OnPressed += owner.StartJuicing;
-            ChamberContentBox.EjectButton.OnPressed += owner.EjectAll;
-            BeakerContentBox.EjectButton.OnPressed += owner.EjectBeaker;
+            IoCManager.InjectDependencies(this);
+            AutoModeButton.OnPressed += _ => OnToggleAuto?.Invoke();
+            GrindButton.OnPressed += _ => OnGrind?.Invoke();
+            JuiceButton.OnPressed += _ => OnJuice?.Invoke();
+            ChamberContentBox.EjectButton.OnPressed += _ => OnEjectAll?.Invoke();
+            BeakerContentBox.EjectButton.OnPressed += _ => OnEjectBeaker?.Invoke();
             ChamberContentBox.BoxContents.OnItemSelected += OnChamberBoxContentsItemSelected;
             BeakerContentBox.BoxContents.SelectMode = ItemList.ItemListSelectMode.None;
         }
 
         private void OnChamberBoxContentsItemSelected(ItemList.ItemListSelectedEventArgs args)
         {
-            _owner.EjectChamberContent(_chamberVisualContents[args.ItemIndex]);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            _chamberVisualContents.Clear();
-            GrindButton.OnPressed -= _owner.StartGrinding;
-            JuiceButton.OnPressed -= _owner.StartJuicing;
-            ChamberContentBox.EjectButton.OnPressed -= _owner.EjectAll;
-            BeakerContentBox.EjectButton.OnPressed -= _owner.EjectBeaker;
-            ChamberContentBox.BoxContents.OnItemSelected -= OnChamberBoxContentsItemSelected;
+            OnEjectChamber?.Invoke(_chamberVisualContents[args.ItemIndex]);
         }
 
         public void UpdateState(ReagentGrinderInterfaceState state)
@@ -55,6 +48,19 @@ namespace Content.Client.Kitchen.UI
             ChamberContentBox.EjectButton.Disabled = state.ChamberContents.Length <= 0;
             GrindButton.Disabled = !state.CanGrind || !state.Powered;
             JuiceButton.Disabled = !state.CanJuice || !state.Powered;
+
+            switch (state.AutoMode)
+            {
+                case GrinderAutoMode.Grind:
+                    AutoModeButton.Text = Loc.GetString("grinder-menu-grind-button");
+                    break;
+                case GrinderAutoMode.Juice:
+                    AutoModeButton.Text = Loc.GetString("grinder-menu-juice-button");
+                    break;
+                default:
+                    AutoModeButton.Text = Loc.GetString("grinder-menu-auto-button-off");
+                    break;
+            }
 
             // TODO move this to a component state and ensure the net ids.
             RefreshContentsDisplay(state.ReagentQuantities, _entityManager.GetEntityArray(state.ChamberContents), state.HasBeakerIn);

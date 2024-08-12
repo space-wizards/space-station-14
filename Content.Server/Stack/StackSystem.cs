@@ -51,7 +51,7 @@ namespace Content.Server.Stack
 
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
             var prototype = _prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
-                ? stackType.Spawn
+                ? stackType.Spawn.ToString()
                 : Prototype(uid)?.ID;
 
             // Set the output parameter in the event instance to the newly split stack.
@@ -69,6 +69,15 @@ namespace Content.Server.Stack
             RaiseLocalEvent(uid, ref ev);
 
             return entity;
+        }
+
+        /// <summary>
+        ///     Spawns a stack of a certain stack type. See <see cref="StackPrototype"/>.
+        /// </summary>
+        public EntityUid Spawn(int amount, ProtoId<StackPrototype> id, EntityCoordinates spawnPosition)
+        {
+            var proto = _prototypeManager.Index(id);
+            return Spawn(amount, proto, spawnPosition);
         }
 
         /// <summary>

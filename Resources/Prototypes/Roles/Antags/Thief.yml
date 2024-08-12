@@ -4,3 +4,11 @@
   antagonist: true
   setPreference: true
   objective: roles-antag-thief-objective
+
+- type: startingGear
+  id: ThiefGear
+  storage:
+    back:
+    - ToolboxThief
+    - ClothingHandsChameleonThief
+    - ThiefBeacon

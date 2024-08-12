@@ -92,23 +92,32 @@ namespace Content.IntegrationTests.Tests
             var allSizes = protoMan.EnumeratePrototypes<ItemSizePrototype>().ToList();
             allSizes.Sort();
 
-            Assert.Multiple(() =>
+            await Assert.MultipleAsync(async () =>
             {
                 foreach (var proto in pair.GetPrototypesWithComponent<StorageFillComponent>())
                 {
                     if (proto.HasComponent<EntityStorageComponent>(compFact))
                         continue;
 
-                    if (!proto.TryGetComponent<StorageComponent>("Storage", out var storage))
+                    StorageComponent? storage = null;
+                    ItemComponent? item = null;
+                    StorageFillComponent fill = default!;
+                    var size = 0;
+                    await server.WaitAssertion(() =>
                     {
-                        Assert.Fail($"Entity {proto.ID} has storage-fill without a storage component!");
+                        if (!proto.TryGetComponent("Storage", out storage))
+                        {
+                            Assert.Fail($"Entity {proto.ID} has storage-fill without a storage component!");
+                            return;
+                        }
+
+                        proto.TryGetComponent("Item", out item);
+                        fill = (StorageFillComponent) proto.Components[id].Component;
+                        size = GetFillSize(fill, false, protoMan, itemSys);
+                    });
+
+                    if (storage == null)
                         continue;
-                    }
-
-                    proto.TryGetComponent<ItemComponent>("Item", out var item);
-
-                    var fill = (StorageFillComponent) proto.Components[id].Component;
-                    var size = GetFillSize(fill, false, protoMan, itemSys);
 
                     var maxSize = storage.MaxItemSize;
                     if (storage.MaxItemSize == null)
@@ -138,7 +147,13 @@ namespace Content.IntegrationTests.Tests
                         if (!protoMan.TryIndex<EntityPrototype>(entry.PrototypeId, out var fillItem))
                             continue;
 
-                        if (!fillItem.TryGetComponent<ItemComponent>("Item", out var entryItem))
+                        ItemComponent? entryItem = null;
+                        await server.WaitPost(() =>
+                        {
+                            fillItem.TryGetComponent("Item", out entryItem);
+                        });
+
+                        if (entryItem == null)
                             continue;
 
                         Assert.That(protoMan.Index(entryItem.Size).Weight,
@@ -164,25 +179,25 @@ namespace Content.IntegrationTests.Tests
 
             var itemSys = entMan.System<SharedItemSystem>();
 
-            Assert.Multiple(() =>
+            foreach (var proto in pair.GetPrototypesWithComponent<StorageFillComponent>())
             {
-                foreach (var proto in pair.GetPrototypesWithComponent<StorageFillComponent>())
-                {
-                    if (proto.HasComponent<StorageComponent>(compFact))
-                        continue;
+                if (proto.HasComponent<StorageComponent>(compFact))
+                    continue;
 
-                    if (!proto.TryGetComponent<EntityStorageComponent>("EntityStorage", out var entStorage))
-                    {
+                await server.WaitAssertion(() =>
+                {
+                    if (!proto.TryGetComponent("EntityStorage", out EntityStorageComponent? entStorage))
                         Assert.Fail($"Entity {proto.ID} has storage-fill without a storage component!");
-                        continue;
-                    }
+
+                    if (entStorage == null)
+                        return;
 
                     var fill = (StorageFillComponent) proto.Components[id].Component;
                     var size = GetFillSize(fill, true, protoMan, itemSys);
                     Assert.That(size, Is.LessThanOrEqualTo(entStorage.Capacity),
                         $"{proto.ID} storage fill is too large.");
-                }
-            });
+                });
+            }
             await pair.CleanReturnAsync();
         }
 

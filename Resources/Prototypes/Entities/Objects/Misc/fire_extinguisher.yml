@@ -7,8 +7,8 @@
   - type: Sprite
     sprite: Objects/Misc/fire_extinguisher.rsi
     layers:
-        - state: fire_extinguisher_closed
-          map: [ "enabled" ]
+    - state: fire_extinguisher_closed
+      map: [ "enum.ToggleVisuals.Layer" ]
   - type: Item
     sprite: Objects/Misc/fire_extinguisher.rsi
     size: Normal
@@ -24,6 +24,8 @@
   - type: DrainableSolution
     solution: spray
   - type: SolutionTransfer
+    maxTransferAmount: 100
+    transferAmount: 100
   - type: UseDelay
   - type: Spray
     transferAmount: 10
@@ -34,8 +36,20 @@
     vaporAmount: 3
     vaporSpread: 90
     sprayVelocity: 2.0
-  - type: FireExtinguisher
-    hasSafety: true
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Machines/button.ogg
+      params:
+        variation: 0.125
+        volume: -4
+    soundDeactivate:
+      path: /Audio/Machines/button.ogg
+      params:
+        variation: 0.125
+        volume: -4
+  - type: ToggleVerb
+    text: fire-extinguisher-component-verb-text
+  - type: SpraySafety
   - type: MeleeWeapon
     wideAnimationRotation: 180
     damage:
@@ -46,20 +60,23 @@
   - type: Tool
     qualities:
     - Rolling
-    speed: 0.5 # its very big, akward to use
+    speedModifier: 0.5 # its very big, awkward to use
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.FireExtinguisherVisuals.Safety:
-        enabled:
-          True: { state: fire_extinguisher_closed }
-          False: { state: fire_extinguisher_open }
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { state: fire_extinguisher_open }
+          False: { state: fire_extinguisher_closed }
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
 
 - type: entity
   name: extinguisher spray
   id: ExtinguisherSpray
   parent: Vapor
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Effects/extinguisherSpray.rsi
@@ -72,3 +89,36 @@
   - type: VaporVisuals
     animationTime: 0.8
     animationState: extinguish
+
+- type: entity
+  name: pocket fire extinguisher
+  parent: FireExtinguisher
+  id: FireExtinguisherMini
+  description: A light and compact fibreglass-framed model fire extinguisher. It holds less water then its bigger brother.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/fire_extinguisher_mini.rsi
+    layers:
+        - state: fire_extinguisher_closed
+          map: [ "enabled" ]
+  - type: Item
+    sprite: Objects/Misc/fire_extinguisher_mini.rsi
+    size: Small
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 30
+        reagents:
+        - ReagentId: Water
+          Quantity: 30
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    damage:
+      types:
+        Blunt: 3 #completely ineffective; your fists are better
+    soundHit:
+      path: /Audio/Effects/weak_hit1.ogg
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+      Glass: 40

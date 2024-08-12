@@ -19,21 +19,21 @@ public sealed class PanelScrewing : InteractionTest
 
         // Open & close panel
         Assert.That(comp.Open, Is.False);
-        await Interact(Screw);
+        await InteractUsing(Screw);
         Assert.That(comp.Open, Is.True);
-        await Interact(Screw);
+        await InteractUsing(Screw);
         Assert.That(comp.Open, Is.False);
 
         // Interrupted DoAfters
-        await Interact(Screw, awaitDoAfters: false);
+        await InteractUsing(Screw, awaitDoAfters: false);
         await CancelDoAfters();
         Assert.That(comp.Open, Is.False);
-        await Interact(Screw);
+        await InteractUsing(Screw);
         Assert.That(comp.Open, Is.True);
-        await Interact(Screw, awaitDoAfters: false);
+        await InteractUsing(Screw, awaitDoAfters: false);
         await CancelDoAfters();
         Assert.That(comp.Open, Is.True);
-        await Interact(Screw);
+        await InteractUsing(Screw);
         Assert.That(comp.Open, Is.False);
     }
 }

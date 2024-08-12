@@ -144,7 +144,7 @@
 # Construction Frames
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   id: BaseGeneratorWallmountFrame
   name: wallmount generator frame
   description: A construction frame for a wallmount generator.
@@ -247,6 +247,10 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/buzzing.ogg
+  - type: GuideHelp
+    guides:
+    - RTG
+    - Power
   - type: Destructible
     thresholds:
       - trigger:

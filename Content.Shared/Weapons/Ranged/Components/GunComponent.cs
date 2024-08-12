@@ -1,5 +1,3 @@
-using Content.Shared.Damage;
-using Content.Shared.Tag;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio;
@@ -9,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(SharedGunSystem))]
 public sealed partial class GunComponent : Component
 {
@@ -140,6 +138,12 @@ public sealed partial class GunComponent : Component
     public EntityCoordinates? ShootCoordinates = null;
 
     /// <summary>
+    /// Who the gun is being requested to shoot at directly.
+    /// </summary>
+    [ViewVariables]
+    public EntityUid? Target = null;
+
+    /// <summary>
     ///     The base value for how many shots to fire per burst.
     /// </summary>
     [DataField, AutoNetworkedField]
@@ -198,6 +202,7 @@ public sealed partial class GunComponent : Component
     /// </summary>
     [DataField(customTypeSerializer:typeof(TimeOffsetSerializer))]
     [AutoNetworkedField]
+    [AutoPausedField]
     public TimeSpan NextFire = TimeSpan.Zero;
 
     /// <summary>

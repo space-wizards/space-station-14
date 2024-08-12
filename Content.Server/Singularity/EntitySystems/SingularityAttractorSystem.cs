@@ -2,12 +2,7 @@ using Content.Server.Physics.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.Components;
-using Content.Shared.Singularity.EntitySystems;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using System.Numerics;
 
@@ -18,8 +13,8 @@ namespace Content.Server.Singularity.EntitySystems;
 /// </summary>
 public sealed class SingularityAttractorSystem : EntitySystem
 {
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     /// <summary>
     /// The minimum range at which the attraction will act.
@@ -69,7 +64,7 @@ public sealed class SingularityAttractorSystem : EntitySystem
 
         attractor.LastPulseTime = _timing.CurTime;
 
-        var mapPos = xform.Coordinates.ToMap(EntityManager);
+        var mapPos = xform.Coordinates.ToMap(EntityManager, _transform);
 
         if (mapPos == MapCoordinates.Nullspace)
             return;
@@ -77,7 +72,7 @@ public sealed class SingularityAttractorSystem : EntitySystem
         var query = EntityQuery<SingularityComponent, RandomWalkComponent, TransformComponent>();
         foreach (var (singulo, walk, singuloXform) in query)
         {
-            var singuloMapPos = singuloXform.Coordinates.ToMap(EntityManager);
+            var singuloMapPos = singuloXform.Coordinates.ToMap(EntityManager, _transform);
 
             if (singuloMapPos.MapId != mapPos.MapId)
                 continue;

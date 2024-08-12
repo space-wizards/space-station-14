@@ -75,6 +75,9 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
 
     private void OnInteractHandEvent(EntityUid uid, BatteryWeaponFireModesComponent component, ActivateInWorldEvent args)
     {
+        if (!args.Complex)
+            return;
+
         if (component.FireModes.Count < 2)
             return;
 

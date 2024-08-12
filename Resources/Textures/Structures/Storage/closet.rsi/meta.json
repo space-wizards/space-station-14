@@ -4,7 +4,7 @@
     "x": 32,
     "y": 32
   },
-  "copyright": "Taken from tgstation, brigmedic locker is a resprited CMO locker by PuroSlavKing (Github)",
+  "copyright": "Taken from tgstation, brigmedic locker is a resprited CMO locker by PuroSlavKing (Github), n2_door state modified by Flareguy from fire_door, using sprites from /vg/station at https://github.com/vgstation-coders/vgstation13/commit/02b9f6894af4419c9f7e699a22c402b086d8067e",
   "license": "CC-BY-SA-3.0",
   "states": [
     {
@@ -399,6 +399,9 @@
       "name": "mixed_door"
     },
     {
+      "name": "n2_door"
+    },
+    {
       "name": "oldcloset"
     },
     {
@@ -460,6 +463,9 @@
     },
     {
       "name": "secure_door"
+    },
+    {
+      "name": "secure_icon"
     },
     {
       "name": "secure_open"

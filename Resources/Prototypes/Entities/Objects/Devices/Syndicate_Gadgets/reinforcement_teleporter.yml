@@ -1,6 +1,7 @@
 - type: entity
-  parent: BaseItem
-  id: ReinforcementRadioSyndicate
+  parent: [BaseItem, BaseSyndicateContraband]
+  abstract: true
+  id: ReinforcementRadio
   name: syndicate reinforcement radio
   description: Call in a syndicate agent of questionable quality, instantly! Only basic equipment provided.
   components:
@@ -8,56 +9,99 @@
     sprite: Objects/Devices/communication.rsi
     layers:
     - state: old-radio
-  - type: GhostRole
-    name: ghost-role-information-syndicate-reinforcement-name
-    description: ghost-role-information-syndicate-reinforcement-description
-    rules: ghost-role-information-syndicate-reinforcement-rules
-  - type: GhostRoleMobSpawner
-    prototype: MobHumanSyndicateAgent
-  - type: EmitSoundOnUse
-    sound: /Audio/Effects/Emotes/parp1.ogg
-  - type: UseDelay
-    delay: 300
+  - type: UserInterface
+    interfaces:
+      enum.GhostRoleRadioUiKey.Key:
+        type: GhostRoleRadioBoundUserInterface
+  - type: ActivatableUI
+    key: enum.GhostRoleRadioUiKey.Key
 
 - type: entity
-  parent: ReinforcementRadioSyndicate
+  parent: ReinforcementRadio
+  id: ReinforcementRadioSyndicate
+  name: syndicate reinforcement radio
+  description: Call in a syndicate agent of questionable quality, instantly!
+  components:
+  - type: GhostRole
+    name: ghost-role-information-syndicate-reinforcement-spy-name
+    description: ghost-role-information-syndicate-reinforcement-description
+    rules: ghost-role-information-syndicate-reinforcement-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanSyndicateAgentSpy
+    selectablePrototypes: ["SyndicateAgentMedic", "SyndicateAgentSpy", "SyndicateAgentThief"]
+
+- type: entity
+  parent: ReinforcementRadio
   id: ReinforcementRadioSyndicateNukeops # Reinforcement radio exclusive to nukeops uplink
+  name: nuclear operative radio
+  description: Call in a nuclear operative of questionable quality, instantly! Basic nukeop equipment provided.
   suffix: NukeOps
   components:
+  - type: GhostRole
+    name: ghost-role-information-nukeop-reinforcement-name
+    description: ghost-role-information-nukeop-reinforcement-description
+    rules: ghost-role-information-nukeop-reinforcement-rules
+    raffle:
+      settings: default
   - type: GhostRoleMobSpawner
     prototype: MobHumanSyndicateAgentNukeops
 
 - type: entity
-  parent: ReinforcementRadioSyndicate
-  id: ReinforcementRadioSyndicateMonkey
-  name: syndicate monkey reinforcement radio
-  description: Calls in a specially trained monkey to assist you.
+  parent: ReinforcementRadio
+  id: ReinforcementRadioSyndicateAncestor
+  name: syndicate genetic ancestor reinforcement radio
+  description: Calls in a specially trained ancestor of your choosing to assist you.
   components:
   - type: GhostRole
     name: ghost-role-information-syndicate-monkey-reinforcement-name
     description: ghost-role-information-syndicate-monkey-reinforcement-description
     rules: ghost-role-information-syndicate-monkey-reinforcement-rules
+    raffle:
+      settings: default
   - type: GhostRoleMobSpawner
     prototype: MobMonkeySyndicateAgent
+    selectablePrototypes: ["SyndicateMonkey", "SyndicateKobold"]
 
 - type: entity
-  parent: ReinforcementRadioSyndicateMonkey
-  id: ReinforcementRadioSyndicateMonkeyNukeops # Reinforcement radio exclusive to nukeops uplink
+  parent: ReinforcementRadioSyndicateAncestor
+  id: ReinforcementRadioSyndicateAncestorNukeops # Reinforcement radio exclusive to nukeops uplink
   suffix: NukeOps
   components:
   - type: GhostRoleMobSpawner
     prototype: MobMonkeySyndicateAgentNukeops
+    selectablePrototypes: ["SyndicateMonkeyNukeops", "SyndicateKoboldNukeops"]
 
 - type: entity
-  parent: ReinforcementRadioSyndicate
+  parent: ReinforcementRadio
+  id: ReinforcementRadioSyndicateSyndiCat
+  name: syndicat reinforcement radio
+  description: Calls in a faithfully trained cat with a microbomb to assist you.
+  components:
+  - type: GhostRole
+    name: ghost-role-information-SyndiCat-name
+    description: ghost-role-information-SyndiCat-description
+    rules: ghost-role-information-SyndiCat-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobCatSyndy
+  - type: EmitSoundOnUse
+    sound: /Audio/Animals/cat_meow.ogg
+
+- type: entity
+  parent: ReinforcementRadio
   id: ReinforcementRadioSyndicateCyborgAssault # Reinforcement radio exclusive to nukeops uplink
   name: syndicate assault cyborg reinforcement radio
   description: Call in a well armed assault cyborg, instantly!
   suffix: NukeOps
   components:
     - type: GhostRole
-      name: Syndicate Assault Cyborg
-      description: Nuclear operatives needs reinforcements. You, a cold silicon killing machine, will help them.
-      rules: Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+      name: ghost-role-information-syndie-assaultborg-name
+      description: ghost-role-information-syndie-assaultborg-description
+      rules: ghost-role-information-silicon-rules
+      raffle:
+        settings: default
     - type: GhostRoleMobSpawner
       prototype: PlayerBorgSyndicateAssaultBattery

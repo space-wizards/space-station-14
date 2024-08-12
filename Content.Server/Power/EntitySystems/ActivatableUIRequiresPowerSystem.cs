@@ -1,33 +1,33 @@
-using Content.Shared.Popups;
 using Content.Server.Power.Components;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.UserInterface;
-using JetBrains.Annotations;
 using Content.Shared.Wires;
-using Content.Server.UserInterface;
+using ActivatableUISystem = Content.Shared.UserInterface.ActivatableUISystem;
 
 namespace Content.Server.Power.EntitySystems;
 
-[UsedImplicitly]
-internal sealed class ActivatableUIRequiresPowerSystem : EntitySystem
+public sealed class ActivatableUIRequiresPowerSystem : SharedActivatableUIRequiresPowerSystem
 {
     [Dependency] private readonly ActivatableUISystem _activatableUI = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ActivatableUIRequiresPowerComponent, ActivatableUIOpenAttemptEvent>(OnActivate);
         SubscribeLocalEvent<ActivatableUIRequiresPowerComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
-    private void OnActivate(EntityUid uid, ActivatableUIRequiresPowerComponent component, ActivatableUIOpenAttemptEvent args)
+    protected override void OnActivate(Entity<ActivatableUIRequiresPowerComponent> ent, ref ActivatableUIOpenAttemptEvent args)
     {
-        if (args.Cancelled) return;
-        if (this.IsPowered(uid, EntityManager)) return;
-        if (TryComp<WiresPanelComponent>(uid, out var panel) && panel.Open)
+        if (args.Cancelled || this.IsPowered(ent.Owner, EntityManager))
+        {
             return;
-        _popup.PopupCursor(Loc.GetString("base-computer-ui-component-not-powered", ("machine", uid)), args.User);
+        }
+
+        if (TryComp<WiresPanelComponent>(ent.Owner, out var panel) && panel.Open)
+            return;
+
         args.Cancel();
     }
 

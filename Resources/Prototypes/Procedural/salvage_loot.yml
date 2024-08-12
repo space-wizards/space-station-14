@@ -27,6 +27,8 @@
         - proto: CloningPodMachineCircuitboard
           cost: 2
         - proto: CognizineChemistryBottle
+        - proto: FoodBoxDonkpocketCarp
+          prob: 0.5
         - proto: CrateSalvageEquipment
           cost: 3
           prob: 0.5
@@ -86,7 +88,6 @@
         - proto: RipleyHarness
           cost: 3
           prob: 0.5
-        - proto: RPED
         - proto: SpaceCash1000
         - proto: SpaceCash10000
           cost: 10
@@ -133,6 +134,13 @@
     - !type:BiomeMarkerLoot
       proto: OreQuartz
 
+- type: salvageLoot
+  id: OreSalt
+  guaranteed: true
+  loots:
+    - !type:BiomeMarkerLoot
+      proto: OreSalt
+
 # - Medium value
 - type: salvageLoot
   id: OreGold
@@ -169,6 +177,13 @@
   loots:
     - !type:BiomeMarkerLoot
       proto: OreBananium
+
+- type: salvageLoot
+  id: OreDiamond
+  guaranteed: true
+  loots:
+    - !type:BiomeMarkerLoot
+      proto: OreDiamond
 
 - type: salvageLoot
   id: OreArtifactFragment

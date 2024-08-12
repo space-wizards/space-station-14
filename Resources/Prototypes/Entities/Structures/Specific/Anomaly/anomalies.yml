@@ -9,9 +9,6 @@
       collection: RadiationPulse
       params:
         volume: 5
-    anomalyContactDamage:
-      types:
-        Radiation: 10
   - type: AmbientSound
     range: 5
     volume: -5
@@ -21,6 +18,7 @@
     anchored: false
   - type: Physics
     bodyType: Static
+    bodyStatus: InAir
   - type: Fixtures
     fixtures:
       fix1:
@@ -47,6 +45,18 @@
   - type: EmitSoundOnSpawn
     sound:
       path: /Audio/Effects/teleport_arrival.ogg
+  - type: SecretDataAnomaly
+    randomStartSecretMin: 0
+    randomStartSecretMax: 2
+  - type: DamageOnInteract
+    damage:
+      types:
+        Radiation: 10
+    popupText: anomaly-component-contact-damage
+  - type: DamageOnAttacked
+    damage:
+      types:
+        Radiation: 10
 
 - type: entity
   id: AnomalyPyroclastic
@@ -86,7 +96,6 @@
     tempChange: 420
   - type: ProjectileAnomaly
     projectilePrototype: ProjectileAnomalyFireball
-    targetNonSentientChance: 0.6
     projectileSpeed: 0.5
     minProjectiles: 3
     maxProjectiles: 6
@@ -96,6 +105,15 @@
   - type: IgniteOnCollide
     fixtureId: fix1
     fireStacks: 1
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 10
+    popupText: anomaly-component-contact-damage
+  - type: DamageOnAttacked
+    damage:
+      types:
+        Heat: 10
 
 - type: entity
   id: AnomalyGravity
@@ -160,6 +178,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreFlesh
     coreInertPrototype: AnomalyCoreFleshInert
+    minPulseLength: 180
+    maxPulseLength: 300
   - type: Sprite
     layers:
     - state: anom5
@@ -289,9 +309,6 @@
       collection: RadiationPulse
       params:
         volume: 5
-    anomalyContactDamage:
-      types:
-        Radiation: 10
 
 - type: entity
   id: AnomalyIce
@@ -314,9 +331,6 @@
   - type: Anomaly
     corePrototype: AnomalyCoreIce
     coreInertPrototype: AnomalyCoreIceInert
-    anomalyContactDamage:
-      types:
-        Cold: 10
   - type: ExplosionAnomaly
     supercriticalExplosion: Cryo
     explosionTotalIntensity: 300
@@ -324,7 +338,6 @@
     explosionMaxTileIntensity: 20
   - type: ProjectileAnomaly
     projectilePrototype: ProjectileIcicle
-    targetNonSentientChance: 0.1
   - type: EntitySpawnAnomaly
     entries:
     - settings:
@@ -341,6 +354,15 @@
     releasedGas: 8 # Frezon. Please replace if there is a better way to specify this
     releaseOnMaxSeverity: true
     spawnRadius: 0
+  - type: DamageOnInteract
+    damage:
+      types:
+        Cold: 10
+    popupText: anomaly-component-contact-damage
+  - type: DamageOnAttacked
+    damage:
+      types:
+        Cold: 10
 
 - type: entity
   id: AnomalyRockBase
@@ -351,6 +373,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreRock
     coreInertPrototype: AnomalyCoreRockInert
+    minPulseLength: 180
+    maxPulseLength: 300
   - type: Sprite
     layers:
     - state: anom6
@@ -441,7 +465,7 @@
     color: "#fb4747"
   - type: EntitySpawnAnomaly
     entries:
-    - settings:  
+    - settings:
         spawnOnPulse: true
         minAmount: 8
         maxAmount: 15
@@ -559,7 +583,7 @@
         maxRange: 4.5
       spawns:
       - CrystalOrange
-    - settings: 
+    - settings:
         spawnOnSuperCritical: true
         minAmount: 30
         maxAmount: 40
@@ -598,12 +622,11 @@
     color: "#6270bb"
   - type: Anomaly
     animationTime: 6
-    offset: 0.05, 0
+    offset: 0, 0
     corePrototype: AnomalyCoreFlora
     coreInertPrototype: AnomalyCoreFloraInert
-    anomalyContactDamage:
-      types:
-        Slash: 0
+    minPulseLength: 60
+    maxPulseLength: 120
   - type: TileSpawnAnomaly
     entries:
     - settings:
@@ -625,21 +648,21 @@
         minAmount: 2
         maxAmount: 5
         maxRange: 2
-      spawns: 
+      spawns:
       - KudzuFlowerFriendly
     - settings:
         spawnOnSuperCritical: true
         minAmount: 5
         maxAmount: 10
         maxRange: 6
-      spawns: 
+      spawns:
       - KudzuFlowerAngry
 
 - type: entity
   id: AnomalyFloraBulb
   name: strange glowing berry
   parent: BaseStructure
-  description: It's a beautiful strange glowing berry. It seems to have something growing inside it... 
+  description: It's a beautiful strange glowing berry. It seems to have something growing inside it...
   suffix: Flora Anomaly
   components:
   - type: Transform
@@ -705,9 +728,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreLiquid
     coreInertPrototype: AnomalyCoreLiquidInert
-    anomalyContactDamage:
-      types:
-        Slash: 1
+    minPulseLength: 60
+    maxPulseLength: 120
   - type: EntitySpawnAnomaly
     entries:
     - settings:
@@ -765,7 +787,6 @@
     - Desoxyephedrine
     - Ephedrine
     - THC
-    - THCOil
     - SpaceDrugs
     - Nocturine
     - MuteToxin
@@ -779,6 +800,7 @@
     - CogChamp
     - Honk
     - Carpetium
+    - JuiceThatMakesYouWeh
   - type: Drink
     solution: anomaly
   - type: DrainableSolution
@@ -791,3 +813,65 @@
     solution: anomaly
   - type: InjectableSolution
     solution: beaker
+
+- type: entity
+  id: AnomalyShadow
+  parent: BaseAnomaly
+  suffix: Shadow
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/shadow_anom.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 1.5
+    energy: 12.5
+    color: "#793a80"
+  - type: AmbientSound
+    range: 5
+    volume: -5
+    sound:
+      path: /Audio/Ambience/anomaly_scary.ogg
+  - type: Anomaly
+    corePrototype: AnomalyCoreShadow
+    coreInertPrototype: AnomalyCoreShadowInert
+    minPulseLength: 60
+    maxPulseLength: 120
+    animationTime: 4
+    offset: "-0.1,0.1"
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        spawnOnSuperCritical: true
+        minAmount: 10
+        maxAmount: 20
+        maxRange: 4
+      spawns:
+      - ShadowKudzuWeak
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 30
+        maxAmount: 40
+        maxRange: 50
+      spawns:
+      - ShadowKudzu
+  - type: Portal
+    arrivalSound: /Audio/Items/hiss.ogg
+    departureSound: /Audio/Items/hiss.ogg
+  - type: Tag
+    tags:
+      - SpookyFog
+  - type: DamageOnInteract
+    damage:
+      types:
+        Cold: 10
+    popupText: anomaly-component-contact-damage
+  - type: DamageOnAttacked
+    damage:
+      types:
+        Cold: 10

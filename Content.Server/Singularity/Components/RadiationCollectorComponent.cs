@@ -11,11 +11,21 @@ namespace Content.Server.Singularity.Components;
 public sealed partial class RadiationCollectorComponent : Component
 {
     /// <summary>
-    ///     How much joules will collector generate for each rad.
+    ///     Power output (in Watts) per unit of radiation collected.
     /// </summary>
     [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
     public float ChargeModifier = 30000f;
+
+    /// <summary>
+    ///     Number of power ticks that the power supply can remain active for. This is needed since
+    ///     power and radiation don't update at the same tickrate, and since radiation does not provide
+    ///     an update when radiation is removed. When this goes to zero, zero out the power supplier
+    ///     to model the radiation source going away.
+    /// </summary>
+    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public int PowerTicksLeft = 0;
 
     /// <summary>
     ///     Is the machine enabled.

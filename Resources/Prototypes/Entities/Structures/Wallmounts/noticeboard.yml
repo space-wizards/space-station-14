@@ -2,9 +2,12 @@
   id: NoticeBoard
   name: notice board
   description: Is there a job for a witcher?
+  placement:
+    mode: SnapgridCenter
   components:
   - type: WallMount
   - type: Sprite
+    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/noticeboard.rsi
     layers:
       - state: noticeboard
@@ -48,8 +51,14 @@
         - Write
   - type: UserInterface
     interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
+  - type: Tag
+    tags:
+    - Wooden
+  - type: Construction
+    graph: NoticeBoard
+    node: noticeBoard

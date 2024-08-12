@@ -9,10 +9,10 @@
                               BorderColor="#5a5a5a"
                               BorderThickness="0 0 0 1"/>
         </PanelContainer.PanelOverride>
-        <BoxContainer Orientation="Horizontal" Align="Center" Margin="8">
-            <Label HorizontalExpand="True" Text="{Loc 'log-probe-label-number'}"/>
-            <Label HorizontalExpand="True" Text="{Loc 'log-probe-label-time'}"/>
-            <Label HorizontalExpand="True" Text="{Loc 'log-probe-label-accessor'}"/>
+        <BoxContainer Orientation="Horizontal" Margin="4 8">
+            <Label Align="Right" SetWidth="26" ClipText="True" Text="{Loc 'log-probe-label-number'}"/>
+            <Label Align="Center" SetWidth="100" ClipText="True" Text="{Loc 'log-probe-label-time'}"/>
+            <Label Align="Left" SetWidth="390" ClipText="True" Text="{Loc 'log-probe-label-accessor'}"/>
         </BoxContainer>
     </PanelContainer>
     <ScrollContainer VerticalExpand="True" HScrollEnabled="True">

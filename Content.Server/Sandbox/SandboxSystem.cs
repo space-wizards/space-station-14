@@ -14,6 +14,7 @@ using Robust.Server.Placement;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Sandbox
 {
@@ -121,7 +122,7 @@ namespace Content.Server.Sandbox
 
             var allAccess = PrototypeManager
                 .EnumeratePrototypes<AccessLevelPrototype>()
-                .Select(p => p.ID).ToArray();
+                .Select(p => new ProtoId<AccessLevelPrototype>(p.ID)).ToList();
 
             if (_inventory.TryGetSlotEntity(attached, "id", out var slotEntity))
             {

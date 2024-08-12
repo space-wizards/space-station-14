@@ -1,7 +1,7 @@
 ﻿# Special entity used to attach to power networks as load when somebody gets electrocuted.
 - type: entity
   id: VirtualElectrocutionLoadBase
-  noSpawn: true
+  abstract: true
   components:
   - type: Electrocution
   - type: Icon
@@ -12,7 +12,7 @@
 - type: entity
   id: VirtualElectrocutionLoadHVPower
   parent: VirtualElectrocutionLoadBase
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: NodeContainer
     nodes:
@@ -26,7 +26,7 @@
 - type: entity
   id: VirtualElectrocutionLoadMVPower
   parent: VirtualElectrocutionLoadBase
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: NodeContainer
     nodes:
@@ -40,7 +40,7 @@
 - type: entity
   id: VirtualElectrocutionLoadApc
   parent: VirtualElectrocutionLoadBase
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: NodeContainer
     nodes:

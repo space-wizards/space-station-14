@@ -1,5 +1,6 @@
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
+using Content.Shared.Power.Components;
 
 namespace Content.Server.Power.Components
 {
@@ -8,11 +9,8 @@ namespace Content.Server.Power.Components
     ///     so that it can receive power from a <see cref="IApcNet"/>.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class ApcPowerReceiverComponent : Component
+    public sealed partial class ApcPowerReceiverComponent : SharedApcPowerReceiverComponent
     {
-        [ViewVariables]
-        public bool Powered => (MathHelper.CloseToPercent(NetworkLoad.ReceivingPower, Load) || !NeedsPower) && !PowerDisabled;
-
         /// <summary>
         ///     Amount of charge this needs from an APC per second to function.
         /// </summary>
@@ -33,7 +31,7 @@ namespace Content.Server.Power.Components
             {
                 _needsPower = value;
                 // Reset this so next tick will do a power update.
-                PoweredLastUpdate = null;
+                Recalculate = true;
             }
         }
 
@@ -50,7 +48,8 @@ namespace Content.Server.Power.Components
             set => NetworkLoad.Enabled = !value;
         }
 
-        public bool? PoweredLastUpdate;
+        // TODO Is this needed? It forces a PowerChangedEvent when NeedsPower is toggled even if it changes to the same state.
+        public bool Recalculate;
 
         [ViewVariables]
         public PowerState.Load NetworkLoad { get; } = new PowerState.Load
@@ -66,10 +65,5 @@ namespace Content.Server.Power.Components
     /// Does nothing on the client.
     /// </summary>
     [ByRefEvent]
-    public readonly record struct PowerChangedEvent(bool Powered, float ReceivingPower)
-    {
-        public readonly bool Powered = Powered;
-        public readonly float ReceivingPower = ReceivingPower;
-    }
-
+    public readonly record struct PowerChangedEvent(bool Powered, float ReceivingPower);
 }

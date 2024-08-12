@@ -59,3 +59,12 @@
 
 - type: statusEffect
   id: StaminaModifier
+
+- type: statusEffect
+  id: Flashed
+
+- type: statusEffect
+  id: RadiationProtection
+
+- type: statusEffect
+  id: Drowsiness #blurs your vision and makes you randomly fall asleep

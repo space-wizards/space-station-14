@@ -1,0 +1,34 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               MinSize="280 160" Title="Temperature Control Unit">
+
+    <BoxContainer Name="VboxContainer" Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
+
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <Button Text="{Loc comp-space-heater-ui-status-disabled}" Access="Public" Name="ToggleStatusButton"/>
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal" SeparationOverride="5">
+                <Label Text="{Loc comp-space-heater-ui-mode}"/>
+                <OptionButton Access="Public" Name="ModeSelector"/>
+            </BoxContainer>
+        </BoxContainer>
+
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="5">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <Label Text="{Loc comp-space-heater-ui-thermostat}"/>
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Right">
+                <Button Text="{Loc comp-space-heater-ui-decrease-temperature-range}" Access="Public" Name="DecreaseTempRange" StyleClasses="OpenRight"/>
+                <LineEdit Name ="Thermostat" MinSize="55 0"></LineEdit>
+                <Button Text="{Loc comp-space-heater-ui-increase-temperature-range}" Access="Public" Name="IncreaseTempRange" StyleClasses="OpenLeft"/>
+            </BoxContainer>
+        </BoxContainer>
+
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="5">
+            <Label Text="{Loc comp-space-heater-ui-power-consumption}"/>
+            <BoxContainer Name="PowerLevelSelectorHBox" Access="Public" SeparationOverride="2"/>
+        </BoxContainer>
+
+    </BoxContainer>
+</DefaultWindow>

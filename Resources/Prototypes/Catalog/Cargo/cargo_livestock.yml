@@ -5,7 +5,7 @@
     state: 0
   product: CrateNPCBee
   cost: 7000
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -15,7 +15,7 @@
     state: butterfly
   product: CrateNPCButterflies
   cost: 4400
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -25,7 +25,7 @@
     state: cat
   product: CrateNPCCat
   cost: 1200
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -35,7 +35,7 @@
     state: icon-1
   product: CrateNPCChicken
   cost: 4000
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -45,7 +45,7 @@
     state: crab
   product: CrateNPCCrab
   cost: 3000
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -54,8 +54,8 @@
     sprite: Mobs/Animals/duck.rsi
     state: icon-0
   product: CrateNPCDuck
-  cost: 6000
-  category: Livestock
+  cost: 4000
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -65,7 +65,7 @@
     state: corgi
   product: CrateNPCCorgi
   cost: 1200
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -75,7 +75,7 @@
     state: puppy
   product: CrateNPCPuppyCorgi
   cost: 1200
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -85,7 +85,7 @@
     state: cow
   product: CrateNPCCow
   cost: 3200
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -95,7 +95,7 @@
     state: goat
   product: CrateNPCGoat
   cost: 1200
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -105,7 +105,7 @@
     state: goose
   product: CrateNPCGoose
   cost: 2100
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -115,7 +115,7 @@
     state: icon
   product: CrateNPCGorilla
   cost: 1100
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -125,7 +125,7 @@
     state: box
   product: CrateNPCMonkeyCube
   cost: 2000
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -135,7 +135,7 @@
     state: box_kobold
   product: CrateNPCKoboldCube
   cost: 2000
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -145,7 +145,7 @@
     state: icon-0
   product: CrateNPCMouse
   cost: 4400
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -155,7 +155,7 @@
     state: parrot
   product: CrateNPCParrot
   cost: 3000
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -165,7 +165,7 @@
     state: penguin
   product: CrateNPCPenguin
   cost: 2100
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -175,7 +175,7 @@
     state: pig
   product: CrateNPCPig
   cost: 1100
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -185,7 +185,7 @@
     state: snake
   product: CrateNPCSnake
   cost: 3000
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -195,7 +195,7 @@
     state: icon-0
   product: CrateNPCHamster
   cost: 2800
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -205,7 +205,7 @@
     state: lizard
   product: CrateNPCLizard
   cost: 1100
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -215,7 +215,7 @@
     state: kangaroo
   product: CrateNPCKangaroo
   cost: 2800
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market
 
 - type: cargoProduct
@@ -225,5 +225,5 @@
     state: mothroach
   product: CrateNPCMothroach
   cost: 5000
-  category: Livestock
+  category: cargoproduct-category-name-livestock
   group: market

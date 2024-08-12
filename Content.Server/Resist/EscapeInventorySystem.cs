@@ -1,6 +1,5 @@
-using Content.Server.Contests;
 using Content.Server.Popups;
-using Content.Server.Storage.Components;
+using Content.Shared.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
@@ -20,12 +19,6 @@ public sealed class EscapeInventorySystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly ContestsSystem _contests = default!;
-
-    /// <summary>
-    /// You can't escape the hands of an entity this many times more massive than you.
-    /// </summary>
-    public const float MaximumMassDisadvantage = 6f;
 
     public override void Initialize()
     {
@@ -38,7 +31,10 @@ public sealed class EscapeInventorySystem : EntitySystem
 
     private void OnRelayMovement(EntityUid uid, CanEscapeInventoryComponent component, ref MoveInputEvent args)
     {
-        if (!_containerSystem.TryGetContainingContainer(uid, out var container) || !_actionBlockerSystem.CanInteract(uid, container.Owner))
+        if (!args.HasDirectionalMovement)
+            return;
+
+        if (!_containerSystem.TryGetContainingContainer((uid, null, null), out var container) || !_actionBlockerSystem.CanInteract(uid, container.Owner))
             return;
 
         // Make sure there's nothing stopped the removal (like being glued)
@@ -49,23 +45,9 @@ public sealed class EscapeInventorySystem : EntitySystem
         }
 
         // Contested
-        if (_handsSystem.IsHolding(container.Owner, uid, out var inHand))
+        if (_handsSystem.IsHolding(container.Owner, uid, out _))
         {
-            var contestResults = _contests.MassContest(uid, container.Owner);
-
-            // Inverse if we aren't going to divide by 0, otherwise just use a default multiplier of 1.
-            if (contestResults != 0)
-                contestResults = 1 / contestResults;
-            else
-                contestResults = 1;
-
-            if (contestResults >= MaximumMassDisadvantage)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-failed-resisting"), uid, uid);
-                return;
-            }
-
-            AttemptEscape(uid, container.Owner, component, contestResults);
+            AttemptEscape(uid, container.Owner, component);
             return;
         }
 
@@ -81,8 +63,7 @@ public sealed class EscapeInventorySystem : EntitySystem
 
         var doAfterEventArgs = new DoAfterArgs(EntityManager, user, component.BaseResistTime * multiplier, new EscapeInventoryEvent(), user, target: container)
         {
-            BreakOnTargetMove = false,
-            BreakOnUserMove = true,
+            BreakOnMove = true,
             BreakOnDamage = true,
             NeedHand = false
         };

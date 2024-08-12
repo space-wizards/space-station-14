@@ -1,5 +1,5 @@
 - type: entity
-  id: BaseHumanOrgan
+  id: BaseHumanOrganUnGibbable
   parent: BaseItem
   abstract: true
   components:
@@ -28,8 +28,15 @@
       - Meat
 
 - type: entity
+  id: BaseHumanOrgan
+  parent: BaseHumanOrganUnGibbable
+  abstract: true
+  components:
+  - type: Gibbable
+
+- type: entity
   id: OrganHumanBrain
-  parent: BaseHumanOrgan
+  parent: BaseHumanOrganUnGibbable
   name: brain
   description: "The source of incredible, unending intelligence. Honk."
   components:
@@ -46,7 +53,28 @@
   - type: Tag
     tags:
       - Meat
-
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - people
+  - type: FoodSequenceElement
+    entries:
+      burger:
+        name: food-sequence-burger-content-brain
+        sprite:
+          sprite: Mobs/Species/Human/organs.rsi
+          state: brain
+  
 - type: entity
   id: OrganHumanEyes
   parent: BaseHumanOrgan
@@ -66,6 +94,13 @@
   components:
   - type: Sprite
     state: tongue
+  - type: FoodSequenceElement
+    entries:
+      burger:
+        name: food-sequence-burger-content-tongue
+        sprite:
+          sprite: Mobs/Species/Human/organs.rsi
+          state: tongue
 
 - type: entity
   id: OrganHumanAppendix
@@ -77,6 +112,13 @@
     - state: appendix
     - state: appendix-inflamed
       visible: false
+  - type: FoodSequenceElement
+    entries:
+      burger:
+        name: food-sequence-burger-content-appendix
+        sprite:
+          sprite: Mobs/Species/Human/organs.rsi
+          state: appendix
 
 - type: entity
   id: OrganHumanEars
@@ -86,6 +128,13 @@
   components:
   - type: Sprite
     state: ears
+  - type: FoodSequenceElement
+    entries:
+      burger:
+        name: food-sequence-burger-content-ears
+        sprite:
+          sprite: Mobs/Species/Human/organs.rsi
+          state: ears
 
 - type: entity
   id: OrganHumanLungs
@@ -168,6 +217,13 @@
     groups:
     - id: Food
     - id: Drink
+  - type: FoodSequenceElement
+    entries:
+      burger:
+        name: food-sequence-burger-content-stomach
+        sprite:
+          sprite: Mobs/Species/Human/organs.rsi
+          state: stomach
 
 - type: entity
   id: OrganHumanLiver
@@ -183,6 +239,13 @@
     groups:
     - id: Alcohol
       rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
+  - type: FoodSequenceElement
+    entries:
+      burger:
+        name: food-sequence-burger-content-liver
+        sprite:
+          sprite: Mobs/Species/Human/organs.rsi
+          state: liver
 
 - type: entity
   id: OrganHumanKidneys

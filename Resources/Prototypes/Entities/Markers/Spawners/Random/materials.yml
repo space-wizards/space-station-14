@@ -1,0 +1,147 @@
+# Normal materials spawners
+- type: entity
+  name: materials spawner
+  id: LootSpawnerMaterials
+  suffix: Construction Materials
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Materials/Sheets/metal.rsi
+          state: steel_3
+    - type: RandomSpawner
+      rarePrototypes:
+        - SheetPlasteel10
+      rareChance: 0.2
+      prototypes:
+        - SheetSteel
+        - SheetGlass
+        - SheetPlastic
+        - CableApcStack
+        - CableMVStack
+        - CableHVStack
+      chance: 0.8
+      offset: 0.0
+
+- type: entity
+  name: materials spawner
+  suffix: Supplementary Materials
+  id: LootSpawnerMaterialsSupplementary
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Materials/materials.rsi
+          state: wood_2
+    - type: RandomSpawner
+      prototypes:
+        - MaterialWoodPlank10
+        - MaterialCardboard10
+        - PartRodMetal10
+      chance: 0.8
+      offset: 0.0
+
+# High-value materials spawners
+# Maybe these should use the 10-in-stack variants?
+- type: entity
+  name: high-value materials spawner
+  suffix: Construction Materials
+  id: LootSpawnerMaterialsHighValueConstruction
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Materials/Sheets/metal.rsi
+          state: plasteel_2
+    - type: RandomSpawner
+      rarePrototypes:
+        - SheetRPGlass
+      rareChance: 0.2
+      prototypes:
+        - SheetPlasteel
+        - SheetRGlass
+      chance: 0.8
+      offset: 0.0
+
+- type: entity
+  name: high-value materials spawner
+  id: LootSpawnerMaterialsHighValue
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Materials/Sheets/other.rsi
+          state: plasma_2
+    - type: RandomSpawner
+      rarePrototypes:
+        - SheetUranium
+      rareChance: 0.2
+      prototypes:
+        - SheetPlasma
+        - IngotGold
+        - IngotSilver
+      chance: 0.8
+      offset: 0.0
+
+# Surplus materials spawner.
+# Intended use case: randomly place in maintenance or in storage areas.
+# Does not include weirdo stuff like Bronze or Paper since those are intended to be gimmicks.
+- type: entity
+  name: surplus materials spawner
+  id: LootSpawnerMaterialsSurplus
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Materials/Sheets/metal.rsi
+          state: steel_3
+    - type: RandomSpawner
+      rarePrototypes:
+        - SheetUranium1
+        - IngotGold1
+        - IngotSilver1
+      rareChance: 0.1
+      prototypes:
+        - SheetPlasteel10
+        - SheetPlasma1
+        - MaterialWoodPlank10
+        - PartRodMetal10
+        - SheetSteel10
+        - SheetGlass10
+        - MaterialCloth10
+        - MaterialCardboard10
+        - SheetPlastic10
+        - CableApcStack10
+        - CableMVStack10
+        - CableHVStack10
+      chance: 0.9
+      offset: 0.0
+
+# Cable coil spawner
+- type: entity
+  name: cable coil spawner
+  id: LootSpawnerCableCoil
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Tools/cable-coils.rsi
+          state: coilall-30
+    - type: RandomSpawner
+      rarePrototypes:
+        - CableApcStack10
+        - CableMVStack10
+        - CableHVStack10
+      rareChance: 0.1
+      prototypes:
+        - CableApcStack
+        - CableMVStack
+        - CableHVStack
+      chance: 0.9
+      offset: 0.0
