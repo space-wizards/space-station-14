@@ -86,7 +86,8 @@
     spawned:
     - id: FoodMeatGoliath
       amount: 3
-    # Add hide in the future...
+    # replace with hide in the future...
+    - id: ClothingNeckCloakGoliathCloak
 
 - type: entity
   id: ActionGoliathTentacle
