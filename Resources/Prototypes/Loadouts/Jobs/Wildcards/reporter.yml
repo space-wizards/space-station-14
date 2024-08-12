@@ -1,18 +1,10 @@
 # Jumpsuit
 - type: loadout
   id: ReporterJumpsuit
-  equipment: ReporterJumpsuit
-
-- type: startingGear
-  id: ReporterJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitReporter
 
 - type: loadout
-  id: JournalistJumpsuit
-  equipment: JournalistJumpsuit
-
-- type: startingGear
   id: JournalistJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitJournalist
