@@ -14,7 +14,7 @@
               icon:
                 sprite: Objects/Misc/glowshroom.rsi
                 state: seed
+              doAfter: 5
 
     - node: plantedGlowshrooms
       entity: Glowshroom
-      doAfter: 5
