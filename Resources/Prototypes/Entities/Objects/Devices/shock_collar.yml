@@ -2,7 +2,8 @@
   parent: Clothing
   id: ClothingNeckShockCollar
   name: shock collar
-  description: An electric collar that shocks when a trigger is triggered.
+  suffix: SelfUnremovable
+  description: An electric collar that shocks on the signal.
   components:
   - type: Item
     size: Small

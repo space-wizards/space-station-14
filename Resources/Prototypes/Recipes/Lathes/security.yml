@@ -90,12 +90,13 @@
     Gold: 100
 
 - type: latheRecipe
-  id: ClothingNeckShockCollar
-  result: ClothingNeckShockCollar
+  id: ClothingBackpackElectropack
+  result: ClothingBackpackElectropack
   completetime: 4
   materials:
     Steel: 500
-    Plastic: 400
+    Plastic: 250
+    Cloth: 500
 
 - type: latheRecipe
   id: ForensicPad

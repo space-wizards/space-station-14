@@ -119,13 +119,13 @@
   id: SpecialMeans
   name: research-technology-special-means
   icon:
-    sprite: Clothing/Neck/Misc/shock_collar.rsi
+    sprite: Clothing/Back/Backpacks/electropack.rsi
     state: icon
   discipline: Arsenal
   tier: 1
   cost: 5000
   recipeUnlocks:
-  - ClothingNeckShockCollar
+  - ClothingBackpackElectropack
 
 # Tier 2
 
