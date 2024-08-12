@@ -12,10 +12,6 @@
       clothingVisuals:
         neck:
           - state: star-equipped
-    - type: EmbeddableProjectile
-      sound: /Audio/Weapons/dodgeball.ogg
-      minimumSpeed: 3
-      removalTime: 0.5
     - type: Item
       size: Tiny
     - type: Tag
