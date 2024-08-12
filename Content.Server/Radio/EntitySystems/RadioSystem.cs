@@ -2,7 +2,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Radio.Components;
-using Content.Server.VoiceMask;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Radio;
@@ -15,8 +14,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
-using Content.Shared.Inventory;
-using Content.Shared.Chat;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -31,7 +28,6 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -90,7 +86,6 @@ public sealed class RadioSystem : EntitySystem
         name = FormattedMessage.EscapeText(name);
 
         var speech = _chat.GetSpeechVerb(messageSource, message);
-
 
         if (verbOverride != null && _prototype.TryIndex<SpeechVerbPrototype>(verbOverride, out var overrideProto))
             speech = overrideProto;

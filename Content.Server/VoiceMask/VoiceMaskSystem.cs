@@ -25,14 +25,14 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<TransformSpeakerNameEvent>>(UpdateName);
+        SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<TransformSpeakerNameEvent>>(OnTransformSpeakerName);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeNameMessage>(OnChangeName);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeVerbMessage>(OnChangeVerb);
         SubscribeLocalEvent<VoiceMaskComponent, ClothingGotEquippedEvent>(OnEquip);
         SubscribeLocalEvent<VoiceMaskSetNameEvent>(OpenUI);
     }
 
-    private void UpdateName(Entity<VoiceMaskComponent> entity, ref InventoryRelayedEvent<TransformSpeakerNameEvent> args)
+    private void OnTransformSpeakerName(Entity<VoiceMaskComponent> entity, ref InventoryRelayedEvent<TransformSpeakerNameEvent> args)
     {
         args.Args.VoiceName = entity.Comp.VoiceMaskName;
         args.Args.SpeechVerb = entity.Comp.VoiceMaskSpeechVerb ?? args.Args.SpeechVerb;
@@ -41,7 +41,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     #region User inputs from UI
     private void OnChangeVerb(Entity<VoiceMaskComponent> ent, ref VoiceMaskChangeVerbMessage msg)
     {
-        if (msg.Verb is {} id && !_proto.HasIndex<SpeechVerbPrototype>(id))
+        if (msg.Verb is { } id && !_proto.HasIndex<SpeechVerbPrototype>(id))
             return;
 
         ent.Comp.VoiceMaskSpeechVerb = msg.Verb;
