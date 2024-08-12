@@ -79,7 +79,7 @@
         - id: CigPackMixed
         - id: CigPackMixedNasty
       - id: CigarGold
-          weight: 0.10
+        weight: 0.10
 
 - type: entityTable
   id: SoakedSmokesTable
