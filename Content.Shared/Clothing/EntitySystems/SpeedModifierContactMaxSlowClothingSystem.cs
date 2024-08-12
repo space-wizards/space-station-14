@@ -3,11 +3,13 @@ using Content.Shared.Inventory;
 using Content.Shared.Movement.Events;
 
 namespace Content.Shared.Clothing.EntitySystems;
+
 public sealed class SpeedModifierContactMaxSlowClothingSystem : EntitySystem
 {
-    /// <inheritdoc/>
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<SpeedModifierContactMaxSlowClothingComponent, InventoryRelayedEvent<GetSpeedModifierContactMaxSlowEvent>>(OnGetMaxSlow);
     }
 

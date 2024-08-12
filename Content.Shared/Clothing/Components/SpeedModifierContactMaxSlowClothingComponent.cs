@@ -1,11 +1,13 @@
-using Content.Shared.Clothing.EntitySystems;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Clothing.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class SpeedModifierContactMaxSlowClothingComponent : Component
 {
-    public float MaxContactSprintSlowdown = 0.8f;
+    [DataField, AutoNetworkedField]
+    public float MaxContactSprintSlowdown = 1f;
 
+    [DataField, AutoNetworkedField]
     public float MaxContactWalkSlowdown = 1f;
 }

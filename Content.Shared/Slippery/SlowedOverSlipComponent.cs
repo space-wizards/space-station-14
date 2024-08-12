@@ -7,6 +7,6 @@ public sealed partial class SlowedOverSlipComponent : Component
 {
 
     [DataField, AutoNetworkedField]
-    public float SlowModifier = 1f;
+    public float SlowdownModifier = 1f;
 
 }
