@@ -10,10 +10,11 @@
               southRotation: true
           steps:
             - tag: GlowshroomSpores
-              sprite: Objects/Misc/glowshroom.rsi
-              state: seed
               name: glowshroom spores
+              icon:
+                sprite: Objects/Misc/glowshroom.rsi
+                state: seed
 
     - node: plantedGlowshrooms
       entity: Glowshroom
-      doafter: 5
+      doAfter: 5
