@@ -152,13 +152,9 @@
 # Misc
 - type: loadout
   id: SecStar
-  equipment: SecStar
   effects:
-    - !type:GroupLoadoutEffect
-      proto: SecurityStarWorthy
-
-- type: startingGear
-  id: SecStar
+  - !type:GroupLoadoutEffect
+    proto: SecurityStarWorthy
   storage:
     back:
-      - Dinkystar
+    - Dinkystar
