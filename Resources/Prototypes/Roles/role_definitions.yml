@@ -29,7 +29,7 @@
   id: Familiar
   roleRule: Familiar
   name: role-type-familiar-name
-  color: '#6495ed' # TODO:ERRANT. should Silicon and Familiar be the same color?
+  color: '#6495ed'
 
 - type: roleType
   id: Silicon
@@ -37,11 +37,11 @@
   name: role-type-silicon-name
   color: '#6495ed'
 
-#- type: roleType # TODO:ERRANT. should this stay?
-#  id: MalfSilicon
-#  roleRule: MalfSilicon
-#  name: role-type-silicon-altered-name
-#  color: '#c832e6'
+- type: roleType
+  id: SubvertedSilicon
+  roleRule: SubvertedSilicon
+  name: role-type-silicon-antagonist-name
+  color: '#c832e6'
 
 - type: roleType
   id: Observer

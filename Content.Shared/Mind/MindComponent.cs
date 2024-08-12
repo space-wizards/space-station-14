@@ -126,7 +126,7 @@ public sealed partial class RoleTypePrototype : IPrototype
     ///     The role's specific antag-or-other-special category.
     /// </summary>
     [DataField(required: true)]
-    public RoleEnum RoleRule = RoleEnum.Neutral; //TODO:ERRANT. LATER do I actually need this for anything?
+    public RoleEnum RoleRule = RoleEnum.Neutral;
 
     /// <summary>
     ///     The role's name as displayed on the UI.
@@ -146,7 +146,7 @@ public sealed partial class RoleTypePrototype : IPrototype
 /// </summary>
 public enum RoleEnum
 {
-    AlteredSilicon,
+    SubvertedSilicon,
     Silicon,
     TeamAntagonist,
     SoloAntagonist,

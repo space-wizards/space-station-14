@@ -233,7 +233,7 @@ namespace Content.Server.Administration.Systems
                 identityName = Identity.Name(session.AttachedEntity.Value, EntityManager);
             }
 
-            var antag = false; //TODO:ERRANT. LATER: Remove? Player Tab Antag Row
+            var antag = false;
 
             RoleTypePrototype roleType = new();
             var startingRole = string.Empty;

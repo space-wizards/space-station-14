@@ -26,11 +26,9 @@ public sealed partial class PlayerTabEntry : PanelContainer
         CharacterLabel.Text = player.CharacterName;
         if (player.IdentityName != player.CharacterName)
             CharacterLabel.Text += $" [{player.IdentityName}]";
-        AntagonistLabel.Text = Loc.GetString(player.Antag ? "player-tab-is-antag-yes" : "player-tab-is-antag-no"); // TODO:ERRANT. LATER: Player Tab Antag Row
-
+        AntagonistLabel.Text = Loc.GetString(player.Antag ? "player-tab-is-antag-yes" : "player-tab-is-antag-no");
         RoleTypeLabel.Text = Loc.GetString(player.RoleProto.Name);
         RoleTypeLabel.FontColorOverride = player.RoleProto.Color;
-
         BackgroundColorPanel.PanelOverride = styleBoxFlat;
         OverallPlaytimeLabel.Text = player.PlaytimeString;
         PlayerEntity = player.NetEntity;

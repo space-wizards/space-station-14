@@ -216,7 +216,10 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         }
         else
         {
-            // TODO:ERRANT Adminlog Player UI failed to get RoleType - displayed Neutral instead
+            //TODO:ERRANT review
+            // adminlog or error log?
+            _adminLogger.Add(LogType.Mind, LogImpact.Extreme,
+                $"UI of {_player.LocalEntity} tried to display invalid Role Type '{mind.RoleType}'. Displaying 'Neutral' instead");
         }
 
         _window.RoleType.Text = roleText;

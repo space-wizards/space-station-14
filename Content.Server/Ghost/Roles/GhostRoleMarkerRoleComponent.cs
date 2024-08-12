@@ -4,7 +4,7 @@ namespace Content.Server.Ghost.Roles;
 
 /// <summary>
 /// This is used for round end display of ghost roles.
-/// It may also be used to ensure some ghost roles count as antagonists in future. TODO:ERRANT updgrade text
+/// It also inherits RoleType, which can be used to set an initial RoleType protoID for the ghostrole
 /// </summary>
 [RegisterComponent]
 public sealed partial class GhostRoleMarkerRoleComponent : BaseRoleComponent

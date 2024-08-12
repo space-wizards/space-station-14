@@ -97,7 +97,10 @@ public abstract class SharedRoleSystem : EntitySystem
                 args.RoleTypes.Add(proto);
             else
             {
-                //TODO:ERRANT Log protoid indexing failure
+                //TODO:ERRANT review
+                // should this maybe Log.Error instead?
+                _adminLogger.Add(LogType.Mind, LogImpact.High,
+                    $"Failed to index Role Type protoID: {proto}");
             }
         });
     }
@@ -132,7 +135,8 @@ public abstract class SharedRoleSystem : EntitySystem
         }
 
 
-
+        // TODO:ERRANT review
+        // should this be adminlog or errorlog
         _adminLogger.Add(LogType.Mind, LogImpact.Low,
             $"Role components {string.Join(components.Keys.ToString(), ", ")} added to mind of {_minds.MindOwnerLoggingString(mind)}");
     }
@@ -160,20 +164,17 @@ public abstract class SharedRoleSystem : EntitySystem
             RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
         }
 
+        // TODO:ERRANT review
+        // should this be adminlog or errorlog
         _adminLogger.Add(LogType.Mind, LogImpact.Low,
             $"'Role {component}' added to mind of {_minds.MindOwnerLoggingString(mind)}");
     }
 
-    //TODO:ERRANT. testing
-
     public void MindRolesChanged(EntityUid mindId)
     {
-        var a = MindGetAllRoles(mindId); //TODO:ERRANT delete this
         var roles = GetAllRoleTypes(mindId);
         var roleType = SortRoleTypes(roles);
-
         SetRoleType(mindId, roleType);
-
     }
 
     public ProtoId<RoleTypePrototype> SortRoleTypes(List<RoleTypePrototype> input)
@@ -193,15 +194,23 @@ public abstract class SharedRoleSystem : EntitySystem
 
     private void SetRoleType(EntityUid mindEnt, ProtoId<RoleTypePrototype> roleTypeId)
     {
-        if (!_prototypes.HasIndex(roleTypeId))
-        {
-            // TODO:ERRANT Log failed RoleType change - wrong ProtoId
-           return;
-        }
+
 
         if (!TryComp<MindComponent>(mindEnt, out var comp))
         {
-            // TODO:ERRANT Decide if this needs logging (shouldn't even be possible)
+            // TODO:ERRANT review
+            // should this be adminlog or errorlog
+            _adminLogger.Add(LogType.Mind, LogImpact.High,
+             $"Failed to update Role Type of mind entity {mindEnt.ToString()} to {roleTypeId}. MindComponent not found.");
+            return;
+        }
+
+        if (!_prototypes.HasIndex(roleTypeId))
+        {
+            // TODO:ERRANT review
+            // should this be adminlog or errorlog
+            _adminLogger.Add(LogType.Mind, LogImpact.High,
+                $"Failed to change Role Type of {_minds.MindOwnerLoggingString(comp)} to {roleTypeId}. Invalid role");
             return;
         }
 
@@ -211,22 +220,20 @@ public abstract class SharedRoleSystem : EntitySystem
         comp.RoleType = roleTypeId;
         Dirty(mindEnt, comp);
 
+        // TODO:ERRANT review
+        // should this be adminlog or errorlog
+        _adminLogger.Add(LogType.Mind, LogImpact.High,
+            $"Role Type of {_minds.MindOwnerLoggingString(comp)} changed to {roleTypeId}");
+
         if (_minds.TryGetSession(mindEnt, out var session))
-        {
             RaiseNetworkEvent(new MindRoleTypeChangedEvent(), session.Channel);
-
-            // TODO:ERRANT Adminlog Roly Type change
-            // _adminLogger.Add(LogType.Mind, LogImpact.Low, //TODO:ERRANT log the successful role type change
-            //     $"Role components {string.Join(components.Keys.ToString(), ", ")} added to mind of {_minds.MindOwnerLoggingString(mind)}");
-
-        }
         else
         {
-            // TODO:ERRANT Adminlog Role Type change without immediate clientside update
-            // _adminLogger.Add(LogType.Mind, LogImpact.Low, //TODO:ERRANT log the successful role type change
-            //     $"Role components {string.Join(components.Keys.ToString(), ", ")} added to mind of {_minds.MindOwnerLoggingString(mind)}");
+            // TODO:ERRANT review
+            // should this be adminlog or errorlog
+            _adminLogger.Add(LogType.Mind, LogImpact.High,
+                $"The Character Window of {_minds.MindOwnerLoggingString(comp)} potentially did not update immediately : session error");
         }
-
     }
 
     /// <summary>
@@ -405,7 +412,6 @@ public abstract class SharedRoleSystem : EntitySystem
         return antag.Requirements;
     }
 }
-
 
 /// <summary>
 /// Raised on the client to update Role Type on the character window, in case it happened to be open.

@@ -177,7 +177,6 @@ namespace Content.Server.Chat.Managers
 
             var adminSystem = _entityManager.System<AdminSystem>();
             var antag = mind.UserId != null && (adminSystem.GetCachedPlayerInfo(mind.UserId.Value)?.Antag ?? false);
-            //TODO:ERRANT. LATER: decide what to send in admin alert
             SendAdminAlert($"{mind.Session?.Name}{(antag ? " (ANTAG)" : "")} {message}");
         }
 
