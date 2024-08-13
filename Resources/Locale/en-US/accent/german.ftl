@@ -11,11 +11,11 @@ accent-german-words-replace-3 = ze
 accent-german-words-4 = shit
 accent-german-words-replace-4 = scheisse
 
-accent-german-words-5 = hospital
-accent-german-words-replace-5 = krankenhaus
+accent-german-words-5 = sausage
+accent-german-words-replace-5 = wurst
 
-accent-german-words-6 = sausage
-accent-german-words-replace-6 = wurst
+accent-german-words-6 = sausages
+accent-german-words-replace-6 = würste
 
 accent-german-words-7 = man
 accent-german-words-replace-7 = mann
@@ -134,8 +134,8 @@ accent-german-words-replace-43 = warnungen
 accent-german-words-44 = and
 accent-german-words-replace-44 = und
 
-accent-german-words-45 = officer
-accent-german-words-replace-45 = offizier
+accent-german-words-45 = carp
+accent-german-words-replace-45 = karpfen
 
 accent-german-words-46 = commander
 accent-german-words-replace-46 = kommandant
@@ -178,9 +178,8 @@ accent-german-words-57 = quick
 accent-german-words-57-2 = quickly
 accent-german-words-replace-57 = schnell
 
-accent-german-words-58 = war ops
-accent-german-words-58-2 = warops
-accent-german-words-replace-58 = blitzkrieg
+accent-german-words-58 = hospital
+accent-german-words-replace-58 = krankenhaus
 
 accent-german-words-59 = tesla coil
 accent-german-words-replace-59 = tesla coil
