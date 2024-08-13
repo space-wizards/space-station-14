@@ -140,7 +140,7 @@
     groups:
       Acidic: [ Touch ]
     reactions:
-    - reagents: [ Vinegar, PolytrinicAcid, FerrochromicAcid, FluorosulfuricAcid, SulfuricAcid, NorepinephricAcid ]
+    - reagents: [ Vinegar, PolytrinicAcid, FerrochromicAcid, FluorosulfuricAcid, SulfuricAcid, NorepinephricAcid, TranexamicAcid ] ]
       methods: [ Touch ]
       effects:
       - !type:ActivateArtifact
