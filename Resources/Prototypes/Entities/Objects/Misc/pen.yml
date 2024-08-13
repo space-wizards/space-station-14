@@ -58,7 +58,7 @@
 
 - type: entity
   name: Cybersun pen
-  parent: PenEmbeddable
+  parent: [PenEmbeddable, BaseSyndicateContraband]
   id: CyberPen
   description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write. So powerful, it's even able to rewrite officially stamped documents should the need arise.
   components:
@@ -95,7 +95,7 @@
     state: pen_cap
 
 - type: entity
-  name: CentCom pen
+  name: CentComm pen
   parent: CyberPen
   id: PenCentcom
   description: In an attempt to keep up with the "power" of the cybersun bureaucracy, NT made a replica of cyber pen, in their corporate style.

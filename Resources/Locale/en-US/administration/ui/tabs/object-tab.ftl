@@ -8,3 +8,6 @@ object-tab-object-type-grids = Grids
 object-tab-object-type-maps = Maps
 object-tab-object-type-stations = Stations
 object-tab-refresh-button = Refresh
+
+object-tab-entity-teleport = Teleport
+object-tab-entity-delete = Delete

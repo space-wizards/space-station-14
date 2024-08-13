@@ -1,7 +1,7 @@
 figurines-hop-1 = Papers, please.
 figurines-hop-2 = You are fired.
 
-figurines-passenger-1 = How to change hands?
+figurines-passenger-1 = Insuls please.
 figurines-passenger-2 = Call evac.
 
 figurines-greytider-1 = Man, this party stinks. I fucking hate these people.
@@ -29,8 +29,7 @@ figurines-musician-2 = Never gonna let you down!
 
 # figurines-boxer-
 
-figurines-captain-1 = Crew, the Nuke Disk is safely up my ass.
-figurines-captain-2 = Glory to NT!
+figurines-captain-1 = Glory to NT!
 
 figurines-hos-1 = Space law? What?
 figurines-hos-2 = Shot the clown.
