@@ -51,7 +51,7 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem<RampingS
         while (query.MoveNext(out var uid, out var scheduler, out var gameRule))
         {
             if (!GameTicker.IsGameRuleActive(uid, gameRule))
-                return;
+                continue;
 
             if (scheduler.TimeUntilNextEvent > 0f)
             {
