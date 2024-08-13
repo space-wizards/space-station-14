@@ -1103,7 +1103,6 @@
   id: paintthinner
   flavorType: Complex
   description: flavor-complex-paint-thinner
-<<<<<<< HEAD
 
 - type: flavor
   id: numbingtranquility
@@ -1119,5 +1118,3 @@
   id: falsemeat
   flavorType: Complex
   description: flavor-complex-false-meat
-=======
->>>>>>> master
