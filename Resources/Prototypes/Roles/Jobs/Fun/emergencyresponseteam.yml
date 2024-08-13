@@ -95,7 +95,7 @@
   description: job-description-ertchaplain
   playTimeTracker: JobERTChaplain
   setPreference: false
-  startingGear: ERTEngineerGearEVA
+  startingGear: ERTChaplainGear
   icon: "JobIconNanotrasen"
   supervisors: job-supervisors-centcom
   canBeAntag: false
@@ -119,7 +119,7 @@
     neck: ClothingNeckStoleChaplain
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterArmorBasicSlim
-    id: ERTEngineerPDA
+    id: ERTChaplainPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltStorageWaistbag
     pocket1: Flare
