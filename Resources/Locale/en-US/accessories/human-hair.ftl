@@ -191,3 +191,5 @@ marking-HumanHairVeryshortovereyealternate = Very Short Over Eye
 marking-HumanHairVlongfringe = Very Long with Fringe
 marking-HumanHairVolaju = Volaju
 marking-HumanHairWisp = Wisp
+marking-HumanHairClassicLong2 = Classic Long Hair 2
+marking-HumanHairClassicLong3 = Classic Long Hair 3
