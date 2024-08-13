@@ -216,7 +216,7 @@
     groups:
       Acidic: [ Touch ]
     reactions:
-    - reagents: [ Impedrezene, SpaceDrugs, Bananadine, Happiness, HeartbreakerToxin, MindbreakerToxin, Pax ]
+    - reagents: [ Impedrezene, SpaceDrugs, Bananadine, Happiness, THC, MindbreakerToxin, Pax ]
       methods: [ Touch ]
       effects:
       - !type:ActivateArtifact
