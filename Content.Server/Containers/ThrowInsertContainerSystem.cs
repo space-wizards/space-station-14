@@ -30,8 +30,6 @@ public sealed class ThrowInsertContainerSystem : EntitySystem
         if (!_containerSystem.CanInsert(args.Thrown, container))
             return;
 
-
-        var rand = _random.NextFloat();
         if (_random.Prob(ent.Comp.Probability))
         {
             _audio.PlayPvs(ent.Comp.MissSound, ent);
