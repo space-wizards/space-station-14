@@ -505,6 +505,35 @@
         density: 10
         mask:
         - ItemMask
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 18
+        reagents:
+        - ReagentId: Butter
+          Quantity: 15
+  - type: SliceableFood
+    count: 3
+    slice: FoodButterSlice
+
+- type: entity
+  name: butter slice
+  parent: FoodBakingBase
+  id: FoodButterSlice
+  description: A pat of delicious, golden, fatty goodness.
+  components:
+  - type: Sprite
+    state: butter-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Butter
+          Quantity: 5
+  - type: Tag
+    tags:
+    - Slice
 
 - type: entity
   name: stick of cannabis butter
@@ -541,6 +570,13 @@
   - type: SliceableFood
     count: 3
     slice: FoodCheeseSlice
+  - type: FoodSequenceElement
+    entries:
+      burger:
+        name: food-sequence-burger-content-cheese
+        sprite:
+          sprite: Objects/Consumable/Food/ingredients.rsi
+          state: cheesewheel
 
 - type: entity
   name: cheese wedge
@@ -563,6 +599,13 @@
   - type: Tag
     tags:
     - Slice
+  - type: FoodSequenceElement
+    entries:
+      burger:
+        name: food-sequence-burger-content-cheese
+        sprite:
+          sprite: Objects/Consumable/Food/ingredients.rsi
+          state: cheesewedge
 
 - type: entity
   name: chèvre log

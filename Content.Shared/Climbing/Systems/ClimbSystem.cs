@@ -14,6 +14,7 @@ using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
@@ -34,6 +35,7 @@ public sealed partial class ClimbSystem : VirtualController
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -450,6 +452,12 @@ public sealed partial class ClimbSystem : VirtualController
             return false;
         }
 
+        if (_containers.IsEntityInContainer(user))
+        {
+            reason = Loc.GetString("comp-climbable-cant-reach");
+            return false;
+        }
+
         reason = string.Empty;
         return true;
     }
@@ -482,6 +490,12 @@ public sealed partial class ClimbSystem : VirtualController
 
         if (!_interactionSystem.InRangeUnobstructed(user, target, component.Range, predicate: Ignored)
             || !_interactionSystem.InRangeUnobstructed(user, dragged, component.Range, predicate: Ignored))
+        {
+            reason = Loc.GetString("comp-climbable-cant-reach");
+            return false;
+        }
+
+        if (_containers.IsEntityInContainer(user) || _containers.IsEntityInContainer(dragged))
         {
             reason = Loc.GetString("comp-climbable-cant-reach");
             return false;

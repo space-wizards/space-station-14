@@ -315,7 +315,7 @@ public sealed class SmokeSystem : EntitySystem
                 continue;
 
             var reagent = _prototype.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
-            reagent.ReactionTile(tile, reagentQuantity.Quantity, EntityManager);
+            reagent.ReactionTile(tile, reagentQuantity.Quantity, EntityManager, reagentQuantity.Reagent.Data);
         }
     }
 

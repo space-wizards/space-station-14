@@ -21,7 +21,7 @@
     hideOnToggle: true
 
 - type: entity
-  parent: ClothingMaskGas
+  parent: [ClothingMaskGas, BaseRestrictedContraband]
   id: ClothingMaskGasSecurity
   name: security gas mask
   description: A standard issue Security gas mask.
@@ -41,7 +41,7 @@
         Heat: 0.95
 
 - type: entity
-  parent: ClothingMaskGas
+  parent: [ClothingMaskGas, BaseSyndicateContraband]
   id: ClothingMaskGasSyndicate
   name: syndicate gas mask
   description: A close-fitting tactical mask that can be connected to an air supply.
@@ -76,7 +76,7 @@
         Heat: 0.80
 
 - type: entity
-  parent: ClothingMaskGasAtmos
+  parent: [ClothingMaskGasAtmos, BaseCommandContraband]
   id: ClothingMaskGasCaptain
   name: captain's gas mask
   description: Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone.
@@ -91,7 +91,7 @@
 - type: entity
   parent: ClothingMaskGasAtmos
   id: ClothingMaskGasCentcom
-  name: CentCom gas mask
+  name: CentComm gas mask
   description: Oooh, gold and green. Fancy! This should help as you sit in your office.
   components:
   - type: Sprite
