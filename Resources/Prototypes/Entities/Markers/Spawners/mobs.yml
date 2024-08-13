@@ -951,3 +951,17 @@
   - type: ConditionalSpawner
     prototypes:
     - MobLaserRaptor
+
+- type: entity
+  name: Kisser Tomato Spawner
+  id: SpawnMobKisserTomato
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: alive
+      sprite: Mobs/Demons/tomatokisser.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobTomatoKisser
