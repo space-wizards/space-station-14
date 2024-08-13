@@ -47,6 +47,8 @@ public sealed class TemperatureSystem : EntitySystem
 
         SubscribeLocalEvent<InternalTemperatureComponent, MapInitEvent>(OnInit);
 
+        SubscribeLocalEvent<ChangeTemperatureOnCollideComponent, StartCollideEvent>(ChangeTemperatureOnCollide);
+
         // Allows overriding thresholds based on the parent's thresholds.
         SubscribeLocalEvent<TemperatureComponent, EntParentChangedMessage>(OnParentChange);
         SubscribeLocalEvent<ContainerTemperatureDamageThresholdsComponent, ComponentStartup>(
@@ -298,6 +300,17 @@ public sealed class TemperatureSystem : EntitySystem
         RaiseLocalEvent(uid, ref ev);
 
         args.Args.TemperatureDelta *= ev.Coefficient;
+    }
+
+    public void ChangeTemperatureOnCollide(Entity<ChangeTemperatureOnCollideComponent> ent, ref StartCollideEvent args)
+    {
+          if (args.EntityManager.TryGetComponent(args.TargetEntity, out TemperatureComponent? temp))
+            {
+                var sys = args.EntityManager.EntitySysManager.GetEntitySystem<TemperatureSystem>();
+                var heat = Heat;
+
+                sys.ChangeHeat(args.TargetEntity, heat, true, temp);
+            }
     }
 
     private void OnParentChange(EntityUid uid, TemperatureComponent component,

@@ -238,6 +238,8 @@
     soundHit:
       collection: WeakHit
     forceSound: true
+  - type: ChangeTemperatureOnCollide
+    heat: 300000
 
 - type: entity
   name : disabler bolt practice
