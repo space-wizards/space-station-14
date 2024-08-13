@@ -11,12 +11,12 @@ public sealed partial class ChangeTemperatureOnCollideComponent : Component
     /// <summary>
     /// The amount it changes the target's temperature by.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float Heat = 0f;
 
     /// <summary>
     /// If this heat change ignores heat resistance or not.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool ignoreHeatResistance = true;
+    [DataField]
+    public bool IgnoreHeatResistance = true;
 }
