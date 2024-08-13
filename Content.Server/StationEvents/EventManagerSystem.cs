@@ -36,6 +36,7 @@ public sealed class EventManagerSystem : EntitySystem
     /// <summary>
     /// Randomly runs a valid event.
     /// </summary>
+    [Obsolete("use overload taking EnityTableSelector instead or risk unexpected results")]
     public void RunRandomEvent()
     {
         var randomEvent = PickRandomEvent();
@@ -51,7 +52,7 @@ public sealed class EventManagerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Randomly runs an event from provided EntitySpawnCollection.
+    /// Randomly runs an event from provided EntityTableSelector.
     /// </summary>
     public void RunRandomEvent(EntityTableSelector limitedEventsTable)
     {
