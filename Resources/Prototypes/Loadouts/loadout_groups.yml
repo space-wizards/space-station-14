@@ -178,6 +178,7 @@
 - type: loadoutGroup
   id: PassengerNeck
   name: loadout-group-passenger-neck
+  minLimit: 0
   loadouts:
   - Mantle
 
