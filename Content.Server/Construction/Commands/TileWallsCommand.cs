@@ -34,9 +34,9 @@ namespace Content.Server.Construction.Commands
             switch (args.Length)
             {
                 case 0:
-                    if (player?.AttachedEntity is not {Valid: true} playerEntity)
+                    if (player?.AttachedEntity is not { Valid: true } playerEntity)
                     {
-                        shell.WriteLine("Only a player can run this command.");
+                        shell.WriteError("Only a player can run this command.");
                         return;
                     }
 
@@ -45,7 +45,7 @@ namespace Content.Server.Construction.Commands
                 case 1:
                     if (!NetEntity.TryParse(args[0], out var idNet) || !_entManager.TryGetEntity(idNet, out var id))
                     {
-                        shell.WriteLine($"{args[0]} is not a valid entity.");
+                        shell.WriteError($"{args[0]} is not a valid entity.");
                         return;
                     }
 
@@ -58,13 +58,13 @@ namespace Content.Server.Construction.Commands
 
             if (!_entManager.TryGetComponent(gridId, out MapGridComponent? grid))
             {
-                shell.WriteLine($"No grid exists with id {gridId}");
+                shell.WriteError($"No grid exists with id {gridId}");
                 return;
             }
 
             if (!_entManager.EntityExists(gridId))
             {
-                shell.WriteLine($"Grid {gridId} doesn't have an associated grid entity.");
+                shell.WriteError($"Grid {gridId} doesn't have an associated grid entity.");
                 return;
             }
 
@@ -94,14 +94,14 @@ namespace Content.Server.Construction.Commands
 
                 var mapSystem = _entManager.System<MapSystem>();
                 var tile = mapSystem.GetTileRef(gridId.Value, grid, childTransform.Coordinates);
-                var tileDef = (ContentTileDefinition) _tileDefManager[tile.Tile.TypeId];
+                var tileDef = (ContentTileDefinition)_tileDefManager[tile.Tile.TypeId];
 
                 if (tileDef.ID == TilePrototypeId)
                 {
                     continue;
                 }
 
-                grid.SetTile(childTransform.Coordinates, underplatingTile);
+                mapSystem.SetTile(gridId.Value, grid, childTransform.Coordinates, underplatingTile);
                 changed++;
             }
 
