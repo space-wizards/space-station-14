@@ -24,10 +24,17 @@ namespace Content.Server.StationEvents
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly EventManagerSystem _event = default!;
 
+        protected override void Started(EntityUid uid, BasicStationEventSchedulerComponent component, GameRuleComponent gameRule,
+            GameRuleStartedEvent args)
+        {
+            // A little starting variance so schedulers dont all proc at once.
+            component.TimeUntilNextEvent = RobustRandom.Next(component.MinimumTimeUntilFirstEvent, component.MinimumTimeUntilFirstEvent + 120);
+        }
+
         protected override void Ended(EntityUid uid, BasicStationEventSchedulerComponent component, GameRuleComponent gameRule,
             GameRuleEndedEvent args)
         {
-            component.TimeUntilNextEvent = BasicStationEventSchedulerComponent.MinimumTimeUntilFirstEvent;
+            component.TimeUntilNextEvent = component.MinimumTimeUntilFirstEvent;
         }
 
 
@@ -69,7 +76,6 @@ namespace Content.Server.StationEvents
     {
         private EventManagerSystem? _stationEvent;
         private EntityTableSystem? _entityTable;
-        private BasicStationEventSchedulerSystem? _basicScheduler;
         private IComponentFactory? _compFac;
         private IRobustRandom? _random;
 
@@ -123,7 +129,7 @@ namespace Content.Server.StationEvents
 
                     if (!_stationEvent.TryBuildLimitedEvents(basicScheduler.ScheduledGameRules, out var selectedEvents))
                     {
-                        continue; // or whatever. return?? maybe should break.
+                        break; // shits fucked yo.
                     }
                     var available = _stationEvent.AvailableEvents(false, playerCount, curTime);
                     var plausibleEvents = new Dictionary<EntityPrototype, StationEventComponent>(available.Intersect(selectedEvents)); // C# makes me sad

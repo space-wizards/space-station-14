@@ -10,7 +10,8 @@ public sealed partial class BasicStationEventSchedulerComponent : Component
     /// <summary>
     /// How long the the scheduler waits to begin starting rules.
     /// </summary>
-    public const float MinimumTimeUntilFirstEvent = 30;//300; // Yell at me if I dont change this back.
+    [DataField]
+    public int MinimumTimeUntilFirstEvent = 30;//200; // Yell at me if I dont change this back.
 
     /// <summary>
     /// The minimum and maximum time between rule starts in seconds.
@@ -19,11 +20,10 @@ public sealed partial class BasicStationEventSchedulerComponent : Component
     public MinMax MinMaxEventTiming = new(3 * 60, 10 * 60);
 
     /// <summary>
-    /// How long until the next check for an event runs
+    /// How long until the next check for an event runs, is initially set based on MinimumTimeUntilFirstEvent & MinMaxEventTiming.
     /// </summary>
-    /// Default value is how long until first event is allowed
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float TimeUntilNextEvent = MinimumTimeUntilFirstEvent;
+    [DataField]
+    public float TimeUntilNextEvent;
 
     /// <summary>
     /// The gamerules that the scheduler can choose from

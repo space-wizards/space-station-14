@@ -9,6 +9,22 @@
     - RampingStationEventScheduler
     - GameRuleMeteorScheduler
     - SpaceTrafficControlEventScheduler
+    - SpaceTrafficControlFriendlyEventScheduler
+    - BasicRoundstartVariation
+
+- type: gamePreset
+  id: KesslerSyndrome
+  alias:
+    - kessler
+    - junk
+    - meteorhell
+  name: kessler-syndrome-title
+  showInVote: false # secret
+  description: kessler-syndrome-description
+  rules:
+    - RampingStationEventScheduler
+    - KesslerSyndromeScheduler
+    - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
 - type: gamePreset
@@ -22,7 +38,26 @@
     - Revolutionary
     - Zombie
     - RampingStationEventScheduler
+    - KesslerSyndromeScheduler
+    - SpaceTrafficControlEventScheduler
+    - BasicRoundstartVariation
+
+- type: gamePreset
+  id: AllerAtOnce
+  name: aller-at-once-title
+  description: all-at-once-description
+  showInVote: false #Please god dont do this
+  rules:
+    - Nukeops
+    - Traitor
+    - Revolutionary
+    - Zombie
+    - BasicStationEventScheduler
+    - RampingStationEventScheduler
+    - MeteorSwarmMildScheduler
     - GameRuleMeteorScheduler
+    - KesslerSyndromeScheduler
+    - SpaceTrafficControlFriendlyEventScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
@@ -174,5 +209,21 @@
   - Zombie
   - BasicStationEventScheduler
   - GameRuleMeteorScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
+
+- type: gamePreset
+  id: Zombieteors
+  alias:
+  - zombieteors
+  - zombombies
+  - meteombies
+  name: zombieteors-title
+  description: zombieteors-description
+  showInVote: false
+  rules:
+  - Zombie
+  - BasicStationEventScheduler
+  - KesslerSyndromeScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
