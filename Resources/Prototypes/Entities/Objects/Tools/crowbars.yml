@@ -164,6 +164,7 @@
     - state: icon
     - state: cover-icon-engineering
   - type: Item
+    size: Small # for pockets
     storedSprite:
       state: yellow-storage-folded
       sprite: Objects/Tools/crowbar.rsi
