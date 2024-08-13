@@ -129,7 +129,7 @@ namespace Content.Server.StationEvents
 
                     if (!_stationEvent.TryBuildLimitedEvents(basicScheduler.ScheduledGameRules, out var selectedEvents))
                     {
-                        break; // shits fucked yo.
+                        continue; // doesnt break because maybe the time is preventing events being available.
                     }
                     var available = _stationEvent.AvailableEvents(false, playerCount, curTime);
                     var plausibleEvents = new Dictionary<EntityPrototype, StationEventComponent>(available.Intersect(selectedEvents)); // C# makes me sad

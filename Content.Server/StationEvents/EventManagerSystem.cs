@@ -55,14 +55,6 @@ public sealed class EventManagerSystem : EntitySystem
     /// </summary>
     public void RunRandomEvent(EntityTableSelector limitedEventsTable)
     {
-        var availableEvents = AvailableEvents(); // handles the player counts and individual event restrictions
-
-        //if (availableEvents.Count == 0) // Yell at me if I dont uncomment this.
-        //{
-        //    Log.Warning("No events were available to run!");
-        //    return;
-        //}
-
         if (!TryBuildLimitedEvents(limitedEventsTable, out var limitedEvents))
         {
             Log.Warning("Provided event table could not build dict!");
@@ -92,6 +84,14 @@ public sealed class EventManagerSystem : EntitySystem
     {
         limitedEvents = new Dictionary<EntityPrototype, StationEventComponent>();
 
+        var availableEvents = AvailableEvents(); // handles the player counts and individual event restrictions
+
+        if (availableEvents.Count == 0)
+        {
+            Log.Warning("No events were available to run!");
+            return false;
+        }
+
         var selectedEvents = _entityTable.GetSpawns(limitedEventsTable);
 
         if (selectedEvents.Any() != true) // This is here so if you fuck up the table it wont die.
@@ -114,8 +114,8 @@ public sealed class EventManagerSystem : EntitySystem
             if (!eventproto.TryGetComponent<StationEventComponent>(out var stationEvent, EntityManager.ComponentFactory))
                 continue;
 
-            //if (!availableEvents.ContainsKey(eventproto)) // Yell at me if I dont uncomment this.
-            //    continue;
+            if (!availableEvents.ContainsKey(eventproto))
+                continue;
 
             limitedEvents.Add(eventproto, stationEvent);
         }
