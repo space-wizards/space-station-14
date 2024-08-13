@@ -3,7 +3,7 @@
   parent: BaseStructure
   id: BaseGatherableFlora
   abstract: true
-  description: Alien flora. You could probably pick this & do something with it.
+  description: Alien flora. You could probably harvest something from this.
   components:
     - type: Transform
       anchored: true
@@ -16,12 +16,6 @@
             !type:PhysShapeCircle
             radius: 0.2
     - type: InteractionOutline
-#    - type: Gatherable
-#      toolWhitelist:
-#        components:
-#          - Hands
-#      loot:
-#        All: SpaceshroomGather
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Wood

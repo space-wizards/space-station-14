@@ -19,6 +19,7 @@
       energy: 0.5
       softness: 0.5
       color: "#AFDDAF"
+      castShadows: false
     - type: Construction
       graph: GlowshroomStructure
       node: plantedGlowshrooms

@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseGatherableFlora
   id: Spaceshroom
-  name: mystery cap mushrooms #renamed to avoid confusion with glowshrooms
+  name: strange mushrooms #renamed to avoid confusion with glowshrooms
   suffix: Structure
   description: A cluster of wild mushrooms that likes to grow in dark, moist environments.
   components:
@@ -25,7 +25,7 @@
 - type: entity
   parent: FoodProduceBase
   id: FoodSpaceshroom
-  name: mystery cap
+  name: strange mushroom
   description: A wild mushroom. There's no telling what effect it could have...
   components:
   - type: Produce
@@ -81,7 +81,7 @@
 
 # Cooked Object
 - type: entity
-  name: cooked mystery cap
+  name: cooked strange mushroom
   parent: FoodProduceBase
   id: FoodSpaceshroomCooked
   description: A wild mushroom that has been cooked through. It seems the heat has removed its chemical effects.
