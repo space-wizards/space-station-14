@@ -16,6 +16,8 @@ namespace Content.Client.IconSmoothing
     [UsedImplicitly]
     public sealed partial class IconSmoothSystem : EntitySystem
     {
+        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+
         private readonly Queue<EntityUid> _dirtyEntities = new();
         private readonly Queue<EntityUid> _anchorChangedEntities = new();
 
@@ -46,7 +48,7 @@ namespace Content.Client.IconSmoothing
             if (xform.Anchored)
             {
                 component.LastPosition = TryComp<MapGridComponent>(xform.GridUid, out var grid)
-                    ? (xform.GridUid.Value, grid.TileIndicesFor(xform.Coordinates))
+                    ? (xform.GridUid.Value, _mapSystem.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates))
                     : (null, new Vector2i(0, 0));
 
                 DirtyNeighbours(uid, component);
@@ -153,7 +155,7 @@ namespace Content.Client.IconSmoothing
 
             if (transform.Anchored && TryComp<MapGridComponent>(transform.GridUid, out var grid))
             {
-                pos = grid.CoordinatesToTile(transform.Coordinates);
+                pos = _mapSystem.CoordinatesToTile(transform.GridUid.Value, grid, transform.Coordinates);
             }
             else
             {
@@ -225,15 +227,16 @@ namespace Content.Client.IconSmoothing
 
                     if (TryComp(xform.GridUid, out grid))
                     {
-                        var pos = grid.TileIndicesFor(xform.Coordinates);
+                        var gridUid = xform.GridUid.Value;
+                        var pos = _mapSystem.TileIndicesFor(gridUid, grid, xform.Coordinates);
 
-                        if (MatchingEntity(smooth, grid.GetAnchoredEntitiesEnumerator(pos.Offset(Direction.North)), smoothQuery))
+                        if (MatchingEntity(smooth, _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, pos.Offset(Direction.North)), smoothQuery))
                             directions |= DirectionFlag.North;
-                        if (MatchingEntity(smooth, grid.GetAnchoredEntitiesEnumerator(pos.Offset(Direction.South)), smoothQuery))
+                        if (MatchingEntity(smooth, _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, pos.Offset(Direction.South)), smoothQuery))
                             directions |= DirectionFlag.South;
-                        if (MatchingEntity(smooth, grid.GetAnchoredEntitiesEnumerator(pos.Offset(Direction.East)), smoothQuery))
+                        if (MatchingEntity(smooth, _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, pos.Offset(Direction.East)), smoothQuery))
                             directions |= DirectionFlag.East;
-                        if (MatchingEntity(smooth, grid.GetAnchoredEntitiesEnumerator(pos.Offset(Direction.West)), smoothQuery))
+                        if (MatchingEntity(smooth, _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, pos.Offset(Direction.West)), smoothQuery))
                             directions |= DirectionFlag.West;
                     }
 
@@ -322,7 +325,7 @@ namespace Content.Client.IconSmoothing
 
             if (grid == null)
             {
-                sprite.Comp.LayerSetState(0, $"{smooth.StateBase}{(int) dirs}");
+                sprite.Comp.LayerSetState(0, $"{smooth.StateBase}{(int)dirs}");
                 return;
             }
 
@@ -336,7 +339,7 @@ namespace Content.Client.IconSmoothing
             if (MatchingEntity(smooth, grid.GetAnchoredEntitiesEnumerator(pos.Offset(Direction.West)), smoothQuery))
                 dirs |= CardinalConnectDirs.West;
 
-            sprite.Comp.LayerSetState(0, $"{smooth.StateBase}{(int) dirs}");
+            sprite.Comp.LayerSetState(0, $"{smooth.StateBase}{(int)dirs}");
 
             var directions = DirectionFlag.None;
 
@@ -379,10 +382,10 @@ namespace Content.Client.IconSmoothing
             // At the very least each event currently only queues a sprite for updating.
             // Oh god sprite component is a mess.
             var sprite = spriteEnt.Comp;
-            sprite.LayerSetState(CornerLayers.NE, $"{smooth.StateBase}{(int) cornerNE}");
-            sprite.LayerSetState(CornerLayers.SE, $"{smooth.StateBase}{(int) cornerSE}");
-            sprite.LayerSetState(CornerLayers.SW, $"{smooth.StateBase}{(int) cornerSW}");
-            sprite.LayerSetState(CornerLayers.NW, $"{smooth.StateBase}{(int) cornerNW}");
+            sprite.LayerSetState(CornerLayers.NE, $"{smooth.StateBase}{(int)cornerNE}");
+            sprite.LayerSetState(CornerLayers.SE, $"{smooth.StateBase}{(int)cornerSE}");
+            sprite.LayerSetState(CornerLayers.SW, $"{smooth.StateBase}{(int)cornerSW}");
+            sprite.LayerSetState(CornerLayers.NW, $"{smooth.StateBase}{(int)cornerNW}");
 
             var directions = DirectionFlag.None;
 
