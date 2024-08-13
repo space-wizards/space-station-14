@@ -63,7 +63,7 @@
     stealGroup: ClothingShoesBootsMagAdv
 
 - type: entity
-  parent: [ClothingShoesBootsMagBase, BaseScienceContraband]
+  parent: [ClothingShoesBootsMagBase]
   id: ClothingShoesBootsMagSci
   components:
   - type: Sprite
