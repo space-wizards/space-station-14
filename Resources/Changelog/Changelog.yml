@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Attempting to dual wield something will now automatically drop the item
-      in your other hand.
-    type: Tweak
-  id: 6604
-  time: '2024-05-19T01:35:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27975
 - author: SHOTbyGUN
   changes:
   - message: White cane recipe for MedFab
@@ -3799,3 +3791,11 @@
   id: 7103
   time: '2024-08-13T13:36:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30540
+- author: Cojoke-dot
+  changes:
+  - message: Borg's names are now displayed when they make an announcement on the
+      Communications Console.
+    type: Tweak
+  id: 7104
+  time: '2024-08-13T18:31:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30107
