@@ -1,22 +1,20 @@
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
-using Content.Server.StationEvents.Events;
-using Content.Shared.CCVar;
 using Content.Shared.GameTicking.Components;
-using Robust.Shared.Configuration;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents;
 
 public sealed class RampingStationEventSchedulerSystem : GameRuleSystem<RampingStationEventSchedulerComponent>
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EventManagerSystem _event = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
 
+    /// <summary>
+    /// Returns the ChaosModifier which increases as round time increases to a point.
+    /// </summary>
     public float GetChaosModifier(EntityUid uid, RampingStationEventSchedulerComponent component)
     {
         var roundTime = (float) _gameTicker.RoundDuration().TotalSeconds;
@@ -64,6 +62,9 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem<RampingS
         }
     }
 
+    /// <summary>
+    /// Sets the timing of the next event addition.
+    /// </summary>
     private void PickNextEventTime(EntityUid uid, RampingStationEventSchedulerComponent component)
     {
         var mod = GetChaosModifier(uid, component);

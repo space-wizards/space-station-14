@@ -158,8 +158,8 @@ namespace Content.Server.StationEvents
                 yield break;
 
             var totalWeight = events.Sum(x => x.Value.Weight); // Well this shit definitely isnt correct now, and I see no way to make it correct.
-
-            foreach (var (proto, comp) in events)
+                                                               // Its probably *fine* but it wont be accurate if the EntityTableSelector does any subsetting.
+            foreach (var (proto, comp) in events)              // The only solution I see is to do a simulation, and we already have that, so...!
             {
                 yield return (proto.ID, comp.Weight / totalWeight);
             }
@@ -179,7 +179,7 @@ namespace Content.Server.StationEvents
 
             var events = untimedEvents.Where(pair => pair.Value.EarliestStart <= time).ToList();
 
-            var totalWeight = events.Sum(x => x.Value.Weight);
+            var totalWeight = events.Sum(x => x.Value.Weight); // same subsetting issue as lsprob.
 
             foreach (var (proto, comp) in events)
             {
@@ -199,7 +199,7 @@ namespace Content.Server.StationEvents
             if (!_stationEvent.TryBuildLimitedEvents(basicScheduler.ScheduledGameRules, out var events))
                 return 0f;
 
-            var totalWeight = events.Sum(x => x.Value.Weight);
+            var totalWeight = events.Sum(x => x.Value.Weight); // same subsetting issue as lsprob.
             var weight = 0f;
             if (events.TryFirstOrNull(p => p.Key.ID == eventId, out var pair))
             {
