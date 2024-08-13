@@ -32,6 +32,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        canReact: false # Dont want cause reactions inside skewers after merging ingredients
         maxVol: 0
   - type: FoodSequenceStartPoint
     key: skewer

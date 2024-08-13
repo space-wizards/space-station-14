@@ -72,6 +72,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        canReact: false # Dont want cause reactions inside burgers after merging ingredients
         maxVol: 5
         reagents:
         - ReagentId: Nutriment
