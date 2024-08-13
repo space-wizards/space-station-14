@@ -31,7 +31,7 @@ figurines-musician-2 = Never gonna let you down!
 
 figurines-captain-1 = Glory to NT!
 figurines-captain-2 = How did I get hired? Yes.
-figurines-captain-3 = The nuclear disk is secure. where? Somewhere.
+figurines-captain-3 = The nuclear disk is secure. Where? Somewhere.
 
 figurines-hos-1 = Space law? What?
 figurines-hos-2 = Shoot the clown.
