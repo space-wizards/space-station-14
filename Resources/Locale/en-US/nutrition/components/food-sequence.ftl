@@ -63,6 +63,7 @@ food-sequence-content-rainbow-cannabis = rainbow cannabis
 food-sequence-content-tobacco = tobacco
 food-sequence-content-hamster = hamster
 food-sequence-content-suppermatter = suppermatter
+food-sequence-content-capfruit = capfruit
 
 #BURGERS
 food-sequence-burger-gen = {$content}burger
@@ -88,6 +89,9 @@ food-sequence-burger-content-ambrosia = ambro
 food-sequence-burger-content-galaxy = galaxy
 food-sequence-burger-content-glasstle = glass
 food-sequence-burger-content-gatfruit = gat
+food-sequence-burger-content-capfruit = cap
+food-sequence-burger-content-rice = rice
+food-sequence-burger-content-soy = soy
 food-sequence-burger-content-koibean = koi
 food-sequence-burger-content-watermelon = water
 food-sequence-burger-content-cannabis = funny

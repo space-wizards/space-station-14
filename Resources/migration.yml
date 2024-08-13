@@ -130,7 +130,6 @@ DrinkGoldschlagerGlass: DrinkGildlagerGlass
 
 # 2024-01-07
 ClosetBase: ClosetSteelBase
-MonkeyCubeBox: VariantCubeBox
 
 # 2024-01-08
 SalvagePartsT4Spawner: SalvageLootSpawner
@@ -354,7 +353,6 @@ ClothingOuterCoatInspector: ClothingOuterCoatJensen
 
 # 2024-06-23
 FloorTileItemReinforced: PartRodMetal1
-
 
 #2024-06-25
 BookChefGaming: BookHowToCookForFortySpaceman
