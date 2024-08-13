@@ -9,11 +9,11 @@
     snap:
     - Wallmount
   components:
-  - type: Sprite
   - type: Clickable
   - type: Tag
     tags:
       - Structure
+  - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Storage/Shelfs/wood.rsi
     state: base
