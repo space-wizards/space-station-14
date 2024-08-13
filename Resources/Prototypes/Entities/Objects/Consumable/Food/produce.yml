@@ -1947,7 +1947,7 @@
     - Fruit # It's in the name
   - type: FoodSequenceElement
     sprite:
-      sprite: Objects/Specific/Hydroponics/soybeans.rsi
+      sprite: Objects/Specific/Hydroponics/gatfruit.rsi
       state: produce
     entries:
       burger:
@@ -1984,12 +1984,14 @@
     tags:
     - Fruit
   - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Specific/Hydroponics/capfruit.rsi
+      state: produce
     entries:
       burger:
         name: food-sequence-burger-content-capfruit
-        sprite:
-          sprite: Objects/Specific/Hydroponics/capfruit.rsi
-          state: produce
+      taco:
+        name: food-sequence-content-capfruit
 
 - type: entity
   name: capfruit
