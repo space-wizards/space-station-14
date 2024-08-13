@@ -3,6 +3,7 @@ using Content.Server.Stack;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Repairable;
@@ -23,6 +24,7 @@ namespace Content.Server.Repairable
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly TagSystem _tags = default!;
         [Dependency] private readonly StackSystem _stacks = default!;
+        [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
         public override void Initialize()
         {
@@ -67,9 +69,10 @@ namespace Content.Server.Repairable
             if (args.Handled)
                 return;
 
-            // Only try repair the target if it is damaged
-            if (!TryComp<DamageableComponent>(uid, out var damageable) || damageable.TotalDamage == 0)
+            if (!IsRepairable(uid, component.Damage))
+            {
                 return;
+            }
 
             float delay = component.DoAfterDelay;
 
@@ -91,6 +94,8 @@ namespace Content.Server.Repairable
             if (args.Cancelled)
                 return;
 
+            var usedRepairSpecifier = args.UsedRepairSpecifier;
+
             if (!EntityManager.TryGetComponent(uid, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
                 return;
 
@@ -105,20 +110,20 @@ namespace Content.Server.Repairable
 
             if (TryComp(args.Used, out StackComponent? stackComp))
             {
-                if (!_stacks.Use(usedMaterial, component.MaterialCost, stackComp))
+                if (!_stacks.Use(usedMaterial, usedRepairSpecifier.MaterialCost, stackComp))
                 {
                     return;
                 }
-                actualMaterialCost = component.MaterialCost;
+                actualMaterialCost = usedRepairSpecifier.MaterialCost;
             }
             else
             {
                 _entities.DeleteEntity(usedMaterial);
             }
 
-            if (component.Damage != null)
+            if (usedRepairSpecifier.Damage != null)
             {
-                var damageChanged = _damageableSystem.TryChangeDamage(uid, component.Damage, true, false, origin: args.User);
+                var damageChanged = _damageableSystem.TryChangeDamage(uid, usedRepairSpecifier.Damage, true, false, origin: args.User);
                 _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} by {damageChanged?.GetTotal()} using {actualMaterialCost} {usedMaterialName}");
             }
 
@@ -141,7 +146,7 @@ namespace Content.Server.Repairable
             // Cancel if there is the stack is too small 
             if (args.Event.Used is EntityUid usedMaterial &&
             TryComp(args.Event.Used!, out StackComponent? stackComp) &&
-            _stacks.GetCount(usedMaterial, stackComp) < component.MaterialCost)
+            _stacks.GetCount(usedMaterial, stackComp) < args.Event.UsedRepairSpecifier.MaterialCost)
             {
                 args.Cancel();
             }
@@ -152,38 +157,50 @@ namespace Content.Server.Repairable
             if (args.Handled)
                 return;
 
+            // Only try repair if the used entity has the right tag
+            RepairMaterialSpecifier? usedRepairSpecifier = null;
+            foreach (var (repairType, repairSpecifier) in component.RepairTypes)
+            {
+                if (_tags.HasTag(args.Used, repairType))
+                {
+                    usedRepairSpecifier = repairSpecifier;
+                    break;
+                }
+            }
+
+            if (usedRepairSpecifier is null)
+            {
+                return;
+            }
+
+            if (!IsRepairable(uid, usedRepairSpecifier.Damage))
+            {
+                return;
+            }
+
             // Do not attempt to repair with a stacked entity if the stack does not have enough materialss
             if (TryComp(args.Used, out StackComponent? stackComp) &&
-               _stacks.GetCount(args.Used, stackComp) < component.MaterialCost)
+               _stacks.GetCount(args.Used, stackComp) < usedRepairSpecifier.MaterialCost)
             {
                 return;
             }
 
-            // Only try repair if the used entity has the right tag
-            if (!_tags.HasTag(args.Used, component.RepairType))
-            {
-                return;
-            }
-
-            // Only try repair the target if it is damaged
-            if (!TryComp<DamageableComponent>(uid, out var damageable) || damageable.TotalDamage == 0)
-                return;
-
-            float delay = component.DoAfterDelay;
+            float delay = usedRepairSpecifier.DoAfterDelay;
 
             // Add a penalty to how long it takes if the user is repairing itself
             if (args.User == args.Target)
             {
-                if (!component.AllowSelfRepair)
+                if (!usedRepairSpecifier.AllowSelfRepair)
                     return;
 
-                delay *= component.SelfRepairPenalty;
+                delay *= usedRepairSpecifier.SelfRepairPenalty;
             }
 
-            var ev = new RepairByReplacementFinishedEvent();
+            var ev = new RepairByReplacementFinishedEvent(usedRepairSpecifier);
             var doAfterArgs = new DoAfterArgs(_entities, args.User, delay, ev, uid, uid, args.Used)
             {
-                BreakOnHandChange = true
+                BreakOnHandChange = true,
+                NeedHand = true
             };
 
             if (stackComp is not null)
@@ -192,6 +209,39 @@ namespace Content.Server.Repairable
             }
 
             args.Handled = _doAfter.TryStartDoAfter(doAfterArgs);
+        }
+
+        /// <summary>
+        /// Checks if the entity can be repaired by the damageRepair.
+        /// damageRepair must have negative values to repair.
+        /// If damageRepair does not repair the damage of the entity, returns false.
+        /// If damageRepair is null, it is assumed that the repair mechanism will heal ALL damage
+        /// </summary>
+        private bool IsRepairable(EntityUid uid, DamageSpecifier? damageRepair)
+        {
+            // Only try repair the target if it is damaged
+            if (!TryComp<DamageableComponent>(uid, out var damageable) || damageable.TotalDamage == 0)
+                return false;
+
+            if (damageRepair is null)
+            {
+                return true;
+            }
+
+            // Only try repair the target if it's damage can be repaired by this mechanism
+            var repairByGroup = damageRepair.DamageDict;
+
+            foreach (var (damageType, damageValue) in damageable.Damage.DamageDict)
+            {
+                if (!repairByGroup.TryGetValue(damageType, out FixedPoint2 val) ||
+                    val >= 0)
+                {
+                    continue;
+                }
+                return true;
+            }
+
+            return false;
         }
     }
 }
