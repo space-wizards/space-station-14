@@ -126,7 +126,7 @@
     groups:
       Acidic: [ Touch ]
     reactions:
-    - reagents: [ Dylovene, Diphenhydramine, Arithrazine, Bicaridine, Dermaline, Dexalin, DexalinPlus ] # adding all medical chems seems. Excessive, and also long. Ive just added the main ones for now
+    - reagents: [ Dylovene, Diphenhydramine, Arithrazine, Bicaridine, Dermaline, Dexalin, DexalinPlus, Tricordrazine, Leporazine, Bruizine, Lacerinol, Puncturase, Pyrazine, Insuzine, Kelotane, Hyronalin, Inaprovaline, Epinephrine ]
       methods: [ Touch ]
       effects:
       - !type:ActivateArtifact
@@ -140,7 +140,7 @@
     groups:
       Acidic: [ Touch ]
     reactions:
-    - reagents: [ Vinegar, PolytrinicAcid, FerrochromicAcid, FluorosulfuricAcid, SulfuricAcid, NorepinephricAcid, TranexamicAcid ] ]
+    - reagents: [ Vinegar, PolytrinicAcid, FerrochromicAcid, FluorosulfuricAcid, SulfuricAcid, NorepinephricAcid, TranexamicAcid ]
       methods: [ Touch ]
       effects:
       - !type:ActivateArtifact
