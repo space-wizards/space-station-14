@@ -1,5 +1,4 @@
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Content.Shared.Clothing.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
 
 namespace Content.Server.Explosion.Components;
@@ -8,7 +7,7 @@ namespace Content.Server.Explosion.Components;
 /// A component that electrocutes an entity having this component when a trigger is triggered.
 /// </summary>
 [RegisterComponent, AutoGenerateComponentPause]
-[Access(typeof(SelfUnremovableClothingSystem), typeof(TriggerSystem))]
+[Access(typeof(TriggerSystem))]
 public sealed partial class ShockOnTriggerComponent : Component
 {
     /// <summary>

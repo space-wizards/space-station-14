@@ -29,6 +29,8 @@
   - type: GuideHelp
     guides:
       - Security
+  - type: StealTarget
+    stealGroup: ClothingNeckShockCollar
   - type: Tag
     tags:
     - WhitelistChameleon
