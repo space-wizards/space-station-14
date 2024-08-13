@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingScarfBase
   id: ClothingNeckScarfStripedRed
   name: striped red scarf
   description: A stylish striped red scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
@@ -10,7 +10,7 @@
     sprite: Clothing/Neck/Scarfs/red.rsi
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingScarfBase
   id: ClothingNeckScarfStripedBlue
   name: striped blue scarf
   description: A stylish striped blue scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
@@ -21,7 +21,7 @@
     sprite: Clothing/Neck/Scarfs/blue.rsi
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingScarfBase
   id: ClothingNeckScarfStripedGreen
   name: striped green scarf
   description: A stylish striped green scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
@@ -32,7 +32,7 @@
     sprite: Clothing/Neck/Scarfs/green.rsi
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingScarfBase
   id: ClothingNeckScarfStripedBlack
   name: striped black scarf
   description: A stylish striped black scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
@@ -43,7 +43,7 @@
       sprite: Clothing/Neck/Scarfs/black.rsi
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingScarfBase
   id: ClothingNeckScarfStripedBrown
   name: striped brown scarf
   description: A stylish striped brown scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
@@ -54,7 +54,7 @@
       sprite: Clothing/Neck/Scarfs/brown.rsi
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingScarfBase
   id: ClothingNeckScarfStripedLightBlue
   name: striped light blue scarf
   description: A stylish striped light blue scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
@@ -65,7 +65,7 @@
       sprite: Clothing/Neck/Scarfs/lightblue.rsi
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingScarfBase
   id: ClothingNeckScarfStripedOrange
   name: striped orange scarf
   description: A stylish striped orange scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
@@ -76,7 +76,7 @@
       sprite: Clothing/Neck/Scarfs/orange.rsi
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingScarfBase
   id: ClothingNeckScarfStripedPurple
   name: striped purple scarf
   description: A stylish striped purple scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
@@ -87,7 +87,7 @@
       sprite: Clothing/Neck/Scarfs/purple.rsi
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ ClothingScarfBase, BaseSyndicateContraband ]
   id: ClothingNeckScarfStripedSyndieGreen
   name: striped syndicate green scarf
   description: A stylish striped syndicate green scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
@@ -98,7 +98,7 @@
       sprite: Clothing/Neck/Scarfs/syndiegreen.rsi
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ ClothingScarfBase, BaseSyndicateContraband ]
   id: ClothingNeckScarfStripedSyndieRed
   name: striped syndicate red scarf
   description: A stylish striped syndicate red scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
@@ -109,10 +109,10 @@
       sprite: Clothing/Neck/Scarfs/syndiered.rsi
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingScarfBase
   id: ClothingNeckScarfStripedCentcom
-  name: striped CentCom scarf
-  description: A stylish striped centcom colored scarf. The perfect winter accessory for those with a keen fashion sense, and those who need to do paperwork in the cold.
+  name: striped CentComm scarf
+  description: A stylish striped centcomm colored scarf. The perfect winter accessory for those with a keen fashion sense, and those who need to do paperwork in the cold.
   components:
     - type: Sprite
       sprite: Clothing/Neck/Scarfs/centcom.rsi
@@ -120,7 +120,7 @@
       sprite: Clothing/Neck/Scarfs/centcom.rsi
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: ClothingScarfBase
   id: ClothingNeckScarfStripedZebra
   name: zebra scarf
   description: A striped scarf, a mandatory accessory for artists.
