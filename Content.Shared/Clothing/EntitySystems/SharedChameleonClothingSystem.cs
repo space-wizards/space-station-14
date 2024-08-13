@@ -40,6 +40,13 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<ChameleonClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ChameleonClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
+
+        SubscribeLocalEvent<ChameleonClothingComponent, PrototypesReloadedEventArgs>(OnPrototypeReload);
+        PrepareAllVariants();
+    }
+
+    private void OnPrototypeReload(EntityUid uid, ChameleonClothingComponent component, PrototypesReloadedEventArgs args)
+    {
         PrepareAllVariants();
     }
 

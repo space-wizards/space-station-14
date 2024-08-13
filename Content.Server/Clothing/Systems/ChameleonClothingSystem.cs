@@ -63,9 +63,9 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         if (component.EmpAffected)
         {
             if (component.EmpContinious)
-                component.NextEmpChange = _timing.CurTime + TimeSpan.FromMilliseconds(MathF.Floor(1000 / component.EmpChangeIntensity));
+                component.NextEmpChange = _timing.CurTime + TimeSpan.FromSeconds(1f / component.EmpChangeIntensity);
 
-            var pick = GetRandomValidPrototype(uid, component.Slot);
+            var pick = GetRandomValidPrototype(component.Slot);
             SetSelectedPrototype(uid, pick, component: component);
 
             args.Affected = true;
@@ -118,13 +118,9 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         Dirty(uid, component);
     }
 
-    public string GetRandomValidPrototype(EntityUid uid, SlotFlags slot)
+    public string GetRandomValidPrototype(SlotFlags slot)
     {
-        var variants = GetValidTargets(slot);
-        var clothPickIndex = _random.Next(variants.Count());
-        var pick = variants.ToList()[clothPickIndex];
-
-        return pick;
+        return _random.Pick(GetValidTargets(slot).ToList());
     }
 
     public override void Update(float frameTime)
@@ -134,16 +130,16 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         var query = EntityQueryEnumerator<EmpDisabledComponent, ChameleonClothingComponent>();
         while (query.MoveNext(out var uid, out var emp, out var chameleon))
         {
-            if (_timing.CurTime < emp.DisabledUntil && chameleon.EmpContinious)
+            if (chameleon.EmpContinious)
             {
                 if (_timing.CurTime < chameleon.NextEmpChange)
                     continue;
 
                 // randomly pick cloth element from available an apply it
-                var pick = GetRandomValidPrototype(uid, chameleon.Slot);
+                var pick = GetRandomValidPrototype(chameleon.Slot);
                 SetSelectedPrototype(uid, pick, component: chameleon);
 
-                chameleon.NextEmpChange += TimeSpan.FromMilliseconds(MathF.Floor(1000 / chameleon.EmpChangeIntensity));
+                chameleon.NextEmpChange += TimeSpan.FromSeconds(1f / chameleon.EmpChangeIntensity);
             }
         }
     }
