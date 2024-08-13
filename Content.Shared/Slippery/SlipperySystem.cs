@@ -37,12 +37,12 @@ public sealed class SlipperySystem : EntitySystem
         SubscribeLocalEvent<SlipperyComponent, StepTriggerAttemptEvent>(HandleAttemptCollide);
         SubscribeLocalEvent<SlipperyComponent, StepTriggeredOffEvent>(HandleStepTrigger);
         SubscribeLocalEvent<NoSlipComponent, SlipAttemptEvent>(OnNoSlipAttempt);
-        SubscribeLocalEvent<SlowedOverSlipComponent, SlipAttemptEvent>(OnSlowedOverSlipAttempt);
+        SubscribeLocalEvent<SlowedOverSlipperyComponent, SlipAttemptEvent>(OnSlowedOverSlipAttempt);
         SubscribeLocalEvent<ThrownItemComponent, SlipCausingAttemptEvent>(OnThrownSlipAttempt);
         // as long as slip-resistant mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
         SubscribeLocalEvent<NoSlipComponent, InventoryRelayedEvent<SlipAttemptEvent>>((e, c, ev) => OnNoSlipAttempt(e, c, ev.Args));
-        SubscribeLocalEvent<SlowedOverSlipComponent, InventoryRelayedEvent<SlipAttemptEvent>>((e, c, ev) => OnSlowedOverSlipAttempt(e, c, ev.Args));
-        SubscribeLocalEvent<SlowedOverSlipComponent, InventoryRelayedEvent<GetSlowedOverSlipperyModifierEvent>>(OnGetSlowedOverSlipperyModifier);
+        SubscribeLocalEvent<SlowedOverSlipperyComponent, InventoryRelayedEvent<SlipAttemptEvent>>((e, c, ev) => OnSlowedOverSlipAttempt(e, c, ev.Args));
+        SubscribeLocalEvent<SlowedOverSlipperyComponent, InventoryRelayedEvent<GetSlowedOverSlipperyModifierEvent>>(OnGetSlowedOverSlipperyModifier);
         SubscribeLocalEvent<SlipperyComponent, EndCollideEvent>(OnEntityExit);
     }
 
@@ -64,7 +64,7 @@ public sealed class SlipperySystem : EntitySystem
         args.NoSlip = true;
     }
 
-    private void OnSlowedOverSlipAttempt(EntityUid uid, SlowedOverSlipComponent component, SlipAttemptEvent args)
+    private void OnSlowedOverSlipAttempt(EntityUid uid, SlowedOverSlipperyComponent component, SlipAttemptEvent args)
     {
         args.SlowOverSlippery = true;
     }
@@ -74,7 +74,7 @@ public sealed class SlipperySystem : EntitySystem
         args.Cancelled = true;
     }
 
-    private void OnGetSlowedOverSlipperyModifier(EntityUid uid, SlowedOverSlipComponent comp, ref InventoryRelayedEvent<GetSlowedOverSlipperyModifierEvent> args)
+    private void OnGetSlowedOverSlipperyModifier(EntityUid uid, SlowedOverSlipperyComponent comp, ref InventoryRelayedEvent<GetSlowedOverSlipperyModifierEvent> args)
     {
         args.Args.SlowdownModifier *= comp.SlowdownModifier;
     }

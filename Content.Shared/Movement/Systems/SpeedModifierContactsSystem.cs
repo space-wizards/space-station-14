@@ -106,6 +106,7 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
                 speedModified = true;
             }
 
+            // SpeedModifierContactsComponent takes priority over SlowedOverSlipperyComponent, effectively overriding the slippery slow.
             if (TryComp<SlipperyComponent>(ent, out var slipperyComponent) && speedModified == false)
             {
                 var evSlippery = new GetSlowedOverSlipperyModifierEvent();
@@ -131,10 +132,8 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
             walkSpeed /= entries;
             sprintSpeed /= entries;
 
-            var evMax = new GetSpeedModifierContactMaxSlowEvent();
+            var evMax = new GetSpeedModifierContactCapEvent();
             RaiseLocalEvent(uid, ref evMax);
-
-            Logger.Debug(sprintSpeed + " " + evMax.MaxSprintSlowdown);
 
             walkSpeed = MathF.Max(walkSpeed, evMax.MaxWalkSlowdown);
             sprintSpeed = MathF.Max(sprintSpeed, evMax.MaxSprintSlowdown);

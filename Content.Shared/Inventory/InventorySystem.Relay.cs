@@ -35,7 +35,7 @@ public partial class InventorySystem
         // by-ref events
         SubscribeLocalEvent<InventoryComponent, GetExplosionResistanceEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, IsWeightlessEvent>(RefRelayInventoryEvent);
-        SubscribeLocalEvent<InventoryComponent, GetSpeedModifierContactMaxSlowEvent>(RefRelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, GetSpeedModifierContactCapEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetSlowedOverSlipperyModifierEvent>(RefRelayInventoryEvent);
 
         // Eye/vision events

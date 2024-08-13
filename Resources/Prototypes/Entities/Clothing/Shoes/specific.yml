@@ -109,9 +109,9 @@
   - type: Clothing
     sprite: Clothing/Shoes/Specific/galoshes.rsi
   - type: NoSlip
-  - type: SlowedOverSlip
+  - type: SlowedOverSlippery
     slowdownModifier: 0.7
-  - type: SpeedModifierContactMaxSlowClothing
+  - type: SpeedModifierContactCapClothing
     maxContactSprintSlowdown: 0.7
     maxContactWalkSlowdown: 0.7
 
