@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: benjamin-burges
-  changes:
-  - message: Bible summon messages are now only visible to the chaplain using the
-      Bible.
-    type: Tweak
-  id: 6602
-  time: '2024-05-18T14:23:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28104
 - author: Aquif
   changes:
   - message: Changing your character's description now properly updates the save button.
@@ -3800,3 +3792,11 @@
   id: 7101
   time: '2024-08-13T10:54:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30824
+- author: Ubaser
+  changes:
+  - message: Add two gatfruit mutations, one fake and one real capfruit which spawns
+      cap guns when eaten.
+    type: Add
+  id: 7102
+  time: '2024-08-13T11:08:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30850
