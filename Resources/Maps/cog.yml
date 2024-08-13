@@ -13854,8 +13854,6 @@ entities:
       pos: 11.5,2.5
       parent: 12
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 3224
 - proto: AirTankFilled
