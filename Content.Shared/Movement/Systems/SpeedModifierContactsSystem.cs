@@ -1,10 +1,8 @@
-using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Slippery;
 using Content.Shared.Whitelist;
-using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -22,8 +20,6 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
     private HashSet<EntityUid> _toUpdate = new();
     private HashSet<EntityUid> _toRemove = new();
 
-    private EntityQuery<InventoryComponent> _inventoryQuery;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -31,8 +27,6 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
         SubscribeLocalEvent<SpeedModifierContactsComponent, EndCollideEvent>(OnEntityExit);
         SubscribeLocalEvent<SpeedModifiedByContactComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedCheck);
         SubscribeLocalEvent<SpeedModifierContactsComponent, ComponentShutdown>(OnShutdown);
-
-        _inventoryQuery = GetEntityQuery<InventoryComponent>();
 
         UpdatesAfter.Add(typeof(SharedPhysicsSystem));
     }

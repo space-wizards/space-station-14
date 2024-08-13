@@ -147,6 +147,7 @@ public sealed class SlipAttemptEvent : EntityEventArgs, IInventoryRelayEvent
     public bool NoSlip;
 
     public bool SlowOverSlippery;
+
     public SlotFlags TargetSlots { get; } = SlotFlags.FEET;
 }
 
