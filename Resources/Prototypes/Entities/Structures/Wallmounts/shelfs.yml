@@ -3,7 +3,7 @@
   abstract: true
   id: ShelfBase
   name: shelf
-  description: A strange place to place, well, anything really. You feel like you shouldn't be seeing this.'
+  description: A strange place to place, well, anything really. You feel like you shouldn't be seeing this.
   placement:
     mode: SnapgridCenter
     snap:
