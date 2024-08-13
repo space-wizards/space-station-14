@@ -9,9 +9,9 @@
   description: A standard Type I armored vest that provides decent protection against most types of damage.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Armor/security.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Armor/security.rsi # GreyStation - Resprite
   - type: Clothing
-    sprite: Clothing/OuterClothing/Armor/security.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Armor/security.rsi # GreyStation - Resprite
   - type: Armor #Based on /tg/ but slightly compensated to fit the fact that armor stacks in SS14.
     modifiers:
       coefficients:
