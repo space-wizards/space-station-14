@@ -1,28 +1,4 @@
 ﻿Entries:
-- author: YuNii
-  changes:
-  - message: Added the ability to re-bind the emote menu.
-    type: Add
-  id: 6601
-  time: '2024-05-17T19:46:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28083
-- author: benjamin-burges
-  changes:
-  - message: Bible summon messages are now only visible to the chaplain using the
-      Bible.
-    type: Tweak
-  id: 6602
-  time: '2024-05-18T14:23:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28104
-- author: Aquif
-  changes:
-  - message: Changing your character's description now properly updates the save button.
-    type: Fix
-  - message: The character description editor does not discard your last edit anymore.
-    type: Fix
-  id: 6603
-  time: '2024-05-19T00:23:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28122
 - author: DrSmugleaf
   changes:
   - message: Attempting to dual wield something will now automatically drop the item
@@ -3799,3 +3775,27 @@
   id: 7100
   time: '2024-08-13T09:20:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29774
+- author: TheShuEd
+  changes:
+  - message: change the way food is sliced - food is now sliced whole after a small
+      doafter than requires multiple clicks on a single entity
+    type: Tweak
+  id: 7101
+  time: '2024-08-13T10:54:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30824
+- author: Ubaser
+  changes:
+  - message: Add two gatfruit mutations, one fake and one real capfruit which spawns
+      cap guns when eaten.
+    type: Add
+  id: 7102
+  time: '2024-08-13T11:08:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30850
+- author: slarticodefast
+  changes:
+  - message: Added new keybindings for rotating and flipping objects. The defaults
+      are R for clockwise, Shift+R for counterclockwise and F for flipping.
+    type: Add
+  id: 7103
+  time: '2024-08-13T13:36:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30540
