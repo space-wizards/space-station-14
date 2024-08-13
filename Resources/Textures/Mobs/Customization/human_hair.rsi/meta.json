@@ -782,6 +782,14 @@
       {
         "name": "tailed",
         "directions": 4
+      },
+      {
+        "name": "artist"
+        "directions": 4
+      },
+      {
+        "name": "capsdaughter"
+        "directions": 4
       }
     ]
   }
