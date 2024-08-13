@@ -273,8 +273,6 @@
         tableId: BasicAntagEventsTable
       - !type:NestedSelector
         tableId: CargoGiftsTable
-      - !type:NestedSelector
-        tableId: UnknownShuttlesTable
 
 - type: entityTable
   id: SpaceTrafficControlTable
