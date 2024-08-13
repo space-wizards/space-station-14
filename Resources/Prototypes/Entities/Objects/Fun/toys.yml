@@ -60,7 +60,7 @@
   description: A stuffed toy to remind cargo techs of what they can no longer have.
   components:
     - type: Sprite
-      sprite: Objects/Weapons/Melee/Throngler2.rsi
+      sprite: Objects/Weapons/Melee/ThronglerPlushie.rsi
       state: icon
     - type: MeleeWeapon
       wideAnimationRotation: -135

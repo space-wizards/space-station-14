@@ -633,3 +633,22 @@
       seedId: pyrotton
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/pyrotton.rsi
+
+- type: entity
+  parent: SeedBase
+  id: RealCapfruitSeeds
+  name: packet of capfruit seeds
+  description: "Is it real, or is it fake?"
+  components:
+    - type: Seed
+      seedId: realCapfruit
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/capfruit.rsi
+
+- type: entity
+  parent: RealCapfruitSeeds
+  id: FakeCapfruitSeeds
+  suffix: Fake
+  components:
+    - type: Seed
+      seedId: fakeCapfruit

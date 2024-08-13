@@ -1,65 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Fixed a bug that would cause items in your inventory to get stuck to
-      your cursor.
-    type: Fix
-  id: 6599
-  time: '2024-05-17T07:51:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27960
-- author: lzk228
-  changes:
-  - message: Fixed bug with pathological liar and zombie accents.
-    type: Fix
-  id: 6600
-  time: '2024-05-17T16:33:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28049
-- author: YuNii
-  changes:
-  - message: Added the ability to re-bind the emote menu.
-    type: Add
-  id: 6601
-  time: '2024-05-17T19:46:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28083
-- author: benjamin-burges
-  changes:
-  - message: Bible summon messages are now only visible to the chaplain using the
-      Bible.
-    type: Tweak
-  id: 6602
-  time: '2024-05-18T14:23:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28104
-- author: Aquif
-  changes:
-  - message: Changing your character's description now properly updates the save button.
-    type: Fix
-  - message: The character description editor does not discard your last edit anymore.
-    type: Fix
-  id: 6603
-  time: '2024-05-19T00:23:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28122
-- author: DrSmugleaf
-  changes:
-  - message: Attempting to dual wield something will now automatically drop the item
-      in your other hand.
-    type: Tweak
-  id: 6604
-  time: '2024-05-19T01:35:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27975
-- author: SHOTbyGUN
-  changes:
-  - message: White cane recipe for MedFab
-    type: Add
-  id: 6605
-  time: '2024-05-19T22:22:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28146
-- author: EmoGarbage404
-  changes:
-  - message: Mirrors work again.
-    type: Fix
-  id: 6606
-  time: '2024-05-19T22:35:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28084
 - author: PolterTzi
   changes:
   - message: The guidebook now lists the effects reagents have on plants.
@@ -3799,3 +3738,64 @@
   id: 7098
   time: '2024-08-12T07:14:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30929
+- author: LeoSantich
+  changes:
+  - message: Updated 'narsie' and 'ratvar' to 'Nar'Sie' and 'Ratvar' in randomly generated
+      storybook content.
+    type: Tweak
+  id: 7099
+  time: '2024-08-12T23:20:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30954
+- author: pigeonpeas
+  changes:
+  - message: Added non command mantle into the winterdrobe
+    type: Add
+  id: 7100
+  time: '2024-08-13T09:20:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29774
+- author: TheShuEd
+  changes:
+  - message: change the way food is sliced - food is now sliced whole after a small
+      doafter than requires multiple clicks on a single entity
+    type: Tweak
+  id: 7101
+  time: '2024-08-13T10:54:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30824
+- author: Ubaser
+  changes:
+  - message: Add two gatfruit mutations, one fake and one real capfruit which spawns
+      cap guns when eaten.
+    type: Add
+  id: 7102
+  time: '2024-08-13T11:08:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30850
+- author: slarticodefast
+  changes:
+  - message: Added new keybindings for rotating and flipping objects. The defaults
+      are R for clockwise, Shift+R for counterclockwise and F for flipping.
+    type: Add
+  id: 7103
+  time: '2024-08-13T13:36:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30540
+- author: Cojoke-dot
+  changes:
+  - message: Borg's names are now displayed when they make an announcement on the
+      Communications Console.
+    type: Tweak
+  id: 7104
+  time: '2024-08-13T18:31:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30107
+- author: Spessmann
+  changes:
+  - message: Added Cog, a new midpop map based on Cogmap from ss13
+    type: Add
+  id: 7105
+  time: '2024-08-13T19:27:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30840
+- author: PoorMansDreams
+  changes:
+  - message: Throngler Plushie looks like a plushie
+    type: Tweak
+  id: 7106
+  time: '2024-08-13T20:32:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30969
