@@ -157,16 +157,16 @@
 - type: entity
   parent: BaseCrowbar
   id: CrowbarYellow
-  description: A foldable pocket crowbar designed to pry open doors and firelocks during power outages, dispensed from Engineering.
+  description: A crowbar designed to pry open doors and firelocks during power outages, dispensed from Engineering.
   components:
   - type: Sprite
     layers:
     - state: icon
-    - state: cover-icon-engineering
+    - state: cover-icon
+      color: "#d2b400"
   - type: Item
-    size: Small # for pockets
     storedSprite:
-      state: yellow-storage-folded
+      state: yellow-storage
       sprite: Objects/Tools/crowbar.rsi
     inhandVisuals:
       left:
