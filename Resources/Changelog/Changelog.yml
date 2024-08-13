@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: YuNii
-  changes:
-  - message: Added the ability to re-bind the emote menu.
-    type: Add
-  id: 6601
-  time: '2024-05-17T19:46:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28083
 - author: benjamin-burges
   changes:
   - message: Bible summon messages are now only visible to the chaplain using the
@@ -3799,3 +3792,11 @@
   id: 7100
   time: '2024-08-13T09:20:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29774
+- author: TheShuEd
+  changes:
+  - message: change the way food is sliced - food is now sliced whole after a small
+      doafter than requires multiple clicks on a single entity
+    type: Tweak
+  id: 7101
+  time: '2024-08-13T10:54:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30824
