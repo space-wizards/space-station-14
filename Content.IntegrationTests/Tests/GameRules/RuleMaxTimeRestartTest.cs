@@ -1,14 +1,9 @@
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Commands;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Shared.CCVar;
 using Content.Shared.GameTicking.Components;
-using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Timing;
-using System.Management;
 
 namespace Content.IntegrationTests.Tests.GameRules
 {
@@ -28,7 +23,6 @@ namespace Content.IntegrationTests.Tests.GameRules
             var entityManager = server.ResolveDependency<IEntityManager>();
             var sGameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
             var sGameTiming = server.ResolveDependency<IGameTiming>();
-            var locManager = server.ResolveDependency<ILocalizationManager>();
 
             MaxTimeRestartRuleComponent maxTime = null;
             await server.WaitPost(() =>
