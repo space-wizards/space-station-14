@@ -60,7 +60,7 @@
   name: emergency crowbar
   parent: BaseCrowbar
   id: CrowbarRed
-  description: A pocket crowbar designed to pry open doors and firelocks during power outages.
+  description: A foldable pocket crowbar designed to pry open doors and firelocks during power outages.
   components:
   - type: Tag
     tags:
@@ -69,12 +69,11 @@
   - type: Sprite
     layers:
     - state: icon
-    - state: cover-icon
-      color: "#990000"
+    - state: cover-icon-emergency
   - type: Item
     size: Small # for pockets
     storedSprite:
-      state: red-storage
+      state: red-storage-folded
       sprite: Objects/Tools/crowbar.rsi
     inhandVisuals:
       left:

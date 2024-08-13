@@ -37,11 +37,17 @@
       "name": "cover-icon"
     },
     {
+      "name": "cover-icon-emergency"
+    },
+    {
       "name": "cover-equipped-BELT",
       "directions": 4
     },
     {
       "name": "red-storage"
+    },
+    {
+      "name": "red-storage-folded"
     },
     {
       "name": "green-storage"
