@@ -17,7 +17,7 @@ public sealed partial class RampingStationEventSchedulerComponent : Component
     ///     Close to how long you expect a round to last, so you'll probably have to tweak this on downstreams.
     /// </summary>
     [DataField]
-    public float AverageEndTime = 30f;
+    public float AverageEndTime = 40f;
 
     [DataField]
     public float EndTime;
