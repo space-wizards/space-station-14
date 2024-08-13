@@ -40,6 +40,9 @@
       "name": "cover-icon-emergency"
     },
     {
+      "name": "cover-icon-engineering"
+    },
+    {
       "name": "cover-equipped-BELT",
       "directions": 4
     },
@@ -57,6 +60,9 @@
     },
     {
       "name": "yellow-storage"
+    },
+    {
+      "name": "yellow-storage-folded"
     }
   ]
 }
