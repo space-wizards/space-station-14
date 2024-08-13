@@ -54,7 +54,7 @@ namespace Content.Server.StationEvents
                 if (eventScheduler.TimeUntilNextEvent > 0)
                 {
                     eventScheduler.TimeUntilNextEvent -= frameTime;
-                    return;
+                    continue;
                 }
 
                 _event.RunRandomEvent(eventScheduler.ScheduledGameRules);
