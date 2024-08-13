@@ -234,7 +234,7 @@
       coverage: EYES
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, BaseMajorContraband]
   id: ClothingEyesVisorNinja
   name: ninja visor
   description: An advanced visor protecting a ninja's eyes from flashing lights.
