@@ -1104,6 +1104,7 @@
   flavorType: Complex
   description: flavor-complex-paint-thinner
 
+
 - type: flavor
   id: cigarettes
   flavorType: Complex
