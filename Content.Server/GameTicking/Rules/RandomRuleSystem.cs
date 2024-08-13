@@ -12,13 +12,12 @@ namespace Content.Server.GameTicking.Rules;
 
 /// <summary>
 /// Entities spawned with this component will try to add gamerules from the provided EntitySpawnEntry list.
-/// This can be used to subset gamerules for balance, or to do something else like add it to a prototype if you want ninjas to start with meteors etc.
+/// This can be used to make events happen concurrently ex: if you want ninjas to start with meteors etc.
 /// </summary>
 public sealed class RandomRuleSystem : GameRuleSystem<RandomRuleComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly EventManagerSystem _event = default!;
 
     protected override void Started(EntityUid uid, RandomRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)

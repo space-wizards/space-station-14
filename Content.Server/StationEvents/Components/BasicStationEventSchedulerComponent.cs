@@ -1,11 +1,22 @@
+using Content.Shared.Destructible.Thresholds;
 using Content.Shared.EntityTable.EntitySelectors;
+
 
 namespace Content.Server.StationEvents.Components;
 
 [RegisterComponent, Access(typeof(BasicStationEventSchedulerSystem))]
 public sealed partial class BasicStationEventSchedulerComponent : Component
 {
+    /// <summary>
+    /// How long the the scheduler waits to begin starting rules.
+    /// </summary>
     public const float MinimumTimeUntilFirstEvent = 30;//300; // Yell at me if I dont change this back.
+
+    /// <summary>
+    /// The minimum and maximum time between rule starts in seconds.
+    /// </summary>
+    [DataField]
+    public MinMax MinMaxEventTiming = new(3 * 60, 10 * 60);
 
     /// <summary>
     /// How long until the next check for an event runs

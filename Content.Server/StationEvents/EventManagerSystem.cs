@@ -53,7 +53,7 @@ public sealed class EventManagerSystem : EntitySystem
     /// <summary>
     /// Randomly runs an event from provided EntitySpawnCollection.
     /// </summary>
-    public void RunRandomEvent(EntityTableSelector limitedEventsList)
+    public void RunRandomEvent(EntityTableSelector limitedEventsTable)
     {
         var availableEvents = AvailableEvents(); // handles the player counts and individual event restrictions
 
@@ -63,12 +63,40 @@ public sealed class EventManagerSystem : EntitySystem
         //    return;
         //}
 
-        var selectedEvents = _entityTable.GetSpawns(limitedEventsList);
+        if (!TryBuildLimitedEvents(limitedEventsTable, out var limitedEvents))
+        {
+            Log.Warning("Provided event table could not build dict!");
+            return;
+        }
+
+        var randomLimitedEvent = FindEvent(limitedEvents); // this picks the event, It might be better to use the GetSpawns to do it, but that will be a major rebalancing fuck.
+        if (randomLimitedEvent == null)
+        {
+            Log.Warning("The selected random event is null!");
+            return;
+        }
+
+        if (!_prototype.TryIndex(randomLimitedEvent, out _))
+        {
+            Log.Warning("A requested event is not available!");
+            return;
+        }
+
+        GameTicker.AddGameRule(randomLimitedEvent);
+    }
+
+    /// <summary>
+    /// Returns true if the provided EntityTableSelector gives at least one prototype with a StationEvent comp.
+    /// </summary>
+    public bool TryBuildLimitedEvents(EntityTableSelector limitedEventsTable, out Dictionary<EntityPrototype, StationEventComponent> limitedEvents)
+    {
+        limitedEvents = new Dictionary<EntityPrototype, StationEventComponent>();
+
+        var selectedEvents = _entityTable.GetSpawns(limitedEventsTable);
 
         if (selectedEvents.Any() != true) // This is here so if you fuck up the table it wont die.
-            return;
+            return false;
 
-        var limitedEvents = new Dictionary<EntityPrototype, StationEventComponent>();
         foreach (var eventid in selectedEvents)
         {
             if (!_prototype.TryIndex(eventid, out var eventproto))
@@ -92,22 +120,11 @@ public sealed class EventManagerSystem : EntitySystem
             limitedEvents.Add(eventproto, stationEvent);
         }
 
-        var randomLimitedEvent = FindEvent(limitedEvents); // this picks the event, It might be better to use the GetSpawns to do it, but that will be a major rebalancing fuck.
-        if (randomLimitedEvent == null)
-        {
-            Log.Warning("The selected random event is null!");
-            return;
-        }
+        if (!limitedEvents.Any())
+            return false;
 
-        if (!_prototype.TryIndex(randomLimitedEvent, out _))
-        {
-            Log.Warning("A requested event is not available!");
-            return;
-        }
-
-        GameTicker.AddGameRule(randomLimitedEvent);
+        return true;
     }
-
 
     /// <summary>
     /// Randomly picks a valid event.
