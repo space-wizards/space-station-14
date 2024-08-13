@@ -11,7 +11,7 @@ public sealed partial class BasicStationEventSchedulerComponent : Component
     /// How long the the scheduler waits to begin starting rules.
     /// </summary>
     [DataField]
-    public int MinimumTimeUntilFirstEvent = 200;
+    public float MinimumTimeUntilFirstEvent = 200;
 
     /// <summary>
     /// The minimum and maximum time between rule starts in seconds.

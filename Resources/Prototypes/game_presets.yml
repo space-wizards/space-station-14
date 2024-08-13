@@ -29,6 +29,8 @@
 
 - type: gamePreset
   id: AllAtOnce
+  alias:
+  - all
   name: all-at-once-title
   description: all-at-once-description
   showInVote: false
@@ -44,6 +46,11 @@
 
 - type: gamePreset
   id: AllerAtOnce
+  alias:
+  - allall
+  - aller
+  - badidea
+  - punishment
   name: aller-at-once-title
   description: all-at-once-description
   showInVote: false #Please god dont do this
