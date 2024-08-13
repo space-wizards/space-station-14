@@ -6,8 +6,8 @@
   showInVote: false # secret
   description: survival-description
   rules:
+    - MeteorSwarmScheduler
     - RampingStationEventScheduler
-    - GameRuleMeteorScheduler
     - SpaceTrafficControlEventScheduler
     - SpaceTrafficControlFriendlyEventScheduler
     - BasicRoundstartVariation
@@ -22,8 +22,8 @@
   showInVote: false # secret
   description: kessler-syndrome-description
   rules:
-    - RampingStationEventScheduler
     - KesslerSyndromeScheduler
+    - RampingStationEventScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
@@ -37,8 +37,8 @@
     - Traitor
     - Revolutionary
     - Zombie
-    - RampingStationEventScheduler
     - KesslerSyndromeScheduler
+    - RampingStationEventScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
@@ -53,12 +53,12 @@
     - Revolutionary
     - Zombie
     - BasicStationEventScheduler
-    - RampingStationEventScheduler
-    - MeteorSwarmMildScheduler
-    - GameRuleMeteorScheduler
     - KesslerSyndromeScheduler
-    - SpaceTrafficControlFriendlyEventScheduler
+    - MeteorSwarmMildScheduler
+    - MeteorSwarmScheduler
+    - RampingStationEventScheduler
     - SpaceTrafficControlEventScheduler
+    - SpaceTrafficControlFriendlyEventScheduler
     - BasicRoundstartVariation
 
 - type: gamePreset
@@ -71,7 +71,7 @@
   description: extended-description
   rules:
   - BasicStationEventScheduler
-  - GameRuleMeteorScheduler
+  - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
 
@@ -107,7 +107,7 @@
   description: secret-description
   rules:
     - BasicStationEventScheduler
-    - GameRuleMeteorScheduler
+    - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
@@ -145,7 +145,7 @@
     - Traitor
     - SubGamemodesRule
     - BasicStationEventScheduler
-    - GameRuleMeteorScheduler
+    - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
@@ -173,7 +173,7 @@
     - Nukeops
     - SubGamemodesRule
     - BasicStationEventScheduler
-    - GameRuleMeteorScheduler
+    - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
@@ -190,7 +190,7 @@
     - Revolutionary
     - SubGamemodesRule
     - BasicStationEventScheduler
-    - GameRuleMeteorScheduler
+    - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
@@ -208,7 +208,7 @@
   rules:
   - Zombie
   - BasicStationEventScheduler
-  - GameRuleMeteorScheduler
+  - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
 
