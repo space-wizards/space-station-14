@@ -56,7 +56,7 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem<RampingS
             if (scheduler.TimeUntilNextEvent > 0f)
             {
                 scheduler.TimeUntilNextEvent -= frameTime;
-                return;
+                continue;
             }
 
             PickNextEventTime(uid, scheduler);
