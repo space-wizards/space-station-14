@@ -95,6 +95,7 @@ accent-german-words-31 = ghost
 accent-german-words-replace-31 = poltergeist
 
 accent-german-words-32 = weed
+accent-german-words-32-2 = cabbage
 accent-german-words-replace-32 = kraut
 
 accent-german-words-33 = vodka
