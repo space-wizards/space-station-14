@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Aquif
-  changes:
-  - message: Changing your character's description now properly updates the save button.
-    type: Fix
-  - message: The character description editor does not discard your last edit anymore.
-    type: Fix
-  id: 6603
-  time: '2024-05-19T00:23:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28122
 - author: DrSmugleaf
   changes:
   - message: Attempting to dual wield something will now automatically drop the item
@@ -3800,3 +3791,11 @@
   id: 7102
   time: '2024-08-13T11:08:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30850
+- author: slarticodefast
+  changes:
+  - message: Added new keybindings for rotating and flipping objects. The defaults
+      are R for clockwise, Shift+R for counterclockwise and F for flipping.
+    type: Add
+  id: 7103
+  time: '2024-08-13T13:36:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30540
