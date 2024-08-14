@@ -6,6 +6,7 @@
     OreCoal: 1.0
     OreSalt: 1.0
     OreGold: 0.25
+    OreDiamond: 0.05
     OreSilver: 0.25
     OrePlasma: 0.15
     OreUranium: 0.15
@@ -15,7 +16,8 @@
 - type: dungeonConfig
   id: BlobAsteroid
   # Floor generation
-  generator: !type:NoiseDunGen
+  layers:
+  - !type:NoiseDunGen
     tileCap: 1500
     capStd: 32
     iterations: 3
@@ -28,22 +30,22 @@
           fractalType: FBm
           octaves: 2
           lacunarity: 2
-  # Everything else
-  postGeneration:
-    # Generate biome
-    - !type:BiomePostGen
-      biomeTemplate: Asteroid
 
-    # Generate ore veins
-    - !type:MarkerLayerPostGen
-      markerTemplate: AsteroidOre
+  # Generate biome
+  - !type:BiomeDunGen
+    biomeTemplate: Asteroid
+
+  # Generate ore veins
+  - !type:BiomeMarkerLayerDunGen
+    markerTemplate: AsteroidOre
 
 # Multiple smaller asteroids
 # This is a pain so we generate fewer tiles
 - type: dungeonConfig
   id: ClusterAsteroid
   # Floor generation
-  generator: !type:NoiseDunGen
+  layers:
+  - !type:NoiseDunGen
     tileCap: 1000
     capStd: 32
     layers:
@@ -55,21 +57,21 @@
           fractalType: FBm
           octaves: 2
           lacunarity: 2
-  # Everything else
-  postGeneration:
-    # Generate biome
-    - !type:BiomePostGen
-      biomeTemplate: Asteroid
 
-    # Generate ore veins
-    - !type:MarkerLayerPostGen
-      markerTemplate: AsteroidOre
+  # Generate biome
+  - !type:BiomeDunGen
+    biomeTemplate: Asteroid
+
+  # Generate ore veins
+  - !type:BiomeMarkerLayerDunGen
+    markerTemplate: AsteroidOre
 
 # Long and spindly, less smooth than blob
 - type: dungeonConfig
   id: SpindlyAsteroid
   # Floor generation
-  generator: !type:NoiseDunGen
+  layers:
+  - !type:NoiseDunGen
     tileCap: 1500
     capStd: 32
     layers:
@@ -82,20 +84,21 @@
           octaves: 3
           lacunarity: 2
           cellularDistanceFunction: Euclidean
-  postGeneration:
-    # Generate biome
-    - !type:BiomePostGen
-      biomeTemplate: Asteroid
 
-    # Generate ore veins
-    - !type:MarkerLayerPostGen
-      markerTemplate: AsteroidOre
+  # Generate biome
+  - !type:BiomeDunGen
+    biomeTemplate: Asteroid
+
+  # Generate ore veins
+  - !type:BiomeMarkerLayerDunGen
+    markerTemplate: AsteroidOre
 
 # Lots of holes in it
 - type: dungeonConfig
   id: SwissCheeseAsteroid
   # Floor generation
-  generator: !type:NoiseDunGen
+  layers:
+  - !type:NoiseDunGen
     tileCap: 1500
     capStd: 32
     layers:
@@ -107,12 +110,11 @@
           fractalType: FBm
           octaves: 2
           lacunarity: 2
-  # Everything else
-  postGeneration:
-    # Generate biome
-    - !type:BiomePostGen
-      biomeTemplate: Asteroid
 
-    # Generate ore veins
-    - !type:MarkerLayerPostGen
-      markerTemplate: AsteroidOre
+  # Generate biome
+  - !type:BiomeDunGen
+    biomeTemplate: Asteroid
+
+  # Generate ore veins
+  - !type:BiomeMarkerLayerDunGen
+    markerTemplate: AsteroidOre

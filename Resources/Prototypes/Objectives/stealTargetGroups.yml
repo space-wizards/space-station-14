@@ -84,13 +84,6 @@
     sprite: Objects/Misc/nukedisk.rsi
     state: icon
 
-- type: stealTargetGroup
-  id: PlutoniumCore
-  name: plutonium core
-  sprite:
-    sprite: Objects/Misc/plutonium_core.rsi
-    state: icon
-
 # Thief Collection
 
 - type: stealTargetGroup
@@ -354,8 +347,8 @@
     state: ian
 
 - type: stealTargetGroup
-  id: AnimalBingus
-  name: Bingus
+  id: AnimalNamedCat
+  name: CMO's Cat
   sprite:
     sprite: Mobs/Pets/bingus.rsi
     state: bingus

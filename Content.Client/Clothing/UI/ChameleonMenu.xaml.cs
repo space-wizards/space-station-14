@@ -75,8 +75,8 @@ public sealed partial class ChameleonMenu : DefaultWindow
             button.OnPressed += _ => OnIdSelected?.Invoke(id);
             Grid.AddChild(button);
             var entityPrototypeView = new EntityPrototypeView();
-            entityPrototypeView.SetPrototype(proto);
             button.AddChild(entityPrototypeView);
+            entityPrototypeView.SetPrototype(proto);
         }
     }
 
