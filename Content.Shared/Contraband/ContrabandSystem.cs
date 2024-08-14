@@ -32,6 +32,7 @@ public sealed class ContrabandSystem : EntitySystem
     {
         _contrabandExamineEnabled = val;
     }
+
     public void CopyDetails(EntityUid uid, ContrabandComponent other, ContrabandComponent? contraband = null)
     {
           if  (!Resolve(uid, ref contraband))

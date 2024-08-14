@@ -76,8 +76,6 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         {
             _contraband.CopyDetails(uid, contra, current);
         }
-
-        
     }
 
     protected virtual void UpdateSprite(EntityUid uid, EntityPrototype proto) { }
