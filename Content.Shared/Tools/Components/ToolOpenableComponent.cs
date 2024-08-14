@@ -50,6 +50,12 @@ namespace Content.Shared.Tools.Components
         public bool HasVerbs = true;
 
         /// <summary>
+        ///     If true, the only way to interact is with verbs. Clicking on the entity will not do anything.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public bool VerbOnly = false;
+
+        /// <summary>
         ///     The name of what is being open and closed.
         ///     E.g toilet lid, pannel, compartment.
         /// </summary>

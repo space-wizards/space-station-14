@@ -1,4 +1,4 @@
-namespace Content.Server.Nutrition;
+namespace Content.Shared.Nutrition;
 
 /// <summary>
 ///     Raised directed at the consumer when attempting to ingest something.
@@ -16,6 +16,19 @@ public sealed class IngestionAttemptEvent : CancellableEntityEventArgs
 /// Cancel this if you want to do something special before a food is deleted.
 /// </summary>
 public sealed class BeforeFullyEatenEvent : CancellableEntityEventArgs
+{
+    /// <summary>
+    /// The person that ate the food.
+    /// </summary>
+    public EntityUid User;
+}
+
+
+/// <summary>
+/// Raised directed at the food after finishing eating a food before it's deleted.
+/// Cancel this if you want to do something special before a food is deleted.
+/// </summary>
+public sealed class AfterFullyEatenEvent : EntityEventArgs
 {
     /// <summary>
     /// The person that ate the food.

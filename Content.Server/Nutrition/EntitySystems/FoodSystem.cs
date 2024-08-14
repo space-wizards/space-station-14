@@ -33,6 +33,7 @@ using System.Linq;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Server.GameObjects;
 using Content.Shared.Whitelist;
+using Content.Shared.Destructible;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -334,6 +335,15 @@ public sealed class FoodSystem : EntitySystem
         RaiseLocalEvent(food, ev);
         if (ev.Cancelled)
             return;
+
+        var afterEvent = new AfterFullyEatenEvent
+        {
+            User = user
+        };
+        RaiseLocalEvent(food, afterEvent);
+
+        var dev = new DestructionEventArgs();
+        RaiseLocalEvent(food, dev);
 
         if (component.Trash.Count == 0)
         {

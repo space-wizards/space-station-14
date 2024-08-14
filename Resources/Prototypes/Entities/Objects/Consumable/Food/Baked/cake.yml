@@ -26,6 +26,16 @@
   - type: Tag
     tags:
     - Cake
+  - type: SecretStash
+    maxItemSize: "Normal"
+    secretStashName: secret-stash-cake
+    damageEatenItemInside:
+      types:
+        Slash: 7.5
+  - type: ToolOpenable
+    openToolQualityNeeded: Slicing
+    closeToolQualityNeeded: Slicing
+    verbOnly: true
 
 - type: entity
   parent: FoodCakeBase
