@@ -9,16 +9,31 @@
   - type: Item
     storedRotation: -90
   - type: Food
+    transferAmount: 3
   - type: Sprite
     sprite: Objects/Consumable/Food/taco.rsi
     layers:
-    - state: tacoshell
+    - state: tacoshell_back
+    - map: ["foodSequenceLayers"]
+    - state: tacoshell_forward
   - type: SolutionContainerManager
     solutions:
       food:
+        canReact: false # Dont want cause reactions inside tacos after merging ingredients
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
+          Quantity: 6.66
+  - type: FoodSequenceStartPoint
+    key: taco
+    maxLayers: 3
+    startPosition: -0.2, 0
+    offset: 0.1, 0
+    minLayerOffset: 0, 0
+    maxLayerOffset: 0, 0.05
+    nameGeneration: food-sequence-taco-gen
+    contentSeparator: ", "
+  - type: Appearance
           Quantity: 6.66 # Just using the same values as the bun values, since the recipe for taco shells is roughly the same as buns.
 # Base
 

@@ -463,5 +463,12 @@ Entries:
   id: 57
   time: '2024-08-09T07:06:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30374
+- author: nikthechampiongr
+  changes:
+  - message: player panel whitelist toggle works without host permissions now.
+    type: Fix
+  id: 58
+  time: '2024-08-12T23:25:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30948
 Name: Admin
 Order: 1
