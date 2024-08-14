@@ -1,0 +1,17 @@
+- type: entity
+  parent: ClothingMaskBandanaBase
+  id: ClothingMaskBalaclava
+  name: balaclava
+  description: A black balaclava.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Head/Misc/balaclava.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Head/Misc/balaclava.rsi
+  - type: IdentityBlocker
+    enabled: true
+
+- type: entity
+  parent: [ClothingHeadBandBase, ClothingMaskBalaclava]
+  id: ClothingHeadBalaclava
+  name: balaclava
