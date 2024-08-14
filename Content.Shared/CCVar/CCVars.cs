@@ -2035,6 +2035,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
+        /// If ghost role lotteries should be made near-instanteous.
+        /// </summary>
+        public static readonly CVarDef<bool> GhostQuickLottery =
+            CVarDef.Create("ghost.quick_lottery", false, CVar.SERVERONLY);
+
+        /// <summary>
         /// Whether or not to kill the player's mob on ghosting, when it is in a critical health state.
         /// </summary>
         public static readonly CVarDef<bool> GhostKillCrit =
