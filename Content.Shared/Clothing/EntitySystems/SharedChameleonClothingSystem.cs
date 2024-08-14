@@ -72,9 +72,13 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         }
 
         if (proto.TryGetComponent("Contraband", out ContrabandComponent? contra) &&
-            EnsureComp<ContrabandComponent>(uid, out var current)
+            EnsureComp<ContrabandComponent>(uid, out var current))
         {
             _contraband.CopyDetails(uid, contra, current);
+        }
+        else
+        {
+            RemComp<ContrabandComponent>(uid);
         }
     }
 
