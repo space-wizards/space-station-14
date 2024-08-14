@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Systems;
@@ -17,7 +18,7 @@ namespace Content.Shared.Fluids;
 public abstract partial class SharedPuddleSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedChemistryRegistrySystem _chemRegistry = default!;
 
@@ -128,7 +129,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     /// </remarks>
     public abstract bool TrySplashSpillAt(EntityUid uid,
         EntityCoordinates coordinates,
-        Solution solution,
+        Entity<SolutionComponent>  solution,
         out EntityUid puddleUid,
         bool sound = true,
         EntityUid? user = null);
@@ -140,7 +141,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     /// <remarks>
     /// On the client, this will always set <paramref name="puddleUid"/> to <see cref="EntityUid.Invalid"> and return false.
     /// </remarks>
-    public abstract bool TrySpillAt(EntityCoordinates coordinates, Solution solution, out EntityUid puddleUid, bool sound = true);
+    public abstract bool TrySpillAt(EntityCoordinates coordinates, Entity<SolutionComponent>  solution, out EntityUid puddleUid, bool sound = true);
 
     /// <summary>
     /// <see cref="TrySpillAt(EntityCoordinates, Solution, out EntityUid, bool)"/>
@@ -148,7 +149,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     /// <remarks>
     /// On the client, this will always set <paramref name="puddleUid"/> to <see cref="EntityUid.Invalid"> and return false.
     /// </remarks>
-    public abstract bool TrySpillAt(EntityUid uid, Solution solution, out EntityUid puddleUid, bool sound = true,
+    public abstract bool TrySpillAt(EntityUid uid, Entity<SolutionComponent>  solution, out EntityUid puddleUid, bool sound = true,
         TransformComponent? transformComponent = null);
 
     /// <summary>
@@ -157,7 +158,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     /// <remarks>
     /// On the client, this will always set <paramref name="puddleUid"/> to <see cref="EntityUid.Invalid"> and return false.
     /// </remarks>
-    public abstract bool TrySpillAt(TileRef tileRef, Solution solution, out EntityUid puddleUid, bool sound = true,
+    public abstract bool TrySpillAt(TileRef tileRef, Entity<SolutionComponent>  solution, out EntityUid puddleUid, bool sound = true,
         bool tileReact = true);
 
     #endregion Spill

@@ -21,7 +21,7 @@ public struct ReagentDef : IEquatable<ReagentDef>
 
     public Entity<ReagentDefinitionComponent> DefinitionEntity;
 
-    public bool IsValid { get; } = false;
+    public bool IsValid { get; private set; } = false;
 
     public ReagentDef()
     {

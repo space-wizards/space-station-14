@@ -79,6 +79,18 @@ public partial class SharedSolutionSystem
 
     public FixedPoint2 GetTotalQuantity(
         Entity<SolutionComponent> solution,
+        params ReagentDef[] reagents)
+    {
+        FixedPoint2 totalQuantity = 0;
+        foreach (var reagentDef in reagents)
+        {
+            totalQuantity += GetTotalQuantity(solution, reagentDef);
+        }
+        return totalQuantity;
+    }
+
+    public FixedPoint2 GetTotalQuantity(
+        Entity<SolutionComponent> solution,
         ReagentDef reagent)
     {
         FixedPoint2 totalQuantity = 0;
@@ -218,13 +230,13 @@ public partial class SharedSolutionSystem
         return true;
     }
 
-    public FixedPoint2 GetTotalReagentQuantity(Entity<SolutionContainerComponent?> solutionContainer, ReagentDef reagent)
+    public FixedPoint2 GetContainerReagentQuantity(Entity<SolutionHolderComponent?> solutionContainer, ReagentDef reagent)
     {
         if (!Resolve(solutionContainer, ref solutionContainer.Comp))
             return 0;
 
         var reagentQuantity = FixedPoint2.New(0);
-        if (!TryComp(solutionContainer, out SolutionContainerComponent? solConComp))
+        if (!TryComp(solutionContainer, out SolutionHolderComponent? solConComp))
             return FixedPoint2.Zero;
         foreach (var solutionEnt in EnumerateSolutions((solutionContainer, solConComp)))
         {
@@ -489,14 +501,14 @@ public partial class SharedSolutionSystem
     }
 
     [PublicAPI]
-    public SolutionReagents SplitSolution(Entity<SolutionComponent> originSolution)
+    public SolutionContents SplitSolution(Entity<SolutionComponent> originSolution)
     {
         ScaleSolution(originSolution, 0.5f, out var overflow, true, true);
         return GetReagents(originSolution);
     }
 
     [PublicAPI]
-    public SolutionReagents SplitSolution(Entity<SolutionComponent> solution, FixedPoint2 quantity)
+    public SolutionContents SplitSolution(Entity<SolutionComponent> solution, FixedPoint2 quantity)
     {
         var percentage = quantity.Float()/solution.Comp.Volume.Float();
         var contents = GetReagents(solution, percentage);
@@ -608,7 +620,7 @@ public partial class SharedSolutionSystem
 
     #region Internal
 
-    protected SolutionReagents GetReagents(Entity<SolutionComponent> solution, float percentage = 1.0f)
+    protected SolutionContents GetReagents(Entity<SolutionComponent> solution, float percentage = 1.0f)
     {
         var contents = new ReagentQuantity[solution.Comp.ReagentAndVariantCount];
         var i = 0;

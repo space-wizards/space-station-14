@@ -61,14 +61,14 @@ public sealed class AbsorbentTest
   - type: RefillableSolution
     solution: refillable
 ";
-    public sealed record TestSolutionReagents(FixedPoint2 VolumeOfEvaporable, FixedPoint2 VolumeOfNonEvaporable);
+    public sealed record TestSolutionContents(FixedPoint2 VolumeOfEvaporable, FixedPoint2 VolumeOfNonEvaporable);
 
     public record TestSolutionCase(
         string Case, // Only for clarity purposes
-        TestSolutionReagents InitialAbsorbentSolution,
-        TestSolutionReagents InitialRefillableSolution,
-        TestSolutionReagents ExpectedAbsorbentSolution,
-        TestSolutionReagents ExpectedRefillableSolution);
+        TestSolutionContents InitialAbsorbentSolution,
+        TestSolutionContents InitialRefillableSolution,
+        TestSolutionContents ExpectedAbsorbentSolution,
+        TestSolutionContents ExpectedRefillableSolution);
 
     [TestCaseSource(nameof(TestCasesToRun))]
     public async Task AbsorbentOnRefillableTest(TestSolutionCase testCase)
@@ -195,125 +195,125 @@ public sealed class AbsorbentTest
         // Both empty case
         new(
             "Both empty - no transfer",
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.Zero)
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.Zero)
         ),
         // Just water cases
         new(
             "Transfer water to empty refillable",
-            new TestSolutionReagents(FixedPoint2.New(50), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.New(50), FixedPoint2.Zero)
+            new TestSolutionContents(FixedPoint2.New(50), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.New(50), FixedPoint2.Zero)
         ),
         new(
             "Transfer water to empty absorbent",
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.New(50), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.New(50), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.Zero)
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.New(50), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.New(50), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.Zero)
         ),
         new(
             "Both partially filled with water while everything fits in absorbent",
-            new TestSolutionReagents(FixedPoint2.New(50), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.New(40), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.New(90), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.Zero)
+            new TestSolutionContents(FixedPoint2.New(50), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.New(40), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.New(90), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.Zero)
         ),
         new(
             "Both partially filled with water while not everything fits in absorbent",
-            new TestSolutionReagents(FixedPoint2.New(70), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.New(50), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.New(100), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.New(20), FixedPoint2.Zero)
+            new TestSolutionContents(FixedPoint2.New(70), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.New(50), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.New(100), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.New(20), FixedPoint2.Zero)
         ),
         // Just contaminants cases
         new(
             "Transfer contaminants to empty refillable",
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(50)),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(50))
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(50)),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(50))
         ),
         new(
             "Do not transfer contaminants back to empty absorbent",
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(50)),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(50))
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(50)),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(50))
         ),
         new(
             "Add contaminants to preexisting while everything fits in refillable",
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(50)),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(130)),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(180))
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(50)),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(130)),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(180))
         ),
         new(
             "Add contaminants to preexisting while not everything fits in refillable",
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(90)),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(130)),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(20)),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(200))
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(90)),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(130)),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(20)),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(200))
         ),
         // Mixed: water and contaminants cases
         new(
             "Transfer just contaminants into empty refillable",
-            new TestSolutionReagents(FixedPoint2.New(50), FixedPoint2.New(50)),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.New(50), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(50))
+            new TestSolutionContents(FixedPoint2.New(50), FixedPoint2.New(50)),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.New(50), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(50))
         ),
         new(
             "Transfer just contaminants into non-empty refillable while everything fits",
-            new TestSolutionReagents(FixedPoint2.New(50), FixedPoint2.New(50)),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(60)),
-            new TestSolutionReagents(FixedPoint2.New(50), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(110))
+            new TestSolutionContents(FixedPoint2.New(50), FixedPoint2.New(50)),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(60)),
+            new TestSolutionContents(FixedPoint2.New(50), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(110))
         ),
         new(
             "Transfer just contaminants into non-empty refillable while not everything fits",
-            new TestSolutionReagents(FixedPoint2.New(50), FixedPoint2.New(50)),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(170)),
-            new TestSolutionReagents(FixedPoint2.New(50), FixedPoint2.New(20)),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(200))
+            new TestSolutionContents(FixedPoint2.New(50), FixedPoint2.New(50)),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(170)),
+            new TestSolutionContents(FixedPoint2.New(50), FixedPoint2.New(20)),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(200))
         ),
         new(
             "Transfer just contaminants and absorb water from water refillable",
-            new TestSolutionReagents(FixedPoint2.New(50), FixedPoint2.New(50)),
-            new TestSolutionReagents(FixedPoint2.New(70), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.New(100), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.New(20), FixedPoint2.New(50))
+            new TestSolutionContents(FixedPoint2.New(50), FixedPoint2.New(50)),
+            new TestSolutionContents(FixedPoint2.New(70), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.New(100), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.New(20), FixedPoint2.New(50))
         ),
         new(
             "Transfer just contaminants and absorb water from a full water refillable",
-            new TestSolutionReagents(FixedPoint2.New(50), FixedPoint2.New(50)),
-            new TestSolutionReagents(FixedPoint2.New(200), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.New(100), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.New(150), FixedPoint2.New(50))
+            new TestSolutionContents(FixedPoint2.New(50), FixedPoint2.New(50)),
+            new TestSolutionContents(FixedPoint2.New(200), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.New(100), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.New(150), FixedPoint2.New(50))
         ),
         new(
             "Transfer just contaminants and absorb water from a full mixed refillable",
-            new TestSolutionReagents(FixedPoint2.New(50), FixedPoint2.New(50)),
-            new TestSolutionReagents(FixedPoint2.New(100), FixedPoint2.New(100)),
-            new TestSolutionReagents(FixedPoint2.New(100), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.New(50), FixedPoint2.New(150))
+            new TestSolutionContents(FixedPoint2.New(50), FixedPoint2.New(50)),
+            new TestSolutionContents(FixedPoint2.New(100), FixedPoint2.New(100)),
+            new TestSolutionContents(FixedPoint2.New(100), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.New(50), FixedPoint2.New(150))
         ),
         new(
             "Transfer just contaminants and absorb water from a low-water mixed refillable",
-            new TestSolutionReagents(FixedPoint2.New(50), FixedPoint2.New(50)),
-            new TestSolutionReagents(FixedPoint2.New(10), FixedPoint2.New(100)),
-            new TestSolutionReagents(FixedPoint2.New(60), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(150))
+            new TestSolutionContents(FixedPoint2.New(50), FixedPoint2.New(50)),
+            new TestSolutionContents(FixedPoint2.New(10), FixedPoint2.New(100)),
+            new TestSolutionContents(FixedPoint2.New(60), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(150))
         ),
         new(
             "Contaminants for water exchange",
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(100)),
-            new TestSolutionReagents(FixedPoint2.New(200), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.New(100), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.New(100), FixedPoint2.New(100))
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(100)),
+            new TestSolutionContents(FixedPoint2.New(200), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.New(100), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.New(100), FixedPoint2.New(100))
         )
     };
 
@@ -322,24 +322,24 @@ public sealed class AbsorbentTest
         // Only testing cases where small refillable AvailableVolume makes a difference
         new(
             "Transfer water to empty refillable",
-            new TestSolutionReagents(FixedPoint2.New(50), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.New(30), FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.New(20), FixedPoint2.Zero)
+            new TestSolutionContents(FixedPoint2.New(50), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.New(30), FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.New(20), FixedPoint2.Zero)
         ),
         new(
             "Transfer contaminants to empty refillable",
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(50)),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.Zero),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(30)),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(20))
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(50)),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.Zero),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(30)),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(20))
         ),
         new(
             "Mixed transfer in limited space",
-            new TestSolutionReagents(FixedPoint2.New(20), FixedPoint2.New(25)),
-            new TestSolutionReagents(FixedPoint2.New(10), FixedPoint2.New(5)),
-            new TestSolutionReagents(FixedPoint2.New(30), FixedPoint2.New(10)),
-            new TestSolutionReagents(FixedPoint2.Zero, FixedPoint2.New(20))
+            new TestSolutionContents(FixedPoint2.New(20), FixedPoint2.New(25)),
+            new TestSolutionContents(FixedPoint2.New(10), FixedPoint2.New(5)),
+            new TestSolutionContents(FixedPoint2.New(30), FixedPoint2.New(10)),
+            new TestSolutionContents(FixedPoint2.Zero, FixedPoint2.New(20))
         )
     };
 }

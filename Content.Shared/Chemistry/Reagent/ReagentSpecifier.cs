@@ -145,6 +145,7 @@ public partial struct ReagentSpecifier: IEquatable<ReagentDef>
     }
 
     public static implicit operator string(ReagentSpecifier d) => d.Id;
+    public static implicit operator ReagentSpecifier(string s) => new(s);
     public static implicit operator (string, ReagentVariant?)(ReagentSpecifier d) => (d.Id, d.Variant);
     public static implicit operator ReagentSpecifier(ReagentDef d) => new(d);
     public static implicit operator ReagentSpecifier(Entity<ReagentDefinitionComponent> def) => new(def, null);
@@ -156,5 +157,12 @@ public partial struct ReagentSpecifier: IEquatable<ReagentDef>
             return;
         }
         reagentSpec._cachedDefinitionEntity = reagent;
+    }
+
+    public static bool ResolveReagentEntity(ref ReagentSpecifier reagentSpec,
+        SharedChemistryRegistrySystem chemRegistry,
+        bool logIfMissing = true)
+    {
+        return !chemRegistry.ResolveReagent(reagentSpec.Id, ref reagentSpec._cachedDefinitionEntity, logIfMissing);
     }
 }

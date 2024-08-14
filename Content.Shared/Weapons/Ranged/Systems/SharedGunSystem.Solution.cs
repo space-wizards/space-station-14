@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Map;
@@ -37,7 +38,7 @@ public partial class SharedGunSystem
         args.Capacity = component.MaxShots;
     }
 
-    protected virtual void UpdateSolutionShots(EntityUid uid, SolutionAmmoProviderComponent component, Solution? solution = null)
+    protected virtual void UpdateSolutionShots(EntityUid uid, SolutionAmmoProviderComponent component, SolutionSpecifier? solution = null)
     {
 
     }

@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
@@ -36,7 +37,7 @@ public sealed partial class ConsumeDoAfterEvent : DoAfterEvent
 public sealed partial class VapeDoAfterEvent : DoAfterEvent
 {
     [DataField("solution", required: true)]
-    public Solution Solution = default!;
+    public SolutionSpecifier Solution = default!;
 
     [DataField("forced", required: true)]
     public bool Forced = default!;
@@ -45,7 +46,7 @@ public sealed partial class VapeDoAfterEvent : DoAfterEvent
     {
     }
 
-    public VapeDoAfterEvent(Solution solution, bool forced)
+    public VapeDoAfterEvent(SolutionSpecifier solution, bool forced)
     {
         Solution = solution;
         Forced = forced;

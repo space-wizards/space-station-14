@@ -6,7 +6,7 @@ using Robust.Shared.Collections;
 
 namespace Content.Shared.Chemistry.Reagent;
 
-public struct SolutionReagents : IEnumerable<ReagentQuantity>
+public struct SolutionContents : IEnumerable<ReagentQuantity>
 {
     public FixedPoint2 TotalVolume { get; private set; }= 0;
 
@@ -26,7 +26,7 @@ public struct SolutionReagents : IEnumerable<ReagentQuantity>
     public bool HasTemperature = false;
 
     private ValueList<ReagentQuantity> _contents = new(0);
-    public SolutionReagents(params ReagentQuantity[] reagents)
+    public SolutionContents(params ReagentQuantity[] reagents)
     {
         _contents = new(reagents.Length);
         foreach (var quant in reagents)
@@ -35,13 +35,13 @@ public struct SolutionReagents : IEnumerable<ReagentQuantity>
         }
     }
 
-    public SolutionReagents(float temperature, params ReagentQuantity[] reagents) : this(reagents)
+    public SolutionContents(float temperature, params ReagentQuantity[] reagents) : this(reagents)
     {
         _temperature = temperature;
         HasTemperature = true;
     }
 
-    public SolutionReagents(ICollection<ReagentQuantity> reagents, float temperature = Atmospherics.T20C)
+    public SolutionContents(ICollection<ReagentQuantity> reagents, float temperature = Atmospherics.T20C)
     {
         _temperature = temperature;
         _contents = new(reagents.Count);
@@ -223,7 +223,7 @@ public struct SolutionReagents : IEnumerable<ReagentQuantity>
         TotalVolume *= scale;
     }
 
-    public static implicit operator ReagentQuantity[](SolutionReagents s) => s._contents.ToArray();
+    public static implicit operator ReagentQuantity[](SolutionContents s) => s._contents.ToArray();
 
     [MustDisposeResource]
     public IEnumerator<ReagentQuantity> GetEnumerator()

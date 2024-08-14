@@ -10,7 +10,7 @@ namespace Content.Shared.Kitchen.Components;
 public sealed partial class ExtractableComponent : Component
 {
     [DataField("juiceSolution")]
-    public Solution? JuiceSolution;
+    public string? JuiceSolution;
 
     [DataField("grindableSolutionName")]
     public string? GrindableSolution;

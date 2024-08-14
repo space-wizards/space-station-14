@@ -26,15 +26,20 @@ public abstract partial class SharedSolutionSystem : EntitySystem
     [Dependency] protected readonly SharedChemistryRegistrySystem ChemistryRegistry = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
 
-    public const string SolutionContainerPrefix = "@Solution";
-
-    //TODO: CVAR THESE!
+    public const float TemperatureEpsilon = 0.0005f;
+    public const string SolutionContainerPrefix = "@Solution_";
     public const int SolutionAlloc = 2;
     public const int ReagentAlloc = 2;
     public const int VariantAlloc = 1;
 
+    private EntityQuery<SolutionComponent> _solutionQuery;
+    private EntityQuery<SolutionHolderComponent> _containerQuery;
+
     public override void Initialize()
     {
+        _solutionQuery = EntityManager.GetEntityQuery<SolutionComponent>();
+        _containerQuery = EntityManager.GetEntityQuery<SolutionHolderComponent>();
+
         SubscribeLocalEvent<SolutionComponent, AfterAutoHandleStateEvent>(HandleSolutionState);
         SubscribeLocalEvent<SolutionComponent, MapInitEvent>(SolutionMapInit);
         SubscribeLocalEvent<StartingSolutionsComponent, MapInitEvent>(InitialSolutionMapInit);
@@ -85,7 +90,7 @@ public abstract partial class SharedSolutionSystem : EntitySystem
         }
     }
 
-    public void SetCapacity(Entity<SolutionComponent> solution, FixedPoint2 capacity, bool stopOverflow = false)
+    public void SetMaxVolume(Entity<SolutionComponent> solution, FixedPoint2 capacity, bool stopOverflow = false)
     {
         if (solution.Comp.MaxVolume == capacity)
             return;

@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.Reagents;
+using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Localizations;
@@ -111,7 +112,7 @@ public record class EntityEffectReagentArgs : EntityEffectBaseArgs
 {
     public EntityUid? OrganEntity;
 
-    public Solution? Source;
+    public Entity<SolutionComponent>? Source;
 
     public FixedPoint2 Quantity;
 
@@ -124,7 +125,7 @@ public record class EntityEffectReagentArgs : EntityEffectBaseArgs
     public EntityEffectReagentArgs(EntityUid targetEntity,
         IEntityManager entityManager,
         EntityUid? organEntity,
-        Solution? source,
+        Entity<SolutionComponent>? source,
         FixedPoint2 quantity,
         Entity<ReagentDefinitionComponent>? reagent,
         ReactionMethod? method,

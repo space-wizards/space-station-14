@@ -5,8 +5,10 @@ using Content.Shared.Body.Part;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Prototypes;
 using Robust.Shared.Prototypes;
@@ -16,8 +18,8 @@ namespace Content.Client.Chemistry.EntitySystems;
 /// <inheritdoc/>
 public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
 {
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly ChemistryRegistrySystem _chemistryRegistry = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
     [ValidatePrototypeId<MixingCategoryPrototype>]
     private const string DefaultMixingCategory = "DummyMix";
@@ -95,7 +97,7 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
             if (entProto.Abstract || usedNames.Contains(entProto.Name))
                 continue;
 
-            if (!entProto.TryGetComponent<ExtractableComponent>(out var extractableComponent))
+            if (!entProto.TryGetComponent<ExtractableComponent>(out var extractableComponent, _componentFactory))
                 continue;
 
             //these bloat the hell out of blood/fat
@@ -106,32 +108,36 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
             if (entProto.HasComponent<PillComponent>())
                 continue;
 
-            if (extractableComponent.JuiceSolution is { } juiceSolution)
+            if (!entProto.TryGetComponent<StartingSolutionsComponent>(out var startingSolutions, _componentFactory))
+                continue;
+
+            if (extractableComponent.JuiceSolution is { } juiceSolutionId
+                && startingSolutions.Solutions.TryGetValue(juiceSolutionId, out var juiceSol)
+                && juiceSol != null)
             {
                 var data = new ReagentEntitySourceData(
                     new() { DefaultJuiceCategory },
                     entProto,
-                    juiceSolution);
-                foreach (var (id, _) in juiceSolution.Contents)
+                    juiceSol.Value);
+                foreach (var (id, _) in juiceSol.Value.Contents)
                 {
-                    _reagentSources[id.Prototype].Add(data);
+                    _reagentSources[id].Add(data);
                 }
 
                 usedNames.Add(entProto.Name);
             }
 
-
-            if (extractableComponent.GrindableSolution is { } grindableSolutionId &&
-                entProto.TryGetComponent<SolutionContainerManagerComponent>(out var manager) &&
-                _solutionContainer.TryGetSolution(manager, grindableSolutionId, out var grindableSolution))
+            if (extractableComponent.GrindableSolution is { } grindableSolutionId
+                && startingSolutions.Solutions.TryGetValue(grindableSolutionId, out var grindSol)
+                && grindSol != null)
             {
                 var data = new ReagentEntitySourceData(
                     new() { DefaultGrindCategory },
                     entProto,
-                    grindableSolution);
-                foreach (var (id, _) in grindableSolution.Contents)
+                    grindSol.Value);
+                foreach (var (id, _) in grindSol)
                 {
-                    _reagentSources[id.Prototype].Add(data);
+                    _reagentSources[id].Add(data);
                 }
                 usedNames.Add(entProto.Name);
             }
@@ -177,13 +183,14 @@ public sealed class ReagentEntitySourceData : ReagentSourceData
 {
     public readonly EntityPrototype SourceEntProto;
 
-    public readonly Solution Solution;
+    public readonly SolutionSpecifier Solution;
 
     public override int OutputCount => Solution.Contents.Count;
 
     public override string IdentifierString => SourceEntProto.Name;
 
-    public ReagentEntitySourceData(List<ProtoId<MixingCategoryPrototype>> mixingType, EntityPrototype sourceEntProto, Solution solution)
+    public ReagentEntitySourceData(List<ProtoId<MixingCategoryPrototype>> mixingType, EntityPrototype sourceEntProto,
+        SolutionSpecifier solution)
         : base(mixingType)
     {
         SourceEntProto = sourceEntProto;

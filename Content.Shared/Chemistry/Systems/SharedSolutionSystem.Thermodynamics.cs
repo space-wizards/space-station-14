@@ -9,9 +9,6 @@ namespace Content.Shared.Chemistry.Systems;
 
 public partial class SharedSolutionSystem
 {
-    public const float TemperatureEpsilon = 0.0005f;
-
-
     protected void ChangeTotalVolume(Entity<SolutionComponent> solution,
         ref SolutionComponent.ReagentData origin,
         FixedPoint2 delta,

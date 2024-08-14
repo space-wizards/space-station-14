@@ -1,6 +1,4 @@
 using Content.Shared.Administration.Logs;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
@@ -9,7 +7,9 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Collections.Frozen;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Content.Shared.Chemistry.Components.Reagents;
+using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.Chemistry.Systems;
 
 
@@ -27,6 +27,7 @@ namespace Content.Shared.Chemistry.Reaction
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly SharedChemistryRegistrySystem _chemistryRegistry = default!;
+        [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
 
         /// <summary>
         /// A cache of all reactions indexed by at most ONE of their required reactants.
@@ -92,17 +93,15 @@ namespace Content.Shared.Chemistry.Reaction
         /// <param name="reaction">The reaction to check.</param>
         /// <param name="lowestUnitReactions">How many times this reaction can occur.</param>
         /// <returns></returns>
-        private bool CanReact(Entity<SolutionComponent> soln, ReactionPrototype reaction, ReactionMixerComponent? mixerComponent, out FixedPoint2 lowestUnitReactions)
+        private bool CanReact(Entity<SolutionComponent> solution, ReactionPrototype reaction, ReactionMixerComponent? mixerComponent, out FixedPoint2 lowestUnitReactions)
         {
-            var solution = soln.Comp.Solution;
-
             lowestUnitReactions = FixedPoint2.MaxValue;
-            if (solution.Temperature < reaction.MinimumTemperature)
+            if (solution.Comp.Temperature < reaction.MinimumTemperature)
             {
                 lowestUnitReactions = FixedPoint2.Zero;
                 return false;
             }
-            if (solution.Temperature > reaction.MaximumTemperature)
+            if (solution.Comp.Temperature > reaction.MaximumTemperature)
             {
                 lowestUnitReactions = FixedPoint2.Zero;
                 return false;
@@ -115,8 +114,8 @@ namespace Content.Shared.Chemistry.Reaction
                 return false;
             }
 
-            var attempt = new ReactionAttemptEvent(reaction, soln);
-            RaiseLocalEvent(soln, ref attempt);
+            var attempt = new ReactionAttemptEvent(reaction, solution);
+            RaiseLocalEvent(solution, ref attempt);
             if (attempt.Cancelled)
             {
                 lowestUnitReactions = FixedPoint2.Zero;
@@ -125,10 +124,10 @@ namespace Content.Shared.Chemistry.Reaction
 
             foreach (var reactantData in reaction.Reactants)
             {
-                var reactantName = reactantData.Key;
+                //TODO: convert reactionDefs to entities so we don't have to index inside a loop
+                var reactant = _chemistryRegistry.Index(reactantData.Key);
                 var reactantCoefficient = reactantData.Value.Amount;
-
-                var reactantQuantity = solution.GetTotalPrototypeQuantity(reactantName);
+                var reactantQuantity = _solutionSystem.GetTotalQuantity(solution, reactant);
 
                 if (reactantQuantity <= FixedPoint2.Zero)
                     return false;
@@ -162,51 +161,49 @@ namespace Content.Shared.Chemistry.Reaction
         ///     Perform a reaction on a solution. This assumes all reaction criteria are met.
         ///     Removes the reactants from the solution, adds products, and returns a list of products.
         /// </summary>
-        private List<string> PerformReaction(Entity<SolutionComponent> soln, ReactionPrototype reaction, FixedPoint2 unitReactions)
+        private List<string> PerformReaction(Entity<SolutionComponent> solution, ReactionPrototype reaction, FixedPoint2 unitReactions)
         {
-            var (uid, comp) = soln;
-            var solution = comp.Solution;
 
-            var energy = reaction.ConserveEnergy ? solution.GetThermalEnergy(_prototypeManager) : 0;
+            var energy = reaction.ConserveEnergy ? solution.Comp.ThermalEnergy : 0;
 
             //Remove reactants
-            foreach (var reactant in reaction.Reactants)
+            foreach (var (reactantId, prototype) in reaction.Reactants)
             {
-                if (!reactant.Value.Catalyst)
-                {
-                    var amountToRemove = unitReactions * reactant.Value.Amount;
-                    solution.RemoveReagent(reactant.Key, amountToRemove);
-                }
+                //TODO: convert reactionDefs to entities so we don't have to index inside a loop
+                var reactant = _chemistryRegistry.Index(reactantId);
+                if (!prototype.Catalyst)
+                    _solutionSystem.RemoveReagent(solution, (reactant, unitReactions * prototype.Amount), out _);
             }
 
             //Create products
             var products = new List<string>();
-            foreach (var product in reaction.Products)
+            foreach (var (productId, amount) in reaction.Products)
             {
-                products.Add(product.Key);
-                solution.AddReagent(product.Key, product.Value * unitReactions);
+                //TODO: convert reactionDefs to entities so we don't have to index inside a loop
+                var product = _chemistryRegistry.Index(productId);
+                products.Add(productId);
+                _solutionSystem.AddReagent(solution, (product, amount * unitReactions), out _);
             }
 
             if (reaction.ConserveEnergy)
-            {
-                var newCap = solution.GetHeatCapacity(_prototypeManager);
-                if (newCap > 0)
-                    solution.Temperature = energy / newCap;
-            }
-
-            OnReaction(soln, reaction, null, unitReactions);
+                _solutionSystem.SetThermalEnergy(solution, energy);
+            OnReaction(solution, reaction, null, unitReactions);
 
             return products;
         }
 
-        private void OnReaction(Entity<SolutionComponent> soln, ReactionPrototype reaction, Entity<ReagentDefinitionComponent>? reagent, FixedPoint2 unitReactions)
+        private void OnReaction(Entity<SolutionComponent> solution, ReactionPrototype reaction,
+            Entity<ReagentDefinitionComponent>? reagent, FixedPoint2 unitReactions)
         {
-            var args = new EntityEffectReagentArgs(soln, EntityManager, null, soln.Comp.Solution, unitReactions, reagent, null, 1f);
+            var args = new EntityEffectReagentArgs(solution, EntityManager, null,
+                solution, unitReactions, reagent, null, 1f);
 
-            var posFound = _transformSystem.TryGetMapOrGridCoordinates(soln, out var gridPos);
+            var posFound = _transformSystem.TryGetMapOrGridCoordinates(solution, out var gridPos);
 
             _adminLogger.Add(LogType.ChemicalReaction, reaction.Impact,
-                $"Chemical reaction {reaction.ID:reaction} occurred with strength {unitReactions:strength} on entity {ToPrettyString(soln):metabolizer} at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found]")}");
+                $"Chemical reaction {reaction.ID:reaction} occurred with strength " +
+                $"{unitReactions:strength} on entity {ToPrettyString(solution):metabolizer} " +
+                $"at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found]")}");
 
             foreach (var effect in reaction.Effects)
             {
@@ -217,13 +214,15 @@ namespace Content.Shared.Chemistry.Reaction
                 {
                     var entity = args.TargetEntity;
                     _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
-                        $"Reaction effect {effect.GetType().Name:effect} of reaction {reaction.ID:reaction} applied on entity {ToPrettyString(entity):entity} at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found")}");
+                        $"Reaction effect {effect.GetType().Name:effect} of reaction {reaction.ID:reaction} " +
+                        $"applied on entity {ToPrettyString(entity):entity} at Pos:" +
+                        $"{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not Found")}");
                 }
 
                 effect.Effect(args);
             }
 
-            _audio.PlayPvs(reaction.Sound, soln);
+            _audio.PlayPvs(reaction.Sound, solution);
         }
 
         /// <summary>
@@ -270,13 +269,13 @@ namespace Content.Shared.Chemistry.Reaction
         /// <summary>
         ///     Continually react a solution until no more reactions occur, with a volume constraint.
         /// </summary>
-        public void FullyReactSolution(Entity<SolutionComponent> soln, ReactionMixerComponent? mixerComponent = null)
+        public void FullyReactSolution(Entity<SolutionComponent> solution, ReactionMixerComponent? mixerComponent = null)
         {
             // construct the initial set of reactions to check.
             SortedSet<ReactionPrototype> reactions = new();
-            foreach (var reactant in soln.Comp.Solution.Contents)
+            foreach (ref var reactant in CollectionsMarshal.AsSpan(solution.Comp.Contents))
             {
-                if (_reactionsSingle.TryGetValue(reactant.Reagent.Prototype, out var reactantReactions))
+                if (_reactionsSingle.TryGetValue(reactant.ReagentId, out var reactantReactions))
                     reactions.UnionWith(reactantReactions);
             }
 
@@ -284,11 +283,11 @@ namespace Content.Shared.Chemistry.Reaction
             // exceed the iteration limit.
             for (var i = 0; i < MaxReactionIterations; i++)
             {
-                if (!ProcessReactions(soln, reactions, mixerComponent))
+                if (!ProcessReactions(solution, reactions, mixerComponent))
                     return;
             }
 
-            Log.Error($"{nameof(Solution)} {soln.Owner} could not finish reacting in under {MaxReactionIterations} loops.");
+            Log.Error($"{nameof(solution)} {solution.Owner} could not finish reacting in under {MaxReactionIterations} loops.");
         }
     }
 

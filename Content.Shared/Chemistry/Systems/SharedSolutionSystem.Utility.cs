@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using System.Text;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.Chemistry.Reagent;
@@ -209,5 +210,36 @@ public partial class SharedSolutionSystem
     private FixedPoint2 ClampToEpsilon(float input)
     {
         return input < FixedPoint2.Epsilon ? FixedPoint2.Epsilon : input;
+    }
+
+    public static string ToPrettyString(string? name, SolutionContents solution)
+    {
+        var sb = new StringBuilder();
+        if (name == null)
+            sb.Append("[");
+        else
+            sb.Append($"{name}:[");
+        var first = true;
+        foreach (var (id, quantity) in solution)
+        {
+            if (first)
+            {
+                first = false;
+            }
+            else
+            {
+                sb.Append(", ");
+            }
+
+            sb.AppendFormat("{0}: {1}u", id, quantity);
+        }
+
+        sb.Append(']');
+        return sb.ToString();
+    }
+
+    public bool ResolveSpecifier(ref ReagentSpecifier reagentSpec, bool logIfMissing = true)
+    {
+        return ReagentSpecifier.ResolveReagentEntity(ref reagentSpec, ChemistryRegistry,logIfMissing);
     }
 }

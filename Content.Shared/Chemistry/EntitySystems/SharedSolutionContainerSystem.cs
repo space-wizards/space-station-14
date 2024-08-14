@@ -236,7 +236,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
     public FixedPoint2 GetTotalPrototypeQuantity(EntityUid solutionContainer, string reagentId)
     {
-        return SolutionSystem.GetTotalReagentQuantity(solutionContainer, reagentId);
+        return SolutionSystem.GetContainerReagentQuantity(solutionContainer, reagentId);
     }
 
 
@@ -308,7 +308,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="capacity">The value to set the capacity of the solution to.</param>
     public void SetCapacity(Entity<SolutionComponent> soln, FixedPoint2 capacity)
     {
-        SolutionSystem.SetCapacity(soln, capacity);
+        SolutionSystem.SetMaxVolume(soln, capacity);
     }
 
     /// <summary>

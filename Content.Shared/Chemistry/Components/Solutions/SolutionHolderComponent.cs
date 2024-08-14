@@ -5,7 +5,7 @@ namespace Content.Shared.Chemistry.Components.Solutions;
 
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class SolutionContainerComponent : Component
+public sealed partial class SolutionHolderComponent : Component
 {
     [DataField, AutoNetworkedField]
     public List<string> SolutionIds = new(SharedSolutionSystem.SolutionAlloc);

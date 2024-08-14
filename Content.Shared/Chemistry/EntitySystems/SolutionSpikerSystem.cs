@@ -1,6 +1,8 @@
 using Content.Shared.Popups;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Components.Solutions;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.Interaction;
 
 namespace Content.Shared.Chemistry.EntitySystems;
@@ -17,15 +19,29 @@ namespace Content.Shared.Chemistry.EntitySystems;
 public sealed class SolutionSpikerSystem : EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private readonly SharedSolutionSystem _solution = default!;
 
+    private EntityQuery<SolutionHolderComponent> _holderQuery;
+    private EntityQuery<SolutionComponent> _solutionQuery;
+    private EntityQuery<SolutionSpikerComponent> _spikerQuery;
+    private EntityQuery<RefillableSolutionComponent> _refillableQuery;
     public override void Initialize()
     {
+        _holderQuery = EntityManager.GetEntityQuery<SolutionHolderComponent>();
+        _solutionQuery = EntityManager.GetEntityQuery<SolutionComponent>();
+        _spikerQuery = EntityManager.GetEntityQuery<SolutionSpikerComponent>();
+        _refillableQuery = EntityManager.GetEntityQuery<RefillableSolutionComponent>();
         SubscribeLocalEvent<RefillableSolutionComponent, InteractUsingEvent>(OnInteractUsing);
     }
 
     private void OnInteractUsing(Entity<RefillableSolutionComponent> entity, ref InteractUsingEvent args)
     {
+        if (!_holderQuery.TryComp(entity, out var targetHolder)
+            ||
+
+            )
+            return;
+
         TrySpike(args.Used, args.Target, args.User, entity.Comp);
     }
 
@@ -36,10 +52,7 @@ public sealed class SolutionSpikerSystem : EntitySystem
     /// <param name="source">Source of the solution.</param>
     /// <param name="target">Target to spike with the solution from source.</param>
     /// <param name="user">User spiking the target solution.</param>
-    private void TrySpike(EntityUid source, EntityUid target, EntityUid user, RefillableSolutionComponent? spikableTarget = null,
-        SolutionSpikerComponent? spikableSource = null,
-        SolutionContainerManagerComponent? managerSource = null,
-        SolutionContainerManagerComponent? managerTarget = null)
+    private void TrySpike(Entity<SolutionHolderComponent, SolutionSpikerComponent> source, Entity<SolutionHolderComponent> target)
     {
         if (!Resolve(source, ref spikableSource, ref managerSource, false)
             || !Resolve(target, ref spikableTarget, ref managerTarget, false)

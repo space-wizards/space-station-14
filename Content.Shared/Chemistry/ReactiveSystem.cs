@@ -1,6 +1,7 @@
+using System.Runtime.InteropServices;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.Reagents;
+using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Systems;
@@ -9,7 +10,6 @@ using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Chemistry;
@@ -19,30 +19,31 @@ public sealed class ReactiveSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
     [Dependency] private readonly SharedChemistryRegistrySystem _chemistryRegistry = default!;
 
-    public void DoEntityReaction(EntityUid uid, Solution solution, ReactionMethod method)
+    public void DoEntityReaction(EntityUid uid, Entity<SolutionComponent> solution, ReactionMethod method)
     {
-        foreach (var reagent in solution.Contents.ToArray())
+        foreach (ref var reagentData in CollectionsMarshal.AsSpan(solution.Comp.Contents))
         {
-            ReactionEntity(uid, method, reagent, solution);
+            ReactionEntity(uid, method, reagentData, solution);
         }
     }
 
-    public void ReactionEntity(EntityUid uid, ReactionMethod method, ReagentQuantity reagentQuantity, Solution? source)
+    public void ReactionEntity(EntityUid uid, ReactionMethod method, ReagentQuantity reagentQuantity, Entity<SolutionComponent>? source)
     {
         // We throw if the reagent specified doesn't exist.
         ReactionEntity(uid, method, reagentQuantity, reagentQuantity, source);
     }
 
     public void ReactionEntity(EntityUid uid, ReactionMethod method, Entity<ReagentDefinitionComponent> reagentDef,
-        ReagentQuantity reagentQuantity, Solution? source)
+        ReagentQuantity reagentQuantity, Entity<SolutionComponent>? source)
     {
         if (!TryComp(uid, out ReactiveComponent? reactive))
             return;
-
         // If we have a source solution, use the reagent quantity we have left. Otherwise, use the reaction volume specified.
-        var args = new EntityEffectReagentArgs(uid, EntityManager, null, source, source?.GetReagentQuantity(reagentQuantity.Reagent) ?? reagentQuantity.Quantity, reagentDef, method, 1f);
+        var args = new EntityEffectReagentArgs(uid, EntityManager, null, source, reagentQuantity.Quantity,
+            reagentDef, method, 1f);
 
         // First, check if the reagent wants to apply any effects.
         if (reagentDef.Comp.ReactiveEffects != null && reactive.ReactiveGroups != null)
@@ -67,7 +68,9 @@ public sealed class ReactiveSystem : EntitySystem
                     {
                         var entity = args.TargetEntity;
                         _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
-                            $"Reactive effect {effect.GetType().Name:effect} of reagent {reagentDef.Comp.Id:reagent} with method {method} applied on entity {ToPrettyString(entity):entity} at {Transform(entity).Coordinates:coordinates}");
+                            $"Reactive effect {effect.GetType().Name:effect} of reagent " +
+                            $"{reagentDef.Comp.Id:reagent} with method {method} applied on entity " +
+                            $"{ToPrettyString(entity):entity} at {Transform(entity).Coordinates:coordinates}");
                     }
 
                     effect.Effect(args);

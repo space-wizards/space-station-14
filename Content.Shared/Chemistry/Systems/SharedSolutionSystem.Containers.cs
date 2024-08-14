@@ -1,8 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.Solutions;
-using Content.Shared.Chemistry.Reagent;
-using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 
@@ -10,7 +7,7 @@ namespace Content.Shared.Chemistry.Systems;
 
 public partial class SharedSolutionSystem
 {
-    public bool TryGetSolution(Entity<SolutionContainerComponent?> containingEntity,
+    public bool TryGetSolution(Entity<SolutionHolderComponent?> containingEntity,
         string solutionId,
         out Entity<SolutionComponent> solution,
         bool logIfMissing = true)
@@ -48,7 +45,7 @@ public partial class SharedSolutionSystem
         return false;
     }
 
-    public IEnumerable<Entity<SolutionComponent>> EnumerateSolutions(Entity<SolutionContainerComponent?> containingEntity)
+    public IEnumerable<Entity<SolutionComponent>> EnumerateSolutions(Entity<SolutionHolderComponent?> containingEntity)
     {
         if (!Resolve(containingEntity, ref containingEntity.Comp))
             yield break;
@@ -63,7 +60,7 @@ public partial class SharedSolutionSystem
         }
     }
 
-    public bool ResolveSolution(Entity<SolutionContainerComponent?> containingEntity,
+    public bool ResolveSolution(Entity<SolutionHolderComponent?> containingEntity,
         string solutionId,
         [NotNullWhen(true)] ref Entity<SolutionComponent>? foundSolution,
         bool logIfMissing = true)
@@ -76,7 +73,6 @@ public partial class SharedSolutionSystem
         return true;
     }
 
-
     /// <summary>
     /// Ensures that the specified entity will have a solution with the specified id, creating a solution if not already present.
     /// This will return false on clients if the solution is not found!
@@ -86,12 +82,12 @@ public partial class SharedSolutionSystem
     /// <param name="solution">Solution</param>
     /// <returns>True if successful, False if there was an error or if a solution is not found on the client</returns>
     [PublicAPI]
-    public bool TryEnsureSolution(Entity<SolutionContainerComponent?,ContainerManagerComponent?> containingEntity,
+    public bool TryEnsureSolution(Entity<SolutionHolderComponent?,ContainerManagerComponent?> containingEntity,
         string solutionId,
         out Entity<SolutionComponent> solution)
     {
         if (!Resolve(containingEntity, ref containingEntity.Comp1, false))
-            AddComp<SolutionContainerComponent>(containingEntity);
+            AddComp<SolutionHolderComponent>(containingEntity);
         var solutionContainer = ContainerSystem.EnsureContainer<ContainerSlot>(containingEntity,
             FormatSolutionContainerId(solutionId),
             containingEntity);
@@ -122,13 +118,209 @@ public partial class SharedSolutionSystem
         solution = (solEnt, solComp);
         return true;
     }
+
+    public bool TryGetSolutionWithComp<TComp>(Entity<SolutionHolderComponent> solutionHolder,
+        string solutionName,
+        out Entity<SolutionComponent,TComp> foundSolution)
+        where TComp: Component, new()
+    {
+        var query = EntityManager.GetEntityQuery<TComp>();
+        foreach (var solEnt in solutionHolder.Comp.SolutionEntities)
+        {
+            if (!query.TryComp(solEnt, out var comp))
+                continue;
+            var solComp = _solutionQuery.Comp(solEnt);
+            if (solComp.Name != solutionName)
+                continue;
+            foundSolution = (solEnt, solComp, comp);
+            return true;
+        }
+        foundSolution = default;
+        return false;
+    }
+
+    public bool TryGetSolutionWithComp<TComp, TComp2>(Entity<SolutionHolderComponent> solutionHolder,
+        string solutionName,
+        out Entity<SolutionComponent, TComp, TComp2> foundSolution)
+        where TComp : Component, new()
+        where TComp2 : Component, new()
+    {
+        var query = EntityManager.GetEntityQuery<TComp>();
+        var query2 = EntityManager.GetEntityQuery<TComp2>();
+        foreach (var solEnt in solutionHolder.Comp.SolutionEntities)
+        {
+            if (!query.TryComp(solEnt, out var comp)
+                || !query2.TryComp(solEnt, out var comp2))
+                continue;
+            var solComp = _solutionQuery.Comp(solEnt);
+            if (solComp.Name != solutionName)
+                continue;
+            foundSolution = (solEnt, solComp, comp, comp2);
+            return true;
+        }
+        foundSolution = default;
+        return false;
+    }
+
+    public bool TryGetSolutionWithComp<TComp, TComp2, TComp3>(Entity<SolutionHolderComponent> solutionHolder,
+        string solutionName,
+        out Entity<SolutionComponent, TComp, TComp2, TComp3> foundSolution)
+        where TComp : Component, new()
+        where TComp2 : Component, new()
+        where TComp3 : Component, new()
+    {
+        var query = EntityManager.GetEntityQuery<TComp>();
+        var query2 = EntityManager.GetEntityQuery<TComp2>();
+        var query3 = EntityManager.GetEntityQuery<TComp3>();
+        foreach (var solEnt in solutionHolder.Comp.SolutionEntities)
+        {
+            if (!query.TryComp(solEnt, out var comp)
+                || !query2.TryComp(solEnt, out var comp2)
+                || !query3.TryComp(solEnt, out var comp3))
+                continue;
+            var solComp = _solutionQuery.Comp(solEnt);
+            if (solComp.Name != solutionName)
+                continue;
+            foundSolution = (solEnt, solComp, comp, comp2, comp3);
+            return true;
+        }
+        foundSolution = default;
+        return false;
+    }
+
+
+    public bool TryGetFirstSolutionWithComp<TComp>(Entity<SolutionHolderComponent> solutionHolder,
+        out Entity<SolutionComponent,TComp> foundSolution)
+        where TComp: Component, new()
+    {
+        var query = EntityManager.GetEntityQuery<TComp>();
+        foreach (var solEnt in solutionHolder.Comp.SolutionEntities)
+        {
+            if (!query.TryComp(solEnt, out var comp))
+                continue;
+            var solComp = _solutionQuery.Comp(solEnt);
+            foundSolution = (solEnt, solComp, comp);
+            return true;
+        }
+        foundSolution = default;
+        return false;
+    }
+
+    public bool TryGetFirstSolutionWithComp<TComp, TComp2>(Entity<SolutionHolderComponent> solutionHolder,
+        out Entity<SolutionComponent, TComp, TComp2> foundSolution)
+        where TComp : Component, new()
+        where TComp2 : Component, new()
+    {
+        var query = EntityManager.GetEntityQuery<TComp>();
+        var query2 = EntityManager.GetEntityQuery<TComp2>();
+        foreach (var solEnt in solutionHolder.Comp.SolutionEntities)
+        {
+            if (!query.TryComp(solEnt, out var comp)
+                || !query2.TryComp(solEnt, out var comp2))
+                continue;
+            var solComp = _solutionQuery.Comp(solEnt);
+            foundSolution = (solEnt, solComp, comp, comp2);
+            return true;
+        }
+        foundSolution = default;
+        return false;
+    }
+
+    public bool TryGetFirstSolutionWithComp<TComp, TComp2, TComp3>(Entity<SolutionHolderComponent> solutionHolder,
+        out Entity<SolutionComponent, TComp, TComp2, TComp3> foundSolution)
+        where TComp : Component, new()
+        where TComp2 : Component, new()
+        where TComp3 : Component, new()
+    {
+        var query = EntityManager.GetEntityQuery<TComp>();
+        var query2 = EntityManager.GetEntityQuery<TComp2>();
+        var query3 = EntityManager.GetEntityQuery<TComp3>();
+        foreach (var solEnt in solutionHolder.Comp.SolutionEntities)
+        {
+            if (!query.TryComp(solEnt, out var comp)
+                || !query2.TryComp(solEnt, out var comp2)
+                || !query3.TryComp(solEnt, out var comp3))
+                continue;
+            var solComp = _solutionQuery.Comp(solEnt);
+            foundSolution = (solEnt, solComp, comp, comp2, comp3);
+            return true;
+        }
+        foundSolution = default;
+        return false;
+    }
+
+
+    public Entity<SolutionComponent, TComp>? GetSolutionWithComp<TComp>(Entity<SolutionHolderComponent> solutionHolder)
+    where TComp: Component, new()
+    {
+        if (!TryGetFirstSolutionWithComp<TComp>(solutionHolder, out var data))
+            return null;
+        return data;
+    }
+
+    public Entity<SolutionComponent, TComp, TComp2>? GetSolutionWithComp<TComp,TComp2>(Entity<SolutionHolderComponent> solutionHolder)
+        where TComp: Component, new()
+        where TComp2: Component, new()
+    {
+        if (!TryGetFirstSolutionWithComp<TComp,TComp2>(solutionHolder, out var data))
+            return null;
+        return data;
+    }
+
+    public Entity<SolutionComponent, TComp, TComp2, TComp3>? GetSolutionWithComp<TComp,TComp2, TComp3>(Entity<SolutionHolderComponent> solutionHolder)
+        where TComp: Component, new()
+        where TComp2: Component, new()
+        where TComp3: Component, new()
+    {
+        if (!TryGetFirstSolutionWithComp<TComp,TComp2,TComp3>(solutionHolder, out var data))
+            return null;
+        return data;
+    }
+    public IEnumerable<Entity<SolutionComponent, TComp>> GetSolutionsWithComp<TComp>(
+        Entity<SolutionHolderComponent> solutionHolder) where TComp : Component, new()
+    {
+        var query = EntityManager.GetEntityQuery<TComp>();
+        foreach (var solutionEntity in solutionHolder.Comp.SolutionEntities)
+        {
+            if (query.TryComp(solutionEntity, out var comp))
+                yield return (solutionEntity, _solutionQuery.Comp(solutionEntity), comp);
+        }
+    }
+
+    public IEnumerable<Entity<SolutionComponent, TComp, TComp2>> GetSolutionsWithComps<TComp, TComp2>(
+        Entity<SolutionHolderComponent> solutionHolder) where TComp : Component, new() where TComp2: Component, new()
+    {
+        var query1 = EntityManager.GetEntityQuery<TComp>();
+        var query2 = EntityManager.GetEntityQuery<TComp2>();
+        foreach (var solutionEntity in solutionHolder.Comp.SolutionEntities)
+        {
+            if (query1.TryComp(solutionEntity, out var comp1) && query2.TryComp(solutionEntity, out var comp2))
+                yield return (solutionEntity, _solutionQuery.Comp(solutionEntity), comp1, comp2);
+        }
+    }
+
+    public IEnumerable<Entity<SolutionComponent, TComp, TComp2, TComp3>> GetSolutionsWithComps<TComp, TComp2, TComp3>(
+        Entity<SolutionHolderComponent> solutionHolder)
+        where TComp : Component, new()
+        where TComp2: Component, new()
+        where TComp3: Component, new()
+    {
+        var query1 = EntityManager.GetEntityQuery<TComp>();
+        var query2 = EntityManager.GetEntityQuery<TComp2>();
+        var query3 = EntityManager.GetEntityQuery<TComp3>();
+        foreach (var solutionEntity in solutionHolder.Comp.SolutionEntities)
+        {
+            if (query1.TryComp(solutionEntity, out var comp1)
+                && query2.TryComp(solutionEntity, out var comp2)
+                && query3.TryComp(solutionEntity, out var comp3))
+                yield return (solutionEntity, _solutionQuery.Comp(solutionEntity), comp1, comp2, comp3);
+        }
+    }
+
     /// <summary>
     /// Formats a string as a solutionContainerId
     /// </summary>
     /// <param name="solutionId">SolutionId</param>
     /// <returns>Formated Container Id</returns>
     public string FormatSolutionContainerId(string solutionId) => $"{SolutionContainerPrefix}_{solutionId}";
-
-
-
 }
