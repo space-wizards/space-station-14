@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: '"Warp to most followed" ghost option no longer includes admins and non-ghost
-      followers.'
-    type: Fix
-  id: 6609
-  time: '2024-05-20T14:12:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28120
 - author: Killerqu00
   changes:
   - message: Sleeper Agents only appear once per round.
@@ -3807,3 +3799,17 @@
   id: 7108
   time: '2024-08-14T06:25:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29954
+- author: TheShuEd
+  changes:
+  - message: added morbilliard variants of procedural tacos and kebabs
+    type: Add
+  - message: removed all microwave taco and kebabs recipes (except for the taco shell
+      itself)
+    type: Remove
+  - message: you can fight with a skewer (even if it has food on it)
+    type: Tweak
+  - message: now you can't put more than 10 layers on a burger. (20 before)
+    type: Tweak
+  id: 7109
+  time: '2024-08-14T13:04:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30905
