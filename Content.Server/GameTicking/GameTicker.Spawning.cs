@@ -275,24 +275,6 @@ namespace Content.Server.GameTicking
                     Loc.GetString("job-greet-station-name", ("stationName", metaData.EntityName)));
             }
 
-
-            // Arrivals is unable to do this during spawning as no actor is attached yet.
-            // We also want this message last.
-            // Arrival System adds a PendingClockInComponent, while the Cryosleep System does not.
-            if (!silent && lateJoin && HasComp(mob, typeof(PendingClockInComponent)))
-            {
-                var arrival = _arrivals.NextShuttleArrival();
-                if (arrival == null)
-                {
-                    _chatManager.DispatchServerMessage(player, Loc.GetString("latejoin-arrivals-direction"));
-                }
-                else
-                {
-                    _chatManager.DispatchServerMessage(player,
-                        Loc.GetString("latejoin-arrivals-direction-time", ("time", $"{arrival:mm\\:ss}")));
-                }
-            }
-
             // We raise this event directed to the mob, but also broadcast it so game rules can do something now.
             PlayersJoinedRoundNormally++;
             var aev = new PlayerSpawnCompleteEvent(mob,
