@@ -200,7 +200,7 @@
     - state: service_label
 
 - type: entity
-  parent: EncryptionKey
+  parent: [EncryptionKey, BaseRestrictedContraband]
   id: EncryptionKeySyndie
   name: blood-red encryption key
   description: An encryption key used by... wait... Who is the owner of this chip?
@@ -215,7 +215,7 @@
     - state: synd_label
 
 - type: entity
-  parent: EncryptionKey
+  parent: [ EncryptionKey, BaseScienceContraband ]
   id: EncryptionKeyBinary
   name: binary translator key
   description: An encryption key that translates binary signals used by silicons.
@@ -233,7 +233,7 @@
   parent: EncryptionKey
   id: EncryptionKeyFreelance
   name: freelancer encryption key
-  description: An encryption key used by freelancers, who may or may not have an affiliation. It looks like its worn out.
+  description: An encryption key used by freelancers, who may or may not have an affiliation. It looks like it's worn out.
   components:
     - type: EncryptionKey
       channels:
