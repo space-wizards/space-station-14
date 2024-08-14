@@ -1,0 +1,25 @@
+- type: metamorphRecipe
+  id: FoodBurgerCheese
+  key: burger
+  result: FoodBurgerCheese
+  rules:
+  - !type:SequenceLength
+    range:
+      max: 3
+      min: 4
+  - !type:LastElementHasTags
+    tags:
+    - Bun
+  - !type:IngredientsWithTags
+    tags:
+    - Cooked
+    - Meat
+    count:
+      min: 1
+      max: 2
+  - !type:IngredientsWithTags
+    tags:
+    - Cheese
+    count:
+      min: 1
+      max: 2

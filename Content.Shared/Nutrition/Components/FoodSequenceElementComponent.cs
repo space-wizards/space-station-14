@@ -1,5 +1,7 @@
 using System.Numerics;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Tag;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -58,6 +60,8 @@ public sealed class FoodSequenceElementEntry
     /// </summary>
     public Vector2 LocalOffset { get; set; } = Vector2.Zero;
 
+    public List<ProtoId<TagPrototype>> Tags { get; set; }  = new();
+
     public static FoodSequenceElementEntry Clone(FoodSequenceElementEntry original)
     {
         FoodSequenceElementEntry clone = new()
@@ -65,7 +69,8 @@ public sealed class FoodSequenceElementEntry
             Name = original.Name,
             Sprite = original.Sprite,
             Scale = original.Scale,
-            Final = original.Final
+            Final = original.Final,
+            Tags = original.Tags
         };
 
         return clone;

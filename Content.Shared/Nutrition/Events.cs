@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Nutrition.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Nutrition;
@@ -76,11 +77,13 @@ public sealed class FoodSequenceIngredientAddedEvent : EntityEventArgs
     public EntityUid Start { get; }
     public EntityUid Element { get; }
     public EntityUid? User { get; }
+    public FoodSequenceElementEntry ElementData { get; }
 
-    public FoodSequenceIngredientAddedEvent(EntityUid start, EntityUid element, EntityUid? user = null)
+    public FoodSequenceIngredientAddedEvent(EntityUid start, EntityUid element, FoodSequenceElementEntry data, EntityUid? user = null)
     {
         Start = start;
         Element = element;
         User = user;
+        ElementData = data;
     }
 }

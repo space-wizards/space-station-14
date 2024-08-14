@@ -247,6 +247,9 @@
   id: Burnt
 
 - type: Tag
+  id: Bun
+
+- type: Tag
   id: BypassDropChecks
 
 - type: Tag

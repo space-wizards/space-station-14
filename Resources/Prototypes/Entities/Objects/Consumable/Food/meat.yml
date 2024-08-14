@@ -114,6 +114,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: plain
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-burger-content-raw-meat
@@ -160,21 +163,24 @@
         reagents:
         - ReagentId: CarpoToxin
           Quantity: 5
-  - type: FoodSequenceElement
-    data:
-      sprite:
-        sprite: Objects/Consumable/Food/meat.rsi
-        state: fish
-    entries:
-      burger:
-        name: food-sequence-burger-content-carp
-      taco:
-        name: food-sequence-content-carp
   - type: Extractable
     juiceSolution:
       reagents:
       - ReagentId: CarpoToxin
         Quantity: 5
+  - type: FoodSequenceElement
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: fish
+      tags:
+      - Meat
+      - Raw
+    entries:
+      burger:
+        name: food-sequence-burger-content-carp
+      taco:
+        name: food-sequence-content-carp
 
 - type: entity
   name: raw bacon
@@ -210,6 +216,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: bacon
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-burger-content-meat
@@ -244,6 +253,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: bear
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-burger-content-bear
@@ -278,6 +290,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: bird
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-burger-content-penguin
@@ -313,6 +328,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: bird
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-content-chicken
@@ -352,6 +370,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: bird
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-content-duck
@@ -387,6 +408,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: corgi
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-burger-content-corgi
@@ -421,6 +445,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: crab
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-content-crab
@@ -491,6 +518,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: dragon
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-content-dragon
@@ -521,6 +551,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: plain
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-burger-content-rat
@@ -555,6 +588,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: lizard
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-burger-content-lizard
@@ -579,6 +615,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: plant
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-burger-content-plant
@@ -614,6 +653,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: rotten
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-burger-content-rotten
@@ -644,6 +686,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: spider
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-burger-content-spider
@@ -671,6 +716,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: spiderleg
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-burger-content-spider
@@ -696,6 +744,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: clump
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-content-clump
@@ -726,6 +777,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: snake
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-content-snake
@@ -768,6 +822,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: xeno
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-content-xeno
@@ -807,6 +864,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: rouny
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-content-rouny
@@ -831,6 +891,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: tomato
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-content-tomato
@@ -872,6 +935,9 @@
       sprite:
         sprite: Objects/Consumable/Food/salami.rsi
         state: salami
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-content-salami
@@ -901,6 +967,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: clown
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-content-clown
@@ -924,6 +993,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: meatball
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-burger-content-raw-meat
@@ -950,6 +1022,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: slime
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-content-slime
@@ -1023,6 +1098,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: plain-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-burger-content-meat
@@ -1069,6 +1147,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: bacon-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-burger-content-meat
@@ -1113,6 +1194,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: product-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-burger-content-bear
@@ -1151,6 +1235,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: bird-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-burger-content-penguin
@@ -1189,6 +1276,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: bird-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-content-chicken
@@ -1232,6 +1322,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: chicken-fried
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-content-chicken
@@ -1275,6 +1368,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: bird-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-content-duck
@@ -1318,6 +1414,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: crab-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-content-crab
@@ -1354,6 +1453,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: goliath-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-burger-content-goliath
@@ -1394,6 +1496,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: rouny-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-content-rouny
@@ -1433,6 +1538,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: lizard-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-burger-content-lizard
@@ -1470,6 +1578,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: spiderleg-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-burger-content-spider
@@ -1501,6 +1612,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: meatball-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-burger-content-meat
@@ -1542,6 +1656,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: cutlet
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-burger-content-meat
@@ -1582,6 +1699,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: cutlet
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-burger-content-bear
@@ -1615,6 +1735,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: cutlet
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-burger-content-penguin
@@ -1648,6 +1771,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: cutlet
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-content-chicken
@@ -1686,6 +1812,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: cutlet
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-content-duck
@@ -1727,6 +1856,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: cutlet
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-burger-content-lizard
@@ -1764,6 +1896,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: spidercutlet
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-burger-content-spider
@@ -1798,6 +1933,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: xenocutlet
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-content-xeno
@@ -1824,6 +1962,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: salami-slice
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-content-tomato
@@ -1856,6 +1997,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: salami-slice
+      tags:
+      - Meat
+      - Raw
     entries:
       burger:
         name: food-sequence-content-salami
@@ -1890,6 +2034,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: cutlet-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         sprite:
@@ -1925,6 +2072,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: cutlet-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-burger-content-bear
@@ -1958,6 +2108,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: cutlet-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-burger-content-penguin
@@ -1991,6 +2144,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: cutlet-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-content-chicken
@@ -2029,6 +2185,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: cutlet-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-content-duck
@@ -2068,6 +2227,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: cutlet-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-burger-content-lizard
@@ -2105,6 +2267,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: cutlet-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-burger-content-spider
@@ -2135,6 +2300,9 @@
       sprite:
         sprite: Objects/Consumable/Food/meat.rsi
         state: xenocutlet-cooked
+      tags:
+      - Meat
+      - Cooked
     entries:
       burger:
         name: food-sequence-content-xeno

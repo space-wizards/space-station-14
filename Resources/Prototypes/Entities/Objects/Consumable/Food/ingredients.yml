@@ -597,6 +597,8 @@
       sprite:
         sprite: Objects/Consumable/Food/ingredients.rsi
         state: cheesewedge
+      tags:
+      - Cheese
     entries:
       burger:
         name: food-sequence-content-cheese
@@ -657,6 +659,8 @@
       sprite:
         sprite: Objects/Consumable/Food/ingredients.rsi
         state: chevredisk
+      tags:
+      - Cheese
     entries:
       burger:
         name: food-sequence-content-chevre
@@ -715,6 +719,8 @@
       sprite:
         sprite: Objects/Consumable/Food/ingredients.rsi
         state: tofu
+      tags:
+      - Cheese
     entries:
       burger:
         name: food-sequence-content-tofu

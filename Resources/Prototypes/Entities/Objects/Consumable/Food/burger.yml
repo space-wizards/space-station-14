@@ -52,6 +52,7 @@
     maxLayerOffset: 0.05, 0
     nameGeneration: food-sequence-burger-gen
   - type: Appearance
+  - type: FoodMetamorphableByAdding
   - type: SolutionContainerManager
     solutions:
       food:
@@ -84,6 +85,9 @@
       sprite:
         sprite: Objects/Consumable/Food/burger.rsi
         state: bun_top
+      tags:
+      - Bun
+      - Bread
     entries:
       burger:
         final: true

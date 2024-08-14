@@ -1,3 +1,8 @@
+using Content.Shared.Destructible.Thresholds;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Tag;
+using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Nutrition.FoodMetamorphRules;
@@ -8,5 +13,152 @@ namespace Content.Shared.Nutrition.FoodMetamorphRules;
 [Serializable, NetSerializable]
 public abstract partial class FoodMetamorphRule
 {
-    public abstract bool Check();
+    public abstract bool Check(List<FoodSequenceElementEntry> ingredients);
+}
+
+/// <summary>
+/// The requirement that the sequence be within the specified size limit
+/// </summary>
+[UsedImplicitly]
+[Serializable, NetSerializable]
+public sealed partial class SequenceLength : FoodMetamorphRule
+{
+    [DataField(required: true)]
+    public MinMax Range = new ();
+
+    public override bool Check(List<FoodSequenceElementEntry> ingredients)
+    {
+        return (ingredients.Count <= Range.Max && ingredients.Count >= Range.Min);
+    }
+}
+
+/// <summary>
+/// A requirement that the last element of the sequence have one or all of the required tags
+/// </summary>
+[UsedImplicitly]
+[Serializable, NetSerializable]
+public sealed partial class LastElementHasTags : FoodMetamorphRule
+{
+    [DataField(required: true)]
+    public List<ProtoId<TagPrototype>> Tags = new ();
+
+    [DataField]
+    public bool NeedAll = true;
+
+    public override bool Check(List<FoodSequenceElementEntry> ingredients)
+    {
+        var lastIngredient = ingredients[ingredients.Count - 1];
+
+        foreach (var tag in Tags)
+        {
+            var containsTag = lastIngredient.Tags.Contains(tag);
+
+            if (NeedAll && !containsTag)
+            {
+                return false;
+            }
+
+            if (!NeedAll && containsTag)
+            {
+                return true;
+            }
+        }
+
+        return NeedAll;
+    }
+}
+
+/// <summary>
+/// A requirement that the specified sequence element have one or all of the required tags
+/// </summary>
+[UsedImplicitly]
+[Serializable, NetSerializable]
+public sealed partial class ElementHasTags : FoodMetamorphRule
+{
+    [DataField(required: true)]
+    public int ElementNumber = 0;
+
+    [DataField(required: true)]
+    public List<ProtoId<TagPrototype>> Tags = new ();
+
+    [DataField]
+    public bool NeedAll = true;
+
+    public override bool Check(List<FoodSequenceElementEntry> ingredients)
+    {
+        if (ingredients.Count < ElementNumber + 1)
+            return false;
+
+        foreach (var tag in Tags)
+        {
+            var containsTag = ingredients[ElementNumber].Tags.Contains(tag);
+
+            if (NeedAll && !containsTag)
+            {
+                return false;
+            }
+
+            if (!NeedAll && containsTag)
+            {
+                return true;
+            }
+        }
+
+        return NeedAll;
+    }
+}
+
+/// <summary>
+/// A requirement that there be X ingredients in the sequence that have one or all of the specified tags.
+/// </summary>
+[UsedImplicitly]
+[Serializable, NetSerializable]
+public sealed partial class IngredientsWithTags : FoodMetamorphRule
+{
+    [DataField(required: true)]
+    public List<ProtoId<TagPrototype>> Tags = new ();
+
+    [DataField(required: true)]
+    public MinMax Count = new();
+
+    [DataField]
+    public bool NeedAll = true;
+
+    public override bool Check(List<FoodSequenceElementEntry> ingredients)
+    {
+        var count = 0;
+        foreach (var ingredient in ingredients)
+        {
+            var allowed = false;
+            if (NeedAll)
+            {
+                allowed = true;
+                foreach (var tag in Tags)
+                {
+                    if (!ingredient.Tags.Contains(tag))
+                    {
+                        allowed = false;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                allowed = false;
+                foreach (var tag in Tags)
+                {
+                    if (ingredient.Tags.Contains(tag))
+                    {
+                        allowed = true;
+                        break;
+                    }
+                }
+            }
+
+            if (allowed)
+                count++;
+        }
+
+        return count >= Count.Min && count <= Count.Max;
+    }
 }
