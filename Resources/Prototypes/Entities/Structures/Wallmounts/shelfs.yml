@@ -2,23 +2,21 @@
 - type: entity
   abstract: true
   id: ShelfBase
-  parent: BaseStructure
   name: shelf
-  description: A strange place to place, well, anything really. You feel like you shouldn't be seeing this.'
+  description: A strange place to place, well, anything really. You feel like you shouldn't be seeing this.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
   components:
+  - type: Clickable
+  - type: Tag
+    tags:
+      - Structure
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Storage/Shelfs/wood.rsi
     state: base
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.35,-0.35,0.35,0.35"
-        density: 35
-        layer:
-        - BulletImpassable
   - type: Transform
   - type: Damageable
     damageModifierSet: Wood
@@ -35,7 +33,6 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: WallMount
-    arc: 175
   - type: Storage
     grid:
     - 0,0,3,1
@@ -49,9 +46,6 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
-  - type: Tag
-    tags:
-    - Structure
 
 - type: entity
   abstract: true
