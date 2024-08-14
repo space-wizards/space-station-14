@@ -1584,76 +1584,6 @@
         - ReagentId: Protein
           Quantity: 5
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: meatball-cooked
-    entries:
-      burger:
-        name: food-sequence-burger-content-meat
-      taco:
-        name: food-sequence-content-meat
-      skewer:
-        name: food-sequence-content-meat
-        sprite:
-          sprite: Objects/Consumable/Food/skewer.rsi
-          state: skewer-meat
-
-- type: entity
-  name: cooked finfin
-  parent: FoodMeatBase
-  id: FoodMeatFinfinCooked
-  description: A cooked piece of finfin. Best used in other recipes.
-  components:
-  - type: Tag
-    tags:
-    - Cooked
-    - Meat
-  - type: Sprite
-    layers:
-    - state: finfin-cooked
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Protein
-          Quantity: 5
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatFinfinCutletCooked
-  - type: Construction
-    graph: FinfinSteak
-    node: cooked finfin
-
-- type: entity
-  name: fried finfin
-  parent: FoodMeatBase
-  id: FoodMeatFinfinFried
-  description: A juicy hunk of finfin meat, fried to perfection.
-  components:
-  - type: Tag
-    tags:
-    - Cooked
-    - Meat
-  - type: Sprite
-    layers:
-    - state: chicken-fried
-      map: [ "enum.DamageStateVisualLayers.Base" ]
-  - type: RandomSprite
-    available:
-      - enum.DamageStateVisualLayers.Base:
-          chicken-fried: ""
-          chicken2-fried: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Protein
-          Quantity: 5
-  - type: FoodSequenceElement
     entries:
       burger:
         sprite:
@@ -1995,6 +1925,15 @@
           Quantity: 1
         - ReagentId: Protein
           Quantity: 1
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Consumable/Food/meat.rsi
+      state: salami-slice
+    entries:
+      burger:
+        name: food-sequence-content-salami
+      taco:
+        name: food-sequence-content-salami
 
 - type: entity
   name: raw finfin cutlet
@@ -2018,6 +1957,7 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+=========
   - type: FoodSequenceElement
     sprite:
       sprite: Objects/Consumable/Food/meat.rsi
@@ -2027,6 +1967,7 @@
         name: food-sequence-content-salami
       taco:
         name: food-sequence-content-salami
+>>>>>>>>> Temporary merge branch 2
 
 # Cooked
 

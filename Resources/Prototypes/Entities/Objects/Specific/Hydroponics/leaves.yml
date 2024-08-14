@@ -24,8 +24,9 @@
     entries:
       burger:
         name: food-sequence-burger-content-cannabis
-      taco:
-        name: food-sequence-content-cannabis
+        sprite:
+          sprite: Objects/Specific/Hydroponics/cannabis.rsi
+          state: produce
 
 - type: entity
   name: green marijuana leaves
@@ -101,6 +102,13 @@
       - Smokable
   - type: Item
     size: Tiny
+  - type: FoodSequenceElement
+    entries:
+      burger:
+        name: food-sequence-burger-content-cannabis
+        sprite:
+          sprite: Objects/Misc/reagent_fillings.rsi
+          state: powderpile
 
 - type: entity
   name: rainbow cannabis leaves
@@ -263,3 +271,10 @@
       - Smokable
   - type: Item
     size: Tiny
+  - type: FoodSequenceElement
+    entries:
+      burger:
+        name: food-sequence-burger-content-tobacco
+        sprite:
+          sprite: Objects/Misc/reagent_fillings.rsi
+          state: powderpile
