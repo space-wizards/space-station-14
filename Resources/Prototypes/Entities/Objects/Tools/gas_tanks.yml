@@ -60,7 +60,7 @@
   parent: GasTankRoundBase
   id: OxygenTank
   name: oxygen tank
-  description: A standard cylindrical gas tank for oxygen.
+  description: A standard cylindrical gas tank for oxygen. It can hold 5 L of gas.
   components:
   - type: Sprite
     sprite: Objects/Tanks/oxygen.rsi
@@ -73,7 +73,7 @@
   parent: GasTankRoundBase
   id: NitrogenTank
   name: nitrogen tank
-  description: A standard cylindrical gas tank for nitrogen.
+  description: A standard cylindrical gas tank for nitrogen. It can hold 5 L of gas.
   components:
   - type: Sprite
     sprite: Objects/Tanks/red.rsi
@@ -86,7 +86,7 @@
   parent: GasTankRoundBase
   id: EmergencyOxygenTank
   name: emergency oxygen tank
-  description: An easily portable tank for emergencies. Contains very little oxygen, rated for survival use only.
+  description: An easily portable tank for emergencies. Contains very little oxygen, rated for survival use only. It can hold 0.66 L of gas.
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency.rsi
@@ -115,7 +115,7 @@
   parent: EmergencyOxygenTank
   id: EmergencyNitrogenTank
   name: emergency nitrogen tank
-  description: An easily portable tank for emergencies. Contains very little nitrogen, rated for survival use only.
+  description: An easily portable tank for emergencies. Contains very little nitrogen, rated for survival use only. It can hold 0.66 L of gas.
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_red.rsi
@@ -128,7 +128,7 @@
   parent: EmergencyOxygenTank
   id: ExtendedEmergencyOxygenTank
   name: extended-capacity emergency oxygen tank
-  description: An emergency tank with extended capacity. Technically rated for prolonged use.
+  description: An emergency tank with extended capacity. Technically rated for prolonged use. It can hold 1.5 L of gas.
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_extended.rsi
@@ -145,7 +145,7 @@
   parent: ExtendedEmergencyOxygenTank
   id: ExtendedEmergencyNitrogenTank
   name: extended-capacity emergency nitrogen tank
-  description: An emergency tank with extended capacity. Technically rated for prolonged use.
+  description: An emergency tank with extended capacity. Technically rated for prolonged use. It can hold 1.5 L of gas.
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_extended_red.rsi
@@ -158,7 +158,7 @@
   parent: ExtendedEmergencyOxygenTank
   id: DoubleEmergencyOxygenTank
   name: double emergency oxygen tank
-  description: A high-grade dual-tank emergency life support container. It holds a decent amount of oxygen for it's small size.
+  description: A high-grade dual-tank emergency life support container. It holds a decent amount of oxygen for its small size. It can hold 2.5 L of gas.
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_double.rsi
@@ -180,7 +180,7 @@
   parent: DoubleEmergencyOxygenTank
   id: DoubleEmergencyNitrogenTank
   name: double emergency nitrogen tank
-  description: A high-grade dual-tank emergency life support container. It holds a decent amount of nitrogen for its small size.
+  description: A high-grade dual-tank emergency life support container. It holds a decent amount of nitrogen for its small size. It can hold 2.5 L of gas.
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_double_red.rsi
@@ -193,7 +193,7 @@
   parent: EmergencyOxygenTank
   id: EmergencyFunnyOxygenTank
   name: funny emergency oxygen tank
-  description: An easily portable tank for emergencies. Contains very little oxygen with an extra of funny gas, rated for survival use only.
+  description: An easily portable tank for emergencies. Contains very little oxygen with an extra of funny gas, rated for survival use only. It can hold 0.66 L of gas.
   components:
   - type: Sprite
     sprite: Objects/Tanks/emergency_clown.rsi
@@ -206,7 +206,7 @@
   parent: GasTankRoundBase
   id: AirTank
   name: air tank
-  description: Mixed anyone?
+  description: Mixed anyone? It can hold 5 L of gas.
   components:
   - type: GasTank
     outputPressure: 101.3
@@ -215,7 +215,7 @@
   parent: GasTankRoundBase
   id: NitrousOxideTank
   name: nitrous oxide tank
-  description: Contains a mixture of air and nitrous oxide. Make sure you don't refill it with pure N2O.
+  description: Contains a mixture of air and nitrous oxide. Make sure you don't refill it with pure N2O. It can hold 5 L of gas.
   components:
   - type: Sprite
     sprite: Objects/Tanks/anesthetic.rsi
@@ -231,7 +231,7 @@
   parent: GasTankBase
   id: PlasmaTank
   name: plasma tank
-  description: Contains dangerous plasma. Do not inhale. Extremely flammable.
+  description: Contains dangerous plasma. Do not inhale. Extremely flammable. It can hold 5 L of gas.
   components:
   - type: Sprite
     sprite: Objects/Tanks/plasma.rsi

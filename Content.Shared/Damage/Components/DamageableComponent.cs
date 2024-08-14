@@ -66,7 +66,7 @@ namespace Content.Shared.Damage
         public List<ProtoId<DamageTypePrototype>> RadiationDamageTypeIDs = new() { "Radiation" };
 
         [DataField]
-        public Dictionary<MobState, ProtoId<StatusIconPrototype>> HealthIcons = new()
+        public Dictionary<MobState, ProtoId<HealthIconPrototype>> HealthIcons = new()
         {
             { MobState.Alive, "HealthIconFine" },
             { MobState.Critical, "HealthIconCritical" },
@@ -74,7 +74,7 @@ namespace Content.Shared.Damage
         };
 
         [DataField]
-        public ProtoId<StatusIconPrototype> RottingIcon = "HealthIconRotting";
+        public ProtoId<HealthIconPrototype> RottingIcon = "HealthIconRotting";
 
         [DataField]
         public FixedPoint2? HealthBarThreshold;
