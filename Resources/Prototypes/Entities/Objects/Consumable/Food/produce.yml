@@ -639,9 +639,9 @@
       state: produce
     entries:
       burger:
-        name: food-sequence-content-lemon
+        name: food-sequence-content-lemoon
       taco:
-        name: food-sequence-content-lemon
+        name: food-sequence-content-lemoon
 
 - type: entity
   name: lime
@@ -671,9 +671,9 @@
       state: produce
     entries:
       burger:
-        name: food-sequence-content-lemon
+        name: food-sequence-content-lime
       taco:
-        name: food-sequence-content-lemon
+        name: food-sequence-content-lime
 
 - type: entity
   name: orange

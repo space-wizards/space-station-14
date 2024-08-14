@@ -209,9 +209,9 @@
       state: bacon
     entries:
       burger:
-        name: food-sequence-burger-content-carp
+        name: food-sequence-burger-content-meat
       taco:
-        name: food-sequence-content-carp
+        name: food-sequence-content-meat
 
 - type: entity
   name: raw bear meat
@@ -347,9 +347,9 @@
       state: bird
     entries:
       burger:
-        name: food-sequence-burger-content-penguin
+        name: food-sequence-burger-content-duck
       taco:
-        name: food-sequence-content-penguin
+        name: food-sequence-content-duck
 
 - type: entity
   name: prime-cut corgi meat
@@ -785,12 +785,12 @@
   - type: FoodSequenceElement
     sprite:
       sprite: Objects/Consumable/Food/meat.rsi
-      state: xeno
+      state: rouny
     entries:
       burger:
-        name: food-sequence-content-xeno
+        name: food-sequence-content-rouny
       taco:
-        name: food-sequence-content-xeno
+        name: food-sequence-content-rouny
 
 - type: entity
   name: killer tomato meat
@@ -840,6 +840,15 @@
     damage:
       types:
         Blunt: 2
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Consumable/Food/salami.rsi
+      state: salami
+    entries:
+      burger:
+        name: food-sequence-content-salami
+      taco:
+        name: food-sequence-content-salami
 
 - type: entity
   name: meat clown
@@ -888,6 +897,8 @@
     entries:
       burger:
         name: food-sequence-burger-content-raw-meat
+      taco:
+        name: food-sequence-content-raw-meat
 
 - type: entity
   name: slimeball
@@ -1344,9 +1355,9 @@
       state: rouny-cooked
     entries:
       burger:
-        name: food-sequence-content-xeno
+        name: food-sequence-content-rouny
       taco:
-        name: food-sequence-content-xeno
+        name: food-sequence-content-rouny
 
 - type: entity
   name: lizard steak

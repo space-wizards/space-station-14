@@ -651,6 +651,15 @@
   - type: Tag
     tags:
     - Slice
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Consumable/Food/ingredients.rsi
+      state: chevredisk
+    entries:
+      burger:
+        name: food-sequence-content-chevre
+      taco: 
+        name: food-sequence-content-chevre
 
 - type: entity
   name: tofu
@@ -699,6 +708,15 @@
   - type: Tag
     tags:
     - Slice
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Consumable/Food/ingredients.rsi
+      state: tofu
+    entries:
+      burger:
+        name: food-sequence-content-tofu
+      taco: 
+        name: food-sequence-content-tofu
 
 - type: entity
   name: burned mess
@@ -755,3 +773,12 @@
   - type: Tag
     tags:
       - Ingredient
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Specific/Hydroponics/cocoa.rsi
+      state: produce-beans
+    entries:
+      burger:
+        name: food-sequence-content-cocoa
+      taco: 
+        name: food-sequence-content-cocoa

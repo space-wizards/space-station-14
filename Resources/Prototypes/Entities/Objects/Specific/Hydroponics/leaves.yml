@@ -46,15 +46,6 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tobacco.rsi
     state: dried
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Specific/Hydroponics/tobacco.rsi
-      state: dried
-    entries:
-      burger:
-        name: food-sequence-burger-content-cannabis
-      taco:
-        name: food-sequence-content-cannabis
 
 - type: entity
   name: ground cannabis
