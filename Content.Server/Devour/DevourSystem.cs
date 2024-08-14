@@ -4,6 +4,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Devour;
 using Content.Shared.Devour.Components;
 using Content.Shared.Humanoid;
+using Content.Shared.Silicons.Borgs.Components;
 
 namespace Content.Server.Devour;
 
@@ -36,6 +37,10 @@ public sealed class DevourSystem : SharedDevourSystem
                 ContainerSystem.Insert(args.Args.Target.Value, component.Stomach);
             }
             _bloodstreamSystem.TryAddToChemicals(uid, ichorInjection);
+        }
+        else if (component.ShouldStoreDevoured && HasComp<BorgChassisComponent>(args.Args.Target)) 
+        {
+              ContainerSystem.Insert(args.Args.Target.Value, component.Stomach);
         }
 
         //TODO: Figure out a better way of removing structures via devour that still entails standing still and waiting for a DoAfter. Somehow.
