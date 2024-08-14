@@ -318,7 +318,7 @@ namespace Content.Server.GameTicking
         }
 
         /// <summary>
-        /// Makes a player join into the game and spawn on a staiton.
+        /// Makes a player join into the game and spawn on a station.
         /// </summary>
         /// <param name="player">The player joining</param>
         /// <param name="station">The station they're spawning on</param>
