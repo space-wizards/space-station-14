@@ -148,6 +148,8 @@
     sprite: Clothing/Head/Misc/cone.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/cone.rsi
+  - type: Item
+    storedRotation: 0
   - type: PhysicalComposition #you can't just pass up some free plastic!
     materialComposition:
       Plastic: 100
@@ -168,7 +170,7 @@
     accent: MobsterAccent
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ ClothingHeadBase, BaseSyndicateContraband ]
   id: ClothingHeadHatCatEars
   name: cat ears
   description: "NYAH!"
@@ -205,7 +207,7 @@
     accent: OwOAccent
 
 - type: entity
-  noSpawn: true
+  categories: [ Actions, HideSpawnMenu ]
   id: ActionBecomeValid
   name: Become Valid
   description: "*notices your killsign* owo whats this"

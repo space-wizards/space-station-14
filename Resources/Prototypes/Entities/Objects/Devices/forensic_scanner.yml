@@ -26,7 +26,7 @@
   - type: ForensicScanner
   - type: GuideHelp
     guides:
-      - Forensics
+    - Forensics
   - type: StealTarget
     stealGroup: ForensicScanner
 
@@ -34,7 +34,7 @@
   name: forensic scanner report
   parent: Paper
   id: ForensicReportPaper
-  description: 'Circumstantial evidence, at best'
+  description: Circumstantial evidence, at best.
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi

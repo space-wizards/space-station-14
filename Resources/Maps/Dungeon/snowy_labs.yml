@@ -10731,14 +10731,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 52.5,14.5
       parent: 1653
-- proto: MagicalLamp
-  entities:
-  - uid: 1204
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 1.5085075,47.438328
-      parent: 1653
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 1245
