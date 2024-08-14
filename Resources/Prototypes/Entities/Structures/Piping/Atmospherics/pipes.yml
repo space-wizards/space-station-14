@@ -155,7 +155,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Blunt: 3 #This should be 6 but throwing damage is doubled at the moment for some reason so for now it's 3
+        Blunt: 8 # Woe, pipe be upon ye!
 
 - type: entity
   parent: GasPipeBase
