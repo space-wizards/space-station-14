@@ -96,11 +96,18 @@ namespace Content.Client.Ghost
 
         private void OnToggleGhosts(EntityUid uid, GhostComponent component, ToggleGhostsActionEvent args)
         {
-            if (args.Handled)
+            if (args.Handled)  {
                 return;
+            }
 
-            Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-ghost-visibility-popup"), args.Performer);
-
+            if (GhostVisibility == false)
+            {
+                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-ghost-visibility-off-popup"), args.Performer);
+            }
+            else
+            {
+                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-ghost-visibility-on-popup"), args.Performer);
+            }
             if (uid == _playerManager.LocalEntity)
                 ToggleGhostVisibility();
 
