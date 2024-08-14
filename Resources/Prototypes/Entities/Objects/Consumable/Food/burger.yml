@@ -33,6 +33,8 @@
   name: bottom bun
   description: It's time to start building the burger tower. 
   components:
+  - type: Item
+    size: Normal #patch until there is an adequate resizing system in place 
   - type: Food
   - type: Sprite
     drawdepth: Mobs
