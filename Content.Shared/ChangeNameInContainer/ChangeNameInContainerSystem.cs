@@ -6,7 +6,7 @@ namespace Content.Shared.ChangeNameInContainer;
 public sealed partial class ChangeNameInContainerSystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -16,7 +16,7 @@ public sealed partial class ChangeNameInContainerSystem : EntitySystem
     private void UpdateName(Entity<ChangeNameInContainerComponent> entity, ref TransformSpeakerNameEvent args)
     {
         if (_container.TryGetContainingContainer((entity, null, null), out var container)
-            && !_whitelistSystem.IsWhitelistFailOrNull(entity.Comp.Whitelist, container.Owner))
+            && !_whitelist.IsWhitelistFailOrNull(entity.Comp.Whitelist, container.Owner))
             args.VoiceName = MetaData(container.Owner).EntityName;
     }
 
