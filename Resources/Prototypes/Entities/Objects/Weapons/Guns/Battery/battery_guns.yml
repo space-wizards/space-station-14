@@ -104,7 +104,7 @@
 
 - type: entity
   name: svalinn laser pistol
-  parent: BaseWeaponPowerCellSmall
+  parent: [ BaseWeaponPowerCellSmall, BaseRestrictedContraband ]
   id: WeaponLaserSvalinn
   description: A cheap and widely used laser pistol.
   components:
@@ -125,7 +125,7 @@
 
 - type: entity
   name: retro laser blaster
-  parent: BaseWeaponBatterySmall
+  parent: [ BaseWeaponBatterySmall, BaseMajorContraband ]
   id: WeaponLaserGun
   description: A weapon using light amplified by the stimulated emission of radiation.
   components:
@@ -200,7 +200,7 @@
 
 - type: entity
   name: laser rifle
-  parent: [BaseWeaponBattery, BaseGunWieldable]
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponLaserCarbine
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
@@ -325,7 +325,7 @@
 
 - type: entity
   name: laser cannon
-  parent: [BaseWeaponBattery, BaseGunWieldable]
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponLaserCannon
   description: A heavy duty, high powered laser weapon.
   components:
@@ -408,7 +408,7 @@
 
 - type: entity
   name: disabler
-  parent: BaseWeaponBatterySmall
+  parent: [ BaseWeaponBatterySmall, BaseSecurityCommandContraband ]
   id: WeaponDisabler
   description: A self-defense weapon that exhausts organic targets, weakening them until they collapse.
   components:
@@ -449,7 +449,7 @@
 
 - type: entity
   name: disabler SMG
-  parent: BaseWeaponBattery
+  parent: [ BaseWeaponBattery, BaseRestrictedContraband ]
   id: WeaponDisablerSMG
   description: Advanced weapon that exhausts organic targets, weakening them until they collapse.
   components:
@@ -512,7 +512,7 @@
 
 - type: entity
   name: taser
-  parent: BaseWeaponBatterySmall
+  parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
   id: WeaponTaser
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
   components:
@@ -548,7 +548,7 @@
 
 - type: entity
   name: antique laser pistol
-  parent: BaseWeaponBatterySmall
+  parent: [BaseWeaponBatterySmall, BaseGrandTheftContraband]
   id: WeaponAntiqueLaser
   description: This is an antique laser pistol. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
   components:
@@ -588,7 +588,7 @@
 
 - type: entity
   name: advanced laser pistol
-  parent: BaseWeaponBatterySmall
+  parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband]
   id: WeaponAdvancedLaser
   description: An experimental high-energy laser pistol with a self-charging nuclear battery.
   components:
@@ -623,7 +623,7 @@
 
 - type: entity
   name: C.H.I.M.P. handcannon
-  parent: BaseWeaponBatterySmall
+  parent: [BaseWeaponBatterySmall, BaseScienceContraband]
   id: WeaponPistolCHIMP
   description: Just because it's a little C.H.I.M.P. doesn't mean it can't punch like an A.P.E.
   components:
@@ -669,7 +669,7 @@
 
 - type: entity
   name: experimental C.H.I.M.P. handcannon
-  parent: WeaponPistolCHIMP
+  parent: [WeaponPistolCHIMP, BaseSyndicateContraband]
   id: WeaponPistolCHIMPUpgraded
   description: This C.H.I.M.P. seems to have a greater punch than is usual...
   components:
