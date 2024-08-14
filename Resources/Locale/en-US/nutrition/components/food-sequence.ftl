@@ -1,6 +1,7 @@
 food-sequence-no-space = You can't put any more!
 
-#GENERAL
+# GENERAL
+
 food-sequence-content-chicken = chicken
 food-sequence-content-duck = duck
 food-sequence-content-crab = crabs
@@ -67,7 +68,8 @@ food-sequence-content-capfruit = capfruit
 food-sequence-content-berries = berries
 food-sequence-content-spacemans-trumpet = spacemans trupmet
 
-#BURGERS
+# BURGERS
+
 food-sequence-burger-gen = {$content}burger
 
 food-sequence-burger-content-raw-meat = raw
@@ -104,8 +106,10 @@ food-sequence-burger-content-hamster = hams
 food-sequence-burger-content-berries = berri
 food-sequence-burger-content-spacemans-trumpet = spacetrump
 
-#TACO
+# TACO
+
 food-sequence-taco-gen = taco with {$content}
 
-#SKEWER
+# SKEWER
+
 food-sequence-skewer-gen = {$content} kebab
