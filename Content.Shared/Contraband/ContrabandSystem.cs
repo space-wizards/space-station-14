@@ -32,6 +32,15 @@ public sealed class ContrabandSystem : EntitySystem
     {
         _contrabandExamineEnabled = val;
     }
+    public void CopyDetails(EntityUid uid, ContrabandComponent other, ContrabandComponent? contraband = null)
+    {
+          if  (!Resolve(uid, ref contraband))
+              return;
+
+          contraband.Severity = other.Severity;
+          contraband.AllowedDepartments = other.AllowedDepartments;
+          Dirty(uid, contraband);
+    }
 
     private void OnExamined(Entity<ContrabandComponent> ent, ref ExaminedEvent args)
     {
