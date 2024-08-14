@@ -814,6 +814,11 @@
         name: food-sequence-content-tomato
       taco:
         name: food-sequence-content-tomato
+      skewer:
+        name: food-sequence-content-tomato
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-tomato
 
 - type: entity
   name: salami
