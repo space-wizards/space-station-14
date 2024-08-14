@@ -347,7 +347,7 @@
       state: bird
     entries:
       burger:
-        name: food-sequence-burger-content-duck
+        name: food-sequence-content-duck
       taco:
         name: food-sequence-content-duck
 
