@@ -59,6 +59,15 @@ public sealed partial class NpcFactionSystem : EntitySystem
             ent.Comp.FriendlyFactions.UnionWith(factionData.Friendly);
             ent.Comp.HostileFactions.UnionWith(factionData.Hostile);
         }
+        // Add additional factions if it is written in prototype
+        if (ent.Comp.AddFriendlyFactions != null)
+        {
+            ent.Comp.FriendlyFactions.UnionWith(ent.Comp.AddFriendlyFactions);
+        }
+        if (ent.Comp.AddHostileFactions != null)
+        {
+            ent.Comp.HostileFactions.UnionWith(ent.Comp.AddHostileFactions);
+        }
     }
 
     /// <summary>
@@ -86,6 +95,28 @@ public sealed partial class NpcFactionSystem : EntitySystem
         ent.Comp ??= EnsureComp<NpcFactionMemberComponent>(ent);
         if (!ent.Comp.Factions.Add(faction))
             return;
+
+        if (dirty)
+            RefreshFactions((ent, ent.Comp));
+    }
+
+    /// <summary>
+    /// Adds this entity to the particular faction.
+    /// </summary>
+    public void AddFactions(Entity<NpcFactionMemberComponent?> ent, HashSet<ProtoId<NpcFactionPrototype>> factions, bool dirty = true)
+    {
+        ent.Comp ??= EnsureComp<NpcFactionMemberComponent>(ent);
+
+        foreach (var faction in factions)
+        {
+            if (!_proto.HasIndex(faction))
+            {
+                Log.Error($"Unable to find faction {faction}");
+                continue;
+            }
+
+            ent.Comp.Factions.Add(faction);
+        }
 
         if (dirty)
             RefreshFactions((ent, ent.Comp));

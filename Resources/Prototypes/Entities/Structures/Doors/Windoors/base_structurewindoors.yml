@@ -172,6 +172,8 @@
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
+  - type: Damageable
+    damageModifierSet: RGlass
   - type: Destructible
     thresholds:
     - trigger:
@@ -257,7 +259,7 @@
 
 - type: entity
   id: BaseSecurePlasmaWindoor
-  parent: BaseWindoor
+  parent: BaseSecureWindoor
   abstract: true
   components:
   - type: Sprite
@@ -367,7 +369,7 @@
 
 - type: entity
   id: BaseSecureUraniumWindoor
-  parent: BaseWindoor
+  parent: BaseSecureWindoor
   abstract: true
   components:
   - type: Sprite

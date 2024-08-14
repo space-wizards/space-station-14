@@ -87,6 +87,7 @@ tiles-gold-tile = gold tile
 tiles-silver-tile = silver tile
 tiles-glass-floor = glass floor
 tiles-reinforced-glass-floor = reinforced glass floor
+tiles-metal-foam = metal foam floor
 tiles-green-circuit-floor = green circuit floor
 tiles-blue-circuit-floor = blue circuit floor
 tiles-snow = snow
