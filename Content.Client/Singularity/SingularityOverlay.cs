@@ -138,7 +138,13 @@ namespace Content.Client.Singularity
                     deformation *= 1.0f - MathF.Pow(distance / maxDistance, 4.0f);
 
                     if (_haveEventHorizons[i] && _intensities[i] > 0.0f)
+                    {
                         deformation -= MathF.Pow(deformation / MaxDeformation, 8.0f);
+                        if (deformation < -MaxDeformation)
+                            deformation = 0.0f;
+                    }
+                    else if (deformation > MaxDeformation)
+                        deformation = MathF.Sqrt(deformation);
                 }
 
                 finalCoords -= delta * deformation;
