@@ -9,13 +9,17 @@
   - type: Item
     storedRotation: -90
   - type: Food
+    transferAmount: 3
   - type: Sprite
     sprite: Objects/Consumable/Food/taco.rsi
     layers:
-    - state: tacoshell
+    - state: tacoshell_back
+    - map: ["foodSequenceLayers"]
+    - state: tacoshell_forward
   - type: SolutionContainerManager
     solutions:
       food:
+        canReact: false # Dont want cause reactions inside tacos after merging ingredients
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
@@ -178,3 +182,14 @@
   - type: Tag
     tags:
       - Meat
+          Quantity: 6.66
+  - type: FoodSequenceStartPoint
+    key: taco
+    maxLayers: 3
+    startPosition: -0.2, 0
+    offset: 0.1, 0
+    minLayerOffset: 0, 0
+    maxLayerOffset: 0, 0.05
+    nameGeneration: food-sequence-taco-gen
+    contentSeparator: ", "
+  - type: Appearance
