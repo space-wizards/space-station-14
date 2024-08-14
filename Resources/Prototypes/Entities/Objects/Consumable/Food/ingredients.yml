@@ -718,7 +718,7 @@
     data:
       sprite:
         sprite: Objects/Consumable/Food/ingredients.rsi
-        state: tofu
+        state: tofu-slice
       tags:
       - Cheese
     entries:

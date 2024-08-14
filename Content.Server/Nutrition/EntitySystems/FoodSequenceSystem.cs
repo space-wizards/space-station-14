@@ -73,11 +73,11 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
                 availableRecipes.Add(recipe);
         }
 
-        if (availableRecipes.Count > 0)
-        {
-            Metamorf(start, availableRecipes[0]);
-            QueueDel(start);
-        }
+        if (availableRecipes.Count <= 0)
+            return true;
+
+        Metamorf(start, availableRecipes[0]);
+        QueueDel(start);
         return true;
     }
 
@@ -94,6 +94,10 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         _solutionContainer.RemoveAllSolution(resultSoln.Value); //Remove all YML reagents
         resultSoln.Value.Comp.Solution.MaxVolume = startSoln.Value.Comp.Solution.MaxVolume;
         _solutionContainer.TryAddSolution(resultSoln.Value, startSolution);
+
+        MergeFlavorProfiles(start, result);
+        MergeTrash(start, result);
+        MergeTags(start, result);
     }
 
     private bool TryAddFoodElement(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element, EntityUid? user = null)
@@ -143,9 +147,9 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
             start.Comp.Finished = true;
 
         UpdateFoodName(start);
-        MergeFoodSolutions((start, startFood), (element, elementFood));
-        MergeFlavorProfiles((start, startFood), (element, elementFood));
-        MergeTrash((start, startFood), (element, elementFood));
+        MergeFoodSolutions(start, element);
+        MergeFlavorProfiles(start, element);
+        MergeTrash(start, element);
         MergeTags(start, element);
         var ev = new FoodSequenceIngredientAddedEvent(start, element, elementData, user);
         RaiseLocalEvent(start, ev);
@@ -189,19 +193,25 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         _metaData.SetEntityName(start, newName);
     }
 
-    private void MergeFoodSolutions(Entity<FoodComponent> start, Entity<FoodComponent> element)
+    private void MergeFoodSolutions(EntityUid start, EntityUid element)
     {
-        if (!_solutionContainer.TryGetSolution(start.Owner, start.Comp.Solution, out var startSolutionEntity, out var startSolution))
+        if (!TryComp<FoodComponent>(start, out var startFood))
             return;
 
-        if (!_solutionContainer.TryGetSolution(element.Owner, element.Comp.Solution, out _, out var elementSolution))
+        if (!TryComp<FoodComponent>(element, out var elementFood))
+            return;
+
+        if (!_solutionContainer.TryGetSolution(start, startFood.Solution, out var startSolutionEntity, out var startSolution))
+            return;
+
+        if (!_solutionContainer.TryGetSolution(element, elementFood.Solution, out _, out var elementSolution))
             return;
 
         startSolution.MaxVolume += elementSolution.MaxVolume;
         _solutionContainer.TryAddSolution(startSolutionEntity.Value, elementSolution);
     }
 
-    private void MergeFlavorProfiles(Entity<FoodComponent> start, Entity<FoodComponent> element)
+    private void MergeFlavorProfiles(EntityUid start, EntityUid element)
     {
         if (!TryComp<FlavorProfileComponent>(start, out var startProfile))
             return;
@@ -216,21 +226,27 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         }
     }
 
-    private void MergeTrash(Entity<FoodComponent> start, Entity<FoodComponent> element)
+    private void MergeTrash(EntityUid start, EntityUid element)
     {
-        foreach (var trash in element.Comp.Trash)
+        if (!TryComp<FoodComponent>(start, out var startFood))
+            return;
+
+        if (!TryComp<FoodComponent>(element, out var elementFood))
+            return;
+
+        foreach (var trash in elementFood.Trash)
         {
-            start.Comp.Trash.Add(trash);
+            startFood.Trash.Add(trash);
         }
     }
 
-    private void MergeTags(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element)
+    private void MergeTags(EntityUid start, EntityUid element)
     {
         if (!TryComp<TagComponent>(element, out var elementTags))
             return;
 
-        EnsureComp<TagComponent>(start.Owner);
+        EnsureComp<TagComponent>(start);
 
-        _tag.TryAddTags(start.Owner, elementTags.Tags);
+        _tag.TryAddTags(start, elementTags.Tags);
     }
 }

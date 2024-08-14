@@ -5,8 +5,8 @@
   rules:
   - !type:SequenceLength
     range:
-      max: 3
-      min: 4
+      max: 4
+      min: 3
   - !type:LastElementHasTags
     tags:
     - Bun
