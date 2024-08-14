@@ -167,6 +167,8 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         if (!TryComp<TagComponent>(element, out var elementTags))
             return;
 
+        EnsureComp<TagComponent>(start.Owner);
+
         _tag.TryAddTags(start.Owner, elementTags.Tags);
     }
 }
