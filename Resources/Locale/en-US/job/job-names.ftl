@@ -60,6 +60,7 @@ job-name-virologist = Virologist
 job-name-zombie = Zombie
 
 # Role timers - Make these alphabetical or I cut you
+JobStationAi = Station AI
 JobAtmosphericTechnician = Atmospheric Technician
 JobBartender = Bartender
 JobBorg = Borg

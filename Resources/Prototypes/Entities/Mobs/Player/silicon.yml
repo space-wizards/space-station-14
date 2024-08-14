@@ -1,4 +1,17 @@
 - type: entity
+  id: PlayerStationAi
+  parent: BaseStructureDynamic
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/station_ai.rsi
+    layers:
+    -
+  - type: StationAi
+  - type: RandomMetadata
+    # TODO: Loadout name support
+    nameSegments: [names_ai]
+
+- type: entity
   id: PlayerBorgGeneric
   parent: BorgChassisGeneric
   suffix: Battery, Tools
