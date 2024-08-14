@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Components.Solutions;
@@ -8,12 +7,10 @@ using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
-using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Chemistry.Systems;
 
@@ -52,7 +49,9 @@ public abstract partial class SharedSolutionSystem : EntitySystem
 
     private void InitialSolutionMapInit(Entity<InitialSolutionsComponent> ent, ref MapInitEvent args)
     {
-        foreach (var (solutionId, initialReagents) in ent.Comp.Contents)
+        if (NetManager.IsClient)
+            return;
+        foreach (var (solutionId, initialReagents) in ent.Comp.Solutions)
         {
             if (!TryEnsureSolution((ent, null), solutionId, out var solution))
             {
@@ -61,13 +60,13 @@ public abstract partial class SharedSolutionSystem : EntitySystem
             }
             if (initialReagents == null)
                 continue;
-            foreach (var (initialId, quantity) in initialReagents)
+            foreach (var (reagentSpecifier, quantity) in initialReagents)
             {
-                if (!ChemistryRegistry.TryIndex(initialId.ReagentId,
+                if (!ChemistryRegistry.TryIndex(reagentSpecifier.Id,
                         out var reagentDefinition,
                         true))
                     continue;
-                AddReagent(solution, reagentDefinition.Value, quantity, initialId.Variant);
+                AddReagent(solution, (reagentDefinition.Value, quantity), out _);
             }
         }
         RemCompDeferred(ent, ent.Comp);
@@ -134,7 +133,7 @@ public abstract partial class SharedSolutionSystem : EntitySystem
             AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
     }
     public Color GetSolutionColor(Entity<SolutionComponent> solution,
-        ICollection<Entity<ReagentDefinitionComponent>>? filterOut = null,
+        ICollection<Entity<ReagentDefinitionComponent>>? filter = null,
         bool invertFilter = false)
     {
         if (solution.Comp.Volume == 0)
@@ -145,11 +144,11 @@ public abstract partial class SharedSolutionSystem : EntitySystem
         foreach (ref var quantData in CollectionsMarshal.AsSpan(solution.Comp.Contents))
         {
             var reagentData = solution.Comp.Contents[index];
-            if (filterOut != null)
+            if (filter != null)
             {
                 if (invertFilter)
                 {
-                    foreach (var filterEntry in filterOut)
+                    foreach (var filterEntry in filter)
                     {
                         if (filterEntry.Comp.Id == reagentData.ReagentId)
                             continue;
@@ -161,7 +160,7 @@ public abstract partial class SharedSolutionSystem : EntitySystem
                 }
                 else
                 {
-                    foreach (var filterEntry in filterOut)
+                    foreach (var filterEntry in filter)
                     {
                         if (filterEntry.Comp.Id != reagentData.ReagentId)
                             continue;

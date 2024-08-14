@@ -9,60 +9,32 @@ namespace Content.Shared.Chemistry.Reagent;
 /// Struct used to uniquely identify a reagent. This is usually just a ReagentPrototype id string, however some reagents
 /// contain additional data (e.g., blood could store DNA data).
 /// </summary>
-[Serializable, NetSerializable]
-[DataDefinition]
-public partial struct ReagentDef : IEquatable<ReagentDef>
+public struct ReagentDef : IEquatable<ReagentDef>
 {
-    [DataField("ReagentId",required: true)]
-    public string Id { get; init; } = string.Empty;
-
-    [Obsolete("Use Id Field instead")]
-    public string Prototype => Id;
+    public static readonly ReagentDef Invalid = new();
+    public string Id => DefinitionEntity.Comp.Id;
 
     /// <summary>
     /// Any additional data that is unique to this reagent type. E.g., for blood this could be DNA data.
     /// </summary>
-    [DataField("data")]
-    public ReagentVariant? Variant { get; init; } = null;
+    public ReagentVariant? Variant;
 
-    [Obsolete("Use Variant Field instead")]
-    public ReagentVariant? Data => Variant;
+    public Entity<ReagentDefinitionComponent> DefinitionEntity;
 
-    [NonSerialized]
-    private Entity<ReagentDefinitionComponent> _definitionEntity = default!;
-
-    [NonSerialized]
-    private bool _isValid = false;
-
-    [ViewVariables]
-    public bool IsValid => _isValid;
-
-    public Entity<ReagentDefinitionComponent> DefinitionEntity
-    {
-        get
-        {
-            if (!IsValid)
-                throw new NullReferenceException($"ReagentDef with Id:{Id} is invalid, its DefinitionEntity is null");
-            return _definitionEntity;
-        }
-        init => _definitionEntity = value;
-    }
-
-    public ReagentDef(string id, ReagentVariant? data)
-    {
-        Id = id;
-        Variant = data;
-    }
-
-    public ReagentDef(Entity<ReagentDefinitionComponent> reagentDef, ReagentVariant? data) : this(reagentDef.Comp.Id,
-        data)
-    {
-        _isValid = true;
-    }
+    public bool IsValid { get; } = false;
 
     public ReagentDef()
     {
-        Id = string.Empty;
+        IsValid = false;
+        DefinitionEntity = default!;
+        Variant = null;
+    }
+
+    public ReagentDef(Entity<ReagentDefinitionComponent> reagentDef, ReagentVariant? variant)
+    {
+        IsValid = true;
+        DefinitionEntity = reagentDef;
+        Variant = variant;
     }
 
     public bool Equals(ReagentDef other)
@@ -121,17 +93,8 @@ public partial struct ReagentDef : IEquatable<ReagentDef>
     }
 
     public static implicit operator string(ReagentDef d) => d.Id;
-    public static implicit operator ReagentDef(string s) => new(s, null);
-
-    public bool Validate(SharedChemistryRegistrySystem chemRegistry, bool logMissing = true)
-    {
-        if (IsValid)
-            return true;
-        if (!chemRegistry.TryIndex(Id, out var foundEnt, logMissing))
-            return false;
-        _definitionEntity = foundEnt.Value;
-        _isValid = true;
-        return true;
-    }
+    public static implicit operator ReagentDef(Entity<ReagentDefinitionComponent> def) => new(def, null);
+    public static implicit operator Entity<ReagentDefinitionComponent>(ReagentDef def) => def.DefinitionEntity;
+    public static implicit operator ReagentVariant?(ReagentDef def) => def.Variant;
 }
 

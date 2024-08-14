@@ -1,17 +1,16 @@
-using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Chemistry.Reagent;
+namespace Content.Shared.Chemistry.Reagent.Variants;
 
 [ImplicitDataDefinitionForInheritors, Serializable, NetSerializable]
-public sealed partial class DnaData : ReagentData
+public sealed partial class DnaData : ReagentVariant
 {
     [DataField]
     public string DNA = String.Empty;
 
-    public override ReagentData Clone() => this;
+    public override ReagentVariant Clone() => this;
 
-    public override bool Equals(ReagentData? other)
+    public override bool Equals(ReagentVariant? other)
     {
         if (other == null)
         {
@@ -20,7 +19,6 @@ public sealed partial class DnaData : ReagentData
 
         return ((DnaData) other).DNA == DNA;
     }
-
     public override int GetHashCode()
     {
         return DNA.GetHashCode();

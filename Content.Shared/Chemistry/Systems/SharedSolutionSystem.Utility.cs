@@ -8,9 +8,6 @@ namespace Content.Shared.Chemistry.Systems;
 
 public partial class SharedSolutionSystem
 {
-    private static SolutionComponent.ReagentData _invalidReagentData = new();
-    private static SolutionComponent.VariantData _invalidVariantData = new();
-
 /// <summary>
     /// Get the possible overflow from changing the volume of this solution.
     /// </summary>
@@ -212,16 +209,4 @@ public partial class SharedSolutionSystem
     {
         return input < FixedPoint2.Epsilon ? FixedPoint2.Epsilon : input;
     }
-
-
-    public bool ResolveReagent(ref ReagentDef reagent, bool logMissing = true)
-    {
-        return ChemistryRegistry.ResolveReagentDef(ref reagent, logMissing);
-    }
-
-    public bool ResolveReagent(ref ReagentQuantity reagent, bool logMissing = true)
-    {
-        return ChemistryRegistry.ResolveReagentDef(ref reagent, logMissing);
-    }
-
 }

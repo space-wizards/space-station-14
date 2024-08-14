@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -120,22 +121,6 @@ public partial class SharedSolutionSystem
         solution = (solEnt, solComp);
         return true;
     }
-
-    public FixedPoint2 GetTotalReagentQuantity(Entity<SolutionContainerComponent?> solutionContainer, string reagentId)
-    {
-        if (!Resolve(solutionContainer, ref solutionContainer.Comp))
-            return 0;
-
-        var reagentQuantity = FixedPoint2.New(0);
-        if (!TryComp(solutionContainer, out SolutionContainerComponent? solConComp))
-            return FixedPoint2.Zero;
-        foreach (var solutionEnt in EnumerateSolutions((solutionContainer, solConComp)))
-        {
-            reagentQuantity += GetTotalQuantity(solutionEnt, reagentId);
-        }
-        return reagentQuantity;
-    }
-
     /// <summary>
     /// Formats a string as a solutionContainerId
     /// </summary>

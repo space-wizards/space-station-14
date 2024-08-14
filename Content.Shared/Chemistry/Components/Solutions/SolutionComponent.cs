@@ -5,7 +5,7 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Chemistry.Components;
+namespace Content.Shared.Chemistry.Components.Solutions;
 
 /// <summary>
 /// <para>Holds the composition of an entity made from reagents and its reagent temperature.</para>
@@ -16,12 +16,6 @@ namespace Content.Shared.Chemistry.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class SolutionComponent : Component
 {
-    /// <summary>
-    /// <para>The reagents the entity is composed of and their temperature.</para>
-    /// </summary>
-    [DataField, AutoNetworkedField, Obsolete]
-    public Solution Solution = new(); //TODO: legacy remove this
-
     [DataField, AutoNetworkedField]
     public EntityUid Container = EntityUid.Invalid;
 
@@ -56,9 +50,7 @@ public sealed partial class SolutionComponent : Component
     ///     Maximum volume this solution supports.
     /// </summary>
     /// <remarks>
-    ///     A value of zero means the maximum will automatically be set equal to the current volume during
-    ///     initialization. Note that most solution methods ignore max volume altogether, but various solution
-    ///     systems use this.
+    /// If overflow is enabled exceeding this volume will cause overflow events
     /// </remarks>
     [DataField("maxVol"), AutoNetworkedField]
     [ViewVariables(VVAccess.ReadWrite)]
@@ -76,14 +68,17 @@ public sealed partial class SolutionComponent : Component
     /// <summary>
     ///     The temperature of the reagents in the solution.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("temperature"), AutoNetworkedField]
-    public float Temperature { get; set; } = 293.15f;
+    [DataField, AutoNetworkedField]
+    public float Temperature;
+
+    [DataField, AutoNetworkedField]
+    public float ThermalEnergy;
 
     /// <summary>
     ///     The total heat capacity of all reagents in the solution.
     /// </summary>
-    [DataField, AutoNetworkedField] public float HeatCapacity;
+    [DataField, AutoNetworkedField]
+    public float HeatCapacity;
 
     [DataField, AutoNetworkedField]
     public int PrimaryReagentIndex = -1;
@@ -155,7 +150,7 @@ public sealed partial class SolutionComponent : Component
         }
 
         public static implicit operator ReagentQuantity(ReagentData d) =>
-            new (d.ReagentId, d.Quantity, null);
+            new (d.ReagentEnt, d.Quantity, null);
 
         public static implicit operator ReagentDef(ReagentData d) =>
             new (d.ReagentEnt, null);

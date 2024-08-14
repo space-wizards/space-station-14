@@ -1,29 +1,30 @@
-using Content.Shared.Chemistry.Systems;
+using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Reagent;
 
 /// <summary>
 /// Simple struct for storing a <see cref="ReagentId"/> & quantity tuple.
 /// </summary>
-[Serializable, NetSerializable]
-[DataDefinition]
-public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
+public partial struct ReagentQuantity: IEquatable<ReagentQuantity>
 {
-    [DataField("Quantity", required: true)]
+    public static readonly ReagentQuantity Invalid = new();
+
+    public ReagentDef ReagentDef;
+
     public FixedPoint2 Quantity;
+    public bool IsValid => ReagentDef.IsValid;
 
+    public Entity<ReagentDefinitionComponent> DefinitionEntity => ReagentDef.DefinitionEntity;
 
-    [ViewVariables, Obsolete("Use ReagentDef field instead")]
-    public ReagentId Reagent => ReagentDef;
+    public ReagentVariant? Variant => ReagentDef.Variant;
 
-    [IncludeDataField]
-    public ReagentDef ReagentDef { get; private set; } = new();
+    public string Id => ReagentDef.Id;
 
-    public ReagentQuantity(string reagentId, FixedPoint2 quantity, List<ReagentData>? data = null)
-        : this(new ReagentId(reagentId, data), quantity)
+    public ReagentQuantity()
     {
+        ReagentDef = ReagentDef.Invalid;
+        Quantity = 0;
     }
 
     public ReagentQuantity(ReagentDef reagent, FixedPoint2 quantity)
@@ -32,19 +33,21 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
         Quantity = quantity;
     }
 
-    public ReagentQuantity() : this(default, default)
+    public ReagentQuantity(Entity<ReagentDefinitionComponent> definitionEntity, FixedPoint2 quantity,
+        ReagentVariant? variant = null)
+        : this(new ReagentDef(definitionEntity, variant), quantity)
     {
-        ReagentDef = new();
     }
+
 
     public override string ToString()
     {
         return ReagentDef.ToString(Quantity);
     }
 
-    public void Deconstruct(out string prototype, out FixedPoint2 quantity, out List<ReagentData>? data)
+    public void Deconstruct(out string reagentId, out FixedPoint2 quantity, out ReagentVariant? data)
     {
-        prototype = ReagentDef.Id;
+        reagentId = ReagentDef.Id;
         quantity = Quantity;
         data = ReagentDef.Variant;
     }
@@ -57,7 +60,8 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
 
     public bool Equals(ReagentQuantity other)
     {
-        return Quantity != other.Quantity && ReagentDef.Equals(other.ReagentDef);
+        return  Quantity != other.Quantity
+               && ReagentDef.Equals(other.ReagentDef);
     }
 
     public override bool Equals(object? obj)
@@ -80,8 +84,11 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
         return !(left == right);
     }
 
-    public bool Validate(SharedChemistryRegistrySystem chemRegistry, bool logMissing = true)
-    {
-        return ReagentDef.Validate(chemRegistry, logMissing);
-    }
+    public static implicit operator (ReagentDef, FixedPoint2)(ReagentQuantity q) => (q.ReagentDef,q.Quantity);
+    public static implicit operator ReagentQuantity((ReagentDef, FixedPoint2)d) => new(d.Item1, d.Item2);
+    public static implicit operator ReagentDef(ReagentQuantity q) => q.ReagentDef;
+    public static implicit operator FixedPoint2(ReagentQuantity q) => q.Quantity;
+    public static implicit operator Entity<ReagentDefinitionComponent>(ReagentQuantity q) => q.ReagentDef.DefinitionEntity;
+    public static implicit operator ReagentVariant?(ReagentQuantity q) => q.ReagentDef.Variant;
+    public static implicit operator string(ReagentQuantity q) => q.ReagentDef.Id;
 }

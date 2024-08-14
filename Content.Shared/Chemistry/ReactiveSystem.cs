@@ -32,8 +32,7 @@ public sealed class ReactiveSystem : EntitySystem
     public void ReactionEntity(EntityUid uid, ReactionMethod method, ReagentQuantity reagentQuantity, Solution? source)
     {
         // We throw if the reagent specified doesn't exist.
-        var reagentId = _chemistryRegistry.Index(reagentQuantity.Reagent.Prototype);
-        ReactionEntity(uid, method, reagentId, reagentQuantity, source);
+        ReactionEntity(uid, method, reagentQuantity, reagentQuantity, source);
     }
 
     public void ReactionEntity(EntityUid uid, ReactionMethod method, Entity<ReagentDefinitionComponent> reagentDef,

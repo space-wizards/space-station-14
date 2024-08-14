@@ -1,173 +1,239 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Collections;
 using Content.Shared.Atmos;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Systems;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Serialization;
+using JetBrains.Annotations;
+using Robust.Shared.Collections;
 
 namespace Content.Shared.Chemistry.Reagent;
 
-[Serializable, NetSerializable, DataDefinition]
-public partial struct SolutionContents
+public struct SolutionReagents : IEnumerable<ReagentQuantity>
 {
-    [DataField(required:true)]
-    public List<ReagentQuantity> Reagents { get; private set; }= new(SharedSolutionSystem.SolutionAlloc);
+    public FixedPoint2 TotalVolume { get; private set; }= 0;
 
-    [DataField("temp")]
-    public float Temperature = Atmospherics.T20C;
-
-    [DataField("maxVol")]
-    public FixedPoint2 MaxVolume = FixedPoint2.MaxValue;
-
-    [DataField]
-    public bool CanOverflow = true;
-
-    [DataField]
-    public bool CanReact = true;
-
-    [ViewVariables, DataField]
-    public FixedPoint2 Volume { get; private set; } = 0;
-
-    [ViewVariables]
-    public FixedPoint2 AvailableVolume => MaxVolume - Volume;
-
-    public SolutionContents(List<ReagentQuantity> reagents, FixedPoint2 maxVol,bool canOverflow = true ,
-        float temp = Atmospherics.T20C, bool canReact = true)
+    public int Count => _contents.Count;
+    private float _temperature = Atmospherics.T20C;
+    public float Temperature
     {
-        MaxVolume = maxVol;
-        Temperature = temp;
-        CanOverflow = canOverflow;
-        Reagents = [..reagents];
-        foreach (var (_, quant) in reagents)
+        get => _temperature;
+        set
         {
-            Volume += quant;
+            if (!HasTemperature)
+                HasTemperature = true;
+            _temperature = value;
         }
     }
 
-    public SolutionContents(List<ReagentQuantity> reagents, bool canOverflow = true, float temp = Atmospherics.T20C,
-        bool canReact = true)
-        : this(reagents, FixedPoint2.MaxValue, canOverflow, temp, canReact)
-    {
-    }
+    public bool HasTemperature = false;
 
-    public SolutionContents(bool canOverflow = true, float temp = Atmospherics.T20C, bool canReact = true,
-        params ReagentQuantity[] reagents)
-        : this([..reagents], FixedPoint2.MaxValue, canOverflow, temp, canReact)
+    private ValueList<ReagentQuantity> _contents = new(0);
+    public SolutionReagents(params ReagentQuantity[] reagents)
     {
-    }
-
-    public SolutionContents(FixedPoint2 maxVol, bool canOverflow = true, float temp = Atmospherics.T20C, bool canReact = true,
-        params ReagentQuantity[] reagents) : this([..reagents], maxVol, canOverflow, temp, canReact)
-    {
-    }
-
-    public SolutionContents(Entity<SolutionComponent> solution, float scaling = 1.0f)
-    {
-        Reagents = new(SharedSolutionSystem.SolutionAlloc);
-        foreach (ref var reagentData in CollectionsMarshal.AsSpan(solution.Comp.Contents))
+        _contents = new(reagents.Length);
+        foreach (var quant in reagents)
         {
-            Reagents.Add(new ReagentQuantity(new (reagentData.ReagentEnt, null), reagentData.Quantity * scaling));
-            if (reagentData.Variants == null)
-                continue;
-            foreach (ref var varData in CollectionsMarshal.AsSpan(reagentData.Variants))
+            _contents.Add(quant);
+        }
+    }
+
+    public SolutionReagents(float temperature, params ReagentQuantity[] reagents) : this(reagents)
+    {
+        _temperature = temperature;
+        HasTemperature = true;
+    }
+
+    public SolutionReagents(ICollection<ReagentQuantity> reagents, float temperature = Atmospherics.T20C)
+    {
+        _temperature = temperature;
+        _contents = new(reagents.Count);
+        foreach (var quant in reagents)
+        {
+            _contents.Add(quant);
+        }
+    }
+
+    public ReagentQuantity this[int i]
+    {
+        get => _contents[i];
+        set
+        {
+            if (value.Quantity == 0)
             {
-                Reagents.Add(new ReagentQuantity(new (reagentData.ReagentEnt, varData.Variant), varData.Quantity * scaling));
+                Remove(value.ReagentDef);
+                return;
+            }
+            var delta = value.Quantity - _contents[i].Quantity ;
+            _contents[i] = value;
+            TotalVolume += delta;
+            ClampTotal();
+        }
+    }
+
+    public ReagentQuantity this[ReagentDef reagent]
+    {
+        get
+        {
+            if (!TryGetReagentIndex(reagent, out var index))
+                throw new KeyNotFoundException($"{reagent} could not be found in solutionContents");
+            return _contents[index];
+        }
+        set
+        {
+            if (!TryGetReagentIndex(reagent, out var index))
+            {
+                _contents[index] = value;
+                return;
+            }
+            _contents.Add(value);
+            TotalVolume += value.Quantity;
+            ClampTotal();
+        }
+    }
+
+    public bool ContainsReagent(ReagentDef def)
+    {
+        return TryGetReagent(def, out _);
+    }
+
+    public ReagentQuantity? GetReagent(ReagentDef reagent)
+    {
+        if (!TryGetReagent(reagent, out var quantity))
+            return null;
+        return quantity;
+    }
+
+    public bool TryGetReagent(ReagentDef reagent, out ReagentQuantity quantity)
+    {
+        if (reagent.IsValid)
+        {
+            foreach (var reagentQuant in _contents)
+            {
+                quantity = reagentQuant;
+                if (reagent == reagentQuant)
+                    return true;
             }
         }
-        Temperature = solution.Comp.Temperature;
-        MaxVolume = solution.Comp.MaxVolume;
-        CanOverflow = solution.Comp.CanOverflow;
-        CanReact = solution.Comp.CanReact;
+        quantity = ReagentQuantity.Invalid;
+        return false;
     }
 
-    public bool TryGetReagent(ReagentDef reagent, out FixedPoint2 quantity, bool includeVariants = true)
+    public int IndexOfReagent(ReagentDef reagent)
     {
-        FixedPoint2 quant = 0;
-        if (includeVariants && reagent.Variant == null)
-        {
-            foreach (var (id, foundQuant) in Reagents)
-            {
-                if (reagent.Id != id.Id)
-                    continue;
-                quant += foundQuant;
-            }
-        }
-        else
-        {
-            foreach (var (id, foundQuant) in Reagents)
-            {
-                if (reagent != id)
-                    continue;
-                quant += foundQuant;
-            }
-        }
-        quantity = quant;
-        return true;
+        TryGetReagentIndex(reagent, out var index);
+        return index;
     }
 
-    public void SetReagent(ReagentQuantity newQuantity)
+    public bool TryGetReagentIndex(ReagentDef reagent, out int index)
     {
-        var reagentsSpan = CollectionsMarshal.AsSpan(Reagents);
-        var delta = newQuantity.Quantity;
-        for (var i = 0; i < Reagents.Count; i++)
+        index = -1;
+        if (reagent.IsValid)
+            return false;
+        for (index = 0; index < _contents.Count; index++)
         {
-            if (reagentsSpan[i].ReagentDef != newQuantity.ReagentDef)
-                continue;
-            var oldData = reagentsSpan[i];
-            delta -= oldData.Quantity;
-            Volume += delta;
-            reagentsSpan[i] = newQuantity;
+            var reagentQuant = _contents[index];
+            if (reagent == reagentQuant)
+                return true;
+        }
+        return false;
+    }
+
+    public void Add(ReagentQuantity quantity)
+    {
+        Add(quantity,quantity);
+    }
+
+    public void Remove(ReagentQuantity quantity)
+    {
+        Add(quantity,- quantity.Quantity );
+    }
+
+    public void Set(ReagentQuantity quantity)
+    {
+        if (!quantity.IsValid)
             return;
-        }
-        Reagents.Add(newQuantity);
-        Volume += delta;
-        if (Volume < 0)
-            Volume = 0;
+        var index = IndexOfReagent(quantity);
+        if (index < 0)
+            return;
+        this[index] = quantity;
     }
 
-    public void RemoveReagent(ReagentDef reagent, bool includeVariants = true)
+    private void Add(ReagentDef reagentDef, FixedPoint2 quantity)
     {
-        Queue<int> indicesToRemove = new();
-        FixedPoint2 delta = 0;
-        if (includeVariants && reagent.Variant == null)
+        if (!reagentDef.IsValid)
+            return;
+        var i = 0;
+        foreach (ref var foundQuant in _contents.Span)
         {
-            for (var index = 0; index < Reagents.Count; index++)
+            if (reagentDef== foundQuant.ReagentDef)
             {
-                var rq = Reagents[index];
-                if (rq.ReagentDef.Id != reagent.Id)
-                    continue;
-                indicesToRemove.Enqueue(index);
-                delta -= rq.Quantity;
+                foundQuant.Quantity += quantity;
+                TotalVolume += quantity;
+                ClampTotal();
+                if (foundQuant.Quantity < 0)
+                {
+                    _contents.RemoveAt(i);
+                    return;
+                }
             }
+            i++;
         }
-        else
-        {
-            for (var index = 0; index < Reagents.Count; index++)
-            {
-                var rq = Reagents[index];
-                if (rq.ReagentDef != reagent)
-                    continue;
-                indicesToRemove.Enqueue(index);
-                delta -= rq.Quantity;
-            }
-        }
-
-        while (indicesToRemove.Count > 0)
-        {
-            Reagents.RemoveAt(indicesToRemove.Dequeue());
-        }
-
-        Volume += delta;
-        if (Volume < 0)
-            Volume = 0;
     }
 
-    public void Scale(float factor)
+    private void ClampTotal()
     {
-        foreach (ref var quantData in CollectionsMarshal.AsSpan(Reagents))
+        if (TotalVolume < 0)
         {
-            quantData.Quantity *= factor;
+            TotalVolume = 0;
+            _contents.Clear();
         }
+    }
+
+    public void Remove(ReagentDef reagent)
+    {
+        var i = 0;
+        foreach (ref var foundQuant in _contents.Span)
+        {
+            if (reagent == foundQuant.ReagentDef)
+            {
+                TotalVolume -= foundQuant.Quantity;
+                ClampTotal();
+                if (foundQuant.Quantity < 0)
+                {
+                    _contents.RemoveAt(i);
+                    return;
+                }
+            }
+            i++;
+        }
+    }
+
+    public void Scale(float scale)
+    {
+        if (scale < 0)
+            return;
+        if (scale == 0)
+        {
+            _contents.Clear();
+            TotalVolume = 0;
+        }
+        foreach (ref var reagents in _contents.Span)
+        {
+            reagents.Quantity *= scale;
+        }
+
+        TotalVolume *= scale;
+    }
+
+    public static implicit operator ReagentQuantity[](SolutionReagents s) => s._contents.ToArray();
+
+    [MustDisposeResource]
+    public IEnumerator<ReagentQuantity> GetEnumerator()
+    {
+        return _contents.GetEnumerator();
+    }
+
+    [MustDisposeResource]
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 }
-

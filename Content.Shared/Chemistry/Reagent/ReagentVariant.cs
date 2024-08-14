@@ -10,18 +10,18 @@ public abstract partial class ReagentVariant : IEquatable<ReagentVariant>
     /// Convert to a string representation. This if for logging & debugging. This is not localized and should not be
     /// shown to players.
     /// </summary>
-    public virtual string ToString(string prototype, FixedPoint2 quantity)
+    public virtual string ToString(string reagentId, FixedPoint2 quantity)
     {
-        return $"{prototype}:{GetType().Name}:{quantity}";
+        return $"{reagentId}:{GetType().Name}:{quantity}";
     }
 
     /// <summary>
     /// Convert to a string representation. This if for logging & debugging. This is not localized and should not be
     /// shown to players.
     /// </summary>
-    public virtual string ToString(string prototype)
+    public virtual string ToString(string reagentId)
     {
-        return $"{prototype}:{GetType().Name}";
+        return $"{reagentId}:{GetType().Name}";
     }
 
     public abstract bool Equals(ReagentVariant? other);

@@ -4,7 +4,6 @@ using System.Text.Json.Serialization;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Reaction;
-using Content.Shared.Chemistry.Systems;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition;
@@ -145,27 +144,6 @@ namespace Content.Shared.Chemistry.Reagent
 
         [DataField]
         public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));
-
-        public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume, IEntityManager entityManager, List<ReagentData>? data)
-        {
-            var removed = FixedPoint2.Zero;
-
-            if (tile.Tile.IsEmpty)
-                return removed;
-
-            foreach (var reaction in TileReactions)
-            {
-                removed += reaction.TileReact(tile, this, reactVolume - removed, entityManager, data);
-
-                if (removed > reactVolume)
-                    throw new Exception("Removed more than we have!");
-
-                if (removed == reactVolume)
-                    break;
-            }
-
-            return removed;
-        }
     }
 
     [Serializable, NetSerializable]
