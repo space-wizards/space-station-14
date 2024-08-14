@@ -1,6 +1,8 @@
-﻿using Content.Shared.Chemistry.Components.Reagents;
+using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using System.Linq;
 
 namespace Content.Shared.Chemistry.Reagent;
 
@@ -20,12 +22,12 @@ public partial struct ReagentId : IEquatable<ReagentId>
     /// Any additional data that is unique to this reagent type. E.g., for blood this could be DNA data.
     /// </summary>
     [DataField("data")]
-    public ReagentVariant? Data { get; init; } = null;
+    public List<ReagentData>? Data { get; private set; } = new();
 
-    public ReagentId(string id, ReagentVariant? data)
+    public ReagentId(string prototype, List<ReagentData>? data)
     {
-        Prototype = id;
-        Data = data;
+        Prototype = prototype;
+        Data = data ?? new();
     }
 
     public static implicit operator ReagentId(ReagentDef d)
@@ -50,6 +52,12 @@ public partial struct ReagentId : IEquatable<ReagentId>
     public ReagentId()
     {
         Prototype = default!;
+        Data = new();
+    }
+
+    public List<ReagentData> EnsureReagentData()
+    {
+        return (Data != null) ? Data : new List<ReagentData>();
     }
 
     public bool Equals(ReagentId other)
@@ -63,24 +71,13 @@ public partial struct ReagentId : IEquatable<ReagentId>
         if (other.Data == null)
             return false;
 
-        return Data.GetType() == other.Data.GetType() && Data.Equals(other.Data);
-    }
-
-    public bool Equals(ReagentDef other)
-    {
-        if (Prototype != other.Prototype)
+        if (Data.Except(other.Data).Any() || other.Data.Except(Data).Any() || Data.Count != other.Data.Count)
             return false;
 
-        if (Data == null)
-            return other.Variant == null;
-
-        if (other.Variant == null)
-            return false;
-
-        return Data.GetType() == other.Variant.GetType() && Data.Equals(other.Variant);
+        return true;
     }
 
-    public bool Equals(string id, ReagentVariant? otherData = null)
+    public bool Equals(string prototype, List<ReagentData>? otherData = null)
     {
         if (Prototype != id)
             return false;
@@ -103,12 +100,12 @@ public partial struct ReagentId : IEquatable<ReagentId>
 
     public string ToString(FixedPoint2 quantity)
     {
-        return Data?.ToString(Prototype, quantity) ?? $"{Prototype}:{quantity}";
+        return $"{Prototype}:{quantity}";
     }
 
     public override string ToString()
     {
-        return Data?.ToString(Prototype) ?? Prototype;
+        return $"{Prototype}";
     }
 
     [Obsolete("Use ReagentDef instead of ReagentId")]

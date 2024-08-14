@@ -1,4 +1,4 @@
-﻿using Content.Server.Maps;
+using Content.Server.Maps;
 using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -16,7 +16,8 @@ public sealed partial class PryTileReaction : ITileReaction
     public FixedPoint2 TileReact(TileRef tile,
         Entity<ReagentDefinitionComponent> reagent,
         FixedPoint2 reactVolume,
-        IEntityManager entityManager)
+        IEntityManager entityManager,
+        List<ReagentData>? data)
     {
         var sys = entityManager.System<TileSystem>();
         sys.PryTile(tile);

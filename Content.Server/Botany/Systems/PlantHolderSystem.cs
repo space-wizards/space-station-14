@@ -304,8 +304,17 @@ public sealed class PlantHolderSystem : EntitySystem
             {
                 healthOverride = component.Health;
             }
-            component.Seed.Unique = false;
-            var seed = _botany.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User, healthOverride);
+            var packetSeed = component.Seed;
+            if (packetSeed.Sentient)
+            {
+                packetSeed = packetSeed.Clone(); // clone before modifying the seed
+                packetSeed.Sentient = false;
+            }
+            else
+            {
+                packetSeed.Unique = false;
+            }
+            var seed = _botany.SpawnSeedPacket(packetSeed, Transform(args.User).Coordinates, args.User, healthOverride);
             _randomHelper.RandomOffset(seed, 0.25f);
             var displayName = Loc.GetString(component.Seed.DisplayName);
             _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
@@ -632,8 +641,15 @@ public sealed class PlantHolderSystem : EntitySystem
         }
         else if (component.Age < 0) // Revert back to seed packet!
         {
+            var packetSeed = component.Seed;
+            if (packetSeed.Sentient)
+            {
+                if (!packetSeed.Unique) // clone if necessary before modifying the seed
+                    packetSeed = packetSeed.Clone();
+                packetSeed.Sentient = false; // remove Sentient to avoid ghost role spam
+            }
             // will put it in the trays hands if it has any, please do not try doing this
-            _botany.SpawnSeedPacket(component.Seed, Transform(uid).Coordinates, uid);
+            _botany.SpawnSeedPacket(packetSeed, Transform(uid).Coordinates, uid);
             RemovePlant(uid, component);
             component.ForceUpdate = true;
             Update(uid, component);

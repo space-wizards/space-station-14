@@ -146,15 +146,25 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));
 
-        [Obsolete("Use ReactionTile() in Shared.Chemistry.ReactiveSystem instead")]
-        public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume, IEntityManager entityManager)
+        public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume, IEntityManager entityManager, List<ReagentData>? data)
         {
-            var sysMan = IoCManager.Resolve<IEntitySystemManager>();
-            return sysMan.GetEntitySystem<ReactiveSystem>()
-                .ReactionTile(tile,
-                    sysMan.GetEntitySystem<SharedChemistryRegistrySystem>().Index(this.ID),
-                    reactVolume,
-                    entityManager);
+            var removed = FixedPoint2.Zero;
+
+            if (tile.Tile.IsEmpty)
+                return removed;
+
+            foreach (var reaction in TileReactions)
+            {
+                removed += reaction.TileReact(tile, this, reactVolume - removed, entityManager, data);
+
+                if (removed > reactVolume)
+                    throw new Exception("Removed more than we have!");
+
+                if (removed == reactVolume)
+                    break;
+            }
+
+            return removed;
         }
     }
 

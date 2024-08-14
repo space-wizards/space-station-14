@@ -124,8 +124,7 @@ namespace Content.Server.Chemistry.EntitySystems
                     var reagent = _chemistryRegistry.Index(reagentQuantity.Reagent.Prototype);
 
                     var reaction =
-                        _reactive.ReactionTile(tile, reagent,
-                            (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f, EntityManager);
+                        reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f, EntityManager, reagentQuantity.Reagent.Data);
 
                     if (reaction > reagentQuantity.Quantity)
                     {

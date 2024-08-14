@@ -39,7 +39,8 @@ public sealed partial class CreateEntityTileReaction : ITileReaction
     public FixedPoint2 TileReact(TileRef tile,
         Entity<ReagentDefinitionComponent> reagent,
         FixedPoint2 reactVolume,
-        IEntityManager entityManager)
+        IEntityManager entityManager,
+        List<ReagentData>? data)
     {
         if (reactVolume >= Usage)
         {

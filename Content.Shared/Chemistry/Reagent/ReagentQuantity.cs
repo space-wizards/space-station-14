@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Systems;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
 
@@ -21,8 +21,8 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
     [IncludeDataField]
     public ReagentDef ReagentDef { get; private set; } = new();
 
-    public ReagentQuantity(string reagentId, FixedPoint2 quantity, ReagentVariant? data)
-        : this(new ReagentDef(reagentId, data), quantity)
+    public ReagentQuantity(string reagentId, FixedPoint2 quantity, List<ReagentData>? data = null)
+        : this(new ReagentId(reagentId, data), quantity)
     {
     }
 
@@ -42,7 +42,7 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
         return ReagentDef.ToString(Quantity);
     }
 
-    public void Deconstruct(out string prototype, out FixedPoint2 quantity, out ReagentVariant? data)
+    public void Deconstruct(out string prototype, out FixedPoint2 quantity, out List<ReagentData>? data)
     {
         prototype = ReagentDef.Id;
         quantity = Quantity;
