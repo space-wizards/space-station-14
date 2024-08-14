@@ -7,14 +7,15 @@
   - Box
   #- Cluster
   #- Core
-  - Fland
+  #- Cog
+  #- Fland
   #- Gemini
   - Marathon
   - Meta
   #- Omega
-  - Oasis
-  - Origin
+  #- Oasis
+  #- Origin
   #- Saltern
   #- Packed
-  - Reach
-  - Train
+  #- Reach
+  #- Train

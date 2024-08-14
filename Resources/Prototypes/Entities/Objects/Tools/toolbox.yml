@@ -118,7 +118,7 @@
 
 - type: entity
   name: suspicious toolbox
-  parent: ToolboxBase
+  parent: [ToolboxBase, BaseSyndicateContraband]
   id: ToolboxSyndicate
   description: A sinister looking toolbox filled with elite syndicate tools.
   components:

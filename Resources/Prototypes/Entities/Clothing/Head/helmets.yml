@@ -3,7 +3,7 @@
 
 #Basic Helmet (Security Helmet)
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseRestrictedContraband]
   id: ClothingHeadHelmetBasic
   name: helmet
   description: Standard security gear. Protects the head from impacts.
@@ -41,7 +41,7 @@
 
 #SWAT Helmet
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseRestrictedContraband]
   id: ClothingHeadHelmetSwat
   name: SWAT helmet
   description: An extremely robust helmet, commonly used by paramilitary forces. This one has the Nanotrasen logo emblazoned on the top.
@@ -77,7 +77,7 @@
 
 #Light Riot Helmet
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseRestrictedContraband]
   id: ClothingHeadHelmetRiot
   name: light riot helmet
   description: It's a helmet specifically designed to protect against close range attacks.
@@ -358,7 +358,7 @@
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
 
 - type: entity
-  parent: ClothingHeadHelmetBasic
+  parent: [ ClothingHeadHelmetBasic, BaseSyndicateContraband ]
   id: ClothingHeadHelmetRaid
   name: syndicate raid helmet
   description: An armored helmet for use with the syndicate raid suit. Very stylish.
