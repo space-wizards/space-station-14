@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
 
