@@ -546,12 +546,15 @@
   id: DrinkCan
 
 - type: Tag
+  id: DrinkCup
+
+- type: Tag
   id: DrinkGlass
 
 - type: Tag
   id: DrinkSpaceGlue
 
-- type: Tag 
+- type: Tag
   id: Dropper
 
 - type: Tag

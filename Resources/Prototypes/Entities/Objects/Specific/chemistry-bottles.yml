@@ -220,7 +220,7 @@
   id: NocturineChemistryBottle
   name: nocturine bottle
   description: This will make someone fall down almost immediately. Hard to overdose on.
-  parent: BaseChemistryBottleFilled
+  parent: [BaseChemistryBottleFilled, BaseSyndicateContraband]
   components:
   - type: SolutionContainerManager
     solutions:
