@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Chemistry.Systems;

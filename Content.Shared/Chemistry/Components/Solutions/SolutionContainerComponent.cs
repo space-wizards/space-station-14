@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Chemistry.Systems;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Chemistry.Components;
+namespace Content.Shared.Chemistry.Components.Solutions;
 
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]

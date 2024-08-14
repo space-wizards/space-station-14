@@ -14,6 +14,7 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.Chemistry.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;

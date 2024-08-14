@@ -1,5 +1,4 @@
 ﻿using System.Runtime.InteropServices;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.Chemistry.EntitySystems;
@@ -38,7 +37,7 @@ public abstract partial class SharedSolutionSystem : EntitySystem
     {
         SubscribeLocalEvent<SolutionComponent, AfterAutoHandleStateEvent>(HandleSolutionState);
         SubscribeLocalEvent<SolutionComponent, MapInitEvent>(SolutionMapInit);
-        SubscribeLocalEvent<InitialSolutionsComponent, MapInitEvent>(InitialSolutionMapInit);
+        SubscribeLocalEvent<StartingSolutionsComponent, MapInitEvent>(InitialSolutionMapInit);
 
     }
 
@@ -47,7 +46,7 @@ public abstract partial class SharedSolutionSystem : EntitySystem
         TrimAllocs(ent);
     }
 
-    private void InitialSolutionMapInit(Entity<InitialSolutionsComponent> ent, ref MapInitEvent args)
+    private void InitialSolutionMapInit(Entity<StartingSolutionsComponent> ent, ref MapInitEvent args)
     {
         if (NetManager.IsClient)
             return;
