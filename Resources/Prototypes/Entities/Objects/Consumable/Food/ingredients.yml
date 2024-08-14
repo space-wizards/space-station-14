@@ -593,9 +593,10 @@
     tags:
     - Slice
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/ingredients.rsi
-      state: cheesewedge
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/ingredients.rsi
+        state: cheesewedge
     entries:
       burger:
         name: food-sequence-content-cheese
@@ -652,9 +653,10 @@
     tags:
     - Slice
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/ingredients.rsi
-      state: chevredisk
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/ingredients.rsi
+        state: chevredisk
     entries:
       burger:
         name: food-sequence-content-chevre
@@ -709,9 +711,10 @@
     tags:
     - Slice
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/ingredients.rsi
-      state: tofu
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/ingredients.rsi
+        state: tofu
     entries:
       burger:
         name: food-sequence-content-tofu
@@ -774,9 +777,10 @@
     tags:
       - Ingredient
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Specific/Hydroponics/cocoa.rsi
-      state: produce-beans
+    data:
+      sprite:
+        sprite: Objects/Specific/Hydroponics/cocoa.rsi
+        state: produce-beans
     entries:
       burger:
         name: food-sequence-content-cocoa

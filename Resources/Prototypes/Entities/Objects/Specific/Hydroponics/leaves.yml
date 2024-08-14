@@ -18,9 +18,10 @@
         - ReagentId: THC
           Quantity: 15
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Specific/Hydroponics/cannabis.rsi
-      state: produce
+    data:
+      sprite:
+        sprite: Objects/Specific/Hydroponics/cannabis.rsi
+        state: produce
     entries:
       burger:
         name: food-sequence-burger-content-cannabis
@@ -107,9 +108,10 @@
         - ReagentId: Psicodine
           Quantity: 0.6
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
-      state: produce
+    data:
+      sprite:
+        sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+        state: produce
     entries:
       burger:
         name: food-sequence-burger-content-rainbow-cannabis

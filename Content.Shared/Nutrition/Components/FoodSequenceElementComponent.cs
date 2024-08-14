@@ -6,28 +6,28 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Nutrition.Components;
 
 /// <summary>
-/// Tndicates that this entity can be inserted into FoodSequence, which will transfer all reagents to the target.
+/// Indicates that this entity can be inserted into FoodSequence, which will transfer all reagents to the target.
 /// </summary>
 [RegisterComponent, Access(typeof(SharedFoodSequenceSystem))]
 public sealed partial class FoodSequenceElementComponent : Component
 {
     /// <summary>
-    /// the same object can be used in different sequences, and it will have a different sprite in different sequences.
+    /// Standard data that can be overwritten for individual keys in Entries
+    /// </summary>
+    [DataField]
+    public FoodSequenceElementEntry Data = new();
+
+    /// <summary>
+    /// The same object can be used in different sequences, and it will have a different data in then.
     /// </summary>
     [DataField(required: true)]
     public Dictionary<string, FoodSequenceElementEntry> Entries = new();
 
     /// <summary>
-    /// which solution we will add to the main dish
+    /// Which solution we will add to the main dish
     /// </summary>
     [DataField]
     public string Solution = "food";
-
-    /// <summary>
-    /// state used to generate the appearance of the added layer
-    /// </summary>
-    [DataField]
-    public SpriteSpecifier? Sprite;
 }
 
 [DataRecord, Serializable, NetSerializable]
@@ -36,20 +36,38 @@ public sealed class FoodSequenceElementEntry
     /// <summary>
     /// A localized name piece to build into the item name generator.
     /// </summary>
-    public LocId? Name { get; set; } = null;
+    public LocId? Name { get; set; }
 
     /// <summary>
-    /// overriding default sprite
+    /// Sprite rendered in sequence
     /// </summary>
-    public SpriteSpecifier? Sprite { get; set; } = null;
+    public SpriteSpecifier? Sprite { get; set; }
+
+    /// <summary>
+    /// Relative size of the sprite displayed in FoodSequence
+    /// </summary>
+    public Vector2 Scale  { get; set; } = Vector2.One;
 
     /// <summary>
     /// If the layer is the final one, it can be added over the limit, but no other layers can be added after it.
     /// </summary>
-    public bool Final { get; set; } = false;
+    public bool Final { get; set; }
 
     /// <summary>
-    /// the shear of a particular layer. Allows a little "randomization" of each layer.
+    /// The offset of a particular layer. Allows a little position randomization of each layer.
     /// </summary>
     public Vector2 LocalOffset { get; set; } = Vector2.Zero;
+
+    public static FoodSequenceElementEntry Clone(FoodSequenceElementEntry original)
+    {
+        FoodSequenceElementEntry clone = new()
+        {
+            Name = original.Name,
+            Sprite = original.Sprite,
+            Scale = original.Scale,
+            Final = original.Final
+        };
+
+        return clone;
+    }
 }

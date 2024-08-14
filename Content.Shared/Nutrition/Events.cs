@@ -67,3 +67,20 @@ public record struct SliceFoodEvent();
 public sealed partial class SliceFoodDoAfterEvent : SimpleDoAfterEvent
 {
 }
+
+/// <summary>
+///    is called when a new ingredient is added to FoodSequence
+/// </summary>
+public sealed class FoodSequenceIngredientAddedEvent : EntityEventArgs
+{
+    public EntityUid Start { get; }
+    public EntityUid Element { get; }
+    public EntityUid? User { get; }
+
+    public FoodSequenceIngredientAddedEvent(EntityUid start, EntityUid element, EntityUid? user = null)
+    {
+        Start = start;
+        Element = element;
+        User = user;
+    }
+}

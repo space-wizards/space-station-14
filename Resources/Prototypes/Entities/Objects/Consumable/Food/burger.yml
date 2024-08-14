@@ -80,9 +80,10 @@
         - ReagentId: Nutriment
           Quantity: 3.3 # 1/2 of a bun
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/burger.rsi
-      state: bun_top
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/burger.rsi
+        state: bun_top
     entries:
       burger:
         final: true

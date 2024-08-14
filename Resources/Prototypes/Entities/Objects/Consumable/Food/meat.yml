@@ -110,9 +110,10 @@
     tags:
     - Meat
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: plain
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: plain
     entries:
       burger:
         name: food-sequence-burger-content-raw-meat
@@ -160,9 +161,10 @@
         - ReagentId: CarpoToxin
           Quantity: 5
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: fish
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: fish
     entries:
       burger:
         name: food-sequence-burger-content-carp
@@ -204,9 +206,10 @@
     node: start
     defaultTarget: bacon
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: bacon
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: bacon
     entries:
       burger:
         name: food-sequence-burger-content-meat
@@ -237,9 +240,10 @@
     node: start
     defaultTarget: filet migrawr
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: bear
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: bear
     entries:
       burger:
         name: food-sequence-burger-content-bear
@@ -270,9 +274,10 @@
     node: start
     defaultTarget: cooked penguin
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: bird
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: bird
     entries:
       burger:
         name: food-sequence-burger-content-penguin
@@ -304,9 +309,10 @@
     node: start
     defaultTarget: cooked chicken
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: bird
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: bird
     entries:
       burger:
         name: food-sequence-content-chicken
@@ -342,9 +348,10 @@
     node: start
     defaultTarget: cooked duck
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: bird
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: bird
     entries:
       burger:
         name: food-sequence-content-duck
@@ -376,9 +383,10 @@
   - type: StealTarget
     stealGroup: FoodMeatCorgi
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: corgi
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: corgi
     entries:
       burger:
         name: food-sequence-burger-content-corgi
@@ -409,9 +417,10 @@
     node: start
     defaultTarget: cooked crab
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: crab
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: crab
     entries:
       burger:
         name: food-sequence-content-crab
@@ -441,9 +450,10 @@
     node: start
     defaultTarget: goliath steak
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: goliath
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: goliath
     entries:
       burger:
         name: food-sequence-burger-content-goliath
@@ -477,9 +487,10 @@
       - ReagentId: Ichor
         Quantity: 10
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: dragon
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: dragon
     entries:
       burger:
         name: food-sequence-content-dragon
@@ -506,9 +517,10 @@
     count: 3
     slice: FoodMeatCutlet
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: plain
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: plain
     entries:
       burger:
         name: food-sequence-burger-content-rat
@@ -539,9 +551,10 @@
     node: start
     defaultTarget: lizard steak
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: lizard
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: lizard
     entries:
       burger:
         name: food-sequence-burger-content-lizard
@@ -562,9 +575,10 @@
   - type: Sprite
     state: plant
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: plant
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: plant
     entries:
       burger:
         name: food-sequence-burger-content-plant
@@ -596,9 +610,10 @@
         - ReagentId: Fat
           Quantity: 4
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: rotten
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: rotten
     entries:
       burger:
         name: food-sequence-burger-content-rotten
@@ -625,9 +640,10 @@
     count: 3
     slice: FoodMeatSpiderCutlet
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: spider
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: spider
     entries:
       burger:
         name: food-sequence-burger-content-spider
@@ -651,9 +667,10 @@
         - ReagentId: Fat
           Quantity: 3
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: spiderleg
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: spiderleg
     entries:
       burger:
         name: food-sequence-burger-content-spider
@@ -675,9 +692,10 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 1
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: clump
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: clump
     entries:
       burger:
         name: food-sequence-content-clump
@@ -704,9 +722,10 @@
         - ReagentId: Toxin
           Quantity: 2
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: snake
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: snake
     entries:
       burger:
         name: food-sequence-content-snake
@@ -745,9 +764,10 @@
     count: 3
     slice: FoodMeatXenoCutlet
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: xeno
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: xeno
     entries:
       burger:
         name: food-sequence-content-xeno
@@ -783,9 +803,10 @@
     node: start
     defaultTarget: rouny steak
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: rouny
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: rouny
     entries:
       burger:
         name: food-sequence-content-rouny
@@ -806,9 +827,10 @@
   - type: StaticPrice
     price: 100
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: tomato
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: tomato
     entries:
       burger:
         name: food-sequence-content-tomato
@@ -846,9 +868,10 @@
       types:
         Blunt: 2
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/salami.rsi
-      state: salami
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/salami.rsi
+        state: salami
     entries:
       burger:
         name: food-sequence-content-salami
@@ -874,9 +897,10 @@
   - type: SliceableFood
     slice: FoodMeatSalamiSlice
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: clown
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: clown
     entries:
       burger:
         name: food-sequence-content-clown
@@ -896,9 +920,10 @@
   - type: Sprite
     state: meatball
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: meatball
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: meatball
     entries:
       burger:
         name: food-sequence-burger-content-raw-meat
@@ -921,9 +946,10 @@
   - type: Sprite
     state: slime
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: slime
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: slime
     entries:
       burger:
         name: food-sequence-content-slime
@@ -993,9 +1019,10 @@
     graph: MeatSteak
     node: meat steak
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: plain-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: plain-cooked
     entries:
       burger:
         name: food-sequence-burger-content-meat
@@ -1038,9 +1065,10 @@
     graph: Bacon
     node: bacon
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: bacon-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: bacon-cooked
     entries:
       burger:
         name: food-sequence-burger-content-meat
@@ -1081,9 +1109,10 @@
     graph: BearSteak
     node: filet migrawr
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: product-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: product-cooked
     entries:
       burger:
         name: food-sequence-burger-content-bear
@@ -1118,9 +1147,10 @@
     graph: PenguinSteak
     node: cooked penguin
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: bird-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: bird-cooked
     entries:
       burger:
         name: food-sequence-burger-content-penguin
@@ -1155,9 +1185,10 @@
     graph: ChickenSteak
     node: cooked chicken
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: bird-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: bird-cooked
     entries:
       burger:
         name: food-sequence-content-chicken
@@ -1197,9 +1228,10 @@
         - ReagentId: Protein
           Quantity: 5
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: chicken-fried
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: chicken-fried
     entries:
       burger:
         name: food-sequence-content-chicken
@@ -1239,9 +1271,10 @@
     graph: DuckSteak
     node: cooked duck
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: bird-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: bird-cooked
     entries:
       burger:
         name: food-sequence-content-duck
@@ -1281,9 +1314,10 @@
     graph: CrabSteak
     node: cooked crab
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: crab-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: crab-cooked
     entries:
       burger:
         name: food-sequence-content-crab
@@ -1316,9 +1350,10 @@
     graph: GoliathSteak
     node: goliath steak
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: goliath-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: goliath-cooked
     entries:
       burger:
         name: food-sequence-burger-content-goliath
@@ -1355,9 +1390,10 @@
     graph: RounySteak
     node: rouny steak
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: rouny-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: rouny-cooked
     entries:
       burger:
         name: food-sequence-content-rouny
@@ -1393,9 +1429,10 @@
     graph: LizardSteak
     node: lizard steak
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: lizard-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: lizard-cooked
     entries:
       burger:
         name: food-sequence-burger-content-lizard
@@ -1429,9 +1466,10 @@
         - ReagentId: Protein
           Quantity: 5
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: spiderleg-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: spiderleg-cooked
     entries:
       burger:
         name: food-sequence-burger-content-spider
@@ -1459,9 +1497,10 @@
         - ReagentId: Protein
           Quantity: 5
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: meatball-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: meatball-cooked
     entries:
       burger:
         name: food-sequence-burger-content-meat
@@ -1499,9 +1538,10 @@
         - ReagentId: Fat
           Quantity: 2
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: cutlet
     entries:
       burger:
         name: food-sequence-burger-content-meat
@@ -1538,10 +1578,10 @@
         - ReagentId: Fat
           Quantity: 2
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet
-      color: brown
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: cutlet
     entries:
       burger:
         name: food-sequence-burger-content-bear
@@ -1571,10 +1611,10 @@
         - ReagentId: Fat
           Quantity: 2
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet
-      color: white
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: cutlet
     entries:
       burger:
         name: food-sequence-burger-content-penguin
@@ -1604,10 +1644,10 @@
         - ReagentId: Fat
           Quantity: 2
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet
-      color: white
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: cutlet
     entries:
       burger:
         name: food-sequence-content-chicken
@@ -1642,10 +1682,10 @@
         - ReagentId: Fat
           Quantity: 2
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet
-      color: white
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: cutlet
     entries:
       burger:
         name: food-sequence-content-duck
@@ -1683,10 +1723,10 @@
         - ReagentId: Fat
           Quantity: 2
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet
-      color: pink
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: cutlet
     entries:
       burger:
         name: food-sequence-burger-content-lizard
@@ -1720,9 +1760,10 @@
         - ReagentId: Fat
           Quantity: 2
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: spidercutlet
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: spidercutlet
     entries:
       burger:
         name: food-sequence-burger-content-spider
@@ -1753,9 +1794,10 @@
         - ReagentId: SulfuricAcid
           Quantity: 20
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: xenocutlet
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: xenocutlet
     entries:
       burger:
         name: food-sequence-content-xeno
@@ -1778,9 +1820,10 @@
   - type: StaticPrice
     price: 30
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: salami-slice
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: salami-slice
     entries:
       burger:
         name: food-sequence-content-tomato
@@ -1809,9 +1852,10 @@
         - ReagentId: Protein
           Quantity: 1
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: salami-slice
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: salami-slice
     entries:
       burger:
         name: food-sequence-content-salami
@@ -1842,9 +1886,10 @@
         - ReagentId: Protein
           Quantity: 2
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: cutlet-cooked
     entries:
       burger:
         sprite:
@@ -1876,9 +1921,10 @@
         - ReagentId: Protein
           Quantity: 2
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: cutlet-cooked
     entries:
       burger:
         name: food-sequence-burger-content-bear
@@ -1908,9 +1954,10 @@
         - ReagentId: Protein
           Quantity: 2
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: cutlet-cooked
     entries:
       burger:
         name: food-sequence-burger-content-penguin
@@ -1940,9 +1987,10 @@
         - ReagentId: Protein
           Quantity: 2
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: cutlet-cooked
     entries:
       burger:
         name: food-sequence-content-chicken
@@ -1977,9 +2025,10 @@
         - ReagentId: Protein
           Quantity: 2
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: cutlet-cooked
     entries:
       burger:
         name: food-sequence-content-duck
@@ -2015,9 +2064,10 @@
         - ReagentId: Protein
           Quantity: 2
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: cutlet-cooked
     entries:
       burger:
         name: food-sequence-burger-content-lizard
@@ -2051,9 +2101,10 @@
         - ReagentId: Protein
           Quantity: 1
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: cutlet-cooked
     entries:
       burger:
         name: food-sequence-burger-content-spider
@@ -2080,9 +2131,10 @@
         - ReagentId: Protein
           Quantity: 1
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: xenocutlet-cooked
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/meat.rsi
+        state: xenocutlet-cooked
     entries:
       burger:
         name: food-sequence-content-xeno

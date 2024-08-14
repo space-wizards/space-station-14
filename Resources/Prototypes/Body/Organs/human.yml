@@ -68,9 +68,10 @@
     flavors:
       - people
   - type: FoodSequenceElement
-    sprite:
-      sprite: Mobs/Species/Human/organs.rsi
-      state: brain
+    data:
+      sprite:
+        sprite: Mobs/Species/Human/organs.rsi
+        state: brain
     entries:
       burger:
         name: food-sequence-content-brain
@@ -97,9 +98,10 @@
   - type: Sprite
     state: tongue
   - type: FoodSequenceElement
-    sprite:
-      sprite: Mobs/Species/Human/organs.rsi
-      state: tongue
+    data:
+      sprite:
+        sprite: Mobs/Species/Human/organs.rsi
+        state: tongue
     entries:
       burger:
         name: food-sequence-content-tongue
@@ -126,9 +128,10 @@
   - type: Sprite
     state: ears
   - type: FoodSequenceElement
-    sprite:
-      sprite: Mobs/Species/Human/organs.rsi
-      state: ears
+    data:
+      sprite:
+        sprite: Mobs/Species/Human/organs.rsi
+        state: ears
     entries:
       burger:
         name: food-sequence-content-ears
@@ -217,9 +220,10 @@
     - id: Food
     - id: Drink
   - type: FoodSequenceElement
-    sprite:
-      sprite: Mobs/Species/Human/organs.rsi
-      state: stomach
+    data:
+      sprite:
+        sprite: Mobs/Species/Human/organs.rsi
+        state: stomach
     entries:
       burger:
         name: food-sequence-content-stomach
@@ -241,9 +245,10 @@
     - id: Alcohol
       rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
   - type: FoodSequenceElement
-    sprite:
-      sprite: Mobs/Species/Human/organs.rsi
-      state: liver
+    data:
+      sprite:
+        sprite: Mobs/Species/Human/organs.rsi
+        state: liver
     entries:
       burger:
         name: food-sequence-content-liver

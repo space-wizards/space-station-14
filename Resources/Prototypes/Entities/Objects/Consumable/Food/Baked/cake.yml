@@ -785,9 +785,10 @@
     tags:
     - Slice
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/Baked/cake.rsi
-      state: suppermatter-shard
+    data:
+      sprite:
+        sprite: Objects/Consumable/Food/Baked/cake.rsi
+        state: suppermatter-shard
     entries:
       burger:
         name: food-sequence-burger-content-suppermatter

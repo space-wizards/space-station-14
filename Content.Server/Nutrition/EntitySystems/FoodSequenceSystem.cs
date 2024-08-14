@@ -4,6 +4,7 @@ using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
@@ -24,6 +25,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         base.Initialize();
 
         SubscribeLocalEvent<FoodSequenceStartPointComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<FoodMetamorphableByAddingComponent, FoodSequenceIngredientAddedEvent>(OnIngredientAdded);
     }
 
     private void OnInteractUsing(Entity<FoodSequenceStartPointComponent> ent, ref InteractUsingEvent args)
@@ -32,25 +34,38 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
             TryAddFoodElement(ent, (args.Used, sequenceElement), args.User);
     }
 
+    private void OnIngredientAdded(Entity<FoodMetamorphableByAddingComponent> ent, ref FoodSequenceIngredientAddedEvent args)
+    {
+        if (!TryComp<FoodSequenceStartPointComponent>(args.Start, out var start))
+            return;
+
+        if (!TryComp<FoodSequenceElementComponent>(args.Element, out var element))
+            return;
+
+
+    }
+
     private bool TryAddFoodElement(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element, EntityUid? user = null)
     {
-        FoodSequenceElementEntry? elementData = null;
-        foreach (var entry in element.Comp.Entries)
-        {
-            if (entry.Key == start.Comp.Key)
-            {
-                elementData = entry.Value;
-                break;
-            }
-        }
-
-        if (elementData is null)
-            return false;
-
         if (TryComp<FoodComponent>(element, out var elementFood) && elementFood.RequireDead)
         {
             if (_mobState.IsAlive(element))
                 return false;
+        }
+
+        //the first thing we do is collect our data. We need to use standard data + overwrite some fields described in specific keys
+        var defaultData = element.Comp.Data;
+        var elementData = FoodSequenceElementEntry.Clone(defaultData);
+
+        foreach (var entry in element.Comp.Entries)
+        {
+            if (entry.Key == start.Comp.Key)
+            {
+                if (entry.Value.Name is not null) elementData.Name = entry.Value.Name;
+                if (entry.Value.Sprite is not null) elementData.Sprite = entry.Value.Sprite;
+                if (entry.Value.Scale != Vector2.One) elementData.Scale = entry.Value.Scale;
+                break;
+            }
         }
 
         //if we run out of space, we can still put in one last, final finishing element.
@@ -60,10 +75,6 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
                 _popup.PopupEntity(Loc.GetString("food-sequence-no-space"), start, user.Value);
             return false;
         }
-
-        //If no specific sprites are specified, standard sprites will be used.
-        if (elementData.Sprite is null && element.Comp.Sprite is not null)
-            elementData.Sprite = element.Comp.Sprite;
 
         elementData.LocalOffset = new Vector2(
             _random.NextFloat(start.Comp.MinLayerOffset.X,start.Comp.MaxLayerOffset.X),
@@ -79,6 +90,10 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         MergeFoodSolutions(start, element);
         MergeFlavorProfiles(start, element);
         MergeTrash(start, element);
+
+        var ev = new FoodSequenceIngredientAddedEvent(start, element, user);
+        RaiseLocalEvent(start, ev);
+
         QueueDel(element);
         return true;
     }
