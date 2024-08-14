@@ -142,7 +142,7 @@
     tags:
     - Sidearm
     - BrassInstrument
-    - BaseInstrument # GreyStation
+    - BasicInstrument # GreyStation
 
 - type: entity
   parent: BaseHandheldInstrument
