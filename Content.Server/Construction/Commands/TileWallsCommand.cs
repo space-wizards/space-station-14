@@ -10,7 +10,7 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Construction.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
-sealed class TileWallsCommand : IConsoleCommand
+public sealed class TileWallsCommand : IConsoleCommand
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
