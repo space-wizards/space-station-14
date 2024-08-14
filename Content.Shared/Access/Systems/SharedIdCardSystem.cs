@@ -147,7 +147,7 @@ public abstract class SharedIdCardSystem : EntitySystem
         foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
         {
             if (department.Roles.Contains(job.ID))
-                id.JobDepartments.Add("department-" + department.ID);
+                id.JobDepartments.Add(department.ID);
         }
 
         Dirty(uid, id);

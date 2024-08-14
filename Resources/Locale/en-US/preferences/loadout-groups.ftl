@@ -35,6 +35,7 @@ loadout-group-passenger-mask = Passenger mask
 loadout-group-passenger-gloves = Passenger gloves
 loadout-group-passenger-outerclothing = Passenger outer clothing
 loadout-group-passenger-shoes = Passenger shoes
+loadout-group-passenger-neck = Passenger neck
 
 loadout-group-bartender-head = Bartender head
 loadout-group-bartender-jumpsuit = Bartender jumpsuit
@@ -193,6 +194,8 @@ loadout-group-paramedic-shoes = Paramedic shoes
 
 # Wildcards
 loadout-group-reporter-jumpsuit = Reporter jumpsuit
+
+loadout-group-psychologist-jumpsuit = Psychologist jumpsuit
 
 loadout-group-boxer-jumpsuit = Boxer jumpsuit
 loadout-group-boxer-gloves = Boxer gloves
