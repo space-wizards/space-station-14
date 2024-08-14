@@ -109,6 +109,9 @@
   - type: Tag
     tags:
     - Meat
+  - type: Tag
+    tags:
+    - Meat
   - type: FoodSequenceElement
     sprite:
       sprite: Objects/Consumable/Food/meat.rsi

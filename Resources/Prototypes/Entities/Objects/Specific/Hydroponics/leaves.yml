@@ -54,6 +54,7 @@
       taco:
         name: food-sequence-content-cannabis
 
+
 - type: entity
   name: dried cannabis leaves
   parent: BaseItem
