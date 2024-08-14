@@ -2086,13 +2086,13 @@
     program: 56
   - type: FoodSequenceElement
     sprite:
-      sprite: Objects/Specific/Hydroponics/soybeans.rsi
+      sprite: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
       state: produce
     entries:
       burger:
-        name: food-sequence-content-soy
+        name: food-sequence-burger-content-spacemans-trumpet
       taco:
-        name: food-sequence-content-soy
+        name: food-sequence-content-spacemans-trumpet
 
 - type: entity
   name: koibean
@@ -2297,6 +2297,15 @@
   - type: Tag
     tags:
     - Fruit
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Specific/Hydroponics/berries.rsi
+      state: produce
+    entries:
+      burger:
+        name: food-sequence-burger-content-berries
+      taco:
+        name: food-sequence-content-berries
 
 - type: entity
   name: bungo fruit

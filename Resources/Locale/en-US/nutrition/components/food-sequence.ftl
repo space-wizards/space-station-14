@@ -64,6 +64,8 @@ food-sequence-content-tobacco = tobacco
 food-sequence-content-hamster = hamster
 food-sequence-content-suppermatter = suppermatter
 food-sequence-content-capfruit = capfruit
+food-sequence-content-berries = berries
+food-sequence-content-spacemans-trumpet = spacemans trupmet
 
 #BURGERS
 food-sequence-burger-gen = {$content}burger
@@ -99,6 +101,8 @@ food-sequence-burger-content-rainbow-cannabis = FUNNY
 food-sequence-burger-content-tobacco = tobaco
 food-sequence-burger-content-suppermatter = supper
 food-sequence-burger-content-hamster = hams
+food-sequence-burger-content-berries = berri
+food-sequence-burger-content-spacemans-trumpet = spacetrump
 
 #TACO
 food-sequence-taco-gen = taco with {$content}
