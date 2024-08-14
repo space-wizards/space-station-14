@@ -1957,17 +1957,6 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
-=========
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: salami-slice
-    entries:
-      burger:
-        name: food-sequence-content-salami
-      taco:
-        name: food-sequence-content-salami
->>>>>>>>> Temporary merge branch 2
 
 # Cooked
 
