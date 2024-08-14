@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: PolterTzi
-  changes:
-  - message: The guidebook now lists the effects reagents have on plants.
-    type: Add
-  id: 6607
-  time: '2024-05-19T23:01:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28038
-- author: Tayrtahn
-  changes:
-  - message: The popup for someone pointing at you is now slightly larger than normal
-      popups.
-    type: Tweak
-  id: 6608
-  time: '2024-05-20T13:32:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28152
 - author: Tayrtahn
   changes:
   - message: '"Warp to most followed" ghost option no longer includes admins and non-ghost
@@ -3799,3 +3784,26 @@
   id: 7106
   time: '2024-08-13T20:32:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30969
+- author: IProduceWidgets
+  changes:
+  - message: shuttle events have been separated from other midround events and can
+      now happen concurrently.
+    type: Tweak
+  - message: Cargo Gift events should be less likely.
+    type: Tweak
+  - message: meteors have been changed to be more responsive to player count.
+    type: Tweak
+  - message: 'Game mode: Kessler syndrome - What if survival but also the apocalypse?'
+    type: Add
+  - message: 'Game mode: Zombeteors - Zombies and a meteor shower all at once!'
+    type: Add
+  id: 7107
+  time: '2024-08-14T05:21:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29320
+- author: Blackern5000
+  changes:
+  - message: Combat medical kits now contain saline syringes.
+    type: Add
+  id: 7108
+  time: '2024-08-14T06:25:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29954
