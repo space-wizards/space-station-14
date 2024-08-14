@@ -3,6 +3,7 @@
   id: ClothingShoesBootsMagBase
   name: magboots
   description: Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle.
+  abstract: true
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/magboots.rsi
