@@ -2389,6 +2389,15 @@
   - type: Tag
     tags:
     - Vegetable
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Specific/Hydroponics/pea.rsi
+      state: produce
+    entries:
+      burger:
+        name: food-sequence-content-pea
+      taco:
+        name: food-sequence-content-pea
 
 - type: entity
   name: pumpkin
