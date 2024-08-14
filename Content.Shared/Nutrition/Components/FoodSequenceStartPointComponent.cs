@@ -72,18 +72,33 @@ public sealed partial class FoodSequenceStartPointComponent : Component
     [DataField]
     public Vector2 MinLayerOffset = Vector2.Zero;
 
+    /// <summary>
+    /// solution where reagents will be added from newly added ingredients
+    /// </summary>
     [DataField]
     public string Solution = "food";
 
+    /// <summary>
+    /// LocId with a name generation pattern.
+    /// </summary>
     [DataField]
     public LocId? NameGeneration;
 
+    /// <summary>
+    /// the part of the name generation used in the pattern
+    /// </summary>
     [DataField]
     public LocId? NamePrefix;
 
+    /// <summary>
+    /// content in the form of all added ingredients will be separated by these symbols
+    /// </summary>
     [DataField]
     public string? ContentSeparator;
 
+    /// <summary>
+    /// the part of the name generation used in the pattern
+    /// </summary>
     [DataField]
     public LocId? NameSuffix;
 }
