@@ -56,6 +56,7 @@
     solutions:
       food:
         maxVol: 5
+        canReact: false # Dont want cause reactions inside burgers after merging ingredients
         reagents:
         - ReagentId: Nutriment
           Quantity: 3.3 # 1/2 of a bun
@@ -74,7 +75,6 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        canReact: false # Dont want cause reactions inside burgers after merging ingredients
         maxVol: 5
         reagents:
         - ReagentId: Nutriment
