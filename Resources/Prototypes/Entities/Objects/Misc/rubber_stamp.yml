@@ -51,7 +51,7 @@
     state: stamp-cap
 
 - type: entity
-  name: CentCom rubber stamp
+  name: CentComm rubber stamp
   parent: RubberStampBase
   id: RubberStampCentcom
   suffix: DO NOT MAP
@@ -211,7 +211,7 @@
 
 - type: entity
   name: syndicate rubber stamp
-  parent: RubberStampBase
+  parent: [RubberStampBase, BaseSyndicateContraband]
   id: RubberStampSyndicate
   suffix: DO NOT MAP
   components:

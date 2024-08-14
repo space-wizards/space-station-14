@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;
 using Content.Shared.CCVar;
@@ -36,7 +36,7 @@ public sealed class FailAndStartPresetTest
 - type: entity
   id: TestRule
   parent: BaseGameRule
-  noSpawn: true
+  categories: [ GameRules ]
   components:
   - type: GameRule
     minPlayers: 0
@@ -45,7 +45,7 @@ public sealed class FailAndStartPresetTest
 - type: entity
   id: TestRuleTenPlayers
   parent: BaseGameRule
-  noSpawn: true
+  categories: [ GameRules ]
   components:
   - type: GameRule
     minPlayers: 10
@@ -110,7 +110,7 @@ public sealed class FailAndStartPresetTest
         player = pair.Player!.AttachedEntity!.Value;
         Assert.That(entMan.EntityExists(player));
 
-        ticker.SetGamePreset((GamePresetPrototype?)null);
+        ticker.SetGamePreset((GamePresetPrototype?) null);
         server.CfgMan.SetCVar(CCVars.GridFill, false);
         server.CfgMan.SetCVar(CCVars.GameLobbyFallbackEnabled, true);
         server.CfgMan.SetCVar(CCVars.GameLobbyDefaultPreset, "secret");

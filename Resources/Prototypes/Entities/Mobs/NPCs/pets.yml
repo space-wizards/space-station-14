@@ -100,6 +100,8 @@
     - id: FoodMeatCorgi
       amount: 2
     - id: MaterialHideCorgi
+  - type: StealTarget
+    stealGroup: AnimalIan
 
 - type: entity
   name: Runtime
@@ -121,6 +123,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalNamedCat
 
 - type: entity
   name: Exception
@@ -139,6 +143,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalNamedCat
 
 - type: entity
   name: Floppa
@@ -164,6 +170,8 @@
     tags:
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalNamedCat
 
 - type: entity
   name: Bandito
@@ -235,7 +243,7 @@
     - CannotSuicide
     - VimPilot
   - type: StealTarget
-    stealGroup: AnimalBingus
+    stealGroup: AnimalNamedCat
 
 - type: entity
   name: McGriff

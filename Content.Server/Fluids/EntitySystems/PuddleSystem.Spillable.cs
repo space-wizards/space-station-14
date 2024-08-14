@@ -70,13 +70,18 @@ public sealed partial class PuddleSystem
             return;
 
         args.Handled = true;
+
+        // First update the hit count so anything that is not reactive wont count towards the total!
         foreach (var hit in args.HitEntities)
         {
             if (!HasComp<ReactiveComponent>(hit))
-            {
-                hitCount -= 1; // so we don't undershoot solution calculation for actual reactive entities
+                hitCount -= 1;
+        }
+
+        foreach (var hit in args.HitEntities)
+        {
+            if (!HasComp<ReactiveComponent>(hit))
                 continue;
-            }
 
             var splitSolution = _solutionContainerSystem.SplitSolution(soln.Value, totalSplit / hitCount);
 
