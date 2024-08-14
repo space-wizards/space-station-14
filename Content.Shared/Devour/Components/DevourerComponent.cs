@@ -59,6 +59,12 @@ public sealed partial class DevourerComponent : Component
         }
     };
 
+    [DataField]
+    public EntityWhitelist StorageWhitelist = new()
+    {
+        Components = new [] {"HumanoidAppearance"}
+    };
+
     /// <summary>
     /// The chemical ID injected upon devouring
     /// </summary>
