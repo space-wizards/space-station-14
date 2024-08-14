@@ -1,7 +1,6 @@
 using System.Numerics;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Nutrition.Components;
 
@@ -49,18 +48,57 @@ public sealed partial class FoodSequenceStartPointComponent : Component
 
     public HashSet<string> RevealedLayers = new();
 
+    /// <summary>
+    /// target layer, where new layers will be added. This allows you to control the order of generative layers and static layers.
+    /// </summary>
+    [DataField]
+    public string TargetLayerMap = "foodSequenceLayers";
+
+    /// <summary>
+    /// If true, the generative layers will be placed in reverse order.
+    /// </summary>
+    [DataField]
+    public bool InverseLayers;
+
+    /// <summary>
+    /// each layer will get a random offset in the specified range
+    /// </summary>
+    [DataField]
+    public Vector2 MaxLayerOffset = Vector2.Zero;
+
+    /// <summary>
+    /// each layer will get a random offset in the specified range
+    /// </summary>
+    [DataField]
+    public Vector2 MinLayerOffset = Vector2.Zero;
+
+    /// <summary>
+    /// solution where reagents will be added from newly added ingredients
+    /// </summary>
     [DataField]
     public string Solution = "food";
 
+    /// <summary>
+    /// LocId with a name generation pattern.
+    /// </summary>
     [DataField]
     public LocId? NameGeneration;
 
+    /// <summary>
+    /// the part of the name generation used in the pattern
+    /// </summary>
     [DataField]
     public LocId? NamePrefix;
 
+    /// <summary>
+    /// content in the form of all added ingredients will be separated by these symbols
+    /// </summary>
     [DataField]
-    public LocId? ContentSeparator;
+    public string? ContentSeparator;
 
+    /// <summary>
+    /// the part of the name generation used in the pattern
+    /// </summary>
     [DataField]
     public LocId? NameSuffix;
 }
