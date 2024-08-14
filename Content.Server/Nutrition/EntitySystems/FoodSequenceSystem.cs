@@ -81,7 +81,6 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
 
     private void Metamorf(Entity<FoodSequenceStartPointComponent> start, FoodMetamorphRecipePrototype recipe)
     {
-        Log.Info($"SUCCESFUL METAMORF: {ToPrettyString(start):entity} into {recipe.ID}");
         var result = SpawnAtPosition(recipe.Result, Transform(start).Coordinates);
 
         if (!_solutionContainer.TryGetSolution(result, start.Comp.Solution, out var resultSoln, out var resultSolution))
@@ -97,11 +96,14 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
 
     private bool TryAddFoodElement(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element, EntityUid? user = null)
     {
-        if (TryComp<FoodComponent>(element, out var elementFood) && elementFood.RequireDead)
-        {
-            if (_mobState.IsAlive(element))
-                return false;
-        }
+        if (!TryComp<FoodComponent>(element, out var elementFood))
+            return false;
+
+        if (elementFood.RequireDead && _mobState.IsAlive(element))
+            return false;
+
+        if (!TryComp<FoodComponent>(start, out var startFood))
+            return false;
 
         //the first thing we do is collect our data. We need to use standard data + overwrite some fields described in specific keys
         //I REALLY DISLIKE HOW IT WORKS
@@ -139,9 +141,9 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
             start.Comp.Finished = true;
 
         UpdateFoodName(start);
-        MergeFoodSolutions(start, element);
-        MergeFlavorProfiles(start, element);
-        MergeTrash(start, element);
+        MergeFoodSolutions((start, startFood), (element, elementFood));
+        MergeFlavorProfiles((start, startFood), (element, elementFood));
+        MergeTrash((start, startFood), (element, elementFood));
 
         var ev = new FoodSequenceIngredientAddedEvent(start, element, elementData, user);
         RaiseLocalEvent(start, ev);
@@ -185,7 +187,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         _metaData.SetEntityName(start, newName);
     }
 
-    private void MergeFoodSolutions(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element)
+    private void MergeFoodSolutions(Entity<FoodComponent> start, Entity<FoodComponent> element)
     {
         if (!_solutionContainer.TryGetSolution(start.Owner, start.Comp.Solution, out var startSolutionEntity, out var startSolution))
             return;
@@ -197,7 +199,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         _solutionContainer.TryAddSolution(startSolutionEntity.Value, elementSolution);
     }
 
-    private void MergeFlavorProfiles(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element)
+    private void MergeFlavorProfiles(Entity<FoodComponent> start, Entity<FoodComponent> element)
     {
         if (!TryComp<FlavorProfileComponent>(start, out var startProfile))
             return;
@@ -212,17 +214,11 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         }
     }
 
-    private void MergeTrash(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element)
+    private void MergeTrash(Entity<FoodComponent> start, Entity<FoodComponent> element)
     {
-        if (!TryComp<FoodComponent>(start, out var startFood))
-            return;
-
-        if (!TryComp<FoodComponent>(element, out var elementFood))
-            return;
-
-        foreach (var trash in elementFood.Trash)
+        foreach (var trash in element.Comp.Trash)
         {
-            startFood.Trash.Add(trash);
+            start.Comp.Trash.Add(trash);
         }
     }
 }
