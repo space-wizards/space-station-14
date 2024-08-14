@@ -69,8 +69,6 @@
     - BolaEnergy
   - type: Sprite
     sprite: Objects/Weapons/Throwable/energy_bola.rsi
-  - type: Item
-    size: Normal
   - type: DamageOnLand
     damage:
       types:
