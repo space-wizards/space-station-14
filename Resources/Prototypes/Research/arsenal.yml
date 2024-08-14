@@ -63,6 +63,18 @@
   - WeaponDisabler
 
 - type: technology
+  id: BolaEnergy
+  name: research-technology-energy-bola
+  icon:
+    sprite: Objects/Weapons/Throwable/energy_bola.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - BolaEnergy
+
+- type: technology
   id: UraniumMunitions
   name: research-technology-uranium-munitions
   icon:

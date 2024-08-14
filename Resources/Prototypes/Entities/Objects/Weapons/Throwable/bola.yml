@@ -70,10 +70,10 @@
   - type: Sprite
     sprite: Objects/Weapons/Throwable/energy_bola.rsi
   - type: Item
-    size: Small
+    size: Normal
   - type: DamageOnLand
     damage:
       types:
         Heat: 5
   - type: Ensnaring
-    destroyOnRemove: true
+    # destroyOnRemove: true - it's a normal bola for now, perphaps someone can find a use for this field in the future
