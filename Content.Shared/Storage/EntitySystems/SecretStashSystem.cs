@@ -61,8 +61,9 @@ public sealed class SecretStashSystem : EntitySystem
     private void OnEaten(Entity<SecretStashComponent> entity, ref AfterFullyEatenEvent args)
     {
         // TODO: When newmed is finished should do damage to teeth (Or something like that!)
-        if (HasItemInside(entity))
-            _damageableSystem.TryChangeDamage(args.User, entity.Comp.DamageEatenItemInside, true);
+        var damage = entity.Comp.DamageEatenItemInside;
+        if (HasItemInside(entity) && damage != null)
+            _damageableSystem.TryChangeDamage(args.User, damage, true);
     }
 
     private void OnInteractUsing(Entity<SecretStashComponent> entity, ref InteractUsingEvent args)

@@ -57,8 +57,8 @@ namespace Content.Shared.Storage.Components
         /// <summary>
         ///     How much damage is delt to something after eating a secret stash that contains an item.
         /// </summary>
-        [DataField(required: true)]
-        public DamageSpecifier DamageEatenItemInside;
+        [DataField]
+        public DamageSpecifier? DamageEatenItemInside;
 
         /// <summary>
         ///     Container used to keep secret stash item.
