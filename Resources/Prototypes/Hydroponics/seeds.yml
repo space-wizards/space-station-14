@@ -1319,6 +1319,61 @@
   packetPrototype: GatfruitSeeds
   productPrototypes:
     - FoodGatfruit
+  mutationPrototypes:
+    - fakeCapfruit
+    - realCapfruit
+  lifespan: 65
+  maturation: 25
+  production: 25
+  yield: 1
+  potency: 10
+  growthStages: 2
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Sulfur:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: fakeCapfruit
+  name: seeds-capfruit-name
+  noun: seeds-noun-seeds
+  displayName: seeds-capfruit-display-name
+  plantRsi: Objects/Specific/Hydroponics/capfruit.rsi
+  packetPrototype: FakeCapfruitSeeds
+  productPrototypes:
+    - FoodFakeCapfruit
+  lifespan: 65
+  maturation: 25
+  production: 25
+  yield: 1
+  potency: 10
+  growthStages: 2
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Sulfur:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: realCapfruit
+  name: seeds-capfruit-name
+  noun: seeds-noun-seeds
+  displayName: seeds-capfruit-display-name
+  plantRsi: Objects/Specific/Hydroponics/capfruit.rsi
+  packetPrototype: RealCapfruitSeeds
+  productPrototypes:
+    - FoodRealCapfruit
   lifespan: 65
   maturation: 25
   production: 25

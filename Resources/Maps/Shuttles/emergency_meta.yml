@@ -472,71 +472,26 @@ entities:
     - type: Transform
       pos: 20.5,-1.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: AirlockCommandGlassLocked
   entities:
-  - uid: 56
+  - uid: 5
     components:
     - type: Transform
       pos: 0.5,-2.5
       parent: 1
-    - type: WiresPanelSecurity
-      wiresAccessible: False
-      examine: wires-panel-component-on-examine-security-level2
-    - type: Construction
-      node: medSecurity
-    - type: ContainerContainer
-      containers:
-        board: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 57
-    - type: DeviceNetwork
-      address: 2A91-A774
-      receiveFrequency: 1280
-- proto: AirlockCommandLocked
-  entities:
-  - uid: 58
+  - uid: 12
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -0.5,-6.5
       parent: 1
-    - type: WiresPanelSecurity
-      wiresAccessible: False
-      examine: wires-panel-component-on-examine-security-level2
-    - type: ContainerContainer
-      containers:
-        board: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 59
-    - type: DeviceNetwork
-      address: 09A1-F0F3
-      receiveFrequency: 1280
-    - type: Construction
-      node: medSecurity
-- proto: AirlockEngineering
+- proto: AirlockEngineeringGlassLocked
   entities:
-  - uid: 60
+  - uid: 13
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 17.5,-4.5
       parent: 1
-    - type: ContainerContainer
-      containers:
-        board: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 61
-    - type: DeviceNetwork
-      address: 4FEE-86F1
-      receiveFrequency: 1280
 - proto: AirlockExternalGlassShuttleEmergencyLocked
   entities:
   - uid: 62
@@ -647,57 +602,27 @@ entities:
     - type: DeviceNetwork
       address: 2CB4-0D0E
       receiveFrequency: 1280
-- proto: AirlockMedicalGlass
+- proto: AirlockMedicalGlassLocked
   entities:
-  - uid: 76
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 8.5,-6.5
-      parent: 1
-    - type: ContainerContainer
-      containers:
-        board: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 77
-    - type: DeviceNetwork
-      address: 0B07-5B7E
-      receiveFrequency: 1280
-  - uid: 78
+  - uid: 22
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,-9.5
       parent: 1
-    - type: ContainerContainer
-      containers:
-        board: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 79
-    - type: DeviceNetwork
-      address: 7B62-0AF6
-      receiveFrequency: 1280
-- proto: AirlockSecurityGlassLocked
+  - uid: 23
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 8.5,-6.5
+      parent: 1
+- proto: AirlockSecurityLawyerGlassLocked
   entities:
-  - uid: 80
+  - uid: 32
     components:
     - type: Transform
       pos: 2.5,-6.5
       parent: 1
-    - type: ContainerContainer
-      containers:
-        board: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 81
-    - type: DeviceNetwork
-      address: 40EA-C9E8
-      receiveFrequency: 1280
 - proto: AirTankFilled
   entities:
   - uid: 82
@@ -794,7 +719,7 @@ entities:
       parent: 1
     - type: Physics
       canCollide: False
-- proto: BookEscalationSecurity
+- proto: BookRandomStory
   entities:
   - uid: 116
     components:
@@ -2901,24 +2826,6 @@ entities:
           ent: 568
 - proto: DoorElectronics
   entities:
-  - uid: 57
-    components:
-    - type: Transform
-      parent: 56
-    - type: Physics
-      canCollide: False
-  - uid: 59
-    components:
-    - type: Transform
-      parent: 58
-    - type: Physics
-      canCollide: False
-  - uid: 61
-    components:
-    - type: Transform
-      parent: 60
-    - type: Physics
-      canCollide: False
   - uid: 67
     components:
     - type: Transform
@@ -2947,24 +2854,6 @@ entities:
     components:
     - type: Transform
       parent: 74
-    - type: Physics
-      canCollide: False
-  - uid: 77
-    components:
-    - type: Transform
-      parent: 76
-    - type: Physics
-      canCollide: False
-  - uid: 79
-    components:
-    - type: Transform
-      parent: 78
-    - type: Physics
-      canCollide: False
-  - uid: 81
-    components:
-    - type: Transform
-      parent: 80
     - type: Physics
       canCollide: False
   - uid: 570
@@ -3311,8 +3200,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 20.5,-6.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GasPassiveVent
   entities:
   - uid: 591
@@ -3321,8 +3208,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 18.5,-6.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GasPipeBend
   entities:
   - uid: 592
@@ -3594,8 +3479,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 20.5,-1.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GasVentPump
   entities:
   - uid: 638
@@ -3604,40 +3487,30 @@ entities:
       rot: 3.141592653589793 rad
       pos: 15.5,-9.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 639
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -1.5,-2.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 640
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,-8.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 641
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 7.5,-9.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 642
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,-0.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: Gauze
   entities:
   - uid: 139
@@ -4334,10 +4207,15 @@ entities:
     - type: Transform
       pos: 15.5,-10.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: OxygenTankFilled
   entities:
+  - uid: 9
+    components:
+    - type: Transform
+      parent: 2
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
   - uid: 491
     components:
     - type: Transform
@@ -8039,13 +7917,4 @@ entities:
       parent: 1
     - type: Physics
       canCollide: False
-- proto: YellowOxygenTankFilled
-  entities:
-  - uid: 9
-    components:
-    - type: Transform
-      parent: 2
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 ...
