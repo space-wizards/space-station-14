@@ -299,6 +299,7 @@ namespace Content.Server.GameTicking
                 player,
                 jobId,
                 lateJoin,
+                silent,
                 PlayersJoinedRoundNormally,
                 station,
                 character);
@@ -497,6 +498,7 @@ namespace Content.Server.GameTicking
         public ICommonSession Player { get; }
         public string? JobId { get; }
         public bool LateJoin { get; }
+        public bool Silent { get; }
         public EntityUid Station { get; }
         public HumanoidCharacterProfile Profile { get; }
 
@@ -507,6 +509,7 @@ namespace Content.Server.GameTicking
             ICommonSession player,
             string? jobId,
             bool lateJoin,
+            bool silent,
             int joinOrder,
             EntityUid station,
             HumanoidCharacterProfile profile)
@@ -515,6 +518,7 @@ namespace Content.Server.GameTicking
             Player = player;
             JobId = jobId;
             LateJoin = lateJoin;
+            Silent = silent;
             Station = station;
             Profile = profile;
             JoinOrder = joinOrder;
