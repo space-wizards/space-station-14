@@ -956,32 +956,6 @@
     node: start
     defaultTarget: cooked finfin
 
-- type: entity
-  name: raw finfin meat
-  parent: FoodMeatRawBase
-  id: FoodMeatFinfin
-  description: A slab of raw finfin. He was your best friend!
-  components:
-  - type: Sprite
-    state: finfin
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 9
-        - ReagentId: Fat
-          Quantity: 9
-  - type: SliceableFood
-    count: 3
-    slice: FoodMeatFinfinCutlet
-  - type: InternalTemperature
-    conductivity: 0.41
-  - type: Construction
-    graph: FinfinSteak
-    node: start
-    defaultTarget: cooked finfin
-
 # Cooked
 
 - type: entity
