@@ -1,10 +1,13 @@
+using System.Numerics;
 using System.Text;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
+using Robust.Shared.Random;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -13,6 +16,8 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -42,21 +47,32 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         if (elementData is null)
             return false;
 
+        if (TryComp<FoodComponent>(element, out var elementFood) && elementFood.RequireDead)
+        {
+            if (_mobState.IsAlive(element))
+                return false;
+        }
+
         //if we run out of space, we can still put in one last, final finishing element.
-        if (start.Comp.FoodLayers.Count >= start.Comp.MaxLayers && !elementData.Value.Final || start.Comp.Finished)
+        if (start.Comp.FoodLayers.Count >= start.Comp.MaxLayers && !elementData.Final || start.Comp.Finished)
         {
             if (user is not null)
                 _popup.PopupEntity(Loc.GetString("food-sequence-no-space"), start, user.Value);
             return false;
         }
 
-        if (elementData.Value.Sprite is not null)
-        {
-            start.Comp.FoodLayers.Add(elementData.Value);
-            Dirty(start);
-        }
+        //If no specific sprites are specified, standard sprites will be used.
+        if (elementData.Sprite is null && element.Comp.Sprite is not null)
+            elementData.Sprite = element.Comp.Sprite;
 
-        if (elementData.Value.Final)
+        elementData.LocalOffset = new Vector2(
+            _random.NextFloat(start.Comp.MinLayerOffset.X,start.Comp.MaxLayerOffset.X),
+            _random.NextFloat(start.Comp.MinLayerOffset.Y,start.Comp.MaxLayerOffset.Y));
+
+        start.Comp.FoodLayers.Add(elementData);
+        Dirty(start);
+
+        if (elementData.Final)
             start.Comp.Finished = true;
 
         UpdateFoodName(start);
@@ -81,12 +97,17 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         foreach (var layer in start.Comp.FoodLayers)
         {
             if (layer.Name is not null && !existedContentNames.Contains(layer.Name.Value))
-            {
-                content.Append(Loc.GetString(layer.Name.Value));
                 existedContentNames.Add(layer.Name.Value);
-            }
+        }
 
-            content.Append(separator);
+        var nameCounter = 1;
+        foreach (var name in existedContentNames)
+        {
+            content.Append(Loc.GetString(name));
+
+            if (nameCounter < existedContentNames.Count)
+                content.Append(separator);
+            nameCounter++;
         }
 
         var newName = Loc.GetString(start.Comp.NameGeneration.Value,

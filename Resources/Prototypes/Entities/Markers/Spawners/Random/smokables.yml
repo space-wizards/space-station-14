@@ -1,0 +1,108 @@
+#Spawners
+- type: entity
+  id: RandomSmokables
+  name: random smokable spawner
+  parent: MarkerBase
+  placement:
+    mode: PlaceFree
+  components:
+  - type: Transform
+    anchored: false
+  - type: Sprite
+    layers:
+      - sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
+        state: closed
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: SmokablesTable
+      prob: 0.95
+
+- type: entity
+  id: RandomSoakedCigarette
+  name: random soaked cigarette spawner
+  parent: MarkerBase
+  placement:
+    mode: PlaceFree
+  components:
+  - type: Transform
+    anchored: false
+  - type: Sprite
+    layers:
+      - sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
+        state: unlit-icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: SoakedSmokesTable
+
+#Tables
+- type: entityTable
+  id: SmokablesTable
+  table: !type:GroupSelector
+    children:
+    #Just a cig
+    - !type:GroupSelector
+      weight: 36
+      children:
+      - id: Cigarette
+    #Uncommon
+    - !type:GroupSelector
+      weight: 9
+      children:
+      - id: Cigar
+      - id: CigPackGreen
+      - id: CigPackRed
+      - id: CigPackBlue
+      - id: CigPackBlack
+      - id: PackPaperRollingFilters
+    #Butts
+    - !type:GroupSelector
+      weight: 3
+      children:
+      - id: CigaretteSpent
+      - id: CigarSpent
+        weight: 0.2
+    #Rare
+    - !type:GroupSelector
+      children:
+      - id: RandomSoakedCigarette
+      - !type:GroupSelector
+        children:
+        - id: Joint
+        - id: JointRainbow
+          weight: 0.5
+        - id: Blunt
+        - id: BluntRainbow
+          weight: 0.5
+      - !type:GroupSelector
+        children:
+        - id: CigPackMixedMedical
+        - id: CigPackMixed
+        - id: CigPackMixedNasty
+      - id: CigarGold
+        weight: 0.10
+
+- type: entityTable
+  id: SoakedSmokesTable
+  table: !type:GroupSelector
+    children:
+      - id: CigaretteOmnizine
+      - id: CigaretteIron
+      - id: CigaretteDylovene
+      - id: CigaretteDermaline
+      - id: CigaretteIpecac
+      - id: CigaretteBicaridine
+      - id: CigaretteDexalin
+      - id: CigarettePax
+      - id: CigaretteBbqSauce
+      - id: CigaretteBlackPepper
+      - id: CigaretteOmnizine
+      - id: CigaretteCapsaicinOil
+      - id: CigaretteBread
+      - id: CigaretteMilk
+      - id: CigaretteBanana
+      - id: CigaretteSpaceDrugs
+      - id: CigaretteMuteToxin
+      - id: CigaretteMold
+      - id: CigaretteLicoxide
+      - id: CigaretteWeldingFuel
+      - id: CigaretteTHC
