@@ -1,7 +1,7 @@
 food-sequence-no-space = You can't put any more!
 
 #GENERAL
-food-sequence-content-chiken = chicken
+food-sequence-content-chicken = chicken
 food-sequence-content-duck = duck
 food-sequence-content-crab = crabs
 food-sequence-content-dragon = dragon

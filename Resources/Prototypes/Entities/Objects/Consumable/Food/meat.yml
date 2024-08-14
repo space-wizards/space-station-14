@@ -309,11 +309,11 @@
       state: bird
     entries:
       burger:
-        name: food-sequence-content-chiken
+        name: food-sequence-content-chicken
       taco:
-        name: food-sequence-content-chiken
+        name: food-sequence-content-chicken
       skewer:
-        name: food-sequence-content-chiken
+        name: food-sequence-content-chicken
         sprite: 
           sprite: Objects/Consumable/Food/skewer.rsi
           state: skewer-meat
@@ -1144,11 +1144,11 @@
       state: bird-cooked
     entries:
       burger:
-        name: food-sequence-content-chiken
+        name: food-sequence-content-chicken
       taco:
-        name: food-sequence-content-chiken
+        name: food-sequence-content-chicken
       skewer:
-        name: food-sequence-content-chiken
+        name: food-sequence-content-chicken
         sprite: 
           sprite: Objects/Consumable/Food/skewer.rsi
           state: skewer-meat
@@ -1186,11 +1186,11 @@
       state: chicken-fried
     entries:
       burger:
-        name: food-sequence-content-chiken
+        name: food-sequence-content-chicken
       taco:
-        name: food-sequence-content-chiken
+        name: food-sequence-content-chicken
       skewer:
-        name: food-sequence-content-chiken
+        name: food-sequence-content-chicken
         sprite: 
           sprite: Objects/Consumable/Food/skewer.rsi
           state: skewer-meat
@@ -1594,11 +1594,11 @@
       color: white
     entries:
       burger:
-        name: food-sequence-content-chiken
+        name: food-sequence-content-chicken
       taco:
-        name: food-sequence-content-chiken
+        name: food-sequence-content-chicken
       skewer:
-        name: food-sequence-content-chiken
+        name: food-sequence-content-chicken
         sprite: 
           sprite: Objects/Consumable/Food/skewer.rsi
           state: skewer-meat
@@ -1929,11 +1929,11 @@
       state: cutlet-cooked
     entries:
       burger:
-        name: food-sequence-content-chiken
+        name: food-sequence-content-chicken
       taco:
-        name: food-sequence-content-chiken
+        name: food-sequence-content-chicken
       skewer:
-        name: food-sequence-content-chiken
+        name: food-sequence-content-chicken
         sprite: 
           sprite: Objects/Consumable/Food/skewer.rsi
           state: skewer-meat
