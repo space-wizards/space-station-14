@@ -4,12 +4,14 @@ using Content.Shared.Temperature;
 
 namespace Content.Server.Temperature.Components;
 
-
+/// <summary>
+/// Put this component on a projectile that you would like to change the temperature on whatever it hits.
+/// </summary>
 [RegisterComponent, Access(typeof(TemperatureSystem))]
 public sealed partial class ChangeTemperatureOnCollideComponent : Component
 {
     /// <summary>
-    /// The amount it changes the target's temperature by.
+    /// The amount it changes the target's temperature by. In Joules.
     /// </summary>
     [DataField]
     public float Heat = 0f;
