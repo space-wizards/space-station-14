@@ -102,11 +102,11 @@ namespace Content.Client.Ghost
 
             if (GhostVisibility == false)
             {
-                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-ghost-visibility-off-popup"), args.Performer);
+                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-ghost-visibility-popup-off"), args.Performer);
             }
             else
             {
-                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-ghost-visibility-on-popup"), args.Performer);
+                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-ghost-visibility-popup-on"), args.Performer);
             }
             if (uid == _playerManager.LocalEntity)
                 ToggleGhostVisibility();
