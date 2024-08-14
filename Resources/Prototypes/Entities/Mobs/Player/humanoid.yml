@@ -42,9 +42,6 @@
       rules: ghost-role-information-Death-Squad-rules
       raffle:
         settings: short
-      requirements:
-      - !type:OverallPlaytimeRequirement
-        time: 36000 #10 hrs
     - type: Loadout
       prototypes: [ DeathSquadGear ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -53,9 +50,26 @@
         - NamesFirstMilitaryLeader
         - NamesLastMilitary
 
+- type: entity
+  parent: RandomHumanoidSpawnerDeathSquad
+  id: RandomHumanoidSpawnerDeathSquadTime
+  suffix: ERTRole, Death Squad, Time
+  components:
+    - type: RandomHumanoidSpawner
+      settings: DeathSquadTime
+
+- type: randomHumanoidSettings
+  id: DeathSquadTime
+  parent: DeathSquad
+  components:
+    - type: GhostRole
+      requirements:
+      - !type:OverallPlaytimeRequirement
+        time: 36000 #10 hrs
 
 ## ERT Leader
 
+# Basic
 - type: entity
   id: RandomHumanoidSpawnerERTLeader
   name: ERT leader
@@ -82,10 +96,6 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
-      requirements:
-      - !type:DepartmentTimeRequirement
-        department: Command
-        time: 18000 #5 hours
     - type: Loadout
       prototypes: [ ERTLeaderGear ]
       roleLoadout: [ RoleSurvivalExtended ]
@@ -94,6 +104,25 @@
       - NamesFirstMilitaryLeader
       - NamesLastMilitary
 
+- type: entity
+  parent: RandomHumanoidSpawnerERTLeader
+  id: RandomHumanoidSpawnerERTLeaderTime
+  suffix: ERTRole, Basic, Time
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTLeaderTime
+
+- type: randomHumanoidSettings
+  id: ERTLeaderTime
+  parent: ERTLeader
+  components:
+    - type: GhostRole
+      requirements:
+      - !type:DepartmentTimeRequirement
+        department: Command
+        time: 18000 #5 hours
+
+# Eva
 - type: entity
   id: RandomHumanoidSpawnerERTLeaderEVA
   parent: RandomHumanoidSpawnerERTLeader
@@ -116,14 +145,29 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
-      requirements:
-      - !type:DepartmentTimeRequirement
-        department: Command
-        time: 18000 #5 hours
     - type: Loadout
       prototypes: [ ERTLeaderGearEVA ]
       roleLoadout: [ RoleSurvivalEVA ]
 
+- type: entity
+  parent: RandomHumanoidSpawnerERTLeaderEVA
+  id: RandomHumanoidSpawnerERTLeaderEVATime
+  suffix: ERTRole, Armored EVA, Time
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTLeaderEVATime
+
+- type: randomHumanoidSettings
+  id: ERTLeaderEVATime
+  parent: ERTLeaderEVA
+  components:
+    - type: GhostRole
+      requirements:
+      - !type:DepartmentTimeRequirement
+        department: Command
+        time: 18000 #5 hours
+
+# Lecter
 - type: entity
   id: RandomHumanoidSpawnerERTLeaderEVALecter
   parent: RandomHumanoidSpawnerERTLeaderEVA
@@ -142,13 +186,27 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+    - type: Loadout
+      prototypes: [ ERTLeaderGearEVALecter ]
+      roleLoadout: [ RoleSurvivalEVA ]
+
+- type: entity
+  parent: RandomHumanoidSpawnerERTLeaderEVALecter
+  id: RandomHumanoidSpawnerERTLeaderEVALecterTime
+  suffix: ERTRole, Lecter, EVA, Time
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTLeaderEVALecterTime
+
+- type: randomHumanoidSettings
+  id: ERTLeaderEVALecterTime
+  parent: ERTLeaderEVALecter
+  components:
+    - type: GhostRole
       requirements:
       - !type:DepartmentTimeRequirement
         department: Command
         time: 18000 #5 hours
-    - type: Loadout
-      prototypes: [ ERTLeaderGearEVALecter ]
-      roleLoadout: [ RoleSurvivalEVA ]
 
 ## ERT Chaplain
 
@@ -276,6 +334,7 @@
 
 ## ERT Engineer
 
+# Basic
 - type: entity
   id: RandomHumanoidSpawnerERTEngineer
   parent: RandomHumanoidSpawnerERTLeader
@@ -302,10 +361,6 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
-      requirements:
-      - !type:DepartmentTimeRequirement
-        department: Engineering
-        time: 36000 # 10 hrs
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -314,6 +369,25 @@
       prototypes: [ ERTEngineerGear ]
       roleLoadout: [ RoleSurvivalExtended ]
 
+- type: entity
+  id: RandomHumanoidSpawnerERTEngineerTime
+  parent: RandomHumanoidSpawnerERTEngineer
+  suffix: ERTRole, Basic, Time
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTEngineerTime
+
+- type: randomHumanoidSettings
+  id: ERTEngineerTime
+  parent: ERTEngineer
+  components:
+    - type: GhostRole
+      requirements:
+      - !type:DepartmentTimeRequirement
+        department: Engineering
+        time: 36000 # 10 hrs
+
+# EVA
 - type: entity
   id: RandomHumanoidSpawnerERTEngineerEVA
   parent: RandomHumanoidSpawnerERTEngineer
@@ -336,16 +410,31 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
-      requirements:
-      - !type:DepartmentTimeRequirement
-        department: Engineering
-        time: 36000 # 10 hrs
     - type: Loadout
       prototypes: [ ERTEngineerGearEVA ]
       roleLoadout: [ RoleSurvivalEVA ]
 
+- type: entity
+  id: RandomHumanoidSpawnerERTEngineerEVATime
+  parent: RandomHumanoidSpawnerERTEngineerEVA
+  suffix: ERTRole, Enviro EVA, Time
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTEngineerEVATime
+
+- type: randomHumanoidSettings
+  id: ERTEngineerEVATime
+  parent: ERTEngineerEVA
+  components:
+    - type: GhostRole
+      requirements:
+      - !type:DepartmentTimeRequirement
+        department: Engineering
+        time: 36000 # 10 hrs
+
 ## ERT Security
 
+# Basic
 - type: entity
   id: RandomHumanoidSpawnerERTSecurity
   parent: RandomHumanoidSpawnerERTLeader
@@ -372,10 +461,6 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
-      requirements:
-        - !type:DepartmentTimeRequirement
-          department: Security
-          time: 36000 #10 hrs
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -384,6 +469,25 @@
       prototypes: [ ERTSecurityGear ]
       roleLoadout: [ RoleSurvivalExtended ]
 
+- type: entity
+  id: RandomHumanoidSpawnerERTSecurityTime
+  parent: RandomHumanoidSpawnerERTSecurity
+  suffix: ERTRole, Basic, Time
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTSecurityTime
+
+- type: randomHumanoidSettings
+  id: ERTSecurityTime
+  parent: ERTSecurity
+  components:
+    - type: GhostRole
+      requirements:
+        - !type:DepartmentTimeRequirement
+          department: Security
+          time: 36000 #10 hrs
+
+# EVA
 - type: entity
   id: RandomHumanoidSpawnerERTSecurityEVA
   parent: RandomHumanoidSpawnerERTSecurity
@@ -406,13 +510,27 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+    - type: Loadout
+      prototypes: [ ERTSecurityGearEVA ]
+      roleLoadout: [ RoleSurvivalEVA ]
+
+- type: entity
+  id: RandomHumanoidSpawnerERTSecurityEVATime
+  parent: RandomHumanoidSpawnerERTSecurityEVA
+  suffix: ERTRole, Armored EVA, Time
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTSecurityEVATime
+
+- type: randomHumanoidSettings
+  id: ERTSecurityEVATime
+  parent: ERTSecurityEVA
+  components:
+    - type: GhostRole
       requirements:
         - !type:DepartmentTimeRequirement
           department: Security
           time: 36000 #10 hrs
-    - type: Loadout
-      prototypes: [ ERTSecurityGearEVA ]
-      roleLoadout: [ RoleSurvivalEVA ]
 
 - type: entity
   id: RandomHumanoidSpawnerERTSecurityEVALecter
@@ -432,16 +550,31 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
-      requirements:
-        - !type:DepartmentTimeRequirement
-          department: Security
-          time: 36000 #10 hrs
     - type: Loadout
       prototypes: [ ERTSecurityGearEVALecter ]
       roleLoadout: [ RoleSurvivalEVA ]
 
+- type: entity
+  id: RandomHumanoidSpawnerERTSecurityEVALecterTime
+  parent: RandomHumanoidSpawnerERTSecurityEVALecter
+  suffix: ERTRole, Lecter, EVA, Time
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTSecurityEVALecterTime
+
+- type: randomHumanoidSettings
+  id: ERTSecurityEVALecterTime
+  parent: ERTSecurityEVALecter
+  components:
+    - type: GhostRole
+      requirements:
+        - !type:DepartmentTimeRequirement
+          department: Security
+          time: 36000 #10 hrs
+
 ## ERT Medic
 
+# Basic
 - type: entity
   id: RandomHumanoidSpawnerERTMedical
   parent: RandomHumanoidSpawnerERTLeader
@@ -468,10 +601,6 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
-      requirements:
-        - !type:DepartmentTimeRequirement
-          department: Medical
-          time: 36000 #10 hrs
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -480,6 +609,25 @@
       prototypes: [ ERTMedicalGear ]
       roleLoadout: [ RoleSurvivalExtended ]
 
+- type: entity
+  id: RandomHumanoidSpawnerERTMedicalTime
+  parent: RandomHumanoidSpawnerERTMedical
+  suffix: ERTRole, Basic, Time
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTMedicalTime
+
+- type: randomHumanoidSettings
+  id: ERTMedicalTime
+  parent: ERTMedical
+  components:
+    - type: GhostRole
+      requirements:
+        - !type:DepartmentTimeRequirement
+          department: Medical
+          time: 36000 #10 hrs
+
+# EVA
 - type: entity
   id: RandomHumanoidSpawnerERTMedicalEVA
   parent: RandomHumanoidSpawnerERTMedical
@@ -502,13 +650,27 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+    - type: Loadout
+      prototypes: [ ERTMedicalGearEVA ]
+      roleLoadout: [ RoleSurvivalEVA ]
+
+- type: entity
+  id: RandomHumanoidSpawnerERTMedicalEVATime
+  parent: RandomHumanoidSpawnerERTMedicalEVA
+  suffix: ERTRole, Armored EVA, Time
+  components:
+    - type: RandomHumanoidSpawner
+      settings: ERTMedicalEVATime
+
+- type: randomHumanoidSettings
+  id: ERTMedicalEVATime
+  parent: ERTMedicalEVA
+  components:
+    - type: GhostRole
       requirements:
         - !type:DepartmentTimeRequirement
           department: Medical
           time: 36000 #10 hrs
-    - type: Loadout
-      prototypes: [ ERTMedicalGearEVA ]
-      roleLoadout: [ RoleSurvivalEVA ]
 
 ## CBURN
 
@@ -536,13 +698,27 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
-      requirements:
-      - !type:OverallPlaytimeRequirement
-        time: 36000 # 10 hrs
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
       - NamesLastMilitary
+
+- type: entity
+  id: RandomHumanoidSpawnerCBURNUnitTime
+  parent: RandomHumanoidSpawnerCBURNUnit
+  suffix: ERTRole, Time
+  components:
+    - type: RandomHumanoidSpawner
+      settings: CBURNAgentTime
+
+- type: randomHumanoidSettings
+  id: CBURNAgentTime
+  parent: CBURNAgent
+  components:
+    - type: GhostRole
+      requirements:
+      - !type:OverallPlaytimeRequirement
+        time: 36000 # 10 hrs
 
 ## Central Command
 
