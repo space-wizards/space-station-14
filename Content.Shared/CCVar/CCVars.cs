@@ -917,7 +917,7 @@ namespace Content.Shared.CCVar
         /// <seealso cref="AdminUseCustomNamesAdminRank"/>
         /// <seealso cref="AhelpAdminPrefixWebhook"/>
         public static readonly CVarDef<bool> AhelpAdminPrefix =
-            CVarDef.Create("ahelp.admin_prefix", true, CVar.SERVERONLY);
+            CVarDef.Create("ahelp.admin_prefix", false, CVar.SERVERONLY);
 
         /// <summary>
         /// Should the administrator's position be displayed in the webhook.
@@ -926,7 +926,7 @@ namespace Content.Shared.CCVar
         /// <seealso cref="AdminUseCustomNamesAdminRank"/>
         /// <seealso cref="AhelpAdminPrefix"/>
         public static readonly CVarDef<bool> AhelpAdminPrefixWebhook =
-            CVarDef.Create("ahelp.admin_prefix_webhook", true, CVar.SERVERONLY);
+            CVarDef.Create("ahelp.admin_prefix_webhook", false, CVar.SERVERONLY);
 
         /*
          * Explosions
@@ -2134,7 +2134,7 @@ namespace Content.Shared.CCVar
         ///     Whether or not world generation is enabled.
         /// </summary>
         public static readonly CVarDef<bool> WorldgenEnabled =
-            CVarDef.Create("worldgen.enabled", false, CVar.SERVERONLY);
+            CVarDef.Create("worldgen.enabled", true, CVar.SERVERONLY);
 
         /// <summary>
         ///     The worldgen config to use.
