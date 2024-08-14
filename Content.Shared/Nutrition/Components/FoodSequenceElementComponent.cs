@@ -49,6 +49,11 @@ public sealed class FoodSequenceElementEntry
     public bool Final { get; set; } = false;
 
     /// <summary>
+    /// Relative size of the sprite displayed in FoodSequence.
+    /// </summary>
+    public Vector2 Scale { get; set; } = Vector2.One;
+
+    /// <summary>
     /// the shear of a particular layer. Allows a little "randomization" of each layer.
     /// </summary>
     public Vector2 LocalOffset { get; set; } = Vector2.Zero;

@@ -763,6 +763,17 @@
   - type: Tag
     tags:
     - Fruit
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Specific/Hydroponics/extradimensional_orange.rsi
+      state: produce
+    entries:
+      burger:
+        name: food-sequence-burger-content-extradimensional-orange
+        scale: 0.5, 0.5
+      taco:
+        name: food-sequence-content-orange
+        scale: 0.5, 0.5
 
 - type: entity
   name: pineapple
@@ -907,7 +918,7 @@
         name: food-sequence-content-tomato
       skewer:
         name: food-sequence-content-tomato
-        sprite: 
+        sprite:
           sprite: Objects/Consumable/Food/skewer.rsi
           state: skewer-tomato
 
@@ -1018,7 +1029,7 @@
         name: food-sequence-content-tomato
       skewer:
         name: food-sequence-content-tomato
-        sprite: 
+        sprite:
           sprite: Objects/Consumable/Food/skewer.rsi
           state: skewer-tomato
 
@@ -1224,7 +1235,7 @@
         name: food-sequence-content-corn
       skewer:
         name: food-sequence-content-corn
-        sprite: 
+        sprite:
           sprite: Objects/Consumable/Food/skewer.rsi
           state: skewer-corn
 
@@ -1369,7 +1380,7 @@
         name: food-sequence-content-mushroom
       skewer:
         name: food-sequence-content-mushroom
-        sprite: 
+        sprite:
           sprite: Objects/Consumable/Food/skewer.rsi
           state: skewer-mushroom
 
@@ -1535,7 +1546,7 @@
         name: food-sequence-content-chili
       skewer:
         name: food-sequence-content-chili
-        sprite: 
+        sprite:
           sprite: Objects/Consumable/Food/skewer.rsi
           state: skewer-pepper
 
@@ -1575,7 +1586,7 @@
         name: food-sequence-content-chilly
       skewer:
         name: food-sequence-content-chilly
-        sprite: 
+        sprite:
           sprite: Objects/Consumable/Food/skewer.rsi
           state: skewer-bluepepper
 
@@ -1730,7 +1741,7 @@
         name: food-sequence-content-mushroom
       skewer:
         name: food-sequence-content-mushroom
-        sprite: 
+        sprite:
           sprite: Objects/Consumable/Food/skewer.rsi
           state: skewer-mushroom
 
@@ -1971,7 +1982,7 @@
         name: food-sequence-content-mushroom
       skewer:
         name: food-sequence-content-mushroom
-        sprite: 
+        sprite:
           sprite: Objects/Consumable/Food/skewer.rsi
           state: skewer-mushroom
 
@@ -2387,6 +2398,15 @@
     tags:
     - Fruit
     - Slice
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Specific/Hydroponics/holymelon.rsi
+      state: slice
+    entries:
+      burger:
+        name: food-sequence-burger-content-holymelon
+      taco:
+        name: food-sequence-content-holymelon
 
 - type: entity
   name: grapes
@@ -2587,6 +2607,15 @@
   - type: Tag
     tags:
     - Vegetable
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Specific/Hydroponics/world_pea.rsi
+      state: produce
+    entries:
+      burger:
+        name: food-sequence-burger-content-world-pea
+      taco:
+        name: food-sequence-content-world-pea
 
 - type: entity
   name: pumpkin
