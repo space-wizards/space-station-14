@@ -71,6 +71,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             _clothingSystem.CopyVisuals(uid, otherClothing, clothing);
         }
 
+        // properlly mark contraband
         if (proto.TryGetComponent("Contraband", out ContrabandComponent? contra))
         {
             EnsureComp<ContrabandComponent>(uid, out var current);
