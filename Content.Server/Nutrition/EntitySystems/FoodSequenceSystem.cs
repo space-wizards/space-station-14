@@ -10,6 +10,7 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Prototypes;
 using Content.Shared.Popups;
+using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -21,6 +22,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
@@ -144,7 +146,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         MergeFoodSolutions((start, startFood), (element, elementFood));
         MergeFlavorProfiles((start, startFood), (element, elementFood));
         MergeTrash((start, startFood), (element, elementFood));
-
+        MergeTags(start, element);
         var ev = new FoodSequenceIngredientAddedEvent(start, element, elementData, user);
         RaiseLocalEvent(start, ev);
 
@@ -220,5 +222,15 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         {
             start.Comp.Trash.Add(trash);
         }
+    }
+
+    private void MergeTags(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element)
+    {
+        if (!TryComp<TagComponent>(element, out var elementTags))
+            return;
+
+        EnsureComp<TagComponent>(start.Owner);
+
+        _tag.TryAddTags(start.Owner, elementTags.Tags);
     }
 }
