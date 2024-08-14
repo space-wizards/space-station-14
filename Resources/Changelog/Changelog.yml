@@ -1,49 +1,4 @@
 ﻿Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Attempting to dual wield something will now automatically drop the item
-      in your other hand.
-    type: Tweak
-  id: 6604
-  time: '2024-05-19T01:35:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27975
-- author: SHOTbyGUN
-  changes:
-  - message: White cane recipe for MedFab
-    type: Add
-  id: 6605
-  time: '2024-05-19T22:22:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28146
-- author: EmoGarbage404
-  changes:
-  - message: Mirrors work again.
-    type: Fix
-  id: 6606
-  time: '2024-05-19T22:35:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28084
-- author: PolterTzi
-  changes:
-  - message: The guidebook now lists the effects reagents have on plants.
-    type: Add
-  id: 6607
-  time: '2024-05-19T23:01:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28038
-- author: Tayrtahn
-  changes:
-  - message: The popup for someone pointing at you is now slightly larger than normal
-      popups.
-    type: Tweak
-  id: 6608
-  time: '2024-05-20T13:32:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28152
-- author: Tayrtahn
-  changes:
-  - message: '"Warp to most followed" ghost option no longer includes admins and non-ghost
-      followers.'
-    type: Fix
-  id: 6609
-  time: '2024-05-20T14:12:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28120
 - author: Killerqu00
   changes:
   - message: Sleeper Agents only appear once per round.
@@ -3799,3 +3754,62 @@
   id: 7103
   time: '2024-08-13T13:36:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30540
+- author: Cojoke-dot
+  changes:
+  - message: Borg's names are now displayed when they make an announcement on the
+      Communications Console.
+    type: Tweak
+  id: 7104
+  time: '2024-08-13T18:31:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30107
+- author: Spessmann
+  changes:
+  - message: Added Cog, a new midpop map based on Cogmap from ss13
+    type: Add
+  id: 7105
+  time: '2024-08-13T19:27:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30840
+- author: PoorMansDreams
+  changes:
+  - message: Throngler Plushie looks like a plushie
+    type: Tweak
+  id: 7106
+  time: '2024-08-13T20:32:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30969
+- author: IProduceWidgets
+  changes:
+  - message: shuttle events have been separated from other midround events and can
+      now happen concurrently.
+    type: Tweak
+  - message: Cargo Gift events should be less likely.
+    type: Tweak
+  - message: meteors have been changed to be more responsive to player count.
+    type: Tweak
+  - message: 'Game mode: Kessler syndrome - What if survival but also the apocalypse?'
+    type: Add
+  - message: 'Game mode: Zombeteors - Zombies and a meteor shower all at once!'
+    type: Add
+  id: 7107
+  time: '2024-08-14T05:21:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29320
+- author: Blackern5000
+  changes:
+  - message: Combat medical kits now contain saline syringes.
+    type: Add
+  id: 7108
+  time: '2024-08-14T06:25:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29954
+- author: TheShuEd
+  changes:
+  - message: added morbilliard variants of procedural tacos and kebabs
+    type: Add
+  - message: removed all microwave taco and kebabs recipes (except for the taco shell
+      itself)
+    type: Remove
+  - message: you can fight with a skewer (even if it has food on it)
+    type: Tweak
+  - message: now you can't put more than 10 layers on a burger. (20 before)
+    type: Tweak
+  id: 7109
+  time: '2024-08-14T13:04:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30905
