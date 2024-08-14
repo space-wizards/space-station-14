@@ -79,7 +79,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         }
         else
         {
-          RemComp<ContrabandComponent>(uid);
+            RemComp<ContrabandComponent>(uid);
         }
     }
 
