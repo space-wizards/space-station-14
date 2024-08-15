@@ -1,4 +1,3 @@
-using Content.Shared.Abilities.Goliath.Components;
 using Content.Shared.Directions;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
@@ -11,7 +10,7 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Abilities.Goliath;
 
-public abstract class SharedGoliathTentacleSystem : EntitySystem
+public sealed class GoliathTentacleSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly INetManager _net = default!;
@@ -24,24 +23,24 @@ public abstract class SharedGoliathTentacleSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<GoliathTentacleUserComponent, GoliathSummonTentacleAction>(OnSummonAction);
+        SubscribeLocalEvent<GoliathSummonTentacleAction>(OnSummonAction);
     }
 
-    private void OnSummonAction(Entity<GoliathTentacleUserComponent> ent, ref GoliathSummonTentacleAction args)
+    private void OnSummonAction(GoliathSummonTentacleAction args)
     {
         if (args.Handled || args.Coords is not { } coords)
             return;
 
         // TODO: animation
 
-        _popup.PopupPredicted(Loc.GetString("tentacle-ability-use-popup", ("entity", ent.Owner)), ent, args.Performer, type: PopupType.SmallCaution);
-        _stun.TryStun(ent, TimeSpan.FromSeconds(0.8f), false);
+        _popup.PopupPredicted(Loc.GetString("tentacle-ability-use-popup", ("entity", args.Performer)), args.Performer, args.Performer, type: PopupType.SmallCaution);
+        _stun.TryStun(args.Performer, TimeSpan.FromSeconds(0.8f), false);
 
         List<EntityCoordinates> spawnPos = new();
         spawnPos.Add(coords);
 
         var dirs = new List<Direction>();
-        dirs.AddRange(ent.Comp.OffsetDirections);
+        dirs.AddRange(args.OffsetDirections);
 
         for (var i = 0; i < 3; i++)
         {
@@ -62,7 +61,7 @@ public abstract class SharedGoliathTentacleSystem : EntitySystem
             }
 
             if (_net.IsServer)
-                Spawn(ent.Comp.TentacleId, pos);
+                Spawn(args.EntityId, pos);
         }
 
         args.Handled = true;

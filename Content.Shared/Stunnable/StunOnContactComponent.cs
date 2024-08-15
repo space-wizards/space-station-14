@@ -1,3 +1,4 @@
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Stunnable;
@@ -16,4 +17,7 @@ public sealed partial class StunOnContactComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan Duration = TimeSpan.FromSeconds(5);
+
+    [DataField]
+    public EntityWhitelist Blacklist = new();
 }

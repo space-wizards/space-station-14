@@ -76,18 +76,19 @@
         6
       AggroVisionRadius: !type:Single
         10
-  - type: GoliathTentacleUser
+  - type: NPCUseActionOnTarget
+    actionId: ActionGoliathTentacle
   - type: Tag
     tags:
     - CannotSuicide
+    - Goliath
     - FootstepSound
   - type: NoSlip
   - type: Butcherable
     spawned:
     - id: FoodMeatGoliath
       amount: 3
-    # replace with hide in the future...
-    - id: ClothingNeckCloakGoliathCloak
+    - id: MaterialGoliathHide1
 
 - type: entity
   id: ActionGoliathTentacle
@@ -116,22 +117,26 @@
     anchored: True
   - type: Physics
     bodyType: Static
+    canCollide: true
   - type: InteractionOutline
   - type: Sprite
     sprite: Mobs/Aliens/Asteroid/goliath.rsi
     layers:
     - state: goliath_tentacle_wiggle
   - type: StunOnContact
+    blacklist:
+      tags:
+      - Goliath
   - type: Fixtures
     fixtures:
       fix:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
+          bounds: "-0.45,-0.45,0.45,0.45"
         mask:
-        - FullTileMask
+        - Impassable
         layer:
-        - WallLayer
+        - Impassable
         hard: false
   - type: TimedDespawn #do this shit by hand because of fucking course.
     lifetime: 0.4
