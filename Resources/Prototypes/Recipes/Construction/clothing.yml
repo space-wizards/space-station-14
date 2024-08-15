@@ -124,7 +124,7 @@
   id: CardboardMask
   graph: MaskCardboard
   startNode: start
-  targetNode: maskCardboard
+  targetNode: mask
   category: construction-category-clothing
   description: A piece of cardboard, with two holes in it, held up by a wire. Ranked the second simplest mask of all time.
   icon: { sprite: Clothing/Mask/cardboard.rsi, state: icon }
