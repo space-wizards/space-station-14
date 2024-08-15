@@ -102,20 +102,12 @@ bounty-description-radio = A recent solar flare has fried all of our communicati
 bounty-description-research-disk = Turns out those bozos in the Research department have been spending all their time getting janitorial equipment. Send some research up to Central Command so we can actually get what we need.
 bounty-description-shiv = Bzzzt... Transmission from prison planet OC-1001: we're facing an onslaught of uhm... "invaders." Yeah, invaders. Send us some shivs to fight them off with.
 bounty-description-soap = Soap has gone missing from CentComm's bathrooms and nobody knows who took it. Replace it and be the hero CentComm needs.
-<<<<<<< HEAD
-bounty-description-soup = To quell the homeless uprising, Nanotrasen will be serving soup to all underpaid workers. Ship any type of soup.
-=======
 bounty-description-soup = To quell the homeless uprising, NanoTrasen will be serving soup to all underpaid workers. Ship any type of soup.
->>>>>>> upstream/master
 bounty-description-spear = CentComm's security forces are going through budget cuts. You will be paid if you ship a set of spears.
 bounty-description-syringe = The NT anti-drug task force is in need of some syringes in order to distribute them to low-income communities. Help some keep some peoples' jobs secure.
 bounty-description-toolbox = There's an absence of robustness at Central Command. Hurry up and ship some toolboxes as a solution.
 bounty-description-tech-disk = The new research assistant on Station 13 spilled a soda on the RND server. Send them some technology disks so they can build up their recipes.
-<<<<<<< HEAD
-bounty-description-trash = Recently a group of janitors have run out of trash to clean up, without any trash Centcomm wants to fire them to cut costs. Send a shipment of trash to keep them employed, and they'll give you a small compensation.
-=======
 bounty-description-trash = Recently a group of janitors have run out of trash to clean up, without any trash CentComm wants to fire them to cut costs. Send a shipment of trash to keep them employed, and they'll give you a small compensation.
->>>>>>> upstream/master
 bounty-description-anomaly-core = Suddenly we've run out of anomaly cores, including inert nuclei. Send us any anomaly cores so that we can continue to observe their final decay process.
 bounty-description-borg-module = Scientists at the neighboring station have only studied Borg production, not module production. They are stuck in the research process and need references to work from. Send any Borg modules to inspire your colleagues.
 bounty-description-artifact-fragment = Scientists at a nearby station are requesting artifact fragments for microxenoarchaeology studies. Ordinary artifacts are too large for their micro research platforms. Send some of the artifact fragments your sector is rich in.
