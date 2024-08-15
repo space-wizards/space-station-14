@@ -20,7 +20,9 @@ public sealed partial class PowerMonitoringConsoleNavMapControl : NavMapControl
 
     private readonly Color[] _powerCableColors = { Color.OrangeRed, Color.Yellow, Color.LimeGreen };
     private readonly Vector2[] _powerCableOffsets = { new Vector2(-0.2f, -0.2f), Vector2.Zero, new Vector2(0.2f, 0.2f) };
+    private Dictionary<Color, Color> _sRGBLookUp = new Dictionary<Color, Color>();
 
+    public PowerMonitoringCableNetworksComponent? PowerMonitoringCableNetworks;
     public List<PowerMonitoringConsoleLineGroup> HiddenLineGroups = new();
     public List<PowerMonitoringConsoleLine> PowerCableNetwork = new();
     public List<PowerMonitoringConsoleLine> FocusCableNetwork = new();
@@ -32,19 +34,20 @@ public sealed partial class PowerMonitoringConsoleNavMapControl : NavMapControl
 
     private MapGridComponent? _grid;
 
-    public PowerMonitoringConsoleNavMapControl()
+    public PowerMonitoringConsoleNavMapControl() : base()
     {
         // Set colors
-        NavData.TileColor = Color.FromSrgb(new Color(30, 57, 67));
-        BackgroundColor = NavData.TileColor.WithAlpha(BackgroundOpacity);
+        TileColor = new Color(30, 57, 67);
+        WallColor = new Color(102, 164, 217);
+        BackgroundColor = Color.FromSrgb(TileColor.WithAlpha(BackgroundOpacity));
 
         PostWallDrawingAction += DrawAllCableNetworks;
-
-        NavData.OnUpdate += UpdateNavMap;
     }
 
-    private void UpdateNavMap()
+    protected override void UpdateNavMap()
     {
+        base.UpdateNavMap();
+
         if (Owner == null)
             return;
 
@@ -61,14 +64,14 @@ public sealed partial class PowerMonitoringConsoleNavMapControl : NavMapControl
             return;
 
         // Draw full cable network
-        if (PowerCableNetwork.Count > 0)
+        if (PowerCableNetwork != null && PowerCableNetwork.Count > 0)
         {
-            var modulator = (FocusCableNetwork.Count > 0) ? Color.DimGray : Color.White;
+            var modulator = (FocusCableNetwork != null && FocusCableNetwork.Count > 0) ? Color.DimGray : Color.White;
             DrawCableNetwork(handle, PowerCableNetwork, modulator);
         }
 
         // Draw focus network
-        if (FocusCableNetwork.Count > 0)
+        if (FocusCableNetwork != null && FocusCableNetwork.Count > 0)
             DrawCableNetwork(handle, FocusCableNetwork, Color.White);
     }
 
@@ -103,8 +106,15 @@ public sealed partial class PowerMonitoringConsoleNavMapControl : NavMapControl
 
                 if (cableNetwork.Count > 0)
                 {
-                    var color = Color.ToSrgb(_powerCableColors[cableNetworkIdx] * modulator);
-                    handle.DrawPrimitives(DrawPrimitiveTopology.LineList, cableNetwork.Span, color);
+                    var color = _powerCableColors[cableNetworkIdx] * modulator;
+
+                    if (!_sRGBLookUp.TryGetValue(color, out var sRGB))
+                    {
+                        sRGB = Color.ToSrgb(color);
+                        _sRGBLookUp[color] = sRGB;
+                    }
+
+                    handle.DrawPrimitives(DrawPrimitiveTopology.LineList, cableNetwork.Span, sRGB);
                 }
             }
         }
@@ -154,9 +164,15 @@ public sealed partial class PowerMonitoringConsoleNavMapControl : NavMapControl
 
                 if (cableVertexUV.Count > 0)
                 {
-                    var color = Color.ToSrgb(_powerCableColors[cableNetworkIdx] * modulator);
+                    var color = _powerCableColors[cableNetworkIdx] * modulator;
 
-                    handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, cableVertexUV.Span, color);
+                    if (!_sRGBLookUp.TryGetValue(color, out var sRGB))
+                    {
+                        sRGB = Color.ToSrgb(color);
+                        _sRGBLookUp[color] = sRGB;
+                    }
+
+                    handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, cableVertexUV.Span, sRGB);
                 }
             }
         }
@@ -220,7 +236,7 @@ public sealed partial class PowerMonitoringConsoleNavMapControl : NavMapControl
                     if (neighbor)
                     {
                         // Add points
-                        NavData.AddOrUpdateNavMapLine(tile, tile + new Vector2i(_grid.TileSize, 0), horizLines, horizLinesReversed);
+                        AddOrUpdateNavMapLine(tile, tile + new Vector2i(_grid.TileSize, 0), horizLines, horizLinesReversed);
                     }
 
                     // North
@@ -238,7 +254,7 @@ public sealed partial class PowerMonitoringConsoleNavMapControl : NavMapControl
                     if (neighbor)
                     {
                         // Add points
-                        NavData.AddOrUpdateNavMapLine(tile + new Vector2i(0, -_grid.TileSize), tile, vertLines, vertLinesReversed);
+                        AddOrUpdateNavMapLine(tile + new Vector2i(0, -_grid.TileSize), tile, vertLines, vertLinesReversed);
                     }
                 }
 

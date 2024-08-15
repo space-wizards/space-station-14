@@ -1,14 +1,13 @@
 using System.Numerics;
-using Content.Client.Pinpointer;
 using Content.Client.SurveillanceCamera;
-using Content.Shared.NPC;
+using Content.Shared.StationAi;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.StationAi;
 
@@ -21,12 +20,10 @@ public sealed class StationAiOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-    private HashSet<Entity<SurveillanceCameraVisualsComponent>> _seeds = new();
+    private HashSet<Entity<StationAiVisionComponent>> _seeds = new();
 
     private IRenderTexture? _staticTexture;
-    public IRenderTexture? _blep;
-
-    protected NavMapData _data = new();
+    public IRenderTexture? _stencilTexture;
 
     public StationAiOverlay()
     {
@@ -35,11 +32,11 @@ public sealed class StationAiOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (_blep?.Texture.Size != args.Viewport.Size)
+        if (_stencilTexture?.Texture.Size != args.Viewport.Size)
         {
             _staticTexture?.Dispose();
-            _blep?.Dispose();
-            _blep = _clyde.CreateRenderTarget(args.Viewport.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "station-ai-stencil");
+            _stencilTexture?.Dispose();
+            _stencilTexture = _clyde.CreateRenderTarget(args.Viewport.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "station-ai-stencil");
             _staticTexture = _clyde.CreateRenderTarget(args.Viewport.Size,
                 new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb),
                 name: "station-ai-static");
@@ -64,12 +61,10 @@ public sealed class StationAiOverlay : Overlay
         var cleared = new HashSet<Vector2i>();
         var opaque = new HashSet<Vector2i>();
         var occluders = new HashSet<Entity<OccluderComponent>>();
+        var viewportTiles = new HashSet<Vector2i>();
 
         if (grid != null)
         {
-            _data.UpdateNavMap(gridUid);
-            _data.Offset = Vector2.Zero;
-
             // Code based upon https://github.com/OpenDreamProject/OpenDream/blob/c4a3828ccb997bf3722673620460ebb11b95ccdf/OpenDreamShared/Dream/ViewAlgorithm.cs
             var tileEnumerator = maps.GetTilesEnumerator(gridUid, grid, expandedBounds, ignoreEmpty: false);
 
@@ -105,6 +100,15 @@ public sealed class StationAiOverlay : Overlay
 
             foreach (var seed in _seeds)
             {
+                if (!seed.Comp.Enabled)
+                    continue;
+
+                // TODO: Iterate tiles direct.
+                if (!seed.Comp.Occluded)
+                {
+
+                }
+
                 var range = 7.5f;
                 boundary.Clear();
                 seedTiles.Clear();
@@ -216,42 +220,76 @@ public sealed class StationAiOverlay : Overlay
                         visibleTiles.Add(tile);
                 }
             }
+
+            // TODO: Combine tiles into viewer draw-calls
+            var gridMatrix = xforms.GetWorldMatrix(gridUid);
+            var matty =  Matrix3x2.Multiply(gridMatrix, invMatrix);
+
+            // Draw visible tiles to stencil
+            worldHandle.RenderInRenderTarget(_stencilTexture!, () =>
+                {
+                    if (!gridUid.IsValid())
+                        return;
+
+                    worldHandle.SetTransform(matty);
+
+                    foreach (var tile in visibleTiles)
+                    {
+                        var aabb = lookups.GetLocalBounds(tile, grid!.TileSize);
+                        worldHandle.DrawRect(aabb, Color.White);
+                    }
+                },
+                Color.Transparent);
+
+            // Create static texture
+            var curTime = IoCManager.Resolve<IGameTiming>().RealTime;
+
+            var noiseTexture = _entManager.System<SpriteSystem>()
+                .GetFrame(new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/noise.rsi"), "noise"), curTime);
+
+            // Once this is gucci optimise rendering.
+            worldHandle.RenderInRenderTarget(_staticTexture!,
+                () =>
+                {
+                    // TODO: Handle properly
+                    if (!gridUid.IsValid())
+                        return;
+
+                    worldHandle.SetTransform(matty);
+
+                    tileEnumerator = maps.GetTilesEnumerator(gridUid, grid!, worldBounds, ignoreEmpty: false);
+
+                    while (tileEnumerator.MoveNext(out var tileRef))
+                    {
+                        if (visibleTiles.Contains(tileRef.GridIndices))
+                            continue;
+
+                        var bounds = lookups.GetLocalBounds(tileRef, grid!.TileSize);
+                        worldHandle.DrawTextureRect(noiseTexture, bounds, Color.White.WithAlpha(80));
+                    }
+
+                },
+                Color.Black);
         }
-
-        // TODO: Combine tiles into viewer draw-calls
-        var matrix = xforms.GetWorldMatrix(gridUid);
-        var matty =  Matrix3x2.Multiply(matrix, invMatrix);
-
-        // Draw visible tiles to stencil
-        worldHandle.RenderInRenderTarget(_blep!, () =>
+        // Not on a grid
+        else
         {
-            if (!gridUid.IsValid())
-                return;
+            worldHandle.RenderInRenderTarget(_stencilTexture!, () =>
+                {
+                },
+                Color.Transparent);
 
-            worldHandle.SetTransform(matty);
-
-            foreach (var tile in visibleTiles)
-            {
-                var aabb = lookups.GetLocalBounds(tile, grid!.TileSize);
-                worldHandle.DrawRect(aabb, Color.White);
-            }
-        },
-        Color.Transparent);
-
-        // Create background texture.
-        worldHandle.RenderInRenderTarget(_staticTexture!,
-        () =>
-        {
-            worldHandle.SetTransform(invMatrix);
-            worldHandle.DrawRect(worldAabb, Color.Black);
-            worldHandle.SetTransform(matty);
-
-            _data.Draw(worldHandle, vec => new Vector2(vec.X, -vec.Y), worldAabb);
-        }, Color.Transparent);
+            worldHandle.RenderInRenderTarget(_staticTexture!,
+                () =>
+                {
+                    worldHandle.SetTransform(Matrix3x2.Identity);
+                    worldHandle.DrawRect(worldBounds, Color.Black);
+                }, Color.Black);
+        }
 
         // Use the lighting as a mask
         worldHandle.UseShader(_proto.Index<ShaderPrototype>("StencilMask").Instance());
-        worldHandle.DrawTextureRect(_blep!.Texture, worldBounds);
+        worldHandle.DrawTextureRect(_stencilTexture!.Texture, worldBounds);
 
         // Draw the static
         worldHandle.UseShader(_proto.Index<ShaderPrototype>("StencilDraw").Instance());
