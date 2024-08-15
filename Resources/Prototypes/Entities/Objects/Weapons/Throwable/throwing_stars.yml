@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseMinorContraband]
   id: ThrowingStar
   name: throwing star
   description: An ancient weapon still used to this day, due to its ease of lodging itself into its victim's body parts.
@@ -49,5 +49,18 @@
   components:
   # prevent ninja crashing server + filling bag with 20 stars to instakill a single person
   # also limits the crew's use
+  - type: TimedDespawn
+    lifetime: 30
+
+- type: entity
+  parent: ThrowingStar
+  id: ThrowingStarChangeling
+  name: bone shard
+  components:
+  - type: Sprite
+    sprite: Changeling/bone_shard.rsi
+    layers:
+    - state: icon
+      map: ["base"]
   - type: TimedDespawn
     lifetime: 30
