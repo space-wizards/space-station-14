@@ -86,7 +86,6 @@ namespace Content.Server.Ghost
         private void OnRestartAttempt(Entity<GhostComponent> entity, ref RestartVoteAttemptEvent args)
         {
             args.DeadPlayers += 1;
-          
         }
 
         private void OnGhostHearingAction(EntityUid uid, GhostComponent component, ToggleGhostHearingActionEvent args)
