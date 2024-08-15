@@ -1,23 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Artifact portal lifespan reduced from 120 seconds to 1 second
-    type: Tweak
-  id: 6611
-  time: '2024-05-22T07:52:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28200
-- author: nikthechampiongr
-  changes:
-  - message: Firelocks can now be pried by hand.
-    type: Tweak
-  - message: Firelocks will now not automatically close for 2 seconds after you pry
-      them open.
-    type: Tweak
-  - message: Firelocks are now properly predicted.
-    type: Fix
-  id: 6612
-  time: '2024-05-22T11:16:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26582
 - author: blueDev2
   changes:
   - message: Watermelon slices are now considered fruit
@@ -3813,3 +3794,18 @@
   id: 7110
   time: '2024-08-14T19:47:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31005
+- author: Erisfiregamer1
+  changes:
+  - message: New chemical, Sedin. It restores seeds on plants 20% of the time with
+      other adverse effects included.
+    type: Add
+  id: 7111
+  time: '2024-08-15T00:38:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27110
+- author: PoorMansDreams
+  changes:
+  - message: Added Star sticker in loadouts for Secoffs
+    type: Add
+  id: 7112
+  time: '2024-08-15T01:50:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29767
