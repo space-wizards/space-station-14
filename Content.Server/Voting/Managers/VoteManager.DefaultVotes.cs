@@ -59,7 +59,6 @@ namespace Content.Server.Voting.Managers
 
             var ghostVotePercentageRequirement = _cfg.GetCVar(CCVars.VoteRestartGhostPercentage);
             
-            //Raised an event so that eligble players can be counted in their respective systems
             var ev = new RestartVoteAttemptEvent();
             RaiseLocalEvent(ref ev);
             
