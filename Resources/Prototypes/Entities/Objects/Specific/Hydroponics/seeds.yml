@@ -633,7 +633,6 @@
       seedId: pyrotton
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/pyrotton.rsi
-<<<<<<< HEAD
  
 - type: entity
   parent: SeedBase
@@ -648,7 +647,6 @@
     - type: Tag
       tags:
       - GlowshroomSpores
-=======
 
 - type: entity
   parent: SeedBase
@@ -668,4 +666,3 @@
   components:
     - type: Seed
       seedId: fakeCapfruit
->>>>>>> master
