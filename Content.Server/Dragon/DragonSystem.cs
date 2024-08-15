@@ -68,7 +68,11 @@ public sealed partial class DragonSystem : EntitySystem
 
     private void OnRestartAttempt(Entity<NpcFactionMemberComponent> entity, ref RestartVoteAttemptEvent args)
     {
+        if (!_faction.IsMember(entity.Owner, "Dragon"))
+            return;
+
         args.DeadPlayers += 1;
+
     }
 
     public override void Update(float frameTime)
