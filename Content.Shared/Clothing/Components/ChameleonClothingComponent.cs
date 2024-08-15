@@ -63,6 +63,7 @@ public sealed partial class ChameleonClothingComponent : Component
     public bool EmpContinious = false;
 
     [AutoPausedField]
+    [DataField]
     public TimeSpan NextEmpChange = TimeSpan.Zero; // When we need to change outfit next time
 }
 
