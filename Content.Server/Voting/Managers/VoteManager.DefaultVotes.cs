@@ -66,7 +66,10 @@ namespace Content.Server.Voting.Managers
                 if (player.Status == SessionStatus.Disconnected)
                     continue;
 
-                _entityManager.EventBus.RaiseLocalEvent(player.AttachedEntity, ref ev);
+                if (player.AttachedEntity is not { } entity)
+                    continue;
+
+                _entityManager.EventBus.RaiseLocalEvent(entity, ref ev);
 
             }
             
