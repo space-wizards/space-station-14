@@ -4,8 +4,10 @@
   # If item is not in list it will go at the bottom (ties broken by alert type enum value)
   id: BaseAlertOrder
   order:
+    - alertType: ChangelingBiomass
     - category: Health
     - category: Stamina
+    - alertType: ChangelingChemicals
     - alertType: SuitPower
     - category: Internals
     - alertType: Fire

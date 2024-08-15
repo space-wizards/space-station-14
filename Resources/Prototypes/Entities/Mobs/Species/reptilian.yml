@@ -5,6 +5,7 @@
   id: BaseMobReptilian
   abstract: true
   components:
+  - type: Absorbable
   - type: HumanoidAppearance
     species: Reptilian
     hideLayersOnEquip:
