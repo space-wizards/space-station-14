@@ -68,14 +68,6 @@
     flavors:
       - people
   - type: FoodSequenceElement
-<<<<<<< HEAD
-    entries:
-      burger:
-        name: food-sequence-burger-content-brain
-        sprite:
-          sprite: Mobs/Species/Human/organs.rsi
-          state: brain
-=======
     sprite:
       sprite: Mobs/Species/Human/organs.rsi
       state: brain
@@ -84,7 +76,6 @@
         name: food-sequence-content-brain
       taco:
         name: food-sequence-content-brain
->>>>>>> upstream/master
   
 - type: entity
   id: OrganHumanEyes
@@ -106,14 +97,6 @@
   - type: Sprite
     state: tongue
   - type: FoodSequenceElement
-<<<<<<< HEAD
-    entries:
-      burger:
-        name: food-sequence-burger-content-tongue
-        sprite:
-          sprite: Mobs/Species/Human/organs.rsi
-          state: tongue
-=======
     sprite:
       sprite: Mobs/Species/Human/organs.rsi
       state: tongue
@@ -122,7 +105,6 @@
         name: food-sequence-content-tongue
       taco:
         name: food-sequence-content-tongue
->>>>>>> upstream/master
 
 - type: entity
   id: OrganHumanAppendix
@@ -134,13 +116,6 @@
     - state: appendix
     - state: appendix-inflamed
       visible: false
-  - type: FoodSequenceElement
-    entries:
-      burger:
-        name: food-sequence-burger-content-appendix
-        sprite:
-          sprite: Mobs/Species/Human/organs.rsi
-          state: appendix
 
 - type: entity
   id: OrganHumanEars
@@ -151,14 +126,6 @@
   - type: Sprite
     state: ears
   - type: FoodSequenceElement
-<<<<<<< HEAD
-    entries:
-      burger:
-        name: food-sequence-burger-content-ears
-        sprite:
-          sprite: Mobs/Species/Human/organs.rsi
-          state: ears
-=======
     sprite:
       sprite: Mobs/Species/Human/organs.rsi
       state: ears
@@ -167,7 +134,6 @@
         name: food-sequence-content-ears
       taco:
         name: food-sequence-content-ears
->>>>>>> upstream/master
 
 - type: entity
   id: OrganHumanLungs
@@ -251,14 +217,6 @@
     - id: Food
     - id: Drink
   - type: FoodSequenceElement
-<<<<<<< HEAD
-    entries:
-      burger:
-        name: food-sequence-burger-content-stomach
-        sprite:
-          sprite: Mobs/Species/Human/organs.rsi
-          state: stomach
-=======
     sprite:
       sprite: Mobs/Species/Human/organs.rsi
       state: stomach
@@ -267,7 +225,6 @@
         name: food-sequence-content-stomach
       taco:
         name: food-sequence-content-stomach
->>>>>>> upstream/master
 
 - type: entity
   id: OrganHumanLiver
@@ -284,14 +241,6 @@
     - id: Alcohol
       rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
   - type: FoodSequenceElement
-<<<<<<< HEAD
-    entries:
-      burger:
-        name: food-sequence-burger-content-liver
-        sprite:
-          sprite: Mobs/Species/Human/organs.rsi
-          state: liver
-=======
     sprite:
       sprite: Mobs/Species/Human/organs.rsi
       state: liver
@@ -300,7 +249,6 @@
         name: food-sequence-content-liver
       taco:
         name: food-sequence-content-liver
->>>>>>> upstream/master
 
 - type: entity
   id: OrganHumanKidneys
