@@ -18,12 +18,23 @@
         - ReagentId: THC
           Quantity: 15
   - type: FoodSequenceElement
+<<<<<<< HEAD
     entries:
       burger:
         name: food-sequence-burger-content-cannabis
         sprite:
           sprite: Objects/Specific/Hydroponics/cannabis.rsi
           state: produce
+=======
+    sprite:
+      sprite: Objects/Specific/Hydroponics/cannabis.rsi
+      state: produce
+    entries:
+      burger:
+        name: food-sequence-burger-content-cannabis
+      taco:
+        name: food-sequence-content-cannabis
+>>>>>>> upstream/master
 
 
 - type: entity
@@ -119,12 +130,23 @@
         - ReagentId: Psicodine
           Quantity: 0.6
   - type: FoodSequenceElement
+<<<<<<< HEAD
     entries:
       burger:
         name: food-sequence-burger-content-rainbow-cannabis
         sprite:
           sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
           state: produce
+=======
+    sprite:
+      sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+      state: produce
+    entries:
+      burger:
+        name: food-sequence-burger-content-rainbow-cannabis
+      taco:
+        name: food-sequence-content-rainbow-cannabis
+>>>>>>> upstream/master
 
 - type: entity
   name: dried rainbow cannabis leaves
@@ -259,6 +281,7 @@
     tags:
       - Smokable
   - type: Item
+<<<<<<< HEAD
     size: Tiny
   - type: FoodSequenceElement
     entries:
@@ -267,3 +290,6 @@
         sprite:
           sprite: Objects/Misc/reagent_fillings.rsi
           state: powderpile
+=======
+    size: Tiny
+>>>>>>> upstream/master

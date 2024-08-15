@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+using System.Numerics;
+>>>>>>> upstream/master
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -21,10 +25,23 @@ public sealed partial class FoodSequenceElementComponent : Component
     /// </summary>
     [DataField]
     public string Solution = "food";
+<<<<<<< HEAD
 }
 
 [DataRecord, Serializable, NetSerializable]
 public partial record struct FoodSequenceElementEntry()
+=======
+
+    /// <summary>
+    /// state used to generate the appearance of the added layer
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier? Sprite;
+}
+
+[DataRecord, Serializable, NetSerializable]
+public sealed class FoodSequenceElementEntry
+>>>>>>> upstream/master
 {
     /// <summary>
     /// A localized name piece to build into the item name generator.
@@ -32,7 +49,11 @@ public partial record struct FoodSequenceElementEntry()
     public LocId? Name { get; set; } = null;
 
     /// <summary>
+<<<<<<< HEAD
     /// state used to generate the appearance of the added layer
+=======
+    /// overriding default sprite
+>>>>>>> upstream/master
     /// </summary>
     public SpriteSpecifier? Sprite { get; set; } = null;
 
@@ -40,4 +61,12 @@ public partial record struct FoodSequenceElementEntry()
     /// If the layer is the final one, it can be added over the limit, but no other layers can be added after it.
     /// </summary>
     public bool Final { get; set; } = false;
+<<<<<<< HEAD
+=======
+
+    /// <summary>
+    /// the shear of a particular layer. Allows a little "randomization" of each layer.
+    /// </summary>
+    public Vector2 LocalOffset { get; set; } = Vector2.Zero;
+>>>>>>> upstream/master
 }

@@ -1,10 +1,23 @@
+<<<<<<< HEAD
+=======
+using System.Numerics;
+>>>>>>> upstream/master
 using System.Text;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
+<<<<<<< HEAD
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
+=======
+using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Popups;
+using Content.Shared.Tag;
+using Robust.Shared.Random;
+>>>>>>> upstream/master
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -13,6 +26,12 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+<<<<<<< HEAD
+=======
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+>>>>>>> upstream/master
 
     public override void Initialize()
     {
@@ -42,14 +61,26 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         if (elementData is null)
             return false;
 
+<<<<<<< HEAD
         //if we run out of space, we can still put in one last, final finishing element.
         if (start.Comp.FoodLayers.Count >= start.Comp.MaxLayers && !elementData.Value.Final || start.Comp.Finished)
+=======
+        if (TryComp<FoodComponent>(element, out var elementFood) && elementFood.RequireDead)
+        {
+            if (_mobState.IsAlive(element))
+                return false;
+        }
+
+        //if we run out of space, we can still put in one last, final finishing element.
+        if (start.Comp.FoodLayers.Count >= start.Comp.MaxLayers && !elementData.Final || start.Comp.Finished)
+>>>>>>> upstream/master
         {
             if (user is not null)
                 _popup.PopupEntity(Loc.GetString("food-sequence-no-space"), start, user.Value);
             return false;
         }
 
+<<<<<<< HEAD
         if (elementData.Value.Sprite is not null)
         {
             start.Comp.FoodLayers.Add(elementData.Value);
@@ -57,12 +88,30 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         }
 
         if (elementData.Value.Final)
+=======
+        //If no specific sprites are specified, standard sprites will be used.
+        if (elementData.Sprite is null && element.Comp.Sprite is not null)
+            elementData.Sprite = element.Comp.Sprite;
+
+        elementData.LocalOffset = new Vector2(
+            _random.NextFloat(start.Comp.MinLayerOffset.X,start.Comp.MaxLayerOffset.X),
+            _random.NextFloat(start.Comp.MinLayerOffset.Y,start.Comp.MaxLayerOffset.Y));
+
+        start.Comp.FoodLayers.Add(elementData);
+        Dirty(start);
+
+        if (elementData.Final)
+>>>>>>> upstream/master
             start.Comp.Finished = true;
 
         UpdateFoodName(start);
         MergeFoodSolutions(start, element);
         MergeFlavorProfiles(start, element);
         MergeTrash(start, element);
+<<<<<<< HEAD
+=======
+        MergeTags(start, element);
+>>>>>>> upstream/master
         QueueDel(element);
         return true;
     }
@@ -81,12 +130,26 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         foreach (var layer in start.Comp.FoodLayers)
         {
             if (layer.Name is not null && !existedContentNames.Contains(layer.Name.Value))
+<<<<<<< HEAD
             {
                 content.Append(Loc.GetString(layer.Name.Value));
                 existedContentNames.Add(layer.Name.Value);
             }
 
             content.Append(separator);
+=======
+                existedContentNames.Add(layer.Name.Value);
+        }
+
+        var nameCounter = 1;
+        foreach (var name in existedContentNames)
+        {
+            content.Append(Loc.GetString(name));
+
+            if (nameCounter < existedContentNames.Count)
+                content.Append(separator);
+            nameCounter++;
+>>>>>>> upstream/master
         }
 
         var newName = Loc.GetString(start.Comp.NameGeneration.Value,
@@ -137,4 +200,17 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
             startFood.Trash.Add(trash);
         }
     }
+<<<<<<< HEAD
+=======
+
+    private void MergeTags(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element)
+    {
+        if (!TryComp<TagComponent>(element, out var elementTags))
+            return;
+
+        EnsureComp<TagComponent>(start.Owner);
+
+        _tag.TryAddTags(start.Owner, elementTags.Tags);
+    }
+>>>>>>> upstream/master
 }

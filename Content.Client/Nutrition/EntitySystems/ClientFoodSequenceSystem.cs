@@ -1,6 +1,10 @@
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Client.GameObjects;
+<<<<<<< HEAD
+=======
+using Robust.Shared.Utility;
+>>>>>>> upstream/master
 
 namespace Content.Client.Nutrition.EntitySystems;
 
@@ -38,6 +42,7 @@ public sealed class ClientFoodSequenceSystem : SharedFoodSequenceSystem
             if (state.Sprite is null)
                 continue;
 
+<<<<<<< HEAD
             counter++;
 
             var keyCode = $"food-layer-{counter}";
@@ -46,12 +51,31 @@ public sealed class ClientFoodSequenceSystem : SharedFoodSequenceSystem
             var index = sprite.LayerMapReserveBlank(keyCode);
 
             //Set image
+=======
+            var keyCode = $"food-layer-{counter}";
+            start.Comp.RevealedLayers.Add(keyCode);
+
+            sprite.LayerMapTryGet(start.Comp.TargetLayerMap, out var index);
+
+            if (start.Comp.InverseLayers)
+                index++;
+
+            sprite.AddBlankLayer(index);
+            sprite.LayerMapSet(keyCode, index);
+>>>>>>> upstream/master
             sprite.LayerSetSprite(index, state.Sprite);
 
             //Offset the layer
             var layerPos = start.Comp.StartPosition;
+<<<<<<< HEAD
             layerPos += start.Comp.Offset * counter;
             sprite.LayerSetOffset(index, layerPos);
+=======
+            layerPos += (start.Comp.Offset * counter) + state.LocalOffset;
+            sprite.LayerSetOffset(index, layerPos);
+
+            counter++;
+>>>>>>> upstream/master
         }
     }
 }

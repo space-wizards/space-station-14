@@ -378,3 +378,20 @@ SignHydro3: SignHydro1
 
 # 2024-07-27
 LogicGate: LogicGateOr
+
+# 2024-08-11
+FoodTacoBeef: FoodTacoShell
+FoodTacoChicken: FoodTacoShell
+FoodTacoFish: FoodTacoShell
+FoodTacoBeefSupreme: FoodTacoShell
+FoodTacoChickenSupreme: FoodTacoShell
+FoodTacoRat: FoodTacoShell
+
+FoodMeatHumanKebab: FoodKebabSkewer
+FoodMeatLizardtailKebab: FoodKebabSkewer
+FoodMeatRatKebab: FoodKebabSkewer
+FoodMeatRatdoubleKebab: FoodKebabSkewer
+FoodMeatSnakeKebab: FoodKebabSkewer
+FoodMeatHawaiianKebab: FoodKebabSkewer
+FoodMeatKebab: FoodKebabSkewer
+FoodMeatFiestaKebab: FoodKebabSkewer
