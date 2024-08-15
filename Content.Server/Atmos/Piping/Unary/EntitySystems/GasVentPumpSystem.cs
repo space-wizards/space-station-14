@@ -350,10 +350,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             args.Handled = true;
 
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.ManualLockoutDisableDoAfter, new VentScrewedDoAfterEvent(), uid, uid, args.Used)
-            {
-                DistanceThreshold = 1f
-            });
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.ManualLockoutDisableDoAfter, new VentScrewedDoAfterEvent(), uid, uid, args.Used));
         }
         private void OnVentScrewed(EntityUid uid, GasVentPumpComponent component, VentScrewedDoAfterEvent args)
         {
