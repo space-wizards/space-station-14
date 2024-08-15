@@ -159,3 +159,12 @@
     path: /Audio/Animals/chicken_cluck_happy.ogg
   exclaimSound:
     path: /Audio/Animals/chicken_cluck_happy.ogg
+
+- type: speechSounds
+  id: Weh
+  saySound:
+    path: /Audio/Items/Toys/weh.ogg
+  askSound:
+    path: /Audio/Items/Toys/weh.ogg
+  exclaimSound:
+    path: /Audio/Items/Toys/weh.ogg

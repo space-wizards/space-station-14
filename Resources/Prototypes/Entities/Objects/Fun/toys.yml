@@ -323,6 +323,10 @@
     equippedPrefix: lizard
     slots:
     - HEAD
+    # all yaml below this point prepares the plushie to be controlled
+  - type: Speech
+    speechVerb: Default
+    speechSounds: Weh
 
 - type: entity
   parent: PlushieLizard
