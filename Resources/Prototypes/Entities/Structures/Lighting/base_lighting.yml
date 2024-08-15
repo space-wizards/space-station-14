@@ -215,9 +215,15 @@
       types:
         Heat: 2
   - type: PointLight
-    radius: 15
-    energy: 2.5
-    softness: 0.9
+    enabled: false
+    radius: 10
+    energy: 0.6
+    offset: "0, 0.4"
+    color: "#7CFC00"
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    radius: 10
+    speed: 50
 
 #Sodium lights
 - type: entity

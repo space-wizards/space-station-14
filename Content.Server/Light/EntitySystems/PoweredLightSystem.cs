@@ -42,13 +42,14 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly PointLightSystem _pointLight = default!;
+        [Dependency] private readonly SharedRotatingLightSystem _rotatingLightSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly DamageOnInteractSystem _damageOnInteractSystem = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
         public const string LightBulbContainer = "light_bulb";
 
-        private const float UpdateLightCycleTimer = 0.2f;
+        private const float UpdateLightCycleTimer = 0.6f;
         private float _lightCycleTimer;
 
         private const float UpdateTimer = 0.05f;
@@ -57,6 +58,13 @@ namespace Content.Server.Light.EntitySystems
         private float _frameTime;
 
         private Color _newColor = Color.White;
+
+        // Add more colors, or change existing
+        private readonly List<Color> _discoLightColors =
+        [
+            Color.Violet, Color.Tomato, Color.Cyan, Color.Yellow,
+            Color.HotPink, Color.Lime, Color.DeepPink, Color.DeepSkyBlue,
+        ];
 
         public override void Initialize()
         {
@@ -98,13 +106,14 @@ namespace Content.Server.Light.EntitySystems
             _lightCycleTimer += _frameTime;
 
             var query =
-                EntityQueryEnumerator<PoweredLightComponent, AppearanceComponent, ApcPowerReceiverComponent>();
+                EntityQueryEnumerator<PoweredLightComponent, AppearanceComponent, ApcPowerReceiverComponent, RotatingLightComponent>();
             while (query.MoveNext(out var uid,
                        out var light,
                        out var appearance,
-                       out var powerReceiver))
+                       out var powerReceiver,
+                       out var rotatingLight))
             {
-                if (!Resolve(uid, ref light, ref powerReceiver, false))
+                if (!Resolve(uid, ref light, ref powerReceiver, ref rotatingLight, false))
                     return;
 
                 // Optional component.
@@ -119,7 +128,7 @@ namespace Content.Server.Light.EntitySystems
 
                 if (_lightCycleTimer is > UpdateLightCycleTimer or 0)
                 {
-                    _newColor = GetRandomColor();
+                    _newColor = GetRandomDiscoLightColor();
                     if (_lightCycleTimer > 0)
                     {
                         _lightCycleTimer = 0;
@@ -136,12 +145,22 @@ namespace Content.Server.Light.EntitySystems
 
                         lightBulb.Color = animatedColor;
 
+                        // _rotatingLightSystem.SetColor(uid, rotatingLight, animatedColor, appearance);
+
+                        // _pointLight.SetEnabled(uid, true);
+
+                        // _appearance.SetData(uid, EmergencyLightVisuals.On, true);
+                        // _appearance.SetData(uid, EmergencyLightVisuals.Color, animatedColor, appearance);
+                        // _appearance.SetData(uid, RotatingLightComponent.RotatingLightVisuals.Color, animatedColor, appearance);
+
+                        // _rotatingLightSystem.SetAnimationColor(uid, rotatingLight, animatedColor);
+
                         SetLight(uid,
                             true,
                             animatedColor,
                             light,
                             lightBulb.LightRadius + 5,
-                            lightBulb.LightEnergy,
+                            lightBulb.LightEnergy + 0.5f,
                             lightBulb.LightSoftness + 1);
 
                         _appearance.SetData(uid, LightBulbVisuals.Color, animatedColor, appearance);
@@ -347,19 +366,12 @@ namespace Content.Server.Light.EntitySystems
             return new Color(r, g, b);
         }
 
-        private Color GetRandomColor()
+        private Color GetRandomDiscoLightColor()
         {
             var random = new Random();
 
-            // Add more colors, or change existing
-            var colors = new List<Color>
-            {
-                Color.Violet, Color.Tomato, Color.Purple, Color.Yellow, Color.Blue,
-                Color.HotPink, Color.Pink, Color.DeepPink, Color.DeepSkyBlue,
-            };
-
-            var rand = random.Next(0, colors.Count);
-            return colors[rand];
+            var rand = random.Next(0, _discoLightColors.Count);
+            return _discoLightColors[rand];
         }
 
         private void UpdateLight(EntityUid uid,
