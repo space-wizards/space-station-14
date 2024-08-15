@@ -124,3 +124,11 @@
   icon: { sprite: Objects/Misc/reagent_fillings.rsi, state: powderpile }
   color: "#A9A9A9"
   price: 0
+
+- type: material
+  id: Diamond
+  name: materials-diamond
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Materials/materials.rsi, state: diamond }
+  color: "#80ffff"
+  price: 20 # big diamond gaslit us so hard diamonds actually became extremely rare

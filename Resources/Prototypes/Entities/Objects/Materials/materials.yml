@@ -360,10 +360,6 @@
     layers:
     - state: diamond
       map: ["base"]
-  - type: StaticPrice
-    price: 0
-  - type: StackPrice
-    price: 500
   - type: Appearance
   - type: Item
     heldPrefix: diamond
@@ -375,6 +371,10 @@
         reagents:
         - ReagentId: Carbon
           Quantity: 20
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Diamond: 100
 
 - type: entity
   parent: MaterialDiamond
@@ -510,7 +510,8 @@
     flavors:
       - banana
   - type: Food
-    trash: TrashBananiumPeel
+    trash: 
+    - TrashBananiumPeel
   - type: BadFood
   - type: SolutionContainerManager
     solutions:

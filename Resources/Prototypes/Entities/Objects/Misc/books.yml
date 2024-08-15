@@ -108,6 +108,7 @@
     openOnActivation: true
     guides:
     - Bartender
+    - Drinks
 
 - type: entity
   id: BookHowToCookForFortySpaceman
@@ -130,6 +131,7 @@
     openOnActivation: true
     guides:
     - Chef
+    - FoodRecipes
 
 - type: entity
   id: BookLeafLoversSecret
@@ -155,6 +157,7 @@
     openOnActivation: true
     guides:
     - Botany
+    - Chemicals
 
 - type: entity
   id: BookEngineersHandbook
@@ -231,6 +234,7 @@
     openOnActivation: true
     guides:
     - Security
+    - Antagonists
 
 - type: entity
   id: BookHowToKeepStationClean
@@ -352,6 +356,7 @@
     openOnActivation: true
     guides:
     - Chemicals
+    - Chemist
 
 - type: entity
   id: BookSpaceLaw
