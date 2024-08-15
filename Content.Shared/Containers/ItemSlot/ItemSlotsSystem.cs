@@ -252,7 +252,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (inserted != null && inserted.Value && user != null)
                 _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.Value)} inserted {ToPrettyString(item)} into {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
 
-            _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null);
+            _audioSystem.PlayPredicted(slot.InsertSound, uid, !excludeUserAudio ? user : null);
         }
 
         /// <summary>
@@ -450,7 +450,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (ejected != null && ejected.Value && user != null)
                 _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.Value)} ejected {ToPrettyString(item)} from {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
 
-            _audioSystem.PlayPredicted(slot.EjectSound, uid, excludeUserAudio ? user : null);
+            _audioSystem.PlayPredicted(slot.EjectSound, uid, !excludeUserAudio ? user : null);
         }
 
         /// <summary>

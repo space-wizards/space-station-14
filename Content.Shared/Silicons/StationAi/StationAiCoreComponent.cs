@@ -7,7 +7,7 @@ namespace Content.Shared.Silicons.StationAi;
 /// Indicates this entity can interact with station equipment and is a "Station AI".
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class StationAiComponent : Component
+public sealed partial class StationAiCoreComponent : Component
 {
     /*
      * I couldn't think of any other reason you'd want to split these out.

@@ -1,8 +1,13 @@
 - type: entity
   id: Incorporeal
-  noSpawn: true
+  save: false
+  abstract: true
   description: Mobs without physical bodies
   components:
+  - type: Sprite
+    noRot: true
+    overrideContainerOcclusion: true # Always show up regardless of where they're contained.
+    drawdepth: Ghosts
   - type: CargoSellBlacklist
   - type: MovementSpeedModifier
     baseSprintSpeed: 12
@@ -32,8 +37,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    overrideContainerOcclusion: true # Ghosts always show up regardless of where they're contained.
-    drawdepth: Ghosts
     sprite: Mobs/Ghosts/ghost_human.rsi
     color: "#fff8"
     layers:

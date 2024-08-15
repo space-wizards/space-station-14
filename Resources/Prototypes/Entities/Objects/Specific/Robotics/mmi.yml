@@ -77,7 +77,6 @@
         map: ["base"]
     - type: Input
       context: human
-    - type: BlockMovement
     - type: ToggleableGhostRole
       examineTextMindPresent: positronic-brain-installed
       examineTextMindSearching: positronic-brain-still-searching

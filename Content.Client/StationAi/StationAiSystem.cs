@@ -15,8 +15,8 @@ public sealed class StationAiSystem : SharedStationAiSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StationAiOverlayComponent, PlayerAttachedEvent>(OnAiAttached);
-        SubscribeLocalEvent<StationAiOverlayComponent, PlayerDetachedEvent>(OnAiDetached);
+        SubscribeLocalEvent<StationAiOverlayComponent, LocalPlayerAttachedEvent>(OnAiAttached);
+        SubscribeLocalEvent<StationAiOverlayComponent, LocalPlayerDetachedEvent>(OnAiDetached);
         SubscribeLocalEvent<StationAiOverlayComponent, ComponentInit>(OnAiOverlayInit);
         SubscribeLocalEvent<StationAiOverlayComponent, ComponentRemove>(OnAiOverlayRemove);
     }
@@ -59,12 +59,12 @@ public sealed class StationAiSystem : SharedStationAiSystem
         _overlay = null;
     }
 
-    private void OnAiAttached(Entity<StationAiOverlayComponent> ent, ref PlayerAttachedEvent args)
+    private void OnAiAttached(Entity<StationAiOverlayComponent> ent, ref LocalPlayerAttachedEvent args)
     {
         AddOverlay();
     }
 
-    private void OnAiDetached(Entity<StationAiOverlayComponent> ent, ref PlayerDetachedEvent args)
+    private void OnAiDetached(Entity<StationAiOverlayComponent> ent, ref LocalPlayerDetachedEvent args)
     {
         RemoveOverlay();
     }

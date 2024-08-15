@@ -1,12 +1,49 @@
+# Actions
+# TODO
+
+# Ai
+- type: entity
+  id: AiHolder
+  abstract: true
+  description: Handles AI interactions across holocards + AI cores
+  components:
+  - type: StationAiHolder
+    slot:
+      name: station-ai-mind-slot
+      whitelist:
+        tags:
+        - StationAi
+  - type: ContainerContainer
+    containers:
+      station_ai_mind_slot: !type:ContainerSlot
+        # Load-bearing.
+        # The issue is verbs check for same transparent container.
+        # The alternative is you add a bunch of events trying to override it; we don't even really need the container functionality
+        # anyway it's just a quality of life thing.
+        showEnts: True
+
 - type: entity
   id: Holocard
   name: Holocard
-  parent: BaseItem
+  parent:
+  - BaseItem
+  - AiHolder
   suffix: Empty
-  # TODO: Sprite
-  # TODO: Item toggle to enable / disable AI functionality
-  # TODO: StationAiComponent
-  # TODO: Interact on the big box (if state good) puts it in.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/ai_card.rsi
+    layers:
+    - state: base
+    - state: full
+      map: ["unshaded"]
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.StationAiVisualState.Key:
+        unshaded:
+          Empty: { state: empty }
+          Occupied: { state: full }
 
 
   # Fix all of the interaction stuff etc. and make it actually work
@@ -20,21 +57,28 @@
 - type: entity
   id: PlayerStationAiEmpty
   name: Station AI
-  parent: BaseStructureDynamic
+  description: The latest in Artificial Intelligences.
+  parent:
+  - BaseStructure
+  - AiHolder
   suffix: Empty
   components:
+  - type: StationAiCore
   - type: StationAiVision
-  - type: ItemSlots
-    slots:
-      station_ai_mind_slot:
-        name: station-ai-mind-slot
   - type: Sprite
     sprite: Mobs/Silicon/station_ai.rsi
     layers:
     - state: base
     - state: ai_empty
+      map: ["unshaded"]
       shader: unshaded
-  - type: StationAi
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.StationAiVisualState.Key:
+        unshaded:
+          Empty: { state: ai_empty }
+          Occupied: { state: ai }
 
 - type: entity
   id: PlayerStationAi
@@ -57,11 +101,18 @@
   noSpawn: true
   suffix: DO NOT MAP
   components:
+  - type: Sprite
+    # Once it's in a core it's pretty much an abstract entity at that point.
+    visible: false
+  - type: ComplexInteraction
+  - type: Actions
   - type: Eye
     drawFov: false
-  - type: ContentEye
-    maxZoom: 1.44,1.44
   - type: InputMover
+  - type: Tag
+    tags:
+    - HideContextMenu
+    - StationAi
   - type: RandomMetadata
     # TODO: Loadout name support
     # TODO: Copy it on station AI insertion
@@ -76,12 +127,16 @@
   noSpawn: true
   suffix: DO NOT MAP
   components:
+  - type: Eye
+    pvsScale: 1.5
   - type: Sprite
     sprite: Mobs/Silicon/station_ai.rsi
+    visible: false
     layers:
     - state: holo
       shader: unshaded
 
+# Borgs
 - type: entity
   id: PlayerBorgGeneric
   parent: BorgChassisGeneric

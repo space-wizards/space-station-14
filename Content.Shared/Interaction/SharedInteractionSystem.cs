@@ -17,6 +17,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Silicons.StationAi;
 using Content.Shared.Storage;
 using Content.Shared.Tag;
 using Content.Shared.Timing;
@@ -630,6 +631,9 @@ namespace Content.Shared.Interaction
             if (!Resolve(other, ref other.Comp))
                 return false;
 
+            if (HasComp<RemoteInteractComponent>(origin))
+                return true;
+
             return InRangeUnobstructed(origin,
                 other,
                 other.Comp.Coordinates,
@@ -1182,6 +1186,12 @@ namespace Content.Shared.Interaction
         /// </summary>
         public bool IsAccessible(Entity<TransformComponent?> user, Entity<TransformComponent?> target)
         {
+            var ev = new AccessibleOverrideEvent(user, target);
+            RaiseLocalEvent(user, ref ev, true);
+
+            if (ev.Handled)
+                return ev.Accessible;
+
             if (_containerSystem.IsInSameOrParentContainer(user, target, out _, out var container))
                 return true;
 
@@ -1369,17 +1379,23 @@ namespace Content.Shared.Interaction
     };
 
     /// <summary>
-    ///     Raised directed by-ref on an item and a user to determine if interactions can occur.
-    /// </summary>
-    /// <param name="Cancelled">Whether the hand interaction should be cancelled.</param>
-    [ByRefEvent]
-    public record struct AttemptUseInteractEvent(EntityUid User, EntityUid Used, bool Cancelled = false);
-
-    /// <summary>
     ///     Raised directed by-ref on an item to determine if hand interactions should go through.
     ///     Defaults to allowing hand interactions to go through. Cancel to force the item to be attacked instead.
     /// </summary>
     /// <param name="Cancelled">Whether the hand interaction should be cancelled.</param>
     [ByRefEvent]
     public record struct CombatModeShouldHandInteractEvent(bool Cancelled = false);
+
+    /// <summary>
+    /// Override event raised directed on a user to say it can access the target.
+    /// </summary>
+    [ByRefEvent]
+    public record struct AccessibleOverrideEvent(EntityUid User, EntityUid Target)
+    {
+        public readonly EntityUid User = User;
+        public readonly EntityUid Target = Target;
+
+        public bool Handled;
+        public bool Accessible = true;
+    }
 }
