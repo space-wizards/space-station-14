@@ -139,7 +139,7 @@
   id: ToiletGoldenEmpty
   parent: BaseToilet
   name: golden toilet
-  description: HT-451G is a gold version of the device. It says on the side that it is made of purest Mercurian gold.
+  description: The HT-451G is the gold version of the device. It says on the side that it is made of the purest Mercurian gold and a real leather seat.
   suffix: Empty
   components:
   - type: Sprite
