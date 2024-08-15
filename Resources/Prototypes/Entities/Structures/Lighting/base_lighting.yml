@@ -87,6 +87,10 @@
     state: empty
   - type: PointLight
     enabled: false
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    enabled: false
+    speed: 50
   - type: PoweredLight
     bulb: Tube
   - type: ContainerContainer
@@ -130,6 +134,10 @@
     state: base
   - type: PointLight
     enabled: true
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    enabled: false
+    speed: 50
   - type: PoweredLight
     hasLampOnSpawn: LightTube
   - type: AmbientOnPowered
@@ -222,6 +230,7 @@
     color: "#7CFC00"
     mask: /Textures/Effects/LightMasks/double_cone.png
   - type: RotatingLight
+    enabled: true
     speed: 50
 
 #Sodium lights

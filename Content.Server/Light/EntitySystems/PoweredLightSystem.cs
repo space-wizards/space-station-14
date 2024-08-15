@@ -42,7 +42,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly PointLightSystem _pointLight = default!;
-        [Dependency] private readonly SharedRotatingLightSystem _rotatingLightSystem = default!;
+        [Dependency] private readonly RotatingLightSystem _rotatingLightSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly DamageOnInteractSystem _damageOnInteractSystem = default!;
 
@@ -116,6 +116,14 @@ namespace Content.Server.Light.EntitySystems
                 if (!Resolve(uid, ref light, ref powerReceiver, ref rotatingLight, false))
                     return;
 
+                if (light.BulbType != LightBulbType.DiscoTube)
+                {
+                    _rotatingLightSystem.SetEnabled(uid, rotatingLight, false);
+                    continue;
+                }
+
+                _rotatingLightSystem.SetEnabled(uid, rotatingLight, true);
+
                 // Optional component.
                 Resolve(uid, ref appearance, false);
 
@@ -144,16 +152,6 @@ namespace Content.Server.Light.EntitySystems
                         var animatedColor = Lerp(startColor, _newColor, _lightCycleTimer);
 
                         lightBulb.Color = animatedColor;
-
-                        // _rotatingLightSystem.SetColor(uid, rotatingLight, animatedColor, appearance);
-
-                        // _pointLight.SetEnabled(uid, true);
-
-                        // _appearance.SetData(uid, EmergencyLightVisuals.On, true);
-                        // _appearance.SetData(uid, EmergencyLightVisuals.Color, animatedColor, appearance);
-                        // _appearance.SetData(uid, RotatingLightComponent.RotatingLightVisuals.Color, animatedColor, appearance);
-
-                        // _rotatingLightSystem.SetAnimationColor(uid, rotatingLight, animatedColor);
 
                         SetLight(uid,
                             true,
@@ -259,6 +257,19 @@ namespace Content.Server.Light.EntitySystems
             // try to insert bulb in container
             if (!_containerSystem.Insert(bulbUid, light.LightBulbContainer))
                 return false;
+
+            if (lightBulb.Type == LightBulbType.DiscoTube)
+            {
+                light.BulbType = LightBulbType.DiscoTube;
+            }
+            else if (lightBulb.Type == LightBulbType.Tube)
+            {
+                light.BulbType = LightBulbType.Tube;
+            }
+            else if (lightBulb.Type == LightBulbType.Bulb)
+            {
+                light.BulbType = LightBulbType.Bulb;
+            }
 
             UpdateLight(uid, light);
             return true;
@@ -384,6 +395,18 @@ namespace Content.Server.Light.EntitySystems
 
             // Optional component.
             Resolve(uid, ref appearance, false);
+
+            if (EntityManager.TryGetComponent(uid, out RotatingLightComponent? rotatingLight))
+            {
+                if (light.BulbType == LightBulbType.DiscoTube)
+                {
+                    _rotatingLightSystem.SetEnabled(uid, rotatingLight, true);
+                }
+                else
+                {
+                    _rotatingLightSystem.SetEnabled(uid, rotatingLight, false);
+                }
+            }
 
             // check if light has bulb
             var bulbUid = GetBulb(uid, light);
