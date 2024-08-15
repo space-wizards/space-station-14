@@ -73,7 +73,7 @@ namespace Content.Server.Voting.Managers
 
             }
             
-            var ghostCount = 0 //ev.DeadPlayers;
+            var ghostCount = ev.DeadPlayers;
 
             var ghostPercentage = 0.0;
             if (totalPlayers > 0)
