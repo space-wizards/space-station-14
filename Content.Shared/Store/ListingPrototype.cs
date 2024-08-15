@@ -2,11 +2,6 @@ using System.Linq;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Store;
@@ -34,7 +29,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// Discount category for listing item. This marker describes chance of how often will item be discounted.
     /// </summary>
     [DataField("discountCategory")]
-    public ProtoId<DiscountCategoryPrototype> DiscountCategory = "noDiscounts";
+    public ProtoId<DiscountCategoryPrototype>? DiscountCategory;
 
     /// <summary>
     /// Options for discount - from max amount down to how much item costs can be cut by discount, absolute value.
