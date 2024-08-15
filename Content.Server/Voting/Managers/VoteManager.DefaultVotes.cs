@@ -58,11 +58,13 @@ namespace Content.Server.Voting.Managers
             var totalPlayers = _playerManager.Sessions.Count(session => session.Status != SessionStatus.Disconnected);
 
             var ghostVotePercentageRequirement = _cfg.GetCVar(CCVars.VoteRestartGhostPercentage);
+            var ghostCount = 0;
             
             var ev = new RestartVoteAttemptEvent();
             RaiseLocalEvent(ref ev);
-            
-            var ghostCount = ev.DeadPlayers;
+
+
+            ghostCount = ev.DeadPlayers;
 
             var ghostPercentage = 0.0;
             if (totalPlayers > 0)
