@@ -7,6 +7,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
 using Content.Shared.Voting;
+using Content.Shared.Zombies;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
@@ -61,7 +62,7 @@ namespace Content.Server.Voting.Managers
             foreach (var player in _playerManager.Sessions)
             {
                 _playerManager.UpdateState(player);
-                if (player.Status != SessionStatus.Disconnected && _entityManager.HasComponent<GhostComponent>(player.AttachedEntity))
+                if (player.Status != SessionStatus.Disconnected && ( _entityManager.HasComponent<GhostComponent>(player.AttachedEntity) || _entityManager.HasComponent<ZombieComponent>(player.AttachedEntity)))
                 {
                     ghostCount++;
                 }
