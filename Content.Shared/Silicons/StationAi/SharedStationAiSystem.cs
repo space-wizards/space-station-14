@@ -1,8 +1,10 @@
+using Content.Shared.Chat;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.StationAi;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
@@ -59,6 +61,17 @@ public abstract class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiCoreComponent, EntRemovedFromContainerMessage>(OnAiRemove);
         SubscribeLocalEvent<StationAiCoreComponent, MapInitEvent>(OnAiMapInit);
         SubscribeLocalEvent<StationAiCoreComponent, ComponentShutdown>(OnAiShutdown);
+    }
+
+    public virtual bool SetEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
+    {
+        if (entity.Comp.Enabled == enabled)
+            return false;
+
+        entity.Comp.Enabled = enabled;
+        Dirty(entity);
+
+        return true;
     }
 
     private void OnAiInteraction(Entity<StationAiHeldComponent> ent, ref InteractionAttemptEvent args)
@@ -206,7 +219,7 @@ public abstract class SharedStationAiSystem : EntitySystem
         RemCompDeferred<RemoteInteractComponent>(args.Entity);
     }
 
-    public void UpdateAppearance(Entity<StationAiHolderComponent?> entity)
+    protected void UpdateAppearance(Entity<StationAiHolderComponent?> entity)
     {
         if (!Resolve(entity.Owner, ref entity.Comp, false))
             return;
