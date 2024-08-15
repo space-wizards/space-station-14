@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Fixed ID Cards not updating the manifest when changed.
-    type: Fix
-  id: 6617
-  time: '2024-05-25T20:08:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28237
 - author: TheShuEd
   changes:
   - message: 'Killer tomatoes got a small health and damage buff: 24 -> 35 hp and
@@ -3834,3 +3827,10 @@
   id: 7116
   time: '2024-08-15T19:23:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31049
+- author: themias
+  changes:
+  - message: Raw meat cutlets can be cooked on a grill
+    type: Tweak
+  id: 7117
+  time: '2024-08-15T19:30:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31048
