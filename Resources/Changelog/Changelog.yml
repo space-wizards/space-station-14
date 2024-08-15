@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: blueDev2
-  changes:
-  - message: Watermelon slices are now considered fruit
-    type: Fix
-  id: 6613
-  time: '2024-05-23T20:27:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28226
 - author: ElectroJr
   changes:
   - message: Ghosts can once again open paper & other UIs
@@ -3809,3 +3802,12 @@
   id: 7112
   time: '2024-08-15T01:50:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29767
+- author: FATFSAAM2
+  changes:
+  - message: added 7 new figurine voice lines.
+    type: Add
+  - message: changed a hos figurine voice line to not include a typo.
+    type: Fix
+  id: 7113
+  time: '2024-08-15T12:34:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30865
