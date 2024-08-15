@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: nikthechampiongr
-  changes:
-  - message: Firelocks will no longer randomly pulse closing lights.
-    type: Fix
-  id: 6615
-  time: '2024-05-24T14:44:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28227
 - author: ElectroJr
   changes:
   - message: Fixed modular grenade visuals getting stuck in an incorrect state.
@@ -3821,3 +3814,19 @@
   id: 7114
   time: '2024-08-15T14:30:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30529
+- author: Mervill
+  changes:
+  - message: The Gas Analyzer won't spuriously shut down for seemly no reason.
+    type: Tweak
+  - message: The Gas Analyzer will always switch to the device tab when a new object
+      is scanned.
+    type: Tweak
+  - message: The Gas Analyzer's interaction range is now equal to the standard interaction
+      range
+    type: Fix
+  - message: Clicking the Gas Analyzer when it's in your hand has proper enable/disable
+      behavior.
+    type: Fix
+  id: 7115
+  time: '2024-08-15T14:45:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30763
