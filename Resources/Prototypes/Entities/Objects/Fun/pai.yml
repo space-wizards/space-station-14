@@ -75,7 +75,7 @@
   - type: StationMap
 
 - type: entity
-  parent: PersonalAI
+  parent: [ PersonalAI, BaseSyndicateContraband]
   id: SyndicatePersonalAI
   name: syndicate personal ai device
   description: Your Syndicate pal who's fun to be with!
