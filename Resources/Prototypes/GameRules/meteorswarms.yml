@@ -204,6 +204,7 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     weight: 3.5
+    reoccurrenceDelay: 1
     duration: 1
     earliestStart: 30
     minimumPlayers: 25
