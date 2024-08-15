@@ -74,8 +74,6 @@
     sprite: Clothing/Neck/mantles/qmmantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/qmmantle.rsi
-<<<<<<< HEAD
-=======
 
 - type: entity
   parent: ClothingNeckBase
@@ -87,4 +85,3 @@
     sprite: Clothing/Neck/mantles/mantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/mantle.rsi 
->>>>>>> upstream/master
