@@ -61,7 +61,6 @@ namespace Content.Server.Voting.Managers
             foreach (var player in _playerManager.Sessions)
             {
                 _playerManager.UpdateState(player);
-                //Update this
                 if (player.Status != SessionStatus.Disconnected && _entityManager.HasComponent<GhostComponent>(player.AttachedEntity))
                 {
                     ghostCount++;
