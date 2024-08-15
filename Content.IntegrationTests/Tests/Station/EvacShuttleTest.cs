@@ -50,8 +50,8 @@ public sealed class EvacShuttleTest
         var data = entMan.GetComponent<StationDataComponent>(station);
         var shuttleData = entMan.GetComponent<StationEmergencyShuttleComponent>(station);
 
-        var saltern = data.Grids.Single();
-        Assert.That(entMan.HasComponent<MapGridComponent>(saltern));
+        var bagel = data.Grids.Single();
+        Assert.That(entMan.HasComponent<MapGridComponent>(bagel));
 
         var shuttle = shuttleData.EmergencyShuttle!.Value;
         Assert.That(entMan.HasComponent<EmergencyShuttleComponent>(shuttle));
@@ -80,7 +80,7 @@ public sealed class EvacShuttleTest
         Assert.That(mapSys.IsPaused(salternXform.MapUid!.Value), Is.False);
 
         EntityLifeStage LifeStage(EntityUid uid) => entMan.GetComponent<MetaDataComponent>(uid).EntityLifeStage;
-        Assert.That(LifeStage(saltern), Is.EqualTo(EntityLifeStage.MapInitialized));
+        Assert.That(LifeStage(bagel), Is.EqualTo(EntityLifeStage.MapInitialized));
         Assert.That(LifeStage(shuttle), Is.EqualTo(EntityLifeStage.MapInitialized));
         Assert.That(LifeStage(centcomm), Is.EqualTo(EntityLifeStage.MapInitialized));
         Assert.That(LifeStage(centcommMap), Is.EqualTo(EntityLifeStage.MapInitialized));
