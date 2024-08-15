@@ -86,18 +86,6 @@ namespace Content.Server.Ghost
 
         private void OnRestartAttempt(Entity<GhostComponent> entity, ref RestartVoteAttemptEvent args)
         {
-            if (!_minds.TryGetMind(entity, out _ , out var mind))
-                return;
-
-            if(mind.UserId == null)
-                return;
-
-            if(!_playerManager.TryGetSessionById(mind.UserId.Value, out var player))
-                return;
-
-            if (player.Status == SessionStatus.Disconnected)
-                return;
-
             args.DeadPlayers += 1;
           
         }
