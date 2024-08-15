@@ -1,10 +1,6 @@
 using System.Numerics;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
-<<<<<<< HEAD
-using Robust.Shared.Serialization;
-=======
->>>>>>> upstream/master
 
 namespace Content.Shared.Nutrition.Components;
 
@@ -52,20 +48,6 @@ public sealed partial class FoodSequenceStartPointComponent : Component
 
     public HashSet<string> RevealedLayers = new();
 
-<<<<<<< HEAD
-    [DataField]
-    public string Solution = "food";
-
-    [DataField]
-    public LocId? NameGeneration;
-
-    [DataField]
-    public LocId? NamePrefix;
-
-    [DataField]
-    public LocId? ContentSeparator;
-
-=======
     /// <summary>
     /// target layer, where new layers will be added. This allows you to control the order of generative layers and static layers.
     /// </summary>
@@ -117,7 +99,6 @@ public sealed partial class FoodSequenceStartPointComponent : Component
     /// <summary>
     /// the part of the name generation used in the pattern
     /// </summary>
->>>>>>> upstream/master
     [DataField]
     public LocId? NameSuffix;
 }
