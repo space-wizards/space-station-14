@@ -96,7 +96,7 @@
   - type: StorageFill
     contents:
     - id: DiscoLightTube
-      amount: 6
+      amount: 4
 
 - type: entity
   name: PDA box
