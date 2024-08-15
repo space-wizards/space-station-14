@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -23,4 +24,9 @@ public sealed partial class StationAiComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? RemoteEntity;
+
+    [DataField(readOnly: true)]
+    public EntProtoId? RemoteEntityProto = "StationAiHolo";
+
+    public const string Container = "station_ai_mind_slot";
 }

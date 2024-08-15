@@ -1,4 +1,6 @@
 # No idea why it's in sci but we ball.
+# TODO: Need to just force it to spawn on a spawner and allow takeover.
+# If no takeover then fallback.
 - type: job
   id: StationAi
   name: job-name-station-ai
@@ -10,7 +12,7 @@
   canBeAntag: false
   icon: JobIconStationAi
   supervisors: job-supervisors-rd
-  jobEntity: PlayerStationAi
+  jobEntity: StationAiBrain
 
 - type: job
   id: Borg

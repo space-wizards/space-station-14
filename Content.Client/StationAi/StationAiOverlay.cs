@@ -32,8 +32,6 @@ public sealed class StationAiOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        return;
-
         if (_stencilTexture?.Texture.Size != args.Viewport.Size)
         {
             _staticTexture?.Dispose();

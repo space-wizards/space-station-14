@@ -33,7 +33,7 @@
       "name": "ai_dead"
     },
     {
-      "name": "ai-empty",
+      "name": "ai_empty",
       "delays": [
         [
           0.7,
@@ -42,7 +42,7 @@
       ]
     },
     {
-      "name": "ai-holo-old",
+      "name": "holo",
       "directions": 4,
       "delays": [
         [
@@ -120,73 +120,7 @@
       "directions": 4
     },
     {
-      "name": "horror",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "xeno_queen",
-      "directions": 4
-    },
-    {
-      "name": "floating_face",
-      "directions": 4
-    },
-    {
-      "name": "ai-banned",
-      "delays": [
-        [
-          0.7,
-          0.7,
-          0.7,
-          0.7,
-          0.7,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.7,
-          0.7,
-          0.7,
-          0.7,
-          0.7,
-          0.7,
-          0.7,
-          0.7,
-          0.7,
-          0.7
-        ]
-      ]
-    },
-    {
-      "name": "ai-banned_dead",
-      "delays": [
-        [
-          0.7,
-          0.7
-        ]
-      ]
+      "name": "base"
     }
   ]
 }

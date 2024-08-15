@@ -1,15 +1,86 @@
 - type: entity
-  id: PlayerStationAi
+  id: Holocard
+  name: Holocard
+  parent: BaseItem
+  suffix: Empty
+  # TODO: Sprite
+  # TODO: Item toggle to enable / disable AI functionality
+  # TODO: StationAiComponent
+  # TODO: Interact on the big box (if state good) puts it in.
+
+
+  # Fix all of the interaction stuff etc. and make it actually work
+  # Also thanks moony for whatever gameticker spawning is doing.
+  # TODO: move camera stuff to shared and check it works + parallel
+  # TODO: Bump viewer range / PVS for AI specifically
+  # TODO: Get interactions working (need some kind of component for it idk)
+  # TODO: Need interaction validation
+  # TODO: Merge borg PR and get the vis working
+
+- type: entity
+  id: PlayerStationAiEmpty
+  name: Station AI
   parent: BaseStructureDynamic
+  suffix: Empty
+  components:
+  - type: StationAiVision
+  - type: ItemSlots
+    slots:
+      station_ai_mind_slot:
+        name: station-ai-mind-slot
+  - type: Sprite
+    sprite: Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: base
+    - state: ai_empty
+      shader: unshaded
+  - type: StationAi
+
+- type: entity
+  id: PlayerStationAi
+  parent: PlayerStationAiEmpty
+  suffix: Job spawn
+  components:
+  - type: ContainerSpawnPoint
+    containerId: station_ai_mind_slot
+    job: StationAi
+  - type: Sprite
+    sprite: Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: base
+    - state: ai
+      shader: unshaded
+
+- type: entity
+  id: StationAiBrain
+  parent: PositronicBrain
+  noSpawn: true
+  suffix: DO NOT MAP
+  components:
+  - type: Eye
+    drawFov: false
+  - type: ContentEye
+    maxZoom: 1.44,1.44
+  - type: InputMover
+  - type: RandomMetadata
+    # TODO: Loadout name support
+    # TODO: Copy it on station AI insertion
+    nameSegments: [ names_ai ]
+
+- type: entity
+  parent:
+  - Incorporeal
+  - BaseMob
+  id: StationAiHolo
+  name: Hologram
+  noSpawn: true
+  suffix: DO NOT MAP
   components:
   - type: Sprite
     sprite: Mobs/Silicon/station_ai.rsi
     layers:
-    -
-  - type: StationAi
-  - type: RandomMetadata
-    # TODO: Loadout name support
-    nameSegments: [names_ai]
+    - state: holo
+      shader: unshaded
 
 - type: entity
   id: PlayerBorgGeneric
