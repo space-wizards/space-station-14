@@ -15,9 +15,9 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
 
     public CrewMonitoringNavMapControl() : base()
     {
-        WallColor = new Color(192, 122, 196);
-        TileColor = new(71, 42, 72);
-        BackgroundColor = Color.FromSrgb(TileColor.WithAlpha(BackgroundOpacity));
+        NavData.WallColor = Color.FromSrgb(new Color(192, 122, 196));
+        NavData.TileColor = Color.FromSrgb(new(71, 42, 72));
+        BackgroundColor = NavData.TileColor.WithAlpha(BackgroundOpacity);
 
         _trackedEntityLabel = new Label
         {
@@ -41,7 +41,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
         };
 
         _trackedEntityPanel.AddChild(_trackedEntityLabel);
-        this.AddChild(_trackedEntityPanel);
+        AddChild(_trackedEntityPanel);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -56,7 +56,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
             return;
         }
 
-        foreach ((var netEntity, var blip) in TrackedEntities)
+        foreach (var (netEntity, blip) in TrackedEntities)
         {
             if (netEntity != Focus)
                 continue;
