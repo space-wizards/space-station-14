@@ -11,6 +11,11 @@ ghost-role-information-freeagent-rules = You are a [color=yellow][bold]Free Agen
                                          You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
                                          You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
                                          You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
+ghost-role-information-freeagent-rat-king-rules = You are a [color=yellow][bold]Free Agent[/bold][/color]. You are free to act as either an antagonist or a non-antagonist.
+                                         You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+                                         You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
+                                         You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
+                                         Your primary goal is getting food. Killing should be used as a last resort. You are still subject to Mass Chaos RDM rules unless declared an enemy of the ship.
 ghost-role-information-antagonist-rules = You are a [color=red][bold]Solo Antagonist[/bold][/color]. Your intentions are clear, and harmful to the station and its crew.
                                           You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
                                           You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
@@ -159,7 +164,7 @@ ghost-role-information-ert-medical-name = ERT Medical
 ghost-role-information-ert-medical-description = Assist with medical efforts to resolve the station's issues.
 
 ghost-role-information-cburn-agent-name = CBURN Agent
-ghost-role-information-cburn-agent-description = A highly trained CentCom agent, capable of dealing with various threats.
+ghost-role-information-cburn-agent-description = A highly trained CentComm agent, capable of dealing with various threats.
 
 ghost-role-information-centcom-official-name = CentComm official
 ghost-role-information-centcom-official-description = Perform CentComm related duties such as inspect the station, jotting down performance reviews for heads of staff, and managing the fax machine.
@@ -238,3 +243,6 @@ ghost-role-information-artifact-description = Enact your eldritch whims. Forcibl
 
 ghost-role-information-syndie-assaultborg-name = Syndicate Assault Borg
 ghost-role-information-syndie-assaultborg-description = Nuclear operatives needs reinforcements. You, a cold silicon killing machine, will help them. More dakka!
+
+ghost-role-information-finfin-name = Fin Fin
+ghost-role-information-finfin-description = Taken from your home planet of Teo by Salvage, you're so adorable that you were adopted by the station instead of sent to Centcomm. It's in your best interest to stay that way.

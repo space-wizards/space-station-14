@@ -25,6 +25,15 @@
   price: 0.05
 
 - type: material
+  id: HempCloth
+  stackEntity: MaterialHempCloth1
+  name: materials-hemp-cloth
+  unit: materials-unit-roll
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: hemp_cloth }
+  color: "#e7e7de"
+  price: 0.03
+
+- type: material
   id: Durathread
   stackEntity: MaterialDurathread1
   name: materials-durathread
@@ -124,3 +133,11 @@
   icon: { sprite: Objects/Misc/reagent_fillings.rsi, state: powderpile }
   color: "#A9A9A9"
   price: 0
+
+- type: material
+  id: Diamond
+  name: materials-diamond
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Materials/materials.rsi, state: diamond }
+  color: "#80ffff"
+  price: 20 # big diamond gaslit us so hard diamonds actually became extremely rare

@@ -5,7 +5,7 @@
   name: trait-accentless-name
   description: trait-accentless-desc
   category: SpeechTraits
-  cost: 2
+  cost: 0
   components:
   - type: Accentless
     removes:
@@ -87,3 +87,59 @@
   cost: 2
   components:
     - type: FrontalLisp
+
+- type: trait
+  id: Mobster
+  name: trait-mobster-name
+  description: trait-mobster-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+    - type: ReplacementAccent
+      accent: mobster
+
+- type: trait
+  id: Ratvarian
+  name: trait-ratvarian-name
+  description: trait-ratvarian-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+    - type: RatvarianLanguage
+
+- type: trait
+  id: Slime
+  name: trait-slime-name
+  description: trait-slime-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+    - type: ReplacementAccent
+      accent: slimes
+
+- type: trait
+  id: Russian
+  name: trait-russian-name
+  description: trait-russian-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+    - type: RussianAccent
+
+- type: trait
+  id: French
+  name: trait-french-name
+  description: trait-french-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+    - type: FrenchAccent
+
+- type: trait
+  id: Spanish
+  name: trait-spanish-name
+  description: trait-spanish-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+    - type: SpanishAccent

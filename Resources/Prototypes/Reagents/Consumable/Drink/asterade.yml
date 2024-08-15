@@ -1,0 +1,62 @@
+- type: reagent
+  id: OrangeAsterade
+  name: reagent-name-asterade-orange
+  parent: BaseAsterade
+  desc: reagent-desc-asterade-orange
+  physicalDesc: reagent-physical-desc-citric
+  flavor: orange
+  color: "#E8A24D"
+
+- type: reagent
+  id: PurpleAsterade
+  name: reagent-name-asterade-purple
+  parent: BaseAsterade
+  desc: reagent-desc-asterade-purple
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: berry
+  color: "#8E46B3"
+
+- type: reagent
+  id: RedAsterade
+  name: reagent-name-asterade-red
+  parent: BaseAsterade
+  desc: reagent-desc-asterade-red
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: watermelon
+  color: "#F07567"
+
+- type: reagent
+  id: GreenAsterade
+  name: reagent-name-asterade-green
+  parent: BaseAsterade
+  desc: reagent-desc-asterade-green
+  physicalDesc: reagent-physical-desc-citric
+  flavor: sour
+  color: "#98DE7E"
+
+- type: reagent
+  id: YellowAsterade
+  name: reagent-name-asterade-yellow
+  parent: BaseAsterade
+  desc: reagent-desc-asterade-yellow
+  physicalDesc: reagent-physical-desc-tropical
+  flavor: pineapple
+  color: "#FFF7A3"
+
+- type: reagent
+  id: LemonAsterade
+  name: reagent-name-asterade-lemon
+  parent: BaseAsterade
+  desc: reagent-desc-asterade-lemon
+  physicalDesc: reagent-physical-desc-citric
+  flavor: sour
+  color: "#FFF7A3"
+
+- type: reagent
+  id: BrownAsterade
+  name: reagent-name-asterade-brown
+  parent: BaseAsterade
+  desc: reagent-desc-asterade-brown
+  physicalDesc: reagent-physical-desc-starchy
+  flavor: potatoes
+  color: "#544934"

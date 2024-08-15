@@ -303,7 +303,7 @@
   - StripableInventoryBase
   id: MobMimeBot
   name: mimebot
-  description: Why not give mimebot a friendly wave.
+  description: Why not give the mimebot a friendly wave?
   components:
   - type: Sprite
     layers:
@@ -325,6 +325,28 @@
   - type: InteractionPopup
     interactSuccessString: petting-success-mimebot
     interactFailureString: petting-failure-mimebot
+  - type: Inventory
+    templateId: head
+
+- type: entity
+  parent:
+  - MobSiliconBase
+  - StripableInventoryBase
+  id: MobSecuritron
+  name: securitron
+  description: The last line of defense. The station's last hope.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: securitron1
+      sprite: Mobs/Silicon/Bots/securitron.rsi
+  - type: Construction
+    graph: Medibot
+    node: bot
+  - type: InteractionPopup
+    interactSuccessString: petting-success-securitron
+    interactFailureString: petting-failure-securitron
   - type: Inventory
     templateId: head
 

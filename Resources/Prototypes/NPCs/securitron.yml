@@ -1,0 +1,8 @@
+- type: htnCompound
+  id: SecuritronCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound
+
+

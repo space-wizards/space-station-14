@@ -16,3 +16,21 @@
         amount: 3
       offset: 0, 1
       speech: action-speech-spell-summon-magicarp
+
+- type: entity
+  id: ActionSpawnSpaceGreaseSpell
+  name: Space Grease
+  description: This spell summons a pool of space grease centered on the clicked location.
+  components:
+  - type: WorldTargetAction
+    useDelay: 20
+    range: 30
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/blink.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: space_grease
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
+      - id: MagicInstantEffectSpaceGrease
+      speech: action-speech-spell-spacegrease

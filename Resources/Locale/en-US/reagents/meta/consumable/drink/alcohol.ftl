@@ -279,3 +279,9 @@ reagent-desc-watermelon-wakeup = If you want to be awake, this will do it... Als
 
 reagent-name-rubberneck = rubberneck
 reagent-desc-rubberneck = A popular drink amongst those adhering to an all synthetic diet.
+
+reagent-name-uap = U.A.P
+reagent-desc-uap = An unidentified alcoholic product...
+
+reagent-name-theehorsepussy = The Horsepussy
+reagent-desc-theehorsepussy = They are going this drink after me when i die

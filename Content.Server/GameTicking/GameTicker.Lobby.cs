@@ -157,6 +157,7 @@ namespace Content.Server.GameTicking
                 if (!_playerManager.TryGetSessionById(playerUserId, out var playerSession))
                     continue;
                 RaiseNetworkEvent(GetStatusMsg(playerSession), playerSession.Channel);
+                RaiseLocalEvent(new PlayerToggleReadyEvent(playerSession));
             }
         }
 
@@ -174,10 +175,32 @@ namespace Content.Server.GameTicking
             }
 
             var status = ready ? PlayerGameStatus.ReadyToPlay : PlayerGameStatus.NotReadyToPlay;
+            if (_playerGameStatuses[player.UserId] == status)
+            {
+                return;
+            }
+
             _playerGameStatuses[player.UserId] = ready ? PlayerGameStatus.ReadyToPlay : PlayerGameStatus.NotReadyToPlay;
             RaiseNetworkEvent(GetStatusMsg(player), player.Channel);
+            RaiseLocalEvent(new PlayerToggleReadyEvent(player));
             // update server info to reflect new ready count
             UpdateInfoText();
+        }
+
+        public bool UserHasJoinedGame(ICommonSession session)
+            => UserHasJoinedGame(session.UserId);
+
+        public bool UserHasJoinedGame(NetUserId userId)
+            => PlayerGameStatuses[userId] == PlayerGameStatus.JoinedGame;
+    }
+
+    public sealed class PlayerToggleReadyEvent : EntityEventArgs
+    {
+        public readonly ICommonSession PlayerSession;
+
+        public PlayerToggleReadyEvent(ICommonSession playerSession)
+        {
+            PlayerSession = playerSession;
         }
     }
 }

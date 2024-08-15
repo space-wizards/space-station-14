@@ -179,8 +179,19 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
 
 - type: entity
-  id: CigPackSyndicate
+  id: CigPackNewport
   parent: CigPackBase
+  name: Newports
+  description: You're gonna be rich bitch!
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/newport.rsi
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/newport.rsi
+
+- type: entity
+  id: CigPackSyndicate
+  parent: [CigPackBase, BaseSyndicateContraband]
   name: Interdyne herbals packet
   description: Elite cigarettes for elite syndicate agents. Infused with medicine for when you need to do more than calm your nerves.
   components:

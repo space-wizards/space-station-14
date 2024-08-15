@@ -223,6 +223,17 @@
       - Lemon
 
 - type: cargoBounty
+  id: BountyLemo
+  reward: 12000
+  description: bounty-description-lemo
+  entries:
+  - name: bounty-item-lemo
+    amount: 5
+    whitelist:
+      tags:
+      - Lemo
+
+- type: cargoBounty
   id: BountyLime
   reward: 10000
   description: bounty-description-lime
@@ -692,7 +703,7 @@
 - type: cargoBounty
   id: BountyCardboardBox
   reward: 1500
-  description: bounty-description-cardobard-box
+  description: bounty-description-cardboard-box
   entries:
   - name: bounty-item-cardboard-box
     amount: 12
@@ -733,3 +744,13 @@
       tags:
       - MicrowaveMachineBoard
 
+- type: cargoBounty
+  id: BountyFlashes
+  reward: 5500
+  description: bounty-description-flashes
+  entries:
+  - name: bounty-item-flash
+    amount: 6
+    whitelist:
+      components:
+      - Flash

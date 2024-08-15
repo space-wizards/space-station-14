@@ -48,14 +48,15 @@
       0: Alive
       200: Dead
   - type: MeleeWeapon
+    altDisarm: false
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
       types:
-        Slash: 12
-        Piercing: 8
+        Slash: 4
+        Piercing: 2
   - type: Body
     prototype: Rat
     requiredLegs: 1 # TODO: More than 1 leg
@@ -89,7 +90,7 @@
     makeSentient: true
     name: ghost-role-information-rat-king-name
     description: ghost-role-information-rat-king-description
-    rules: ghost-role-information-freeagent-rules
+    rules: ghost-role-information-freeagent-rat-king-rules
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -141,14 +142,15 @@
       0: Alive
       350: Dead
   - type: MeleeWeapon
+    altDisarm: false
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh2.ogg
     angle: 0
-    attackRate: 0.75
+    attackRate: 0.55
     animation: WeaponArcFist
     damage:
       types:
-        Blunt: 66 #oof ouch owie my bones
+        Blunt: 12 #no more oof ouch owie my bones (use the servants)
   - type: SlowOnDamage
     speedModifierThresholds:
       200: 0.7

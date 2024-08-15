@@ -268,6 +268,9 @@
     - id: ClothingBeltChampion
       prob: 0.01
       orGroup: Swag
+    - id: MobFinfin
+      prob: 0.001
+      orGroup: Swag
     #plushies
     - id: PlushieRGBee
       prob: 0.01
@@ -290,6 +293,8 @@
     - id: PlushieLizard
       prob: 0.01
       orGroup: Plushies
+    - id: PlushieFinfin
+      prob: 0.01
     - id: PlushieRouny
       prob: 0.01
       orGroup: Plushies
@@ -304,6 +309,9 @@
       orGroup: Plushies
     - id: PlushieArachind
       prob: 0.01
+      orGroup: Plushies
+    - id: PlushieThrongler #hehe
+      prob: 0.0005
       orGroup: Plushies
     #useful
     - id: AmeJar

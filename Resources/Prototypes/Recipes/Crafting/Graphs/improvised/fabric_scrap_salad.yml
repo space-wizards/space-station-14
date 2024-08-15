@@ -1,0 +1,18 @@
+﻿- type: constructionGraph
+  id: FabricScrapSalad
+  start: start
+  graph:
+  - node: start
+    edges:
+      - to: salad
+        steps:
+          - material: Cloth
+            amount: 2
+            doAfter: 5
+          - tag: Bowl
+            name: bowl
+            icon:
+              sprite: Objects/Consumable/Food/bowl.rsi
+              state: bowl
+  - node: salad
+    entity: FabricScrapSalad

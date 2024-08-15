@@ -190,6 +190,32 @@
   objectType: Item
 
 - type: construction
+  name: hemp cloth
+  id: HempWovenCloth
+  graph: HempObjects
+  startNode: start
+  targetNode: hempcloth
+  category: construction-category-misc
+  description: "A homemade piece of hempen cloth, it feels coarse."
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: hemp_cloth_3
+  objectType: Item
+
+- type: construction
+  name: hemp sack
+  id: hempWovenSack
+  graph: HempWovenSack
+  startNode: start
+  targetNode: hempsack
+  category: construction-category-misc
+  description: "A woven hemp sack. Feels sturdy."
+  icon:
+    sprite: Objects/Storage/hempsack.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
   name: straw hat
   id: strawHat
   graph: StrawHat
@@ -214,3 +240,29 @@
   icon:
     sprite: Objects/Weapons/Bombs/pipebomb.rsi
     state: icon
+
+- type: construction
+  name: yarn noodles
+  id: yarnnoodles
+  graph: YarnNoodles
+  startNode: start
+  targetNode: noodles
+  category: construction-category-misc
+  objectType: Item
+  description: A Mothchelin 3-star meal!
+  icon:
+    sprite: Objects/Fun/toys.rsi
+    state: yarn-noodles
+
+- type: construction
+  name: fabric scrap salad
+  id: fabricscrapsalad
+  graph: FabricScrapSalad
+  startNode: start
+  targetNode: salad
+  category: construction-category-misc
+  objectType: Item
+  description: A home-made recipe involving a pair of scissors and being very sneaky.
+  icon:
+    sprite: Objects/Fun/toys.rsi
+    state: fabric-scrap-salad

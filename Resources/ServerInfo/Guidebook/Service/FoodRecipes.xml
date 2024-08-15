@@ -76,7 +76,6 @@ WARNING: This is not an automatically generated list, things here may become out
 <GuideEntityEmbed Entity="FoodPizzaMargherita"/>
 <GuideEntityEmbed Entity="FoodCakePlain"/>
 <GuideEntityEmbed Entity="FoodPieApple"/>
-<GuideEntityEmbed Entity="FoodTacoBeef"/>
 </Box>
 <Box>
 <GuideEntityEmbed Entity="FoodMealCubancarp"/>

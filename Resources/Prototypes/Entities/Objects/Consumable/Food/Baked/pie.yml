@@ -23,7 +23,8 @@
         - ReagentId: Vitamin
           Quantity: 5
   - type: Food #All pies here made with a pie tin; unless you're some kind of savage, you're probably not destroying this when you eat or slice the pie!
-    trash: FoodPlateTin
+    trash: 
+    - FoodPlateTin
   - type: SliceableFood
     count: 4
   - type: Tag
@@ -100,6 +101,47 @@
     - Pie
     - Slice
 # Tastes like pie, apple.
+
+- type: entity
+  name: lemo pie
+  parent: FoodPieBase
+  id: FoodPieLemo
+  description: A new spin on the classic. Makes you want to sing!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - lemo
+  - type: Sprite
+    layers:
+    - state: tin
+    - state: lemo
+  - type: SliceableFood
+    slice: FoodPieLemoSlice
+  - type: Tag
+    tags:
+    - Fruit
+    - Pie
+
+- type: entity
+  name: slice of lemo pie
+  parent: FoodPieSliceBase
+  id: FoodPieLemoSlice
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - lemo
+  - type: Sprite
+    layers:
+    - state: plain-slice
+    - state: alpha-slice-filling
+      color: pink
+  - type: Tag
+    tags:
+    - Fruit
+    - Pie
+    - Slice
 
 - type: entity
   name: baklava

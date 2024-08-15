@@ -1,6 +1,6 @@
 - type: entity
   name: baseball bat
-  parent: BaseItem
+  parent: [BaseItem, BaseMinorContraband]
   id: BaseBallBat
   description: A robust baseball bat.
   components:
@@ -42,6 +42,7 @@
   - type: Tag
     tags:
     - BaseballBat
+  - type: DeflectThrownObjects
 
 - type: entity
   name: incomplete baseball bat

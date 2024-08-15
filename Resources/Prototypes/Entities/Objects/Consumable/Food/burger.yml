@@ -19,6 +19,73 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 6.66 # 1/3 of a loaf of bread, technically losing 0.01 nutriment per batch of three buns over making bread loaves/slices
+  - type: Butcherable
+    butcherDelay: 1
+    spawned:
+      - id: FoodBreadBunTop
+        amount: 1
+      - id: FoodBreadBunBottom
+        amount: 1
+
+- type: entity
+  id: FoodBreadBunBottom
+  parent: FoodBreadSliceBase
+  name: bottom bun
+  description: It's time to start building the burger tower.
+  components:
+  - type: Item
+    size: Normal #patch until there is an adequate resizing system in place
+  - type: Food
+  - type: Sprite
+    drawdepth: Mobs
+    noRot: true
+    sprite: Objects/Consumable/Food/burger.rsi
+    layers:
+    - state: bun_bottom
+    - map: ["foodSequenceLayers"]
+  - type: FoodSequenceStartPoint
+    key: burger
+    maxLayers: 10
+    startPosition: 0, 0
+    offset: 0, 0.1
+    minLayerOffset: -0.05, 0
+    maxLayerOffset: 0.05, 0
+    nameGeneration: food-sequence-burger-gen
+  - type: Appearance
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        canReact: false # Dont want cause reactions inside burgers after merging ingredients
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3.3 # 1/2 of a bun
+
+- type: entity
+  id: FoodBreadBunTop
+  parent: FoodBreadSliceBase
+  name: top bun
+  description: the perfect finish for your burger tower
+  components:
+  - type: Food
+  - type: Sprite
+    sprite: Objects/Consumable/Food/burger.rsi
+    layers:
+    - state: bun_top
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3.3 # 1/2 of a bun
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Consumable/Food/burger.rsi
+      state: bun_top
+    entries:
+      burger:
+        final: true
 
 # Base
 
@@ -327,6 +394,38 @@
 # Tastes like bun, chicken.
 
 - type: entity
+  name: finfin sandwich
+  parent: FoodBurgerBase
+  id: FoodBurgerFinfin
+  description: Why
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - finfin
+      - chicken
+      - duck
+      - fishy
+  - type: Sprite
+    state: chicken
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Mayo
+          Quantity: 3
+  - type: Tag
+    tags:
+    - Meat
+
+- type: entity
   name: clown burger
   parent: FoodBurgerBase
   id: FoodBurgerClown
@@ -620,7 +719,8 @@
   description: An elusive rib shaped burger with limited availability across the galaxy. Not as good as you remember it.
   components:
   - type: Food
-    trash: FoodKebabSkewer
+    trash:
+    - FoodKebabSkewer
   - type: FlavorProfile
     flavors:
       - bun
@@ -919,4 +1019,3 @@
   - type: Tag
     tags:
     - Meat
-    

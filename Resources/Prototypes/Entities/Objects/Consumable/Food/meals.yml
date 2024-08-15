@@ -330,7 +330,8 @@
   description: BBQ ribs, slathered in a healthy coating of BBQ sauce. The least vegan thing to ever exist.
   components:
   - type: Food
-    trash: FoodKebabSkewer
+    trash: 
+    - FoodKebabSkewer
   - type: FlavorProfile
     flavors:
       - meaty
@@ -529,6 +530,31 @@
 # tastes exotic
 
 - type: entity
+  name: finfin sashimi
+  parent: FoodMealBase
+  id: FoodMealFinfinSashimi
+  description: An unscrupulous delicacy. Japanese-Teoean fusion cuisine!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - fishy
+      - finfin
+  - type: Sprite
+    state: sashimi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 18
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: CarpoToxin
+          Quantity: 15
+  - type: Tag
+    tags:
+    - Meat
+
+- type: entity
   name: enchiladas
   parent: FoodMealBase
   id: FoodMealEnchiladas
@@ -591,7 +617,8 @@
   description: Buttery.
   components:
   - type: Food
-    trash: FoodPlate
+    trash: 
+    - FoodPlate
   - type: FlavorProfile
     flavors:
       - corn

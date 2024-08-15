@@ -1171,3 +1171,39 @@
       amount: 1
   products:
     Cola: 4
+
+- type: reaction
+  id: UAP
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    XenoBasher:
+      amount: 1
+    GargleBlaster:
+      amount: 1
+    Uranium:
+      amount: 1
+    Radium:
+      amount: 1
+    SpaceCleaner:
+      amount: 1
+    SpaceLube:
+      amount: 1
+  products:
+    UAP: 6
+
+- type: reaction
+  id: TheeHorsepussy
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Martini:
+      amount: 1
+    JuiceApple:
+      amount: 1
+    Desoxyephedrine:
+      amount: 1
+  products:
+    TheeHorsepussy: 3
+  sound:
+    path: /Audio/Animals/spooky_horse.ogg

@@ -225,6 +225,16 @@
     - UplinkExplosives
 
 - type: listing
+  id: UplinkBeenade
+  name: uplink-beenade-name
+  description: uplink-beenade-desc
+  productEntity: BeeGrenade
+  cost:
+    Telecrystal: 6
+  categories:
+    - UplinkExplosives
+
+- type: listing
   id: UplinkWhiteholeGrenade
   name: uplink-whitehole-grenade-name
   description: uplink-whitehole-grenade-desc

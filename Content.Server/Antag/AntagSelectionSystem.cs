@@ -13,11 +13,15 @@ using Content.Server.Roles.Jobs;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Antag;
+using Content.Shared.Clothing;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
+using Content.Shared.Mind;
 using Content.Shared.Players;
+using Content.Shared.Preferences.Loadouts;
+using Content.Shared.Roles;
 using Content.Shared.Whitelist;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
@@ -25,6 +29,7 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -35,10 +40,13 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IServerPreferencesManager _pref = default!;
+    [Dependency] private readonly ActorSystem _actors = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly GhostRoleSystem _ghostRole = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
+    [Dependency] private readonly LoadoutSystem _loadout = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
@@ -72,7 +80,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (!Exists(rule) || !TryComp<AntagSelectionComponent>(rule, out var select))
             return;
 
-        MakeAntag((rule, select), args.Player, def, ignoreSpawner: true);
+        MakeAntag((rule, select), args.Player, def, null, ignoreSpawner: true);
         args.TookRole = true;
         _ghostRole.UnregisterGhostRole((ent, Comp<GhostRoleComponent>(ent)));
     }
@@ -131,8 +139,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         foreach (var (uid, antag) in rules)
         {
-            if (!RobustRandom.Prob(LateJoinRandomChance))
-                continue;
+            if (!antag.Definitions.Any(p => p.ForceAllPossible))
+                if (!RobustRandom.Prob(LateJoinRandomChance))
+                    continue;
 
             if (!antag.Definitions.Any(p => p.LateJoinAdditional))
                 continue;
@@ -224,7 +233,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         for (var i = 0; i < count; i++)
         {
-            var session = (ICommonSession?) null;
+            var session = (ICommonSession?)null;
             if (picking)
             {
                 if (!playerPool.TryPickAndTake(RobustRandom, out session) && noSpawner)
@@ -240,7 +249,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 }
             }
 
-            MakeAntag(ent, session, def);
+            MakeAntag(ent, session, def, playerPool);
         }
     }
 
@@ -255,14 +264,14 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (!IsSessionValid(ent, session, def) || !IsEntityValid(session?.AttachedEntity, def))
             return false;
 
-        MakeAntag(ent, session, def, ignoreSpawner);
+        MakeAntag(ent, session, def, null, ignoreSpawner);
         return true;
     }
 
     /// <summary>
     /// Makes a given player into the specified antagonist.
     /// </summary>
-    public void MakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, bool ignoreSpawner = false)
+    public void MakeAntag(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, AntagSelectionPlayerPool? pool, bool ignoreSpawner = false)
     {
         EntityUid? antagEnt = null;
         var isSpawner = false;
@@ -324,12 +333,21 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         // The following is where we apply components, equipment, and other changes to our antagonist entity.
         EntityManager.AddComponents(player, def.Components);
-        _stationSpawning.EquipStartingGear(player, def.StartingGear);
+
+        // Equip the entity's RoleLoadout and LoadoutGroup
+        List<ProtoId<StartingGearPrototype>>? gear = new();
+        if (def.StartingGear is not null)
+            gear.Add(def.StartingGear.Value);
+
+        _loadout.Equip(player, gear, def.RoleLoadout);
 
         if (session != null)
         {
             var curMind = session.GetMind();
-            if (curMind == null)
+            
+            if (curMind == null || 
+                !TryComp<MindComponent>(curMind.Value, out var mindComp) ||
+                mindComp.OwnedEntity != antagEnt)
             {
                 curMind = _mind.CreateMind(session.UserId, Name(antagEnt.Value));
                 _mind.SetUserId(curMind.Value, session.UserId);
@@ -341,7 +359,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             SendBriefing(session, def.Briefing);
         }
 
-        var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent, def);
+        var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent, def, pool);
         RaiseLocalEvent(ent, ref afterEv, true);
     }
 
@@ -450,7 +468,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
     private void OnObjectivesTextGetInfo(Entity<AntagSelectionComponent> ent, ref ObjectivesTextGetInfoEvent args)
     {
-        if (ent.Comp.AgentName is not {} name)
+        if (ent.Comp.AgentName is not { } name)
             return;
 
         args.Minds = ent.Comp.SelectedMinds;
@@ -490,4 +508,4 @@ public record struct AntagSelectLocationEvent(ICommonSession? Session, Entity<An
 /// Used for applying additional more complex setup logic.
 /// </summary>
 [ByRefEvent]
-public readonly record struct AfterAntagEntitySelectedEvent(ICommonSession? Session, EntityUid EntityUid, Entity<AntagSelectionComponent> GameRule, AntagSelectionDefinition Def);
+public readonly record struct AfterAntagEntitySelectedEvent(ICommonSession? Session, EntityUid EntityUid, Entity<AntagSelectionComponent> GameRule, AntagSelectionDefinition Def, AntagSelectionPlayerPool? Pool);

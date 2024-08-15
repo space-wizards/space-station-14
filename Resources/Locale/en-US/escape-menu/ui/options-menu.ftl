@@ -156,6 +156,9 @@ ui-options-function-try-pull-object = Pull object
 ui-options-function-move-pulled-object = Move pulled object
 ui-options-function-release-pulled-object = Release pulled object
 ui-options-function-point = Point at location
+ui-options-function-rotate-object-clockwise = Rotate clockwise
+ui-options-function-rotate-object-counterclockwise = Rotate counterclockwise
+ui-options-function-flip-object = Flip
 
 ui-options-function-focus-chat-input-window = Focus chat
 ui-options-function-focus-local-chat-window = Focus chat (IC)
@@ -275,5 +278,6 @@ cmd-options-help = Usage: options [tab]
 ui-options-enable-color-name = Add colors to character names
 ui-options-colorblind-friendly = Colorblind friendly mode
 ui-options-reduced-motion = Reduce motion of visual effects
+ui-options-disable-singulo-warp = Disable the singularity's screen warping effect
 ui-options-chat-window-opacity = Chat window opacity
 ui-options-screen-shake-intensity = Screen shake intensity

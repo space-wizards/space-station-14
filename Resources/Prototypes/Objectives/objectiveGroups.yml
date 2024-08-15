@@ -42,6 +42,7 @@
     RandomTraitorAliveObjective: 1
     RandomTraitorProgressObjective: 1
 
+
 #Thief groups
 - type: weightedRandom
   id: ThiefObjectiveGroups
@@ -52,8 +53,8 @@
 - type: weightedRandom
   id: ThiefBigObjectiveGroups
   weights:
-    ThiefObjectiveGroupStructure: 0 #Temporarily disabled until obvious ways to steal structures are added
-    ThiefObjectiveGroupAnimal: 2
+    ThiefObjectiveGroupStructure: 1
+    ThiefObjectiveGroupAnimal: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupCollection
@@ -91,7 +92,6 @@
   weights:
     NuclearBombStealObjective: 0.5
     FaxMachineCaptainStealObjective: 1
-    VehicleSecwayStealObjective: 1
     ChemDispenserStealObjective: 1
     XenoArtifactStealObjective: 1
     FreezerHeaterStealObjective: 1
@@ -116,4 +116,5 @@
   id: ThiefObjectiveGroupEscape
   weights:
     EscapeThiefShuttleObjective: 1
-#Changeling, crew, wizard, when you code it...
+
+#Crew, wizard, when you code it...

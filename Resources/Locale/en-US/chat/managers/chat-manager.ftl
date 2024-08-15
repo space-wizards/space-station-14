@@ -30,8 +30,8 @@ chat-manager-entity-whisper-unknown-wrap-message = [font size=11][italic][Bubble
 
 # THE() is not used here because the entity and its name can technically be disconnected if a nameOverride is passed...
 chat-manager-entity-me-wrap-message = [italic]{ PROPER($entity) ->
-    *[false] the {$entityName} {$message}[/italic]
-     [true] {$entityName} {$message}[/italic]
+    *[false] The {$entityName} {$message}[/italic]
+     [true] {CAPITALIZE($entityName)} {$message}[/italic]
     }
 
 chat-manager-entity-looc-wrap-message = LOOC: [bold]{$entityName}:[/bold] {$message}
@@ -151,3 +151,16 @@ chat-speech-verb-name-electricity = Electricity
 chat-speech-verb-electricity-1 = crackles
 chat-speech-verb-electricity-2 = buzzes
 chat-speech-verb-electricity-3 = screeches
+
+# who put so much detail into finfins speech patterns lol
+chat-speech-verb-name-finfin = Finfin
+chat-speech-verb-finfin-1 = chirps
+chat-speech-verb-finfin-2 = warbles
+chat-speech-verb-name-finfin-exclamation = Finfin Exclaiming
+chat-speech-verb-finfin-exclamation-1 = calls
+chat-speech-verb-finfin-exclamation-2 = trills
+chat-speech-verb-name-finfin-stutter = Finfin Stuttering
+chat-speech-verb-finfin-stutter-1 = falters
+chat-speech-verb-finfin-stutter-2 = squeaks
+chat-speech-verb-name-finfin-mumble = Finfin Mumbling
+chat-speech-verb-finfin-mumble-1 = quavers

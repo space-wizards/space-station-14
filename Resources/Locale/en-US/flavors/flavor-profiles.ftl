@@ -171,6 +171,8 @@ flavor-complex-violets = like violets
 flavor-complex-pyrotton = like a burning mouth
 flavor-complex-mothballs = like mothballs
 flavor-complex-paint-thinner = like paint thinner
+flavor-complex-finfin = like your best friend
+flavor-complex-radiation = like radiation
 
 # Drink-specific flavors.
 
@@ -262,10 +264,11 @@ flavor-complex-pilk = like sweet milk
 
 ## Generic flavors.
 flavor-complex-medicine = like medicine
-
+flavor-complex-cigarettes = like cigarettes
 flavor-complex-carpet = like a handful of fur
 flavor-complex-bee = unbeelievable
 flavor-complex-sax = like jazz
 flavor-complex-bottledlightning = like lightning in a bottle
 flavor-complex-punishment = like punishment
 flavor-weh = like weh
+flavour-stardust = like stardust 

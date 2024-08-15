@@ -1,0 +1,24 @@
+- type: entity
+  name: hemp sack
+  id: HempClothSack
+  parent: BaseStorageItem
+  description: A sack made from hemp cloth.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/hempsack.rsi
+    state: icon
+  - type: Item
+    size: Normal
+  - type: Storage
+    grid:
+    - 0,0,4,4
+    maxItemSize: Normal
+    quickInsert: true
+    areaInsert: true
+  - type: Dumpable
+  - type: Construction
+    graph: HempWovenSack
+    node: hempsack
+  - type: Tag
+    tags:
+    - HempSack

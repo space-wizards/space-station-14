@@ -1,6 +1,7 @@
 using Content.Server.Administration.Systems;
 using Content.Shared.Antag;
 using Content.Shared.Destructible.Thresholds;
+using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Storage;
 using Content.Shared.Whitelist;
@@ -115,6 +116,12 @@ public partial struct AntagSelectionDefinition()
     [DataField]
     public bool LateJoinAdditional = false;
 
+    /// <summary>
+    /// If true, all possible players who have this antag type enabled will be selected. Includes latejoins if LateJoinAdditional is true.
+    /// </summary>
+    [DataField]
+    public bool ForceAllPossible = false;
+
     //todo: find out how to do this with minimal boilerplate: filler department, maybe?
     //public HashSet<ProtoId<JobPrototype>> JobBlacklist = new()
 
@@ -153,6 +160,12 @@ public partial struct AntagSelectionDefinition()
     /// </summary>
     [DataField]
     public ProtoId<StartingGearPrototype>? StartingGear;
+
+    /// <summary>
+    /// A list of role loadouts, from which a randomly selected one will be equipped.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<RoleLoadoutPrototype>>? RoleLoadout;
 
     /// <summary>
     /// A briefing shown to the player.

@@ -13,6 +13,11 @@ traitor-description = There are traitors among us...
 traitor-not-enough-ready-players = Not enough players readied up for the game! There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start Traitor.
 traitor-no-one-ready = No players readied up! Can't start Traitor.
 
+spy-vs-spy-title = Spy VS Spy
+spy-vs-spy-description = Watch your back.
+spy-vs-spy-not-enough-ready-players = Not enough players readied up for the game! There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start Spy VS Spy.
+spy-vs-spy-no-one-ready = No players readied up! Can't start Spy VS Spy.
+
 ## TraitorDeathMatch
 traitor-death-match-title = Traitor Deathmatch
 traitor-death-match-description = Everyone's a traitor. Everyone wants each other dead.
@@ -24,17 +29,17 @@ traitor-death-match-end-round-description-entry = {$originalName}'s PDA, with {$
 
 # TraitorRole
 traitor-role-greeting =
-    You are an agent sent by {$corporation} on behalf of The Syndicate.
+    You are an agent sent by {$corporation} on behalf of [color = darkred]The Syndicate.[/color]
     Your objectives and codewords are listed in the character menu.
     Use the uplink loaded into your PDA to buy the tools you'll need for this mission.
     Death to Nanotrasen!
 traitor-role-codewords =
-    The codewords are:
-    {$codewords}.
+    The codewords are: [color = lightgray]
+    {$codewords}.[/color]
     Codewords can be used in regular conversation to identify yourself discretely to other syndicate agents.
     Listen for them, and keep them secret.
 traitor-role-uplink-code =
-    Set your ringtone to the notes {$code} to lock or unlock your uplink.
+    Set your ringtone to the notes [color = lightgray]{$code}[/color] to lock or unlock your uplink.
     Remember to lock it after, or the stations crew will easily open it too!
 
 # don't need all the flavour text for character menu

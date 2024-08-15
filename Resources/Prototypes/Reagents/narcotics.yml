@@ -40,6 +40,14 @@
         key: KnockedDown
         time: 3
         type: Remove
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Haloperidol
+          max: 0.01
+        key: Drowsiness
+        time: 10
+        type: Remove
     Medicine:
       effects:
       - !type:ResetNarcolepsy
@@ -79,6 +87,14 @@
       - !type:GenericStatusEffect
         key: KnockedDown
         time: 1
+        type: Remove
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Haloperidol
+          max: 0.01
+        key: Drowsiness
+        time: 10
         type: Remove
       - !type:PopupMessage
         visualType: Medium
@@ -139,6 +155,14 @@
       - !type:GenericStatusEffect
         key: ForcedSleep
         time: 3
+        type: Remove
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Haloperidol
+          max: 0.01
+        key: Drowsiness
+        time: 10
         type: Remove
     Medicine:
       metabolismRate: 1.0
@@ -240,6 +264,47 @@
         type: Add
         time: 5
         refresh: false
+
+- type: reagent
+  id: ForeverWeed
+  name: reagent-name-forever-weed
+  group: Narcotics
+  desc: reagent-desc-forever-weed
+  physicalDesc: reagent-physical-desc-syrupy
+  flavor: bitter
+  color: "#1b8b3d"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: ForeverWeed
+          max: 5
+        reagent: ForeverWeed
+        amount: 1
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 1
+        refresh: false
+      - !type:PopupMessage
+        type: Local
+        messages:
+          - "foreverweed-effect-longtime"
+          - "foreverweed-effect-parents"
+          - "foreverweed-effect-paranoia-one"
+          - "foreverweed-effect-paranoia-two"
+          - "foreverweed-effect-paranoia-three"
+          - "foreverweed-effect-syndicate"
+          - "foreverweed-effect-space-cops"
+          - "foreverweed-effect-space-cops-paranoia"
+          - "foreverweed-effect-captain"
+          - "foreverweed-effect-captain-paranoia"
+          - "foreverweed-effect-centcomm"
+          - "foreverweed-effect-centcomm-paranoia"
+        probability: 0.01
 
 - type: reagent
   id: Bananadine

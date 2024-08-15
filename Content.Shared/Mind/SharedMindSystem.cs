@@ -168,15 +168,17 @@ public abstract class SharedMindSystem : EntitySystem
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
     }
 
+    /// <summary>
+    /// Checks to see if the user's mind prevents them from suicide
+    /// Handles the suicide event without killing the user if true
+    /// </summary>
     private void OnSuicide(EntityUid uid, MindContainerComponent component, SuicideEvent args)
     {
         if (args.Handled)
             return;
 
         if (TryComp(component.Mind, out MindComponent? mind) && mind.PreventSuicide)
-        {
-            args.BlockSuicideAttempt(true);
-        }
+            args.Handled = true;
     }
 
     public EntityUid? GetMind(EntityUid uid, MindContainerComponent? mind = null)
@@ -543,6 +545,27 @@ public abstract class SharedMindSystem : EntitySystem
         {
             // the player needs to have a mind and not be the excluded one
             if (mc.Mind == null || mc.Mind == exclude)
+                continue;
+
+            // the player has to be alive
+            if (_mobState.IsAlive(uid, mobState))
+                allHumans.Add(mc.Mind.Value);
+        }
+
+        return allHumans;
+    }
+
+    public List<EntityUid> GetAliveHumansExceptGroup(List<EntityUid> exclude)
+    {
+        var mindQuery = EntityQuery<MindComponent>();
+
+        var allHumans = new List<EntityUid>();
+        // HumanoidAppearanceComponent is used to prevent mice, pAIs, etc from being chosen
+        var query = EntityQueryEnumerator<MindContainerComponent, MobStateComponent, HumanoidAppearanceComponent>();
+        while (query.MoveNext(out var uid, out var mc, out var mobState, out _))
+        {
+            // the player needs to have a mind and not be in the excluded group
+            if (mc.Mind == null || exclude.Contains((EntityUid)mc.Mind))
                 continue;
 
             // the player has to be alive

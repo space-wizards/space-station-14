@@ -1,3 +1,40 @@
+- type: entityTable
+  id: BasicCalmEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: AnomalySpawn
+    - id: BluespaceArtifact
+    - id: BluespaceLocker
+    - id: BreakerFlip
+    - id: BureaucraticError
+    - id: ClericalError
+    - id: CockroachMigration
+    - id: GasLeak
+    - id: IonStorm # its calm like 90% of the time smh
+    - id: KudzuGrowth
+    - id: MassHallucinations
+    - id: MimicVendorRule
+    - id: MouseMigration
+    - id: PowerGridCheck
+    - id: SlimesSpawn
+    - id: SolarFlare
+    - id: SpiderClownSpawn
+    - id: SpiderSpawn
+    - id: VentClog
+
+- type: entityTable
+  id: BasicAntagEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: ClosetSkeleton
+    - id: DragonSpawn
+    - id: KingRatMigration
+    - id: NinjaSpawn
+    - id: RevenantSpawn
+    - id: SleeperAgents
+    - id: ZombieOutbreak
+
+
 - type: entity
   id: BaseStationEvent
   parent: BaseGameRule
@@ -106,7 +143,7 @@
   - type: StationEvent
     weight: 5
     duration: 1
-    minimumPlayers: 10
+    minimumPlayers: 20
   - type: RandomEntityStorageSpawnRule
     prototype: MobSkeletonCloset
 
@@ -118,7 +155,7 @@
     weight: 6.5
     earliestStart: 40
     reoccurrenceDelay: 20
-    minimumPlayers: 20
+    minimumPlayers: 45
   - type: AntagRandomSpawn
   - type: AntagSpawner
     prototype: MobDragon
@@ -151,10 +188,6 @@
     minimumPlayers: 30
   - type: SpaceSpawnRule
   - type: AntagLoadProfileRule
-    # Vox disabled until loadouts work on AntagSelection-based spawns
-    speciesOverride: Human
-    speciesOverrideBlacklist:
-    - Vox
   - type: AntagObjectives
     objectives:
     - StealResearchObjective
@@ -171,6 +204,8 @@
       max: 1
       pickPlayer: false
       startingGear: SpaceNinjaGear
+      roleLoadout:
+      - RoleSurvivalEVA
       briefing:
         text: ninja-role-greeting
         color: Green
@@ -523,6 +558,7 @@
     startAudio:
       path: /Audio/Announcements/intercept.ogg
     duration: null # the rule has to last the whole round not 1 second
+    occursDuringRoundEnd: false
   - type: AlertLevelInterceptionRule
   - type: AntagSelection
     definitions:

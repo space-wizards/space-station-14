@@ -1,0 +1,36 @@
+- type: reagent
+  id: SpaceGrease
+  name: reagent-name-space-grease
+  parent: BasePyrotechnic
+  desc: reagent-desc-space-grease
+  slippery: true
+  physicalDesc: reagent-physical-desc-space-grease
+  flavor: funny
+  color: "#77b58e"
+  boilingPoint: 290.0 # Glycerin
+  meltingPoint: 18.2
+  tileReactions:
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 5
+  - !type:SpillTileReaction
+    paralyzeTime: 3
+    launchForwardsMultiplier: 2
+    requiredSlipSpeed: 1
+    superSlippery: true
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+        multiplier: 0.4
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 2
+            Poison: 1
+            Caustic: 0.5
+      - !type:FlammableReaction
+        multiplier: 0.4

@@ -14,6 +14,7 @@
     tags:
       - Cigar
       - Trash
+      - PetWearable
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi
     slots: [ mask ]
@@ -36,11 +37,17 @@
     solutions:
       smokable:
         maxVol: 20
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nicotine
+          Quantity: 5
   - type: Tag
     tags:
       - Cigar
       - Trash
       - Burnt
+      - PetWearable
 
 - type: entity
   id: CigarGold
@@ -71,3 +78,8 @@
     solutions:
       smokable:
         maxVol: 20
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nicotine
+          Quantity: 5

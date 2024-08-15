@@ -49,6 +49,19 @@
       - MobCorgiIanPup
 
 - type: entity
+  name: Finfin Spawner
+  id: SpawnMobFinfin
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobFinfin
+
+- type: entity
   name: Possum Morty Spawner
   id: SpawnMobPossumMorty
   parent: MarkerBase
@@ -60,6 +73,32 @@
   - type: ConditionalSpawner
     prototypes:
       - MobPossumMortyOld
+
+- type: entity
+  name: Poppy Spawner
+  id: SpawnMobPoppy
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobPossumPoppy
+
+- type: entity
+  name: Goji Spawner
+  id: SpawnMobGoji
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobGoji
 
 - type: entity
   name: Raccoon Morticia Spawner
@@ -153,6 +192,19 @@
       - MobBingus
 
 - type: entity
+  name: Pipi Spawner
+  id: SpawnMobCatKittenPipi
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobPipi
+
+- type: entity
   name: Space Cat Spawner
   id: SpawnMobCatSpace
   parent: MarkerBase
@@ -187,12 +239,16 @@
     layers:
       - state: green
       - state: ai
-  - type: ConditionalSpawner
+  - type: RandomSpawner
     prototypes:
       - MobCatRuntime
       - MobCatException
       - MobCatFloppa
       - MobBingus
+      - MobPipi
+    rarePrototypes:
+      - MobFinfin
+    rareChance: 0.05
 
 - type: entity
   name: Generic Cat Spawner
@@ -211,6 +267,7 @@
       - MobCatKitten
     rarePrototypes:
       - MobCatSpace
+      - MobFinfin
     rareChance: 0.05
 
 - type: entity
@@ -852,3 +909,59 @@
   - type: ConditionalSpawner
     prototypes:
     - MobClownSpider
+
+- type: entity
+  name: honk bot spawner
+  id: SpawnHonkBot
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: honkbot
+      sprite: Mobs/Silicon/Bots/honkbot.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobHonkBot
+
+- type: entity
+  name: Space Bear Major Spawner
+  id: SpawnMobBearMajor
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: major
+      sprite: Mobs/Animals/major.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobBearSpaceMajor
+
+- type: entity
+  name: Laser Raptor Spawner
+  id: SpawnMobLaserRaptor
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: laser_raptor
+      sprite: Mobs/Aliens/laser_raptor.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobLaserRaptor
+
+- type: entity
+  name: Kisser Tomato Spawner
+  id: SpawnMobKisserTomato
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: alive
+      sprite: Mobs/Demons/tomatokisser.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobTomatoKisser

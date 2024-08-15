@@ -848,6 +848,36 @@
   packetPrototype: CannabisSeeds
   productPrototypes:
     - LeavesCannabis
+    - MaterialHemp1
+  mutationPrototypes:
+    - rainbowCannabis
+    - greenMarijuana
+  harvestRepeat: Repeat
+  lifespan: 75
+  maturation: 8
+  production: 12
+  yield: 2
+  potency: 20
+  growthStages: 3
+  waterConsumption: 0.40
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    THC:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: greenMarijuana
+  name: seeds-green-marijuana-name
+  noun: seeds-noun-seeds
+  displayName: seeds-green-marijuana-display-name
+  plantRsi: Objects/Specific/Hydroponics/cannabis.rsi
+  packetPrototype: GreenMarijuanaSeeds
+  productPrototypes:
+    - LeavesGreenMarijuana
+    - MaterialHemp1
   mutationPrototypes:
     - rainbowCannabis
   harvestRepeat: Repeat
@@ -875,6 +905,7 @@
   packetPrototype: RainbowCannabisSeeds
   productPrototypes:
     - LeavesCannabisRainbow
+    - MaterialHemp1
   harvestRepeat: Repeat
   lifespan: 75
   maturation: 8
@@ -1319,6 +1350,61 @@
   packetPrototype: GatfruitSeeds
   productPrototypes:
     - FoodGatfruit
+  mutationPrototypes:
+    - fakeCapfruit
+    - realCapfruit
+  lifespan: 65
+  maturation: 25
+  production: 25
+  yield: 1
+  potency: 10
+  growthStages: 2
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Sulfur:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: fakeCapfruit
+  name: seeds-capfruit-name
+  noun: seeds-noun-seeds
+  displayName: seeds-capfruit-display-name
+  plantRsi: Objects/Specific/Hydroponics/capfruit.rsi
+  packetPrototype: FakeCapfruitSeeds
+  productPrototypes:
+    - FoodFakeCapfruit
+  lifespan: 65
+  maturation: 25
+  production: 25
+  yield: 1
+  potency: 10
+  growthStages: 2
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Sulfur:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: realCapfruit
+  name: seeds-capfruit-name
+  noun: seeds-noun-seeds
+  displayName: seeds-capfruit-display-name
+  plantRsi: Objects/Specific/Hydroponics/capfruit.rsi
+  packetPrototype: RealCapfruitSeeds
+  productPrototypes:
+    - FoodRealCapfruit
   lifespan: 65
   maturation: 25
   production: 25
@@ -1687,3 +1773,29 @@
       Min: 4
       Max: 8
       PotencyDivisor: 30
+
+- type: seed
+  id: lemo
+  name: seeds-lemo-name
+  noun: seeds-noun-seeds
+  displayName: seeds-lemo-display-name
+  plantRsi: Objects/Specific/Hydroponics/lemo.rsi
+  packetPrototype: LemoSeeds
+  productPrototypes:
+    - FoodLemo
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 10
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
