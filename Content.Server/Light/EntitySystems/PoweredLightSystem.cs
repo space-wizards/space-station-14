@@ -159,7 +159,7 @@ namespace Content.Server.Light.EntitySystems
                             true,
                             animatedColor,
                             light,
-                            lightBulb.LightRadius + 5,
+                            lightBulb.LightRadius,
                             lightBulb.LightEnergy + 0.5f,
                             lightBulb.LightSoftness + 1);
 
