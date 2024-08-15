@@ -17,6 +17,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Storage.Components;
+using Content.Shared.Voting.Events;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Map;
@@ -24,6 +25,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Enums;
 
 namespace Content.Server.Ghost
 {
@@ -78,6 +80,26 @@ namespace Content.Server.Ghost
 
             SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
             SubscribeLocalEvent<ToggleGhostVisibilityToAllEvent>(OnToggleGhostVisibilityToAll);
+
+            SubscribeLocalEvent<GhostComponent, RestartVoteAttemptEvent>(OnRestartAttempt);
+        }
+
+        private void OnRestartAttempt(Entity<GhostComponent> entity, ref RestartVoteAttemptEvent args)
+        {
+            if (!_minds.TryGetMind(entity, out _ , out var mind))
+                return;
+
+            if(mind.UserId == null)
+                return;
+
+            if(!_playerManager.TryGetSessionById(mind.UserId.Value, out var player))
+                return;
+
+            if (player.Status == SessionStatus.Disconnected)
+                return;
+
+            args.DeadPlayers += 1;
+          
         }
 
         private void OnGhostHearingAction(EntityUid uid, GhostComponent component, ToggleGhostHearingActionEvent args)
