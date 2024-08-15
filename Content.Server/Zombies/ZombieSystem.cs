@@ -16,6 +16,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
+using Content.Shared.Voting.Events;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
@@ -68,7 +69,10 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<IncurableZombieComponent, MapInitEvent>(OnPendingMapInit);
 
             SubscribeLocalEvent<ZombifyOnDeathComponent, MobStateChangedEvent>(OnDamageChanged);
+
+            SubscribeLocalEvent<ZombieComponent, RestartVoteAttemptEvent>(OnRestartAttempt);
         }
+          
 
         private void OnPendingMapInit(EntityUid uid, IncurableZombieComponent component, MapInitEvent args)
         {
@@ -290,6 +294,11 @@ namespace Content.Server.Zombies
         {
             if (UnZombify(args.Source, args.Target, zombiecomp))
                 args.NameHandled = true;
+        }
+
+        private void OnRestartAttempt(Entity<ZombieComponent> entity, ref RestartVoteAttemptEvent args)
+        {
+            args.DeadPlayers += 1;
         }
     }
 }
