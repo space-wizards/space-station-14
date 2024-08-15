@@ -146,6 +146,30 @@
     sprite: Structures/Furniture/golden_toilet.rsi
   - type: StaticPrice
     price: 1500
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          IngotGold1:
+            min: 5
+            max: 5
 
 - type: entity
   id: ToiletGoldenDirtyWater
