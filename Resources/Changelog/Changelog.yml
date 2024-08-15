@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Fixed modular grenade visuals getting stuck in an incorrect state.
-    type: Fix
-  id: 6616
-  time: '2024-05-25T20:03:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28265
 - author: deltanedas
   changes:
   - message: Fixed ID Cards not updating the manifest when changed.
@@ -3830,3 +3823,14 @@
   id: 7115
   time: '2024-08-15T14:45:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30763
+- author: Nimfar11
+  changes:
+  - message: Adds a gold toilet
+    type: Add
+  - message: Adds a target for the Thief to steal the golden toilet
+    type: Add
+  - message: Corrected the sprite image for the normal toilet.
+    type: Fix
+  id: 7116
+  time: '2024-08-15T19:23:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31049
