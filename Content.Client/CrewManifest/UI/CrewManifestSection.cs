@@ -25,33 +25,64 @@ public sealed class CrewManifestSection : BoxContainer
             Text = Loc.GetString($"department-{section.ID}")
         });
 
-        var gridContainer = new GridContainer()
+        var departmentContainer = new BoxContainer()
         {
+            Orientation = LayoutOrientation.Horizontal,
             HorizontalExpand = true,
-            Columns = 2
         };
 
-        AddChild(gridContainer);
+        var namesContainer = new BoxContainer()
+        {
+            Orientation = LayoutOrientation.Vertical,
+            HorizontalExpand = true,
+            SizeFlagsStretchRatio = 3,
+        };
+
+        var titlesContainer = new BoxContainer()
+        {
+            Orientation = LayoutOrientation.Vertical,
+            HorizontalExpand = true,
+            SizeFlagsStretchRatio = 2,
+        };
+
+        departmentContainer.AddChild(namesContainer);
+        departmentContainer.AddChild(titlesContainer);
+
+        AddChild(departmentContainer);
 
         foreach (var entry in entries)
         {
-            var name = new RichTextLabel()
+            var nameContainer = new BoxContainer()
             {
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
             };
+
+            var name = new RichTextLabel();
             name.SetMessage(entry.Name);
+
+            var gender = new RichTextLabel()
+            {
+                Margin = new Thickness(6, 0, 0, 0),
+                StyleClasses = { "CrewManifestGender" }
+            };
+            gender.SetMessage(Loc.GetString("gender-display", ("gender", entry.Gender)));
+
+            nameContainer.AddChild(name);
+            nameContainer.AddChild(gender);
 
             var titleContainer = new BoxContainer()
             {
                 Orientation = LayoutOrientation.Horizontal,
-                HorizontalExpand = true
+                HorizontalExpand = true,
+                SizeFlagsStretchRatio = 1,
             };
 
             var title = new RichTextLabel();
             title.SetMessage(entry.JobTitle);
 
 
-            if (prototypeManager.TryIndex<StatusIconPrototype>(entry.JobIcon, out var jobIcon))
+            if (prototypeManager.TryIndex<JobIconPrototype>(entry.JobIcon, out var jobIcon))
             {
                 var icon = new TextureRect()
                 {
@@ -69,8 +100,8 @@ public sealed class CrewManifestSection : BoxContainer
                 titleContainer.AddChild(title);
             }
 
-            gridContainer.AddChild(name);
-            gridContainer.AddChild(titleContainer);
+            namesContainer.AddChild(nameContainer);
+            titlesContainer.AddChild(titleContainer);
         }
     }
 }

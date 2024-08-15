@@ -110,6 +110,9 @@
       "name": "geneticist"
     },
     {
+      "name": "guestservices"
+    },
+    {
       "name": "hop"
     },
     {
@@ -192,6 +195,9 @@
     },
     {
       "name": "technicalassistant"
+    },
+    {
+      "name": "vip"
     },
     {
       "name": "virologist"

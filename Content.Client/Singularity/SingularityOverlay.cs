@@ -110,6 +110,8 @@ namespace Content.Client.Singularity
             if (_configManager.GetCVar(CCVars.ReducedMotion) || _configManager.GetCVar(CCVars.DisableSinguloWarping))
                 return;
 
+            if (args.Viewport.Eye == null)
+                return;
             var maxDistance = MaxDistance * EyeManager.PixelsPerMeter;
             var finalCoords = args.VisiblePosition;
 
@@ -122,10 +124,11 @@ namespace Content.Client.Singularity
                 // and in local space 'Y' is measured in pixels from the top of the viewport.
                 // As a minor optimization the locations of the singularities are transformed into fragment space in BeforeDraw so the shader doesn't need to.
                 // We need to undo that here or this will transform the cursor position as if the singularities were mirrored vertically relative to the center of the viewport.
+
                 var localPosition = _positions[i];
                 localPosition.Y = args.Viewport.Size.Y - localPosition.Y;
                 var delta = args.VisiblePosition - localPosition;
-                var distance = (delta / args.Viewport.RenderScale).Length();
+                var distance = (delta / (args.Viewport.RenderScale * args.Viewport.Eye.Scale)).Length();
 
                 var deformation = _intensities[i] / MathF.Pow(distance, _falloffPowers[i]);
 

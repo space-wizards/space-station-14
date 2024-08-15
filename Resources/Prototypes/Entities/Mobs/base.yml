@@ -107,10 +107,6 @@
         Blunt: 5
     soundHit:
       path: /Audio/Effects/hit_kick.ogg
-  - type: DamageOnDraggingCrit
-    damage:
-      types:
-        Blunt: 1
   - type: Pullable
   - type: LightningTarget
     priority: 2

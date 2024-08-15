@@ -1,0 +1,20 @@
+- type: dataset
+  id: names_gray_last
+  values:
+  - Shitto # Ascalapha odorata
+  - Zaz # refers to any of the 3 Acherontia
+  - Da # Saturniinae
+  - Gimy # Plagodis dolabraria
+  - Vroo # Temnora
+  - Xen # Usta
+  - Keth # Thysania agrippina
+  - Quas # Operophtera brumata
+
+  # Other languages
+  - Wex # Ancient Greek "moth"
+  - Exo # conceivably any Old Norse descendant of mǫlr but probably more Danish than anything. "oe" digraph for ø.
+  - Ert # literal pseudo-translation of German Nachtfalter
+
+  # Myth and legend
+  - Barathium # belief of moths flying at night signalling the reception of a letter
+  - Dadodododo # Greek figure associated with Hero, and similar sounding to Oleander hawk-moth
