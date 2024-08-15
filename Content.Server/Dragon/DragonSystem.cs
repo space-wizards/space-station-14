@@ -6,6 +6,8 @@ using Content.Shared.Actions;
 using Content.Shared.Dragon;
 using Content.Shared.Maps;
 using Content.Shared.NPC.Components;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NPC.Systems;
