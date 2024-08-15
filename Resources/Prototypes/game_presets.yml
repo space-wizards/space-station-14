@@ -45,6 +45,7 @@
   showInVote: false #4boring4vote
   description: greenshift-description
   rules:
+  - SpaceTrafficControlFriendlyEventScheduler
   - BasicRoundstartVariation
 
 - type: gamePreset
@@ -76,6 +77,9 @@
   name: secret-title
   showInVote: false #Admin Use
   description: secret-description
+  rules:
+  - SpaceTrafficControlFriendlyEventScheduler
+  - BasicRoundstartVariation
 
 - type: gamePreset
   id: Sandbox
@@ -112,7 +116,8 @@
   rules:
     - SpyVsSpy
     - BasicStationEventScheduler
-    - GameRuleMeteorScheduler
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
 - type: gamePreset
@@ -123,7 +128,8 @@
   rules:
     - SpyVsSpyDefaultTC
     - BasicStationEventScheduler
-    - GameRuleMeteorScheduler
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
 - type: gamePreset
@@ -134,7 +140,8 @@
   rules:
     - SpyVsSpy5TC
     - BasicStationEventScheduler
-    - GameRuleMeteorScheduler
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
 - type: gamePreset
@@ -148,7 +155,8 @@
   rules:
     - SpyVsSpy
     - BasicStationEventScheduler
-    - GameRuleMeteorScheduler
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
 - type: gamePreset
