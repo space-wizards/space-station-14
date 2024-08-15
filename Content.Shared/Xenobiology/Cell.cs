@@ -16,6 +16,9 @@ public sealed class Cell
     public float Stability;
 
     [ViewVariables]
+    public int Cost;
+
+    [ViewVariables]
     public List<CellModifier> Modifiers;
 
     public Cell(CellPrototype cell)
@@ -23,6 +26,7 @@ public sealed class Cell
         Id = cell.ID;
         Color = cell.Color;
         Stability = cell.Stability;
+        Cost = cell.Cost;
         Modifiers = cell.Modifiers;
     }
 }
