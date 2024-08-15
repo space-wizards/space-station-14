@@ -1,4 +1,3 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.GameObjects;
@@ -6,6 +5,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.IntegrationTests.Tests.Chemistry
 {
@@ -34,7 +34,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
-            var solutionContainerSystem = entityManager.System<SolutionContainerSystem>();
+            var solutionContainerSystem = entityManager.System<SharedSolutionContainerSystem>();
 
             foreach (var reactionPrototype in prototypeManager.EnumeratePrototypes<ReactionPrototype>())
             {

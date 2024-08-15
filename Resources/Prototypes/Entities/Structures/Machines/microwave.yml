@@ -1,6 +1,6 @@
-﻿- type: entity
+- type: entity
   id: KitchenMicrowave
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   name: microwave
   description: It's magic.
   components:
@@ -105,3 +105,22 @@
   - type: GuideHelp
     guides:
     - Chef
+    - FoodRecipes
+
+- type: entity
+  id: SyndicateMicrowave
+  parent: KitchenMicrowave
+  name: donk co. microwave
+  description: So advanced, it can cook donk-pockets in a mere 2.5 seconds!
+  components:
+  - type: Microwave
+    cookTimeMultiplier: 0.5
+    capacity: 10
+    canMicrowaveIdsSafely: false
+    explosionChance: 0.3
+  - type: Sprite
+    sprite: Structures/Machines/microwave_syndie.rsi
+    drawdepth: SmallObjects
+    snapCardinals: true
+  - type: Machine
+    board: SyndicateMicrowaveMachineCircuitboard

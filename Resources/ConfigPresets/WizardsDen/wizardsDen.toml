@@ -1,15 +1,15 @@
-﻿# Base configuration preset used on all Wizard's Den servers.
+# Base configuration preset used on all Wizard's Den servers.
 # Loaded before server-specific config presets by configuration.
 
 [game]
-desc             = "Official English Space Station 14 servers. Vanilla, low roleplay."
+desc             = "Official English Space Station 14 servers. Vanilla, roleplay ruleset."
 lobbyenabled     = true
 soft_max_players = 80
 panic_bunker.enabled = true
 panic_bunker.disable_with_admins = true
 panic_bunker.enable_without_admins = true
 panic_bunker.show_reason = true
-panic_bunker.custom_reason = "You have not played on Wizard's Den server long enough to connect to this server. Please play on Wizard's Den Lizard or Wizard's Den Leviathan until you have more playtime."
+panic_bunker.custom_reason = "You have not played on a Wizard's Den server long enough to connect to this server. Please play on Wizard's Den Lizard, Leviathan, or Farm Grass Hopper until you have more playtime."
 
 [infolinks]
 bug_report = "https://github.com/space-wizards/space-station-14/issues/new/choose"
@@ -20,6 +20,9 @@ patreon    = "https://www.patreon.com/spacestation14"
 website    = "https://spacestation14.io"
 wiki       = "https://wiki.spacestation14.io"
 appeal     = "https://appeal.ss14.io"
+
+[server]
+rules_file = "StandardRuleset"
 
 [net]
 max_connections = 1024
@@ -34,6 +37,4 @@ limit = 10.0
 see_own_notes = true
 deadmin_on_join = true
 new_player_threshold = 600
-
-[worldgen]
-enabled = true
+alert.min_players_sharing_connection = 2

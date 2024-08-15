@@ -8,10 +8,13 @@ using Content.Server.GameTicking;
 using Content.Server.Medical.CrewMonitoring;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Clothing;
 using Content.Shared.Damage;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -35,6 +38,9 @@ public sealed class SuitSensorSystem : EntitySystem
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly SingletonDeviceNetServerSystem _singletonServerSystem = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     public override void Initialize()
     {
@@ -49,6 +55,7 @@ public sealed class SuitSensorSystem : EntitySystem
         SubscribeLocalEvent<SuitSensorComponent, EntGotRemovedFromContainerMessage>(OnRemove);
         SubscribeLocalEvent<SuitSensorComponent, EmpPulseEvent>(OnEmpPulse);
         SubscribeLocalEvent<SuitSensorComponent, EmpDisabledRemoved>(OnEmpFinished);
+        SubscribeLocalEvent<SuitSensorComponent, SuitSensorChangeDoAfterEvent>(OnSuitSensorDoAfter);
     }
 
     public override void Update(float frameTime)
@@ -205,7 +212,14 @@ public sealed class SuitSensorSystem : EntitySystem
             return;
 
         // standard interaction checks
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+        if (!args.CanInteract || args.Hands == null)
+            return;
+
+        if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
+            return;
+
+        // check if target is incapacitated (cuffed, dead, etc)
+        if (component.User != null && args.User != component.User && _actionBlocker.CanInteract(component.User.Value, null))
             return;
 
         args.Verbs.UnionWith(new[]
@@ -239,7 +253,7 @@ public sealed class SuitSensorSystem : EntitySystem
         args.Disabled = true;
 
         component.PreviousMode = component.Mode;
-        SetSensor(uid, SuitSensorMode.SensorOff, null, component);
+        SetSensor((uid, component), SuitSensorMode.SensorOff, null);
 
         component.PreviousControlsLocked = component.ControlsLocked;
         component.ControlsLocked = true;
@@ -247,7 +261,7 @@ public sealed class SuitSensorSystem : EntitySystem
 
     private void OnEmpFinished(EntityUid uid, SuitSensorComponent component, ref EmpDisabledRemoved args)
     {
-        SetSensor(uid, component.PreviousMode, null, component);
+        SetSensor((uid, component), component.PreviousMode, null);
         component.ControlsLocked = component.PreviousControlsLocked;
     }
 
@@ -259,7 +273,7 @@ public sealed class SuitSensorSystem : EntitySystem
             Disabled = component.Mode == mode,
             Priority = -(int) mode, // sort them in descending order
             Category = VerbCategory.SetSensor,
-            Act = () => SetSensor(uid, mode, userUid, component)
+            Act = () => TrySetSensor((uid, component), mode, userUid)
         };
     }
 
@@ -287,18 +301,46 @@ public sealed class SuitSensorSystem : EntitySystem
         return Loc.GetString(name);
     }
 
-    public void SetSensor(EntityUid uid, SuitSensorMode mode, EntityUid? userUid = null,
-        SuitSensorComponent? component = null)
+    public void TrySetSensor(Entity<SuitSensorComponent> sensors, SuitSensorMode mode, EntityUid userUid)
     {
-        if (!Resolve(uid, ref component))
+        var comp = sensors.Comp;
+
+        if (!Resolve(sensors, ref comp))
             return;
 
-        component.Mode = mode;
+        if (comp.User == null || userUid == comp.User)
+            SetSensor(sensors, mode, userUid);
+        else
+        {
+            var doAfterEvent = new SuitSensorChangeDoAfterEvent(mode);
+            var doAfterArgs = new DoAfterArgs(EntityManager, userUid, comp.SensorsTime, doAfterEvent, sensors)
+            {
+                BreakOnMove = true,
+                BreakOnDamage = true
+            };
+
+            _doAfterSystem.TryStartDoAfter(doAfterArgs);
+        }
+    }
+
+    private void OnSuitSensorDoAfter(Entity<SuitSensorComponent> sensors, ref SuitSensorChangeDoAfterEvent args)
+    {
+        if (args.Handled || args.Cancelled)
+            return;
+
+        SetSensor(sensors, args.Mode, args.User);
+    }
+
+    public void SetSensor(Entity<SuitSensorComponent> sensors, SuitSensorMode mode, EntityUid? userUid = null)
+    {
+        var comp = sensors.Comp;
+
+        comp.Mode = mode;
 
         if (userUid != null)
         {
             var msg = Loc.GetString("suit-sensor-mode-state", ("mode", GetModeName(mode)));
-            _popupSystem.PopupEntity(msg, uid, userUid.Value);
+            _popupSystem.PopupEntity(msg, sensors, userUid.Value);
         }
     }
 
@@ -308,7 +350,7 @@ public sealed class SuitSensorSystem : EntitySystem
             return null;
 
         // check if sensor is enabled and worn by user
-        if (sensor.Mode == SuitSensorMode.SensorOff || sensor.User == null || transform.GridUid == null)
+        if (sensor.Mode == SuitSensorMode.SensorOff || sensor.User == null || !HasComp<MobStateComponent>(sensor.User) || transform.GridUid == null)
             return null;
 
         // try to get mobs id from ID slot
@@ -323,11 +365,10 @@ public sealed class SuitSensorSystem : EntitySystem
                 userName = card.Comp.FullName;
             if (card.Comp.JobTitle != null)
                 userJob = card.Comp.JobTitle;
-            if (card.Comp.JobIcon != null)
-                userJobIcon = card.Comp.JobIcon;
+            userJobIcon = card.Comp.JobIcon;
 
             foreach (var department in card.Comp.JobDepartments)
-                userJobDepartments.Add(Loc.GetString(department));
+                userJobDepartments.Add(Loc.GetString($"department-{department}"));
         }
 
         // get health mob state

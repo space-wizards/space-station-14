@@ -32,14 +32,14 @@ public abstract partial class SharedSalvageSystem
             var layers = new Dictionary<string, int>();
 
             // If we ever add more random layers will need to Next on these.
-            foreach (var layer in configProto.PostGeneration)
+            foreach (var layer in configProto.Layers)
             {
                 switch (layer)
                 {
-                    case BiomePostGen:
+                    case BiomeDunGen:
                         rand.Next();
                         break;
-                    case BiomeMarkerLayerPostGen marker:
+                    case BiomeMarkerLayerDunGen marker:
                         for (var i = 0; i < marker.Count; i++)
                         {
                             var proto = _proto.Index(marker.MarkerTemplate).Pick(rand);

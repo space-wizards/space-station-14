@@ -350,8 +350,17 @@
   components:
   - type: Stack
     stackType: Diamond
+    baseLayer: base
+    layerStates:
+    - diamond
+    - diamond_2
+    - diamond_3
   - type: Sprite
     state: diamond
+    layers:
+    - state: diamond
+      map: ["base"]
+  - type: Appearance
   - type: Item
     heldPrefix: diamond
   - type: Extractable
@@ -362,6 +371,10 @@
         reagents:
         - ReagentId: Carbon
           Quantity: 20
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Diamond: 100
 
 - type: entity
   parent: MaterialDiamond
@@ -493,13 +506,12 @@
     layerStates:
       - bananium
       - bananium_1
-  - type: RadiationSource
-    intensity: 0.1
   - type: FlavorProfile
     flavors:
       - banana
   - type: Food
-    trash: TrashBananiumPeel
+    trash: 
+    - TrashBananiumPeel
   - type: BadFood
   - type: SolutionContainerManager
     solutions:
