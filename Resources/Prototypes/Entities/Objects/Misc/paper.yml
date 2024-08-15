@@ -503,7 +503,7 @@
 
 - type: entity
   id: BoxFolderQmClipboard
-  parent: BoxFolderClipboard
+  parent: [BoxFolderClipboard, BaseGrandTheftContraband]
   name: requisition digi-board
   description: A bulky electric clipboard, filled with shipping orders and financing details. With so many compromising documents, you ought to keep this safe.
   components:

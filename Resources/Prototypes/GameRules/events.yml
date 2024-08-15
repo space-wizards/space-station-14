@@ -1,3 +1,40 @@
+- type: entityTable
+  id: BasicCalmEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: AnomalySpawn
+    - id: BluespaceArtifact
+    - id: BluespaceLocker
+    - id: BreakerFlip
+    - id: BureaucraticError
+    - id: ClericalError
+    - id: CockroachMigration
+    - id: GasLeak
+    - id: IonStorm # its calm like 90% of the time smh
+    - id: KudzuGrowth
+    - id: MassHallucinations
+    - id: MimicVendorRule
+    - id: MouseMigration
+    - id: PowerGridCheck
+    - id: SlimesSpawn
+    - id: SolarFlare
+    - id: SpiderClownSpawn
+    - id: SpiderSpawn
+    - id: VentClog
+
+- type: entityTable
+  id: BasicAntagEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: ClosetSkeleton
+    - id: DragonSpawn
+    - id: KingRatMigration
+    - id: NinjaSpawn
+    - id: RevenantSpawn
+    - id: SleeperAgents
+    - id: ZombieOutbreak
+
+
 - type: entity
   id: BaseStationEvent
   parent: BaseGameRule
@@ -224,6 +261,19 @@
   - type: GasLeakRule
 
 - type: entity
+  id: GasLeakTTTTS
+  parent: GasLeak
+  components:
+    - type: StationEvent
+      startAnnouncement: station-event-gas-leak-start-announcement
+      startAudio:
+        path: /Audio/Announcements/gasleakTTTTs.ogg
+      endAnnouncement: station-event-gas-leak-end-announcement
+      weight: 1
+    - type: GasLeakRule
+
+
+- type: entity
   id: KudzuGrowth
   parent: BaseStationEventLongDelay
   components:
@@ -312,6 +362,20 @@
       path: /Audio/Announcements/power_off.ogg
       params:
        volume: -4
+    duration: 60
+    maxDuration: 120
+  - type: PowerGridCheckRule
+
+- type: entity
+  id: PowerGridCheckTTTTS
+  parent: PowerGridCheck
+  components:
+  - type: StationEvent
+    weight: 1
+    startAnnouncement: station-event-power-grid-check-start-announcement
+    endAnnouncement: station-event-power-grid-check-end-announcement
+    startAudio:
+      path: /Audio/Announcements/power_offTTTTS.ogg
     duration: 60
     maxDuration: 120
   - type: PowerGridCheckRule
@@ -563,6 +627,45 @@
       orGroup: rodProto
     - id: ImmovableRodGibstick
       prob: 0.0072
+      orGroup: rodProto
+
+- type: entity
+  id: ImmovableRodSpawnTTTTS
+  parent: ImmovableRodSpawn
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-immovable-rod-start-announcement
+    startAudio:
+      path: /Audio/Announcements/highvelocityTTTTS.ogg
+    weight: 1
+    duration: 1
+    earliestStart: 30
+    minimumPlayers: 20
+  - type: ImmovableRodRule
+    rodPrototypes:
+    - id: ImmovableRodKeepTilesStill
+      prob: 0.3
+      orGroup: rodProto
+    - id: ImmovableRodMop
+      prob: 0.1
+      orGroup: rodProto
+    - id: ImmovableRodShark
+      prob: 0.1
+      orGroup: rodProto
+    - id: ImmovableRodClown
+      prob: 0.1
+      orGroup: rodProto
+    - id: ImmovableRodBanana
+      prob: 0.1
+      orGroup: rodProto
+    - id: ImmovableRodHammer
+      prob: 0.1
+      orGroup: rodProto
+    - id: ImmovableRodThrongler
+      prob: 0.1
+      orGroup: rodProto
+    - id: ImmovableRodGibstick
+      prob: 0.1
       orGroup: rodProto
 
 - type: entity
