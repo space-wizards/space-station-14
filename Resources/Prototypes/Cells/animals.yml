@@ -49,10 +49,6 @@
   color: "#744331"
 
 - type: cell
-  id: Atypical
-  color: "#744331"
-
-- type: cell
   id: Aphid
   color: "#744331"
 

@@ -4,6 +4,9 @@
   name: petri dish
   description: This makes you feel well-cultured.
   components:
+  - type: Tag
+    tags:
+    - Dish
   - type: Appearance
   - type: GenericVisualizer
     visuals:

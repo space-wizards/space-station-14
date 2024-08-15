@@ -1266,3 +1266,23 @@
       Capacitor: 1
       Manipulator: 1
       Cable: 1
+
+- type: entity
+  id: CellSequencerCircuitboard
+  parent: BaseMachineCircuitboard
+  name: cell sequencer machine board
+  description: A machine printed circuit board for a cell sequencer.
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: CellSequencer
+      stackRequirements:
+        Plasma: 5
+        MatterBin: 1
+        Glass: 1
+        Steel: 2
+      tagRequirements:
+        Dish:
+          amount: 2
+          defaultPrototype: PetriDish
