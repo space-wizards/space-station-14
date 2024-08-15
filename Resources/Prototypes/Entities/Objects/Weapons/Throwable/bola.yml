@@ -73,5 +73,3 @@
     damage:
       types:
         Heat: 5
-  - type: Ensnaring
-    # destroyOnRemove: true - it's a normal bola for now, perphaps someone can find a use for this field in the future
