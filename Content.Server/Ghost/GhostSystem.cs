@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Numerics;
-using Robust.Server.GameObjects;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind;
@@ -19,13 +18,14 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Storage.Components;
 using Content.Shared.Voting.Events;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Enums;
 
 namespace Content.Server.Ghost
 {
