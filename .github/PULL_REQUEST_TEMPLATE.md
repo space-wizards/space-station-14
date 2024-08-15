@@ -4,7 +4,7 @@
 <!-- What did you change? -->
 
 ## Why / Balance
-<!-- Why was it changed? Link any relevant discussions or issues. -->
+<!-- Discuss how this would affect game balance or explain why was it changed. Link any relevant discussions or issues. -->
 
 ## Technical details
 <!-- Summary of code changes for easier review. -->
@@ -15,20 +15,18 @@ Small fixes/refactors are exempt. Media may be used in SS14 progress reports wit
 
 ## Requirements
 <!-- Confirm the following by placing an X in the brackets [X]: -->
-- [ ] I have read and am following the [Pull Request Guidelines](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html).
-- [ ] I have read and I am following the [Changelog Guidelines](https://docs.spacestation14.io/en/getting-started/pr-guideline#changelog)
+- [ ] I have read and am following the [Pull Request and Changelog Guidelines](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html).
 - [ ] I have added media to this PR or it does not require an ingame showcase.
-- [ ] I understand that not following the above may get my pr closed at maintainer’s discretion
+<!-- You should understand that not following the above may get your pr closed at maintainer’s discretion -->
 
 ## Breaking changes
-<!-- List any breaking changes and provide instructions for fixing them. -->
+<!-- List any breaking changes, including namespaces, public class/method/field changes, prototype renames; and provide instructions for fixing them.
+This will be pasted in #codebase-changes. -->
 
 **Changelog**
-<!--
-Add a Changelog entry to make players aware of new features or changes that could affect gameplay.
-Remove this comment block to make the Changelog visible.
-Make sure the entry includes the :cl: symbol so the bot can recognize and add it to the game’s changelog.
--->
+<!-- Add a Changelog entry to make players aware of new features or changes that could affect gameplay.
+Make sure to read the guidelines.
+Remove the following comment block to make the Changelog visible. -->
 <!--
 :cl:
 - add: Added fun!
