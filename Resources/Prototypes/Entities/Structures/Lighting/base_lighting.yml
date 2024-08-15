@@ -89,7 +89,6 @@
     enabled: false
     mask: /Textures/Effects/LightMasks/double_cone.png
   - type: RotatingLight
-    enabled: false
     speed: 50
   - type: PoweredLight
     bulb: Tube
@@ -136,7 +135,6 @@
     enabled: true
     mask: /Textures/Effects/LightMasks/double_cone.png
   - type: RotatingLight
-    enabled: false
     speed: 50
   - type: PoweredLight
     hasLampOnSpawn: LightTube
