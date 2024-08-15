@@ -61,7 +61,7 @@ namespace Content.Server.Voting.Managers
             
             //Raised an event so that eligble players can be counted in their respective systems
             var ev = new RestartVoteAttemptEvent();
-            _entityManager.EventBus.RaiseLocalEvent(ref ev);
+            RaiseLocalEvent(ref ev);
             
             var ghostCount = ev.DeadPlayers;
 
