@@ -168,7 +168,7 @@
   rules:
     - SpyVsSpy
     - BasicStationEventScheduler
-    - GameRuleMeteorScheduler
+    - MeteorSwarmScheduler
     - BasicRoundstartVariation
 
 - type: gamePreset
@@ -179,7 +179,7 @@
   rules:
     - SpyVsSpyDefaultTC
     - BasicStationEventScheduler
-    - GameRuleMeteorScheduler
+    - MeteorSwarmScheduler
     - BasicRoundstartVariation
 
 - type: gamePreset
@@ -190,7 +190,7 @@
   rules:
     - SpyVsSpy5TC
     - BasicStationEventScheduler
-    - GameRuleMeteorScheduler
+    - MeteorSwarmScheduler
     - BasicRoundstartVariation
 
 - type: gamePreset
@@ -204,7 +204,7 @@
   rules:
     - SpyVsSpy
     - BasicStationEventScheduler
-    - GameRuleMeteorScheduler
+    - MeteorSwarmScheduler
     - BasicRoundstartVariation
 
 - type: gamePreset
@@ -299,7 +299,7 @@
     - Changeling
     - SubGamemodesRule
     - BasicStationEventScheduler
-    - GameRuleMeteorScheduler
+    - MeteorSwarmScheduler
     - BasicRoundstartVariation
 
 - type: gamePreset
@@ -315,5 +315,5 @@
     - Traitor
     - SubGamemodesRule
     - BasicStationEventScheduler
-    - GameRuleMeteorScheduler
+    - MeteorSwarmScheduler
     - BasicRoundstartVariation
