@@ -1,10 +1,8 @@
 - type: gameMapPool
   id: DefaultMapPool
   maps:
-  - Atlas
   - Bagel
   - Box
-  - Cluster
   - Cog
   - Core
   - Fland
@@ -13,7 +11,6 @@
   - Oasis
   - Omega
   - Origin
-  - Saltern
   - Packed
   - Reach
   - Train
