@@ -68,7 +68,7 @@ namespace Content.Server.Voting.Managers
                 if (player.Status == SessionStatus.Disconnected)
                     continue;
 
-                if (_whitelist.IsValid(whitelist, player.AttachedEntity))
+                if(_whitelist.IsValid(whitelist, player.AttachedEntity))
                     ghostCount++;
             }
 
