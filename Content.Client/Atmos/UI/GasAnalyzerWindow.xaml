@@ -8,7 +8,7 @@
             <!-- Scanned device mix data -->
             <ScrollContainer VerticalExpand="True">
                 <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Vertical">
-                    <GridContainer Name="CDeviceGrid" Columns="3" Rows="1" VerticalExpand="True" HorizontalExpand="True">
+                    <GridContainer Name="CDeviceGrid" Columns="4" Rows="1" VerticalExpand="True" HorizontalExpand="True">
                         <BoxContainer Orientation="Vertical" VerticalExpand="True">
                             <Control MinHeight="5"/>
                             <Label Name="LeftPanelLabel" HorizontalExpand="True" Align="Center"/>
@@ -29,8 +29,15 @@
                             <Control MinHeight="27"/>
                             <BoxContainer Name="RightPanel" VerticalExpand="True" HorizontalExpand="True" Margin="1 1 1 1" MinSize="315 150" Align="Center" Visible="False"/>
                         </BoxContainer>
+                        <!-- exists only for the quaternary so the gas analyzer doesn't get a stroke -->
+                        <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                            <Control MinHeight="5"/>
+                            <Label Name="FourthPanelLabel" HorizontalExpand="True" Align="Center"/>
+                            <Control MinHeight="27"/>
+                            <BoxContainer Name="FourthPanel" VerticalExpand="True" HorizontalExpand="True" Margin="1 1 1 1" MinSize="315 150" Align="Center" Visible="False"/>
+                        </BoxContainer>
                     </GridContainer>
-                    <!-- this is for any leftover mixes for > trinary, but it'll look really ugly -->
+                    <!-- this is for any leftover mixes for > quaternary, but it'll look really ugly -->
                     <BoxContainer Name="CDeviceMixes" HorizontalExpand="True" Orientation="Horizontal">
                     </BoxContainer>
                 </BoxContainer>

@@ -66,6 +66,8 @@ namespace Content.Client.Atmos.UI
                     3 => Direction.East,
                     // Trinary layout
                     4 => Direction.East,
+                    // Quaternary layout
+                    5 => Direction.East,
                     _ => GridIcon.OverrideDirection
                 };
 
@@ -73,6 +75,7 @@ namespace Content.Client.Atmos.UI
                 LeftPanel.RemoveAllChildren();
                 MiddlePanel.RemoveAllChildren();
                 RightPanel.RemoveAllChildren();
+                FourthPanel.RemoveAllChildren();
                 if (msg.NodeGasMixes.Length == 2)
                 {
                     // Unary, use middle
@@ -83,6 +86,7 @@ namespace Content.Client.Atmos.UI
                     LeftPanel.Visible = false;
                     MiddlePanel.Visible = true;
                     RightPanel.Visible = false;
+                    FourthPanel.Visible = false;
 
                     GenerateGasDisplay(msg.NodeGasMixes[1], MiddlePanel);
 
@@ -98,6 +102,7 @@ namespace Content.Client.Atmos.UI
                     LeftPanel.Visible = true;
                     MiddlePanel.Visible = false;
                     RightPanel.Visible = true;
+                    FourthPanel.Visible = false;
 
                     GenerateGasDisplay(msg.NodeGasMixes[1], LeftPanel);
                     GenerateGasDisplay(msg.NodeGasMixes[2], RightPanel);
@@ -106,7 +111,7 @@ namespace Content.Client.Atmos.UI
                 }
                 else if (msg.NodeGasMixes.Length == 4)
                 {
-                    // Trinary, use all three
+                    // Trinary, use three
                     // Trinary can be flippable, which complicates how to display things currently
                     LeftPanelLabel.Text = Loc.GetString("gas-analyzer-window-tab-title-capitalized",
                         ("title", msg.DeviceFlipped ? msg.NodeGasMixes[1].Name : msg.NodeGasMixes[3].Name));
@@ -117,6 +122,7 @@ namespace Content.Client.Atmos.UI
                     LeftPanel.Visible = true;
                     MiddlePanel.Visible = true;
                     RightPanel.Visible = true;
+                    FourthPanel.Visible = false;
 
                     GenerateGasDisplay(msg.DeviceFlipped ? msg.NodeGasMixes[1] : msg.NodeGasMixes[3], LeftPanel);
                     GenerateGasDisplay(msg.NodeGasMixes[2], MiddlePanel);
@@ -124,9 +130,29 @@ namespace Content.Client.Atmos.UI
 
                     minSize = new Vector2(CDeviceGrid.DesiredSize.X + 40, MinSize.Y);
                 }
+                else if (msg.NodeGasMixes.Length == 5)
+                {
+                    // Quaternary, use the fourth panel
+                    LeftPanelLabel.Text = Loc.GetString("gas-analyzer-window-tab-title-capitalized", ("title", msg.NodeGasMixes[1].Name));
+                    MiddlePanelLabel.Text = Loc.GetString("gas-analyzer-window-tab-title-capitalized", ("title", msg.NodeGasMixes[2].Name));
+                    RightPanelLabel.Text = Loc.GetString("gas-analyzer-window-tab-title-capitalized", ("title", msg.NodeGasMixes[3].Name));
+                    FourthPanelLabel.Text = Loc.GetString("gas-analyzer-window-tab-title-capitalized", ("title", msg.NodeGasMixes[4].Name));
+
+                    LeftPanel.Visible = true;
+                    MiddlePanel.Visible = true;
+                    RightPanel.Visible = true;
+                    FourthPanel.Visible = true;
+
+                    GenerateGasDisplay(msg.NodeGasMixes[1], LeftPanel);
+                    GenerateGasDisplay(msg.NodeGasMixes[2], MiddlePanel);
+                    GenerateGasDisplay(msg.NodeGasMixes[3], RightPanel);
+                    GenerateGasDisplay(msg.NodeGasMixes[4], FourthPanel);
+
+                    minSize = new Vector2(CDeviceGrid.DesiredSize.X + 40, MinSize.Y);
+                }
                 else
                 {
-                    // oh shit of fuck its more than 4 this ui isn't gonna look pretty anymore
+                    // oh shit of fuck its more than 5 this ui isn't gonna look pretty anymore
                     for (var i = 1; i < msg.NodeGasMixes.Length; i++)
                     {
                         GenerateGasDisplay(msg.NodeGasMixes[i], CDeviceMixes);
@@ -134,6 +160,7 @@ namespace Content.Client.Atmos.UI
                     LeftPanel.Visible = false;
                     MiddlePanel.Visible = false;
                     RightPanel.Visible = false;
+                    FourthPanel.Visible = false;
                     minSize = new Vector2(CDeviceMixes.DesiredSize.X + 40, MinSize.Y);
                 }
             }

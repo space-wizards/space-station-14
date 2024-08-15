@@ -1,0 +1,74 @@
+- type: entity
+  parent: GasPipeBase
+  abstract: true
+  id: GasQuaternaryBase
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: AtmosDevice
+    - type: Tag
+      tags:
+        - Unstackable
+    - type: SubFloorHide
+      blockInteractions: false
+      blockAmbience: false
+    - type: NodeContainer
+      nodes:
+        inlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: North
+        inletSecondary:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: West
+        outlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+        outletSecondary:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: East
+
+- type: entity
+  parent: GasQuaternaryBase
+  id: CounterflowHeatExchanger
+  name: counterflow heat exchanger
+  description: Exchanges thermal energy between two gases.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      sprite: Structures/Piping/Atmospherics/gasfilter.rsi
+      layers:
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeTrinaryConnectors
+          map: [ "enum.PipeVisualLayers.Pipe" ]
+        - state: gasFilter
+          map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+    - type: Appearance
+    # - type: GenericVisualizer
+    #   visuals:
+    #     enum.FilterVisuals.Enabled:
+    #       enabled:
+    #         True: { state: gasFilterOn }
+    #         False: { state: gasFilter }
+    - type: PipeColorVisuals
+    # - type: UserInterface
+    #   interfaces:
+    #     enum.GasFilterUiKey.Key:
+    #       type: GasFilterBoundUserInterface
+    - type: CounterflowHeatExchanger
+    # - type: Flippable
+    #   mirrorEntity: GasFilterFlipped
+    # - type: Construction
+    #   graph: GasTrinary
+    #   node: filter
+    # - type: AmbientSound
+    #   enabled: false
+    #   volume: -9
+    #   range: 5
+    #   sound:
+    #     path: /Audio/Ambience/Objects/gas_hiss.ogg
+
