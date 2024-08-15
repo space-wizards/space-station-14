@@ -61,11 +61,12 @@ namespace Content.Server.Voting.Managers
             foreach (var player in _playerManager.Sessions)
             {
                 _playerManager.UpdateState(player);
-                //Update this
-                if (player.Status != SessionStatus.Disconnected && _entityManager.HasComponent<GhostComponent>(player.AttachedEntity))
-                {
+
+                if (player.Status == SessionStatus.Disconnected)
+                    continue;
+
+                if(_whitelist.IsValid(whitelist, player.AttachedEntity))
                     ghostCount++;
-                }
             }
 
             var ghostPercentage = 0.0;
