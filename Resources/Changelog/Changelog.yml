@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Artifact portal lifespan reduced from 120 seconds to 1 second
-    type: Tweak
-  id: 6611
-  time: '2024-05-22T07:52:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28200
 - author: nikthechampiongr
   changes:
   - message: Firelocks can now be pried by hand.
@@ -3813,3 +3806,11 @@
   id: 7110
   time: '2024-08-14T19:47:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31005
+- author: Erisfiregamer1
+  changes:
+  - message: New chemical, Sedin. It restores seeds on plants 20% of the time with
+      other adverse effects included.
+    type: Add
+  id: 7111
+  time: '2024-08-15T00:38:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27110
