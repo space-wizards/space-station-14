@@ -75,7 +75,6 @@ namespace Content.Shared.Interaction
         private EntityQuery<WallMountComponent> _wallMountQuery;
         private EntityQuery<UseDelayComponent> _delayQuery;
         private EntityQuery<ActivatableUIComponent> _uiQuery;
-        private EntityQuery<ComplexInteractionComponent> _complexInteractionQuery;
 
         private const CollisionGroup InRangeUnobstructedMask = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
 
@@ -98,7 +97,6 @@ namespace Content.Shared.Interaction
             _wallMountQuery = GetEntityQuery<WallMountComponent>();
             _delayQuery = GetEntityQuery<UseDelayComponent>();
             _uiQuery = GetEntityQuery<ActivatableUIComponent>();
-            _complexInteractionQuery = GetEntityQuery<ComplexInteractionComponent>();
 
             SubscribeLocalEvent<BoundUserInterfaceCheckRangeEvent>(HandleUserInterfaceRangeCheck);
             SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
@@ -166,7 +164,7 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (uiComp.RequireHands && !_handsQuery.HasComp(ev.Actor))
+            if (uiComp.RequiresComplex && !_actionBlockerSystem.CanComplexInteract(ev.Actor))
                 ev.Cancel();
         }
 
@@ -441,7 +439,7 @@ namespace Content.Shared.Interaction
 
         public void InteractHand(EntityUid user, EntityUid target)
         {
-            var complexInteractions = SupportsComplexInteractions(user);
+            var complexInteractions = _actionBlockerSystem.CanComplexInteract(user);
             if (!complexInteractions)
             {
                 InteractionActivate(user,
@@ -1334,13 +1332,10 @@ namespace Content.Shared.Interaction
             return ev.Handled;
         }
 
-        /// <summary>
-        /// Checks if a given entity is able to do specific complex interactions.
-        /// This is used to gate manipulation to general humanoids. If a mouse shouldn't be able to do something, then it's complex.
-        /// </summary>
+        [Obsolete("Use ActionBlockerSystem")]
         public bool SupportsComplexInteractions(EntityUid user)
         {
-            return _complexInteractionQuery.HasComp(user);
+            return _actionBlockerSystem.CanComplexInteract(user);
         }
     }
 

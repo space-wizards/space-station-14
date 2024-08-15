@@ -21,6 +21,9 @@ public abstract class SharedStationAiSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metadata = default!;
 
     /*
+     * TODO: Fix examines
+     * TODO: Vismask on the AI eye
+     * TODO: Add door bolting
      * TODO: Sprite / vismask visibility + action
      * TODO: Double-check positronic interactions didn't break
      * Need action bar
@@ -173,6 +176,7 @@ public abstract class SharedStationAiSystem : EntitySystem
         // Just so text and the likes works properly
         _metadata.SetEntityName(ent.Owner, MetaData(args.Entity).EntityName);
 
+        EnsureComp<IgnoreUIRangeComponent>(args.Entity);
         EnsureComp<StationAiHeldComponent>(args.Entity);
         EnsureComp<StationAiOverlayComponent>(args.Entity);
         EnsureComp<RemoteInteractComponent>(args.Entity);
@@ -196,6 +200,7 @@ public abstract class SharedStationAiSystem : EntitySystem
             _eye.SetTarget(args.Entity, null, eyeComp);
         }
 
+        RemCompDeferred<IgnoreUIRangeComponent>(args.Entity);
         RemCompDeferred<StationAiHeldComponent>(args.Entity);
         RemCompDeferred<StationAiOverlayComponent>(args.Entity);
         RemCompDeferred<RemoteInteractComponent>(args.Entity);
