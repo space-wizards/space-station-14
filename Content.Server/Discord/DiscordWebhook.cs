@@ -88,7 +88,7 @@ public sealed class DiscordWebhook : IPostInjectInit
 
         LogResponse(response, "Delete");
 
-        return response; ;
+        return response;
     }
 
     /// <summary>
