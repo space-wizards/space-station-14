@@ -1,41 +1,4 @@
 ﻿Entries:
-- author: PolterTzi
-  changes:
-  - message: The guidebook now lists the effects reagents have on plants.
-    type: Add
-  id: 6607
-  time: '2024-05-19T23:01:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28038
-- author: Tayrtahn
-  changes:
-  - message: The popup for someone pointing at you is now slightly larger than normal
-      popups.
-    type: Tweak
-  id: 6608
-  time: '2024-05-20T13:32:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28152
-- author: Tayrtahn
-  changes:
-  - message: '"Warp to most followed" ghost option no longer includes admins and non-ghost
-      followers.'
-    type: Fix
-  id: 6609
-  time: '2024-05-20T14:12:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28120
-- author: Killerqu00
-  changes:
-  - message: Sleeper Agents only appear once per round.
-    type: Tweak
-  id: 6610
-  time: '2024-05-21T10:16:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28160
-- author: TheShuEd
-  changes:
-  - message: Artifact portal lifespan reduced from 120 seconds to 1 second
-    type: Tweak
-  id: 6611
-  time: '2024-05-22T07:52:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28200
 - author: nikthechampiongr
   changes:
   - message: Firelocks can now be pried by hand.
@@ -3799,3 +3762,55 @@
   id: 7106
   time: '2024-08-13T20:32:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30969
+- author: IProduceWidgets
+  changes:
+  - message: shuttle events have been separated from other midround events and can
+      now happen concurrently.
+    type: Tweak
+  - message: Cargo Gift events should be less likely.
+    type: Tweak
+  - message: meteors have been changed to be more responsive to player count.
+    type: Tweak
+  - message: 'Game mode: Kessler syndrome - What if survival but also the apocalypse?'
+    type: Add
+  - message: 'Game mode: Zombeteors - Zombies and a meteor shower all at once!'
+    type: Add
+  id: 7107
+  time: '2024-08-14T05:21:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29320
+- author: Blackern5000
+  changes:
+  - message: Combat medical kits now contain saline syringes.
+    type: Add
+  id: 7108
+  time: '2024-08-14T06:25:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29954
+- author: TheShuEd
+  changes:
+  - message: added morbilliard variants of procedural tacos and kebabs
+    type: Add
+  - message: removed all microwave taco and kebabs recipes (except for the taco shell
+      itself)
+    type: Remove
+  - message: you can fight with a skewer (even if it has food on it)
+    type: Tweak
+  - message: now you can't put more than 10 layers on a burger. (20 before)
+    type: Tweak
+  id: 7109
+  time: '2024-08-14T13:04:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30905
+- author: themias
+  changes:
+  - message: Fixed lizards being unable to eat custom burgers
+    type: Fix
+  id: 7110
+  time: '2024-08-14T19:47:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31005
+- author: Erisfiregamer1
+  changes:
+  - message: New chemical, Sedin. It restores seeds on plants 20% of the time with
+      other adverse effects included.
+    type: Add
+  id: 7111
+  time: '2024-08-15T00:38:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27110

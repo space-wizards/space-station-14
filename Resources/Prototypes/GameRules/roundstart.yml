@@ -262,17 +262,68 @@
         prototype: InitialInfected
 
 # event schedulers
+
+- type: entityTable
+  id: BasicGameRulesTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+      - !type:NestedSelector
+        tableId: BasicCalmEventsTable
+      - !type:NestedSelector
+        tableId: BasicAntagEventsTable
+      - !type:NestedSelector
+        tableId: CargoGiftsTable
+
+- type: entityTable
+  id: SpaceTrafficControlTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+      - !type:NestedSelector
+        tableId: UnknownShuttlesFriendlyTable
+      - !type:NestedSelector
+        tableId: UnknownShuttlesFreelanceTable
+      - !type:NestedSelector
+        tableId: UnknownShuttlesHostileTable
+
 - type: entity
   id: BasicStationEventScheduler
   parent: BaseGameRule
   components:
   - type: BasicStationEventScheduler
+    scheduledGameRules: !type:NestedSelector
+      tableId: BasicGameRulesTable
 
 - type: entity
   id: RampingStationEventScheduler
   parent: BaseGameRule
   components:
   - type: RampingStationEventScheduler
+    scheduledGameRules: !type:NestedSelector
+      tableId: BasicGameRulesTable
+
+- type: entity
+  id: SpaceTrafficControlEventScheduler # iff we make a selector for EntityTables that can respect StationEventComp restrictions, or somehow impliment them otherwise in said tables,
+  parent: BaseGameRule                  # we can remerge this with the other schedulers, but it will silently fail due to that limitation without a separate scheduler to balance atm.
+  components:
+  - type: BasicStationEventScheduler
+    minimumTimeUntilFirstEvent: 1200 # 20 mins
+    minMaxEventTiming:
+      min: 600 # 10 mins
+      max: 1800 # 30 mins
+    scheduledGameRules: !type:NestedSelector
+      tableId: SpaceTrafficControlTable
+
+- type: entity
+  id: SpaceTrafficControlFriendlyEventScheduler 
+  parent: BaseGameRule                  
+  components:
+  - type: BasicStationEventScheduler
+    minimumTimeUntilFirstEvent: 1200 # 20 mins
+    minMaxEventTiming:
+      min: 600 # 10 mins
+      max: 1800 # 30 mins
+    scheduledGameRules: !type:NestedSelector
+      tableId: UnknownShuttlesFriendlyTable
 
 # variation passes
 - type: entity

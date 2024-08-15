@@ -570,13 +570,6 @@
   - type: SliceableFood
     count: 3
     slice: FoodCheeseSlice
-  - type: FoodSequenceElement
-    entries:
-      burger:
-        name: food-sequence-burger-content-cheese
-        sprite:
-          sprite: Objects/Consumable/Food/ingredients.rsi
-          state: cheesewheel
 
 - type: entity
   name: cheese wedge
@@ -600,12 +593,14 @@
     tags:
     - Slice
   - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Consumable/Food/ingredients.rsi
+      state: cheesewedge
     entries:
       burger:
-        name: food-sequence-burger-content-cheese
-        sprite:
-          sprite: Objects/Consumable/Food/ingredients.rsi
-          state: cheesewedge
+        name: food-sequence-content-cheese
+      taco: 
+        name: food-sequence-content-cheese
 
 - type: entity
   name: chèvre log
@@ -656,6 +651,15 @@
   - type: Tag
     tags:
     - Slice
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Consumable/Food/ingredients.rsi
+      state: chevredisk
+    entries:
+      burger:
+        name: food-sequence-content-chevre
+      taco: 
+        name: food-sequence-content-chevre
 
 - type: entity
   name: tofu
@@ -704,6 +708,15 @@
   - type: Tag
     tags:
     - Slice
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Consumable/Food/ingredients.rsi
+      state: tofu
+    entries:
+      burger:
+        name: food-sequence-content-tofu
+      taco: 
+        name: food-sequence-content-tofu
 
 - type: entity
   name: burned mess
@@ -760,3 +773,12 @@
   - type: Tag
     tags:
       - Ingredient
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Specific/Hydroponics/cocoa.rsi
+      state: produce-beans
+    entries:
+      burger:
+        name: food-sequence-content-cocoa
+      taco: 
+        name: food-sequence-content-cocoa
