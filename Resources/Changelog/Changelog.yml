@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Ghosts can once again open paper & other UIs
-    type: Fix
-  id: 6614
-  time: '2024-05-24T05:03:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27999
 - author: nikthechampiongr
   changes:
   - message: Firelocks will no longer randomly pulse closing lights.
@@ -3811,3 +3804,20 @@
   id: 7113
   time: '2024-08-15T12:34:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30865
+- author: to4no_fix
+  changes:
+  - message: Added a new electropack that shocks when a trigger is triggered
+    type: Add
+  - message: Added a new shock collar that shocks when a trigger is triggered
+    type: Add
+  - message: Two shock collars and two remote signallers added to the warden's locker
+    type: Add
+  - message: Shock collar added as a new target for the thief
+    type: Add
+  - message: A new Special Means technology has been added to the Arsenal research
+      branch at the 1st research level. Its research opens up the possibility of producing
+      electropacks at security techfab. The cost of technology research is 5000
+    type: Add
+  id: 7114
+  time: '2024-08-15T14:30:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30529
