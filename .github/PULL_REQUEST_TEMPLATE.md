@@ -15,8 +15,8 @@ Small fixes/refactors are exempt. Media may be used in SS14 progress reports wit
 
 ## Requirements
 <!-- Confirm the following by placing an X in the brackets [X]: -->
-- [ ] I have read and am following the [Pull Request Guidelines](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html).
-- [ ] I have added media to this PR or it does not require an ingame showcase.
+- [ ] I have read and am following the [Pull Request Guidelines](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html). I understand that not doing so may get my pr closed at maintainer’s discretion.
+- [ ] I have added screenshots/videos to this PR showcasing its changes ingame, **or** this PR does not require an ingame showcase.
 
 ## Breaking changes
 <!-- List any breaking changes and provide instructions for fixing them. -->
