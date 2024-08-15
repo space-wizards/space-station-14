@@ -7,5 +7,5 @@ namespace Content.Shared.Voting.Events;
 [ByRefEvent]
 public struct RestartVoteAttemptEvent
 {
-    public int DeadPlayers = 0;
+    public int DeadPlayers;
 }
