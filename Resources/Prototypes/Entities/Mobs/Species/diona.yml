@@ -5,6 +5,7 @@
   id: BaseMobDiona
   abstract: true
   components:
+  - type: Absorbable
   - type: HumanoidAppearance
     species: Diona
   - type: Hunger

@@ -965,3 +965,17 @@
   - type: ConditionalSpawner
     prototypes:
     - MobTomatoKisser
+
+- type: entity
+  name: Laser-less Laser Raptor Spawner
+  id: SpawnMobRaptor
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: raptor
+      sprite: Mobs/Aliens/laser-less_laser_raptor.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobRaptor
