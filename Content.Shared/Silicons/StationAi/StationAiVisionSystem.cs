@@ -47,7 +47,7 @@ public sealed class StationAiVisionSystem : EntitySystem
     /// <summary>
     /// Gets a byond-equivalent for tiles in the specified worldAABB.
     /// </summary>
-    /// <param name="expansionSize">How much to expand the bounds before to find vision intersecting it. Makes this as small as you can.</param>
+    /// <param name="expansionSize">How much to expand the bounds before to find vision intersecting it. Makes this the largest vision size + 1 tile.</param>
     public void GetView(Entity<MapGridComponent> grid, Box2Rotated worldBounds, HashSet<Vector2i> visibleTiles, float expansionSize = 7.5f)
     {
         _viewportTiles.Clear();
