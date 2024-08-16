@@ -16,7 +16,7 @@
         mask:
         - MachineMask
         layer:
-          - MachineLayer  
+          - MachineLayer
   - type: Lathe
   - type: MaterialStorage
   - type: Destructible
@@ -808,6 +808,7 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
+      - ClothingBackpackElectropack
   - type: MaterialStorage
     whitelist:
       tags:
