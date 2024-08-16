@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration.Logs;
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
@@ -157,7 +157,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         var tile = tileRef.GridIndices;
 
         var found = false;
-        var (gridPos, _, gridMatrix) = xform.GetWorldPositionRotationMatrix();
+        var (gridPos, _, gridMatrix) = _transform.GetWorldPositionRotationMatrix(xform);
         var gridBounds = gridMatrix.TransformBox(grid.LocalAABB);
 
         //Obviously don't put anything ridiculous in here
