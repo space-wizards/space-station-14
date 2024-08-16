@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Properly fix magic mirrors
-    type: Fix
-  id: 6622
-  time: '2024-05-26T04:46:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28282
 - author: deltanedas
   changes:
   - message: Fixed being picked for antag roles while in the lobby or not opted in.
@@ -3829,3 +3822,16 @@
   id: 7121
   time: '2024-08-15T23:30:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30541
+- author: EmoGarbage404
+  changes:
+  - message: Reduced the amount of ore on the mining asteroid and expeditions.
+    type: Tweak
+  - message: Increased the amount of ore on magnet asteroids.
+    type: Tweak
+  - message: Each piece of ore now only has enough material to create 1 sheet.
+    type: Tweak
+  - message: The salvage magnet now accurately reports the contents of asteroids.
+    type: Fix
+  id: 7122
+  time: '2024-08-16T01:43:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30920
