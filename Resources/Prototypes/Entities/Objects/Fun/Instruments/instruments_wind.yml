@@ -73,6 +73,7 @@
     inHandsOnly: false  
   - type: Tag
     tags:
+    - BasicInstrument # GreyStation
     - WoodwindInstrument
 
 - type: entity

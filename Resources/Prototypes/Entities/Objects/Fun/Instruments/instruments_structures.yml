@@ -146,6 +146,9 @@
     program: 117
   - type: Sprite
     state: toms
+  - type: Tag # GreyStation
+    tags:
+    - PercussionInstrument
 
 - type: entity
   parent: [ BasePlaceableInstrumentRotatable, ConstructibleMachine]
@@ -168,3 +171,6 @@
   - type: Instrument
     allowPercussion: true
     allowProgramChange: true
+  - type: Tag # GreyStation - anyone can use DAW
+    tags:
+    - BasicInstrument

@@ -26,6 +26,9 @@
   - type: Sprite
     sprite: Objects/Fun/Instruments/musicbox.rsi
     state: icon
+  - type: Tag # GreyStation
+    tags:
+    - BasicInstrument
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -81,6 +84,7 @@
   - type: Tag
     tags:
     - KeyedInstrument
+    - BasicInstrument # GreyStation - sci can mass produce them and its arguably a portable DAW, so let anyone use it
   - type: StaticPrice
     price: 90
 
