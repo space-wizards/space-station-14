@@ -78,7 +78,7 @@
   description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
   components:
   - type: Sprite
-    sprite: GreyStation/Objects/Weapons/Melee/e_sword.rsi # GreyStation - Resprite
+    sprite: Objects/Weapons/Melee/e_sword.rsi # GreyStation - Resprite
     layers:
     - state: e_sword
     - state: e_sword_blade
