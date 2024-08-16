@@ -270,3 +270,28 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepSkates
+
+- type: entity
+  parent: Clothing
+  id: ClothingShoesLegShackles
+  name: leg shackles
+  description: Used to slow down bad guys.
+  components:
+  - type: Sprite
+    state: icon
+    sprite: Clothing/Shoes/Specific/leg_shackles.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/leg_shackles.rsi
+    stripDelay: 10
+    equipDelay: 5 # to avoid accidentally falling into the trap associated with SelfUnremovableClothing
+    slots:
+    - FEET
+  - type: SelfUnremovableClothing
+  - type: Item
+    size: Normal
+  - type: ClothingSpeedModifier
+    walkModifier: 0.5
+    sprintModifier: 0.5
+  - type: Tag
+    tags:
+    - WhitelistChameleon

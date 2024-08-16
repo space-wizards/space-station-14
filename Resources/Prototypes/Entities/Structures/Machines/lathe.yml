@@ -758,6 +758,7 @@
       - WeaponDisablerPractice
       - WeaponLaserCarbinePractice
       - Zipties
+      - ClothingShoesLegShackles
     dynamicRecipes:
       - BoxBeanbag
       - BoxShotgunIncendiary
