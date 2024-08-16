@@ -184,7 +184,7 @@
 
   - type: barSign
   id: Spacebucks
-  name: barsign-prototype-name-spacebcks
+  name: barsign-prototype-name-spacebucks
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
     state: spacebucks
