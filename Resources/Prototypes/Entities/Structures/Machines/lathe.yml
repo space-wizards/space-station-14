@@ -758,7 +758,6 @@
       - WeaponDisablerPractice
       - WeaponLaserCarbinePractice
       - Zipties 
-      - ShockCollar # Nyanotrasen - Shock Collar
     dynamicRecipes:
       - BoxBeanbag
       - BoxShotgunIncendiary
