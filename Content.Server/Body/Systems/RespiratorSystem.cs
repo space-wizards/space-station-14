@@ -287,10 +287,10 @@ public sealed class RespiratorSystem : EntitySystem
         if (ent.Comp.SuffocationCycles >= ent.Comp.SuffocationCycleThreshold)
         {
             // TODO: This is not going work with multiple different lungs, if that ever becomes a possibility
-            var organs = _bodySystem.GetBodyOrganComponents<LungComponent>(ent);
-            foreach (var (comp, _) in organs)
+            var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((ent, null));
+            foreach (var entity in organs)
             {
-                _alertsSystem.ShowAlert(ent, comp.Alert);
+                _alertsSystem.ShowAlert(entity.Owner, entity.Comp1.Alert);
             }
         }
 
@@ -303,10 +303,10 @@ public sealed class RespiratorSystem : EntitySystem
             _adminLogger.Add(LogType.Asphyxiation, $"{ToPrettyString(ent):entity} stopped suffocating");
 
         // TODO: This is not going work with multiple different lungs, if that ever becomes a possibility
-        var organs = _bodySystem.GetBodyOrganComponents<LungComponent>(ent);
-        foreach (var (comp, _) in organs)
+        var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((ent, null));
+        foreach (var entity in organs)
         {
-            _alertsSystem.ClearAlert(ent, comp.Alert);
+            _alertsSystem.ClearAlert(entity.Owner, entity.Comp1.Alert);
         }
 
         _damageableSys.TryChangeDamage(ent, ent.Comp.DamageRecovery);
