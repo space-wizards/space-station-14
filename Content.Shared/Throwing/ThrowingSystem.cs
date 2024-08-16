@@ -5,12 +5,14 @@ using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Friction;
 using Content.Shared.Gravity;
+using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Throwing;
@@ -38,6 +40,7 @@ public sealed class ThrowingSystem : EntitySystem
     [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -228,5 +231,8 @@ public sealed class ThrowingSystem : EntitySystem
             if (!msg.Cancelled)
                 _physics.ApplyLinearImpulse(user.Value, -impulseVector / physics.Mass * pushbackRatio * MathF.Min(massLimit, physics.Mass), body: userPhysics);
         }
+
+        var popup = Loc.GetString("throwing-user-threw-others", ("user", user), ("thrown", uid));
+        _popup.PopupEntity(popup, user.Value, Filter.PvsExcept(user.Value), true, PopupType.SmallCaution);
     }
 }
