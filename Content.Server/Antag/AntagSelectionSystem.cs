@@ -348,11 +348,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             }
 
             _mind.TransferTo(curMind.Value, antagEnt, ghostCheckOverride: true);
-
-            // Add individual Antagonist Roles to the MindEntity.
-            // PlayerInfo update for the Admin Panel is also triggered from this call
             _role.MindAddRoles(curMind.Value, def.MindComponents, null, true);
-            ent.Comp.SelectedMinds.Add((curMind.Value, Name(player)));
+            ent.Comp.SelectedMinds.Add((curMind.Value, Name(player))); //TODO:ERRANT what is this, is this important?
 
             SendBriefing(session, def.Briefing);
         }

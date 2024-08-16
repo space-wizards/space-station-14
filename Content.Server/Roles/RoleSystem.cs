@@ -21,7 +21,7 @@ public sealed class RoleSystem : SharedRoleSystem
         SubscribeAntagEvents<ZombieRoleComponent>();
         SubscribeAntagEvents<ThiefRoleComponent>();
 
-        // TODO:ERRANT This is extremely not ideal
+        // TODO: I am in fact coding mind role entities, but until we get there, we have to live with... *this*
         SubscribeMindRoleEvents<DragonRoleComponent>();
         SubscribeMindRoleEvents<InitialInfectedRoleComponent>();
         SubscribeMindRoleEvents<NinjaRoleComponent>();
