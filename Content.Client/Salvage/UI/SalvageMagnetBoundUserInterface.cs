@@ -98,8 +98,8 @@ public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
                     }
 
                     break;
-                case SalvageOffering salvage:
-                    option.Title = Loc.GetString($"salvage-map-proto-{salvage.SalvageMap.ID}");
+                case SalvageOffering:
+                    option.Title = Loc.GetString($"salvage-map-wreck");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
