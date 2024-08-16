@@ -8,10 +8,10 @@
   - type: Item
     size: Small
   - type: Sprite
-    sprite: Clothing/Neck/Misc/shock_collar.rsi
+    sprite: GreyStation/Clothing/Neck/Misc/shock.rsi # GreyStation - Resprite
     state: icon
   - type: Clothing
-    sprite: Clothing/Neck/Misc/shock_collar.rsi
+    sprite: GreyStation/Clothing/Neck/Misc/shock.rsi # GreyStation - Resprite
     stripDelay: 10
     equipDelay: 5 # to avoid accidentally falling into the trap associated with SelfUnremovableClothing
     quickEquip: true
