@@ -666,6 +666,7 @@
     id: UniversalIDCard
   - type: HealthAnalyzer
     scanDelay: 0
+    silent: true
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
     notificationsEnabled: false
