@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Fixed being picked for antag roles while in the lobby or not opted in.
-    type: Fix
-  id: 6623
-  time: '2024-05-26T05:14:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28197
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Fix hypodarts not injecting into people with outerclothing equipped.
-    type: Fix
-  id: 6624
-  time: '2024-05-26T14:48:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28301
 - author: metalgearsloth
   changes:
   - message: Selectively revert pulling throwing for the short-term.
@@ -3835,3 +3821,17 @@
   id: 7122
   time: '2024-08-16T01:43:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30920
+- author: metalgearsloth
+  changes:
+  - message: Fix mains light on wires not being lit.
+    type: Fix
+  id: 7123
+  time: '2024-08-16T03:59:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31066
+- author: IgorAnt028
+  changes:
+  - message: The dead and knocked down now stop holding objects
+    type: Fix
+  id: 7124
+  time: '2024-08-16T04:53:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31009
