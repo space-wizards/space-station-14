@@ -15,7 +15,8 @@
   Your bag is full of [bold]tools[/bold] and a [bold]survival box[/bold]. You also carry a [color=cyan]jetpack[/color] and a [color=cyan]pinpointer[/color] that will lead you to the station.
 
   <Box>
-    <GuideEntityEmbed Entity="PinpointerStation" Caption="your pinpointer"/>
+    <GuideEntityEmbed Entity="JetpackBlack"/>
+    <GuideEntityEmbed Entity="PinpointerStation"/>
   </Box>
   
   ## Ninja Suit & Boots
@@ -52,7 +53,7 @@
   ## Energy Katana
 
   <Box>
-    <GuideEntityEmbed Entity="EnergyKatana" Captain="energy katana"/>
+    <GuideEntityEmbed Entity="EnergyKatana"/>
   </Box>
 
   [bold]You have sworn yourself to the sword and refuse to use firearms.[/bold] Luckily, you've got a pretty cool sword.
@@ -64,7 +65,7 @@
   ## Spider Clan Charge
   
   <Box>
-    <GuideEntityEmbed Entity="SpiderCharge" Caption="spider clan charge"/>
+    <GuideEntityEmbed Entity="SpiderCharge"/>
   </Box>
   
   [color=#66FF00]A modified C-4 explosive[/color], which can be found in your pocket. Creates a large explosion but [bold]must be armed in your target area[/bold] as it is one of your [color=#66FF00]objectives[/color].
