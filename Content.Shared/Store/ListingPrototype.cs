@@ -31,7 +31,8 @@ public sealed partial class ListingDataWithDiscount : ListingData
             listingData.ID,
             listingData.Categories,
             listingData.Cost,
-            listingData.RestockTime
+            listingData.RestockTime,
+            listingData.DiscountDownTo
         )
     {
         DiscountData = discountData;
@@ -68,7 +69,8 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
         string id,
         List<ProtoId<StoreCategoryPrototype>> categories,
         Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> cost,
-        TimeSpan restockTime
+        TimeSpan restockTime,
+        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> listingDataDiscountDownTo
     )
     {
         Name = name;
@@ -89,7 +91,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
         Cost = cost;
         RestockTime = restockTime;
     }
-    
+
     [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;
@@ -190,6 +192,12 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     [DataField]
     public TimeSpan RestockTime = TimeSpan.Zero;
 
+    /// <summary>
+    /// Options for discount - from max amount down to how much item costs can be cut by discount, absolute value.
+    /// </summary>
+    [DataField("discountDownTo")]
+    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> DiscountDownTo = new();
+
     public bool Equals(ListingData? listing)
     {
         if (listing == null)
@@ -224,7 +232,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     }
 
     /// <summary>
-    /// Creates a unique instance of a listing. ALWAWYS USE THIS WHEN ENUMERATING LISTING PROTOTYPES
+    /// Creates a unique instance of a listing. ALWAYS USE THIS WHEN ENUMERATING LISTING PROTOTYPES
     /// DON'T BE DUMB AND MODIFY THE PROTOTYPES
     /// </summary>
     /// <returns>A unique copy of the listing data.</returns>
@@ -258,17 +266,11 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
 [Prototype("listing")]
 [Serializable, NetSerializable]
 [DataDefinition]
-public sealed partial class ListingPrototype : ListingData, IPrototype
-{
-    /// <summary>
-    /// Options for discount - from max amount down to how much item costs can be cut by discount, absolute value.
-    /// </summary>
-    [DataField("discountDownTo")]
-    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> DiscountDownTo = new();
-}
+public sealed partial class ListingPrototype : ListingData, IPrototype;
 
 /// <summary>
-///     Defines set of rules for <see cref="ListingPrototype"/> discount.
+///     Defines set of rules for category of discounts -
+///     how <see cref="StoreDiscountComponent"/> will be filled by respective system.
 /// </summary>
 [Prototype("discountCategory")]
 [DataDefinition, Serializable, NetSerializable]

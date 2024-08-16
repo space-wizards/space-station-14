@@ -38,6 +38,12 @@ public sealed partial class StoreDiscountData
     public int Count;
 
     /// <summary>
+    /// Discount category that provided this discount.
+    /// </summary>
+    [DataField("discountCategoryId")]
+    public ProtoId<DiscountCategoryPrototype> DiscountCategory;
+
+    /// <summary>
     /// Map of currencies to flat amount of discount.
     /// </summary>
     [DataField("discountAmountByCurrency")]

@@ -204,6 +204,7 @@ public sealed class StoreDiscountSystem : EntitySystem
                 {
                     ListingId = listingData.ID,
                     Count = 1,
+                    DiscountCategory = listingData.DiscountCategory!.Value,
                     DiscountAmountByCurrency = discountAmountByCurrencyId
                 };
                 list.Add(discountData);
