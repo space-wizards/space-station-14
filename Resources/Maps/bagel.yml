@@ -9329,8 +9329,8 @@ entities:
           id: docking43669
           localAnchorB: -47.5,-40
           localAnchorA: 0.5,0
-          damping: 1559.79
-          stiffness: 14000.643
+          damping: 1560.1207
+          stiffness: 14003.611
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 2133
@@ -127946,9 +127946,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: 17.5,-7.5
       parent: 60
-- proto: StairStage
+- proto: StairStageWood
   entities:
-  - uid: 24111
+  - uid: 5021
     components:
     - type: Transform
       pos: -3.5,-2.5
@@ -133227,15 +133227,17 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -66.5,-1.5
       parent: 60
-  - uid: 5021
-    components:
-    - type: Transform
-      pos: -3.5,-9.5
-      parent: 60
   - uid: 7843
     components:
     - type: Transform
       pos: 58.5,-44.5
+      parent: 60
+- proto: ToiletGoldenDirtyWater
+  entities:
+  - uid: 24111
+    components:
+    - type: Transform
+      pos: -3.5,-9.5
       parent: 60
 - proto: ToolboxArtistic
   entities:

@@ -1,79 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Fixed modular grenade visuals getting stuck in an incorrect state.
-    type: Fix
-  id: 6616
-  time: '2024-05-25T20:03:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28265
-- author: deltanedas
-  changes:
-  - message: Fixed ID Cards not updating the manifest when changed.
-    type: Fix
-  id: 6617
-  time: '2024-05-25T20:08:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28237
-- author: TheShuEd
-  changes:
-  - message: 'Killer tomatoes got a small health and damage buff: 24 -> 35 hp and
-      4->9 brute damage'
-    type: Tweak
-  - message: Killer tomatoes now die after 5 minutes of their existence
-    type: Tweak
-  - message: Killer tomatoes can now be profitably sold.
-    type: Add
-  id: 6618
-  time: '2024-05-25T20:18:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28173
-- author: metalgearsloth
-  changes:
-  - message: Fix water shader getting stuck on sometimes.
-    type: Fix
-  id: 6619
-  time: '2024-05-25T20:23:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28130
-- author: Errant
-  changes:
-  - message: Changing hands while wielding an item will now immediately unwield it.
-    type: Tweak
-  id: 6620
-  time: '2024-05-26T01:17:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28161
-- author: ElectroJr
-  changes:
-  - message: Fixed being unable to interact with items via storage UIs
-    type: Fix
-  id: 6621
-  time: '2024-05-26T02:11:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28291
-- author: EmoGarbage404
-  changes:
-  - message: Properly fix magic mirrors
-    type: Fix
-  id: 6622
-  time: '2024-05-26T04:46:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28282
-- author: deltanedas
-  changes:
-  - message: Fixed being picked for antag roles while in the lobby or not opted in.
-    type: Fix
-  id: 6623
-  time: '2024-05-26T05:14:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28197
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Fix hypodarts not injecting into people with outerclothing equipped.
-    type: Fix
-  id: 6624
-  time: '2024-05-26T14:48:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28301
-- author: metalgearsloth
-  changes:
-  - message: Selectively revert pulling throwing for the short-term.
-    type: Tweak
-  id: 6625
-  time: '2024-05-27T00:11:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28126
 - author: EmoGarbage404
   changes:
   - message: Multiple pipes facing the same direction can no longer be placed on the
@@ -3830,3 +3755,83 @@
   id: 7115
   time: '2024-08-15T14:45:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30763
+- author: Nimfar11
+  changes:
+  - message: Adds a gold toilet
+    type: Add
+  - message: Adds a target for the Thief to steal the golden toilet
+    type: Add
+  - message: Corrected the sprite image for the normal toilet.
+    type: Fix
+  id: 7116
+  time: '2024-08-15T19:23:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31049
+- author: themias
+  changes:
+  - message: Raw meat cutlets can be cooked on a grill
+    type: Tweak
+  id: 7117
+  time: '2024-08-15T19:30:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31048
+- author: IProduceWidgets
+  changes:
+  - message: Meteor dust should more consistently happen instead of meteors.
+    type: Tweak
+  id: 7118
+  time: '2024-08-15T19:33:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31018
+- author: Emisse
+  changes:
+  - message: Atlas, Cluster, Europa, & Saltern removed from the game.
+    type: Remove
+  id: 7119
+  time: '2024-08-15T21:10:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31058
+- author: Emisse
+  changes:
+  - message: Origin removed from the game.
+    type: Remove
+  id: 7120
+  time: '2024-08-15T22:22:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31059
+- author: Psychpsyo
+  changes:
+  - message: You can now be German on ze space station! (added German accent)
+    type: Add
+  id: 7121
+  time: '2024-08-15T23:30:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30541
+- author: EmoGarbage404
+  changes:
+  - message: Reduced the amount of ore on the mining asteroid and expeditions.
+    type: Tweak
+  - message: Increased the amount of ore on magnet asteroids.
+    type: Tweak
+  - message: Each piece of ore now only has enough material to create 1 sheet.
+    type: Tweak
+  - message: The salvage magnet now accurately reports the contents of asteroids.
+    type: Fix
+  id: 7122
+  time: '2024-08-16T01:43:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30920
+- author: metalgearsloth
+  changes:
+  - message: Fix mains light on wires not being lit.
+    type: Fix
+  id: 7123
+  time: '2024-08-16T03:59:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31066
+- author: IgorAnt028
+  changes:
+  - message: The dead and knocked down now stop holding objects
+    type: Fix
+  id: 7124
+  time: '2024-08-16T04:53:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31009
+- author: SlamBamActionman
+  changes:
+  - message: Nar'Sie is satiated; moppable blood will no longer duplicate.
+    type: Fix
+  id: 7125
+  time: '2024-08-16T10:47:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30983

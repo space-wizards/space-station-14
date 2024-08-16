@@ -99,6 +99,7 @@
     BoozeDispenserStealObjective: 1
     AltarNanotrasenStealObjective: 1
     PlantRDStealObjective: 1
+    ToiletGoldenStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupAnimal

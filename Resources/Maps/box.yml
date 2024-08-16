@@ -11448,7 +11448,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -4258.8877
+      secondsUntilStateChange: -4557.451
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -17015,6 +17015,13 @@ entities:
     components:
     - type: Transform
       pos: 5.6363735,-36.502228
+      parent: 8364
+- proto: ButtonFrameExit
+  entities:
+  - uid: 3810
+    components:
+    - type: Transform
+      pos: 24.5,-21.5
       parent: 8364
 - proto: CableApcExtension
   entities:
@@ -39575,6 +39582,11 @@ entities:
     - type: Transform
       pos: -3.5,-5.5
       parent: 8364
+  - uid: 5450
+    components:
+    - type: Transform
+      pos: -44.5,-61.5
+      parent: 8364
   - uid: 5520
     components:
     - type: Transform
@@ -41425,6 +41437,11 @@ entities:
     - type: Transform
       pos: 31.5,-38.5
       parent: 8364
+  - uid: 8814
+    components:
+    - type: Transform
+      pos: -43.5,-61.5
+      parent: 8364
   - uid: 8885
     components:
     - type: Transform
@@ -41469,6 +41486,11 @@ entities:
     components:
     - type: Transform
       pos: 7.5,26.5
+      parent: 8364
+  - uid: 9243
+    components:
+    - type: Transform
+      pos: -45.5,-61.5
       parent: 8364
   - uid: 9462
     components:
@@ -43120,6 +43142,11 @@ entities:
     - type: Transform
       pos: 45.5,37.5
       parent: 8364
+  - uid: 11984
+    components:
+    - type: Transform
+      pos: -46.5,-61.5
+      parent: 8364
   - uid: 11990
     components:
     - type: Transform
@@ -43210,6 +43237,11 @@ entities:
     - type: Transform
       pos: -44.5,28.5
       parent: 8364
+  - uid: 12023
+    components:
+    - type: Transform
+      pos: -47.5,-61.5
+      parent: 8364
   - uid: 12025
     components:
     - type: Transform
@@ -43289,6 +43321,11 @@ entities:
     components:
     - type: Transform
       pos: -45.5,12.5
+      parent: 8364
+  - uid: 12641
+    components:
+    - type: Transform
+      pos: -48.5,-61.5
       parent: 8364
   - uid: 13102
     components:
@@ -43795,6 +43832,11 @@ entities:
     - type: Transform
       pos: -50.5,-3.5
       parent: 8364
+  - uid: 14147
+    components:
+    - type: Transform
+      pos: -49.5,-61.5
+      parent: 8364
   - uid: 14368
     components:
     - type: Transform
@@ -43849,6 +43891,26 @@ entities:
     components:
     - type: Transform
       pos: -24.5,-64.5
+      parent: 8364
+  - uid: 15105
+    components:
+    - type: Transform
+      pos: -50.5,-61.5
+      parent: 8364
+  - uid: 15106
+    components:
+    - type: Transform
+      pos: -51.5,-61.5
+      parent: 8364
+  - uid: 15126
+    components:
+    - type: Transform
+      pos: -52.5,-61.5
+      parent: 8364
+  - uid: 15127
+    components:
+    - type: Transform
+      pos: -53.5,-61.5
       parent: 8364
   - uid: 15460
     components:
@@ -67591,13 +67653,6 @@ entities:
     - type: Transform
       pos: 41.493343,-57.314545
       parent: 8364
-- proto: ClothingHeadHatBeretWarden
-  entities:
-  - uid: 12641
-    components:
-    - type: Transform
-      pos: 3.2725,33.525177
-      parent: 8364
 - proto: ClothingHeadHatBowlerHat
   entities:
   - uid: 13306
@@ -68216,6 +68271,16 @@ entities:
       parent: 8364
 - proto: ClothingOuterHardsuitSecurity
   entities:
+  - uid: 4163
+    components:
+    - type: Transform
+      pos: 0.37893665,35.52849
+      parent: 8364
+  - uid: 15129
+    components:
+    - type: Transform
+      pos: 0.37893665,35.52849
+      parent: 8364
   - uid: 20856
     components:
     - type: Transform
@@ -80140,17 +80205,17 @@ entities:
     - type: Transform
       pos: 21.5,-18.5
       parent: 8364
+  - uid: 3812
+    components:
+    - type: Transform
+      pos: -2.5,31.5
+      parent: 8364
   - uid: 5500
     components:
     - type: MetaData
       name: fox bed
     - type: Transform
       pos: 5.5,-17.5
-      parent: 8364
-  - uid: 8814
-    components:
-    - type: Transform
-      pos: 3.5,33.5
       parent: 8364
   - uid: 17832
     components:
@@ -84717,19 +84782,19 @@ entities:
       tags: []
     - type: RefillableSolution
       solution: food
+- proto: FoodKebabSkewer
+  entities:
+  - uid: 21797
+    components:
+    - type: Transform
+      pos: 69.38562,-55.371544
+      parent: 8364
 - proto: FoodMealMint
   entities:
   - uid: 15590
     components:
     - type: Transform
       pos: -35.361305,-43.28145
-      parent: 8364
-- proto: FoodMeatRatdoubleKebab
-  entities:
-  - uid: 21797
-    components:
-    - type: Transform
-      pos: 69.38562,-55.371544
       parent: 8364
 - proto: FoodPieBananaCream
   entities:
@@ -119306,10 +119371,10 @@ entities:
     - type: Transform
       pos: -0.5,39.5
       parent: 8364
-  - uid: 26576
+  - uid: 15128
     components:
     - type: Transform
-      pos: 0.5,33.5
+      pos: 3.5,33.5
       parent: 8364
 - proto: GunSafeLaserCarbine
   entities:
@@ -120574,6 +120639,19 @@ entities:
     - type: Transform
       pos: -28.5,-5.5
       parent: 8364
+- proto: LockableButtonChiefMedicalOfficer
+  entities:
+  - uid: 3809
+    components:
+    - type: Transform
+      pos: 24.5,-21.5
+      parent: 8364
+    - type: DeviceLinkSource
+      linkedPorts:
+        2505:
+        - Pressed: Open
+        2506:
+        - Pressed: Open
 - proto: LockerAtmosphericsFilledHardsuit
   entities:
   - uid: 3883
@@ -125242,11 +125320,6 @@ entities:
       parent: 8364
 - proto: PottedPlant23
   entities:
-  - uid: 18310
-    components:
-    - type: Transform
-      pos: 47.5,-36.5
-      parent: 8364
   - uid: 22006
     components:
     - type: Transform
@@ -131950,15 +132023,15 @@ entities:
     - type: Transform
       pos: 15.5,-32.5
       parent: 8364
+  - uid: 3808
+    components:
+    - type: Transform
+      pos: 47.5,-36.5
+      parent: 8364
   - uid: 4661
     components:
     - type: Transform
       pos: 9.5,-56.5
-      parent: 8364
-  - uid: 5450
-    components:
-    - type: Transform
-      pos: 24.5,-22.5
       parent: 8364
   - uid: 8467
     components:
@@ -138289,25 +138362,6 @@ entities:
         - Pressed: Toggle
         6099:
         - Pressed: Toggle
-  - uid: 14147
-    components:
-    - type: Transform
-      pos: 23.5,-21.5
-      parent: 8364
-    - type: DeviceLinkSource
-      linkedPorts:
-        19024:
-        - Pressed: Toggle
-        19023:
-        - Pressed: Toggle
-        19022:
-        - Pressed: Toggle
-        14148:
-        - Pressed: Toggle
-        2941:
-        - Pressed: Toggle
-        3001:
-        - Pressed: Toggle
   - uid: 17472
     components:
     - type: Transform
@@ -141680,10 +141734,10 @@ entities:
       parent: 8364
 - proto: SpawnMobMcGriff
   entities:
-  - uid: 9243
+  - uid: 3811
     components:
     - type: Transform
-      pos: 3.5,33.5
+      pos: -2.5,31.5
       parent: 8364
 - proto: SpawnMobMedibot
   entities:
@@ -143172,6 +143226,11 @@ entities:
       parent: 8364
 - proto: SuitStorageSec
   entities:
+  - uid: 3813
+    components:
+    - type: Transform
+      pos: 0.5,33.5
+      parent: 8364
   - uid: 11965
     components:
     - type: Transform
@@ -147763,12 +147822,6 @@ entities:
       parent: 8364
 - proto: ToiletEmpty
   entities:
-  - uid: 5254
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 10.5,-21.5
-      parent: 8364
   - uid: 13841
     components:
     - type: Transform
@@ -147783,6 +147836,14 @@ entities:
     components:
     - type: Transform
       pos: -48.5,-14.5
+      parent: 8364
+- proto: ToiletGoldenDirtyWater
+  entities:
+  - uid: 5254
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 10.5,-21.5
       parent: 8364
 - proto: ToolboxArtistic
   entities:
@@ -170519,18 +170580,6 @@ entities:
     components:
     - type: Transform
       pos: 50.5,17.5
-      parent: 8364
-  - uid: 11984
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -8.5,2.5
-      parent: 8364
-  - uid: 12023
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -14.5,2.5
       parent: 8364
   - uid: 12030
     components:
