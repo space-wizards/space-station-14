@@ -26,6 +26,6 @@ public sealed partial class EntityHeaterComponent : Component
     /// <summary>
     /// An optional sound that plays when the setting is changed.
     /// </summary>
-    [DataField, ViewVariables]
+    [DataField]
     public SoundPathSpecifier? SettingSound;
 }
