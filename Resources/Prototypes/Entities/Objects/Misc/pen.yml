@@ -57,10 +57,8 @@
     heldPrefix: luxury_pen
 
 - type: entity
-  name: Cybersun pen
-  parent: [PenEmbeddable, BaseSyndicateContraband]
-  id: CyberPen
-  description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write. So powerful, it's even able to rewrite officially stamped documents should the need arise.
+  id: BaseAdvancedPen
+  parent: PenEmbeddable
   components:
   - type: Tag
     tags:
@@ -68,10 +66,6 @@
     - WriteIgnoreStamps
     - Pickaxe
     - Pen
-  - type: Sprite
-    state: overpriced_pen
-  - type: Item
-    heldPrefix: overpriced_pen
   - type: MeleeWeapon
     wideAnimationRotation: -45
     damage:
@@ -81,9 +75,31 @@
       path: /Audio/Weapons/bladeslice.ogg
   - type: Tool
     qualities:
-      - Screwing
+    - Screwing
     useSound:
       collection: Screwdriver
+
+- type: entity
+  name: Cybersun pen
+  parent: [BaseAdvancedPen, BaseSyndicateContraband]
+  id: CyberPen
+  description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write. So powerful, it's even able to rewrite officially stamped documents should the need arise.
+  components:
+  - type: Sprite
+    state: overpriced_pen
+  - type: Item
+    heldPrefix: overpriced_pen
+
+- type: entity
+  name: CentComm pen
+  parent: [BaseAdvancedPen, BaseCommandContraband]
+  id: PenCentcom
+  description: In an attempt to keep up with the "power" of the cybersun bureaucracy, NT made a replica of cyber pen, in their corporate style.
+  components:
+  - type: Sprite
+    state: pen_centcom
+  - type: Item
+    heldPrefix: pen_centcom
 
 - type: entity
   name: captain's fountain pen
@@ -93,17 +109,6 @@
   components:
   - type: Sprite
     state: pen_cap
-
-- type: entity
-  name: CentComm pen
-  parent: CyberPen
-  id: PenCentcom
-  description: In an attempt to keep up with the "power" of the cybersun bureaucracy, NT made a replica of cyber pen, in their corporate style.
-  components:
-  - type: Sprite
-    state: pen_centcom
-  - type: Item
-    heldPrefix: pen_centcom
 
 - type: entity
   name: hop's fountain pen
