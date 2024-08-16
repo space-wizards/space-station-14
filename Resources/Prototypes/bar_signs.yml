@@ -182,3 +182,11 @@
     state: imp
   description: barsign-prototype-description-imp
 
+  - type: barSign
+  id: Spacebucks
+  name: barsign-prototype-name-spacebcks
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: spacebucks
+  description: barsign-prototype-description-spacebucks
+
