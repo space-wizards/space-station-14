@@ -252,7 +252,7 @@ public static partial class PoolManager
         }
         finally
         {
-            if (pair != null && pair.TestHistory.Count > 1)
+            if (pair != null && pair.TestHistory.Count > 0)
             {
                 await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Pair {pair.Id} Test History Start");
                 for (var i = 0; i < pair.TestHistory.Count; i++)
@@ -268,12 +268,14 @@ public static partial class PoolManager
         var poolRetrieveTime = poolRetrieveTimeWatch.Elapsed;
         await testOut.WriteLineAsync(
             $"{nameof(GetServerClientPair)}: Retrieving pair {pair.Id} from pool took {poolRetrieveTime.TotalMilliseconds} ms");
-        await testOut.WriteLineAsync(
-            $"{nameof(GetServerClientPair)}: Returning pair {pair.Id}");
 
         pair.ClearModifiedCvars();
         pair.Settings = poolSettings;
         pair.TestHistory.Add(currentTestName);
+        pair.SetupSeed();
+        await testOut.WriteLineAsync(
+            $"{nameof(GetServerClientPair)}: Returning pair {pair.Id} with client/server seeds: {pair.ClientSeed}/{pair.ServerSeed}");
+
         pair.Watch.Restart();
         return pair;
     }

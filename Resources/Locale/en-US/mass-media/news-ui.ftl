@@ -34,4 +34,4 @@ news-write-ui-richtext-tooltip = News articles support rich text
     {"[bullet/]bullet[/color]"}
 
 news-pda-notification-header = New news article
-news-publish-admin-announcement = {$actor} published news article {$title} by {$author}"
+news-publish-admin-announcement = {$actor} published news article {$title} by {$author}

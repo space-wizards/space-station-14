@@ -161,3 +161,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from TG station."
   source: "https://github.com/tgstation/tgstation/tree/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0"
+
+- files: ["cutter.ogg"]
+  license: "CC0-1.0"
+  copyright: "by Ko4erga"
+  source: "https://github.com/space-wizards/space-station-14/pull/30431"
