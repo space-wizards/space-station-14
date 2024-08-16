@@ -209,6 +209,7 @@
 - type: latheRecipe
   id: SheetPlastic
   result: SheetPlastic1
+  applyMaterialDiscount: false
   completetime: 0
   materials:
     Plastic: 100
