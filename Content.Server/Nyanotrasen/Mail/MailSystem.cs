@@ -12,6 +12,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Damage.Components;
+using Content.Server.DeltaV.Cargo.Components;
 using Content.Server.Destructible;
 using Content.Server.Destructible.Thresholds;
 using Content.Server.Destructible.Thresholds.Behaviors;
@@ -48,6 +49,7 @@ using Content.Shared.Storage;
 using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Timer = Robust.Shared.Timing.Timer;
+using Content.Server.DeltaV.Cargo.Systems;
 
 namespace Content.Server.Mail
 {
@@ -71,6 +73,9 @@ namespace Content.Server.Mail
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly ItemSystem _itemSystem = default!;
         [Dependency] private readonly MindSystem _mindSystem = default!;
+
+        // DeltaV - system that keeps track of mail and cargo stats
+        [Dependency] private readonly LogisticStatsSystem _logisticsStatsSystem = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -216,6 +221,13 @@ namespace Content.Server.Mail
                 }
             }
 
+            // DeltaV - Add earnings to logistic stats
+            ExecuteForEachLogisticsStats(uid, (station, logisticStats) =>
+            {
+                _logisticsStatsSystem.AddOpenedMailEarnings(station,
+                    logisticStats,
+                    component.IsProfitable ? component.Bounty : 0);
+            });
             UnlockMail(uid, component);
 
             if (!component.IsProfitable)
@@ -235,7 +247,6 @@ namespace Content.Server.Mail
                     continue;
 
                 _cargoSystem.UpdateBankAccount(station, account, component.Bounty);
-                return;
             }
         }
 
@@ -300,7 +311,17 @@ namespace Content.Server.Mail
         private void OnDestruction(EntityUid uid, MailComponent component, DestructionEventArgs args)
         {
             if (component.IsLocked)
+            {
+                // DeltaV - Tampered mail recorded to logistic stats
+                ExecuteForEachLogisticsStats(uid, (station, logisticStats) =>
+                {
+                    _logisticsStatsSystem.AddTamperedMailLosses(station,
+                        logisticStats,
+                        component.IsProfitable ? component.Penalty : 0);
+                });
+
                 PenalizeStationFailedDelivery(uid, component, "mail-penalty-lock");
+            }
 
             if (component.IsEnabled)
                 OpenMail(uid, component);
@@ -329,7 +350,17 @@ namespace Content.Server.Mail
             _appearanceSystem.SetData(uid, MailVisuals.IsBroken, true);
 
             if (component.IsFragile)
+            {
+                // DeltaV - Broken mail recorded to logistic stats
+                ExecuteForEachLogisticsStats(uid, (station, logisticStats) =>
+                {
+                    _logisticsStatsSystem.AddDamagedMailLosses(station,
+                        logisticStats,
+                        component.IsProfitable ? component.Penalty : 0);
+                });
+
                 PenalizeStationFailedDelivery(uid, component, "mail-penalty-fragile");
+            }
         }
 
         private void OnMailEmagged(EntityUid uid, MailComponent component, ref GotEmaggedEvent args)
@@ -495,7 +526,18 @@ namespace Content.Server.Mail
                 mailComp.priorityCancelToken = new CancellationTokenSource();
 
                 Timer.Spawn((int) component.priorityDuration.TotalMilliseconds,
-                    () => PenalizeStationFailedDelivery(uid, mailComp, "mail-penalty-expired"),
+                    () =>
+                    {
+                        // DeltaV - Expired mail recorded to logistic stats
+                        ExecuteForEachLogisticsStats(uid, (station, logisticStats) =>
+                        {
+                            _logisticsStatsSystem.AddExpiredMailLosses(station,
+                                logisticStats,
+                                mailComp.IsProfitable ? mailComp.Penalty : 0);
+                        });
+
+                        PenalizeStationFailedDelivery(uid, mailComp, "mail-penalty-expired");
+                    },
                     mailComp.priorityCancelToken.Token);
             }
 
@@ -727,6 +769,21 @@ namespace Content.Server.Mail
         private void UpdateMailTrashState(EntityUid uid, bool isTrash)
         {
             _appearanceSystem.SetData(uid, MailVisuals.IsTrash, isTrash);
+        }
+
+        // DeltaV - Helper function that executes for each StationLogisticsStatsComponent
+        // For updating MailMetrics stats
+        private void ExecuteForEachLogisticsStats(EntityUid uid,
+            Action<EntityUid, StationLogisticStatsComponent> action)
+        {
+
+            var query = EntityQueryEnumerator<StationLogisticStatsComponent>();
+            while (query.MoveNext(out var station, out var logisticStats))
+            {
+                if (_stationSystem.GetOwningStation(uid) != station)
+                    continue;
+                action(station, logisticStats);
+            }
         }
     }
 
