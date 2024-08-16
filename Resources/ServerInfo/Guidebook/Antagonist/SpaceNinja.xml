@@ -1,6 +1,9 @@
 <Document>
   # Space Ninja
-  [color=#999999][italic]"Spider of the night, silent is my bite."[/italic][/color]
+  
+  <Box>
+    [color=#999999][italic]"Spider of the night, silent is my bite."[/italic][/color]
+  </Box>
 
   You are an elite mercenary that [color=#66FF00]The Spider Clan[/color] has sent to wreak all kinds of havoc on the station. You are equipped to keep it silent-but-deadly.
 
@@ -18,9 +21,9 @@
   ## Ninja Suit & Boots
   
   <Box>
-    <GuideEntityEmbed Entity="ClothingEyesVisorNinja" Captain="your visor"/>
-    <GuideEntityEmbed Entity="ClothingOuterSuitSpaceNinja" Captain="your suit"/>
-    <GuideEntityEmbed Entity="ClothingShoesSpaceNinja" Captain="your boots"/>
+    <GuideEntityEmbed Entity="ClothingEyesVisorNinja" Caption="your visor"/>
+    <GuideEntityEmbed Entity="ClothingOuterSuitSpaceNinja" Caption="your suit"/>
+    <GuideEntityEmbed Entity="ClothingShoesSpaceNinja" Caption="your boots"/>
   </Box>
 
   Your single most important item is [color=#66FF00]your suit[/color], without it none of your abilities would work.

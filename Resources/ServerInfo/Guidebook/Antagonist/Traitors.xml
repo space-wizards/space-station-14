@@ -1,7 +1,12 @@
 <Document>
   # Traitors
-  [color=#999999][italic]"WHISKEY. ECHO. WHISKEY. LIMA. ALPHA. DELTA. AGENT, YOU HAVE BEEN ACTIVATED."[/italic][/color]
 
+  <Box>
+    [color=#999999][italic]"WHISKEY. ECHO. WHISKEY. LIMA. ALPHA. DELTA. AGENT, YOU HAVE BEEN ACTIVATED."[/italic][/color]
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="PosterContrabandSyndicateRecruitment" Caption=""/>
+  </Box>
   Traitors are antagonists employed by the [color=#ff0000]Syndicate[/color]. You are a sleeper agent who has access to various tools and weapons through your [bold]uplink[/bold].
   You also receive [color=red]codewords[/color] to identify other agents, and a coordinated team of Traitors can have [italic]brutal results.[/italic]
 

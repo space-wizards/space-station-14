@@ -1,6 +1,12 @@
 <Document>
   # Revolutionaries
-  [color=#999999][italic]"Viva la revolución!!"[/italic][/color]
+  
+  <Box>
+    [color=#999999][italic]"Viva la revolución!!"[/italic][/color]
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="PosterContrabandRevolt" Caption=""/>
+  </Box>
 
   Revolutionaries are antagonists sponsored by the [color=#ff0000]Syndicate[/color] who are tasked with taking control of the station. They have no fancy gimmicks or cheap tricks, they only have a cause and strength in numbers.
 
