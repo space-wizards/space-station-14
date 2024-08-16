@@ -1,7 +1,7 @@
 namespace Content.Server.Speech.Components
 {
     [RegisterComponent]
-    public sealed partial class SwedishAccentComponent : Component
+    public sealed partial class ScandinavianAccentComponent : Component
     {
     }
 }

@@ -74,13 +74,13 @@
     accent: liar
 
 - type: trait
-  id: SwedishAccent
-  name: trait-swedish-name
-  description: trait-swedish-desc
+  id: ScandinavianAccent
+  name: trait-scandinavian-name
+  description: trait-scandinavian-desc
   category: SpeechTraits
   cost: 1
   components:
-    - type: SwedishAccent
+    - type: ScandinavianAccent
 
 # 2 Cost
 

@@ -54,5 +54,5 @@ trait-german-desc = You seem to come from space Germany.
 trait-italian-name = Italian accent
 trait-italian-desc = Mamma mia! You seem to have lived in space Italy!
 
-trait-swedish-name = Swedish accent
-trait-swedish-desc = Forces the language center of the subject's brain to construct sentences in a vaguely norse manner.
+trait-scandinavian-name = Scandinavian accent
+trait-scandinavian-desc = Forces the language center of the subject's brain to construct sentences in a vaguely norse manner.

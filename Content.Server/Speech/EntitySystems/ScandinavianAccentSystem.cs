@@ -3,13 +3,9 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class SwedishAccentSystem : EntitySystem
+public sealed class ScandinavianAccentSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-
-    private static readonly IReadOnlyList<string> Borks = new List<string>{
-        ", bork!", ", bork, bork!"
-    }.AsReadOnly();
 
     private static readonly IReadOnlyDictionary<string, string[]> Letters = new Dictionary<string, string[]>()
     {
@@ -28,7 +24,7 @@ public sealed class SwedishAccentSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<SwedishAccentComponent, AccentGetEvent>(OnAccent);
+        SubscribeLocalEvent<ScandinavianAccentComponent, AccentGetEvent>(OnAccent);
     }
 
     public string Accentuate(string message)
@@ -41,7 +37,7 @@ public sealed class SwedishAccentSystem : EntitySystem
         return message;
     }
 
-    private void OnAccent(EntityUid uid, SwedishAccentComponent component, AccentGetEvent args)
+    private void OnAccent(EntityUid uid, ScandinavianAccentComponent component, AccentGetEvent args)
     {
         args.Message = Accentuate(args.Message);
     }
