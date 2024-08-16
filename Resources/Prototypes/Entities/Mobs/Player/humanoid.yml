@@ -501,7 +501,7 @@
 ## Central Command
 
 - type: entity
-  name: CentCom official
+  name: CentComm official
   id: RandomHumanoidSpawnerCentcomOfficial
   components:
     - type: Sprite
