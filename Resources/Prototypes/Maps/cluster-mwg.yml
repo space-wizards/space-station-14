@@ -1,7 +1,7 @@
 - type: gameMap
   id: Cluster
   mapName: 'Cluster'
-  mapPath: /Maps/cluster.yml
+  mapPath: /Maps/cluster-mwg.yml
   minPlayers: 10
   maxPlayers: 35
   stations:

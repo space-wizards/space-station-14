@@ -1,7 +1,7 @@
 - type: gameMap
   id: Atlas
   mapName: Atlas
-  mapPath: /Maps/atlas.yml
+  mapPath: /Maps/atlas-mwg.yml
   minPlayers: 5
   maxPlayers: 20
   stations:

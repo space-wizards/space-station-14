@@ -1,7 +1,7 @@
 - type: gameMap
   id: Origin
   mapName: 'Origin'
-  mapPath: /Maps/origin.yml
+  mapPath: /Maps/origin-mwg.yml
   minPlayers: 50
   stations:
     Origin:
