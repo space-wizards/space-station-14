@@ -114,7 +114,18 @@ public sealed partial class StoreSystem
 
         var getDiscountsEvent = new GetDiscountsEvent(store);
         RaiseLocalEvent(getDiscountsEvent);
-        var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, getDiscountsEvent.DiscountsData, showFooter, component.RefundAllowed);
+
+        var availableListings = component.LastAvailableListings;
+        var withDiscounts = new HashSet<ListingDataWithDiscount>();
+        foreach (var availableListing in availableListings)
+        {
+            var found = getDiscountsEvent.DiscountsData?.FirstOrDefault(
+                x => x.ListingId == availableListing.ID
+                     && x.Count > 0
+            );
+            withDiscounts.Add(new ListingDataWithDiscount(availableListing, found));
+        }
+        var state = new StoreUpdateState(withDiscounts, allCurrency, showFooter, component.RefundAllowed);
         _ui.SetUiState(store, StoreUiKey.Key, state);
     }
 

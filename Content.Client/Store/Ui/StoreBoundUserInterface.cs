@@ -2,7 +2,6 @@ using Content.Shared.Store;
 using JetBrains.Annotations;
 using System.Linq;
 using Content.Shared.Store.Components;
-using Content.Shared.StoreDiscount.Components;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
@@ -20,10 +19,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
     private string _search = string.Empty;
 
     [ViewVariables]
-    private HashSet<ListingData> _listings = new();
-
-    [ViewVariables]
-    private StoreDiscountData[] _discounts = default!;
+    private HashSet<ListingDataWithDiscount> _listings = new();
 
     public StoreBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -70,7 +66,6 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         {
             case StoreUpdateState msg:
                 _listings = msg.Listings;
-                _discounts = msg.Discounts;
 
                 _menu?.UpdateBalance(msg.Balance);
 
@@ -86,13 +81,13 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         if (_menu == null)
             return;
 
-        var filteredListings = new HashSet<ListingData>(_listings);
+        var filteredListings = new HashSet<ListingDataWithDiscount>(_listings);
         if (!string.IsNullOrEmpty(_search))
         {
             filteredListings.RemoveWhere(listingData => !ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listingData, _prototypeManager).Trim().ToLowerInvariant().Contains(_search) &&
                                                         !ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(listingData, _prototypeManager).Trim().ToLowerInvariant().Contains(_search));
         }
-        _menu.PopulateStoreCategoryButtons(filteredListings, _discounts);
-        _menu.UpdateListing(filteredListings.ToList(), _discounts);
+        _menu.PopulateStoreCategoryButtons(filteredListings);
+        _menu.UpdateListing(filteredListings.ToList());
     }
 }

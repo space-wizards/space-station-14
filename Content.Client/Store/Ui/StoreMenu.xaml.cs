@@ -34,8 +34,7 @@ public sealed partial class StoreMenu : DefaultWindow
     public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Balance = new();
     public string CurrentCategory = string.Empty;
 
-    private List<ListingData> _cachedListings = new();
-    private StoreDiscountData[] _cachedDiscounts = Array.Empty<StoreDiscountData>();
+    private List<ListingDataWithDiscount> _cachedListings = new();
 
     public StoreMenu()
     {
@@ -73,10 +72,10 @@ public sealed partial class StoreMenu : DefaultWindow
         WithdrawButton.Disabled = disabled;
     }
 
-    public void UpdateListing(List<ListingData> listings, StoreDiscountData[] discounts)
+    public void UpdateListing(List<ListingDataWithDiscount> listings)
     {
         _cachedListings = listings;
-        _cachedDiscounts = discounts;
+
         UpdateListing();
     }
 
@@ -88,17 +87,13 @@ public sealed partial class StoreMenu : DefaultWindow
         // should probably chunk these out instead. to-do if this clogs the internet tubes.
         // maybe read clients prototypes instead?
         ClearListings();
-        var storeDiscounts = _cachedDiscounts.Where(x => x.Count > 0)
-                                      .ToDictionary(x => x.ListingId);
-
         foreach (var item in sorted)
         {
-            storeDiscounts.TryGetValue(item.ID, out var discountData);
-            if (discountData != null)
+            if (item.DiscountData != null)
             {
                 item.Categories.Add(DiscountedStoreCategoryPrototypeKey);
             }
-            AddListingGui(item, discountData);
+            AddListingGui(item);
         }
     }
 
@@ -129,13 +124,12 @@ public sealed partial class StoreMenu : DefaultWindow
         OnRefundAttempt?.Invoke(args);
     }
 
-    private void AddListingGui(ListingData listing, StoreDiscountData? discountData)
+    private void AddListingGui(ListingDataWithDiscount listing)
     {
         if (!listing.Categories.Contains(CurrentCategory))
             return;
 
-        var listingPrice = listing.Cost;
-        var hasBalance = CanBuyListing(Balance, listingPrice, discountData);
+        var hasBalance = CanBuyListing(Balance, listing);
 
         var spriteSys = _entityManager.EntitySysManager.GetEntitySystem<SpriteSystem>();
 
@@ -158,7 +152,7 @@ public sealed partial class StoreMenu : DefaultWindow
             }
         }
 
-        var (listingInStock, discount) = GetListingPriceString(listing, discountData);
+        var (listingInStock, discount) = GetListingPriceString(listing);
 
         var newListing = new StoreListingControl(listing, listingInStock, discount, hasBalance, texture);
         newListing.StoreItemBuyButton.OnButtonDown += args
@@ -167,8 +161,10 @@ public sealed partial class StoreMenu : DefaultWindow
         StoreListingsContainer.AddChild(newListing);
     }
 
-    public bool CanBuyListing(Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> currentBalance, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> price, StoreDiscountData? discountData)
+    public bool CanBuyListing(Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> currentBalance, ListingDataWithDiscount listing)
     {
+        var price = listing.Cost;
+        var discountData = listing.DiscountData;
         foreach (var (currency, value) in price)
         {
             if (!currentBalance.ContainsKey(currency))
@@ -187,7 +183,7 @@ public sealed partial class StoreMenu : DefaultWindow
         return true;
     }
 
-    private (string Price, string Discount) GetListingPriceString(ListingData listing, StoreDiscountData? discountData)
+    private (string Price, string Discount) GetListingPriceString(ListingDataWithDiscount listing)
     {
         var text = string.Empty;
         var discountMessage = string.Empty;
@@ -198,6 +194,7 @@ public sealed partial class StoreMenu : DefaultWindow
             text = Loc.GetString("store-currency-free");
         else
         {
+            var discountData = listing.DiscountData;
             foreach (var (type, amount) in listing.Cost)
             {
                 var currency = _prototypeManager.Index<CurrencyPrototype>(type);
@@ -249,7 +246,7 @@ public sealed partial class StoreMenu : DefaultWindow
         StoreListingsContainer.Children.Clear();
     }
 
-    public void PopulateStoreCategoryButtons(HashSet<ListingData> listings, StoreDiscountData[] discounts)
+    public void PopulateStoreCategoryButtons(HashSet<ListingDataWithDiscount> listings)
     {
         var allCategories = new List<StoreCategoryPrototype>();
         foreach (var listing in listings)
@@ -262,7 +259,7 @@ public sealed partial class StoreMenu : DefaultWindow
             }
         }
 
-        if (discounts.Any(x => x.Count > 0))
+        if (listings.Any(x => x.DiscountData != null))
         {
             var proto = _prototypeManager.Index<StoreCategoryPrototype>(DiscountedStoreCategoryPrototypeKey);
             allCategories.Add(proto);

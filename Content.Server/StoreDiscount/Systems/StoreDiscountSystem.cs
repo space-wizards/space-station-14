@@ -42,7 +42,7 @@ public sealed class StoreDiscountSystem : EntitySystem
     private void OnBuyFinished(ref StoreBuyFinishedEvent ev)
     {
         var (storeId, purchasedItemId) = ev;
-        var discounts = Array.Empty<StoreDiscountData>();
+        IReadOnlyCollection<StoreDiscountData> discounts = Array.Empty<StoreDiscountData>();
         if (TryComp<StoreDiscountComponent>(storeId, out var discountsComponent))
         {
             discounts = discountsComponent.Discounts;
@@ -60,7 +60,7 @@ public sealed class StoreDiscountSystem : EntitySystem
     /// <summary> Refine listing item cost using discounts. </summary>
     private void OnBuyRequest(StoreBuyAttemptEvent ev)
     {
-        var discounts = Array.Empty<StoreDiscountData>();
+        IReadOnlyCollection<StoreDiscountData> discounts = Array.Empty<StoreDiscountData>();
         if (TryComp<StoreDiscountComponent>(ev.StoreUid, out var discountsComponent))
         {
             discounts = discountsComponent.Discounts;
@@ -104,7 +104,7 @@ public sealed class StoreDiscountSystem : EntitySystem
         discountComponent.Discounts = InitializeDiscounts(ev.Listings);
     }
 
-    private StoreDiscountData[] InitializeDiscounts(
+    private IReadOnlyCollection<StoreDiscountData> InitializeDiscounts(
         IEnumerable<ListingData> listings,
         int totalAvailableDiscounts = 3
     )
@@ -112,36 +112,13 @@ public sealed class StoreDiscountSystem : EntitySystem
         // get list of categories with cumulative weights.
         // for example if we have categories with weights 2, 18 and 80
         // list of cumulative ones will be 2,20,100 (with 100 being total)
-        var discountCumulativeWeightByDiscountCategoryId = PreCalculateDiscountCategoriesWithCumulativeWeights();
+        var prototypes = _prototypeManager.EnumeratePrototypes<DiscountCategoryPrototype>();
+        var categoriesWithCumulativeWeight = new CategoriesWithCumulativeWeight(prototypes);
 
         // roll HOW MANY different listing items to discount in which categories.
-        var chosenDiscounts = PickCategoriesToRoll(totalAvailableDiscounts, discountCumulativeWeightByDiscountCategoryId);
+        var uniqueListingItemCountByCategory = PickCategoriesToRoll(totalAvailableDiscounts, categoriesWithCumulativeWeight);
 
-        return RollItems(listings, chosenDiscounts).ToArray();
-    }
-
-    /// <summary>
-    /// Prepares list of discount categories with pre-calculated cumulative wights.
-    /// Only categories that have weight and have more then 0 max items in category.
-    /// </summary>
-    /// <returns> List of discount categories.</returns>
-    private List<DiscountCategoryWithCumulativeWeight> PreCalculateDiscountCategoriesWithCumulativeWeights()
-    {
-        List<DiscountCategoryWithCumulativeWeight> discountCumulativeWeightByDiscountCategoryId = new();
-
-        var cumulativeWeight = 0;
-        foreach (var discountCategory in _prototypeManager.EnumeratePrototypes<DiscountCategoryPrototype>())
-        {
-            if (discountCategory.Weight == 0 || discountCategory.MaxItems == 0)
-            {
-                continue;
-            }
-
-            cumulativeWeight += discountCategory.Weight;
-            discountCumulativeWeightByDiscountCategoryId.Add(new(discountCategory, cumulativeWeight));
-        }
-
-        return discountCumulativeWeightByDiscountCategoryId;
+        return RollItems(listings, uniqueListingItemCountByCategory);
     }
 
     /// <summary>
@@ -157,54 +134,46 @@ public sealed class StoreDiscountSystem : EntitySystem
     /// Total amount of different listing items to be discounted. Depending on <see cref="DiscountCategoryPrototype.MaxItems"/>
     /// there might be less discounts then <see cref="totalAvailableDiscounts"/>, but never more.
     /// </param>
-    /// <param name="discountCumulativeWeightByDiscountCategoryId">Map of discount category cumulative weight by its protoId.</param>
+    /// <param name="categoriesWithCumulativeWeight">Map of discount category cumulative weight by its protoId.</param>
     /// <returns>Map: count of different listing items to be discounted by their discount category.</returns>
     private Dictionary<ProtoId<DiscountCategoryPrototype>, int> PickCategoriesToRoll(
         int totalAvailableDiscounts,
-        List<DiscountCategoryWithCumulativeWeight> discountCumulativeWeightByDiscountCategoryId
+        CategoriesWithCumulativeWeight categoriesWithCumulativeWeight
     )
     {
-        // cumulative weight of last discount category is total weight of all categories
-        var sumWeight = discountCumulativeWeightByDiscountCategoryId[^1].CumulativeWeight;
         var chosenDiscounts = new Dictionary<ProtoId<DiscountCategoryPrototype>, int>();
         for (var i = 0; i < totalAvailableDiscounts; i++)
         {
-            var roll = _random.Next(sumWeight);
-
-            // We rolled random point inside range of 0 and 'total weight' to pick category respecting category weights
-            // now we find index of category we rolled. If category cumulative weight is less than roll -
-            // we rolled other category, skip and try next
-            var index = 0;
-            DiscountCategoryWithCumulativeWeight container;
-            while ((container = discountCumulativeWeightByDiscountCategoryId[index]).CumulativeWeight < roll)
+            var discountCategory = categoriesWithCumulativeWeight.RollCategory(_random);
+            if (discountCategory == null)
             {
-                index++;
+                break;
             }
 
             // * if category was not previously picked - we mark it as picked 1 time
-            // * if category was previously picked - we increase its 'picked' marker
-            // * if category 'picked' marker going to exceed limit on category - we remove it from further rolls
-            // and reduce total cumulative count by that category weight, so it won't affect next rolls
-            if (!chosenDiscounts.TryGetValue(container.DiscountCategory.ID, out var alreadySelectedCount))
+            // * if category was previously picked - we increment its 'picked' marker
+            // * if category 'picked' marker going to exceed limit on category - we need to remove IT from further rolls
+            int newDiscountCount;
+            if (!chosenDiscounts.TryGetValue(discountCategory.ID, out var alreadySelectedCount))
             {
-                chosenDiscounts[container.DiscountCategory.ID] = 1;
+                newDiscountCount = 1;
             }
-            else if (alreadySelectedCount < container.DiscountCategory.MaxItems)
+            else
             {
-                var newDiscountCount = chosenDiscounts[container.DiscountCategory.ID] + 1;
-                chosenDiscounts[container.DiscountCategory.ID] = newDiscountCount;
-                if (newDiscountCount == container.DiscountCategory.MaxItems)
-                {
-                    discountCumulativeWeightByDiscountCategoryId.Remove(container);
-                    sumWeight -= container.DiscountCategory.Weight;
-                }
+                newDiscountCount = alreadySelectedCount + 1;
+            }
+            chosenDiscounts[discountCategory.ID] = newDiscountCount;
+
+            if (newDiscountCount >= discountCategory.MaxItems)
+            {
+                categoriesWithCumulativeWeight.Remove(discountCategory);
             }
         }
 
         return chosenDiscounts;
     }
 
-    private List<StoreDiscountData> RollItems(IEnumerable<ListingData> listings, Dictionary<ProtoId<DiscountCategoryPrototype>, int> chosenDiscounts)
+    private IReadOnlyCollection<StoreDiscountData> RollItems(IEnumerable<ListingData> listings, Dictionary<ProtoId<DiscountCategoryPrototype>, int> chosenDiscounts)
     {
         // To roll for discounts on items we: pick listing items that have values inside 'DiscountDownTo'.
         // then we iterate over discount categories that were chosen on previous step and pick unique set
@@ -265,12 +234,82 @@ public sealed class StoreDiscountSystem : EntitySystem
         return discountAmountByCurrencyId;
     }
 
-    private sealed class DiscountCategoryWithCumulativeWeight(DiscountCategoryPrototype discountCategory, int cumulativeWeight)
+    private sealed record CategoriesWithCumulativeWeight
     {
-        public DiscountCategoryPrototype DiscountCategory { get; set; } = discountCategory;
-        public int CumulativeWeight { get; set; } = cumulativeWeight;
-    }
+        private readonly List<DiscountCategoryPrototype> _categories;
+        private readonly List<int> _weights;
+        private int _totalWeight;
 
+        public CategoriesWithCumulativeWeight(IEnumerable<DiscountCategoryPrototype> prototypes)
+        {
+            var asArray = prototypes.ToArray();
+            _weights = new (asArray.Length);
+            _categories = new(asArray.Length);
+
+            var currentIndex = 0;
+            _totalWeight = 0;
+            for (var i = 0; i < asArray.Length; i++)
+            {
+                var category = asArray[i];
+                if (category.MaxItems == 0 || category.Weight == 0)
+                {
+                    continue;
+                }
+
+                _categories.Add(category);
+
+                if (currentIndex == 0)
+                {
+                    _totalWeight = category.Weight;
+                }
+                else
+                {
+                    // cumulative weight of last discount category is total weight of all categories
+                    _totalWeight += category.Weight;
+                }
+                _weights.Add(_totalWeight);
+
+                currentIndex++;
+            }
+        }
+
+        // decrease cumulativeWeight of every category that is following current one, and then
+        // reduce total cumulative count by that category weight, so it won't affect next rolls in any way
+        public void Remove(DiscountCategoryPrototype discountCategory)
+        {
+            var indexToRemove = _categories.IndexOf(discountCategory);
+            if (indexToRemove == -1)
+            {
+                return;
+            }
+
+            for (var i = indexToRemove + 1; i < _categories.Count; i++)
+            {
+                _weights[i]-= discountCategory.Weight;
+            }
+
+            _totalWeight -= discountCategory.Weight;
+            _categories.RemoveAt(indexToRemove);
+            _weights.RemoveAt(indexToRemove);
+        }
+
+        // We rolled random point inside range of 0 and 'total weight' to pick category respecting category weights
+        // now we find index of category we rolled. If category cumulative weight is less than roll -
+        // we rolled other category, skip and try next
+        public DiscountCategoryPrototype? RollCategory(IRobustRandom random)
+        {
+            var roll = random.Next(_totalWeight);
+            for (int i = 0; i < _weights.Count; i++)
+            {
+                if (roll < _weights[i])
+                {
+                    return _categories[i];
+                }
+            }
+
+            return null;
+        }
+    }
 }
 
 /// <summary> Attempt to get list of discounts. </summary>
@@ -286,5 +325,5 @@ public sealed partial class GetDiscountsEvent(EntityUid store)
     /// Collection of discounts to fill.
     /// </summary>
 
-    public StoreDiscountData[]? DiscountsData { get; set; }
+    public IReadOnlyCollection<StoreDiscountData>? DiscountsData { get; set; }
 }

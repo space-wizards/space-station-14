@@ -1,10 +1,42 @@
 using System.Linq;
 using Content.Shared.FixedPoint;
+using Content.Shared.StoreDiscount.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Store;
+
+[Serializable, NetSerializable, DataDefinition]
+public sealed partial class ListingDataWithDiscount : ListingData
+{
+    public StoreDiscountData? DiscountData;
+
+    /// <inheritdoc />
+    public ListingDataWithDiscount(ListingData listingData, StoreDiscountData? discountData)
+        : base(
+            listingData.Name,
+            listingData.DiscountCategory,
+            listingData.Description,
+            listingData.Conditions,
+            listingData.Icon,
+            listingData.Priority,
+            listingData.ProductEntity,
+            listingData.ProductAction,
+            listingData.ProductUpgradeId,
+            listingData.ProductActionEntity,
+            listingData.ProductEvent,
+            listingData.RaiseProductEventOnUser,
+            listingData.PurchaseAmount,
+            listingData.ID,
+            listingData.Categories,
+            listingData.Cost,
+            listingData.RestockTime
+        )
+    {
+        DiscountData = discountData;
+    }
+}
 
 /// <summary>
 ///     This is the data object for a store listing which is passed around in code.
@@ -15,6 +47,49 @@ namespace Content.Shared.Store;
 [Virtual, DataDefinition]
 public partial class ListingData : IEquatable<ListingData>, ICloneable
 {
+    public ListingData()
+    {
+    }
+
+    public ListingData(
+        string? name,
+        ProtoId<DiscountCategoryPrototype>? discountCategory,
+        string? description,
+        List<ListingCondition>? conditions,
+        SpriteSpecifier? icon,
+        int priority,
+        EntProtoId? productEntity,
+        EntProtoId? productAction,
+        ProtoId<ListingPrototype>? productUpgradeId,
+        EntityUid? productActionEntity,
+        object? productEvent,
+        bool raiseProductEventOnUser,
+        int purchaseAmount,
+        string id,
+        List<ProtoId<StoreCategoryPrototype>> categories,
+        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> cost,
+        TimeSpan restockTime
+    )
+    {
+        Name = name;
+        DiscountCategory = discountCategory;
+        Description = description;
+        Conditions = conditions;
+        Icon = icon;
+        Priority = priority;
+        ProductEntity = productEntity;
+        ProductAction = productAction;
+        ProductUpgradeId = productUpgradeId;
+        ProductActionEntity = productActionEntity;
+        ProductEvent = productEvent;
+        RaiseProductEventOnUser = raiseProductEventOnUser;
+        PurchaseAmount = purchaseAmount;
+        ID = id;
+        Categories = categories;
+        Cost = cost;
+        RestockTime = restockTime;
+    }
+    
     [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;
@@ -30,12 +105,6 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// </summary>
     [DataField("discountCategory")]
     public ProtoId<DiscountCategoryPrototype>? DiscountCategory;
-
-    /// <summary>
-    /// Options for discount - from max amount down to how much item costs can be cut by discount, absolute value.
-    /// </summary>
-    [DataField("discountDownTo")]
-    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> DiscountDownTo = new();
 
     /// <summary>
     /// The description of the listing. If empty, uses the entity's description (if present)
@@ -179,7 +248,6 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
             PurchaseAmount = PurchaseAmount,
             RestockTime = RestockTime,
             DiscountCategory = DiscountCategory,
-            DiscountDownTo = DiscountDownTo
         };
     }
 }
@@ -192,6 +260,11 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
 [DataDefinition]
 public sealed partial class ListingPrototype : ListingData, IPrototype
 {
+    /// <summary>
+    /// Options for discount - from max amount down to how much item costs can be cut by discount, absolute value.
+    /// </summary>
+    [DataField("discountDownTo")]
+    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> DiscountDownTo = new();
 }
 
 /// <summary>

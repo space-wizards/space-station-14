@@ -16,7 +16,7 @@ public sealed partial class StoreDiscountComponent : Component
     /// Discounts for items in <see cref="ListingData"/>.
     /// </summary>
     [ViewVariables, DataField]
-    public StoreDiscountData[] Discounts = Array.Empty<StoreDiscountData>();
+    public IReadOnlyCollection<StoreDiscountData> Discounts = Array.Empty<StoreDiscountData>();
 }
 
 /// <summary>
