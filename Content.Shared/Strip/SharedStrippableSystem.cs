@@ -1,13 +1,17 @@
+using Content.Shared.Administration.Managers;
 using Content.Shared.CombatMode;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
+using Content.Shared.Inventory;
 using Content.Shared.Strip.Components;
 
 namespace Content.Shared.Strip;
 
 public abstract class SharedStrippableSystem : EntitySystem
 {
+    [Dependency] private readonly ISharedAdminManager _admin = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
 
     public override void Initialize()
@@ -76,5 +80,16 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (args.CanDrop)
             args.Handled = true;
+    }
+
+    public bool IsStripHidden(SlotDefinition definition, EntityUid? viewer)
+    {
+        if (!definition.StripHidden)
+            return false;
+
+        if (viewer == null)
+            return true;
+
+        return !HasComp<BypassInteractionChecksComponent>(viewer);
     }
 }
