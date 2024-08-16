@@ -17,6 +17,8 @@
   - Maintenance
   - Service
   - Detective
+  - External
+  - Cryogenics
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
