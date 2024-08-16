@@ -95,7 +95,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
         if (args.Target == args.User || doAfterCancelled)
             return;
 
-        if (uid.Comp.Silent == false)
+        if (uid.Comp.Silent == true)
             return;
 
         var msg = Loc.GetString("health-analyzer-popup-scan-target", ("user", Identity.Entity(args.User, EntityManager)));
