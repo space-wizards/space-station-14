@@ -137,25 +137,3 @@
   sprite:
     sprite: Decals/ntasww.rsi
     state: 20
-
-- type: decal
-  id: ww21
-  tags: ["whale"]
-  sprite:
-    sprite: Decals/ntasww.rsi
-    state: 21
-
-- type: decal
-  id: ww22
-  tags: ["whale"]
-  sprite:
-    sprite: Decals/ntasww.rsi
-    state: 22
-
-- type: decal
-  id: ww23
-  tags: ["whale"]
-  sprite:
-    sprite: Decals/ntasww.rsi
-    state: 23
-
