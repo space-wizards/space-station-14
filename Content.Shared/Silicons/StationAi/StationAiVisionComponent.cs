@@ -10,7 +10,7 @@ public sealed partial class StationAiVisionComponent : Component
     public bool Enabled = true;
 
     [DataField, AutoNetworkedField]
-    public bool Occluded = false;
+    public bool Occluded = true;
 
     /// <summary>
     /// Range in tiles

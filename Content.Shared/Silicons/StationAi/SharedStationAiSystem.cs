@@ -23,7 +23,6 @@ public abstract class SharedStationAiSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metadata = default!;
 
     /*
-     * TODO: Fix examines
      * TODO: Vismask on the AI eye
      * TODO: Add door bolting
      * TODO: Sprite / vismask visibility + action
