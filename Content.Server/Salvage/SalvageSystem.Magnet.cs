@@ -315,7 +315,7 @@ public sealed partial class SalvageSystem
             bounds = bounds?.Union(childAABB) ?? childAABB;
 
             // Update mass scanner names as relevant.
-            if (offering is AsteroidOffering)
+            if (offering is AsteroidOffering or DebrisOffering)
             {
                 _metaData.SetEntityName(mapChild, Loc.GetString("salvage-asteroid-name"));
                 _gravity.EnableGravity(mapChild);
