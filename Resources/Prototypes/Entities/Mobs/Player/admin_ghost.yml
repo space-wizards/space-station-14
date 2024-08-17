@@ -4,6 +4,7 @@
   name: admin observer
   categories: [ HideSpawnMenu ]
   components:
+  - type: Buckle
   - type: ContentEye
     maxZoom: 8.916104, 8.916104
   - type: Tag

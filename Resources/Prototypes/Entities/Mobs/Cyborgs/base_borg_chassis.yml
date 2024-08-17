@@ -6,6 +6,7 @@
   save: false
   abstract: true
   components:
+  - type: Buckle
   - type: Reactive
     groups:
       Acidic: [Touch]
