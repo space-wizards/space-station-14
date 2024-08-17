@@ -1,0 +1,34 @@
+- type: soundCollection
+  id: InternAnnouncements
+  files:
+    - /Audio/Announcers/Intern/comms/announce/1.ogg
+    - /Audio/Announcers/Intern/comms/announce/2.ogg
+    - /Audio/Announcers/Intern/comms/announce/3.ogg
+    - /Audio/Announcers/Intern/comms/announce/4.ogg
+    - /Audio/Announcers/Intern/comms/announce/5.ogg
+    - /Audio/Announcers/Intern/comms/announce/6.ogg
+    - /Audio/Announcers/Intern/comms/announce/7.ogg
+    - /Audio/Announcers/Intern/comms/announce/8.ogg
+    - /Audio/Announcers/Intern/comms/announce/9.ogg
+    - /Audio/Announcers/Intern/comms/announce/10.ogg
+    - /Audio/Announcers/Intern/comms/announce/11.ogg
+    - /Audio/Announcers/Intern/comms/announce/12.ogg
+    - /Audio/Announcers/Intern/comms/announce/13.ogg
+    - /Audio/Announcers/Intern/comms/announce/14.ogg
+
+- type: soundCollection
+  id: InternCommandReportAnnouncements
+  files:
+    - /Audio/Announcers/Intern/comms/commandReport/1.ogg
+    - /Audio/Announcers/Intern/comms/commandReport/2.ogg
+    - /Audio/Announcers/Intern/comms/commandReport/3.ogg
+
+- type: soundCollection
+  id: InternWelcomeAnnouncements
+  files:
+    - /Audio/Announcers/Intern/comms/welcome/1.ogg
+    - /Audio/Announcers/Intern/comms/welcome/2.ogg
+    - /Audio/Announcers/Intern/comms/welcome/3.ogg
+    - /Audio/Announcers/Intern/comms/welcome/4.ogg
+    - /Audio/Announcers/Intern/comms/welcome/5.ogg
+    - /Audio/Announcers/Intern/comms/welcome/6.ogg

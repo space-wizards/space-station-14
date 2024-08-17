@@ -1,13 +1,17 @@
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
@@ -26,6 +30,9 @@ public sealed class SwapTeleporterSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly PullingSystem _pulling = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -167,11 +174,55 @@ public sealed class SwapTeleporterSystem : EntitySystem
             return;
         }
 
+
+        // Prevents teleporting to the polymorph zone or the cryosleep zone.
+        // Don't unlink because it might be temporary (polymorph). Let them figure it out and unlink it themselves.
+        if (_map.IsPaused(Transform(teleEnt).MapID) || _map.IsPaused(Transform(otherTeleEnt).MapID))
+        {
+            _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-teleport-fail",
+                ("entity", Identity.Entity(linkedEnt, EntityManager))),
+                teleEnt,
+                teleEnt,
+                PopupType.MediumCaution);
+            return;
+        }
+
         _popup.PopupClient(Loc.GetString("swap-teleporter-popup-teleport-other",
             ("entity", Identity.Entity(linkedEnt, EntityManager))),
             teleEnt,
             otherTeleEnt,
             PopupType.MediumCaution);
+
+        // break pulls before teleport so we dont break shit
+        if (TryComp<PullableComponent>(teleEnt, out var pullable) && pullable.BeingPulled)
+        {
+            _pulling.TryStopPull(teleEnt, pullable);
+        }
+
+        if (TryComp<PullerComponent>(teleEnt, out var pullerComp)
+            && TryComp<PullableComponent>(pullerComp.Pulling, out var subjectPulling))
+        {
+            _pulling.TryStopPull(pullerComp.Pulling.Value, subjectPulling);
+        }
+        // both sides
+        if (TryComp<PullableComponent>(otherTeleEnt, out var otherPullable) && otherPullable.BeingPulled)
+        {
+            _pulling.TryStopPull(otherTeleEnt, otherPullable);
+        }
+
+        if (TryComp<PullerComponent>(otherTeleEnt, out var otherPullerComp)
+            && TryComp<PullableComponent>(otherPullerComp.Pulling, out var otherSubjectPulling))
+        {
+            _pulling.TryStopPull(otherPullerComp.Pulling.Value, otherSubjectPulling);
+        }
+
+        // can't predict if the target doesn't exist on the client / is outside of PVS
+        if (_netMan.IsClient)
+        {
+            if (!Exists(otherTeleEnt) || Transform(otherTeleEnt).MapID == MapId.Nullspace)
+                return;
+        }
+
         _transform.SwapPositions(teleEnt, otherTeleEnt);
     }
 

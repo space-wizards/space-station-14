@@ -51,6 +51,11 @@ public sealed partial class AudioTab : Control
             SliderVolumeInterface,
             scale: ContentAudioSystem.InterfaceMultiplier);
 
+        Control.AddOptionPercentSlider(
+            CCVars.AnnouncerVolume,
+            SliderVolumeAnnouncer,
+            scale: ContentAudioSystem.AnnouncerMultiplier);
+
         Control.AddOptionSlider(
             CCVars.MaxAmbientSources,
             SliderMaxAmbienceSounds,

@@ -1,0 +1,158 @@
+# This should be getting auto detected as YML if you're using VSCode
+# If it's not, you can probably manually set the language mode to YML somehow
+# Or just change the filename to `template.yml` temporarily
+# The game will complain if I name it template.yaml in an attempt to not load it
+#
+# This file contains instructions for everything you can do with the announcer system
+# This also contains every "needed" announcement for any new announcers and descriptions for what they are
+#
+# Avoid renaming announcement audio files to keep consistency between announcers for workspace searching
+# Keep comments on specific announcements and follow this same formatting for every announcer
+# If you don't have an announcement audio, comment the announcemt type instead of deleting it
+
+- type: announcer
+  id: Announcer # Localized as "announcer-<id>-name" in chat
+  basePath: /Audio/Codebase/Announcements/Announcer # Where to start looking for audio files
+  baseAudioParams: # Default audio parameters for all announcements, all options explained in the template announcement
+    volume: -7 # If this announcer is really loud, lower it to match the others' volume #? Default is 3
+  announcements: # List of all announcements this announcer has audio for #! Comment out unused announcements, don't remove them
+    # Template, delete this in real announcer files
+    - id: template # Lowercase of the event ID, add "Complete" to the end for post-event announcements (endings)
+      ignoreBasePath: false # If true, it will ignore the basePath and use the path as is
+      path: template.ogg # Path to the file relative to basePath/, named with snake_case except for "-complete"
+      collection: AnnouncerTemplateAnnouncements # Collection of audios to randomly use for this, will ignore path if set #! Ignores basePath automatically
+      message: announcer-announcement-template # Localization key for the announcement message to use instead of the default one # NOTE this does not pass through previous loc args yet
+      audioParams: # Overrides baseAudioParams entirely for this specific announcement, numbers are all floats
+        volume: 3 # We don't want individual announcement volumes to vary too much, normalize them with this #? Default is 3
+        pitch: 1 #? Default is 1
+        playOffsetSeconds: 0 # How many seconds into the audio to start from #? Default is 0
+        variation: 0 # Probably wouldn't sound very good unless very low, 0.15 or less is normally used #? Default is 0
+
+    # Communications
+    - id: announce # Communications console
+      path: comms/announce.ogg
+    - id: attention # Generic alert sound # Should be different from fallback but it's very similar
+      path: comms/attention.ogg
+    - id: commandReport # Station goal, Central Command messages, etc
+      path: comms/command_report.ogg
+    - id: spawnAnnounce # Captain join # TODO That system is annoyingly not modular
+      path: comms/spawn_announce.ogg
+    - id: war # Nuclear Operative declaration of war
+      path: comms/war.ogg
+    - id: nukeCodes # The station has been send nuclear activation codes
+      path: comms/nuke_codes.ogg # Or command_report.ogg if you want
+    - id: nukeArm # The nuke is active and ticking
+      path: comms/nuke_arm.ogg
+    - id: nukeDisarm # The nuke has been disarmed
+      path: comms/nuke_disarm.ogg
+    - id: welcome # The shift has started
+      path: comms/welcome.ogg
+
+    # Alert levels
+    - id: alertGreen # Everything is fine
+      path: alerts/green.ogg
+    - id: alertBlue # Something is amiss
+      path: alerts/blue.ogg
+    - id: alertViolet # Viral infection or misc medical emergencies, listen to Medical
+      path: alerts/violet.ogg
+    - id: alertWhite # Glimmer is too high, listen to Epistemics
+      path: alerts/white.ogg
+    - id: alertYellow # The station is being largely damaged, listen to Engineering
+      path: alerts/yellow.ogg
+    - id: alertRed # Generic many things are bad, listen to Security
+      path: alerts/red.ogg
+    - id: alertGamma # There is a massive immediate threat to the station, listen to Central Command
+      path: alerts/gamma.ogg
+    - id: alertDelta # The station is being or about to be massively destroyed, run for your life
+      path: alerts/delta.ogg
+    - id: alertEpsilon # The station has been terminated, good luck survivors!
+      path: alerts/epsilon.ogg
+
+    # Events
+    ## Wizard's Den
+    ### Mid-Round Antagonists
+    - id: ninjaHacking # A Ninja is hacking something
+      path: comms/ninja_hacking.ogg
+    - id: powersinkExplosion # A power sink is about to overcharge and explode
+      path: comms/powersink_explosion.ogg
+    ### Events
+    - id: anomalySpawn # An anomaly has spawned in a random place
+      path: events/anomaly.ogg
+    - id: bluespaceArtifact # An artifact has spawned in a random place
+      path: events/bluespace_artifact.ogg
+    - id: bluespaceLocker # Two random lockers now share inventories
+      path: events/bluespace_locker.ogg
+    - id: breakerFlip # A few random APCs have been disabled, ask Engineering to fix them
+      path: events/breaker_flip.ogg
+    - id: bureaucraticError # Random jobs have been added, removed, or made infinite
+      path: events/bureaucratic_error.ogg
+    - id: clericalError # Random crew are removed from the manifest
+      path: events/clerical_error.ogg
+    - id: carpRift # A dragon's carp rift is active
+      path: events/carp_rift.ogg
+    - id: revenantSpawn # A revenant has spawned (by a prober?)
+      path: events/revenant_spawn.ogg
+    - id: gasLeak # A random gas is coming out of a random vent
+      path: events/gas_leak.ogg
+    - id: gasLeakComplete # Gas has stopped coming out of a vent
+      path: events/gas_leak-complete.ogg
+    - id: kudzuGrowth # Kudzu is growing in a random place
+      path: events/kudzu_growth.ogg
+    - id: meteorSwarm # Meteors are flying at the station, stay away from windows
+      path: events/meteors.ogg
+    - id: meteorSwarmComplete # Meteors have stopped flying at the station
+      path: events/meteors-complete.ogg
+    - id: mouseMigration # Several mice have appeared in a random place
+      path: events/mouse_migration.ogg
+    - id: cockroachMigration # Several cockroaches have appeared in a random place
+      path: events/cockroach_migration.ogg
+    - id: powerGridCheck # The station's power is offline for some moments
+      path: events/power_grid_check.ogg
+    - id: powerGridCheckComplete # The station's power is online again
+      path: events/power_grid_check-complete.ogg
+    - id: randomSentience # A random few animals have become sentient
+      path: events/random_sentience.ogg
+    - id: solarFlare # A solar flare is nearby, may mess with comms and electronics
+      path: events/solar_flare.ogg
+    - id: solarFlareComplete # The solar flare has passed
+      path: events/solar_flare-complete.ogg
+    - id: ventClog # A random reagent is coming out of a scrubber
+      path: events/vent_clog.ogg
+    - id: slimesSpawn # Some simple slimes are appearing in vents
+      path: events/slimes_spawn.ogg
+    - id: spiderSpawn # Some simple spiders are appearing in vents
+      path: events/spider_spawn.ogg
+    - id: immovableRodSpawn # The station is moving into an immovable rod, don't die or something, ask Engineering for help repairing it
+      path: events/immovable_rod_spawn.ogg
+    - id: ionStorm # AI-controlled equipment are now weird, check their laws
+      path: events/ion_storm.ogg
+    ## Delta-V
+    - id: xenoVents # Xenomorphs are coming out of vents
+      path: events/xeno_vents.ogg
+    ## NyanoTrasen
+    - id: noosphericStorm # A large amount of glimmer has joined the station and made people psionic
+      path: events/noospheric_storm.ogg
+
+    # Shuttle
+    - id: shuttleCalled # The shuttle is on its way
+      path: shuttle/called.ogg
+    - id: shuttleRecalled # The shuttle is going back to Central Command
+      path: shuttle/recalled.ogg
+    - id: shuttleDock # The shuttle has arrived at the station
+      path: shuttle/dock.ogg
+    - id: shuttleNearby # The shuttle couldn't dock, it's at a specified location
+      path: shuttle/nearby.ogg
+    - id: shuttleGoodLuck # The shuttle could not find its way to the station, good luck crew
+      path: shuttle/good_luck.ogg
+    - id: shuttleAuthAdded # One of few have added their acceptance to early launching
+      path: shuttle/auth_added.ogg
+    - id: shuttleAuthRevoked # One of few have revoked their acceptance to early launching
+      path: shuttle/auth_revoked.ogg
+    - id: shuttleAlmostLaunching # The shuttle will leave to FTL in 10 seconds
+      path: shuttle/almost_launching.ogg
+    - id: shuttleLeft # The shuttle has left the station
+      path: shuttle/left.ogg
+
+    # Fallback # REQUIRED
+    - id: fallback # Any announcement sent without a valid announcement on this announcer will use this
+      path: fallback.ogg
