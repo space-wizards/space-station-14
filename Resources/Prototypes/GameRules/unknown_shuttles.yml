@@ -29,7 +29,7 @@
   id: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming
+    startAnnouncement: true
     startAudio:
       path: /Audio/Announcements/attention.ogg
     weight: 5
