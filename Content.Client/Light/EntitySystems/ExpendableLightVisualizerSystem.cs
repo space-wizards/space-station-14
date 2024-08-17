@@ -9,6 +9,7 @@ public sealed class ExpendableLightVisualizerSystem : VisualizerSystem<Expendabl
 {
     [Dependency] private readonly PointLightSystem _pointLightSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly LightBehaviorSystem _lightBehavior = default!;
 
     public override void Initialize()
     {
@@ -30,11 +31,11 @@ public sealed class ExpendableLightVisualizerSystem : VisualizerSystem<Expendabl
         if (AppearanceSystem.TryGetData<string>(uid, ExpendableLightVisuals.Behavior, out var lightBehaviourID, args.Component)
         &&  TryComp<LightBehaviourComponent>(uid, out var lightBehaviour))
         {
-            lightBehaviour.StopLightBehaviour();
+            _lightBehavior.StopLightBehaviour((uid, lightBehaviour));
 
             if (!string.IsNullOrEmpty(lightBehaviourID))
             {
-                lightBehaviour.StartLightBehaviour(lightBehaviourID);
+                _lightBehavior.StartLightBehaviour((uid, lightBehaviour), lightBehaviourID);
             }
             else if (TryComp<PointLightComponent>(uid, out var light))
             {
