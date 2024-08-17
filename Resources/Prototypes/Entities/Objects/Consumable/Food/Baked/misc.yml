@@ -303,7 +303,6 @@
     - state: pancakesbb9
       map: ["pancakesbb9"]
       visible: false
-
   - type: Tag
     tags:
     - Pancake
