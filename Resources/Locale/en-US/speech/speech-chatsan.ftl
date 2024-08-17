@@ -168,3 +168,9 @@ chatsan-replacement-59 = my bad
 
 chatsan-word-60 = jfc
 chatsan-replacement-60 = jesus fucking christ
+
+chatsan-word-61 = omw
+chatsan-replacement-61 = on my way
+
+chatsan-word-62 = otw
+chatsan-replacement-62 = on the way
