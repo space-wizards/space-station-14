@@ -95,6 +95,7 @@
   components:
   - type: GameRule
   - type: StationEvent
+    reoccurrenceDelay: 1
     earliestStart: 12
     minimumPlayers: 25
   - type: MeteorSwarm

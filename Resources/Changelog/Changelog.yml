@@ -1,37 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Fixed modular grenade visuals getting stuck in an incorrect state.
-    type: Fix
-  id: 6616
-  time: '2024-05-25T20:03:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28265
-- author: deltanedas
-  changes:
-  - message: Fixed ID Cards not updating the manifest when changed.
-    type: Fix
-  id: 6617
-  time: '2024-05-25T20:08:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28237
-- author: TheShuEd
-  changes:
-  - message: 'Killer tomatoes got a small health and damage buff: 24 -> 35 hp and
-      4->9 brute damage'
-    type: Tweak
-  - message: Killer tomatoes now die after 5 minutes of their existence
-    type: Tweak
-  - message: Killer tomatoes can now be profitably sold.
-    type: Add
-  id: 6618
-  time: '2024-05-25T20:18:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28173
-- author: metalgearsloth
-  changes:
-  - message: Fix water shader getting stuck on sometimes.
-    type: Fix
-  id: 6619
-  time: '2024-05-25T20:23:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28130
 - author: Errant
   changes:
   - message: Changing hands while wielding an item will now immediately unwield it.
@@ -3830,3 +3797,35 @@
   id: 7115
   time: '2024-08-15T14:45:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30763
+- author: Nimfar11
+  changes:
+  - message: Adds a gold toilet
+    type: Add
+  - message: Adds a target for the Thief to steal the golden toilet
+    type: Add
+  - message: Corrected the sprite image for the normal toilet.
+    type: Fix
+  id: 7116
+  time: '2024-08-15T19:23:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31049
+- author: themias
+  changes:
+  - message: Raw meat cutlets can be cooked on a grill
+    type: Tweak
+  id: 7117
+  time: '2024-08-15T19:30:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31048
+- author: IProduceWidgets
+  changes:
+  - message: Meteor dust should more consistently happen instead of meteors.
+    type: Tweak
+  id: 7118
+  time: '2024-08-15T19:33:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31018
+- author: Emisse
+  changes:
+  - message: Atlas, Cluster, Europa, & Saltern removed from the game.
+    type: Remove
+  id: 7119
+  time: '2024-08-15T21:10:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31058

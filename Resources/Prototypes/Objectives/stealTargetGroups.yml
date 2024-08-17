@@ -142,8 +142,6 @@
     sprite: Objects/Misc/id_cards.rsi
     state: default
 
-
-
 - type: stealTargetGroup
   id: LAMP
   name: LAMPS
@@ -343,6 +341,13 @@
   sprite:
     sprite: Structures/Furniture/potted_plants.rsi
     state: plant-25
+
+- type: stealTargetGroup
+  id: ToiletGoldenDirtyWater
+  name: golden toilet
+  sprite:
+    sprite: Structures/Furniture/golden_toilet.rsi
+    state: condisposal
 
 # Thief Animal
 
