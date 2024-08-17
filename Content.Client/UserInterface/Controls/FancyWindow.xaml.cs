@@ -16,6 +16,20 @@ public partial class FancyWindow : BaseWindow
     private const int DragMarginSize = 7;
     public const string StyleClassWindowHelpButton = "windowHelpButton";
 
+    public OrderedChildCollection Controls
+    {
+        get => WindowControls.Children;
+        set
+        {
+            WindowControls.DisposeAllChildren();
+
+            foreach (var control in value)
+            {
+                WindowControls.AddChild(control);
+            }
+        }
+    }
+
     public FancyWindow()
     {
         RobustXamlLoader.Load(this);
