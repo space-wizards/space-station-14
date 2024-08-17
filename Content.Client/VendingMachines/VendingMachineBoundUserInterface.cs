@@ -33,7 +33,7 @@ namespace Content.Client.VendingMachines
             _menu.OnClose += Close;
             _menu.OnItemSelected += OnItemSelected;
 
-            _menu.Populate(_cachedInventory, out _cachedFilteredIndex);
+            _menu.Populate(_cachedInventory);
 
             _menu.OpenCenteredLeft();
         }

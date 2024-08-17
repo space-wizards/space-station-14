@@ -15,7 +15,6 @@ namespace Content.Client.VendingMachines.UI
     public sealed partial class VendingMachineMenu : FancyWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public event Action<GUIBoundKeyEventArgs, ListData>? OnItemSelected;
 
