@@ -112,9 +112,6 @@ public sealed partial class StoreSystem
         // only tell operatives to lock their uplink if it can be locked
         var showFooter = HasComp<RingerUplinkComponent>(store);
 
-        var getDiscountsEvent = new GetDiscountsEvent(store);
-        RaiseLocalEvent(getDiscountsEvent);
-
         var availableListings = component.LastAvailableListings;
 
         var state = new StoreUpdateState(availableListings, allCurrency, showFooter, component.RefundAllowed);

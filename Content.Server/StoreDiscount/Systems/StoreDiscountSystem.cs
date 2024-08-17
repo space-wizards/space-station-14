@@ -25,7 +25,6 @@ public sealed class StoreDiscountSystem : EntitySystem
 
         SubscribeLocalEvent<StoreInitializedEvent>(OnStoreInitialized);
         SubscribeLocalEvent<StoreBuyFinishedEvent>(OnBuyFinished);
-        SubscribeLocalEvent<GetDiscountsEvent>(OnGetDiscounts);
         SubscribeLocalEvent<ListingItemsInitializingEvent>(OnListingItemInitialized);
     }
 
@@ -47,29 +46,25 @@ public sealed class StoreDiscountSystem : EntitySystem
         }
     }
 
-    /// <summary> Extracts discount data if there any on <see cref="GetDiscountsEvent.Store"/>. </summary>
-    private void OnGetDiscounts(GetDiscountsEvent ev)
-    {
-        if (TryComp<StoreDiscountComponent>(ev.Store, out var discountsComponent))
-        {
-            ev.DiscountsData = discountsComponent.Discounts;
-        }
-    }
-
     /// <summary> Decrements discounted item count. </summary>
     private void OnBuyFinished(ref StoreBuyFinishedEvent ev)
     {
         var (storeId, purchasedItemId) = ev;
-        IReadOnlyCollection<StoreDiscountData> discounts = Array.Empty<StoreDiscountData>();
-        if (TryComp<StoreDiscountComponent>(storeId, out var discountsComponent))
+        if (!TryComp<StoreDiscountComponent>(storeId, out var discountsComponent))
         {
-            discounts = discountsComponent.Discounts;
+            return;
         }
 
-        var discountData = discounts.FirstOrDefault(x => x.Count > 0 && x.ListingId == purchasedItemId);
+        var discounts = discountsComponent.Discounts;
+        var discountData = discounts.FirstOrDefault(x => x.ListingId == purchasedItemId);
         if (discountData == null)
         {
             return;
+        }
+
+        if (discountData.Count <= 0)
+        {
+            Log.Warning("Tried to decrement discounted items count but it were already zero!");
         }
 
         discountData.Count--;
@@ -78,12 +73,12 @@ public sealed class StoreDiscountSystem : EntitySystem
     /// <summary> Initialized discounts if required. </summary>
     private void OnStoreInitialized(ref StoreInitializedEvent ev)
     {
-        if (!TryComp<StoreComponent>(ev.Store, out _))
+        if (!ev.UseDiscounts)
         {
             return;
         }
 
-        if (!ev.UseDiscounts)
+        if (!TryComp<StoreComponent>(ev.Store, out _))
         {
             return;
         }
@@ -97,13 +92,15 @@ public sealed class StoreDiscountSystem : EntitySystem
         int totalAvailableDiscounts = 3
     )
     {
-        // get list of categories with cumulative weights.
+        // Get list of categories with cumulative weights.
         // for example if we have categories with weights 2, 18 and 80
-        // list of cumulative ones will be 2,20,100 (with 100 being total)
+        // list of cumulative ones will be 2,20,100 (with 100 being total).
+        // Then roll amount of unique listing items to be discounted under
+        // each category, and after that - roll exact items in categories
+        // and their cost
+
         var prototypes = _prototypeManager.EnumeratePrototypes<DiscountCategoryPrototype>();
         var categoriesWithCumulativeWeight = new CategoriesWithCumulativeWeight(prototypes);
-
-        // roll HOW MANY different listing items to discount in which categories.
         var uniqueListingItemCountByCategory = PickCategoriesToRoll(totalAvailableDiscounts, categoriesWithCumulativeWeight);
 
         return RollItems(listings, uniqueListingItemCountByCategory);
@@ -122,8 +119,10 @@ public sealed class StoreDiscountSystem : EntitySystem
     /// Total amount of different listing items to be discounted. Depending on <see cref="DiscountCategoryPrototype.MaxItems"/>
     /// there might be less discounts then <see cref="totalAvailableDiscounts"/>, but never more.
     /// </param>
-    /// <param name="categoriesWithCumulativeWeight">Map of discount category cumulative weight by its protoId.</param>
-    /// <returns>Map: count of different listing items to be discounted by their discount category.</returns>
+    /// <param name="categoriesWithCumulativeWeight">
+    /// Map of discount category cumulative weights by respective protoId of discount category.
+    /// </param>
+    /// <returns>Map: <b>count</b> of different listing items to be discounted, by discount category.</returns>
     private Dictionary<ProtoId<DiscountCategoryPrototype>, int> PickCategoriesToRoll(
         int totalAvailableDiscounts,
         CategoriesWithCumulativeWeight categoriesWithCumulativeWeight
@@ -161,6 +160,12 @@ public sealed class StoreDiscountSystem : EntitySystem
         return chosenDiscounts;
     }
 
+    /// <summary>
+    /// Rolls list of exact <see cref="ListingData"/> items to be discounted, and amount of currency to be discounted.
+    /// </summary>
+    /// <param name="listings">List of all available listing items from which discounted ones could be selected.</param>
+    /// <param name="chosenDiscounts"></param>
+    /// <returns>Collection of containers with rolled discount data.</returns>
     private IReadOnlyCollection<StoreDiscountData> RollItems(IEnumerable<ListingData> listings, Dictionary<ProtoId<DiscountCategoryPrototype>, int> chosenDiscounts)
     {
         // To roll for discounts on items we: pick listing items that have values inside 'DiscountDownTo'.
@@ -203,10 +208,16 @@ public sealed class StoreDiscountSystem : EntitySystem
     }
 
     /// <summary> Roll amount of each currency by which item cost should be reduced. </summary>
-    private Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> RollItemCost(IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> cost, ListingData listingData)
+    /// <remarks>
+    /// No point in confusing user with a fractional number, so we remove numbers after dot that were rolled.
+    /// </remarks>
+    private Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> RollItemCost(
+        IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> originalCost,
+        ListingData listingData
+    )
     {
-        var discountAmountByCurrencyId = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>(cost.Count);
-        foreach (var (currency, amount) in cost)
+        var discountAmountByCurrencyId = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>(originalCost.Count);
+        foreach (var (currency, amount) in originalCost)
         {
             if (!listingData.DiscountDownTo.TryGetValue(currency, out var discountUntilValue))
             {
@@ -214,8 +225,7 @@ public sealed class StoreDiscountSystem : EntitySystem
             }
 
             var discountUntilRolledValue = _random.NextDouble(discountUntilValue.Double(), amount.Double());
-            var leftover = discountUntilRolledValue % 1;
-            var discountedCost = amount - (discountUntilRolledValue - leftover);
+            var discountedCost = amount - Math.Floor(discountUntilRolledValue);
 
             discountAmountByCurrencyId.Add(currency.Id, discountedCost);
         }
@@ -299,20 +309,4 @@ public sealed class StoreDiscountSystem : EntitySystem
             return null;
         }
     }
-}
-
-/// <summary> Attempt to get list of discounts. </summary>
-public sealed partial class GetDiscountsEvent(EntityUid store)
-{
-    /// <summary>
-    /// EntityUid for which discounts should be retrieved
-    /// </summary>
-
-    public EntityUid Store { get; } = store;
-
-    /// <summary>
-    /// Collection of discounts to fill.
-    /// </summary>
-
-    public IReadOnlyCollection<StoreDiscountData>? DiscountsData { get; set; }
 }
