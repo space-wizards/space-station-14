@@ -4,6 +4,13 @@
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/DefaultRules.xml"
 
+  - type: guideEntry
+  id: WeaselRuleset
+  name: guide-entry-weasel-rules
+  ruleEntry: true
+  priority: 5
+  text: "/ServerInfo/Guidebook/ServerRules/WeaselRules.xml"
+
 - type: guideEntry
   id: CoreRuleset
   name: guide-entry-rules-core-only
