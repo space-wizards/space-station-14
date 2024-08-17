@@ -33,8 +33,11 @@ public sealed class MutationSystem : EntitySystem
         {
             if (Random(mutation.BaseOdds * severity))
             {
-                EntityEffectBaseArgs args = new EntityEffectBaseArgs(plantHolder, EntityManager);
-                mutation.Mutation.Effect(args);
+                if (mutation.AppliesToPlant)
+                { 
+                    EntityEffectBaseArgs args = new EntityEffectBaseArgs(plantHolder, EntityManager);
+                    mutation.Mutation.Effect(args);
+                }
                 seed.Mutations.Add(mutation);
             }
         }

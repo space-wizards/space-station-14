@@ -9,7 +9,7 @@ using System.Text.Json.Serialization;
 namespace Content.Shared.Random;
 
 /// <summary>
-///     Data that specifies reagents that share the same weight and quantity for use with WeightedRandomSolution.
+///     Data that specifies the odds and effects of possible random plant mutations.
 /// </summary>
 [Serializable, NetSerializable]
 [DataDefinition]
@@ -30,10 +30,19 @@ public sealed partial class RandomPlantMutation
     /// <summary>
     /// The actual EntityEffect to apply to the target
     /// </summary>
-    [JsonPropertyName("mutation")]
+    //[JsonPropertyName("mutation")]
     [DataField("mutation")]
-    public EntityEffect Mutation = default!;
+    public EntityEffect Mutation = default!; //TODO: rename to Effect or something.
 
+    /// <summary>
+    /// This mutation will target the harvested produce
+    /// </summary>
     [DataField("appliesToProduce")]
     public bool AppliesToProduce = true;
+
+    /// <summary>
+    /// This mutation will target the growing plant as soon as this mutation is applied.
+    /// </summary>
+    [DataField("appliesToPlant")]
+    public bool AppliesToPlant = true;
 }
