@@ -8,12 +8,15 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Store;
 
 [Serializable, NetSerializable, DataDefinition]
-public sealed partial class ListingDataWithDiscount : ListingData
+public sealed partial class ListingDataWithCostModifiers : ListingData
 {
-    public StoreDiscountData? DiscountData;
+    private IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2>? _costModified = null;
+
+    [DataField]
+    public List<IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2>> Modifiers = new();
 
     /// <inheritdoc />
-    public ListingDataWithDiscount(ListingData listingData, StoreDiscountData? discountData)
+    public ListingDataWithCostModifiers(ListingData listingData)
         : base(
             listingData.Name,
             listingData.DiscountCategory,
@@ -35,7 +38,113 @@ public sealed partial class ListingDataWithDiscount : ListingData
             listingData.DiscountDownTo
         )
     {
-        DiscountData = discountData;
+        // _costModified = Cost;
+    }
+
+    public bool CanBuyWith(Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance)
+    {
+        foreach (var (currency, value) in Cost)
+        {
+            if (!balance.ContainsKey(currency))
+                return false;
+
+            var amount = value;
+            if (Cost.TryGetValue(currency, out var discount))
+            {
+                amount -= discount;
+            }
+
+            if (balance[currency] < amount)
+                return false;
+        }
+
+        return true;
+    }
+
+    /// <inheritdoc />
+    public override IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Cost
+    {
+        get
+        {
+            if (_costModified == null)
+            {
+                if (Modifiers.Count == 0)
+                {
+                    _costModified = OriginalCost.ToDictionary(x => x.Key, x => x.Value);
+                }
+                else
+                {
+                    var dictionary = OriginalCost.ToDictionary(
+                        x => x.Key,
+                        x => x.Value
+                    );
+                    foreach (var modifier in Modifiers)
+                    {
+                        ApplyModifier(dictionary, modifier);
+                    }
+                    _costModified = dictionary;
+                }
+            }
+            return _costModified;
+        }
+    }
+
+    public bool IsCostModified => Modifiers.Count > 0;
+
+    private void ApplyModifier(
+        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> applyTo,
+        IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> modifier
+    )
+    {
+        foreach (var (currency, modifyBy) in modifier)
+        {
+            if (applyTo.TryGetValue(currency, out var currentAmount))
+            {
+                var modifiedAmount = currentAmount - modifyBy;
+                if (modifiedAmount < 0)
+                {
+                    modifiedAmount = 0;
+                    // no negative cost allowed
+                }
+                applyTo[currency] = modifiedAmount;
+            }
+        }
+    }
+
+    public void AddModifier(IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> modifier)
+    {
+        Modifiers.Add(modifier);
+    }
+
+    public IReadOnlyDictionary<ProtoId<CurrencyPrototype>, float> GetModifiersSummaryRelative()
+    {
+        var modifiersSummaryAbsoluteValues = Modifiers.Aggregate(
+            new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>(),
+            (accumulator, x) =>
+            {
+                foreach (var (currency, amount) in x)
+                {
+                    accumulator.TryGetValue(currency, out var accumulatedAmount);
+                    accumulator[currency] = accumulatedAmount + amount;
+                }
+
+                return accumulator;
+            }
+        );
+        var relativeModifiedPercent = new Dictionary<ProtoId<CurrencyPrototype>, float>();
+        foreach (var (currency, discountAmount) in modifiersSummaryAbsoluteValues)
+        {
+            if (OriginalCost.TryGetValue(currency, out var originalAmount))
+            {
+                var discountPercent = (float)discountAmount.Value / originalAmount.Value;
+                relativeModifiedPercent.Add(currency, discountPercent);
+            }
+            // no negative cost allowed
+
+        }
+
+        return relativeModifiedPercent;
+
     }
 }
 
@@ -68,9 +177,9 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
         int purchaseAmount,
         string id,
         List<ProtoId<StoreCategoryPrototype>> categories,
-        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> cost,
+        IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> originalCost,
         TimeSpan restockTime,
-        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> listingDataDiscountDownTo
+        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> dataDiscountDownTo
     )
     {
         Name = name;
@@ -88,8 +197,9 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
         PurchaseAmount = purchaseAmount;
         ID = id;
         Categories = categories;
-        Cost = cost;
+        OriginalCost = originalCost;
         RestockTime = restockTime;
+        DiscountDownTo = dataDiscountDownTo;
     }
 
     [ViewVariables]
@@ -124,7 +234,9 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// The cost of the listing. String represents the currency type while the FixedPoint2 represents the amount of that currency.
     /// </summary>
     [DataField]
-    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Cost = new();
+    public IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> OriginalCost = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>();
+
+    public virtual IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Cost => OriginalCost;
 
     /// <summary>
     /// Specific customizable conditions that determine whether or not the listing can be purchased.
@@ -244,7 +356,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
             Name = Name,
             Description = Description,
             Categories = Categories,
-            Cost = Cost,
+            OriginalCost = OriginalCost,
             Conditions = Conditions,
             Icon = Icon,
             Priority = Priority,
@@ -256,6 +368,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
             PurchaseAmount = PurchaseAmount,
             RestockTime = RestockTime,
             DiscountCategory = DiscountCategory,
+            DiscountDownTo = DiscountDownTo
         };
     }
 }
@@ -266,7 +379,14 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
 [Prototype("listing")]
 [Serializable, NetSerializable]
 [DataDefinition]
-public sealed partial class ListingPrototype : ListingData, IPrototype;
+public sealed partial class ListingPrototype : ListingData, IPrototype
+{
+    /*/// <inheritdoc />
+    public override IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Cost
+    {
+        get => OriginalCost;
+    }*/
+}
 
 /// <summary>
 ///     Defines set of rules for category of discounts -

@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
@@ -24,14 +25,8 @@ public sealed partial class StoreSystem
     {
         var allListings = _proto.EnumeratePrototypes<ListingPrototype>();
 
-        var allData = new HashSet<ListingData>();
-
-        foreach (var listing in allListings)
-        {
-            allData.Add((ListingData) listing.Clone());
-        }
-
-        return allData;
+        var withModifiers = allListings.Select(x=>(ListingData)x.Clone()).ToHashSet();
+        return withModifiers;
     }
 
     /// <summary>
@@ -39,7 +34,7 @@ public sealed partial class StoreSystem
     /// </summary>
     /// <param name="component">The store to add the listing to</param>
     /// <param name="listingId">The id of the listing</param>
-    /// <returns>Whetehr or not the listing was added successfully</returns>
+    /// <returns>Whether or not the listing was added successfully</returns>
     public bool TryAddListing(StoreComponent component, string listingId)
     {
         if (!_proto.TryIndex<ListingPrototype>(listingId, out var proto))
@@ -47,7 +42,11 @@ public sealed partial class StoreSystem
             Log.Error("Attempted to add invalid listing.");
             return false;
         }
-        return TryAddListing(component, proto);
+
+        var listingData = new ListingDataWithCostModifiers(proto);
+        var @event = new ListingItemsInitializingEvent(listingData, component.Owner);
+        RaiseLocalEvent(@event);
+        return TryAddListing(component, listingData);
     }
 
     /// <summary>
@@ -56,7 +55,7 @@ public sealed partial class StoreSystem
     /// <param name="component">The store to add the listing to</param>
     /// <param name="listing">The listing</param>
     /// <returns>Whether or not the listing was add successfully</returns>
-    public bool TryAddListing(StoreComponent component, ListingData listing)
+    public bool TryAddListing(StoreComponent component, ListingDataWithCostModifiers listing)
     {
         return component.Listings.Add(listing);
     }
@@ -68,9 +67,9 @@ public sealed partial class StoreSystem
     /// <param name="store"></param>
     /// <param name="component">The store the listings are coming from.</param>
     /// <returns>The available listings.</returns>
-    public IEnumerable<ListingData> GetAvailableListings(EntityUid buyer, EntityUid store, StoreComponent component)
+    public IEnumerable<ListingDataWithCostModifiers> GetAvailableListings(EntityUid buyer, EntityUid store, StoreComponent component)
     {
-        return GetAvailableListings(buyer, component.Listings, component.Categories, store);
+        return GetAvailableListings(buyer, null, component.Categories, store);
     }
 
     /// <summary>
@@ -81,13 +80,21 @@ public sealed partial class StoreSystem
     /// <param name="categories">What categories to filter by.</param>
     /// <param name="storeEntity">The physial entity of the store. Can be null.</param>
     /// <returns>The available listings.</returns>
-    public IEnumerable<ListingData> GetAvailableListings(
+    public IEnumerable<ListingDataWithCostModifiers> GetAvailableListings(
         EntityUid buyer,
-        HashSet<ListingData>? listings,
+        HashSet<ListingDataWithCostModifiers>? listings,
         HashSet<ProtoId<StoreCategoryPrototype>> categories,
-        EntityUid? storeEntity = null)
+        EntityUid? storeEntity = null
+    )
     {
-        listings ??= GetAllListings();
+        if (listings == null)
+        {
+            var withModifiers = GetAllListings()
+                                .Select(x => new ListingDataWithCostModifiers(x))
+                                .ToHashSet();
+            RaiseLocalEvent(new ListingItemsInitializingEvent(withModifiers, storeEntity));
+            listings = withModifiers;
+        }
 
         foreach (var listing in listings)
         {
@@ -131,4 +138,22 @@ public sealed partial class StoreSystem
         }
         return false;
     }
+}
+
+public sealed class ListingItemsInitializingEvent
+{
+    public ListingItemsInitializingEvent(IReadOnlyCollection<ListingDataWithCostModifiers> listingData, EntityUid? storeOwner)
+    {
+        ListingData = listingData;
+        StoreOwner = storeOwner;
+    }
+
+    public ListingItemsInitializingEvent(ListingDataWithCostModifiers listingData, EntityUid? storeOwner)
+    {
+        ListingData = new HashSet<ListingDataWithCostModifiers> { listingData };
+        StoreOwner = storeOwner;
+    }
+
+    public IReadOnlyCollection<ListingDataWithCostModifiers> ListingData { get; }
+    public EntityUid? StoreOwner { get; }
 }

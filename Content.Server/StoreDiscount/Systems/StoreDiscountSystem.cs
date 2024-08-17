@@ -24,9 +24,27 @@ public sealed class StoreDiscountSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<StoreInitializedEvent>(OnStoreInitialized);
-        SubscribeLocalEvent<StoreBuyAttemptEvent>(OnBuyRequest);
         SubscribeLocalEvent<StoreBuyFinishedEvent>(OnBuyFinished);
         SubscribeLocalEvent<GetDiscountsEvent>(OnGetDiscounts);
+        SubscribeLocalEvent<ListingItemsInitializingEvent>(OnListingItemInitialized);
+    }
+
+    private void OnListingItemInitialized(ListingItemsInitializingEvent ev)
+    {
+        if (ev.StoreOwner == null)
+        {
+            return;
+        }
+
+        if (TryComp<StoreDiscountComponent>(ev.StoreOwner, out var discountsComponent))
+        {
+            var discounts = discountsComponent.Discounts;
+            foreach (var discountData in discounts)
+            {
+                var found = ev.ListingData.First(x => x.ID == discountData.ListingId);
+                found.AddModifier(discountData.DiscountAmountByCurrency);
+            }
+        }
     }
 
     /// <summary> Extracts discount data if there any on <see cref="GetDiscountsEvent.Store"/>. </summary>
@@ -57,40 +75,10 @@ public sealed class StoreDiscountSystem : EntitySystem
         discountData.Count--;
     }
 
-    /// <summary> Refine listing item cost using discounts. </summary>
-    private void OnBuyRequest(StoreBuyAttemptEvent ev)
-    {
-        IReadOnlyCollection<StoreDiscountData> discounts = Array.Empty<StoreDiscountData>();
-        if (TryComp<StoreDiscountComponent>(ev.StoreUid, out var discountsComponent))
-        {
-            discounts = discountsComponent.Discounts;
-        }
-
-        var discountData = discounts.FirstOrDefault(x => x.Count > 0 && x.ListingId == ev.PurchasingItemId);
-        if (discountData == null)
-        {
-            return;
-        }
-
-        var withDiscount = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>();
-        foreach (var (currency, amount) in ev.Cost)
-        {
-            var totalAmount = amount;
-            if (discountData?.DiscountAmountByCurrency.TryGetValue(currency, out var discount) == true)
-            {
-                totalAmount -= discount;
-            }
-
-            withDiscount.Add(currency, totalAmount);
-        }
-
-        ev.Cost = withDiscount;
-    }
-
     /// <summary> Initialized discounts if required. </summary>
     private void OnStoreInitialized(ref StoreInitializedEvent ev)
     {
-        if (!TryComp<StoreComponent>(ev.Store, out var store))
+        if (!TryComp<StoreComponent>(ev.Store, out _))
         {
             return;
         }
@@ -215,7 +203,7 @@ public sealed class StoreDiscountSystem : EntitySystem
     }
 
     /// <summary> Roll amount of each currency by which item cost should be reduced. </summary>
-    private Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> RollItemCost(Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> cost, ListingData listingData)
+    private Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> RollItemCost(IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> cost, ListingData listingData)
     {
         var discountAmountByCurrencyId = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>(cost.Count);
         foreach (var (currency, amount) in cost)

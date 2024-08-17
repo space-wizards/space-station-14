@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Store.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
@@ -56,7 +57,7 @@ namespace Content.Server.Traitor.Uplink
                 TargetUser: user,
                 Store: uplinkEntity.Value,
                 UseDiscounts: giveDiscounts,
-                Listings: _store.GetAvailableListings(user, uplinkEntity.Value, store)
+                Listings: _store.GetAvailableListings(user, uplinkEntity.Value, store).ToArray()
             );
             RaiseLocalEvent(ref uplinkInitializedEvent);
             // TODO add BUI. Currently can't be done outside of yaml -_-
@@ -95,5 +96,5 @@ namespace Content.Server.Traitor.Uplink
     }
 
     [ByRefEvent]
-    public record struct StoreInitializedEvent(EntityUid TargetUser, EntityUid Store, bool UseDiscounts, IEnumerable<ListingData> Listings);
+    public record struct StoreInitializedEvent(EntityUid TargetUser, EntityUid Store, bool UseDiscounts, IReadOnlyCollection<ListingData> Listings);
 }

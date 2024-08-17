@@ -1,9 +1,4 @@
 - type: discountCategory
-  id: noDiscounts # Items should not be discounted in any way share or form for the love of humanity.
-  weight: 0
-  maxItems: 0
-
-- type: discountCategory
   id: rareDiscounts # Dirty-cheap items that are rarely used and can be discounted to 0-ish cost to encourage usage.
   weight: 18
   maxItems: 2

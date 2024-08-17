@@ -116,16 +116,8 @@ public sealed partial class StoreSystem
         RaiseLocalEvent(getDiscountsEvent);
 
         var availableListings = component.LastAvailableListings;
-        var withDiscounts = new HashSet<ListingDataWithDiscount>();
-        foreach (var availableListing in availableListings)
-        {
-            var found = getDiscountsEvent.DiscountsData?.FirstOrDefault(
-                x => x.ListingId == availableListing.ID
-                     && x.Count > 0
-            );
-            withDiscounts.Add(new ListingDataWithDiscount(availableListing, found));
-        }
-        var state = new StoreUpdateState(withDiscounts, allCurrency, showFooter, component.RefundAllowed);
+
+        var state = new StoreUpdateState(availableListings, allCurrency, showFooter, component.RefundAllowed);
         _ui.SetUiState(store, StoreUiKey.Key, state);
     }
 
@@ -169,16 +161,7 @@ public sealed partial class StoreSystem
         }
 
         //check that we have enough money
-        var storeBuyAttempt = new StoreBuyAttemptEvent(uid, listing.Cost, msg.Listing.ID);
-        RaiseLocalEvent(storeBuyAttempt);
-
-        var cost = storeBuyAttempt.Cost;
-
-        if (storeBuyAttempt.Cancelled)
-        {
-            return;
-        }
-
+        var cost = listing.Cost;
         foreach (var (currency, amount) in cost)
         {
             if (!component.Balance.TryGetValue(currency, out var balance) || balance < amount)
@@ -409,35 +392,6 @@ public sealed partial class StoreSystem
 
         component.RefundAllowed = false;
     }
-}
-
-/// <summary>
-/// Cancellable event of attempt of store buy. Can be used to modify cost of item in some way (apply discount or surcharge).
-/// </summary>
-public sealed class StoreBuyAttemptEvent : CancellableEntityEventArgs
-{
-    /// <inheritdoc />
-    public StoreBuyAttemptEvent(EntityUid storeUid, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> cost, string purchasingItemId)
-    {
-        StoreUid = storeUid;
-        Cost = cost;
-        PurchasingItemId = purchasingItemId;
-    }
-
-    /// <summary>
-    /// EntityUid on which store is placed.
-    /// </summary>
-    public EntityUid StoreUid { get; set; }
-
-    /// <summary>
-    /// <c>Modifiable</c> cost of item to be purchased.
-    /// </summary>
-    public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Cost { get; set; }
-
-    /// <summary>
-    /// ListingItem that was attempted to be purchased.
-    /// </summary>
-    public string PurchasingItemId { get; set; }
 }
 
 /// <summary>
