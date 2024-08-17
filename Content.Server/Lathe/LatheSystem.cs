@@ -195,11 +195,11 @@ namespace Content.Server.Lathe
             var recipe = component.Queue.First();
             component.Queue.RemoveAt(0);
 
-            var time = _reagentSpeed.ApplySpeed(uid, recipe.CompleteTime);
+            var time = _reagentSpeed.ApplySpeed(uid, recipe.CompleteTime) * component.TimeMultiplier;
 
             var lathe = EnsureComp<LatheProducingComponent>(uid);
             lathe.StartTime = _timing.CurTime;
-            lathe.ProductionLength = time * component.TimeMultiplier;
+            lathe.ProductionLength = time;
             component.CurrentRecipe = recipe;
 
             var ev = new LatheStartPrintingEvent(recipe);
@@ -208,6 +208,11 @@ namespace Content.Server.Lathe
             _audio.PlayPvs(component.ProducingSound, uid);
             UpdateRunningAppearance(uid, true);
             UpdateUserInterfaceState(uid, component);
+
+            if (time == TimeSpan.Zero)
+            {
+                FinishProducing(uid, component, lathe);
+            }
             return true;
         }
 

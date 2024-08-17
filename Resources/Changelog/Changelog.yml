@@ -1,200 +1,4 @@
 ﻿Entries:
-- author: PolterTzi
-  changes:
-  - message: The guidebook now lists the effects reagents have on plants.
-    type: Add
-  id: 6607
-  time: '2024-05-19T23:01:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28038
-- author: Tayrtahn
-  changes:
-  - message: The popup for someone pointing at you is now slightly larger than normal
-      popups.
-    type: Tweak
-  id: 6608
-  time: '2024-05-20T13:32:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28152
-- author: Tayrtahn
-  changes:
-  - message: '"Warp to most followed" ghost option no longer includes admins and non-ghost
-      followers.'
-    type: Fix
-  id: 6609
-  time: '2024-05-20T14:12:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28120
-- author: Killerqu00
-  changes:
-  - message: Sleeper Agents only appear once per round.
-    type: Tweak
-  id: 6610
-  time: '2024-05-21T10:16:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28160
-- author: TheShuEd
-  changes:
-  - message: Artifact portal lifespan reduced from 120 seconds to 1 second
-    type: Tweak
-  id: 6611
-  time: '2024-05-22T07:52:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28200
-- author: nikthechampiongr
-  changes:
-  - message: Firelocks can now be pried by hand.
-    type: Tweak
-  - message: Firelocks will now not automatically close for 2 seconds after you pry
-      them open.
-    type: Tweak
-  - message: Firelocks are now properly predicted.
-    type: Fix
-  id: 6612
-  time: '2024-05-22T11:16:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26582
-- author: blueDev2
-  changes:
-  - message: Watermelon slices are now considered fruit
-    type: Fix
-  id: 6613
-  time: '2024-05-23T20:27:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28226
-- author: ElectroJr
-  changes:
-  - message: Ghosts can once again open paper & other UIs
-    type: Fix
-  id: 6614
-  time: '2024-05-24T05:03:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27999
-- author: nikthechampiongr
-  changes:
-  - message: Firelocks will no longer randomly pulse closing lights.
-    type: Fix
-  id: 6615
-  time: '2024-05-24T14:44:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28227
-- author: ElectroJr
-  changes:
-  - message: Fixed modular grenade visuals getting stuck in an incorrect state.
-    type: Fix
-  id: 6616
-  time: '2024-05-25T20:03:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28265
-- author: deltanedas
-  changes:
-  - message: Fixed ID Cards not updating the manifest when changed.
-    type: Fix
-  id: 6617
-  time: '2024-05-25T20:08:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28237
-- author: TheShuEd
-  changes:
-  - message: 'Killer tomatoes got a small health and damage buff: 24 -> 35 hp and
-      4->9 brute damage'
-    type: Tweak
-  - message: Killer tomatoes now die after 5 minutes of their existence
-    type: Tweak
-  - message: Killer tomatoes can now be profitably sold.
-    type: Add
-  id: 6618
-  time: '2024-05-25T20:18:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28173
-- author: metalgearsloth
-  changes:
-  - message: Fix water shader getting stuck on sometimes.
-    type: Fix
-  id: 6619
-  time: '2024-05-25T20:23:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28130
-- author: Errant
-  changes:
-  - message: Changing hands while wielding an item will now immediately unwield it.
-    type: Tweak
-  id: 6620
-  time: '2024-05-26T01:17:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28161
-- author: ElectroJr
-  changes:
-  - message: Fixed being unable to interact with items via storage UIs
-    type: Fix
-  id: 6621
-  time: '2024-05-26T02:11:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28291
-- author: EmoGarbage404
-  changes:
-  - message: Properly fix magic mirrors
-    type: Fix
-  id: 6622
-  time: '2024-05-26T04:46:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28282
-- author: deltanedas
-  changes:
-  - message: Fixed being picked for antag roles while in the lobby or not opted in.
-    type: Fix
-  id: 6623
-  time: '2024-05-26T05:14:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28197
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Fix hypodarts not injecting into people with outerclothing equipped.
-    type: Fix
-  id: 6624
-  time: '2024-05-26T14:48:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28301
-- author: metalgearsloth
-  changes:
-  - message: Selectively revert pulling throwing for the short-term.
-    type: Tweak
-  id: 6625
-  time: '2024-05-27T00:11:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28126
-- author: EmoGarbage404
-  changes:
-  - message: Multiple pipes facing the same direction can no longer be placed on the
-      same tile. You can still have overlapping straight pipes or corners going in
-      opposite directions.
-    type: Fix
-  id: 6626
-  time: '2024-05-27T22:37:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28308
-- author: Emisse
-  changes:
-  - message: Derotate Train temporarily
-    type: Tweak
-  id: 6627
-  time: '2024-05-27T22:40:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28328
-- author: EmoGarbage404
-  changes:
-  - message: Fixed not enough antags being selected for gamemodes.
-    type: Fix
-  id: 6628
-  time: '2024-05-27T22:43:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28327
-- author: EmoGarbage404
-  changes:
-  - message: Removed the fire-fighting remote.
-    type: Remove
-  id: 6629
-  time: '2024-05-28T00:04:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28330
-- author: slarticodefast
-  changes:
-  - message: Corrected some cargo bounties.
-    type: Fix
-  id: 6630
-  time: '2024-05-28T00:51:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28255
-- author: Repo
-  changes:
-  - message: NanoMed, wall vends will spawn items the correct direction.
-    type: Fix
-  id: 6631
-  time: '2024-05-28T14:02:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28279
-- author: ShadowCommander
-  changes:
-  - message: Added pressure and temperature warnings to firelock examine text.
-    type: Add
-  id: 6632
-  time: '2024-05-28T14:59:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28341
 - author: deltanedas
   changes:
   - message: Nukies will have ghost roles opened if not enough people can be picked.
@@ -3799,3 +3603,234 @@
   id: 7106
   time: '2024-08-13T20:32:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30969
+- author: IProduceWidgets
+  changes:
+  - message: shuttle events have been separated from other midround events and can
+      now happen concurrently.
+    type: Tweak
+  - message: Cargo Gift events should be less likely.
+    type: Tweak
+  - message: meteors have been changed to be more responsive to player count.
+    type: Tweak
+  - message: 'Game mode: Kessler syndrome - What if survival but also the apocalypse?'
+    type: Add
+  - message: 'Game mode: Zombeteors - Zombies and a meteor shower all at once!'
+    type: Add
+  id: 7107
+  time: '2024-08-14T05:21:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29320
+- author: Blackern5000
+  changes:
+  - message: Combat medical kits now contain saline syringes.
+    type: Add
+  id: 7108
+  time: '2024-08-14T06:25:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29954
+- author: TheShuEd
+  changes:
+  - message: added morbilliard variants of procedural tacos and kebabs
+    type: Add
+  - message: removed all microwave taco and kebabs recipes (except for the taco shell
+      itself)
+    type: Remove
+  - message: you can fight with a skewer (even if it has food on it)
+    type: Tweak
+  - message: now you can't put more than 10 layers on a burger. (20 before)
+    type: Tweak
+  id: 7109
+  time: '2024-08-14T13:04:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30905
+- author: themias
+  changes:
+  - message: Fixed lizards being unable to eat custom burgers
+    type: Fix
+  id: 7110
+  time: '2024-08-14T19:47:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31005
+- author: Erisfiregamer1
+  changes:
+  - message: New chemical, Sedin. It restores seeds on plants 20% of the time with
+      other adverse effects included.
+    type: Add
+  id: 7111
+  time: '2024-08-15T00:38:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27110
+- author: PoorMansDreams
+  changes:
+  - message: Added Star sticker in loadouts for Secoffs
+    type: Add
+  id: 7112
+  time: '2024-08-15T01:50:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29767
+- author: FATFSAAM2
+  changes:
+  - message: added 7 new figurine voice lines.
+    type: Add
+  - message: changed a hos figurine voice line to not include a typo.
+    type: Fix
+  id: 7113
+  time: '2024-08-15T12:34:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30865
+- author: to4no_fix
+  changes:
+  - message: Added a new electropack that shocks when a trigger is triggered
+    type: Add
+  - message: Added a new shock collar that shocks when a trigger is triggered
+    type: Add
+  - message: Two shock collars and two remote signallers added to the warden's locker
+    type: Add
+  - message: Shock collar added as a new target for the thief
+    type: Add
+  - message: A new Special Means technology has been added to the Arsenal research
+      branch at the 1st research level. Its research opens up the possibility of producing
+      electropacks at security techfab. The cost of technology research is 5000
+    type: Add
+  id: 7114
+  time: '2024-08-15T14:30:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30529
+- author: Mervill
+  changes:
+  - message: The Gas Analyzer won't spuriously shut down for seemly no reason.
+    type: Tweak
+  - message: The Gas Analyzer will always switch to the device tab when a new object
+      is scanned.
+    type: Tweak
+  - message: The Gas Analyzer's interaction range is now equal to the standard interaction
+      range
+    type: Fix
+  - message: Clicking the Gas Analyzer when it's in your hand has proper enable/disable
+      behavior.
+    type: Fix
+  id: 7115
+  time: '2024-08-15T14:45:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30763
+- author: Nimfar11
+  changes:
+  - message: Adds a gold toilet
+    type: Add
+  - message: Adds a target for the Thief to steal the golden toilet
+    type: Add
+  - message: Corrected the sprite image for the normal toilet.
+    type: Fix
+  id: 7116
+  time: '2024-08-15T19:23:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31049
+- author: themias
+  changes:
+  - message: Raw meat cutlets can be cooked on a grill
+    type: Tweak
+  id: 7117
+  time: '2024-08-15T19:30:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31048
+- author: IProduceWidgets
+  changes:
+  - message: Meteor dust should more consistently happen instead of meteors.
+    type: Tweak
+  id: 7118
+  time: '2024-08-15T19:33:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31018
+- author: Emisse
+  changes:
+  - message: Atlas, Cluster, Europa, & Saltern removed from the game.
+    type: Remove
+  id: 7119
+  time: '2024-08-15T21:10:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31058
+- author: Emisse
+  changes:
+  - message: Origin removed from the game.
+    type: Remove
+  id: 7120
+  time: '2024-08-15T22:22:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31059
+- author: Psychpsyo
+  changes:
+  - message: You can now be German on ze space station! (added German accent)
+    type: Add
+  id: 7121
+  time: '2024-08-15T23:30:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30541
+- author: EmoGarbage404
+  changes:
+  - message: Reduced the amount of ore on the mining asteroid and expeditions.
+    type: Tweak
+  - message: Increased the amount of ore on magnet asteroids.
+    type: Tweak
+  - message: Each piece of ore now only has enough material to create 1 sheet.
+    type: Tweak
+  - message: The salvage magnet now accurately reports the contents of asteroids.
+    type: Fix
+  id: 7122
+  time: '2024-08-16T01:43:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30920
+- author: metalgearsloth
+  changes:
+  - message: Fix mains light on wires not being lit.
+    type: Fix
+  id: 7123
+  time: '2024-08-16T03:59:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31066
+- author: IgorAnt028
+  changes:
+  - message: The dead and knocked down now stop holding objects
+    type: Fix
+  id: 7124
+  time: '2024-08-16T04:53:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31009
+- author: SlamBamActionman
+  changes:
+  - message: Nar'Sie is satiated; moppable blood will no longer duplicate.
+    type: Fix
+  id: 7125
+  time: '2024-08-16T10:47:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30983
+- author: Blackern5000
+  changes:
+  - message: Disabler SMGs no longer fit in combat boots
+    type: Fix
+  id: 7126
+  time: '2024-08-17T01:00:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31110
+- author: Mervill
+  changes:
+  - message: Fixed suffocation alerts not appearing.
+    type: Fix
+  id: 7127
+  time: '2024-08-17T02:02:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31115
+- author: TokenStyle
+  changes:
+  - message: Plant's scream mutation now have 10+ scream varieties.
+    type: Add
+  id: 7128
+  time: '2024-08-17T02:09:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30862
+- author: Boaz1111
+  changes:
+  - message: Phlogiston now also ignites people who consume it.
+    type: Add
+  id: 7129
+  time: '2024-08-17T02:49:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30955
+- author: slarticodefast
+  changes:
+  - message: Fixed borgs brains being teleported outside their chassis and PAIs outside
+      a PDA or pocket by the bluespace anomaly.
+    type: Fix
+  id: 7130
+  time: '2024-08-17T04:58:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30744
+- author: EmoGarbage404
+  changes:
+  - message: You can no longer see wreck names in the salvage magnet UI.
+    type: Tweak
+  id: 7131
+  time: '2024-08-17T05:09:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31087
+- author: EmoGarbage404
+  changes:
+  - message: You can now smelt ores in intervals smaller than 30.
+    type: Add
+  id: 7132
+  time: '2024-08-17T05:12:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31074

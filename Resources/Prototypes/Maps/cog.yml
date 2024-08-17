@@ -3,7 +3,7 @@
   mapName: 'Cog'
   mapPath: /Maps/cog.yml
   minPlayers: 35
-  maxPlayers: 70
+  maxPlayers: 70 #big map
   stations:
     Cog:
       stationProto: StandardNanotrasenStation
@@ -12,7 +12,7 @@
           mapNameTemplate: '{0} Cog {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: '14'
+            prefixCreator: 'R4' # R4407/Goon. GS isn't as cool sounding.
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_wode.yml
         - type: StationJobs
