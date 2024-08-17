@@ -176,6 +176,13 @@
     accentVColor: "#A32D26"
   - type: Icon
     state: pda-interncadet
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
 
 - type: entity
   parent: BasePDA
@@ -411,6 +418,13 @@
     borderColor: "#6f6192"
   - type: Icon
     state: pda-lawyer
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
 
 - type: entity
   parent: BasePDA
@@ -445,6 +459,13 @@
     borderColor: "#7C5D00"
   - type: Icon
     state: pda-captain
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
 
 - type: entity
   parent: BasePDA
@@ -606,6 +627,13 @@
     accentHColor: "#447987"
   - type: Icon
     state: pda-hos
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
 
 - type: entity
   parent: BasePDA
@@ -621,6 +649,13 @@
     accentVColor: "#949137"
   - type: Icon
     state: pda-warden
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
 
 - type: entity
   parent: BasePDA
@@ -635,6 +670,13 @@
     borderColor: "#A32D26"
   - type: Icon
     state: pda-security
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
 
 - type: entity
   parent: BasePDA
@@ -654,6 +696,13 @@
     borderColor: "#00842e"
   - type: Icon
     state: pda-centcom
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
 
 - type: entity
   parent: CentcomPDA
@@ -674,6 +723,7 @@
       - NotekeeperCartridge
       - NewsReaderCartridge
       - LogProbeCartridge
+      - WantedListCartridge
 
 - type: entity
   parent: CentcomPDA
@@ -781,6 +831,13 @@
     accentVColor: "#447987"
   - type: Icon
     state: pda-ert
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
 
 - type: entity
   parent: ERTLeaderPDA
@@ -926,6 +983,13 @@
     borderColor: "#774705"
   - type: Icon
     state: pda-detective
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
 
 - type: entity
   parent: BaseMedicalPDA
@@ -942,6 +1006,13 @@
     accentVColor: "#d7d7d0"
   - type: Icon
     state: pda-brigmedic
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
 
 - type: entity
   parent: ClownPDA
@@ -1027,6 +1098,13 @@
     accentVColor: "#DFDFDF"
   - type: Icon
     state: pda-seniorofficer
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
 
 - type: entity
   parent: SyndiPDA
