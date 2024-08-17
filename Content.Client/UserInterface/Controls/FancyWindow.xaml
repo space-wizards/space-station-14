@@ -10,6 +10,10 @@
             <BoxContainer Margin="4 2 8 0" Orientation="Horizontal">
                 <Label Name="WindowTitle"
                        HorizontalExpand="True" VAlign="Center" StyleClasses="FancyWindowTitle" />
+
+                <Control Name="WindowControls" />
+
+                <controls:CloseButton Name="CloseButton" />
             </BoxContainer>
         </Control>
         <PanelContainer StyleClasses="LowDivider" />

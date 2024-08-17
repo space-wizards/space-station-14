@@ -20,6 +20,8 @@ public partial class FancyWindow : BaseWindow
     {
         RobustXamlLoader.Load(this);
 
+        CloseButton.OnPressed += _ => Close();
+
         XamlChildren = ContentsContainer.Children;
     }
 
