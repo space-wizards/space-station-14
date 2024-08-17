@@ -13,17 +13,12 @@ namespace Content.Client.UserInterface.Controls;
 [Virtual]
 public partial class FancyWindow : BaseWindow
 {
-    [Dependency] private readonly IEntitySystemManager _sysMan = default!;
-    private GuidebookSystem? _guidebookSystem;
     private const int DragMarginSize = 7;
     public const string StyleClassWindowHelpButton = "windowHelpButton";
 
     public FancyWindow()
     {
         RobustXamlLoader.Load(this);
-
-        CloseButton.OnPressed += _ => Close();
-        HelpButton.OnPressed += _ => Help();
 
         XamlChildren = ContentsContainer.Children;
     }
@@ -32,27 +27,6 @@ public partial class FancyWindow : BaseWindow
     {
         get => WindowTitle.Text;
         set => WindowTitle.Text = value;
-    }
-
-    private List<ProtoId<GuideEntryPrototype>>? _helpGuidebookIds;
-
-    public List<ProtoId<GuideEntryPrototype>>? HelpGuidebookIds
-    {
-        get => _helpGuidebookIds;
-        set
-        {
-            _helpGuidebookIds = value;
-            HelpButton.Disabled = _helpGuidebookIds == null;
-            HelpButton.Visible = !HelpButton.Disabled;
-        }
-    }
-
-    public void Help()
-    {
-        if (HelpGuidebookIds is null)
-            return;
-        _guidebookSystem ??= _sysMan.GetEntitySystem<GuidebookSystem>();
-        _guidebookSystem.OpenHelp(HelpGuidebookIds);
     }
 
     protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
