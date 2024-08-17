@@ -1,39 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Corrected some cargo bounties.
-    type: Fix
-  id: 6630
-  time: '2024-05-28T00:51:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28255
-- author: Repo
-  changes:
-  - message: NanoMed, wall vends will spawn items the correct direction.
-    type: Fix
-  id: 6631
-  time: '2024-05-28T14:02:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28279
-- author: ShadowCommander
-  changes:
-  - message: Added pressure and temperature warnings to firelock examine text.
-    type: Add
-  id: 6632
-  time: '2024-05-28T14:59:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28341
-- author: deltanedas
-  changes:
-  - message: Nukies will have ghost roles opened if not enough people can be picked.
-    type: Tweak
-  id: 6633
-  time: '2024-05-28T15:35:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28316
-- author: WarMechanic
-  changes:
-  - message: Guns will now cycle when interacting with them in-hand after wielding.
-    type: Tweak
-  id: 6634
-  time: '2024-05-28T18:17:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28002
 - author: lzk228
   changes:
   - message: Gasp and deathgasp emotes now have a sound.
@@ -3833,3 +3798,39 @@
   id: 7129
   time: '2024-08-17T02:49:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30955
+- author: slarticodefast
+  changes:
+  - message: Fixed borgs brains being teleported outside their chassis and PAIs outside
+      a PDA or pocket by the bluespace anomaly.
+    type: Fix
+  id: 7130
+  time: '2024-08-17T04:58:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30744
+- author: EmoGarbage404
+  changes:
+  - message: You can no longer see wreck names in the salvage magnet UI.
+    type: Tweak
+  id: 7131
+  time: '2024-08-17T05:09:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31087
+- author: EmoGarbage404
+  changes:
+  - message: You can now smelt ores in intervals smaller than 30.
+    type: Add
+  id: 7132
+  time: '2024-08-17T05:12:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31074
+- author: themias
+  changes:
+  - message: Added a recipe for croissants
+    type: Add
+  id: 7133
+  time: '2024-08-17T14:09:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30825
+- author: Ubaser
+  changes:
+  - message: Red crowbars no longer fit in pockets.
+    type: Fix
+  id: 7134
+  time: '2024-08-17T14:32:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30939
