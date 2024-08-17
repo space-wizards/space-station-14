@@ -234,5 +234,5 @@
 
 - files: [beeps.ogg, electrical_short_circuit.ogg, electrical_short_circuit2.ogg, ]
   copyright: '"taken from zvukipro.com'
-  license: "CC-BY-NC"
+  license: "CC-BY-NC-3.0"
   source: https://zvukipro.com/predmet/158-zvuk-elektrichestva.html
