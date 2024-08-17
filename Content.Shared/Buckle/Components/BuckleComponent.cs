@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Alert;
 using Content.Shared.Interaction;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -79,6 +80,7 @@ public sealed class BuckleState(NetEntity? buckledTo, bool dontCollide, TimeSpan
     public readonly TimeSpan? BuckleTime = buckleTime;
 }
 
+public sealed partial class UnbuckleAlertEvent : BaseAlertEvent;
 
 /// <summary>
 /// Event raised directed at a strap entity before some entity gets buckled to it.

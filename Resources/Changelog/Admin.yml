@@ -367,5 +367,115 @@ Entries:
   id: 45
   time: '2024-07-11T05:14:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29896
+- author: Repo
+  changes:
+  - message: Added aHelp player pinning.
+    type: Add
+  - message: Added disconnection, reconnection, banning notice on relay and ahelp.
+    type: Add
+  - message: Fixed search clears on aHelp close.
+    type: Fix
+  id: 46
+  time: '2024-07-30T08:28:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28639
+- author: Repo
+  changes:
+  - message: Fixed Ahelp Sorting
+    type: Fix
+  id: 47
+  time: '2024-07-31T01:58:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30518
+- author: Mervill
+  changes:
+  - message: added a debug command to make you thirsty
+    type: Add
+  id: 48
+  time: '2024-08-02T15:49:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30562
+- author: Repo
+  changes:
+  - message: Players that aHelped in Current round stay at top of bwoink list.
+    type: Fix
+  id: 49
+  time: '2024-08-02T18:58:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30580
+- author: Mervill
+  changes:
+  - message: added a debug command to set either your hunger or thirst value to a
+      given threshold
+    type: Add
+  id: 50
+  time: '2024-08-05T07:36:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30563
+- author: nikthechampiongr
+  changes:
+  - message: The player panel has now been added and can be invoked with the playerpanel
+      command. It will display general information on the selected player, as well
+      as allow for general actions to be performed on them.
+    type: Add
+  id: 51
+  time: '2024-08-09T05:33:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30238
+- author: Repo
+  changes:
+  - message: Accurate Panic bunker and Baby Jail conditions.
+    type: Fix
+  id: 52
+  time: '2024-08-09T05:48:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30581
+- author: Simyon
+  changes:
+  - message: You can now view and edit the laws of silicons. Cyborg/Law bound entity
+      -> Admin -> Manage laws
+    type: Add
+  id: 53
+  time: '2024-08-09T06:16:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28483
+- author: TsjipTsjip
+  changes:
+  - message: Explosion damage dealt to players is now logged again.
+    type: Add
+  id: 54
+  time: '2024-08-09T06:24:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29762
+- author: Repo
+  changes:
+  - message: Admin logs for Cubes and other rehydration.
+    type: Add
+  id: 55
+  time: '2024-08-09T06:24:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30597
+- author: Errant
+  changes:
+  - message: The setgamepreset command now only sets the gamemode for a limited number
+      of rounds, specified by a second parameter. Afterwards it switches back to the
+      server default. Omitting the number parameter sets it for 1 round only. To change
+      the game mode for a longer period, either specify a high number or change the
+      game.fallbackpreset cvar so it will reset to what you want
+    type: Tweak
+  id: 56
+  time: '2024-08-09T07:04:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30756
+- author: Ko4erga
+  changes:
+  - message: Added new markup decals.
+    type: Add
+  id: 57
+  time: '2024-08-09T07:06:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30374
+- author: nikthechampiongr
+  changes:
+  - message: player panel whitelist toggle works without host permissions now.
+    type: Fix
+  id: 58
+  time: '2024-08-12T23:25:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30948
+- author: MilonPL
+  changes:
+  - message: Deleting a grid from the objects tab now requires confirmation.
+    type: Tweak
+  id: 59
+  time: '2024-08-17T16:05:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30946
 Name: Admin
 Order: 1

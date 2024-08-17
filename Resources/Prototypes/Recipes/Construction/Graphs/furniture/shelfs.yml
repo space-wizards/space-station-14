@@ -117,6 +117,7 @@
       edges:
         - to: start
           completed:
+            - !type:EmptyAllContainers
             - !type:SpawnPrototype
                 prototype: MaterialWoodPlank1
                 amount: 4
@@ -129,6 +130,7 @@
       edges:
         - to: start
           completed:
+            - !type:EmptyAllContainers
             - !type:SpawnPrototype
                 prototype: SheetSteel1
                 amount: 5
@@ -141,6 +143,7 @@
       edges:
         - to: start
           completed:
+            - !type:EmptyAllContainers
             - !type:SpawnPrototype
                 prototype: SheetGlass1
                 amount: 4
@@ -153,6 +156,7 @@
       edges:
         - to: start
           completed:
+            - !type:EmptyAllContainers
             - !type:SpawnPrototype
                 prototype: MaterialWoodPlank1
                 amount: 8
@@ -170,6 +174,7 @@
       edges:
         - to: start
           completed:
+            - !type:EmptyAllContainers
             - !type:SpawnPrototype
                 prototype: SheetPlasteel1
                 amount: 5
@@ -190,6 +195,7 @@
       edges:
         - to: start
           completed:
+            - !type:EmptyAllContainers
             - !type:SpawnPrototype
                 prototype: SheetPlastic1
                 amount: 5
@@ -211,6 +217,7 @@
       edges:
         - to: start
           completed:
+            - !type:EmptyAllContainers
             - !type:SpawnPrototype
                 prototype: MaterialWoodPlank1
                 amount: 6
@@ -223,6 +230,7 @@
       edges:
         - to: start
           completed:
+            - !type:EmptyAllContainers
             - !type:SpawnPrototype
                 prototype: PartRodMetal
                 amount: 2
@@ -245,6 +253,7 @@
       edges:
         - to: start
           completed:
+            - !type:EmptyAllContainers
             - !type:SpawnPrototype
                 prototype: SheetPlasteel1
                 amount: 2

@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseSyndicateContraband]
   id: ChameleonProjector
   name: chameleon projector
   description: Holoparasite technology used to create a hard-light replica of any object around you. Disguise is destroyed when picked up or deactivated.
@@ -22,7 +22,7 @@
       entity: ChameleonDisguise
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BaseMob
   id: ChameleonDisguise
   name: Urist McKleiner

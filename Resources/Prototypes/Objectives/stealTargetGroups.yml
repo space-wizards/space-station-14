@@ -142,8 +142,6 @@
     sprite: Objects/Misc/id_cards.rsi
     state: default
 
-
-
 - type: stealTargetGroup
   id: LAMP
   name: LAMPS
@@ -272,6 +270,13 @@
     sprite: Clothing/Neck/Medals/clownmedal.rsi
     state: icon
 
+- type: stealTargetGroup
+  id: ClothingNeckShockCollar
+  name: shock collar
+  sprite:
+    sprite: Clothing/Neck/Misc/shock_collar.rsi
+    state: icon
+
 #Thief structures
 
 - type: stealTargetGroup
@@ -337,6 +342,13 @@
     sprite: Structures/Furniture/potted_plants.rsi
     state: plant-25
 
+- type: stealTargetGroup
+  id: ToiletGoldenDirtyWater
+  name: golden toilet
+  sprite:
+    sprite: Structures/Furniture/golden_toilet.rsi
+    state: condisposal
+
 # Thief Animal
 
 - type: stealTargetGroup
@@ -347,8 +359,8 @@
     state: ian
 
 - type: stealTargetGroup
-  id: AnimalBingus
-  name: Bingus
+  id: AnimalNamedCat
+  name: CMO's Cat
   sprite:
     sprite: Mobs/Pets/bingus.rsi
     state: bingus
