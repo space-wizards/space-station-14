@@ -82,7 +82,6 @@ Buzz! Don't forget about Moth diet!
 <GuideEntityEmbed Entity="FoodPizzaMargherita"/>
 <GuideEntityEmbed Entity="FoodCakePlain"/>
 <GuideEntityEmbed Entity="FoodPieApple"/>
-<GuideEntityEmbed Entity="FoodTacoBeef"/>
 </Box>
 <Box>
 <GuideEntityEmbed Entity="FoodMealCubancarp"/>

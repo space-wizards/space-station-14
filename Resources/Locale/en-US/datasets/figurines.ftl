@@ -1,7 +1,7 @@
 figurines-hop-1 = Papers, please.
 figurines-hop-2 = You are fired.
 
-figurines-passenger-1 = How to change hands?
+figurines-passenger-1 = Insuls please.
 figurines-passenger-2 = Call evac.
 
 figurines-greytider-1 = Man, this party stinks. I fucking hate these people.
@@ -30,16 +30,23 @@ figurines-musician-2 = Never gonna let you down!
 # figurines-boxer-
 
 figurines-captain-1 = Glory to NT!
+figurines-captain-2 = How did I get hired? Yes.
+figurines-captain-3 = The nuclear disk is secure. Where? Somewhere.
 
 figurines-hos-1 = Space law? What?
-figurines-hos-2 = Shot the clown.
+figurines-hos-2 = Shoot the clown.
+figurines-hos-3 = Yes, I shot the clown. No, I don't regret it.
 
 figurines-warden-1 = Execute him for breaking in!
+figurines-warden-2 = Perma the fucker for insulting me!
+figurines-warden-3 = We totally treat everyone fairly and do NOT mistreat our prisoners.
 
 figurines-detective-1 = The butler did it.
+figurines-detective-2 = I need some whiskey after this.
 
 figurines-security-1 = I am the law!
 figurines-security-2 = You have violated article 1984.
+figurines-security-3 = Whenever I get bored I use the clown as target practice.
 
 figurines-lawyer-1 = Better Call Saul!
 figurines-lawyer-2 = Objection!

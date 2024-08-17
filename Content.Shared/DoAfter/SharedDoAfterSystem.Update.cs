@@ -229,7 +229,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
             // If an item was in the user's hand to begin with,
             // check if the user is no longer holding the item.
-            if (args.BreakOnDropItem && !_hands.IsHolding((args.User, hands), doAfter.InitialItem))
+            if (args.BreakOnDropItem && doAfter.InitialItem != null && !_hands.IsHolding((args.User, hands), doAfter.InitialItem))
                     return true;
 
             // If the user changes which hand is active at all, interrupt the do-after
