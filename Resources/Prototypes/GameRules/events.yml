@@ -248,7 +248,7 @@
   components:
   - type: StationEvent
     startAnnouncement: true
-    endAnnouncement: station-event-gas-leak-end-announcement
+    endAnnouncement: true
     weight: 8
   - type: GasLeakRule
 
@@ -257,11 +257,10 @@
   parent: GasLeak
   components:
     - type: StationEvent
-      startAnnouncement: station-event-gas-leak-start-announcement
+      startAnnouncement: true
       startAudio:
         path: /Audio/Announcements/gasleakTTTTs.ogg
-      endAnnouncement: station-event-gas-leak-end-announcement
-      weight: 1
+      endAnnouncement: true
     - type: GasLeakRule
 
 
@@ -354,8 +353,8 @@
   components:
   - type: StationEvent
     weight: 1
-    startAnnouncement: station-event-power-grid-check-start-announcement
-    endAnnouncement: station-event-power-grid-check-end-announcement
+    startAnnouncement: true
+    endAnnouncement: true
     startAudio:
       path: /Audio/Announcements/power_offTTTTS.ogg
     duration: 60
@@ -601,7 +600,7 @@
   parent: ImmovableRodSpawn
   components:
   - type: StationEvent
-    startAnnouncement: station-event-immovable-rod-start-announcement
+    startAnnouncement: true
     startAudio:
       path: /Audio/Announcements/highvelocityTTTTS.ogg
     weight: 1

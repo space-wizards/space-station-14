@@ -182,7 +182,7 @@
     state: imp
   description: barsign-prototype-description-imp
 
-  - type: barSign
+- type: barSign
   id: Spacebucks
   name: barsign-prototype-name-spacebucks
   icon:
