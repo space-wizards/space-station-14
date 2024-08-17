@@ -186,3 +186,6 @@ chatsan-replacement-65 = i don't give a fuck
 
 chatsan-word-66 = smth
 chatsan-replacement-66 = something
+
+chatsan-word-67 = allg
+chatsan-replacement-67 = all good
