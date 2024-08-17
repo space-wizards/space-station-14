@@ -2,6 +2,7 @@ using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.EntityEffects;
+using Content.Shared.Random;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -191,16 +192,6 @@ public partial class SeedData
     [DataField("viable")] public bool Viable = true;
 
     /// <summary>
-    ///     If true, fruit slips players.
-    /// </summary>
-    [DataField("slip")] public bool Slip = false;
-
-    /// <summary>
-    ///     If true, fruits are sentient.
-    /// </summary>
-    [DataField("sentient")] public bool Sentient = false;
-
-    /// <summary>
     ///     If true, a sharp tool is required to harvest this plant.
     /// </summary>
     [DataField("ligneous")] public bool Ligneous;
@@ -233,15 +224,12 @@ public partial class SeedData
 
     [DataField("screaming")] public bool CanScream;
 
-    [DataField("bioluminescent")] public bool Bioluminescent;
-    [DataField("bioluminescentColor")] public Color BioluminescentColor { get; set; } = Color.White;
-
-    public float BioluminescentRadius = 2f;
-
     [DataField("kudzuPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))] public string KudzuPrototype = "WeakKudzu";
 
     [DataField("turnIntoKudzu")] public bool TurnIntoKudzu;
     [DataField("splatPrototype")] public string? SplatPrototype { get; set; }
+
+    public List<RandomPlantMutation> Mutations { get; set; } = new();
 
     #endregion
 
@@ -292,17 +280,14 @@ public partial class SeedData
 
             Seedless = Seedless,
             Viable = Viable,
-            Slip = Slip,
-            Sentient = Sentient,
             Ligneous = Ligneous,
 
             PlantRsi = PlantRsi,
             PlantIconState = PlantIconState,
-            Bioluminescent = Bioluminescent,
             CanScream = CanScream,
             TurnIntoKudzu = TurnIntoKudzu,
-            BioluminescentColor = BioluminescentColor,
             SplatPrototype = SplatPrototype,
+            Mutations = Mutations,
 
             // Newly cloned seed is unique. No need to unnecessarily clone if repeatedly modified.
             Unique = true,
@@ -353,18 +338,16 @@ public partial class SeedData
             HarvestRepeat = HarvestRepeat,
             Potency = Potency,
 
+            Mutations = Mutations,
+
             Seedless = Seedless,
             Viable = Viable,
-            Slip = Slip,
-            Sentient = Sentient,
             Ligneous = Ligneous,
 
             PlantRsi = other.PlantRsi,
             PlantIconState = other.PlantIconState,
-            Bioluminescent = Bioluminescent,
             CanScream = CanScream,
             TurnIntoKudzu = TurnIntoKudzu,
-            BioluminescentColor = BioluminescentColor,
             SplatPrototype = other.SplatPrototype,
 
             // Newly cloned seed is unique. No need to unnecessarily clone if repeatedly modified.

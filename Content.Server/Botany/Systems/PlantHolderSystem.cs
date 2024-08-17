@@ -299,15 +299,6 @@ public sealed class PlantHolderSystem : EntitySystem
                 healthOverride = component.Health;
             }
             var packetSeed = component.Seed;
-            if (packetSeed.Sentient)
-            {
-                packetSeed = packetSeed.Clone(); // clone before modifying the seed
-                packetSeed.Sentient = false;
-            }
-            else
-            {
-                packetSeed.Unique = false;
-            }
             var seed = _botany.SpawnSeedPacket(packetSeed, Transform(args.User).Coordinates, args.User, healthOverride);
             _randomHelper.RandomOffset(seed, 0.25f);
             var displayName = Loc.GetString(component.Seed.DisplayName);
@@ -636,12 +627,6 @@ public sealed class PlantHolderSystem : EntitySystem
         else if (component.Age < 0) // Revert back to seed packet!
         {
             var packetSeed = component.Seed;
-            if (packetSeed.Sentient)
-            {
-                if (!packetSeed.Unique) // clone if necessary before modifying the seed
-                    packetSeed = packetSeed.Clone();
-                packetSeed.Sentient = false; // remove Sentient to avoid ghost role spam
-            }
             // will put it in the trays hands if it has any, please do not try doing this
             _botany.SpawnSeedPacket(packetSeed, Transform(uid).Coordinates, uid);
             RemovePlant(uid, component);
@@ -677,14 +662,6 @@ public sealed class PlantHolderSystem : EntitySystem
         }
 
         CheckLevelSanity(uid, component);
-
-        if (component.Seed.Sentient)
-        {
-            var ghostRole = EnsureComp<GhostRoleComponent>(uid);
-            EnsureComp<GhostTakeoverAvailableComponent>(uid);
-            ghostRole.RoleName = MetaData(uid).EntityName;
-            ghostRole.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", ghostRole.RoleName));
-        }
 
         if (component.UpdateSpriteAfterUpdate)
             UpdateSprite(uid, component);
@@ -903,7 +880,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (component.Seed != null)
         {
             EnsureUniqueSeed(uid, component);
-            _mutation.MutateSeed(ref component.Seed, severity);
+            _mutation.MutateSeed(uid, ref component.Seed, severity);
         }
     }
 
@@ -913,19 +890,6 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
 
         component.UpdateSpriteAfterUpdate = false;
-
-        if (component.Seed != null && component.Seed.Bioluminescent)
-        {
-            var light = EnsureComp<PointLightComponent>(uid);
-            _pointLight.SetRadius(uid, component.Seed.BioluminescentRadius, light);
-            _pointLight.SetColor(uid, component.Seed.BioluminescentColor, light);
-            _pointLight.SetCastShadows(uid, false, light);
-            Dirty(uid, light);
-        }
-        else
-        {
-            RemComp<PointLightComponent>(uid);
-        }
 
         if (!TryComp<AppearanceComponent>(uid, out var app))
             return;

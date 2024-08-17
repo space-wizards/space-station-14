@@ -174,6 +174,7 @@ public sealed partial class BotanySystem : EntitySystem
             produce.Seed = proto;
             ProduceGrown(entity, produce);
 
+
             _appearance.SetData(entity, ProduceVisuals.Potency, proto.Potency);
 
             if (proto.Mysterious)
@@ -182,30 +183,6 @@ public sealed partial class BotanySystem : EntitySystem
                 _metaData.SetEntityName(entity, metaData.EntityName + "?", metaData);
                 _metaData.SetEntityDescription(entity,
                     metaData.EntityDescription + " " + Loc.GetString("botany-mysterious-description-addon"), metaData);
-            }
-
-            if (proto.Bioluminescent)
-            {
-                var light = _light.EnsureLight(entity);
-                _light.SetRadius(entity, proto.BioluminescentRadius, light);
-                _light.SetColor(entity, proto.BioluminescentColor, light);
-                // TODO: Ayo why you copy-pasting code between here and plantholder?
-                _light.SetCastShadows(entity, false, light); // this is expensive, and botanists make lots of plants
-            }
-
-            if (proto.Slip)
-            {
-                var slippery = EnsureComp<SlipperyComponent>(entity);
-                Dirty(entity, slippery);
-                EnsureComp<StepTriggerComponent>(entity);
-                // Need a fixture with a slip layer in order to actually do the slipping
-                var fixtures = EnsureComp<FixturesComponent>(entity);
-                var body = EnsureComp<PhysicsComponent>(entity);
-                var shape = fixtures.Fixtures["fix1"].Shape;
-                _fixtureSystem.TryCreateFixture(entity, shape, "slips", 1, false, (int) CollisionGroup.SlipLayer, manager: fixtures, body: body);
-                // Need to disable collision wake so that mobs can collide with and slip on it
-                var collisionWake = EnsureComp<CollisionWakeComponent>(entity);
-                _colWakeSystem.SetEnabled(entity, false, collisionWake);
             }
         }
 

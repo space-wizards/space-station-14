@@ -4,6 +4,7 @@ using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using System.Linq;
 using Content.Shared.Atmos;
+using Content.Shared.EntityEffects;
 
 namespace Content.Server.Botany;
 
@@ -12,11 +13,31 @@ public sealed class MutationSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     private WeightedRandomFillSolutionPrototype _randomChems = default!;
+    private  RandomPlantMutationListPrototype _randomMutations = default!;
 
 
     public override void Initialize()
     {
         _randomChems = _prototypeManager.Index<WeightedRandomFillSolutionPrototype>("RandomPickBotanyReagent");
+        _randomMutations = _prototypeManager.Index<RandomPlantMutationListPrototype>("RandomPlantMutations");
+    }
+
+    /// <summary>
+    /// For each random mutation, see if it occurs on this plant this check.
+    /// </summary>
+    /// <param name="seed"></param>
+    /// <param name="severity"></param>
+    public void CheckRandomMutations(EntityUid plantHolder, ref SeedData seed, float severity)
+    {
+        foreach (var mutation in _randomMutations.mutations)
+        {
+            if (Random(mutation.BaseOdds * severity))
+            {
+                EntityEffectBaseArgs args = new EntityEffectBaseArgs(plantHolder, EntityManager);
+                mutation.Mutation.Effect(args);
+                seed.Mutations.Add(mutation);
+            }
+        }
     }
 
     /// <summary>
@@ -29,13 +50,15 @@ public sealed class MutationSystem : EntitySystem
     ///
     /// You MUST clone() seed before mutating it!
     /// </summary>
-    public void MutateSeed(ref SeedData seed, float severity)
+    public void MutateSeed(EntityUid plantHolder, ref SeedData seed, float severity)
     {
         if (!seed.Unique)
         {
             Log.Error($"Attempted to mutate a shared seed");
             return;
         }
+
+        CheckRandomMutations(plantHolder, ref seed, severity); //TODO Will be the main call later, just check if this runs for now.
 
         // Add up everything in the bits column and put the number here.
         const int totalbits = 262;
@@ -67,13 +90,9 @@ public sealed class MutationSystem : EntitySystem
 
         // Fun (72)
         MutateBool(ref seed.Seedless      , true , 10, totalbits, severity);
-        MutateBool(ref seed.Slip          , true , 10, totalbits, severity);
-        MutateBool(ref seed.Sentient      , true , 2 , totalbits, severity);
         MutateBool(ref seed.Ligneous      , true , 10, totalbits, severity);
-        MutateBool(ref seed.Bioluminescent, true , 10, totalbits, severity);
         MutateBool(ref seed.TurnIntoKudzu , true , 10, totalbits, severity);
         MutateBool(ref seed.CanScream     , true , 10, totalbits, severity);
-        seed.BioluminescentColor = RandomColor(seed.BioluminescentColor, 10, totalbits, severity);
         #pragma warning restore IDE0055
 
         // ConstantUpgade (10)
@@ -115,19 +134,16 @@ public sealed class MutationSystem : EntitySystem
         CrossFloat(ref result.Production, a.Production);
         CrossFloat(ref result.Potency, a.Potency);
 
-        // we do not transfer Sentient to another plant to avoid ghost role spam
         CrossBool(ref result.Seedless, a.Seedless);
         CrossBool(ref result.Viable, a.Viable);
-        CrossBool(ref result.Slip, a.Slip);
         CrossBool(ref result.Ligneous, a.Ligneous);
-        CrossBool(ref result.Bioluminescent, a.Bioluminescent);
         CrossBool(ref result.TurnIntoKudzu, a.TurnIntoKudzu);
         CrossBool(ref result.CanScream, a.CanScream);
 
         CrossGasses(ref result.ExudeGasses, a.ExudeGasses);
         CrossGasses(ref result.ConsumeGasses, a.ConsumeGasses);
 
-        result.BioluminescentColor = Random(0.5f) ? a.BioluminescentColor : result.BioluminescentColor;
+        result.Mutations = result.Mutations.Where(m => Random(0.5f)).Union(a.Mutations.Where(m => Random(0.5f))).DistinctBy(m => m.Name).ToList();
 
         // Hybrids have a high chance of being seedless. Balances very
         // effective hybrid crossings.
@@ -301,26 +317,6 @@ public sealed class MutationSystem : EntitySystem
 
         seed = seed.SpeciesChange(protoSeed);
     }
-
-    private Color RandomColor(Color color, int bits, int totalbits, float mult)
-    {
-        float probModify = mult * bits / totalbits;
-        if (Random(probModify))
-        {
-            var colors = new List<Color>{
-                Color.White,
-                Color.Red,
-                Color.Yellow,
-                Color.Green,
-                Color.Blue,
-                Color.Purple,
-                Color.Pink
-            };
-            return _robustRandom.Pick(colors);
-        }
-        return color;
-    }
-
     private void CrossChemicals(ref Dictionary<string, SeedChemQuantity> val, Dictionary<string, SeedChemQuantity> other)
     {
         // Go through chemicals from the pollen in swab

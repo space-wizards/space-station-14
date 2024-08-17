@@ -1,0 +1,12 @@
+- type: RandomPlantMutationList
+  id: RandomPlantMutations
+  mutations:  
+    - name: Bioluminescent
+      baseOdds: 0.0072
+      mutation: !type:Glow # new effect   
+    - name: Sentient
+      baseOdds: 0.0072
+      mutation: !type:MakeSentient #existing effect.
+    - name: Slippery
+      baseOdds: 0.0072
+      mutation: !type:Slipify
