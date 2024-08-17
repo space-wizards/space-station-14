@@ -513,7 +513,7 @@ public partial class SharedSolutionSystem
         var percentage = quantity.Float()/solution.Comp.Volume.Float();
         var contents = GetReagents(solution, percentage);
         var overFlow = RemoveReagents(solution, null,contents);
-        contents.Scale(100 - overFlow.Float() / contents.TotalVolume.Float());
+        contents.Scale(100 - overFlow.Float() / contents.Volume.Float());
         return contents;
     }
 

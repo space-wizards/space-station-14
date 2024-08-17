@@ -1,8 +1,8 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Administration;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Robust.Shared.Console;
 using System.Linq;
+using Content.Shared.Chemistry.Components.Solutions;
+using Content.Shared.Chemistry.Systems;
 
 namespace Content.Server.Administration.Commands
 {
@@ -29,16 +29,17 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!_entManager.TryGetComponent(uid, out SolutionContainerManagerComponent? man))
+            if (!_entManager.TryGetComponent(uid, out SolutionHolderComponent? man))
             {
                 shell.WriteLine($"Entity does not have any solutions.");
                 return;
             }
 
-            var solutionContainerSystem = _entManager.System<SolutionContainerSystem>();
-            if (!solutionContainerSystem.TryGetSolution((uid.Value, man), args[1], out var solutionEnt, out var solution))
+            var solutionSystem = _entManager.System<SharedSolutionSystem>();
+            if (!solutionSystem.TryGetSolution((uid.Value, man), args[1], out var solution))
             {
-                var validSolutions = string.Join(", ", solutionContainerSystem.EnumerateSolutions((uid.Value, man)).Select(s => s.Name));
+                var validSolutions = string.Join(", ", solutionSystem.EnumerateSolutions((uid.Value, man))
+                    .Select(s => s.Comp.Name));
                 shell.WriteLine($"Entity does not have a \"{args[1]}\" solution. Valid solutions are:\n{validSolutions}");
                 return;
             }
@@ -49,7 +50,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (solution.GetHeatCapacity(null) <= 0.0f)
+            if (solution.Comp.HeatCapacity <= 0.0f)
             {
                 if (quantity != 0.0f)
                 {
@@ -63,7 +64,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            solutionContainerSystem.SetThermalEnergy(solutionEnt.Value, quantity);
+            solutionSystem.SetThermalEnergy(solution, quantity);
         }
     }
 }

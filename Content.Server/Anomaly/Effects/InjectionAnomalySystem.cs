@@ -3,6 +3,8 @@ using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using System.Linq;
+using Content.Shared.Chemistry.Components.Solutions;
+using Content.Shared.Chemistry.Systems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Anomaly.Effects;
@@ -16,7 +18,7 @@ namespace Content.Server.Anomaly.Effects;
 public sealed class InjectionAnomalySystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
 
     private EntityQuery<InjectableSolutionComponent> _injectableQuery;
@@ -41,7 +43,7 @@ public sealed class InjectionAnomalySystem : EntitySystem
 
     private void PulseScalableEffect(Entity<InjectionAnomalyComponent> entity, float injectRadius, float maxInject)
     {
-        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var sol))
+        if (!_solutionSystem.TryGetSolution(entity.Owner, entity.Comp.Solution, out var sourceSolution))
             return;
 
         //We get all the entity in the radius into which the reagent will be injected.
@@ -49,16 +51,14 @@ public sealed class InjectionAnomalySystem : EntitySystem
         var xform = xformQuery.GetComponent(entity);
         var allEnts = _lookup.GetEntitiesInRange<InjectableSolutionComponent>(_transform.GetMapCoordinates(entity, xform: xform), injectRadius)
             .Select(x => x.Owner).ToList();
-
         //for each matching entity found
         foreach (var ent in allEnts)
         {
-            if (!_solutionContainer.TryGetInjectableSolution(ent, out var injectable, out _))
-                continue;
-
-            if (_injectableQuery.TryGetComponent(ent, out var injEnt))
+            if (_injectableQuery.TryGetComponent(ent, out var injComp)
+                && _solutionSystem.SolutionQuery.TryComp(ent, out var solComp))
             {
-                _solutionContainer.TryTransferSolution(injectable.Value, sol, maxInject);
+                _solutionSystem.TransferSolution(sourceSolution, (ent, solComp), maxInject,
+                    out _, false);
                 //Spawn Effect
                 var uidXform = Transform(ent);
                 Spawn(entity.Comp.VisualEffectPrototype, uidXform.Coordinates);

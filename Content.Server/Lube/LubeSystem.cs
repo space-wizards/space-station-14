@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.Database;
+using Content.Shared.FixedPoint;
 using Content.Shared.Glue;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -19,7 +20,7 @@ public sealed class LubeSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
@@ -71,11 +72,12 @@ public sealed class LubeSystem : EntitySystem
             return false;
         }
 
-        if (HasComp<ItemComponent>(target) && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
+        if (HasComp<ItemComponent>(target) && _solutionSystem.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solution))
         {
-            var quantity = solution.RemoveReagent(entity.Comp.Reagent, entity.Comp.Consumption);
-            if (quantity > 0)
+
+            if (_solutionSystem.RemoveReagent(solution,(entity.Comp.Reagent, entity.Comp.Consumption), out var overflow))
             {
+                var quantity = FixedPoint2.Clamp(entity.Comp.Consumption - overflow,0, entity.Comp.Consumption);
                 var lubed = EnsureComp<LubedComponent>(target);
                 lubed.SlipsLeft = _random.Next(entity.Comp.MinSlips * quantity.Int(), entity.Comp.MaxSlips * quantity.Int());
                 lubed.SlipStrength = entity.Comp.SlipStrength;

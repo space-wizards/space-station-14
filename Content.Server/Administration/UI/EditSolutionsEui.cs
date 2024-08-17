@@ -1,8 +1,8 @@
 using Content.Server.Administration.Systems;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.EUI;
 using Content.Shared.Administration;
-using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Components.Solutions;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
@@ -17,13 +17,13 @@ namespace Content.Server.Administration.UI
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        private readonly SharedSolutionSystem _solutionSystem = default!;
         public readonly EntityUid Target;
 
         public EditSolutionsEui(EntityUid entity)
         {
             IoCManager.InjectDependencies(this);
-            _solutionContainerSystem = _entityManager.System<SolutionContainerSystem>();
+            _solutionSystem = _entityManager.System<SharedSolutionSystem>();
             Target = entity;
         }
 
@@ -43,15 +43,15 @@ namespace Content.Server.Administration.UI
         {
             List<(string Name, NetEntity Solution)>? netSolutions;
 
-            if (_entityManager.TryGetComponent(Target, out SolutionContainerManagerComponent? container) && container.Containers.Count > 0)
+            if (_entityManager.TryGetComponent(Target, out SolutionHolderComponent? holder) && holder.SolutionIds.Count > 0)
             {
                 netSolutions = new();
-                foreach (var (name, solution) in _solutionContainerSystem.EnumerateSolutions((Target, container)))
+                foreach (var (solEnt, solComp) in _solutionSystem.EnumerateSolutions((Target, holder)))
                 {
-                    if (name is null || !_entityManager.TryGetNetEntity(solution, out var netSolution))
+                    if (!_entityManager.TryGetNetEntity(solEnt, out var netSolution))
                         continue;
 
-                    netSolutions.Add((name, netSolution.Value));
+                    netSolutions.Add((solComp.Name, netSolution.Value));
                 }
             }
             else

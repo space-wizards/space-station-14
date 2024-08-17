@@ -1,7 +1,7 @@
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Alert;
-using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;

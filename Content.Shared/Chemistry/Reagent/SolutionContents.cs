@@ -8,7 +8,7 @@ namespace Content.Shared.Chemistry.Reagent;
 
 public struct SolutionContents : IEnumerable<ReagentQuantity>
 {
-    public FixedPoint2 TotalVolume { get; private set; }= 0;
+    public FixedPoint2 Volume { get; private set; }= 0;
 
     public int Count => _contents.Count;
     private float _temperature = Atmospherics.T20C;
@@ -24,8 +24,12 @@ public struct SolutionContents : IEnumerable<ReagentQuantity>
     }
 
     public bool HasTemperature = false;
-
     private ValueList<ReagentQuantity> _contents = new(0);
+
+    public SolutionContents(int count)
+    {
+        _contents = new(count);
+    }
     public SolutionContents(params ReagentQuantity[] reagents)
     {
         _contents = new(reagents.Length);
@@ -63,7 +67,7 @@ public struct SolutionContents : IEnumerable<ReagentQuantity>
             }
             var delta = value.Quantity - _contents[i].Quantity ;
             _contents[i] = value;
-            TotalVolume += delta;
+            Volume += delta;
             ClampTotal();
         }
     }
@@ -84,7 +88,7 @@ public struct SolutionContents : IEnumerable<ReagentQuantity>
                 return;
             }
             _contents.Add(value);
-            TotalVolume += value.Quantity;
+            Volume += value.Quantity;
             ClampTotal();
         }
     }
@@ -166,7 +170,7 @@ public struct SolutionContents : IEnumerable<ReagentQuantity>
             if (reagentDef== foundQuant.ReagentDef)
             {
                 foundQuant.Quantity += quantity;
-                TotalVolume += quantity;
+                Volume += quantity;
                 ClampTotal();
                 if (foundQuant.Quantity < 0)
                 {
@@ -180,9 +184,9 @@ public struct SolutionContents : IEnumerable<ReagentQuantity>
 
     private void ClampTotal()
     {
-        if (TotalVolume < 0)
+        if (Volume < 0)
         {
-            TotalVolume = 0;
+            Volume = 0;
             _contents.Clear();
         }
     }
@@ -194,7 +198,7 @@ public struct SolutionContents : IEnumerable<ReagentQuantity>
         {
             if (reagent == foundQuant.ReagentDef)
             {
-                TotalVolume -= foundQuant.Quantity;
+                Volume -= foundQuant.Quantity;
                 ClampTotal();
                 if (foundQuant.Quantity < 0)
                 {
@@ -213,14 +217,14 @@ public struct SolutionContents : IEnumerable<ReagentQuantity>
         if (scale == 0)
         {
             _contents.Clear();
-            TotalVolume = 0;
+            Volume = 0;
         }
         foreach (ref var reagents in _contents.Span)
         {
             reagents.Quantity *= scale;
         }
 
-        TotalVolume *= scale;
+        Volume *= scale;
     }
 
     public static implicit operator ReagentQuantity[](SolutionContents s) => s._contents.ToArray();

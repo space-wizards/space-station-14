@@ -112,7 +112,7 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
         {
             foreach (var reactionPrototype in reactions)
             {
-                RecipesDescriptionContainer.AddChild(new GuideReagentReaction(reactionPrototype, _prototype, _systemManager));
+                RecipesDescriptionContainer.AddChild(new GuideReagentReaction(reactionPrototype, _systemManager));
             }
         }
         else
@@ -226,14 +226,12 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
                     entitySourceData.SourceEntProto,
                     entitySourceData.Solution,
                     entitySourceData.MixingType,
-                    _prototype,
                     _systemManager));
             }
             else if (source is ReagentReactionSourceData reactionSourceData)
             {
                 SourcesDescriptionContainer.AddChild(new GuideReagentReaction(
                     reactionSourceData.ReactionPrototype,
-                    _prototype,
                     _systemManager));
             }
             else if (source is ReagentGasSourceData gasSourceData)

@@ -86,13 +86,38 @@ public partial struct ReagentQuantitySpecifier : IEquatable<ReagentQuantitySpeci
         return !(left == right);
     }
 
+    public static implicit operator ReagentQuantitySpecifier(KeyValuePair<ReagentSpecifier, FixedPoint2> data) =>
+        new(data.Key, data.Value);
     public static implicit operator ReagentQuantitySpecifier(ReagentQuantity q) => new(q);
     public static implicit operator string(ReagentQuantitySpecifier d) => d.Reagent.Id;
-    public static implicit operator (string, ReagentVariant?)(ReagentQuantitySpecifier d) => (d.Reagent.Id, d.Reagent.Variant);
+    public static implicit operator (string, ReagentVariant?, FixedPoint2)(ReagentQuantitySpecifier d) => (d.Reagent.Id, d.Reagent.Variant, d.Quantity);
     public static implicit operator (ReagentSpecifier, FixedPoint2)(ReagentQuantitySpecifier q) => (q.Reagent,q.Quantity);
     public static implicit operator ReagentQuantitySpecifier((ReagentSpecifier, FixedPoint2)d) => new(d.Item1, d.Item2);
+
     public static void UpdateCachedEntity(ref ReagentQuantitySpecifier reagentQuantity, SharedChemistryRegistrySystem chemRegistry)
     {
         ReagentSpecifier.UpdateCachedEntity(ref reagentQuantity.Reagent, chemRegistry);
+    }
+
+    public static bool ResolveReagentEntity(ref ReagentQuantitySpecifier quantSpec,
+        SharedChemistryRegistrySystem chemRegistry,
+        bool logIfMissing = true)
+    {
+        return ReagentSpecifier.ResolveReagentEntity(ref quantSpec.Reagent, chemRegistry, logIfMissing);
+    }
+
+    public static bool TryGetReagentQuantity(ReagentQuantitySpecifier quantSpec,
+        SharedChemistryRegistrySystem chemRegistry,
+        out ReagentQuantity reagentQuantity,
+        bool logIfMissing = true)
+    {
+        if (!ReagentSpecifier.ResolveReagentEntity(ref quantSpec.Reagent, chemRegistry, logIfMissing))
+        {
+            reagentQuantity = default;
+            return false;
+        }
+        //This is not null because it gets resolved.
+        reagentQuantity = (new(quantSpec.Reagent.CachedDefinitionEntity!.Value, quantSpec.Reagent.Variant), quantSpec.Quantity);
+        return true;
     }
 }

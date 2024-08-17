@@ -8,6 +8,8 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.Climbing.Events;
 using Content.Shared.Construction.Components;
 using Content.Shared.Database;
@@ -52,6 +54,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private readonly MaterialStorageSystem _material = default!;
         [Dependency] private readonly SharedMindSystem _minds = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
+        [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
 
         [ValidatePrototypeId<MaterialPrototype>]
         public const string BiomassPrototype = "Biomass";
@@ -68,10 +71,12 @@ namespace Content.Server.Medical.BiomassReclaimer
 
                 if (reclaimer.RandomMessTimer <= 0)
                 {
-                    if (_robustRandom.Prob(0.2f) && reclaimer.BloodReagent is not null)
+                    if (_robustRandom.Prob(0.2f)
+                        && reclaimer.BloodReagent is not null
+                        && _solutionSystem.TryGetReagentDef(reclaimer.BloodReagent, out var reagentDef,null, true))
                     {
-                        Solution blood = new();
-                        blood.AddReagent(reclaimer.BloodReagent, 50);
+                        SolutionContents blood = new(1);
+                        blood.Add((reagentDef, 50));
                         _puddleSystem.TrySpillAt(uid, blood, out _);
                     }
                     if (_robustRandom.Prob(0.03f) && reclaimer.SpawnedEntities.Count > 0)

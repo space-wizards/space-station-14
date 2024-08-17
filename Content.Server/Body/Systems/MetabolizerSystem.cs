@@ -5,6 +5,8 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Components.Solutions;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.Database;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
@@ -24,18 +26,18 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
         [Dependency] private readonly ChemistryRegistrySystem _chemistryRegistry = default!;
 
         private EntityQuery<OrganComponent> _organQuery;
-        private EntityQuery<SolutionContainerManagerComponent> _solutionQuery;
+        private EntityQuery<SolutionHolderComponent> _solutionQuery;
 
         public override void Initialize()
         {
             base.Initialize();
 
             _organQuery = GetEntityQuery<OrganComponent>();
-            _solutionQuery = GetEntityQuery<SolutionContainerManagerComponent>();
+            _solutionQuery = GetEntityQuery<SolutionHolderComponent>();
 
             SubscribeLocalEvent<MetabolizerComponent, ComponentInit>(OnMetabolizerInit);
             SubscribeLocalEvent<MetabolizerComponent, MapInitEvent>(OnMapInit);
@@ -57,11 +59,11 @@ namespace Content.Server.Body.Systems
         {
             if (!entity.Comp.SolutionOnBody)
             {
-                _solutionContainerSystem.EnsureSolution(entity.Owner, entity.Comp.SolutionName);
+                _solutionSystem.EnsureSolution(entity.Owner, entity.Comp.SolutionName);
             }
             else if (_organQuery.CompOrNull(entity)?.Body is { } body)
             {
-                _solutionContainerSystem.EnsureSolution(body, entity.Comp.SolutionName);
+                _solutionSystem.EnsureSolution(body, entity.Comp.SolutionName);
             }
         }
 
@@ -104,7 +106,7 @@ namespace Content.Server.Body.Systems
             }
         }
 
-        private void TryMetabolize(Entity<MetabolizerComponent, OrganComponent?, SolutionContainerManagerComponent?> ent)
+        private void TryMetabolize(Entity<MetabolizerComponent, OrganComponent?, SolutionHolderComponent?> ent)
         {
             _organQuery.Resolve(ent, ref ent.Comp2, logMissing: false);
 
@@ -121,7 +123,7 @@ namespace Content.Server.Body.Systems
                     if (!_solutionQuery.Resolve(body, ref ent.Comp3, logMissing: false))
                         return;
 
-                    _solutionContainerSystem.TryGetSolution((body, ent.Comp3), solutionName, out soln, out solution);
+                    _solutionSystem.TryGetSolution((body, ent.Comp3), solutionName, out soln, out solution);
                     solutionEntityUid = body;
                 }
             }
@@ -130,7 +132,7 @@ namespace Content.Server.Body.Systems
                 if (!_solutionQuery.Resolve(ent, ref ent.Comp3, logMissing: false))
                     return;
 
-                _solutionContainerSystem.TryGetSolution((ent, ent), solutionName, out soln, out solution);
+                _solutionSystem.TryGetSolution((ent, ent), solutionName, out soln, out solution);
                 solutionEntityUid = ent;
             }
 
@@ -229,7 +231,7 @@ namespace Content.Server.Body.Systems
                 }
             }
 
-            _solutionContainerSystem.UpdateChemicals(soln.Value);
+            _solutionSystem.UpdateChemicals(soln.Value);
         }
     }
 

@@ -2,6 +2,7 @@ using Content.Server.Body.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.Solutions;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Body.Components;

@@ -11,6 +11,19 @@ public partial struct SolutionSpecifier : IEnumerable<KeyValuePair<ReagentSpecif
     [DataField]
     public Dictionary<ReagentSpecifier, FixedPoint2> Contents = new();
 
+    public List<ReagentQuantitySpecifier> Quantities
+    {
+        get
+        {
+            var list = new List<ReagentQuantitySpecifier>();
+            foreach (var data in Contents)
+            {
+                list.Add(data);
+            }
+            return list;
+        }
+    }
+
     [DataField]
     public FixedPoint2 Volume = 0;
 
@@ -29,6 +42,21 @@ public partial struct SolutionSpecifier : IEnumerable<KeyValuePair<ReagentSpecif
 
     IEnumerator IEnumerable.GetEnumerator() => Contents.GetEnumerator();
 
+
+    public SolutionSpecifier()
+    {
+    }
+
+    public SolutionSpecifier(List<ReagentQuantitySpecifier> contents)
+    {
+        foreach (var (reagent, quant) in contents)
+        {
+            Contents.Add(reagent, quant);
+        }
+    }
+
+    public static implicit operator SolutionSpecifier(List<ReagentQuantitySpecifier> data) => new(data);
+    public static implicit operator List<ReagentQuantitySpecifier>( SolutionSpecifier s) => s.Quantities;
     void ISerializationHooks.AfterDeserialization()
     {
         Volume = FixedPoint2.Zero;

@@ -165,4 +165,19 @@ public partial struct ReagentSpecifier: IEquatable<ReagentDef>
     {
         return !chemRegistry.ResolveReagent(reagentSpec.Id, ref reagentSpec._cachedDefinitionEntity, logIfMissing);
     }
+
+    public static bool TryGetReagentDef(ref ReagentSpecifier reagentSpec,
+        SharedChemistryRegistrySystem chemRegistry,
+        out ReagentDef reagentDef,
+        bool logIfMissing = true)
+    {
+        if (!ResolveReagentEntity(ref reagentSpec, chemRegistry, logIfMissing))
+        {
+            reagentDef = default;
+            return false;
+        }
+        //This is not null because it gets resolved.
+        reagentDef = new(reagentSpec._cachedDefinitionEntity!.Value, reagentSpec.Variant);
+        return true;
+    }
 }

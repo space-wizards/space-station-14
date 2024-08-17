@@ -2,6 +2,8 @@ using Content.Server.Anomaly.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.Sprite;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
@@ -28,7 +30,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
     //Useful:
     //Those reagents that the players are hunting for. Very low percentage of loss.
 
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly PointLightSystem _light = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -68,16 +70,16 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
             if (component.AccumulatedFrametime < component.UpdateInterval)
                 continue;
 
-            if (!_solutionContainer.ResolveSolution(uid, component.SolutionName, ref component.Solution, out var producerSolution))
+            if (!_solutionSystem.ResolveSolution(uid, component.SolutionName, ref component.Solution))
                 continue;
+            var prodSolution = component.Solution.Value;
 
-            Solution newSol = new();
             var reagentProducingAmount = anomaly.Stability * component.MaxReagentProducing * component.AccumulatedFrametime;
             if (anomaly.Severity >= 0.97) reagentProducingAmount *= component.SupercriticalReagentProducingModifier;
 
-            newSol.AddReagent(component.ProducingReagent, reagentProducingAmount);
-            _solutionContainer.TryAddSolution(component.Solution.Value, newSol); // TODO - the container is not fully filled.
-
+            _solutionSystem.AddReagent(prodSolution,
+                (component.ProducingReagent.Id, reagentProducingAmount),
+                out _);
             component.AccumulatedFrametime = 0;
 
             // The component will repaint the sprites of the object to match the current color of the solution,
@@ -87,7 +89,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
             // and nothing worked out for me. So for now it will be like this.
             if (component.NeedRecolor)
             {
-                var color = producerSolution.GetColor(_prototypeManager);
+                var color = _solutionSystem.GetSolutionColor(prodSolution);
                 _light.SetColor(uid, color);
                 if (TryComp<RandomSpriteComponent>(uid, out var randomSprite))
                 {

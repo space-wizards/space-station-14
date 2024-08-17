@@ -4,6 +4,7 @@ using Content.Server.Body.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.Clothing;
 using Content.Shared.Inventory.Events;
 
@@ -13,7 +14,7 @@ public sealed class LungSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly InternalsSystem _internals = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
     public static string LungSolutionName = "Lung";
@@ -50,7 +51,7 @@ public sealed class LungSystem : EntitySystem
 
     private void OnComponentInit(Entity<LungComponent> entity, ref ComponentInit args)
     {
-        var solution = _solutionContainerSystem.EnsureSolution(entity.Owner, entity.Comp.SolutionName);
+        var solution = _solutionSystem.EnsureSolution(entity.Owner, entity.Comp.SolutionName);
         solution.MaxVolume = 100.0f;
         solution.CanReact = false; // No dexalin lungs
     }
@@ -75,11 +76,11 @@ public sealed class LungSystem : EntitySystem
 
     public void GasToReagent(EntityUid uid, LungComponent lung)
     {
-        if (!_solutionContainerSystem.ResolveSolution(uid, lung.SolutionName, ref lung.Solution, out var solution))
+        if (!_solutionSystem.ResolveSolution(uid, lung.SolutionName, ref lung.Solution, out var solution))
             return;
 
         GasToReagent(lung.Air, solution);
-        _solutionContainerSystem.UpdateChemicals(lung.Solution.Value);
+        _solutionSystem.UpdateChemicals(lung.Solution.Value);
     }
 
     private void GasToReagent(GasMixture gas, Solution solution)

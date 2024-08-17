@@ -17,22 +17,16 @@ public partial class SharedSolutionSystem
             solution = default;
             if (logIfMissing)
             {
-                Log.Error($"Target Entity: {ToPrettyString(containingEntity)} Does not have a SolutionContainerComponent " +
+                Log.Error($"Target Entity: {ToPrettyString(containingEntity)} Does not have a SolutionHolderComponent " +
                           $"and does not have any solutions!");
             }
             return false;
         }
         for (var i = 0; i < containingEntity.Comp.SolutionIds.Count; i++)
         {
-            var solEnt = containingEntity.Comp.SolutionEntities[i];
             if (containingEntity.Comp.SolutionIds[i] != solutionId)
                 continue;
-            if (!TryComp(solEnt, out SolutionComponent? solComp))
-            {
-                throw new Exception($"Solution Entity {ToPrettyString(containingEntity.Comp.SolutionEntities[i])}" +
-                                    $" does not have SolutionComponent! This should never happen!");
-            }
-            solution = (solEnt, solComp);
+            solution = containingEntity.Comp.Solutions[i];
             return true;
         }
 
@@ -51,12 +45,7 @@ public partial class SharedSolutionSystem
             yield break;
         for (var i = 0; i < containingEntity.Comp.SolutionIds.Count; i++)
         {
-            var solEnt = containingEntity.Comp.SolutionEntities[i];
-            if (!TryComp(solEnt, out SolutionComponent? solComp))
-            {
-                throw new Exception($"Entity:{solEnt} is in a solution container but does not have a solution component!");
-            }
-            yield return (solEnt, solComp);
+            yield return containingEntity.Comp.Solutions[i];
         }
     }
 
@@ -125,18 +114,30 @@ public partial class SharedSolutionSystem
         where TComp: Component, new()
     {
         var query = EntityManager.GetEntityQuery<TComp>();
-        foreach (var solEnt in solutionHolder.Comp.SolutionEntities)
+        foreach (var solution in solutionHolder.Comp.Solutions)
         {
-            if (!query.TryComp(solEnt, out var comp))
+            if (!query.TryComp(solution, out var comp))
                 continue;
-            var solComp = _solutionQuery.Comp(solEnt);
-            if (solComp.Name != solutionName)
+            if (solution.Comp.Name != solutionName)
                 continue;
-            foundSolution = (solEnt, solComp, comp);
+            foundSolution = (solution, solution, comp);
             return true;
         }
         foundSolution = default;
         return false;
+    }
+
+    public bool TryGetFirstSolution(Entity<SolutionHolderComponent?> solutionHolder, out Entity<SolutionComponent> solution)
+    {
+        if (!Resolve(solutionHolder, ref solutionHolder.Comp)
+            || solutionHolder.Comp.Solutions.Count == 0
+            )
+        {
+            solution = default;
+            return false;
+        }
+        solution = solutionHolder.Comp.Solutions[0];
+        return true;
     }
 
     public bool TryGetSolutionWithComp<TComp, TComp2>(Entity<SolutionHolderComponent> solutionHolder,
@@ -147,15 +148,14 @@ public partial class SharedSolutionSystem
     {
         var query = EntityManager.GetEntityQuery<TComp>();
         var query2 = EntityManager.GetEntityQuery<TComp2>();
-        foreach (var solEnt in solutionHolder.Comp.SolutionEntities)
+        foreach (var solution in solutionHolder.Comp.Solutions)
         {
-            if (!query.TryComp(solEnt, out var comp)
-                || !query2.TryComp(solEnt, out var comp2))
+            if (!query.TryComp(solution, out var comp)
+                || !query2.TryComp(solution, out var comp2))
                 continue;
-            var solComp = _solutionQuery.Comp(solEnt);
-            if (solComp.Name != solutionName)
+            if (solution.Comp.Name != solutionName)
                 continue;
-            foundSolution = (solEnt, solComp, comp, comp2);
+            foundSolution = (solution, solution, comp, comp2);
             return true;
         }
         foundSolution = default;
@@ -172,16 +172,15 @@ public partial class SharedSolutionSystem
         var query = EntityManager.GetEntityQuery<TComp>();
         var query2 = EntityManager.GetEntityQuery<TComp2>();
         var query3 = EntityManager.GetEntityQuery<TComp3>();
-        foreach (var solEnt in solutionHolder.Comp.SolutionEntities)
+        foreach (var solution in solutionHolder.Comp.Solutions)
         {
-            if (!query.TryComp(solEnt, out var comp)
-                || !query2.TryComp(solEnt, out var comp2)
-                || !query3.TryComp(solEnt, out var comp3))
+            if (!query.TryComp(solution, out var comp)
+                || !query2.TryComp(solution, out var comp2)
+                || !query3.TryComp(solution, out var comp3))
                 continue;
-            var solComp = _solutionQuery.Comp(solEnt);
-            if (solComp.Name != solutionName)
+            if (solution.Comp.Name != solutionName)
                 continue;
-            foundSolution = (solEnt, solComp, comp, comp2, comp3);
+            foundSolution = (solution, solution, comp, comp2, comp3);
             return true;
         }
         foundSolution = default;
@@ -194,12 +193,11 @@ public partial class SharedSolutionSystem
         where TComp: Component, new()
     {
         var query = EntityManager.GetEntityQuery<TComp>();
-        foreach (var solEnt in solutionHolder.Comp.SolutionEntities)
+        foreach (var solution in solutionHolder.Comp.Solutions)
         {
-            if (!query.TryComp(solEnt, out var comp))
+            if (!query.TryComp(solution, out var comp))
                 continue;
-            var solComp = _solutionQuery.Comp(solEnt);
-            foundSolution = (solEnt, solComp, comp);
+            foundSolution = (solution, solution, comp);
             return true;
         }
         foundSolution = default;
@@ -213,13 +211,12 @@ public partial class SharedSolutionSystem
     {
         var query = EntityManager.GetEntityQuery<TComp>();
         var query2 = EntityManager.GetEntityQuery<TComp2>();
-        foreach (var solEnt in solutionHolder.Comp.SolutionEntities)
+        foreach (var solution in solutionHolder.Comp.Solutions)
         {
-            if (!query.TryComp(solEnt, out var comp)
-                || !query2.TryComp(solEnt, out var comp2))
+            if (!query.TryComp(solution, out var comp)
+                || !query2.TryComp(solution, out var comp2))
                 continue;
-            var solComp = _solutionQuery.Comp(solEnt);
-            foundSolution = (solEnt, solComp, comp, comp2);
+            foundSolution = (solution, solution, comp, comp2);
             return true;
         }
         foundSolution = default;
@@ -235,14 +232,13 @@ public partial class SharedSolutionSystem
         var query = EntityManager.GetEntityQuery<TComp>();
         var query2 = EntityManager.GetEntityQuery<TComp2>();
         var query3 = EntityManager.GetEntityQuery<TComp3>();
-        foreach (var solEnt in solutionHolder.Comp.SolutionEntities)
+        foreach (var solution in solutionHolder.Comp.Solutions)
         {
-            if (!query.TryComp(solEnt, out var comp)
-                || !query2.TryComp(solEnt, out var comp2)
-                || !query3.TryComp(solEnt, out var comp3))
+            if (!query.TryComp(solution, out var comp)
+                || !query2.TryComp(solution, out var comp2)
+                || !query3.TryComp(solution, out var comp3))
                 continue;
-            var solComp = _solutionQuery.Comp(solEnt);
-            foundSolution = (solEnt, solComp, comp, comp2, comp3);
+            foundSolution = (solution, solution, comp, comp2, comp3);
             return true;
         }
         foundSolution = default;
@@ -280,10 +276,10 @@ public partial class SharedSolutionSystem
         Entity<SolutionHolderComponent> solutionHolder) where TComp : Component, new()
     {
         var query = EntityManager.GetEntityQuery<TComp>();
-        foreach (var solutionEntity in solutionHolder.Comp.SolutionEntities)
+        foreach (var solution in solutionHolder.Comp.Solutions)
         {
-            if (query.TryComp(solutionEntity, out var comp))
-                yield return (solutionEntity, _solutionQuery.Comp(solutionEntity), comp);
+            if (query.TryComp(solution, out var comp))
+                yield return (solution, solution, comp);
         }
     }
 
@@ -292,10 +288,10 @@ public partial class SharedSolutionSystem
     {
         var query1 = EntityManager.GetEntityQuery<TComp>();
         var query2 = EntityManager.GetEntityQuery<TComp2>();
-        foreach (var solutionEntity in solutionHolder.Comp.SolutionEntities)
+        foreach (var solution in solutionHolder.Comp.Solutions)
         {
-            if (query1.TryComp(solutionEntity, out var comp1) && query2.TryComp(solutionEntity, out var comp2))
-                yield return (solutionEntity, _solutionQuery.Comp(solutionEntity), comp1, comp2);
+            if (query1.TryComp(solution, out var comp1) && query2.TryComp(solution, out var comp2))
+                yield return (solution, solution, comp1, comp2);
         }
     }
 
@@ -308,12 +304,12 @@ public partial class SharedSolutionSystem
         var query1 = EntityManager.GetEntityQuery<TComp>();
         var query2 = EntityManager.GetEntityQuery<TComp2>();
         var query3 = EntityManager.GetEntityQuery<TComp3>();
-        foreach (var solutionEntity in solutionHolder.Comp.SolutionEntities)
+        foreach (var solution in solutionHolder.Comp.Solutions)
         {
-            if (query1.TryComp(solutionEntity, out var comp1)
-                && query2.TryComp(solutionEntity, out var comp2)
-                && query3.TryComp(solutionEntity, out var comp3))
-                yield return (solutionEntity, _solutionQuery.Comp(solutionEntity), comp1, comp2, comp3);
+            if (query1.TryComp(solution, out var comp1)
+                && query2.TryComp(solution, out var comp2)
+                && query3.TryComp(solution, out var comp3))
+                yield return (solution, solution, comp1, comp2, comp3);
         }
     }
 

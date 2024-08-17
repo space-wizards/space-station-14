@@ -2,6 +2,8 @@ using Content.Server.Animals.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.Solutions;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
@@ -25,7 +27,7 @@ internal sealed class UdderSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
 
     public override void Initialize()
     {
@@ -61,11 +63,11 @@ internal sealed class UdderSystem : EntitySystem
                 _hunger.ModifyHunger(uid, -udder.HungerUsage, hunger);
             }
 
-            if (!_solutionContainerSystem.ResolveSolution(uid, udder.SolutionName, ref udder.Solution))
+            if (!_solutionSystem.ResolveSolution(uid, udder.SolutionName, ref udder.Solution))
                 continue;
 
             //TODO: toxins from bloodstream !?
-            _solutionContainerSystem.TryAddReagent(udder.Solution.Value, udder.ReagentId, udder.QuantityPerUpdate, out _);
+            _solutionSystem.AddReagent(udder.Solution.Value, (udder.ReagentId.Id, udder.QuantityPerUpdate), out _);
         }
     }
 
@@ -86,29 +88,29 @@ internal sealed class UdderSystem : EntitySystem
 
     private void OnDoAfter(Entity<UdderComponent> entity, ref MilkingDoAfterEvent args)
     {
-        if (args.Cancelled || args.Handled || args.Args.Used == null)
+        if (args.Cancelled || args.Handled || args.Args.Used == null || !TryComp(args.Args.Used, out SolutionHolderComponent? solHolderComp))
             return;
 
-        if (!_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution, out var solution))
+        if (!_solutionSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution))
             return;
+        Entity<SolutionComponent> sourceSolution = (entity, entity.Comp.Solution);
 
-        if (!_solutionContainerSystem.TryGetRefillableSolution(args.Args.Used.Value, out var targetSoln, out var targetSolution))
+        if (!_solutionSystem.TryGetFirstSolutionWithComp<RefillableSolutionComponent>((args.Args.Used.Value, solHolderComp),
+                    out var targetSolution))
             return;
 
         args.Handled = true;
-        var quantity = solution.Volume;
+        var quantity = sourceSolution.Comp.Volume;
         if (quantity == 0)
         {
             _popupSystem.PopupEntity(Loc.GetString("udder-system-dry"), entity.Owner, args.Args.User);
             return;
         }
 
-        if (quantity > targetSolution.AvailableVolume)
-            quantity = targetSolution.AvailableVolume;
+        if (quantity > targetSolution.Comp1.AvailableVolume)
+            quantity = targetSolution.Comp1.AvailableVolume;
 
-        var split = _solutionContainerSystem.SplitSolution(entity.Comp.Solution.Value, quantity);
-        _solutionContainerSystem.TryAddSolution(targetSoln.Value, split);
-
+        _solutionSystem.TransferSolution(sourceSolution, targetSolution, quantity, out _);
         _popupSystem.PopupEntity(Loc.GetString("udder-system-success", ("amount", quantity), ("target", Identity.Entity(args.Args.Used.Value, EntityManager))), entity.Owner,
             args.Args.User, PopupType.Medium);
     }

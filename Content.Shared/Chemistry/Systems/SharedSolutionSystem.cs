@@ -32,18 +32,34 @@ public abstract partial class SharedSolutionSystem : EntitySystem
     public const int ReagentAlloc = 2;
     public const int VariantAlloc = 1;
 
-    private EntityQuery<SolutionComponent> _solutionQuery;
+    public EntityQuery<SolutionComponent> SolutionQuery;
     private EntityQuery<SolutionHolderComponent> _containerQuery;
 
     public override void Initialize()
     {
-        _solutionQuery = EntityManager.GetEntityQuery<SolutionComponent>();
+        SolutionQuery = EntityManager.GetEntityQuery<SolutionComponent>();
         _containerQuery = EntityManager.GetEntityQuery<SolutionHolderComponent>();
 
         SubscribeLocalEvent<SolutionComponent, AfterAutoHandleStateEvent>(HandleSolutionState);
+        SubscribeLocalEvent<SolutionHolderComponent, AfterAutoHandleStateEvent>(HandleSolutionHolderState);
         SubscribeLocalEvent<SolutionComponent, MapInitEvent>(SolutionMapInit);
         SubscribeLocalEvent<StartingSolutionsComponent, MapInitEvent>(InitialSolutionMapInit);
 
+    }
+
+    private void HandleSolutionHolderState(Entity<SolutionHolderComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        ent.Comp.Solutions.Clear();
+        foreach (var solEnt in ent.Comp.SolutionEntities)
+        {
+            if (!SolutionQuery.TryComp(solEnt, out var solComp))
+            {
+                Log.Error($"Entity: {ToPrettyString(solEnt)} is contained in a solution " +
+                          $"but does not have a solution component!");
+                continue;
+            }
+            ent.Comp.Solutions.Add((solEnt, solComp));
+        }
     }
 
     private void SolutionMapInit(Entity<SolutionComponent> ent, ref MapInitEvent args)

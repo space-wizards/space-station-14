@@ -12,6 +12,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.EntityEffects;
@@ -34,7 +35,7 @@ public sealed class RespiratorSystem : EntitySystem
     [Dependency] private readonly LungSystem _lungSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly ChemistryRegistrySystem _chemistryRegistry = default!;
 
@@ -168,8 +169,8 @@ public sealed class RespiratorSystem : EntitySystem
             _atmosSys.Merge(outGas, lung.Air);
             lung.Air.Clear();
 
-            if (_solutionContainerSystem.ResolveSolution(organUid, lung.SolutionName, ref lung.Solution))
-                _solutionContainerSystem.RemoveAllSolution(lung.Solution.Value);
+            if (_solutionSystem.ResolveSolution(organUid, lung.SolutionName, ref lung.Solution))
+                _solutionSystem.RemoveAllSolution(lung.Solution.Value);
         }
 
         _atmosSys.Merge(ev.Gas, outGas);

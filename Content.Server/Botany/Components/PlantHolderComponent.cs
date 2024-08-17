@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.Solutions;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Botany.Components;

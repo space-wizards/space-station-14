@@ -1,5 +1,6 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
@@ -27,11 +28,10 @@ public abstract partial class SharedToolSystem : EntitySystem
     [Dependency] protected readonly ItemToggleSystem ItemToggle = default!;
     [Dependency] private   readonly SharedMapSystem _maps = default!;
     [Dependency] private   readonly SharedPopupSystem _popup = default!;
-    [Dependency] protected readonly SharedSolutionContainerSystem SolutionContainerSystem = default!;
     [Dependency] private   readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private   readonly TileSystem _tiles = default!;
     [Dependency] private   readonly TurfSystem _turfs = default!;
-    [Dependency] protected readonly SharedSolutionContainerSystem SolutionContainer = default!;
+    [Dependency] protected readonly SharedSolutionSystem SolutionSystem = default!;
 
     public override void Initialize()
     {

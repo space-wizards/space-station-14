@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.Solutions;
 
 namespace Content.Server.Atmos.Piping.Unary.Components;
 

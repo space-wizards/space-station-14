@@ -1,4 +1,4 @@
-using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;

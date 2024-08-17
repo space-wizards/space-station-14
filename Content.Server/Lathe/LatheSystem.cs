@@ -10,13 +10,11 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Shared.Atmos;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.Emag.Components;
-using Content.Shared.Examine;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.ReagentSpeed;
@@ -46,7 +44,7 @@ namespace Content.Server.Lathe
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PuddleSystem _puddle = default!;
         [Dependency] private readonly ReagentSpeedSystem _reagentSpeed = default!;
-        [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
+        [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
         [Dependency] private readonly StackSystem _stack = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
 
@@ -229,20 +227,24 @@ namespace Content.Server.Lathe
                 if (comp.CurrentRecipe.ResultReagents is { } resultReagents &&
                     comp.ReagentOutputSlotId is { } slotId)
                 {
-                    var toAdd = new Solution(
-                        resultReagents.Select(p => new ReagentQuantity(p.Key.Id, p.Value, null)));
+                    SolutionContents contents = new(resultReagents.Count);
+                    foreach (var (protoId, quant) in resultReagents)
+                    {
+                        if (_solutionSystem.TryGetReagentDef(protoId, out var reagentDef, null, true))
+                            contents.Add((reagentDef, quant));
+                    }
 
                     // dispense it in the container if we have it and dump it if we don't
                     if (_container.TryGetContainer(uid, slotId, out var container) &&
                         container.ContainedEntities.Count == 1 &&
-                        _solution.TryGetFitsInDispenser(container.ContainedEntities.First(), out var solution, out _))
+                        _solutionSystem.TryGetFirstSolution(uid, out var solution))
                     {
-                        _solution.AddSolution(solution.Value, toAdd);
+                        _solutionSystem.AddReagents(solution, null, true, contents);
                     }
                     else
                     {
                         _popup.PopupEntity(Loc.GetString("lathe-reagent-dispense-no-container", ("name", uid)), uid);
-                        _puddle.TrySpillAt(uid, toAdd, out _);
+                        _puddle.TrySpillAt(uid, contents, out _);
                     }
                 }
             }

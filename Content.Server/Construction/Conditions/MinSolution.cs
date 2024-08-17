@@ -1,10 +1,9 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Construction.Conditions;
 
@@ -24,7 +23,7 @@ public sealed partial class MinSolution : IGraphCondition
     /// The reagent that needs to be present.
     /// </summary>
     [DataField(required: true)]
-    public ReagentId Reagent = new();
+    public ReagentSpecifier Reagent = new();
 
     /// <summary>
     /// How much of the reagent must be present.
@@ -34,11 +33,11 @@ public sealed partial class MinSolution : IGraphCondition
 
     public bool Condition(EntityUid uid, IEntityManager entMan)
     {
-        var containerSys = entMan.System<SolutionContainerSystem>();
-        if (!containerSys.TryGetSolution(uid, Solution, out _, out var solution))
+        var solutionSystem = entMan.System<SharedSolutionSystem>();
+        if (!solutionSystem.TryGetSolution(uid, Solution, out var solution))
             return false;
 
-        solution.TryGetReagentQuantity(Reagent, out var quantity);
+        solutionSystem.TryGetReagentQuantity(solution, Reagent, out var quantity);
         return quantity >= Quantity;
     }
 
@@ -47,11 +46,11 @@ public sealed partial class MinSolution : IGraphCondition
         var entMan = IoCManager.Resolve<IEntityManager>();
         var uid = args.Examined;
 
-        var containerSys = entMan.System<SolutionContainerSystem>();
-        if (!containerSys.TryGetSolution(uid, Solution, out _, out var solution))
+        var solutionSystem = entMan.System<SharedSolutionSystem>();
+        if (!solutionSystem.TryGetSolution(uid, Solution, out var solution))
             return false;
 
-        solution.TryGetReagentQuantity(Reagent, out var quantity);
+        solutionSystem.TryGetReagentQuantity(solution,Reagent, out var quantity);
 
         // already has enough so dont show examine
         if (quantity >= Quantity)
@@ -78,7 +77,7 @@ public sealed partial class MinSolution : IGraphCondition
     private string Name()
     {
         var chemRegistry = IoCManager.Resolve<IEntityManager>().System<ChemistryRegistrySystem>();
-        var proto = chemRegistry.Index(Reagent.Prototype);
+        var proto = chemRegistry.Index(Reagent.Id);
         return proto.Comp.LocalizedName;
     }
 }

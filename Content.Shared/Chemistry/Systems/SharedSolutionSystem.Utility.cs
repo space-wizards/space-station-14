@@ -242,4 +242,11 @@ public partial class SharedSolutionSystem
     {
         return ReagentSpecifier.ResolveReagentEntity(ref reagentSpec, ChemistryRegistry,logIfMissing);
     }
+
+    public bool ResolveSpecifier(ref ReagentQuantitySpecifier reagentSpec, bool logIfMissing = true)
+    {
+        return ReagentQuantitySpecifier.ResolveReagentEntity(ref reagentSpec, ChemistryRegistry,logIfMissing);
+    }
+
+
 }
