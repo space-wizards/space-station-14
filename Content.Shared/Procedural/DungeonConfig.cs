@@ -1,14 +1,10 @@
-using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Procedural;
 
-[Prototype]
-public sealed partial class DungeonConfigPrototype : IPrototype
+[Virtual, DataDefinition]
+public partial class DungeonConfig
 {
-    [IdDataField]
-    public string ID { get; private set; } = default!;
-
     /// <summary>
     /// <see cref="Data"/>
     /// </summary>
@@ -18,7 +14,7 @@ public sealed partial class DungeonConfigPrototype : IPrototype
     /// <summary>
     /// The secret sauce, procedural generation layers that get run.
     /// </summary>
-    [DataField(required: true)]
+    [DataField]
     public List<IDunGenLayer> Layers = new();
 
     /// <summary>
@@ -50,4 +46,11 @@ public sealed partial class DungeonConfigPrototype : IPrototype
     /// </summary>
     [DataField]
     public int MaxOffset;
+}
+
+[Prototype]
+public sealed class DungeonConfigPrototype : DungeonConfig, IPrototype
+{
+    [IdDataField]
+    public string ID { get; private set; } = default!;
 }
