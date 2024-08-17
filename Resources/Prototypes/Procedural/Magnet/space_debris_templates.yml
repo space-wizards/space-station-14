@@ -81,7 +81,6 @@
     - FloorSteel
     - Plating
     threshold: 0.2
-    divisions: 1
     noise:
       seed: 1
       frequency: 1
@@ -95,7 +94,6 @@
     allowedTiles:
     - FloorSteel
     threshold: 0.7
-    divisions: 1
     noise:
       seed: 1
       frequency: 1
@@ -110,7 +108,6 @@
     allowedTiles:
     - FloorSteel
     threshold: 0.80
-    divisions: 1
     noise:
       seed: 1
       frequency: 1
