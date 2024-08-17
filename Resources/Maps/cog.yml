@@ -80882,7 +80882,182 @@ entities:
     - type: Transform
       pos: 33.741333,47.545418
       parent: 12
-- proto: Firelock
+- proto: FirelockEdge
+  entities:
+  - uid: 2114
+    components:
+    - type: Transform
+      pos: -33.5,20.5
+      parent: 12
+  - uid: 2117
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -33.5,24.5
+      parent: 12
+    - type: DeviceNetwork
+      deviceLists:
+      - 23910
+  - uid: 8462
+    components:
+    - type: Transform
+      pos: 48.5,-12.5
+      parent: 12
+  - uid: 9077
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 42.5,-17.5
+      parent: 12
+  - uid: 9078
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 43.5,-17.5
+      parent: 12
+  - uid: 9079
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 44.5,-17.5
+      parent: 12
+  - uid: 13168
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 43.5,32.5
+      parent: 12
+  - uid: 13292
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 54.5,31.5
+      parent: 12
+  - uid: 13297
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 55.5,31.5
+      parent: 12
+  - uid: 13305
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 44.5,32.5
+      parent: 12
+  - uid: 23633
+    components:
+    - type: Transform
+      pos: 14.5,55.5
+      parent: 12
+    - type: DeviceNetwork
+      deviceLists:
+      - 23630
+  - uid: 23634
+    components:
+    - type: Transform
+      pos: 8.5,55.5
+      parent: 12
+    - type: DeviceNetwork
+      deviceLists:
+      - 23630
+  - uid: 23751
+    components:
+    - type: Transform
+      pos: 68.5,46.5
+      parent: 12
+    - type: DeviceNetwork
+      deviceLists:
+      - 24184
+  - uid: 23752
+    components:
+    - type: Transform
+      pos: 69.5,46.5
+      parent: 12
+    - type: DeviceNetwork
+      deviceLists:
+      - 24184
+  - uid: 23753
+    components:
+    - type: Transform
+      pos: 70.5,46.5
+      parent: 12
+    - type: DeviceNetwork
+      deviceLists:
+      - 24184
+  - uid: 23754
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 68.5,51.5
+      parent: 12
+    - type: DeviceNetwork
+      deviceLists:
+      - 24184
+  - uid: 23755
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 70.5,51.5
+      parent: 12
+    - type: DeviceNetwork
+      deviceLists:
+      - 24184
+  - uid: 23756
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 69.5,51.5
+      parent: 12
+    - type: DeviceNetwork
+      deviceLists:
+      - 24184
+  - uid: 26931
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 57.5,2.5
+      parent: 12
+    - type: DeviceNetwork
+      deviceLists:
+      - 26938
+  - uid: 26932
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 57.5,0.5
+      parent: 12
+    - type: DeviceNetwork
+      deviceLists:
+      - 26938
+  - uid: 26933
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 57.5,-0.5
+      parent: 12
+    - type: DeviceNetwork
+      deviceLists:
+      - 26938
+  - uid: 26934
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 57.5,-1.5
+      parent: 12
+    - type: DeviceNetwork
+      deviceLists:
+      - 26938
+  - uid: 26935
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 57.5,1.5
+      parent: 12
+    - type: DeviceNetwork
+      deviceLists:
+      - 26938
+- proto: FirelockGlass
   entities:
   - uid: 637
     components:
@@ -83312,183 +83487,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -27.5,-11.5
       parent: 12
-- proto: FirelockEdge
-  entities:
-  - uid: 2114
-    components:
-    - type: Transform
-      pos: -33.5,20.5
-      parent: 12
-  - uid: 2117
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -33.5,24.5
-      parent: 12
-    - type: DeviceNetwork
-      deviceLists:
-      - 23910
-  - uid: 8462
-    components:
-    - type: Transform
-      pos: 48.5,-12.5
-      parent: 12
-  - uid: 9077
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 42.5,-17.5
-      parent: 12
-  - uid: 9078
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 43.5,-17.5
-      parent: 12
-  - uid: 9079
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 44.5,-17.5
-      parent: 12
-  - uid: 13168
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 43.5,32.5
-      parent: 12
-  - uid: 13292
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 54.5,31.5
-      parent: 12
-  - uid: 13297
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 55.5,31.5
-      parent: 12
-  - uid: 13305
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 44.5,32.5
-      parent: 12
-  - uid: 23633
-    components:
-    - type: Transform
-      pos: 14.5,55.5
-      parent: 12
-    - type: DeviceNetwork
-      deviceLists:
-      - 23630
-  - uid: 23634
-    components:
-    - type: Transform
-      pos: 8.5,55.5
-      parent: 12
-    - type: DeviceNetwork
-      deviceLists:
-      - 23630
-  - uid: 23751
-    components:
-    - type: Transform
-      pos: 68.5,46.5
-      parent: 12
-    - type: DeviceNetwork
-      deviceLists:
-      - 24184
-  - uid: 23752
-    components:
-    - type: Transform
-      pos: 69.5,46.5
-      parent: 12
-    - type: DeviceNetwork
-      deviceLists:
-      - 24184
-  - uid: 23753
-    components:
-    - type: Transform
-      pos: 70.5,46.5
-      parent: 12
-    - type: DeviceNetwork
-      deviceLists:
-      - 24184
-  - uid: 23754
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 68.5,51.5
-      parent: 12
-    - type: DeviceNetwork
-      deviceLists:
-      - 24184
-  - uid: 23755
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 70.5,51.5
-      parent: 12
-    - type: DeviceNetwork
-      deviceLists:
-      - 24184
-  - uid: 23756
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 69.5,51.5
-      parent: 12
-    - type: DeviceNetwork
-      deviceLists:
-      - 24184
-  - uid: 26931
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 57.5,2.5
-      parent: 12
-    - type: DeviceNetwork
-      deviceLists:
-      - 26938
-  - uid: 26932
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 57.5,0.5
-      parent: 12
-    - type: DeviceNetwork
-      deviceLists:
-      - 26938
-  - uid: 26933
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 57.5,-0.5
-      parent: 12
-    - type: DeviceNetwork
-      deviceLists:
-      - 26938
-  - uid: 26934
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 57.5,-1.5
-      parent: 12
-    - type: DeviceNetwork
-      deviceLists:
-      - 26938
-  - uid: 26935
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 57.5,1.5
-      parent: 12
-    - type: DeviceNetwork
-      deviceLists:
-      - 26938
-- proto: FirelockGlass
-  entities:
   - uid: 610
     components:
     - type: Transform
