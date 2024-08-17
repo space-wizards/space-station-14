@@ -39,3 +39,7 @@ dungeon-config-proto-SwissCheeseAsteroid = Asteroid fragments
 
 # Wrecks
 salvage-map-wreck = Salvage wreck
+salvage-map-wreck-desc-size = Size:
+salvage-map-wreck-size-small = [color=lime]Small[/color]
+salvage-map-wreck-size-medium = [color=cornflowerblue]Medium[/color]
+salvage-map-wreck-size-large = [color=orchid]Large[/color]

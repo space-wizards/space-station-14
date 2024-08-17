@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client.Message;
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Magnet;
 using Robust.Client.UserInterface;
@@ -98,8 +99,32 @@ public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
                     }
 
                     break;
-                case SalvageOffering:
+                case SalvageOffering salvage:
                     option.Title = Loc.GetString($"salvage-map-wreck");
+
+                    var salvContainer = new BoxContainer
+                    {
+                        Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                        HorizontalExpand = true,
+                    };
+
+                    var sizeLabel = new Label
+                    {
+                        Text = Loc.GetString("salvage-map-wreck-desc-size"),
+                        HorizontalAlignment = Control.HAlignment.Left,
+                    };
+
+                    var sizeValueLabel = new RichTextLabel
+                    {
+                        HorizontalAlignment = Control.HAlignment.Right,
+                        HorizontalExpand = true,
+                    };
+                    sizeValueLabel.SetMarkup(Loc.GetString(salvage.SalvageMap.SizeString));
+
+                    salvContainer.AddChild(sizeLabel);
+                    salvContainer.AddChild(sizeValueLabel);
+
+                    option.AddContent(salvContainer);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
