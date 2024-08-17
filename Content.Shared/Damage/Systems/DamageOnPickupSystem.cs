@@ -46,7 +46,7 @@ public sealed class DamageOnPickupSystem : EntitySystem
         }
 
         args.Cancel();
-        _audio.PlayPvs(entity.Comp.FailSound, entity);
+        _audio.PlayPredicted(entity.Comp.FailSound, entity, user);
 
         if (entity.Comp.Throw)
         {
@@ -59,6 +59,6 @@ public sealed class DamageOnPickupSystem : EntitySystem
         {
             _damageableSystem.TryChangeDamage(user, entity.Comp.Damage, origin: user);
         }
-        _popupSystem.PopupEntity(Loc.GetString("damage-onpickup-entity", ("entity", Identity.Entity(entity, EntityManager))), entity, user);
+        _popupSystem.PopupClient(Loc.GetString("damage-onpickup-entity", ("entity", Identity.Entity(entity, EntityManager))), entity, user, PopupType.SmallCaution);
     }
 }
