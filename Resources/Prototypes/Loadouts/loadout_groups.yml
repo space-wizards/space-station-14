@@ -51,7 +51,15 @@
   loadouts:
   - EmergencyNitrogen
   - EmergencyOxygen
+  - LoadoutSpeciesVoxNitrogen
+
+- type: loadoutGroup
+  id: GroupEVATank
+  name: loadout-group-EVA-tank
+  hidden: true
+  loadouts:
   - LoadoutSpeciesEVANitrogen
+  - LoadoutSpeciesEVAOxygen
 
 # Command
 - type: loadoutGroup
@@ -164,6 +172,13 @@
   - CommonBackpack
   - CommonSatchel
   - CommonDuffel
+
+- type: loadoutGroup
+  id: PassengerNeck
+  name: loadout-group-passenger-neck
+  minLimit: 0
+  loadouts:
+  - Mantle
 
 - type: loadoutGroup
   id: PassengerOuterClothing
@@ -423,7 +438,7 @@
   loadouts:
   - EmergencyNitrogenClown
   - EmergencyOxygenClown
-  - LoadoutSpeciesEVANitrogen
+  - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
   id: MimeHead
@@ -746,7 +761,7 @@
   loadouts:
   - EmergencyNitrogenExtended
   - EmergencyOxygenExtended
-  - LoadoutSpeciesEVANitrogen
+  - LoadoutSpeciesVoxNitrogen
 
 # Science
 - type: loadoutGroup
@@ -1026,7 +1041,14 @@
   loadouts:
   - EmergencyNitrogenSecurity
   - EmergencyOxygenSecurity
-  - LoadoutSpeciesEVANitrogen
+  - LoadoutSpeciesVoxNitrogen
+
+- type: loadoutGroup
+  id: SecurityStar
+  name: loadout-group-security-star
+  minLimit: 0
+  loadouts:
+  - SecStar
 
 # Medical
 - type: loadoutGroup
@@ -1208,7 +1230,7 @@
   loadouts:
   - EmergencyNitrogenMedical
   - EmergencyOxygenMedical
-  - LoadoutSpeciesEVANitrogen
+  - LoadoutSpeciesVoxNitrogen
 
 # Wildcards
 - type: loadoutGroup
@@ -1217,6 +1239,13 @@
   loadouts:
   - ReporterJumpsuit
   - JournalistJumpsuit
+
+- type: loadoutGroup
+  id: PsychologistJumpsuit
+  name: loadout-group-psychologist-jumpsuit
+  loadouts:
+  - PsychologistJumpsuit
+  - PsychologistJumpskirt
 
 - type: loadoutGroup
   id: BoxerJumpsuit
@@ -1243,7 +1272,7 @@
   loadouts:
   - EmergencyNitrogenSyndicate
   - EmergencyOxygenSyndicate
-  - LoadoutSpeciesEVANitrogen
+  - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
   id: GroupSpeciesBreathTool

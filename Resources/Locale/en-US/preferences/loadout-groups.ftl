@@ -14,6 +14,7 @@ loadout-group-survival-security = Security Survival Box
 loadout-group-survival-syndicate = Github is forcing me to write text that is literally twice-impossible for the player to ever see, send help
 loadout-group-breath-tool = Species-dependent breath tools
 loadout-group-tank-harness = Species-specific survival equipment
+loadout-group-EVA-tank = Species-specific gas tank
 
 # Command
 loadout-group-captain-head = Captain head
@@ -34,6 +35,7 @@ loadout-group-passenger-mask = Passenger mask
 loadout-group-passenger-gloves = Passenger gloves
 loadout-group-passenger-outerclothing = Passenger outer clothing
 loadout-group-passenger-shoes = Passenger shoes
+loadout-group-passenger-neck = Passenger neck
 
 loadout-group-bartender-head = Bartender head
 loadout-group-bartender-jumpsuit = Bartender jumpsuit
@@ -161,6 +163,7 @@ loadout-group-detective-jumpsuit = Detective jumpsuit
 loadout-group-detective-outerclothing = Detective outer clothing
 
 loadout-group-security-cadet-jumpsuit = Security cadet jumpsuit
+loadout-group-security-star = Security Star
 
 # Medical
 loadout-group-medical-gloves = Medical gloves
@@ -192,6 +195,8 @@ loadout-group-paramedic-shoes = Paramedic shoes
 
 # Wildcards
 loadout-group-reporter-jumpsuit = Reporter jumpsuit
+
+loadout-group-psychologist-jumpsuit = Psychologist jumpsuit
 
 loadout-group-boxer-jumpsuit = Boxer jumpsuit
 loadout-group-boxer-gloves = Boxer gloves

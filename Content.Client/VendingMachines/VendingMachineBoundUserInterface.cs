@@ -5,6 +5,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using System.Linq;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.VendingMachines
 {
@@ -28,9 +29,10 @@ namespace Content.Client.VendingMachines
 
             _cachedInventory = vendingMachineSys.GetAllInventory(Owner);
 
-            _menu = new VendingMachineMenu { Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName };
+            _menu = this.CreateWindow<VendingMachineMenu>();
+            _menu.OpenCenteredLeft();
+            _menu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
 
-            _menu.OnClose += Close;
             _menu.OnItemSelected += OnItemSelected;
 
             _menu.Populate(_cachedInventory);
