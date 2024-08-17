@@ -12,8 +12,8 @@
          amount: 2
        - id: ClothingShoesColorBlack
          amount: 2
-       - id: ClothingMaskMuzzle
        - id: ClothingShoesLegShackles
+       - id: ClothingMaskMuzzle
 
 #- type: entity
 #  id: WardrobePajamaFilled

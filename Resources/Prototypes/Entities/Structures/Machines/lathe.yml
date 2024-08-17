@@ -723,6 +723,7 @@
       - BoxShotgunPractice
       - BoxShotgunSlug
       - ClothingEyesHudSecurity
+      - ClothingShoesLegShackles
       - CombatKnife
       - Flash
       - ForensicPad
@@ -758,7 +759,6 @@
       - WeaponDisablerPractice
       - WeaponLaserCarbinePractice
       - Zipties
-      - ClothingShoesLegShackles
     dynamicRecipes:
       - BoxBeanbag
       - BoxShotgunIncendiary
