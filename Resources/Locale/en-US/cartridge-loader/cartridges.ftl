@@ -22,3 +22,7 @@ log-probe-label-number = #
 
 wanted-list-program-name = Wanted list
 wanted-list-label-no-records = It's all right, cowboy
+wanted-list-status-wanted = [color=red]wanted[/color]
+wanted-list-status-suspected = [color=yellow]suspect[/color]
+wanted-list-reason = [color=darkgray]Reason:[/color] { $reason }
+wanted-list-search-placeholder = Search

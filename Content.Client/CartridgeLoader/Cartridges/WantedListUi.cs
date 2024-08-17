@@ -1,4 +1,5 @@
 using Content.Client.UserInterface.Fragments;
+using Content.Shared.CartridgeLoader.Cartridges;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
@@ -19,6 +20,11 @@ public sealed partial class WantedListUi : UIFragment
 
     public override void UpdateState(BoundUserInterfaceState state)
     {
-        throw new NotImplementedException();
+        switch (state)
+        {
+            case WantedListUiState cast:
+                _fragment?.UpdateState(cast.Records);
+                break;
+        }
     }
 }

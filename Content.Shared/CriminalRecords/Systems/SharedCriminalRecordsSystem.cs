@@ -2,6 +2,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Security;
 using Content.Shared.Security.Components;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.CriminalRecords.Systems;
 
@@ -50,3 +51,14 @@ public abstract class SharedCriminalRecordsSystem : EntitySystem
             Dirty(characterUid, record);
     }
 }
+
+[Serializable, NetSerializable]
+public struct WantedRecord(string targetName, SecurityStatus status, string? reason)
+{
+    public string TargetName = targetName;
+    public SecurityStatus Status = status;
+    public string? Reason = reason;
+};
+
+[ByRefEvent]
+public record struct CriminalRecordChangedEvent(CriminalRecord Record);
