@@ -441,8 +441,12 @@
     chatsan-word-58: chatsan-replacement-58
     chatsan-word-59: chatsan-replacement-59
     chatsan-word-60: chatsan-replacement-60
-    chatsan-word-61: chatsan-replacement-60
-    chatsan-word-62: chatsan-replacement-60
+    chatsan-word-61: chatsan-replacement-61
+    chatsan-word-62: chatsan-replacement-62
+    chatsan-word-63: chatsan-replacement-63
+    chatsan-word-64: chatsan-replacement-64
+    chatsan-word-65: chatsan-replacement-65
+    chatsan-word-66: chatsan-replacement-66
 
 - type: accent
   id: liar

@@ -174,3 +174,15 @@ chatsan-replacement-61 = on my way
 
 chatsan-word-62 = otw
 chatsan-replacement-62 = on the way
+
+chatsan-word-63 = yk
+chatsan-replacement-63 = you know
+
+chatsan-word-64 = istfg
+chatsan-replacement-64 = istfg
+
+chatsan-word-65 = idgaf
+chatsan-replacement-65 = i don't give a fuck
+
+chatsan-word-66 = smth
+chatsan-replacement-66 = something
