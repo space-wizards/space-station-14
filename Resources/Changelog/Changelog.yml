@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Multiple pipes facing the same direction can no longer be placed on the
-      same tile. You can still have overlapping straight pipes or corners going in
-      opposite directions.
-    type: Fix
-  id: 6626
-  time: '2024-05-27T22:37:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28308
 - author: Emisse
   changes:
   - message: Derotate Train temporarily
@@ -3835,3 +3826,10 @@
   id: 7125
   time: '2024-08-16T10:47:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30983
+- author: Blackern5000
+  changes:
+  - message: Disabler SMGs no longer fit in combat boots
+    type: Fix
+  id: 7126
+  time: '2024-08-17T01:00:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31110
