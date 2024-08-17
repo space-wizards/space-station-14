@@ -1,6 +1,6 @@
 - type: gameMap
   id: Saltern
-  mapName: 'Saltern'
+  mapName: 'MWG-Saltern'
   mapPath: /Maps/saltern-mwg.yml
   minPlayers: 0
   maxPlayers: 35
