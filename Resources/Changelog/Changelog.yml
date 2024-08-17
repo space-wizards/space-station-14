@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Nukies will have ghost roles opened if not enough people can be picked.
-    type: Tweak
-  id: 6633
-  time: '2024-05-28T15:35:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28316
 - author: WarMechanic
   changes:
   - message: Guns will now cycle when interacting with them in-hand after wielding.
@@ -3834,3 +3827,10 @@
   id: 7132
   time: '2024-08-17T05:12:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31074
+- author: themias
+  changes:
+  - message: Added a recipe for croissants
+    type: Add
+  id: 7133
+  time: '2024-08-17T14:09:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30825
