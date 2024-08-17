@@ -19,3 +19,6 @@ log-probe-scan = Downloaded logs from {$device}!
 log-probe-label-time = Time
 log-probe-label-accessor = Accessed by
 log-probe-label-number = #
+
+wanted-list-program-name = Wanted list
+wanted-list-label-no-records = It's all right, cowboy

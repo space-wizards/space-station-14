@@ -1,0 +1,29 @@
+<cartridges:WantedListUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
+        xmlns="https://spacestation14.io"
+        Orientation="Vertical"
+        VerticalExpand="True"
+        HorizontalExpand="True">
+
+    <LineEdit Name="SearchBar" PlaceHolder="{Loc 'criminal-records-filter-placeholder'}"/>
+
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+        <Label Name="NoRecords" Text="{Loc 'wanted-list-label-no-records'}" Align="Center" VAlign="Center" HorizontalExpand="True" FontColorOverride="DarkGray"/>
+
+        <BoxContainer Orientation="Vertical" Visible="False">
+            <ScrollContainer VerticalExpand="True" MinWidth="250" MaxWidth="300">
+                <ItemList Name="RecordsList" />
+            </ScrollContainer>
+        </BoxContainer>
+
+        <Label Name="RecordUnselected" Text="{Loc 'criminal-records-console-select-record-info'}" Align="Center" FontColorOverride="DarkGray" Visible="False"/>
+        <BoxContainer Name="PersonContainer" Orientation="Vertical" Margin="5">
+            <BoxContainer Orientation="Horizontal">
+                <Label Name="PersonName" StyleClasses="LabelBig" Align="Left"/>
+                <RichTextLabel Name="PersonState"/>
+            </BoxContainer>
+            <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 5"/>
+            <Label Name="InitiatorName"/>
+            <Label Name="WantedReason"/>
+        </BoxContainer>
+    </BoxContainer>
+</cartridges:WantedListUiFragment>

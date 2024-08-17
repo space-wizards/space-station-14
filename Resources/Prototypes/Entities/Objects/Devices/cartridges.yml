@@ -93,3 +93,24 @@
     - type: GuideHelp
       guides:
       - Forensics
+
+- type: entity
+  parent: BaseItem
+  id: WantedListCartridge
+  name: Wanted list cartridge
+  description: A program to get a list of wanted persons.
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-s
+    - type: Icon
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-s
+    - type: UIFragment
+      ui: !type:WantedListUi
+    - type: Cartridge
+      programName: wanted-list-program-name
+      icon:
+        sprite: Objects/Misc/books.rsi
+        state: icon_magnifier
+    - type: WantedListCartridge
