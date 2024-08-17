@@ -278,6 +278,11 @@
         Asphyxiation: -1.0
   - type: FireVisuals
     alternateState: Standing
+  - type: InstrumentWhitelist # GreyStation - anyone can use DAW and drums without traits/job
+    whitelist:
+      tags:
+      - BasicInstrument
+      - PercussionInstrument
 
 - type: entity
   save: false
