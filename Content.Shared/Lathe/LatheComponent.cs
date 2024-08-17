@@ -77,7 +77,7 @@ namespace Content.Shared.Lathe
 
         public bool getUnavailable;
 
-        public List<ProtoId<LatheRecipePrototype>> Recipes = new();
+        public HashSet<ProtoId<LatheRecipePrototype>> Recipes = new();
 
         public LatheGetRecipesEvent(EntityUid lathe, bool forced)
         {

@@ -206,6 +206,8 @@
   id: SalvageEquipmentRare
   table: !type:GroupSelector
     children:
+    - id: BlueprintFlare
+    - id: SeismicCharge
     - id: FultonBeacon
     - id: Fulton
       amount: !type:RangeNumberSelector
@@ -221,6 +223,8 @@
   id: SalvageEquipmentLegendary
   table: !type:GroupSelector
     children:
+    - id: BlueprintFulton
+    - id: BlueprintSeismicCharge
     - id: WeaponCrusher
     - id: WeaponCrusherGlaive
     - id: OmnizineChemistryBottle

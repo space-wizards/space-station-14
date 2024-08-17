@@ -155,10 +155,10 @@ namespace Content.Server.Lathe
         {
             var ev = new LatheGetRecipesEvent(uid, getUnavailable)
             {
-                Recipes = new List<ProtoId<LatheRecipePrototype>>(component.StaticRecipes)
+                Recipes = new HashSet<ProtoId<LatheRecipePrototype>>(component.StaticRecipes)
             };
             RaiseLocalEvent(uid, ev);
-            return ev.Recipes;
+            return ev.Recipes.ToList();
         }
 
         public static List<ProtoId<LatheRecipePrototype>> GetAllBaseRecipes(LatheComponent component)
