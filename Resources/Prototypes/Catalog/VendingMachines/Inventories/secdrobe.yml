@@ -1,29 +1,27 @@
 - type: vendingMachineInventory
   id: SecDrobeInventory
   startingInventory:
-    ClothingBackpackSecurity: 3
-    ClothingBackpackSatchelSecurity: 3
-    ClothingBackpackDuffelSecurity: 3
-    ClothingUniformJumpsuitSec: 3
-    ClothingShoesBootsJack: 3
     ClothingHeadHatBeretSecurity: 3
     ClothingHeadHatSecsoft: 3
-    ClothingHeadBandRed: 3
-    ClothingHandsGlovesColorBlack: 3
-    ClothingHandsGlovesFingerless: 3
+    ClothingMaskBandRed: 3 # GreyStation - Tweaked to be a mask instead of head bandana
+    ClothingMaskBalaclava: 3 # GreyStation - Clothing Addition
+    ClothingHeadsetSecurity: 3
+    ClothingUniformJumpsuitSec: 3
     ClothingUniformJumpskirtSec: 3
     ClothingUniformJumpsuitSecGrey: 3
     ClothingUniformJumpskirtSecGrey: 3
     ClothingUniformJumpsuitSecBlue: 3
-    ClothingUniformJumpsuitSecSummer: 3 # GreyStation - Clothing addition
-    ClothingUniformRedOveralls: 2 # GreyStation - Clothing addition
-    ClothingHeadsetSecurity: 3
     ClothingOuterWinterSec: 2
-    ClothingOuterArmorPlateCarrier: 2 # GreyStation - Replaced ClothingOuterArmorBasic
-    ClothingNeckScarfStripedRed: 3
+    #ClothingNeckScarfStripedRed: 3 # GreyStation - Removal
     ClothingOuterArmorBasicSlim: 2
-    ClothingEyesBlindfold: 1
-    ClothingShoesBootsCombat: 1
-    ClothingShoesBootsWinterSec: 2
+    #ClothingEyesBlindfold: 1 GreyStation - Removal
+    #ClothingShoesBootsWinterSec: 2 # GreyStation - Removal
+    ClothingHandsGlovesColorBlack: 3
+    #ClothingHandsGlovesFingerless: 3 # GreyStation - Removal
+    ClothingShoesBootsJack: 3
+    #ClothingShoesBootsCombat: 1 # GreyStation - Removal
+    ClothingBackpackSecurity: 3
+    ClothingBackpackSatchelSecurity: 3
+    ClothingBackpackDuffelSecurity: 3
   contrabandInventory:
     ClothingMaskClownSecurity: 1
