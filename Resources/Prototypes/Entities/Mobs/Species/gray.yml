@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  name: Glornar Bibpo
+  name: Urist McGray
   parent: BaseMobSpeciesOrganic
   id: BaseMobGray
   abstract: true
