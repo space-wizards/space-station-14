@@ -29,4 +29,16 @@ public sealed partial class SyndicateTeleporterComponent : Component
     [DataField("alarm"), AutoNetworkedField]
     public SoundSpecifier? AlarmSound = new SoundPathSpecifier("/Audio/Effects/beeps.ogg");
 
+
+    public EntityUid UserComp;
+    /// <summary>
+    /// the number of seconds the player stays in the wall. (just so that he would realize that he almost died)
+    /// </summary>
+    [DataField]
+    public float CorrectTime = 0.5f;
+    public float Timer = 0; 
+
+    public bool InWall = false;
+
+
 }

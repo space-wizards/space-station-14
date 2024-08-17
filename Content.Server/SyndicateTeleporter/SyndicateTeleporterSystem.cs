@@ -10,6 +10,8 @@ using Content.Shared.Body.Systems;
 using Robust.Shared.Audio.Systems;
 using System.Threading.Tasks;
 using Robust.Shared.Random;
+using Content.Server.Popups;
+using Content.Shared.Popups;
 
 namespace Content.Server.SyndicateTeleporter;
 
@@ -22,9 +24,8 @@ public sealed class SyndicateTeleporterSystem : EntitySystem
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] protected readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly PopupSystem _popups = default!;
 
-
-    [ValidatePrototypeId<EntityPrototype>]
     private const string TeleportEffectPrototype = "TeleportEffect";
     public override void Initialize()
     {
@@ -33,8 +34,29 @@ public sealed class SyndicateTeleporterSystem : EntitySystem
         SubscribeLocalEvent<SyndicateTeleporterComponent, UseInHandEvent>(OnUse);
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<SyndicateTeleporterComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.InWall == true)
+            {
+                comp.Timer += frameTime;
+                if (comp.Timer >= comp.CorrectTime) //I'm not sure I should do it this way...
+                {
+                    SaveTeleport(uid, comp);
+                    comp.Timer = 0;
+                }
+            }
+        }
+    }
+
     private void OnUse(EntityUid uid, SyndicateTeleporterComponent component, UseInHandEvent args)
     {
+        component.UserComp = args.User; // well, i need this for SaveTeleport...
+
         if (!TryComp<LimitedChargesComponent>(uid, out var charges))
             return;
 
@@ -49,12 +71,10 @@ public sealed class SyndicateTeleporterSystem : EntitySystem
         Teleportation(uid, args.User, component);
     }
 
-    private async Task Teleportation(EntityUid uid, EntityUid user, SyndicateTeleporterComponent comp)
+    private void Teleportation(EntityUid uid, EntityUid user, SyndicateTeleporterComponent comp)
     {
         float random = _random.Next(0, comp.RandomDistanceValue);
-        var multiplaer = new Vector2(comp.TeleportationValue + random, comp.TeleportationValue + random); //make random for teleport distance value
-
-        EntityUid? tuser = null;
+        var multiplaer = new Vector2(comp.TeleportationValue + random, comp.TeleportationValue + random); //make random for teleport distance valu
 
         var transform = Transform(user);
         var offsetValue = transform.LocalRotation.ToWorldVec().Normalized() * multiplaer;
@@ -73,22 +93,41 @@ public sealed class SyndicateTeleporterSystem : EntitySystem
         if (tile == null)
             return;
 
+        if (_turf.IsTileBlocked(tile.Value, CollisionGroup.Impassable))
+        {
+            comp.InWall = true; // if yes then starting the timer countdown in update
+
+        }
+
+    }
+
+    private void SaveTeleport(EntityUid uid, SyndicateTeleporterComponent comp)
+    {
+        var transform = Transform(comp.UserComp);
+        var offsetValue = Transform(comp.UserComp).LocalPosition;
+        var coords = transform.Coordinates.WithPosition(offsetValue);
+
+        var tile = coords.GetTileRef(EntityManager, _mapMan);
+        if (tile == null)
+            return;
+
         var saveattempts = comp.SaveAttempts;
         var savedistance = comp.SaveDistance;
 
         while (_turf.IsTileBlocked(tile.Value, CollisionGroup.Impassable))
         {
-            if (!TryComp<BodyComponent>(user, out var body)) 
+            if (!TryComp<BodyComponent>(comp.UserComp, out var body))
                 return;
 
 
+            EntityUid? tuser = null;
+
             if (saveattempts > 0) // if we have chance to survive then teleport in random side away
             {
-                await Task.Delay(400);
                 double side = _random.Next(-180, 180);
                 offsetValue = Angle.FromDegrees(side).ToWorldVec() * savedistance; //averages the resulting direction, turning it into one of 8 directions, (N, NE, E...)
                 coords = transform.Coordinates.Offset(offsetValue);
-                _transformSystem.SetCoordinates(user, coords);
+                _transformSystem.SetCoordinates(comp.UserComp, coords);
 
                 Spawn(TeleportEffectPrototype, coords);
                 _audio.PlayPredicted(comp.AlarmSound, uid, tuser);
@@ -97,15 +136,21 @@ public sealed class SyndicateTeleporterSystem : EntitySystem
             }
             else
             {
-                _body.GibBody(user, true, body);
+                _body.GibBody(comp.UserComp, true, body);
+                comp.InWall = false; // closing the countdown in update
                 break;
             }
 
-
             tile = coords.GetTileRef(EntityManager, _mapMan);
-            if (tile == null)
+            if(tile == null)
+            {
                 return;
-
+            }
+            if (!_turf.IsTileBlocked(tile.Value, CollisionGroup.Impassable))
+            {
+                comp.InWall = false;
+                return;
+            }
         }
     }
 }
