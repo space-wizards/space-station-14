@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ShadowCommander
-  changes:
-  - message: Added pressure and temperature warnings to firelock examine text.
-    type: Add
-  id: 6632
-  time: '2024-05-28T14:59:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28341
 - author: deltanedas
   changes:
   - message: Nukies will have ghost roles opened if not enough people can be picked.
@@ -3834,3 +3827,10 @@
   id: 7131
   time: '2024-08-17T05:09:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31087
+- author: EmoGarbage404
+  changes:
+  - message: You can now smelt ores in intervals smaller than 30.
+    type: Add
+  id: 7132
+  time: '2024-08-17T05:12:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31074
