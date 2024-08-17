@@ -216,6 +216,10 @@
     - id: ClothingEyesGlassesMeson
     - id: ClothingBeltSalvageWebbing
     - id: ClothingOuterHardsuitSalvage
+    - !type:GroupSelector
+      children:
+      - id: JetpackBlue
+      - id: JetpackBlack
 
 - type: entityTable
   id: SalvageEquipmentLegendary
@@ -224,3 +228,7 @@
     - id: WeaponCrusher
     - id: WeaponCrusherGlaive
     - id: OmnizineChemistryBottle
+    - !type:GroupSelector
+      children:
+      - id: JetpackBlueFilled
+      - id: JetpackBlackFilled
