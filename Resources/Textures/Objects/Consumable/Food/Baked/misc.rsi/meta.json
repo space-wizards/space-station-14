@@ -6,123 +6,159 @@
     "x": 32,
     "y": 32
   },
-  "states": [
-    {
-      "name": "cannoli"
-    },
-    {
-      "name": "dumplings"
-    },
-    {
-      "name": "honeybar"
-    },
-    {
-      "name": "onionrings"
-    },
-    {
-      "name": "pretzel"
-    },
-    {
-      "name": "muffin-bluecherry"
-    },
-    {
-      "name": "muffin-cherry"
-    },
-    {
-      "name": "bun-honey"
-    },
-    {
-      "name": "bun-hotcross"
-    },
-    {
-      "name": "bun-meat"
-    },
-    {
-      "name": "muffin"
-    },
-    {
-      "name": "muffin-berry"
-    },
-    {
-      "name": "COOKIE!!!"
-    },
-    {
-      "name": "cookie-oatmeal"
-    },
-    {
-      "name": "cookie-raisin"
-    },
-    {
-      "name": "cookie-sugar"
-    },
-    {
-      "name": "pancakes1"
-    },
-    {
-      "name": "pancakes2"
-    },
-    {
-      "name": "pancakes3"
-    },
-    {
-      "name": "pancakes4"
-    },
-    {
-      "name": "pancakes5"
-    },
-    {
-      "name": "pancakes6"
-    },
-    {
-      "name": "pancakes7"
-    },
-    {
-      "name": "pancakes8"
-    },
-    {
-      "name": "pancakes9"
-    },
-    {
-      "name": "pancakesbb1"
-    },
-    {
-      "name": "pancakesbb2"
-    },
-    {
-      "name": "pancakesbb3"
-    },
-    {
-      "name": "pancakescc1"
-    },
-    {
-      "name": "pancakescc2"
-    },
-    {
-      "name": "pancakescc3"
-    },
-    {
-      "name": "pigblanket"
-    },
-    {
-      "name": "plate-small"
-    },
-    {
-      "name": "waffles"
-    },
-    {
-      "name": "waffles-roffle"
-    },
-    {
-      "name": "waffles-soy"
-    },
-    {
-      "name": "waffles-soylent"
-    },
-    {
-      "name": "tray"
-    },
-    {
-      "name": "chevrechaud"
-    }
-  ]
+    "states": [
+        {
+            "name": "cannoli"
+        },
+        {
+            "name": "dumplings"
+        },
+        {
+            "name": "honeybar"
+        },
+        {
+            "name": "onionrings"
+        },
+        {
+            "name": "pretzel"
+        },
+        {
+            "name": "muffin-bluecherry"
+        },
+        {
+            "name": "muffin-cherry"
+        },
+        {
+            "name": "bun-honey"
+        },
+        {
+            "name": "bun-hotcross"
+        },
+        {
+            "name": "bun-meat"
+        },
+        {
+            "name": "muffin"
+        },
+        {
+            "name": "muffin-berry"
+        },
+        {
+            "name": "COOKIE!!!"
+        },
+        {
+            "name": "cookie-oatmeal"
+        },
+        {
+            "name": "cookie-raisin"
+        },
+        {
+            "name": "cookie-sugar"
+        },
+        {
+            "name": "pancakes1"
+        },
+        {
+            "name": "pancakes2"
+        },
+        {
+            "name": "pancakes3"
+        },
+        {
+            "name": "pancakes4"
+        },
+        {
+            "name": "pancakes5"
+        },
+        {
+            "name": "pancakes6"
+        },
+        {
+            "name": "pancakes7"
+        },
+        {
+            "name": "pancakes8"
+        },
+        {
+            "name": "pancakes9"
+        },
+        {
+            "name": "pancakesbb1"
+        },
+        {
+            "name": "pancakesbb2"
+        },
+        {
+            "name": "pancakesbb3"
+        },
+        {
+            "name": "pancakesbb4"
+        },
+        {
+            "name": "pancakesbb5"
+        },
+        {
+            "name": "pancakesbb6"
+        },
+        {
+            "name": "pancakesbb7"
+        },
+        {
+            "name": "pancakesbb8"
+        },
+        {
+            "name": "pancakesbb9"
+        },
+        {
+            "name": "pancakescc1"
+        },
+        {
+            "name": "pancakescc2"
+        },
+        {
+            "name": "pancakescc3"
+        },
+        {
+            "name": "pancakescc4"
+        },
+        {
+            "name": "pancakescc5"
+        },
+        {
+            "name": "pancakescc6"
+        },
+        {
+            "name": "pancakescc7"
+        },
+        {
+            "name": "pancakescc8"
+        },
+        {
+            "name": "pancakescc9"
+        },
+        {
+            "name": "pigblanket"
+        },
+        {
+            "name": "plate-small"
+        },
+        {
+            "name": "waffles"
+        },
+        {
+            "name": "waffles-roffle"
+        },
+        {
+            "name": "waffles-soy"
+        },
+        {
+            "name": "waffles-soylent"
+        },
+        {
+            "name": "tray"
+        },
+        {
+            "name": "chevrechaud"
+        }
+    ]
 }
