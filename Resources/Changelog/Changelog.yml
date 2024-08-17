@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Emisse
-  changes:
-  - message: Derotate Train temporarily
-    type: Tweak
-  id: 6627
-  time: '2024-05-27T22:40:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28328
 - author: EmoGarbage404
   changes:
   - message: Fixed not enough antags being selected for gamemodes.
@@ -3833,3 +3826,10 @@
   id: 7126
   time: '2024-08-17T01:00:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31110
+- author: Mervill
+  changes:
+  - message: Fixed suffocation alerts not appearing.
+    type: Fix
+  id: 7127
+  time: '2024-08-17T02:02:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31115
