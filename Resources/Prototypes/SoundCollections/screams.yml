@@ -43,8 +43,8 @@
     - /Audio/Voice/Human/malescream_6.ogg
 
     # Female.
-    - /Audio/Voice/Human/femalescream_1.ogg
-    - /Audio/Voice/Human/femalescream_2.ogg
-    - /Audio/Voice/Human/femalescream_3.ogg
-    - /Audio/Voice/Human/femalescream_4.ogg
-    - /Audio/Voice/Human/femalescream_5.ogg
+#    - /Audio/Voice/Human/femalescream_1.ogg # GreyStation - Male screams sound funnier
+#    - /Audio/Voice/Human/femalescream_2.ogg
+#    - /Audio/Voice/Human/femalescream_3.ogg
+#    - /Audio/Voice/Human/femalescream_4.ogg
+#    - /Audio/Voice/Human/femalescream_5.ogg
