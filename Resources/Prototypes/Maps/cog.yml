@@ -3,7 +3,7 @@
   mapName: 'Cog'
   mapPath: /Maps/cog.yml
   minPlayers: 35
-  maxPlayers: 70
+  maxPlayers: 80 #big map
   stations:
     Cog:
       stationProto: StandardNanotrasenStation
