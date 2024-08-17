@@ -52,9 +52,9 @@ public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
             option.Claimed = current.ActiveSeed == seed;
             var claimIndex = i;
 
-            option.ClaimPressed += args =>
+            option.ClaimPressed += _ =>
             {
-                SendMessage(new MagnetClaimOfferEvent()
+                SendMessage(new MagnetClaimOfferEvent
                 {
                     Index = claimIndex
                 });
@@ -71,20 +71,20 @@ public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
                     {
                         var count = asteroid.MarkerLayers[resource];
 
-                        var container = new BoxContainer()
+                        var container = new BoxContainer
                         {
                             Orientation = BoxContainer.LayoutOrientation.Horizontal,
                             HorizontalExpand = true,
                         };
 
-                        var resourceLabel = new Label()
+                        var resourceLabel = new Label
                         {
                             Text = Loc.GetString("salvage-magnet-resources",
                                 ("resource", resource)),
                             HorizontalAlignment = Control.HAlignment.Left,
                         };
 
-                        var countLabel = new Label()
+                        var countLabel = new Label
                         {
                             Text = Loc.GetString("salvage-magnet-resources-count", ("count", count)),
                             HorizontalAlignment = Control.HAlignment.Right,
@@ -97,6 +97,9 @@ public sealed class SalvageMagnetBoundUserInterface : BoundUserInterface
                         option.AddContent(container);
                     }
 
+                    break;
+                case DebrisOffering debris:
+                    option.Title = Loc.GetString($"salvage-magnet-debris-{debris.Id}");
                     break;
                 case SalvageOffering salvage:
                     option.Title = Loc.GetString($"salvage-map-proto-{salvage.SalvageMap.ID}");
