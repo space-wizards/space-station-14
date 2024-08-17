@@ -94,15 +94,27 @@ public sealed partial class GunSystem : SharedGunSystem
     private void OnHitscan(HitscanEvent ev)
     {
         // ALL I WANT IS AN ANIMATED EFFECT
+        var sourceGrid = GetEntity(ev.SourceGrid);
         foreach (var a in ev.Sprites)
         {
             if (a.Sprite is not SpriteSpecifier.Rsi rsi)
                 continue;
 
-            // we intentonally use this specific `Spawn` overload since it deals with grid
-            // rotation for us. we have to make sure grid rotation is accounted for for each
-            // *indivisual* sprite segment of the laser effect, 
-            var ent = Spawn(HitscanProto, TransformSystem.ToMapCoordinates(GetCoordinates(a.coordinates)), rotation: a.angle);
+            EntityUid ent;
+            // fromCoordinates represensts the position of the hitscan effect segments
+            var fromCoordinates = GetCoordinates(a.coordinates);
+            if (sourceGrid.HasValue)
+            { // if there is a source grid, make sure effects are parented to it, fix rotation
+                ent = SpawnAttachedTo(HitscanProto, TransformSystem.WithEntityId(fromCoordinates, sourceGrid.Value), traversal: false);
+                var xform = Transform(ent);
+                var sourceGridRot = TransformSystem.GetWorldRotation(sourceGrid.Value);
+                // subtract grid rotation, flip over Y-axis
+                xform.LocalRotation = (Angle.FromDegrees(180) - (sourceGridRot - a.angle)).Opposite();
+            }
+            else
+            { // if there is no source grid, spawn effects on map
+                ent = Spawn(HitscanProto, TransformSystem.ToMapCoordinates(GetCoordinates(a.coordinates)), rotation: a.angle);
+            }
             var sprite = Comp<SpriteComponent>(ent);
             sprite[EffectLayers.Unshaded].AutoAnimated = false;
             sprite.LayerSetSprite(EffectLayers.Unshaded, rsi);

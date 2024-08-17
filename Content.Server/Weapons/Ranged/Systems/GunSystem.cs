@@ -398,11 +398,13 @@ public sealed partial class GunSystem : SharedGunSystem
         var effectDirection = mapDirection.ToVec().Normalized();
 
         // we need to subtract any grid rotation to properly offset the effect parts
-        if (MapManager.TryFindGridAt(TransformSystem.ToMapCoordinates(fromCoordinates), out var gridUid, out _)) {
+        if (MapManager.TryFindGridAt(TransformSystem.ToMapCoordinates(fromCoordinates), out var gridUid, out _))
+        {
             var gridRotation = TransformSystem.GetWorldRotation(gridUid);
             effectDirection = (effectDirection.ToAngle() - gridRotation).ToVec().Normalized();
         }
 
+        EntityUid? sourceGrid = gridUid.IsValid() ? gridUid : null;
 
         if (distance >= 1f)
         {
@@ -427,6 +429,7 @@ public sealed partial class GunSystem : SharedGunSystem
             RaiseNetworkEvent(new HitscanEvent
             {
                 Sprites = sprites,
+                SourceGrid = GetNetEntity(sourceGrid),
             }, Filter.Pvs(fromCoordinates));
         }
     }
