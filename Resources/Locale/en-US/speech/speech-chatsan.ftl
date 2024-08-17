@@ -179,7 +179,7 @@ chatsan-word-63 = yk
 chatsan-replacement-63 = you know
 
 chatsan-word-64 = istfg
-chatsan-replacement-64 = istfg
+chatsan-replacement-64 = i swear to fucking god
 
 chatsan-word-65 = idgaf
 chatsan-replacement-65 = i don't give a fuck
