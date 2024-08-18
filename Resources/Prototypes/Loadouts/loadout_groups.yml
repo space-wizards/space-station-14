@@ -1043,6 +1043,13 @@
   - EmergencyOxygenSecurity
   - LoadoutSpeciesVoxNitrogen
 
+- type: loadoutGroup
+  id: SecurityStar
+  name: loadout-group-security-star
+  minLimit: 0
+  loadouts:
+  - SecStar
+
 # Medical
 - type: loadoutGroup
   id: ChiefMedicalOfficerHead
