@@ -1,10 +1,9 @@
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using Content.Shared.Random;
-using Content.Shared.Random.Helpers;
-using System.Linq;
 using Content.Shared.Atmos;
 using Content.Shared.EntityEffects;
+using Content.Shared.Random;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.Botany;
 
@@ -12,20 +11,15 @@ public sealed class MutationSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    private WeightedRandomFillSolutionPrototype _randomChems = default!;
     private RandomPlantMutationListPrototype _randomMutations = default!;
 
     //Additonal TODO:
     //clean up errors on client side about missing concrete Glow class?
-
-    //Remaining mutations to port:
-    //harvest type and autoharvest (2)
-    //gases (2, eat/make)
-    //chems (1)
+    //Investigate Ligneous pop-up message not appearing if the trait is acquired via mutation.
+    //clean up warnings in new code formatting.
 
     public override void Initialize()
     {
-        _randomChems = _prototypeManager.Index<WeightedRandomFillSolutionPrototype>("RandomPickBotanyReagent");
         _randomMutations = _prototypeManager.Index<RandomPlantMutationListPrototype>("RandomPlantMutations");
     }
 
@@ -52,14 +46,7 @@ public sealed class MutationSystem : EntitySystem
     }
 
     /// <summary>
-    /// Main idea: Simulate genetic mutation using random binary flips.  Each
-    /// seed attribute can be encoded with a variable number of bits, e.g.
-    /// NutrientConsumption is represented by 5 bits randomly distributed in the
-    /// plant's genome which thermometer code the floating value between 0.1 and
-    /// 5. 1 unit of mutation flips one bit in the plant's genome, which changes
-    /// NutrientConsumption if one of those 5 bits gets affected.
-    ///
-    /// You MUST clone() seed before mutating it!
+    /// Checks all defined mutations against a seed to see which of them are applied.
     /// </summary>
     public void MutateSeed(EntityUid plantHolder, ref SeedData seed, float severity)
     {
@@ -69,18 +56,7 @@ public sealed class MutationSystem : EntitySystem
             return;
         }
 
-        CheckRandomMutations(plantHolder, ref seed, severity); //TODO Will be the main call later, just check if this runs for now.
-
-        // Add up everything in the bits column and put the number here.
-        const int totalbits = 262;
-
-
-        // ConstantUpgade (10)
-        MutateHarvestType(ref seed.HarvestRepeat, 10, totalbits, severity);
-
-        // Gas (5)
-        MutateGasses(ref seed.ExudeGasses, 0.01f, 0.5f, 4, totalbits, severity);
-        MutateGasses(ref seed.ConsumeGasses, 0.01f, 0.5f, 1, totalbits, severity);
+        CheckRandomMutations(plantHolder, ref seed, severity);
     }
 
     public SeedData Cross(SeedData a, SeedData b)
@@ -126,51 +102,6 @@ public sealed class MutationSystem : EntitySystem
         }
 
         return result;
-    }
-
-    private void MutateBool(ref bool val, bool polarity, int bits, int totalbits, float mult)
-    {
-        // Probability that a bit flip happens for this value.
-        float probSet = mult * bits / totalbits;
-        probSet = Math.Clamp(probSet, 0, 1);
-        if (!Random(probSet))
-            return;
-
-        val = polarity;
-    }
-
-    private void MutateHarvestType(ref HarvestType val, int bits, int totalbits, float mult)
-    {
-        float probModify = mult * bits / totalbits;
-        probModify = Math.Clamp(probModify, 0, 1);
-
-        if (!Random(probModify))
-            return;
-
-        if (val == HarvestType.NoRepeat)
-            val = HarvestType.Repeat;
-        else if (val == HarvestType.Repeat)
-            val = HarvestType.SelfHarvest;
-    }
-
-    private void MutateGasses(ref Dictionary<Gas, float> gasses, float min, float max, int bits, int totalbits, float mult)
-    {
-        float probModify = mult * bits / totalbits;
-        probModify = Math.Clamp(probModify, 0, 1);
-        if (!Random(probModify))
-            return;
-
-        // Add a random amount of a random gas to this gas dictionary
-        float amount = _robustRandom.NextFloat(min, max);
-        Gas gas = _robustRandom.Pick(Enum.GetValues(typeof(Gas)).Cast<Gas>().ToList());
-        if (gasses.ContainsKey(gas))
-        {
-            gasses[gas] += amount;
-        }
-        else
-        {
-            gasses.Add(gas, amount);
-        }
     }
 
     private void CrossChemicals(ref Dictionary<string, SeedChemQuantity> val, Dictionary<string, SeedChemQuantity> other)
