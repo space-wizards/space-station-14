@@ -1,0 +1,9 @@
+accent-vulgar-words-1 = FUCK
+accent-vulgar-words-2 = SHIT
+accent-vulgar-words-3 = COCK
+accent-vulgar-words-4 = ASSHOLE
+accent-vulgar-words-5 = SON OF A BITCH
+accent-vulgar-words-6 = YOU BASTARD
+accent-vulgar-words-7 = DAMN IT
+accent-vulgar-words-8 = SON OF A CLUWNE
+accent-vulgar-words-9 = DICKBAG
