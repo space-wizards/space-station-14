@@ -50,31 +50,31 @@
   id: FigurinesCaptain
   values:
     prefix: figurines-captain-
-    count: 1
+    count: 3
 
 - type: localizedDataset
   id: FigurinesHoS
   values:
     prefix: figurines-hos-
-    count: 2
+    count: 3
 
 - type: localizedDataset
   id: FigurinesWarden
   values:
     prefix: figurines-warden-
-    count: 1
+    count: 3
 
 - type: localizedDataset
   id: FigurinesDetective
   values:
     prefix: figurines-detective-
-    count: 1
+    count: 2
 
 - type: localizedDataset
   id: FigurinesSecurity
   values:
     prefix: figurines-security-
-    count: 2
+    count: 3
 
 - type: localizedDataset
   id: FigurinesLawyer
