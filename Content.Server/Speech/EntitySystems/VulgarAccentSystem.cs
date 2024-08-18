@@ -12,29 +12,7 @@ namespace Content.Server.Speech.EntitySystems;
 public sealed class VulgarAccentSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
-
-    private string[] _swearWords =
-    {
-        "FUCK",
-        "FUCKING HELL",
-        "GOD DAMN",
-        "SHIT",
-        "BIG SACK OF SHIT",
-        "SON OF A BITCH",
-        "BITCH",
-        "COCK",
-        "COCKSUCKER",
-        "BONER SHIT COCKS",
-        "MOTHERFUCKER",
-        "YOU BASTARD",
-        "DICK",
-        "DICKBAG",
-        "ASSHOLE",
-        "SHITTY ASS FUCKHOLE",
-        "GOOD HEAVENS",
-        "SON OF A CLUWNE"
-    };
+    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;  
 
     public override void Initialize()
     {
@@ -43,17 +21,17 @@ public sealed class VulgarAccentSystem : EntitySystem
         SubscribeLocalEvent<VulgarAccentComponent, AccentGetEvent>(OnAccentGet);
     }
 
-    public string Accentuate(string message, AccentGetEvent args)
+    public string Accentuate(string message, VulgarAccentComponent component)
     {
         string[] messageWords = message.Split(" ");
 
         for (int i = 0; i < messageWords.Length; i++)
         {
 
-            //Every word has a 33% chance to be replaced by a random swear word.
-            if (_random.Prob(0.50f))
+            //Every word has a percentage chance to be replaced by a random swear word from the component's array.
+            if (_random.Prob(component.SwearProb))
             {
-                messageWords[i] = _swearWords[_random.Next(_swearWords.Length)];
+                messageWords[i] = component.SwearWords[_random.Next(component.SwearWords.Length)];
             }
         }
 
@@ -62,6 +40,6 @@ public sealed class VulgarAccentSystem : EntitySystem
 
     public void OnAccentGet(EntityUid uid, VulgarAccentComponent component, AccentGetEvent args)
     {
-        args.Message = Accentuate(args.Message, args);
+        args.Message = Accentuate(args.Message, component);
     }
 }
