@@ -670,7 +670,7 @@
   - type: StaticPrice
     price: 0
   - type: StackPrice
-    price: 500
+    price: 1500
   - type: Appearance
   - type: Stack
     stackType: GoliathHide
