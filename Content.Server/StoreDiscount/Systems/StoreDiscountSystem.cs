@@ -60,30 +60,44 @@ public sealed class StoreDiscountSystem : EntitySystem
         }
     }
 
-    /// <summary> Decrements discounted item count. </summary>
+    /// <summary> Decrements discounted item count, removes discount modifier and category, if counter reaches zero. </summary>
     private void OnBuyFinished(ref StoreBuyFinishedEvent ev)
     {
-        var (storeId, purchasedItemId, listingData) = ev;
+        var (storeId, purchasedItemId) = ev;
         if (!TryComp<StoreDiscountComponent>(storeId, out var discountsComponent))
         {
             return;
         }
 
+        // find and decrement discount count for item, if there is one.
         var discounts = discountsComponent.Discounts;
         var discountData = discounts.FirstOrDefault(x => x.ListingId == purchasedItemId);
-        if (discountData == null)
+        if (discountData == null || discountData.Count == 0)
         {
             return;
         }
 
+        discountData.Count--;
         if (discountData.Count > 0)
         {
-            discountData.Count--;
-            if (discountData.Count == 0)
-            {
-                listingData.CostModifiersBySourceId.Remove(discountData.DiscountCategory);
-            }
+            return;
         }
+
+        // if there were discounts, but they are all bought up now - restore state: remove modifier and remove store category
+        if (!TryComp<StoreComponent>(storeId, out var storeComponent))
+        {
+            Log.Warning("Decremented discount count on StoreDiscountData of entity without StoreComponent.");
+            return;
+        }
+
+        var found = storeComponent.LastAvailableListings.FirstOrDefault(x => x.ID == purchasedItemId);
+        if (found == null)
+        {
+            Log.Warning("Decremented discount count on StoreDiscountData of listing that doesn't exist on store available list.");
+            return;
+        }
+        found.CostModifiersBySourceId.Remove(discountData.DiscountCategory);
+        found.Categories.Remove(_discountStoreCategoryPrototype);
     }
 
     /// <summary> Initialized discounts if required. </summary>

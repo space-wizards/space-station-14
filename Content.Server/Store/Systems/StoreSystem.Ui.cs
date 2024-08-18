@@ -112,9 +112,7 @@ public sealed partial class StoreSystem
         // only tell operatives to lock their uplink if it can be locked
         var showFooter = HasComp<RingerUplinkComponent>(store);
 
-        var availableListings = component.LastAvailableListings;
-
-        var state = new StoreUpdateState(availableListings, allCurrency, showFooter, component.RefundAllowed);
+        var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, showFooter, component.RefundAllowed);
         _ui.SetUiState(store, StoreUiKey.Key, state);
     }
 
@@ -271,8 +269,7 @@ public sealed partial class StoreSystem
         var buyFinished = new StoreBuyFinishedEvent
         {
             PurchasingItemId = msg.Listing.ID,
-            StoreUid = uid,
-            ListingData = listing
+            StoreUid = uid
         };
         RaiseLocalEvent(ref buyFinished);
 
@@ -397,6 +394,5 @@ public sealed partial class StoreSystem
 /// </summary>
 /// <param name="StoreUid">EntityUid on which store is placed.</param>
 /// <param name="PurchasingItemId">Id of ListingItem that was purchased.</param>
-/// <param name="ListingData">.</param>
 [ByRefEvent]
-public record struct StoreBuyFinishedEvent(EntityUid StoreUid, string PurchasingItemId, ListingDataWithCostModifiers ListingData);
+public record struct StoreBuyFinishedEvent(EntityUid StoreUid, string PurchasingItemId);
