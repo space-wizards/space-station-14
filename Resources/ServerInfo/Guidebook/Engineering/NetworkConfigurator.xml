@@ -9,7 +9,7 @@
   ## List Mode
   In list mode you can click on network devices to save them on the configurator and then on a network device that has a device list like the [color=#a4885c]Air Alarm[/color].
 
-  When clicking on a device like the Air Alarm, a UI will open displaying the list currently saved on the device and buttons to manipulate that list.
+  When clicking on a device like the Air Alarm, a UI will open, displaying the list currently saved on the device and buttons to manipulate that list.
 
   You can:
   - Replace the current list with the one saved on the configurator
