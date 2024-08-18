@@ -1093,6 +1093,10 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: Cutlet
+    node: start
+    defaultTarget: cutlet
 
 - type: entity
   name: raw bear cutlet
@@ -1118,6 +1122,10 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: BearCutlet
+    node: start
+    defaultTarget: bear cutlet
 
 - type: entity
   name: raw penguin cutlet
@@ -1141,6 +1149,10 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: PenguinCutlet
+    node: start
+    defaultTarget: penguin cutlet
 
 - type: entity
   name: raw chicken cutlet
@@ -1164,6 +1176,10 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: ChickenCutlet
+    node: start
+    defaultTarget: chicken cutlet
 
 - type: entity
   name: raw duck cutlet
@@ -1187,6 +1203,10 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: DuckCutlet
+    node: start
+    defaultTarget: duck cutlet
 
 - type: entity
   name: raw lizard cutlet
@@ -1213,6 +1233,10 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: LizardCutlet
+    node: start
+    defaultTarget: lizard cutlet
 
 - type: entity
   name: raw spider cutlet
@@ -1235,6 +1259,11 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: SpiderCutlet
+    node: start
+    defaultTarget: spider cutlet
+
 - type: entity
   name: raw xeno cutlet
   parent: FoodMeatBase
@@ -1258,6 +1287,10 @@
         reagents:
         - ReagentId: SulfuricAcid
           Quantity: 20
+  - type: Construction
+    graph: XenoCutlet
+    node: start
+    defaultTarget: xeno cutlet
 
 - type: entity
   name: raw killer tomato cutlet
@@ -1320,6 +1353,9 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
+  - type: Construction
+    graph: Cutlet
+    node: cutlet
 
 - type: entity
   name: bear cutlet
@@ -1345,6 +1381,9 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
+  - type: Construction
+    graph: BearCutlet
+    node: bear cutlet
 
 - type: entity
   name: penguin cutlet
@@ -1368,6 +1407,9 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
+  - type: Construction
+    graph: PenguinCutlet
+    node: penguin cutlet
 
 - type: entity
   name: chicken cutlet
@@ -1391,6 +1433,9 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
+  - type: Construction
+    graph: ChickenCutlet
+    node: chicken cutlet
 
 - type: entity
   name: duck cutlet
@@ -1414,6 +1459,9 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
+  - type: Construction
+    graph: DuckCutlet
+    node: duck cutlet
 
 - type: entity
   name: lizard cutlet
@@ -1438,6 +1486,9 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
+  - type: Construction
+    graph: LizardCutlet
+    node: lizard cutlet
 
 - type: entity
   name: spider cutlet
@@ -1460,6 +1511,9 @@
           Quantity: 1
         - ReagentId: Protein
           Quantity: 1
+  - type: Construction
+    graph: SpiderCutlet
+    node: spider cutlet
 
 - type: entity
   name: xeno cutlet
@@ -1482,3 +1536,6 @@
           Quantity: 1
         - ReagentId: Protein
           Quantity: 1
+  - type: Construction
+    graph: XenoCutlet
+    node: xeno cutlet

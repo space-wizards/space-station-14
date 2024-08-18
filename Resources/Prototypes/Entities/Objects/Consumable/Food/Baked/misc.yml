@@ -603,3 +603,27 @@
             Quantity: 1
           - ReagentId: Vitamin
             Quantity: 1
+
+- type: entity
+  name: croissant
+  parent: FoodBakedBase
+  id: FoodBakedCroissant
+  description: Buttery, flaky goodness.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - butter
+  - type: Sprite
+    state: croissant
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Butter
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 1

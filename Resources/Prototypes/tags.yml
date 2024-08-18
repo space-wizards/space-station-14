@@ -660,6 +660,9 @@
   id: Goat
 
 - type: Tag
+  id: Goliath
+
+- type: Tag
   id: GPS
 
 - type: Tag
