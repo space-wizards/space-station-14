@@ -17,14 +17,23 @@ public sealed class VulgarAccentSystem : EntitySystem
     private string[] _swearWords =
     {
         "FUCK",
+        "FUCKING HELL",
+        "GOD DAMN",
         "SHIT",
-        "COCK",
-        "DICK",
-        "FUCK YOU",
+        "BIG SACK OF SHIT",
+        "SON OF A BITCH",
         "BITCH",
-        "ASSHOLE",
+        "COCK",
+        "COCKSUCKER",
+        "BONER SHIT COCKS",
         "MOTHERFUCKER",
-        "BONERCOCK"
+        "YOU BASTARD",
+        "DICK",
+        "DICKBAG",
+        "ASSHOLE",
+        "SHITTY ASS FUCKHOLE",
+        "GOOD HEAVENS",
+        "SON OF A CLUWNE"
     };
 
     public override void Initialize()
@@ -42,7 +51,7 @@ public sealed class VulgarAccentSystem : EntitySystem
         {
 
             //Every word has a 33% chance to be replaced by a random swear word.
-            if (_random.Prob(0.33f))
+            if (_random.Prob(0.50f))
             {
                 messageWords[i] = _swearWords[_random.Next(_swearWords.Length)];
             }
