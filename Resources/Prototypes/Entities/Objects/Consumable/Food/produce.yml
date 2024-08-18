@@ -1139,6 +1139,10 @@
     tags:
     - Fruit
     - Slice
+  - type: FoodSequenceElement
+    entries:
+      burger: PineappleSliceBurger
+      taco: PineappleSlice
 
 - type: entity
   name: onion slice
@@ -1166,6 +1170,10 @@
     tags:
     - Vegetable
     - Slice
+  - type: FoodSequenceElement
+    entries:
+      burger: OnionSliceBurger
+      taco: OnionSlice
 
 - type: entity
   name: red onion slice
@@ -1193,6 +1201,10 @@
     tags:
     - Vegetable
     - Slice
+  - type: FoodSequenceElement
+    entries:
+      burger: OnionRedSliceBurger
+      taco: OnionRedSlice
 
 - type: entity
   name: chili pepper

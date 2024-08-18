@@ -1393,7 +1393,7 @@
     node: bear cutlet
   - type: FoodSequenceElement
     entries:
-      burger: BearCutlet
+      burger: BearCutletBurger
       taco: BearCutlet
 
 - type: entity
@@ -1423,7 +1423,7 @@
     node: penguin cutlet
   - type: FoodSequenceElement
     entries:
-      burger: PenguinCutlet
+      burger: PenguinCutletBurger
       taco: PenguinCutlet
 
 - type: entity
@@ -1453,7 +1453,7 @@
     node: chicken cutlet
   - type: FoodSequenceElement
     entries:
-      burger: ChickenCutlet
+      burger: ChickenCutletBurger
       taco: ChickenCutlet
 
 - type: entity
@@ -1483,7 +1483,7 @@
     node: duck cutlet
   - type: FoodSequenceElement
     entries:
-      burger: DuckCutlet
+      burger: DuckCutletBurger
       taco: DuckCutlet
 
 - type: entity
@@ -1514,7 +1514,7 @@
     node: lizard cutlet
   - type: FoodSequenceElement
     entries:
-      burger: LizardCutlet
+      burger: LizardCutletBurger
       taco: LizardCutlet
 
 - type: entity
@@ -1543,7 +1543,7 @@
     node: spider cutlet
   - type: FoodSequenceElement
     entries:
-      burger: SpiderCutlet
+      burger: SpiderCutletBurger
       taco: SpiderCutlet
 
 - type: entity
@@ -1572,5 +1572,5 @@
     node: xeno cutlet
   - type: FoodSequenceElement
     entries:
-      burger: XenoCutlet
+      burger: XenoCutletBurger
       taco: XenoCutlet

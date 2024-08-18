@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using System.Text;
 using Content.Server.Nutrition.Components;
@@ -134,7 +133,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         //Generate new visual layer
         var flip = _random.Prob(0.5f);
         var layer = new FoodSequenceVisualLayer(elementIndexed,
-            elementIndexed.Sprite,
+            _random.Pick(elementIndexed.Sprites),
             new Vector2(flip ? 1 : -1, 1),
             new Vector2(
                 _random.NextFloat(start.Comp.MinLayerOffset.X, start.Comp.MaxLayerOffset.X),

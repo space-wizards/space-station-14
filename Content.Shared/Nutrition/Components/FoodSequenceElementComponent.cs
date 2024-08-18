@@ -1,6 +1,5 @@
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Prototypes;
-using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.Components;

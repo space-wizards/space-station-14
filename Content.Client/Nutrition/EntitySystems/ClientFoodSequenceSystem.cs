@@ -1,8 +1,6 @@
-using System.Numerics;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Client.GameObjects;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Nutrition.EntitySystems;
 
