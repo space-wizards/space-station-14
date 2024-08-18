@@ -8,8 +8,7 @@ namespace Content.Shared.Speech.Components;
 public sealed partial class VulgarAccentComponent : Component
 {
     [DataField]
-    public ProtoId<LocalizedDatasetPrototype> Pack { get; private set; }
-    = "SwearWords";
+    public ProtoId<LocalizedDatasetPrototype> Pack = "SwearWords";
 
     [DataField]
     public float SwearProb = 0.5f;
