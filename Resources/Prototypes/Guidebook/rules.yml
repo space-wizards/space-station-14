@@ -4,7 +4,7 @@
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/DefaultRules.xml"
 
-  - type: guideEntry
+- type: guideEntry
   id: StandardRuleset
   name: guide-entry-rules-lrp
   ruleEntry: true
