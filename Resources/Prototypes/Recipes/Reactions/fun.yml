@@ -201,3 +201,18 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: MaterialGunpowder
+
+- type: reaction
+  id: Profanol
+  impact: Low
+  quantized: true
+  minTemp: 300
+  reactants:
+    THC:
+      amount: 3
+    Ethanol:
+      amount: 2
+    Mercury:
+      amount: 1
+  products:
+    Profanol: 10
