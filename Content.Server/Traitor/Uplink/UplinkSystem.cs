@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Store.Systems;
+using Content.Server.StoreDiscount.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
@@ -94,7 +95,4 @@ namespace Content.Server.Traitor.Uplink
             return null;
         }
     }
-
-    [ByRefEvent]
-    public record struct StoreInitializedEvent(EntityUid TargetUser, EntityUid Store, bool UseDiscounts, IReadOnlyCollection<ListingData> Listings);
 }

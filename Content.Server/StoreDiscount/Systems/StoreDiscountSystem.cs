@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Store.Systems;
-using Content.Server.Traitor.Uplink;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
@@ -366,3 +365,12 @@ public sealed class ListingItemsInitializingEvent
     public EntityUid? Store { get; }
 }
 
+/// <summary>
+/// Event of store being initialized.
+/// </summary>
+/// <param name="TargetUser">EntityUid of store entity owner.</param>
+/// <param name="Store">EntityUid of store entity.</param>
+/// <param name="UseDiscounts">Marker, if store should have discounts.</param>
+/// <param name="Listings">List of available listings items.</param>
+[ByRefEvent]
+public record struct StoreInitializedEvent(EntityUid TargetUser, EntityUid Store, bool UseDiscounts, IReadOnlyCollection<ListingData> Listings);
