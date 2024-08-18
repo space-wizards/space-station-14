@@ -11,7 +11,7 @@
       types:
         Blunt: 16
     soundHit:
-      collection: MetalThud
+      path: /Audio/Weapons/bladeslice.ogg
   - type: Reflect
     reflectProb: 0.05
     spread: 90
