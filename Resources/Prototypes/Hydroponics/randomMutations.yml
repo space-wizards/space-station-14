@@ -102,3 +102,7 @@
       baseOdds: 0.00036
       persists: false
       mutation: !type:PlantMutateScream
+    - name: ChangeChemicals
+      baseOdds: 0.00018
+      persists: false
+      mutation: !type:PlantMutateChemicals

@@ -81,9 +81,6 @@ public sealed class MutationSystem : EntitySystem
         // Gas (5)
         MutateGasses(ref seed.ExudeGasses, 0.01f, 0.5f, 4, totalbits, severity);
         MutateGasses(ref seed.ConsumeGasses, 0.01f, 0.5f, 1, totalbits, severity);
-
-        // Chems (20)
-        MutateChemicals(ref seed.Chemicals, 20, totalbits, severity);
     }
 
     public SeedData Cross(SeedData a, SeedData b)
@@ -173,37 +170,6 @@ public sealed class MutationSystem : EntitySystem
         else
         {
             gasses.Add(gas, amount);
-        }
-    }
-
-    private void MutateChemicals(ref Dictionary<string, SeedChemQuantity> chemicals, int bits, int totalbits, float mult)
-    {
-        float probModify = mult * bits / totalbits;
-        probModify = Math.Clamp(probModify, 0, 1);
-        if (!Random(probModify))
-            return;
-
-        // Add a random amount of a random chemical to this set of chemicals
-        if (_randomChems != null)
-        {
-            var pick = _randomChems.Pick(_robustRandom);
-            string chemicalId = pick.reagent;
-            int amount = _robustRandom.Next(1, (int)pick.quantity);
-            SeedChemQuantity seedChemQuantity = new SeedChemQuantity();
-            if (chemicals.ContainsKey(chemicalId))
-            {
-                seedChemQuantity.Min = chemicals[chemicalId].Min;
-                seedChemQuantity.Max = chemicals[chemicalId].Max + amount;
-            }
-            else
-            {
-                seedChemQuantity.Min = 1;
-                seedChemQuantity.Max = 1 + amount;
-                seedChemQuantity.Inherent = false;
-            }
-            int potencyDivisor = (int)Math.Ceiling(100.0f / seedChemQuantity.Max);
-            seedChemQuantity.PotencyDivisor = potencyDivisor;
-            chemicals[chemicalId] = seedChemQuantity;
         }
     }
 
