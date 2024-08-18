@@ -23,3 +23,5 @@ pai-system-pai-name-raw = {$name}'s pAI
 
 pai-system-brick-popup = The pAI's circuits loudly pop and fizzle out!
 pai-system-scramble-popup = The pAI's circuits are overloaded with electricity!
+
+pai-system-pai-description-cracked = Did someone drop it?

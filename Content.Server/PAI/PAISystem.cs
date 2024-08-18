@@ -9,6 +9,12 @@ using Content.Shared.Popups;
 using Robust.Shared.Random;
 using System.Text;
 using Robust.Shared.Player;
+using Content.Shared.Destructible;
+using Content.Server.Speech.Components;
+using Content.Shared.Throwing;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.PAI;
 
@@ -19,6 +25,8 @@ public sealed class PAISystem : SharedPAISystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ToggleableGhostRoleSystem _toggleableGhostRole = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     /// <summary>
     /// Possible symbols that can be part of a scrambled pai's name.
@@ -33,6 +41,9 @@ public sealed class PAISystem : SharedPAISystem
         SubscribeLocalEvent<PAIComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<PAIComponent, MindRemovedMessage>(OnMindRemoved);
         SubscribeLocalEvent<PAIComponent, BeingMicrowavedEvent>(OnMicrowaved);
+        SubscribeLocalEvent<PAIComponent, BreakageEventArgs>(OnCracked);
+        SubscribeLocalEvent<PAIComponent, LandEvent>(OnDropped);
+        SubscribeLocalEvent<PAIComponent, DamageChangedEvent>(OnDamageChanged);
     }
 
     private void OnUseInHand(EntityUid uid, PAIComponent component, UseInHandEvent args)
@@ -54,13 +65,14 @@ public sealed class PAISystem : SharedPAISystem
         // Changing the PAI's identity in a way that ties it to the owner's identity also seems weird.
         // Cause then you could remotely figure out information about the owner's equipped items.
 
-        _metaData.SetEntityName(uid, val);
+        if (!component.Cracked)
+            _metaData.SetEntityName(uid, val);
     }
 
     private void OnMindRemoved(EntityUid uid, PAIComponent component, MindRemovedMessage args)
     {
         // Mind was removed, shutdown the PAI.
-        PAITurningOff(uid);
+        PAITurningOff(uid, component);
     }
 
     private void OnMicrowaved(EntityUid uid, PAIComponent comp, BeingMicrowavedEvent args)
@@ -98,7 +110,7 @@ public sealed class PAISystem : SharedPAISystem
         _metaData.SetEntityName(uid, val);
     }
 
-    public void PAITurningOff(EntityUid uid)
+    public void PAITurningOff(EntityUid uid, PAIComponent comp)
     {
         //  Close the instrument interface if it was open
         //  before closing
@@ -114,8 +126,48 @@ public sealed class PAISystem : SharedPAISystem
         if (TryComp(uid, out MetaDataComponent? metadata))
         {
             var proto = metadata.EntityPrototype;
-            if (proto != null)
+            if (proto != null && !comp.Cracked)
                 _metaData.SetEntityName(uid, proto.Name);
+        }
+    }
+
+    private void OnCracked(EntityUid uid, PAIComponent comp, BreakageEventArgs args)
+    {
+        if (comp.Cracked)
+            return;
+        comp.Cracked = true;
+        ScrambleName(uid, comp);
+        if (TryComp(uid, out MetaDataComponent? metadata))
+        {
+            var proto = metadata.EntityPrototype;
+            if (proto != null)
+                _metaData.SetEntityDescription(uid, proto.Description + " " + Loc.GetString("pai-system-pai-description-cracked"));
+        }
+        AddComp<GlitchAccentComponent>(uid);
+    }
+
+    private void OnDropped(EntityUid uid, PAIComponent comp, LandEvent args)
+    {
+        _damageable.TryChangeDamage(uid, new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Blunt"), 150));
+    }
+
+    private void OnDamageChanged(EntityUid uid, PAIComponent comp, DamageChangedEvent args)
+    {
+        if (comp.Cracked && TryComp<DamageableComponent>(uid, out var damageableComponent) && damageableComponent.TotalDamage < 100)
+        {
+            comp.Cracked = false;
+            RemComp<GlitchAccentComponent>(uid);
+            if (TryComp(uid, out MetaDataComponent? metadata))
+            {
+                var proto = metadata.EntityPrototype;
+                if (proto != null)
+                    _metaData.SetEntityDescription(uid, proto.Description);
+            }
+            if (comp.LastUser != null)
+            {
+                var val = Loc.GetString("pai-system-pai-name", ("owner", comp.LastUser));
+                _metaData.SetEntityName(uid, val);
+            }
         }
     }
 }
