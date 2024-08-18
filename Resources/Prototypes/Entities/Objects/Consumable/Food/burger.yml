@@ -65,7 +65,7 @@
   id: FoodBreadBunTop
   parent: FoodBreadSliceBase
   name: top bun
-  description: the perfect finish for your burger tower
+  description: The perfect finish for your burger tower.
   components:
   - type: Food
   - type: Sprite

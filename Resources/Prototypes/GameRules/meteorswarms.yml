@@ -95,6 +95,7 @@
   components:
   - type: GameRule
   - type: StationEvent
+    reoccurrenceDelay: 1
     earliestStart: 12
     minimumPlayers: 25
   - type: MeteorSwarm
@@ -203,6 +204,7 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     weight: 3.5
+    reoccurrenceDelay: 1
     duration: 1
     earliestStart: 30
     minimumPlayers: 25
