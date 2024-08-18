@@ -67,6 +67,10 @@
   - type: FlavorProfile
     flavors:
       - people
+  - type: FoodSequenceElement
+    entries:
+      burger: Brain
+      taco: Brain
   
 - type: entity
   id: OrganHumanEyes

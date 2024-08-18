@@ -48,7 +48,7 @@
 # Meat cutlet
 
 - type: foodSequenceElement
-  id: MeatCutletBurger
+  id: MeatCutlet
   sprite:
     sprite: Objects/Consumable/Food/meat.rsi
     state: cutlet-cooked
@@ -60,7 +60,7 @@
 # Bear cutlet
 
 - type: foodSequenceElement
-  id: BearCutletBurger
+  id: BearCutlet
   name: food-sequence-content-bear
   sprite:
     sprite: Objects/Consumable/Food/meat.rsi
@@ -73,7 +73,7 @@
 # Penguin cutlet
 
 - type: foodSequenceElement
-  id: PenguinCutletBurger
+  id: PenguinCutlet
   name: food-sequence-content-penguin
   sprite:
     sprite: Objects/Consumable/Food/meat.rsi
@@ -86,7 +86,7 @@
 # Chicken cutlet
 
 - type: foodSequenceElement
-  id: ChickenCutletBurger
+  id: ChickenCutlet
   name: food-sequence-content-chicken
   sprite:
     sprite: Objects/Consumable/Food/meat.rsi
@@ -113,7 +113,7 @@
 # Spider cutlet
 
 - type: foodSequenceElement
-  id: LizardCutletBurger
+  id: LizardCutlet
   name: food-sequence-burger-content-lizard
   sprite:
     sprite: Objects/Consumable/Food/meat.rsi
@@ -126,7 +126,7 @@
 # Spider cutlet
 
 - type: foodSequenceElement
-  id: SpiderCutletBurger
+  id: SpiderCutlet
   name: food-sequence-burger-content-spider
   sprite:
     sprite: Objects/Consumable/Food/meat.rsi
@@ -139,7 +139,7 @@
 # Xeno cutlet
 
 - type: foodSequenceElement
-  id: XenoCutletBurger
+  id: XenoCutlet
   name: food-sequence-content-xeno
   sprite:
     sprite: Objects/Consumable/Food/meat.rsi
@@ -152,7 +152,7 @@
 # Crab meat
 
 - type: foodSequenceElement
-  id: CrabMeatBurger
+  id: CrabMeat
   name: food-sequence-burger-content-crab
   sprite:
     sprite: Objects/Consumable/Food/meat.rsi
@@ -161,3 +161,16 @@
   - Cooked
   - Meat
   - Crab
+
+# Brain
+
+- type: foodSequenceElement
+  id: Brain
+  name: food-sequence-content-brain
+  sprite:
+    sprite: Mobs/Species/Human/organs.rsi
+    state: brain
+  tags:
+  - Brain
+  - Raw
+

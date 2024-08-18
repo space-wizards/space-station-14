@@ -75,7 +75,7 @@
     FoodTomato: 1
     FoodOnionSlice: 2
 
-- type: microwaveMealRecipe
+- type: microwaveMealRecipe #Added to metamorph recipes
   id: RecipeBrainBurger
   name: brain burger recipe
   result: FoodBurgerBrain
