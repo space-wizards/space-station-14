@@ -47,7 +47,7 @@
     key: burger
     maxLayers: 10
     startPosition: 0, 0
-    offset: 0, 0.1
+    offset: 0, 0.07
     minLayerOffset: -0.05, 0
     maxLayerOffset: 0.05, 0
     nameGeneration: food-sequence-burger-gen
@@ -80,6 +80,9 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 3.3 # 1/2 of a bun
+  - type: FoodSequenceElement
+    entries:
+      burger: BunTopBurger
   
 # Base
 

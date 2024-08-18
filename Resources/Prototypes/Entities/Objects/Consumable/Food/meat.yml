@@ -1356,6 +1356,9 @@
   - type: Construction
     graph: Cutlet
     node: cutlet
+  - type: FoodSequenceElement
+    entries:
+      burger: MeatCutletBurger
 
 - type: entity
   name: bear cutlet
@@ -1384,6 +1387,9 @@
   - type: Construction
     graph: BearCutlet
     node: bear cutlet
+  - type: FoodSequenceElement
+    entries:
+      burger: BearCutletBurger
 
 - type: entity
   name: penguin cutlet
@@ -1410,6 +1416,9 @@
   - type: Construction
     graph: PenguinCutlet
     node: penguin cutlet
+  - type: FoodSequenceElement
+    entries:
+      burger: PenguinCutletBurger
 
 - type: entity
   name: chicken cutlet
@@ -1436,6 +1445,9 @@
   - type: Construction
     graph: ChickenCutlet
     node: chicken cutlet
+  - type: FoodSequenceElement
+    entries:
+      burger: ChickenCutletBurger
 
 - type: entity
   name: duck cutlet
@@ -1462,6 +1474,9 @@
   - type: Construction
     graph: DuckCutlet
     node: duck cutlet
+  - type: FoodSequenceElement
+    entries:
+      burger: DuckCutletBurger
 
 - type: entity
   name: lizard cutlet
@@ -1489,6 +1504,9 @@
   - type: Construction
     graph: LizardCutlet
     node: lizard cutlet
+  - type: FoodSequenceElement
+    entries:
+      burger: LizardCutletBurger
 
 - type: entity
   name: spider cutlet
@@ -1514,6 +1532,9 @@
   - type: Construction
     graph: SpiderCutlet
     node: spider cutlet
+  - type: FoodSequenceElement
+    entries:
+      burger: SpiderCutletBurger
 
 - type: entity
   name: xeno cutlet
@@ -1539,3 +1560,6 @@
   - type: Construction
     graph: XenoCutlet
     node: xeno cutlet
+  - type: FoodSequenceElement
+    entries:
+      burger: XenoCutletBurger
