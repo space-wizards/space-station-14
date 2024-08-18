@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: blueDev2
-  changes:
-  - message: Epipens can be disposed
-    type: Fix
-  id: 6642
-  time: '2024-05-30T04:18:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28317
 - author: metalgearsloth
   changes:
   - message: Predict opening even more interfaces.
@@ -3834,3 +3827,13 @@
   id: 7141
   time: '2024-08-18T22:25:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31175
+- author: Potato1234_x
+  changes:
+  - message: Added tea plants that can be dried and ground to make tea powder which
+      can then be used to make tea.
+    type: Add
+  - message: Added blue pumpkins. Currently useless but recipe uses are coming soon.
+    type: Add
+  id: 7142
+  time: '2024-08-18T22:28:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25092
