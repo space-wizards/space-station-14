@@ -1,3 +1,4 @@
+using Content.Server.Access.Systems;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Research.Components;
 using Content.Shared.UserInterface;
@@ -9,6 +10,8 @@ namespace Content.Server.Research.Systems;
 
 public sealed partial class ResearchSystem
 {
+    [Dependency] private readonly IdCardSystem _idCardSystem = default!;
+
     private void InitializeConsole()
     {
         SubscribeLocalEvent<ResearchConsoleComponent, ConsoleUnlockTechnologyMessage>(OnConsoleUnlock);
@@ -37,9 +40,18 @@ public sealed partial class ResearchSystem
         if (!UnlockTechnology(uid, args.Id, act))
             return;
 
-        var message = Loc.GetString("research-console-unlock-technology-radio-broadcast",
+        var approver = string.Empty;
+        if (_idCardSystem.TryFindIdCard(act, out var idCard))
+        {
+            approver = FormatApprover(idCard);
+        }
+        
+        var message = Loc.GetString(
+            "research-console-unlock-technology-radio-broadcast",
             ("technology", Loc.GetString(technologyPrototype.Name)),
-            ("amount", technologyPrototype.Cost));
+            ("amount", technologyPrototype.Cost),
+            ("approver", approver)
+        );
         _radio.SendRadioMessage(uid, message, component.AnnouncementChannel, uid, escapeMarkup: false);
         SyncClientWithServer(uid);
         UpdateConsoleInterface(uid, component);
@@ -86,5 +98,20 @@ public sealed partial class ResearchSystem
     private void OnConsoleDatabaseModified(EntityUid uid, ResearchConsoleComponent component, ref TechnologyDatabaseModifiedEvent args)
     {
         UpdateConsoleInterface(uid, component);
+    }
+
+    private static string FormatApprover(IdCardComponent idCardComponent)
+    {
+        if (idCardComponent.FullName == null)
+        {
+            return idCardComponent.JobTitle ?? string.Empty;
+        }
+
+        if (idCardComponent.JobTitle == null)
+        {
+            return idCardComponent.FullName;
+        }
+
+        return idCardComponent.FullName + ", " + idCardComponent.JobTitle;
     }
 }
