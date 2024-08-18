@@ -29,6 +29,13 @@
   - sprite: Objects/Consumable/Food/taco_sequence.rsi
     state: rat
 
+- type: foodSequenceElement
+  id: RatSkewer
+  name: food-sequence-content-rat
+  sprites:
+  - sprite: Objects/Consumable/Food/skewer.rsi
+    state: skewer-rat
+
 # Cheese
 
 - type: foodSequenceElement
@@ -354,4 +361,90 @@
   tags:
   - Fruit
   - Slice
+
+# Chili pepper
+
+- type: foodSequenceElement
+  id: ChiliPepper
+  name: food-sequence-content-chili
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/chili.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+- type: foodSequenceElement
+  id: ChiliPepperBurger
+  name: food-sequence-burger-content-chili
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/chili.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+- type: foodSequenceElement
+  id: ChiliPepperSkewer
+  name: food-sequence-content-chili
+  sprites:
+  - sprite: Objects/Consumable/Food/skewer.rsi
+    state: skewer-pepper
+  tags:
+  - Vegetable
+
+# Chilly pepper
+
+- type: foodSequenceElement
+  id: ChillyPepper
+  name: food-sequence-content-chilly
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/chilly.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+- type: foodSequenceElement
+  id: ChillyPepperBurger
+  name: food-sequence-burger-content-chilly
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/chilly.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+- type: foodSequenceElement
+  id: ChillyPepperSkewer
+  name: food-sequence-content-chilly
+  sprites:
+  - sprite: Objects/Consumable/Food/skewer.rsi
+    state: skewer-bluepepper
+  tags:
+  - Vegetable
+
+# Corn
+- type: foodSequenceElement
+  id: Corn
+  name: food-sequence-content-corn
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/corn.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+- type: foodSequenceElement
+  id: CornBurger
+  name: food-sequence-burger-content-corn
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/corn.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+- type: foodSequenceElement
+  id: CornSkewer
+  name: food-sequence-content-corn
+  sprites:
+  - sprite: Objects/Consumable/Food/skewer.rsi
+    state: skewer-corn
+  tags:
+  - Vegetable
 

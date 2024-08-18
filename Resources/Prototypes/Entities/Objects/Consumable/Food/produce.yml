@@ -992,6 +992,11 @@
         Quantity: 3
       - ReagentId: Enzyme
         Quantity: 2
+  - type: FoodSequenceElement
+    entries:
+      burger: CornBurger
+      taco: Corn
+      skewer: CornSkewer
 
 - type: entity
   name: corn cob
@@ -1233,6 +1238,11 @@
   - type: Tag
     tags:
     - Vegetable
+  - type: FoodSequenceElement
+    entries:
+      taco: ChiliPepper
+      burger: ChiliPepperBurger
+      skewer: ChiliPepperSkewer
 
 - type: entity
   name: chilly pepper
@@ -1259,6 +1269,11 @@
     sprite: Objects/Specific/Hydroponics/chilly.rsi
   - type: Produce
     seedId: chilly
+  - type: FoodSequenceElement
+    entries:
+      taco: ChillyPepper
+      burger: ChillyPepperBurger
+      skewer: ChillyPepperSkewer
 
 - type: entity
   name: aloe

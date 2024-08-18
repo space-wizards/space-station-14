@@ -1679,6 +1679,7 @@
     entries:
       taco: RatTaco
       burger: RatBurger
+      skewer: RatSkewer
 
 - type: entity
   parent: MobMouse
