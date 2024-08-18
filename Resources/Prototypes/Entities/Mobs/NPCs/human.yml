@@ -116,6 +116,7 @@
 - type: entity
   parent: MobSyndicateFootsoldier
   id: MobSyndicateNuclearOperative
+  suffix: Armed, Melee
   components:
   - type: Loadout
     prototypes:
@@ -127,6 +128,7 @@
 - type: entity
   parent: MobSyndicateFootsoldier
   id: MobSyndicateNuclearOperativeElite
+  suffix: Armed, Elite
   components:
   - type: Loadout
     prototypes:
@@ -138,6 +140,7 @@
 - type: entity
   parent: MobSyndicateFootsoldier
   id: MobSyndicateNuclearOperativeCommander
+  suffix: Armed, Commander
   components:
   - type: Loadout
     prototypes:
