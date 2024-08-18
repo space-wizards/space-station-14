@@ -1690,7 +1690,7 @@
   - UplinkPointless
 
 - type: listing
-  id: UplinkcostumePyjama
+  id: UplinkCostumePyjama
   name: uplink-costume-pyjama-name
   description: uplink-costume-pyjama-desc
   productEntity: ClothingBackpackDuffelSyndicatePyjamaBundle
@@ -1700,10 +1700,10 @@
   - UplinkPointless
 
 - type: listing
-  id: UplinkcostumeClown
+  id: UplinkCostumeClown
   name: uplink-costume-clown-name
   description: uplink-costume-clown-desc
-  productEntity: ClothingBackpackDuffelSyndicatecostumeClown
+  productEntity: ClothingBackpackDuffelSyndicateCostumeClown
   cost:
     Telecrystal: 2
   categories:
