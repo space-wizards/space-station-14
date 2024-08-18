@@ -9,8 +9,7 @@
     wideAnimationRotation: -135
     damage:
       types:
-        Blunt: 20 # that's some hard crust
-        Structural: 10
+        Blunt: 16
     soundHit:
       collection: MetalThud
   - type: Reflect
