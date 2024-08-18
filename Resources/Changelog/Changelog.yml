@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: notafet
-  changes:
-  - message: Fix passive gate flow rate display.
-    type: Fix
-  id: 6640
-  time: '2024-05-30T00:34:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28372
 - author: Lamrr
   changes:
   - message: Candle boxes can now only hold candles.
@@ -3834,3 +3827,10 @@
   id: 7139
   time: '2024-08-18T21:55:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31171
+- author: Deatherd
+  changes:
+  - message: Sharks Go RAWR!
+    type: Tweak
+  id: 7140
+  time: '2024-08-18T22:18:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31142
