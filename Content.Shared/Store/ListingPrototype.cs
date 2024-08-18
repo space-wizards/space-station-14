@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.FixedPoint;
+using Content.Shared.Store.Components;
 using Content.Shared.StoreDiscount.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -249,6 +250,13 @@ public sealed partial class ListingPrototype : ListingData, IPrototype
 }
 
 /// <summary> Wrapper around <see cref="ListingData"/> that enables controller and centralized cost modification. </summary>
+/// <remarks>
+/// Server lifecycle of those objects is bound to <see cref="StoreComponent.FullListingsCatalog"/>, which is their local cache. To fix
+/// cost changes after server side change (for example, when all items with set discount are bought up) <see cref="ApplyAllModifiers"/> is called
+/// on changes.
+/// Client side lifecycle is possible due to modifiers and original cost being transferred fields and cost being calculated when needed. Modifiers changes
+/// should not (are not expected) be happening on client.
+/// </remarks>
 [Serializable, NetSerializable, DataDefinition]
 public sealed partial class ListingDataWithCostModifiers : ListingData
 {
@@ -256,6 +264,8 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
 
     /// <summary>
     /// Map of values, by which calculated cost should be modified, with modification sourceId.
+    /// Instead of modifying this field - use <see cref="RemoveCostModifier"/> and <see cref="AddCostModifier"/>
+    /// when possible.
     /// </summary>
     [DataField]
     public Dictionary<string, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>> CostModifiersBySourceId = new();

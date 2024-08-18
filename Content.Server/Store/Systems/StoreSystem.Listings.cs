@@ -15,17 +15,17 @@ public sealed partial class StoreSystem
     /// <param name="component">The store to refresh</param>
     public void RefreshAllListings(StoreComponent component)
     {
-        component.Listings = GetAllListings().ToHashSet();
+        component.FullListingsCatalog = GetAllListings().ToHashSet();
     }
 
     /// <summary>
     /// Gets all listings from a prototype.
     /// </summary>
     /// <returns>All the listings</returns>
-    public IEnumerable<ListingData> GetAllListings()
+    public IEnumerable<ListingDataWithCostModifiers> GetAllListings()
     {
         var prototypes = _proto.EnumeratePrototypes<ListingPrototype>();
-        return prototypes.Select(x => new ListingData(x));
+        return prototypes.Select(x => new ListingDataWithCostModifiers(x));
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public sealed partial class StoreSystem
     /// <returns>Whether or not the listing was add successfully</returns>
     public bool TryAddListing(StoreComponent component, ListingPrototype listing)
     {
-        return component.Listings.Add(listing);
+        return component.FullListingsCatalog.Add(new ListingDataWithCostModifiers(listing));
     }
 
     /// <summary>
@@ -63,9 +63,9 @@ public sealed partial class StoreSystem
     /// <param name="store"></param>
     /// <param name="component">The store the listings are coming from.</param>
     /// <returns>The available listings.</returns>
-    public IEnumerable<ListingDataWithCostModifiers> GetAvailableListings(EntityUid buyer, EntityUid store, StoreComponent component)
+    public IReadOnlyCollection<ListingDataWithCostModifiers> GetAvailableListings(EntityUid buyer, EntityUid store, StoreComponent component)
     {
-        return GetAvailableListings(buyer, null, component.Categories, store);
+        return GetAvailableListings(buyer, component.FullListingsCatalog, component.Categories, store).ToHashSet();
     }
 
     /// <summary>
@@ -85,11 +85,8 @@ public sealed partial class StoreSystem
     {
         if (listings == null)
         {
-            var withModifiers = GetAllListings()
-                                .Select(x => new ListingDataWithCostModifiers(x))
-                                .ToHashSet();
-            RaiseLocalEvent(new ListingItemsInitializingEvent(withModifiers, storeEntity));
-            listings = withModifiers;
+            listings = GetAllListings()
+                .ToHashSet();
         }
 
         foreach (var listing in listings)

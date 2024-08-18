@@ -22,7 +22,7 @@ public sealed partial class StoreMenu : DefaultWindow
     private StoreWithdrawWindow? _withdrawWindow;
 
     public event EventHandler<string>? SearchTextUpdated;
-    public event Action<BaseButton.ButtonEventArgs, ListingData>? OnListingButtonPressed;
+    public event Action<BaseButton.ButtonEventArgs, ListingDataWithCostModifiers>? OnListingButtonPressed;
     public event Action<BaseButton.ButtonEventArgs, string>? OnCategoryButtonPressed;
     public event Action<BaseButton.ButtonEventArgs, string, int>? OnWithdrawAttempt;
     public event Action<BaseButton.ButtonEventArgs>? OnRefundAttempt;

@@ -4,7 +4,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.PDA.Ringer;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
-using Content.Server.StoreDiscount.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -12,7 +11,6 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Mind;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
-using Content.Shared.StoreDiscount.Components;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
@@ -217,7 +215,7 @@ public sealed partial class StoreSystem
 
                 if (listing.ProductUpgradeId != null)
                 {
-                    foreach (var upgradeListing in component.Listings)
+                    foreach (var upgradeListing in component.FullListingsCatalog)
                     {
                         if (upgradeListing.ID == listing.ProductUpgradeId)
                         {
@@ -268,7 +266,7 @@ public sealed partial class StoreSystem
 
         var buyFinished = new StoreBuyFinishedEvent
         {
-            PurchasingItemId = msg.Listing.ID,
+            PurchasedItem = listing,
             StoreUid = uid
         };
         RaiseLocalEvent(ref buyFinished);
@@ -393,6 +391,9 @@ public sealed partial class StoreSystem
 /// Event of successfully finishing purchase in store (<see cref="StoreSystem"/>.
 /// </summary>
 /// <param name="StoreUid">EntityUid on which store is placed.</param>
-/// <param name="PurchasingItemId">Id of ListingItem that was purchased.</param>
+/// <param name="PurchasedItem">ListingItem that was purchased.</param>
 [ByRefEvent]
-public record struct StoreBuyFinishedEvent(EntityUid StoreUid, string PurchasingItemId);
+public readonly record struct StoreBuyFinishedEvent(
+    EntityUid StoreUid,
+    ListingDataWithCostModifiers PurchasedItem
+);
