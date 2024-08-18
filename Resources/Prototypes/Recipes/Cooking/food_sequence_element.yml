@@ -148,3 +148,16 @@
   - Cooked
   - Cutlet
   - Meat
+
+# Crab meat
+
+- type: foodSequenceElement
+  id: CrabMeatBurger
+  name: food-sequence-burger-content-crab
+  sprite:
+    sprite: Objects/Consumable/Food/meat.rsi
+    state: crab-cooked
+  tags:
+  - Cooked
+  - Meat
+  - Crab

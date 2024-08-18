@@ -133,7 +133,7 @@
     FoodBreadBun: 1
     FoodMeatCorgi: 1
 
-- type: microwaveMealRecipe
+- type: microwaveMealRecipe #Added to metamorph recipes
   id: RecipeCrabBurger
   name: crab burger recipe
   result: FoodBurgerCrab
@@ -158,7 +158,7 @@
     CrayonGreen: 1
     Flare: 1
 
-- type: microwaveMealRecipe
+- type: microwaveMealRecipe #Added to metamorph recipes
   id: RecipeDuckBurger
   name: duck sandwich recipe
   result: FoodBurgerDuck
