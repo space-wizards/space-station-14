@@ -296,7 +296,8 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 					"emergency-shuttle-docked",
 					null, null, null, null,
 					("time", $"{_consoleAccumulator:0}"),
-					    ("direction", direction)
+                       ("direction", direction),
+					   ("location", location)
 				);
             }
 
@@ -331,7 +332,8 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 				    _announcer.GetAnnouncementId("ShuttleNearby"),
 					"emergency-shuttle-nearby",
 					null, null, null, null,
-					("direction", direction)
+					("direction", direction),
+					    ("location", location)
 				);
             }
 
