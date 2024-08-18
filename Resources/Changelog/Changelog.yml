@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Lamrr
-  changes:
-  - message: Candle boxes can now only hold candles.
-    type: Tweak
-  id: 6641
-  time: '2024-05-30T04:15:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28314
 - author: blueDev2
   changes:
   - message: Epipens can be disposed
@@ -3834,3 +3827,10 @@
   id: 7140
   time: '2024-08-18T22:18:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31142
+- author: slarticodefast
+  changes:
+  - message: Fixed the radiation collector warning light thresholds.
+    type: Fix
+  id: 7141
+  time: '2024-08-18T22:25:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31175
