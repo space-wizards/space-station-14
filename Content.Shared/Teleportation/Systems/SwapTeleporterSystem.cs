@@ -157,6 +157,13 @@ public sealed class SwapTeleporterSystem : EntitySystem
             return;
         }
 
+        // can't predict if either entity doesn't exist on the client / is outside of PVS
+        if (_netMan.IsClient)
+        {
+            if (!Exists(uid) || Transform(uid).MapID == MapId.Nullspace || !Exists(linkedEnt) || Transform(linkedEnt).MapID == MapId.Nullspace)
+                return;
+        }
+
         var teleEnt = GetTeleportingEntity((uid, xform));
         var otherTeleEnt = GetTeleportingEntity((linkedEnt, Transform(linkedEnt)));
 
@@ -214,13 +221,6 @@ public sealed class SwapTeleporterSystem : EntitySystem
             && TryComp<PullableComponent>(otherPullerComp.Pulling, out var otherSubjectPulling))
         {
             _pulling.TryStopPull(otherPullerComp.Pulling.Value, otherSubjectPulling);
-        }
-
-        // can't predict if the target doesn't exist on the client / is outside of PVS
-        if (_netMan.IsClient)
-        {
-            if (!Exists(otherTeleEnt) || Transform(otherTeleEnt).MapID == MapId.Nullspace)
-                return;
         }
 
         _transform.SwapPositions(teleEnt, otherTeleEnt);
