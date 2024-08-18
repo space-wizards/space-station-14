@@ -35,27 +35,24 @@ public sealed class StoreDiscountSystem : EntitySystem
         SubscribeLocalEvent<ListingItemsInitializingEvent>(OnListingItemInitialized);
     }
 
+    /// <summary> Initializes discount data on listing items, if required. </summary>
     private void OnListingItemInitialized(ListingItemsInitializingEvent ev)
     {
-        if (ev.Store == null)
+        if (ev.Store == null || !TryComp<StoreDiscountComponent>(ev.Store, out var discountsComponent))
         {
             return;
         }
 
-        if (TryComp<StoreDiscountComponent>(ev.Store, out var discountsComponent))
+        foreach (var discountData in discountsComponent.Discounts)
         {
-            var discounts = discountsComponent.Discounts;
-            foreach (var discountData in discounts)
+            if (discountData.Count <= 0)
             {
-                if (discountData.Count <= 0)
-                {
-                    continue;
-                }
-
-                var found = ev.ListingData.First(x => x.ID == discountData.ListingId);
-                found.CostModifiersBySourceId.Add(discountData.DiscountCategory, discountData.DiscountAmountByCurrency);
-                found.Categories.Add(_discountStoreCategoryPrototype);
+                continue;
             }
+
+            var found = ev.ListingData.First(x => x.ID == discountData.ListingId);
+            found.CostModifiersBySourceId.Add(discountData.DiscountCategory, discountData.DiscountAmountByCurrency);
+            found.Categories.Add(_discountStoreCategoryPrototype);
         }
     }
 
@@ -129,7 +126,7 @@ public sealed class StoreDiscountSystem : EntitySystem
         // and their cost
 
         var prototypes = _prototypeManager.EnumeratePrototypes<DiscountCategoryPrototype>();
-        var categoriesWithCumulativeWeight = new CategoriesWithCumulativeWeight(prototypes);
+        var categoriesWithCumulativeWeight = new CategoriesWithCumulativeWeightMap(prototypes);
         var uniqueListingItemCountByCategory = PickCategoriesToRoll(totalAvailableDiscounts, categoriesWithCumulativeWeight);
 
         return RollItems(listings, uniqueListingItemCountByCategory);
@@ -148,19 +145,19 @@ public sealed class StoreDiscountSystem : EntitySystem
     /// Total amount of different listing items to be discounted. Depending on <see cref="DiscountCategoryPrototype.MaxItems"/>
     /// there might be less discounts then <see cref="totalAvailableDiscounts"/>, but never more.
     /// </param>
-    /// <param name="categoriesWithCumulativeWeight">
+    /// <param name="categoriesWithCumulativeWeightMap">
     /// Map of discount category cumulative weights by respective protoId of discount category.
     /// </param>
     /// <returns>Map: <b>count</b> of different listing items to be discounted, by discount category.</returns>
     private Dictionary<ProtoId<DiscountCategoryPrototype>, int> PickCategoriesToRoll(
         int totalAvailableDiscounts,
-        CategoriesWithCumulativeWeight categoriesWithCumulativeWeight
+        CategoriesWithCumulativeWeightMap categoriesWithCumulativeWeightMap
     )
     {
         var chosenDiscounts = new Dictionary<ProtoId<DiscountCategoryPrototype>, int>();
         for (var i = 0; i < totalAvailableDiscounts; i++)
         {
-            var discountCategory = categoriesWithCumulativeWeight.RollCategory(_random);
+            var discountCategory = categoriesWithCumulativeWeightMap.RollCategory(_random);
             if (discountCategory == null)
             {
                 break;
@@ -182,7 +179,7 @@ public sealed class StoreDiscountSystem : EntitySystem
 
             if (newDiscountCount >= discountCategory.MaxItems)
             {
-                categoriesWithCumulativeWeight.Remove(discountCategory);
+                categoriesWithCumulativeWeightMap.Remove(discountCategory);
             }
         }
 
@@ -262,13 +259,18 @@ public sealed class StoreDiscountSystem : EntitySystem
         return discountAmountByCurrencyId;
     }
 
-    private sealed record CategoriesWithCumulativeWeight
+    /// <summary> Map for holding discount categories with their calculated cumulative weight.  </summary>
+    private sealed record CategoriesWithCumulativeWeightMap
     {
         private readonly List<DiscountCategoryPrototype> _categories;
         private readonly List<int> _weights;
         private int _totalWeight;
 
-        public CategoriesWithCumulativeWeight(IEnumerable<DiscountCategoryPrototype> prototypes)
+        /// <summary>
+        /// Creates map, filtering out categories that could not be picked (no weight, no max items).
+        /// Calculates cumulative weights by summing each next category weight with sum of all previous ones.
+        /// </summary>
+        public CategoriesWithCumulativeWeightMap(IEnumerable<DiscountCategoryPrototype> prototypes)
         {
             var asArray = prototypes.ToArray();
             _weights = new (asArray.Length);
@@ -279,7 +281,7 @@ public sealed class StoreDiscountSystem : EntitySystem
             for (var i = 0; i < asArray.Length; i++)
             {
                 var category = asArray[i];
-                if (category.MaxItems == 0 || category.Weight == 0)
+                if (category.MaxItems <= 0 || category.Weight <= 0)
                 {
                     continue;
                 }
@@ -301,8 +303,11 @@ public sealed class StoreDiscountSystem : EntitySystem
             }
         }
 
-        // decrease cumulativeWeight of every category that is following current one, and then
-        // reduce total cumulative count by that category weight, so it won't affect next rolls in any way
+        /// <summary>
+        /// Removes category and all of its effects on other items in map:
+        /// decreases cumulativeWeight of every category that is following current one, and then
+        /// reduces total cumulative count by that category weight, so it won't affect next rolls in any way.
+        /// </summary>
         public void Remove(DiscountCategoryPrototype discountCategory)
         {
             var indexToRemove = _categories.IndexOf(discountCategory);
@@ -321,9 +326,17 @@ public sealed class StoreDiscountSystem : EntitySystem
             _weights.RemoveAt(indexToRemove);
         }
 
-        // We rolled random point inside range of 0 and 'total weight' to pick category respecting category weights
-        // now we find index of category we rolled. If category cumulative weight is less than roll -
-        // we rolled other category, skip and try next
+        
+        /// <summary>
+        /// Roll category respecting categories weight.
+        /// </summary>
+        /// <remarks>
+        /// We rolled random point inside range of 0 and 'total weight' to pick category respecting category weights
+        /// now we find index of category we rolled. If category cumulative weight is less than roll -
+        /// we rolled other category, skip and try next.
+        /// </remarks>
+        /// <param name="random">Random number generator.</param>
+        /// <returns>Rolled category, or null if no category could be picked based on current map state.</returns>
         public DiscountCategoryPrototype? RollCategory(IRobustRandom random)
         {
             var roll = random.Next(_totalWeight);
