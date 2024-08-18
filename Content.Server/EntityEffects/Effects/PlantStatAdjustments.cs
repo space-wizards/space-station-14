@@ -314,3 +314,167 @@ public sealed partial class PlantMutateWeedTolerance : EntityEffect
     }
 }
 
+/// <summary>
+///     Changes the value on a plant's Endurance value randomly when applied.
+/// </summary>
+public sealed partial class PlantMutateEndurance : EntityEffect
+{
+    [DataField]
+    public float minValue = 50f;
+    [DataField]
+    public float maxValue = 150f;
+
+    public override void Effect(EntityEffectBaseArgs args)
+    {
+        var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+
+        if (plantholder.Seed == null)
+            return;
+
+        var random = IoCManager.Resolve<IRobustRandom>();
+        plantholder.Seed.Endurance = random.NextFloat(minValue, maxValue);
+
+    }
+
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    {
+        return "TODO";
+    }
+}
+
+/// <summary>
+///     Changes the value on a plant's Yield value randomly when applied.
+/// </summary>
+public sealed partial class PlantMutateYield : EntityEffect
+{
+    [DataField]
+    public int minValue = 3;
+    [DataField]
+    public int maxValue = 10;
+
+    public override void Effect(EntityEffectBaseArgs args)
+    {
+        var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+
+        if (plantholder.Seed == null)
+            return;
+
+        var random = IoCManager.Resolve<IRobustRandom>();
+        plantholder.Seed.Yield = random.Next(minValue, maxValue);
+
+    }
+
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    {
+        return "TODO";
+    }
+}
+
+/// <summary>
+///     Changes the value on a plant's Lifespan value randomly when applied.
+/// </summary>
+public sealed partial class PlantMutateLifespan : EntityEffect
+{
+    [DataField]
+    public float minValue = 10f;
+    [DataField]
+    public float maxValue = 80f;
+
+    public override void Effect(EntityEffectBaseArgs args)
+    {
+        var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+
+        if (plantholder.Seed == null)
+            return;
+
+        var random = IoCManager.Resolve<IRobustRandom>();
+        plantholder.Seed.Lifespan = random.NextFloat(minValue, maxValue);
+    }
+
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    {
+        return "TODO";
+    }
+}
+
+/// <summary>
+///     Changes the value on a plant's Maturation value randomly when applied.
+/// </summary>
+public sealed partial class PlantMutateMaturation : EntityEffect
+{
+    [DataField]
+    public float minValue = 3f;
+    [DataField]
+    public float maxValue = 8f;
+
+    public override void Effect(EntityEffectBaseArgs args)
+    {
+        var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+
+        if (plantholder.Seed == null)
+            return;
+
+        var random = IoCManager.Resolve<IRobustRandom>();
+        plantholder.Seed.Maturation = random.NextFloat(minValue, maxValue);
+    }
+
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    {
+        return "TODO";
+    }
+}
+
+/// <summary>
+///     Changes the value on a plant's Production value randomly when applied.
+/// </summary>
+public sealed partial class PlantMutateProduction : EntityEffect
+{
+    [DataField]
+    public float minValue = 1f;
+    [DataField]
+    public float maxValue = 10f;
+
+    public override void Effect(EntityEffectBaseArgs args)
+    {
+        var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+
+        if (plantholder.Seed == null)
+            return;
+
+        var random = IoCManager.Resolve<IRobustRandom>();
+        plantholder.Seed.Production = random.NextFloat(minValue, maxValue);
+    }
+
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    {
+        return "TODO";
+    }
+}
+
+/// <summary>
+///     Changes the value on a plant's Potency value randomly when applied.
+/// </summary>
+public sealed partial class PlantMutatePotency : EntityEffect
+{
+    [DataField]
+    public float minValue = 30f;
+    [DataField]
+    public float maxValue = 100f;
+
+    public override void Effect(EntityEffectBaseArgs args)
+    {
+        var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+
+        if (plantholder.Seed == null)
+            return;
+
+        var random = IoCManager.Resolve<IRobustRandom>();
+        plantholder.Seed.Potency = random.NextFloat(minValue, maxValue);
+    }
+
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    {
+        return "TODO";
+    }
+}
+

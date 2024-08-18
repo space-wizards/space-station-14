@@ -19,7 +19,6 @@ public sealed class MutationSystem : EntitySystem
     //clean up errors on client side about missing concrete Glow class?
 
     //Remaining mutations to port:
-    //stat adjustments (6)
     //remaining fun (4)
     // - Seedless, Ligneous, turnintokudzu are plant traits rather than effects and their value should stay in SeedData for now
     // - Screaming will need updated with new screams from more recent commit.
@@ -79,14 +78,6 @@ public sealed class MutationSystem : EntitySystem
         const int totalbits = 262;
 
         #pragma warning disable IDE0055 // disable formatting warnings because this looks more readable
-        // Stats (30*2 = 60)
-        MutateFloat(ref seed.Endurance            , 50f  , 150f, 5, totalbits, 2 * severity);
-        MutateInt(ref seed.Yield                  , 3    , 10  , 5, totalbits, 2 * severity);
-        MutateFloat(ref seed.Lifespan             , 10f  , 80f , 5, totalbits, 2 * severity);
-        MutateFloat(ref seed.Maturation           , 3f   , 8f  , 5, totalbits, 2 * severity);
-        MutateFloat(ref seed.Production           , 1f   , 10f , 5, totalbits, 2 * severity);
-        MutateFloat(ref seed.Potency              , 30f  , 100f, 5, totalbits, 2 * severity);
-
         // Fun (72)
         MutateBool(ref seed.Seedless      , true , 10, totalbits, severity);
         MutateBool(ref seed.Ligneous      , true , 10, totalbits, severity);
@@ -148,71 +139,6 @@ public sealed class MutationSystem : EntitySystem
         }
 
         return result;
-    }
-
-    // Mutate reference 'val' between 'min' and 'max' by pretending the value
-    // is representable by a thermometer code with 'bits' number of bits and
-    // randomly flipping some of them.
-    //
-    // 'totalbits' and 'mult' are used only to calculate the probability that
-    // one bit gets flipped.
-    private void MutateFloat(ref float val, float min, float max, int bits, int totalbits, float mult)
-    {
-        // Probability that a bit flip happens for this value's representation in thermometer code.
-        float probBitflip = mult * bits / totalbits;
-        probBitflip = Math.Clamp(probBitflip, 0, 1);
-        if (!Random(probBitflip))
-            return;
-
-        // Starting number of bits that are high, between 0 and bits.
-        // In other words, it's val mapped linearly from range [min, max] to range [0, bits], and then rounded.
-        int valInt = (int)MathF.Round((val - min) / (max - min) * bits);
-        // val may be outside the range of min/max due to starting prototype values, so clamp.
-        valInt = Math.Clamp(valInt, 0, bits);
-
-        // Probability that the bit flip increases n.
-        // The higher the current value is, the lower the probability of increasing value is, and the higher the probability of decreasive it it.
-        // In other words, it tends to go to the middle.
-        float probIncrease = 1 - (float)valInt / bits;
-        int valIntMutated;
-        if (Random(probIncrease))
-        {
-            valIntMutated = valInt + 1;
-        }
-        else
-        {
-            valIntMutated = valInt - 1;
-        }
-
-        // Set value based on mutated thermometer code.
-        float valMutated = Math.Clamp((float)valIntMutated / bits * (max - min) + min, min, max);
-        val = valMutated;
-    }
-
-    private void MutateInt(ref int val, int min, int max, int bits, int totalbits, float mult)
-    {
-        // Probability that a bit flip happens for this value's representation in thermometer code.
-        float probBitflip = mult * bits / totalbits;
-        probBitflip = Math.Clamp(probBitflip, 0, 1);
-        if (!Random(probBitflip))
-            return;
-
-        // Probability that the bit flip increases n.
-        // The higher the current value is, the lower the probability of increasing value is, and the higher the probability of decreasive it it.
-        // In other words, it tends to go to the middle.
-        float probIncrease = 1 - (float)val / bits;
-        int valMutated;
-        if (Random(probIncrease))
-        {
-            valMutated = val + 1;
-        }
-        else
-        {
-            valMutated = val - 1;
-        }
-
-        valMutated = Math.Clamp(valMutated, min, max);
-        val = valMutated;
     }
 
     private void MutateBool(ref bool val, bool polarity, int bits, int totalbits, float mult)

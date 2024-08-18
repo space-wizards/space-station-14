@@ -62,3 +62,27 @@
       baseOdds: 0.018
       persists: false
       mutation: !type:PlantMutateWeedTolerance
+    - name: ChangeEndurance
+      baseOdds: 0.036
+      persists: false
+      mutation: !type:PlantMutateEndurance
+    - name: ChangeYield
+      baseOdds: 0.036
+      persists: false
+      mutation: !type:PlantMutateYield
+    - name: ChangeLifespan
+      baseOdds: 0.036
+      persists: false
+      mutation: !type:PlantMutateLifespan
+    - name: ChangeMaturation
+      baseOdds: 0.036
+      persists: false
+      mutation: !type:PlantMutateMaturation
+    - name: ChangeProduction
+      baseOdds: 0.036
+      persists: false
+      mutation: !type:PlantMutateProduction
+    - name: ChangePotency
+      baseOdds: 0.036
+      persists: false
+      mutation: !type:PlantMutatePotency
