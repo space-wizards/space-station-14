@@ -13,6 +13,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Map;
 using System.Numerics;
+using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 using Robust.Server.GameObjects;
 

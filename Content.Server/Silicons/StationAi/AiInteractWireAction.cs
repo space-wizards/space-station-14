@@ -10,7 +10,7 @@ namespace Content.Server.Silicons.StationAi;
 /// </summary>
 public sealed partial class AiInteractWireAction : ComponentWireAction<StationAiWhitelistComponent>
 {
-    public override string Name { get; set; } = "wire-name-ai-light";
+    public override string Name { get; set; } = "wire-name-ai-act-light";
     public override Color Color { get; set; } = Color.DeepSkyBlue;
     public override object StatusKey => AirlockWireStatus.AiControlIndicator;
 

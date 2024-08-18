@@ -149,23 +149,53 @@ namespace Content.Shared.Movement.Systems
 
         public void RotateCamera(EntityUid uid, Angle angle)
         {
-            if (CameraRotationLocked || !MoverQuery.TryGetComponent(uid, out var mover))
+            if (CameraRotationLocked)
+                return;
+
+            var entity = uid;
+
+            if (!TryComp(uid, out RelayInputMoverComponent? relay) ||
+                !MoverQuery.TryComp(relay.RelayEntity, out var mover))
+            {
+                MoverQuery.TryGetComponent(uid, out mover);
+            }
+            else
+            {
+                entity = relay.RelayEntity;
+            }
+
+            if (mover == null)
                 return;
 
             mover.TargetRelativeRotation += angle;
-            Dirty(uid, mover);
+            Dirty(entity, mover);
         }
 
         public void ResetCamera(EntityUid uid)
         {
-            if (CameraRotationLocked ||
-                !MoverQuery.TryGetComponent(uid, out var mover))
+            if (CameraRotationLocked)
             {
                 return;
             }
 
+            TransformComponent xform;
+
+            if (!TryComp(uid, out RelayInputMoverComponent? relay) ||
+                !MoverQuery.TryComp(relay.RelayEntity, out var mover))
+            {
+                MoverQuery.TryGetComponent(uid, out mover);
+                xform = XformQuery.Comp(uid);
+            }
+            else
+            {
+                xform = XformQuery.Comp(relay.RelayEntity);
+            }
+
+            if (mover == null)
+                return;
+
             // If we updated parent then cancel the accumulator and force it now.
-            if (!TryUpdateRelative(mover, XformQuery.GetComponent(uid)) && mover.TargetRelativeRotation.Equals(Angle.Zero))
+            if (!TryUpdateRelative(mover, xform) && mover.TargetRelativeRotation.Equals(Angle.Zero))
                 return;
 
             mover.LerpTarget = TimeSpan.Zero;

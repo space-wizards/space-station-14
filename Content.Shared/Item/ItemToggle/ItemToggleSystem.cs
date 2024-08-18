@@ -1,8 +1,10 @@
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Popups;
 using Content.Shared.Temperature;
 using Content.Shared.Toggleable;
+using Content.Shared.Verbs;
 using Content.Shared.Wieldable;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -20,7 +22,6 @@ public sealed class ItemToggleSystem : EntitySystem
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
@@ -32,6 +33,8 @@ public sealed class ItemToggleSystem : EntitySystem
         SubscribeLocalEvent<ItemToggleComponent, ItemUnwieldedEvent>(TurnOffOnUnwielded);
         SubscribeLocalEvent<ItemToggleComponent, ItemWieldedEvent>(TurnOnOnWielded);
         SubscribeLocalEvent<ItemToggleComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<ItemToggleComponent, GetVerbsEvent<ActivationVerb>>(OnActivateVerb);
+        SubscribeLocalEvent<ItemToggleComponent, ActivateInWorldEvent>(OnActivate);
 
         SubscribeLocalEvent<ItemToggleHotComponent, IsHotEvent>(OnIsHotEvent);
 
@@ -60,6 +63,32 @@ public sealed class ItemToggleSystem : EntitySystem
         args.Handled = true;
 
         Toggle((ent, ent.Comp), args.User, predicted: ent.Comp.Predictable);
+    }
+
+    private void OnActivateVerb(Entity<ItemToggleComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        var user = args.User;
+
+        args.Verbs.Add(new ActivationVerb()
+        {
+            Text = !ent.Comp.Activated ? Loc.GetString("item-toggle-activate") : Loc.GetString("item-toggle-deactivate"),
+            Act = () =>
+            {
+                Toggle((ent.Owner, ent.Comp), user, predicted: ent.Comp.Predictable);
+            }
+        });
+    }
+
+    private void OnActivate(Entity<ItemToggleComponent> ent, ref ActivateInWorldEvent args)
+    {
+        if (args.Handled || !ent.Comp.OnActivate)
+            return;
+
+        args.Handled = true;
+        Toggle((ent.Owner, ent.Comp), args.User, predicted: ent.Comp.Predictable);
     }
 
     /// <summary>
@@ -199,16 +228,7 @@ public sealed class ItemToggleSystem : EntitySystem
         if (TryComp(ent, out AppearanceComponent? appearance))
         {
             _appearance.SetData(ent, ToggleVisuals.Toggled, ent.Comp.Activated, appearance);
-
-            if (ent.Comp.ToggleLight)
-                _appearance.SetData(ent, ToggleableLightVisuals.Enabled, ent.Comp.Activated, appearance);
         }
-
-        if (!ent.Comp.ToggleLight)
-            return;
-
-        if (_light.TryGetLight(ent, out var light))
-            _light.SetEnabled(ent, ent.Comp.Activated, light);
     }
 
     /// <summary>

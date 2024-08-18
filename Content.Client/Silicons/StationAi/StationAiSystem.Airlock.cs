@@ -13,9 +13,12 @@ public sealed partial class StationAiSystem
 
     private void OnDoorBoltGetRadial(Entity<DoorBoltComponent> ent, ref GetStationAiRadialEvent args)
     {
-        args.Actions.Add(new StationAiAction()
+        args.Actions.Add(new StationAiRadial()
         {
-            Sprite = new SpriteSpecifier.Rsi(
+            Sprite = ent.Comp.BoltsDown ?
+                new SpriteSpecifier.Rsi(
+                new ResPath("/Textures/Structures/Doors/Airlocks/Standard/basic.rsi"), "open") :
+                new SpriteSpecifier.Rsi(
                 new ResPath("/Textures/Structures/Doors/Airlocks/Standard/basic.rsi"), "closed"),
             Tooltip = ent.Comp.BoltsDown ? Loc.GetString("bolt-open") : Loc.GetString("bolt-close"),
             Event = new StationAiBoltEvent()

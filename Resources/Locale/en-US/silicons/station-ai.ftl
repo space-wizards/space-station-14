@@ -1,7 +1,13 @@
 # General
 ai-wire-snipped = Wire has been cut at {$coords}.
-wire-name-ai-light = AI
+wire-name-ai-vision-light = AIV
+wire-name-ai-act-light = AIA
 
 # Radial actions
+ai-open = Open actions
+ai-close = Close actions
+
 bolt-close = Close bolt
 bolt-open = Open bolt
+
+toggle-light = Toggle light

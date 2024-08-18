@@ -30,6 +30,9 @@ public abstract partial class SharedStationAiSystem
 
     private void OnMessageAttempt(BoundUserInterfaceMessageAttempt ev)
     {
+        if (ev.Actor == ev.Target)
+            return;
+
         if (TryComp(ev.Actor, out StationAiHeldComponent? aiComp) &&
            (!ValidateAi((ev.Actor, aiComp)) ||
             !HasComp<StationAiWhitelistComponent>(ev.Target)))
@@ -40,12 +43,15 @@ public abstract partial class SharedStationAiSystem
 
     private void OnHeldInteraction(Entity<StationAiHeldComponent> ent, ref InteractionAttemptEvent args)
     {
-        args.Cancelled = !TryComp(args.Target, out StationAiWhitelistComponent? whitelist) || !whitelist.Enabled;
+        // Cancel if it's not us or something with a whitelist.
+        args.Cancelled = ent.Owner != args.Target &&
+                         args.Target != null &&
+                         (!TryComp(args.Target, out StationAiWhitelistComponent? whitelist) || !whitelist.Enabled);
     }
 
     private void OnTargetVerbs(Entity<StationAiWhitelistComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanComplexInteract || !ent.Comp.Enabled || !TryComp(args.User, out StationAiHeldComponent? aiComp))
+        if (!args.CanComplexInteract || !ent.Comp.Enabled || !HasComp<StationAiHeldComponent>(args.User))
             return;
 
         var user = args.User;
@@ -55,8 +61,7 @@ public abstract partial class SharedStationAiSystem
 
         args.Verbs.Add(new AlternativeVerb()
         {
-            // TODO: Localise
-            Text = isOpen ? "Close actions" : "Open actions",
+            Text = isOpen ? Loc.GetString("ai-close") : Loc.GetString("ai-open"),
             Act = () =>
             {
                 if (isOpen)
@@ -72,6 +77,10 @@ public abstract partial class SharedStationAiSystem
     }
 }
 
+/// <summary>
+/// Raised from client to server as a BUI message wrapping the event to perform.
+/// Also handles AI action validation.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class StationAiRadialMessage : BoundUserInterfaceMessage
 {
@@ -79,7 +88,10 @@ public sealed class StationAiRadialMessage : BoundUserInterfaceMessage
 }
 
 // Do nothing on server just here for shared move along.
-public sealed class StationAiAction : BaseStationAiAction
+/// <summary>
+/// Raised on client to get the relevant data for radial actions.
+/// </summary>
+public sealed class StationAiRadial : BaseStationAiAction
 {
     public SpriteSpecifier? Sprite;
 
@@ -106,7 +118,7 @@ public abstract class BaseStationAiAction
 [ByRefEvent]
 public record struct GetStationAiRadialEvent()
 {
-    public List<StationAiAction> Actions = new();
+    public List<StationAiRadial> Actions = new();
 }
 
 [Serializable, NetSerializable]

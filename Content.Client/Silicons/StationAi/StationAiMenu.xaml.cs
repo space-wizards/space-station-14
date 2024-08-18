@@ -62,12 +62,20 @@ public sealed partial class StationAiMenu : RadialMenu
 
             if (action.Sprite != null)
             {
+                var texture = sprites.Frame0(action.Sprite);
+                var scale = Vector2.One;
+
+                if (texture.Width <= 32)
+                {
+                    scale *= 2;
+                }
+
                 var tex = new TextureRect
                 {
                     VerticalAlignment = VAlignment.Center,
                     HorizontalAlignment = HAlignment.Center,
-                    Texture = sprites.Frame0(action.Sprite),
-                    TextureScale = new Vector2(2f, 2f),
+                    Texture = texture,
+                    TextureScale = scale,
                 };
 
                 button.AddChild(tex);
@@ -102,7 +110,7 @@ public sealed partial class StationAiMenu : RadialMenu
             return;
         }
 
-        var coords = _eyeManager.CoordinatesToScreen(xform.Coordinates);
+        var coords = _entManager.System<SpriteSystem>().GetSpriteScreenCoordinates((_tracked, null, xform));
 
         if (!coords.IsValid)
         {

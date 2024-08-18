@@ -21,6 +21,7 @@ using Robust.Shared.Utility;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Power.Components;
 
 namespace Content.Server.Materials;
 

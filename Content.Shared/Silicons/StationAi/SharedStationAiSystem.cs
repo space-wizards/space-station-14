@@ -1,8 +1,8 @@
 using Content.Shared.ActionBlocker;
-using Content.Shared.Actions;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.StationAi;
@@ -24,21 +24,33 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private   readonly SharedContainerSystem _containers = default!;
     [Dependency] private   readonly SharedDoorSystem _doors = default!;
     [Dependency] private   readonly SharedEyeSystem _eye = default!;
+    [Dependency] private   readonly ItemToggleSystem _toggles = default!;
     [Dependency] protected readonly SharedMapSystem Maps = default!;
     [Dependency] private   readonly SharedMoverController _mover = default!;
     [Dependency] private   readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private   readonly StationAiVisionSystem _vision = default!;
 
     /*
+     * TODO: Sprite-System get screencoords of entity / get world coords
      * TODO: Double-check positronic interactions didn't break
-     * Fix inventory GUI
-     * Need destruction
-     * Cleanup the shitcode
+     * Upload console
+     * Sensor overlay to see job
+     * Check the
+     * crew monitoring console
+     * crew manifest
+        alert console (donno if we have that yet)
+        button jump towards the ai core
+        call shuttle
+        make annoucement
+        state laws
      */
 
     // StationAiHeld is added to anything inside of an AI core.
     // StationAiHolder indicates it can hold an AI positronic brain (e.g. holocard / core).
     // StationAiCore holds functionality related to the core itself.
+    // StationAiWhitelist is a general whitelist to stop it being able to interact with anything
+    // StationAiOverlay handles the static overlay. It also handles interaction blocking on client and server
+    // for anything under it.
 
     public override void Initialize()
     {
@@ -46,6 +58,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         InitializeAirlock();
         InitializeHeld();
+        InitializeLight();
 
         SubscribeLocalEvent<StationAiWhitelistComponent, BoundUserInterfaceCheckRangeEvent>(OnAiBuiCheck);
 
@@ -172,7 +185,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void OnHolderInit(Entity<StationAiHolderComponent> ent, ref ComponentInit args)
     {
-        _slots.AddItemSlot(ent.Owner, StationAiCoreComponent.Container, ent.Comp.Slot);
+        _slots.AddItemSlot(ent.Owner, StationAiHolderComponent.Container, ent.Comp.Slot);
     }
 
     private void OnHolderRemove(Entity<StationAiHolderComponent> ent, ref ComponentRemove args)
@@ -220,12 +233,13 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (ent.Comp.RemoteEntity == null)
             return;
 
-        if (!_containers.TryGetContainer(ent.Owner, StationAiCoreComponent.Container, out var container) ||
+        if (!_containers.TryGetContainer(ent.Owner, StationAiHolderComponent.Container, out var container) ||
             container.ContainedEntities.Count != 1)
         {
             return;
         }
 
+        // Attach them to the portable eye that can move around.
         var user = container.ContainedEntities[0];
 
         if (TryComp(user, out EyeComponent? eyeComp))
@@ -243,10 +257,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         // Just so text and the likes works properly
         _metadata.SetEntityName(ent.Owner, MetaData(args.Entity).EntityName);
-
-        EnsureComp<IgnoreUIRangeComponent>(args.Entity);
-        EnsureComp<StationAiHeldComponent>(args.Entity);
-        EnsureComp<StationAiOverlayComponent>(args.Entity);
 
         AttachEye(ent);
     }
@@ -266,18 +276,14 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         {
             _eye.SetTarget(args.Entity, null, eyeComp);
         }
-
-        RemCompDeferred<IgnoreUIRangeComponent>(args.Entity);
-        RemCompDeferred<StationAiHeldComponent>(args.Entity);
-        RemCompDeferred<StationAiOverlayComponent>(args.Entity);
     }
 
-    protected void UpdateAppearance(Entity<StationAiHolderComponent?> entity)
+    private void UpdateAppearance(Entity<StationAiHolderComponent?> entity)
     {
         if (!Resolve(entity.Owner, ref entity.Comp, false))
             return;
 
-        if (!_containers.TryGetContainer(entity.Owner, StationAiCoreComponent.Container, out var container) ||
+        if (!_containers.TryGetContainer(entity.Owner, StationAiHolderComponent.Container, out var container) ||
             container.Count == 0)
         {
             _appearance.SetData(entity.Owner, StationAiVisualState.Key, StationAiState.Empty);
@@ -309,6 +315,9 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// BUI validation for ai interactions.
+    /// </summary>
     private bool ValidateAi(Entity<StationAiHeldComponent?> entity)
     {
         if (!Resolve(entity.Owner, ref entity.Comp, false))

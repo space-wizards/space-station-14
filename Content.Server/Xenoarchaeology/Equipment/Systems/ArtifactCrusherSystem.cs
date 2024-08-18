@@ -7,6 +7,7 @@ using Content.Server.Storage.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
+using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;

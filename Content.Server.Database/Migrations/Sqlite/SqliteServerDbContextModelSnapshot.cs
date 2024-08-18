@@ -853,6 +853,7 @@ namespace Content.Server.Database.Migrations.Sqlite
 
                     b.Property<string>("GroupName")
                         .IsRequired()
+                        .HasMaxLength(256)
                         .HasColumnType("TEXT")
                         .HasColumnName("group_name");
 
@@ -875,12 +876,18 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("profile_role_loadout_id");
 
+                    b.Property<string>("CustomName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("custom_name");
+
                     b.Property<int>("ProfileId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("profile_id");
 
                     b.Property<string>("RoleName")
                         .IsRequired()
+                        .HasMaxLength(256)
                         .HasColumnType("TEXT")
                         .HasColumnName("role_name");
 

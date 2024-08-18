@@ -33,6 +33,7 @@ job-name-botanist = Botanist
 job-name-bartender = Bartender
 job-name-passenger = Passenger
 job-name-salvagespec = Salvage specialist
+job-name-station-ai = Station AI
 job-name-qm = Quartermaster
 job-name-cargotech = Cargo Technician
 job-name-chef = Chef
@@ -60,7 +61,6 @@ job-name-virologist = Virologist
 job-name-zombie = Zombie
 
 # Role timers - Make these alphabetical or I cut you
-JobStationAi = Station AI
 JobAtmosphericTechnician = Atmospheric Technician
 JobBartender = Bartender
 JobBorg = Borg
@@ -104,6 +104,7 @@ JobScientist = Scientist
 JobSecurityCadet = Security Cadet
 JobSecurityOfficer = Security Officer
 JobServiceWorker = Service Worker
+JobStationAi = Station AI
 JobStationEngineer = Station Engineer
 JobTechnicalAssistant = Technical Assistant
 JobVisitor = Visitor

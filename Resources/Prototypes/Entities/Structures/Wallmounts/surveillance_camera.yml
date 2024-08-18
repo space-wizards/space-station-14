@@ -4,6 +4,18 @@
   name: camera
   description: A surveillance camera. It's watching you. Kinda.
   components:
+  - type: StationAiWhitelist
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Machines/button.ogg
+    soundDeactivate:
+      path: /Audio/Machines/button.ogg
+  - type: PointLight
+    enabled: false
+    radius: 5
+  - type: ItemTogglePointLight
+  - type: SlimPoweredLight
+    enabled: false
   - type: StationAiVision
   - type: Clickable
   - type: InteractionOutline
@@ -43,6 +55,8 @@
       InUse: camera_in_use
   - type: UserInterface
     interfaces:
+      enum.AiUi.Key:
+        type: StationAiBoundUserInterface
       enum.SurveillanceCameraSetupUiKey.Camera:
         type: SurveillanceCameraSetupBoundUi
       enum.WiresUiKey.Key:

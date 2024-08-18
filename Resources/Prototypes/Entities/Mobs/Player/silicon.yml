@@ -1,3 +1,28 @@
+# Be careful with these as they get removed on shutdown too!
+- type: entity
+  id: AiHeld
+  description: Components added / removed from an entity that gets inserted into an AI core.
+  noSpawn: true
+  components:
+  - type: IgnoreUIRange
+  - type: StationAiHeld
+  - type: StationAiOverlay
+  - type: UserInterface
+    interfaces:
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
+      enum.CrewMonitoringUIKey.Key:
+        type: CrewMonitoringBoundUserInterface
+      enum.GeneralStationRecordConsoleKey.Key:
+        type: GeneralStationRecordConsoleBoundUserInterface
+  - type: IntrinsicUI
+    uis:
+      enum.RadarConsoleUiKey.Key:
+        toggleAction: ActionAGhostShowRadar
+      enum.CrewMonitoringUIKey.Key:
+        toggleAction: ActionAGhostShowCrewMonitoring
+      enum.GeneralStationRecordConsoleKey.Key:
+        toggleAction: ActionAGhostShowStationRecords
 
 # Ai
 - type: entity
@@ -61,6 +86,20 @@
   - AiHolder
   suffix: Empty
   components:
+  - type: ContainerComp
+    proto: AiHeld
+    container: station_ai_mind_slot
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: StationAiCore
   - type: StationAiVision
   - type: Sprite
@@ -78,6 +117,7 @@
           Empty: { state: ai_empty }
           Occupied: { state: ai }
 
+# The job-ready version of an AI spawn.
 - type: entity
   id: PlayerStationAi
   parent: PlayerStationAiEmpty
@@ -117,17 +157,15 @@
     tags:
     - HideContextMenu
     - StationAi
-  - type: RandomMetadata
-    # TODO: Loadout name support
-    # TODO: Copy it on station AI insertion
-    nameSegments: [ names_ai ]
 
+# Hologram projection that the AI's eye tracks.
 - type: entity
   parent:
   - Incorporeal
   - BaseMob
   id: StationAiHolo
   name: Hologram
+  description: A projection of the AI.
   noSpawn: true
   suffix: DO NOT MAP
   components:
