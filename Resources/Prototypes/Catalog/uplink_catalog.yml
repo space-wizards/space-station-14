@@ -1743,3 +1743,36 @@
     blacklist:
       components:
       - SurplusBundle
+
+- type: listing
+  id: UplinkBluespaceBook
+  name: uplink-bluespace-book-name
+  description: uplink-bluespace-book-desc
+  icon: { sprite:  Objects/Misc/books.rsi, state: cover_base}
+  productEntity: BookBluespace
+  cost:
+    Telecrystal: 3
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Librarian
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+
+- type: listing
+  id: UplinkMysterySyndieBox
+  name: uplink-syndie-box-name
+  description: uplink-syndie-box-desc
+  productEntity: MysterySyndieBox
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Librarian

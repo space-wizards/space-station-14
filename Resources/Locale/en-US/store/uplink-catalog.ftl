@@ -296,6 +296,12 @@ uplink-cluster-banana-peel-desc = Splits into 6 explosive banana peels after bei
 uplink-cane-blade-name = Cane Blade
 uplink-cane-blade-desc = A cane that has a hidden blade that can be unsheathed.
 
+uplink-bluespace-book-name = Bluespace Book
+uplink-bluespace-book-desc = An inconspicuous book containing a small pocket dimension for storage.
+
+uplink-syndie-box-name = Mystery Syndicate Box
+uplink-syndie-box-desc = A small box containing a super-compacted syndicate agent, complete with (cheap) equipment. The compacting process may have caused major neurological damage.
+
 # Armor
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!

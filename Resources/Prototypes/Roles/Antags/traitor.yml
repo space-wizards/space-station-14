@@ -79,3 +79,31 @@
     gloves: ClothingHandsGlovesCombat
     pocket1: BaseUplinkRadio40TC
     id: SyndiPDA
+
+#Figurine Spawns
+
+- type: startingGear
+  id: SyndicateFootsoldierArmed
+  parent: SyndicateOperativeClothing
+  inhand:
+  - WeaponSniperMosin
+
+- type: startingGear
+  id: SyndicateOperativeGearFullNoUplinkMeleeArmed
+  parent: SyndicateOperativeGearFullNoUplink
+  inhand:
+  - EnergySwordLockedActive
+
+- type: startingGear
+  id: SyndicateOperativeGearFullNoUplinkSMGArmed
+  parent: SyndicateOperativeGearFullNoUplink
+  inhand:
+  - WeaponRifleAkDisposable
+
+- type: startingGear
+  id: SyndicateOperativeGearFullNoUplinkCommanderArmed
+  parent: SyndicateOperativeGearFullNoUplink
+  equipment:
+    outerClothing: ClothingOuterHardsuitSyndieCommander
+  inhand:
+  - WeaponRifleAkDisposable

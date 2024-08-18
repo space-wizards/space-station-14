@@ -537,3 +537,22 @@
       color: gold
   - type: Paper
     content: book-text-atmos-vents
+
+- type: entity
+  parent:
+    - BookRandomStory
+    - BaseStorageItem
+  id: BookBluespace
+  name: book
+  suffix: Bluespace
+  components:
+    - type: Storage
+      maxItemSize: Normal
+      grid:
+        - 0,0,2,2
+    - type: UserInterface
+      interfaces:
+        enum.StorageUiKey.Key:
+          type: StorageBoundUserInterface
+        enum.PaperUiKey.Key:
+          type: PaperBoundUserInterface

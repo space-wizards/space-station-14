@@ -133,3 +133,22 @@
       - id: ToyFigurineHamlet
         prob: 0.20
         orGroup: SpacemenFig
+
+- type: entity
+  parent: MysteryFigureBox
+  id: MysterySyndieBox
+  suffix: Syndicate
+  components:
+  - type: SpawnItemsOnUse
+    items:
+      - id: MobSyndicateFootsoldierArmed
+        orGroup: SpacemenFig
+      - id: MobSyndicateNuclearOperative
+        orGroup: SpacemenFig
+        prob: 0.10
+      - id: MobSyndicateNuclearOperativeElite
+        orGroup: SpacemenFig
+        prob: 0.10
+      - id: MobSyndicateNuclearOperativeCommander
+        orGroup: SpacemenFig
+        prob: 0.05

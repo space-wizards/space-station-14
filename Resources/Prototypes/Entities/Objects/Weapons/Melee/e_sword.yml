@@ -337,3 +337,56 @@
   components: # could add energy-draining like the L6C
   - type: Wieldable
     freeHandsRequired: 0 # because borg has no off-hand to wield with.  Without this, it will be unable to activate the esword
+
+- type: entity
+  name: energy sword
+  suffix: LockedActive
+  parent: BaseItem
+  id: EnergySwordLockedActive
+  description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter. No off switch
+  components:
+    - type: EnergySword
+    - type: Sharp
+    - type: DisarmMalus
+      malus: 0.6
+    - type: MeleeWeapon
+      angle: 0
+      wideAnimationRotation: -135
+      attackRate: 1
+      damage:
+        types:
+          Slash: 15
+          Heat: 15
+          Structural: 20
+      soundHit:
+        path: /Audio/Weapons/eblade1.ogg
+        params:
+          variation: 0.250
+    - type: Item
+      size: Huge
+      sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
+      inhandVisuals:
+        left:
+        - state: inhand-left-blade
+          color: red
+          shader: unshaded
+        right:
+        - state: inhand-right-blade
+          color: red
+          shader: unshaded
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/e_sword.rsi
+      layers:
+      - state: e_sword
+      - state: e_sword_blade
+        color: red
+        shader: unshaded
+        map: [ "blade" ]
+    - type: Reflect
+    - type: IgnitionSource
+      temperature: 700
+    - type: PointLight
+      radius: 2
+      energy: 2
+      color: red
+      netsync: false

@@ -98,3 +98,50 @@
   - type: Cluwne
   - type: Speech
     speechVerb: Cluwne
+
+#Figurine Spawns
+
+- type: entity
+  parent: MobSyndicateFootsoldier
+  id: MobSyndicateFootsoldierArmed
+  suffix: Armed
+  components:
+    - type: Loadout
+      prototypes:
+      - SyndicateFootsoldierArmed
+    - type: HTN
+      rootTask:
+        task: GunCombatCompound
+
+- type: entity
+  parent: MobSyndicateFootsoldier
+  id: MobSyndicateNuclearOperative
+  components:
+  - type: Loadout
+    prototypes:
+    - SyndicateOperativeGearFullNoUplinkMeleeArmed
+  - type: HTN
+    rootTask:
+      task: MeleeCombatCompound
+
+- type: entity
+  parent: MobSyndicateFootsoldier
+  id: MobSyndicateNuclearOperativeElite
+  components:
+  - type: Loadout
+    prototypes:
+    - SyndicateOperativeGearFullNoUplinkSMGArmed
+  - type: HTN
+    rootTask:
+      task: GunCombatCompound
+
+- type: entity
+  parent: MobSyndicateFootsoldier
+  id: MobSyndicateNuclearOperativeCommander
+  components:
+  - type: Loadout
+    prototypes:
+    - SyndicateOperativeGearFullNoUplinkCommanderArmed
+  - type: HTN
+    rootTask:
+      task: GunCombatCompound
