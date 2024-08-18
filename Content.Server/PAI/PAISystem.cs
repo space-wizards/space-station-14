@@ -136,33 +136,47 @@ public sealed class PAISystem : SharedPAISystem
         if (comp.Cracked)
             return;
         comp.Cracked = true;
+
+        // Scramble the name when cracked.
         ScrambleName(uid, comp);
+
+        // Update the pai description
         if (TryComp(uid, out MetaDataComponent? metadata))
         {
             var proto = metadata.EntityPrototype;
             if (proto != null)
                 _metaData.SetEntityDescription(uid, proto.Description + " " + Loc.GetString("pai-system-pai-description-cracked"));
         }
+
+        // Add a glitch accent to the pai
         AddComp<GlitchAccentComponent>(uid);
     }
 
     private void OnDropped(EntityUid uid, PAIComponent comp, LandEvent args)
     {
+        // If the pai is dropped, it is instantly cracked.
         _damageable.TryChangeDamage(uid, new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Blunt"), 150));
     }
 
     private void OnDamageChanged(EntityUid uid, PAIComponent comp, DamageChangedEvent args)
     {
+        // If the PAI is repaired, uncrack it.
         if (comp.Cracked && TryComp<DamageableComponent>(uid, out var damageableComponent) && damageableComponent.TotalDamage < 100)
         {
             comp.Cracked = false;
+
+            // Remove the glitch accent
             RemComp<GlitchAccentComponent>(uid);
+
+            // Update the pai description
             if (TryComp(uid, out MetaDataComponent? metadata))
             {
                 var proto = metadata.EntityPrototype;
                 if (proto != null)
                     _metaData.SetEntityDescription(uid, proto.Description);
             }
+
+            // Update the pai name
             if (comp.LastUser != null)
             {
                 var val = Loc.GetString("pai-system-pai-name", ("owner", comp.LastUser));
