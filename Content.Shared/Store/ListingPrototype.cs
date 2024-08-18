@@ -117,7 +117,9 @@ public partial class ListingData : IEquatable<ListingData>
     public HashSet<ProtoId<StoreCategoryPrototype>> Categories = new();
 
     /// <summary>
-    /// The cost of the listing. String represents the currency type while the FixedPoint2 represents the amount of that currency.
+    /// The original cost of the listing. FixedPoint2 represents the amount of that currency.
+    /// This fields should not be used for getting actual cost of item, as there could be
+    /// cost modifiers (due to discounts or surplus). Use Cost property on derived class instead.
     /// </summary>
     [DataField]
     public IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> OriginalCost = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>();
@@ -229,11 +231,32 @@ public partial class ListingData : IEquatable<ListingData>
 
 }
 
+/// <summary>
+///     Defines a set item listing that is available in a store
+/// </summary>
+[Prototype("listing")]
+[Serializable, NetSerializable]
+[DataDefinition]
+public sealed partial class ListingPrototype : ListingData, IPrototype
+{
+    /// <summary> Setter/getter for item cost from prototype. </summary>
+    [DataField]
+    public IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Cost
+    {
+        get => OriginalCost;
+        set => OriginalCost = value;
+    }
+}
+
+/// <summary> Wrapper around <see cref="ListingData"/> that enables controller and centralized cost modification. </summary>
 [Serializable, NetSerializable, DataDefinition]
 public sealed partial class ListingDataWithCostModifiers : ListingData
 {
     private IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2>? _costModified;
 
+    /// <summary>
+    /// Map of values, by which calculated cost should be modified, with modification sourceId.
+    /// </summary>
     [DataField]
     public Dictionary<string, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>> CostModifiersBySourceId = new();
 
@@ -262,6 +285,43 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
     {
     }
 
+    /// <summary> Marker, if cost of listing item have any modifiers. </summary>
+    public bool IsCostModified => CostModifiersBySourceId.Count > 0;
+
+    /// <summary> Cost of listing item after applying all available modifiers. </summary>
+    public IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Cost
+    {
+        get
+        {
+            return _costModified ??= CostModifiersBySourceId.Count == 0
+                ? OriginalCost.ToDictionary(x => x.Key, x => x.Value)
+                : ApplyAllModifiers();
+        }
+    }
+
+    /// <summary> Add map with currencies and value by which cost should be modified when final value is calculated. </summary>
+    /// <param name="modifierSourceId">Id of modifier source. Can be used for removing modifier later.</param>
+    /// <param name="modifiers">Values for cost modification.</param>
+    public void AddCostModifier(string modifierSourceId, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> modifiers)
+    {
+        CostModifiersBySourceId.Add(modifierSourceId, modifiers);
+        if (_costModified != null)
+        {
+            _costModified = ApplyAllModifiers();
+        }
+    }
+
+    /// <summary> Remove cost modifier with passed sourceId. </summary>
+    public void RemoveCostModifier(string modifierSourceId)
+    {
+        CostModifiersBySourceId.Remove(modifierSourceId);
+        if (_costModified != null)
+        {
+            _costModified = ApplyAllModifiers();
+        }
+    }
+
+    /// <summary> Check if listing item can be bought with passed balance. </summary>
     public bool CanBuyWith(Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance)
     {
         foreach (var (currency, amount) in Cost)
@@ -276,55 +336,10 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
         return true;
     }
 
-    public IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Cost
-    {
-        get
-        {
-            if (_costModified == null)
-            {
-                if (CostModifiersBySourceId.Count == 0)
-                {
-                    _costModified = OriginalCost.ToDictionary(x => x.Key, x => x.Value);
-                }
-                else
-                {
-                    var dictionary = OriginalCost.ToDictionary(
-                        x => x.Key,
-                        x => x.Value
-                    );
-                    foreach (var (_, modifier) in CostModifiersBySourceId)
-                    {
-                        ApplyModifier(dictionary, modifier);
-                    }
-                    _costModified = dictionary;
-                }
-            }
-            return _costModified;
-        }
-    }
-
-    public bool IsCostModified => CostModifiersBySourceId.Count > 0;
-
-    private void ApplyModifier(
-        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> applyTo,
-        IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> modifier
-    )
-    {
-        foreach (var (currency, modifyBy) in modifier)
-        {
-            if (applyTo.TryGetValue(currency, out var currentAmount))
-            {
-                var modifiedAmount = currentAmount - modifyBy;
-                if (modifiedAmount < 0)
-                {
-                    modifiedAmount = 0;
-                    // no negative cost allowed
-                }
-                applyTo[currency] = modifiedAmount;
-            }
-        }
-    }
-
+    /// <summary>
+    /// Gets percent of reduced/increased cost that modifiers give respective to <see cref="ListingData.OriginalCost"/>.
+    /// Percent values are numbers between 0 and 1.
+    /// </summary>
     public IReadOnlyDictionary<ProtoId<CurrencyPrototype>, float> GetModifiersSummaryRelative()
     {
         var modifiersSummaryAbsoluteValues = CostModifiersBySourceId.Aggregate(
@@ -348,28 +363,44 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
                 var discountPercent = (float)discountAmount.Value / originalAmount.Value;
                 relativeModifiedPercent.Add(currency, discountPercent);
             }
-            // no negative cost allowed
-
         }
 
         return relativeModifiedPercent;
 
     }
-}
 
-/// <summary>
-///     Defines a set item listing that is available in a store
-/// </summary>
-[Prototype("listing")]
-[Serializable, NetSerializable]
-[DataDefinition]
-public sealed partial class ListingPrototype : ListingData, IPrototype
-{
-    [DataField]
-    public IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Cost
+    private Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> ApplyAllModifiers()
     {
-        get => OriginalCost;
-        set => OriginalCost = value;
+        var dictionary = OriginalCost.ToDictionary(
+            x => x.Key,
+            x => x.Value
+        );
+        foreach (var (_, modifier) in CostModifiersBySourceId)
+        {
+            ApplyModifier(dictionary, modifier);
+        }
+
+        return dictionary;
+    }
+
+    private void ApplyModifier(
+        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> applyTo,
+        IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> modifier
+    )
+    {
+        foreach (var (currency, modifyBy) in modifier)
+        {
+            if (applyTo.TryGetValue(currency, out var currentAmount))
+            {
+                var modifiedAmount = currentAmount + modifyBy;
+                if (modifiedAmount < 0)
+                {
+                    modifiedAmount = 0;
+                    // no negative cost allowed
+                }
+                applyTo[currency] = modifiedAmount;
+            }
+        }
     }
 }
 

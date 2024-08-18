@@ -51,7 +51,7 @@ public sealed class StoreDiscountSystem : EntitySystem
             }
 
             var found = ev.ListingData.First(x => x.ID == discountData.ListingId);
-            found.CostModifiersBySourceId.Add(discountData.DiscountCategory, discountData.DiscountAmountByCurrency);
+            found.AddCostModifier(discountData.DiscountCategory, discountData.DiscountAmountByCurrency);
             found.Categories.Add(_discountStoreCategoryPrototype);
         }
     }
@@ -92,7 +92,7 @@ public sealed class StoreDiscountSystem : EntitySystem
             Log.Warning("Decremented discount count on StoreDiscountData of listing that doesn't exist on store available list.");
             return;
         }
-        found.CostModifiersBySourceId.Remove(discountData.DiscountCategory);
+        found.RemoveCostModifier(discountData.DiscountCategory);
         found.Categories.Remove(_discountStoreCategoryPrototype);
     }
 
@@ -253,7 +253,8 @@ public sealed class StoreDiscountSystem : EntitySystem
             var discountUntilRolledValue = _random.NextDouble(discountUntilValue.Double(), amount.Double());
             var discountedCost = amount - Math.Floor(discountUntilRolledValue);
 
-            discountAmountByCurrencyId.Add(currency.Id, discountedCost);
+            // discount is negative modifier for cost
+            discountAmountByCurrencyId.Add(currency.Id, -discountedCost);
         }
 
         return discountAmountByCurrencyId;
