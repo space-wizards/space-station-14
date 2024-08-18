@@ -216,7 +216,7 @@ public sealed class StoreDiscountSystem : EntitySystem
             var chosen = _random.GetItems(itemsForDiscount, itemsCount, allowDuplicates: false);
             foreach (var listingData in chosen)
             {
-                var cost = listingData.Cost;
+                var cost = listingData.OriginalCost;
                 var discountAmountByCurrencyId = RollItemCost(cost, listingData);
 
                 var discountData = new StoreDiscountData
