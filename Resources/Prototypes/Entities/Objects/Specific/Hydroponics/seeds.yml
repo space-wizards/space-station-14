@@ -169,7 +169,7 @@
   id: TeaPlantSeeds
   components:
     - type: Seed
-      seedId: TeaPlant
+      seedId: teaPlant
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/tea_plant.rsi
 
@@ -630,7 +630,7 @@
   id: BluePumpkinSeeds
   components:
     - type: Seed
-      seedId: BluePumpkin
+      seedId: bluePumpkin
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/blue_pumpkin.rsi
 

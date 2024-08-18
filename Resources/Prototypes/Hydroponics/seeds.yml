@@ -358,7 +358,7 @@
       PotencyDivisor: 5
 
 - type: seed
-  id: TeaPlant
+  id: teaPlant
   name: seeds-teaplant-name
   noun: seeds-noun-seeds
   displayName: seeds-teaplant-display-name
@@ -1645,7 +1645,7 @@
   productPrototypes:
     - FoodPumpkin
   mutationPrototypes:
-    - BluePumpkin
+    - bluePumpkin
   lifespan: 55
   maturation: 10
   production: 4
@@ -1664,7 +1664,7 @@
       PotencyDivisor: 20
 
 - type: seed
-  id: BluePumpkin
+  id: bluePumpkin
   name: seeds-blue-pumpkin-name
   noun: seeds-noun-seeds
   displayName: seeds-blue-pumpkin-display-name

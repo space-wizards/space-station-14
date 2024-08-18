@@ -165,12 +165,12 @@
   name: tea leaves
   parent: ProduceBase
   id: LeavesTea
-  description: "Dry them out to make some tea"
+  description: "Can be dried out to make tea."
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tea_plant.rsi
   - type: Produce
-    seedId: TeaPlant
+    seedId: teaPlant
   - type: SolutionContainerManager
     solutions:
       food:

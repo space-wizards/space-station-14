@@ -2004,7 +2004,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/blue_pumpkin.rsi
   - type: Produce
-    seedId: BluePumpkin
+    seedId: bluePumpkin
   - type: Damageable
     damageContainer: Biological
   - type: Destructible
