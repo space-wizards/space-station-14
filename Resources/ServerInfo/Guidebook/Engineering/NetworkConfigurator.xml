@@ -31,7 +31,7 @@
   <Box>
     [color=cyan]Pressed 🠒 Toggle[/color]
    </Box>
-  When you're done connecting the ports you want you can click on [color=gray]OK[/color] to close the UI.
+  When you're done connecting the ports you want, you can click on [color=gray]OK[/color] to close the UI.
 
   You can quickly link multiple devices to their default port by first clicking on a device that can be linked and then using [color=gray]Alt+Left Mouse button[/color] on the devices you want to link together.
 
