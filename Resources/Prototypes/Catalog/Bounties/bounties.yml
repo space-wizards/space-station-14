@@ -692,7 +692,7 @@
 - type: cargoBounty
   id: BountyCardboardBox
   reward: 1500
-  description: bounty-description-cardobard-box
+  description: bounty-description-cardboard-box
   entries:
   - name: bounty-item-cardboard-box
     amount: 12
