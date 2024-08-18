@@ -28,7 +28,7 @@
   A device with no access requirements set, like a public access airlock, can be modified using any valid station ID card.
 
   ## Repairing damaged ID card readers
-  Syndicate agents may attempt to hack access restricted devices through the use of a [color=#a4885c]Cryptographic Sequencer (EMAG)[/color]. This nefarious tool will completely short out any ID card readers that are attached to the device.
+  Syndicate agents may attempt to hack access-restricted devices through the use of a [color=#a4885c]Cryptographic Sequencer (EMAG)[/color]. This nefarious tool will completely short out any ID card readers that are attached to the device.
 
   Engineers will need to partially de/reconstruct affected devices, and then set appropriate access permissions afterwards using the access configurator (or network configurator, for airlocks), to re-establish access restrictions.
 </Document>
