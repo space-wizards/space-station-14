@@ -1277,7 +1277,6 @@
     seedId: chilly
   - type: FoodSequenceElement
     entries:
-    entries:
       taco: ChillyPepper
       burger: ChillyPepper
       skewer: ChillyPepperSkewer
