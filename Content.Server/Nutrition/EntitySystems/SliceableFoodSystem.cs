@@ -10,6 +10,10 @@ using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Random;
+using Robust.Shared.Containers;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -19,7 +23,9 @@ public sealed class SliceableFoodSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
-
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -113,6 +119,13 @@ public sealed class SliceableFoodSystem : EntitySystem
         // this lets you do things like slice a pizza up inside of a hot food cart without making a food-everywhere mess
         _transform.DropNextTo(sliceUid, (uid, transform));
         _transform.SetLocalRotation(sliceUid, 0);
+
+        if (!_container.IsEntityOrParentInContainer(sliceUid))
+        {
+            var randVect = _random.NextVector2(2.0f, 2.5f);
+            if (TryComp<PhysicsComponent>(sliceUid, out var physics))
+                _physics.SetLinearVelocity(sliceUid, randVect, body: physics);
+        }
 
         return sliceUid;
     }
