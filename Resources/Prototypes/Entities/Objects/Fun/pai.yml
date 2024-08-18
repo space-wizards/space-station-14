@@ -100,7 +100,7 @@
     thresholds: [100]
     trackAllDamage: true
     damageOverlay:
-      sprite: /Objects/Fun/pai.rsi
+      sprite: Objects/Fun/pai.rsi
   - type: Repairable
 
 - type: entity
