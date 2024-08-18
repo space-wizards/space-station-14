@@ -1000,7 +1000,7 @@
         Quantity: 2
   - type: FoodSequenceElement
     entries:
-      burger: CornBurger
+      burger: Corn
       taco: Corn
       skewer: CornSkewer
 
@@ -1247,7 +1247,7 @@
   - type: FoodSequenceElement
     entries:
       taco: ChiliPepper
-      burger: ChiliPepperBurger
+      burger: ChiliPepper
       skewer: ChiliPepperSkewer
 
 - type: entity
@@ -1277,8 +1277,9 @@
     seedId: chilly
   - type: FoodSequenceElement
     entries:
+    entries:
       taco: ChillyPepper
-      burger: ChillyPepperBurger
+      burger: ChillyPepper
       skewer: ChillyPepperSkewer
 
 - type: entity

@@ -133,17 +133,6 @@
 # Duck cutlet
 
 - type: foodSequenceElement
-  id: DuckCutletBurger
-  name: food-sequence-burger-content-duck
-  sprites:
-  - sprite: Objects/Consumable/Food/meat.rsi
-    state: cutlet-cooked
-  tags:
-  - Cooked
-  - Cutlet
-  - Meat
-
-- type: foodSequenceElement
   id: DuckCutlet
   name: food-sequence-content-duck
   sprites:
@@ -207,17 +196,6 @@
 - type: foodSequenceElement
   id: XenoCutlet
   name: food-sequence-content-xeno
-  sprites:
-  - sprite: Objects/Consumable/Food/meat.rsi
-    state: xenocutlet-cooked
-  tags:
-  - Cooked
-  - Cutlet
-  - Meat
-
-- type: foodSequenceElement
-  id: XenoCutletBurger
-  name: food-sequence-burger-content-xeno
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
     state: xenocutlet-cooked
@@ -372,15 +350,6 @@
   - Vegetable
 
 - type: foodSequenceElement
-  id: ChiliPepperBurger
-  name: food-sequence-burger-content-chili
-  sprites:
-  - sprite: Objects/Specific/Hydroponics/chili.rsi
-    state: produce
-  tags:
-  - Vegetable
-
-- type: foodSequenceElement
   id: ChiliPepperSkewer
   name: food-sequence-content-chili
   sprites:
@@ -401,15 +370,6 @@
   - Vegetable
 
 - type: foodSequenceElement
-  id: ChillyPepperBurger
-  name: food-sequence-burger-content-chilly
-  sprites:
-  - sprite: Objects/Specific/Hydroponics/chilly.rsi
-    state: produce
-  tags:
-  - Vegetable
-
-- type: foodSequenceElement
   id: ChillyPepperSkewer
   name: food-sequence-content-chilly
   sprites:
@@ -422,15 +382,6 @@
 - type: foodSequenceElement
   id: Corn
   name: food-sequence-content-corn
-  sprites:
-  - sprite: Objects/Specific/Hydroponics/corn.rsi
-    state: produce
-  tags:
-  - Vegetable
-
-- type: foodSequenceElement
-  id: CornBurger
-  name: food-sequence-burger-content-corn
   sprites:
   - sprite: Objects/Specific/Hydroponics/corn.rsi
     state: produce

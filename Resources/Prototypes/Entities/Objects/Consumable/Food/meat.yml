@@ -1483,7 +1483,7 @@
     node: duck cutlet
   - type: FoodSequenceElement
     entries:
-      burger: DuckCutletBurger
+      burger: DuckCutlet
       taco: DuckCutlet
 
 - type: entity
@@ -1572,5 +1572,5 @@
     node: xeno cutlet
   - type: FoodSequenceElement
     entries:
-      burger: XenoCutletBurger
+      burger: XenoCutlet
       taco: XenoCutlet
