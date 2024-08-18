@@ -6,8 +6,15 @@
       mutation: !type:Glow # new effect   
     - name: Sentient
       baseOdds: 0.0072
-      appliesToPlant: false #current makes the botany tray sentient.
+      appliesToPlant: false #makes the botany tray sentient right now.
       mutation: !type:MakeSentient #existing effect.
     - name: Slippery
       baseOdds: 0.0072
       mutation: !type:Slipify
+    - name: ChangeSpecies
+      baseOdds: 0.0072
+      appliesToProduce: false
+      mutation: !type:PlantSpeciesChange
+    - name: Unviable
+      baseOdds: 0.00012
+      mutation: !type:PlantUnviable

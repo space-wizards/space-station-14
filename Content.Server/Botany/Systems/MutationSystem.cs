@@ -13,8 +13,18 @@ public sealed class MutationSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     private WeightedRandomFillSolutionPrototype _randomChems = default!;
-    private  RandomPlantMutationListPrototype _randomMutations = default!;
+    private RandomPlantMutationListPrototype _randomMutations = default!;
 
+    //Additonal TODO:
+    //clean up errors on client side about missing concrete Glow class?
+
+    //Remaining mutations to port:
+    //all tolerance adjustments (11)
+    //stat adjustments (6)
+    //remaining fun (4)
+    //harvest type and autoharvest (2)
+    //gases (2, eat/make)
+    //chems (1)
 
     public override void Initialize()
     {
@@ -88,9 +98,6 @@ public sealed class MutationSystem : EntitySystem
         MutateFloat(ref seed.Production           , 1f   , 10f , 5, totalbits, 2 * severity);
         MutateFloat(ref seed.Potency              , 30f  , 100f, 5, totalbits, 2 * severity);
 
-        // Kill the plant (30)
-        MutateBool(ref seed.Viable        , false, 30, totalbits, severity);
-
         // Fun (72)
         MutateBool(ref seed.Seedless      , true , 10, totalbits, severity);
         MutateBool(ref seed.Ligneous      , true , 10, totalbits, severity);
@@ -107,9 +114,6 @@ public sealed class MutationSystem : EntitySystem
 
         // Chems (20)
         MutateChemicals(ref seed.Chemicals, 20, totalbits, severity);
-
-        // Species (10)
-        MutateSpecies(ref seed, 10, totalbits, severity);
     }
 
     public SeedData Cross(SeedData a, SeedData b)
@@ -138,7 +142,6 @@ public sealed class MutationSystem : EntitySystem
         CrossFloat(ref result.Potency, a.Potency);
 
         CrossBool(ref result.Seedless, a.Seedless);
-        CrossBool(ref result.Viable, a.Viable);
         CrossBool(ref result.Ligneous, a.Ligneous);
         CrossBool(ref result.TurnIntoKudzu, a.TurnIntoKudzu);
         CrossBool(ref result.CanScream, a.CanScream);
