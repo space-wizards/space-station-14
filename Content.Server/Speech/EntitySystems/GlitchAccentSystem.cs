@@ -19,56 +19,69 @@ namespace Content.Server.Speech.EntitySystems
 
         public string Accentuate(string message)
         {
-            if (_random.NextDouble() >= 0.7)
+            var rand = _random.NextDouble();
+            if (rand >= 0.7)
                 return message;
-            else if (_random.NextDouble() >= 0.3)
+            else if (rand >= 0.2)
                 return message.Replace(" ", _random.Pick(Formats));
-            else
+            return RebuildSentence(message);
+        }
+
+        private string RebuildSentence(string message)
+        {
+            var words = message.Split();
+            var accentedMessage = new StringBuilder(message.Length + 2);
+
+            for (var i = 0; i < words.Length; i++)
             {
-                var words = message.Split();
-                var accentedMessage = new StringBuilder(message.Length + 2);
+                var word = words[i];
+                var rand = _random.NextDouble();
 
-                for (var i = 0; i < words.Length; i++)
-                {
-                    var word = words[i];
+                if (rand >= 0.75)
+                    accentedMessage.Append(AccentuateWord(word));
+                else
+                    accentedMessage.Append(word);
 
-                    if (_random.NextDouble() >= 0.75)
-                    {
-                        if (_random.NextDouble() >= 0.3)
-                        {
-                            foreach (var letter in word)
-                            {
-                                if (_random.NextDouble() >= 0.8)
-                                    accentedMessage.Append('*');
-                                else
-                                    accentedMessage.Append(letter);
-                            }
-                        }
-                        else if (_random.NextDouble() >= 0.5)
-                        {
-                            accentedMessage.Append("ERROR");
-                        }
-                        else
-                        {
-                            foreach (var _ in word)
-                            {
-                                if (_random.NextDouble() >= 0.5)
-                                    accentedMessage.Append('0');
-                                else
-                                    accentedMessage.Append('1');
-                            }
-                        }
-                    }
-                    else
-                    {
-                        accentedMessage.Append(word);
-                    }
-
-                    if (i < words.Length - 1)
-                        accentedMessage.Append(' ');
-                }
-                return accentedMessage.ToString();
+                if (i < words.Length - 1)
+                    accentedMessage.Append(' ');
             }
+            return accentedMessage.ToString();
+        }
+
+        private string AccentuateWord(string word)
+        {
+            var rand = _random.NextDouble();
+            if (rand >= 0.3)
+                return AddStarsToWord(word);
+            else if (rand >= 0.15)
+                return ChangeWordToFakeBinary(word);
+            return "ERROR";
+        }
+
+        private string AddStarsToWord(string word)
+        {
+            var accentedWord = new StringBuilder(word.Length);
+            foreach (var letter in word)
+            {
+                if (_random.NextDouble() >= 0.8)
+                    accentedWord.Append('*');
+                else
+                    accentedWord.Append(letter);
+            }
+            return accentedWord.ToString();
+        }
+
+        private string ChangeWordToFakeBinary(string word)
+        {
+            var accentedWord = new StringBuilder(word.Length);
+            foreach (var _ in word)
+            {
+                if (_random.NextDouble() >= 0.5)
+                    accentedWord.Append('0');
+                else
+                    accentedWord.Append('1');
+            }
+            return accentedWord.ToString();
         }
 
         private void OnAccent(EntityUid uid, GlitchAccentComponent component, AccentGetEvent args)
