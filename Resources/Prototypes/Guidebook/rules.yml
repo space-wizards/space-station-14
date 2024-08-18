@@ -5,10 +5,10 @@
   text: "/ServerInfo/Guidebook/ServerRules/DefaultRules.xml"
 
   - type: guideEntry
-  id: WeaselRuleset
-  name: guide-entry-weasel-rules
+  id: StandardRuleset
+  name: guide-entry-rules-lrp
   ruleEntry: true
-  priority: 5
+  priority: 0
   text: "/ServerInfo/Guidebook/ServerRules/WeaselRules.xml"
 
 - type: guideEntry
@@ -18,12 +18,12 @@
   priority: 0
   text: "/ServerInfo/Guidebook/ServerRules/WizDenCoreOnlyRules.xml"
 
-- type: guideEntry
-  id: StandardRuleset
-  name: guide-entry-rules-lrp
-  ruleEntry: true
-  priority: 5
-  text: "/ServerInfo/Guidebook/ServerRules/WizDenLRPRules.xml"
+#- type: guideEntry
+#  id: StandardRuleset
+#  name: guide-entry-rules-lrp
+#  ruleEntry: true
+#  priority: 5
+#  text: "/ServerInfo/Guidebook/ServerRules/WizDenLRPRules.xml"
 
 - type: guideEntry
   id: MRPRuleset
