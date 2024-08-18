@@ -323,10 +323,6 @@
     equippedPrefix: lizard
     slots:
     - HEAD
-    # all yaml below this point prepares the plushie to be controlled
-  - type: Speech
-    speechVerb: Default
-    speechSounds: Weh
 
 - type: entity
   parent: PlushieLizard
@@ -379,6 +375,21 @@
           Quantity: 10
         - ReagentId: JuiceThatMakesYouWeh
           Quantity: 10
+
+- type: entity
+  parent: PlushieLizard
+  id: PossessedPlushieLizard
+  components:
+  - type: Item
+    size: Small
+  - type: Speech
+    speechVerb: Default
+    speechSounds: Weh
+  - type: BlockMovement
+  - type: GhostRole
+    name: ghost-role-information-possessed-lizard-plushie-name
+    description: ghost-role-information-possessed-lizard-description
+    rules: ghost-role-component-default-rules
 
 - type: entity
   parent: BasePlushie
