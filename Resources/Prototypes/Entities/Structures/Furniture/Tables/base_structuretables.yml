@@ -32,8 +32,6 @@
     bonkDamage:
       types:
         Blunt: 4
-    bonkSound: !type:SoundCollectionSpecifier
-      collection: TrayHit
   - type: Clickable
   - type: FootstepModifier
     footstepSoundCollection:

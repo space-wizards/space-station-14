@@ -91,6 +91,10 @@ public sealed class ClumsySystem : EntitySystem
 
         _audioSystem.PlayPredicted(entity.Comp.ClumsySound, entity, entity);
 
+        var secondSound = new SoundCollectionSpecifier("TrayHit");
+        _audioSystem.PlayPredicted(secondSound, entity, entity);
+
+
         var beingClimbedName = Identity.Entity(args.BeingClimbedOn, EntityManager);
         var gettingPutOnTableName = Identity.Entity(args.GettingPutOnTable, EntityManager);
         var puttingOnTableName = Identity.Entity(args.PuttingOnTable, EntityManager);
