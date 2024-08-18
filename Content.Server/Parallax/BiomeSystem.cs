@@ -623,14 +623,14 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             var groupSize = rand.Next(layerProto.MinGroupSize, layerProto.MaxGroupSize + 1);
 
             // While we have remaining tiles keep iterating
-            while (groupSize >= 0 && remainingTiles.Count > 0)
+            while (groupSize > 0 && remainingTiles.Count > 0)
             {
                 var startNode = rand.PickAndTake(remainingTiles);
                 frontier.Clear();
                 frontier.Add(startNode);
 
                 // This essentially may lead to a vein being split in multiple areas but the count matters more than position.
-                while (frontier.Count > 0 && groupSize >= 0)
+                while (frontier.Count > 0 && groupSize > 0)
                 {
                     // Need to pick a random index so we don't just get straight lines of ores.
                     var frontierIndex = rand.Next(frontier.Count);
@@ -643,9 +643,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     {
                         for (var y = -1; y <= 1; y++)
                         {
-                            if (x != 0 && y != 0)
-                                continue;
-
                             var neighbor = new Vector2i(node.X + x, node.Y + y);
 
                             if (frontier.Contains(neighbor) || !remainingTiles.Contains(neighbor))
