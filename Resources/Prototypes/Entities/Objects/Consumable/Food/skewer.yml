@@ -17,7 +17,7 @@
     wideAnimationRotation: -120
     damage:
       types:
-        Piercing: 4
+        Piercing: 8
     angle: 0
     animation: WeaponArcThrust
     soundHit:
