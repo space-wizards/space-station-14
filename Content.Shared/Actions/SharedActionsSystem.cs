@@ -958,6 +958,21 @@ public abstract class SharedActionsSystem : EntitySystem
         // See client-side system for UI code.
     }
 
+    public bool ValidAction(BaseActionComponent action, bool canReach = true)
+    {
+        if (!action.Enabled)
+            return false;
+
+        if (action.Charges.HasValue && action.Charges <= 0)
+            return false;
+
+        var curTime = GameTiming.CurTime;
+        if (action.Cooldown.HasValue && action.Cooldown.Value.End > curTime)
+            return false;
+
+        return canReach || action is BaseTargetActionComponent { CheckCanAccess: false };
+    }
+
     #endregion
 
     #region EquipHandlers
