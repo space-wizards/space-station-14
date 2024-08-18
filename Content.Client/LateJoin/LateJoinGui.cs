@@ -257,27 +257,20 @@ namespace Content.Client.LateJoin
 
                         jobButton.OnPressed += _ => SelectedId.Invoke((id, jobButton.JobId));
 
-                        if (!_jobRequirements.IsAllowed(prototype, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
+                        var allowed = _jobRequirements.IsAllowed(prototype,
+                            (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter,
+                            out var reason);
+
+                        jobButton.Disabled = !allowed;
+
+                        if (reason is { IsEmpty: false })
                         {
-                            jobButton.Disabled = true;
-
-                            if (!reason.IsEmpty)
-                            {
-                                var tooltip = new Tooltip();
-                                tooltip.SetMessage(reason);
-                                jobButton.TooltipSupplier = _ => tooltip;
-                            }
-
-                            jobSelector.AddChild(new TextureRect
-                            {
-                                TextureScale = new Vector2(0.4f, 0.4f),
-                                Stretch = TextureRect.StretchMode.KeepCentered,
-                                Texture = _sprites.Frame0(new SpriteSpecifier.Texture(new ("/Textures/Interface/Nano/lock.svg.192dpi.png"))),
-                                HorizontalExpand = true,
-                                HorizontalAlignment = HAlignment.Right,
-                            });
+                            var tooltip = new Tooltip();
+                            tooltip.SetMessage(reason);
+                            jobButton.TooltipSupplier = _ => tooltip;
                         }
-                        else if (value == 0)
+
+                        if (allowed && value == 0)
                         {
                             jobButton.Disabled = true;
                         }

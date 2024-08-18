@@ -27,7 +27,7 @@ public sealed partial class RoleTimeRequirement : JobRequirement
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile,
         IReadOnlyDictionary<string, TimeSpan> playTimes,
-        [NotNullWhen(false)] out FormattedMessage? reason)
+        out FormattedMessage reason)
     {
         reason = new FormattedMessage();
 
@@ -45,6 +45,13 @@ public sealed partial class RoleTimeRequirement : JobRequirement
                 departmentColor = departmentProto.Color;
         }
 
+        reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
+            Inverted ? "role-timer-not-too-high" : "role-timer-role-sufficient",
+            ("current", roleTime.TotalMinutes),
+            ("required", Time.TotalMinutes),
+            ("job", Loc.GetString(proto)),
+            ("departmentColor", departmentColor.ToHex())));
+
         if (!Inverted)
         {
             if (roleDiff <= 0)
@@ -52,7 +59,8 @@ public sealed partial class RoleTimeRequirement : JobRequirement
 
             reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
                 "role-timer-role-insufficient",
-                ("time", Math.Ceiling(roleDiff)),
+                ("current", roleTime.TotalMinutes),
+                ("required", Time.TotalMinutes),
                 ("job", Loc.GetString(proto)),
                 ("departmentColor", departmentColor.ToHex())));
             return false;
@@ -62,7 +70,8 @@ public sealed partial class RoleTimeRequirement : JobRequirement
         {
             reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
                 "role-timer-role-too-high",
-                ("time", -roleDiff),
+                ("current", roleTime.TotalMinutes),
+                ("required", Time.TotalMinutes),
                 ("job", Loc.GetString(proto)),
                 ("departmentColor", departmentColor.ToHex())));
             return false;

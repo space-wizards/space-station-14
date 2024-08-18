@@ -23,7 +23,7 @@ public sealed partial class SpeciesRequirement : JobRequirement
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile,
         IReadOnlyDictionary<string, TimeSpan> playTimes,
-        [NotNullWhen(false)] out FormattedMessage? reason)
+        out FormattedMessage reason)
     {
         reason = new FormattedMessage();
 

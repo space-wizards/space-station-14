@@ -79,7 +79,7 @@ public sealed partial class RequirementsSelector : BoxContainer
         (string, int)[] items,
         string title,
         int titleSize,
-        string? description,
+        FormattedMessage description,
         TextureRect? icon = null,
         List<ProtoId<GuideEntryPrototype>>? guides = null)
     {
@@ -93,7 +93,9 @@ public sealed partial class RequirementsSelector : BoxContainer
 
         TitleLabel.Text = title;
         TitleLabel.MinSize = new Vector2(titleSize, 0f);
-        TitleLabel.ToolTip = description;
+        var tooltip = new Tooltip();
+        tooltip.SetMessage(description);
+        TitleLabel.TooltipSupplier = (_) => tooltip;
 
         if (icon != null)
         {
