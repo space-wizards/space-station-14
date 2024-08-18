@@ -390,6 +390,7 @@
     name: ghost-role-information-possessed-lizard-plushie-name
     description: ghost-role-information-possessed-lizard-description
     rules: ghost-role-component-default-rules
+  - type: GhostTakeoverAvailable
 
 - type: entity
   parent: BasePlushie
