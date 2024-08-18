@@ -27,7 +27,7 @@
 
   Now, you can either click [color=gray]Link Defaults[/color] to link the default ports for a source + sink combination, or press on a source port and then a sink port to connect them.
 
-  An example of a default link for the aformentioned combinaton of devices would be:
+  An example of a default link for the aforementioned combinaton of devices would be:
   <Box>
     [color=cyan]Pressed 🠒 Toggle[/color]
    </Box>
