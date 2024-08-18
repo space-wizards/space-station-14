@@ -349,7 +349,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.baby_jail.whitelisted_can_bypass", true, CVar.SERVERONLY);
 
         /// <summary>
-        /// Make people bonk when trying to climb certain objects like tables.
+        /// Always make clumsy people fail when climbing onto tables.
         /// </summary>
         public static readonly CVarDef<bool> GameTableBonk =
             CVarDef.Create("game.table_bonk", false, CVar.REPLICATED);

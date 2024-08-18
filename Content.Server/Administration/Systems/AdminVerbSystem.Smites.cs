@@ -50,6 +50,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
+using Content.Shared.Clumsy;
 
 namespace Content.Server.Administration.Systems;
 

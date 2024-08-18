@@ -19,7 +19,7 @@ namespace Content.Shared.Climbing.Components
         ///     The time it takes to climb onto the entity.
         /// </summary>
         [DataField("delay")]
-        public float ClimbDelay = 1.5f;
+        public float ClimbDelay = 1f;
 
         /// <summary>
         ///     Sound to be played when a climb is started.

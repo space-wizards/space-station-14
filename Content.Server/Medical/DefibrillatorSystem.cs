@@ -77,7 +77,7 @@ public sealed class DefibrillatorSystem : EntitySystem
         Zap(uid, target, args.User, component);
     }
 
-    public bool CanZap(EntityUid uid, EntityUid target, EntityUid? user = null, DefibrillatorComponent? component = null)
+    public bool CanZap(EntityUid uid, EntityUid target, EntityUid? user = null, DefibrillatorComponent? component = null, bool taretCanBeAlive = false)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -98,10 +98,10 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (!_powerCell.HasActivatableCharge(uid, user: user))
             return false;
 
-        if (_mobState.IsAlive(target, mobState))
+        if (!taretCanBeAlive && _mobState.IsAlive(target, mobState))
             return false;
 
-        if (!component.CanDefibCrit && _mobState.IsCritical(target, mobState))
+        if (!taretCanBeAlive && !component.CanDefibCrit && _mobState.IsCritical(target, mobState))
             return false;
 
         return true;
@@ -118,25 +118,38 @@ public sealed class DefibrillatorSystem : EntitySystem
         _audio.PlayPvs(component.ChargeSound, uid);
         return _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.DoAfterDuration, new DefibrillatorZapDoAfterEvent(),
             uid, target, uid)
-            {
-                NeedHand = true,
-                BreakOnMove = !component.AllowDoAfterMovement
-            });
+        {
+            NeedHand = true,
+            BreakOnMove = !component.AllowDoAfterMovement
+        });
     }
 
     public void Zap(EntityUid uid, EntityUid target, EntityUid user, DefibrillatorComponent? component = null, MobStateComponent? mob = null, MobThresholdsComponent? thresholds = null)
     {
-        if (!Resolve(uid, ref component) || !Resolve(target, ref mob, ref thresholds, false))
+        if (!Resolve(uid, ref component))
             return;
-
-        // clowns zap themselves
-        if (HasComp<ClumsyComponent>(user) && user != target)
-        {
-            Zap(uid, user, user, component);
-            return;
-        }
 
         if (!_powerCell.TryUseActivatableCharge(uid, user: user))
+            return;
+
+        var selfEvent = new SelfBeforeDefibrillatorZaps(user, uid, target);
+        RaiseLocalEvent(user, selfEvent);
+
+        target = selfEvent.DefibTarget;
+
+        // Ensure thet new target is still valid.
+        if (selfEvent.Cancelled || !CanZap(uid, target, user, component, true))
+            return;
+
+        var targetEvent = new TargetBeforeDefibrillatorZaps(user, uid, target);
+        RaiseLocalEvent(target, targetEvent);
+
+        target = targetEvent.DefibTarget;
+
+        if (targetEvent.Cancelled || !CanZap(uid, target, user, component, true))
+            return;
+
+        if (!Resolve(target, ref mob, ref thresholds, false))
             return;
 
         _audio.PlayPvs(component.ZapSound, uid);
