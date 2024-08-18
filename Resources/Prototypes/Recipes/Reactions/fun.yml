@@ -211,8 +211,8 @@
     THC:
       amount: 3
     Ethanol:
-      amount: 2
+      amount: 3
     Mercury:
-      amount: 1
+      amount: 2
   products:
     Profanol: 10
