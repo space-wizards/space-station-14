@@ -46,7 +46,10 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         if (!TryComp<FoodSequenceStartPointComponent>(args.Start, out var start))
             return;
 
-        if (!ent.Comp.OnlyFinal || args.ElementData.Final || start.FoodLayers.Count == start.MaxLayers)
+        if (!_proto.TryIndex(args.ElementProto, out var elementProto))
+            return;
+
+        if (!ent.Comp.OnlyFinal || elementProto.Final || start.FoodLayers.Count == start.MaxLayers)
         {
             TryMetamorph((ent, start));
         }
@@ -54,30 +57,30 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
 
     private bool TryMetamorph(Entity<FoodSequenceStartPointComponent> start)
     {
-        List<FoodMetamorphRecipePrototype> availableRecipes = new();
-        foreach (var recipe in _proto.EnumeratePrototypes<FoodMetamorphRecipePrototype>())
-        {
-            if (recipe.Key != start.Comp.Key)
-                continue;
-
-            bool allowed = true;
-            foreach (var rule in recipe.Rules)
-            {
-                if (!rule.Check(start.Comp.FoodLayers))
-                {
-                    allowed = false;
-                    break;
-                }
-            }
-            if (allowed)
-                availableRecipes.Add(recipe);
-        }
-
-        if (availableRecipes.Count <= 0)
-            return true;
-
-        Metamorf(start, availableRecipes[0]);
-        QueueDel(start);
+        //List<FoodMetamorphRecipePrototype> availableRecipes = new();
+        //foreach (var recipe in _proto.EnumeratePrototypes<FoodMetamorphRecipePrototype>())
+        //{
+        //    if (recipe.Key != start.Comp.Key)
+        //        continue;
+//
+        //    bool allowed = true;
+        //    foreach (var rule in recipe.Rules)
+        //    {
+        //        if (!rule.Check(start.Comp.FoodLayers))
+        //        {
+        //            allowed = false;
+        //            break;
+        //        }
+        //    }
+        //    if (allowed)
+        //        availableRecipes.Add(recipe);
+        //}
+//
+        //if (availableRecipes.Count <= 0)
+        //    return true;
+//
+        //Metamorf(start, availableRecipes[0]);
+        //QueueDel(start);
         return true;
     }
 
@@ -102,48 +105,45 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
 
     private bool TryAddFoodElement(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element, EntityUid? user = null)
     {
+        // we can't add a live mouse to a burger.
         if (!TryComp<FoodComponent>(element, out var elementFood))
             return false;
-
         if (elementFood.RequireDead && _mobState.IsAlive(element))
             return false;
 
-        if (!TryComp<FoodComponent>(start, out var startFood))
-            return false;
-
-        //the first thing we do is collect our data. We need to use standard data + overwrite some fields described in specific keys
-        //I REALLY DISLIKE HOW IT WORKS
-        var defaultData = element.Comp.Data;
-        var elementData = FoodSequenceElementEntry.Clone(defaultData);
-
-        foreach (var entry in element.Comp.Entries)
+        //looking for a suitable FoodSequence prototype
+        ProtoId<FoodSequenceElementPrototype> elementProto = string.Empty;
+        foreach (var pair in element.Comp.Entries)
         {
-            if (entry.Key == start.Comp.Key)
+            if (pair.Key == start.Comp.Key)
             {
-                if (entry.Value.Name is not null) elementData.Name = entry.Value.Name;
-                if (entry.Value.Sprite is not null) elementData.Sprite = entry.Value.Sprite;
-                if (entry.Value.Scale != Vector2.One) elementData.Scale = entry.Value.Scale;
-                if (entry.Value.Final != elementData.Final) elementData.Final = entry.Value.Final;
-                break;
+                elementProto = pair.Value;
             }
         }
+        if (!_proto.TryIndex(elementProto, out var elementIndexed))
+            return false;
 
         //if we run out of space, we can still put in one last, final finishing element.
-        if (start.Comp.FoodLayers.Count >= start.Comp.MaxLayers && !elementData.Final || start.Comp.Finished)
+        if (start.Comp.FoodLayers.Count >= start.Comp.MaxLayers && !elementIndexed.Final || start.Comp.Finished)
         {
             if (user is not null)
                 _popup.PopupEntity(Loc.GetString("food-sequence-no-space"), start, user.Value);
             return false;
         }
 
-        elementData.LocalOffset = new Vector2(
-            _random.NextFloat(start.Comp.MinLayerOffset.X,start.Comp.MaxLayerOffset.X),
-            _random.NextFloat(start.Comp.MinLayerOffset.Y,start.Comp.MaxLayerOffset.Y));
+        //Generate new visual layer
+        var layer = new FoodSequenceVisualLayer(elementIndexed,
+            elementIndexed.Sprite,
+            Vector2.One, //TODO scale calculation
+            new Vector2(
+                _random.NextFloat(start.Comp.MinLayerOffset.X, start.Comp.MaxLayerOffset.X),
+                _random.NextFloat(start.Comp.MinLayerOffset.Y, start.Comp.MaxLayerOffset.Y))
+        );
 
-        start.Comp.FoodLayers.Add(elementData);
+        start.Comp.FoodLayers.Add(layer);
         Dirty(start);
 
-        if (elementData.Final)
+        if (elementIndexed.Final)
             start.Comp.Finished = true;
 
         UpdateFoodName(start);
@@ -151,7 +151,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         MergeFlavorProfiles(start, element);
         MergeTrash(start, element);
         MergeTags(start, element);
-        var ev = new FoodSequenceIngredientAddedEvent(start, element, elementData, user);
+        var ev = new FoodSequenceIngredientAddedEvent(start, element, elementProto, user);
         RaiseLocalEvent(start, ev);
 
         QueueDel(element);
@@ -168,17 +168,20 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         if (start.Comp.ContentSeparator is not null)
             separator = Loc.GetString(start.Comp.ContentSeparator);
 
-        HashSet<LocId> existedContentNames = new();
+        HashSet<ProtoId<FoodSequenceElementPrototype>> existedContentNames = new();
         foreach (var layer in start.Comp.FoodLayers)
         {
-            if (layer.Name is not null && !existedContentNames.Contains(layer.Name.Value))
-                existedContentNames.Add(layer.Name.Value);
+            if (!existedContentNames.Contains(layer.Proto))
+                existedContentNames.Add(layer.Proto);
         }
 
         var nameCounter = 1;
-        foreach (var name in existedContentNames)
+        foreach (var proto in existedContentNames)
         {
-            content.Append(Loc.GetString(name));
+            if (!_proto.TryIndex(proto, out var protoIndexed))
+                continue;
+
+            content.Append(Loc.GetString(protoIndexed.Name));
 
             if (nameCounter < existedContentNames.Count)
                 content.Append(separator);

@@ -11,7 +11,7 @@
   - type: Food
     transferAmount: 3
   - type: Sprite
-    sprite: Objects/Consumable/Food/taco.rsi
+    sprite: Objects/Consumable/Food/taco_sequence.rsi
     layers:
     - state: tacoshell_back
     - map: ["foodSequenceLayers"]

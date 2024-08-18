@@ -1,12 +1,13 @@
 - type: foodSequenceElement
   id: CheeseBurger
-  name: food-sequence-content-raw-meat
+  name: food-sequence-content-cheese
   sprite:
     sprite: Objects/Consumable/Food/burger_sequence.rsi
     state: cheese
 
 - type: foodSequenceElement
   id: CheeseTaco
-  name: food-sequence-content-raw-meat
+  name: food-sequence-content-cheese
   sprite:
     sprite: Objects/Consumable/Food/taco_sequence.rsi
+    state: cheese

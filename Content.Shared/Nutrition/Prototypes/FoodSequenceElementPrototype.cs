@@ -1,10 +1,12 @@
+using System.Numerics;
+using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Nutrition.Prototypes;
 
 /// <summary>
-///
+/// Unique data storage block for different FoodSequence layers
 /// </summary>
 [Prototype("foodSequenceElement")]
 public sealed partial class FoodSequenceElementPrototype : IPrototype
@@ -15,11 +17,23 @@ public sealed partial class FoodSequenceElementPrototype : IPrototype
     ///
     /// </summary>
     [DataField]
+    public SpriteSpecifier Sprite { get; private set; } = SpriteSpecifier.Invalid;
+
+    /// <summary>
+    /// A localized name piece to build into the item name generator.
+    /// </summary>
+    [DataField]
     public LocId Name { get; private set; } = string.Empty;
+
+    /// <summary>
+    /// If the layer is the final one, it can be added over the limit, but no other layers can be added after it.
+    /// </summary>
+    [DataField]
+    public bool Final { get; private set; }
 
     /// <summary>
     ///
     /// </summary>
     [DataField]
-    public SpriteSpecifier Sprite { get; private set; } = SpriteSpecifier.Invalid;
+    public List<ProtoId<TagPrototype>> Tags { get; set; }  = new();
 }
