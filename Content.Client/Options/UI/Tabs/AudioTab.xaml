@@ -13,7 +13,7 @@
                 <ui:OptionSlider Name="SliderVolumeAmbience" Title="{Loc 'ui-options-ambience-volume'}" />
                 <ui:OptionSlider Name="SliderVolumeLobby" Title="{Loc 'ui-options-lobby-volume'}" />
                 <ui:OptionSlider Name="SliderVolumeInterface" Title="{Loc 'ui-options-interface-volume'}" />
-				<ui:OptionSlider Name="SliderVolumeAnnouncer" Title="{Loc 'ui-options-announcer-volume'}" />
+                <ui:OptionSlider Name="SliderVolumeAnnouncer" Title="{Loc 'ui-options-announcer-volume'}" />
                 <ui:OptionSlider Name="SliderMaxAmbienceSounds" Title="{Loc 'ui-options-ambience-max-sounds'}"
                                  Margin="0 0 0 8" />
                 <CheckBox Name="LobbyMusicCheckBox" Text="{Loc 'ui-options-lobby-music'}" />

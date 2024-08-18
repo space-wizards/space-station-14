@@ -10,8 +10,8 @@ namespace Content.Server.StationEvents.Events;
 
 public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRuleComponent>
 {
-	[Dependency] private readonly AnnouncerSystem _announcer = default!;
-	
+    [Dependency] private readonly AnnouncerSystem _announcer = default!;
+
     protected override void Started(EntityUid uid, RandomSentienceRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         HashSet<EntityUid> stationsToNotify = new();

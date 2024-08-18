@@ -29,7 +29,7 @@ public sealed class DragonRiftSystem : EntitySystem
     [Dependency] private readonly NavMapSystem _navMap = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-	[Dependency] private readonly AnnouncerSystem _announcer = default!;
+    [Dependency] private readonly AnnouncerSystem _announcer = default!;
 
     public override void Initialize()
     {
@@ -72,10 +72,10 @@ public sealed class DragonRiftSystem : EntitySystem
                 comp.State = DragonRiftState.AlmostFinished;
                 Dirty(uid, comp);
 
-				_announcer.SendAnnouncement(_announcer.GetAnnouncementId("CarpRift"), Filter.Broadcast(),
+                _announcer.SendAnnouncement(_announcer.GetAnnouncementId("CarpRift"), Filter.Broadcast(),
                     "carp-rift-warning", colorOverride: Color.Red, localeArgs: ("location",
-					FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString((uid, xform)))));
-				
+                    FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString((uid, xform)))));
+
                 _navMap.SetBeaconEnabled(uid, true);
             }
 

@@ -44,7 +44,7 @@ public sealed class NukeSystem : EntitySystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
-	[Dependency] private readonly AnnouncerSystem _announcer = default!;
+    [Dependency] private readonly AnnouncerSystem _announcer = default!;
 
     /// <summary>
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
@@ -461,14 +461,14 @@ public sealed class NukeSystem : EntitySystem
         _selectedNukeSong = _audio.GetSound(component.ArmMusic);
 
         _announcer.SendAnnouncementMessage(
-		    _announcer.GetAnnouncementId("NukeArm"),
-			"nuke-component-announcement-armed",
-			Loc.GetString("nuke-component-announcement-sender"),
-			Color.Red,
-			stationUid ?? uid,
-			null,
-			("time", (int) component.RemainingTime), ("position", posText)
-		);
+            _announcer.GetAnnouncementId("NukeArm"),
+            "nuke-component-announcement-armed",
+            Loc.GetString("nuke-component-announcement-sender"),
+            Color.Red,
+            stationUid ?? uid,
+            null,
+            ("time", (int) component.RemainingTime), ("position", posText)
+        );
 
         _sound.PlayGlobalOnStation(uid, _audio.GetSound(component.ArmSound));
         _nukeSongLength = (float) _audio.GetAudioLength(_selectedNukeSong).TotalSeconds;
@@ -506,11 +506,11 @@ public sealed class NukeSystem : EntitySystem
             _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnDeactivate, true, true, true);
 
        _announcer.SendAnnouncementMessage(
-	       _announcer.GetAnnouncementId("NukeDisarm"),
-		   "nuke-component-announcement-unarmed",
-		   Loc.GetString("nuke-component-announcement-sender"),
-		   station: stationUid ?? uid
-	   );
+           _announcer.GetAnnouncementId("NukeDisarm"),
+           "nuke-component-announcement-unarmed",
+           Loc.GetString("nuke-component-announcement-sender"),
+           station: stationUid ?? uid
+       );
 
         component.PlayedNukeSong = false;
         _sound.PlayGlobalOnStation(uid, _audio.GetSound(component.DisarmSound));
