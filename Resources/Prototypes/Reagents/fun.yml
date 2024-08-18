@@ -361,7 +361,8 @@
   slippery: true
   metabolisms:
     Poison:
+      metabolismRate: 0.25
       effects:
       - !type:GenericStatusEffect
-        tag: Vulgarity
+        key: Vulgarity
         component: VulgarAccent
