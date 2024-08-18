@@ -96,7 +96,7 @@ public sealed class NewsSystem : SharedNewsSystem
             return;
 
         var article = articles[msg.ArticleNum];
-        if (CanUse(msg.Actor, ent))
+        if (CanUse(msg.Actor, ent.Owner))
         {
             _adminLogger.Add(
                 LogType.Chat, LogImpact.Medium,
@@ -132,14 +132,14 @@ public sealed class NewsSystem : SharedNewsSystem
         if (!ent.Comp.PublishEnabled)
             return;
 
-        ent.Comp.PublishEnabled = false;
-        ent.Comp.NextPublish = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.PublishCooldown);
-
         if (!TryGetArticles(ent, out var articles))
             return;
 
         if (!CanUse(msg.Actor, ent.Owner))
             return;
+
+        ent.Comp.PublishEnabled = false;
+        ent.Comp.NextPublish = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.PublishCooldown);
 
         string? authorName = null;
         if (_idCardSystem.TryFindIdCard(msg.Actor, out var idCard))
