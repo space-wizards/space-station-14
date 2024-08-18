@@ -19,9 +19,10 @@ public sealed class MutationSystem : EntitySystem
     //clean up errors on client side about missing concrete Glow class?
 
     //Remaining mutations to port:
-    //all tolerance adjustments (11)
     //stat adjustments (6)
     //remaining fun (4)
+    // - Seedless, Ligneous, turnintokudzu are plant traits rather than effects and their value should stay in SeedData for now
+    // - Screaming will need updated with new screams from more recent commit.
     //harvest type and autoharvest (2)
     //gases (2, eat/make)
     //chems (1)
@@ -48,7 +49,8 @@ public sealed class MutationSystem : EntitySystem
                     EntityEffectBaseArgs args = new EntityEffectBaseArgs(plantHolder, EntityManager);
                     mutation.Mutation.Effect(args);
                 }
-                seed.Mutations.Add(mutation);
+                if (mutation.Persists) //Stat adjustments do not persist by being an attached effect, they just change the stat.
+                    seed.Mutations.Add(mutation);
             }
         }
     }
@@ -77,19 +79,6 @@ public sealed class MutationSystem : EntitySystem
         const int totalbits = 262;
 
         #pragma warning disable IDE0055 // disable formatting warnings because this looks more readable
-        // Tolerances (55)
-        MutateFloat(ref seed.NutrientConsumption  , 0.05f, 1.2f, 5, totalbits, severity);
-        MutateFloat(ref seed.WaterConsumption     , 3f   , 9f  , 5, totalbits, severity);
-        MutateFloat(ref seed.IdealHeat            , 263f , 323f, 5, totalbits, severity);
-        MutateFloat(ref seed.HeatTolerance        , 2f   , 25f , 5, totalbits, severity);
-        MutateFloat(ref seed.IdealLight           , 0f   , 14f , 5, totalbits, severity);
-        MutateFloat(ref seed.LightTolerance       , 1f   , 5f  , 5, totalbits, severity);
-        MutateFloat(ref seed.ToxinsTolerance      , 1f   , 10f , 5, totalbits, severity);
-        MutateFloat(ref seed.LowPressureTolerance , 60f  , 100f, 5, totalbits, severity);
-        MutateFloat(ref seed.HighPressureTolerance, 100f , 140f, 5, totalbits, severity);
-        MutateFloat(ref seed.PestTolerance        , 0f   , 15f , 5, totalbits, severity);
-        MutateFloat(ref seed.WeedTolerance        , 0f   , 15f , 5, totalbits, severity);
-
         // Stats (30*2 = 60)
         MutateFloat(ref seed.Endurance            , 50f  , 150f, 5, totalbits, 2 * severity);
         MutateInt(ref seed.Yield                  , 3    , 10  , 5, totalbits, 2 * severity);
@@ -141,9 +130,9 @@ public sealed class MutationSystem : EntitySystem
         CrossFloat(ref result.Production, a.Production);
         CrossFloat(ref result.Potency, a.Potency);
 
-        CrossBool(ref result.Seedless, a.Seedless);
-        CrossBool(ref result.Ligneous, a.Ligneous);
-        CrossBool(ref result.TurnIntoKudzu, a.TurnIntoKudzu);
+        CrossBool(ref result.Seedless, a.Seedless); 
+        CrossBool(ref result.Ligneous, a.Ligneous); 
+        CrossBool(ref result.TurnIntoKudzu, a.TurnIntoKudzu); 
         CrossBool(ref result.CanScream, a.CanScream);
 
         CrossGasses(ref result.ExudeGasses, a.ExudeGasses);
@@ -302,27 +291,6 @@ public sealed class MutationSystem : EntitySystem
         }
     }
 
-    private void MutateSpecies(ref SeedData seed, int bits, int totalbits, float mult)
-    {
-        float p = mult * bits / totalbits;
-        p = Math.Clamp(p, 0, 1);
-        if (!Random(p))
-            return;
-
-        if (seed.MutationPrototypes.Count == 0)
-            return;
-
-        var targetProto = _robustRandom.Pick(seed.MutationPrototypes);
-        _prototypeManager.TryIndex(targetProto, out SeedPrototype? protoSeed);
-
-        if (protoSeed == null)
-        {
-            Log.Error($"Seed prototype could not be found: {targetProto}!");
-            return;
-        }
-
-        seed = seed.SpeciesChange(protoSeed);
-    }
     private void CrossChemicals(ref Dictionary<string, SeedChemQuantity> val, Dictionary<string, SeedChemQuantity> other)
     {
         // Go through chemicals from the pollen in swab

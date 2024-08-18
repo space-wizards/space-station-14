@@ -229,9 +229,13 @@ public partial class SeedData
     [DataField("turnIntoKudzu")] public bool TurnIntoKudzu;
     [DataField("splatPrototype")] public string? SplatPrototype { get; set; }
 
-    public List<RandomPlantMutation> Mutations { get; set; } = new();
-
     #endregion
+
+    /// <summary>
+    /// The mutation effects that have been applied to this plant.
+    /// </summary>
+    [DataField("mutations")] //TODO confirm this is sufficient.
+    public List<RandomPlantMutation> Mutations { get; set; } = new();
 
     /// <summary>
     ///     The seed prototypes this seed may mutate into when prompted to.

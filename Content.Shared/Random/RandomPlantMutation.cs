@@ -32,7 +32,7 @@ public sealed partial class RandomPlantMutation
     /// </summary>
     //[JsonPropertyName("mutation")]
     [DataField("mutation")]
-    public EntityEffect Mutation = default!; //TODO: rename to Effect or something.
+    public EntityEffect Mutation = default!; //TODO: rename to Effect or something?
 
     /// <summary>
     /// This mutation will target the harvested produce
@@ -45,4 +45,10 @@ public sealed partial class RandomPlantMutation
     /// </summary>
     [DataField("appliesToPlant")]
     public bool AppliesToPlant = true;
+
+    /// <summary>
+    /// This mutation stays on the plant and its produce. If false while AppliesToPlant is true, the effect will run when triggered.
+    /// </summary>
+    [DataField("persists")]
+    public bool Persists = true;
 }

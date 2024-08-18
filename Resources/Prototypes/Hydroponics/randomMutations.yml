@@ -6,7 +6,7 @@
       mutation: !type:Glow # new effect   
     - name: Sentient
       baseOdds: 0.0072
-      appliesToPlant: false #makes the botany tray sentient right now.
+      appliesToPlant: false #makes the botany tray sentient if true
       mutation: !type:MakeSentient #existing effect.
     - name: Slippery
       baseOdds: 0.0072
@@ -18,3 +18,47 @@
     - name: Unviable
       baseOdds: 0.00012
       mutation: !type:PlantUnviable
+    - name: ChangeWaterConsumption
+      baseOdds: 0.018
+      persists: false
+      mutation: !type:PlantMutateWaterConsumption
+    - name: ChangeNutrientConsumption
+      baseOdds: 0.018
+      persists: false
+      mutation: !type:PlantMutateNutrientConsumption
+    - name: ChangeIdealHeat
+      baseOdds: 0.018
+      persists: false
+      mutation: !type:PlantMutateIdealHeat
+    - name: ChangeHeatTolerance
+      baseOdds: 0.018
+      persists: false
+      mutation: !type:PlantMutateHeatTolerance
+    - name: ChangeIdealLight
+      baseOdds: 0.018
+      persists: false
+      mutation: !type:PlantMutateIdealLight
+    - name: ChangeLightTolerance
+      baseOdds: 0.018
+      persists: false
+      mutation: !type:PlantMutateLightTolerance
+    - name: ChangeToxinsTolerance
+      baseOdds: 0.018
+      persists: false
+      mutation: !type:PlantMutateToxinsTolerance
+    - name: ChangeLowPressureTolerance
+      baseOdds: 0.018
+      persists: false
+      mutation: !type:PlantMutateLowPressureTolerance
+    - name: ChangeHighPressureTolerance
+      baseOdds: 0.018
+      persists: false
+      mutation: !type:PlantMutateHighPressureTolerance
+    - name: ChangePestTolerance
+      baseOdds: 0.018
+      persists: false
+      mutation: !type:PlantMutatePestTolerance
+    - name: ChangeWeedTolerance
+      baseOdds: 0.018
+      persists: false
+      mutation: !type:PlantMutateWeedTolerance
