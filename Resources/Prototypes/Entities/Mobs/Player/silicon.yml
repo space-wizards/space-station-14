@@ -7,6 +7,10 @@
   - type: IgnoreUIRange
   - type: StationAiHeld
   - type: StationAiOverlay
+  - type: ActionGrant
+    actions:
+    - ActionShowJobIcons
+    - ActionSurvCameraLights
   - type: UserInterface
     interfaces:
       enum.RadarConsoleUiKey.Key:
@@ -23,6 +27,45 @@
         toggleAction: ActionAGhostShowCrewMonitoring
       enum.GeneralStationRecordConsoleKey.Key:
         toggleAction: ActionAGhostShowStationRecords
+
+# Actions
+- type: entity
+  id: ActionShowJobIcons
+  name: Show job icons
+  description: Shows job icons for crew members.
+  components:
+  - type: InstantAction
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Misc/job_icons.rsi
+      state: Captain
+    event: !type:ActionComponentChangeEvent
+      components:
+      - type: ShowJobIcons
+
+- type: entity
+  id: ActionSurvCameraLights
+  name: Toggle camera lights
+  description: Enable surveillance camera lights near wherever you're viewing.
+  components:
+  - type: InstantAction
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Misc/job_icons.rsi
+      state: Captain
+    event: !type:RelayedActionComponentChangeEvent
+      components:
+      - type: LightOnCollideCollider
+      - type: FixturesChange
+        fixtures:
+          lightTrigger:
+            shape:
+              !type:PhysShapeCircle
+              radius: 0.35
+            density: 80
+            hard: false
+            layer:
+            - GhostImpassable
 
 # Ai
 - type: entity
@@ -102,6 +145,7 @@
         acts: [ "Destruction" ]
   - type: StationAiCore
   - type: StationAiVision
+  - type: InteractionOutline
   - type: Sprite
     sprite: Mobs/Silicon/station_ai.rsi
     layers:

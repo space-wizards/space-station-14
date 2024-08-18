@@ -31,8 +31,12 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private   readonly StationAiVisionSystem _vision = default!;
 
     /*
-     * TODO: Sprite-System get screencoords of entity / get world coords
      * TODO: Double-check positronic interactions didn't break
+     *
+     * Camera lights need fixing apparently the toggle is only if they go in range or some shit
+     * Need non-hard fixture on lights
+     * Probably proximitytrigger with whitelist, use slimpoweredlightcomponent and toggle it on / off
+     *
      * Upload console
      * Sensor overlay to see job
      * Check the

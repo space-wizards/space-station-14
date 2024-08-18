@@ -38,10 +38,7 @@ public sealed class ContainerCompSystem : EntitySystem
 
         if (_proto.TryIndex(ent.Comp.Proto, out var entProto))
         {
-            foreach (var entry in entProto.Components.Values)
-            {
-                AddComp(args.Entity, entry.Component, overwrite: true);
-            }
+            EntityManager.AddComponents(args.Entity, entProto.Components);
         }
     }
 }
