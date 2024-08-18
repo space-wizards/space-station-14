@@ -74,7 +74,7 @@
       "name": "potato-searching-overlay"
     },
     {
-      "name": "DamageOverlay_10", "directions": 1
+      "name": "DamageOverlay_10"
     },
     {
       "name": "DamageOverlay_100", "directions": 1
