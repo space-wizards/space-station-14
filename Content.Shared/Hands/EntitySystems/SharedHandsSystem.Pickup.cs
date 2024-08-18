@@ -184,7 +184,9 @@ public abstract partial class SharedHandsSystem : EntitySystem
             if (!ContainerSystem.CanRemove(entity, container))
                 return false;
 
-            if (!_inventory.CanUnequip(uid, entity, container.ID, out _))
+            if (_inventory.TryGetSlotEntity(uid, container.ID, out var slotEnt) &&
+                slotEnt == entity &&
+                !_inventory.CanUnequip(uid, entity, container.ID, out _))
                 return false;
         }
 
