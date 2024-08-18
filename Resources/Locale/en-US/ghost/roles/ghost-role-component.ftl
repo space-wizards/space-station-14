@@ -238,3 +238,6 @@ ghost-role-information-artifact-description = Enact your eldritch whims. Forcibl
 
 ghost-role-information-syndie-assaultborg-name = Syndicate Assault Borg
 ghost-role-information-syndie-assaultborg-description = Nuclear operatives needs reinforcements. You, a cold silicon killing machine, will help them. More dakka!
+
+ghost-role-information-possessed-lizard-plushie-name = Possessed Lizard Plushie
+ghost-role-information-possessed-lizard-description = A Lizard Plushie that has been given sentience!
