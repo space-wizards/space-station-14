@@ -90,7 +90,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
             return;
 
         //Invalid prototype
-        if (!_proto.TryIndex(component.Prototype, out _))
+        if (!_proto.HasIndex(component.Prototype))
             return;
 
         if (TryFindRandomTile(entityGridUid.Value, entityMapUid.Value, 10, out var coords))
