@@ -25,7 +25,6 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    
 
     public override void Initialize()
     {
@@ -93,7 +92,6 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         //Invalid prototype
         if (!_proto.TryIndex(component.Prototype, out _))
             return;
-
 
         if (TryFindRandomTile(entityGridUid.Value, entityMapUid.Value, 10, out var coords))
             Respawn(uid, component.Prototype, coords);
