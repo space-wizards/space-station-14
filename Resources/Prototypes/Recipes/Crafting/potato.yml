@@ -17,9 +17,9 @@
   targetNode: potatoai
   category: construction-category-misc
   description: The potato happens to be the perfect power source for this chip.
-  icon: { sprite: Objects/Fun/pai.rsi, state: icon-potato-off }
+  icon: { sprite: Objects/Fun/pai_potato.rsi, state: icon-potato-off }
   objectType: Item
-  
+
 - type: construction
   name: supercompact AI chip
   id: PotatoAIChip
