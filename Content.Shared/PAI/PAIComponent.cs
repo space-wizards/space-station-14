@@ -55,6 +55,12 @@ public sealed partial class PAIComponent : Component
     public string ScramblePopup = "pai-system-scramble-popup";
 
     /// <summary>
+    /// How much damage the pai can take before the screen cracks.
+    /// </summary>
+    [DataField]
+    public int DamageTillCracked = 100;
+
+    /// <summary>
     /// Boolean that keeps track whether the pai has a cracked screen or not.
     /// </summary>
     public bool Cracked = false;

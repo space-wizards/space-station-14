@@ -163,6 +163,8 @@
   - type: Construction
     graph: PotatoAI
     node: potatoai
+  - type: PAI
+    damageTillCracked: 10
   - type: Destructible
     thresholds:
     - trigger:

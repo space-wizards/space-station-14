@@ -161,7 +161,7 @@ public sealed class PAISystem : SharedPAISystem
     private void OnDamageChanged(EntityUid uid, PAIComponent comp, DamageChangedEvent args)
     {
         // If the PAI is repaired, uncrack it.
-        if (comp.Cracked && TryComp<DamageableComponent>(uid, out var damageableComponent) && damageableComponent.TotalDamage < 100)
+        if (comp.Cracked && TryComp<DamageableComponent>(uid, out var damageableComponent) && damageableComponent.TotalDamage < comp.DamageTillCracked)
         {
             comp.Cracked = false;
 
