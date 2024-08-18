@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: SwearWords
+  values:
+    prefix: accent-vulgar-words-
+    count: 9
