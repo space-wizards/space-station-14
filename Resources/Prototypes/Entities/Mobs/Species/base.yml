@@ -134,6 +134,7 @@
     - Flashed
     - RadiationProtection
     - Drowsiness
+    - Vulgarity
   - type: Body
     prototype: Human
     requiredLegs: 2
