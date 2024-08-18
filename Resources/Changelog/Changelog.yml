@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ShadowCommander
-  changes:
-  - message: Fixed firelocks with warnings enabled opening immediately for characters
-      without engineering access.
-    type: Fix
-  id: 6644
-  time: '2024-05-30T17:25:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28415
 - author: moonheart08
   changes:
   - message: The hand teleporter can no longer create portal links between grids.
@@ -3837,3 +3829,11 @@
   id: 7143
   time: '2024-08-18T22:34:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/24983
+- author: Psychpsyo
+  changes:
+  - message: The random sentience event is back and can no longer pick things that
+      aren't even on the station.
+    type: Add
+  id: 7144
+  time: '2024-08-18T23:41:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29123
