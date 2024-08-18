@@ -66,7 +66,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
             bool allowed = true;
             foreach (var rule in recipe.Rules)
             {
-                if (!rule.Check(_proto, start.Comp.FoodLayers))
+                if (!rule.Check(_proto, EntityManager, start, start.Comp.FoodLayers))
                 {
                     allowed = false;
                     break;

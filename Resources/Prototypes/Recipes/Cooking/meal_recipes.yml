@@ -94,7 +94,7 @@
     FoodMeat: 1
     ClothingHeadHatCatEars: 1
 
-- type: microwaveMealRecipe
+- type: microwaveMealRecipe #Added to metamorph recipes
   id: RecipeCheeseburger
   name: cheeseburger recipe
   result: FoodBurgerCheese
@@ -104,7 +104,7 @@
     FoodMeat: 1
     FoodCheeseSlice: 1
 
-- type: microwaveMealRecipe
+- type: microwaveMealRecipe #Added to metamorph recipes
   id: RecipeChickenSandwich
   name: chicken sandwich recipe
   result: FoodBurgerChicken

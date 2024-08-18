@@ -1,4 +1,8 @@
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Destructible.Thresholds;
+using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Tag;
 using JetBrains.Annotations;
@@ -13,7 +17,7 @@ namespace Content.Shared.Nutrition.FoodMetamorphRules;
 [Serializable, NetSerializable]
 public abstract partial class FoodMetamorphRule
 {
-    public abstract bool Check(IPrototypeManager protoMan, List<FoodSequenceVisualLayer> ingredients);
+    public abstract bool Check(IPrototypeManager protoMan, EntityManager entMan, EntityUid food, List<FoodSequenceVisualLayer> ingredients);
 }
 
 /// <summary>
@@ -24,11 +28,11 @@ public abstract partial class FoodMetamorphRule
 public sealed partial class SequenceLength : FoodMetamorphRule
 {
     [DataField(required: true)]
-    public MinMax Range = new ();
+    public MinMax Range;
 
-    public override bool Check(IPrototypeManager protoMan, List<FoodSequenceVisualLayer> ingredients)
+    public override bool Check(IPrototypeManager protoMan, EntityManager entMan, EntityUid food, List<FoodSequenceVisualLayer> ingredients)
     {
-        return (ingredients.Count <= Range.Max && ingredients.Count >= Range.Min);
+        return ingredients.Count <= Range.Max && ingredients.Count >= Range.Min;
     }
 }
 
@@ -45,7 +49,7 @@ public sealed partial class LastElementHasTags : FoodMetamorphRule
     [DataField]
     public bool NeedAll = true;
 
-    public override bool Check(IPrototypeManager protoMan, List<FoodSequenceVisualLayer> ingredients)
+    public override bool Check(IPrototypeManager protoMan, EntityManager entMan, EntityUid food, List<FoodSequenceVisualLayer> ingredients)
     {
         var lastIngredient = ingredients[ingredients.Count - 1];
 
@@ -87,7 +91,7 @@ public sealed partial class ElementHasTags : FoodMetamorphRule
     [DataField]
     public bool NeedAll = true;
 
-    public override bool Check(IPrototypeManager protoMan, List<FoodSequenceVisualLayer> ingredients)
+    public override bool Check(IPrototypeManager protoMan, EntityManager entMan, EntityUid food, List<FoodSequenceVisualLayer> ingredients)
     {
         if (ingredients.Count < ElementNumber + 1)
             return false;
@@ -115,6 +119,47 @@ public sealed partial class ElementHasTags : FoodMetamorphRule
 }
 
 /// <summary>
+/// requirement that the food contains certain reagents (e.g. sauces)
+/// </summary>
+[UsedImplicitly]
+[Serializable, NetSerializable]
+public sealed partial class FoodHasReagent : FoodMetamorphRule
+{
+    [DataField(required: true)]
+    public ProtoId<ReagentPrototype> Reagent = new();
+
+    [DataField(required: true)]
+    public MinMax Count;
+
+    [DataField]
+    public string Solution = "food";
+
+    public override bool Check(IPrototypeManager protoMan, EntityManager entMan, EntityUid food, List<FoodSequenceVisualLayer> ingredients)
+    {
+        if (!entMan.TryGetComponent<SolutionContainerManagerComponent>(food, out var solMan))
+            return false;
+
+        var solutionMan = entMan.System<SharedSolutionContainerSystem>();
+
+        if (!solutionMan.TryGetSolution(food, Solution, out var foodSoln, out var foodSolution))
+            return false;
+
+        foreach (var (id, quantity) in foodSoln.Value.Comp.Solution.Contents)
+        {
+            if (id.Prototype != Reagent.Id)
+                continue;
+
+            if (quantity < Count.Min || quantity > Count.Max)
+                break;
+
+            return true;
+        }
+
+        return false;
+    }
+}
+
+/// <summary>
 /// A requirement that there be X ingredients in the sequence that have one or all of the specified tags.
 /// </summary>
 [UsedImplicitly]
@@ -130,7 +175,7 @@ public sealed partial class IngredientsWithTags : FoodMetamorphRule
     [DataField]
     public bool NeedAll = true;
 
-    public override bool Check(IPrototypeManager protoMan, List<FoodSequenceVisualLayer> ingredients)
+    public override bool Check(IPrototypeManager protoMan, EntityManager entMan, EntityUid food, List<FoodSequenceVisualLayer> ingredients)
     {
         var count = 0;
         foreach (var ingredient in ingredients)
