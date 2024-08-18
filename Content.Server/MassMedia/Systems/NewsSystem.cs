@@ -96,7 +96,7 @@ public sealed class NewsSystem : SharedNewsSystem
             return;
 
         var article = articles[msg.ArticleNum];
-        if (CanUse(msg.Actor, ent))
+        if (CanUse(msg.Actor, ent.Owner))
         {
             _adminLogger.Add(
                 LogType.Chat, LogImpact.Medium,
