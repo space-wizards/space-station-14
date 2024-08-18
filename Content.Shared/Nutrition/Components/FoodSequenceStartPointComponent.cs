@@ -110,6 +110,9 @@ public sealed partial class FoodSequenceStartPointComponent : Component
     [DataField]
     public Vector2 MinLayerOffset = Vector2.Zero;
 
+    [DataField]
+    public bool AllowHorizontalFlip = true;
+
     public HashSet<string> RevealedLayers = new();
 
     #endregion

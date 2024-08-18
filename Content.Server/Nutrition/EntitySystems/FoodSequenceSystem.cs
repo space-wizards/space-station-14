@@ -131,7 +131,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         }
 
         //Generate new visual layer
-        var flip = _random.Prob(0.5f);
+        var flip = start.Comp.AllowHorizontalFlip && _random.Prob(0.5f);
         var layer = new FoodSequenceVisualLayer(elementIndexed,
             _random.Pick(elementIndexed.Sprites),
             new Vector2(flip ? 1 : -1, 1),
