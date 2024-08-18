@@ -1453,7 +1453,7 @@
     node: chicken cutlet
   - type: FoodSequenceElement
     entries:
-      burger: ChickenCutletBurger
+      burger: ChickenCutlet
       taco: ChickenCutlet
 
 - type: entity

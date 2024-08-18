@@ -130,18 +130,6 @@
   - Meat
   - Chicken
 
-- type: foodSequenceElement
-  id: ChickenCutletBurger
-  name: food-sequence-burger-content-chicken
-  sprites:
-  - sprite: Objects/Consumable/Food/meat.rsi
-    state: cutlet-cooked
-  tags:
-  - Cooked
-  - Cutlet
-  - Meat
-  - Chicken
-
 # Duck cutlet
 
 - type: foodSequenceElement
