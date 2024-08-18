@@ -13,7 +13,7 @@ namespace Content.Shared.Nutrition.FoodMetamorphRules;
 [Serializable, NetSerializable]
 public abstract partial class FoodMetamorphRule
 {
-    public abstract bool Check(PrototypeManager protoMan, List<FoodSequenceVisualLayer> ingredients);
+    public abstract bool Check(IPrototypeManager protoMan, List<FoodSequenceVisualLayer> ingredients);
 }
 
 /// <summary>
@@ -26,7 +26,7 @@ public sealed partial class SequenceLength : FoodMetamorphRule
     [DataField(required: true)]
     public MinMax Range = new ();
 
-    public override bool Check(PrototypeManager protoMan, List<FoodSequenceVisualLayer> ingredients)
+    public override bool Check(IPrototypeManager protoMan, List<FoodSequenceVisualLayer> ingredients)
     {
         return (ingredients.Count <= Range.Max && ingredients.Count >= Range.Min);
     }
@@ -45,7 +45,7 @@ public sealed partial class LastElementHasTags : FoodMetamorphRule
     [DataField]
     public bool NeedAll = true;
 
-    public override bool Check(PrototypeManager protoMan, List<FoodSequenceVisualLayer> ingredients)
+    public override bool Check(IPrototypeManager protoMan, List<FoodSequenceVisualLayer> ingredients)
     {
         var lastIngredient = ingredients[ingredients.Count - 1];
 
@@ -87,7 +87,7 @@ public sealed partial class ElementHasTags : FoodMetamorphRule
     [DataField]
     public bool NeedAll = true;
 
-    public override bool Check(PrototypeManager protoMan, List<FoodSequenceVisualLayer> ingredients)
+    public override bool Check(IPrototypeManager protoMan, List<FoodSequenceVisualLayer> ingredients)
     {
         if (ingredients.Count < ElementNumber + 1)
             return false;
@@ -130,7 +130,7 @@ public sealed partial class IngredientsWithTags : FoodMetamorphRule
     [DataField]
     public bool NeedAll = true;
 
-    public override bool Check(PrototypeManager protoMan, List<FoodSequenceVisualLayer> ingredients)
+    public override bool Check(IPrototypeManager protoMan, List<FoodSequenceVisualLayer> ingredients)
     {
         var count = 0;
         foreach (var ingredient in ingredients)

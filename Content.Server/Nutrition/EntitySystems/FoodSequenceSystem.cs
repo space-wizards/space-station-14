@@ -57,30 +57,30 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
 
     private bool TryMetamorph(Entity<FoodSequenceStartPointComponent> start)
     {
-        //List<FoodMetamorphRecipePrototype> availableRecipes = new();
-        //foreach (var recipe in _proto.EnumeratePrototypes<FoodMetamorphRecipePrototype>())
-        //{
-        //    if (recipe.Key != start.Comp.Key)
-        //        continue;
-//
-        //    bool allowed = true;
-        //    foreach (var rule in recipe.Rules)
-        //    {
-        //        if (!rule.Check(start.Comp.FoodLayers))
-        //        {
-        //            allowed = false;
-        //            break;
-        //        }
-        //    }
-        //    if (allowed)
-        //        availableRecipes.Add(recipe);
-        //}
-//
-        //if (availableRecipes.Count <= 0)
-        //    return true;
-//
-        //Metamorf(start, availableRecipes[0]);
-        //QueueDel(start);
+        List<FoodMetamorphRecipePrototype> availableRecipes = new();
+        foreach (var recipe in _proto.EnumeratePrototypes<FoodMetamorphRecipePrototype>())
+        {
+            if (recipe.Key != start.Comp.Key)
+                continue;
+
+            bool allowed = true;
+            foreach (var rule in recipe.Rules)
+            {
+                if (!rule.Check(_proto, start.Comp.FoodLayers))
+                {
+                    allowed = false;
+                    break;
+                }
+            }
+            if (allowed)
+                availableRecipes.Add(recipe);
+        }
+
+        if (availableRecipes.Count <= 0)
+            return true;
+
+        Metamorf(start, availableRecipes[0]);
+        QueueDel(start);
         return true;
     }
 
@@ -132,9 +132,10 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         }
 
         //Generate new visual layer
+        var flip = _random.Prob(0.5f);
         var layer = new FoodSequenceVisualLayer(elementIndexed,
             elementIndexed.Sprite,
-            Vector2.One, //TODO scale calculation
+            new Vector2(flip ? 1 : -1, 1),
             new Vector2(
                 _random.NextFloat(start.Comp.MinLayerOffset.X, start.Comp.MaxLayerOffset.X),
                 _random.NextFloat(start.Comp.MinLayerOffset.Y, start.Comp.MaxLayerOffset.Y))

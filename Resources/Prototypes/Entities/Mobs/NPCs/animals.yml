@@ -1675,7 +1675,10 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
-
+  - type: FoodSequenceElement
+    entries:
+      taco: RatTaco
+      burger: RatBurger
 
 - type: entity
   parent: MobMouse

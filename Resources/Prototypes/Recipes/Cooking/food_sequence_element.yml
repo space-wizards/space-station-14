@@ -1,3 +1,21 @@
+# Mice
+
+- type: foodSequenceElement
+  id: RatBurger
+  name: food-sequence-burger-content-rat
+  sprite:
+    sprite: Mobs/Animals/mouse.rsi
+    state: dead-0
+
+- type: foodSequenceElement
+  id: RatTaco
+  name: food-sequence-content-rat
+  sprite:
+    sprite: Objects/Consumable/Food/taco_sequence.rsi
+    state: rat
+
+# Cheese
+
 - type: foodSequenceElement
   id: CheeseBurger
   name: food-sequence-content-cheese

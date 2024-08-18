@@ -27,8 +27,8 @@
   - type: FoodSequenceStartPoint
     key: taco
     maxLayers: 3
-    startPosition: -0.2, 0
-    offset: 0.1, 0
+    startPosition: -0.15, 0
+    offset: 0.15, 0
     minLayerOffset: 0, 0
     maxLayerOffset: 0, 0.05
     nameGeneration: food-sequence-taco-gen
