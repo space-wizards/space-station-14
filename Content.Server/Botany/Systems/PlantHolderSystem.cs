@@ -1,9 +1,7 @@
-using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Fluids.Components;
-using Content.Server.Ghost.Roles.Components;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
@@ -39,7 +37,6 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
@@ -79,7 +76,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (component.Seed == null)
             return 0;
 
-        var result = Math.Max(1, (int) (component.Age * component.Seed.GrowthStages / component.Seed.Maturation));
+        var result = Math.Max(1, (int)(component.Age * component.Seed.GrowthStages / component.Seed.Maturation));
         return result;
     }
 
@@ -125,9 +122,9 @@ public sealed class PlantHolderSystem : EntitySystem
                 args.PushMarkup(Loc.GetString("plant-holder-component-pest-high-level-message"));
 
             args.PushMarkup(Loc.GetString($"plant-holder-component-water-level-message",
-                ("waterLevel", (int) component.WaterLevel)));
+                ("waterLevel", (int)component.WaterLevel)));
             args.PushMarkup(Loc.GetString($"plant-holder-component-nutrient-level-message",
-                ("nutritionLevel", (int) component.NutritionLevel)));
+                ("nutritionLevel", (int)component.NutritionLevel)));
 
             if (component.DrawWarnings)
             {
@@ -304,7 +301,7 @@ public sealed class PlantHolderSystem : EntitySystem
             var displayName = Loc.GetString(component.Seed.DisplayName);
             _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
                 ("seedName", displayName)), args.User);
-            
+
             DoScream(entity.Owner, component.Seed);
 
             if (_random.Prob(0.3f))
@@ -450,7 +447,7 @@ public sealed class PlantHolderSystem : EntitySystem
         else
         {
             if (_random.Prob(0.8f))
-                component.Age += (int) (1 * HydroponicsSpeedMultiplier);
+                component.Age += (int)(1 * HydroponicsSpeedMultiplier);
 
             component.UpdateSpriteAfterUpdate = true;
         }

@@ -5,16 +5,11 @@ using Content.Server.Popups;
 using Content.Shared.Botany;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
-using Content.Shared.Slippery;
-using Content.Shared.StepTrigger.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -34,7 +29,6 @@ public sealed partial class BotanySystem : EntitySystem
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
-    [Dependency] private readonly CollisionWakeSystem _colWakeSystem = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
 
     public override void Initialize()

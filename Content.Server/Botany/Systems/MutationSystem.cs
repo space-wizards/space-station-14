@@ -16,7 +16,7 @@ public sealed class MutationSystem : EntitySystem
     //Additonal TODO:
     //clean up errors on client side about missing concrete Glow class?
     //Investigate Ligneous pop-up message not appearing if the trait is acquired via mutation.
-    //clean up warnings in new code formatting.
+    //Balance: RobustHarvest can now negate mutating into a low Potency Value, rather than being the primary way to boost Potency.
 
     public override void Initialize()
     {
@@ -35,8 +35,8 @@ public sealed class MutationSystem : EntitySystem
             if (Random(mutation.BaseOdds * severity))
             {
                 if (mutation.AppliesToPlant)
-                { 
-                    EntityEffectBaseArgs args = new EntityEffectBaseArgs(plantHolder, EntityManager);
+                {
+                    var args = new EntityEffectBaseArgs(plantHolder, EntityManager);
                     mutation.Mutation.Effect(args);
                 }
                 if (mutation.Persists) //Stat adjustments do not persist by being an attached effect, they just change the stat.
@@ -84,9 +84,9 @@ public sealed class MutationSystem : EntitySystem
         CrossFloat(ref result.Production, a.Production);
         CrossFloat(ref result.Potency, a.Potency);
 
-        CrossBool(ref result.Seedless, a.Seedless); 
-        CrossBool(ref result.Ligneous, a.Ligneous); 
-        CrossBool(ref result.TurnIntoKudzu, a.TurnIntoKudzu); 
+        CrossBool(ref result.Seedless, a.Seedless);
+        CrossBool(ref result.Ligneous, a.Ligneous);
+        CrossBool(ref result.TurnIntoKudzu, a.TurnIntoKudzu);
         CrossBool(ref result.CanScream, a.CanScream);
 
         CrossGasses(ref result.ExudeGasses, a.ExudeGasses);

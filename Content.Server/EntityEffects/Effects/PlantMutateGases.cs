@@ -1,8 +1,6 @@
-using Content.Server.Botany;
 using Content.Server.Botany.Components;
 using Content.Shared.Atmos;
 using Content.Shared.EntityEffects;
-using Content.Shared.Random;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
@@ -15,9 +13,9 @@ namespace Content.Server.EntityEffects.Effects;
 public sealed partial class PlantMutateExudeGasses : EntityEffect
 {
     [DataField]
-    public float minValue = 0.01f;
+    public float MinValue = 0.01f;
     [DataField]
-    public float maxValue = 0.5f;
+    public float MaxValue = 0.5f;
     public override void Effect(EntityEffectBaseArgs args)
     {
         var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
@@ -26,11 +24,10 @@ public sealed partial class PlantMutateExudeGasses : EntityEffect
             return;
 
         var random = IoCManager.Resolve<IRobustRandom>();
-        var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
         var gasses = plantholder.Seed.ExudeGasses;
 
         // Add a random amount of a random gas to this gas dictionary
-        float amount = random.NextFloat(minValue, maxValue);
+        float amount = random.NextFloat(MinValue, MaxValue);
         Gas gas = random.Pick(Enum.GetValues(typeof(Gas)).Cast<Gas>().ToList());
         if (gasses.ContainsKey(gas))
         {
@@ -54,9 +51,9 @@ public sealed partial class PlantMutateExudeGasses : EntityEffect
 public sealed partial class PlantMutateConsumeGasses : EntityEffect
 {
     [DataField]
-    public float minValue = 0.01f;
+    public float MinValue = 0.01f;
     [DataField]
-    public float maxValue = 0.5f;
+    public float MaxValue = 0.5f;
     public override void Effect(EntityEffectBaseArgs args)
     {
         var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
@@ -65,11 +62,10 @@ public sealed partial class PlantMutateConsumeGasses : EntityEffect
             return;
 
         var random = IoCManager.Resolve<IRobustRandom>();
-        var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
         var gasses = plantholder.Seed.ConsumeGasses;
 
         // Add a random amount of a random gas to this gas dictionary
-        float amount = random.NextFloat(minValue, maxValue);
+        float amount = random.NextFloat(MinValue, MaxValue);
         Gas gas = random.Pick(Enum.GetValues(typeof(Gas)).Cast<Gas>().ToList());
         if (gasses.ContainsKey(gas))
         {

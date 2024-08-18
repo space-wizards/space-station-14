@@ -24,7 +24,7 @@ public sealed partial class PlantSpeciesChange : EntityEffect
         if (plantholder.Seed.MutationPrototypes.Count == 0)
             return;
 
-        var random = IoCManager.Resolve<IRobustRandom>(); 
+        var random = IoCManager.Resolve<IRobustRandom>();
         var targetProto = random.Pick(plantholder.Seed.MutationPrototypes);
         prototypeManager.TryIndex(targetProto, out SeedPrototype? protoSeed);
 

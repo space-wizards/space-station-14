@@ -15,29 +15,30 @@ public sealed partial class Glow : EntityEffect
     [DataField]
     public Color Color = Color.Black;
 
-    static List<Color> colors = new List<Color>{
-                Color.White,
-                Color.Red,
-                Color.Yellow,
-                Color.Green,
-                Color.Blue,
-                Color.Purple,
-                Color.Pink
-            };
+    private static readonly List<Color> Colors = new()
+    {
+        Color.White,
+        Color.Red,
+        Color.Yellow,
+        Color.Green,
+        Color.Blue,
+        Color.Purple,
+        Color.Pink
+    };
 
     public override void Effect(EntityEffectBaseArgs args)
     {
         if (Color == Color.Black)
         {
             var random = IoCManager.Resolve<IRobustRandom>();
-            Color = random.Pick(colors);
+            Color = random.Pick(Colors);
         }
 
-        var _light = args.EntityManager.System<SharedPointLightSystem>();
-        var light = _light.EnsureLight(args.TargetEntity);
-        _light.SetRadius(args.TargetEntity, Radius, light);
-        _light.SetColor(args.TargetEntity, Color, light);
-        _light.SetCastShadows(args.TargetEntity, false, light); // this is expensive, and botanists make lots of plants
+        var lightSystem = args.EntityManager.System<SharedPointLightSystem>();
+        var light = lightSystem.EnsureLight(args.TargetEntity);
+        lightSystem.SetRadius(args.TargetEntity, Radius, light);
+        lightSystem.SetColor(args.TargetEntity, Color, light);
+        lightSystem.SetCastShadows(args.TargetEntity, false, light); // this is expensive, and botanists make lots of plants
     }
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

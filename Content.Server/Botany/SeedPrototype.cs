@@ -133,68 +133,67 @@ public partial class SeedData
     [DataField("productPrototypes", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string> ProductPrototypes = new();
 
-    [DataField("chemicals")] public Dictionary<string, SeedChemQuantity> Chemicals = new();
+    [DataField] public Dictionary<string, SeedChemQuantity> Chemicals = new();
 
-    [DataField("consumeGasses")] public Dictionary<Gas, float> ConsumeGasses = new();
+    [DataField] public Dictionary<Gas, float> ConsumeGasses = new();
 
-    [DataField("exudeGasses")] public Dictionary<Gas, float> ExudeGasses = new();
+    [DataField] public Dictionary<Gas, float> ExudeGasses = new();
 
     #endregion
 
     #region Tolerances
 
-    [DataField("nutrientConsumption")] public float NutrientConsumption = 0.75f;
+    [DataField] public float NutrientConsumption = 0.75f;
 
-    [DataField("waterConsumption")] public float WaterConsumption = 0.5f;
-    [DataField("idealHeat")] public float IdealHeat = 293f;
-    [DataField("heatTolerance")] public float HeatTolerance = 10f;
-    [DataField("idealLight")] public float IdealLight = 7f;
-    [DataField("lightTolerance")] public float LightTolerance = 3f;
-    [DataField("toxinsTolerance")] public float ToxinsTolerance = 4f;
+    [DataField] public float WaterConsumption = 0.5f;
+    [DataField] public float IdealHeat = 293f;
+    [DataField] public float HeatTolerance = 10f;
+    [DataField] public float IdealLight = 7f;
+    [DataField] public float LightTolerance = 3f;
+    [DataField] public float ToxinsTolerance = 4f;
 
-    [DataField("lowPressureTolerance")] public float LowPressureTolerance = 81f;
+    [DataField] public float LowPressureTolerance = 81f;
 
-    [DataField("highPressureTolerance")] public float HighPressureTolerance = 121f;
+    [DataField] public float HighPressureTolerance = 121f;
 
-    [DataField("pestTolerance")] public float PestTolerance = 5f;
+    [DataField] public float PestTolerance = 5f;
 
-    [DataField("weedTolerance")] public float WeedTolerance = 5f;
+    [DataField] public float WeedTolerance = 5f;
 
-    [DataField("weedHighLevelThreshold")] public float WeedHighLevelThreshold = 10f;
+    [DataField] public float WeedHighLevelThreshold = 10f;
 
     #endregion
 
     #region General traits
 
-    [DataField("endurance")] public float Endurance = 100f;
+    [DataField] public float Endurance = 100f;
 
-    [DataField("yield")] public int Yield;
-    [DataField("lifespan")] public float Lifespan;
-    [DataField("maturation")] public float Maturation;
-    [DataField("production")] public float Production;
-    [DataField("growthStages")] public int GrowthStages = 6;
+    [DataField] public int Yield;
+    [DataField] public float Lifespan;
+    [DataField] public float Maturation;
+    [DataField] public float Production;
+    [DataField] public int GrowthStages = 6;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("harvestRepeat")] public HarvestType HarvestRepeat = HarvestType.NoRepeat;
+    [DataField] public HarvestType HarvestRepeat = HarvestType.NoRepeat;
 
-    [DataField("potency")] public float Potency = 1f;
+    [DataField] public float Potency = 1f;
 
     /// <summary>
     ///     If true, cannot be harvested for seeds. Balances hybrids and
     ///     mutations.
     /// </summary>
-    [DataField("seedless")] public bool Seedless = false;
+    [DataField] public bool Seedless = false;
 
     /// <summary>
     ///     If false, rapidly decrease health while growing. Used to kill off
     ///     plants with "bad" mutations.
     /// </summary>
-    [DataField("viable")] public bool Viable = true;
+    [DataField] public bool Viable = true;
 
     /// <summary>
     ///     If true, a sharp tool is required to harvest this plant.
     /// </summary>
-    [DataField("ligneous")] public bool Ligneous;
+    [DataField] public bool Ligneous;
 
     // No, I'm not removing these.
     // if you re-add these, make sure that they get cloned.
@@ -213,37 +212,35 @@ public partial class SeedData
 
     #region Cosmetics
 
-    [DataField("plantRsi", required: true)]
+    [DataField(required: true)]
     public ResPath PlantRsi { get; set; } = default!;
 
-    [DataField("plantIconState")] public string PlantIconState { get; set; } = "produce";
+    [DataField] public string PlantIconState { get; set; } = "produce";
 
     /// <summary>
-    /// Screams random sound, could be strict sound SoundPathSpecifier or collection SoundCollectionSpecifier
-    /// base class is SoundSpecifier
+    /// Screams random sound from collection SoundCollectionSpecifier
     /// </summary>
-    [DataField("screamSound")]
+    [DataField]
     public SoundSpecifier ScreamSound = new SoundCollectionSpecifier("PlantScreams", AudioParams.Default.WithVolume(-10));
 
     [DataField("screaming")] public bool CanScream;
 
-    [DataField("kudzuPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))] public string KudzuPrototype = "WeakKudzu";
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))] public string KudzuPrototype = "WeakKudzu";
 
-    [DataField("turnIntoKudzu")] public bool TurnIntoKudzu;
-    [DataField("splatPrototype")] public string? SplatPrototype { get; set; }
+    [DataField] public bool TurnIntoKudzu;
+    [DataField] public string? SplatPrototype { get; set; }
 
     #endregion
 
     /// <summary>
     /// The mutation effects that have been applied to this plant.
     /// </summary>
-    [DataField("mutations")] //TODO confirm this is sufficient.
-    public List<RandomPlantMutation> Mutations { get; set; } = new();
+    [DataField] public List<RandomPlantMutation> Mutations { get; set; } = new();
 
     /// <summary>
     ///     The seed prototypes this seed may mutate into when prompted to.
     /// </summary>
-    [DataField("mutationPrototypes", customTypeSerializer: typeof(PrototypeIdListSerializer<SeedPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<SeedPrototype>))]
     public List<string> MutationPrototypes = new();
 
     public SeedData Clone()

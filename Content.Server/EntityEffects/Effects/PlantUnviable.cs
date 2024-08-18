@@ -1,7 +1,6 @@
 using Content.Server.Botany.Components;
 using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Server.EntityEffects.Effects;
 
@@ -17,7 +16,7 @@ public sealed partial class PlantUnviable : EntityEffect
         if (plantholder.Seed == null)
             return;
 
-        plantholder.Seed.Viable = false;
+        plantholder.Seed.Viable = !plantholder.Seed.Viable;
     }
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

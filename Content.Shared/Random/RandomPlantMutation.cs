@@ -1,10 +1,5 @@
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
-using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using System.Text.Json.Serialization;
 
 namespace Content.Shared.Random;
 
@@ -18,37 +13,36 @@ public sealed partial class RandomPlantMutation
     /// <summary>
     ///     Odds of this mutation occurring with 1 point of mutation severity on a plant.
     /// </summary>
-    [DataField("baseOdds")]
+    [DataField]
     public float BaseOdds = 0;
 
     /// <summary>
     ///     The name of this mutation.
     /// </summary>
-    [DataField("name")]
+    [DataField]
     public string Name = "";
 
     /// <summary>
     /// The actual EntityEffect to apply to the target
     /// </summary>
-    //[JsonPropertyName("mutation")]
-    [DataField("mutation")]
+    [DataField]
     public EntityEffect Mutation = default!; //TODO: rename to Effect or something?
 
     /// <summary>
     /// This mutation will target the harvested produce
     /// </summary>
-    [DataField("appliesToProduce")]
+    [DataField]
     public bool AppliesToProduce = true;
 
     /// <summary>
     /// This mutation will target the growing plant as soon as this mutation is applied.
     /// </summary>
-    [DataField("appliesToPlant")]
+    [DataField]
     public bool AppliesToPlant = true;
 
     /// <summary>
     /// This mutation stays on the plant and its produce. If false while AppliesToPlant is true, the effect will run when triggered.
     /// </summary>
-    [DataField("persists")]
+    [DataField]
     public bool Persists = true;
 }
