@@ -28,5 +28,5 @@ reagent-desc-laughter = Some say that this is the best medicine, but recent stud
 reagent-name-weh = juice that makes you Weh
 reagent-desc-weh = Pure essence of lizard plush. Makes you Weh!
 
-reagent-name-profanium = Profanium
-reagent-desc-profanium = A chemical compound known to make people compulsively swear. A ruiner of countless family reunions and funerals.
+reagent-name-profanol = Profanol
+reagent-desc-profanol = A chemical compound known to make people compulsively swear. A ruiner of countless family reunions and funerals.

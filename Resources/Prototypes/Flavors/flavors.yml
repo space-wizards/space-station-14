@@ -1073,6 +1073,11 @@
   id: profits
   flavorType: Complex
   description: flavor-complex-profits
+  
+- type: flavor
+  id: offensive
+  flavorType: Base
+  description: flavor-base-offensive
 
 - type: flavor
   id: weh
