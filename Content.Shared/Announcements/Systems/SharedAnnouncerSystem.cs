@@ -70,12 +70,12 @@ public abstract class SharedAnnouncerSystem : EntitySystem
 
         // If the event has ended, add "Complete" to the end
         if (ended)
-		    OopsConcat(id, "Complete");
+            id += "Complete";
 
         return id;
     }
-	
-	private static string OopsConcat(string a, string b)
+
+    private static string OopsConcat(string a, string b)
     {
         // This exists to prevent Roslyn being clever and compiling something that fails sandbox checks.
         return a + b;

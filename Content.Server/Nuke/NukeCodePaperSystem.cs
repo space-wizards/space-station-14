@@ -19,7 +19,7 @@ namespace Content.Server.Nuke
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly PaperSystem _paper = default!;
         [Dependency] private readonly FaxSystem _faxSystem = default!;
-		[Dependency] private readonly AnnouncerSystem _announcer = default!;
+        [Dependency] private readonly AnnouncerSystem _announcer = default!;
 
         public override void Initialize()
         {
@@ -81,7 +81,7 @@ namespace Content.Server.Nuke
 
             if (wasSent)
                 _announcer.SendAnnouncement(_announcer.GetAnnouncementId("NukeCodes"), Filter.Broadcast(),
-			        "nuke-component-announcement-send-codes", colorOverride: Color.Red);
+                    "nuke-component-announcement-send-codes", colorOverride: Color.Red);
 
             return wasSent;
         }

@@ -253,18 +253,6 @@
   - type: GasLeakRule
 
 - type: entity
-  id: GasLeakTTTTS
-  parent: GasLeak
-  components:
-    - type: StationEvent
-      startAnnouncement: true
-      startAudio:
-        path: /Audio/Announcements/gasleakTTTTs.ogg
-      endAnnouncement: true
-    - type: GasLeakRule
-
-
-- type: entity
   id: KudzuGrowth
   parent: BaseStationEventLongDelay
   components:
@@ -343,20 +331,6 @@
     weight: 5
     startAnnouncement: true
     endAnnouncement: true
-    duration: 60
-    maxDuration: 120
-  - type: PowerGridCheckRule
-
-- type: entity
-  id: PowerGridCheckTTTTS
-  parent: PowerGridCheck
-  components:
-  - type: StationEvent
-    weight: 1
-    startAnnouncement: true
-    endAnnouncement: true
-    startAudio:
-      path: /Audio/Announcements/power_offTTTTS.ogg
     duration: 60
     maxDuration: 120
   - type: PowerGridCheckRule
@@ -593,45 +567,6 @@
       orGroup: rodProto
     - id: ImmovableRodGibstick
       prob: 0.0072
-      orGroup: rodProto
-
-- type: entity
-  id: ImmovableRodSpawnTTTTS
-  parent: ImmovableRodSpawn
-  components:
-  - type: StationEvent
-    startAnnouncement: true
-    startAudio:
-      path: /Audio/Announcements/highvelocityTTTTS.ogg
-    weight: 1
-    duration: 1
-    earliestStart: 30
-    minimumPlayers: 20
-  - type: ImmovableRodRule
-    rodPrototypes:
-    - id: ImmovableRodKeepTilesStill
-      prob: 0.3
-      orGroup: rodProto
-    - id: ImmovableRodMop
-      prob: 0.1
-      orGroup: rodProto
-    - id: ImmovableRodShark
-      prob: 0.1
-      orGroup: rodProto
-    - id: ImmovableRodClown
-      prob: 0.1
-      orGroup: rodProto
-    - id: ImmovableRodBanana
-      prob: 0.1
-      orGroup: rodProto
-    - id: ImmovableRodHammer
-      prob: 0.1
-      orGroup: rodProto
-    - id: ImmovableRodThrongler
-      prob: 0.1
-      orGroup: rodProto
-    - id: ImmovableRodGibstick
-      prob: 0.1
       orGroup: rodProto
 
 - type: entity

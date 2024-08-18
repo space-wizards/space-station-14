@@ -46,7 +46,7 @@ namespace Content.Server.Communications
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-		[Dependency] private readonly AnnouncerSystem _announcer = default!;
+        [Dependency] private readonly AnnouncerSystem _announcer = default!;
 
         private const float UIUpdateInterval = 5.0f;
 
@@ -293,8 +293,8 @@ namespace Content.Server.Communications
             }
 
             if (TryComp<StationDataComponent>(_stationSystem.GetOwningStation(uid), out var stationData))
-			    _announcer.SendAnnouncement("announce", _stationSystem.GetInStation(stationData), msg, title,
-			        comp.Color);
+                _announcer.SendAnnouncement("announce", _stationSystem.GetInStation(stationData), msg, title,
+                    comp.Color);
 
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Actor):player} has sent the following station announcement: {msg}");
 

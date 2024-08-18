@@ -59,14 +59,14 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
         AdminLogManager.Add(LogType.EventStarted, LogImpact.High, $"Event started: {ToPrettyString(uid)}");
 
         if (stationEvent.StartAnnouncement)
-		{
-			_announcer.SendAnnouncement(
+        {
+            _announcer.SendAnnouncement(
                 _announcer.GetAnnouncementId(args.RuleId),
                 Filter.Broadcast(),
                 _announcer.GetEventLocaleString(_announcer.GetAnnouncementId(args.RuleId)),
                 colorOverride: Color.Gold
-			);
-		}
+            );
+        }
 
         if (stationEvent.Duration != null)
         {
@@ -92,13 +92,13 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
         Filter allPlayersInGame = Filter.Empty().AddWhere(GameTicker.UserHasJoinedGame);
 
         if (stationEvent.EndAnnouncement)
-		{
+        {
                 _announcer.SendAnnouncement(
                 _announcer.GetAnnouncementId(args.RuleId, true),
                 Filter.Broadcast(),
                 _announcer.GetEventLocaleString(_announcer.GetAnnouncementId(args.RuleId, true)),
                 colorOverride: Color.Gold);
-		}
+        }
     }
 
     /// <summary>
