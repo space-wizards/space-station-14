@@ -133,7 +133,7 @@ public sealed partial class StoreSystem
     /// </summary>
     private void OnBuyRequest(EntityUid uid, StoreComponent component, StoreBuyListingMessage msg)
     {
-        var listing = component.Listings.FirstOrDefault(x => x.ID.Equals(msg.Listing.ID));
+        var listing = component.LastAvailableListings.FirstOrDefault(x => x.ID.Equals(msg.Listing.ID));
 
         if (listing == null) //make sure this listing actually exists
         {
@@ -219,7 +219,7 @@ public sealed partial class StoreSystem
 
                 if (listing.ProductUpgradeId != null)
                 {
-                    foreach (var upgradeListing in component.Listings)
+                    foreach (var upgradeListing in component.PrototypeListings)
                     {
                         if (upgradeListing.ID == listing.ProductUpgradeId)
                         {
@@ -271,7 +271,8 @@ public sealed partial class StoreSystem
         var buyFinished = new StoreBuyFinishedEvent
         {
             PurchasingItemId = msg.Listing.ID,
-            StoreUid = uid
+            StoreUid = uid,
+            ListingData = listing
         };
         RaiseLocalEvent(ref buyFinished);
 
@@ -396,5 +397,6 @@ public sealed partial class StoreSystem
 /// </summary>
 /// <param name="StoreUid">EntityUid on which store is placed.</param>
 /// <param name="PurchasingItemId">Id of ListingItem that was purchased.</param>
+/// <param name="ListingData">.</param>
 [ByRefEvent]
-public record struct StoreBuyFinishedEvent(EntityUid StoreUid, string PurchasingItemId);
+public record struct StoreBuyFinishedEvent(EntityUid StoreUid, string PurchasingItemId, ListingDataWithCostModifiers ListingData);

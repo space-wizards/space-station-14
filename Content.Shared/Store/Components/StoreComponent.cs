@@ -47,7 +47,7 @@ public sealed partial class StoreComponent : Component
     /// All listings, including those that aren't available to the buyer
     /// </summary>
     [DataField]
-    public HashSet<ListingData> Listings = new();
+    public HashSet<ListingPrototype> PrototypeListings = new();
 
     /// <summary>
     /// All available listings from the last time that it was checked.

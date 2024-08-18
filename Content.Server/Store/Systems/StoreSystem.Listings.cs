@@ -14,19 +14,16 @@ public sealed partial class StoreSystem
     /// <param name="component">The store to refresh</param>
     public void RefreshAllListings(StoreComponent component)
     {
-        component.Listings = GetAllListings();
+        component.PrototypeListings = GetAllListings().ToHashSet();
     }
 
     /// <summary>
     /// Gets all listings from a prototype.
     /// </summary>
     /// <returns>All the listings</returns>
-    public HashSet<ListingData> GetAllListings()
+    public IEnumerable<ListingPrototype> GetAllListings()
     {
-        var allListings = _proto.EnumeratePrototypes<ListingPrototype>();
-
-        var withModifiers = allListings.Select(x=>(ListingData)x.Clone()).ToHashSet();
-        return withModifiers;
+        return _proto.EnumeratePrototypes<ListingPrototype>();
     }
 
     /// <summary>
@@ -43,10 +40,7 @@ public sealed partial class StoreSystem
             return false;
         }
 
-        var listingData = new ListingDataWithCostModifiers(proto);
-        var @event = new ListingItemsInitializingEvent(listingData, component.Owner);
-        RaiseLocalEvent(@event);
-        return TryAddListing(component, listingData);
+        return TryAddListing(component, proto);
     }
 
     /// <summary>
@@ -55,9 +49,9 @@ public sealed partial class StoreSystem
     /// <param name="component">The store to add the listing to</param>
     /// <param name="listing">The listing</param>
     /// <returns>Whether or not the listing was add successfully</returns>
-    public bool TryAddListing(StoreComponent component, ListingDataWithCostModifiers listing)
+    public bool TryAddListing(StoreComponent component, ListingPrototype listing)
     {
-        return component.Listings.Add(listing);
+        return component.PrototypeListings.Add(listing);
     }
 
     /// <summary>

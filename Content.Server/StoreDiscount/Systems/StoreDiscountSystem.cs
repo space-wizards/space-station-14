@@ -15,13 +15,21 @@ namespace Content.Server.StoreDiscount.Systems;
 /// </summary>
 public sealed class StoreDiscountSystem : EntitySystem
 {
+    [ValidatePrototypeId<StoreCategoryPrototype>]
+    private const string DiscountedStoreCategoryPrototypeKey = "DiscountedItems";
+
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    private StoreCategoryPrototype _discountStoreCategoryPrototype = default!;
 
     /// <inheritdoc />
     public override void Initialize()
     {
         base.Initialize();
+
+        _discountStoreCategoryPrototype =
+            _prototypeManager.Index<StoreCategoryPrototype>(DiscountedStoreCategoryPrototypeKey);
 
         SubscribeLocalEvent<StoreInitializedEvent>(OnStoreInitialized);
         SubscribeLocalEvent<StoreBuyFinishedEvent>(OnBuyFinished);
@@ -40,8 +48,14 @@ public sealed class StoreDiscountSystem : EntitySystem
             var discounts = discountsComponent.Discounts;
             foreach (var discountData in discounts)
             {
+                if (discountData.Count <= 0)
+                {
+                    continue;
+                }
+
                 var found = ev.ListingData.First(x => x.ID == discountData.ListingId);
-                found.AddModifier(discountData.DiscountAmountByCurrency);
+                found.CostModifiersBySourceId.Add(discountData.DiscountCategory, discountData.DiscountAmountByCurrency);
+                found.Categories.Add(_discountStoreCategoryPrototype);
             }
         }
     }
@@ -49,7 +63,7 @@ public sealed class StoreDiscountSystem : EntitySystem
     /// <summary> Decrements discounted item count. </summary>
     private void OnBuyFinished(ref StoreBuyFinishedEvent ev)
     {
-        var (storeId, purchasedItemId) = ev;
+        var (storeId, purchasedItemId, listingData) = ev;
         if (!TryComp<StoreDiscountComponent>(storeId, out var discountsComponent))
         {
             return;
@@ -62,12 +76,14 @@ public sealed class StoreDiscountSystem : EntitySystem
             return;
         }
 
-        if (discountData.Count <= 0)
+        if (discountData.Count > 0)
         {
-            Log.Warning("Tried to decrement discounted items count but it were already zero!");
+            discountData.Count--;
+            if (discountData.Count == 0)
+            {
+                listingData.CostModifiersBySourceId.Remove(discountData.DiscountCategory);
+            }
         }
-
-        discountData.Count--;
     }
 
     /// <summary> Initialized discounts if required. </summary>

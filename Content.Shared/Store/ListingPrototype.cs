@@ -13,7 +13,7 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
     private IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2>? _costModified = null;
 
     [DataField]
-    public List<IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2>> Modifiers = new();
+    public Dictionary<string, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>> CostModifiersBySourceId = new();
 
     /// <inheritdoc />
     public ListingDataWithCostModifiers(ListingData listingData)
@@ -43,16 +43,10 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
 
     public bool CanBuyWith(Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance)
     {
-        foreach (var (currency, value) in Cost)
+        foreach (var (currency, amount) in Cost)
         {
             if (!balance.ContainsKey(currency))
                 return false;
-
-            var amount = value;
-            if (Cost.TryGetValue(currency, out var discount))
-            {
-                amount -= discount;
-            }
 
             if (balance[currency] < amount)
                 return false;
@@ -68,7 +62,7 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
         {
             if (_costModified == null)
             {
-                if (Modifiers.Count == 0)
+                if (CostModifiersBySourceId.Count == 0)
                 {
                     _costModified = OriginalCost.ToDictionary(x => x.Key, x => x.Value);
                 }
@@ -78,7 +72,7 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
                         x => x.Key,
                         x => x.Value
                     );
-                    foreach (var modifier in Modifiers)
+                    foreach (var (_, modifier) in CostModifiersBySourceId)
                     {
                         ApplyModifier(dictionary, modifier);
                     }
@@ -89,7 +83,7 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
         }
     }
 
-    public bool IsCostModified => Modifiers.Count > 0;
+    public bool IsCostModified => CostModifiersBySourceId.Count > 0;
 
     private void ApplyModifier(
         Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> applyTo,
@@ -111,18 +105,13 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
         }
     }
 
-    public void AddModifier(IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> modifier)
-    {
-        Modifiers.Add(modifier);
-    }
-
     public IReadOnlyDictionary<ProtoId<CurrencyPrototype>, float> GetModifiersSummaryRelative()
     {
-        var modifiersSummaryAbsoluteValues = Modifiers.Aggregate(
+        var modifiersSummaryAbsoluteValues = CostModifiersBySourceId.Aggregate(
             new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>(),
             (accumulator, x) =>
             {
-                foreach (var (currency, amount) in x)
+                foreach (var (currency, amount) in x.Value)
                 {
                     accumulator.TryGetValue(currency, out var accumulatedAmount);
                     accumulator[currency] = accumulatedAmount + amount;
@@ -155,10 +144,34 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
 /// </summary>
 [Serializable, NetSerializable]
 [Virtual, DataDefinition]
-public partial class ListingData : IEquatable<ListingData>, ICloneable
+public partial class ListingData : IEquatable<ListingData>
 {
     public ListingData()
     {
+    }
+
+    public ListingData(ListingData other) : this(
+        other.Name,
+        other.DiscountCategory,
+        other.Description,
+        other.Conditions,
+        other.Icon,
+        other.Priority,
+        other.ProductEntity,
+        other.ProductAction,
+        other.ProductUpgradeId,
+        other.ProductActionEntity,
+        other.ProductEvent,
+        other.RaiseProductEventOnUser,
+        other.PurchaseAmount,
+        other.ID,
+        other.Categories,
+        other.Cost,
+        other.RestockTime,
+        other.DiscountDownTo
+    )
+    {
+
     }
 
     public ListingData(
@@ -176,7 +189,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
         bool raiseProductEventOnUser,
         int purchaseAmount,
         string id,
-        List<ProtoId<StoreCategoryPrototype>> categories,
+        HashSet<ProtoId<StoreCategoryPrototype>> categories,
         IReadOnlyDictionary<ProtoId<CurrencyPrototype>, FixedPoint2> originalCost,
         TimeSpan restockTime,
         Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> dataDiscountDownTo
@@ -185,7 +198,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
         Name = name;
         DiscountCategory = discountCategory;
         Description = description;
-        Conditions = conditions;
+        Conditions = conditions?.ToList();
         Icon = icon;
         Priority = priority;
         ProductEntity = productEntity;
@@ -196,10 +209,13 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
         RaiseProductEventOnUser = raiseProductEventOnUser;
         PurchaseAmount = purchaseAmount;
         ID = id;
-        Categories = categories;
+        Categories = categories.ToHashSet();
         OriginalCost = originalCost;
         RestockTime = restockTime;
-        DiscountDownTo = dataDiscountDownTo;
+        DiscountDownTo = dataDiscountDownTo.ToDictionary(
+            x => x.Key,
+            x => x.Value
+        );
     }
 
     [ViewVariables]
@@ -228,7 +244,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     /// The categories that this listing applies to. Used for filtering a listing for a store.
     /// </summary>
     [DataField]
-    public List<ProtoId<StoreCategoryPrototype>> Categories = new();
+    public HashSet<ProtoId<StoreCategoryPrototype>> Categories = new();
 
     /// <summary>
     /// The cost of the listing. String represents the currency type while the FixedPoint2 represents the amount of that currency.
@@ -343,34 +359,6 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
         return true;
     }
 
-    /// <summary>
-    /// Creates a unique instance of a listing. ALWAYS USE THIS WHEN ENUMERATING LISTING PROTOTYPES
-    /// DON'T BE DUMB AND MODIFY THE PROTOTYPES
-    /// </summary>
-    /// <returns>A unique copy of the listing data.</returns>
-    public object Clone()
-    {
-        return new ListingData
-        {
-            ID = ID,
-            Name = Name,
-            Description = Description,
-            Categories = Categories,
-            OriginalCost = OriginalCost,
-            Conditions = Conditions,
-            Icon = Icon,
-            Priority = Priority,
-            ProductEntity = ProductEntity,
-            ProductAction = ProductAction,
-            ProductUpgradeId = ProductUpgradeId,
-            ProductActionEntity = ProductActionEntity,
-            ProductEvent = ProductEvent,
-            PurchaseAmount = PurchaseAmount,
-            RestockTime = RestockTime,
-            DiscountCategory = DiscountCategory,
-            DiscountDownTo = DiscountDownTo
-        };
-    }
 }
 
 /// <summary>
