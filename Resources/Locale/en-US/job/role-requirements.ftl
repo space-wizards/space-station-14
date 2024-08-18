@@ -1,7 +1,7 @@
 ﻿
 # Coloring rule of thumb: green for met requirement, yellow for unmet requirement that can still be met, red for unmeetable
 
-role-timer-department-sufficient = You have [color=green]{TOSTRING($current, "0")}/{TOSTRING($required, "0")}[/color] minutes of [color={$departmentColor}]{$department}[/color] department playtime to play this role.
+role-timer-department-sufficient = You require [color=green]{TOSTRING($current, "0")}/{TOSTRING($required, "0")}[/color] minutes of [color={$departmentColor}]{$department}[/color] department playtime to play this role.
 role-timer-department-insufficient = You require [color=yellow]{TOSTRING($current, "0")}/{TOSTRING($required, "0")}[/color] minutes of [color={$departmentColor}]{$department}[/color] department playtime to play this role.
 role-timer-department-not-too-high = You require [color=green]{TOSTRING($current, "0")}/{TOSTRING($required, "0")}[/color] or fewer minutes of [color={$departmentColor}]{$department}[/color] department playtime.
 role-timer-department-too-high = You require [color=red]{TOSTRING($current, "0")}/{TOSTRING($required, "0")}[/color] or fewer minutes of [color={$departmentColor}]{$department}[/color] department playtime. (Are you trying to play a trainee role?)
