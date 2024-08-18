@@ -70,7 +70,7 @@
     state: plantbgone
   completetime: 1
   materials:
-    Biomass: 3
+    Biomass: 12
 
 - type: latheRecipe
   id: BioGenWeedKiller
@@ -82,7 +82,7 @@
     state: weedspray
   completetime: 1
   materials:
-    Biomass: 2
+    Biomass: 8
 
 - type: latheRecipe
   id: BioGenPestKiller
@@ -94,7 +94,7 @@
     state: weedspray
   completetime: 1
   materials:
-    Biomass: 3
+    Biomass: 12
 
 - type: latheRecipe
   id: BioGenLeft4Zed
@@ -106,7 +106,7 @@
     state: bottle-1
   completetime: 1
   materials:
-    Biomass: 4
+    Biomass: 12
 
 - type: latheRecipe
   id: BioGenEZNutrient
@@ -118,7 +118,7 @@
     state: bottle-1
   completetime: 1
   materials:
-    Biomass: 1
+    Biomass: 15
 
 - type: latheRecipe
   id: BioGenRobustHarvest
@@ -130,7 +130,7 @@
     state: bottle-1
   completetime: 1
   materials:
-    Biomass: 2
+    Biomass: 15
 
 - type: latheRecipe
   id: BioGenMilk
@@ -142,7 +142,7 @@
     state: icon
   completetime: 1
   materials:
-    Biomass: 4
+    Biomass: 12
 
 - type: latheRecipe
   id: BioGenMilkSoy
@@ -154,7 +154,7 @@
     state: icon
   completetime: 1
   materials:
-    Biomass: 4
+    Biomass: 12
 
 - type: latheRecipe
   id: BioGenEthanol
@@ -166,7 +166,7 @@
     state: icon
   completetime: 1
   materials:
-    Biomass: 6
+    Biomass: 18
 
 - type: latheRecipe
   id: BioGenCream
@@ -178,7 +178,7 @@
     state: icon
   completetime: 1
   materials:
-    Biomass: 6
+    Biomass: 18
 
 - type: latheRecipe
   id: BioGenBlackpepper
@@ -190,7 +190,7 @@
     state: packet-pepper
   completetime: 1
   materials:
-    Biomass: 6
+    Biomass: 18
 
 - type: latheRecipe
   id: BioGenEnzyme
@@ -202,7 +202,7 @@
     state: bottle-empty
   completetime: 1
   materials:
-    Biomass: 6
+    Biomass: 18
 
 - type: latheRecipe
   id: BioGenFlour
@@ -214,7 +214,7 @@
     state: flour-big
   completetime: 1
   materials:
-    Biomass: 6
+    Biomass: 18
 
 - type: latheRecipe
   id: BioGenSugar
@@ -226,7 +226,7 @@
     state: sugar-big
   completetime: 1
   materials:
-    Biomass: 6
+    Biomass: 18
 
 
 
