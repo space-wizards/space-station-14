@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Potato by Doru991, and crack by Brahex",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "potato-base"
+    },
+    {
+      "name": "icon-potato-off"
+    },
+    {
+      "name": "potato-off-overlay"
+    },
+    {
+      "name": "potato-on-overlay"
+    },
+    {
+      "name": "potato-searching-overlay"
+    },
+    {
+      "name": "DamageOverlay_100"
+    }
+  ]
+}

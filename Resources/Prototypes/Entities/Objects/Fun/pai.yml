@@ -142,7 +142,7 @@
   description: It's a potato. You forced it to be sentient, you monster.
   components:
   - type: Sprite
-    sprite: Objects/Fun/pai.rsi
+    sprite: Objects/Fun/pai_potato.rsi
     layers:
     - state: potato-base
     - state: potato-off-overlay
@@ -163,24 +163,11 @@
   - type: Construction
     graph: PotatoAI
     node: potatoai
-  - type: PAI
-    damageTillCracked: 10
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/glass_crack2.ogg
-      - !type:DoActsBehavior
-        acts: [ "Breakage" ]
   - type: DamageVisuals
-    thresholds: [10]
+    thresholds: [100]
     trackAllDamage: true
     damageOverlay:
-      sprite: /Objects/Fun/pai.rsi
+      sprite: /Objects/Fun/pai_potato.rsi
 
 - type: entity
   id: ActionPAIPlayMidi
