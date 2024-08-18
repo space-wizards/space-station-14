@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.StoreDiscount.Systems;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
@@ -133,22 +134,4 @@ public sealed partial class StoreSystem
         }
         return false;
     }
-}
-
-public sealed class ListingItemsInitializingEvent
-{
-    public ListingItemsInitializingEvent(IReadOnlyCollection<ListingDataWithCostModifiers> listingData, EntityUid? storeOwner)
-    {
-        ListingData = listingData;
-        StoreOwner = storeOwner;
-    }
-
-    public ListingItemsInitializingEvent(ListingDataWithCostModifiers listingData, EntityUid? storeOwner)
-    {
-        ListingData = new HashSet<ListingDataWithCostModifiers> { listingData };
-        StoreOwner = storeOwner;
-    }
-
-    public IReadOnlyCollection<ListingDataWithCostModifiers> ListingData { get; }
-    public EntityUid? StoreOwner { get; }
 }

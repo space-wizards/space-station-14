@@ -38,12 +38,12 @@ public sealed class StoreDiscountSystem : EntitySystem
 
     private void OnListingItemInitialized(ListingItemsInitializingEvent ev)
     {
-        if (ev.StoreOwner == null)
+        if (ev.Store == null)
         {
             return;
         }
 
-        if (TryComp<StoreDiscountComponent>(ev.StoreOwner, out var discountsComponent))
+        if (TryComp<StoreDiscountComponent>(ev.Store, out var discountsComponent))
         {
             var discounts = discountsComponent.Discounts;
             foreach (var discountData in discounts)
@@ -326,3 +326,29 @@ public sealed class StoreDiscountSystem : EntitySystem
         }
     }
 }
+
+/// <summary>
+/// Event of store items being initialized before usage.
+/// This event is supposed to help refine listing items - add discounts, refine categories, etc
+/// </summary>
+public sealed class ListingItemsInitializingEvent
+{
+    public ListingItemsInitializingEvent(IReadOnlyCollection<ListingDataWithCostModifiers> listingData, EntityUid? store)
+    {
+        ListingData = listingData;
+        Store = store;
+    }
+
+    public ListingItemsInitializingEvent(ListingDataWithCostModifiers listingData, EntityUid? store)
+    {
+        ListingData = new HashSet<ListingDataWithCostModifiers> { listingData };
+        Store = store;
+    }
+
+    /// <summary> List of items to initialize. </summary>
+    public IReadOnlyCollection<ListingDataWithCostModifiers> ListingData { get; }
+
+    /// <summary> EntityUid of store entity. </summary>
+    public EntityUid? Store { get; }
+}
+
