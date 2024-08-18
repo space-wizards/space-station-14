@@ -74,13 +74,7 @@
     #   path: events/gas_leak-complete.ogg
     # - id: kudzuGrowth # Kudzu is growing in a random place
     #   path: events/kudzu_growth.ogg
-    - id: gameRuleMeteorSwarmSmall # Meteors are flying at the station, stay away from windows
-      path: events/meteors.ogg
-    - id: gameRuleMeteorSwarmMedium # Meteors are flying at the station, stay away from windows
-      path: events/meteors.ogg
-    - id: gameRuleMeteorSwarmLarge # Meteors are flying at the station, stay away from windows
-      path: events/meteors.ogg
-    - id: gameRuleSpaceDustMajor # Meteors are flying at the station, stay away from windows
+    - id: meteorSwarm # Meteors are flying at the station, stay away from windows
       path: events/meteors.ogg
     # - id: meteorSwarmComplete # Meteors have stopped flying at the station
     #   path: events/meteors-complete.ogg

@@ -39,7 +39,7 @@ public sealed class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmComponent>
         if (meteorSwarm.StartAnnouncement)
         {
             _announcer.SendAnnouncement(
-                _announcer.GetAnnouncementId(args.RuleId),
+                _announcer.GetAnnouncementId("MeteorSwarm"),
                 Filter.Broadcast(),
                 _announcer.GetEventLocaleString(_announcer.GetAnnouncementId(args.RuleId)),
                 colorOverride: Color.Gold
