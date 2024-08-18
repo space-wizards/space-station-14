@@ -14,16 +14,17 @@ public sealed partial class StoreSystem
     /// <param name="component">The store to refresh</param>
     public void RefreshAllListings(StoreComponent component)
     {
-        component.PrototypeListings = GetAllListings().ToHashSet();
+        component.Listings = GetAllListings().ToHashSet();
     }
 
     /// <summary>
     /// Gets all listings from a prototype.
     /// </summary>
     /// <returns>All the listings</returns>
-    public IEnumerable<ListingPrototype> GetAllListings()
+    public IEnumerable<ListingData> GetAllListings()
     {
-        return _proto.EnumeratePrototypes<ListingPrototype>();
+        var prototypes = _proto.EnumeratePrototypes<ListingPrototype>();
+        return prototypes.Select(x => new ListingData(x));
     }
 
     /// <summary>
@@ -51,7 +52,7 @@ public sealed partial class StoreSystem
     /// <returns>Whether or not the listing was add successfully</returns>
     public bool TryAddListing(StoreComponent component, ListingPrototype listing)
     {
-        return component.PrototypeListings.Add(listing);
+        return component.Listings.Add(listing);
     }
 
     /// <summary>

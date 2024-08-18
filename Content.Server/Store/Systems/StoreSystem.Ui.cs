@@ -219,7 +219,7 @@ public sealed partial class StoreSystem
 
                 if (listing.ProductUpgradeId != null)
                 {
-                    foreach (var upgradeListing in component.PrototypeListings)
+                    foreach (var upgradeListing in component.Listings)
                     {
                         if (upgradeListing.ID == listing.ProductUpgradeId)
                         {

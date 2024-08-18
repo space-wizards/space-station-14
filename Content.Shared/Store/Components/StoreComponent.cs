@@ -44,10 +44,10 @@ public sealed partial class StoreComponent : Component
     public EntityUid? AccountOwner = null;
 
     /// <summary>
-    /// All listings, including those that aren't available to the buyer
+    /// All listings, including those that aren't available to the buyer. 
     /// </summary>
     [DataField]
-    public HashSet<ListingPrototype> PrototypeListings = new();
+    public HashSet<ListingData> Listings = new();
 
     /// <summary>
     /// All available listings from the last time that it was checked.
