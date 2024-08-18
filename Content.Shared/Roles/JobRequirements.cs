@@ -11,14 +11,14 @@ public static class JobRequirements
     public static bool TryRequirementsMet(
         JobPrototype job,
         IReadOnlyDictionary<string, TimeSpan> playTimes,
-        out List<FormattedMessage> reasons,
+        out List<FormattedMessage> requirementDetails,
         IEntityManager entManager,
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile)
     {
         var sys = entManager.System<SharedRoleSystem>();
         var requirements = sys.GetJobRequirement(job);
-        reasons = new List<FormattedMessage>();
+        requirementDetails = new List<FormattedMessage>();
         if (requirements == null)
             return true;
 
@@ -32,7 +32,7 @@ public static class JobRequirements
                           out var reason)
                       && success;
 
-            reasons.Add(reason);
+            requirementDetails.Add(reason);
         }
 
         return success;
