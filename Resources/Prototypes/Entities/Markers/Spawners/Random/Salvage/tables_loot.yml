@@ -207,7 +207,6 @@
   table: !type:GroupSelector
     children:
     - id: BlueprintFlare
-    - id: SeismicCharge
     - id: FultonBeacon
     - id: Fulton
       amount: !type:RangeNumberSelector
