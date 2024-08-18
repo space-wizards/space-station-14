@@ -1,41 +1,39 @@
-using Content.Shared.Chat;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Actions;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.StationAi;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Silicons.StationAi;
 
-public abstract class SharedStationAiSystem : EntitySystem
+public abstract partial class SharedStationAiSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ItemSlotsSystem _slots = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedContainerSystem _containers = default!;
-    [Dependency] private readonly SharedEyeSystem _eye = default!;
-    [Dependency] private readonly SharedMoverController _mover = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
+    [Dependency] private   readonly IGameTiming _timing = default!;
+    [Dependency] private   readonly ItemSlotsSystem _slots = default!;
+    [Dependency] private   readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private   readonly MetaDataSystem _metadata = default!;
+    [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private   readonly SharedContainerSystem _containers = default!;
+    [Dependency] private   readonly SharedDoorSystem _doors = default!;
+    [Dependency] private   readonly SharedEyeSystem _eye = default!;
+    [Dependency] protected readonly SharedMapSystem Maps = default!;
+    [Dependency] private   readonly SharedMoverController _mover = default!;
+    [Dependency] private   readonly SharedUserInterfaceSystem _uiSystem = default!;
+    [Dependency] private   readonly StationAiVisionSystem _vision = default!;
 
     /*
-     * TODO: Vismask on the AI eye
-     * TODO: Add door bolting
-     * TODO: Sprite / vismask visibility + action
      * TODO: Double-check positronic interactions didn't break
-     * Need action bar
-     * AI wire for doors.
-     * Need to check giving comp "just works" and maybe map act for it
-     * Need to move the view stuff to shared + parallel + optimise
-     * Need cameras to be snip-snippable and to turn ai vision off, also xray support, also power
-     * Need to bump PVS range for AI to like 20 or something
-     * Make it a screen-space overlay
-     * Need interaction whitelist or something working
-     * Need destruction and all that
+     * Fix inventory GUI
+     * Need destruction
+     * Cleanup the shitcode
      */
 
     // StationAiHeld is added to anything inside of an AI core.
@@ -46,8 +44,14 @@ public abstract class SharedStationAiSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StationAiHeldComponent, AccessibleOverrideEvent>(OnAiAccessible);
-        SubscribeLocalEvent<StationAiHeldComponent, InteractionAttemptEvent>(OnAiInteraction);
+        InitializeAirlock();
+        InitializeHeld();
+
+        SubscribeLocalEvent<StationAiWhitelistComponent, BoundUserInterfaceCheckRangeEvent>(OnAiBuiCheck);
+
+        SubscribeLocalEvent<StationAiOverlayComponent, AccessibleOverrideEvent>(OnAiAccessible);
+        SubscribeLocalEvent<StationAiOverlayComponent, InRangeOverrideEvent>(OnAiInRange);
+        SubscribeLocalEvent<StationAiOverlayComponent, MenuVisibilityEvent>(OnAiMenu);
 
         SubscribeLocalEvent<StationAiHolderComponent, ComponentInit>(OnHolderInit);
         SubscribeLocalEvent<StationAiHolderComponent, ComponentRemove>(OnHolderRemove);
@@ -62,27 +66,79 @@ public abstract class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiCoreComponent, ComponentShutdown>(OnAiShutdown);
     }
 
-    public virtual bool SetEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
+    private void OnAiAccessible(Entity<StationAiOverlayComponent> ent, ref AccessibleOverrideEvent args)
     {
-        if (entity.Comp.Enabled == enabled)
-            return false;
-
-        entity.Comp.Enabled = enabled;
-        Dirty(entity);
-
-        return true;
-    }
-
-    private void OnAiInteraction(Entity<StationAiHeldComponent> ent, ref InteractionAttemptEvent args)
-    {
-        args.Cancelled = !HasComp<StationAiWhitelistComponent>(args.Target);
-    }
-
-    private void OnAiAccessible(Entity<StationAiHeldComponent> ent, ref AccessibleOverrideEvent args)
-    {
-        // TODO: Validate it's near cameras
-        args.Accessible = true;
         args.Handled = true;
+
+        // Hopefully AI never needs storage
+        if (_containers.TryGetContainingContainer(args.Target, out var targetContainer))
+        {
+            return;
+        }
+
+        if (!_containers.IsInSameOrTransparentContainer(args.User, args.Target, otherContainer: targetContainer))
+        {
+            return;
+        }
+
+        args.Accessible = true;
+    }
+
+    private void OnAiMenu(Entity<StationAiOverlayComponent> ent, ref MenuVisibilityEvent args)
+    {
+        args.Visibility &= ~MenuVisibility.NoFov;
+    }
+
+    private void OnAiBuiCheck(Entity<StationAiWhitelistComponent> ent, ref BoundUserInterfaceCheckRangeEvent args)
+    {
+        args.Result = BoundUserInterfaceRangeResult.Fail;
+
+        // Similar to the inrange check but more optimised so server doesn't die.
+        var targetXform = Transform(args.Target);
+
+        // No cross-grid
+        if (targetXform.GridUid != args.Actor.Comp.GridUid)
+        {
+            return;
+        }
+
+        if (!TryComp(targetXform.GridUid, out MapGridComponent? grid))
+        {
+            return;
+        }
+
+        var targetTile = Maps.LocalToTile(targetXform.GridUid.Value, grid, targetXform.Coordinates);
+
+        lock (_vision)
+        {
+            if (_vision.IsAccessible((targetXform.GridUid.Value, grid), targetTile, fastPath: true))
+            {
+                args.Result = BoundUserInterfaceRangeResult.Pass;
+            }
+        }
+    }
+
+    private void OnAiInRange(Entity<StationAiOverlayComponent> ent, ref InRangeOverrideEvent args)
+    {
+        args.Handled = true;
+        var targetXform = Transform(args.Target);
+
+        // No cross-grid
+        if (targetXform.GridUid != Transform(args.User).GridUid)
+        {
+            return;
+        }
+
+        // Validate it's in camera range yes this is expensive.
+        // Yes it needs optimising
+        if (!TryComp(targetXform.GridUid, out MapGridComponent? grid))
+        {
+            return;
+        }
+
+        var targetTile = Maps.LocalToTile(targetXform.GridUid.Value, grid, targetXform.Coordinates);
+
+        args.InRange = _vision.IsAccessible((targetXform.GridUid.Value, grid), targetTile);
     }
 
     private void OnHolderInteract(Entity<StationAiHolderComponent> ent, ref AfterInteractEvent args)
@@ -191,7 +247,6 @@ public abstract class SharedStationAiSystem : EntitySystem
         EnsureComp<IgnoreUIRangeComponent>(args.Entity);
         EnsureComp<StationAiHeldComponent>(args.Entity);
         EnsureComp<StationAiOverlayComponent>(args.Entity);
-        EnsureComp<RemoteInteractComponent>(args.Entity);
 
         AttachEye(ent);
     }
@@ -215,7 +270,6 @@ public abstract class SharedStationAiSystem : EntitySystem
         RemCompDeferred<IgnoreUIRangeComponent>(args.Entity);
         RemCompDeferred<StationAiHeldComponent>(args.Entity);
         RemCompDeferred<StationAiOverlayComponent>(args.Entity);
-        RemCompDeferred<RemoteInteractComponent>(args.Entity);
     }
 
     protected void UpdateAppearance(Entity<StationAiHolderComponent?> entity)
@@ -231,6 +285,38 @@ public abstract class SharedStationAiSystem : EntitySystem
         }
 
         _appearance.SetData(entity.Owner, StationAiVisualState.Key, StationAiState.Occupied);
+    }
+
+    public virtual bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
+    {
+        if (entity.Comp.Enabled == enabled)
+            return false;
+
+        entity.Comp.Enabled = enabled;
+        Dirty(entity);
+
+        return true;
+    }
+
+    public virtual bool SetWhitelistEnabled(Entity<StationAiWhitelistComponent> entity, bool value, bool announce = false)
+    {
+        if (entity.Comp.Enabled == value)
+            return false;
+
+        entity.Comp.Enabled = value;
+        Dirty(entity);
+
+        return true;
+    }
+
+    private bool ValidateAi(Entity<StationAiHeldComponent?> entity)
+    {
+        if (!Resolve(entity.Owner, ref entity.Comp, false))
+        {
+            return false;
+        }
+
+        return _blocker.CanComplexInteract(entity.Owner);
     }
 }
 

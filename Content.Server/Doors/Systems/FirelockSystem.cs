@@ -8,6 +8,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Power.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 

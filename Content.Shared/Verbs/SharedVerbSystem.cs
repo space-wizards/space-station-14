@@ -3,6 +3,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.VirtualItem;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Verbs
 {
@@ -173,5 +174,28 @@ namespace Content.Shared.Verbs
             if (verb.DoContactInteraction ?? (verb.DefaultDoContactInteraction && _interactionSystem.InRangeUnobstructed(user, target)))
                 _interactionSystem.DoContactInteraction(user, target);
         }
+    }
+
+    // Does nothing on server
+    /// <summary>
+    /// Raised directed when trying to get the entity menu visibility for entities.
+    /// </summary>
+    [ByRefEvent]
+    public record struct MenuVisibilityEvent
+    {
+        public MapCoordinates TargetPos;
+        public MenuVisibility Visibility;
+    }
+
+    // Does nothing on server
+    [Flags]
+    public enum MenuVisibility
+    {
+        // What entities can a user see on the entity menu?
+        Default = 0,          // They can only see entities in FoV.
+        NoFov = 1 << 0,         // They ignore FoV restrictions
+        InContainer = 1 << 1,   // They can see through containers.
+        Invisible = 1 << 2,   // They can see entities without sprites and the "HideContextMenu" tag is ignored.
+        All = NoFov | InContainer | Invisible
     }
 }

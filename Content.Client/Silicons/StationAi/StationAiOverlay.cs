@@ -6,7 +6,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.StationAi;
+namespace Content.Client.Silicons.StationAi;
 
 public sealed class StationAiOverlay : Overlay
 {
@@ -42,7 +42,6 @@ public sealed class StationAiOverlay : Overlay
         var worldHandle = args.WorldHandle;
 
         var worldBounds = args.WorldBounds;
-        var maps = _entManager.System<SharedMapSystem>();
         var lookups = _entManager.System<EntityLookupSystem>();
         var xforms = _entManager.System<SharedTransformSystem>();
 
@@ -60,7 +59,7 @@ public sealed class StationAiOverlay : Overlay
             // TODO: Call the moved-to code here.
 
             _visibleTiles.Clear();
-            _entManager.System<StationAiVisionSystem>().GetView((gridUid, grid), worldBounds, _visibleTiles, expansionSize: 8.5f);
+            _entManager.System<StationAiVisionSystem>().GetView((gridUid, grid), worldBounds, _visibleTiles);
 
             var gridMatrix = xforms.GetWorldMatrix(gridUid);
             var matty =  Matrix3x2.Multiply(gridMatrix, invMatrix);

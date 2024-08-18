@@ -629,8 +629,13 @@ namespace Content.Shared.Interaction
             if (!Resolve(other, ref other.Comp))
                 return false;
 
-            if (HasComp<RemoteInteractComponent>(origin))
-                return true;
+            var ev = new InRangeOverrideEvent(origin, other);
+            RaiseLocalEvent(origin, ref ev);
+
+            if (ev.Handled)
+            {
+                return ev.InRange;
+            }
 
             return InRangeUnobstructed(origin,
                 other,
@@ -1130,7 +1135,7 @@ namespace Content.Shared.Interaction
             // Get list of alt-interact verbs
             var verbs = _verbSystem.GetLocalVerbs(target, user, typeof(AlternativeVerb));
 
-            if (!verbs.Any())
+            if (verbs.Count == 0)
                 return false;
 
             _verbSystem.ExecuteVerb(verbs.First(), user, target);
@@ -1185,7 +1190,8 @@ namespace Content.Shared.Interaction
         public bool IsAccessible(Entity<TransformComponent?> user, Entity<TransformComponent?> target)
         {
             var ev = new AccessibleOverrideEvent(user, target);
-            RaiseLocalEvent(user, ref ev, true);
+
+            RaiseLocalEvent(user, ref ev);
 
             if (ev.Handled)
                 return ev.Accessible;
@@ -1382,8 +1388,10 @@ namespace Content.Shared.Interaction
     public record struct CombatModeShouldHandInteractEvent(bool Cancelled = false);
 
     /// <summary>
-    /// Override event raised directed on a user to say it can access the target.
+    /// Override event raised directed on the user to say the target is accessible.
     /// </summary>
+    /// <param name="User"></param>
+    /// <param name="Target"></param>
     [ByRefEvent]
     public record struct AccessibleOverrideEvent(EntityUid User, EntityUid Target)
     {
@@ -1391,6 +1399,19 @@ namespace Content.Shared.Interaction
         public readonly EntityUid Target = Target;
 
         public bool Handled;
-        public bool Accessible = true;
+        public bool Accessible = false;
+    }
+
+    /// <summary>
+    /// Override event raised directed on a user to check InRangeUnoccluded AND InRangeUnobstructed to the target if you require custom logic.
+    /// </summary>
+    [ByRefEvent]
+    public record struct InRangeOverrideEvent(EntityUid User, EntityUid Target)
+    {
+        public readonly EntityUid User = User;
+        public readonly EntityUid Target = Target;
+
+        public bool Handled;
+        public bool InRange = false;
     }
 }

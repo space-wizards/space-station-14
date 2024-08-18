@@ -18,6 +18,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Jittering;
 using Content.Shared.Maps;
 using Content.Shared.Popups;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;

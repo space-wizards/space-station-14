@@ -3,13 +3,16 @@ using System.Linq;
 using System.Threading;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
+using Content.Server.Hands.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Components;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -22,8 +25,8 @@ public sealed class WiresSystem : SharedWiresSystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ConstructionSystem _construction = default!;
@@ -43,6 +46,7 @@ public sealed class WiresSystem : SharedWiresSystem
         // this is a broadcast event
         SubscribeLocalEvent<WiresComponent, PanelChangedEvent>(OnPanelChanged);
         SubscribeLocalEvent<WiresComponent, WiresActionMessage>(OnWiresActionMessage);
+        SubscribeLocalEvent<WiresComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<WiresComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<WiresComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<WiresComponent, TimedWireEvent>(OnTimedWire);
@@ -387,37 +391,15 @@ public sealed class WiresSystem : SharedWiresSystem
 
     private void OnWiresActionMessage(EntityUid uid, WiresComponent component, WiresActionMessage args)
     {
-        if (args.Actor == null)
-        {
-            return;
-        }
-        var player = (EntityUid) args.Actor;
+        var player = args.Actor;
 
-        if (!EntityManager.TryGetComponent(player, out HandsComponent? handsComponent))
-        {
-            _popupSystem.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-no-hands"), uid, player);
-            return;
-        }
+        // TODO: Get hand or self tool
+        var toolUid = _hands.GetActiveItemOrSelf(player);
 
-        if (!_interactionSystem.InRangeUnobstructed(player, uid))
-        {
-            _popupSystem.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-cannot-reach"), uid, player);
-            return;
-        }
-
-        var activeHand = handsComponent.ActiveHand;
-
-        if (activeHand == null)
+        if (!EntityManager.TryGetComponent(toolUid, out ToolComponent? tool))
             return;
 
-        if (activeHand.HeldEntity == null)
-            return;
-
-        var activeHandEntity = activeHand.HeldEntity.Value;
-        if (!EntityManager.TryGetComponent(activeHandEntity, out ToolComponent? tool))
-            return;
-
-        TryDoWireAction(uid, player, activeHandEntity, args.Id, args.Action, component, tool);
+        TryDoWireAction(uid, player, toolUid, args.Id, args.Action, component, tool);
     }
 
     private void OnDoAfter(EntityUid uid, WiresComponent component, WireDoAfterEvent args)
@@ -436,25 +418,45 @@ public sealed class WiresSystem : SharedWiresSystem
         args.Handled = true;
     }
 
+    private void OnActivate(Entity<WiresComponent> ent, ref ActivateInWorldEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        var toolUid = args.User;
+
+        if (!TryComp<ToolComponent>(args.User, out var tool))
+            return;
+
+        if (!IsPanelOpen(ent.Owner, toolUid))
+            return;
+
+        if (Tool.HasQuality(toolUid, SharedToolSystem.CutQuality, tool) ||
+            Tool.HasQuality(toolUid, SharedToolSystem.PulseQuality, tool))
+        {
+            _uiSystem.OpenUi(ent.Owner, WiresUiKey.Key, args.User);
+            args.Handled = true;
+        }
+    }
+
     private void OnInteractUsing(EntityUid uid, WiresComponent component, InteractUsingEvent args)
     {
         if (args.Handled)
             return;
 
-        if (!TryComp<ToolComponent>(args.Used, out var tool))
+        var toolUid = args.Used;
+
+        if (!TryComp<ToolComponent>(args.User, out var tool))
             return;
 
-        if (!IsPanelOpen(uid))
+        if (!IsPanelOpen(uid, toolUid))
             return;
 
-        if (Tool.HasQuality(args.Used, "Cutting", tool) ||
-            Tool.HasQuality(args.Used, "Pulsing", tool))
+        if (Tool.HasQuality(toolUid, SharedToolSystem.CutQuality, tool) ||
+            Tool.HasQuality(toolUid, SharedToolSystem.PulseQuality, tool))
         {
-            if (TryComp(args.User, out ActorComponent? actor))
-            {
-                _uiSystem.OpenUi(uid, WiresUiKey.Key, actor.PlayerSession);
-                args.Handled = true;
-            }
+            _uiSystem.OpenUi(uid, WiresUiKey.Key, args.User);
+            args.Handled = true;
         }
     }
 
@@ -627,7 +629,7 @@ public sealed class WiresSystem : SharedWiresSystem
         switch (action)
         {
             case WiresAction.Cut:
-                if (!Tool.HasQuality(toolEntity, "Cutting", tool))
+                if (!Tool.HasQuality(toolEntity, SharedToolSystem.CutQuality, tool))
                 {
                     _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), user);
                     return;
@@ -641,7 +643,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
                 break;
             case WiresAction.Mend:
-                if (!Tool.HasQuality(toolEntity, "Cutting", tool))
+                if (!Tool.HasQuality(toolEntity, SharedToolSystem.CutQuality, tool))
                 {
                     _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), user);
                     return;
@@ -655,7 +657,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
                 break;
             case WiresAction.Pulse:
-                if (!Tool.HasQuality(toolEntity, "Pulsing", tool))
+                if (!Tool.HasQuality(toolEntity, SharedToolSystem.PulseQuality, tool))
                 {
                     _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-multitool"), user);
                     return;
@@ -714,7 +716,7 @@ public sealed class WiresSystem : SharedWiresSystem
         switch (action)
         {
             case WiresAction.Cut:
-                if (!Tool.HasQuality(toolEntity, "Cutting", tool))
+                if (!Tool.HasQuality(toolEntity, SharedToolSystem.CutQuality, tool))
                 {
                     _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), user);
                     break;
@@ -735,7 +737,7 @@ public sealed class WiresSystem : SharedWiresSystem
                 UpdateUserInterface(used);
                 break;
             case WiresAction.Mend:
-                if (!Tool.HasQuality(toolEntity, "Cutting", tool))
+                if (!Tool.HasQuality(toolEntity, SharedToolSystem.CutQuality, tool))
                 {
                     _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), user);
                     break;
@@ -756,7 +758,7 @@ public sealed class WiresSystem : SharedWiresSystem
                 UpdateUserInterface(used);
                 break;
             case WiresAction.Pulse:
-                if (!Tool.HasQuality(toolEntity, "Pulsing", tool))
+                if (!Tool.HasQuality(toolEntity, SharedToolSystem.PulseQuality, tool))
                 {
                     _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-multitool"), user);
                     break;

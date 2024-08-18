@@ -1,7 +1,4 @@
-using Content.Shared.NPC;
 using Content.Shared.StationAi;
-using Microsoft.Extensions.ObjectPool;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Threading;
 using Robust.Shared.Utility;
@@ -10,6 +7,12 @@ namespace Content.Shared.Silicons.StationAi;
 
 public sealed class StationAiVisionSystem : EntitySystem
 {
+    /*
+     * This class handles 2 things:
+     * 1. It handles general "what tiles are visible" line of sight checks.
+     * 2. It does single-tile lookups to tell if they're visible or not with support for a faster range-only path.
+     */
+
     [Dependency] private readonly IParallelManager _parallel = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
@@ -18,14 +21,26 @@ public sealed class StationAiVisionSystem : EntitySystem
     private SeedJob _seedJob;
     private ViewJob _job;
 
-    private HashSet<Entity<OccluderComponent>> _occluders = new();
-    private HashSet<Entity<StationAiVisionComponent>> _seeds = new();
-    private HashSet<Vector2i> _viewportTiles = new();
+    private readonly HashSet<Entity<OccluderComponent>> _occluders = new();
+    private readonly HashSet<Entity<StationAiVisionComponent>> _seeds = new();
+    private readonly HashSet<Vector2i> _viewportTiles = new();
+
+    // Dummy set
+    private readonly HashSet<Vector2i> _singleTiles = new();
 
     // Occupied tiles per-run.
     // For now it's only 1-grid supported but updating to TileRefs if required shouldn't be too hard.
     private readonly HashSet<Vector2i> _opaque = new();
-    private readonly HashSet<Vector2i> _clear = new();
+
+    /// <summary>
+    /// Do we skip line of sight checks and just check vision ranges.
+    /// </summary>
+    private bool FastPath;
+
+    /// <summary>
+    /// Have we found the target tile if we're only checking for a single one.
+    /// </summary>
+    private bool TargetFound;
 
     public override void Initialize()
     {
@@ -45,24 +60,104 @@ public sealed class StationAiVisionSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets a byond-equivalent for tiles in the specified worldAABB.
+    /// Returns whether a tile is accessible based on vision.
     /// </summary>
-    /// <param name="expansionSize">How much to expand the bounds before to find vision intersecting it. Makes this the largest vision size + 1 tile.</param>
-    public void GetView(Entity<MapGridComponent> grid, Box2Rotated worldBounds, HashSet<Vector2i> visibleTiles, float expansionSize = 7.5f)
+    public bool IsAccessible(Entity<MapGridComponent> grid, Vector2i tile, float expansionSize = 8.5f, bool fastPath = false)
     {
         _viewportTiles.Clear();
         _opaque.Clear();
-        _clear.Clear();
+        _seeds.Clear();
+        _viewportTiles.Add(tile);
+        var localBounds = _lookup.GetLocalBounds(tile, grid.Comp.TileSize);
+        var expandedBounds = localBounds.Enlarged(expansionSize);
+
+        _seedJob.Grid = grid;
+        _seedJob.ExpandedBounds = expandedBounds;
+        _parallel.ProcessNow(_seedJob);
+        _job.Data.Clear();
+        FastPath = fastPath;
+
+        foreach (var seed in _seeds)
+        {
+            if (!seed.Comp.Enabled)
+                continue;
+
+            _job.Data.Add(seed);
+        }
+
+        if (_seeds.Count == 0)
+            return false;
+
+        // Skip occluders step if we're just doing range checks.
+        if (!fastPath)
+        {
+            var tileEnumerator = _maps.GetLocalTilesEnumerator(grid, grid, expandedBounds, ignoreEmpty: false);
+
+            // Get all other relevant tiles.
+            while (tileEnumerator.MoveNext(out var tileRef))
+            {
+                var tileBounds = _lookup.GetLocalBounds(tileRef.GridIndices, grid.Comp.TileSize).Enlarged(-0.05f);
+
+                _occluders.Clear();
+                _lookup.GetLocalEntitiesIntersecting(grid.Owner, tileBounds, _occluders, LookupFlags.Static);
+
+                if (_occluders.Count > 0)
+                {
+                    _opaque.Add(tileRef.GridIndices);
+                }
+            }
+        }
+
+        for (var i = _job.Vis1.Count; i < _job.Data.Count; i++)
+        {
+            _job.Vis1.Add(new Dictionary<Vector2i, int>());
+            _job.Vis2.Add(new Dictionary<Vector2i, int>());
+            _job.SeedTiles.Add(new HashSet<Vector2i>());
+            _job.BoundaryTiles.Add(new HashSet<Vector2i>());
+        }
+
+        _job.TargetTile = tile;
+        TargetFound = false;
+        _singleTiles.Clear();
+        _job.Grid = grid;
+        _job.VisibleTiles = _singleTiles;
+        _parallel.ProcessNow(_job, _job.Data.Count);
+
+        return TargetFound;
+    }
+
+    /// <summary>
+    /// Gets a byond-equivalent for tiles in the specified worldAABB.
+    /// </summary>
+    /// <param name="expansionSize">How much to expand the bounds before to find vision intersecting it. Makes this the largest vision size + 1 tile.</param>
+    public void GetView(Entity<MapGridComponent> grid, Box2Rotated worldBounds, HashSet<Vector2i> visibleTiles, float expansionSize = 8.5f)
+    {
+        _viewportTiles.Clear();
+        _opaque.Clear();
         _seeds.Clear();
         var expandedBounds = worldBounds.Enlarged(expansionSize);
 
         // TODO: Would be nice to be able to run this while running the other stuff.
         _seedJob.Grid = grid;
-        _seedJob.ExpandedBounds = expandedBounds;
+        var localAABB = _xforms.GetInvWorldMatrix(grid).TransformBox(expandedBounds);
+        _seedJob.ExpandedBounds = localAABB;
         _parallel.ProcessNow(_seedJob);
+        _job.Data.Clear();
+        FastPath = false;
+
+        foreach (var seed in _seeds)
+        {
+            if (!seed.Comp.Enabled)
+                continue;
+
+            _job.Data.Add(seed);
+        }
+
+        if (_seeds.Count == 0)
+            return;
 
         // Get viewport tiles
-        var tileEnumerator = _maps.GetTilesEnumerator(grid, grid, worldBounds, ignoreEmpty: false);
+        var tileEnumerator = _maps.GetLocalTilesEnumerator(grid, grid, localAABB, ignoreEmpty: false);
 
         while (tileEnumerator.MoveNext(out var tileRef))
         {
@@ -75,15 +170,11 @@ public sealed class StationAiVisionSystem : EntitySystem
             {
                 _opaque.Add(tileRef.GridIndices);
             }
-            else
-            {
-                _clear.Add(tileRef.GridIndices);
-            }
 
             _viewportTiles.Add(tileRef.GridIndices);
         }
 
-        tileEnumerator = _maps.GetTilesEnumerator(grid, grid, expandedBounds, ignoreEmpty: false);
+        tileEnumerator = _maps.GetLocalTilesEnumerator(grid, grid, localAABB, ignoreEmpty: false);
 
         // Get all other relevant tiles.
         while (tileEnumerator.MoveNext(out var tileRef))
@@ -100,22 +191,9 @@ public sealed class StationAiVisionSystem : EntitySystem
             {
                 _opaque.Add(tileRef.GridIndices);
             }
-            else
-            {
-                _clear.Add(tileRef.GridIndices);
-            }
         }
 
-        _job.Data.Clear();
         // Wait for seed job here
-
-        foreach (var seed in _seeds)
-        {
-            if (!seed.Comp.Enabled)
-                continue;
-
-            _job.Data.Add(seed);
-        }
 
         for (var i = _job.Vis1.Count; i < _job.Data.Count; i++)
         {
@@ -125,6 +203,8 @@ public sealed class StationAiVisionSystem : EntitySystem
             _job.BoundaryTiles.Add(new HashSet<Vector2i>());
         }
 
+        _job.TargetTile = null;
+        TargetFound = false;
         _job.Grid = grid;
         _job.VisibleTiles = visibleTiles;
         _parallel.ProcessNow(_job, _job.Data.Count);
@@ -200,12 +280,11 @@ public sealed class StationAiVisionSystem : EntitySystem
         public StationAiVisionSystem System;
 
         public Entity<MapGridComponent> Grid;
-        public Box2Rotated ExpandedBounds;
+        public Box2 ExpandedBounds;
 
         public void Execute()
         {
-            var localAABB = System._xforms.GetInvWorldMatrix(Grid.Owner).TransformBox(ExpandedBounds);
-            System._lookup.GetLocalEntitiesIntersecting(Grid.Owner, localAABB, System._seeds);
+            System._lookup.GetLocalEntitiesIntersecting(Grid.Owner, ExpandedBounds, System._seeds);
         }
     }
 
@@ -220,6 +299,9 @@ public sealed class StationAiVisionSystem : EntitySystem
         public Entity<MapGridComponent> Grid;
         public List<Entity<StationAiVisionComponent>> Data = new();
 
+        // If we're doing range-checks might be able to early out
+        public Vector2i? TargetTile;
+
         public HashSet<Vector2i> VisibleTiles;
 
         public readonly List<Dictionary<Vector2i, int>> Vis1 = new();
@@ -230,11 +312,56 @@ public sealed class StationAiVisionSystem : EntitySystem
 
         public void Execute(int index)
         {
+            // If we're looking for a single tile then early-out if someone else has found it.
+            if (TargetTile != null)
+            {
+                lock (System)
+                {
+                    if (System.TargetFound)
+                    {
+                        return;
+                    }
+                }
+            }
+
             var seed = Data[index];
+            var seedXform = EntManager.GetComponent<TransformComponent>(seed);
 
             // Fastpath just get tiles in range.
-            if (!seed.Comp.Occluded)
+            // Either xray-vision or system is doing a quick-and-dirty check.
+            if (!seed.Comp.Occluded || System.FastPath)
             {
+                var squircles = Maps.GetLocalTilesIntersecting(Grid.Owner,
+                    Grid.Comp,
+                    new Circle(System._xforms.GetWorldPosition(seedXform), seed.Comp.Range), ignoreEmpty: false);
+
+                // Try to find the target tile.
+                if (TargetTile != null)
+                {
+                    foreach (var tile in squircles)
+                    {
+                        if (tile.GridIndices == TargetTile)
+                        {
+                            lock (System)
+                            {
+                                System.TargetFound = true;
+                            }
+
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    lock (VisibleTiles)
+                    {
+                        foreach (var tile in squircles)
+                        {
+                            VisibleTiles.Add(tile.GridIndices);
+                        }
+                    }
+                }
+
                 return;
             }
 
@@ -246,10 +373,18 @@ public sealed class StationAiVisionSystem : EntitySystem
 
             var seedTiles = SeedTiles[index];
             var boundary = BoundaryTiles[index];
+
+            // Cleanup last run
+            vis1.Clear();
+            vis2.Clear();
+
+            seedTiles.Clear();
+            boundary.Clear();
+
             var maxDepthMax = 0;
             var sumDepthMax = 0;
 
-            var eyePos = Maps.GetTileRef(Grid.Owner, Grid, EntManager.GetComponent<TransformComponent>(seed).Coordinates).GridIndices;
+            var eyePos = Maps.GetTileRef(Grid.Owner, Grid, seedXform.Coordinates).GridIndices;
 
             for (var x = Math.Floor(eyePos.X - range); x <= eyePos.X + range; x++)
             {
@@ -342,30 +477,43 @@ public sealed class StationAiVisionSystem : EntitySystem
                 vis1[tile] = -1;
             }
 
-            // vis2 is what we care about for LOS.
-            foreach (var tile in seedTiles)
+            if (TargetTile != null)
             {
-                // If not in viewport don't care.
-                if (!System._viewportTiles.Contains(tile))
-                    continue;
-
-                var tileVis2 = vis2.GetValueOrDefault(tile, 0);
-
-                if (tileVis2 != 0)
+                if (vis2.TryGetValue(TargetTile.Value, out var tileVis2))
                 {
-                    // No idea if it's better to do this inside or out.
-                    lock (VisibleTiles)
+                    DebugTools.Assert(seedTiles.Contains(TargetTile.Value));
+
+                    if (tileVis2 != 0)
                     {
-                        VisibleTiles.Add(tile);
+                        lock (System)
+                        {
+                            System.TargetFound = true;
+                            return;
+                        }
                     }
                 }
             }
+            else
+            {
+                // vis2 is what we care about for LOS.
+                foreach (var tile in seedTiles)
+                {
+                    // If not in viewport don't care.
+                    if (!System._viewportTiles.Contains(tile))
+                        continue;
 
-            vis1.Clear();
-            vis2.Clear();
+                    var tileVis2 = vis2.GetValueOrDefault(tile, 0);
 
-            seedTiles.Clear();
-            boundary.Clear();
+                    if (tileVis2 != 0)
+                    {
+                        // No idea if it's better to do this inside or out.
+                        lock (VisibleTiles)
+                        {
+                            VisibleTiles.Add(tile);
+                        }
+                    }
+                }
+            }
         }
     }
 }

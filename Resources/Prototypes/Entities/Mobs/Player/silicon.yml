@@ -1,5 +1,3 @@
-# Actions
-# TODO
 
 # Ai
 - type: entity
@@ -95,6 +93,7 @@
     - state: ai
       shader: unshaded
 
+# The actual brain inside the core
 - type: entity
   id: StationAiBrain
   parent: PositronicBrain
@@ -105,11 +104,14 @@
     # Once it's in a core it's pretty much an abstract entity at that point.
     visible: false
   - type: ComplexInteraction
+  - type: DoorRemote
   - type: Actions
+  - type: Access
+    groups:
+    - AllAccess
   - type: Eye
     drawFov: false
   - type: Examiner
-    checkInRangeUnoccluded: false
   - type: InputMover
   - type: Tag
     tags:
@@ -131,12 +133,25 @@
   components:
   - type: Eye
     pvsScale: 1.5
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.IncorporealState.Base:
+        base:
+          True:
+            color: '#FFFFFFFF'
+          False:
+            color: '#FFFFFF0A'
+  - type: Incorporeal
+    visible: false
+  - type: Visibility
+    layer: 2
   - type: Sprite
     sprite: Mobs/Silicon/station_ai.rsi
-    visible: false
     layers:
-    - state: holo
+    - state: default
       shader: unshaded
+      map: ["base"]
 
 # Borgs
 - type: entity

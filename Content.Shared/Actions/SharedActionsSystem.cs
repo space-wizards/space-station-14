@@ -653,6 +653,10 @@ public abstract class SharedActionsSystem : EntitySystem
             return; // no interaction occurred.
 
         // play sound, reduce charges, start cooldown, and mark as dirty (if required).
+        if (actionEvent?.Toggle == true)
+        {
+            action.Toggled = !action.Toggled;
+        }
 
         _audio.PlayPredicted(action.Sound, performer,predicted ? performer : null);
 
@@ -673,10 +677,11 @@ public abstract class SharedActionsSystem : EntitySystem
             action.Cooldown = (curTime, curTime + action.UseDelay.Value);
         }
 
-        Dirty(actionId, action);
-
-        if (dirty && component != null)
-            Dirty(performer, component);
+        if (dirty)
+        {
+            Dirty(actionId, action);
+            UpdateAction(actionId, action);
+        }
 
         var ev = new ActionPerformedEvent(performer);
         RaiseLocalEvent(actionId, ref ev);

@@ -4,6 +4,7 @@ using Content.Server.Xenoarchaeology.Equipment.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Placeable;
+using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Xenoarchaeology.Equipment.Systems;

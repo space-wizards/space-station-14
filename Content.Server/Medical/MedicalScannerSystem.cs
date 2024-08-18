@@ -14,6 +14,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Power.EntitySystems;
 using Robust.Server.Containers;
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent; // Hmm...
 

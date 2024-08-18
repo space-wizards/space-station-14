@@ -6,7 +6,4 @@ namespace Content.Shared.Silicons.StationAi;
 /// Indicates this entity is currently held inside of a station AI core.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class StationAiHeldComponent : Component
-{
-
-}
+public sealed partial class StationAiHeldComponent : Component;
