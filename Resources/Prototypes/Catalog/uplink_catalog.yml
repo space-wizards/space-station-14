@@ -1769,7 +1769,7 @@
   description: uplink-syndie-box-desc
   productEntity: MysterySyndieBox
   cost:
-    Telecrystal: 6
+    Telecrystal: 8
   categories:
   - UplinkJob
   conditions:
