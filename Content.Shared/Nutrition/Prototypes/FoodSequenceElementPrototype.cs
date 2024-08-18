@@ -18,7 +18,7 @@ public sealed partial class FoodSequenceElementPrototype : IPrototype
     public LocId Name { get; private set; } = string.Empty;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [DataField]
     public SpriteSpecifier Sprite { get; private set; } = SpriteSpecifier.Invalid;

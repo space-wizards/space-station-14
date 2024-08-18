@@ -39,7 +39,7 @@
   - type: Sprite
     drawdepth: Mobs
     noRot: true
-    sprite: Objects/Consumable/Food/burger.rsi
+    sprite: Objects/Consumable/Food/burger_sequence.rsi
     layers:
     - state: bun_bottom
     - map: ["foodSequenceLayers"]
@@ -70,7 +70,7 @@
   components:
   - type: Food
   - type: Sprite
-    sprite: Objects/Consumable/Food/burger.rsi
+    sprite: Objects/Consumable/Food/burger_sequence.rsi
     layers:
     - state: bun_top
   - type: SolutionContainerManager
