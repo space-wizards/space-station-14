@@ -565,13 +565,15 @@
   id: FoodCheese
   description: A big wheel of delicious Cheddar.
   components:
+  - type: Item
+    size: Normal
   - type: FlavorProfile
     flavors:
       - cheesy
   - type: Sprite
     state: cheesewheel
   - type: SliceableFood
-    count: 3
+    count: 4
     slice: FoodCheeseSlice
 
 - type: entity
