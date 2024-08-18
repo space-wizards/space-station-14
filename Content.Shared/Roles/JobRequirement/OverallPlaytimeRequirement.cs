@@ -20,12 +20,12 @@ public sealed partial class OverallPlaytimeRequirement : JobRequirement
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile,
         IReadOnlyDictionary<string, TimeSpan> playTimes,
-        out FormattedMessage reason)
+        out FormattedMessage details)
     {
         var overallTime = playTimes.GetValueOrDefault(PlayTimeTrackingShared.TrackerOverall);
         var overallDiff = Time.TotalMinutes - overallTime.TotalMinutes;
 
-        reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
+        details = FormattedMessage.FromMarkupPermissive(Loc.GetString(
             Inverted ? "role-timer-overall-not-too-high" : "role-timer-overall-sufficient",
             ("current", overallTime.TotalMinutes),
             ("required", Time.TotalMinutes)));
@@ -35,7 +35,7 @@ public sealed partial class OverallPlaytimeRequirement : JobRequirement
             if (overallDiff <= 0 || overallTime >= Time)
                 return true;
 
-            reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
+            details = FormattedMessage.FromMarkupPermissive(Loc.GetString(
                 "role-timer-overall-insufficient",
                 ("current", overallTime.TotalMinutes),
                 ("required", Time.TotalMinutes)));
@@ -44,7 +44,7 @@ public sealed partial class OverallPlaytimeRequirement : JobRequirement
 
         if (overallDiff <= 0 || overallTime >= Time)
         {
-            reason = FormattedMessage.FromMarkupPermissive(
+            details = FormattedMessage.FromMarkupPermissive(
                 Loc.GetString("role-timer-overall-too-high",
                 ("current", overallTime.TotalMinutes),
                 ("required", Time.TotalMinutes)));

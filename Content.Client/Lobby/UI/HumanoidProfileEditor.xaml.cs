@@ -645,13 +645,11 @@ namespace Content.Client.Lobby.UI
 
                 var title = Loc.GetString(antag.Name);
                 var description = FormattedMessage.FromMarkupPermissive(Loc.GetString(antag.Objective));
-                selector.Setup(items, title, 250, description, guides: antag.Guides);
-                selector.Select(Profile?.AntagPreferences.Contains(antag.ID) == true ? 0 : 1);
-
                 var requirements = _entManager.System<SharedRoleSystem>().GetAntagRequirement(antag);
-                if (!_requirements.CheckRoleRequirements(requirements, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
+
+                if (!_requirements.CheckRoleRequirements(requirements, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var requirementDetails))
                 {
-                    selector.LockRequirements(reason);
+                    selector.LockRequirements(requirementDetails);
                     Profile = Profile?.WithAntagPreference(antag.ID, false);
                     SetDirty();
                 }
@@ -659,6 +657,20 @@ namespace Content.Client.Lobby.UI
                 {
                     selector.UnlockRequirements();
                 }
+
+                // Append requirement details to description, separated by a clear line
+                if (!requirementDetails.IsEmpty)
+                {
+                    if (!description.IsEmpty)
+                    {
+                        description.PushNewline();
+                        description.PushNewline();
+                    }
+                    description.AddMessage(requirementDetails);
+                }
+
+                selector.Setup(items, title, 250, description, guides: antag.Guides);
+                selector.Select(Profile?.AntagPreferences.Contains(antag.ID) == true ? 0 : 1);
 
                 selector.OnSelected += preference =>
                 {
@@ -904,33 +916,30 @@ namespace Content.Client.Lobby.UI
                     var description = job.LocalizedDescription != null
                         ? FormattedMessage.FromUnformatted(job.LocalizedDescription)
                         : FormattedMessage.Empty;
-                    var allowed = _requirements.IsAllowed(job,
-                        (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter,
-                        out var reason);
 
-                    // Append the reason to the description
-                    if (reason is { IsEmpty: false })
+                    if (!_requirements.IsAllowed(job,
+                            (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter,
+                            out var requirementDetails))
                     {
-                        if (!description.IsEmpty)
-                        {
-                            description.PushNewline();
-                            description.PushNewline();
-                        }
-
-                        description.AddMessage(reason);
-                    }
-
-                    selector.Setup(items, job.LocalizedName, 200, description, icon, job.Guides);
-
-                    if (!allowed)
-                    {
-                        selector.LockRequirements(description);
+                        selector.LockRequirements(requirementDetails);
                     }
                     else
                     {
                         selector.UnlockRequirements();
                     }
 
+                    // Append requirements to description, separated by a clear line
+                    if (!requirementDetails.IsEmpty)
+                    {
+                        if (!description.IsEmpty)
+                        {
+                            description.PushNewline(); // Two newlines produce one empty line
+                            description.PushNewline();
+                        }
+                        description.AddMessage(requirementDetails);
+                    }
+
+                    selector.Setup(items, job.LocalizedName, 200, description, icon, job.Guides);
                     selector.OnSelected += selectedPrio =>
                     {
                         var selectedJobPrio = (JobPriority) selectedPrio;

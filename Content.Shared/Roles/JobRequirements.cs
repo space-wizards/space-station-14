@@ -54,5 +54,5 @@ public abstract partial class JobRequirement
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile,
         IReadOnlyDictionary<string, TimeSpan> playTimes,
-        out FormattedMessage reason);
+        out FormattedMessage details);
 }

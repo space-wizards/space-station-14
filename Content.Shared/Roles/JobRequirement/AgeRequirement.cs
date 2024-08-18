@@ -21,14 +21,14 @@ public sealed partial class AgeRequirement : JobRequirement
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile,
         IReadOnlyDictionary<string, TimeSpan> playTimes,
-        out FormattedMessage reason)
+        out FormattedMessage details)
     {
-        reason = new FormattedMessage();
+        details = new FormattedMessage();
 
         if (profile is null) //the profile could be null if the player is a ghost. In this case we don't need to block the role selection for ghostrole
             return true;
 
-        reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
+        details = FormattedMessage.FromMarkupPermissive(Loc.GetString(
             Inverted ? "role-timer-age-young-enough" : "role-timer-age-old-enough",
             ("age", RequiredAge)));
 
@@ -37,7 +37,7 @@ public sealed partial class AgeRequirement : JobRequirement
             if (profile.Age >= RequiredAge)
                 return true;
 
-            reason = FormattedMessage.FromMarkupPermissive(Loc.GetString("role-timer-age-not-old-enough",
+            details = FormattedMessage.FromMarkupPermissive(Loc.GetString("role-timer-age-not-old-enough",
                 ("age", RequiredAge)));
             return false;
         }
@@ -45,7 +45,7 @@ public sealed partial class AgeRequirement : JobRequirement
         if (profile.Age <= RequiredAge)
             return true;
 
-        reason = FormattedMessage.FromMarkupPermissive(Loc.GetString("role-timer-age-not-young-enough",
+        details = FormattedMessage.FromMarkupPermissive(Loc.GetString("role-timer-age-not-young-enough",
             ("age", RequiredAge)));
         return false;
     }

@@ -259,14 +259,14 @@ namespace Content.Client.LateJoin
 
                         var allowed = _jobRequirements.IsAllowed(prototype,
                             (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter,
-                            out var reason);
+                            out var details);
 
                         jobButton.Disabled = !allowed;
 
-                        if (reason is { IsEmpty: false })
+                        if (details is { IsEmpty: false })
                         {
                             var tooltip = new Tooltip();
-                            tooltip.SetMessage(reason);
+                            tooltip.SetMessage(details);
                             jobButton.TooltipSupplier = _ => tooltip;
                         }
 
