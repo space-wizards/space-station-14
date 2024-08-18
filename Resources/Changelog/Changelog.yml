@@ -1,38 +1,6 @@
 ﻿Entries:
 - author: lzk228
   changes:
-  - message: Gasp and deathgasp emotes now have a sound.
-    type: Tweak
-  id: 6635
-  time: '2024-05-28T23:56:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27736
-- author: Cojoke-dot
-  changes:
-  - message: The syndicate Medical and Sabatour borgs now come with medical and diagnostics
-      HUDs  respectively.
-    type: Tweak
-  id: 6636
-  time: '2024-05-29T00:16:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27875
-- author: ShadowCommander
-  changes:
-  - message: Popups with the same message now stack together and append a x# to the
-      end.
-    type: Tweak
-  id: 6637
-  time: '2024-05-29T04:05:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27978
-- author: notafet
-  changes:
-  - message: Slightly increase spacing speed to fix under-pressure lockout.
-    type: Tweak
-  - message: Fix vent under-pressure lockout.
-    type: Fix
-  id: 6638
-  time: '2024-05-29T05:21:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28370
-- author: lzk228
-  changes:
   - message: Salvage access has been replaced with Cargo for the artifact container.
     type: Tweak
   id: 6639
@@ -3834,3 +3802,31 @@
   id: 7134
   time: '2024-08-17T14:32:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30939
+- author: iztokbajcar
+  changes:
+  - message: Fixed some typos in the guidebook.
+    type: Fix
+  id: 7135
+  time: '2024-08-18T15:31:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31159
+- author: Unkn0wnGh0st333
+  changes:
+  - message: changed human male coughing
+    type: Tweak
+  id: 7136
+  time: '2024-08-18T16:00:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30893
+- author: EmoGarbage404
+  changes:
+  - message: Legends tell of horrifying Goliaths that roam the mining asteroid.
+    type: Add
+  id: 7137
+  time: '2024-08-18T16:22:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30839
+- author: Beck Thompson
+  changes:
+  - message: Cutting food now moves the sliced pieces a small amount!
+    type: Tweak
+  id: 7138
+  time: '2024-08-18T21:18:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31166
