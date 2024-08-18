@@ -51,8 +51,11 @@ public sealed class SlimPoweredLightSystem : EntitySystem
         _setting = false;
     }
 
-    public void SetEnabled(Entity<SlimPoweredLightComponent> entity, bool enabled)
+    public void SetEnabled(Entity<SlimPoweredLightComponent?> entity, bool enabled)
     {
+        if (!Resolve(entity.Owner, ref entity.Comp, false))
+            return;
+
         if (entity.Comp.Enabled == enabled)
             return;
 

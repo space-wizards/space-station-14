@@ -1,3 +1,4 @@
+using Content.Shared.Actions.Events;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Serialization;
@@ -17,6 +18,30 @@ public abstract partial class SharedStationAiSystem
         SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnMessageAttempt);
         SubscribeLocalEvent<StationAiWhitelistComponent, GetVerbsEvent<AlternativeVerb>>(OnTargetVerbs);
         SubscribeLocalEvent<StationAiHeldComponent, InteractionAttemptEvent>(OnHeldInteraction);
+        SubscribeLocalEvent<StationAiHeldComponent, AttemptRelayActionComponentChangeEvent>(OnHeldRelay);
+    }
+
+    private bool TryGetCore(EntityUid ent, out EntityUid core)
+    {
+        if (!_containers.TryGetContainingContainer(ent, out var container) ||
+            container.ID != StationAiCoreComponent.Container ||
+            !TryComp(container.Owner, out StationAiCoreComponent? coreComp) ||
+            coreComp.RemoteEntity == null)
+        {
+            core = EntityUid.Invalid;
+            return false;
+        }
+
+        core = coreComp.RemoteEntity.Value;
+        return true;
+    }
+
+    private void OnHeldRelay(Entity<StationAiHeldComponent> ent, ref AttemptRelayActionComponentChangeEvent args)
+    {
+        if (!TryGetCore(ent.Owner, out var core))
+            return;
+
+        args.Target = core;
     }
 
     private void OnRadialMessage(StationAiRadialMessage ev)

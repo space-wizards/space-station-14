@@ -98,11 +98,10 @@
 
 - type: wireLayout
   id: SurveillanceCamera
-  dummyWires: 3
+  dummyWires: 2
   wires:
   - !type:PowerWireAction
   - !type:AiVisionWireAction
-  - !type:AiInteractWireAction
 
 - type: wireLayout
   id: CryoPod
