@@ -86,3 +86,19 @@
       baseOdds: 0.036
       persists: false
       mutation: !type:PlantMutatePotency
+    - name: ChangeSeedless
+      baseOdds: 0.00036
+      persists: false
+      mutation: !type:PlantMutateSeedless
+    - name: ChangeLigneous
+      baseOdds: 0.00036
+      persists: false
+      mutation: !type:PlantMutateLigneous
+    - name: ChangeTurnIntoKudzu
+      baseOdds: 0.00036
+      persists: false
+      mutation: !type:PlantMutateKudzu
+    - name: ChangeScreaming
+      baseOdds: 0.00036
+      persists: false
+      mutation: !type:PlantMutateScream

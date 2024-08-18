@@ -478,3 +478,86 @@ public sealed partial class PlantMutatePotency : EntityEffect
     }
 }
 
+/// <summary>
+///     Changes if the plant has seeds or not.
+/// </summary>
+public sealed partial class PlantMutateSeedless : EntityEffect
+{
+    public override void Effect(EntityEffectBaseArgs args)
+    {
+        var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+
+        if (plantholder.Seed == null)
+            return;
+
+        plantholder.Seed.Seedless = !plantholder.Seed.Seedless;
+    }
+
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    {
+        return "TODO";
+    }
+}
+
+/// <summary>
+///     Changes if the plant requires a hatchet to harvest.
+/// </summary>
+public sealed partial class PlantMutateLigneous : EntityEffect
+{
+    public override void Effect(EntityEffectBaseArgs args)
+    {
+        var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+
+        if (plantholder.Seed == null)
+            return;
+
+        plantholder.Seed.Ligneous = !plantholder.Seed.Ligneous;
+    }
+
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    {
+        return "TODO";
+    }
+}
+
+/// <summary>
+///     Changes if the plant will turn into kudzu once weed levels are high
+/// </summary>
+public sealed partial class PlantMutateKudzu : EntityEffect
+{
+    public override void Effect(EntityEffectBaseArgs args)
+    {
+        var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+
+        if (plantholder.Seed == null)
+            return;
+
+        plantholder.Seed.TurnIntoKudzu = !plantholder.Seed.TurnIntoKudzu;
+    }
+
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    {
+        return "TODO";
+    }
+}
+
+/// <summary>
+///     Changes if the plant and its produce scream.
+/// </summary>
+public sealed partial class PlantMutateScream : EntityEffect
+{
+    public override void Effect(EntityEffectBaseArgs args)
+    {
+        var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+
+        if (plantholder.Seed == null)
+            return;
+
+        plantholder.Seed.CanScream = !plantholder.Seed.CanScream;
+    }
+
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+    {
+        return "TODO";
+    }
+}

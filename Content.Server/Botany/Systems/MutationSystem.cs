@@ -19,9 +19,6 @@ public sealed class MutationSystem : EntitySystem
     //clean up errors on client side about missing concrete Glow class?
 
     //Remaining mutations to port:
-    //remaining fun (4)
-    // - Seedless, Ligneous, turnintokudzu are plant traits rather than effects and their value should stay in SeedData for now
-    // - Screaming will need updated with new screams from more recent commit.
     //harvest type and autoharvest (2)
     //gases (2, eat/make)
     //chems (1)
@@ -77,13 +74,6 @@ public sealed class MutationSystem : EntitySystem
         // Add up everything in the bits column and put the number here.
         const int totalbits = 262;
 
-        #pragma warning disable IDE0055 // disable formatting warnings because this looks more readable
-        // Fun (72)
-        MutateBool(ref seed.Seedless      , true , 10, totalbits, severity);
-        MutateBool(ref seed.Ligneous      , true , 10, totalbits, severity);
-        MutateBool(ref seed.TurnIntoKudzu , true , 10, totalbits, severity);
-        MutateBool(ref seed.CanScream     , true , 10, totalbits, severity);
-        #pragma warning restore IDE0055
 
         // ConstantUpgade (10)
         MutateHarvestType(ref seed.HarvestRepeat, 10, totalbits, severity);
