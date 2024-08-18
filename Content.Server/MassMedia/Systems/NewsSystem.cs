@@ -131,14 +131,14 @@ public sealed class NewsSystem : SharedNewsSystem
         if (!ent.Comp.PublishEnabled)
             return;
 
-        ent.Comp.PublishEnabled = false;
-        ent.Comp.NextPublish = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.PublishCooldown);
-
         if (!TryGetArticles(ent, out var articles))
             return;
 
         if (!_accessReader.FindStationRecordKeys(msg.Actor, out _))
             return;
+
+        ent.Comp.PublishEnabled = false;
+        ent.Comp.NextPublish = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.PublishCooldown);
 
         string? authorName = null;
         if (_idCardSystem.TryFindIdCard(msg.Actor, out var idCard))
