@@ -106,7 +106,7 @@
   The space vent (designated as a blast door to space on one side of the burn chamber) allows waste gases to be expelled and destroyed. Open this every now and then to keep the pressure under control, or to space excess input gas.
 
   The scrubber array filters out all the burnt gasses and sends them through the TEG. Note that using default settings on the scrubbers is a bad idea, as valuable plasma will be filtered out too.
-  Instead, use a network configurator to connect all the scrubbers to a nearby air alarm, and set the air alarm's scrubber settings to scrub everything except Oxygen and Plasma, and to siphon air aswell. This ensures that as much heat as available can be collected and sent to the TEG.
+  Instead, use a network configurator to connect all the scrubbers to a nearby air alarm, and set the air alarm's scrubber settings to scrub everything except Oxygen and Plasma, and to siphon air as well. This ensures that as much heat as available can be collected and sent to the TEG.
 
   Note that these are just two of many ways you can setup the hot loop; [color=#a4885c]feel free to mix and match setups as needed![/color] Volume pumps in replacement of pressure pumps, radiator loops for heat collection, or even a Pyroclastic anomaly to provide said heat! The stars are the limit!
 
