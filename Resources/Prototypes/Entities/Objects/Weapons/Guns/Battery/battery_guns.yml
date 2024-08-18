@@ -483,7 +483,6 @@
   - type: Tag
     tags:
       - Taser
-      - Sidearm
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/disabler_smg.rsi
     layers:

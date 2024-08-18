@@ -1830,3 +1830,12 @@
   time: 5
   solids:
     FoodDoughTortillaFlat: 1 # one third of a standard bread dough recipe
+
+- type: microwaveMealRecipe
+  id: RecipeCroissant
+  name: croissant recipe
+  result: FoodBakedCroissant
+  time: 5
+  solids:
+    FoodCroissantRaw: 1
+    FoodButterSlice: 1
