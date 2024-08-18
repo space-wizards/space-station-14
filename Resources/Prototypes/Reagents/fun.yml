@@ -349,3 +349,19 @@
         conditions:
         - !type:ReagentThreshold
           min: 50
+
+- type: reagent
+  id: Profanium
+  name: reagent-name-profanium
+  group: Toxins
+  desc: reagent-desc-profanium
+  physicalDesc: reagent-physical-desc-profanium
+  flavor: offensive
+  color: "#BF5E5E"
+  slippery: true
+  metabolisms:
+    Poison:
+      effects:
+      - !type:GenericStatusEffect
+        tag: Vulgarity
+        component: VulgarAccent
