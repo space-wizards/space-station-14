@@ -9,6 +9,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Nutrition.FoodMetamorphRules;
+
 /// <summary>
 /// abstract rules that are used to verify the correct foodSequence for recipe
 /// </summary>

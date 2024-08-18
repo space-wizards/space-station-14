@@ -31,7 +31,7 @@ public sealed partial class FoodSequenceElementPrototype : IPrototype
     public bool Final { get; private set; }
 
     /// <summary>
-    ///
+    /// Tag list of this layer. Used for recipes for food metamorphosis.
     /// </summary>
     [DataField]
     public List<ProtoId<TagPrototype>> Tags { get; set; }  = new();

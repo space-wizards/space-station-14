@@ -78,7 +78,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         if (availableRecipes.Count <= 0)
             return true;
 
-        Metamorf(start, availableRecipes[0]);
+        Metamorf(start, _random.Pick(availableRecipes)); //In general, if there's more than one recipe, the yml-guys screwed up. Maybe some kind of unit test is needed.
         QueueDel(start);
         return true;
     }
@@ -151,6 +151,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         MergeFlavorProfiles(start, element);
         MergeTrash(start, element);
         MergeTags(start, element);
+
         var ev = new FoodSequenceIngredientAddedEvent(start, element, elementProto, user);
         RaiseLocalEvent(start, ev);
 
