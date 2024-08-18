@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Salvage access has been replaced with Cargo for the artifact container.
-    type: Tweak
-  id: 6639
-  time: '2024-05-29T16:46:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28386
 - author: notafet
   changes:
   - message: Fix passive gate flow rate display.
@@ -3830,3 +3823,14 @@
   id: 7138
   time: '2024-08-18T21:18:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31166
+- author: lzk228
+  changes:
+  - message: Pizza and pizza box now have 3x2 size in inventory.
+    type: Tweak
+  - message: Pizze box is 4x2 inside and always will have a pizza with a knife inside.
+    type: Tweak
+  - message: Pizza box have whitelist for utensils and pizza.
+    type: Tweak
+  id: 7139
+  time: '2024-08-18T21:55:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31171
