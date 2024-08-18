@@ -20,7 +20,7 @@ In the event of a serious emergency, there're a few things you can do to help en
   <GuideEntityEmbed Entity="EmergencyOxygenTankFilled"/> 
 </Box>
 
-- If actively bleeding out, or simply wishing to prepare, it's possible to slice up cloth items with a knife or other sharp object and use the resulting cloth to create gauze in the crafting menu to stem bleeding with, however cloth alone can be used to less of a degree in emergencys. 
+- If actively bleeding out, or simply wishing to prepare, it's possible to slice up cloth items with a knife or other sharp object and use the resulting cloth to create gauze in the crafting menu to stem bleeding with, however cloth alone can be used to less of a degree in emergencies. 
 
 <Box>
   <GuideEntityEmbed Entity="Gauze"/>
