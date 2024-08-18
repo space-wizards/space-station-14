@@ -1831,6 +1831,10 @@
     tags:
     - Fruit
     - Slice
+  - type: FoodSequenceElement
+    entries:
+      burger: WatermelonSliceBurger
+      taco: WatermelonSlice
 
 - type: entity
   name: grapes

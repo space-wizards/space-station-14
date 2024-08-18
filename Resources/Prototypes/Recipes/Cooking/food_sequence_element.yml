@@ -298,7 +298,7 @@
   - sprite: Objects/Specific/Hydroponics/onion.rsi
     state: slice
   tags:
-  - Fruit
+  - Vegetable
   - Slice
 
 - type: foodSequenceElement
@@ -320,7 +320,7 @@
   - sprite: Objects/Specific/Hydroponics/onion_red.rsi
     state: slice
   tags:
-  - Fruit
+  - Vegetable
   - Slice
 
 - type: foodSequenceElement
@@ -331,5 +331,27 @@
     state: slice
   tags:
   - Vegetable
+  - Slice
+
+# Watermelon
+
+- type: foodSequenceElement
+  id: WatermelonSliceBurger
+  name: food-sequence-burger-content-watermelon
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/watermelon.rsi
+    state: slice
+  tags:
+  - Fruit
+  - Slice
+
+- type: foodSequenceElement
+  id: WatermelonSlice
+  name: food-sequence-content-watermelon
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/watermelon.rsi
+    state: slice
+  tags:
+  - Fruit
   - Slice
 
