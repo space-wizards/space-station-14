@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: notafet
-  changes:
-  - message: Slightly increase spacing speed to fix under-pressure lockout.
-    type: Tweak
-  - message: Fix vent under-pressure lockout.
-    type: Fix
-  id: 6638
-  time: '2024-05-29T05:21:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28370
 - author: lzk228
   changes:
   - message: Salvage access has been replaced with Cargo for the artifact container.
@@ -3832,3 +3823,10 @@
   id: 7137
   time: '2024-08-18T16:22:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30839
+- author: Beck Thompson
+  changes:
+  - message: Cutting food now moves the sliced pieces a small amount!
+    type: Tweak
+  id: 7138
+  time: '2024-08-18T21:18:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31166
