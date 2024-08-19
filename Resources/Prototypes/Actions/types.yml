@@ -162,20 +162,6 @@
     event: !type:UseDnaScramblerImplantEvent
 
 - type: entity
-  id: ActionMorphGeras
-  name: Morph into Geras
-  description:  Morphs you into a Geras - a miniature version of you which allows you to move fast, at the cost of your inventory.
-  components:
-  - type: InstantAction
-    itemIconStyle: BigAction
-    useDelay: 10 # prevent spam
-    priority: -20
-    icon:
-      sprite: Mobs/Aliens/slimes.rsi
-      state: blue_adult_slime
-    event: !type:MorphIntoGeras
-
-- type: entity
   id: ActionToggleSuitPiece
   name: Toggle Suit Piece
   description: Remember to equip the important pieces of your suit before going into action.

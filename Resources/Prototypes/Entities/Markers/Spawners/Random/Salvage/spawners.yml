@@ -1,0 +1,458 @@
+- type: entityTable
+  id: SalvageScrapSpawnerCommon
+  table: !type:GroupSelector
+    children:
+    # 70% chance of scrap of some kind
+    - !type:GroupSelector
+      weight: 70
+      children:
+      - !type:NestedSelector
+        tableId: SalvageScrapLowValue
+        weight: 60
+      - !type:NestedSelector
+        tableId: SalvageScrapHighValue
+        weight: 30
+      - !type:NestedSelector
+        tableId: SalvageScrapLarge
+        weight: 10
+    # 10% chance of some trash
+    - !type:NestedSelector
+      tableId: GenericTrashItems
+      weight: 10
+    # 15% chance of low-value equipment
+    - !type:NestedSelector
+      tableId: SalvageEquipmentCommon
+      weight: 15
+    # 5% chance of low-value treasure or maintenance tools
+    - !type:GroupSelector
+      weight: 5
+      children:
+      - !type:NestedSelector
+        tableId: SalvageTreasureCommon
+      - !type:NestedSelector
+        tableId: MaintToolsTable
+
+- type: entity
+  parent: MarkerBase
+  id: SalvageSpawnerScrapCommon
+  name: Salvage Scrap Spawner
+  suffix: Common, 50%
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Objects/Materials/Scrap/generic.rsi
+      state: metal-1
+  - type: EntityTableSpawner
+    offset: 0.4
+    table: !type:NestedSelector
+      tableId: SalvageScrapSpawnerCommon
+      prob: 0.5
+
+- type: entity
+  parent: SalvageSpawnerScrapCommon
+  id: SalvageSpawnerScrapCommon75
+  suffix: Common, 75%
+  components:
+  - type: EntityTableSpawner
+    offset: 0.4
+    table: !type:NestedSelector
+      tableId: SalvageScrapSpawnerCommon
+      prob: 0.75
+
+- type: entityTable
+  id: SalvageScrapSpawnerValuable
+  table: !type:GroupSelector
+    children:
+    # 75% chance of scrap of some kind
+    - !type:GroupSelector
+      weight: 75
+      children:
+      - !type:NestedSelector
+        tableId: SalvageScrapLowValue
+        weight: 20
+      - !type:NestedSelector
+        tableId: SalvageScrapHighValue
+        weight: 40
+      - !type:NestedSelector
+        tableId: SalvageScrapLarge
+        weight: 40
+    # 15% chance of low-value equipment
+    - !type:NestedSelector
+      tableId: SalvageEquipmentCommon
+      weight: 15
+    # 10% chance of low-value treasure or maintenance tools
+    - !type:GroupSelector
+      weight: 10
+      children:
+      - !type:NestedSelector
+        tableId: SalvageTreasureCommon
+      - !type:NestedSelector
+        tableId: MaintToolsTable
+      - !type:NestedSelector
+        tableId: SalvageTreasureUncommon
+        weight: 0.25
+
+- type: entity
+  parent: MarkerBase
+  id: SalvageSpawnerScrapValuable
+  name: Salvage Scrap Spawner
+  suffix: Valuable, 50%
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Objects/Materials/Scrap/generic.rsi
+      state: junk-airlock-1
+  - type: EntityTableSpawner
+    offset: 0.4
+    table: !type:NestedSelector
+      tableId: SalvageScrapSpawnerValuable
+      prob: 0.5
+
+- type: entity
+  parent: SalvageSpawnerScrapValuable
+  id: SalvageSpawnerScrapValuable75
+  suffix: Valuable, 75%
+  components:
+  - type: EntityTableSpawner
+    offset: 0.4
+    table: !type:NestedSelector
+      tableId: SalvageScrapSpawnerValuable
+      prob: 0.75
+
+- type: entity
+  parent: MarkerBase
+  id: SalvageSpawnerTreasure
+  name: Salvage Treasure Spawner
+  suffix: Common, 75%
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Objects/Materials/materials.rsi
+      state: diamond
+  - type: EntityTableSpawner
+    offset: 0.4
+    table: !type:GroupSelector
+      prob: 0.75
+      children:
+      # 80% chance of some treasure
+      - !type:GroupSelector
+        weight: 80
+        children:
+        - !type:NestedSelector
+          tableId: SalvageTreasureCommon
+          weight: 60
+        - !type:NestedSelector
+          tableId: SalvageTreasureUncommon
+          weight: 30
+        - !type:NestedSelector
+          tableId: SalvageTreasureRare
+          weight: 9
+        - !type:NestedSelector
+          tableId: SalvageTreasureLegendary
+          weight: 1
+      # 10% chance of low-level equipment
+      - !type:GroupSelector
+        weight: 10
+        children:
+        - !type:NestedSelector
+          tableId: SalvageEquipmentCommon
+          weight: 60
+        - !type:NestedSelector
+          tableId: SalvageEquipmentUncommon
+          weight: 40
+      # 5% chance of moderate scrap
+      - !type:GroupSelector
+        weight: 5
+        children:
+        - !type:NestedSelector
+          tableId: SalvageScrapLowValue
+          weight: 60
+        - !type:NestedSelector
+          tableId: SalvageScrapHighValue
+          weight: 30
+        - !type:NestedSelector
+          tableId: SalvageScrapLarge
+          weight: 10
+      # 5% chance of maintenance fluff
+      - !type:NestedSelector
+        tableId: MaintFluffTable
+        weight: 5
+
+- type: entity
+  parent: MarkerBase
+  id: SalvageSpawnerTreasureValuable
+  name: Salvage Treasure Spawner
+  suffix: Valuable, 75%
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Objects/Materials/materials.rsi
+      state: diamond
+  - type: EntityTableSpawner
+    offset: 0.4
+    table: !type:GroupSelector
+      prob: 0.75
+      children:
+      # 80% chance of some treasure
+      - !type:GroupSelector
+        weight: 80
+        children:
+        - !type:NestedSelector
+          tableId: SalvageTreasureCommon
+          weight: 45
+        - !type:NestedSelector
+          tableId: SalvageTreasureUncommon
+          weight: 35
+        - !type:NestedSelector
+          tableId: SalvageTreasureRare
+          weight: 15
+        - !type:NestedSelector
+          tableId: SalvageTreasureLegendary
+          weight: 5
+      # 10% chance of low-level equipment
+      - !type:GroupSelector
+        weight: 10
+        children:
+        - !type:NestedSelector
+          tableId: SalvageEquipmentCommon
+          weight: 50
+        - !type:NestedSelector
+          tableId: SalvageEquipmentUncommon
+          weight: 40
+        - !type:NestedSelector
+          tableId: SalvageEquipmentUncommon
+          weight: 10
+      # 5% chance of moderate scrap
+      - !type:GroupSelector
+        weight: 5
+        children:
+        - !type:NestedSelector
+          tableId: SalvageScrapLowValue
+          weight: 30
+        - !type:NestedSelector
+          tableId: SalvageScrapHighValue
+          weight: 45
+        - !type:NestedSelector
+          tableId: SalvageScrapLarge
+          weight: 25
+      # 5% chance of maintenance fluff
+      - !type:NestedSelector
+        tableId: MaintFluffTable
+        weight: 5
+        rolls: !type:RangeNumberSelector
+          range: 1, 2
+
+- type: entity
+  parent: MarkerBase
+  id: SalvageSpawnerEquipment
+  name: Salvage Equipment Spawner
+  suffix: Common, 75%
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Objects/Devices/communication.rsi
+      state: walkietalkie
+  - type: EntityTableSpawner
+    offset: 0.4
+    table: !type:GroupSelector
+      prob: 0.75
+      children:
+      # 80% chance of equipment item
+      - !type:GroupSelector
+        weight: 80
+        children:
+        - !type:NestedSelector
+          tableId: SalvageEquipmentCommon
+          weight: 60
+        - !type:NestedSelector
+          tableId: SalvageEquipmentUncommon
+          weight: 30
+        - !type:NestedSelector
+          tableId: SalvageEquipmentRare
+          weight: 9
+        - !type:NestedSelector
+          tableId: SalvageEquipmentLegendary
+          weight: 1
+      # 15% chance of decent-ish treasure
+      - !type:GroupSelector
+        weight: 15
+        children:
+        - !type:NestedSelector
+          tableId: SalvageTreasureCommon
+          weight: 75
+        - !type:NestedSelector
+          tableId: SalvageTreasureUncommon
+          weight: 20
+        - !type:NestedSelector
+          tableId: SalvageTreasureRare
+          weight: 5
+      # 5% chance of decent maintenance loot
+      - !type:GroupSelector
+        weight: 5
+        children:
+        - !type:NestedSelector
+          tableId: MaintToolsTable
+        - !type:NestedSelector
+          tableId: MaintFluffTable
+
+- type: entity
+  parent: MarkerBase
+  id: SalvageSpawnerEquipmentValuable
+  name: Salvage Equipment Spawner
+  suffix: Valuable, 75%
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Objects/Devices/communication.rsi
+      state: walkietalkie
+  - type: EntityTableSpawner
+    offset: 0.4
+    table: !type:GroupSelector
+      prob: 0.75
+      children:
+      # 80% chance of equipment item
+      - !type:GroupSelector
+        weight: 80
+        children:
+        - !type:NestedSelector
+          tableId: SalvageEquipmentCommon
+          weight: 45
+        - !type:NestedSelector
+          tableId: SalvageEquipmentUncommon
+          weight: 35
+        - !type:NestedSelector
+          tableId: SalvageEquipmentRare
+          weight: 15
+        - !type:NestedSelector
+          tableId: SalvageEquipmentLegendary
+          weight: 5
+      # 14% chance of decent-ish treasure
+      - !type:GroupSelector
+        weight: 14
+        children:
+        - !type:NestedSelector
+          tableId: SalvageTreasureCommon
+          weight: 60
+        - !type:NestedSelector
+          tableId: SalvageTreasureUncommon
+          weight: 30
+        - !type:NestedSelector
+          tableId: SalvageTreasureRare
+          weight: 10
+      # 5% chance of decent maintenance loot
+      - !type:GroupSelector
+        weight: 5
+        children:
+        - !type:NestedSelector
+          tableId: MaintToolsTable
+        - !type:NestedSelector
+          tableId: MaintFluffTable
+      # 1% chance of syndie maintenance loot
+      - !type:GroupSelector
+        weight: 1
+        children:
+        - !type:NestedSelector
+          tableId: SyndieMaintLoot
+
+- type: entity
+  name: Salvage Canister Spawner
+  id: SalvageCanisterSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Storage/canister.rsi
+      state: blue
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      prob: 0.9
+      children:
+      - id: AirCanister
+      - id: NitrogenCanister
+      - id: OxygenCanister
+      - id: CarbonDioxideCanister
+      - id: PlasmaCanister
+        weight: 0.25
+      - id: NitrousOxideCanister
+        weight: 0.25
+
+- type: entityTable
+  id: SalvageMagnetMobTable
+  table: !type:GroupSelector
+    children:
+    - id: MobCarpSalvage
+      weight: 70
+    - id: MobCarpSalvage
+      weight: 25
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - !type:AllSelector
+      weight: 5
+      children:
+      - id: MobSharkSalvage
+      - id: MobCarpSalvage
+        amount: !type:ConstantNumberSelector
+          value: 3
+    # - id: MobHivebot (solo hivebot spawn)
+
+- type: entity
+  parent: MarkerBase
+  id: SalvageSpawnerMobMagnet
+  name: Salvage Magnet Mob Spawner
+  suffix: 50%
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Mobs/Aliens/Carps/space.rsi
+      state: alive
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      prob: 0.5
+      tableId: SalvageMagnetMobTable
+
+- type: entity
+  parent: SalvageSpawnerMobMagnet
+  id: SalvageSpawnerMobMagnet75
+  suffix: 75%
+  components:
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      prob: 0.75
+      tableId: SalvageMagnetMobTable
+
+- type: entity
+  parent: SalvageSpawnerMobMagnet
+  id: SalvageSpawnerMobMagnet100
+  suffix: 100%
+  components:
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      prob: 1.0
+      tableId: SalvageMagnetMobTable
+
+- type: entity
+  parent: MarkerBase
+  id: SalvageSpawnerMobShark
+  name: Salvage Sharkminnow Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Mobs/Aliens/Carps/sharkminnow.rsi
+      state: alive
+  - type: EntityTableSpawner
+    table: !type:AllSelector
+      children:
+      - id: MobSharkSalvage
+      - id: MobCarpSalvage
+        amount: !type:ConstantNumberSelector
+          value: 3
+

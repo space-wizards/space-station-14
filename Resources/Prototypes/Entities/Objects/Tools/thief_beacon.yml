@@ -1,0 +1,38 @@
+- type: entity
+  id: ThiefBeacon
+  name: thieving beacon
+  description: A device that will teleport everything around it to the thief's vault at the end of the shift.
+  components:
+    - type: ThiefBeacon
+    - type: StealArea
+    - type: Item
+      size: Normal
+    - type: Physics
+      bodyType: Dynamic
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.4,0.25,0.1"
+          density: 20
+          mask:
+            - Impassable
+    - type: Foldable
+      folded: true
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.FoldedVisuals.State:
+          foldedLayer:
+            True: { state: folded_extraction }
+            False: { state: extraction_point }
+    - type: Sprite
+      sprite: Objects/Tools/thief_beacon.rsi
+      drawdepth: SmallObjects
+      noRot: true
+      layers:
+        - state: extraction_point
+          map: [ "foldedLayer" ]

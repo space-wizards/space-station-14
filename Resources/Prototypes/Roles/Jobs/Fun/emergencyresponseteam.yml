@@ -31,7 +31,6 @@
     pocket2: FlashlightSeclite
   storage:
     back:
-    - BoxSurvivalEngineering
     - WeaponDisabler
     - MedicatedSuture
     - RegenerativeMesh
@@ -49,7 +48,6 @@
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTLeader
-    suitstorage: AirTankFilled
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltSecurityFilled
@@ -57,7 +55,6 @@
     pocket2: FlashlightSeclite
   storage:
     back:
-    - BoxSurvivalEngineering
     - WeaponDisabler
     - MedicatedSuture
     - RegenerativeMesh
@@ -75,17 +72,15 @@
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTLeader
-    suitstorage: WeaponRifleLecter
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltSecurityFilled
     pocket1: MagazineRifle
     pocket2: MagazineRifle
   inhand:
-    - AirTankFilled
+  - WeaponRifleLecter
   storage:
     back:
-    - BoxSurvivalEngineering
     - WeaponDisabler
     - MedicatedSuture
     - RegenerativeMesh
@@ -100,7 +95,7 @@
   description: job-description-ertchaplain
   playTimeTracker: JobERTChaplain
   setPreference: false
-  startingGear: ERTEngineerGearEVA
+  startingGear: ERTChaplainGear
   icon: "JobIconNanotrasen"
   supervisors: job-supervisors-centcom
   canBeAntag: false
@@ -124,14 +119,13 @@
     neck: ClothingNeckStoleChaplain
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterArmorBasicSlim
-    id: ERTEngineerPDA
+    id: ERTChaplainPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltStorageWaistbag
     pocket1: Flare
     pocket2: DrinkWaterBottleFull
   storage:
     back:
-    - BoxSurvivalEngineering
     - BoxCandle
     - BoxBodyBag
     - DrinkWaterMelonJuiceJug
@@ -156,7 +150,6 @@
     neck: ClothingNeckStoleChaplain
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTChaplain
-    suitstorage: AirTankFilled
     id: ERTChaplainPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltStorageWaistbag
@@ -164,7 +157,6 @@
     pocket2: DrinkWaterBottleFull
   storage:
     back:
-    - BoxSurvivalEngineering
     - BoxCandle
     - BoxBodyBag
     - DrinkWaterMelonJuiceJug
@@ -211,7 +203,6 @@
     pocket2: GasAnalyzer
   storage:
     back:
-    - BoxSurvivalEngineering
     - trayScanner
     - RCD
     - RCDAmmo
@@ -233,7 +224,6 @@
     eyes: ClothingEyesGlassesMeson
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTEngineer
-    suitstorage: AirTankFilled
     id: ERTEngineerPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltChiefEngineerFilled
@@ -241,7 +231,6 @@
     pocket2: GasAnalyzer
   storage:
     back:
-    - BoxSurvivalEngineering
     - trayScanner
     - RCD
     - RCDAmmo
@@ -286,7 +275,6 @@
     pocket2: FlashlightSeclite
   storage:
     back:
-    - BoxSurvivalEngineering
     - WeaponDisabler
     - MedicatedSuture
     - RegenerativeMesh
@@ -304,7 +292,6 @@
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTSecurity
-    suitstorage: AirTankFilled
     id: ERTSecurityPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltSecurityFilled
@@ -312,7 +299,6 @@
     pocket2: FlashlightSeclite
   storage:
     back:
-    - BoxSurvivalEngineering
     - WeaponDisabler
     - MedicatedSuture
     - RegenerativeMesh
@@ -330,17 +316,15 @@
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTSecurity
-    suitstorage: WeaponRifleLecter
     id: ERTSecurityPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltSecurityFilled
     pocket1: MagazineRifle
     pocket2: MagazineRifle
   inhand:
-    - AirTankFilled
+    - WeaponRifleLecter
   storage:
     back:
-    - BoxSurvivalEngineering
     - WeaponDisabler
     - MedicatedSuture
     - RegenerativeMesh
@@ -380,7 +364,6 @@
     pocket1: Flare
   storage:
     back:
-    - BoxSurvivalMedical # Is this actually supposed to be Medical? All other ERT has Extended
     - Hypospray
     - MedkitAdvancedFilled
     - CrowbarRed
@@ -398,14 +381,12 @@
     eyes: ClothingEyesHudMedical
     gloves: ClothingHandsGlovesNitrile
     outerClothing: ClothingOuterHardsuitERTMedical
-    suitstorage: AirTankFilled
     id: ERTMedicPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltMedicalFilled
     pocket1: Flare
   storage:
     back:
-    - BoxSurvivalMedical # Is this actually supposed to be Medical? All other ERT has Extended
     - Hypospray
     - MedkitAdvancedFilled
     - CrowbarRed
@@ -444,7 +425,6 @@
     pocket1: Flare
   storage:
     back:
-    - BoxSurvivalEngineering
     - LightReplacer
     - BoxLightMixed
     - BoxLightMixed
@@ -461,14 +441,12 @@
     mask: ClothingMaskGasERT
     gloves: ClothingHandsGlovesColorPurple
     outerClothing: ClothingOuterHardsuitERTJanitor
-    suitstorage: AirTankFilled
     id: ERTJanitorPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltJanitorFilled
     pocket1: Flare
   storage:
     back:
-    - BoxSurvivalEngineering
     - LightReplacer
     - BoxLightMixed
     - BoxLightMixed

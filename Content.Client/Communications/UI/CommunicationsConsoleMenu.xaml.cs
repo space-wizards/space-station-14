@@ -126,11 +126,11 @@ namespace Content.Client.Communications.UI
                 return;
             }
 
-            var diff = (CountdownEnd - _timing.CurTime) ?? TimeSpan.Zero;
+            var diff = MathHelper.Max((CountdownEnd - _timing.CurTime) ?? TimeSpan.Zero, TimeSpan.Zero);
 
             EmergencyShuttleButton.Text = Loc.GetString("comms-console-menu-recall-shuttle");
             var infoText = Loc.GetString($"comms-console-menu-time-remaining",
-            ("time", diff.TotalSeconds.ToString(CultureInfo.CurrentCulture)));
+                ("time", diff.ToString(@"hh\:mm\:ss", CultureInfo.CurrentCulture)));
             CountdownLabel.SetMessage(infoText);
         }
     }
