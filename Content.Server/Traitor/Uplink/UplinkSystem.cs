@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Store.Systems;
 using Content.Server.StoreDiscount.Systems;
 using Content.Shared.Hands.EntitySystems;
@@ -56,6 +57,7 @@ namespace Content.Server.Traitor.Uplink
                 Store: uplinkEntity.Value,
                 UseDiscounts: giveDiscounts,
                 Listings: _store.GetAvailableListings(user, uplinkEntity.Value, store)
+                                .ToArray()
             );
             RaiseLocalEvent(ref uplinkInitializedEvent);
             // TODO add BUI. Currently can't be done outside of yaml -_-
