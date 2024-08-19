@@ -315,6 +315,8 @@
     sprite: Clothing/Mask/muzzle.rsi
   - type: Clothing
     sprite: Clothing/Mask/muzzle.rsi
+    equipDelay: 5
+    unequipDelay: 5
   - type: IngestionBlocker
   - type: AddAccentClothing
     accent: ReplacementAccent
