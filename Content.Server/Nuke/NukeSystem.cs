@@ -467,7 +467,8 @@ public sealed class NukeSystem : EntitySystem
             Color.Red,
             stationUid ?? uid,
             null,
-            ("time", (int) component.RemainingTime), ("position", posText)
+            ("time", (int) component.RemainingTime),
+                ("location", FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString((uid, nukeXform))))
         );
 
         _sound.PlayGlobalOnStation(uid, _audio.GetSound(component.ArmSound));
