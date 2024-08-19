@@ -1121,6 +1121,20 @@
 
 - type: entity
   id: StationAiUploadComputer
+  parent: BaseComputer
   name: AI upload console
   description: Used to update the laws of the station AI.
-
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "computerLayerBody" ]
+      state: computer
+    - map: [ "computerLayerKeyboard" ]
+      state: generic_keyboard
+    - map: [ "computerLayerScreen" ]
+      state: aiupload
+    - map: [ "computerLayerKeys" ]
+      state: generic_keys
+  - type: SiliconLawUpdater
+  - type: ItemSlots
+  - type: ContainerContainer
