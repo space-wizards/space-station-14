@@ -2,7 +2,7 @@
   id: BaseBlobStructure
   name: blob
   description: A thick wall of writhing tendrils.
-  categories: [ hideSpawnMenu ]
+  categories: [ HideSpawnMenu ]
   abstract: true
   placement:
     mode: SnapgridCenter
@@ -189,5 +189,5 @@
   components:
   - type: Sprite
     layers:
-    - state: blob_factory_2
+    - state: blob_factory
   - type: BlobFactory

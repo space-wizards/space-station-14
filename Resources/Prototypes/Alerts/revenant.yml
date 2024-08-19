@@ -20,6 +20,7 @@
   components:
   - type: GenericCounterAlert
     centerGlyph: false
+    hideLeadingZeroes: false
   - type: Sprite
     sprite: /Textures/Interface/Alerts/essence_counter.rsi
     layers:

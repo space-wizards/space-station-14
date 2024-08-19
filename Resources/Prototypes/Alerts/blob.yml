@@ -15,9 +15,12 @@
   - type: GenericCounterAlert
   - type: Sprite
     sprite: /Textures/Interface/Alerts/generic_counter.rsi
-    offset: 0, 0 #todo: WOW! The offset doesn't fuckigng work. W O N D E R F U L
+    offset: 0, 0
     layers:
     - state: base
     - map: [ "1" ]
+      color: "#a6f500"
     - map: [ "10" ]
+      color: "#a6f500"
     - map: [ "100" ]
+      color: "#a6f500"

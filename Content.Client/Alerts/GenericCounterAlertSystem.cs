@@ -26,12 +26,30 @@ public sealed class GenericCounterAlertSystem : EntitySystem
         if (!ev.Handled)
             return;
 
-        var digitCount = GetDigitCount((ent, ent, sprite));
+        // How many digits can we display
+        var maxDigitCount = GetMaxDigitCount((ent, ent, sprite));
 
         // Clamp it to a positive number that we can actually display in full (no rollover to 0)
-        var amount = (int) Math.Clamp(ev.Amount!.Value, 0, Math.Pow(10, digitCount) - 1);
+        var amount = (int) Math.Clamp(ev.Amount!.Value, 0, Math.Pow(10, maxDigitCount) - 1);
 
-        var baseOffset = ((ent.Comp.AlertSize.X - (digitCount * ent.Comp.GlyphWidth)) / 2f) * (1f / EyeManager.PixelsPerMeter);
+        // This is super wack but ig it works?
+        var digitCount = ent.Comp.HideLeadingZeroes
+            ? amount.ToString().Length
+            : maxDigitCount;
+
+        if (ent.Comp.HideLeadingZeroes)
+        {
+            for (var i = 0; i < ent.Comp.DigitKeys.Count; i++)
+            {
+                if (!sprite.LayerMapTryGet(ent.Comp.DigitKeys[i], out var layer))
+                    continue;
+                sprite.LayerSetVisible(layer, i <= digitCount - 1);
+            }
+        }
+
+        // ReSharper disable once PossibleLossOfFraction
+        var baseOffset = (ent.Comp.AlertSize.X - digitCount * ent.Comp.GlyphWidth) / 2 * (1f / EyeManager.PixelsPerMeter);
+
         for (var i = 0; i < ent.Comp.DigitKeys.Count; i++)
         {
             if (!sprite.LayerMapTryGet(ent.Comp.DigitKeys[i], out var layer))
@@ -42,9 +60,7 @@ public sealed class GenericCounterAlertSystem : EntitySystem
 
             if (ent.Comp.CenterGlyph)
             {
-                var littleOFfset = ((digitCount - i) * ent.Comp.GlyphWidth * (1f / EyeManager.PixelsPerMeter));
-                var offset = baseOffset + littleOFfset;
-                Log.Debug($"fuck[{i}]: {baseOffset}, {littleOFfset}");
+                var offset = baseOffset + (digitCount - 1 - i) * ent.Comp.GlyphWidth * (1f / EyeManager.PixelsPerMeter);
                 sprite.LayerSetOffset(layer, new Vector2(offset, 0));
             }
         }
@@ -54,7 +70,7 @@ public sealed class GenericCounterAlertSystem : EntitySystem
     /// Gets the number of digits that we can display.
     /// </summary>
     /// <returns></returns>
-    private int GetDigitCount(Entity<GenericCounterAlertComponent, SpriteComponent> ent)
+    private int GetMaxDigitCount(Entity<GenericCounterAlertComponent, SpriteComponent> ent)
     {
         var comp = ent.Comp1;
         var sprite = ent.Comp2;

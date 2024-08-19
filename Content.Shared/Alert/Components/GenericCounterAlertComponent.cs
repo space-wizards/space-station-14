@@ -19,6 +19,9 @@ public sealed partial class GenericCounterAlertComponent : Component
     public bool CenterGlyph = true;
 
     [DataField]
+    public bool HideLeadingZeroes = true;
+
+    [DataField]
     public Vector2i AlertSize = new(32, 32);
 
     [DataField]
