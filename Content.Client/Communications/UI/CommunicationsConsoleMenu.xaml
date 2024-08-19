@@ -7,11 +7,11 @@
         <Button Name="AnnounceButton" Text="{Loc 'comms-console-menu-announcement-button'}" ToolTip="{Loc 'comms-console-menu-announcement-button-tooltip'}" StyleClasses="OpenLeft" Access="Public" />
         <Button Name="BroadcastButton" Text="{Loc 'comms-console-menu-broadcast-button'}" ToolTip="{Loc 'comms-console-menu-broadcast-button-tooltip'}" StyleClasses="OpenLeft" Access="Public" />
 
-        <OptionButton Name="AlertLevelButton"  ToolTip="{Loc 'comms-console-menu-alert-level-button-tooltip'}" StyleClasses="OpenRight" Access="Public" />
+        <OptionButton Name="AlertLevelButton" ToolTip="{Loc 'comms-console-menu-alert-level-button-tooltip'}" StyleClasses="OpenRight" Access="Public" />
 
         <Control MinSize="10 10" />
 
         <RichTextLabel Name="CountdownLabel" VerticalExpand="True" />
-        <Button Name="EmergencyShuttleButton" Text="Placeholder Text" Access="Public" />
+        <Button Name="EmergencyShuttleButton" Text="Placeholder Text" ToolTip="{Loc 'comms-console-menu-emergency-shuttle-button-tooltip'}" Access="Public" />
     </BoxContainer>
 </controls:FancyWindow>

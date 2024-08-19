@@ -8,6 +8,7 @@ comms-console-menu-broadcast-button-tooltip = Broadcasts your message all digita
 comms-console-menu-alert-level-button-tooltip = Change the station alert level. Applies immediately on selecting.
 comms-console-menu-call-shuttle = Call emergency shuttle
 comms-console-menu-recall-shuttle = Recall emergency shuttle
+comms-console-menu-emergency-shuttle-button-tooltip = Calls or recalls the emergency shuttle. You can only recall when there's enough time left.
 comms-console-menu-time-remaining = Time remaining: {$time}
 
 # Popup
