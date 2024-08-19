@@ -72,16 +72,14 @@
   parent: [BoxCardboard, BaseSyndicateContraband]
   id: CombatBakeryKit
   name: combat bakery kit
-  description: A kit of clandestine baked weapons. Packaging disintegrates when opened, leaving no evidence behind.
+  description: A kit of clandestine baked weapons.
   components:
   - type: Sprite
     layers:
       - state: box_of_doom
       - state: france
-  - type: SpawnItemsOnUse
-    items:
+  - type: StorageFill
+    contents:
       - id: WeaponCroissant
         amount: 2
       - id: WeaponBaguette
-    sound:
-      path: /Audio/Effects/unwrap.ogg
