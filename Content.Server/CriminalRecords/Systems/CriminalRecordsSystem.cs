@@ -35,6 +35,8 @@ public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem
         SubscribeLocalEvent<AfterGeneralRecordCreatedEvent>(OnGeneralRecordCreated);
         SubscribeLocalEvent<WantedListCartridgeComponent, CriminalRecordChangedEvent>(OnRecordChanged);
         SubscribeLocalEvent<WantedListCartridgeComponent, CartridgeUiReadyEvent>(OnCartridgeUiReady);
+        SubscribeLocalEvent<WantedListCartridgeComponent, CriminalHistoryAddedEvent>(OnHistoryAdded);
+        SubscribeLocalEvent<WantedListCartridgeComponent, CriminalHistoryRemovedEvent>(OnHistoryRemoved);
     }
 
     private void OnGeneralRecordCreated(AfterGeneralRecordCreatedEvent ev)
@@ -93,6 +95,14 @@ public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem
             return false;
 
         record.History.Add(entry);
+
+        var args = new CriminalHistoryAddedEvent(entry);
+        var query = EntityQueryEnumerator<WantedListCartridgeComponent>();
+        while (query.MoveNext(out var readerUid, out _))
+        {
+            RaiseLocalEvent(readerUid, ref args);
+        }
+
         return true;
     }
 
@@ -117,11 +127,29 @@ public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem
         if (index >= record.History.Count)
             return false;
 
+        var history = record.History[(int)index];
         record.History.RemoveAt((int) index);
+
+        var args = new CriminalHistoryRemovedEvent(history);
+        var query = EntityQueryEnumerator<WantedListCartridgeComponent>();
+        while (query.MoveNext(out var readerUid, out _))
+        {
+            RaiseLocalEvent(readerUid, ref args);
+        }
+
         return true;
     }
 
-    private void OnRecordChanged(Entity<WantedListCartridgeComponent> ent, ref CriminalRecordChangedEvent args)
+    private void OnRecordChanged(Entity<WantedListCartridgeComponent> ent, ref CriminalRecordChangedEvent args) =>
+        StateChanged(ent);
+
+    private void OnHistoryAdded(Entity<WantedListCartridgeComponent> ent, ref CriminalHistoryAddedEvent args) =>
+        StateChanged(ent);
+
+    private void OnHistoryRemoved(Entity<WantedListCartridgeComponent> ent, ref CriminalHistoryRemovedEvent args) =>
+        StateChanged(ent);
+
+    private void StateChanged(Entity<WantedListCartridgeComponent> ent)
     {
         if (Comp<CartridgeComponent>(ent).LoaderUid is not { } loaderUid)
             return;
@@ -153,22 +181,4 @@ public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem
 
         _cartridge.UpdateCartridgeUiState(loaderUid, state);
     }
-}
-
-public enum CriminalRecordsFilter
-{
-    /// <summary>
-    /// All records.
-    /// </summary>
-    None,
-
-    /// <summary>
-    /// All records with <c>Wanted</c> and <c>Suspected</c> statuses.
-    /// </summary>
-    Wanted,
-
-    /// <summary>
-    /// All records with the status <c>Detained</c>, <c>Discharged</c> and <c>Paroled</c>.
-    /// </summary>
-    Released,
 }

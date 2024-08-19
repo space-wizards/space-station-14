@@ -65,3 +65,9 @@ public struct WantedRecord(GeneralStationRecord targetInfo, SecurityStatus statu
 
 [ByRefEvent]
 public record struct CriminalRecordChangedEvent(CriminalRecord Record);
+
+[ByRefEvent]
+public record struct CriminalHistoryAddedEvent(CrimeHistory History);
+
+[ByRefEvent]
+public record struct CriminalHistoryRemovedEvent(CrimeHistory History);

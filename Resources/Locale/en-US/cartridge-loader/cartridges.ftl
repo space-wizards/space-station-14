@@ -42,7 +42,7 @@ wanted-list-status-label = [color=darkgray]status:[/color] {$status ->
         [detained] [color=#b18644]detained[/color]
         [paroled] [color=green]paroled[/color]
         [discharged] [color=green]discharged[/color]
-        *[other] unknown
+        *[other] none
     }
 
 wanted-list-history-table-time-col = Time
