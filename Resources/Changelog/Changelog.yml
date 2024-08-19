@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Fixed latejoin antagonists not respecting antag preferences (for real
-      this time)
-    type: Fix
-  id: 6649
-  time: '2024-05-31T02:06:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28430
 - author: Ubaser
   changes:
   - message: Botanists now spawn with a plant clipper.
@@ -3837,3 +3829,11 @@
   id: 7148
   time: '2024-08-19T02:48:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31088
+- author: redmushie
+  changes:
+  - message: News management console now checks for Service ID card access instead
+      of the manifest
+    type: Fix
+  id: 7149
+  time: '2024-08-19T02:55:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31160
