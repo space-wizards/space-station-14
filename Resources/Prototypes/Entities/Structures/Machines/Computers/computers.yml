@@ -1118,3 +1118,9 @@
     access: [["ResearchDirector"]]
   - type: Lock
     unlockOnClick: false
+
+- type: entity
+  id: StationAiUploadComputer
+  name: AI upload console
+  description: Used to update the laws of the station AI.
+
