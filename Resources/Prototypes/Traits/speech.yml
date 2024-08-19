@@ -51,7 +51,7 @@
   category: SpeechTraits
   cost: 1
   components:
-    - type: ItalianAccent
+  - type: ItalianAccent
 
 - type: trait
   id: Liar
