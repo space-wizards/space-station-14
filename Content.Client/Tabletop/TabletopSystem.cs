@@ -27,6 +27,7 @@ namespace Content.Client.Tabletop
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
         // Time in seconds to wait until sending the location of a dragged entity to the server again
         private const float Delay = 1f / 10; // 10 Hz
@@ -100,7 +101,7 @@ namespace Content.Client.Tabletop
             if (clampedCoords.Equals(MapCoordinates.Nullspace)) return;
 
             // Move the entity locally every update
-            EntityManager.GetComponent<TransformComponent>(_draggedEntity.Value).WorldPosition = clampedCoords.Position;
+            _transformSystem.SetWorldPosition(_draggedEntity.Value, clampedCoords.Position);
 
             // Increment total time passed
             _timePassed += frameTime;

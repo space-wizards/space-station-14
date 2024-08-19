@@ -92,7 +92,7 @@
   id: ClockworkGrille
   parent: Grille
   name: clockwork grille
-  description: a flimsy framework of iron rods assembled in traditional Ratvarian fashion.
+  description: A flimsy framework of iron rods assembled in traditional Ratvarian fashion.
   components:
     - type: Sprite
       drawdepth: Walls

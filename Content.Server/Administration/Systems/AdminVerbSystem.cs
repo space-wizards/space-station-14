@@ -35,6 +35,9 @@ using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
+using Content.Server.Silicons.Laws;
+using Content.Shared.Silicons.Laws.Components;
+using Robust.Server.Player;
 using Robust.Shared.Physics.Components;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
@@ -68,6 +71,8 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly StationSpawningSystem _spawning = default!;
         [Dependency] private readonly ExamineSystemShared _examine = default!;
         [Dependency] private readonly AdminFrozenSystem _freeze = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly SiliconLawSystem _siliconLawSystem = default!;
 
         private readonly Dictionary<ICommonSession, List<EditSolutionsEui>> _openSolutionUis = new();
 
@@ -180,7 +185,7 @@ namespace Content.Server.Administration.Systems
 
                             if (targetMind != null)
                             {
-                                _mindSystem.TransferTo(targetMind.Value, mobUid);
+                                _mindSystem.TransferTo(targetMind.Value, mobUid, true);
                             }
                         },
                         ConfirmationPopup = true,
@@ -207,6 +212,15 @@ namespace Content.Server.Administration.Systems
                         },
                         ConfirmationPopup = true,
                         Impact = LogImpact.High,
+                    });
+
+                    // PlayerPanel
+                    args.Verbs.Add(new Verb
+                    {
+                        Text = Loc.GetString("admin-player-actions-player-panel"),
+                        Category = VerbCategory.Admin,
+                        Act = () => _console.ExecuteCommand(player, $"playerpanel \"{targetActor.PlayerSession.UserId}\""),
+                        Impact = LogImpact.Low
                     });
                 }
 
@@ -329,6 +343,25 @@ namespace Content.Server.Administration.Systems
                     Impact = LogImpact.Low
                 });
 
+                if (TryComp<SiliconLawBoundComponent>(args.Target, out var lawBoundComponent))
+                {
+                    args.Verbs.Add(new Verb()
+                    {
+                        Text = Loc.GetString("silicon-law-ui-verb"),
+                        Category = VerbCategory.Admin,
+                        Act = () =>
+                        {
+                            var ui = new SiliconLawEui(_siliconLawSystem, EntityManager, _adminManager);
+                            if (!_playerManager.TryGetSessionByEntity(args.User, out var session))
+                            {
+                                return;
+                            }
+                            _euiManager.OpenEui(ui, session);
+                            ui.UpdateLaws(lawBoundComponent, args.Target);
+                        },
+                        Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/actions_borg.rsi"), "state-laws"),
+                    });
+                }
             }
         }
 
