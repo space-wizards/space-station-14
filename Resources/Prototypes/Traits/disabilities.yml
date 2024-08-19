@@ -64,3 +64,17 @@
       maxSoundDistance: 7
       sounds:
         collection: Paracusia
+
+- type: trait
+  id: Clumsy
+  name: trait-clumsy-name
+  description: trait-clumsy-desc
+  category: Disabilities
+  components:
+    - type: Clumsy
+      clumsyDamage:
+        types:
+          Blunt: 5
+          Piercing: 4
+        groups:
+          Burn: 3

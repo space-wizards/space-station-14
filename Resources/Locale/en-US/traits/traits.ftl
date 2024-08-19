@@ -24,6 +24,9 @@ trait-paracusia-desc = You hear sounds that aren't really there.
 trait-unrevivable-name = Unrevivable
 trait-unrevivable-desc = You are unable to be revived by defibrillators.
 
+trait-clumsy-name = Clumsy
+trait-clumsy-desc = You are very clumsy! Certain actions, like shooting, are more difficult.
+
 trait-pirate-accent-name = Pirate accent
 trait-pirate-accent-desc = You can't stop speaking like a pirate!
 
