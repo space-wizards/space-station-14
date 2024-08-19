@@ -6,10 +6,10 @@
   suffix: Weapon
   components:
   - type: MeleeWeapon
-    wideAnimationRotation: -135
+    wideAnimationRotation: -120
     damage:
       types:
-        Blunt: 16
+        Slash: 16
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Reflect
