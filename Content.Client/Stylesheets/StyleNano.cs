@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client.CartridgeLoader.UI;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
 using Content.Client.PDA;
@@ -1056,6 +1057,43 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(ItemList.StylePropertyDisabledItemBackground,
                         itemListItemBackgroundDisabled),
                     new StyleProperty(ItemList.StylePropertySelectedItemBackground,
+                        itemListBackgroundSelected)
+                }),
+
+                 // StatusList
+                new StyleRule(new SelectorElement(typeof(StatusList), null, null, null), new[]
+                {
+                    new StyleProperty(StatusList.StylePropertyBackground,
+                        new StyleBoxFlat {BackgroundColor = new Color(32, 32, 40)}),
+                    new StyleProperty(StatusList.StylePropertyItemBackground,
+                        itemListItemBackground),
+                    new StyleProperty(StatusList.StylePropertyDisabledItemBackground,
+                        itemListItemBackgroundDisabled),
+                    new StyleProperty(StatusList.StylePropertySelectedItemBackground,
+                        itemListBackgroundSelected)
+                }),
+
+                new StyleRule(new SelectorElement(typeof(StatusList), new[] {"transparentItemList"}, null, null), new[]
+                {
+                    new StyleProperty(StatusList.StylePropertyBackground,
+                        new StyleBoxFlat {BackgroundColor = Color.Transparent}),
+                    new StyleProperty(StatusList.StylePropertyItemBackground,
+                        itemListItemBackgroundTransparent),
+                    new StyleProperty(StatusList.StylePropertyDisabledItemBackground,
+                        itemListItemBackgroundDisabled),
+                    new StyleProperty(StatusList.StylePropertySelectedItemBackground,
+                        itemListBackgroundSelected)
+                }),
+
+                 new StyleRule(new SelectorElement(typeof(StatusList), new[] {"transparentBackgroundItemList"}, null, null), new[]
+                {
+                    new StyleProperty(StatusList.StylePropertyBackground,
+                        new StyleBoxFlat {BackgroundColor = Color.Transparent}),
+                    new StyleProperty(StatusList.StylePropertyItemBackground,
+                        itemListItemBackground),
+                    new StyleProperty(StatusList.StylePropertyDisabledItemBackground,
+                        itemListItemBackgroundDisabled),
+                    new StyleProperty(StatusList.StylePropertySelectedItemBackground,
                         itemListBackgroundSelected)
                 }),
 

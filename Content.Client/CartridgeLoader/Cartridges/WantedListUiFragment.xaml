@@ -1,5 +1,6 @@
 <cartridges:WantedListUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
         xmlns="https://spacestation14.io"
+        xmlns:ui="clr-namespace:Content.Client.CartridgeLoader.UI"
         Orientation="Vertical"
         VerticalExpand="True"
         HorizontalExpand="True">
@@ -9,11 +10,7 @@
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
         <Label Name="NoRecords" Text="{Loc 'wanted-list-label-no-records'}" Align="Center" VAlign="Center" HorizontalExpand="True" FontColorOverride="DarkGray"/>
 
-        <BoxContainer Name="RecordsListContainer" Orientation="Vertical" Visible="False">
-            <ScrollContainer VerticalExpand="True" MinWidth="150" MaxWidth="250">
-                <ItemList Name="RecordsList" VerticalExpand="True" />
-            </ScrollContainer>
-        </BoxContainer>
+        <ui:StatusList Name="RecordsList" VerticalExpand="True" MinWidth="150" MaxWidth="250" Visible="False" />
 
         <Label Name="RecordUnselected"
                Text="{Loc 'criminal-records-console-select-record-info'}"
