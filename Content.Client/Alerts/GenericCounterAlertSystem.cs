@@ -1,5 +1,7 @@
+using System.Numerics;
 using Content.Shared.Alert.Components;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 
 namespace Content.Client.Alerts;
 
@@ -25,11 +27,11 @@ public sealed class GenericCounterAlertSystem : EntitySystem
             return;
 
         var digitCount = GetDigitCount((ent, ent, sprite));
+
         // Clamp it to a positive number that we can actually display in full (no rollover to 0)
         var amount = (int) Math.Clamp(ev.Amount!.Value, 0, Math.Pow(10, digitCount) - 1);
 
-        Log.Debug($"{digitCount}");
-        //todo automatic layering and centering.
+        var baseOffset = ((ent.Comp.AlertSize.X - (digitCount * ent.Comp.GlyphWidth)) / 2f) * (1f / EyeManager.PixelsPerMeter);
         for (var i = 0; i < ent.Comp.DigitKeys.Count; i++)
         {
             if (!sprite.LayerMapTryGet(ent.Comp.DigitKeys[i], out var layer))
@@ -37,6 +39,14 @@ public sealed class GenericCounterAlertSystem : EntitySystem
 
             var result = amount / (int) Math.Pow(10, i) % 10;
             sprite.LayerSetState(layer, $"{result}");
+
+            if (ent.Comp.CenterGlyph)
+            {
+                var littleOFfset = ((digitCount - i) * ent.Comp.GlyphWidth * (1f / EyeManager.PixelsPerMeter));
+                var offset = baseOffset + littleOFfset;
+                Log.Debug($"fuck[{i}]: {baseOffset}, {littleOFfset}");
+                sprite.LayerSetOffset(layer, new Vector2(offset, 0));
+            }
         }
     }
 

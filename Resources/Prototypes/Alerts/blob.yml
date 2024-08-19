@@ -1,0 +1,23 @@
+- type: alert
+  id: BlobResource
+  category: Health
+  icons:
+  - sprite: /Textures/Interface/Alerts/generic_counter.rsi
+    state: base
+  alertViewEntity: BlobResourceAlertSpriteView
+  name: alerts-blob-resource-name
+  description: alerts-blob-resource-desc
+
+- type: entity
+  id: BlobResourceAlertSpriteView
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: GenericCounterAlert
+  - type: Sprite
+    sprite: /Textures/Interface/Alerts/generic_counter.rsi
+    offset: 0, 0 #todo: WOW! The offset doesn't fuckigng work. W O N D E R F U L
+    layers:
+    - state: base
+    - map: [ "1" ]
+    - map: [ "10" ]
+    - map: [ "100" ]

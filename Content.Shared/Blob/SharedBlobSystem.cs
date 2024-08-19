@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Actions;
+using Content.Shared.Alert;
 using Content.Shared.Blob.Components;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Input;
@@ -27,9 +28,11 @@ namespace Content.Shared.Blob;
 /// </summary>
 public abstract partial class SharedBlobSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] protected readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly FixtureSystem _fixture = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -94,6 +97,7 @@ public abstract partial class SharedBlobSystem : EntitySystem
             }
         }
 
+        _alerts.ShowAlert(ent, ent.Comp.ResourceAlert);
         SpawnBlobCreated(comp.CoreProtoId, Transform(ent).Coordinates, ent);
         Dirty(ent, ent.Comp);
     }
@@ -455,6 +459,9 @@ public abstract partial class SharedBlobSystem : EntitySystem
 
     public void SetResource(Entity<BlobOvermindComponent> ent, int amount)
     {
+        // sigh... todo: this makes everything mispredict like ass. WHY!
+        if (_net.IsClient)
+            return;
         ent.Comp.Resource = amount;
         Dirty(ent, ent.Comp);
     }

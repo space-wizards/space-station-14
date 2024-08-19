@@ -60,7 +60,8 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
             _severity = severity;
             _icon = new SpriteView
             {
-                Scale = new Vector2(2, 2)
+                Scale = new Vector2(2, 2),
+                RectClipContent = true
             };
 
             SetupIcon();

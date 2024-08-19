@@ -19,6 +19,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: GenericCounterAlert
+    centerGlyph: false
   - type: Sprite
     sprite: /Textures/Interface/Alerts/essence_counter.rsi
     layers:

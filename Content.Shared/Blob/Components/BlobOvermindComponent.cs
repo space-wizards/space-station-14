@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Alert;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -46,6 +47,9 @@ public sealed partial class BlobOvermindComponent : Component
 
     [DataField]
     public EntProtoId CoreProtoId = "BlobStructureCore";
+
+    [DataField]
+    public ProtoId<AlertPrototype> ResourceAlert = "BlobResource";
 }
 
 [DataDefinition]
