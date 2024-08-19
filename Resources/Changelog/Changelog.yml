@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Janitors now spawn with a light replacer.
-    type: Tweak
-  id: 6651
-  time: '2024-05-31T08:44:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28441
-- author: NazrinNya
-  changes:
-  - message: Disposal pipes are now blocked from constructing underneath impassable
-      objects.
-    type: Fix
-  id: 6652
-  time: '2024-05-31T14:49:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28447
 - author: ShadowCommander
   changes:
   - message: Opening a firelock when temperature or pressure warnings are active,
@@ -3837,3 +3822,24 @@
   id: 7150
   time: '2024-08-19T03:01:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31105
+- author: EmoGarbage404
+  changes:
+  - message: Space carp and Sharkminnows now drop teeth when butchered.
+    type: Add
+  - message: Added new bounties for carp and shark teeth.
+    type: Add
+  id: 7151
+  time: '2024-08-19T03:04:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31070
+- author: to4no_fix
+  changes:
+  - message: Now it takes 5 seconds to take off or put on a muzzle
+    type: Tweak
+  - message: Now it takes 5 seconds to take off or put on a blindfold
+    type: Tweak
+  - message: Added a recipe for producing a straitjacket, it opens when researching
+      the Special Means technology, it can be produced at the security techfab
+    type: Add
+  id: 7152
+  time: '2024-08-19T03:05:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31095
