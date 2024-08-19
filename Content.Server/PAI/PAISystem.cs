@@ -105,7 +105,7 @@ public sealed class PAISystem : SharedPAISystem
             name.Append(_random.Pick(SYMBOLS));
         }
 
-        // add 's pAI to the scrambled name
+        // add 's pai to the scrambled name
         var val = Loc.GetString("pai-system-pai-name-raw", ("name", name.ToString()));
         _metaData.SetEntityName(uid, val);
     }
