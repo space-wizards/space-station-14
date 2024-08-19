@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: notafet
-  changes:
-  - message: Increase power output from Tesla coils.
-    type: Tweak
-  id: 6659
-  time: '2024-06-01T05:51:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28424
 - author: Beck Thompson
   changes:
   - message: ID computer will now select passenger as the default id icon instead
@@ -3848,3 +3841,19 @@
   id: 7158
   time: '2024-08-19T03:32:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30815
+- author: EmoGarbage404
+  changes:
+  - message: The recycler can now be broken down and repaired.
+    type: Add
+  - message: Breaking the recycler now removes the EMAG effect.
+    type: Add
+  - message: The material-reclaiming efficiency of the recycler has been increased.
+    type: Tweak
+  - message: Fixed a bug where inaccessible solutions could be extracted from entities
+      via the recycler.
+    type: Fix
+  - message: Removed the material reclaimer.
+    type: Remove
+  id: 7159
+  time: '2024-08-19T03:39:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30802
