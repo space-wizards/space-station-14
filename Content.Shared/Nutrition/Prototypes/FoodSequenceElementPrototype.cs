@@ -22,7 +22,7 @@ public sealed partial class FoodSequenceElementPrototype : IPrototype
     /// A localized name piece to build into the item name generator.
     /// </summary>
     [DataField]
-    public LocId Name { get; private set; } = string.Empty;
+    public LocId? Name { get; private set; }
 
     /// <summary>
     /// If the layer is the final one, it can be added over the limit, but no other layers can be added after it.

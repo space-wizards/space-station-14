@@ -182,7 +182,10 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
             if (!_proto.TryIndex(proto, out var protoIndexed))
                 continue;
 
-            content.Append(Loc.GetString(protoIndexed.Name));
+            if (protoIndexed.Name is null)
+                continue;
+
+            content.Append(Loc.GetString(protoIndexed.Name.Value));
 
             if (nameCounter < existedContentNames.Count)
                 content.Append(separator);
