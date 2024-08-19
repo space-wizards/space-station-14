@@ -130,7 +130,7 @@ public sealed partial class StoreSystem
     /// </summary>
     private void OnBuyRequest(EntityUid uid, StoreComponent component, StoreBuyListingMessage msg)
     {
-        var listing = component.LastAvailableListings.FirstOrDefault(x => x.ID.Equals(msg.Listing.ID));
+        var listing = component.FullListingsCatalog.FirstOrDefault(x => x.ID.Equals(msg.Listing.ID));
 
         if (listing == null) //make sure this listing actually exists
         {
