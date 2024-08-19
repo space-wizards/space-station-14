@@ -3,7 +3,7 @@
   mutations:  
     - name: Bioluminescent
       baseOdds: 0.0072
-      mutation: !type:Glow # new effect   
+      mutation: !type:Glow
     - name: Sentient
       baseOdds: 0.0072
       appliesToPlant: false #makes the botany tray sentient if true

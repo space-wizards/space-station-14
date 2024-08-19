@@ -13,6 +13,6 @@ public sealed partial class RandomPlantMutationListPrototype : IPrototype
     /// <summary>
     ///     List of RandomFills that can be picked from.
     /// </summary>
-    [DataField("mutations", required: true)]
+    [DataField("mutations", required: true, serverOnly: true)]
     public List<RandomPlantMutation> mutations = new();
 }

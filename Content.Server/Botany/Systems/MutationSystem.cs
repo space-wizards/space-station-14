@@ -13,11 +13,6 @@ public sealed class MutationSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     private RandomPlantMutationListPrototype _randomMutations = default!;
 
-    //Additonal TODO:
-    //clean up errors on client side about missing concrete Glow class?
-    //Investigate Ligneous pop-up message not appearing if the trait is acquired via mutation.
-    //Balance: RobustHarvest can now negate mutating into a low Potency Value, rather than being the primary way to boost Potency.
-
     public override void Initialize()
     {
         _randomMutations = _prototypeManager.Index<RandomPlantMutationListPrototype>("RandomPlantMutations");
