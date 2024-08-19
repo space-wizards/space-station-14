@@ -17,7 +17,7 @@
         volume: 2
   - type: Physics
     bodyType: Dynamic
-    canCollide: true
+    canCollide: false
   - type: Fixtures
     fixtures:
       fix1:
@@ -1711,6 +1711,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitNanotrasenLogo
@@ -1719,6 +1721,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitCleanliness
@@ -1727,6 +1731,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitHelpOthers
@@ -1735,6 +1741,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitBuild
@@ -1743,6 +1751,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitBlessThisSpess
@@ -1751,6 +1761,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitScience
@@ -1759,6 +1771,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitIan
@@ -1767,6 +1781,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitObey
@@ -1775,6 +1791,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitWalk
@@ -1783,6 +1801,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitStateLaws
@@ -1791,6 +1811,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitLoveIan
@@ -1799,6 +1821,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitSpaceCops
@@ -1807,6 +1831,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitUeNo
@@ -1815,6 +1841,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitGetYourLEGS
@@ -1823,6 +1851,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitDoNotQuestion
@@ -1831,6 +1861,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitWorkForAFuture
@@ -1839,6 +1871,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitSoftCapPopArt
@@ -1847,6 +1881,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitSafetyInternals
@@ -1855,6 +1891,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitSafetyEyeProtection
@@ -1863,6 +1901,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitSafetyReport
@@ -1871,6 +1911,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitReportCrimes
@@ -1879,6 +1921,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitIonRifle
@@ -1887,6 +1931,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitFoamForceAd
@@ -1895,6 +1941,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitCohibaRobustoAd
@@ -1903,6 +1951,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegit50thAnniversaryVintageReprint
@@ -1911,6 +1961,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitFruitBowl
@@ -1919,6 +1971,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitPDAAd
@@ -1927,6 +1981,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitEnlist
@@ -1935,6 +1991,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitNanomichiAd
@@ -1943,6 +2001,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegit12Gauge
@@ -1951,6 +2011,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitHighClassMartini
@@ -1959,6 +2021,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitTheOwl
@@ -1967,6 +2031,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitNoERP
@@ -1975,6 +2041,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitCarbonDioxide
@@ -1983,6 +2051,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitDickGumshue
@@ -1991,6 +2061,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitThereIsNoGasGiant
@@ -1999,6 +2071,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitJustAWeekAway
@@ -2007,6 +2081,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitSecWatch
@@ -2015,6 +2091,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitAnatomyPoster
@@ -2023,6 +2101,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitMime
@@ -2031,6 +2111,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitCarpMount
@@ -2039,6 +2121,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitSafetyMothDelam
@@ -2047,6 +2131,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitSafetyMothEpi
@@ -2055,6 +2141,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitSafetyMothHardhat
@@ -2063,6 +2151,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitSafetyMothMeth
@@ -2071,6 +2161,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitSafetyMothPiping
@@ -2079,6 +2171,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitVacation
@@ -2087,6 +2181,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitPeriodicTable
@@ -2095,6 +2191,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitRenault
@@ -2103,6 +2201,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterLegitNTTGC
@@ -2111,6 +2211,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandFreeTonto
@@ -2119,6 +2221,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandAtmosiaDeclarationIndependence
@@ -2127,6 +2231,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandFunPolice
@@ -2135,6 +2241,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandLustyExomorph
@@ -2143,6 +2251,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandClown
@@ -2151,6 +2261,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandSmoke
@@ -2159,6 +2271,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandGreyTide
@@ -2167,6 +2281,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandMissingGloves
@@ -2175,6 +2291,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandHackingGuide
@@ -2183,6 +2301,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandRIPBadger
@@ -2191,6 +2311,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandAmbrosiaVulgaris
@@ -2199,6 +2321,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandDonutCorp
@@ -2207,6 +2331,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandEAT
@@ -2215,6 +2341,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandTools
@@ -2223,6 +2351,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandPower
@@ -2231,6 +2361,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandSpaceCube
@@ -2239,6 +2371,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandCommunistState
@@ -2247,6 +2381,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandLamarr
@@ -2255,6 +2391,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandBorgFancy
@@ -2263,6 +2401,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandBorgFancyv2
@@ -2271,6 +2411,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandKosmicheskayaStantsiya
@@ -2279,6 +2421,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandRebelsUnite
@@ -2287,6 +2431,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandC20r
@@ -2295,6 +2441,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandHaveaPuff
@@ -2303,6 +2451,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandRevolver
@@ -2311,6 +2461,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandDDayPromo
@@ -2319,6 +2471,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandSyndicatePistol
@@ -2327,6 +2481,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandSyndicateRecruitment
@@ -2335,6 +2491,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandEnergySwords
@@ -2343,6 +2501,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandRedRum
@@ -2351,6 +2511,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandCC64KAd
@@ -2359,6 +2521,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandPunchShit
@@ -2367,6 +2531,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandTheGriffin
@@ -2375,6 +2541,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandFreeDrone
@@ -2383,6 +2551,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandBustyBackdoorExoBabes6
@@ -2391,6 +2561,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandRobustSoftdrinks
@@ -2399,6 +2571,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandShamblersJuice
@@ -2407,6 +2581,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandPwrGame
@@ -2415,6 +2591,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandSunkist
@@ -2423,6 +2601,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandSpaceCola
@@ -2431,6 +2611,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandSpaceUp
@@ -2439,6 +2621,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandKudzu
@@ -2447,6 +2631,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandMaskedMen
@@ -2455,6 +2641,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandUnreadableAnnouncement
@@ -2463,6 +2651,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandFreeSyndicateEncryptionKey
@@ -2471,6 +2661,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandBountyHunters
@@ -2479,6 +2671,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandTheBigGasTruth
@@ -2487,6 +2681,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandWehWatches
@@ -2495,6 +2691,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandVoteWeh
@@ -2503,6 +2701,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandBeachStarYamamoto
@@ -2511,6 +2711,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandHighEffectEngineering
@@ -2519,6 +2721,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandNuclearDeviceInformational
@@ -2527,6 +2731,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandRise
@@ -2535,6 +2741,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandRevolt
@@ -2543,6 +2751,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandMoth
@@ -2551,6 +2761,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandCybersun600
@@ -2559,6 +2771,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandDonk
@@ -2567,6 +2781,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandEnlistGorlex
@@ -2575,6 +2791,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandInterdyne
@@ -2583,6 +2801,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandWaffleCorp
@@ -2591,6 +2811,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
 
 - type: entity
   parent: PosterContrabandMissingSpacepen
@@ -2599,3 +2821,5 @@
   components:
   - type: Foldable
     folded: true
+  - type: Physics
+    canCollide: true
