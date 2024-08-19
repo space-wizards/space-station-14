@@ -492,6 +492,13 @@
           Quantity: 8
         - ReagentId: Protein
           Quantity: 2
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - bread
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: chèvre chaud

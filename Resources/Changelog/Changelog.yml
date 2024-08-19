@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed the flash effect getting darker with each appearence.
-    type: Fix
-  - message: Fixed short-sightedness making you immune to flashes.
-    type: Fix
-  id: 6664
-  time: '2024-06-02T04:17:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27369
-- author: AJCM-git
-  changes:
-  - message: Midround antags work again
-    type: Fix
-  id: 6665
-  time: '2024-06-02T16:52:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28523
 - author: Errant-4
   changes:
   - message: Map labels no longer suddenly disappear for the rest of the round.
@@ -3859,3 +3843,17 @@
   id: 7163
   time: '2024-08-19T14:03:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31085
+- author: tosatur
+  changes:
+  - message: Changed text for ghost visibility toggle
+    type: Tweak
+  id: 7164
+  time: '2024-08-19T17:51:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30998
+- author: themias
+  changes:
+  - message: Lizards can now eat meat dumplings.
+    type: Fix
+  id: 7165
+  time: '2024-08-19T18:17:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31212
