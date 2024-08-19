@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Vermidia
-  changes:
-  - message: Glass shards are no longer weldable with an unlit welder.
-    type: Fix
-  id: 6668
-  time: '2024-06-03T03:28:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27959
 - author: AJCM-git
   changes:
   - message: Biomass reclaimers no longer act as a void to any unfortunate belongings
@@ -3862,3 +3855,10 @@
   id: 7167
   time: '2024-08-19T18:57:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31179
+- author: metalgearsloth
+  changes:
+  - message: Fix wire sounds not playing.
+    type: Fix
+  id: 7168
+  time: '2024-08-19T19:50:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31067
