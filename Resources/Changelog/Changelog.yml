@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: moonheart08
-  changes:
-  - message: The hand teleporter can no longer create portal links between grids.
-    type: Remove
-  id: 6645
-  time: '2024-05-30T20:45:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28423
 - author: Ghagliiarghii
   changes:
   - message: Cargo Sale Computer now correctly uses its own computer board
@@ -3837,3 +3830,10 @@
   id: 7144
   time: '2024-08-18T23:41:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29123
+- author: EmoGarbage404
+  changes:
+  - message: Ore can no longer be destroyed by explosions. Happy blast mining.
+    type: Tweak
+  id: 7145
+  time: '2024-08-19T01:55:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31182
