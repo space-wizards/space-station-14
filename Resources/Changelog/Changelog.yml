@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: Lasers now pass through Glass External Airlocks and Glass Shuttle Airlocks
-    type: Fix
-  id: 6663
-  time: '2024-06-02T04:13:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28065
 - author: slarticodefast
   changes:
   - message: Fixed the flash effect getting darker with each appearence.
@@ -3859,3 +3852,10 @@
   id: 7162
   time: '2024-08-19T11:14:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30643
+- author: tosatur
+  changes:
+  - message: Added more words to chat sanitisation
+    type: Tweak
+  id: 7163
+  time: '2024-08-19T14:03:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31085
