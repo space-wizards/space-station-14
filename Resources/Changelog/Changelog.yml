@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: aspiringLich
-  changes:
-  - message: Some chemicals have been made more colorful and child-friendly.
-    type: Tweak
-  id: 6655
-  time: '2024-05-31T19:44:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28367
 - author: Vermidia
   changes:
   - message: Many more ghost roles have a random appearance, including ERT and shuttle
@@ -3842,3 +3835,10 @@
   id: 7154
   time: '2024-08-19T03:16:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31075
+- author: TheWaffleJesus
+  changes:
+  - message: ERT Chaplains now have blessings to use their bible.
+    type: Fix
+  id: 7155
+  time: '2024-08-19T03:19:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30993
