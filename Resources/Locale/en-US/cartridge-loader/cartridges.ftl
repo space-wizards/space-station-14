@@ -24,5 +24,9 @@ wanted-list-program-name = Wanted list
 wanted-list-label-no-records = It's all right, cowboy
 wanted-list-status-wanted = [color=red]wanted[/color]
 wanted-list-status-suspected = [color=yellow]suspect[/color]
-wanted-list-reason = [color=darkgray]Reason:[/color] { $reason }
+wanted-list-reason-label = [color=darkgray]Reason:[/color] [color=white]{ $reason }[/color]
+wanted-list-initiator-label = [color=darkgray]Initiator:[color=darkgray] [color=white]{ $initiator }[/color]
 wanted-list-search-placeholder = Search
+wanted-list-history-table-time-col = Time
+wanted-list-history-table-reason-col = Crime
+wanted-list-history-table-initiator-col = Initiator
