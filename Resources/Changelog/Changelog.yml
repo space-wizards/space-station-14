@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix verb categories shuffling around.
-    type: Fix
-  id: 6647
-  time: '2024-05-31T01:55:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28368
 - author: ShadowCommander
   changes:
   - message: Tweaked the player tab column widths so that usernames and character
@@ -3837,3 +3830,11 @@
   id: 7146
   time: '2024-08-19T02:41:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31152
+- author: Goldminermac
+  changes:
+  - message: Chocolate-chip and blueberry pancakes can now be in stacks of up to nine
+      for consistency.
+    type: Fix
+  id: 7147
+  time: '2024-08-19T02:42:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31123
