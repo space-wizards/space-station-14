@@ -2,23 +2,21 @@
 - type: entity
   abstract: true
   id: ShelfBase
-  parent: BaseStructure
   name: shelf
-  description: a strange place to place, well, anything really. You feel like you shouldn't be seeing this.'
+  description: A strange place to place, well, anything really. You feel like you shouldn't be seeing this.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
   components:
+  - type: Clickable
+  - type: Tag
+    tags:
+      - Structure
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Storage/Shelfs/wood.rsi
     state: base
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.35,-0.35,0.35,0.35"
-        density: 35
-        layer:
-        - BulletImpassable
   - type: Transform
   - type: Damageable
     damageModifierSet: Wood
@@ -35,7 +33,6 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: WallMount
-    arc: 175
   - type: Storage
     grid:
     - 0,0,3,1
@@ -49,9 +46,6 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
-  - type: Tag
-    tags:
-    - Structure
 
 - type: entity
   abstract: true
@@ -70,7 +64,7 @@
       map: ["enum.StorageVisualLayers.Base"]
     - state: unlocked
       shader: unshaded
-      # used to keep the unlocked light visible while open. 
+      # used to keep the unlocked light visible while open.
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
     - state: locked
@@ -189,7 +183,7 @@
   id: ShelfRWood
   parent: ShelfBaseReinforced
   name: sturdy wood shelf
-  description: A safe place to put your favorite bottle of whiskey
+  description: A safe place to put your favorite bottle of whiskey.
   components:
   - type: Sprite
     sprite: Structures/Storage/Shelfs/wood.rsi
@@ -226,7 +220,7 @@
   id: ShelfRMetal
   parent: ShelfBaseReinforced
   name: sturdy metal shelf
-  description: A strong & shiny place to keep all your vials safe
+  description: A strong & shiny place to keep all your vials safe.
   components:
   - type: Sprite
     sprite: Structures/Storage/Shelfs/metal.rsi
@@ -342,7 +336,7 @@
 - type: entity
   id: ShelfKitchen
   parent: ShelfBase
-  name: cooking shelf
+  name: kitchen shelf
   description: Holds knifes, spice, and everything nice!
   components:
   - type: Sprite
@@ -385,6 +379,9 @@
     maxItemSize: Normal
     whitelist:
       tags:
+        - DrinkBottle
+        - DrinkCan
+        - DrinkCup
         - DrinkGlass
         - BoxCardboard
         - MonkeyCube
@@ -397,6 +394,7 @@
         - RollingPin
         - Ingredient
         - Trash
+        - Plastic
   - type: Construction
     graph: Shelf
     node: ShelfKitchen
