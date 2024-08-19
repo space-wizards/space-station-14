@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.CartridgeLoader;
 using Content.Server.CartridgeLoader.Cartridges;
@@ -50,14 +48,14 @@ public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem
     /// Reason should only be passed if status is Wanted, nullability isn't checked.
     /// </summary>
     /// <returns>True if the status is changed, false if not</returns>
-    public bool TryChangeStatus(StationRecordKey key, SecurityStatus status, string? reason)
+    public bool TryChangeStatus(StationRecordKey key, SecurityStatus status, string? reason, string? initiatorName = null)
     {
         // don't do anything if its the same status
         if (!_records.TryGetRecord<CriminalRecord>(key, out var record)
             || status == record.Status)
             return false;
 
-        OverwriteStatus(key, record, status, reason);
+        OverwriteStatus(key, record, status, reason, initiatorName);
 
         return true;
     }
@@ -65,10 +63,11 @@ public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem
     /// <summary>
     /// Sets the status without checking previous status or reason nullability.
     /// </summary>
-    public void OverwriteStatus(StationRecordKey key, CriminalRecord record, SecurityStatus status, string? reason)
+    public void OverwriteStatus(StationRecordKey key, CriminalRecord record, SecurityStatus status, string? reason, string? initiatorName = null)
     {
         record.Status = status;
         record.Reason = reason;
+        record.InitiatorName = initiatorName;
 
         var name = _records.RecordName(key);
         if (name != string.Empty)
@@ -100,9 +99,9 @@ public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem
     /// <summary>
     /// Creates and tries to add a history entry using the current time.
     /// </summary>
-    public bool TryAddHistory(StationRecordKey key, string line)
+    public bool TryAddHistory(StationRecordKey key, string line, string? initiatorName = null)
     {
-        var entry = new CrimeHistory(_ticker.RoundDuration(), line);
+        var entry = new CrimeHistory(_ticker.RoundDuration(), line, initiatorName);
         return TryAddHistory(key, entry);
     }
 
@@ -120,32 +119,6 @@ public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem
 
         record.History.RemoveAt((int) index);
         return true;
-    }
-
-    /// <summary>
-    /// Returns a collection of all criminal records.
-    /// </summary>
-    /// <param name="station">The station to get the records from.</param>
-    /// <param name="filter">A filter to retrieve a specific group of records.</param>
-    public IEnumerable<WantedRecord> GetRecords(EntityUid station, CriminalRecordsFilter filter = CriminalRecordsFilter.None)
-    {
-        // Get the target name and convert the collection from (uint, CriminalRecord) to WantedRecord.
-        var records = _records.GetRecordsOfType<CriminalRecord>(station).Select(cr =>
-        {
-            var (key, r) = cr;
-            var target = _records.RecordName(new (key, station));
-            return new WantedRecord(target, r.Status, r.Reason);
-        });
-
-        if (filter == CriminalRecordsFilter.None)
-            return records;
-
-        return records.Where(cr => filter switch
-        {
-            CriminalRecordsFilter.Wanted => cr.Status is SecurityStatus.Wanted or SecurityStatus.Suspected,
-            CriminalRecordsFilter.Released => cr.Status is SecurityStatus.Detained or SecurityStatus.Discharged or SecurityStatus.Paroled,
-            _ => cr.Status == SecurityStatus.None,
-        });
     }
 
     private void OnRecordChanged(Entity<WantedListCartridgeComponent> ent, ref CriminalRecordChangedEvent args)
@@ -166,7 +139,14 @@ public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem
         if (_station.GetOwningStation(ent) is not { } station)
             return;
 
-        var records = GetRecords(station, CriminalRecordsFilter.Wanted);
+        var records = _records.GetRecordsOfType<CriminalRecord>(station)
+            .Where(cr => cr.Item2.Status is not SecurityStatus.None || cr.Item2.History.Count > 0)
+            .Select(cr =>
+            {
+                var (key, r) = cr;
+                var targetName = _records.RecordName(new(key, station));
+                return new WantedRecord(targetName, r.Status, r.Reason, r.InitiatorName, r.History);
+            });
         var state = new WantedListUiState(records.ToList());
 
         _cartridge.UpdateCartridgeUiState(loaderUid, state);

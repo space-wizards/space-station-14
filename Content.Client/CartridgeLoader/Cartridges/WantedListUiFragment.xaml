@@ -10,7 +10,7 @@
         <Label Name="NoRecords" Text="{Loc 'wanted-list-label-no-records'}" Align="Center" VAlign="Center" HorizontalExpand="True" FontColorOverride="DarkGray"/>
 
         <BoxContainer Name="RecordsListContainer" Orientation="Vertical" Visible="False">
-            <ScrollContainer VerticalExpand="True" MinWidth="250" MaxWidth="300">
+            <ScrollContainer VerticalExpand="True" MinWidth="150" MaxWidth="250">
                 <ItemList Name="RecordsList" VerticalExpand="True" />
             </ScrollContainer>
         </BoxContainer>
@@ -27,7 +27,13 @@
                 <RichTextLabel Name="PersonState" HorizontalAlignment="Right" HorizontalExpand="True" />
             </BoxContainer>
             <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 5"/>
-            <RichTextLabel Name="WantedReason"/>
+            <ScrollContainer VerticalExpand="True">
+                <BoxContainer Name="DataContainer" Orientation="Vertical">
+                    <RichTextLabel Name="InitiatorName" VerticalAlignment="Stretch"/>
+                    <RichTextLabel Name="WantedReason" VerticalAlignment="Stretch"/>
+                    <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 5" />
+                </BoxContainer>
+            </ScrollContainer>
         </BoxContainer>
     </BoxContainer>
 </cartridges:WantedListUiFragment>

@@ -53,11 +53,13 @@ public abstract class SharedCriminalRecordsSystem : EntitySystem
 }
 
 [Serializable, NetSerializable]
-public struct WantedRecord(string targetName, SecurityStatus status, string? reason)
+public struct WantedRecord(string targetName, SecurityStatus status, string? reason, string? initiator, List<CrimeHistory> history)
 {
     public string TargetName = targetName;
     public SecurityStatus Status = status;
     public string? Reason = reason;
+    public string? Initiator = initiator;
+    public List<CrimeHistory> History = history;
 };
 
 [ByRefEvent]
