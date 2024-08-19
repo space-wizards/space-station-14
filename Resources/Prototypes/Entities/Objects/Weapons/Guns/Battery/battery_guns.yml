@@ -584,6 +584,10 @@
     price: 750
   - type: StealTarget
     stealGroup: WeaponAntiqueLaser
+  - type: SentienceTarget # I hope this is only the captain's gun
+    flavorKind: station-event-random-sentience-flavor-inanimate
+    weight: 0.0002 # 5,000 times less likely than 1 regular animal
+    # not putting a BlockMovement component here cause that's funny.
 
 - type: entity
   name: advanced laser pistol
@@ -713,3 +717,53 @@
   - type: Appearance
   - type: StaticPrice
     price: 750
+
+- type: entity
+  name: energy shotgun
+  parent: [BaseWeaponBattery, BaseGunWieldable]
+  id: WeaponEnergyShotgun
+  description: A one-of-a-kind prototype energy weapon that uses various shotgun configurations. It offers the possibility of both lethal and non-lethal shots, making it a versatile weapon.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
+  - type: Gun
+    fireRate: 2
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletLaserSpread
+    fireCost: 150
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletLaserSpread
+      fireCost: 150
+    - proto: BulletLaserHeavySpread
+      fireCost: 150
+    - proto: BulletDisablerSmgSpread
+      fireCost: 150
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,3,1
+    sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
+    heldPrefix: energy
+  - type: Tag
+    tags:
+    - HighRiskItem
+  - type: StealTarget
+    stealGroup: WeaponEnergyShotgun
+  - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
+  - type: Battery
+    maxCharge: 1050
+    startingCharge: 1050
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 25 #takes 42 seconds to fully recharge, the answer to life, the universe and everything

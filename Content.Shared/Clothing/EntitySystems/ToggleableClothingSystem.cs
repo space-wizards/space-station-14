@@ -57,7 +57,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
     private void OnGetVerbs(EntityUid uid, ToggleableClothingComponent component, GetVerbsEvent<EquipmentVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || component.ClothingUid == null || component.Container == null)
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null || component.ClothingUid == null || component.Container == null)
             return;
 
         var text = component.VerbText ?? (component.ActionEntity == null ? null : Name(component.ActionEntity.Value));
