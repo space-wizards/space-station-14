@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: Medical Borgs now have medical huds
-    type: Add
-  id: 6657
-  time: '2024-06-01T04:54:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28391
 - author: beck-thompson
   changes:
   - message: You can now remove evidence from containers using the verb menu.
@@ -3841,3 +3834,15 @@
   id: 7156
   time: '2024-08-19T03:21:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30961
+- author: EmoGarbage404
+  changes:
+  - message: Increased the sell prices of most materials
+    type: Tweak
+  - message: Increased the price of ordering material crates from cargo.
+    type: Tweak
+  - message: Decreased the amount of plasma in one plasma crate from 3 stacks to 1
+      stack.
+    type: Tweak
+  id: 7157
+  time: '2024-08-19T03:28:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30869
