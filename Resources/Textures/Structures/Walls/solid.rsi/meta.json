@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/c34c1b30abf18aa552e19294523924c39e5ea127/icons/turf/wall_masks.dmi and modified.",
+  "license": "only for Imperator_Shlepa",
+  "copyright": "by Imperator_Shlepa",
   "size": {
     "x": 32,
-    "y": 32
+    "y": 64
   },
   "states": [
     {
