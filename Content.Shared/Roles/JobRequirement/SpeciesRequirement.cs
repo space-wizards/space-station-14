@@ -36,23 +36,20 @@ public sealed partial class SpeciesRequirement : JobRequirement
             sb.Append(Loc.GetString(protoManager.Index(s).Name) + " ");
         }
 
+        // Default message is success.
         details = FormattedMessage.FromMarkupPermissive(Loc.GetString(
             Inverted ? "role-timer-blacklisted-species-pass" : "role-timer-whitelisted-species-pass",
             ("species", sb)));
 
-        if (!Inverted)
-        {
-            if (Species.Contains(profile.Species))
-                return true;
-
-            details = FormattedMessage.FromMarkupPermissive(Loc.GetString("role-timer-whitelisted-species-fail", ("species", sb)));
-            return false;
-        }
-
-        if (!Species.Contains(profile.Species))
+        // !Inverted = Whitelist mode, meaning player should have ONE of the species.
+        // Inverted = Blacklist mode, meaning player must have NONE of those species.
+        if (!Inverted == Species.Contains(profile.Species))
             return true;
 
-        details = FormattedMessage.FromMarkupPermissive(Loc.GetString("role-timer-blacklisted-species-fail", ("species", sb)));
+        // Change to fail message.
+        details = FormattedMessage.FromMarkupPermissive(Loc.GetString(
+            Inverted ? "role-timer-blacklisted-species-fail" : "role-timer-whitelisted-species-fail",
+            ("species", sb)));
         return false;
     }
 }

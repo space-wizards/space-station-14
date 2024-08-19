@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
@@ -24,44 +25,35 @@ public sealed partial class TraitsRequirement : JobRequirement
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile,
         IReadOnlyDictionary<string, TimeSpan> playTimes,
-        [NotNullWhen(false)] out FormattedMessage? reason)
+        out FormattedMessage details)
     {
-        reason = new FormattedMessage();
+        details = new FormattedMessage();
 
         if (profile is null) //the profile could be null if the player is a ghost. In this case we don't need to block the role selection for ghostrole
             return true;
 
         var sb = new StringBuilder();
-        sb.Append("[color=yellow]");
         foreach (var t in Traits)
         {
             sb.Append(Loc.GetString(protoManager.Index(t).Name) + " ");
         }
 
-        sb.Append("[/color]");
+        // Default message is success.
+        details = FormattedMessage.FromMarkupPermissive(Loc.GetString(
+            Inverted ? "role-timer-blacklisted-traits-pass" : "role-timer-whitelisted-traits-pass",
+            ("traits", sb)));
 
-        if (!Inverted)
-        {
-            reason = FormattedMessage.FromMarkupPermissive($"{Loc.GetString("role-timer-whitelisted-traits")}\n{sb}");
-            //at least one of
-            foreach (var trait in Traits)
-            {
-                if (profile.TraitPreferences.Contains(trait))
-                    return true;
-            }
-            return false;
-        }
-        else
-        {
-            reason = FormattedMessage.FromMarkupPermissive($"{Loc.GetString("role-timer-blacklisted-traits")}\n{sb}");
+        var hasAnyTrait = Traits.Any(trait => profile.TraitPreferences.Contains(trait));
 
-            foreach (var trait in Traits)
-            {
-                if (profile.TraitPreferences.Contains(trait))
-                    return false;
-            }
-        }
+        // !Inverted = Whitelist mode, meaning player must have ONE of the traits.
+        // Inverted = Blacklist mode, meaning player must have NONE of the traits.
+        if (!Inverted == hasAnyTrait)
+            return true;
 
-        return true;
+        // Change to fail message.
+        details = FormattedMessage.FromMarkupPermissive(Loc.GetString(
+            Inverted ? "role-timer-blacklisted-traits-fail" : "role-timer-whitelisted-traits-fail",
+            ("traits", sb)));
+        return false;
     }
 }

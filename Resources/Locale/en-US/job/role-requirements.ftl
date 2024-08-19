@@ -29,8 +29,10 @@ role-timer-whitelisted-species-fail = Your character [color=yellow]must[/color] 
 role-timer-blacklisted-species-pass = Your character [color=green]must not[/color] be one of the following species to play this role: [color=green]{$species}[/color]
 role-timer-blacklisted-species-fail = Your character [color=yellow]must not[/color] be one of the following species to play this role: [color=yellow]{$species}[/color]
 
-role-timer-whitelisted-traits = Your character must have one of the following traits:
-role-timer-blacklisted-traits = Your character must not have any of the following traits:
+role-timer-whitelisted-traits-pass = Your character [color=green]must[/color] have one of the following traits: [color=green]{$traits}[/color]
+role-timer-whitelisted-traits-fail = Your character [color=yellow]must[/color] have one of the following traits: [color=yellow]{$traits}[/color]
+role-timer-blacklisted-traits-pass = Your character [color=green]must not[/color] have one of the following traits: [color=green]{$traits}[/color]
+role-timer-blacklisted-traits-fail = Your character [color=yellow]must not[/color] have one of the following traits: [color=yellow]{$traits}[/color]
 
 role-timer-locked = Locked (hover for details)
 
