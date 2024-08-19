@@ -1024,6 +1024,7 @@
     forceSound: true
 
 - type: entity
+  name: wide laser barrage
   id: BulletLaserSpread
   noSpawn: true
   parent: BulletLaser
@@ -1045,6 +1046,7 @@
         Heat: 15
 
 - type: entity
+  name: narrow laser barrage
   id: BulletLaserHeavySpread
   noSpawn: true
   parent: BulletLaser
@@ -1055,6 +1057,7 @@
     spread: 10
 
 - type: entity
+  name: disabling laser barrage
   id: BulletDisablerSmgSpread
   noSpawn: true
   parent: BulletDisablerSmg
