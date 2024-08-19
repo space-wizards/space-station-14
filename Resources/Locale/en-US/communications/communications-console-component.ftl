@@ -2,7 +2,9 @@
 comms-console-menu-title = Communications Console
 comms-console-menu-announcement-placeholder = Announcement text...
 comms-console-menu-announcement-button = Announce
+comms-console-menu-announcement-button-tooltip = Send your message as a station-wide radio announcement.
 comms-console-menu-broadcast-button = Broadcast
+comms-console-menu-broadcast-button-tooltip = Broadcasts your message all digital wall-mounted screens around the station. Note: They only fit ten characters!
 comms-console-menu-call-shuttle = Call emergency shuttle
 comms-console-menu-recall-shuttle = Recall emergency shuttle
 comms-console-menu-time-remaining = Time remaining: {$time}
