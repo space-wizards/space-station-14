@@ -477,5 +477,12 @@ Entries:
   id: 59
   time: '2024-08-17T16:05:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30946
+- author: MilonPL
+  changes:
+  - message: The admin PDA health analyzer no longer shows a popup to the player.
+    type: Fix
+  id: 60
+  time: '2024-08-19T03:02:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31097
 Name: Admin
 Order: 1
