@@ -35,6 +35,6 @@ public sealed partial class PosterComponent : Component
 
     // Entity that store effect
     [DataField]
-    public EntityUid EffectEntity = new();
+    public EntityUid? EffectEntity;
 
 }
