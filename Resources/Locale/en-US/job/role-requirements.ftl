@@ -1,4 +1,4 @@
-﻿
+
 # Coloring rule of thumb: green for met requirement, yellow for unmet requirement that can still be met, red for unmeetable
 
 role-timer-department-sufficient = You require [color=green]{TOSTRING($current, "0")}/{TOSTRING($required, "0")}[/color] minutes of [color={$departmentColor}]{$department}[/color] department playtime to play this role.
@@ -28,6 +28,9 @@ role-timer-whitelisted-species-pass = Your character [color=green]must[/color] b
 role-timer-whitelisted-species-fail = Your character [color=yellow]must[/color] be one of the following species to play this role: [color=yellow]{$species}[/color]
 role-timer-blacklisted-species-pass = Your character [color=green]must not[/color] be one of the following species to play this role: [color=green]{$species}[/color]
 role-timer-blacklisted-species-fail = Your character [color=yellow]must not[/color] be one of the following species to play this role: [color=yellow]{$species}[/color]
+
+role-timer-whitelisted-traits = Your character must have one of the following traits:
+role-timer-blacklisted-traits = Your character must not have any of the following traits:
 
 role-timer-locked = Locked (hover for details)
 
