@@ -143,9 +143,11 @@ public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem
             .Where(cr => cr.Item2.Status is not SecurityStatus.None || cr.Item2.History.Count > 0)
             .Select(cr =>
             {
-                var (key, r) = cr;
-                var targetName = _records.RecordName(new(key, station));
-                return new WantedRecord(targetName, r.Status, r.Reason, r.InitiatorName, r.History);
+                var (i, r) = cr;
+                var key = new StationRecordKey(i, station);
+                // Hopefully it will work smoothly.....
+                _records.TryGetRecord(key, out GeneralStationRecord? generalRecord);
+                return new WantedRecord(generalRecord!, r.Status, r.Reason, r.InitiatorName, r.History);
             });
         var state = new WantedListUiState(records.ToList());
 

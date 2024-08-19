@@ -2,6 +2,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Security;
 using Content.Shared.Security.Components;
+using Content.Shared.StationRecords;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CriminalRecords.Systems;
@@ -53,9 +54,9 @@ public abstract class SharedCriminalRecordsSystem : EntitySystem
 }
 
 [Serializable, NetSerializable]
-public struct WantedRecord(string targetName, SecurityStatus status, string? reason, string? initiator, List<CrimeHistory> history)
+public struct WantedRecord(GeneralStationRecord targetInfo, SecurityStatus status, string? reason, string? initiator, List<CrimeHistory> history)
 {
-    public string TargetName = targetName;
+    public GeneralStationRecord TargetInfo = targetInfo;
     public SecurityStatus Status = status;
     public string? Reason = reason;
     public string? Initiator = initiator;

@@ -25,14 +25,14 @@ public sealed partial class WantedListUiFragment : BoxContainer
     {
         var found = !String.IsNullOrWhiteSpace(args.Text)
             ? _wantedRecords.FindAll(r =>
-                r.TargetName.Contains(args.Text) ||
+                r.TargetInfo.Name.Contains(args.Text) ||
                 r.Status.ToString().Contains(args.Text, StringComparison.OrdinalIgnoreCase))
             : _wantedRecords;
 
         UpdateState(found, false);
     }
 
-    public void UpdateState(List<WantedRecord> records, bool refresh)
+    public void UpdateState(List<WantedRecord> records, bool refresh = true)
     {
         RecordsList.Clear();
 
@@ -57,8 +57,8 @@ public sealed partial class WantedListUiFragment : BoxContainer
 
         foreach (var record in records)
         {
-            var addedItem = RecordsList.AddItem(record.TargetName, metadata: record);
-            addedItem.Selected = String.Equals(record.TargetName, _selectedTargetName);
+            var addedItem = RecordsList.AddItem(record.TargetInfo.Name, metadata: record);
+            addedItem.Selected = String.Equals(record.TargetInfo.Name, _selectedTargetName);
         }
 
         RecordsList.OnItemSelected += OnItemSelected;
@@ -66,8 +66,6 @@ public sealed partial class WantedListUiFragment : BoxContainer
         if (refresh)
             _wantedRecords = records;
     }
-
-    public void UpdateState(List<WantedRecord> records) => UpdateState(records, true);
 
     private void OnItemSelected(ItemList.ItemListSelectedEventArgs args)
     {
@@ -77,35 +75,50 @@ public sealed partial class WantedListUiFragment : BoxContainer
         if (!list.TryGetValue(index, out var item) || item.Metadata is not WantedRecord record)
             return;
 
-        // Set person name
-        PersonName.Text = record.TargetName;
+        FormattedMessage GetLoc(string fluentId, params (string,object)[] args)
+        {
+            var msg = new FormattedMessage();
+            var fluent = Loc.GetString(fluentId, args);
+            msg.AddMarkupPermissive(fluent);
+            return msg;
+        }
+
+        // Set personal info
+        PersonName.Text = record.TargetInfo.Name;
+        TargetAge.SetMessage(GetLoc(
+            "wanted-list-age-label",
+            ("age", record.TargetInfo.Age)
+        ));
+        TargetJob.SetMessage(GetLoc(
+            "wanted-list-job-label",
+            ("job", record.TargetInfo.JobTitle.ToLower())
+        ));
+        TargetSpecies.SetMessage(GetLoc(
+            "wanted-list-species-label",
+            ("species", record.TargetInfo.Species.ToLower())
+        ));
+        TargetGender.SetMessage(GetLoc(
+            "wanted-list-gender-label",
+            ("gender", record.TargetInfo.Gender)
+        ));
 
         // Set reason
-        var reason = Loc.GetString("wanted-list-reason-label", ("reason", record.Reason ?? String.Empty));
-        var reasonMsg = new FormattedMessage();
-        reasonMsg.AddMarkupPermissive(reason);
-        WantedReason.SetMessage(reasonMsg);
+        WantedReason.SetMessage(GetLoc(
+            "wanted-list-reason-label",
+            ("reason", record.Reason ?? Loc.GetString("wanted-list-unknown-reason-label"))
+        ));
 
         // Set status
-        var statusText = Loc.GetString("wanted-list-status-" + record.Status switch
-        {
-            SecurityStatus.Wanted => "wanted",
-            SecurityStatus.Suspected => "suspected",
-            _ => string.Empty,
-        });
-        var statusLabel = Loc.GetString("criminal-records-console-status").ToLower();
-        var stateMsg = new FormattedMessage();
-        stateMsg.AddMarkupPermissive($"{statusLabel}: {statusText}");
-        PersonState.SetMessage(stateMsg);
+        PersonState.SetMessage(GetLoc(
+            "wanted-list-status-label",
+            ("status", record.Status.ToString().ToLower())
+        ));
 
         // Set initiator
-        const string initiatorLabelId = "wanted-list-initiator-label";
-        var initiatorLabel = record.Initiator is null
-            ? Loc.GetString(initiatorLabelId)
-            : Loc.GetString(initiatorLabelId, ("initiator", record.Initiator));
-        var initiatorMsg = new FormattedMessage();
-        initiatorMsg.AddMarkupPermissive(initiatorLabel);
-        InitiatorName.SetMessage(initiatorMsg);
+        InitiatorName.SetMessage(GetLoc(
+            "wanted-list-initiator-label",
+            ("initiator", record.Initiator ?? Loc.GetString("wanted-list-unknown-initiator-label"))
+        ));
 
         // History table
 
@@ -121,7 +134,9 @@ public sealed partial class WantedListUiFragment : BoxContainer
                 Name = "HistoryTable",
                 Columns = 5,
                 HorizontalExpand = true,
+                Margin = new Thickness(0, 15, 0, 0),
             };
+            DataContainer.AddChild(_historyGridContainer);
         }
 
         void AddDivider()
@@ -143,6 +158,7 @@ public sealed partial class WantedListUiFragment : BoxContainer
             Text = Loc.GetString("wanted-list-history-table-reason-col"),
             StyleClasses = { "LabelSmall" },
             HorizontalAlignment = HAlignment.Center,
+            HorizontalExpand = true,
         });
         AddDivider();
         _historyGridContainer.AddChild(new Label()
@@ -150,6 +166,7 @@ public sealed partial class WantedListUiFragment : BoxContainer
             Text = Loc.GetString("wanted-list-history-table-initiator-col"),
             StyleClasses = { "LabelSmall" },
             HorizontalAlignment = HAlignment.Center,
+            HorizontalExpand = true,
         });
 
         if (record.History.Count > 0)
@@ -176,12 +193,10 @@ public sealed partial class WantedListUiFragment : BoxContainer
             }
         }
 
-        DataContainer.AddChild(_historyGridContainer);
-
         RecordUnselected.Visible = false;
         PersonContainer.Visible = true;
 
         // Save selected item
-        _selectedTargetName = record.TargetName;
+        _selectedTargetName = record.TargetInfo.Name;
     }
 }
