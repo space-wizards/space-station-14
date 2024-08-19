@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AJCM-git
-  changes:
-  - message: Machine parts are now stackable
-    type: Tweak
-  id: 6661
-  time: '2024-06-01T17:49:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28434
 - author: DrSmugleaf
   changes:
   - message: Disabled the seeing rainbows screen effect when reduced motion is enabled
@@ -3856,3 +3849,10 @@
   id: 7160
   time: '2024-08-19T07:54:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31168
+- author: Beck Thompson
+  changes:
+  - message: Slightly increased the price of the seed restock.
+    type: Tweak
+  id: 7161
+  time: '2024-08-19T10:33:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31185
