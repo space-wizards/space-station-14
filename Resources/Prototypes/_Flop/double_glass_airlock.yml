@@ -1,0 +1,49 @@
+- type: entity
+  id: DoubleGlassAirlock
+  parent: Airlock
+  name: Double Glass Airlock
+  description: It opens, it closes, and maybe crushes you, but it bigger than normal door.
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: GlassSmack
+  - type: Door
+    occludes: false
+  - type: Occluder
+    enabled: false
+  - type: Sprite
+    sprite: _Flop/double_glass_airlock.rsi
+    snapCardinals: false
+    offset: 0.5,0
+  - type: AnimationPlayer
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,1.49,0.49" # don't want this colliding with walls or they won't close
+        density: 100
+        mask:
+        - FullTileMask
+        layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
+        - GlassAirlockLayer
+  - type: LayerChangeOnWeld
+    unWeldedLayer: GlassAirlockLayer
+    weldedLayer: GlassLayer
+  - type: Rotatable
+    rotateWhileAnchored: false
+  - type: Transform
+    noRot: false
+  - type: Construction
+    graph: Airlock
+    node: glassAirlock
+  - type: PaintableAirlock
+    group: Glass
+    department: null
+  - type: RadiationBlocker
+    resistance: 2
+  - type: Tag
+    tags:
+      - GlassAirlock
+      # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
