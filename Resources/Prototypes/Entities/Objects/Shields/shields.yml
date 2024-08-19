@@ -58,7 +58,7 @@
                   min: 2
                   max: 2
     - type: StaticPrice
-      price: 50
+      price: 100
 
 #Security Shields
 

@@ -145,7 +145,7 @@
     minCount: 5
     maxCount: 8
     groups:
-    - id: MobXeno
+    - id: MobGoliath
       amount: 1
 
 #- type: dungeonConfig
@@ -175,7 +175,7 @@
     minCount: 20
     maxCount: 30
     groups:
-    - id: MobXeno
+    - id: MobGoliath
       amount: 1
 
 #- type: dungeonConfig

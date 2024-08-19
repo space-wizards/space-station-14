@@ -96,6 +96,7 @@
   - type: Actions
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-mechanical
+    weight: 0.025 # fuck you in particular (it now needs 40 vending machines to be as likely as 1 interesting animal)
   - type: StaticPrice
     price: 100
   - type: Appearance

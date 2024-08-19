@@ -460,6 +460,12 @@
   - type: Sprite
     sprite: Objects/Fun/sharkplush.rsi
     state: blue
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/rawr.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/rawr.ogg
   - type: Item
     heldPrefix: blue
     storedRotation: -90

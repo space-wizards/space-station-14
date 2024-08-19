@@ -952,20 +952,6 @@
       Steel: 1
 
 - type: entity
-  id: MaterialReclaimerMachineCircuitboard
-  parent: BaseMachineCircuitboard
-  name: material reclaimer machine board
-  components:
-    - type: Sprite
-      state: supply
-    - type: MachineBoard
-      prototype: MaterialReclaimer
-      stackRequirements:
-        Manipulator: 2
-        Steel: 5
-        Plastic: 5
-
-- type: entity
   id: OreProcessorMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: ore processor machine board
