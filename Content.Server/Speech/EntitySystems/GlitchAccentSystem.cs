@@ -55,7 +55,7 @@ namespace Content.Server.Speech.EntitySystems
                 return AddStarsToWord(word);
             else if (rand >= 0.15)
                 return ChangeWordToFakeBinary(word);
-            return "ERROR";
+            return Loc.GetString("accent-glitch-error");
         }
 
         private string AddStarsToWord(string word)
