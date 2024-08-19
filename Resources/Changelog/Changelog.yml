@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Disabled the seeing rainbows screen effect when reduced motion is enabled
-      in the options menu.
-    type: Tweak
-  id: 6662
-  time: '2024-06-02T01:41:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28496
 - author: Cojoke-dot
   changes:
   - message: Lasers now pass through Glass External Airlocks and Glass Shuttle Airlocks
@@ -3856,3 +3848,14 @@
   id: 7161
   time: '2024-08-19T10:33:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31185
+- author: Boaz1111
+  changes:
+  - message: The HoS has been given a new experimental weapon:An energy shotgun with
+      multiple fire modes. This experimental tech is highly wanted by the syndicate,
+      and agents will try to steal it.
+    type: Add
+  - message: Removed the Head of Security's Emergency Orders.
+    type: Remove
+  id: 7162
+  time: '2024-08-19T11:14:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30643
