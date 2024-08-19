@@ -635,7 +635,7 @@
       right:
       - state: baguette-inhand-right
   - type: MeleeWeapon
-    wideAnimationRotation: -135
+    wideAnimationRotation: -120
     damage:
       types:
         Blunt: 1 # bonk
