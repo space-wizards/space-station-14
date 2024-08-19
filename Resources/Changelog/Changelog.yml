@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Vermidia
-  changes:
-  - message: Many more ghost roles have a random appearance, including ERT and shuttle
-      roles.
-    type: Tweak
-  id: 6656
-  time: '2024-06-01T04:51:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27997
 - author: Cojoke-dot
   changes:
   - message: Medical Borgs now have medical huds
@@ -3842,3 +3834,10 @@
   id: 7155
   time: '2024-08-19T03:19:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30993
+- author: DieselMohawk
+  changes:
+  - message: Reshaped the Security Helmet
+    type: Tweak
+  id: 7156
+  time: '2024-08-19T03:21:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30961
