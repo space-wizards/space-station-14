@@ -405,6 +405,7 @@
   name: loadout-group-clown-jumpsuit
   loadouts:
   - ClownSuit
+  - ClownSkirt
   - JesterSuit
 
 - type: loadoutGroup
