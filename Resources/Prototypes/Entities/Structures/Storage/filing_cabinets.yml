@@ -80,7 +80,7 @@
 
 - type: entity
   name: tall cabinet
-  parent: FilingCabinet
+  parent: BaseFilingCabinet
   id: filingCabinetTall
   components:
   - type: Sprite
