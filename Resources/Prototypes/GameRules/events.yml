@@ -412,6 +412,40 @@
       prob: 0.05
 
 - type: entity
+  id: ZombieOutbreak
+  parent: BaseGameRule
+  components:
+  - type: StationEvent
+    earliestStart: 90
+    minimumPlayers: 40
+    weight: 0.25 # Zombies was happening basically every single survival round, so now it's super rare
+    duration: 1
+  - type: ZombieRule
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ InitialInfected ]
+      max: 3
+      playerRatio: 10
+      blacklist:
+        components:
+        - ZombieImmune
+        - AntagImmune
+      briefing:
+        text: zombie-patientzero-role-greeting
+        color: Plum
+        sound: "/Audio/Ambience/Antag/zombie_start.ogg"
+      components:
+      - type: PendingZombie #less time to prepare than normal
+        minInitialInfectedGrace: 300
+        maxInitialInfectedGrace: 450
+      - type: ZombifyOnDeath
+      - type: IncurableZombie
+      - type: InitialInfected
+      mindComponents:
+      - type: InitialInfectedRole
+        prototype: InitialInfected
+
+- type: entity
   parent: BaseNukeopsRule
   id: LoneOpsSpawn
   components:
