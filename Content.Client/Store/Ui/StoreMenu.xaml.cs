@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Text;
 using Content.Client.Actions;
 using Content.Client.Message;
 using Content.Shared.FixedPoint;
@@ -189,23 +190,36 @@ public sealed partial class StoreMenu : DefaultWindow
         var relativeModifiersSummary = listingDataWithCostModifiers.GetModifiersSummaryRelative();
         if (relativeModifiersSummary.Count > 1)
         {
-            var discountMessagesPerCurrency = relativeModifiersSummary.Select(
-                x =>
+            var sb = new StringBuilder();
+            sb.Append('(');
+            foreach (var (currency, amount) in relativeModifiersSummary)
+            {
+                var currencyPrototype = _prototypeManager.Index(currency);
+                if (sb.Length != 0)
                 {
-                    var currencyPrototype = _prototypeManager.Index(x.Key);
-                    return Loc.GetString(
-                        "store-ui-discount-display-with-currency",
-                        ("amount", x.Value.ToString("P0")),
-                        ("currency", Loc.GetString(currencyPrototype.DisplayName))
-                    );
-                });
-            discountMessage = string.Join(',', discountMessagesPerCurrency);
+                    sb.Append(", ");
+                }
+                var currentDiscountMessage = Loc.GetString(
+                    "store-ui-discount-display-with-currency",
+                    ("amount", amount.ToString("P0")),
+                    ("currency", Loc.GetString(currencyPrototype.DisplayName))
+                );
+                sb.Append(currentDiscountMessage);
+            }
+
+            sb.Append(')');
+            discountMessage = sb.ToString();
         }
         else
         {
+            // if cost was modified - it should have diff relatively to original cost in 1 or more currency
+            // ReSharper disable once GenericEnumeratorNotDisposed Dictionary enumerator doesn't require dispose
+            var enumerator = relativeModifiersSummary.GetEnumerator();
+            enumerator.MoveNext();
+            var amount = enumerator.Current.Value;
             discountMessage = Loc.GetString(
                 "store-ui-discount-display",
-                ("amount", (relativeModifiersSummary.Single().Value.ToString("P0")))
+                ("amount", (amount.ToString("P0")))
             );
         }
 

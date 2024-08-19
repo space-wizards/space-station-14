@@ -23,14 +23,12 @@ namespace Content.Server.Traitor.Uplink
         /// </summary>
         /// <param name="user">The person who is getting the uplink</param>
         /// <param name="balance">The amount of currency on the uplink. If null, will just use the amount specified in the preset.</param>
-        /// <param name="uplinkPresetId">The id of the storepreset</param>
         /// <param name="uplinkEntity">The entity that will actually have the uplink functionality. Defaults to the PDA if null.</param>
         /// <param name="giveDiscounts">Marker that enables discounts for uplink items.</param>
         /// <returns>Whether or not the uplink was added successfully</returns>
         public bool AddUplink(
             EntityUid user,
             FixedPoint2? balance,
-            string uplinkPresetId = "StorePresetUplink",
             EntityUid? uplinkEntity = null,
             bool giveDiscounts = false
         )

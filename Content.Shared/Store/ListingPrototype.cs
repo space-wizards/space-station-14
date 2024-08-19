@@ -83,10 +83,7 @@ public partial class ListingData : IEquatable<ListingData>
         Categories = categories.ToHashSet();
         OriginalCost = originalCost;
         RestockTime = restockTime;
-        DiscountDownTo = dataDiscountDownTo.ToDictionary(
-            x => x.Key,
-            x => x.Value
-        );
+        DiscountDownTo = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>(dataDiscountDownTo);
     }
 
     [ViewVariables]
@@ -102,7 +99,7 @@ public partial class ListingData : IEquatable<ListingData>
     /// <summary>
     /// Discount category for listing item. This marker describes chance of how often will item be discounted.
     /// </summary>
-    [DataField("discountCategory")]
+    [DataField]
     public ProtoId<DiscountCategoryPrototype>? DiscountCategory;
 
     /// <summary>
@@ -194,7 +191,7 @@ public partial class ListingData : IEquatable<ListingData>
     /// <summary>
     /// Options for discount - from max amount down to how much item costs can be cut by discount, absolute value.
     /// </summary>
-    [DataField("discountDownTo")]
+    [DataField]
     public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> DiscountDownTo = new();
 
     public bool Equals(ListingData? listing)
@@ -304,7 +301,7 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
         get
         {
             return _costModified ??= CostModifiersBySourceId.Count == 0
-                ? OriginalCost.ToDictionary(x => x.Key, x => x.Value)
+                ? new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>(OriginalCost)
                 : ApplyAllModifiers();
         }
     }
@@ -381,10 +378,7 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
 
     private Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> ApplyAllModifiers()
     {
-        var dictionary = OriginalCost.ToDictionary(
-            x => x.Key,
-            x => x.Value
-        );
+        var dictionary = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>(OriginalCost);
         foreach (var (_, modifier) in CostModifiersBySourceId)
         {
             ApplyModifier(dictionary, modifier);
@@ -429,12 +423,12 @@ public sealed partial class DiscountCategoryPrototype : IPrototype
     /// <summary>
     /// Weight that sets chance to roll discount of that category.
     /// </summary>
-    [DataField("weight")]
+    [DataField]
     public int Weight { get; private set; }
 
     /// <summary>
     /// Maximum amount of items that are allowed to be picked from this category.
     /// </summary>
-    [DataField("maxItems")]
+    [DataField]
     public int? MaxItems { get; private set; }
 }

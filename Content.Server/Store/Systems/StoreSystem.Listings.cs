@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.StoreDiscount.Systems;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
@@ -15,17 +14,22 @@ public sealed partial class StoreSystem
     /// <param name="component">The store to refresh</param>
     public void RefreshAllListings(StoreComponent component)
     {
-        component.FullListingsCatalog = GetAllListings().ToHashSet();
+        component.FullListingsCatalog = GetAllListings();
     }
 
     /// <summary>
     /// Gets all listings from a prototype.
     /// </summary>
     /// <returns>All the listings</returns>
-    public IEnumerable<ListingDataWithCostModifiers> GetAllListings()
+    public HashSet<ListingDataWithCostModifiers> GetAllListings()
     {
-        var prototypes = _proto.EnumeratePrototypes<ListingPrototype>();
-        return prototypes.Select(x => new ListingDataWithCostModifiers(x));
+        var clones = new HashSet<ListingDataWithCostModifiers>();
+        foreach (var prototype in _proto.EnumeratePrototypes<ListingPrototype>())
+        {
+            clones.Add(new ListingDataWithCostModifiers(prototype));
+        }
+
+        return clones;
     }
 
     /// <summary>
@@ -63,9 +67,10 @@ public sealed partial class StoreSystem
     /// <param name="store"></param>
     /// <param name="component">The store the listings are coming from.</param>
     /// <returns>The available listings.</returns>
-    public IReadOnlyCollection<ListingDataWithCostModifiers> GetAvailableListings(EntityUid buyer, EntityUid store, StoreComponent component)
+    public IReadOnlyList<ListingDataWithCostModifiers> GetAvailableListings(EntityUid buyer, EntityUid store, StoreComponent component)
     {
-        return GetAvailableListings(buyer, component.FullListingsCatalog, component.Categories, store).ToHashSet();
+        return GetAvailableListings(buyer, component.FullListingsCatalog, component.Categories, store)
+            .ToArray();
     }
 
     /// <summary>
@@ -78,16 +83,12 @@ public sealed partial class StoreSystem
     /// <returns>The available listings.</returns>
     public IEnumerable<ListingDataWithCostModifiers> GetAvailableListings(
         EntityUid buyer,
-        HashSet<ListingDataWithCostModifiers>? listings,
+        IReadOnlyCollection<ListingDataWithCostModifiers>? listings,
         HashSet<ProtoId<StoreCategoryPrototype>> categories,
         EntityUid? storeEntity = null
     )
     {
-        if (listings == null)
-        {
-            listings = GetAllListings()
-                .ToHashSet();
-        }
+        listings ??= GetAllListings();
 
         foreach (var listing in listings)
         {

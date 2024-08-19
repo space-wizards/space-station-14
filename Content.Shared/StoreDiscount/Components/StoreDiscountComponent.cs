@@ -16,7 +16,7 @@ public sealed partial class StoreDiscountComponent : Component
     /// Discounts for items in <see cref="ListingData"/>.
     /// </summary>
     [ViewVariables, DataField]
-    public IReadOnlyCollection<StoreDiscountData> Discounts = Array.Empty<StoreDiscountData>();
+    public IReadOnlyList<StoreDiscountData> Discounts = Array.Empty<StoreDiscountData>();
 }
 
 /// <summary>
@@ -28,24 +28,24 @@ public sealed partial class StoreDiscountData
     /// <summary>
     /// Id of listing item to be discounted.
     /// </summary>
-    [DataField("listingId")]
-    public ProtoId<ListingPrototype> ListingId = default!;
+    [DataField(required: true)]
+    public ProtoId<ListingPrototype> ListingId;
 
     /// <summary>
     /// Amount of discounted items. Each buy will decrement this counter.
     /// </summary>
-    [DataField("count")]
+    [DataField]
     public int Count;
 
     /// <summary>
     /// Discount category that provided this discount.
     /// </summary>
-    [DataField("discountCategoryId")]
+    [DataField(required: true)]
     public ProtoId<DiscountCategoryPrototype> DiscountCategory;
 
     /// <summary>
     /// Map of currencies to flat amount of discount.
     /// </summary>
-    [DataField("discountAmountByCurrency")]
+    [DataField]
     public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> DiscountAmountByCurrency = new();
 }
