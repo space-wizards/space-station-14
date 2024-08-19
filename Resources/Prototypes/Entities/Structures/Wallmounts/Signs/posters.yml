@@ -1710,7 +1710,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitNanotrasenLogo
@@ -1718,7 +1718,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitCleanliness
@@ -1726,7 +1726,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitHelpOthers
@@ -1734,7 +1734,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitBuild
@@ -1742,7 +1742,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitBlessThisSpess
@@ -1750,7 +1750,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitScience
@@ -1758,7 +1758,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitIan
@@ -1766,7 +1766,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitObey
@@ -1774,7 +1774,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitWalk
@@ -1782,7 +1782,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitStateLaws
@@ -1790,7 +1790,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitLoveIan
@@ -1798,7 +1798,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitSpaceCops
@@ -1806,7 +1806,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitUeNo
@@ -1814,7 +1814,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitGetYourLEGS
@@ -1822,7 +1822,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitDoNotQuestion
@@ -1830,7 +1830,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitWorkForAFuture
@@ -1838,7 +1838,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitSoftCapPopArt
@@ -1846,7 +1846,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitSafetyInternals
@@ -1854,7 +1854,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitSafetyEyeProtection
@@ -1862,7 +1862,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitSafetyReport
@@ -1870,7 +1870,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitReportCrimes
@@ -1878,7 +1878,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitIonRifle
@@ -1886,7 +1886,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitFoamForceAd
@@ -1894,7 +1894,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitCohibaRobustoAd
@@ -1902,7 +1902,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegit50thAnniversaryVintageReprint
@@ -1910,7 +1910,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitFruitBowl
@@ -1918,7 +1918,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitPDAAd
@@ -1926,7 +1926,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitEnlist
@@ -1934,7 +1934,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitNanomichiAd
@@ -1942,7 +1942,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegit12Gauge
@@ -1950,7 +1950,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitHighClassMartini
@@ -1958,7 +1958,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitTheOwl
@@ -1966,7 +1966,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitNoERP
@@ -1974,7 +1974,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitCarbonDioxide
@@ -1982,7 +1982,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitDickGumshue
@@ -1990,7 +1990,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitThereIsNoGasGiant
@@ -1998,7 +1998,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitJustAWeekAway
@@ -2006,7 +2006,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitSecWatch
@@ -2014,7 +2014,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitAnatomyPoster
@@ -2022,7 +2022,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitMime
@@ -2030,7 +2030,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitCarpMount
@@ -2038,7 +2038,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitSafetyMothDelam
@@ -2046,7 +2046,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitSafetyMothEpi
@@ -2054,7 +2054,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitSafetyMothHardhat
@@ -2062,7 +2062,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitSafetyMothMeth
@@ -2070,7 +2070,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitSafetyMothPiping
@@ -2078,7 +2078,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitVacation
@@ -2086,7 +2086,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitPeriodicTable
@@ -2094,7 +2094,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitRenault
@@ -2102,7 +2102,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterLegitNTTGC
@@ -2110,7 +2110,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandFreeTonto
@@ -2118,7 +2118,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandAtmosiaDeclarationIndependence
@@ -2126,7 +2126,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandFunPolice
@@ -2134,7 +2134,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandLustyExomorph
@@ -2142,7 +2142,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandClown
@@ -2150,7 +2150,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandSmoke
@@ -2158,7 +2158,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandGreyTide
@@ -2166,7 +2166,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandMissingGloves
@@ -2174,7 +2174,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandHackingGuide
@@ -2182,7 +2182,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandRIPBadger
@@ -2190,7 +2190,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandAmbrosiaVulgaris
@@ -2198,7 +2198,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandDonutCorp
@@ -2206,7 +2206,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandEAT
@@ -2214,7 +2214,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandTools
@@ -2222,7 +2222,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandPower
@@ -2230,7 +2230,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandSpaceCube
@@ -2238,7 +2238,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandCommunistState
@@ -2246,7 +2246,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandLamarr
@@ -2254,7 +2254,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandBorgFancy
@@ -2262,7 +2262,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandBorgFancyv2
@@ -2270,7 +2270,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandKosmicheskayaStantsiya
@@ -2278,7 +2278,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandRebelsUnite
@@ -2286,7 +2286,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandC20r
@@ -2294,7 +2294,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandHaveaPuff
@@ -2302,7 +2302,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandRevolver
@@ -2310,7 +2310,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandDDayPromo
@@ -2318,7 +2318,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandSyndicatePistol
@@ -2326,7 +2326,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandSyndicateRecruitment
@@ -2334,7 +2334,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandEnergySwords
@@ -2342,7 +2342,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandRedRum
@@ -2350,7 +2350,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandCC64KAd
@@ -2358,7 +2358,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandPunchShit
@@ -2366,7 +2366,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandTheGriffin
@@ -2374,7 +2374,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandFreeDrone
@@ -2382,7 +2382,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandBustyBackdoorExoBabes6
@@ -2390,7 +2390,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandRobustSoftdrinks
@@ -2398,7 +2398,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandShamblersJuice
@@ -2406,7 +2406,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandPwrGame
@@ -2414,7 +2414,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandSunkist
@@ -2422,7 +2422,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandSpaceCola
@@ -2430,7 +2430,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandSpaceUp
@@ -2438,7 +2438,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandKudzu
@@ -2446,7 +2446,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandMaskedMen
@@ -2454,7 +2454,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandUnreadableAnnouncement
@@ -2462,7 +2462,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandFreeSyndicateEncryptionKey
@@ -2470,7 +2470,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandBountyHunters
@@ -2478,7 +2478,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandTheBigGasTruth
@@ -2486,7 +2486,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandWehWatches
@@ -2494,7 +2494,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandVoteWeh
@@ -2502,7 +2502,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandBeachStarYamamoto
@@ -2510,7 +2510,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandHighEffectEngineering
@@ -2518,7 +2518,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandNuclearDeviceInformational
@@ -2526,7 +2526,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandRise
@@ -2534,7 +2534,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandRevolt
@@ -2542,7 +2542,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandMoth
@@ -2550,7 +2550,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandCybersun600
@@ -2558,7 +2558,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandDonk
@@ -2566,7 +2566,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandEnlistGorlex
@@ -2574,7 +2574,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandInterdyne
@@ -2582,7 +2582,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandWaffleCorp
@@ -2590,7 +2590,7 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true
 
 - type: entity
   parent: PosterContrabandMissingSpacepen
@@ -2598,4 +2598,4 @@
   suffix: Folded
   components:
   - type: Foldable
-    isFolded: true
+    folded: true

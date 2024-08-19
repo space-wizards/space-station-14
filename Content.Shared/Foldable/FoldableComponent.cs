@@ -14,7 +14,7 @@ namespace Content.Shared.Foldable;
 [Access(typeof(FoldableSystem))]
 public sealed partial class FoldableComponent : Component
 {
-    [DataField, AutoNetworkedField]
+    [DataField("folded"), AutoNetworkedField]
     public bool IsFolded = false;
 
     // Responsible for disabling collision when item is unfolded
