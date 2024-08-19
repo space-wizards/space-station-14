@@ -23,6 +23,7 @@
     HandTeleporterStealObjective: 0.5
     SecretDocumentsStealObjective: 0.5
     HoSGunStealObjective: 0.5 # Delta-V - HoS Gun
+    #EnergyShotgunStealObjective: 0.5
 
 - type: weightedRandom
   id: TraitorObjectiveGroupKill

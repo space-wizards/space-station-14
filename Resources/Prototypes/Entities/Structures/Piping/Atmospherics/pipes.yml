@@ -61,7 +61,7 @@
     canCollide: false
     bodyType: static
   - type: StaticPrice
-    price: 11
+    price: 30
 
 #Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
 

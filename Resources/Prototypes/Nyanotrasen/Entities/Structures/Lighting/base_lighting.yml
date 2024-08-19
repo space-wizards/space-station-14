@@ -118,7 +118,7 @@
   - type: PoweredLight
     hasLampOnSpawn: ColoredLightTubeRed
   - type: StaticPrice #DynamicPrice
-    price: 25
+    price: 60
 
 - type: entity
   id: AlwaysPoweredLightPostSmallRed

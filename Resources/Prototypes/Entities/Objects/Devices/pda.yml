@@ -67,6 +67,7 @@
     deviceNetId: Wireless
     receiveFrequencyId: PDA
     prefix: device-address-prefix-console
+    savableAddress: false
   - type: WirelessNetworkConnection
     range: 500
   - type: CartridgeLoader
@@ -109,6 +110,15 @@
     sound: /Audio/SimpleStation14/Items/Handling/multitool_drop.ogg
   - type: EmitSoundOnLand
     sound: /Audio/SimpleStation14/Items/Handling/multitool_drop.ogg
+#  - type: SentienceTarget # sentient PDA = pAI lite # GreyStation - Random sentience should be to most things that are alive.
+#    flavorKind: station-event-random-sentience-flavor-mechanical
+#    weight: 0.001 # 1,000 PDAs = as likely to be picked as 1 regular animal
+#  - type: BlockMovement
+#    blockInteraction: false # lets the PDA toggle its own flashlight
+#  - type: TypingIndicator
+#    proto: robot
+#  - type: Speech
+#    speechVerb: Robotic
 
 - type: entity
   parent: BasePDA
@@ -226,6 +236,8 @@
     borderColor: "#d7d7d0"
   - type: Icon
     state: pda-cook
+  - type: ReplacementAccent # for random sentience event
+    accent: italian
 
 - type: entity
   parent: BasePDA
@@ -305,6 +317,7 @@
     accentHColor: "#333333"
   - type: Icon
     state: pda-mime
+  - type: Muted # for random sentience event
 
 - type: entity
   name: chaplain PDA
@@ -672,6 +685,7 @@
     id: UniversalIDCard
   - type: HealthAnalyzer
     scanDelay: 0
+    silent: true
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
     notificationsEnabled: false

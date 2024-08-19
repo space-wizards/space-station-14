@@ -257,3 +257,20 @@
       - !type:AdjustReagent
         reagent: Nutriment
         amount: 0.75
+
+- type: reagent
+  id: TeaPowder
+  name: reagent-name-tea-powder
+  desc: reagent-desc-tea-powder
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: tea
+  color: "#7F8400"
+  group: Foods
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateThirst
+        factor: -0.2
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.1

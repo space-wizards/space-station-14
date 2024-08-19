@@ -7,7 +7,7 @@ The Anomalous Particle Emitter is a machine used to interface with anomalies. It
 <GuideEntityEmbed Entity="MachineAPE"/>
 </Box>
 
-The A.P.E. can shoot three different kinds of anomalous particles: Delta, Epsilon, and Zeta. Each particle types has certain effects:
+The A.P.E. can shoot three different kinds of anomalous particles: Delta, Epsilon, and Zeta. Each particle type has certain effects:
 
 - [color=#a4885c]Danger:[/color] Increases the severity of an anomaly.
 - [color=#a4885c]Unstable:[/color] Increases the instability of an anomaly.
