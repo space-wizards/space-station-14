@@ -442,3 +442,7 @@ uplink-backpack-syndicate-desc = Lightweight explosion-proof а backpack for hol
 
 uplink-propaganda-bundle-name = Propaganda bundle
 uplink-propaganda-bundle-desc = Contains posters, clothing, flags and figures with syndicate thematics
+
+uplink-combat-bakery-name = Combat Bakery Kit
+uplink-combat-bakery-desc = A kit of clandestine baked weapons. Contains a baguette which a skilled mime could use as a sword and a pair of throwing croissants. Once the job is done, eat the evidence.
+
