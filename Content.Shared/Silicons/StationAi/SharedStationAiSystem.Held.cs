@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Actions.Events;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
@@ -17,22 +18,32 @@ public abstract partial class SharedStationAiSystem
         SubscribeLocalEvent<StationAiRadialMessage>(OnRadialMessage);
         SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnMessageAttempt);
         SubscribeLocalEvent<StationAiWhitelistComponent, GetVerbsEvent<AlternativeVerb>>(OnTargetVerbs);
+
         SubscribeLocalEvent<StationAiHeldComponent, InteractionAttemptEvent>(OnHeldInteraction);
         SubscribeLocalEvent<StationAiHeldComponent, AttemptRelayActionComponentChangeEvent>(OnHeldRelay);
+        SubscribeLocalEvent<StationAiHeldComponent, JumpToCoreEvent>(OnCoreJump);
     }
 
-    private bool TryGetCore(EntityUid ent, out EntityUid core)
+    private void OnCoreJump(Entity<StationAiHeldComponent> ent, ref JumpToCoreEvent args)
+    {
+        if (!TryGetCore(ent.Owner, out var core) || core.Comp?.RemoteEntity == null)
+            return;
+
+        _xforms.DropNextTo(core.Comp.RemoteEntity.Value, core.Owner) ;
+    }
+
+    private bool TryGetCore(EntityUid ent, out Entity<StationAiCoreComponent?> core)
     {
         if (!_containers.TryGetContainingContainer(ent, out var container) ||
             container.ID != StationAiCoreComponent.Container ||
             !TryComp(container.Owner, out StationAiCoreComponent? coreComp) ||
             coreComp.RemoteEntity == null)
         {
-            core = EntityUid.Invalid;
+            core = (EntityUid.Invalid, null);
             return false;
         }
 
-        core = coreComp.RemoteEntity.Value;
+        core = (container.Owner, coreComp);
         return true;
     }
 
@@ -41,7 +52,7 @@ public abstract partial class SharedStationAiSystem
         if (!TryGetCore(ent.Owner, out var core))
             return;
 
-        args.Target = core;
+        args.Target = core.Comp?.RemoteEntity;
     }
 
     private void OnRadialMessage(StationAiRadialMessage ev)

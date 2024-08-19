@@ -1,4 +1,5 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Actions;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
@@ -27,6 +28,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private   readonly ItemToggleSystem _toggles = default!;
     [Dependency] protected readonly SharedMapSystem Maps = default!;
     [Dependency] private   readonly SharedMoverController _mover = default!;
+    [Dependency] private   readonly SharedTransformSystem _xforms = default!;
     [Dependency] private   readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private   readonly StationAiVisionSystem _vision = default!;
 
@@ -229,6 +231,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (ent.Comp.RemoteEntityProto != null)
         {
             ent.Comp.RemoteEntity = SpawnAtPosition(ent.Comp.RemoteEntityProto, Transform(ent.Owner).Coordinates);
+            Dirty(ent);
         }
     }
 
@@ -331,6 +334,11 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         return _blocker.CanComplexInteract(entity.Owner);
     }
+}
+
+public sealed partial class JumpToCoreEvent : InstantActionEvent
+{
+
 }
 
 [Serializable, NetSerializable]

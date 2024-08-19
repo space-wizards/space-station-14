@@ -41,7 +41,6 @@
   - type: CameraRecoil
   - type: MindContainer
   - type: MovementSpeedModifier
-  - type: StatusIcon
   - type: RequireProjectileTarget
     active: False
 

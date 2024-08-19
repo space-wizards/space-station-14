@@ -9,8 +9,10 @@
   - type: StationAiOverlay
   - type: ActionGrant
     actions:
+    - ActionJumpToCore
     - ActionShowJobIcons
     - ActionSurvCameraLights
+    - ActionViewLaws
   - type: UserInterface
     interfaces:
       enum.RadarConsoleUiKey.Key:
@@ -19,6 +21,8 @@
         type: CrewMonitoringBoundUserInterface
       enum.GeneralStationRecordConsoleKey.Key:
         type: GeneralStationRecordConsoleBoundUserInterface
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
   - type: IntrinsicUI
     uis:
       enum.RadarConsoleUiKey.Key:
@@ -29,6 +33,18 @@
         toggleAction: ActionAGhostShowStationRecords
 
 # Actions
+- type: entity
+  id: ActionJumpToCore
+  name: Jump to core
+  description: Sends your eye back to the core.
+  components:
+  - type: InstantAction
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Misc/job_icons.rsi
+      state: Captain
+    event: !type:JumpToCoreEvent
+
 - type: entity
   id: ActionShowJobIcons
   name: Show job icons
@@ -89,8 +105,9 @@
         showEnts: True
 
 - type: entity
-  id: Holocard
-  name: Holocard
+  id: Intellicard
+  name: Intellicard
+  description: A storage device for AIs.
   parent:
   - BaseItem
   - AiHolder
@@ -187,6 +204,14 @@
   - type: Sprite
     # Once it's in a core it's pretty much an abstract entity at that point.
     visible: false
+  - type: SiliconLawBound
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
   - type: ComplexInteraction
   - type: DoorRemote
   - type: Actions

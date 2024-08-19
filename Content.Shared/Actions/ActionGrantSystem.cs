@@ -12,6 +12,18 @@ public sealed class ActionGrantSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<ActionGrantComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ActionGrantComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<ItemActionGrantComponent, GetItemActionsEvent>(OnItemGet);
+    }
+
+    private void OnItemGet(Entity<ItemActionGrantComponent> ent, ref GetItemActionsEvent args)
+    {
+        if (!TryComp(ent.Owner, out ActionGrantComponent? grant))
+            return;
+
+        foreach (var action in grant.ActionEntities)
+        {
+            args.AddAction(action);
+        }
     }
 
     private void OnMapInit(Entity<ActionGrantComponent> ent, ref MapInitEvent args)
