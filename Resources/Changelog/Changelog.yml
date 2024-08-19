@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ShadowCommander
-  changes:
-  - message: Tweaked the player tab column widths so that usernames and character
-      names are more visible.
-    type: Tweak
-  id: 6648
-  time: '2024-05-31T01:59:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28029
 - author: EmoGarbage404
   changes:
   - message: Fixed latejoin antagonists not respecting antag preferences (for real
@@ -3838,3 +3830,10 @@
   id: 7147
   time: '2024-08-19T02:42:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31123
+- author: tosatur
+  changes:
+  - message: Made hydroponics alert light more orange
+    type: Tweak
+  id: 7148
+  time: '2024-08-19T02:48:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31088
