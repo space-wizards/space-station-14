@@ -831,6 +831,10 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: StaticPrice
+    price: 250
+  - type: RadiationBlocker
+    resistance: 5
   - type: Sprite
     sprite: Structures/Walls/shuttle.rsi
   - type: Icon
