@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Hugging a player no longer briefly opens the mugging UI
-    type: Fix
-  id: 6654
-  time: '2024-05-31T17:25:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28432
 - author: aspiringLich
   changes:
   - message: Some chemicals have been made more colorful and child-friendly.
@@ -3842,3 +3835,10 @@
   id: 7153
   time: '2024-08-19T03:13:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30997
+- author: UBlueberry
+  changes:
+  - message: The guidebook entries for all antagonists have been revised.
+    type: Tweak
+  id: 7154
+  time: '2024-08-19T03:16:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31075
