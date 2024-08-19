@@ -57,7 +57,7 @@
   name: x-01 multiphase energy gun
   parent: BaseWeaponBatterySmall
   id: WeaponEnergyGunMultiphase
-  description: This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time.
+  description: "This is an expensive, modern recreation of an antique laser gun. The fire selector has two settings, 'disable' and 'kill'. Unfortunately, it has lost the ability to recharge over time."
   components:
   - type: Sprite
     sprite: DeltaV/Objects/Weapons/Guns/Battery/multiphase_energygun.rsi
