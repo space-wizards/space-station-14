@@ -12,11 +12,15 @@ namespace Content.Shared.Foldable;
 [Access(typeof(FoldableSystem))]
 public sealed partial class FoldableComponent : Component
 {
-    [DataField("folded"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool IsFolded = false;
 
     [DataField]
     public bool CanFoldInsideContainer = false;
+
+    // Can fold or unfold it by hands
+    [DataField, AutoNetworkedField]
+    public bool CanBeHandlyFolded = true;
 
     [DataField]
     public LocId UnfoldVerbText = "unfold-verb";

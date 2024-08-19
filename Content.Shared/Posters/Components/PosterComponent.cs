@@ -6,14 +6,12 @@ namespace Content.Shared.Posters.Components;
 [RegisterComponent]
 public sealed partial class PosterComponent : Component
 {
-    public CancellationTokenSource? CancelToken;
-
-    [DataField("foldedPrototype")]
+    [DataField]
     public string? FoldedPrototype;
 
-    [DataField("removingTime")]
+    [DataField]
     public float RemovingTime = 2.0f;
 
-    [DataField("removingSound")]
+    [DataField]
     public SoundSpecifier? RemovingSound = new SoundPathSpecifier("/Audio/Effects/poster_removing.ogg");
 }

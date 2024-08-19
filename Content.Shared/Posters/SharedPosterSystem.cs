@@ -103,7 +103,7 @@ public abstract partial class SharedPosterSystem : EntitySystem
 
     private void OnRemoveVerb(EntityUid uid, PosterComponent poster, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess || poster.CancelToken != null)
+        if (!args.CanInteract || !args.CanAccess)
             return;
 
         if (poster.FoldedPrototype == null)

@@ -104,6 +104,10 @@ public sealed class FoldableSystem : EntitySystem
         if (_container.IsEntityInContainer(uid) && !fold.CanFoldInsideContainer)
             return false;
 
+        // Can't unfold by hands, only by other systems. For exapmle: posters.
+        if (!fold.CanBeHandlyFolded)
+            return false;
+
         var ev = new FoldAttemptEvent();
         RaiseLocalEvent(uid, ref ev);
         return !ev.Cancelled;
