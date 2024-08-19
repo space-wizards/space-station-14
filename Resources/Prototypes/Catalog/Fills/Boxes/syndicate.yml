@@ -70,7 +70,7 @@
 
 - type: entity
   parent: [BoxCardboard, BaseSyndicateContraband]
-  id: CopmbatBakeryKit
+  id: CombatBakeryKit
   name: combat bakery kit
   description: A kit of clandestine baked weapons. Packaging disintegrates when opened, leaving no evidence behind.
   components:
