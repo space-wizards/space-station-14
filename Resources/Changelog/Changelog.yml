@@ -1,63 +1,4 @@
 ﻿Entries:
-- author: notafet
-  changes:
-  - message: Slightly increase spacing speed to fix under-pressure lockout.
-    type: Tweak
-  - message: Fix vent under-pressure lockout.
-    type: Fix
-  id: 6638
-  time: '2024-05-29T05:21:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28370
-- author: lzk228
-  changes:
-  - message: Salvage access has been replaced with Cargo for the artifact container.
-    type: Tweak
-  id: 6639
-  time: '2024-05-29T16:46:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28386
-- author: notafet
-  changes:
-  - message: Fix passive gate flow rate display.
-    type: Fix
-  id: 6640
-  time: '2024-05-30T00:34:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28372
-- author: Lamrr
-  changes:
-  - message: Candle boxes can now only hold candles.
-    type: Tweak
-  id: 6641
-  time: '2024-05-30T04:15:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28314
-- author: blueDev2
-  changes:
-  - message: Epipens can be disposed
-    type: Fix
-  id: 6642
-  time: '2024-05-30T04:18:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28317
-- author: metalgearsloth
-  changes:
-  - message: Predict opening even more interfaces.
-    type: Tweak
-  id: 6643
-  time: '2024-05-30T07:32:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28405
-- author: ShadowCommander
-  changes:
-  - message: Fixed firelocks with warnings enabled opening immediately for characters
-      without engineering access.
-    type: Fix
-  id: 6644
-  time: '2024-05-30T17:25:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28415
-- author: moonheart08
-  changes:
-  - message: The hand teleporter can no longer create portal links between grids.
-    type: Remove
-  id: 6645
-  time: '2024-05-30T20:45:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28423
 - author: Ghagliiarghii
   changes:
   - message: Cargo Sale Computer now correctly uses its own computer board
@@ -3832,3 +3773,67 @@
   id: 7137
   time: '2024-08-18T16:22:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30839
+- author: Beck Thompson
+  changes:
+  - message: Cutting food now moves the sliced pieces a small amount!
+    type: Tweak
+  id: 7138
+  time: '2024-08-18T21:18:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31166
+- author: lzk228
+  changes:
+  - message: Pizza and pizza box now have 3x2 size in inventory.
+    type: Tweak
+  - message: Pizze box is 4x2 inside and always will have a pizza with a knife inside.
+    type: Tweak
+  - message: Pizza box have whitelist for utensils and pizza.
+    type: Tweak
+  id: 7139
+  time: '2024-08-18T21:55:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31171
+- author: Deatherd
+  changes:
+  - message: Sharks Go RAWR!
+    type: Tweak
+  id: 7140
+  time: '2024-08-18T22:18:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31142
+- author: slarticodefast
+  changes:
+  - message: Fixed the radiation collector warning light thresholds.
+    type: Fix
+  id: 7141
+  time: '2024-08-18T22:25:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31175
+- author: Potato1234_x
+  changes:
+  - message: Added tea plants that can be dried and ground to make tea powder which
+      can then be used to make tea.
+    type: Add
+  - message: Added blue pumpkins. Currently useless but recipe uses are coming soon.
+    type: Add
+  id: 7142
+  time: '2024-08-18T22:28:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25092
+- author: deltanedas
+  changes:
+  - message: Added Memory Cells for storing logic signals persistently.
+    type: Add
+  id: 7143
+  time: '2024-08-18T22:34:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24983
+- author: Psychpsyo
+  changes:
+  - message: The random sentience event is back and can no longer pick things that
+      aren't even on the station.
+    type: Add
+  id: 7144
+  time: '2024-08-18T23:41:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29123
+- author: EmoGarbage404
+  changes:
+  - message: Ore can no longer be destroyed by explosions. Happy blast mining.
+    type: Tweak
+  id: 7145
+  time: '2024-08-19T01:55:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31182
