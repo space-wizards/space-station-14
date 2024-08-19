@@ -1,9 +1,9 @@
+using System.Numerics;
 using Content.Shared.Singularity.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
-using System.Numerics;
 
 namespace Content.Client.Singularity
 {
@@ -21,7 +21,7 @@ namespace Content.Client.Singularity
 
         private const float MaxDistance = 20f;
 
-        private const float MaxDeformation = 6.0f;
+        private const float MaxDeformation = 7.0f;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         public override bool RequestScreenTexture => true;
@@ -40,7 +40,7 @@ namespace Content.Client.Singularity
         private readonly Vector2[] _positions = new Vector2[MaxCount];
         private readonly float[] _intensities = new float[MaxCount];
         private readonly float[] _falloffPowers = new float[MaxCount];
-        private bool[] _haveEventHorizons = new bool[MaxCount];
+        private readonly bool[] _haveEventHorizons = new bool[MaxCount];
         private int _count = 0;
 
         protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -139,12 +139,10 @@ namespace Content.Client.Singularity
 
                     if (_haveEventHorizons[i] && _intensities[i] > 0.0f)
                     {
-                        deformation -= MathF.Pow(deformation / MaxDeformation, 8.0f);
+                        deformation -= MathF.Pow(deformation / MaxDeformation, 32.0f);
                         if (deformation < -MaxDeformation)
                             deformation = 0.0f;
                     }
-                    else if (deformation > MaxDeformation)
-                        deformation = MathF.Sqrt(deformation);
                 }
 
                 finalCoords -= delta * deformation;
