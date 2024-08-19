@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: beck-thompson
-  changes:
-  - message: You can now remove evidence from containers using the verb menu.
-    type: Fix
-  id: 6658
-  time: '2024-06-01T04:58:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28101
 - author: notafet
   changes:
   - message: Increase power output from Tesla coils.
@@ -3846,3 +3839,12 @@
   id: 7157
   time: '2024-08-19T03:28:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30869
+- author: Flareguy
+  changes:
+  - message: Added 2 new vox customization options for both hair & facial hair.
+    type: Add
+  - message: Vox Long Braids no longer incorrectly uses the Vox Afro sprite.
+    type: Fix
+  id: 7158
+  time: '2024-08-19T03:32:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30815
