@@ -1,7 +1,7 @@
 figurines-hop-1 = Papers, please.
 figurines-hop-2 = You are fired.
 
-figurines-passenger-1 = How to change hands?
+figurines-passenger-1 = Insuls please.
 figurines-passenger-2 = Call evac.
 
 figurines-greytider-1 = Man, this party stinks. I fucking hate these people.
@@ -27,20 +27,28 @@ figurines-mime-5 = ................
 figurines-musician-1 = Never gonna give you up!
 figurines-musician-2 = Never gonna let you down!
 
-# figurines-boxer-
+figurines-boxer-1 = The first rule of Fight Club is...
 
-figurines-captain-1 = Crew, the Nuke Disk is safely up my ass.
-figurines-captain-2 = Glory to NT!
+figurines-captain-1 = Glory to NT!
+figurines-captain-2 = How did I get hired? Yes.
+figurines-captain-3 = The nuclear disk is secure. Where? Somewhere.
 
 figurines-hos-1 = Space law? What?
-figurines-hos-2 = Shot the clown.
+figurines-hos-2 = Shoot the clown.
+figurines-hos-3 = Yes, I shot the clown. No, I don't regret it.
 
 figurines-warden-1 = Execute him for breaking in!
+figurines-warden-2 = Perma the fucker for insulting me!
+figurines-warden-3 = We totally treat everyone fairly and do NOT mistreat our prisoners.
+figurines-warden-4 = Brig is my home. My home is brig. My brig is home. Stop, what?
 
 figurines-detective-1 = The butler did it.
+figurines-detective-2 = I need some whiskey after this.
 
 figurines-security-1 = I am the law!
 figurines-security-2 = You have violated article 1984.
+figurines-security-3 = Whenever I get bored I use the clown as target practice.
+figurines-security-4 = You have two rights: to remain silent and to cry about it.
 
 figurines-lawyer-1 = Better Call Saul!
 figurines-lawyer-2 = Objection!
@@ -81,8 +89,8 @@ figurines-rd-2 = Tier 3 arsenal? No way.
 figurines-scientist-1 = Someone else must have made those bombs!
 figurines-scientist-2 = He asked to be borged!
 figurines-scientist-3 = Carp at sci!
-figurines-scientist-4 = Explosion at sci.
-figurines-scientist-5 = The anomaly has exploded.
+figurines-scientist-4 = Explosion at sci!
+figurines-scientist-5 = The anomaly has exploded!
 
 figurines-cmo-1 = Suit sensors!
 figurines-cmo-2 = Why do we have meth?
