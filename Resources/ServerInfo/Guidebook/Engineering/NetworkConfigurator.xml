@@ -9,7 +9,7 @@
   ## List Mode
   In list mode you can click on network devices to save them on the configurator and then on a network device that has a device list like the [color=#a4885c]Air Alarm[/color].
 
-  When clicking on a device like the Air Alarm, a UI will open displaying the list currently saved on the device and buttons to manipulate that list.
+  When clicking on a device like the Air Alarm, a UI will open, displaying the list currently saved on the device and buttons to manipulate that list.
 
   You can:
   - Replace the current list with the one saved on the configurator
@@ -27,11 +27,11 @@
 
   Now, you can either click [color=gray]Link Defaults[/color] to link the default ports for a source + sink combination, or press on a source port and then a sink port to connect them.
 
-  An example of a default link for the aformentioned combinaton of devices would be:
+  An example of a default link for the aforementioned combinaton of devices would be:
   <Box>
     [color=cyan]Pressed 🠒 Toggle[/color]
    </Box>
-  When you're done connecting the ports you want you can click on [color=gray]OK[/color] to close the UI.
+  When you're done connecting the ports you want, you can click on [color=gray]OK[/color] to close the UI.
 
   You can quickly link multiple devices to their default port by first clicking on a device that can be linked and then using [color=gray]Alt+Left Mouse button[/color] on the devices you want to link together.
 

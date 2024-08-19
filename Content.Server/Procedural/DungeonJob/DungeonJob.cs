@@ -44,7 +44,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<TransformComponent> _xformQuery;
 
-    private readonly DungeonConfigPrototype _gen;
+    private readonly DungeonConfig _gen;
     private readonly int _seed;
     private readonly Vector2i _position;
 
@@ -65,7 +65,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         EntityLookupSystem lookup,
         TileSystem tile,
         SharedTransformSystem transform,
-        DungeonConfigPrototype gen,
+        DungeonConfig gen,
         MapGridComponent grid,
         EntityUid gridUid,
         int seed,
@@ -102,7 +102,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
     /// <param name="reserve">Should we reserve tiles even if the config doesn't specify.</param>
     private async Task<List<Dungeon>> GetDungeons(
         Vector2i position,
-        DungeonConfigPrototype config,
+        DungeonConfig config,
         DungeonData data,
         List<IDunGenLayer> layers,
         HashSet<Vector2i> reservedTiles,
@@ -139,7 +139,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
 
     protected override async Task<List<Dungeon>?> Process()
     {
-        _sawmill.Info($"Generating dungeon {_gen.ID} with seed {_seed} on {_entManager.ToPrettyString(_gridUid)}");
+        _sawmill.Info($"Generating dungeon {_gen} with seed {_seed} on {_entManager.ToPrettyString(_gridUid)}");
         _grid.CanSplit = false;
         var random = new Random(_seed);
         var position = (_position + random.NextPolarVector2(_gen.MinOffset, _gen.MaxOffset)).Floored();
@@ -177,7 +177,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         int seed,
         Random random)
     {
-        _sawmill.Debug($"Doing postgen {layer.GetType()} for {_gen.ID} with seed {_seed}");
+        _sawmill.Debug($"Doing postgen {layer.GetType()} for {_gen} with seed {_seed}");
 
         // If there's a way to just call the methods directly for the love of god tell me.
         // Some of these don't care about reservedtiles because they only operate on dungeon tiles (which should
