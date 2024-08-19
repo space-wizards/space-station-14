@@ -13,6 +13,8 @@ namespace Content.Shared.Humanoid.Markings
         HeadSide,
         Snout,
         Chest,
+        Underwear,
+        Undershirt,
         Arms,
         Legs,
         Tail,
@@ -43,6 +45,8 @@ namespace Content.Shared.Humanoid.Markings
                 HumanoidVisualLayers.RFoot => MarkingCategories.Legs,
                 HumanoidVisualLayers.Tail => MarkingCategories.Tail,
                 _ => MarkingCategories.Overlay
+                _ => MarkingCategories.Underwear,
+                _ => MarkingCategories.Undershirt,
             };
         }
     }
