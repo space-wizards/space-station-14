@@ -31,7 +31,7 @@ public sealed class BlueprintSystem : EntitySystem
 
     private void OnAfterInteract(Entity<BlueprintReceiverComponent> ent, ref AfterInteractUsingEvent args)
     {
-        if (args.Handled || !TryComp<BlueprintComponent>(args.Used, out var blueprintComponent))
+        if (args.Handled || !args.CanReach || !TryComp<BlueprintComponent>(args.Used, out var blueprintComponent))
             return;
         args.Handled = TryInsertBlueprint(ent, (args.Used, blueprintComponent), args.User);
     }
@@ -50,7 +50,7 @@ public sealed class BlueprintSystem : EntitySystem
         if (!CanInsertBlueprint(ent, blueprint, user))
             return false;
 
-        if (user != null)
+        if (user is not null)
         {
             var userId = Identity.Entity(user.Value, EntityManager);
             var bpId = Identity.Entity(blueprint, EntityManager);
@@ -73,6 +73,12 @@ public sealed class BlueprintSystem : EntitySystem
     {
         if (_entityWhitelist.IsWhitelistFail(ent.Comp.Whitelist, blueprint))
         {
+            return false;
+        }
+
+        if (blueprint.Comp.ProvidedRecipes.Count == 0)
+        {
+            Log.Error($"Attempted to insert blueprint {ToPrettyString(blueprint)} with no recipes.");
             return false;
         }
 
