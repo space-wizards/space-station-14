@@ -1118,3 +1118,8 @@
   id: radiation
   flavorType: Complex
   description: flavor-complex-radiation
+
+- type: flavor
+  id: apple-martini-crystal-lite
+  flavorType: Complex
+  description: flavor-complex-apple-martini-crystal-lite

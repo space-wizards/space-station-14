@@ -36,5 +36,6 @@
     offset: 0.0
     #rare
     rarePrototypes:
+      - DrinkAppleMartiniCrystalLiteBottleFull # added as a rare drop so that the station isn't constantly dying of horsepussy
       - DrinkPoisonWinebottleFull
     rareChance: 0.01
