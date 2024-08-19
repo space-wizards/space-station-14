@@ -1,6 +1,7 @@
 - type: entity
   parent: BaseStructureDynamic
   id: BaseFilingCabinet
+  description: A cabinet for all your filing needs.
   suffix: Empty
   abstract: true
   components:
@@ -51,7 +52,6 @@
   name: filing cabinet
   parent: [ BaseFilingCabinet, BaseBagOpenClose ]
   id: FilingCabinet
-  description: A cabinet for all your filing needs.
   components:
   - type: Storage
     grid:
@@ -148,13 +148,13 @@
         orGroup: Folder
 
 - type: entity
-  parent: [FilingCabinet, BaseBureaucraticStorageFill]
-  id: FilingCabinetFilled
+  parent: [filingCabinet, BaseBureaucraticStorageFill]
+  id: filingCabinetRandom
 
 - type: entity
-  parent: [FilingCabinetTall, BaseBureaucraticStorageFill]
-  id: FilingCabinetTallFilled
+  parent: [filingCabinetTall, BaseBureaucraticStorageFill]
+  id: filingCabinetTallRandom
 
 - type: entity
-  parent: [FilingCabinetDrawer, BaseBureaucraticStorageFill]
-  id: FilingCabinetDrawerFilled
+  parent: [filingCabinetDrawer, BaseBureaucraticStorageFill]
+  id: filingCabinetDrawerRandom
