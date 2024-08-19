@@ -77,8 +77,8 @@ public sealed class PAISystem : SharedPAISystem
 
     private void OnMicrowaved(EntityUid uid, PAIComponent comp, BeingMicrowavedEvent args)
     {
-        // name will always be scrambled whether it gets bricked or not, this is the reward
-        ScrambleName(uid, comp);
+        // damage and crack the pai
+        _damageable.TryChangeDamage(uid, new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Heat"), 50));
 
         // randomly brick it
         if (_random.Prob(comp.BrickChance))
@@ -160,7 +160,7 @@ public sealed class PAISystem : SharedPAISystem
 
     private void OnDamageChanged(EntityUid uid, PAIComponent comp, DamageChangedEvent args)
     {
-        // If the PAI is repaired, uncrack it.
+        // If the pai is repaired, uncrack it.
         if (comp.Cracked && TryComp<DamageableComponent>(uid, out var damageableComponent) && damageableComponent.TotalDamage < 100)
         {
             comp.Cracked = false;
