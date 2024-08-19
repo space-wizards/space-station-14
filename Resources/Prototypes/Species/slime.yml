@@ -15,6 +15,8 @@
     Head: MobSlimeHead
     Hair: MobSlimeMarkingFollowSkin
     FacialHair: MobSlimeMarkingFollowSkin
+    Underwear: MobHumanoidAnyMarking
+    Undershirt: MobHumanoidAnyMarking
     Chest: MobSlimeTorso
     Eyes: MobHumanoidEyes
     LArm: MobSlimeLArm
@@ -38,6 +40,14 @@
     Chest:
       points: 1
       required: false
+    Underwear:
+      points: 1
+      required: true
+      defaultMarkings: [ UnderwearDefault ]
+    Undershirt:
+      points: 1
+      required: true
+      defaultMarkings: [ UndershirtDefault ]
     Legs:
       points: 4
       required: false
