@@ -143,7 +143,7 @@
   bodyPart: Undershirt
   markingCategory: Undershirt
   speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
-  sexRestriction: [Male]
+  sexRestriction: [Male, Unsexed]
   coloring:
     default:
       type:
