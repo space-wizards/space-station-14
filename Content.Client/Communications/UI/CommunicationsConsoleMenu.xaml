@@ -7,7 +7,7 @@
         <Button Name="AnnounceButton" Text="{Loc 'comms-console-menu-announcement-button'}" ToolTip="{Loc 'comms-console-menu-announcement-button-tooltip'}" StyleClasses="OpenLeft" Access="Public" />
         <Button Name="BroadcastButton" Text="{Loc 'comms-console-menu-broadcast-button'}" ToolTip="{Loc 'comms-console-menu-broadcast-button-tooltip'}" StyleClasses="OpenLeft" Access="Public" />
 
-        <OptionButton Name="AlertLevelButton" StyleClasses="OpenRight" Access="Public" />
+        <OptionButton Name="AlertLevelButton"  ToolTip="{Loc 'comms-console-menu-alert-level-button-tooltip'}" StyleClasses="OpenRight" Access="Public" />
 
         <Control MinSize="10 10" />
 
