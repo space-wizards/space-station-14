@@ -1,4 +1,6 @@
+using Content.Shared.Beam.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Foldable;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Posters.Components;
@@ -17,83 +19,119 @@ public abstract partial class SharedPosterSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly FoldableSystem _foldableSystem = default!;
     [Dependency] private readonly INetManager _net = default!;
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<FoldedPosterComponent, AfterInteractEvent>(OnFoldedInteract);
-        SubscribeLocalEvent<FoldedPosterComponent, PosterPlacingDoAfterEvent>(OnPlacingDoAfter);
-        SubscribeLocalEvent<FoldedPosterComponent, GetVerbsEvent<UtilityVerb>>(OnPlacingVerb);
-
-        SubscribeLocalEvent<PosterComponent, GetVerbsEvent<AlternativeVerb>>(OnRemoveVerb);
+        SubscribeLocalEvent<PosterComponent, AfterInteractEvent>(OnInteract);
+        SubscribeLocalEvent<PosterComponent, PosterPlacingDoAfterEvent>(OnPlacingDoAfter);
         SubscribeLocalEvent<PosterComponent, PosterRemovingDoAfterEvent>(OnRemovingDoAfter);
+        SubscribeLocalEvent<PosterComponent, GetVerbsEvent<UtilityVerb>>(OnPlacingVerb);
+        SubscribeLocalEvent<PosterComponent, GetVerbsEvent<AlternativeVerb>>(OnRemoveVerb);
     }
 
-    private void OnFoldedInteract(EntityUid uid, FoldedPosterComponent folded, AfterInteractEvent args)
+    private void OnInteract(Entity<PosterComponent> poster, ref AfterInteractEvent args)
     {
-        if (folded.CancelToken != null || !args.CanReach || args.Target == null)
+        if (!args.CanReach || args.Target == null)
             return;
 
-        if (!HasComp<TagComponent>(args.Target))
-            return;
-
-        if (folded.PosterPrototype == null)
-            return;
-
-        if (!_prototypeManager.HasIndex<EntityPrototype>(folded.PosterPrototype))
-            return;
-
-        if (_tagSystem.HasTag(args.Target.Value, "Wall"))
-            StartPlacing(uid, folded, args.Target.Value, args.User);
+        if (CanPlacePoster(poster, args.Target.Value))
+            StartPlacing(poster, args.Target.Value, args.User);
     }
 
-    private void OnPlacingDoAfter(EntityUid uid, FoldedPosterComponent folded, PosterPlacingDoAfterEvent args)
+    private void StartPlacing(Entity<PosterComponent> poster, EntityUid target, EntityUid user)
     {
-        if (args.Cancelled || _net.IsServer)
-            QueueDel(EntityManager.GetEntity(args.Effect));
+        var comp = poster.Comp;
 
-        if (args.Handled || args.Cancelled)
+        var ev = new PosterPlacingDoAfterEvent();
+
+        var doAfterargs = new DoAfterArgs(EntityManager, user, comp.PlacingTime, ev, poster, target, poster)
+        {
+            BreakOnMove = true,
+            NeedHand = true,
+            BreakOnHandChange = true
+        };
+
+        _audioSystem.PlayPredicted(comp.PlacingSound, poster, user);
+
+        if (_doAfter.TryStartDoAfter(doAfterargs))
+            CreatePlaceEffect(poster, target);
+    }
+
+    /// <summary>
+    /// Creating poster place effect on server side
+    /// </summary>
+    private void CreatePlaceEffect(Entity<PosterComponent> poster, EntityUid target)
+    {
+        if (!_net.IsServer)
             return;
+
+        var comp = poster.Comp;
+        comp.EffectEntity = Spawn(comp.PlacingEffect, Transform(target).Coordinates);
+    }
+
+    private void DeletePlaceEffect(Entity<PosterComponent> poster)
+    {
+        if (!_net.IsServer)
+            return;
+
+        var comp = poster.Comp;
+
+        QueueDel(comp.EffectEntity);
+    }
+
+    private void OnPlacingDoAfter(Entity<PosterComponent> poster, ref PosterPlacingDoAfterEvent args)
+    {
+        // Delete effect in case doafter was cancelled
+        if (args.Cancelled || args.Handled)
+        {
+            DeletePlaceEffect(poster);
+            return;
+        }
 
         if (args.Target == null)
             return;
 
-        Spawn(folded.PosterPrototype, Transform(args.Target.Value).Coordinates);
-        QueueDel(uid);
-        QueueDel(EntityManager.GetEntity(args.Effect));
+        // Getting foldable comp to unfold poster
+        if (!TryComp<FoldableComponent>(poster, out var foldable))
+            return;
+
+        // Moving entity to the target coords
+        var xform = Transform(poster);
+        var parentXform = Transform(args.Target.Value);
+
+        _transformSystem.SetCoordinates(poster, xform, parentXform.Coordinates, rotation: Angle.Zero);
+        _transformSystem.SetParent(poster, args.Target.Value);
+
+        _foldableSystem.SetFolded(poster, foldable, false);
+
+        DeletePlaceEffect(poster);
     }
 
-    private void OnRemovingDoAfter(EntityUid uid, PosterComponent poster, PosterRemovingDoAfterEvent args)
+    /// <summary>
+    /// Creates utility verb to place poster on the object
+    /// </summary>
+    private void OnPlacingVerb(Entity<PosterComponent> poster, ref GetVerbsEvent<UtilityVerb> args)
     {
-        if (args.Handled || args.Cancelled)
+        if (!args.CanInteract || !args.CanAccess)
             return;
 
-        var item = Spawn(poster.FoldedPrototype, Transform(args.User).Coordinates);
-        _handsSystem.PickupOrDrop(args.User, item, checkActionBlocker: false);
-
-        QueueDel(uid);
-    }
-
-    private void OnPlacingVerb(EntityUid uid, FoldedPosterComponent folded, GetVerbsEvent<UtilityVerb> args)
-    {
-        if (!args.CanInteract || !args.CanAccess || folded.CancelToken != null)
+        if (!CanPlacePoster(poster, args.Target))
             return;
 
-        if (!HasComp<TagComponent>(args.Target) || !_tagSystem.HasTag(args.Target, "Wall"))
+        if (!_foldableSystem.IsFolded(poster))
             return;
 
-        if (folded.PosterPrototype == null)
-            return;
-
-        if (!_prototypeManager.HasIndex<EntityPrototype>(folded.PosterPrototype))
-            return;
+        var target = args.Target;
+        var user = args.User;
 
         var verb = new UtilityVerb()
         {
-            Act = () => StartPlacing(uid, folded, args.Target, args.User),
-            IconEntity = GetNetEntity(uid),
+            Act = () => StartPlacing(poster, target, user),
+            IconEntity = GetNetEntity(poster),
             Text = Loc.GetString("poster-placing-verb-text"),
             Message = Loc.GetString("poster-placing-verb-message")
         };
@@ -101,21 +139,20 @@ public abstract partial class SharedPosterSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void OnRemoveVerb(EntityUid uid, PosterComponent poster, GetVerbsEvent<AlternativeVerb> args)
+    private void OnRemoveVerb(Entity<PosterComponent> poster, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
             return;
 
-        if (poster.FoldedPrototype == null)
+        // Check if poster is folded to prevent removing folded poster
+        if (_foldableSystem.IsFolded(poster))
             return;
 
-        if (!_prototypeManager.HasIndex<EntityPrototype>(poster.FoldedPrototype))
-            return;
-
+        var user = args.User;
         var verb = new AlternativeVerb()
         {
-            Act = () => StartRemoving(uid, poster, args.User),
-            IconEntity = GetNetEntity(uid),
+            Act = () => StartRemoving(poster, user),
+            IconEntity = GetNetEntity(poster),
             Text = Loc.GetString("poster-removing-verb-text"),
             Message = Loc.GetString("poster-removing-verb-message")
         };
@@ -123,50 +160,59 @@ public abstract partial class SharedPosterSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void StartPlacing(EntityUid uid, FoldedPosterComponent folded, EntityUid target, EntityUid user)
+    private void StartRemoving(Entity<PosterComponent> poster, EntityUid user)
     {
-        var effect = Spawn(folded.PlacingEffect, Transform(target).Coordinates);
-        var ev = new PosterPlacingDoAfterEvent(EntityManager.GetNetEntity(effect));
+        var comp = poster.Comp;
 
-        var doAfterargs = new DoAfterArgs(EntityManager, user, folded.PlacingTime, ev, uid, target, uid)
+        var doAfterargs = new DoAfterArgs(EntityManager, user, comp.RemovingTime, new PosterRemovingDoAfterEvent(), poster, poster)
         {
             BreakOnMove = true,
             NeedHand = true,
             BreakOnHandChange = true
         };
 
-        _audioSystem.PlayPvs(folded.PlacingSound, uid);
-
-        if (!_doAfter.TryStartDoAfter(doAfterargs))
-            QueueDel(effect);
-    }
-
-    private void StartRemoving(EntityUid uid, PosterComponent poster, EntityUid user)
-    {
-        var doAfterargs = new DoAfterArgs(EntityManager, user, poster.RemovingTime, new PosterRemovingDoAfterEvent(), uid, uid)
-        {
-            BreakOnMove = true,
-            NeedHand = true,
-            BreakOnHandChange = true
-        };
-
-        _audioSystem.PlayPvs(poster.RemovingSound, uid);
+        _audioSystem.PlayPredicted(comp.RemovingSound, poster, user);
 
         _doAfter.TryStartDoAfter(doAfterargs);
+    }
+
+    private void OnRemovingDoAfter(Entity<PosterComponent> poster, ref PosterRemovingDoAfterEvent args)
+    {
+        if (args.Handled || args.Cancelled)
+            return;
+
+        if (!TryComp<FoldableComponent>(poster, out var foldable))
+            return;
+
+        // Fold poster and put it in user's hands
+        _foldableSystem.SetFolded(poster, foldable, true);
+        _handsSystem.PickupOrDrop(args.User, poster, checkActionBlocker: false);
+    }
+
+    /// <summary>
+    /// Check if poster can be placed on specific target
+    /// </summary>
+    private bool CanPlacePoster(Entity<PosterComponent> poster, EntityUid target)
+    {
+        var comp = poster.Comp;
+
+        // Check if tag is empty. If it is - we starting placing poster on target object.
+        if (string.IsNullOrWhiteSpace(comp.PlacingTag))
+            return true;
+
+        if (!HasComp<TagComponent>(target))
+            return false;
+
+        if (!_tagSystem.HasTag(target, comp.PlacingTag))
+            return false;
+
+        return true;
     }
 }
 
 [Serializable, NetSerializable]
-public sealed partial class PosterPlacingDoAfterEvent : DoAfterEvent
+public sealed partial class PosterPlacingDoAfterEvent : SimpleDoAfterEvent
 {
-    public NetEntity? Effect { get; private set; } = null;
-
-    public PosterPlacingDoAfterEvent(NetEntity? effect = null)
-    {
-        Effect = effect;
-    }
-
-    public override DoAfterEvent Clone() => this;
 }
 
 [Serializable, NetSerializable]

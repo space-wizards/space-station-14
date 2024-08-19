@@ -1,15 +1,47 @@
 - type: entity
-  parent: BaseSign
+  parent: BaseFoldable
   id: PosterBase
   abstract: true
+  placement:
+    mode: SnapgridCenter
   components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: EmitSoundOnCollide
+    sound:
+      collection: WeakHit
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Effects/drop.ogg
+      params:
+        volume: 2
+  - type: Physics
+    bodyType: Dynamic
+    canCollide: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
   - type: Appearance
+  - type: Poster
   - type: WallMount
     arc: 360
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/posters.rsi
     snapCardinals: true
+  - type: Foldable
+    canBeHandlyFolded: false
+    foldedDisableCollision: true
+  - type: Item
+    size: Small
   - type: Damageable
     damageModifierSet: Web
   - type: Flammable
@@ -119,9 +151,11 @@
   description: "A salvaged shred of a much larger flag, colors bled together and faded from age."
   components:
   - type: Sprite
-    state: poster1_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandFreeTonto
+    layers:
+    - state: poster1_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -130,9 +164,11 @@
   description: "A relic of a failed rebellion."
   components:
   - type: Sprite
-    state: poster2_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandAtmosiaDeclarationIndependence
+    layers:
+    - state: poster2_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -141,9 +177,11 @@
   description: "A poster condemning the station's security forces."
   components:
   - type: Sprite
-    state: poster3_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandFunPolice
+    layers:
+    - state: poster3_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -152,9 +190,11 @@
   description: "A heretical poster depicting the titular star of an equally heretical book."
   components:
   - type: Sprite
-    state: poster4_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandLustyExomorph
+    layers:
+    - state: poster4_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -163,9 +203,11 @@
   description: "See the galaxy! Shatter corrupt megacorporations! Join today!"
   components:
   - type: Sprite
-    state: poster5_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandSyndicateRecruitment
+    layers:
+    - state: poster5_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -174,9 +216,11 @@
   description: "Honk."
   components:
   - type: Sprite
-    state: poster6_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandClown
+    layers:
+    - state: poster6_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -185,9 +229,11 @@
   description: "A poster advertising a rival corporate brand of cigarettes."
   components:
   - type: Sprite
-    state: poster7_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandSmoke
+    layers:
+    - state: poster7_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -196,9 +242,11 @@
   description: "A rebellious poster symbolizing passenger solidarity."
   components:
   - type: Sprite
-    state: poster8_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandGreyTide
+    layers:
+    - state: poster8_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -207,9 +255,11 @@
   description: "This poster references the uproar that followed Nanotrasen's financial cuts toward insulated-glove purchases."
   components:
   - type: Sprite
-    state: poster9_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandMissingGloves
+    layers:
+    - state: poster9_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -218,9 +268,11 @@
   description: "This poster details the internal workings of the common Nanotrasen airlock. Sadly, it appears out of date."
   components:
   - type: Sprite
-    state: poster10_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandHackingGuide
+    layers:
+    - state: poster10_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -229,9 +281,11 @@
   description: "This seditious poster references Nanotrasen's genocide of a space station full of badgers."
   components:
   - type: Sprite
-    state: poster11_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandRIPBadger
+    layers:
+    - state: poster11_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -240,9 +294,11 @@
   description: "This poster is lookin' pretty trippy man."
   components:
   - type: Sprite
-    state: poster12_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandAmbrosiaVulgaris
+    layers:
+    - state: poster12_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -251,9 +307,11 @@
   description: "This poster is an unauthorized advertisement for Donut Corp."
   components:
   - type: Sprite
-    state: poster13_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandDonutCorp
+    layers:
+    - state: poster13_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -262,9 +320,11 @@
   description: "This poster promotes rank gluttony."
   components:
   - type: Sprite
-    state: poster14_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandEAT
+    layers:
+    - state: poster14_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -273,9 +333,11 @@
   description: "This poster looks like an advertisement for tools, but is in fact a subliminal jab at the tools at CentComm."
   components:
   - type: Sprite
-    state: poster15_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandTools
+    layers:
+    - state: poster15_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -284,9 +346,11 @@
   description: "A poster that positions the seat of power outside Nanotrasen."
   components:
   - type: Sprite
-    state: poster16_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandPower
+    layers:
+    - state: poster16_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -295,9 +359,11 @@
   description: "Ignorant of Nature's Harmonic 6 Side Space Cube Creation, the Spacemen are Dumb, Educated Singularity Stupid and Evil."
   components:
   - type: Sprite
-    state: poster17_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandSpaceCube
+    layers:
+    - state: poster17_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -306,9 +372,11 @@
   description: "All hail the Communist party!"
   components:
   - type: Sprite
-    state: poster18_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandCommunistState
+    layers:
+    - state: poster18_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -317,9 +385,11 @@
   description: "This poster depicts Lamarr. Probably made by a traitorous Research Director."
   components:
   - type: Sprite
-    state: poster19_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandLamarr
+    layers:
+    - state: poster19_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -328,9 +398,11 @@
   description: "Being fancy can be for any borg, just need a suit."
   components:
   - type: Sprite
-    state: poster20_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandBorgFancy
+    layers:
+    - state: poster20_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -339,9 +411,11 @@
   description: "Borg Fancy, Now only taking the most fancy."
   components:
   - type: Sprite
-    state: poster21_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandBorgFancyv2
+    layers:
+    - state: poster21_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -350,9 +424,11 @@
   description: "A poster mocking CentComm's denial of the existence of the derelict station near Space Station 13."
   components:
   - type: Sprite
-    state: poster22_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandKosmicheskayaStantsiya
+    layers:
+    - state: poster22_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -361,9 +437,11 @@
   description: "A poster urging the viewer to rebel against Nanotrasen."
   components:
   - type: Sprite
-    state: poster23_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandRebelsUnite
+    layers:
+    - state: poster23_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -372,9 +450,11 @@
   description: "A poster advertising the Scarborough Arms C-20r."
   components:
   - type: Sprite
-    state: poster24_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandC20r
+    layers:
+    - state: poster24_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -383,9 +463,11 @@
   description: "Who cares about lung cancer when you're high as a kite?"
   components:
   - type: Sprite
-    state: poster25_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandHaveaPuff
+    layers:
+    - state: poster25_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -394,9 +476,11 @@
   description: "Because seven shots are all you need."
   components:
   - type: Sprite
-    state: poster26_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandRevolver
+    layers:
+    - state: poster26_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -405,9 +489,11 @@
   description: "A promotional poster for some rapper."
   components:
   - type: Sprite
-    state: poster27_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandDDayPromo
+    layers:
+    - state: poster27_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -416,9 +502,11 @@
   description: "A poster advertising syndicate pistols as being 'classy as fuck'. It's covered in faded gang tags."
   components:
   - type: Sprite
-    state: poster28_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandSyndicatePistol
+    layers:
+    - state: poster28_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -427,9 +515,11 @@
   description: "All the colors of the bloody murder rainbow."
   components:
   - type: Sprite
-    state: poster29_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandEnergySwords
+    layers:
+    - state: poster29_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -438,9 +528,11 @@
   description: "Looking at this poster makes you want to kill."
   components:
   - type: Sprite
-    state: poster30_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandRedRum
+    layers:
+    - state: poster30_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -449,9 +541,11 @@
   description: "The latest portable computer from Comrade Computing, with a whole 64kB of ram!"
   components:
   - type: Sprite
-    state: poster31_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandCC64KAd
+    layers:
+    - state: poster31_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -460,9 +554,11 @@
   description: "Fight things for no reason, like a man!"
   components:
   - type: Sprite
-    state: poster32_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandPunchShit
+    layers:
+    - state: poster32_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -471,9 +567,11 @@
   description: "The Griffin commands you to be the worst you can be. Will you?"
   components:
   - type: Sprite
-    state: poster33_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandTheGriffin
+    layers:
+    - state: poster33_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -482,9 +580,11 @@
   description: "This poster commemorates the bravery of the rogue drone; once exiled, and then ultimately destroyed by CentComm."
   components:
   - type: Sprite
-    state: poster35_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandFreeDrone
+    layers:
+    - state: poster35_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -493,9 +593,11 @@
   description: "Get a load, or give, of these all natural Exos!"
   components:
   - type: Sprite
-    state: poster36_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandBustyBackdoorExoBabes6
+    layers:
+    - state: poster36_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -504,10 +606,11 @@
   description: "Robust Softdrinks: More robust than a toolbox to the head!"
   components:
   - type: Sprite
-    state: poster37_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandRobustSoftdrinks
-
+    layers:
+    - state: poster37_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 - type: entity
   parent: PosterBase
   id: PosterContrabandShamblersJuice
@@ -515,9 +618,11 @@
   description: "~Shake me up some of that Shambler's Juice!~"
   components:
   - type: Sprite
-    state: poster38_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandShamblersJuice
+    layers:
+    - state: poster38_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -526,9 +631,11 @@
   description: "The POWER that gamers CRAVE! In partnership with Vlad's Salad."
   components:
   - type: Sprite
-    state: poster39_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandPwrGame
+    layers:
+    - state: poster39_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -537,9 +644,11 @@
   description: "Drink the stars!"
   components:
   - type: Sprite
-    state: poster40_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandSunkist
+    layers:
+    - state: poster40_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 
 - type: entity
@@ -549,9 +658,11 @@
   description: "Your favorite cola, in space."
   components:
   - type: Sprite
-    state: poster41_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandSpaceCola
+    layers:
+    - state: poster41_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -560,9 +671,11 @@
   description: "Sucked out into space by the FLAVOR!"
   components:
   - type: Sprite
-    state: poster42_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandSpaceUp
+    layers:
+    - state: poster42_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -571,9 +684,11 @@
   description: "A poster advertising a movie about plants. How dangerous could they possibly be?"
   components:
   - type: Sprite
-    state: poster43_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandKudzu
+    layers:
+    - state: poster43_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -582,9 +697,11 @@
   description: "A poster advertising a movie about some masked men."
   components:
   - type: Sprite
-    state: poster44_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandMaskedMen
+    layers:
+    - state: poster44_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -593,9 +710,11 @@
   description: "A poster announcing something by someone, oddly enough they seem to have forgotten making it readable."
   components:
   - type: Sprite
-    state: poster45_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandUnreadableAnnouncement
+    layers:
+    - state: poster45_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -604,9 +723,11 @@
   description: "A poster about traitors begging for more."
   components:
   - type: Sprite
-    state: poster46_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandFreeSyndicateEncryptionKey
+    layers:
+    - state: poster46_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -615,9 +736,11 @@
   description: "A poster advertising bounty hunting services. \"I hear you got a problem.\""
   components:
   - type: Sprite
-    state: poster47_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandBountyHunters
+    layers:
+    - state: poster47_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -626,9 +749,11 @@
   description: "Don't believe everything you see on a poster, patriots. All the lizards at central command don't want to answer this SIMPLE QUESTION: WHERE IS THE GAS MINER MINING FROM, CENTCOMM?"
   components:
   - type: Sprite
-    state: poster48_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandTheBigGasTruth
+    layers:
+    - state: poster48_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -637,9 +762,11 @@
   description: "A poster depicting a loveable green lizard."
   components:
   - type: Sprite
-    state: poster50_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandWehWatches
+    layers:
+    - state: poster50_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -648,9 +775,11 @@
   description: "A stylish, sleek, and well illustrated poster for a \"Weh\"nderful new progressive candidate coming this election season."
   components:
   - type: Sprite
-    state: poster51_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandVoteWeh
+    layers:
+    - state: poster51_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 # These 3 originally from VEEGEE
 - type: entity
@@ -660,9 +789,11 @@
   description: "A wall scroll depicting an old swimming anime with girls in small swim suits. You feel more weebish the longer you look at it."
   components:
   - type: Sprite
-    state: poster52_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandBeachStarYamamoto
+    layers:
+    - state: poster52_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -671,9 +802,11 @@
   description: "There are 3 shards and a singularity.  The shards are singing.  The engineers are crying."
   components:
   - type: Sprite
-    state: poster53_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandHighEffectEngineering
+    layers:
+    - state: poster53_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -682,9 +815,11 @@
   description: "This poster depicts an image of an old style nuclear explosive device, as well as some helpful information on what to do if one has been set. It suggests lying on the floor and crying."
   components:
   - type: Sprite
-    state: poster54_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandNuclearDeviceInformational
+    layers:
+    - state: poster54_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -693,9 +828,11 @@
   description: "A poster depicting a grey shirted man holding a crowbar with the word Rise written below it."
   components:
   - type: Sprite
-    state: poster55_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandRise
+    layers:
+    - state: poster55_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -704,9 +841,11 @@
   description: "Revolutionist propaganda, manufactured by the Syndicate."
   components:
   - type: Sprite
-    state: poster56_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandRevolt
+    layers:
+    - state: poster56_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -715,9 +854,11 @@
   description: "A Syndicate-commissioned poster that uses Syndie Moth™ to tell the viewer to keep the nuclear authentication disk unsecured. \"Peace was never an option!\" No good employee would listen to this nonsense."
   components:
   - type: Sprite
-    state: poster57_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandMoth
+    layers:
+    - state: poster57_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -726,9 +867,11 @@
   description: "An artistic poster commemorating 600 years of continual business for Cybersun Industries."
   components:
   - type: Sprite
-    state: poster58_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandCybersun600
+    layers:
+    - state: poster58_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -737,9 +880,11 @@
   description: "DONK CO. BRAND MICROWAVABLE FOOD: MADE BY STARVING COLLEGE STUDENTS, FOR STARVING COLLEGE STUDENTS."
   components:
   - type: Sprite
-    state: poster59_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandDonk
+    layers:
+    - state: poster59_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -748,9 +893,11 @@
   description: "Enlist with the Gorlex Marauders today! See the galaxy, kill corpos, get paid!"
   components:
   - type: Sprite
-    state: poster60_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandEnlistGorle
+    layers:
+    - state: poster60_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -759,9 +906,11 @@
   description: "An advertisement for Interdyne Pharmaceutics' GeneClean clinics. 'Become the master of your own body!'"
   components:
   - type: Sprite
-    state: poster61_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandInterdyne
+    layers:
+    - state: poster61_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -770,9 +919,11 @@
   description: "An old advertisement for Waffle Corp rifles. 'Better weapons, lower prices!'"
   components:
   - type: Sprite
-    tate: poster62_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandWaffleCorp
+    layers:
+    - state: poster62_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -781,9 +932,11 @@
   description: "This poster depicts something you will never find."
   components:
   - type: Sprite
-    state: poster63_contraband
-  - type: Poster
-    foldedPrototype: FoldedPosterContrabandMissingSpacepen
+    layers:
+    - state: poster63_contraband
+      map: [ "unfoldedLayer" ]
+    - state: rolled_contraband
+      map: [ "foldedLayer" ]
 
 # Legit
 - type: entity
@@ -793,9 +946,11 @@
   description: "A poster glorifying the station's security force."
   components:
   - type: Sprite
-    state: poster1_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitHereForYourSafety
+    layers:
+    - state: poster1_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -804,9 +959,11 @@
   description: "A poster depicting the Nanotrasen logo."
   components:
   - type: Sprite
-    state: poster2_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitNanotrasenLogo
+    layers:
+    - state: poster2_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -815,9 +972,11 @@
   description: "A poster warning of the dangers of poor hygiene."
   components:
   - type: Sprite
-    state: poster3_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitCleanliness
+    layers:
+    - state: poster3_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -826,9 +985,11 @@
   description: "A poster encouraging you to help fellow crewmembers."
   components:
   - type: Sprite
-    state: poster4_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitHelpOthers
+    layers:
+    - state: poster4_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -837,9 +998,11 @@
   description: "A poster glorifying the engineering team."
   components:
   - type: Sprite
-    state: poster5_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitBuild
+    layers:
+    - state: poster5_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -848,9 +1011,11 @@
   description: "A poster blessing this area."
   components:
   - type: Sprite
-    state: poster6_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitBlessThisSpess
+    layers:
+    - state: poster6_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -859,9 +1024,11 @@
   description: "A poster depicting an atom."
   components:
   - type: Sprite
-    state: poster7_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitScience
+    layers:
+    - state: poster7_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -870,9 +1037,11 @@
   description: "Arf arf. Yap."
   components:
   - type: Sprite
-    state: poster8_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitIan
+    layers:
+    - state: poster8_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -881,9 +1050,11 @@
   description: "A poster instructing the viewer to obey authority."
   components:
   - type: Sprite
-    state: poster9_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitObey
+    layers:
+    - state: poster9_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -892,9 +1063,11 @@
   description: "A poster instructing the viewer to walk instead of running."
   components:
   - type: Sprite
-    state: poster10_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitWalk
+    layers:
+    - state: poster10_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -903,9 +1076,11 @@
   description: "A poster instructing cyborgs to state their laws."
   components:
   - type: Sprite
-    state: poster11_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitStateLaws
+    layers:
+    - state: poster11_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -914,9 +1089,11 @@
   description: "Ian is love, Ian is life."
   components:
   - type: Sprite
-    state: poster12_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitLoveIan
+    layers:
+    - state: poster12_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -925,9 +1102,11 @@
   description: "A poster advertising the television show Space Cops."
   components:
   - type: Sprite
-    state: poster13_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitSpaceCops
+    layers:
+    - state: poster13_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -936,9 +1115,11 @@
   description: "This thing is all in Japanese."
   components:
   - type: Sprite
-    state: poster14_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitUeNo
+    layers:
+    - state: poster14_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -947,9 +1128,11 @@
   description: "LEGS: Leadership, Experience, Genius, Subordination."
   components:
   - type: Sprite
-    state: poster15_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitGetYourLEGS
+    layers:
+    - state: poster15_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -958,9 +1141,11 @@
   description: "A poster instructing the viewer not to ask about things they aren't meant to know."
   components:
   - type: Sprite
-    state: poster16_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitDoNotQuestion
+    layers:
+    - state: poster16_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -969,9 +1154,11 @@
   description: " A poster encouraging you to work for your future."
   components:
   - type: Sprite
-    state: poster17_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitWorkForAFuture
+    layers:
+    - state: poster17_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -980,9 +1167,11 @@
   description: "A poster reprint of some cheap pop art."
   components:
   - type: Sprite
-    state: poster18_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitSoftCapPopArt
+    layers:
+    - state: poster18_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -991,9 +1180,11 @@
   description: "A poster instructing the viewer to wear internals in the rare environments where there is no oxygen or the air has been rendered toxic."
   components:
   - type: Sprite
-    state: poster19_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitSafetyInternals
+    layers:
+    - state: poster19_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1002,9 +1193,11 @@
   description: "A poster instructing the viewer to wear eye protection when dealing with chemicals, smoke, or bright lights."
   components:
   - type: Sprite
-    state: poster20_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitSafetyEyeProtection
+    layers:
+    - state: poster20_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1013,9 +1206,11 @@
   description: "A poster instructing the viewer to report suspicious activity to the security force."
   components:
   - type: Sprite
-    state: poster21_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitSafetyReport
+    layers:
+    - state: poster21_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1024,9 +1219,11 @@
   description: "A poster encouraging the swift reporting of crime or seditious behavior to station security."
   components:
   - type: Sprite
-    state: poster22_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitReportCrimes
+    layers:
+    - state: poster22_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1035,9 +1232,11 @@
   description: "A poster displaying an Ion Rifle."
   components:
   - type: Sprite
-    state: poster23_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitIonRifle
+    layers:
+    - state: poster23_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1046,9 +1245,11 @@
   description: "Foam Force, it's Foam or be Foamed!"
   components:
   - type: Sprite
-    state: poster24_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitFoamForceAd
+    layers:
+    - state: poster24_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1057,9 +1258,11 @@
   description: "Cohiba Robusto, the classy cigar."
   components:
   - type: Sprite
-    state: poster25_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitCohibaRobustoAd
+    layers:
+    - state: poster25_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1068,9 +1271,11 @@
   description: "A reprint of a poster from 2505, commemorating the 50th Anniversary of Nanoposters Manufacturing, a subsidiary of Nanotrasen."
   components:
   - type: Sprite
-    state: poster26_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegit50thAnniversaryVintageReprint
+    layers:
+    - state: poster26_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1079,9 +1284,11 @@
   description: " Simple, yet awe-inspiring."
   components:
   - type: Sprite
-    state: poster27_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitFruitBowl
+    layers:
+    - state: poster27_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1090,9 +1297,11 @@
   description: "A poster advertising the latest PDA from Nanotrasen suppliers."
   components:
   - type: Sprite
-    state: poster28_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitPDAAd
+    layers:
+    - state: poster28_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1101,9 +1310,11 @@
   description: "Enlist in the Nanotrasen Deathsquadron reserves today!"
   components:
   - type: Sprite
-    state: poster29_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitEnlist
+    layers:
+    - state: poster29_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1112,9 +1323,11 @@
   description: " A poster advertising Nanomichi brand audio cassettes."
   components:
   - type: Sprite
-    state: poster30_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitNanomichiAd
+    layers:
+    - state: poster30_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1123,9 +1336,11 @@
   description: "A poster boasting about the superiority of 12 gauge shotgun shells."
   components:
   - type: Sprite
-    state: poster31_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegit12Gauge
+    layers:
+    - state: poster31_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1134,9 +1349,11 @@
   description: "I told you to shake it, no stirring."
   components:
   - type: Sprite
-    state: poster32_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitHighClassMartini
+    layers:
+    - state: poster32_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1145,9 +1362,11 @@
   description: "The Owl would do his best to protect the station. Will you?"
   components:
   - type: Sprite
-    state: poster33_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitTheOwl
+    layers:
+    - state: poster33_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1156,9 +1375,11 @@
   description: "This poster reminds the crew that Eroticism and Pornography are banned on Nanotrasen stations."
   components:
   - type: Sprite
-    state: poster34_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitNoERP
+    layers:
+    - state: poster34_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1167,9 +1388,11 @@
   description: "This informational poster teaches the viewer what carbon dioxide is."
   components:
   - type: Sprite
-    state: poster35_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitCarbonDioxide
+    layers:
+    - state: poster35_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1178,9 +1401,11 @@
   description: "A poster advertising the escapades of Dick Gumshue, mouse detective. Encouraging crew to bring the might of justice down upon wire saboteurs."
   components:
   - type: Sprite
-    state: poster36_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitDickGumshue
+    layers:
+    - state: poster36_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1189,9 +1414,11 @@
   description: "Nanotrasen has issued posters, like this one, to all stations reminding them that rumours of a gas giant are false."
   components:
   - type: Sprite
-    state: poster37_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitThereIsNoGasGiant
+    layers:
+    - state: poster37_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1200,9 +1427,11 @@
   description: A poster advertising a long delayed project, it still claims it to be 'just a week away...'
   components:
   - type: Sprite
-    state: poster38_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitJustAWeekAway
+    layers:
+    - state: poster38_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1211,9 +1440,11 @@
   description: "A poster reminding you that security is watching your every move."
   components:
   - type: Sprite
-    state: poster39_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitSecWatch
+    layers:
+    - state: poster39_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1222,9 +1453,11 @@
   description: "A poster showing the bits and bobs that makes you... you!"
   components:
   - type: Sprite
-    state: poster40_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitAnatomyPoster
+    layers:
+    - state: poster40_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1233,9 +1466,11 @@
   description: "A postmodern depiction of a mime, superb!"
   components:
   - type: Sprite
-    state: poster41_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitMime
+    layers:
+    - state: poster41_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
     
 - type: entity
   parent: PosterBase
@@ -1244,9 +1479,11 @@
   description: "Carpe diem!"
   components:
   - type: Sprite
-    state: poster42_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitCarpMount
+    layers:
+    - state: poster42_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1255,9 +1492,11 @@
   description: "This informational poster uses Safety Moth™ to tell the viewer to hide in lockers when the Supermatter Crystal has delaminated, to prevent hallucinations. Evacuating might be a better strategy."
   components:
   - type: Sprite
-    state: poster43_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitSafetyMothDelam
+    layers:
+    - state: poster43_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1266,9 +1505,11 @@
   description: "This informational poster uses Safety Moth™ to inform the viewer to help injured/deceased crewmen with their epinephrine injectors. \"Prevent organ rot with this one simple trick!\""
   components:
   - type: Sprite
-    state: poster44_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitSafetyMothEpi
+    layers:
+    - state: poster44_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1277,9 +1518,11 @@
   description: "This informational poster uses Safety Moth™ to tell the viewer to wear hardhats in cautious areas. \"It's like a lamp for your head!\""
   components:
   - type: Sprite
-    state: poster45_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitSafetyMothHardhat
+    layers:
+    - state: poster45_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1288,9 +1531,11 @@
   description: "This informational poster uses Safety Moth™ to tell the viewer to seek CMO approval before cooking methamphetamine. \"Stay close to the target temperature, and never go over!\" ...You shouldn't ever be making this."
   components:
   - type: Sprite
-    state: poster46_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitSafetyMothMeth
+    layers:
+    - state: poster46_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1299,9 +1544,11 @@
   description: "This informational poster uses Safety Moth™ to tell atmospheric technicians correct types of piping to be used. \"Pipes, not Pumps! Proper pipe placement prevents poor performance!\""
   components:
   - type: Sprite
-    state: poster47_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitSafetyMothPiping
+    layers:
+    - state: poster47_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1310,9 +1557,11 @@
   description: "This informational poster provides information on some of the prizes available via the NT Corporate Perks program, including a two-week vacation for two on the resort world Idyllus."
   components:
   - type: Sprite
-    state: poster48_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitVacation
+    layers:
+    - state: poster48_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1321,9 +1570,11 @@
   description: "A periodic table of the elements, from Hydrogen to Oganesson, and everything inbetween."
   components:
   - type: Sprite  
-    state: poster49_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitPeriodicTable
+    layers:
+    - state: poster49_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1332,9 +1583,11 @@
   description: "Yap."
   components:
   - type: Sprite
-    state: poster50_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitRenault
+    layers:
+    - state: poster50_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 - type: entity
   parent: PosterBase
@@ -1343,9 +1596,11 @@
   description: "An advertisement for Nanotrasen's TCG cards: BUY MORE CARDS."
   components:
   - type: Sprite
-    state: poster51_legit
-  - type: Poster
-    foldedPrototype: FoldedPosterLegitNTTGC
+    layers:
+    - state: poster51_legit
+      map: [ "unfoldedLayer" ]
+    - state: rolled_legit
+      map: [ "foldedLayer" ]
 
 #maps
 
@@ -1447,3 +1702,900 @@
   components:
   - type: Sprite
     state: originmap
+
+# Folded posters
+- type: entity
+  parent: PosterLegitHereForYourSafety
+  id: FoldedPosterLegitHereForYourSafety
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitNanotrasenLogo
+  id: FoldedPosterLegitNanotrasenLogo
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitCleanliness
+  id: FoldedPosterLegitCleanliness
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitHelpOthers
+  id: FoldedPosterLegitHelpOthers
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitBuild
+  id: FoldedPosterLegitBuild
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitBlessThisSpess
+  id: FoldedPosterLegitBlessThisSpess
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitScience
+  id: FoldedPosterLegitScience
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitIan
+  id: FoldedPosterLegitIan
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitObey
+  id: FoldedPosterLegitObey
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitWalk
+  id: FoldedPosterLegitWalk
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitStateLaws
+  id: FoldedPosterLegitStateLaws
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitLoveIan
+  id: FoldedPosterLegitLoveIan
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitSpaceCops
+  id: FoldedPosterLegitSpaceCops
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitUeNo
+  id: FoldedPosterLegitUeNo
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitGetYourLEGS
+  id: FoldedPosterLegitGetYourLEGS
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitDoNotQuestion
+  id: FoldedPosterLegitDoNotQuestion
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitWorkForAFuture
+  id: FoldedPosterLegitWorkForAFuture
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitSoftCapPopArt
+  id: FoldedPosterLegitSoftCapPopArt
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitSafetyInternals
+  id: FoldedPosterLegitSafetyInternals
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitSafetyEyeProtection
+  id: FoldedPosterLegitSafetyEyeProtection
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitSafetyReport
+  id: FoldedPosterLegitSafetyReport
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitReportCrimes
+  id: FoldedPosterLegitReportCrimes
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitIonRifle
+  id: FoldedPosterLegitIonRifle
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitFoamForceAd
+  id: FoldedPosterLegitFoamForceAd
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitCohibaRobustoAd
+  id: FoldedPosterLegitCohibaRobustoAd
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegit50thAnniversaryVintageReprint
+  id: FoldedPosterLegit50thAnniversaryVintageReprint
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitFruitBowl
+  id: FoldedPosterLegitFruitBowl
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitPDAAd
+  id: FoldedPosterLegitPDAAd
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitEnlist
+  id: FoldedPosterLegitEnlist
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitNanomichiAd
+  id: FoldedPosterLegitNanomichiAd
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegit12Gauge
+  id: FoldedPosterLegit12Gauge
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitHighClassMartini
+  id: FoldedPosterLegitHighClassMartini
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitTheOwl
+  id: FoldedPosterLegitTheOwl
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitNoERP
+  id: FoldedPosterLegitNoERP
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitCarbonDioxide
+  id: FoldedPosterLegitCarbonDioxide
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitDickGumshue
+  id: FoldedPosterLegitDickGumshue
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitThereIsNoGasGiant
+  id: FoldedPosterLegitThereIsNoGasGiant
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitJustAWeekAway
+  id: FoldedPosterLegitJustAWeekAway
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitSecWatch
+  id: FoldedPosterLegitSecWatch
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitAnatomyPoster
+  id: FoldedPosterLegitAnatomyPoster
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitMime
+  id: FoldedPosterLegitMime
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitCarpMount
+  id: FoldedPosterLegitCarpMount
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitSafetyMothDelam
+  id: FoldedPosterLegitSafetyMothDelam
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitSafetyMothEpi
+  id: FoldedPosterLegitSafetyMothEpi
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitSafetyMothHardhat
+  id: FoldedPosterLegitSafetyMothHardhat
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitSafetyMothMeth
+  id: FoldedPosterLegitSafetyMothMeth
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitSafetyMothPiping
+  id: FoldedPosterLegitSafetyMothPiping
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitVacation
+  id: FoldedPosterLegitVacation
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitPeriodicTable
+  id: FoldedPosterLegitPeriodicTable
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitRenault
+  id: FoldedPosterLegitRenault
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterLegitNTTGC
+  id: FoldedPosterLegitNTTGC
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandFreeTonto
+  id: FoldedPosterContrabandFreeTonto
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandAtmosiaDeclarationIndependence
+  id: FoldedPosterContrabandAtmosiaDeclarationIndependence
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandFunPolice
+  id: FoldedPosterContrabandFunPolice
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandLustyExomorph
+  id: FoldedPosterContrabandLustyExomorph
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandClown
+  id: FoldedPosterContrabandClown
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandSmoke
+  id: FoldedPosterContrabandSmoke
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandGreyTide
+  id: FoldedPosterContrabandGreyTide
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandMissingGloves
+  id: FoldedPosterContrabandMissingGloves
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandHackingGuide
+  id: FoldedPosterContrabandHackingGuide
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandRIPBadger
+  id: FoldedPosterContrabandRIPBadger
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandAmbrosiaVulgaris
+  id: FoldedPosterContrabandAmbrosiaVulgaris
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandDonutCorp
+  id: FoldedPosterContrabandDonutCorp
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandEAT
+  id: FoldedPosterContrabandEAT
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandTools
+  id: FoldedPosterContrabandTools
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandPower
+  id: FoldedPosterContrabandPower
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandSpaceCube
+  id: FoldedPosterContrabandSpaceCube
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandCommunistState
+  id: FoldedPosterContrabandCommunistState
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandLamarr
+  id: FoldedPosterContrabandLamarr
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandBorgFancy
+  id: FoldedPosterContrabandBorgFancy
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandBorgFancyv2
+  id: FoldedPosterContrabandBorgFancyv2
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandKosmicheskayaStantsiya
+  id: FoldedPosterContrabandKosmicheskayaStantsiya
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandRebelsUnite
+  id: FoldedPosterContrabandRebelsUnite
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandC20r
+  id: FoldedPosterContrabandC20r
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandHaveaPuff
+  id: FoldedPosterContrabandHaveaPuff
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandRevolver
+  id: FoldedPosterContrabandRevolver
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandDDayPromo
+  id: FoldedPosterContrabandDDayPromo
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandSyndicatePistol
+  id: FoldedPosterContrabandSyndicatePistol
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandSyndicateRecruitment
+  id: FoldedPosterContrabandSyndicateRecruitment
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandEnergySwords
+  id: FoldedPosterContrabandEnergySwords
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandRedRum
+  id: FoldedPosterContrabandRedRum
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandCC64KAd
+  id: FoldedPosterContrabandCC64KAd
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandPunchShit
+  id: FoldedPosterContrabandPunchShit
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandTheGriffin
+  id: FoldedPosterContrabandTheGriffin
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandFreeDrone
+  id: FoldedPosterContrabandFreeDrone
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandBustyBackdoorExoBabes6
+  id: FoldedPosterContrabandBustyBackdoorExoBabes6
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandRobustSoftdrinks
+  id: FoldedPosterContrabandRobustSoftdrinks
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandShamblersJuice
+  id: FoldedPosterContrabandShamblersJuice
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandPwrGame
+  id: FoldedPosterContrabandPwrGame
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandSunkist
+  id: FoldedPosterContrabandSunkist
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandSpaceCola
+  id: FoldedPosterContrabandSpaceCola
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandSpaceUp
+  id: FoldedPosterContrabandSpaceUp
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandKudzu
+  id: FoldedPosterContrabandKudzu
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandMaskedMen
+  id: FoldedPosterContrabandMaskedMen
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandUnreadableAnnouncement
+  id: FoldedPosterContrabandUnreadableAnnouncement
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandFreeSyndicateEncryptionKey
+  id: FoldedPosterContrabandFreeSyndicateEncryptionKey
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandBountyHunters
+  id: FoldedPosterContrabandBountyHunters
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandTheBigGasTruth
+  id: FoldedPosterContrabandTheBigGasTruth
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandWehWatches
+  id: FoldedPosterContrabandWehWatches
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandVoteWeh
+  id: FoldedPosterContrabandVoteWeh
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandBeachStarYamamoto
+  id: FoldedPosterContrabandBeachStarYamamoto
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandHighEffectEngineering
+  id: FoldedPosterContrabandHighEffectEngineering
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandNuclearDeviceInformational
+  id: FoldedPosterContrabandNuclearDeviceInformational
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandRise
+  id: FoldedPosterContrabandRise
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandRevolt
+  id: FoldedPosterContrabandRevolt
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandMoth
+  id: FoldedPosterContrabandMoth
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandCybersun600
+  id: FoldedPosterContrabandCybersun600
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandDonk
+  id: FoldedPosterContrabandDonk
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandEnlistGorlex
+  id: FoldedPosterContrabandEnlistGorlex
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandInterdyne
+  id: FoldedPosterContrabandInterdyne
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandWaffleCorp
+  id: FoldedPosterContrabandWaffleCorp
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true
+
+- type: entity
+  parent: PosterContrabandMissingSpacepen
+  id: FoldedPosterContrabandMissingSpacepen
+  suffix: Folded
+  components:
+  - type: Foldable
+    isFolded: true

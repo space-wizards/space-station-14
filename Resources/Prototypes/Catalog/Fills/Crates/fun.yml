@@ -382,290 +382,228 @@
   name: posters crate
   description: Crate filled with ten posters with almost legal content.
   components:
-  - type: StorageFill
-    contents:
-      - id: FoldedPosterLegitHereForYourSafety
-        orGroup: PosterGroup1
-      - id: FoldedPosterLegitNanotrasenLogo
-        orGroup: PosterGroup1
-      - id: FoldedPosterLegitCleanliness
-        orGroup: PosterGroup1
-      - id: FoldedPosterLegitHelpOthers
-        orGroup: PosterGroup1
-      - id: FoldedPosterLegitBuild
-        orGroup: PosterGroup1
-      - id: FoldedPosterContrabandFreeTonto
-        prob: 0.1
-        orGroup: PosterGroup1
-      - id: FoldedPosterContrabandAtmosiaDeclarationIndependence
-        prob: 0.1
-        orGroup: PosterGroup1
-      - id: FoldedPosterContrabandFunPolice
-        prob: 0.1
-        orGroup: PosterGroup1
-      - id: FoldedPosterContrabandLustyExomorph
-        prob: 0.1
-        orGroup: PosterGroup1
-      - id: FoldedPosterContrabandClown
-        prob: 0.1
-        orGroup: PosterGroup1
-      - id: FoldedPosterContrabandSmoke
-        prob: 0.1
-        orGroup: PosterGroup1
-      - id: FoldedPosterLegitBlessThisSpess
-        orGroup: PosterGroup2
-      - id: FoldedPosterLegitScience
-        orGroup: PosterGroup2
-      - id: FoldedPosterLegitIan
-        orGroup: PosterGroup2
-      - id: FoldedPosterLegitObey
-        orGroup: PosterGroup2
-      - id: FoldedPosterLegitWalk
-        orGroup: PosterGroup2
-      - id: FoldedPosterContrabandGreyTide
-        prob: 0.1
-        orGroup: PosterGroup2
-      - id: FoldedPosterContrabandMissingGloves
-        prob: 0.1
-        orGroup: PosterGroup2
-      - id: FoldedPosterContrabandHackingGuide
-        prob: 0.1
-        orGroup: PosterGroup2
-      - id: FoldedPosterContrabandRIPBadger
-        prob: 0.1
-        orGroup: PosterGroup2
-      - id: FoldedPosterContrabandAmbrosiaVulgaris
-        prob: 0.1
-        orGroup: PosterGroup2
-      - id: FoldedPosterContrabandDonutCorp
-        prob: 0.1
-        orGroup: PosterGroup2
-      - id: FoldedPosterLegitStateLaws
-        orGroup: PosterGroup3
-      - id: FoldedPosterLegitLoveIan
-        orGroup: PosterGroup3
-      - id: FoldedPosterLegitSpaceCops
-        orGroup: PosterGroup3
-      - id: FoldedPosterLegitUeNo
-        orGroup: PosterGroup3
-      - id: FoldedPosterLegitGetYourLEGS
-        orGroup: PosterGroup3
-      - id: FoldedPosterContrabandEAT
-        prob: 0.1
-        orGroup: PosterGroup3
-      - id: FoldedPosterContrabandTools
-        prob: 0.1
-        orGroup: PosterGroup3
-      - id: FoldedPosterContrabandPower
-        prob: 0.1
-        orGroup: PosterGroup3
-      - id: FoldedPosterContrabandSpaceCube
-        prob: 0.1
-        orGroup: PosterGroup3
-      - id: FoldedPosterContrabandCommunistState
-        prob: 0.1
-        orGroup: PosterGroup3
-      - id: FoldedPosterContrabandLamarr
-        prob: 0.1
-        orGroup: PosterGroup3
-      - id: FoldedPosterLegitDoNotQuestion
-        orGroup: PosterGroup4
-      - id: FoldedPosterLegitWorkForAFuture
-        orGroup: PosterGroup4
-      - id: FoldedPosterLegitSoftCapPopArt
-        orGroup: PosterGroup4
-      - id: FoldedPosterLegitSafetyInternals
-        orGroup: PosterGroup4
-      - id: FoldedPosterLegitSafetyEyeProtection
-        orGroup: PosterGroup4
-      - id: FoldedPosterContrabandBorgFancy
-        prob: 0.1
-        orGroup: PosterGroup4
-      - id: FoldedPosterContrabandBorgFancyv2
-        prob: 0.1
-        orGroup: PosterGroup4
-      - id: FoldedPosterContrabandKosmicheskayaStantsiya
-        prob: 0.1
-        orGroup: PosterGroup4
-      - id: FoldedPosterContrabandRebelsUnite
-        prob: 0.1
-        orGroup: PosterGroup4
-      - id: FoldedPosterContrabandC20r
-        prob: 0.1
-        orGroup: PosterGroup4
-      - id: FoldedPosterContrabandHaveaPuff
-        prob: 0.1
-        orGroup: PosterGroup4
-      - id: FoldedPosterLegitSafetyReport
-        orGroup: PosterGroup5
-      - id: FoldedPosterLegitReportCrimes
-        orGroup: PosterGroup5
-      - id: FoldedPosterLegitIonRifle
-        orGroup: PosterGroup5
-      - id: FoldedPosterLegitFoamForceAd
-        orGroup: PosterGroup5
-      - id: FoldedPosterLegitCohibaRobustoAd
-        orGroup: PosterGroup5
-      - id: FoldedPosterContrabandRevolver
-        prob: 0.1
-        orGroup: PosterGroup5
-      - id: FoldedPosterContrabandDDayPromo
-        prob: 0.1
-        orGroup: PosterGroup5
-      - id: FoldedPosterContrabandSyndicatePistol
-        prob: 0.1
-        orGroup: PosterGroup5
-      - id: FoldedPosterContrabandSyndicateRecruitment
-        prob: 0.1
-        orGroup: PosterGroup5
-      - id: FoldedPosterContrabandEnergySwords
-        prob: 0.1
-        orGroup: PosterGroup5
-      - id: FoldedPosterContrabandRedRum
-        prob: 0.1
-        orGroup: PosterGroup5
-      - id: FoldedPosterLegit50thAnniversaryVintageReprint
-        orGroup: PosterGroup6
-      - id: FoldedPosterLegitFruitBowl
-        orGroup: PosterGroup6
-      - id: FoldedPosterLegitPDAAd
-        orGroup: PosterGroup6
-      - id: FoldedPosterLegitEnlist
-        orGroup: PosterGroup6
-      - id: FoldedPosterLegitNanomichiAd
-        orGroup: PosterGroup6
-      - id: FoldedPosterContrabandCC64KAd
-        prob: 0.1
-        orGroup: PosterGroup6
-      - id: FoldedPosterContrabandPunchShit
-        prob: 0.1
-        orGroup: PosterGroup6
-      - id: FoldedPosterContrabandTheGriffin
-        prob: 0.1
-        orGroup: PosterGroup6
-      - id: FoldedPosterContrabandFreeDrone
-        prob: 0.1
-        orGroup: PosterGroup6
-      - id: FoldedPosterContrabandBustyBackdoorExoBabes6
-        prob: 0.1
-        orGroup: PosterGroup6
-      - id: FoldedPosterContrabandRobustSoftdrinks
-        prob: 0.1
-        orGroup: PosterGroup6
-      - id: FoldedPosterLegit12Gauge
-        orGroup: PosterGroup7
-      - id: FoldedPosterLegitHighClassMartini
-        orGroup: PosterGroup7
-      - id: FoldedPosterLegitTheOwl
-        orGroup: PosterGroup7
-      - id: FoldedPosterLegitNoERP
-        orGroup: PosterGroup7
-      - id: FoldedPosterLegitCarbonDioxide
-        orGroup: PosterGroup7
-      - id: FoldedPosterContrabandShamblersJuice
-        prob: 0.1
-        orGroup: PosterGroup7
-      - id: FoldedPosterContrabandPwrGame
-        prob: 0.1
-        orGroup: PosterGroup7
-      - id: FoldedPosterContrabandSunkist
-        prob: 0.1
-        orGroup: PosterGroup7
-      - id: FoldedPosterContrabandSpaceCola
-        prob: 0.1
-        orGroup: PosterGroup7
-      - id: FoldedPosterContrabandSpaceUp
-        prob: 0.1
-        orGroup: PosterGroup7
-      - id: FoldedPosterContrabandKudzu
-        prob: 0.1
-        orGroup: PosterGroup7
-      - id: FoldedPosterLegitDickGumshue
-        orGroup: PosterGroup8
-      - id: FoldedPosterLegitThereIsNoGasGiant
-        orGroup: PosterGroup8
-      - id: FoldedPosterLegitJustAWeekAway
-        orGroup: PosterGroup8
-      - id: FoldedPosterLegitSecWatch
-        orGroup: PosterGroup8
-      - id: FoldedPosterLegitAnatomyPoster
-        orGroup: PosterGroup8
-      - id: FoldedPosterContrabandMaskedMen
-        prob: 0.1
-        orGroup: PosterGroup8
-      - id: FoldedPosterContrabandUnreadableAnnouncement
-        prob: 0.1
-        orGroup: PosterGroup8
-      - id: FoldedPosterContrabandFreeSyndicateEncryptionKey
-        prob: 0.1
-        orGroup: PosterGroup8
-      - id: FoldedPosterContrabandBountyHunters
-        prob: 0.1
-        orGroup: PosterGroup8
-      - id: FoldedPosterContrabandTheBigGasTruth
-        prob: 0.1
-        orGroup: PosterGroup8
-      - id: FoldedPosterContrabandWehWatches
-        prob: 0.1
-        orGroup: PosterGroup8
-      - id: FoldedPosterLegitMime
-        orGroup: PosterGroup9
-      - id: FoldedPosterLegitCarpMount
-        orGroup: PosterGroup9
-      - id: FoldedPosterLegitSafetyMothDelam
-        orGroup: PosterGroup9
-      - id: FoldedPosterLegitSafetyMothEpi
-        orGroup: PosterGroup9
-      - id: FoldedPosterLegitSafetyMothHardhat
-        orGroup: PosterGroup9
-      - id: FoldedPosterContrabandVoteWeh
-        prob: 0.1
-        orGroup: PosterGroup9
-      - id: FoldedPosterContrabandBeachStarYamamoto
-        prob: 0.1
-        orGroup: PosterGroup9
-      - id: FoldedPosterContrabandHighEffectEngineering
-        prob: 0.1
-        orGroup: PosterGroup9
-      - id: FoldedPosterContrabandNuclearDeviceInformational
-        prob: 0.1
-        orGroup: PosterGroup9
-      - id: FoldedPosterContrabandRise
-        prob: 0.1
-        orGroup: PosterGroup9
-      - id: FoldedPosterContrabandRevolt
-        prob: 0.1
-        orGroup: PosterGroup9
-      - id: FoldedPosterLegitSafetyMothMeth
-        orGroup: PosterGroup10
-      - id: FoldedPosterLegitSafetyMothPiping
-        orGroup: PosterGroup10
-      - id: FoldedPosterLegitVacation
-        orGroup: PosterGroup10
-      - id: FoldedPosterLegitPeriodicTable
-        orGroup: PosterGroup10
-      - id: FoldedPosterLegitRenault
-        orGroup: PosterGroup10
-      - id: FoldedPosterLegitNTTGC
-        orGroup: PosterGroup10
-      - id: FoldedPosterContrabandMoth
-        prob: 0.1
-        orGroup: PosterGroup10
-      - id: FoldedPosterContrabandCybersun600
-        prob: 0.1
-        orGroup: PosterGroup10
-      - id: FoldedPosterContrabandDonk
-        prob: 0.1
-        orGroup: PosterGroup10
-      - id: FoldedPosterContrabandEnlistGorlex
-        prob: 0.1
-        orGroup: PosterGroup10
-      - id: FoldedPosterContrabandInterdyne
-        prob: 0.1
-        orGroup: PosterGroup10
-      - id: FoldedPosterContrabandWaffleCorp
-        prob: 0.1
-        orGroup: PosterGroup10      
-      - id: FoldedPosterContrabandMissingSpacepen
-        prob: 0.1
-        orGroup: PosterGroup10
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: PostersEntityTable
+        rolls: !type:ConstantNumberSelector
+          value: 10
+
+- type: entityTable
+  id: PostersEntityTable
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 10
+      children:
+      - !type:EntSelector
+        id: FoldedPosterContrabandAmbrosiaVulgaris
+      - !type:EntSelector
+        id: FoldedPosterContrabandAtmosiaDeclarationIndependence
+      - !type:EntSelector
+        id: FoldedPosterContrabandBeachStarYamamoto
+      - !type:EntSelector
+        id: FoldedPosterContrabandBorgFancy
+      - !type:EntSelector
+        id: FoldedPosterContrabandBorgFancyv2
+      - !type:EntSelector
+        id: FoldedPosterContrabandBountyHunters
+      - !type:EntSelector      
+        id: FoldedPosterContrabandBustyBackdoorExoBabes6
+      - !type:EntSelector
+        id: FoldedPosterContrabandC20r
+      - !type:EntSelector
+        id: FoldedPosterContrabandCC64KAd
+      - !type:EntSelector
+        id: FoldedPosterContrabandClown
+      - !type:EntSelector
+        id: FoldedPosterContrabandCommunistState
+      - !type:EntSelector
+        id: FoldedPosterContrabandCybersun600
+      - !type:EntSelector
+        id: FoldedPosterContrabandDDayPromo
+      - !type:EntSelector
+        id: FoldedPosterContrabandDonk
+      - !type:EntSelector
+        id: FoldedPosterContrabandDonutCorp
+      - !type:EntSelector
+        id: FoldedPosterContrabandEAT
+      - !type:EntSelector
+        id: FoldedPosterContrabandEnergySwords
+      - !type:EntSelector
+        id: FoldedPosterContrabandEnlistGorlex
+      - !type:EntSelector
+        id: FoldedPosterContrabandFreeDrone
+      - !type:EntSelector
+        id: FoldedPosterContrabandFreeSyndicateEncryptionKey
+      - !type:EntSelector
+        id: FoldedPosterContrabandFreeTonto
+      - !type:EntSelector
+        id: FoldedPosterContrabandFunPolice
+      - !type:EntSelector
+        id: FoldedPosterContrabandGreyTide
+      - !type:EntSelector
+        id: FoldedPosterContrabandHackingGuide
+      - !type:EntSelector
+        id: FoldedPosterContrabandHaveaPuff
+      - !type:EntSelector
+        id: FoldedPosterContrabandHighEffectEngineering
+      - !type:EntSelector
+        id: FoldedPosterContrabandInterdyne
+      - !type:EntSelector
+        id: FoldedPosterContrabandKosmicheskayaStantsiya
+      - !type:EntSelector
+        id: FoldedPosterContrabandKudzu
+      - !type:EntSelector
+        id: FoldedPosterContrabandLamarr
+      - !type:EntSelector
+        id: FoldedPosterContrabandLustyExomorph
+      - !type:EntSelector
+        id: FoldedPosterContrabandMaskedMen
+      - !type:EntSelector
+        id: FoldedPosterContrabandMissingGloves
+      - !type:EntSelector
+        id: FoldedPosterContrabandMissingSpacepen
+      - !type:EntSelector
+        id: FoldedPosterContrabandMoth
+      - !type:EntSelector
+        id: FoldedPosterContrabandNuclearDeviceInformational
+      - !type:EntSelector
+        id: FoldedPosterContrabandPower
+      - !type:EntSelector
+        id: FoldedPosterContrabandPunchShit
+      - !type:EntSelector
+        id: FoldedPosterContrabandPwrGame
+      - !type:EntSelector
+        id: FoldedPosterContrabandRebelsUnite
+      - !type:EntSelector
+        id: FoldedPosterContrabandRedRum
+      - !type:EntSelector
+        id: FoldedPosterContrabandRevolt
+      - !type:EntSelector
+        id: FoldedPosterContrabandRevolver
+      - !type:EntSelector
+        id: FoldedPosterContrabandRIPBadger
+      - !type:EntSelector
+        id: FoldedPosterContrabandRise
+      - !type:EntSelector
+        id: FoldedPosterContrabandRobustSoftdrinks
+      - !type:EntSelector
+        id: FoldedPosterContrabandShamblersJuice
+      - !type:EntSelector
+        id: FoldedPosterContrabandSmoke
+      - !type:EntSelector
+        id: FoldedPosterContrabandSpaceCola
+      - !type:EntSelector
+        id: FoldedPosterContrabandSpaceCube
+      - !type:EntSelector
+        id: FoldedPosterContrabandSpaceUp
+      - !type:EntSelector
+        id: FoldedPosterContrabandSunkist
+      - !type:EntSelector
+        id: FoldedPosterContrabandSyndicatePistol
+      - !type:EntSelector
+        id: FoldedPosterContrabandSyndicateRecruitment
+      - !type:EntSelector
+        id: FoldedPosterContrabandTheBigGasTruth
+      - !type:EntSelector
+        id: FoldedPosterContrabandTheGriffin
+      - !type:EntSelector
+        id: FoldedPosterContrabandTools
+      - !type:EntSelector
+        id: FoldedPosterContrabandUnreadableAnnouncement
+      - !type:EntSelector
+        id: FoldedPosterContrabandVoteWeh
+      - !type:EntSelector
+        id: FoldedPosterContrabandWaffleCorp
+      - !type:EntSelector
+        id: FoldedPosterContrabandWehWatches
+    - !type:GroupSelector
+      weight: 90
+      children:
+      - !type:EntSelector
+        id: FoldedPosterLegit12Gauge
+      - !type:EntSelector
+        id: FoldedPosterLegit50thAnniversaryVintageReprint
+      - !type:EntSelector
+        id: FoldedPosterLegitBlessThisSpess
+      - !type:EntSelector
+        id: FoldedPosterLegitBuild
+      - !type:EntSelector
+        id: FoldedPosterLegitCarbonDioxide
+      - !type:EntSelector
+        id: FoldedPosterLegitCleanliness
+      - !type:EntSelector
+        id: FoldedPosterLegitCohibaRobustoAd
+      - !type:EntSelector
+        id: FoldedPosterLegitDickGumshue
+      - !type:EntSelector
+        id: FoldedPosterLegitDoNotQuestion
+      - !type:EntSelector
+        id: FoldedPosterLegitEnlist
+      - !type:EntSelector
+        id: FoldedPosterLegitFoamForceAd
+      - !type:EntSelector
+        id: FoldedPosterLegitFruitBowl
+      - !type:EntSelector
+        id: FoldedPosterLegitGetYourLEGS
+      - !type:EntSelector
+        id: FoldedPosterLegitHelpOthers
+      - !type:EntSelector
+        id: FoldedPosterLegitHereForYourSafety
+      - !type:EntSelector
+        id: FoldedPosterLegitHighClassMartini
+      - !type:EntSelector
+        id: FoldedPosterLegitIan
+      - !type:EntSelector
+        id: FoldedPosterLegitIonRifle
+      - !type:EntSelector
+        id: FoldedPosterLegitJustAWeekAway
+      - !type:EntSelector
+        id: FoldedPosterLegitLoveIan
+      - !type:EntSelector
+        id: FoldedPosterLegitNanomichiAd
+      - !type:EntSelector
+        id: FoldedPosterLegitNanotrasenLogo
+      - !type:EntSelector
+        id: FoldedPosterLegitNoERP
+      - !type:EntSelector
+        id: FoldedPosterLegitNTTGC
+      - !type:EntSelector
+        id: FoldedPosterLegitObey
+      - !type:EntSelector
+        id: FoldedPosterLegitPDAAd
+      - !type:EntSelector
+        id: FoldedPosterLegitPeriodicTable
+      - !type:EntSelector
+        id: FoldedPosterLegitRenault
+      - !type:EntSelector
+        id: FoldedPosterLegitReportCrimes
+      - !type:EntSelector
+        id: FoldedPosterLegitSafetyEyeProtection
+      - !type:EntSelector
+        id: FoldedPosterLegitSafetyInternals
+      - !type:EntSelector
+        id: FoldedPosterLegitSafetyReport
+      - !type:EntSelector
+        id: FoldedPosterLegitScience
+      - !type:EntSelector
+        id: FoldedPosterLegitSecWatch
+      - !type:EntSelector
+        id: FoldedPosterLegitSoftCapPopArt
+      - !type:EntSelector
+        id: FoldedPosterLegitSpaceCops
+      - !type:EntSelector
+        id: FoldedPosterLegitStateLaws
+      - !type:EntSelector
+        id: FoldedPosterLegitTheOwl
+      - !type:EntSelector
+        id: FoldedPosterLegitThereIsNoGasGiant
+      - !type:EntSelector
+        id: FoldedPosterLegitUeNo
+      - !type:EntSelector
+        id: FoldedPosterLegitVacation
+      - !type:EntSelector
+        id: FoldedPosterLegitWalk
+      - !type:EntSelector
+        id: FoldedPosterLegitWorkForAFuture

@@ -9,7 +9,6 @@
     noRot: true
     drawdepth: Effects
     sprite: /Textures/Structures/Wallmounts/posters.rsi
-    state: poster_being_set
   - type: Tag
     tags:
     - HideContextMenu

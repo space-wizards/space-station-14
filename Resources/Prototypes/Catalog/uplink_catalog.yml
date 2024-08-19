@@ -1530,7 +1530,7 @@
   icon: { sprite: Structures/Wallmounts/posters.rsi, state: poster5_contraband }
   productEntity: ClothingBackpackDuffelSyndicatePropagandaKitFilled
   cost:
-    Telecrystal: 4
+    Telecrystal: 3
   categories:
     - UplinkPointless
 

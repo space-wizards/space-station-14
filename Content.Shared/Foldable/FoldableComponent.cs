@@ -1,4 +1,6 @@
+using Content.Shared.Physics;
 using Robust.Shared.GameStates;
+using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Shared.Foldable;
 
@@ -14,6 +16,10 @@ public sealed partial class FoldableComponent : Component
 {
     [DataField, AutoNetworkedField]
     public bool IsFolded = false;
+
+    // Responsible for disabling collision when item is unfolded
+    [DataField, AutoNetworkedField]
+    public bool FoldedDisableCollision = false;
 
     [DataField]
     public bool CanFoldInsideContainer = false;
