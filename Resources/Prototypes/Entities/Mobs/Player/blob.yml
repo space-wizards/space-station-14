@@ -9,7 +9,7 @@
   components:
   - type: Sprite
     sprite: Mobs/Blob/blob.rsi
-    drawdepth: SmallMobs
+    drawdepth: OverMobs
   - type: Appearance
   - type: Transform
     anchored: true
@@ -131,9 +131,6 @@
   - type: Sprite
     layers:
     - state: blob
-      color: "#9ACD32"
-    - state: blob_glow
-      color: "#9ACD32"
   - type: BlobUpgradeable
     upgradeEntity: BlobStructureStrong
   - type: Tag
@@ -146,8 +143,7 @@
   components:
   - type: Sprite
     layers:
-    - state: blob_shield
-      color: "#9ACD32"
+    - state: blob_idle
   - type: Tag
     tags: [ BlobAllowReplace ]
 
@@ -160,10 +156,6 @@
   - type: Sprite
     layers:
     - state: blob_core
-      color: "#9ACD32"
-    - state: blob_core_glow
-      color: "#9ACD32"
-    - state: blob_core_overlay
   - type: BlobCore
   - type: BlobNode
     pulseRange: 4
@@ -176,9 +168,6 @@
   - type: Sprite
     layers:
     - state: blob_resource
-      color: "#9ACD32"
-    - state: blob_resource_glow
-      color: "#9ACD32"
   - type: BlobResource
 
 - type: entity
@@ -190,10 +179,6 @@
   - type: Sprite
     layers:
     - state: blob_node
-      color: "#9ACD32"
-    - state: blob_node_glow
-      color: "#9ACD32"
-    - state: blob_node_overlay
   - type: BlobNode
     pulseRange: 3
 
@@ -204,8 +189,5 @@
   components:
   - type: Sprite
     layers:
-    - state: blob_factory
-      color: "#9ACD32"
-    - state: blob_factory_glow
-      color: "#9ACD32"
+    - state: blob_factory_2
   - type: BlobFactory
