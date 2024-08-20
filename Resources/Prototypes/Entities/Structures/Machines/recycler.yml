@@ -56,32 +56,12 @@
     layers:
     - state: grinder-o0
       map: ["enum.RecyclerVisualLayers.Main"]
-    - state: grinder-o0bld
-      map: ["enum.RecyclerVisualLayers.Bloody"]
-      visible: false
   - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.RecyclerVisuals.Bloody:
-        enum.RecyclerVisualLayers.Main:
-          True: { visible: false }
-          False: { visible: true }
-        enum.RecyclerVisualLayers.Bloody:
-          True: { visible: true }
-          False: { visible: false }
-      enum.ConveyorVisuals.State:
-        enum.RecyclerVisualLayers.Main:
-          Forward: { state: grinder-o1 }
-          Reverse: { state: grinder-o1 }
-          Off: { state: grinder-o0 }
-        enum.RecyclerVisualLayers.Bloody:
-          Forward: { state: grinder-o1bld }
-          Reverse: { state: grinder-o1bld }
-          Off: { state: grinder-o0bld }
+  - type: RecyclerVisuals
+
   - type: CollideMaterialReclaimer
   - type: MaterialReclaimer
     enabled: false
-    efficiency: 0.25
     scaleProcessSpeed: false #instant!
     minimumProcessDuration: 0
     whitelist:
@@ -104,13 +84,23 @@
       params:
         volume: -3
     cutOffSound: false
-  - type: SolutionContainerManager
-    solutions:
-      output:
-        maxVol: 0 #exists only for the overflow stuff on material reclaimer
   - type: MaterialStorage
   - type: Conveyor
   - type: Rotatable
+  - type: Repairable
+    doAfterDelay: 5
+    fuelCost: 25
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: InteractionPopup
     successChance: 1.0
     interactSuccessString: petting-success-recycler
