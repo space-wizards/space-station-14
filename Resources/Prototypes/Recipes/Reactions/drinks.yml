@@ -984,6 +984,16 @@
     SyndicateBomb: 2
 
 - type: reaction
+  id: Tea
+  reactants:
+    TeaPowder:
+      amount: 1
+    Water:
+      amount: 5
+  products:
+    Tea: 6
+
+- type: reaction
   id: TequilaSunrise
   reactants:
     JuiceOrange:
