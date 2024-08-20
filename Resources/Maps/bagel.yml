@@ -95798,8 +95798,6 @@ entities:
       pos: -52.5,13.5
       parent: 60
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 11464
     - type: AtmosPipeColor
@@ -95819,8 +95817,6 @@ entities:
       pos: -46.5,13.5
       parent: 60
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 11464
     - type: AtmosPipeColor
@@ -97242,8 +97238,6 @@ entities:
       pos: -47.5,12.5
       parent: 60
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 11464
     - type: AtmosPipeColor
@@ -97262,8 +97256,6 @@ entities:
       pos: -51.5,12.5
       parent: 60
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 11464
     - type: AtmosPipeColor
