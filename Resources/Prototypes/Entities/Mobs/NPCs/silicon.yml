@@ -286,6 +286,8 @@
   - type: Construction
     graph: MediBot
     node: bot
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-mechanical
   - type: Anchorable
   - type: InteractionPopup
     interactSuccessString: petting-success-medibot
@@ -303,7 +305,7 @@
   - StripableInventoryBase
   id: MobMimeBot
   name: mimebot
-  description: Why not give mimebot a friendly wave.
+  description: Why not give the mimebot a friendly wave?
   components:
   - type: Sprite
     layers:
