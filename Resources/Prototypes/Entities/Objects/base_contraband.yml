@@ -61,6 +61,14 @@
     allowedDepartments: [ Security, Science, Command ]
 
 - type: entity
+  id: BaseSecurityEngineeringContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Security, Engineering ]
+
+- type: entity
   id: BaseEngineeringContraband
   parent: BaseRestrictedContraband
   abstract: true
