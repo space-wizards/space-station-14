@@ -1088,7 +1088,7 @@
   id: bluepumpkin
   flavorType: Complex
   description: flavor-complex-blue-pumpkin
-  
+
 - type: flavor
   id: violets
   flavorType: Complex
@@ -1128,3 +1128,8 @@
   id: apple-martini-crystal-lite
   flavorType: Complex
   description: flavor-complex-apple-martini-crystal-lite
+
+- type: flavor
+  id: horsepussy
+  flavorType: Complex
+  description: flavor-complex-horsepussy

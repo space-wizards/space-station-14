@@ -1203,29 +1203,15 @@
     UAP: 6
 
 - type: reaction
-  id: TheeHorsepussy
+  id: TheHorsepussy
   requiredMixerCategories:
     - Stir
   reactants:
-    Martini:
-      amount: 1
-    JuiceApple:
-      amount: 1
-    Desoxyephedrine:
-      amount: 1
-  products:
-    TheeHorsepussy: 3
-  sound:
-    path: /Audio/Animals/spooky_horse.ogg
-
-- type: reaction
-  id: TheHorsepussy
-  requiredMixerCategories:
-    - Shake
-  reactants:
-    Apple Martini Crystal Lite:
+    AppleMartiniCrystalLite:
       amount: 2
     Methadone:
       amount: 1
   products:
     TheHorsepussy: 3
+  sound:
+    path: /Audio/Animals/spooky_horse.ogg

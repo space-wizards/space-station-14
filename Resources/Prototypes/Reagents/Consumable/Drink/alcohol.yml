@@ -2018,43 +2018,6 @@
           probability: 0.1
 
 - type: reagent
-  id: TheeHorsepussy
-  name: reagent-name-theehorsepussy
-  parent: BaseAlcohol
-  desc: reagent-desc-theehorsepussy
-  physicalDesc: reagent-physical-desc-volatile
-  flavor: apple
-  color: "#72d585"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/thee_horsepussy.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 4
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
-      - !type:AdjustReagent
-        reagent: Ethanol
-        amount: 0.15
-    Medicine:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Blunt: 100
-        conditions:
-        - !type:ReagentThreshold
-          min: 25
-        - !type:MobStateCondition
-          mobstate: Alive
-
-# this version is lore-accurate, but still uses the lovely sprite made by starlighthowls
-# well, containing alcohol is lore-innacurate. but it feels in the spirit.
-# also there is now a slim chance that you'll be fine if you drink it which feels funnier to me.
-- type: reagent
   id: TheHorsepussy
   name: reagent-name-thehorsepussy
   parent: BaseAlcohol
@@ -2082,13 +2045,13 @@
     Medicine:
       effects:
       - !type:HealthChange
-        probability: 0.9
+        probability: 0.99
         damage:
           types:
             Blunt: 100
         conditions:
         - !type:ReagentThreshold
-          min: 25
+          min: 20
         - !type:MobStateCondition
           mobstate: Alive
 

@@ -44,7 +44,7 @@
         - PillCanisterDexalin
         - HandheldHealthAnalyzer
         - ClothingHandsGlovesLatex
-        - MethadoneChemistryBottle # added methadone as a rare spawn
+        - MethadoneChemistryBottle
       rareChance: 0.1
       prototypes:
         - Syringe

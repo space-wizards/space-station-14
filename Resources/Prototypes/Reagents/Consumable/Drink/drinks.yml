@@ -587,11 +587,11 @@
         factor: 0.6
 
 - type: reagent
-  id: Apple Martini Crystal Lite
+  id: AppleMartiniCrystalLite
   name: reagent-name-apple-martini-crystal-lite
   parent: BaseDrink
   desc: reagent-desc-apple-martini-crystal-lite
-  physticalDesc: reagent-physical-desc-appletini
+  physicalDesc: reagent-physical-desc-appletini
   flavor: apple-martini-crystal-lite
   color: "#CAD655"
   metamorphicSprite:

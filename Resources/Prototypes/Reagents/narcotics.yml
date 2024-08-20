@@ -504,7 +504,7 @@
         refresh: false
 
 - type: reagent
-  id: Opioid
+  id: Methadone
   name: reagent-name-methadone
   group: Narcotic
   desc: reagent-desc-methadone
