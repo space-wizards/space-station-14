@@ -510,7 +510,7 @@
     flavors:
       - banana
   - type: Food
-    trash: 
+    trash:
     - TrashBananiumPeel
   - type: BadFood
   - type: SolutionContainerManager
@@ -601,6 +601,83 @@
 
 - type: entity
   parent: MaterialBase
+  id: MaterialToothSpaceCarp
+  name: space carp tooth
+  description: Pretty small but plenty nasty. You like them best when they're not sinking into you.
+  suffix: Full
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/Mob/carptooth.rsi
+    layers:
+    - state: tooth
+      map: [ "base" ]
+  - type: Item
+    sprite: Objects/Materials/Mob/carptooth.rsi
+    size: Normal
+  - type: Appearance
+  - type: Stack
+    stackType: SpaceCarpTooth
+    count: 30
+    baseLayer: base
+    layerStates:
+    - tooth
+    - tooth_2
+    - tooth_3
+  - type: StackPrice
+    price: 50
+  - type: Tag
+    tags:
+    - ToothSpaceCarp
+
+- type: entity
+  parent: MaterialToothSpaceCarp
+  id: MaterialToothSpaceCarp1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: [ MaterialBase, BaseKnife ]
+  id: MaterialToothSharkminnow
+  name: sharkminnow tooth
+  description: Looks sharp. Sharp enough to poke someone's eye out. Holy fuck it's big.
+  suffix: Full
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/Mob/sharktooth.rsi
+    layers:
+    - state: tooth
+      map: [ "base" ]
+  - type: Item
+    sprite: Objects/Materials/Mob/sharktooth.rsi
+    size: Normal
+  - type: Appearance
+  - type: Stack
+    stackType: SharkMinnowTooth
+    count: 30
+    baseLayer: base
+    layerStates:
+    - tooth
+    - tooth_2
+    - tooth_3
+  - type: StackPrice
+    price: 150
+  - type: Tag
+    tags:
+    - Knife
+    - ToothSharkminnow
+
+- type: entity
+  parent: MaterialToothSharkminnow
+  id: MaterialToothSharkminnow1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
   id: MaterialBones
   name: bones
   suffix: Full
@@ -654,3 +731,40 @@
       Gunpowder: 100
   - type: Item
     size: Tiny
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialGoliathHide
+  name: goliath hide plates
+  description: Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna.
+  suffix: Full
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/hide.rsi
+    layers:
+    - state: goliath_hide
+      map: [ "base" ]
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 1500
+  - type: Appearance
+  - type: Stack
+    stackType: GoliathHide
+    baseLayer: base
+    layerStates:
+    - goliath_hide
+    - goliath_hide_2
+    - goliath_hide_3
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,2
+
+- type: entity
+  parent: MaterialGoliathHide
+  id: MaterialGoliathHide1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
