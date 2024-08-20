@@ -1,47 +1,4 @@
 ﻿Entries:
-- author: AJCM-git
-  changes:
-  - message: Midround antags work again
-    type: Fix
-  id: 6665
-  time: '2024-06-02T16:52:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28523
-- author: Errant-4
-  changes:
-  - message: Map labels no longer suddenly disappear for the rest of the round.
-    type: Fix
-  id: 6666
-  time: '2024-06-02T17:30:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28518
-- author: Whisper
-  changes:
-  - message: Renamed the player-obtainable "admin cloak" to "weh cloak".
-    type: Tweak
-  id: 6667
-  time: '2024-06-03T02:18:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28540
-- author: Vermidia
-  changes:
-  - message: Glass shards are no longer weldable with an unlit welder.
-    type: Fix
-  id: 6668
-  time: '2024-06-03T03:28:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27959
-- author: AJCM-git
-  changes:
-  - message: Biomass reclaimers no longer act as a void to any unfortunate belongings
-      a corpse may be wearing
-    type: Tweak
-  id: 6669
-  time: '2024-06-03T03:30:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28544
-- author: Laneron
-  changes:
-  - message: Jetpack UI window now has correctly displayed header
-    type: Fix
-  id: 6670
-  time: '2024-06-03T03:33:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28545
 - author: Vermidia
   changes:
   - message: SyndiCats now spawn from a radio like other reinforcements.
@@ -3857,3 +3814,51 @@
   id: 7164
   time: '2024-08-19T17:51:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30998
+- author: themias
+  changes:
+  - message: Lizards can now eat meat dumplings.
+    type: Fix
+  id: 7165
+  time: '2024-08-19T18:17:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31212
+- author: slarticodefast
+  changes:
+  - message: Made the straitjacked non-printable again.
+    type: Remove
+  id: 7166
+  time: '2024-08-19T18:47:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31197
+- author: themias
+  changes:
+  - message: Added the Combat Bakery Kit to the syndicate uplink. Includes a deadly
+      edible baguette sword and throwing star croissants for 3 TC.
+    type: Add
+  - message: Baguettes can be worn on the belt and normal ones do one blunt damage.
+    type: Tweak
+  - message: Mimes have a baguette instead of an MRE in their survival kits.
+    type: Tweak
+  id: 7167
+  time: '2024-08-19T18:57:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31179
+- author: metalgearsloth
+  changes:
+  - message: Fix wire sounds not playing.
+    type: Fix
+  id: 7168
+  time: '2024-08-19T19:50:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31067
+- author: redmushie
+  changes:
+  - message: Communications console buttons now have descriptive tooltips
+    type: Add
+  id: 7169
+  time: '2024-08-19T20:36:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31217
+- author: Mephisto72
+  changes:
+  - message: The Detective can now access Externals and Cryogenics like their Officer
+      counterpart.
+    type: Tweak
+  id: 7170
+  time: '2024-08-19T23:44:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30203
