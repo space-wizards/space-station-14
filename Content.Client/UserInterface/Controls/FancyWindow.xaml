@@ -13,7 +13,10 @@
 
                 <Control Name="WindowControls" />
 
-                <controls:CloseButton Name="CloseButton" />
+                <TextureButton
+                    Name="CloseButton"
+                    StyleClasses="windowCloseButton"
+                    VerticalAlignment="Center" />
             </BoxContainer>
         </Control>
         <PanelContainer StyleClasses="LowDivider" />
