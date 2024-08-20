@@ -745,7 +745,7 @@
     fireModes:
     - proto: BulletLaserSpread
       fireCost: 150
-    - proto: BulletLaserHeavySpread
+    - proto: BulletLaserSpreadNarrow
       fireCost: 150
     - proto: BulletDisablerSmgSpread
       fireCost: 150
