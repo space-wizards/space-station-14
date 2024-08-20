@@ -11,7 +11,7 @@
                 <Label Name="WindowTitle"
                        HorizontalExpand="True" VAlign="Center" StyleClasses="FancyWindowTitle" />
 
-                <Control Name="WindowControls" />
+                <controls:HelpButton Name="HelpButton" Access="Public" />
 
                 <TextureButton
                     Name="CloseButton"
