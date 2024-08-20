@@ -20,7 +20,6 @@ public partial class MobStateSystem : EntitySystem
     private ISawmill _sawmill = default!;
 
     private EntityQuery<MobStateComponent> _mobStateQuery;
-    private EntityQueryEnumerator<MobStateComponent> _mobStateQueryEnumerator;
 
     public override void Initialize()
     {
@@ -28,18 +27,8 @@ public partial class MobStateSystem : EntitySystem
         _mobStateQuery = GetEntityQuery<MobStateComponent>();
         base.Initialize();
         SubscribeEvents();
-
-        SubscribeLocalEvent<MobStateComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnMapInit(EntityUid mob, MobStateComponent comp, MapInitEvent args)
-    {
-        // tells other components that the mobstate is what it be now it do
-        var curstate = comp.CurrentState;
-        var ev = new MobStateChangedEvent(mob, comp, curstate, curstate);
-        RaiseLocalEvent(mob, ev, true);
-
-    }
     #region Public API
 
     /// <summary>
