@@ -1,14 +1,15 @@
 - type: entity
   save: false
-  name: Glornar Bibpo
+  name: Urist McGray
   parent: BaseMobSpeciesOrganic
   id: BaseMobGray
   abstract: true
   components:
+  - type: Absorbable
   - type: Hunger
   - type: Thirst
   - type: Icon
-    sprite: Mobs/Species/Gray/parts.rsi # It was like this beforehand, no idea why.
+    sprite: Mobs/Species/Gray/parts.rsi
     state: full
   - type: Respirator
     damage:

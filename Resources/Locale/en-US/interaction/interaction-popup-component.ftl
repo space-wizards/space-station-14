@@ -8,6 +8,7 @@ petting-success-soft-floofy = You pet {THE($target)} on {POSS-ADJ($target)} soft
 petting-success-bingus = You pet {THE($target)} on {POSS-ADJ($target)} wrinkly little head.
 petting-success-bird = You pet {THE($target)} on {POSS-ADJ($target)} cute feathery head.
 petting-success-carp = You pet {THE($target)} on {POSS-ADJ($target)} fishy little head.
+petting-success-nicecarp = You pet {THE($target)} on {POSS-ADJ($target)} friendly wet head.
 petting-success-cat = You pet {THE($target)} on {POSS-ADJ($target)} fuzzy little head.
 petting-success-corrupted-corgi = In an act of hubris, you pet {THE($target)} on {POSS-ADJ($target)} cursed little head.
 petting-success-crab = You pet {THE($target)} on {POSS-ADJ($target)} smooth little head.
@@ -34,6 +35,7 @@ petting-success-slimes = You pet {THE($target)} on {POSS-ADJ($target)} mucous su
 petting-success-snake = You pet {THE($target)} on {POSS-ADJ($target)} scaly large head.
 petting-success-monkey = You pet {THE($target)} on {POSS-ADJ($target)} mischevious little head.
 petting-success-nymph = You pet {THE($target)} on {POSS-ADJ($target)} wooden little head.
+petting-success-tomato = You reach out to pet {THE($target)}, but it jumps up and kisses your hand first.
 
 petting-failure-generic = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} aloof towards you.
 
@@ -56,6 +58,7 @@ petting-failure-bear = You reach out to pet {THE($target)}, but {SUBJECT($target
 petting-failure-monkey = You reach out to pet {THE($target)}, but {SUBJECT($target)} almost {CONJUGATE-BASIC($target, "bite", "bites")} your fingers!
 petting-failure-nymph = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BASIC($target, "move", "moves")} {POSS-ADJ($target)} branches away.
 petting-failure-shadow = You try to pet {THE($target)}, but your hand passes through the cold darkness of {POSS-ADJ($target)} body.
+petting-failure-tomato = You try to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} gets so excited it rolls away.
 
 ## Petting silicons
 

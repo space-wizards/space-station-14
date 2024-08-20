@@ -76,7 +76,7 @@
 
 - type: entity
   name: Poppy Spawner
-  id: SpawnMobPoppyMorty
+  id: SpawnMobPoppy
   parent: MarkerBase
   components:
   - type: Sprite
@@ -85,7 +85,20 @@
       - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobPossumMortyOld
+      - MobPossumPoppy
+
+- type: entity
+  name: Goji Spawner
+  id: SpawnMobGoji
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobGoji
 
 - type: entity
   name: Raccoon Morticia Spawner
@@ -910,3 +923,59 @@
   - type: ConditionalSpawner
     prototypes:
     - MobHonkBot
+
+- type: entity
+  name: Space Bear Major Spawner
+  id: SpawnMobBearMajor
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: major
+      sprite: Mobs/Animals/major.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobBearSpaceMajor
+
+- type: entity
+  name: Laser Raptor Spawner
+  id: SpawnMobLaserRaptor
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: laser_raptor
+      sprite: Mobs/Aliens/laser_raptor.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobLaserRaptor
+
+- type: entity
+  name: Kisser Tomato Spawner
+  id: SpawnMobKisserTomato
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: alive
+      sprite: Mobs/Demons/tomatokisser.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobTomatoKisser
+
+- type: entity
+  name: Laser-less Laser Raptor Spawner
+  id: SpawnMobRaptor
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: raptor
+      sprite: Mobs/Aliens/laser-less_laser_raptor.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobRaptor

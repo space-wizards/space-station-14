@@ -12,6 +12,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Content.Server.Announcements.Systems;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -21,6 +22,7 @@ public sealed class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmComponent>
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly AnnouncerSystem _announcer = default!;
 
     protected override void Added(EntityUid uid, MeteorSwarmComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
@@ -28,9 +30,21 @@ public sealed class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmComponent>
 
         component.WaveCounter = component.Waves.Next(RobustRandom);
 
-        if (component.Announcement is { } locId)
-            _chat.DispatchGlobalAnnouncement(Loc.GetString(locId), playSound: false, colorOverride: Color.Gold);
-        _audio.PlayGlobal(component.AnnouncementSound, Filter.Broadcast(), true);
+        // we don't want to send to players who aren't in game (i.e. in the lobby)
+        Filter allPlayersInGame = Filter.Empty().AddWhere(GameTicker.UserHasJoinedGame);
+
+        if (!TryComp<MeteorSwarmComponent>(uid, out var meteorSwarm))
+            return;
+
+        if (meteorSwarm.StartAnnouncement)
+        {
+            _announcer.SendAnnouncement(
+                _announcer.GetAnnouncementId("MeteorSwarm"),
+                Filter.Broadcast(),
+                _announcer.GetEventLocaleString(_announcer.GetAnnouncementId(args.RuleId)),
+                colorOverride: Color.Gold
+            );
+        }
     }
 
     protected override void ActiveTick(EntityUid uid, MeteorSwarmComponent component, GameRuleComponent gameRule, float frameTime)

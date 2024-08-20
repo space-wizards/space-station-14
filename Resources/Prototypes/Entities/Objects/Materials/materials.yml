@@ -441,10 +441,6 @@
     layers:
     - state: diamond
       map: ["base"]
-  - type: StaticPrice
-    price: 0
-  - type: StackPrice
-    price: 500
   - type: Appearance
   - type: Item
     heldPrefix: diamond
@@ -456,6 +452,10 @@
         reagents:
         - ReagentId: Carbon
           Quantity: 20
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Diamond: 100
 
 - type: entity
   parent: MaterialDiamond
@@ -643,7 +643,8 @@
     flavors:
       - banana
   - type: Food
-    trash: TrashBananiumPeel
+    trash:
+    - TrashBananiumPeel
   - type: BadFood
   - type: SolutionContainerManager
     solutions:
@@ -786,3 +787,40 @@
       Gunpowder: 100
   - type: Item
     size: Tiny
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialGoliathHide
+  name: goliath hide plates
+  description: Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna.
+  suffix: Full
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/hide.rsi
+    layers:
+    - state: goliath_hide
+      map: [ "base" ]
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 1500
+  - type: Appearance
+  - type: Stack
+    stackType: GoliathHide
+    baseLayer: base
+    layerStates:
+    - goliath_hide
+    - goliath_hide_2
+    - goliath_hide_3
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,2
+
+- type: entity
+  parent: MaterialGoliathHide
+  id: MaterialGoliathHide1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1

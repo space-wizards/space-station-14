@@ -220,7 +220,7 @@
   id: NocturineChemistryBottle
   name: nocturine bottle
   description: This will make someone fall down almost immediately. Hard to overdose on.
-  parent: BaseChemistryBottleFilled
+  parent: [BaseChemistryBottleFilled, BaseSyndicateContraband]
   components:
   - type: SolutionContainerManager
     solutions:
@@ -320,3 +320,16 @@
           reagents:
             - ReagentId: Toxin
               Quantity: 30
+
+# added methadone as a bottle so it can spawn for use
+  id: MethadoneChemistryBottle
+  name: methadone bottle
+  parent: BaseChemistryBottleFilled
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 100
+          reagents:
+            - ReagentId: Methadone
+              Quantity: 100

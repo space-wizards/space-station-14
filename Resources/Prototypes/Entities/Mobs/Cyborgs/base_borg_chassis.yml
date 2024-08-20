@@ -230,6 +230,10 @@
     - Cyborgs
     - Robotics
   - type: StepTriggerImmune
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
 
 - type: entity
   abstract: true

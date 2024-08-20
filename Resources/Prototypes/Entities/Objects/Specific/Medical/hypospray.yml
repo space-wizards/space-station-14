@@ -1,6 +1,6 @@
 - type: entity
   name: hypospray
-  parent: BaseItem
+  parent: [BaseItem, BaseGrandTheftContraband]
   description: A sterile injector for rapid administration of drugs to patients.
   id: Hypospray
   components:
@@ -319,7 +319,7 @@
 
 - type: entity
   name: hyperzine injector
-  parent: ChemicalMedipen
+  parent: [ChemicalMedipen, BaseSyndicateContraband]
   id: Stimpack
   description: Contains enough hyperzine for you to have the chemical's effect for 30 seconds. Use it when you're sure you're ready to throw down.
   components:
@@ -351,7 +351,7 @@
 
 - type: entity
   name: hyperzine microinjector
-  parent: ChemicalMedipen
+  parent: [ChemicalMedipen, BaseSyndicateContraband]
   id: StimpackMini
   description: A microinjector of hyperzine that give you about fifteen seconds of the chemical's effects.
   components:
@@ -378,7 +378,7 @@
 
 - type: entity
   name: combat medipen
-  parent: ChemicalMedipen
+  parent: [ChemicalMedipen, BaseSyndicateContraband]
   id: CombatMedipen
   description: A single-use medipen containing chemicals that regenerate most types of damage.
   components:
@@ -436,7 +436,7 @@
     handle: false # don't want the sound to stop the self-inject from triggering
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseSyndicateContraband ]
   id: HypopenBox
   name: hypopen box
   description: A small box containing a hypopen. Packaging disintegrates when opened, leaving no evidence behind.

@@ -1,0 +1,110 @@
+﻿# non-stealth syndicate stuff
+- type: entity
+  id: BaseSyndicateContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Syndicate
+    # no one should be carrying this around visibly!
+    allowedDepartments: null
+
+# minor contraband not departmentally restricted -- improvised weapons etc
+- type: entity
+  id: BaseMinorContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Minor
+    # according to space law no dept is authorized to have
+    allowedDepartments: null
+
+# major contraband, for things like guns or weaponry that don't belong to any department and aren't syndicate specific
+- type: entity
+  id: BaseMajorContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Major
+    allowedDepartments: null
+
+# minor contraband by default restricted to security only
+- type: entity
+  id: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Restricted
+
+# departmentally restricted contraband -- this covers every configuration currently listed in space law
+- type: entity
+  id: BaseCommandContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Command ]
+
+- type: entity
+  id: BaseSecurityCommandContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Security, Command ]
+
+- type: entity
+  id: BaseSecurityScienceCommandContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Security, Science, Command ]
+
+- type: entity
+  id: BaseSecurityEngineeringContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Security, Engineering ]
+
+- type: entity
+  id: BaseEngineeringContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Engineering ]
+
+- type: entity
+  id: BaseScienceContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Science ]
+
+- type: entity
+  id: BaseSecurityCargoContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Security, Cargo ]
+
+- type: entity
+  id: BaseCargoContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Cargo ]
+
+# for ~objective items
+- type: entity
+  id: BaseGrandTheftContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: GrandTheft
+    allowedDepartments: [ Command ]

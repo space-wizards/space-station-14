@@ -110,32 +110,6 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool>
             EventsEnabled = CVarDef.Create("events.enabled", true, CVar.ARCHIVE | CVar.SERVERONLY);
 
-        /// <summary>
-        ///     Average time (in minutes) for when the ramping event scheduler should stop increasing the chaos modifier.
-        ///     Close to how long you expect a round to last, so you'll probably have to tweak this on downstreams.
-        /// </summary>
-        public static readonly CVarDef<float>
-            EventsRampingAverageEndTime = CVarDef.Create("events.ramping_average_end_time", 40f, CVar.ARCHIVE | CVar.SERVERONLY);
-
-        /// <summary>
-        ///     Average ending chaos modifier for the ramping event scheduler.
-        ///     Max chaos chosen for a round will deviate from this
-        /// </summary>
-        public static readonly CVarDef<float>
-            EventsRampingAverageChaos = CVarDef.Create("events.ramping_average_chaos", 6f, CVar.ARCHIVE | CVar.SERVERONLY);
-
-        /// <summary>
-        ///     Minimum time between meteor swarms in minutes.
-        /// </summary>
-        public static readonly CVarDef<float>
-            MeteorSwarmMinTime = CVarDef.Create("events.meteor_swarm_min_time", 12.5f, CVar.ARCHIVE | CVar.SERVERONLY);
-
-        /// <summary>
-        ///     Maximum time between meteor swarms in minutes.
-        /// </summary>
-        public static readonly CVarDef<float>
-            MeteorSwarmMaxTime = CVarDef.Create("events.meteor_swarm_max_time", 17.5f, CVar.ARCHIVE | CVar.SERVERONLY);
-
         /*
          * Game
          */
@@ -432,6 +406,37 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> RoundEndSoundCollection =
             CVarDef.Create("game.round_end_sound_collection", "RoundEnd", CVar.SERVERONLY);
 
+
+        /*
+         * Announcers
+         */
+
+        /// <summary>
+        ///     Weighted list of announcers to choose from
+        /// </summary>
+        public static readonly CVarDef<string> AnnouncerList =
+            CVarDef.Create("announcer.list", "RandomAnnouncers", CVar.REPLICATED);
+
+        /// <summary>
+        ///     Optionally force set an announcer
+        /// </summary>
+        public static readonly CVarDef<string> Announcer =
+            CVarDef.Create("announcer.announcer", "", CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Optionally blacklist announcers
+        ///     List of IDs separated by commas
+        /// </summary>
+        public static readonly CVarDef<string> AnnouncerBlacklist =
+            CVarDef.Create("announcer.blacklist", "", CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Changes how loud the announcers are for the client
+        /// </summary>
+        public static readonly CVarDef<float> AnnouncerVolume =
+            CVarDef.Create("announcer.volume", 0.5f, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+
         /// <summary>
         /// Whether or not to add every player as a global override to PVS at round end.
         /// This will allow all players to see their clothing in the round screen player list screen,
@@ -449,6 +454,12 @@ namespace Content.Shared.CCVar
         /// </remarks>
         public static readonly CVarDef<bool> GameTabletopPlace =
             CVarDef.Create("game.tabletop_place", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If true, contraband severity can be viewed in the examine menu
+        /// </summary>
+        public static readonly CVarDef<bool> ContrabandExamine =
+            CVarDef.Create("game.contraband_examine", true, CVar.SERVER | CVar.REPLICATED);
 
         /*
          * Discord
@@ -937,7 +948,7 @@ namespace Content.Shared.CCVar
         /// <seealso cref="AdminUseCustomNamesAdminRank"/>
         /// <seealso cref="AhelpAdminPrefixWebhook"/>
         public static readonly CVarDef<bool> AhelpAdminPrefix =
-            CVarDef.Create("ahelp.admin_prefix", true, CVar.SERVERONLY);
+            CVarDef.Create("ahelp.admin_prefix", false, CVar.SERVERONLY);
 
         /// <summary>
         /// Should the administrator's position be displayed in the webhook.
@@ -946,7 +957,7 @@ namespace Content.Shared.CCVar
         /// <seealso cref="AdminUseCustomNamesAdminRank"/>
         /// <seealso cref="AhelpAdminPrefix"/>
         public static readonly CVarDef<bool> AhelpAdminPrefixWebhook =
-            CVarDef.Create("ahelp.admin_prefix_webhook", true, CVar.SERVERONLY);
+            CVarDef.Create("ahelp.admin_prefix_webhook", false, CVar.SERVERONLY);
 
         /*
          * Explosions
@@ -1168,9 +1179,9 @@ namespace Content.Shared.CCVar
         /// <summary>
         ///     Whether monstermos explosive depressurization will rip tiles..
         ///     Needs <see cref="MonstermosEqualization"/> and <see cref="MonstermosDepressurization"/> to be enabled to work.
-		///     WARNING: This cvar causes MAJOR contrast issues, and usually tends to make any spaced scene look very cluttered.
-		///     This not only usually looks strange, but can also reduce playability for people with impaired vision. Please think twice before enabling this on your server.
-		///     Also looks weird on slow spacing for unrelated reasons. If you do want to enable this, you should probably turn on instaspacing.
+        ///     WARNING: This cvar causes MAJOR contrast issues, and usually tends to make any spaced scene look very cluttered.
+        ///     This not only usually looks strange, but can also reduce playability for people with impaired vision. Please think twice before enabling this on your server.
+        ///     Also looks weird on slow spacing for unrelated reasons. If you do want to enable this, you should probably turn on instaspacing.
         /// </summary>
         public static readonly CVarDef<bool> MonstermosRipTiles =
             CVarDef.Create("atmos.monstermos_rip_tiles", false, CVar.SERVERONLY);
@@ -2037,6 +2048,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
+        /// If ghost role lotteries should be made near-instanteous.
+        /// </summary>
+        public static readonly CVarDef<bool> GhostQuickLottery =
+            CVarDef.Create("ghost.quick_lottery", false, CVar.SERVERONLY);
+
+        /// <summary>
         /// Whether or not to kill the player's mob on ghosting, when it is in a critical health state.
         /// </summary>
         public static readonly CVarDef<bool> GhostKillCrit =
@@ -2156,7 +2173,7 @@ namespace Content.Shared.CCVar
         ///     Whether or not world generation is enabled.
         /// </summary>
         public static readonly CVarDef<bool> WorldgenEnabled =
-            CVarDef.Create("worldgen.enabled", false, CVar.SERVERONLY);
+            CVarDef.Create("worldgen.enabled", true, CVar.SERVERONLY);
 
         /// <summary>
         ///     The worldgen config to use.

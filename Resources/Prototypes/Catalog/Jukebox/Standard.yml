@@ -39,3 +39,81 @@
   name: PigeonBeans - Sunset
   path:
     path: /Audio/Jukebox/sunset.ogg
+
+- type: jukebox
+  id: mtamientvsspasm
+  name: Mt. Amient vs Spasm - Soichi Terada
+  path:
+    path: /Audio/Lobby/mt_amient_vs_spasm.ogg
+
+- type: jukebox
+  id: moveme
+  name: Kohta Takahashi - Move Me
+  path:
+    path: /Audio/Jukebox/move_me.ogg
+
+- type: jukebox
+  id: shred
+  name: B. Bravo & Lean Rock - Shred
+  path:
+    path: /Audio/Jukebox/shred.ogg
+
+- type: jukebox
+  id: MorningGlow
+  name: Doc McLennon - Morning Glow (Ft. Nicholas Mangiafico)
+  path:
+    path: /Audio/Jukebox/morning_glow.ogg
+
+- type: jukebox
+  id: LostInRecollection
+  name: DrTapeworm - Lost in Recollection
+  path:
+    path: /Audio/Jukebox/lost_in_recollection.ogg
+
+- type: jukebox
+  id: FinalTagRoll
+  name: Rukunetsu - Final Tag Roll
+  path:
+    path: /Audio/Jukebox/final_tag_roll.ogg
+
+- type: jukebox
+  id: LastHoorah
+  name: KiloWatts - Last Hoorah
+  path:
+    path: /Audio/Jukebox/last_hoorah.ogg
+
+- type: jukebox
+  id: OrdinaryDays
+  name: Klaus Veen - Ordinary Days
+  path:
+    path: /Audio/Jukebox/ordinary_days.ogg
+
+- type: jukebox
+  id: 4ff
+  name: NANORAY - 4ff
+  path:
+    path: /Audio/Jukebox/4ff.ogg
+
+- type: jukebox
+  id: RollingDownTheStreet
+  name: Fearofdark - Rolling Down The Street, In My Katamari
+  path:
+    path: /Audio/Jukebox/rolling_down_the_street_in_my_katamari.ogg
+
+- type: jukebox
+  id: ThrashardInTheCave
+  name: Sota Fujimori - Thrashard In The Cave - Stage 2 (Arrange Ver.)
+  path:
+    path: /Audio/Jukebox/thrashard_in_the_cave.ogg
+
+- type: jukebox
+  id: LiveStudioAudience
+  name: Tyron - Live Studio Audience
+  path:
+    path: /Audio/Jukebox/live_studio_audience.ogg
+
+- type: jukebox
+  id: LaxLullaby
+  name: Eero Lahtinen - Lax Lullaby
+  path:
+    path: /Audio/Jukebox/lax_lullaby.ogg

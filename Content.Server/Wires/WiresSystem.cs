@@ -151,19 +151,17 @@ public sealed class WiresSystem : SharedWiresSystem
             for (var i = 0; i < enumeratedList.Count; i++)
             {
                 (int id, Wire d) = enumeratedList[i];
+                d.Id = i;
 
                 if (d.Action != null)
                 {
                     var actionType = d.Action.GetType();
-                    if (types.ContainsKey(actionType))
+                    if (!types.TryAdd(actionType, 1))
                         types[actionType] += 1;
-                    else
-                        types.Add(actionType, 1);
 
                     if (!d.Action.AddWire(d, types[actionType]))
                         d.Action = null;
                 }
-                d.Id = i;
 
                 data.Add(id, new WireLayout.WireData(d.Letter, d.Color, i));
                 wires.WiresList[i] = wireSet[id];

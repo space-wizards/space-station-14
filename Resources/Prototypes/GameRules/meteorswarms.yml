@@ -1,21 +1,39 @@
-- type: entity
-  parent: BaseGameRule
-  id: GameRuleMeteorScheduler
-  components:
-  - type: GameRule
-    minPlayers: 25
-    cancelPresetOnTooFewPlayers: false
-  - type: MeteorScheduler
+# Event Tables
 
-- type: weightedRandomEntity
-  id: DefaultConfig
-  weights:
-    GameRuleSpaceDustMinor: 44
-    GameRuleSpaceDustMajor: 22
-    GameRuleMeteorSwarmSmall: 18
-    GameRuleMeteorSwarmMedium: 10
-    GameRuleMeteorSwarmLarge: 5
-    GameRuleUristSwarm: 0.05
+- type: entityTable
+  id: MeteorSwarmDustEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: GameRuleSpaceDustMinor
+    - id: GameRuleSpaceDustMajor
+
+- type: entityTable
+  id: MeteorSwarmSmallChanceEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: GameRuleMeteorSwarmSmall
+      prob: 0.15
+
+- type: entityTable
+  id: MeteorSwarmMildTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - !type:NestedSelector
+        tableId: MeteorSwarmDustEventsTable
+    - !type:NestedSelector
+        tableId: MeteorSwarmSmallChanceEventsTable
+
+- type: entityTable
+  id: BasicMeteorSwarmEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - !type:NestedSelector
+        tableId: MeteorSwarmDustEventsTable
+    - id: GameRuleMeteorSwarmSmall
+    - id: GameRuleMeteorSwarmMedium
+    - id: GameRuleMeteorSwarmLarge
+    - id: GameRuleUristSwarm
+    - id: ImmovableRodSpawn
 
 - type: weightedRandomEntity
   id: MeteorSpawnAsteroidWallTable
@@ -29,7 +47,46 @@
     AsteroidRockPlasma: 2
     AsteroidRockDiamond: 2
     AsteroidRockUranium: 0.5
-    AsteroidRockBananium: 0.5      
+    AsteroidRockBananium: 0.5
+
+# Event Schedulers
+
+- type: entity
+  parent: BaseGameRule
+  id: MeteorSwarmScheduler
+  components:
+  - type: GameRule
+  - type: BasicStationEventScheduler
+    minimumTimeUntilFirstEvent: 300 # 5 min
+    minMaxEventTiming:
+      min: 750 # 12.5 min
+      max: 930 # 17.5 min
+    scheduledGameRules: !type:NestedSelector
+      tableId: BasicMeteorSwarmEventsTable
+
+- type: entity
+  parent: BaseGameRule
+  id: MeteorSwarmMildScheduler
+  components:
+  - type: GameRule
+  - type: BasicStationEventScheduler
+    minimumTimeUntilFirstEvent: 300 # 5 min
+    minMaxEventTiming:
+      min: 750 # 12.5 min
+      max: 930 # 17.5 min
+    scheduledGameRules: !type:NestedSelector
+      tableId: MeteorSwarmMildTable
+
+- type: entity
+  parent: BaseGameRule
+  id: KesslerSyndromeScheduler
+  components:
+  - type: GameRule
+  - type: RampingStationEventScheduler
+    scheduledGameRules: !type:NestedSelector
+      tableId: BasicMeteorSwarmEventsTable
+
+# Game Rules
 
 - type: entity
   parent: BaseGameRule
@@ -37,15 +94,21 @@
   abstract: true
   components:
   - type: GameRule
+  - type: StationEvent
+    reoccurrenceDelay: 1
+    earliestStart: 12
+    minimumPlayers: 25
   - type: MeteorSwarm
 
 - type: entity
   parent: GameRuleMeteorSwarm
   id: GameRuleSpaceDustMinor
   components:
+  - type: StationEvent
+    weight: 44
+    earliestStart: 2
+    minimumPlayers: 0
   - type: MeteorSwarm
-    announcement: null
-    announcementSound: null
     nonDirectional: true
     meteors:
       MeteorSpaceDust: 1
@@ -60,9 +123,11 @@
   parent: GameRuleMeteorSwarm
   id: GameRuleSpaceDustMajor
   components:
+  - type: StationEvent
+    weight: 22
+    minimumPlayers: 0
   - type: MeteorSwarm
-    announcement: station-event-space-dust-start-announcement
-    announcementSound: /Audio/Announcements/attention.ogg
+    startAnnouncement: true
     nonDirectional: true
     meteors:
       MeteorSpaceDust: 1
@@ -77,7 +142,11 @@
   parent: GameRuleMeteorSwarm
   id: GameRuleMeteorSwarmSmall
   components:
+  - type: StationEvent
+    weight: 18
+    minimumPlayers: 15
   - type: MeteorSwarm
+    startAnnouncement: true
     meteors:
       MeteorSmall: 7
       MeteorMedium: 3
@@ -86,7 +155,10 @@
   parent: GameRuleMeteorSwarm
   id: GameRuleMeteorSwarmMedium
   components:
+  - type: StationEvent
+    weight: 10
   - type: MeteorSwarm
+    startAnnouncement: true
     meteors:
       MeteorSmall: 3
       MeteorMedium: 6
@@ -96,7 +168,10 @@
   parent: GameRuleMeteorSwarm
   id: GameRuleMeteorSwarmLarge
   components:
+  - type: StationEvent
+    weight: 5
   - type: MeteorSwarm
+    startAnnouncement: true
     meteors:
       MeteorSmall: 2
       MeteorMedium: 4
@@ -106,9 +181,10 @@
   parent: GameRuleMeteorSwarm
   id: GameRuleUristSwarm
   components:
+  - type: StationEvent
+    weight: 0.05
   - type: MeteorSwarm
-    announcement: station-event-meteor-urist-start-announcement
-    announcementSound: /Audio/Announcements/attention.ogg
+    startAnnouncement: true
     meteors:
       MeteorUrist: 1
     waves:

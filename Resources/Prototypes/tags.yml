@@ -552,6 +552,9 @@
   id: DrinkCan
 
 - type: Tag
+  id: DrinkCup
+
+- type: Tag
   id: DrinkGlass
 
 - type: Tag
@@ -658,6 +661,9 @@
 
 - type: Tag
   id: Goat
+
+- type: Tag
+  id: Goliath
 
 - type: Tag
   id: GPS
