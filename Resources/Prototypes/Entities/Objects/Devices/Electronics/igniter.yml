@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [BaseComponentDropSounds, BaseItem]
   id: Igniter
   name: igniter
   description: Creates a spark when activated by a signal.

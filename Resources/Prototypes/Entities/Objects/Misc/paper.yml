@@ -4,6 +4,15 @@
   id: Paper
   description: 'A piece of white paper.'
   components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Handling/paper_drop.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/Items/Handling/paper_drop.ogg
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/Items/Handling/paper_pickup.ogg
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     layers:

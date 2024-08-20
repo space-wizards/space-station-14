@@ -1,0 +1,39 @@
+- files:
+  - "crowbar_pickup.ogg"
+  - "toolbelt_pickup.ogg"
+  - "toolbelt_drop.ogg"
+  - "toolbox_pickup.ogg"
+  - "weldingtool_pickup.ogg"
+  - "wirecutter_pickup.ogg"
+  - "wrench_pickup.ogg"
+  - "paper_pickup.ogg"
+  - "paper_drop.ogg"
+  - "multiool_pickup.ogg"
+  - "matchbox_pickup.ogg"
+  - "disk_pickup.ogg"
+  - "disk_drop.ogg"
+  - "screwdriver_pickup.ogg"
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tg station"
+  source: "https://github.com/tgstation/tgstation/commit/81c3d921295d6b925ff063bef13f623687d7bdbd"
+
+- files:
+  - "rcd_drop.ogg"
+  - "rcd_pickup.ogg"
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tg station"
+  source: "https://github.com/tgstation/tgstation/commit/9a64fa934b65e308f8e1e0cfab77bf352f5d4267"
+
+- files:
+  - "stun_baton_pickup.ogg"
+  - "stun_baton_drop.ogg"
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tg station"
+  source: "https://github.com/tgstation/tgstation/commit/f0575ec415470207f1d05ab74ddb5b360a0add54"
+
+- files:
+  - "component_drop.ogg"
+  - "component_pickup.ogg"
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tg station"
+  source: "https://github.com/tgstation/tgstation/commit/aba80b9b45fe3554d315c5e8fa0f5e0ebf05e39e"

@@ -1,7 +1,21 @@
 ﻿- type: entity
+  id: BaseComponentDropSounds
+  abstract: true
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Handling/component_drop.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/Items/Handling/component_drop.ogg
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/Items/Handling/component_pickup.ogg
+
+- type: entity
   id: BaseStockPart
   name: stock part
-  parent: BaseItem
+  parent: [BaseComponentDropSounds, BaseItem]
   description: What?
   abstract: true
   components:

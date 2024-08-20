@@ -7,6 +7,12 @@
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/crowbar_drop.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/Items/crowbar_drop.ogg
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/Items/Handling/crowbar_pickup.ogg
   - type: Tag
     tags:
     - Crowbar

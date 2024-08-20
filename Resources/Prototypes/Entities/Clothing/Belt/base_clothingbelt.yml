@@ -7,6 +7,15 @@
     state: icon
   - type: Item
     size: Normal
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Handling/toolbelt_drop.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/Items/Handling/toolbelt_drop.ogg
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/Items/Handling/toolbelt_pickup.ogg
   - type: Clothing
     slots: [belt]
     equipSound:

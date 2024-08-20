@@ -1,5 +1,19 @@
 - type: entity
-  parent: BaseItem
+  id: BaseDiskDropSounds
+  abstract: true
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Handling/disk_drop.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/Items/Handling/disk_drop.ogg
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/Items/Handling/disk_pickup.ogg
+
+- type: entity
+  parent: [BaseDiskDropSounds, BaseItem]
   id: ResearchDisk
   name: research point disk (1000)
   description: A disk for the R&D server containing 1000 points.
@@ -41,7 +55,7 @@
     unlockAllTech: true
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseDiskDropSounds, BaseItem]
   id: TechnologyDisk
   name: technology disk
   description: A disk for the R&D server containing research technology.

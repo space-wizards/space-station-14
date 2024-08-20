@@ -1,6 +1,6 @@
 - type: entity
   name: basic lighter
-  parent: BaseItem
+  parent: [BaseComponentDropSounds, BaseItem]
   id: Lighter
   description: "A simple plastic cigarette lighter."
   components:
@@ -119,7 +119,7 @@
 
 - type: entity
   name: flippo lighter
-  parent: BaseItem
+  parent: [BaseComponentDropSounds, BaseItem]
   id: FlippoLighter
   description: "A rugged metal lighter, lasts quite a while."
   components:

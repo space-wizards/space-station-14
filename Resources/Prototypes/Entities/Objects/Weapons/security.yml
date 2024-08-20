@@ -1,6 +1,20 @@
 - type: entity
+  abstract: true
+  id: BaseSecurityBatonSounds
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Handling/stun_baton_drop.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/Items/Handling/stun_baton_drop.ogg
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/Items/Handling/stun_baton_pickup.ogg
+
+- type: entity
   name: stun baton
-  parent: [BaseItem, BaseRestrictedContraband]
+  parent: [BaseItem, BaseRestrictedContraband, BaseSecurityBatonSounds]
   id: Stunbaton
   description: A stun baton for incapacitating people with. Actively harming with this is considered bad tone.
   components:
@@ -91,7 +105,7 @@
 
 - type: entity
   name: truncheon
-  parent: [BaseItem, BaseRestrictedContraband]
+  parent: [BaseItem, BaseRestrictedContraband, BaseSecurityBatonSounds]
   id: Truncheon
   description: A rigid, steel-studded baton, meant to harm.
   components:

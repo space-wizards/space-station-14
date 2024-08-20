@@ -10,6 +10,12 @@
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/toolbox_drop.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/Items/toolbox_drop.ogg
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/Items/Handling/toolbox_pickup.ogg
   - type: Storage
     maxItemSize: Normal
     grid:

@@ -11,7 +11,7 @@
 
 - type: entity
   name: match stick
-  parent: BaseItem
+  parent: [BaseComponentDropSounds, BaseItem]
   id: Matchstick
   description: A simple match stick, used for lighting fine smokables.
   components:
@@ -62,6 +62,12 @@
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/matchbox_drop.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/Items/matchbox_drop.ogg
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/Items/Handling/matchbox_pickup.ogg
   - type: Matchbox
   - type: Sprite
     sprite: Objects/Tools/matches.rsi

@@ -7,6 +7,12 @@
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/wirecutter_drop.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/Items/wirecutter_drop.ogg
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/Items/Handling/wirecutter_pickup.ogg
   - type: Tag
     tags:
     - PlantSampleTaker
@@ -53,6 +59,12 @@
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/screwdriver_drop.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/Items/screwdriver_drop.ogg
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/Items/Handling/screwdriver_pickup.ogg
   - type: Tag
     tags:
     - Screwdriver
@@ -97,6 +109,12 @@
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/wrench_drop.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/Items/wrench_drop.ogg
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/Items/Handling/wrench_pickup.ogg
   - type: Tag
     tags:
     - Wrench
@@ -136,6 +154,12 @@
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/multitool_drop.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/Items/multitool_drop.ogg
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/Items/Handling/multiool_pickup.ogg
   - type: Sprite
     sprite: Objects/Tools/multitool.rsi
     layers:
@@ -184,6 +208,12 @@
     - type: EmitSoundOnLand
       sound:
         path: /Audio/Items/multitool_drop.ogg
+    - type: EmitSoundOnDrop
+      sound:
+        path: /Audio/Items/multitool_drop.ogg
+    - type: EmitSoundOnPickup
+      sound:
+        path: /Audio/Items/Handling/multiool_pickup.ogg
     - type: Sprite
       sprite: Objects/Tools/network_configurator.rsi
       layers:
@@ -288,6 +318,15 @@
   name: RCD
   description: The rapid construction device can be used to quickly place and remove various station structures and fixtures. Requires compressed matter to function.
   components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Handling/rcd_drop.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/Items/Handling/rcd_drop.ogg
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/Items/Handling/rcd_pickup.ogg
   - type: RCD
     availablePrototypes:
     - WallSolid
