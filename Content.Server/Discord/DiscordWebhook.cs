@@ -8,6 +8,9 @@ namespace Content.Server.Discord;
 
 public sealed class DiscordWebhook : IPostInjectInit
 {
+    private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions
+        { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
+
     [Dependency] private readonly ILogManager _log = default!;
 
     private const string BaseUrl = "https://discord.com/api/v10/webhooks";
@@ -68,7 +71,7 @@ public sealed class DiscordWebhook : IPostInjectInit
     public async Task<HttpResponseMessage> CreateMessage(WebhookIdentifier identifier, WebhookPayload payload)
     {
         var url = $"{GetUrl(identifier)}?wait=true";
-        var response = await _http.PostAsJsonAsync(url, payload, new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
+        var response = await _http.PostAsJsonAsync(url, payload, JsonOptions);
 
         LogResponse(response, "Create");
 
@@ -101,7 +104,7 @@ public sealed class DiscordWebhook : IPostInjectInit
     public async Task<HttpResponseMessage> EditMessage(WebhookIdentifier identifier, ulong messageId, WebhookPayload payload)
     {
         var url = $"{GetUrl(identifier)}/messages/{messageId}";
-        var response = await _http.PatchAsJsonAsync(url, payload, new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
+        var response = await _http.PatchAsJsonAsync(url, payload, JsonOptions);
 
         LogResponse(response, "Edit");
 
