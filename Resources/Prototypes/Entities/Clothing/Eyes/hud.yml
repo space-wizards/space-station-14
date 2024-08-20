@@ -222,7 +222,7 @@
 - type: entity
   parent: [ClothingEyesHudMedical, ClothingHeadEyeBaseFlippable]
   id: ClothingEyesEyepatchHudMedical
-  name: medical hud glasses
+  name: medical hud eyepatch
   description: A heads-up display that scans the humanoids in view and provides accurate data about their health status. For true patriots.
   components:
   - type: Sprite
@@ -233,7 +233,7 @@
 - type: entity
   parent: [ClothingEyesEyepatchHudMedical, ClothingHeadEyeBaseFlipped]
   id: ClothingEyesEyepatchHudMedicalFlipped
-  name: medical hud glasses
+  name: medical hud eyepatch
 
 - type: entity
   parent: [ClothingEyesHudSecurity, ClothingHeadEyeBaseFlippable]
