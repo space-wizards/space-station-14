@@ -129,6 +129,30 @@
   - type: SiliconLawProvider
     laws: Corporate
 
+- type: entity
+  id: NTDefaultCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (NT Default)
+  description: An electronics board containing the NT Default lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: NTDefault
+
+- type: entity
+  id: NTDefaultCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (NT Default)
+  description: An electronics board containing the NT Default lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: NTDefault
+
 # Items
 - type: entity
   id: Intellicard

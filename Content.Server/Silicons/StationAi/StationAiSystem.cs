@@ -15,7 +15,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly IChatManager _chats = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
-    private HashSet<Entity<StationAiCoreComponent>> _ais = new();
+    private readonly HashSet<Entity<StationAiCoreComponent>> _ais = new();
 
     public override bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
     {

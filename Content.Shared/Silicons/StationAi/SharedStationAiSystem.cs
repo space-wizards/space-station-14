@@ -33,11 +33,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private   readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private   readonly StationAiVisionSystem _vision = default!;
 
-    /*
-     - AI core announcement on latejoin
-     - Test posibrain interactions
-     */
-
     // StationAiHeld is added to anything inside of an AI core.
     // StationAiHolder indicates it can hold an AI positronic brain (e.g. holocard / core).
     // StationAiCore holds functionality related to the core itself.
