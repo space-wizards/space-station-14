@@ -4,6 +4,8 @@
   abstract: true
   components:
   - type: Sharp
+  - type: Execution
+    doAfterDuration: 4.0
   - type: MeleeWeapon
     wideAnimationRotation: -135
   - type: Sprite
@@ -16,7 +18,7 @@
 
 - type: entity
   name: captain's sabre
-  parent: BaseSword
+  parent: [ BaseSword, BaseCommandContraband ]
   id: CaptainSabre
   description: A ceremonial weapon belonging to the captain of the station.
   components:
@@ -38,10 +40,15 @@
     tags:
     - CaptainSabre
   - type: DisarmMalus
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-inanimate
+    weight: 0.0002 # 5,000 times less likely than 1 regular animal
+  - type: PirateAccent
+    # not putting a BlockMovement component here cause that's funny.
 
 - type: entity
   name: katana
-  parent: BaseSword
+  parent: [ BaseSword, BaseMajorContraband ]
   id: Katana
   description: Ancient craftwork made with not so ancient plasteel.
   components:
@@ -91,7 +98,7 @@
 
 - type: entity
   name: machete
-  parent: BaseSword
+  parent: [ BaseSword, BaseMajorContraband ]
   id: Machete
   description: A large, vicious looking blade.
   components:
@@ -112,7 +119,7 @@
 
 - type: entity
   name: claymore
-  parent: BaseSword
+  parent: [ BaseSword, BaseMajorContraband ]
   id: Claymore
   description: An ancient war blade.
   components:
@@ -134,7 +141,7 @@
 
 - type: entity
   name: cutlass
-  parent: BaseSword
+  parent: [ BaseSword, BaseMajorContraband ]
   id: Cutlass
   description: A wickedly curved blade, often seen in the hands of space pirates.
   components:
@@ -155,7 +162,7 @@
 
 - type: entity
   name: Throngler
-  parent: BaseSword
+  parent: [ BaseSword, BaseMajorContraband ]
   id: Throngler
   description: Why would you make this?
   components:
