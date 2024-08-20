@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Cojoke-dot
   changes:
-  - message: The player can now use the gasping emote
-    type: Tweak
-  id: 6673
-  time: '2024-06-03T12:10:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28466
-- author: Cojoke-dot
-  changes:
   - message: Bullets no longer hit crates unless directly clicked on while shooting.
     type: Tweak
   - message: Bullets now pass over mobs that are lying down unless directly clicked
@@ -3862,3 +3855,10 @@
   id: 7172
   time: '2024-08-20T10:57:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29661
+- author: cranberriez
+  changes:
+  - message: Added Discord webhook error logging!
+    type: Tweak
+  id: 7173
+  time: '2024-08-20T21:12:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30835
