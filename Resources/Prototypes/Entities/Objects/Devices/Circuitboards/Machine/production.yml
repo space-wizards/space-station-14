@@ -1008,6 +1008,15 @@
       - MicrowaveMachineBoard
 
 - type: entity
+  id: CombatBakeryMicrowaveMachineCircuitboard
+  parent: MicrowaveMachineCircuitboard
+  name: microwave machine board
+  suffix: Machine Board, Combat Bakery
+  components:
+    - type: MachineBoard
+      prototype: CombatBakeryMicrowave
+
+- type: entity
   id: SyndicateMicrowaveMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: donk co. microwave machine board

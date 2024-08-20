@@ -41,6 +41,7 @@ using Content.Shared.Stacks;
 using Content.Server.Construction.Components;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -589,7 +590,9 @@ namespace Content.Server.Kitchen.EntitySystems
             }
 
             // Check recipes
-            var portionedRecipe = _recipeManager.Recipes.Select(r =>
+            List<FoodRecipePrototype> recipes = TryGetSecretRecipes(uid);
+            recipes.AddRange(_recipeManager.Recipes);
+            var portionedRecipe = recipes.Select(r =>
                 CanSatisfyRecipe(component, r, solidsDict, reagentDict)).FirstOrDefault(r => r.Item2 > 0);
 
             _audio.PlayPvs(component.StartCookingSound, uid);
@@ -692,6 +695,28 @@ namespace Content.Server.Kitchen.EntitySystems
                 _audio.PlayPvs(microwave.FoodDoneSound, uid);
                 StopCooking((uid, microwave));
             }
+        }
+
+        /// <summary>
+        /// This is a helper method that tries to get secret recipes that the microwave might be capable of.
+        /// Currently, we only check the microwave itself, but in the future, the user might be able to learn recipes.
+        /// </summary>
+        private List<FoodRecipePrototype> TryGetSecretRecipes(EntityUid uid)
+        {
+            List<FoodRecipePrototype> secretRecipes = new();
+
+            if (TryComp<FoodRecipeProviderComponent>(uid, out var providerComp))
+            {
+                foreach (ProtoId<FoodRecipePrototype> recipeId in providerComp.ProvidedRecipes)
+                {
+                    if (_prototype.TryIndex(recipeId, out var recipeProto))
+                    {
+                        secretRecipes.Add(recipeProto);
+                    }
+                }
+            }
+
+            return secretRecipes;
         }
 
         #region ui

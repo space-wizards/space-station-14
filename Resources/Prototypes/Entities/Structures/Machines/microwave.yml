@@ -124,3 +124,17 @@
     snapCardinals: true
   - type: Machine
     board: SyndicateMicrowaveMachineCircuitboard
+
+- type: entity
+  id: CombatBakeryMicrowave
+  parent: KitchenMicrowave
+  name: microwave
+  description: It's magic.
+  suffix: Combat Bakery
+  components:
+  - type: Machine
+    board: CombatBakeryMicrowaveMachineCircuitboard
+  - type: FoodRecipeProvider
+    providedRecipes:
+    - RecipeBaguetteSword
+    - RecipeThrowingCroissant
