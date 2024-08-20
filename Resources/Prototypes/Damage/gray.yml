@@ -1,0 +1,10 @@
+- type: damageModifierSet
+  id: Gray
+  coefficients:
+    Blunt: 1.5
+    Slash: 1.5
+    Piercing: 1.5
+    Cold: .3
+    Heat: .3
+    Poison: 0.2
+    Cellular: 1

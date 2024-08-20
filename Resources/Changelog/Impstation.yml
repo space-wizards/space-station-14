@@ -1,19 +1,19 @@
 Entries:
-- author: V
+- author: formlessnameless
   changes:
   - message: Added Pipi
     type: Add
   id: 1
   time: '2024-06-19T20:07:39.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/1
-- author: V
+- author: formlessnameless
   changes:
   - message: Added Space Grease
     type: Add
   id: 2
   time: '2024-06-22T18:34:53.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/2
-- author: V
+- author: formlessnameless
   changes:
   - message: Made cigarettes/cigars/joints edible and have the same effect as when smoked.
     type: Add
@@ -62,14 +62,14 @@ Entries:
   id: 9
   time: '2024-07-01T18:55:18.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/11
-- author: jmcb
+- author: joelsgp
   changes:
   - message: Fix Lemo tag on bounty
     type: Fix
   id: 10
   time: '2024-07-01T21:57:29.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/12
-- author: jmcb
+- author: joelsgp
   changes:
   - message: Add custom logo, icons, and loading tips
     type: Add
@@ -83,7 +83,7 @@ Entries:
   id: 12
   time: '2024-07-08T16:51:26.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/14
-- author: jmcb
+- author: joelsgp
   changes:
   - message: Add new logo and more loading tips
     type: Add
@@ -97,49 +97,49 @@ Entries:
   id: 14
   time: '2024-07-03T15:39:30.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/16
-- author: jmcb
+- author: joelsgp
   changes:
-  - message: Newports
+  - message: Newports (sprites by Arch)
     type: Add
   id: 15
   time: '2024-07-03T15:39:46.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/17
-- author: jmcb
+- author: joelsgp
   changes:
   - message: Finfin foods
     type: Add
   id: 16
   time: '2024-07-04T17:44:01.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/18
-- author: V
+- author: formlessnameless
   changes:
   - message: Stop Pipi and Fin Fin from spawning in lockers and dying
     type: Tweak
   id: 17
   time: '2024-07-04T20:09:35.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/19
-- author: jmcb
+- author: joelsgp
   changes:
   - message: Fix green marijuana sprites and starting with newports
     type: Fix
   id: 18
   time: '2024-07-05T17:16:10.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/21
-- author: V
+- author: formlessnameless
   changes:
   - message: Hemp and hemp products
     type: Add
   id: 19
   time: '2024-07-05T17:15:59.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/22
-- author: V
+- author: formlessnameless
   changes:
   - message: Hemp balance changes and PAI as trinkets
     type: Tweak
   id: 20
   time: '2024-07-06T21:51:36.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/23
-- author: jmcb
+- author: joelsgp
   changes:
   - message: Finfin meat sprites and new tips
     type: Add
@@ -167,7 +167,7 @@ Entries:
   id: 24
   time: '2024-07-17T00:20:32.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/29
-- author: V
+- author: formlessnameless
   changes:
   - message: Syndie Vs Syndie
     type: Add
@@ -190,7 +190,7 @@ Entries:
   id: 27
   time: '2024-07-19T18:42:14.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/33
-- author: V
+- author: formlessnameless
   changes:
   - message: Fixing Traitor Objectives
     type: Fix
@@ -267,7 +267,7 @@ Entries:
   id: 38
   time: '2024-07-26T00:41:36.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/47
-- author: V
+- author: formlessnameless
   changes:
   - message: Add codeword highlighting, from an inactive upstream PR by SlamBamActionman
     type: Add
@@ -281,38 +281,100 @@ Entries:
   id: 40
   time: '2024-07-26T19:19:39.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/50
-- author: jmcb
+- author: joelsgp
   changes:
   - message: New loading tips from community suggestions
     type: Add
   id: 41
   time: '2024-07-28T17:09:34.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/54
-- author: jmcb
+- author: joelsgp
   changes:
   - message: Add End as default keybind for opening round end summary
     type: Tweak
   id: 42
   time: '2024-07-28T17:09:46.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/55
-- author: jmcb
+- author: joelsgp
   changes:
   - message: Add new lobby music
     type: Add
   id: 43
   time: '2024-07-28T17:10:10.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/56
-- author: jmcb
+- author: joelsgp
   changes:
   - message: Prototype fixes
     type: Fix
   id: 44
   time: '2024-07-28T17:10:23.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/57
-- author: V
+- author: formlessnameless
   changes:
   - message: Spy VS Spy updates
     type: Fix
   id: 45
   time: '2024-07-28T18:44:49.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/58
+- author: joelsgp
+  changes:
+  - message: Custom changelog for our fork!
+    type: Add
+  id: 46
+  time: '2024-07-28T22:21:44.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/59
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Damage from low pressure (space) increased dramatically (4x current amount).
+    type: Tweak
+  id: 47
+  time: '2024-07-30T01:36:25.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/60
+- author: formlessnameless
+  changes:
+  - message: Base Spy Vs Spy now starts everyone with 0 TC. Also added variants with 5 starting TC, and default (20) starting TC to test with.
+    type: Add
+  - message: Traitors and Sleeper Agents should no longer have blank objectives.
+    type: Fix
+  id: 48
+  time: '2024-07-30T01:36:42.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/61
+- author: ultramario1998
+  changes:
+  - message: Increased HoS required playtime to 90 hours
+    type: Tweak
+  id: 49
+  time: '2024-07-30T19:17:23.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/62
+- author: 12rabbits
+  changes:
+  - message: Fixed certain inaccuracies in the ready manifest display
+    type: Fix
+  id: 50
+  time: '2024-08-01T19:46:45.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/63
+- author: FlippenPage
+  changes:
+  - message: Nitrogen Deprivation Kit, found rarely in N2 Lockers.
+    type: Add
+  - message: N2 Wall Locker.
+    type: Add
+  - message: N2 Locker Loot Table updated.
+    type: Tweak
+  id: 51
+  time: '2024-08-01T19:46:36.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/64
+- author: ultramario1998
+  changes:
+  - message: Fin fin can now open doors. Life, uh, finds a way.
+    type: Tweak
+  id: 52
+  time: '2024-08-01T19:46:26.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/65
+- author: formlessnameless
+  changes:
+  - message: Blessed bananium flooring.
+    type: Add
+  id: 53
+  time: '2024-08-02T00:36:08.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/67

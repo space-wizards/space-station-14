@@ -162,7 +162,7 @@ public abstract class ClothingSystem : EntitySystem
         if (args.Current is ClothingComponentState state)
         {
             SetEquippedPrefix(uid, state.EquippedPrefix, component);
-            if (component.InSlot != null && _containerSys.TryGetContainingContainer(uid, out var container))
+            if (component.InSlot != null && _containerSys.TryGetContainingContainer((uid, null, null), out var container))
             {
                 CheckEquipmentForLayerHide(uid, container.Owner);
             }

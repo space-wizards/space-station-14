@@ -2,7 +2,7 @@
   name: pickaxe
   parent: BaseItem
   id: Pickaxe
-  description: Notched to perfection, for jamming it into rocks
+  description: Notched to perfection, for jamming it into rocks.
   components:
   - type: Tag
     tags:
@@ -40,7 +40,7 @@
   name: mining drill
   parent: BaseItem
   id: MiningDrill
-  description: Powerful tool used to quickly drill through rocks
+  description: Powerful tool used to quickly drill through rocks.
   components:
   - type: Item
     storedRotation: -90

@@ -64,3 +64,18 @@
         density: 1000
         mask:
         - ItemMask
+
+- type: entity
+  id: FloorSuperBananiumEntity
+  suffix: Blessed
+  parent: FloorBananiumEntity
+  components:
+  - type: Slippery
+    superSlippery: true
+    launchForwardsMultiplier: 2
+  - type: StepTrigger
+    requiredTriggeredSpeed: 1
+  - type: PointLight
+    radius: 1.5
+    energy: 5
+    color: "#f5f542"

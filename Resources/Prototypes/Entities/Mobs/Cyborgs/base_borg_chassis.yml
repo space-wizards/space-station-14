@@ -227,7 +227,8 @@
   - type: Emoting
   - type: GuideHelp
     guides:
-      - Cyborgs
+    - Cyborgs
+    - Robotics
   - type: StepTriggerImmune
 
 - type: entity

@@ -75,6 +75,19 @@
       - MobPossumMortyOld
 
 - type: entity
+  name: Poppy Spawner
+  id: SpawnMobPoppyMorty
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobPossumMortyOld
+
+- type: entity
   name: Raccoon Morticia Spawner
   id: SpawnMobRaccoonMorticia
   parent: MarkerBase
@@ -883,3 +896,17 @@
   - type: ConditionalSpawner
     prototypes:
     - MobClownSpider
+
+- type: entity
+  name: honk bot spawner
+  id: SpawnHonkBot
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: honkbot
+      sprite: Mobs/Silicon/Bots/honkbot.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobHonkBot

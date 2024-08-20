@@ -359,3 +359,13 @@
         amount: 1
         prob: 0.05
 
+- type: entity
+  id: CrateFun500Cigarettes
+  parent: CrateGenericSteel
+  name: 500 cigarettes
+  description: The tingles... Do you feel them?
+  components:
+  - type: StorageFill
+    contents:
+      - id: StackOfCigs
+        amount: 1
