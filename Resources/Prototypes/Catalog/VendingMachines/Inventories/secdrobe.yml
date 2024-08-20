@@ -16,7 +16,8 @@
     ClothingOuterArmorBasicSlim: 2
     #ClothingEyesBlindfold: 1 GreyStation - Removal
     #ClothingShoesBootsWinterSec: 2 # GreyStation - Removal
-    ClothingHandsGlovesColorBlack: 3
+    #ClothingHandsGlovesColorBlack: 3
+    ClothingHandsGlovesSecurity: 3 # GreyStation - Clothing Addition
     #ClothingHandsGlovesFingerless: 3 # GreyStation - Removal
     ClothingShoesBootsJack: 3
     #ClothingShoesBootsCombat: 1 # GreyStation - Removal

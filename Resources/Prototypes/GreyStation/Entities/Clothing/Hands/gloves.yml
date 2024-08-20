@@ -1,0 +1,17 @@
+- type: entity
+  parent: [ClothingHandsGlovesSyntheticBase, BaseSecurityEngineeringContraband]
+  id: ClothingHandsGlovesSecurity
+  name: security gloves
+  description: These security gloves come with microchips that help the user quickly restrain suspects.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Hands/Gloves/sec.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Hands/Gloves/sec.rsi
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingHandsGlovesFingerless
+  - type: Fiber # GreyStation Addition
+    fiberColor: fibers-black
+ #- type: FastCuffing - Component that let's the user wearing the gloves cuff a lot quicker.
