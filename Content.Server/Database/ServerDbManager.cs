@@ -15,7 +15,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 using Prometheus;
-using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
@@ -117,7 +116,7 @@ namespace Content.Server.Database
         /// Get current ban exemption flags for a user
         /// </summary>
         /// <returns><see cref="ServerBanExemptFlags.None"/> if the user is not exempt from any bans.</returns>
-        Task<ServerBanExemptFlags> GetBanExemption(NetUserId userId);
+        Task<ServerBanExemptFlags> GetBanExemption(NetUserId userId, CancellationToken cancel = default);
 
         #endregion
 
@@ -307,9 +306,41 @@ namespace Content.Server.Database
         #endregion
 
         #region DB Notifications
-        public void SubscribeToNotifications(Action<(string channel, string? payload)> handler);
+
+        void SubscribeToNotifications(Action<DatabaseNotification> handler);
+
+        /// <summary>
+        /// Inject a notification as if it was created by the database. This is intended for testing.
+        /// </summary>
+        /// <param name="notification">The notification to trigger</param>
+        void InjectTestNotification(DatabaseNotification notification);
 
         #endregion
+    }
+
+    /// <summary>
+    /// Represents a notification sent between servers via the database layer.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Database notifications are a simple system to broadcast messages to an entire server group
+    /// backed by the same database. For example, this is used to notify all servers of new ban records.
+    /// </para>
+    /// <para>
+    /// They are currently implemented  by the PostgreSQL <c>NOTIFY</c> and <c>LISTEN</c> commands.
+    /// </para>
+    /// </remarks>
+    public struct DatabaseNotification
+    {
+        /// <summary>
+        /// The channel for the notification. This can be used to differentiate notifications for different purposes.
+        /// </summary>
+        public required string Channel { get; set; }
+
+        /// <summary>
+        /// The actual contents of the notification. Optional.
+        /// </summary>
+        public string? Payload { get; set; }
     }
 
     public sealed class ServerDbManager : IServerDbManager
@@ -329,7 +360,6 @@ namespace Content.Server.Database
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IResourceManager _res = default!;
         [Dependency] private readonly ILogManager _logMgr = default!;
-        [Dependency] private readonly ITaskManager _taskManager = default!;
 
         private ServerDbBase _db = default!;
         private LoggingProvider _msLogProvider = default!;
@@ -340,7 +370,7 @@ namespace Content.Server.Database
         // This is that connection, close it when we shut down.
         private SqliteConnection? _sqliteInMemoryConnection;
 
-        private List<Action<(string channel, string? payload)>> _notificationHandlers = [];
+        private readonly List<Action<DatabaseNotification>> _notificationHandlers = [];
 
         public void Init()
         {
@@ -354,6 +384,7 @@ namespace Content.Server.Database
 
             var engine = _cfg.GetCVar(CCVars.DatabaseEngine).ToLower();
             var opsLog = _logMgr.GetSawmill("db.op");
+            var notifyLog = _logMgr.GetSawmill("db.notify");
             switch (engine)
             {
                 case "sqlite":
@@ -361,8 +392,8 @@ namespace Content.Server.Database
                     _db = new ServerDbSqlite(contextFunc, inMemory, _cfg, _synchronous, opsLog);
                     break;
                 case "postgres":
-                    var pgOptions = CreatePostgresOptions();
-                    _db = new ServerDbPostgres(pgOptions, _cfg, opsLog);
+                    var (pgOptions, conString) = CreatePostgresOptions();
+                    _db = new ServerDbPostgres(pgOptions, conString, _cfg, opsLog, notifyLog);
                     break;
                 default:
                     throw new InvalidDataException($"Unknown database engine {engine}.");
@@ -479,10 +510,10 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.UpdateBanExemption(userId, flags));
         }
 
-        public Task<ServerBanExemptFlags> GetBanExemption(NetUserId userId)
+        public Task<ServerBanExemptFlags> GetBanExemption(NetUserId userId, CancellationToken cancel = default)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetBanExemption(userId));
+            return RunDbCommand(() => _db.GetBanExemption(userId, cancel));
         }
 
         #region Role Ban
@@ -921,16 +952,27 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.RemoveJobWhitelist(player, job));
         }
 
-        public void SubscribeToNotifications(Action<(string channel, string? payload)> handler)
+        public void SubscribeToNotifications(Action<DatabaseNotification> handler)
         {
-            _notificationHandlers.Add(handler);
+            lock (_notificationHandlers)
+            {
+                _notificationHandlers.Add(handler);
+            }
         }
 
-        private async void HandleDatabaseNotification((string channel, string? payload) notification)
+        public void InjectTestNotification(DatabaseNotification notification)
         {
-            foreach (var handler in _notificationHandlers)
+            HandleDatabaseNotification(notification);
+        }
+
+        private async void HandleDatabaseNotification(DatabaseNotification notification)
+        {
+            lock (_notificationHandlers)
             {
-                _taskManager.RunOnMainThread(async () => handler(notification));
+                foreach (var handler in _notificationHandlers)
+                {
+                    handler(notification);
+                }
             }
         }
 
@@ -989,7 +1031,7 @@ namespace Content.Server.Database
             return enumerable;
         }
 
-        private DbContextOptions<PostgresServerDbContext> CreatePostgresOptions()
+        private (DbContextOptions<PostgresServerDbContext> options, string connectionString) CreatePostgresOptions()
         {
             var host = _cfg.GetCVar(CCVars.DatabasePgHost);
             var port = _cfg.GetCVar(CCVars.DatabasePgPort);
@@ -1011,7 +1053,7 @@ namespace Content.Server.Database
 
             builder.UseNpgsql(connectionString);
             SetupLogging(builder);
-            return builder.Options;
+            return (builder.Options, connectionString);
         }
 
         private void SetupSqlite(out Func<DbContextOptions<SqliteServerDbContext>> contextFunc, out bool inMemory)

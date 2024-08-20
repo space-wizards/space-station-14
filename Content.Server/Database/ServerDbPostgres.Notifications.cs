@@ -2,9 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
-using Content.Shared.CCVar;
 using Npgsql;
-using Robust.Shared.Configuration;
 
 namespace Content.Server.Database;
 
@@ -16,40 +14,24 @@ public sealed partial class ServerDbPostgres
     /// <summary>
     /// The list of notify channels to subscribe to.
     /// </summary>
-    private readonly List<string> _channels =
+    private static readonly string[] NotificationChannels =
     [
-        BanManager.BanNotificationChannel
+        BanManager.BanNotificationChannel,
     ];
 
-    private NpgsqlConnection? _notificationConnection;
+    private static readonly TimeSpan ReconnectWaitIncrease = TimeSpan.FromSeconds(10);
 
     private readonly CancellationTokenSource _notificationTokenSource = new();
+
+    private NpgsqlConnection? _notificationConnection;
     private TimeSpan _reconnectWaitTime = TimeSpan.Zero;
-    private readonly TimeSpan _reconnectWaitIncrease = TimeSpan.FromSeconds(10);
 
     /// <summary>
     /// Sets up the database connection and the notification handler
     /// </summary>
-    private void InitNotificationListener(IConfigurationManager cfg)
+    private void InitNotificationListener(string connectionString)
     {
-        // There currently doesn't seem to be a sane way to share getting the connection string with `ServerDbManager`
-
-        var host = cfg.GetCVar(CCVars.DatabasePgHost);
-        var port = cfg.GetCVar(CCVars.DatabasePgPort);
-        var db = cfg.GetCVar(CCVars.DatabasePgDatabase);
-        var user = cfg.GetCVar(CCVars.DatabasePgUsername);
-        var pass = cfg.GetCVar(CCVars.DatabasePgPassword);
-
-        var builder = new NpgsqlConnectionStringBuilder
-        {
-            Host = host,
-            Port = port,
-            Database = db,
-            Username = user,
-            Password = pass
-        };
-
-        _notificationConnection = new NpgsqlConnection(builder.ConnectionString);
+        _notificationConnection = new NpgsqlConnection(connectionString);
         _notificationConnection.Notification += OnNotification;
 
         var cancellationToken = _notificationTokenSource.Token;
@@ -64,39 +46,67 @@ public sealed partial class ServerDbPostgres
         if (_notificationConnection == null)
             return;
 
+        _notifyLog.Verbose("Starting notification listener");
+
         while (!cancellationToken.IsCancellationRequested)
         {
-            if (_notificationConnection.State == ConnectionState.Broken)
-                await _notificationConnection.CloseAsync();
-
-            if (_notificationConnection.State == ConnectionState.Closed)
-            {
-                await Task.Delay(_reconnectWaitTime, cancellationToken);
-                await _notificationConnection.OpenAsync(cancellationToken);
-                _reconnectWaitTime = TimeSpan.Zero;
-            }
-
             try
             {
-                foreach (var channel in _channels)
+                if (_notificationConnection.State == ConnectionState.Broken)
                 {
+                    _notifyLog.Debug("Notification listener entered broken state, closing...");
+                    await _notificationConnection.CloseAsync();
+                }
+
+                if (_notificationConnection.State == ConnectionState.Closed)
+                {
+                    _notifyLog.Debug("Opening notification listener connection...");
+                    if (_reconnectWaitTime != TimeSpan.Zero)
+                    {
+                        _notifyLog.Verbose($"_reconnectWaitTime is {_reconnectWaitTime}");
+                        await Task.Delay(_reconnectWaitTime, cancellationToken);
+                    }
+
+                    await _notificationConnection.OpenAsync(cancellationToken);
+                    _reconnectWaitTime = TimeSpan.Zero;
+                    _notifyLog.Verbose($"Notification connection opened...");
+                }
+
+                foreach (var channel in NotificationChannels)
+                {
+                    _notifyLog.Verbose($"Listening on channel {channel}");
                     await using var cmd = new NpgsqlCommand($"LISTEN {channel}", _notificationConnection);
                     await cmd.ExecuteNonQueryAsync(cancellationToken);
                 }
 
-                await _notificationConnection.WaitAsync(cancellationToken);
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    _notifyLog.Verbose("Waiting on notifications...");
+                    await _notificationConnection.WaitAsync(cancellationToken);
+                }
             }
-            catch (NpgsqlException e)
+            catch (OperationCanceledException)
             {
-                _reconnectWaitTime += _reconnectWaitIncrease;
-                LogDbError($"{e.Message}\n{e.StackTrace}");
+                // Abort loop on cancel.
+                _notifyLog.Verbose($"Shutting down notification listener due to cancellation");
+                return;
+            }
+            catch (Exception e)
+            {
+                _reconnectWaitTime += ReconnectWaitIncrease;
+                _notifyLog.Error($"Error in notification listener: {e}");
             }
         }
     }
 
     private void OnNotification(object _, NpgsqlNotificationEventArgs notification)
     {
-        NotificationReceived(notification.Channel, notification.Payload);
+        _notifyLog.Verbose($"Received notification on channel {notification.Channel}");
+        NotificationReceived(new DatabaseNotification
+        {
+            Channel = notification.Channel,
+            Payload = notification.Payload,
+        });
     }
 
     public override void Shutdown()
