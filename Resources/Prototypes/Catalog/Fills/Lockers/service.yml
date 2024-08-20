@@ -22,7 +22,7 @@
       - id: RagItem
         amount: 2
       - id: DrinkBottleAppleMartiniCrystalLiteFull
-        prob: 0.2 # less common so as to prevent overuse of horsepussy
+        prob: 0.2
 
 #- type: entity
 #  id: LockerFormalFilled

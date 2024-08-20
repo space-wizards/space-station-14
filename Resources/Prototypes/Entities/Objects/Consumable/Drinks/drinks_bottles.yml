@@ -1103,7 +1103,7 @@
     solutions:
       drink:
         reagents:
-        - ReagentId: Apple Martini Crystal Lite
+        - ReagentId: AppleMartiniCrystalLite
           Quantity: 100
   - type: Label
     currentLabel: reagent-name-apple-martini-crystal-lite
