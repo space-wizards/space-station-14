@@ -105,7 +105,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         {
             var oldReason = record.Reason ?? Loc.GetString("criminal-records-console-unspecified-reason");
             var history = Loc.GetString("criminal-records-console-auto-history", ("reason", oldReason));
-            _criminalRecords.TryAddHistory(key.Value, history);
+            _criminalRecords.TryAddHistory(key.Value, history, officer);
         }
 
         // will probably never fail given the checks above
