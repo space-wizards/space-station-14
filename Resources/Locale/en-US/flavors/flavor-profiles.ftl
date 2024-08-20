@@ -261,6 +261,9 @@ flavor-complex-antifreeze = warm
 ### This is exactly what pilk tastes like. I'm not even joking. I might've been a little drunk though
 flavor-complex-pilk = like sweet milk
 
+flavor-complex-apple-martini-crystal-lite = tastes like imitation appletini
+flavor-complex-horsepussy = tastes like death and a subsequent memorial
+
 # Medicine/chemical-specific flavors.
 
 ## Generic flavors.
@@ -272,4 +275,4 @@ flavor-complex-sax = like jazz
 flavor-complex-bottledlightning = like lightning in a bottle
 flavor-complex-punishment = like punishment
 flavor-weh = like weh
-flavour-stardust = like stardust 
+flavour-stardust = like stardust

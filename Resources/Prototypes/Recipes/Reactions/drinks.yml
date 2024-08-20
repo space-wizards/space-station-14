@@ -1217,3 +1217,15 @@
     TheeHorsepussy: 3
   sound:
     path: /Audio/Animals/spooky_horse.ogg
+
+- type: reaction
+  id: TheHorsepussy
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    Apple Martini Crystal Lite:
+      amount: 2
+    Methadone:
+      amount: 1
+  products:
+    TheHorsepussy: 3
