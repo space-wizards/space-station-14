@@ -153,6 +153,28 @@
   objectType: Item
 
 - type: construction
+  name: plasma glass shard arrow
+  id: ImprovisedArrowPlasma
+  graph: ImprovisedArrowPlasma
+  startNode: start
+  targetNode: ImprovisedArrowPlasma
+  category: construction-category-weapons
+  description: An arrow tipped with pieces of a plasma glass shard, for use with a bow.
+  icon: { sprite: Objects/Weapons/Guns/Bow/bow.rsi, state: wielded-arrow }
+  objectType: Item
+
+- type: construction
+  name: uranium glass shard arrow
+  id: ImprovisedArrowUranium
+  graph: ImprovisedArrowUranium
+  startNode: start
+  targetNode: ImprovisedArrowUranium
+  category: construction-category-weapons
+  description: An arrow tipped with pieces of a uranium glass shard, for use with a bow.
+  icon: { sprite: Objects/Weapons/Guns/Bow/bow.rsi, state: wielded-arrow }
+  objectType: Item
+
+- type: construction
   name: improvised bow
   id: ImprovisedBow
   graph: ImprovisedBow

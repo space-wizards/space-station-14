@@ -21,3 +21,51 @@
 
   - node: ImprovisedArrow
     entity: ArrowImprovised
+
+- type: constructionGraph
+  id: ImprovisedArrowPlasma
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: ImprovisedArrowPlasma
+      steps:
+      - material: MetalRod
+        amount: 1
+        doAfter: 0.5
+      - material: Cloth
+        amount: 1
+        doAfter: 0.5
+      - tag: PlasmaGlassShard
+        name: plasma glass shard
+        icon:
+          sprite: Objects/Materials/Shards/shard.rsi
+          state: shard1
+        doAfter: 0.5
+
+  - node: ImprovisedArrowPlasma
+    entity: ArrowImprovisedPlasma
+
+- type: constructionGraph
+  id: ImprovisedArrowUranium
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: ImprovisedArrowUranium
+      steps:
+      - material: MetalRod
+        amount: 1
+        doAfter: 0.5
+      - material: Cloth
+        amount: 1
+        doAfter: 0.5
+      - tag: UraniumGlassShard
+        name: uranium glass shard
+        icon:
+          sprite: Objects/Materials/Shards/shard.rsi
+          state: shard1
+        doAfter: 0.5
+
+  - node: ImprovisedArrowUranium
+    entity: ArrowImprovisedUranium
