@@ -126,13 +126,13 @@ public sealed class DiscordWebhook : IPostInjectInit
             _sawmill.Error($"Failed to {methodName} message. Status code: {response.StatusCode}.");
 
             if (response.Headers.TryGetValues("Retry-After", out var retryAfter))
-                _sawmill.Error($"Retry-After: {string.Join(", ", retryAfter)}");
+                _sawmill.Debug($"Failed webhook response Retry-After: {string.Join(", ", retryAfter)}");
 
             if (response.Headers.TryGetValues("X-RateLimit-Global", out var globalRateLimit))
-                _sawmill.Error($"X-RateLimit-Global: {string.Join(", ", globalRateLimit)}");
+                _sawmill.Debug($"Failed webhook response X-RateLimit-Global: {string.Join(", ", globalRateLimit)}");
 
             if (response.Headers.TryGetValues("X-RateLimit-Scope", out var rateLimitScope))
-                _sawmill.Error($"X-RateLimit-Scope: {string.Join(", ", rateLimitScope)}");
+                _sawmill.Debug($"Failed webhook response X-RateLimit-Scope: {string.Join(", ", rateLimitScope)}");
         }
     }
 
