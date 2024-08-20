@@ -129,27 +129,8 @@ public sealed partial class GunSystem : SharedGunSystem
                 case CartridgeAmmoComponent cartridge:
                     if (!cartridge.Spent)
                     {
-                        if (cartridge.Count > 1)
-                        {
-                            var ev = new GunGetAmmoSpreadEvent(cartridge.Spread);
-                            RaiseLocalEvent(gunUid, ref ev);
-
-                            var angles = LinearSpread(mapAngle - ev.Spread / 2,
-                                mapAngle + ev.Spread / 2, cartridge.Count);
-
-                            for (var i = 0; i < cartridge.Count; i++)
-                            {
-                                var uid = Spawn(cartridge.Prototype, fromEnt);
-                                ShootOrThrow(uid, angles[i].ToVec(), gunVelocity, gun, gunUid, user);
-                                shotProjectiles.Add(uid);
-                            }
-                        }
-                        else
-                        {
-                            var uid = Spawn(cartridge.Prototype, fromEnt);
-                            ShootOrThrow(uid, mapDirection, gunVelocity, gun, gunUid, user);
-                            shotProjectiles.Add(uid);
-                        }
+                        var uid = Spawn(cartridge.Prototype, fromEnt);
+                        CreateAndFireProjectiles(uid, cartridge);
 
                         RaiseLocalEvent(ent!.Value, new AmmoShotEvent()
                         {
@@ -157,8 +138,6 @@ public sealed partial class GunSystem : SharedGunSystem
                         });
 
                         SetCartridgeSpent(ent.Value, cartridge, true);
-                        MuzzleFlash(gunUid, cartridge, mapDirection.ToAngle(), user);
-                        Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
 
                         if (cartridge.DeleteOnSpawn)
                             Del(ent.Value);
@@ -177,10 +156,10 @@ public sealed partial class GunSystem : SharedGunSystem
                     break;
                 // Ammo shoots itself
                 case AmmoComponent newAmmo:
-                    shotProjectiles.Add(ent!.Value);
-                    MuzzleFlash(gunUid, newAmmo, mapDirection.ToAngle(), user);
-                    Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
-                    ShootOrThrow(ent.Value, mapDirection, gunVelocity, gun, gunUid, user);
+                    if (ent == null)
+                        break;
+                    CreateAndFireProjectiles(ent.Value, newAmmo);
+
                     break;
                 case HitscanPrototype hitscan:
 
@@ -295,6 +274,36 @@ public sealed partial class GunSystem : SharedGunSystem
         {
             FiredProjectiles = shotProjectiles,
         });
+
+        void CreateAndFireProjectiles(EntityUid ammoEnt, AmmoComponent ammoComp)
+        {
+            if (TryComp<ProjectileSpreadComponent>(ammoEnt, out var ammoSpreadComp))
+            {
+                var spreadEvent = new GunGetAmmoSpreadEvent(ammoSpreadComp.Spread);
+                RaiseLocalEvent(gunUid, ref spreadEvent);
+
+                var angles = LinearSpread(mapAngle - spreadEvent.Spread / 2,
+                    mapAngle + spreadEvent.Spread / 2, ammoSpreadComp.Count);
+
+                ShootOrThrow(ammoEnt, angles[0].ToVec(), gunVelocity, gun, gunUid, user);
+                shotProjectiles.Add(ammoEnt);
+
+                for (var i = 1; i < ammoSpreadComp.Count; i++)
+                {
+                    var newuid = Spawn(ammoSpreadComp.Proto, fromEnt);
+                    ShootOrThrow(newuid, angles[i].ToVec(), gunVelocity, gun, gunUid, user);
+                    shotProjectiles.Add(ammoEnt);
+                }
+            }
+            else
+            {
+                ShootOrThrow(ammoEnt, mapDirection, gunVelocity, gun, gunUid, user);
+                shotProjectiles.Add(ammoEnt);
+            }
+
+            MuzzleFlash(gunUid, ammoComp, mapDirection.ToAngle(), user);
+            Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
+        }
     }
 
     private void ShootOrThrow(EntityUid uid, Vector2 mapDirection, Vector2 gunVelocity, GunComponent gun, EntityUid gunUid, EntityUid? user)
