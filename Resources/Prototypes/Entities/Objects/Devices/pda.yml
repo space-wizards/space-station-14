@@ -1006,13 +1006,6 @@
     accentVColor: "#d7d7d0"
   - type: Icon
     state: pda-brigmedic
-  - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
-    preinstalled:
-    - CrewManifestCartridge
-    - NotekeeperCartridge
-    - NewsReaderCartridge
-    - WantedListCartridge
 
 - type: entity
   parent: ClownPDA
