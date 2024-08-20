@@ -1,11 +1,14 @@
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
+using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.CartridgeLoader;
 using Content.Server.CartridgeLoader.Cartridges;
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using System.Diagnostics.CodeAnalysis;
-using Content.Server.Access.Systems;
+using Content.Server.Interaction;
+using Content.Server.MassMedia.Components;
 using Content.Server.Popups;
+using Content.Server.Station.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CartridgeLoader;
@@ -13,20 +16,18 @@ using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.Database;
 using Content.Shared.MassMedia.Components;
 using Content.Shared.MassMedia.Systems;
-using Robust.Server.GameObjects;
-using Content.Server.MassMedia.Components;
-using Robust.Shared.Timing;
-using Content.Server.Station.Systems;
 using Content.Shared.Popups;
-using Content.Shared.StationRecords;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
-using Content.Server.Chat.Managers;
+using Robust.Shared.Timing;
 
 namespace Content.Server.MassMedia.Systems;
 
 public sealed class NewsSystem : SharedNewsSystem
 {
+    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
@@ -95,7 +96,7 @@ public sealed class NewsSystem : SharedNewsSystem
             return;
 
         var article = articles[msg.ArticleNum];
-        if (CheckDeleteAccess(article, ent, msg.Actor))
+        if (CanUse(msg.Actor, ent.Owner))
         {
             _adminLogger.Add(
                 LogType.Chat, LogImpact.Medium,
@@ -131,14 +132,14 @@ public sealed class NewsSystem : SharedNewsSystem
         if (!ent.Comp.PublishEnabled)
             return;
 
-        ent.Comp.PublishEnabled = false;
-        ent.Comp.NextPublish = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.PublishCooldown);
-
         if (!TryGetArticles(ent, out var articles))
             return;
 
-        if (!_accessReader.FindStationRecordKeys(msg.Actor, out _))
+        if (!CanUse(msg.Actor, ent.Owner))
             return;
+
+        ent.Comp.PublishEnabled = false;
+        ent.Comp.NextPublish = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.PublishCooldown);
 
         string? authorName = null;
         if (_idCardSystem.TryFindIdCard(msg.Actor, out var idCard))
@@ -305,21 +306,17 @@ public sealed class NewsSystem : SharedNewsSystem
         }
     }
 
-    private bool CheckDeleteAccess(NewsArticle articleToDelete, EntityUid device, EntityUid user)
+    private bool CanUse(EntityUid user, EntityUid console)
     {
-        if (TryComp<AccessReaderComponent>(device, out var accessReader) &&
-            _accessReader.IsAllowed(user, device, accessReader))
-            return true;
+        // This shouldn't technically be possible because of BUI but don't trust client.
+        if (!_interaction.InRangeUnobstructed(console, user))
+            return false;
 
-        if (articleToDelete.AuthorStationRecordKeyIds == null || articleToDelete.AuthorStationRecordKeyIds.Count == 0)
-            return true;
-
-        return _accessReader.FindStationRecordKeys(user, out var recordKeys)
-               && StationRecordsToNetEntities(recordKeys).Intersect(articleToDelete.AuthorStationRecordKeyIds).Any();
+        if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent))
+        {
+            return _accessReaderSystem.IsAllowed(user, console, accessReaderComponent);
+        }
+        return true;
     }
 
-    private ICollection<(NetEntity, uint)> StationRecordsToNetEntities(IEnumerable<StationRecordKey> records)
-    {
-        return records.Select(record => (GetNetEntity(record.OriginStation), record.Id)).ToList();
-    }
 }
