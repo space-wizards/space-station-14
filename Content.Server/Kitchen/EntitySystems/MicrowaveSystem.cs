@@ -102,6 +102,8 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<ActiveMicrowaveComponent, EntRemovedFromContainerMessage>(OnActiveMicrowaveRemove);
 
             SubscribeLocalEvent<ActivelyMicrowavedComponent, OnConstructionTemperatureEvent>(OnConstructionTemp);
+
+            SubscribeLocalEvent<FoodRecipeProviderComponent, GetSecretRecipesEvent>(OnGetSecretRecipes);
         }
 
         private void OnCookStart(Entity<ActiveMicrowaveComponent> ent, ref ComponentStartup args)
@@ -590,7 +592,10 @@ namespace Content.Server.Kitchen.EntitySystems
             }
 
             // Check recipes
-            List<FoodRecipePrototype> recipes = TryGetSecretRecipes(uid);
+            var getRecipesEv = new GetSecretRecipesEvent();
+            RaiseLocalEvent(uid, ref getRecipesEv);
+
+            List<FoodRecipePrototype> recipes = getRecipesEv.Recipes;
             recipes.AddRange(_recipeManager.Recipes);
             var portionedRecipe = recipes.Select(r =>
                 CanSatisfyRecipe(component, r, solidsDict, reagentDict)).FirstOrDefault(r => r.Item2 > 0);
@@ -698,25 +703,18 @@ namespace Content.Server.Kitchen.EntitySystems
         }
 
         /// <summary>
-        /// This is a helper method that tries to get secret recipes that the microwave might be capable of.
+        /// This event tries to get secret recipes that the microwave might be capable of.
         /// Currently, we only check the microwave itself, but in the future, the user might be able to learn recipes.
         /// </summary>
-        private List<FoodRecipePrototype> TryGetSecretRecipes(EntityUid uid)
+        private void OnGetSecretRecipes(Entity<FoodRecipeProviderComponent> ent, ref GetSecretRecipesEvent args)
         {
-            List<FoodRecipePrototype> secretRecipes = new();
-
-            if (TryComp<FoodRecipeProviderComponent>(uid, out var providerComp))
+            foreach (ProtoId<FoodRecipePrototype> recipeId in ent.Comp.ProvidedRecipes)
             {
-                foreach (ProtoId<FoodRecipePrototype> recipeId in providerComp.ProvidedRecipes)
+                if (_prototype.TryIndex(recipeId, out var recipeProto))
                 {
-                    if (_prototype.TryIndex(recipeId, out var recipeProto))
-                    {
-                        secretRecipes.Add(recipeProto);
-                    }
+                    args.Recipes.Add(recipeProto);
                 }
             }
-
-            return secretRecipes;
         }
 
         #region ui
