@@ -104,6 +104,32 @@
         # anyway it's just a quality of life thing.
         showEnts: True
 
+# Boards
+- type: entity
+  id: AsimovCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Crewsimov)
+  description: An electronics board containing the Crewsimov lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: Crewsimov
+
+- type: entity
+  id: CorporateCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Corporate)
+  description: An electronics board containing the Corporate lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: Corporate
+
+# Items
 - type: entity
   id: Intellicard
   name: Intellicard
@@ -160,6 +186,8 @@
           collection: MetalBreak
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: ApcPowerReceiver
+    powerLoad: 1000
   - type: StationAiCore
   - type: StationAiVision
   - type: InteractionOutline
@@ -204,6 +232,8 @@
   - type: Sprite
     # Once it's in a core it's pretty much an abstract entity at that point.
     visible: false
+  - type: SiliconLawProvider
+    laws: Crewsimov
   - type: SiliconLawBound
   - type: ActionGrant
     actions:

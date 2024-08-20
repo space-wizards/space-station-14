@@ -1,4 +1,3 @@
-using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -13,6 +12,6 @@ public sealed partial class SiliconLawUpdaterComponent : Component
     /// <summary>
     /// Entities to update
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public ComponentRegistry Components;
 }

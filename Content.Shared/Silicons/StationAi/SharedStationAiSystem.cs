@@ -6,6 +6,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Power.Components;
 using Content.Shared.StationAi;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -33,22 +34,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private   readonly StationAiVisionSystem _vision = default!;
 
     /*
-     * TODO: Double-check positronic interactions didn't break
-     *
-     * Camera lights need fixing apparently the toggle is only if they go in range or some shit
-     * Need non-hard fixture on lights
-     * Probably proximitytrigger with whitelist, use slimpoweredlightcomponent and toggle it on / off
-     *
-     * Upload console
-     * Sensor overlay to see job
-     * Check the
-     * crew monitoring console
-     * crew manifest
-        alert console (donno if we have that yet)
-        button jump towards the ai core
-        call shuttle
-        make annoucement
-        state laws
+     - AI core announcement on latejoin
+     - Test posibrain interactions
      */
 
     // StationAiHeld is added to anything inside of an AI core.
@@ -83,6 +70,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiCoreComponent, EntRemovedFromContainerMessage>(OnAiRemove);
         SubscribeLocalEvent<StationAiCoreComponent, MapInitEvent>(OnAiMapInit);
         SubscribeLocalEvent<StationAiCoreComponent, ComponentShutdown>(OnAiShutdown);
+        SubscribeLocalEvent<StationAiCoreComponent, PowerChangedEvent>(OnCorePower);
     }
 
     private void OnAiAccessible(Entity<StationAiOverlayComponent> ent, ref AccessibleOverrideEvent args)
@@ -220,19 +208,46 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         ent.Comp.RemoteEntity = null;
     }
 
+    private void OnCorePower(Entity<StationAiCoreComponent> ent, ref PowerChangedEvent args)
+    {
+        // TODO: I think in 13 they just straightup die so maybe implement that
+        if (args.Powered)
+        {
+            if (!SetupEye(ent))
+                return;
+
+            AttachEye(ent);
+        }
+        else
+        {
+            ClearEye(ent);
+        }
+    }
+
     private void OnAiMapInit(Entity<StationAiCoreComponent> ent, ref MapInitEvent args)
     {
         SetupEye(ent);
         AttachEye(ent);
     }
 
-    private void SetupEye(Entity<StationAiCoreComponent> ent)
+    private bool SetupEye(Entity<StationAiCoreComponent> ent)
     {
+        if (ent.Comp.RemoteEntity != null)
+            return false;
+
         if (ent.Comp.RemoteEntityProto != null)
         {
             ent.Comp.RemoteEntity = SpawnAtPosition(ent.Comp.RemoteEntityProto, Transform(ent.Owner).Coordinates);
             Dirty(ent);
         }
+
+        return true;
+    }
+
+    private void ClearEye(Entity<StationAiCoreComponent> ent)
+    {
+        QueueDel(ent.Comp.RemoteEntity);
+        ent.Comp.RemoteEntity = null;
     }
 
     private void AttachEye(Entity<StationAiCoreComponent> ent)

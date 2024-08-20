@@ -17,6 +17,7 @@ using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
@@ -251,9 +252,9 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     /// <summary>
     /// Extract all the laws from a lawset's prototype ids.
     /// </summary>
-    public SiliconLawset GetLawset(string lawset)
+    public SiliconLawset GetLawset(ProtoId<SiliconLawsetPrototype> lawset)
     {
-        var proto = _prototype.Index<SiliconLawsetPrototype>(lawset);
+        var proto = _prototype.Index(lawset);
         var laws = new SiliconLawset()
         {
             Laws = new List<SiliconLaw>(proto.Laws.Count)
@@ -280,6 +281,21 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         component.Lawset.Laws = newLaws;
         NotifyLawsChanged(target);
+    }
+
+    protected override void OnUpdaterInsert(Entity<SiliconLawUpdaterComponent> ent, ref EntInsertedIntoContainerMessage args)
+    {
+        // TODO: Prediction dump this
+        if (!TryComp(args.Entity, out SiliconLawProviderComponent? provider))
+            return;
+
+        var lawset = GetLawset(provider.Laws).Laws;
+        var query = EntityManager.CompRegistryQueryEnumerator(ent.Comp.Components);
+
+        while (query.MoveNext(out var update))
+        {
+            SetLaws(lawset, update);
+        }
     }
 }
 

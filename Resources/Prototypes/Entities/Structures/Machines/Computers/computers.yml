@@ -1135,6 +1135,28 @@
       state: aiupload
     - map: [ "computerLayerKeys" ]
       state: generic_keys
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+  - type: AccessReader
+    access: [ [ "ResearchDirector" ] ]
+  - type: Lock
+    unlockOnClick: false
   - type: SiliconLawUpdater
+    components:
+    - type: StationAiHeld
+  - type: ItemSlotsLock
+    slots:
+    - circuit_holder
+  - type: ItemSlotRequiresPower
   - type: ItemSlots
+    slots:
+      circuit_holder:
+        name: circuit-holder
+        insertSuccessPopup: silicon-laws-updated
+        whitelist:
+          components:
+          - SiliconLawProvider
+          - Item
   - type: ContainerContainer
+    containers:
+      circuit_holder: !type:ContainerSlot
