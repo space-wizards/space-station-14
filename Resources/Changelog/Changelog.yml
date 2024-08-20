@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Cojoke-dot
   changes:
-  - message: Medibots will now occasionally talk
-    type: Tweak
-  id: 6672
-  time: '2024-06-03T12:05:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28543
-- author: Cojoke-dot
-  changes:
   - message: The player can now use the gasping emote
     type: Tweak
   id: 6673
@@ -3862,3 +3855,10 @@
   id: 7171
   time: '2024-08-20T04:20:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28956
+- author: Cojoke-dot
+  changes:
+  - message: Devouring bodies now reduces bleed for Space Dragons.
+    type: Tweak
+  id: 7172
+  time: '2024-08-20T10:57:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29661
