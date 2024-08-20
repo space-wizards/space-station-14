@@ -153,6 +153,8 @@
   - type: PhysicalComposition #you can't just pass up some free plastic!
     materialComposition:
       Plastic: 100
+  - type: StaticPrice
+    price: 25
 
 - type: entity
   parent: ClothingHeadBase
