@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: Bullets no longer hit crates unless directly clicked on while shooting.
-    type: Tweak
-  - message: Bullets now pass over mobs that are lying down unless directly clicked
-      on while shooting.
-    type: Tweak
-  id: 6674
-  time: '2024-06-03T13:04:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28072
 - author: AJCM-git
   changes:
   - message: Ninja stealth mode, stealth boxes and everything with stealth won't show
@@ -3862,3 +3852,10 @@
   id: 7173
   time: '2024-08-20T21:12:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30835
+- author: Repo
+  changes:
+  - message: Added copy to clipboard button for connection failure UI.
+    type: Add
+  id: 7174
+  time: '2024-08-20T21:31:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30760
