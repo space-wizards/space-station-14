@@ -395,11 +395,11 @@
     impactEffect: BulletImpactEffectKinetic
     damage:
       types:
-        Blunt: 15
-        Structural: 10
+        Blunt: 25
+        Structural: 30
   # Short lifespan
   - type: TimedDespawn
-    lifetime: 0.170 #the cost of infinite ammo. goes about 4~ tiles
+    lifetime: 0.4
   - type: GatheringProjectile
 
 - type: entity
