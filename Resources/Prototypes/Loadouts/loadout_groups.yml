@@ -570,6 +570,7 @@
   loadouts:
   - BrownShoes
   - CargoWinterBoots
+  - SalvageBoots
 
 - type: loadoutGroup
   id: CargoTechnicianHead
