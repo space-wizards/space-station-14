@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: RenQ
-  changes:
-  - message: The moths now have their own "death grasp"
-    type: Add
-  id: 6677
-  time: '2024-06-03T18:48:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28409
 - author: lzk228
   changes:
   - message: Borgs ID now will be shown in LogProbe instead of Unknown.
@@ -3859,3 +3852,11 @@
   id: 7176
   time: '2024-08-21T18:33:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31284
+- author: Beck Thompson
+  changes:
+  - message: Nuclear authentication code folder that spawns the nuclear authentication
+      codes when opened.
+    type: Add
+  id: 7177
+  time: '2024-08-21T18:53:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31272
