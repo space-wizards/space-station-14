@@ -1,34 +1,33 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.Ghost.Roles;
+using Content.Shared.GameTicking;
 using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Roles;
 
 public abstract class SharedRoleSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedMindSystem _minds = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-
-    // TODO please lord make role entities
-    private readonly HashSet<Type> _antagTypes = new();
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly SharedGameTicker _gameTicker = default!;
+    [Dependency] private readonly SharedMindSystem _minds = default!;
+    [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     private JobRequirementOverridePrototype? _requirementOverride;
 
     public override void Initialize()
     {
-        // TODO make roles entities
-        SubscribeLocalEvent<JobComponent, MindGetAllRolesEvent>(OnJobGetAllRoles);
         Subs.CVar(_cfg, CCVars.GameRoleTimerOverride, SetRequirementOverride, true);
     }
 
@@ -44,124 +43,116 @@ public abstract class SharedRoleSystem : EntitySystem
             Log.Error($"Unknown JobRequirementOverridePrototype: {value}");
     }
 
-    private void OnJobGetAllRoles(EntityUid uid, JobComponent component, ref MindGetAllRolesEvent args)
-    {
-        var name = "game-ticker-unknown-role";
-        var prototype = "";
-        string? playTimeTracker = null;
-        if (component.Prototype != null && _prototypes.TryIndex(component.Prototype, out JobPrototype? job))
-        {
-            name = job.Name;
-            prototype = job.ID;
-            playTimeTracker = job.PlayTimeTracker;
-        }
-
-        name = Loc.GetString(name);
-
-        args.Roles.Add(new RoleInfo(component, name, false, playTimeTracker, prototype));
-    }
-
-    protected void SubscribeAntagEvents<T>() where T : AntagonistRoleComponent
-    {
-        SubscribeLocalEvent((EntityUid _, T component, ref MindGetAllRolesEvent args) =>
-        {
-            var name = "game-ticker-unknown-role";
-            var prototype = "";
-            if (component.PrototypeId != null && _prototypes.TryIndex(component.PrototypeId, out AntagPrototype? antag))
-            {
-                name = antag.Name;
-                prototype = antag.ID;
-            }
-            name = Loc.GetString(name);
-
-            args.Roles.Add(new RoleInfo(component, name, true, null, prototype));
-        });
-
-        SubscribeLocalEvent((EntityUid _, T _, ref MindIsAntagonistEvent args) => { args.IsAntagonist = true; args.IsExclusiveAntagonist |= typeof(T).TryGetCustomAttribute<ExclusiveAntagonistAttribute>(out _); });
-        _antagTypes.Add(typeof(T));
-    }
-
-    public void MindAddRoles(EntityUid mindId, ComponentRegistry components, MindComponent? mind = null, bool silent = false)
-    {
-        if (!Resolve(mindId, ref mind))
-            return;
-
-        EntityManager.AddComponents(mindId, components);
-        var antagonist = false;
-        foreach (var compReg in components.Values)
-        {
-            var compType = compReg.Component.GetType();
-
-            var comp = EntityManager.ComponentFactory.GetComponent(compType);
-            if (IsAntagonistRole(comp.GetType()))
-            {
-                antagonist = true;
-                break;
-            }
-        }
-
-        var mindEv = new MindRoleAddedEvent(silent);
-        RaiseLocalEvent(mindId, ref mindEv);
-
-        var message = new RoleAddedEvent(mindId, mind, antagonist, silent);
-        if (mind.OwnedEntity != null)
-        {
-            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
-        }
-
-        _adminLogger.Add(LogType.Mind, LogImpact.Low,
-            $"Role components {string.Join(components.Keys.ToString(), ", ")} added to mind of {_minds.MindOwnerLoggingString(mind)}");
-    }
-
-    public void MindAddRole(EntityUid mindId, Component component, MindComponent? mind = null, bool silent = false)
-    {
-        if (!Resolve(mindId, ref mind))
-            return;
-
-        if (HasComp(mindId, component.GetType()))
-        {
-            throw new ArgumentException($"We already have this role: {component}");
-        }
-
-        EntityManager.AddComponent(mindId, component);
-        var antagonist = IsAntagonistRole(component.GetType());
-
-        var mindEv = new MindRoleAddedEvent(silent);
-        RaiseLocalEvent(mindId, ref mindEv);
-
-        var message = new RoleAddedEvent(mindId, mind, antagonist, silent);
-        if (mind.OwnedEntity != null)
-        {
-            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
-        }
-
-        _adminLogger.Add(LogType.Mind, LogImpact.Low,
-            $"'Role {component}' added to mind of {_minds.MindOwnerLoggingString(mind)}");
-    }
-
     /// <summary>
-    ///     Gives this mind a new role.
+    ///     Adds multiple mind roles to a mind
     /// </summary>
-    /// <param name="mindId">The mind to add the role to.</param>
-    /// <param name="component">The role instance to add.</param>
-    /// <typeparam name="T">The role type to add.</typeparam>
-    /// <param name="silent">Whether or not the role should be added silently</param>
-    /// <returns>The instance of the role.</returns>
-    /// <exception cref="ArgumentException">
-    ///     Thrown if we already have a role with this type.
-    /// </exception>
-    public void MindAddRole<T>(EntityUid mindId, T component, MindComponent? mind = null, bool silent = false) where T : IComponent, new()
+    /// <param name="mindId">The mind entity to add the role to</param>
+    /// <param name="roles">The list of mind roles to add</param>
+    /// <param name="mind">If the mind component is provided, it will be checked if it belongs to the mind entity</param>
+    /// <param name="silent">If true, no briefing will be generated upon receiving the mind role</param>
+    public void MindAddRoles(EntityUid mindId,
+        List<ProtoId<EntityPrototype>>? roles,
+        MindComponent? mind = null,
+        bool silent = false)
     {
-        if (!Resolve(mindId, ref mind))
+        if (roles is null || roles.Count == 0)
             return;
 
-        if (HasComp<T>(mindId))
+        foreach (var proto in roles)
         {
-            throw new ArgumentException($"We already have this role: {typeof(T)}");
+            MindAddRole(mindId, proto, mind, silent);
+        }
+    }
+
+    /// <summary>
+    ///     Adds a mind role to a mind
+    /// </summary>
+    /// <param name="mindId">The mind entity to add the role to</param>
+    /// <param name="protoId">The mind role to add</param>
+    /// <param name="mind">If the mind component is provided, it will be checked if it belongs to the mind entity</param>
+    /// <param name="silent">If true, no briefing will be generated upon receiving the mind role</param>
+    public void MindAddRole(EntityUid mindId,
+        ProtoId<EntityPrototype> protoId,
+        MindComponent? mind = null,
+        bool silent = false)
+    {
+        if (protoId == "MindRoleJob")
+            MindAddRoleDo(mindId, protoId, mind, silent, ""); //TODO:ERRANT prorotypes amirite
+        else
+            MindAddRoleDo(mindId, protoId, mind, silent);
+    }
+
+    /// <summary>
+    /// Adds a Job mind role with the specified job prototype
+    /// </summary>
+    /// /// <param name="mindId">The mind entity to add the job role to</param>
+    /// <param name="mind">If the mind component is provided, it will be checked if it belongs to the mind entity</param>
+    /// <param name="silent">If true, no briefing will be generated upon receiving the mind role</param>
+    /// <param name="jobPrototype">The Job prototype for the new role</param>
+    public void MindAddJobRole(EntityUid mindId, //TODO:ERRANT merge the two prototypes and make them both assignable
+        MindComponent? mind = null,
+        bool silent = false,
+        string? jobPrototype = null)
+    {
+        MindAddRoleDo(mindId, "MindRoleJob", mind, silent, jobPrototype);
+    }
+
+    /// <summary>
+    ///     Creates a Mind Role
+    /// </summary>
+    private void MindAddRoleDo(EntityUid mindId,
+        ProtoId<EntityPrototype> protoId,
+        MindComponent? mind = null,
+        bool silent = false,
+        string? jobPrototype = null)
+    {
+        if (!Resolve(mindId, ref mind))
+        {
+            Log.Error($"Failed to add role {protoId} to mind {mindId} : Mind does not match provided mind component");
+            return;
         }
 
-        AddComp(mindId, component);
-        var antagonist = IsAntagonistRole<T>();
+        var antagonist = false;
+
+        //TODO:ERRANT what if it already has that role prototype?
+        //It should be modified instead
+        // Does that matter for anything other than Job?
+
+        if (!_prototypes.TryIndex(protoId, out _))
+        {
+            Log.Error($"Failed to add role {protoId} to mind {mindId} : Role prototype does not exist");
+            return;
+        }
+
+        var mindRoleId = Spawn(protoId, MapCoordinates.Nullspace); //TODO:ERRANT Why is this not visible for the client
+        EnsureComp<MindRoleComponent>(mindRoleId);
+        var mindRoleComp = Comp<MindRoleComponent>(mindRoleId);
+
+        mindRoleComp.Created = _gameTicker.RoundDuration();
+        mindRoleComp.Mind = (mindId,mind);
+        if (jobPrototype is not null)
+        {
+            mindRoleComp.JobPrototype = jobPrototype;
+            EnsureComp<JobRoleComponent>(mindRoleId);
+        }
+
+        if (mindRoleComp.Antag || mindRoleComp.ExclusiveAntag)
+            antagonist = true;
+
+        mind.MindRoles.Add(mindRoleId);
+
+
+
+        //Anti frustration debug feature  TODO:ERRANT Delete this when done
+        // No, seriously, REMOVE THIS it breaks tests
+        // Welp, test was rigged from the start
+        TryComp<MindContainerComponent>(mind.OwnedEntity, out var mindCont);
+        if (mindCont is not null && mind.OwnedEntity is not null)
+        {
+            mindCont.MindRoles.Add(mindRoleId);
+        }
+
+
 
         var mindEv = new MindRoleAddedEvent(silent);
         RaiseLocalEvent(mindId, ref mindEv);
@@ -172,94 +163,316 @@ public abstract class SharedRoleSystem : EntitySystem
             RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
         }
 
-        _adminLogger.Add(LogType.Mind, LogImpact.Low,
-            $"'Role {typeof(T).Name}' added to mind of {_minds.MindOwnerLoggingString(mind)}");
+        _adminLogger.Add(LogType.Mind,
+            LogImpact.Low,
+            $"Role {protoId.ToString()} added to mind of {_minds.MindOwnerLoggingString(mind)}");
     }
 
     /// <summary>
-    ///     Removes a role from this mind.
+    ///     Removes all instances of a specific role from this mind.
     /// </summary>
     /// <param name="mindId">The mind to remove the role from.</param>
     /// <typeparam name="T">The type of the role to remove.</typeparam>
-    /// <exception cref="ArgumentException">
-    ///     Thrown if we do not have this role.
-    /// </exception>
-    public void MindRemoveRole<T>(EntityUid mindId) where T : IComponent
+    /// <exception cref="ArgumentException">Thrown if the mind does not exist or does not have this role.</exception>
+    /// <returns>Returns False if there was something wrong with the mind or the removal. True if successful</returns>>
+    public bool MindRemoveRole<T>(EntityUid mindId) where T : IComponent
     {
-        if (!RemComp<T>(mindId))
+        if (!TryComp<MindComponent>(mindId, out var mind) )
+            throw new ArgumentException($"{mindId} does not exist or does not have mind component");
+
+        var found = false;
+        var antagonist = false;
+        var delete = new List<EntityUid>();
+        foreach (var role in mind.MindRoles)
         {
-            throw new ArgumentException($"We do not have this role: {typeof(T)}");
+            if (!HasComp<T>(role))
+                continue;
+
+            var roleComp = Comp<MindRoleComponent>(role);
+            antagonist = roleComp.Antag;
+            _entityManager.DeleteEntity(role);
+
+            delete.Add(role);
+            found = true;
+
         }
 
-        var mind = Comp<MindComponent>(mindId);
-        var antagonist = IsAntagonistRole<T>();
+        foreach (var role in delete)
+        {
+            mind.MindRoles.Remove(role);
+
+
+            // debug only? //TODO:ERRANT Delete this when done
+            TryComp<MindContainerComponent>(mind.OwnedEntity, out var mindCont);
+            if (mindCont is not null)
+            {
+                mindCont.MindRoles.Remove(role);
+                if (mind.OwnedEntity is not null)
+                {
+                    Dirty(mind.OwnedEntity.Value, mindCont );
+                }
+            }
+            else
+            {
+                Log.Error($"Error code Shiny Umbreon");
+            }
+            // end of debug
+
+
+
+        }
+
+        if (!found)
+        {
+            throw new ArgumentException($"{mindId} does not have this role: {typeof(T)}");
+        }
+
         var message = new RoleRemovedEvent(mindId, mind, antagonist);
 
         if (mind.OwnedEntity != null)
         {
             RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
         }
-        _adminLogger.Add(LogType.Mind, LogImpact.Low,
+        _adminLogger.Add(LogType.Mind,
+            LogImpact.Low,
             $"'Role {typeof(T).Name}' removed from mind of {_minds.MindOwnerLoggingString(mind)}");
-    }
-
-    public bool MindTryRemoveRole<T>(EntityUid mindId) where T : IComponent
-    {
-        if (!MindHasRole<T>(mindId))
-            return false;
-
-        MindRemoveRole<T>(mindId);
         return true;
     }
 
-    public bool MindHasRole<T>(EntityUid mindId) where T : IComponent
+    /// <summary>
+    /// Finds and removes all mind roles of a specific type
+    /// </summary>
+    /// <param name="mindId">The mind entity</param>
+    /// <typeparam name="T">The type of the role to remove.</typeparam>
+    /// <returns>True if the role existed and was removed</returns>
+    public bool MindTryRemoveRole<T>(EntityUid mindId) where T : IComponent
     {
-        DebugTools.Assert(HasComp<MindComponent>(mindId));
-        return HasComp<T>(mindId);
-    }
+        if (!MindHasRole<T>(mindId))
+        {
+            Log.Warning($"Failed to remove role {typeof(T)} from {mindId} : mind does not have role ");
+            return false;
+        }
 
-    public List<RoleInfo> MindGetAllRoles(EntityUid mindId)
-    {
-        DebugTools.Assert(HasComp<MindComponent>(mindId));
-        var ev = new MindGetAllRolesEvent(new List<RoleInfo>());
-        RaiseLocalEvent(mindId, ref ev);
-        return ev.Roles;
-    }
-
-    public bool MindIsAntagonist(EntityUid? mindId)
-    {
-        if (mindId == null)
+        if (typeof(T) == typeof(MindRoleComponent))
             return false;
 
-        DebugTools.Assert(HasComp<MindComponent>(mindId));
-        var ev = new MindIsAntagonistEvent();
-        RaiseLocalEvent(mindId.Value, ref ev);
-        return ev.IsAntagonist;
+        return MindRemoveRole<T>(mindId);
+    }
+
+    /// <summary>
+    /// Finds and outputs the first mind role of a specific type
+    /// </summary>
+    /// <param name="mindId">The mind entity</param>
+    /// <typeparam name="T">The type of the role to find.</typeparam>
+    /// <param name="role">The output role</param>
+    /// <returns>True if the role is found</returns>
+    public bool MindHasRole<T>(EntityUid mindId, [NotNullWhen(true)] out Entity<MindRoleComponent>? role) where T : IComponent
+    {
+        role = null;
+
+        if (!TryComp<MindComponent>(mindId, out var mind))
+            return false;
+
+        var found = false;
+
+        foreach (var roleEnt in mind.MindRoles)
+        {
+            if (!HasComp<T>(roleEnt))
+                continue;
+
+            role = (roleEnt,Comp<MindRoleComponent>(roleEnt));
+            found = true;
+            break;
+        }
+
+        return found;
+    }
+
+    /// <summary>
+    /// Finds and outputs the first mind role of a specific type
+    /// </summary>
+    /// <param name="mindId">The mind entity</param>
+    /// <param name="type">The Type to look for</param>
+    /// <param name="role">The output role</param>
+    /// <returns>True if the role is found</returns>
+    public bool MindHasRole(EntityUid mindId,
+        Type type,
+        [NotNullWhen(true)] out Entity<MindRoleComponent>? role)
+    {
+        role = null;
+        // All MindRoles have this component, it would just return the first one.
+        // Order might not be what is expected.
+        // Better to report null
+        if (type == Type.GetType("MindRoleComponent"))
+        {
+            Log.Error($"Something attempted to query mind role 'MindRoleComponent' on mind {mindId}. This component is present on every single mind role.");
+            return false;
+        }
+
+        if (!TryComp<MindComponent>(mindId, out var mind))
+            return false;
+
+        var found = false;
+
+        foreach (var roleEnt in mind.MindRoles)
+        {
+            if (!HasComp(roleEnt, type))
+                continue;
+
+            role = (roleEnt,Comp<MindRoleComponent>(roleEnt));
+            found = true;
+            break;
+        }
+
+        return found;
+    }
+
+    /// <summary>
+    /// Finds the first mind role of a specific type
+    /// </summary>
+    /// <param name="mindId">The mind entity</param>
+    /// <typeparam name="T">The type of the role to find.</typeparam>
+    /// <returns>True if the role is found</returns>
+    public bool MindHasRole<T>(EntityUid mindId) where T : IComponent
+    {
+        return MindHasRole<T>(mindId, out _);
+    }
+
+    /// <summary>
+    /// Returns the first mind role of a specific type
+    /// </summary>
+    /// <param name="mindId">The mind entity</param>
+    /// <returns>Entity Component of the mind role</returns>
+    public Entity<MindRoleComponent>? MindGetRole<T>(EntityUid mindId) where T : IComponent
+    {
+        Entity<MindRoleComponent>? result = null;
+
+        var mind = Comp<MindComponent>(mindId);
+
+        foreach (var uid in mind.MindRoles)
+        {
+            if (HasComp<T>(uid) && TryComp<MindRoleComponent>(uid, out var comp))
+                result = (uid,comp);
+        }
+        return result;
+    }
+
+    /// <summary>
+    /// Reads all Roles of a mind Entity and returns their data as RoleInfo
+    /// </summary>
+    /// <param name="mindId">The mind entity</param>
+    /// <returns>RoleInfo list</returns>
+    public List<RoleInfo> MindGetAllRoleInfo(EntityUid mindId)
+    {
+        var roleInfo = new List<RoleInfo>();
+
+        if (!TryComp<MindComponent>(mindId, out var mind))
+            return roleInfo;
+
+        foreach (var role in mind.MindRoles)
+        {
+            var valid = false;
+            var name = "game-ticker-unknown-role";
+            var prototype = "";
+           string? playTimeTracker = null;
+
+            var comp = Comp<MindRoleComponent>(role);
+            if (comp.AntagPrototype is not null)
+            {
+                prototype = comp.AntagPrototype;
+            }
+
+            if (comp.JobPrototype is not null && comp.AntagPrototype is null)
+            {
+                prototype = comp.JobPrototype;
+                if (_prototypes.TryIndex(comp.JobPrototype, out var job))
+                {
+                    playTimeTracker = job.PlayTimeTracker;
+                    name = job.Name;
+                    valid = true;
+                }
+                else
+                {
+                    Log.Error($" Mind Role Prototype '{role.Id}' contains invalid Job prototype: '{comp.JobPrototype}'");
+                }
+            }
+            else if (comp.AntagPrototype is not null && comp.JobPrototype is null)
+            {
+                prototype = comp.AntagPrototype;
+                if (_prototypes.TryIndex(comp.AntagPrototype, out var antag))
+                {
+                    name = antag.Name;
+                    valid = true;
+                }
+                else
+                {
+                    Log.Error($" Mind Role Prototype '{role.Id}' contains invalid Antagonist prototype: '{comp.AntagPrototype}'");
+                }
+            }
+            else if (comp.JobPrototype is not null && comp.AntagPrototype is not null)
+            {
+                //TODO:ERRANT merge the two prototypes
+                Log.Error($" Mind Role Prototype '{role.Id}' contains both Job and Antagonist prototypes");
+            }
+
+            if (valid)
+                roleInfo.Add(new RoleInfo(name, comp.Antag || comp.ExclusiveAntag , playTimeTracker, prototype));
+        }
+        return roleInfo;
+    }
+
+    /// <summary>
+    /// Does this mind possess an antagonist role
+    /// </summary>
+    /// <param name="mindId">The mind entity</param>
+    /// <returns>True if the mind possesses any antag roles</returns>
+    public bool MindIsAntagonist(EntityUid? mindId)
+    {
+        if (mindId is null)
+        {
+            Log.Warning($"Antagonist status of mind entity {mindId} could not be determined - mind entity not found");
+            return false;
+        }
+
+        return CheckAntagonistStatus(mindId.Value).Item1;
     }
 
     /// <summary>
     /// Does this mind possess an exclusive antagonist role
     /// </summary>
     /// <param name="mindId">The mind entity</param>
-    /// <returns>True if the mind possesses an exclusive antag role</returns>
+    /// <returns>True if the mind possesses any exclusive antag roles</returns>
     public bool MindIsExclusiveAntagonist(EntityUid? mindId)
     {
-        if (mindId == null)
+        if (mindId is null)
+        {
+            Log.Warning($"Antagonist status of mind entity {mindId} could not be determined - mind entity not found");
             return false;
+        }
 
-        var ev = new MindIsAntagonistEvent();
-        RaiseLocalEvent(mindId.Value, ref ev);
-        return ev.IsExclusiveAntagonist;
+        return CheckAntagonistStatus(mindId.Value).Item2;
     }
 
-    public bool IsAntagonistRole<T>()
-    {
-        return _antagTypes.Contains(typeof(T));
-    }
+   private (bool, bool) CheckAntagonistStatus(EntityUid mindId)
+   {
+       if (!TryComp<MindComponent>(mindId, out var mind))
+       {
+           Log.Warning($"Antagonist status of mind entity {mindId} could not be determined - mind component not found");
+           return (false, false);
+       }
 
-    public bool IsAntagonistRole(Type component)
-    {
-        return _antagTypes.Contains(component);
+        var antagonist = false;
+        var exclusiveAntag = false;
+        foreach (var role in mind.MindRoles)
+        {
+            var roleComp = Comp<MindRoleComponent>(role);
+            if (roleComp.Antag || exclusiveAntag)
+                antagonist = true;
+            if (roleComp.ExclusiveAntag)
+                exclusiveAntag = true;
+        }
+
+        return (antagonist, exclusiveAntag);
     }
 
     /// <summary>

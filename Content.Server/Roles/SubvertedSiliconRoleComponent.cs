@@ -3,6 +3,6 @@
 namespace Content.Server.Roles;
 
 [RegisterComponent]
-public sealed partial class SubvertedSiliconRoleComponent : AntagonistRoleComponent
+public sealed partial class SubvertedSiliconRoleComponent : BaseMindRoleComponent //TODO:ERRANT Test this
 {
 }

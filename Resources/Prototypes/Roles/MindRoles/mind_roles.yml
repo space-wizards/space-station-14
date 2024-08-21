@@ -1,0 +1,169 @@
+- type: entity
+  id: BaseMindRole
+  name: mind role entity
+  description: mind role entity
+  abstract: true
+  components:
+  - type: MindRole
+
+- type: entity
+  parent: BaseMindRole
+  id: BaseMindRoleAntag
+  abstract: true
+  components:
+  - type: MindRole
+    antag: true
+
+#Observer
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleObserver
+  components:
+  - type: MindRole
+  - type: ObserverRole
+
+#Observer
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleGhostMarker
+  components:
+  - type: MindRole
+  - type: GhostRoleMarkerRole
+
+# The Job MindRole holds the mob's Job prototype
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleJob
+  name: mind-role-job-name
+  description: mind-role-job-description
+  components:
+  - type: MindRole
+
+# Dragon
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleDragon
+  name: mind-role-dragon-name
+  description: mind-role-dragon-description
+  components:
+  - type: MindRole
+    antagPrototype: Dragon
+  - type: DragonRole
+  - type: RoleBriefing
+    briefing: dragon-role-briefing
+
+# Ninja
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleNinja
+  name: mind-role-ninja-name
+  description: mind-role-ninja-description
+  components:
+  - type: MindRole
+    antagPrototype: SpaceNinja
+  - type: NinjaRole
+
+# Nukies
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleNukeops
+  name: mind-role-nukeops-name
+  description: mind-role-nukeops-description
+  components:
+  - type: MindRole
+    antagPrototype: Nukeops
+  - type: NukeopsRole
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleNukeopsMedic
+  name: mind-role-nukeops-medic-name
+  description: mind-role-nukeops-medic-description
+  components:
+  - type: MindRole
+    antagPrototype: NukeopsMedic
+  - type: NukeopsRole
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleNukeopsCommander
+  name: mind-role-nukeops-commander-name
+  description: mind-role-nukeops-commander-description
+  components:
+  - type: MindRole
+    antagPrototype: NukeopsCommander
+  - type: NukeopsRole
+
+# Revolutionaries
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleHeadRevolutionary
+  name: mind-role-head-revolutionary-name
+  description: mind-role-head-revolutionary-description
+  components:
+  - type: MindRole
+    antagPrototype: HeadRev
+  - type: RevolutionaryRole
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleRevolutionary
+  name: mind-role-revolutionary-name
+  description: mind-role-revolutionary-description
+  components:
+  - type: MindRole
+    antagPrototype: Rev
+  - type: RevolutionaryRole
+
+# Thief
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleThief
+  name: mind-role-thief-name
+  description: mind-role-thief-description
+  components:
+  - type: MindRole
+    antagPrototype: Thief
+  - type: ThiefRole
+
+# Traitors
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleTraitor
+  name: mind-role-traitor-name
+  description: mind-role-traitor-description
+  components:
+  - type: MindRole
+    antagPrototype: Traitor
+  - type: TraitorRole
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleTraitorSleeper
+  name: mind-role-traitor-sleeper-name
+  description: mind-role-traitor-sleeper-description
+  components:
+  - type: MindRole
+    antagPrototype: TraitorSleeper
+  - type: TraitorRole
+
+# Zombie Squad
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleInitialInfected
+  name: mind-role-initial-infected-name
+  description: mind-role-initial-infected-description
+  components:
+  - type: MindRole
+    antagPrototype: InitialInfected
+  - type: InitialInfectedRole
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleZombie
+  name: mind-role-zombie-name
+  description: mind-role-zombie-description
+  components:
+  - type: MindRole
+    antagPrototype: Zombie
+  - type: ZombieRole

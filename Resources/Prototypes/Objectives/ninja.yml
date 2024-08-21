@@ -9,7 +9,7 @@
     issuer: objective-issuer-spiderclan
   - type: RoleRequirement
     roles:
-      components:
+      mindRoles:
       - NinjaRole
 
 - type: entity

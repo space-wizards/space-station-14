@@ -30,7 +30,7 @@ public sealed class JobSystem : SharedJobSystem
         if (!_mind.TryGetSession(mindId, out var session))
             return;
 
-        if (!MindTryGetJob(mindId, out _, out var prototype))
+        if (!MindTryGetJob(mindId, out var prototype))
             return;
 
         _chat.DispatchServerMessage(session, Loc.GetString("job-greet-introduce-job-name",
@@ -42,11 +42,11 @@ public sealed class JobSystem : SharedJobSystem
         _chat.DispatchServerMessage(session, Loc.GetString("job-greet-supervisors-warning", ("jobName", prototype.LocalizedName), ("supervisors", Loc.GetString(prototype.Supervisors))));
     }
 
-    public void MindAddJob(EntityUid mindId, string jobPrototypeId)
+    public void MindAddJob(EntityUid mindId, string jobPrototypeId) //TODO:ERRANT test this (only used by a console comand?)
     {
         if (MindHasJobWithId(mindId, jobPrototypeId))
             return;
 
-        _roles.MindAddRole(mindId, new JobComponent { Prototype = jobPrototypeId });
+        _roles.MindAddJobRole(mindId, null, false, jobPrototypeId);
     }
 }

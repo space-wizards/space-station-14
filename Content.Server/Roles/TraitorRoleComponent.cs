@@ -3,6 +3,6 @@ using Content.Shared.Roles;
 namespace Content.Server.Roles;
 
 [RegisterComponent, ExclusiveAntagonist]
-public sealed partial class TraitorRoleComponent : AntagonistRoleComponent
+public sealed partial class TraitorRoleComponent : BaseMindRoleComponent
 {
 }
