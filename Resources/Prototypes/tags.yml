@@ -254,7 +254,7 @@
 
 - type: Tag
   id: CableCoil
-  
+
 - type: Tag
   id: Candle
 
@@ -363,6 +363,10 @@
 
 - type: Tag
   id: Chicken
+
+# Allowed to control someone wearing a Chef's hat if inside their hat.
+- type: Tag
+  id: ChefPilot
 
 - type: Tag
   id: ChemDispensable # container that can go into the chem dispenser
@@ -506,6 +510,9 @@
   id: DiscreteHealthAnalyzer #So construction recipes don't eat medical PDAs
 
 - type: Tag
+  id: DNASolutionScannable
+
+- type: Tag
   id: DockArrivals
 
 - type: Tag
@@ -539,7 +546,16 @@
   id: DrinkCan
 
 - type: Tag
+  id: DrinkCup
+
+- type: Tag
+  id: DrinkGlass
+
+- type: Tag
   id: DrinkSpaceGlue
+
+- type: Tag
+  id: Dropper
 
 - type: Tag
   id: Duck
@@ -617,6 +633,9 @@
   id: GasScrubber
 
 - type: Tag
+  id: GasTank
+
+- type: Tag
   id: GasVent
 
 - type: Tag
@@ -636,6 +655,9 @@
 
 - type: Tag
   id: Goat
+
+- type: Tag
+  id: Goliath
 
 - type: Tag
   id: GPS
@@ -753,6 +775,9 @@
 
 - type: Tag
   id: Igniter
+
+- type: Tag
+  id: Ingredient
 
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete
@@ -1096,6 +1121,9 @@
   id: SalvageExperiment
 
 - type: Tag
+  id: Scarf
+
+- type: Tag
   id: Screwdriver
 
 - type: Tag
@@ -1234,6 +1262,12 @@
 
 - type: Tag
   id: Toolbox
+
+- type: Tag
+  id: ToothSharkminnow
+
+- type: Tag
+  id: ToothSpaceCarp
 
 - type: Tag
   id: Torch

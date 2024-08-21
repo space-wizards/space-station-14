@@ -71,6 +71,7 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { ":/", "chatsan-uncertain" },
         { ":\\", "chatsan-uncertain" },
         { "lmao", "chatsan-laughs" },
+        { "lmfao", "chatsan-laughs" },
         { "lol", "chatsan-laughs" },
         { "lel", "chatsan-laughs" },
         { "kek", "chatsan-laughs" },

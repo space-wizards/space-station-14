@@ -1,6 +1,6 @@
 - type: entity
   id: ElectricalDisruptionKit
-  parent: BoxCardboard
+  parent: [BoxCardboard, BaseSyndicateContraband]
   name: electrical disruption kit
   suffix: Filled
   components:
@@ -12,7 +12,7 @@
           amount: 1
 
 - type: entity
-  parent: BoxVial
+  parent: [BoxVial, BaseSyndicateContraband]
   id: ChemicalSynthesisKit
   name: chemical synthesis kit
   description: A starter kit for the aspiring chemist, includes toxin and vestine for all your criminal needs!
@@ -33,7 +33,7 @@
       - id: SyringeStimulants
 
 - type: entity
-  parent: BoxCardboard
+  parent: [BoxCardboard, BaseSyndicateContraband]
   id: ThrowingKnivesKit
   name: throwing knives kit
   description: A set of 4 syndicate branded throwing knives, perfect for embedding into the body of your victims.
@@ -52,9 +52,9 @@
 
 - type: entity
   name: deathrattle implant box
-  parent: BoxCardboard
+  parent: [BoxCardboard, BaseSyndicateContraband]
   id: BoxDeathRattleImplants
-  description: Six deathrattle implants and handheld GPS devices for the whole squad.
+  description: Six deathrattle implants for the whole squad.
   components:
   - type: Sprite
     layers:
@@ -67,5 +67,19 @@
     contents:
       - id: DeathRattleImplanter
         amount: 6
-      - id: HandheldGPSBasic
-        amount: 6
+
+- type: entity
+  parent: [BoxCardboard, BaseSyndicateContraband]
+  id: CombatBakeryKit
+  name: combat bakery kit
+  description: A kit of clandestine baked weapons.
+  components:
+  - type: Sprite
+    layers:
+      - state: box_of_doom
+      - state: france
+  - type: StorageFill
+    contents:
+      - id: WeaponCroissant
+        amount: 2
+      - id: WeaponBaguette

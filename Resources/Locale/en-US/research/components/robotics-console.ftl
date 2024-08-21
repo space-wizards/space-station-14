@@ -16,4 +16,4 @@ robotics-console-locked-message = Controls locked, swipe ID.
 robotics-console-disable = Disable
 robotics-console-destroy = Destroy
 
-robotics-console-cyborg-destroyed = The cyborg {$name} has been remotely destroyed.
+robotics-console-cyborg-destroying = {$name} is being remotely detonated!

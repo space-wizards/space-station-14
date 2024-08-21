@@ -62,7 +62,7 @@
     containers:
       disposals: !type:Container
   - type: StaticPrice
-    price: 62
+    price: 70
   - type: PowerSwitch
 
 - type: entity
@@ -84,6 +84,7 @@
       enum.DisposalUnitUiKey.Key:
         type: DisposalUnitBoundUserInterface
   - type: RatKingRummageable
+  - type: RequireProjectileTarget
 
 - type: entity
   id: MailingUnit

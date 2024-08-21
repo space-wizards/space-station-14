@@ -10,11 +10,20 @@ These are terms you might encounter in-game.
 ## AOS
 Arrest on sight.
 
+## AA
+All Access, or an ID which has every access on the station. The captain is the only person who will have this kind of access under normal circumstances.
+
 ## Atmos
 Short for Atmospherics.
 
 ## Atmosian
 A term for Atmospheric Technicians, or generally anyone who spends most of their time or is particularly skilled with Atmospherics.
+
+## Bolted
+An airlock that will never change states. It will stay permanently open or permanently closed until it is unbolted. Closed and bolted airlocks have solid red lights.
+
+## Borg
+Short for cyborgs, player-controlled robots.
 
 ## Braindead
 Refers to a user who has disconnected from the game. Disconnected users may still reconnect to the server and assume control of their character again.
@@ -26,13 +35,13 @@ The main area of the security department. This is where prisoners are brought an
 Short for Captain.
 
 ## Cargonia
-Reference to cargo declaring independance. Against the rules.
-
-## CentCom/Central Command
-An administrative agency which oversees the Nanotrasen space station you inhabit.
+Reference to cargo declaring independence. Against the rules.
 
 ## CE
 Short for Chief Engineer, the head of the Engineering Department.
+
+## CentComm/Central Command
+An administrative agency which oversees the Nanotrasen space station you inhabit.
 
 ## CMO
 Short for Chief Medical Officer, the head of the Medical Department.
@@ -40,41 +49,74 @@ Short for Chief Medical Officer, the head of the Medical Department.
 ## Crit/Critical
 Refers to the health state at which you fall unconscious and unable to move. While in critical, your health slowly decays until you die, unless you happen to get outside assistance.
 
+## Emag
+  Refers to the Syndicate cryptographic sequencer. "Emagged" usually refers to airlocks or lockers that are bolted open, but also any other device hacked into by an Emag.
+
+## Emergency Access/EA
+  An airlock that can be opened by anyone, even without access or an ID at all. Airlocks that are set to emergency access have blinking yellow lights.
+
 ## ERT
 An Emergency Response Team. These may be dispatched by Central Command for a number of purposes.
 
-## HoP
-Short for Head of Personnel, head of the Service Department.
+## Flukie
+A portmanteau of "Fluke" and "Nukie" used to (usually derogatorily) refer to a team of Nuclear Operatives who fail their objective. May also appear as "Fluke Ops".
 
-## HoS
-Short for Head of Security.
-
-## Insuls
-Short for Insulated Gloves. These are the yellow gloves most often worn by Engineers. They are offer complete protection from getting electrocuted from shocked things. Vastily more effective than their budget variety.
-
-## KOS
-Kill on sight. Someone has commited such a serious crime that they are deemed not even worth arresting.
-
-## Perma
-Short for Permanent Brig. This is for the most serious crime and means that a prisoner will never be released. Most stations have a dedicated, seperate area of security for the permanent brig.
-
-## RD
-Short for Research Director, the head of the Science Department.
-
-## QM
-Short for Quartermaster, the head of the Cargo department.
+## God(s)
+An IC term representing a Server Administrator. CentComm is also sometimes used in this manner.
 
 ## Greytide/Greyshirt/Tider/Assistant
 Typically utilized to refer to a Passenger due to the color of their standard uniform, though this may be used to negatively refer to other crew members (not only passengers) who act unruly or commit various minor crimes.
 
-## God
-An IC term representing a Server Administrator. CentCom is also sometimes used in this manner.
+## HoP
+Short for Head of Personnel, head of the Service Department. Can also refer to the HoP's office, where IDs are given or changed.
+
+## HoS
+Short for Head of Security, head of the Security Department.
+
+## Insuls
+Short for Insulated Gloves. These are the yellow gloves most often worn by Engineers. They are offer complete protection from getting electrocuted from shocked things. Vastily more effective than their budget variety.
+
+## Jani
+Short for Janitor.
+
+## KOS
+Kill on sight. Someone has commited such a serious crime that they are deemed not even worth arresting.
+
+## Mats
+Materials. Usually steel, plastic, plasteel, glass, silver and gold.
+
+## Nanotrasen/NT
+Nanotrasen is the company which owns the space station you inhabit.
+
+## Newkie
+A portmanteau of "New" and "Nukie" used to refer to an inexperienced player in the role of a Nuclear Operative.
 
 ## Nukie
 A slang/shorthand term of a Nuclear Operative. May sometimes also appear as "Nuke Op".
 
-## Newkie
-A portmanteau of "New" and "Nukie" used to refer to an inexperienced player in the role of a Nuclear Operative.
+## Perma
+Short for Permanent Brig. This is for the most serious crime and means that a prisoner will never be released. Most stations have a dedicated, separate area of security for the permanent brig.
+
+## QM
+Short for Quartermaster, the head of the Cargo department.
+
+## RD
+Short for Research Director, the head of the Science Department.
+
+## Robust
+A word used to describe someone who is particularly adept in combat, or endured through a tough fight.
+
+## Salv
+Short for Salvage tech.
+
+## Sci
+Short for Science.
+
+## Sec
+Short for Security.
+
+## Secoff
+Short for Security Officer.
 
 ## Shift
 In-Character way to refer to rounds.
@@ -85,29 +127,26 @@ A shortening of the Singularity Engine. A Singulo can create infinite power for 
 ## Singuloose
 A Singularity that has grownth too much and breached it's containment. It will rip through the station causing massive damage.
 
+## Spacing
+An event which causes an area to lose air pressure, i.e. a hull breach.
+
+## Spess
+An intentional mis-spelling of "Space", sometimes used as a portmanteau of "space" and "mess". May also appear in words such as "Spessmen".
+
 ## SSD
 Short for Sudden Sleep Disorder or Space Sleep Disorder. This is an in-character way to refer to a player who has disconnected and is no longer responding.
 
 ## Syndie/Syndi/Syndicate
 A catch-all reference to anyone employed by the Syndicate. This ranges from (suspected) Syndicate Agents to Nuclear Operatives.
 
-## Flukie
-A portmanteau of "Fluke" and "Nukie" used to (usually derogatorily) refer to a team of Nuclear Operatives who fail their objective. May also appear as "Fluke Ops".
-
-## Nanotrasen/NT
-Nanotrasen is the company which owns the space station you inhabit.
-
-## Spess
-An intentional mis-spelling of "Space", sometimes used as a portmanteau of "space" and "mess". May also appear in words such as "Spessmen".
-
-## Spacing
-An event which causes an area to lose air pressure, i.e. a hull breach.
-
 ## TC
 A telecrystal, which is a currency used by Syndicate Agents to purchase restricted contraband such as weapons and other illegal equipment.
 
 ## Wardenloose
 A joke term referencing a Singuloose. A wardenloose is when the Warden is seen outside of the brig.
+
+## Xenoarchaeology
+Study of artifacts, usually performed by science.
 
 # Out-Of-Character Slang
 
@@ -125,8 +164,11 @@ Short for Antagonists, which are specifically picked individuals designed to dri
 ## Bwoink
 The noise made when an admin-help is received. Pray this isn't a ban.
 
-## Upstream
-The baseline version of the game. Any changes to Upstream will "flow" down to all other forks of the game. All official Wizard's Den servers work off of Upstream.
+## Ick Ock
+A phrase usually shouted in OOC when somebody reveals IC current round information, or "in-character, out-of-character".
+
+## LOOC/OOC
+Local out-of-character and (global) out-of-character respectively. They are text channels that allow players to talk to other players outside of roleplay. LOOC is enabled during rounds, while OOC is typically only on after the round ends.
 
 ## LRP
 Low Roleplay. Servers marked LRP typically have relaxed roleplaying rules.
@@ -137,10 +179,13 @@ Medium Roleplay. Servers marked MRP usually have a decent basis of roleplaying r
 ## HRP
 High Roleplay. Servers marked HRP generally have extensive rules on what is and is not constituted while playing a character. You are generally required to act as your character would, have a character backstory, and follow protocol on the station. Some HRP servers may create their own lore or settings to further facilitate the type of server they wish to host.
 
-##Self-Antag
+## Self-Antag
 A term for a player who engages in antagonist-like activity without actually being an antagonist. This encompasses a wide variety of behavior, but is typically used to describe annoying behavior or actions which are greatly detrimental to other players for no purpose. Self-antagonism is a bannable offense. Sometimes used in IC. DO NOT DO THIS.
 
-## Validhunting
+## Upstream
+The baseline version of the game. Any changes to Upstream will "flow" down to all other forks of the game. All official Wizard's Den servers work off of Upstream.
+
+## Validhunter
 A player who hunts down "valids", as in people that are valid to kill, even though this person isn't security.
 
 </Document>

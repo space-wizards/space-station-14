@@ -1,60 +1,69 @@
 - type: entity
-  name: captain's sabre
   parent: BaseItem
+  id: BaseSword
+  abstract: true
+  components:
+  - type: Sharp
+  - type: Execution
+    doAfterDuration: 4.0
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+  - type: Sprite
+    state: icon
+  - type: Item
+    size: Normal
+  - type: Utensil
+    types:
+      - Knife
+
+- type: entity
+  name: captain's sabre
+  parent: [ BaseSword, BaseCommandContraband ]
   id: CaptainSabre
   description: A ceremonial weapon belonging to the captain of the station.
   components:
-  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
-    state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: -135
     attackRate: 1.5
     damage:
       types:
-        Slash: 15
+        Slash: 17 #cmon, it has to be at least BETTER than the rest.
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Reflect
-    enabled: true
-    # Design intent: a robust captain or tot can sacrifice movement to make the most of this weapon, but they have to
-    # really restrict themselves to walking speed or less.
-    reflectProb: 0.5
-    velocityBeforeNotMaxProb: 1.0
-    velocityBeforeMinProb: 3.0
-    minReflectProb: 0.1
+    reflectProb: .1
     spread: 90
   - type: Item
-    size: Normal
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
   - type: Tag
     tags:
     - CaptainSabre
   - type: DisarmMalus
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-inanimate
+    weight: 0.0002 # 5,000 times less likely than 1 regular animal
+  - type: PirateAccent
+    # not putting a BlockMovement component here cause that's funny.
 
 - type: entity
   name: katana
-  parent: BaseItem
+  parent: [ BaseSword, BaseMajorContraband ]
   id: Katana
   description: Ancient craftwork made with not so ancient plasteel.
   components:
-  - type: Sharp
   - type: Tag
     tags:
     - Katana
   - type: Sprite
     sprite: Objects/Weapons/Melee/katana.rsi
-    state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: -135
     damage:
       types:
         Slash: 15
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
-    size: Normal
     sprite: Objects/Weapons/Melee/katana.rsi
   - type: DisarmMalus
 
@@ -66,14 +75,12 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/energykatana.rsi
-    state: icon
   - type: MeleeWeapon
     wideAnimationRotation: -60
     damage:
       types:
         Slash: 30
   - type: Item
-    size: Normal
     sprite: Objects/Weapons/Melee/energykatana.rsi
   - type: EnergyKatana
   - type: DashAbility
@@ -88,47 +95,37 @@
     - Back
     - Belt
   - type: Reflect
-    reflectProb: 0.3
-    velocityBeforeNotMaxProb: 6.0 # don't punish ninjas for being ninjas
-    velocityBeforeMinProb: 10.0
 
 - type: entity
   name: machete
-  parent: BaseItem
+  parent: [ BaseSword, BaseMajorContraband ]
   id: Machete
   description: A large, vicious looking blade.
   components:
-  - type: Sharp
   - type: Tag
     tags:
     - Machete
   - type: Sprite
     sprite: Objects/Weapons/Melee/machete.rsi
-    state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: -135
     damage:
       types:
         Slash: 15
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
-    size: Normal
     sprite: Objects/Weapons/Melee/machete.rsi
   - type: DisarmMalus
 
 - type: entity
   name: claymore
-  parent: BaseItem
+  parent: [ BaseSword, BaseMajorContraband ]
   id: Claymore
   description: An ancient war blade.
   components:
-  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/claymore.rsi
-    state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: -135
     attackRate: 0.75
     damage:
       types:
@@ -136,7 +133,6 @@
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
-    size: Normal
   - type: Clothing
     sprite: Objects/Weapons/Melee/claymore.rsi
     slots:
@@ -145,41 +141,34 @@
 
 - type: entity
   name: cutlass
-  parent: BaseItem
+  parent: [ BaseSword, BaseMajorContraband ]
   id: Cutlass
   description: A wickedly curved blade, often seen in the hands of space pirates.
   components:
-  - type: Sharp
   - type: Tag
     tags:
     - Machete
   - type: Sprite
     sprite: Objects/Weapons/Melee/cutlass.rsi
-    state: icon
   - type: MeleeWeapon
-    wideAnimationRotation: -135
     damage:
       types:
-        Slash: 15
+        Slash: 16
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
-    size: Normal
     sprite: Objects/Weapons/Melee/cutlass.rsi
   - type: DisarmMalus
 
 - type: entity
-  name: The Throngler
-  parent: BaseItem
+  name: Throngler
+  parent: [ BaseSword, BaseMajorContraband ]
   id: Throngler
-  description: Why would someone make this?
+  description: Why would you make this?
   components:
-    - type: Sharp
     - type: Sprite
       sprite: Objects/Weapons/Melee/Throngler2.rsi
-      state: icon
     - type: MeleeWeapon
-      wideAnimationRotation: -135
       attackRate: 10
       damage:
         types:
@@ -192,13 +181,12 @@
       soundHit:
         path: /Audio/Effects/explosion_small1.ogg
     - type: Reflect
-      enabled: true
-      reflectProb: 0.5 # In robust hands, deflects as well as an e-sword
-      velocityBeforeNotMaxProb: 1.0
-      velocityBeforeMinProb: 3.0
-      minReflectProb: 0.1
+      reflectProb: .25
       spread: 90
     - type: Item
       size: Ginormous
       sprite: Objects/Weapons/Melee/Throngler-in-hand.rsi
     - type: DisarmMalus
+    - type: Grammar
+      attributes:
+        proper: true

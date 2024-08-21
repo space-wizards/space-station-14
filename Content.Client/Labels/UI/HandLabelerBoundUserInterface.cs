@@ -1,6 +1,7 @@
 using Content.Shared.Labels;
 using Content.Shared.Labels.Components;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Labels.UI
 {
@@ -23,13 +24,8 @@ namespace Content.Client.Labels.UI
         {
             base.Open();
 
-            _window = new HandLabelerWindow();
-            if (State != null)
-                UpdateState(State);
+            _window = this.CreateWindow<HandLabelerWindow>();
 
-            _window.OpenCentered();
-
-            _window.OnClose += Close;
             _window.OnLabelChanged += OnLabelChanged;
             Reload();
         }
@@ -51,13 +47,5 @@ namespace Content.Client.Labels.UI
 
             _window.SetCurrentLabel(component.AssignedLabel);
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing) return;
-            _window?.Dispose();
-        }
     }
-
 }

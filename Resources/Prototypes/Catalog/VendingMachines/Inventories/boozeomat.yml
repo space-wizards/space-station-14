@@ -25,6 +25,7 @@
     DrinkGildlagerBottleFull: 2 #if champagne gets less because its premium, then gildlager should match this and have two
     DrinkGrenadineBottleFull: 2
     DrinkJuiceLimeCarton: 3
+    DrinkJuiceLemonCarton: 3
     DrinkJuiceOrangeCarton: 3
     DrinkJuiceTomatoCarton: 3
     DrinkCoffeeLiqueurBottleFull: 3

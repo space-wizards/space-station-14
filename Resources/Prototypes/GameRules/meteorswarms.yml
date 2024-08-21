@@ -1,0 +1,236 @@
+# Event Tables
+
+- type: entityTable
+  id: MeteorSwarmDustEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: GameRuleSpaceDustMinor
+    - id: GameRuleSpaceDustMajor
+
+- type: entityTable
+  id: MeteorSwarmSmallChanceEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: GameRuleMeteorSwarmSmall
+      prob: 0.15
+
+- type: entityTable
+  id: MeteorSwarmMildTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - !type:NestedSelector
+        tableId: MeteorSwarmDustEventsTable
+    - !type:NestedSelector
+        tableId: MeteorSwarmSmallChanceEventsTable
+
+- type: entityTable
+  id: BasicMeteorSwarmEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - !type:NestedSelector
+        tableId: MeteorSwarmDustEventsTable
+    - id: GameRuleMeteorSwarmSmall
+    - id: GameRuleMeteorSwarmMedium
+    - id: GameRuleMeteorSwarmLarge
+    - id: GameRuleUristSwarm
+    - id: ImmovableRodSpawn
+
+- type: weightedRandomEntity
+  id: MeteorSpawnAsteroidWallTable
+  weights:
+    AsteroidRock: 10
+    AsteroidRockCoal: 5
+    AsteroidRockQuartz: 5
+    AsteroidRockTin: 5
+    AsteroidRockSilver: 2
+    AsteroidRockGold: 2
+    AsteroidRockPlasma: 2
+    AsteroidRockDiamond: 2
+    AsteroidRockUranium: 0.5
+    AsteroidRockBananium: 0.5
+
+# Event Schedulers
+
+- type: entity
+  parent: BaseGameRule
+  id: MeteorSwarmScheduler
+  components:
+  - type: GameRule
+  - type: BasicStationEventScheduler
+    minimumTimeUntilFirstEvent: 300 # 5 min
+    minMaxEventTiming:
+      min: 750 # 12.5 min
+      max: 930 # 17.5 min
+    scheduledGameRules: !type:NestedSelector
+      tableId: BasicMeteorSwarmEventsTable
+
+- type: entity
+  parent: BaseGameRule
+  id: MeteorSwarmMildScheduler
+  components:
+  - type: GameRule
+  - type: BasicStationEventScheduler
+    minimumTimeUntilFirstEvent: 300 # 5 min 
+    minMaxEventTiming:
+      min: 750 # 12.5 min
+      max: 930 # 17.5 min
+    scheduledGameRules: !type:NestedSelector
+      tableId: MeteorSwarmMildTable
+
+- type: entity
+  parent: BaseGameRule
+  id: KesslerSyndromeScheduler
+  components:
+  - type: GameRule
+  - type: RampingStationEventScheduler
+    scheduledGameRules: !type:NestedSelector
+      tableId: BasicMeteorSwarmEventsTable
+
+# Game Rules
+
+- type: entity
+  parent: BaseGameRule
+  id: GameRuleMeteorSwarm
+  abstract: true
+  components:
+  - type: GameRule
+  - type: StationEvent
+    reoccurrenceDelay: 1
+    earliestStart: 12
+    minimumPlayers: 25
+  - type: MeteorSwarm
+
+- type: entity
+  parent: GameRuleMeteorSwarm
+  id: GameRuleSpaceDustMinor
+  components:
+  - type: StationEvent
+    weight: 44
+    earliestStart: 2
+    minimumPlayers: 0
+  - type: MeteorSwarm
+    announcement: null
+    announcementSound: null
+    nonDirectional: true
+    meteors:
+      MeteorSpaceDust: 1
+    waves:
+      min: 2
+      max: 3
+    meteorsPerWave:
+      min: 3
+      max: 5
+
+- type: entity
+  parent: GameRuleMeteorSwarm
+  id: GameRuleSpaceDustMajor
+  components:
+  - type: StationEvent
+    weight: 22
+    minimumPlayers: 0
+  - type: MeteorSwarm
+    announcement: station-event-space-dust-start-announcement
+    announcementSound: /Audio/Announcements/attention.ogg
+    nonDirectional: true
+    meteors:
+      MeteorSpaceDust: 1
+    waves:
+      min: 2
+      max: 3
+    meteorsPerWave:
+      min: 8
+      max: 12
+
+- type: entity
+  parent: GameRuleMeteorSwarm
+  id: GameRuleMeteorSwarmSmall
+  components:
+  - type: StationEvent
+    weight: 18
+    minimumPlayers: 15
+  - type: MeteorSwarm
+    meteors:
+      MeteorSmall: 7
+      MeteorMedium: 3
+
+- type: entity
+  parent: GameRuleMeteorSwarm
+  id: GameRuleMeteorSwarmMedium
+  components:
+  - type: StationEvent
+    weight: 10
+  - type: MeteorSwarm
+    meteors:
+      MeteorSmall: 3
+      MeteorMedium: 6
+      MeteorLarge: 1
+
+- type: entity
+  parent: GameRuleMeteorSwarm
+  id: GameRuleMeteorSwarmLarge
+  components:
+  - type: StationEvent
+    weight: 5
+  - type: MeteorSwarm
+    meteors:
+      MeteorSmall: 2
+      MeteorMedium: 4
+      MeteorLarge: 4
+
+- type: entity
+  parent: GameRuleMeteorSwarm
+  id: GameRuleUristSwarm
+  components:
+  - type: StationEvent
+    weight: 0.05
+  - type: MeteorSwarm
+    announcement: station-event-meteor-urist-start-announcement
+    announcementSound: /Audio/Announcements/attention.ogg
+    meteors:
+      MeteorUrist: 1
+    waves:
+      min: 3
+      max: 3
+    meteorsPerWave:
+      min: 10
+      max: 10
+
+- type: entity
+  id: ImmovableRodSpawn
+  parent: BaseGameRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-immovable-rod-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    weight: 3.5
+    reoccurrenceDelay: 1
+    duration: 1
+    earliestStart: 30
+    minimumPlayers: 25
+  - type: ImmovableRodRule
+    rodPrototypes:
+    - id: ImmovableRodKeepTilesStill
+      prob: 0.95
+      orGroup: rodProto
+    - id: ImmovableRodMop
+      prob: 0.0072
+      orGroup: rodProto
+    - id: ImmovableRodShark
+      prob: 0.0072
+      orGroup: rodProto
+    - id: ImmovableRodClown
+      prob: 0.0072
+      orGroup: rodProto
+    - id: ImmovableRodBanana
+      prob: 0.0072
+      orGroup: rodProto
+    - id: ImmovableRodHammer
+      prob: 0.0072
+      orGroup: rodProto
+    - id: ImmovableRodThrongler
+      prob: 0.0072
+      orGroup: rodProto
+    - id: ImmovableRodGibstick
+      prob: 0.0072
+      orGroup: rodProto

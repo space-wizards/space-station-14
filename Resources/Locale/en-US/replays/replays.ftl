@@ -41,3 +41,5 @@ replay-verb-spectate = Spectate
 cmd-replay-spectate-help = replay_spectate [optional entity]
 cmd-replay-spectate-desc = Attaches or detaches the local player to a given entity uid.
 cmd-replay-spectate-hint = Optional EntityUid
+
+cmd-replay-toggleui-desc = Toggles the replay control UI.

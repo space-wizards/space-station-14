@@ -140,7 +140,8 @@
     respectMidiLimits: false
   - type: Sprite
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
-    state: icon
+    state: supersynth
   - type: Item
+    heldPrefix: super
     size: Normal
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi

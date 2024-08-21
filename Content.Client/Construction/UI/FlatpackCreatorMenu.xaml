@@ -8,7 +8,7 @@
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" Margin="10">
         <BoxContainer SizeFlagsStretchRatio="2" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
             <BoxContainer Orientation="Vertical">
-                <SpriteView Name="MachineSprite" Scale="4 4" HorizontalAlignment="Center" VerticalExpand="True" MinSize="128 128"/>
+                <EntityPrototypeView Name="MachineSprite" Scale="4 4" HorizontalAlignment="Center" VerticalExpand="True" MinSize="128 128"/>
                 <RichTextLabel Name="MachineNameLabel" HorizontalAlignment="Center" StyleClasses="LabelKeyText"/>
             </BoxContainer>
             <Control MinHeight="10"/>
