@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Borgs ID now will be shown in LogProbe instead of Unknown.
-    type: Tweak
-  id: 6678
-  time: '2024-06-03T18:48:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27788
 - author: FairlySadPanda
   changes:
   - message: Stacking multiple deflecting items at once has been removed; now only
@@ -3860,3 +3853,12 @@
   id: 7177
   time: '2024-08-21T18:53:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31272
+- author: Brandon-Huu
+  changes:
+  - message: Nukie shuttle now spawns with the nuclear authentication code folder.
+      This fixes the issue where the nuclear codes would only ever have the codes
+      for the nuclear operatives nuke and not the stations.
+    type: Fix
+  id: 7178
+  time: '2024-08-21T18:55:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31273
