@@ -1,5 +1,4 @@
 using Content.Client.Alerts;
-using Content.Shared.Alert;
 using Content.Shared.Revenant;
 using Content.Shared.Revenant.Components;
 using Robust.Client.GameObjects;
@@ -42,7 +41,7 @@ public sealed class RevenantSystem : EntitySystem
 
     private void OnUpdateAlert(Entity<RevenantComponent> ent, ref UpdateAlertSpriteEvent args)
     {
-        if (args.Alert.AlertType != AlertType.Essence)
+        if (args.Alert.ID != ent.Comp.EssenceAlert)
             return;
 
         var sprite = args.SpriteViewEnt.Comp;

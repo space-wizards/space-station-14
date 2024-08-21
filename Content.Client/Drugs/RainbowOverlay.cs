@@ -1,7 +1,9 @@
+using Content.Shared.CCVar;
 using Content.Shared.Drugs;
 using Content.Shared.StatusEffect;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -10,6 +12,7 @@ namespace Content.Client.Drugs;
 
 public sealed class RainbowOverlay : Overlay
 {
+    [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -75,6 +78,10 @@ public sealed class RainbowOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        // TODO disable only the motion part or ike's idea (single static frame of the overlay)
+        if (_config.GetCVar(CCVars.ReducedMotion))
+            return;
+
         if (ScreenTexture == null)
             return;
 

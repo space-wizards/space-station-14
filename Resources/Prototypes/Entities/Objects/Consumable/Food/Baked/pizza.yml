@@ -26,6 +26,8 @@
     count: 8
   - type: Item
     size: Normal
+    shape:
+    - 0,0,2,1
   - type: Tag
     tags:
     - Pizza
@@ -59,6 +61,7 @@
     tags:
     - Pizza
     - ReptilianFood
+    - Slice
 
 # Pizza
 
@@ -135,6 +138,7 @@
     tags:
     - Meat
     - Pizza
+    - Slice
 # Tastes like crust, tomato, cheese, meat.
 
 - type: entity
@@ -291,6 +295,7 @@
     tags:
     - Meat
     - Pizza
+    - Slice
 # Tastes like crust, tomato, cheese, meat, laziness.
 
 - type: entity
@@ -316,11 +321,9 @@
         maxVol: 50
         reagents:
         - ReagentId: Nutriment
-          Quantity: 25
-        - ReagentId: Vitamin
-          Quantity: 5
-        - ReagentId: DoctorsDelight
-          Quantity: 6
+          Quantity: 20
+        - ReagentId: THC
+          Quantity: 30
 
 - type: entity
   name: slice of dank pizza
@@ -343,11 +346,9 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4.2
-        - ReagentId: Vitamin
-          Quantity: 0.8
-        - ReagentId: DoctorsDelight
-          Quantity: 1
+          Quantity: 3.5
+        - ReagentId: THC
+          Quantity: 5
 # Tastes like crust, tomato, cheese, meat, satisfaction.
 
 - type: entity
@@ -391,13 +392,14 @@
     tags:
     - Meat
     - Pizza
+    - Slice
 # Tastes like crust, tomato, cheese, sausage, sass.
 
 - type: entity
   name: Hawaiian pizza
   parent: FoodPizzaBase
   id: FoodPizzaPineapple
-  description: Makes people burst into tears. Tears of joy or sadness depends on the persons fondness for pineapple.
+  description: Makes people burst into tears. Tears of joy or sadness depends on the person's fondness for pineapple.
   components:
   - type: FlavorProfile
     flavors:
@@ -411,9 +413,13 @@
     - state: pineapple
   - type: SliceableFood
     slice: FoodPizzaPineappleSlice
+  - type: Tag
+    tags:
+    - Meat
+    - Pizza
 
 - type: entity
-  name: slice of pineapple pizza
+  name: slice of Hawaiian pizza
   parent: FoodPizzaSliceBase
   id: FoodPizzaPineappleSlice
   description: A slice of joy/sin.
@@ -432,6 +438,7 @@
     tags:
     - Meat
     - Pizza
+    - Slice
 # Tastes like crust, tomato, cheese, pineapple, ham.
 
 #TODO: This is a meme pizza from /tg/. It has specially coded mechanics.
@@ -504,6 +511,7 @@
     tags:
     - Meat
     - Pizza
+    - Slice
 # Tastes like crust, tomato, cheese, pepperoni, 9 millimeter bullets.
 
 #TODO: Make this do poison damage and make cut pizza slices eventually rot into this.
@@ -521,6 +529,9 @@
   - type: Sprite
     layers:
     - state: moldy-slice
+  - type: Tag
+    tags:
+    - Trash
   - type: SolutionContainerManager
     solutions:
       food:
@@ -534,3 +545,76 @@
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes like stale crust, rancid cheese, mushroom.
+
+- type: entity
+  name: spicy rock pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaUranium
+  description: Spicy pizza covered in peppers and uranium.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - spicy
+    - cheesy
+    - oily
+    - bread
+  - type: Sprite
+    layers:
+    - state: uranium-pizza
+  - type: SliceableFood
+    slice: FoodPizzaUraniumSlice
+  - type: Tag
+    tags:
+    - Meat
+    - Pizza
+  - type: PointLight
+    enabled: true
+    radius: 2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+        - ReagentId: Radium
+          Quantity: 4
+        - ReagentId: Uranium
+          Quantity: 16
+
+- type: entity
+  name: slice of spicy rock pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaUraniumSlice
+  description: A glowing slice of spicy rock pizza.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - spicy
+    - cheesy
+    - oily
+    - bread
+  - type: Sprite
+    layers:
+    - state: uranium-slice
+  - type: Tag
+    tags:
+    - Meat
+    - Pizza
+    - Slice
+  - type: PointLight
+    enabled: true
+    radius: 2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2.5
+        - ReagentId: Radium
+          Quantity: 0.5
+        - ReagentId: Uranium
+          Quantity: 2
+
+# Tastes like crust, tomato, cheese, radiation.

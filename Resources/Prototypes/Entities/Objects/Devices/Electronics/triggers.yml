@@ -18,6 +18,8 @@
     state: timer
   - type: Item
     size: Small
+  - type: StaticPrice
+    price: 40
   - type: PayloadTrigger
     components:
     - type: OnUseTimerTrigger
@@ -28,8 +30,6 @@
         path: /Audio/Machines/Nuke/general_beep.ogg
         params:
           volume: -2
-    - type: StaticPrice
-      price: 40
 
 - type: entity
   parent: TimerTrigger
@@ -40,6 +40,11 @@
   - type: Sprite
     sprite: Objects/Devices/signaltrigger.rsi
     state: signaltrigger
+  - type: StaticPrice
+    price: 40
+  - type: Tag
+    tags:
+    - SignalTrigger
   - type: PayloadTrigger
     components:
     - type: TriggerOnSignal
@@ -49,23 +54,21 @@
     - type: WirelessNetworkConnection
       range: 200
     - type: DeviceLinkSink
-    - type: StaticPrice
-      price: 40
 
 - type: entity
   parent: BaseItem
   id: VoiceTrigger
   name: voice trigger
-  description: Adds a machine link that is triggered by vocal keywords
+  description: Adds a machine link that is triggered by vocal keywords.
   components:
   - type: Sprite
     sprite: Objects/Devices/voice.rsi
     state: voice
-  - type: PayloadTrigger
-    components:
-  - type: TriggerOnVoice
   - type: StaticPrice
     price: 40
   - type: Tag
     tags:
     - VoiceTrigger
+  - type: PayloadTrigger
+    components:
+    - type: TriggerOnVoice

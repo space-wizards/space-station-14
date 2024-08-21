@@ -67,7 +67,7 @@ public sealed class SlipperySystem : EntitySystem
                 && _statusEffects.CanApplyEffect(toSlip, "Stun"); //Should be KnockedDown instead?
     }
 
-    private void TrySlip(EntityUid uid, SlipperyComponent component, EntityUid other)
+    public void TrySlip(EntityUid uid, SlipperyComponent component, EntityUid other, bool requiresContact = true)
     {
         if (HasComp<KnockedDownComponent>(other) && !component.SuperSlippery)
             return;
@@ -89,7 +89,7 @@ public sealed class SlipperySystem : EntitySystem
         {
             _physics.SetLinearVelocity(other, physics.LinearVelocity * component.LaunchForwardsMultiplier, body: physics);
 
-            if (component.SuperSlippery)
+            if (component.SuperSlippery && requiresContact)
             {
                 var sliding = EnsureComp<SlidingComponent>(other);
                 sliding.CollidingEntities.Add(uid);

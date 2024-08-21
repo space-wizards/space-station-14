@@ -1,7 +1,5 @@
 using Content.Shared.Anomaly;
-using Content.Shared.Gravity;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 
 namespace Content.Client.Anomaly.Ui;
 
@@ -18,10 +16,8 @@ public sealed class AnomalyGeneratorBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _window = new(Owner);
-
-        _window.OpenCentered();
-        _window.OnClose += Close;
+        _window = this.CreateWindow<AnomalyGeneratorWindow>();
+        _window.SetEntity(Owner);
 
         _window.OnGenerateButtonPressed += () =>
         {
@@ -36,14 +32,6 @@ public sealed class AnomalyGeneratorBoundUserInterface : BoundUserInterface
         if (state is not AnomalyGeneratorUserInterfaceState msg)
             return;
         _window?.UpdateState(msg);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing) return;
-
-        _window?.Dispose();
     }
 }
 

@@ -10,7 +10,8 @@
     solutions:
       drink:
         maxVol: 20
-        canMix: true
+  - type: MixableSolution
+    solution: drink
   - type: FitsInDispenser
     solution: drink
   - type: DrawableSolution
@@ -24,8 +25,8 @@
     maxTransferAmount: 10
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Drink
   - type: Sprite
     state: icon
@@ -37,6 +38,10 @@
     damage:
       types:
         Blunt: 0
+  - type: DnaSubstanceTrace
+  - type: Tag
+    tags:
+    - DrinkCup
 
 - type: entity
   parent: DrinkBaseCup
@@ -46,6 +51,8 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/golden_cup.rsi
+  - type: StaticPrice
+    price: 125
 
 - type: entity
   parent: DrinkBaseCup
@@ -313,7 +320,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkLean
-  name: grape Juice
+  name: grape juice
   description: Damn, no fun allowed.
   components:
   - type: SolutionContainerManager

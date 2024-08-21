@@ -90,12 +90,14 @@
 
 - Flags: ADMIN
   Commands:
-  - delete
-  - kick
   - listplayers
   - tp
   - tpto
-  - respawn
+
+- Flags: FUN
+  Commands:
+  - tippy
+  - tip
 
 - Flags: SERVER
   Commands:
@@ -109,6 +111,12 @@
   Commands:
   - spawn
   - cspawn
+  - delete
+
+- Flags: MODERATOR
+  Commands:
+  - kick
+  - respawn
 
 - Flags: HOST
   Commands:

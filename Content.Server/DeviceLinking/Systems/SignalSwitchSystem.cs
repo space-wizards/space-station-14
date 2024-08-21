@@ -26,7 +26,7 @@ public sealed class SignalSwitchSystem : EntitySystem
 
     private void OnActivated(EntityUid uid, SignalSwitchComponent comp, ActivateInWorldEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !args.Complex)
             return;
 
         comp.State = !comp.State;

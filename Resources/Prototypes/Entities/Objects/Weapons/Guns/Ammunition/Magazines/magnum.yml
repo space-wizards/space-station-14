@@ -48,6 +48,19 @@
   - type: Appearance
 
 - type: entity
+  id: MagazineMagnumEmpty
+  name: pistol magazine (.45 magnum any)
+  suffix: empty
+  parent: BaseMagazineMagnum
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+
+- type: entity
   id: MagazineMagnum
   name: pistol magazine (.45 magnum)
   parent: BaseMagazineMagnum
@@ -71,20 +84,6 @@
   - type: Sprite
     layers:
     - state: practice
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineMagnumRubber
-  name: pistol magazine (.45 magnum rubber)
-  parent: BaseMagazineMagnum
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnumRubber
-  - type: Sprite
-    layers:
-    - state: rubber
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
@@ -118,6 +117,19 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
+  id: MagazineMagnumSubMachineGunEmpty
+  name: "Vector magazine (.45 magnum any)"
+  suffix: empty
+  parent: BaseMagazineMagnumSubMachineGun
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+
+- type: entity
   id: MagazineMagnumSubMachineGun
   name: "Vector magazine (.45 magnum)"
   parent: BaseMagazineMagnumSubMachineGun
@@ -141,20 +153,6 @@
   - type: Sprite
     layers:
     - state: practice
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  id: MagazineMagnumSubMachineGunRubber
-  name: "Vector magazine (.45 magnum rubber)"
-  parent: BaseMagazineMagnumSubMachineGun
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnumRubber
-  - type: Sprite
-    layers:
-    - state: rubber
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]

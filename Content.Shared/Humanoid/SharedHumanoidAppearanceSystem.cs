@@ -1,13 +1,22 @@
+using System.IO;
 using System.Linq;
+using Content.Shared.CCVar;
 using Content.Shared.Decals;
 using Content.Shared.Examine;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Preferences;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Markdown;
+using Robust.Shared.Utility;
+using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Humanoid;
 
@@ -22,8 +31,10 @@ namespace Content.Shared.Humanoid;
 /// </summary>
 public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] private readonly MarkingManager _markingManager = default!;
 
     [ValidatePrototypeId<SpeciesPrototype>]
@@ -35,6 +46,37 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<HumanoidAppearanceComponent, ExaminedEvent>(OnExamined);
+    }
+
+    public DataNode ToDataNode(HumanoidCharacterProfile profile)
+    {
+        var export = new HumanoidProfileExport()
+        {
+            ForkId = _cfgManager.GetCVar(CVars.BuildForkId),
+            Profile = profile,
+        };
+
+        var dataNode = _serManager.WriteValue(export, alwaysWrite: true, notNullableOverride: true);
+        return dataNode;
+    }
+
+    public HumanoidCharacterProfile FromStream(Stream stream, ICommonSession session)
+    {
+        using var reader = new StreamReader(stream, EncodingHelpers.UTF8);
+        var yamlStream = new YamlStream();
+        yamlStream.Load(reader);
+
+        var root = yamlStream.Documents[0].RootNode;
+        var export = _serManager.Read<HumanoidProfileExport>(root.ToDataNode(), notNullableOverride: true);
+
+        /*
+         * Add custom handling here for forks / version numbers if you care.
+         */
+
+        var profile = export.Profile;
+        var collection = IoCManager.Instance;
+        profile.EnsureValid(session, collection!);
+        return profile;
     }
 
     private void OnInit(EntityUid uid, HumanoidAppearanceComponent humanoid, ComponentInit args)
@@ -267,8 +309,11 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     /// <param name="uid">The mob's entity UID.</param>
     /// <param name="profile">The character profile to load.</param>
     /// <param name="humanoid">Humanoid component of the entity</param>
-    public virtual void LoadProfile(EntityUid uid, HumanoidCharacterProfile profile, HumanoidAppearanceComponent? humanoid = null)
+    public virtual void LoadProfile(EntityUid uid, HumanoidCharacterProfile? profile, HumanoidAppearanceComponent? humanoid = null)
     {
+        if (profile == null)
+            return;
+
         if (!Resolve(uid, ref humanoid))
         {
             return;

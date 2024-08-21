@@ -2,6 +2,7 @@ using Content.Server.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Traits;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 
@@ -10,8 +11,8 @@ namespace Content.Server.Traits;
 public sealed class TraitSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ISerializationManager _serializationManager = default!;
     [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -31,34 +32,26 @@ public sealed class TraitSystem : EntitySystem
                 return;
             }
 
-            if (traitPrototype.Whitelist != null && !traitPrototype.Whitelist.IsValid(args.Mob))
-                continue;
-
-            if (traitPrototype.Blacklist != null && traitPrototype.Blacklist.IsValid(args.Mob))
+            if (_whitelistSystem.IsWhitelistFail(traitPrototype.Whitelist, args.Mob) ||
+                _whitelistSystem.IsBlacklistPass(traitPrototype.Blacklist, args.Mob))
                 continue;
 
             // Add all components required by the prototype
-            foreach (var entry in traitPrototype.Components.Values)
-            {
-                if (HasComp(args.Mob, entry.Component.GetType()))
-                    continue;
-
-                var comp = (Component) _serializationManager.CreateCopy(entry.Component, notNullableOverride: true);
-                comp.Owner = args.Mob;
-                EntityManager.AddComponent(args.Mob, comp);
-            }
+            EntityManager.AddComponents(args.Mob, traitPrototype.Components, false);
 
             // Add item required by the trait
-            if (traitPrototype.TraitGear != null)
-            {
-                if (!TryComp(args.Mob, out HandsComponent? handsComponent))
-                    continue;
+            if (traitPrototype.TraitGear == null)
+                continue;
 
-                var coords = Transform(args.Mob).Coordinates;
-                var inhandEntity = EntityManager.SpawnEntity(traitPrototype.TraitGear, coords);
-                _sharedHandsSystem.TryPickup(args.Mob, inhandEntity, checkActionBlocker: false,
-                    handsComp: handsComponent);
-            }
+            if (!TryComp(args.Mob, out HandsComponent? handsComponent))
+                continue;
+
+            var coords = Transform(args.Mob).Coordinates;
+            var inhandEntity = EntityManager.SpawnEntity(traitPrototype.TraitGear, coords);
+            _sharedHandsSystem.TryPickup(args.Mob,
+                inhandEntity,
+                checkActionBlocker: false,
+                handsComp: handsComponent);
         }
     }
 }

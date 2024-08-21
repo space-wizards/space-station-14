@@ -1,6 +1,6 @@
 - type: entity
   id: MachineArtifactAnalyzer
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   name: artifact analyzer
   description: A platform capable of performing analysis on various types of artifacts.
   components:
@@ -28,6 +28,14 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
+        mask:
+        - Impassable
+        - HighImpassable
+        - MidImpassable
+      fix2:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.35,0.35,0.35"
         density: 190
         mask:
         - MachineMask
@@ -35,14 +43,15 @@
         - Impassable
         - MidImpassable
         - LowImpassable
+        - BulletImpassable
         hard: False
   - type: Transform
     anchored: true
-    noRot: false
   - type: ApcPowerReceiver
     powerLoad: 12000
     needsPower: false #only turns on when scanning
   - type: ArtifactAnalyzer
+  - type: TraversalDistorter
   - type: ItemPlacer
     whitelist:
       components:
@@ -65,62 +74,6 @@
     - Xenoarchaeology
   - type: LitOnPowered
   - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.PowerDeviceVisuals.Powered:
-        enum.PowerDeviceVisualLayers.Powered:
-          True: { visible: true }
-          False: { visible: false }
-
-- type: entity
-  id: MachineTraversalDistorter
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
-  name: traversal distorter
-  description: A machine capable of distorting the traversal of artifact nodes.
-  components:
-  - type: Sprite
-    noRot: true
-    sprite: Structures/Machines/traversal_distorter.rsi
-    drawdepth: FloorObjects
-    layers:
-    - state: icon
-    - state: unshaded
-      shader: unshaded
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-  - type: Physics
-    bodyType: Static
-    canCollide: true
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.35,-0.35,0.35,0.35"
-        density: 190
-        mask:
-        - MachineMask
-        layer:
-        - Impassable
-        - MidImpassable
-        - LowImpassable
-        hard: False
-  - type: Transform
-    noRot: false
-  - type: TraversalDistorter
-  - type: ItemPlacer
-    # don't limit the number of artifacts that can be biased
-    maxEntities: 0
-    whitelist:
-      components:
-      - Artifact
-  - type: PlaceableSurface
-    placeCentered: true
-  - type: Machine
-    board: TraversalDistorterMachineCircuitboard
-  - type: Appearance
-  - type: GuideHelp
-    guides:
-    - TraversalDistorter
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:

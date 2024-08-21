@@ -12,14 +12,16 @@
   name: basic hardsuit helmet
   description: A basic-looking hardsuit helmet that provides minor protection against most sources of damage.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/basic.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/basic.rsi
-  - type: Tag
-    tags:
-    - HidesNose
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
 
 #Atmospherics Hardsuit
 - type: entity
@@ -28,7 +30,6 @@
   name: atmos hardsuit helmet
   description: A special hardsuit helmet designed for working in low-pressure, high thermal environments.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/atmospherics.rsi
     layers:
@@ -60,6 +61,8 @@
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.005
+  - type: FireProtection
+    reduction: 0.2
 
 #Engineering Hardsuit
 - type: entity
@@ -68,7 +71,6 @@
   name: engineering hardsuit helmet
   description: An engineering hardsuit helmet designed for working in low-pressure, high radioactive environments.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/engineering.rsi
   - type: Clothing
@@ -86,7 +88,6 @@
   name: spationaut hardsuit helmet
   description: A sturdy helmet designed for complex industrial operations in space.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/spatiohelm.rsi
     layers:
@@ -110,6 +111,8 @@
       - state: equipped-head
       - state: equipped-head-unshaded
         shader: unshaded
+  - type: PointLight
+    radius: 6
   - type: PressureProtection
     highPressureMultiplier: 0.72
     lowPressureMultiplier: 1000
@@ -121,7 +124,6 @@
   name: salvage hardsuit helmet
   description: A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating for wildlife encounters and dual floodlights.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/salvage.rsi
   - type: Clothing
@@ -136,11 +138,10 @@
 - type: entity
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitMaxim
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: salvager maxim helmet
   description: A predication of decay washes over your mind.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/maxim.rsi
   - type: Clothing
@@ -163,7 +164,6 @@
   name: security hardsuit helmet
   description: Armored hardsuit helmet for security needs.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/security.rsi
   - type: Clothing
@@ -188,7 +188,6 @@
   name: brigmedic hardsuit helmet
   description: The lightweight helmet of the brigmedic hardsuit. Protects against viruses, and clowns.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/brigmedic.rsi
   - type: Clothing
@@ -215,7 +214,6 @@
   name: warden's hardsuit helmet
   description: A modified riot helmet. Oddly comfortable.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/security-warden.rsi
   - type: Clothing
@@ -240,7 +238,6 @@
   name: captain's hardsuit helmet
   description: Special hardsuit helmet, made for the captain of the station.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/capspace.rsi
   - type: Clothing
@@ -256,7 +253,6 @@
   name: chief engineer's hardsuit helmet
   description: Special hardsuit helmet, made for the chief engineer of the station.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/engineering-white.rsi
   - type: Clothing
@@ -266,6 +262,8 @@
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
+  - type: FireProtection
+    reduction: 0.2
 
 #Chief Medical Officer's Hardsuit
 - type: entity
@@ -274,7 +272,6 @@
   name: chief medical officer's hardsuit helmet
   description: Lightweight medical hardsuit helmet that doesn't restrict your head movements.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/medical.rsi
   - type: Clothing
@@ -292,7 +289,6 @@
   name: experimental research hardsuit helmet
   description: Lightweight hardsuit helmet that doesn't restrict your head movements.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/rd.rsi
   - type: Clothing
@@ -310,7 +306,6 @@
   name: head of security's hardsuit helmet
   description: Security hardsuit helmet with the latest top secret NT-HUD software. Belongs to the HoS.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/security-red.rsi
   - type: Clothing
@@ -335,7 +330,6 @@
   name: luxury mining hardsuit helmet
   description: A refurbished mining hardsuit helmet, fitted with satin cushioning and an extra (non-functioning) antenna, because you're that extra.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/luxury.rsi
   - type: Clothing
@@ -355,7 +349,6 @@
   name: blood-red hardsuit helmet
   description: A heavily armored helmet designed for work in special operations. Property of Gorlex Marauders.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/syndicate.rsi
   - type: Clothing
@@ -380,7 +373,6 @@
   name: blood-red medic hardsuit helmet
   description: An advanced red hardsuit helmet specifically designed for field medic operations.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/syndiemedic.rsi
   - type: Clothing
@@ -405,7 +397,6 @@
   name: syndicate elite helmet
   description: An elite version of the blood-red hardsuit's helmet, with improved armor and fireproofing. Property of Gorlex Marauders.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/syndieelite.rsi
   - type: Clothing
@@ -417,6 +408,8 @@
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.005
+  - type: FireProtection
+    reduction: 0.2
   - type: Armor
     modifiers:
       coefficients:
@@ -432,7 +425,6 @@
   name: syndicate commander helmet
   description: A bulked up version of the blood-red hardsuit's helmet, purpose-built for the commander of a syndicate operative squad. Has significantly improved armor for those deadly front-lines firefights.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/syndiecommander.rsi
   - type: Clothing
@@ -457,7 +449,6 @@
   name: cybersun juggernaut helmet
   description: Made of compressed red matter, this helmet was designed in the Tau chromosphere facility.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/cybersun.rsi
   - type: Clothing
@@ -480,7 +471,6 @@
   name: wizard hardsuit helmet
   description: A bizarre gem-encrusted helmet that radiates magical energies.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/wizard.rsi
   - type: Clothing
@@ -505,7 +495,6 @@
   name: organic space helmet
   description: A spaceworthy biomass of pressure and temperature resistant tissue.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/lingspacehelmet.rsi
   - type: Clothing
@@ -522,7 +511,6 @@
   suffix: Pirate
   description: A deep space EVA helmet, very heavy but provides good protection.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/pirateeva.rsi
   - type: Clothing
@@ -539,7 +527,6 @@
   suffix: Pirate
   description: A special hardsuit helmet, made for the captain of a pirate ship.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
   - type: Clothing
@@ -556,7 +543,6 @@
   name: ERT leader hardsuit helmet
   description: A special hardsuit helmet worn by members of an emergency response team.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertleader.rsi
   - type: Clothing
@@ -578,7 +564,6 @@
   name: ERT chaplain hardsuit helmet
   description: A special hardsuit helmet worn by members of an emergency response team.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertchaplain.rsi
   - type: Clothing
@@ -593,7 +578,6 @@
   name: ERT engineer hardsuit helmet
   description: A special hardsuit helmet worn by members of an emergency response team.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
   - type: Clothing
@@ -615,7 +599,6 @@
   name: ERT medic hardsuit helmet
   description: A special hardsuit helmet worn by members of an emergency response team.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
   - type: Clothing
@@ -630,7 +613,6 @@
   name: ERT security hardsuit helmet
   description: A special hardsuit helmet worn by members of an emergency response team.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertsecurity.rsi
   - type: Clothing
@@ -652,7 +634,6 @@
   name: ERT janitor hardsuit helmet
   description: A special hardsuit helmet worn by members of an emergency response team.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
   - type: Clothing
@@ -667,7 +648,6 @@
   name: CBURN exosuit helmet
   description: A pressure resistant and fireproof hood worn by special cleanup units.
   components:
-  - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/cburn.rsi
     layers:
@@ -714,6 +694,8 @@
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
+  - type: FireProtection
+    reduction: 0.2
   - type: Armor
     modifiers:
       coefficients:

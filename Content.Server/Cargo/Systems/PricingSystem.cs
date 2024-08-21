@@ -16,6 +16,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Research.Prototypes;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -158,6 +159,26 @@ public sealed class PricingSystem : EntitySystem
         return price;
     }
 
+    public double GetLatheRecipePrice(LatheRecipePrototype recipe)
+    {
+        var price = 0.0;
+
+        if (recipe.Result is { } result)
+        {
+            price += GetEstimatedPrice(_prototypeManager.Index(result));
+        }
+
+        if (recipe.ResultReagents is { } resultReagents)
+        {
+            foreach (var (reagent, amount) in resultReagents)
+            {
+                price += (_prototypeManager.Index(reagent).PricePerUnit * amount).Double();
+            }
+        }
+
+        return price;
+    }
+
     /// <summary>
     /// Get a rough price for an entityprototype. Does not consider contained entities.
     /// </summary>
@@ -199,7 +220,7 @@ public sealed class PricingSystem : EntitySystem
     /// This fires off an event to calculate the price.
     /// Calculating the price of an entity that somehow contains itself will likely hang.
     /// </remarks>
-    public double GetPrice(EntityUid uid)
+    public double GetPrice(EntityUid uid, bool includeContents = true)
     {
         var ev = new PriceCalculationEvent();
         RaiseLocalEvent(uid, ref ev);
@@ -222,7 +243,7 @@ public sealed class PricingSystem : EntitySystem
             price += GetStaticPrice(uid);
         }
 
-        if (TryComp<ContainerManagerComponent>(uid, out var containers))
+        if (includeContents && TryComp<ContainerManagerComponent>(uid, out var containers))
         {
             foreach (var container in containers.Containers.Values)
             {

@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Alert;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Content.Shared.Whitelist;
@@ -199,6 +200,9 @@ public sealed partial class RevenantComponent : Component
     [DataField]
     public EntityWhitelist? MalfunctionBlacklist;
     #endregion
+
+    [DataField]
+    public ProtoId<AlertPrototype> EssenceAlert = "Essence";
 
     #region Visualizer
     [DataField("state")]

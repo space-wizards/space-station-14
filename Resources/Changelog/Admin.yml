@@ -152,5 +152,337 @@ Entries:
   id: 20
   time: '2024-04-09T15:25:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26771
+- author: Aexxie
+  changes:
+  - message: Removed the bartender's roundstart incendiary shells on Meta.
+    type: Remove
+  id: 21
+  time: '2024-04-20T01:06:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27142
+- author: nikthechampiongr
+  changes:
+  - message: Banpanel default values for ban severities, whether a server ban should
+      be applied with hwid/ip,  whether to use last available details, and whether
+      to erase the player on ban can now be configured through a Cvar.
+    type: Tweak
+  id: 22
+  time: '2024-04-20T16:18:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27168
+- author: EmoGarbage404
+  changes:
+  - message: Fixed antag status being broken in overlay and UI.
+    type: Fix
+  id: 23
+  time: '2024-04-26T00:25:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27319
+- author: Errant
+  changes:
+  - message: When spawning vox for admemes, they should be given/spawned in a nitrogen-filled
+      space if possible. If they must be placed in normal air, an alternate vox prototype
+      now comes with breathing gear and N2 tank already equipped, but the internals
+      must be turned on via right click and even if you do this instantly they will
+      still probably take ~4 poison damage from the air, so heal them afterwards.
+    type: Add
+  id: 24
+  time: '2024-04-27T10:33:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26705
+- author: Tainakov
+  changes:
+  - message: +Adminchat flag is added. Now to gain access to the admin chat you will
+      need this flag.
+    type: Add
+  id: 25
+  time: '2024-04-27T11:17:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26930
+- author: Titian3
+  changes:
+  - message: Added admin playtime tracking and included it in overall playtime tracking.
+    type: Add
+  id: 26
+  time: '2024-05-02T06:23:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/24945
+- author: pissdemon
+  changes:
+  - message: Players frozen by admins can no longer use the "ghost" or "suicide" console
+      commands.
+    type: Tweak
+  - message: Added a "Freeze And Mute" admin verb. In addition to acting like Freeze,
+      it will mute the targeted player, which prevents them from speaking or emoting
+      until unfrozen. It can also be used on already frozen but not yet muted players.
+    type: Add
+  id: 27
+  time: '2024-05-12T14:35:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27813
+- author: nikthechampiongr
+  changes:
+  - message: Admins are now able to remove station records through the records console
+      interface on their aghost. This will remove the record from the manifest and
+      criminal records as well.
+    type: Add
+  id: 28
+  time: '2024-05-12T15:07:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27883
+- author: Arimah and TsjipTsjip
+  changes:
+  - message: Universal access configurator which can modify all access levels with
+      the correct ID card.
+    type: Add
+  - message: Universal ID card which has all access levels.
+    type: Add
+  - message: Admin PDA's spawn with a universal ID card, admin ghosts get a universal
+      access configurator in their bluespace satchel.
+    type: Tweak
+  id: 29
+  time: '2024-05-19T23:04:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28107
+- author: Repo
+  changes:
+  - message: Added listgamerules command, lists all run game modes for the round.
+    type: Add
+  - message: Added admin anouncement for addgamerule
+    type: Add
+  - message: Gamemode now shows after starting round.
+    type: Fix
+  id: 30
+  time: '2024-05-25T20:18:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28178
+- author: Repo
+  changes:
+  - message: Option to admin or play on observe for admins
+    type: Tweak
+  - message: de-admin on late join
+    type: Fix
+  id: 31
+  time: '2024-05-28T18:00:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28319
+- author: ShadowCommander
+  changes:
+  - message: Added a search bar to the admin menu player tab.
+    type: Add
+  - message: Changed the player tab entry tooltip to be the player name, character
+      name, identity, and job. Moved the time tooltip to the header.
+    type: Tweak
+  id: 32
+  time: '2024-05-31T06:28:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28030
+- author: Geekyhobo
+  changes:
+  - message: Added a PII admin flag to hide personal identification information.
+    type: Add
+  id: 33
+  time: '2024-06-01T07:23:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27776
+- author: ShadowCommander, EmoGarbage
+  changes:
+  - message: 'Added new permissions: moderator, adminwho, and namecolor'
+    type: Add
+  - message: Changed various command perms from admin to moderator & fun.
+    type: Tweak
+  id: 34
+  time: '2024-06-01T08:14:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28451
+- author: Repo
+  changes:
+  - message: Sorting and search to objects tab.
+    type: Add
+  - message: Disconnected people showing player tab
+    type: Fix
+  id: 35
+  time: '2024-06-06T06:41:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28609
+- author: nikthechampiongr
+  changes:
+  - message: Freeze, freeze & mute, and unfreeze verbs now work on any entity. Not
+      just connected players.
+    type: Tweak
+  id: 36
+  time: '2024-06-08T10:40:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28664
+- author: ShadowCommander
+  changes:
+  - message: Player tab playtime no longer changes to Unknown when a player reconnects.
+    type: Fix
+  id: 37
+  time: '2024-06-13T06:38:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28876
+- author: nikthechampiongr
+  changes:
+  - message: The ahelp panel properly deselects a player when they are no longer on
+      the player list.
+    type: Fix
+  id: 38
+  time: '2024-06-15T11:25:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28899
+- author: slarticodefast
+  changes:
+  - message: Added the "Make Inititial Infected" verb to the antag control.
+    type: Add
+  id: 39
+  time: '2024-06-21T05:42:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29259
+- author: nikthechampiongr
+  changes:
+  - message: It is now possible to issue BlacklistedRanges bans(This requires you
+      to edit the database manually at the moment.) Bans marked as BlacklistedRange
+      will lead to players joining for the first time who match an ip range to be
+      denied. Players that have joined the server before will be unaffected.
+    type: Add
+  id: 40
+  time: '2024-06-21T12:06:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29258
+- author: Chief-Engineer
+  changes:
+  - message: grant_connect_bypass now requires moderator permissions instead of admin.
+    type: Tweak
+  id: 41
+  time: '2024-06-24T21:56:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29406
+- author: Chief-Engineer
+  changes:
+  - message: Added the ability to alert for shared connections.
+    type: Add
+  id: 42
+  time: '2024-06-26T13:43:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29405
+- author: Repo
+  changes:
+  - message: Changed admin object tab from auto to manual refresh on tab change or
+      button press so that entries don't shift around when selecting an object.
+    type: Tweak
+  id: 43
+  time: '2024-06-28T03:32:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28681
+- author: Chief-Engineer
+  changes:
+  - message: Admin alert for unsafe AME injection rate was disabled.
+    type: Remove
+  id: 44
+  time: '2024-06-30T12:26:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29582
+- author: Chief-Engineer
+  changes:
+  - message: Baby jail no longer prevents accounts with no prior connections from
+      connecting
+    type: Fix
+  id: 45
+  time: '2024-07-11T05:14:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29896
+- author: Repo
+  changes:
+  - message: Added aHelp player pinning.
+    type: Add
+  - message: Added disconnection, reconnection, banning notice on relay and ahelp.
+    type: Add
+  - message: Fixed search clears on aHelp close.
+    type: Fix
+  id: 46
+  time: '2024-07-30T08:28:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28639
+- author: Repo
+  changes:
+  - message: Fixed Ahelp Sorting
+    type: Fix
+  id: 47
+  time: '2024-07-31T01:58:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30518
+- author: Mervill
+  changes:
+  - message: added a debug command to make you thirsty
+    type: Add
+  id: 48
+  time: '2024-08-02T15:49:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30562
+- author: Repo
+  changes:
+  - message: Players that aHelped in Current round stay at top of bwoink list.
+    type: Fix
+  id: 49
+  time: '2024-08-02T18:58:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30580
+- author: Mervill
+  changes:
+  - message: added a debug command to set either your hunger or thirst value to a
+      given threshold
+    type: Add
+  id: 50
+  time: '2024-08-05T07:36:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30563
+- author: nikthechampiongr
+  changes:
+  - message: The player panel has now been added and can be invoked with the playerpanel
+      command. It will display general information on the selected player, as well
+      as allow for general actions to be performed on them.
+    type: Add
+  id: 51
+  time: '2024-08-09T05:33:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30238
+- author: Repo
+  changes:
+  - message: Accurate Panic bunker and Baby Jail conditions.
+    type: Fix
+  id: 52
+  time: '2024-08-09T05:48:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30581
+- author: Simyon
+  changes:
+  - message: You can now view and edit the laws of silicons. Cyborg/Law bound entity
+      -> Admin -> Manage laws
+    type: Add
+  id: 53
+  time: '2024-08-09T06:16:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28483
+- author: TsjipTsjip
+  changes:
+  - message: Explosion damage dealt to players is now logged again.
+    type: Add
+  id: 54
+  time: '2024-08-09T06:24:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29762
+- author: Repo
+  changes:
+  - message: Admin logs for Cubes and other rehydration.
+    type: Add
+  id: 55
+  time: '2024-08-09T06:24:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30597
+- author: Errant
+  changes:
+  - message: The setgamepreset command now only sets the gamemode for a limited number
+      of rounds, specified by a second parameter. Afterwards it switches back to the
+      server default. Omitting the number parameter sets it for 1 round only. To change
+      the game mode for a longer period, either specify a high number or change the
+      game.fallbackpreset cvar so it will reset to what you want
+    type: Tweak
+  id: 56
+  time: '2024-08-09T07:04:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30756
+- author: Ko4erga
+  changes:
+  - message: Added new markup decals.
+    type: Add
+  id: 57
+  time: '2024-08-09T07:06:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30374
+- author: nikthechampiongr
+  changes:
+  - message: player panel whitelist toggle works without host permissions now.
+    type: Fix
+  id: 58
+  time: '2024-08-12T23:25:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30948
+- author: MilonPL
+  changes:
+  - message: Deleting a grid from the objects tab now requires confirmation.
+    type: Tweak
+  id: 59
+  time: '2024-08-17T16:05:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30946
+- author: MilonPL
+  changes:
+  - message: The admin PDA health analyzer no longer shows a popup to the player.
+    type: Fix
+  id: 60
+  time: '2024-08-19T03:02:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31097
 Name: Admin
 Order: 1

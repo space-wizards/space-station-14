@@ -4,16 +4,15 @@
   id: BaseNinjaObjective
   components:
   - type: Objective
-    # difficulty isn't used all since objectives are picked
+    # difficulty isn't used since all objectives are picked
     difficulty: 1.5
-    issuer: spiderclan
+    issuer: objective-issuer-spiderclan
   - type: RoleRequirement
     roles:
       components:
       - NinjaRole
 
 - type: entity
-  noSpawn: true
   parent: BaseNinjaObjective
   id: DoorjackObjective
   components:
@@ -29,7 +28,6 @@
   - type: DoorjackCondition
 
 - type: entity
-  noSpawn: true
   parent: BaseNinjaObjective
   id: StealResearchObjective
   description: Your gloves can be used to hack a research server and steal its precious data. If science has been slacking you'll have to get to work.
@@ -45,8 +43,7 @@
   - type: StealResearchCondition
 
 - type: entity
-  noSpawn: true
-  parent: BaseNinjaObjective
+  parent: [BaseNinjaObjective, BaseCodeObjective]
   id: SpiderChargeObjective
   description: This bomb can be detonated in a specific location. Note that the bomb will not work anywhere else!
   components:
@@ -57,7 +54,6 @@
   - type: SpiderChargeCondition
 
 - type: entity
-  noSpawn: true
   parent: [BaseNinjaObjective, BaseSurviveObjective]
   id: NinjaSurviveObjective
   name: Survive
@@ -69,8 +65,7 @@
       state: icon
 
 - type: entity
-  noSpawn: true
-  parent: BaseNinjaObjective
+  parent: [BaseNinjaObjective, BaseCodeObjective]
   id: TerrorObjective
   name: Call in a threat
   description: Use your gloves on a communication console in order to bring another threat to the station.
@@ -79,4 +74,14 @@
     icon:
       sprite: Objects/Fun/Instruments/otherinstruments.rsi
       state: red_phone
-  - type: TerrorCondition
+
+- type: entity
+  parent: [BaseNinjaObjective, BaseCodeObjective]
+  id: MassArrestObjective
+  name: Set everyone to wanted
+  description: Use your gloves to hack a criminal records console, setting the entire station to be wanted!
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Weapons/Melee/stunbaton.rsi
+      state: stunbaton_on

@@ -2,10 +2,12 @@
 using System.IO;
 using System.Linq;
 using Content.Server.GameTicking;
+using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Preferences;
 using Robust.Client;
 using Robust.Server.Player;
 using Robust.Shared.Exceptions;
@@ -34,11 +36,18 @@ public sealed partial class TestPair : IAsyncDisposable
 
     private async Task OnCleanDispose()
     {
+        await Server.WaitIdleAsync();
+        await Client.WaitIdleAsync();
+        await ResetModifiedPreferences();
+        await Server.RemoveAllDummySessions();
+
         if (TestMap != null)
         {
             await Server.WaitPost(() => Server.EntMan.DeleteEntity(TestMap.MapUid));
             TestMap = null;
         }
+
+        await RevertModifiedCvars();
 
         var usageTime = Watch.Elapsed;
         Watch.Restart();
@@ -75,6 +84,16 @@ public sealed partial class TestPair : IAsyncDisposable
 
         var returnTime = Watch.Elapsed;
         await _testOut.WriteLineAsync($"{nameof(CleanReturnAsync)}: PoolManager took {returnTime.TotalMilliseconds} ms to put pair {Id} back into the pool");
+    }
+
+    private async Task ResetModifiedPreferences()
+    {
+        var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
+        foreach (var user in _modifiedProfiles)
+        {
+            await Server.WaitPost(() => prefMan.SetProfile(user, 0, new HumanoidCharacterProfile()).Wait());
+        }
+        _modifiedProfiles.Clear();
     }
 
     public async ValueTask CleanReturnAsync()
@@ -131,7 +150,8 @@ public sealed partial class TestPair : IAsyncDisposable
         // Move to pre-round lobby. Required to toggle dummy ticker on and off
         if (gameTicker.RunLevel != GameRunLevel.PreRoundLobby)
         {
-            await testOut.WriteLineAsync($"Recycling: {Watch.Elapsed.TotalMilliseconds} ms: Restarting server.");
+            await testOut.WriteLineAsync($"Recycling: {Watch.Elapsed.TotalMilliseconds} ms: Restarting round.");
+            Server.CfgMan.SetCVar(CCVars.GameDummyTicker, false);
             Assert.That(gameTicker.DummyTicker, Is.False);
             Server.CfgMan.SetCVar(CCVars.GameLobbyEnabled, true);
             await Server.WaitPost(() => gameTicker.RestartRound());
@@ -146,6 +166,7 @@ public sealed partial class TestPair : IAsyncDisposable
 
         // Restart server.
         await testOut.WriteLineAsync($"Recycling: {Watch.Elapsed.TotalMilliseconds} ms: Restarting server again");
+        await Server.WaitPost(() => Server.EntMan.FlushEntities());
         await Server.WaitPost(() => gameTicker.RestartRound());
         await RunTicksSync(1);
 

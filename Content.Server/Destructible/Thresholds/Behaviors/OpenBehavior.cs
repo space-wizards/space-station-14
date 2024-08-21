@@ -11,7 +11,7 @@ public sealed partial class OpenBehavior : IThresholdBehavior
 {
     public void Execute(EntityUid uid, DestructibleSystem system, EntityUid? cause = null)
     {
-        var openable = EntitySystem.Get<OpenableSystem>();
+        var openable = system.EntityManager.System<OpenableSystem>();
         openable.TryOpen(uid);
     }
 }

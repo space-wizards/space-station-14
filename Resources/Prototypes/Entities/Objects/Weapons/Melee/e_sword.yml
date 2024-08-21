@@ -1,8 +1,7 @@
 - type: entity
-  name: energy sword
+  id: BaseMeleeWeaponEnergy # more generic naming in case someone makes like, idk, an energy axe
   parent: BaseItem
-  id: EnergySword
-  description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
+  abstract: true
   components:
   - type: EnergySword
   - type: ItemToggle
@@ -13,10 +12,14 @@
   - type: ItemToggleActiveSound
     activeSound:
       path: /Audio/Weapons/ebladehum.ogg
-  - type: ItemToggleSharp
+  - type: ComponentToggler
+    components:
+    - type: Sharp
+    - type: DisarmMalus
+      malus: 0.6
+    - type: Execution
+      doAfterDuration: 4.0
   - type: ItemToggleHot
-  - type: ItemToggleDisarmMalus
-    activatedDisarmMalus: 0.6
   - type: ItemToggleSize
     activatedSize: Huge
   - type: ItemToggleMeleeWeapon
@@ -34,19 +37,10 @@
       params:
         variation: 0.125
     activatedDamage:
-        types:
-            Slash: 15
-            Heat: 15
-            Structural: 20
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/e_sword.rsi
-    layers:
-      - state: e_sword
-      - state: e_sword_blade
-        color: "#FFFFFF"
-        visible: false
-        shader: unshaded
-        map: [ "blade" ]
+      types:
+        Slash: 15
+        Heat: 15
+        Structural: 20
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 1
@@ -55,7 +49,6 @@
         Blunt: 4.5
   - type: Item
     size: Small
-    sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
   - type: UseDelay
     delay: 1.0
   - type: PointLight
@@ -74,35 +67,48 @@
       right:
       - state: inhand-right-blade
         shader: unshaded
-  - type: DisarmMalus
-    malus: 0
   - type: Reflect
-    enabled: false
   - type: IgnitionSource
     temperature: 700
 
 - type: entity
-  name: pen
-  parent: EnergySword
-  id: EnergyDagger
-  suffix: E-Dagger
-  description: 'A dark ink pen.'
+  name: energy sword
+  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
+  id: EnergySword
+  description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
   components:
-  - type: EnergySword
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_sword.rsi
+    layers:
+    - state: e_sword
+    - state: e_sword_blade
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
+  - type: Item
+    sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
+
+- type: entity
+  name: energy dagger
+  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
+  id: EnergyDaggerLoud
+  description: A not as loud and dangerous dagger with a beam made of pure, concentrated plasma. This one is completely undisguised.
+  components:
   - type: ItemToggle
     soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
       params:
-        volume: -6
+        volume: -3
     soundDeactivate:
       path: /Audio/Weapons/ebladeoff.ogg
       params:
-        volume: -6
+        volume: -3
   - type: ItemToggleMeleeWeapon
     activatedSoundOnSwing:
       path: /Audio/Weapons/eblademiss.ogg
       params:
-        volume: -6
+        volume: -3
         variation: 0.250
     activatedDamage:
         types:
@@ -113,9 +119,81 @@
     activeSound:
       path: /Audio/Weapons/ebladehum.ogg
       params:
+        volume: -3
+  - type: ComponentToggler
+    components:
+    - type: Sharp
+    - type: DisarmMalus
+      malus: 0.4
+    - type: Execution
+      doAfterDuration: 4.0
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_dagger_loud.rsi
+    layers:
+      - state: e_sword
+      - state: e_sword_blade
+        color: "#FFFFFF"
+        visible: false
+        shader: unshaded
+        map: [ "blade" ]
+  - type: MeleeWeapon
+    wideAnimationRotation: 145
+    attackRate: 1
+    hidden: true
+    damage:
+      types:
+        Blunt: 1
+  - type: Item
+    size: Tiny
+    sprite: Objects/Weapons/Melee/e_dagger_loud.rsi
+  - type: PointLight
+    enabled: false
+    radius: 1.5
+    energy: 1.5
+    color: white
+    netsync: false
+
+- type: entity
+  name: pen
+  parent: BaseMeleeWeaponEnergy
+  id: EnergyDagger
+  suffix: E-Dagger
+  description: 'A dark ink pen.'
+  components:
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Weapons/ebladeon.ogg
+      params:
         volume: -6
-  - type: ItemToggleDisarmMalus
-    activatedDisarmMalus: 0.4
+    soundDeactivate:
+      path: /Audio/Weapons/ebladeoff.ogg
+      params:
+        volume: -6
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+      params:
+        volume: -6
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnSwing:
+      path: /Audio/Weapons/eblademiss.ogg
+      params:
+        volume: -3
+        variation: 0.250
+    activatedDamage:
+      types:
+        Slash: 10
+        Heat: 10
+  - type: ComponentToggler
+    components:
+    - type: Sharp
+    - type: DisarmMalus
+      malus: 0.4
+    - type: Execution
+      doAfterDuration: 4.0
+    - type: Contraband
+      severity: Syndicate
+      allowedDepartments: null
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:
@@ -125,42 +203,28 @@
         visible: false
         shader: unshaded
         map: [ "blade" ]
-  - type: MeleeWeapon
-    wideAnimationRotation: -135
-    attackRate: 1
-    hidden: true
-    damage:
-      types:
-        Blunt: 1
   - type: Item
     size: Tiny
     sprite: Objects/Weapons/Melee/e_dagger.rsi
-  - type: UseDelay
-    delay: 1.0
   - type: PointLight
     enabled: false
     radius: 1.5
     energy: 1.5
     color: white
     netsync: false
-  - type: Appearance
-  - type: ToggleableLightVisuals
-    spriteLayer: blade
-    inhandVisuals:
-      left:
-      - state: inhand-left-blade
-        shader: unshaded
-      right:
-      - state: inhand-right-blade
-        shader: unshaded
+  - type: MeleeWeapon
+    wideAnimationRotation: 145
+    attackRate: 1
+    hidden: true
+    damage:
+      types:
+        Blunt: 1
   - type: Tag
     tags:
     - Write
-  - type: DisarmMalus
-    malus: 0
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseSyndicateContraband]
   id: EnergyDaggerBox
   name: e-dagger box
   suffix: E-Dagger
@@ -179,19 +243,16 @@
 
 - type: entity
   name: energy cutlass
-  parent: EnergySword
+  parent: [BaseMeleeWeaponEnergy, BaseMajorContraband]
   id: EnergyCutlass
   description: An exotic energy weapon.
   components:
-  - type: EnergySword
   - type: ItemToggleMeleeWeapon
     activatedDamage:
         types:
             Slash: 10
             Heat: 12
     deactivatedSecret: true
-  - type: ItemToggleDisarmMalus
-    activatedDisarmMalus: 0.6
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
     layers:
@@ -202,26 +263,16 @@
         shader: unshaded
         map: [ "blade" ]
   - type: Item
-    size: Small
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
-  - type: ToggleableLightVisuals
-    spriteLayer: blade
-    inhandVisuals:
-      left:
-      - state: inhand-left-blade
-        shader: unshaded
-      right:
-      - state: inhand-right-blade
-        shader: unshaded
 
 - type: entity
   name: double-bladed energy sword
-  parent: EnergySword
+  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
   id: EnergySwordDouble
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. This can be stored in pockets.
   components:
-  - type: EnergySword
   - type: ItemToggle
+    onUse: false # wielding events control it instead
     soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
       params:
@@ -246,9 +297,15 @@
       path: /Audio/Weapons/ebladehum.ogg
       params:
         volume: 3
-  - type: ItemToggleDisarmMalus
-    activatedDisarmMalus: 0.7
+  - type: ComponentToggler
+    components:
+    - type: Sharp
+    - type: DisarmMalus
+      malus: 0.7
+    - type: Execution
+      doAfterDuration: 4.0
   - type: Wieldable
+    wieldSound: null # esword light sound instead
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 1.5
@@ -271,14 +328,12 @@
   - type: Reflect
     reflectProb: .75
     spread: 75
-  - type: UseDelay
-    delay: 1
-  - type: ToggleableLightVisuals
-    spriteLayer: blade
-    inhandVisuals:
-      left:
-      - state: inhand-left-blade
-        shader: unshaded
-      right:
-      - state: inhand-right-blade
-        shader: unshaded
+
+- type: entity
+  suffix: One-Handed, For Borgs
+  parent: EnergySwordDouble
+  id: CyborgEnergySwordDouble # why is this invalid if ID is BorgEnergySwordDouble
+  description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. Specially designed for syndicate cyborgs.
+  components: # could add energy-draining like the L6C
+  - type: Wieldable
+    freeHandsRequired: 0 # because borg has no off-hand to wield with.  Without this, it will be unable to activate the esword

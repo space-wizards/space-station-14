@@ -1,0 +1,14 @@
+<BoxContainer xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         Orientation="Horizontal">
+    <Label Name="TitleLabel"
+           Margin="5 0"
+           MouseFilter="Stop"/>
+
+    <!--21 was the height of OptionsContainer at the time that this button was added. So I am limiting the texture to 21x21-->
+    <Control SetSize="21 21">
+        <TextureButton Name="Help" StyleClasses="HelpButton"/>
+    </Control>
+    <BoxContainer Name="OptionsContainer"
+                  SetWidth="400"/>
+</BoxContainer>

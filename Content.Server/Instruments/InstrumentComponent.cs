@@ -1,6 +1,7 @@
 using Content.Server.UserInterface;
 using Content.Shared.Instruments;
 using Robust.Shared.Player;
+using ActivatableUIComponent = Content.Shared.UserInterface.ActivatableUIComponent;
 
 namespace Content.Server.Instruments;
 
@@ -16,9 +17,9 @@ public sealed partial class InstrumentComponent : SharedInstrumentComponent
     [ViewVariables] public uint LastSequencerTick = 0;
 
     // TODO Instruments: Make this ECS
-    public ICommonSession? InstrumentPlayer =>
+    public EntityUid? InstrumentPlayer =>
         _entMan.GetComponentOrNull<ActivatableUIComponent>(Owner)?.CurrentSingleUser
-        ?? _entMan.GetComponentOrNull<ActorComponent>(Owner)?.PlayerSession;
+        ?? _entMan.GetComponentOrNull<ActorComponent>(Owner)?.PlayerSession.AttachedEntity;
 }
 
 [RegisterComponent]

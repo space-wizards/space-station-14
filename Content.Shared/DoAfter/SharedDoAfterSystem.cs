@@ -227,7 +227,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         // For this we need to stay on the same hand slot and need the same item in that hand slot
         // (or if there is no item there we need to keep it free).
-        if (args.NeedHand && args.BreakOnHandChange)
+        if (args.NeedHand && (args.BreakOnHandChange || args.BreakOnDropItem))
         {
             if (!TryComp(args.User, out HandsComponent? handsComponent))
                 return false;
@@ -245,8 +245,9 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.AttemptFrequency == AttemptFrequency.StartAndEnd && !TryAttemptEvent(doAfter))
             return false;
 
-        if (args.Delay <= TimeSpan.Zero ||
-            _tag.HasTag(args.User, "InstantDoAfters"))
+        // TODO DO AFTER
+        // Why does this tag exist? Just make this a bool on the component?
+        if (args.Delay <= TimeSpan.Zero || _tag.HasTag(args.User, "InstantDoAfters"))
         {
             RaiseDoAfterEvents(doAfter, comp);
             // We don't store instant do-afters. This is just a lazy way of hiding them from client-side visuals.
@@ -309,7 +310,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         if ((conditions & DuplicateConditions.SameEvent) != 0
-            && args.Event.GetType() != otherArgs.Event.GetType())
+            && !args.Event.IsDuplicate(otherArgs.Event))
         {
             return false;
         }
@@ -391,6 +392,19 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         // This would also mean the post-DoAfter checks haven't run yet. But whatever, I can't be bothered tracking and
         // networking whether a do-after has raised its events or not.
         return DoAfterStatus.Finished;
+    }
+
+    public bool IsRunning(DoAfterId? id, DoAfterComponent? comp = null)
+    {
+        if (id == null)
+            return false;
+
+        return GetStatus(id.Value.Uid, id.Value.Index, comp) == DoAfterStatus.Running;
+    }
+
+    public bool IsRunning(EntityUid entity, ushort id, DoAfterComponent? comp = null)
+    {
+        return GetStatus(entity, id, comp) == DoAfterStatus.Running;
     }
     #endregion
 }

@@ -2,6 +2,7 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.NameModifier.EntitySystems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems;
@@ -11,6 +12,7 @@ public sealed class TransformableContainerSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly MetaDataSystem _metadataSystem = default!;
+    [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
     public override void Initialize()
     {
@@ -18,15 +20,12 @@ public sealed class TransformableContainerSystem : EntitySystem
 
         SubscribeLocalEvent<TransformableContainerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<TransformableContainerComponent, SolutionContainerChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<TransformableContainerComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
     }
 
     private void OnMapInit(Entity<TransformableContainerComponent> entity, ref MapInitEvent args)
     {
         var meta = MetaData(entity.Owner);
-        if (string.IsNullOrEmpty(entity.Comp.InitialName))
-        {
-            entity.Comp.InitialName = meta.EntityName;
-        }
         if (string.IsNullOrEmpty(entity.Comp.InitialDescription))
         {
             entity.Comp.InitialDescription = meta.EntityDescription;
@@ -58,11 +57,19 @@ public sealed class TransformableContainerSystem : EntitySystem
             && _prototypeManager.TryIndex(reagentId.Value.Prototype, out ReagentPrototype? proto))
         {
             var metadata = MetaData(entity.Owner);
-            var val = Loc.GetString("transformable-container-component-glass", ("name", proto.LocalizedName));
-            _metadataSystem.SetEntityName(entity.Owner, val, metadata);
             _metadataSystem.SetEntityDescription(entity.Owner, proto.LocalizedDescription, metadata);
             entity.Comp.CurrentReagent = proto;
             entity.Comp.Transformed = true;
+        }
+
+        _nameMod.RefreshNameModifiers(entity.Owner);
+    }
+
+    private void OnRefreshNameModifiers(Entity<TransformableContainerComponent> entity, ref RefreshNameModifiersEvent args)
+    {
+        if (entity.Comp.CurrentReagent is { } currentReagent)
+        {
+            args.AddModifier("transformable-container-component-glass", priority: -1, ("reagent", currentReagent.LocalizedName));
         }
     }
 
@@ -73,10 +80,8 @@ public sealed class TransformableContainerSystem : EntitySystem
 
         var metadata = MetaData(entity);
 
-        if (!string.IsNullOrEmpty(entity.Comp.InitialName))
-        {
-            _metadataSystem.SetEntityName(entity.Owner, entity.Comp.InitialName, metadata);
-        }
+        _nameMod.RefreshNameModifiers(entity.Owner);
+
         if (!string.IsNullOrEmpty(entity.Comp.InitialDescription))
         {
             _metadataSystem.SetEntityDescription(entity.Owner, entity.Comp.InitialDescription, metadata);

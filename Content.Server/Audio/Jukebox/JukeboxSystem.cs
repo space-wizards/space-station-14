@@ -5,6 +5,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using JukeboxComponent = Content.Shared.Audio.Jukebox.JukeboxComponent;
 
@@ -66,8 +67,11 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
     private void OnJukeboxSetTime(EntityUid uid, JukeboxComponent component, JukeboxSetTimeMessage args)
     {
-        var offset = (args.Session.Channel.Ping * 1.5f) / 1000f;
-        Audio.SetPlaybackPosition(component.AudioStream, args.SongTime + offset);
+        if (TryComp(args.Actor, out ActorComponent? actorComp))
+        {
+            var offset = actorComp.PlayerSession.Channel.Ping * 1.5f / 1000f;
+            Audio.SetPlaybackPosition(component.AudioStream, args.SongTime + offset);
+        }
     }
 
     private void OnPowerChanged(Entity<JukeboxComponent> entity, ref PowerChangedEvent args)

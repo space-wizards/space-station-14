@@ -209,13 +209,18 @@
   # TODO make these entitystorage again + placeablesurface after entity storage ECS gets merged.
   - type: Storage
     grid:
-    - 0,0,1,1
+    - 0,0,3,1
     maxItemSize: Normal
+    whitelist:
+      components:
+      - Utensil
+      tags:
+      - Pizza
   - type: Item
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     heldPrefix: box
     shape:
-    - 0,0,1,1
+    - 0,0,2,1
   - type: Appearance
   - type: EntityStorageVisuals
     stateDoorOpen: box-open
@@ -263,6 +268,7 @@
     - id: FoodPizzaDonkpocket
       prob: 0.10
       orGroup: Pizza
+    - id: KnifePlastic
 
 # Nugget
 
@@ -555,7 +561,6 @@
   - type: Tag
     tags:
     - Trash
-    - HappyHonk
     - MimeHappyHonk
   - type: Sprite
     sprite: Objects/Storage/Happyhonk/mime.rsi
@@ -566,7 +571,7 @@
 
 - type: entity
   id: HappyHonkNukie
-  parent: HappyHonk
+  parent: [HappyHonk, BaseSyndicateContraband]
   name: robust nukie meal
   description: A sus meal with a potentially explosive surprise.
   suffix: Toy Unsafe
@@ -652,6 +657,10 @@
   name: woeful cluwne meal
   description: Nothing good can come of this.
   components:
+  - type: Tag
+    tags:
+    - Trash
+    - CluwneHappyHonk
   - type: Sprite
     sprite: Objects/Storage/Happyhonk/cluwne.rsi
     state: box
@@ -666,7 +675,7 @@
   id: FoodMealHappyHonkClown
   parent: HappyHonk
   suffix: random food spawner meal
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: StorageFill
     contents:

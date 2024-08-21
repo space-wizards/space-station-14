@@ -2,8 +2,8 @@
   id: Packed
   mapName: 'Packed'
   mapPath: /Maps/packed.yml
-  minPlayers: 5
-  maxPlayers: 40
+  minPlayers: 7
+  maxPlayers: 35
   stations:
     Packed:
       stationProto: StandardNanotrasenStation
@@ -14,14 +14,12 @@
             !type:NanotrasenNameGenerator
             prefixCreator: 'VG'
         - type: StationJobs
-          overflowJobs:
-            - Passenger
           availableJobs:
             #service
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             Bartender: [ 1, 1 ]
-            Botanist: [ 2, 2 ]
+            Botanist: [ 1, 2 ]
             Chef: [ 1, 1 ]
             Janitor: [ 1, 2 ]
             Chaplain: [ 1, 1 ]

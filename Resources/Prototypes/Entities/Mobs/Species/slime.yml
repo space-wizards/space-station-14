@@ -12,11 +12,37 @@
   - type: Body
     prototype: Slime
     requiredLegs: 2
+  # they like eat it idk lol
+  - type: Storage
+    clickInsert: false
+    grid:
+    - 0,0,1,2
+    maxItemSize: Large
+    storageInsertSound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.VoiceMaskUIKey.Key:
+        type: VoiceMaskBoundUserInterface
+      enum.HumanoidMarkingModifierKey.Key:
+        type: HumanoidMarkingModifierBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  # to prevent bag open/honk spam
+  - type: UseDelay
+    delay: 0.5
   - type: HumanoidAppearance
     species: SlimePerson
   - type: Speech
     speechVerb: Slime
     speechSounds: Slime
+    allowedEmotes: ['Squish']
   - type: TypingIndicator
     proto: slime
   - type: Vocal
@@ -27,6 +53,15 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Slime
+  - type: PassiveDamage # Around 8 damage a minute healed
+    allowedStates:
+    - Alive
+    damageCap: 65
+    damage:
+      types:
+        Heat: -0.14
+      groups:
+        Brute: -0.14
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
@@ -55,7 +90,7 @@
         scaleByQuantity: true
         damage:
           types:
-            Heat: 2
+            Heat: 0.1
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -74,11 +109,25 @@
       types:
         Asphyxiation: -1.0
     maxSaturation: 15
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
 
 - type: entity
   parent: MobHumanDummy
   id: MobSlimePersonDummy
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
-    - type: HumanoidAppearance
-      species: SlimePerson
+  - type: HumanoidAppearance
+    species: SlimePerson
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female

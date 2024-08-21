@@ -2,7 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Server.Chemistry.ReactionEffects;
+using Content.Server.EntityEffects.Effects;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
@@ -315,7 +315,7 @@ public sealed class SmokeSystem : EntitySystem
                 continue;
 
             var reagent = _prototype.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
-            reagent.ReactionTile(tile, reagentQuantity.Quantity);
+            reagent.ReactionTile(tile, reagentQuantity.Quantity, EntityManager, reagentQuantity.Reagent.Data);
         }
     }
 

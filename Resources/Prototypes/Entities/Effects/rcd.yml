@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: EffectRCDBase
   abstract: true
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Transform
     anchored: True
@@ -19,7 +19,7 @@
 - type: entity
   parent: EffectRCDBase
   id: EffectRCDDeconstructPreview
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: deconstructPreview
@@ -27,7 +27,7 @@
 - type: entity
   parent: EffectRCDBase
   id: EffectRCDConstruct0
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: construct0
@@ -37,7 +37,7 @@
 - type: entity
   parent: EffectRCDBase
   id: EffectRCDConstruct1
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: construct1
@@ -47,7 +47,7 @@
 - type: entity
   parent: EffectRCDBase
   id: EffectRCDConstruct2
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: construct2
@@ -57,7 +57,7 @@
 - type: entity
   parent: EffectRCDBase
   id: EffectRCDConstruct3
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: construct3
@@ -67,7 +67,7 @@
 - type: entity
   parent: EffectRCDBase
   id: EffectRCDConstruct4
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: construct4
@@ -77,7 +77,7 @@
 - type: entity
   parent: EffectRCDBase
   id: EffectRCDDeconstruct2
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: deconstruct2
@@ -87,7 +87,7 @@
 - type: entity
   parent: EffectRCDBase
   id: EffectRCDDeconstruct4
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: deconstruct4
@@ -97,7 +97,7 @@
 - type: entity
   parent: EffectRCDBase
   id: EffectRCDDeconstruct6
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: deconstruct6
@@ -107,7 +107,7 @@
 - type: entity
   parent: EffectRCDBase
   id: EffectRCDDeconstruct8
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: deconstruct8

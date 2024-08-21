@@ -40,6 +40,14 @@
         key: KnockedDown
         time: 3
         type: Remove
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Haloperidol
+          max: 0.01
+        key: Drowsiness
+        time: 10
+        type: Remove
     Medicine:
       effects:
       - !type:ResetNarcolepsy
@@ -79,6 +87,14 @@
       - !type:GenericStatusEffect
         key: KnockedDown
         time: 1
+        type: Remove
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Haloperidol
+          max: 0.01
+        key: Drowsiness
+        time: 10
         type: Remove
       - !type:PopupMessage
         visualType: Medium
@@ -140,6 +156,14 @@
         key: ForcedSleep
         time: 3
         type: Remove
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Haloperidol
+          max: 0.01
+        key: Drowsiness
+        time: 10
+        type: Remove
     Medicine:
       metabolismRate: 1.0
       effects:
@@ -151,8 +175,7 @@
         - !type:HealthChange
           conditions:
           - !type:TotalDamage
-            min: 70
-            max: 120 # you've got a chance to get out of crit
+            min: 70 # only heals when you're more dead than alive
           damage: # heals at the same rate as tricordrazine, doesn't heal poison because if you OD'd I'm not giving you a safety net
             groups:
               Burn: -1
@@ -172,25 +195,6 @@
     amount: -5
   - !type:PlantAdjustHealth
     amount: -1
-  metabolisms:
-    Narcotic:
-      effects:
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
-        component: SeeingRainbows
-        type: Add
-        time: 16
-        refresh: false
-
-- type: reagent
-  id: THCOil # deprecated in favor of THC, preserved here for forks
-  name: reagent-name-thc-oil
-  group: Narcotics
-  desc: reagent-desc-thc-oil
-  physicalDesc: reagent-physical-desc-skunky
-  flavor: bitter
-  flavorMinimum: 0.05
-  color: "#DAA520"
   metabolisms:
     Narcotic:
       effects:
@@ -407,3 +411,53 @@
         conditions:
         - !type:ReagentThreshold
           min: 20
+
+- type: reagent
+  id: Happiness
+  name: reagent-name-happiness
+  group: Narcotics
+  desc: reagent-desc-happiness
+  physicalDesc: reagent-physical-desc-soothing
+  flavor: paintthinner
+  color: "#EE35FF"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:Emote
+        emote: Laugh
+        showInChat: true
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          max: 20
+      - !type:Emote
+        emote: Whistle
+        showInChat: true
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          max: 20
+      - !type:Emote
+        emote: Crying
+        showInChat: true
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+      - !type:PopupMessage # we dont have sanity/mood so this will have to do
+        type: Local
+        visualType: Medium
+        messages:
+        - "psicodine-effect-fearless"
+        - "psicodine-effect-anxieties-wash-away"
+        - "psicodine-effect-at-peace"
+        probability: 0.2
+        conditions:
+        - !type:ReagentThreshold
+          max: 20
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false

@@ -10,9 +10,10 @@ implanter-component-implant-already = {$target} already has the {$implant}!
 implanter-draw-text = Draw
 implanter-inject-text = Inject
 
-implanter-empty-text = None
+implanter-empty-text = Empty
 
-implanter-label = Implant: [color=green]{$implantName}[/color] | [color=white]{$modeString}[/color]{$lineBreak}{$implantDescription}
+implanter-label = [color=green]{$implantName}[/color]
+    Mode: [color=white]{$modeString}[/color]
 
 implanter-contained-implant-text = [color=green]{$desc}[/color]
 

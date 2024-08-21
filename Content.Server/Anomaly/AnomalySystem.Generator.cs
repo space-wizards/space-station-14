@@ -61,7 +61,7 @@ public sealed partial class AnomalySystem
         var materialAmount = _material.GetMaterialAmount(uid, component.RequiredMaterial);
 
         var state = new AnomalyGeneratorUserInterfaceState(component.CooldownEndTime, materialAmount, component.MaterialPerAnomaly);
-        _ui.TrySetUiState(uid, AnomalyGeneratorUiKey.Key, state);
+        _ui.SetUiState(uid, AnomalyGeneratorUiKey.Key, state);
     }
 
     public void TryGeneratorCreateAnomaly(EntityUid uid, AnomalyGeneratorComponent? component = null)

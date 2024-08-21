@@ -1,15 +1,9 @@
-using Content.Shared.Damage;
-using Content.Shared.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Temperature.Components;
+using Content.Shared.Atmos;
 using Content.Shared.Atmos.Rotting;
-using Content.Shared.Examine;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs.Systems;
-using Content.Shared.Rejuvenate;
+using Content.Shared.Damage;
 using Robust.Server.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
@@ -22,81 +16,14 @@ public sealed class RottingSystem : SharedRottingSystem
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PerishableComponent, MapInitEvent>(OnPerishableMapInit);
-        SubscribeLocalEvent<PerishableComponent, MobStateChangedEvent>(OnMobStateChanged);
-        SubscribeLocalEvent<PerishableComponent, ExaminedEvent>(OnPerishableExamined);
-
-        SubscribeLocalEvent<RottingComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<RottingComponent, MobStateChangedEvent>(OnRottingMobStateChanged);
         SubscribeLocalEvent<RottingComponent, BeingGibbedEvent>(OnGibbed);
-        SubscribeLocalEvent<RottingComponent, RejuvenateEvent>(OnRejuvenate);
 
         SubscribeLocalEvent<TemperatureComponent, IsRottingEvent>(OnTempIsRotting);
-    }
-
-    private void OnPerishableMapInit(EntityUid uid, PerishableComponent component, MapInitEvent args)
-    {
-        component.RotNextUpdate = _timing.CurTime + component.PerishUpdateRate;
-    }
-
-    private void OnMobStateChanged(EntityUid uid, PerishableComponent component, MobStateChangedEvent args)
-    {
-        if (args.NewMobState != MobState.Dead && args.OldMobState != MobState.Dead)
-            return;
-
-        if (HasComp<RottingComponent>(uid))
-            return;
-
-        component.RotAccumulator = TimeSpan.Zero;
-        component.RotNextUpdate = _timing.CurTime + component.PerishUpdateRate;
-    }
-
-    private void OnShutdown(EntityUid uid, RottingComponent component, ComponentShutdown args)
-    {
-        if (TryComp<PerishableComponent>(uid, out var perishable))
-        {
-            perishable.RotNextUpdate = TimeSpan.Zero;
-        }
-    }
-
-    private void OnRottingMobStateChanged(EntityUid uid, RottingComponent component, MobStateChangedEvent args)
-    {
-        if (args.NewMobState == MobState.Dead)
-            return;
-        RemCompDeferred(uid, component);
-    }
-
-    public bool IsRotProgressing(EntityUid uid, PerishableComponent? perishable)
-    {
-        // things don't perish by default.
-        if (!Resolve(uid, ref perishable, false))
-            return false;
-
-        // only dead things or inanimate objects can rot
-        if (TryComp<MobStateComponent>(uid, out var mobState) && !_mobState.IsDead(uid, mobState))
-            return false;
-
-        if (_container.TryGetOuterContainer(uid, Transform(uid), out var container) &&
-            HasComp<AntiRottingContainerComponent>(container.Owner))
-        {
-            return false;
-        }
-
-        var ev = new IsRottingEvent();
-        RaiseLocalEvent(uid, ref ev);
-
-        return !ev.Handled;
-    }
-
-    public bool IsRotten(EntityUid uid, RottingComponent? rotting = null)
-    {
-        return Resolve(uid, ref rotting, false);
     }
 
     private void OnGibbed(EntityUid uid, RottingComponent component, BeingGibbedEvent args)
@@ -107,39 +34,9 @@ public sealed class RottingSystem : SharedRottingSystem
         if (!TryComp<PerishableComponent>(uid, out var perishable))
             return;
 
-        var molsToDump = perishable.MolsPerSecondPerUnitMass * physics.FixturesMass * (float) component.TotalRotTime.TotalSeconds;
+        var molsToDump = perishable.MolsPerSecondPerUnitMass * physics.FixturesMass * (float)component.TotalRotTime.TotalSeconds;
         var tileMix = _atmosphere.GetTileMixture(uid, excite: true);
         tileMix?.AdjustMoles(Gas.Ammonia, molsToDump);
-    }
-
-    private void OnPerishableExamined(Entity<PerishableComponent> perishable, ref ExaminedEvent args)
-    {
-        int stage = PerishStage(perishable, MaxStages);
-        if (stage < 1 || stage > MaxStages)
-        {
-            // We dont push an examined string if it hasen't started "perishing" or it's already rotting
-            return;
-        }
-
-        var isMob = HasComp<MobStateComponent>(perishable);
-        var description = "perishable-" + stage + (!isMob ? "-nonmob" : string.Empty);
-        args.PushMarkup(Loc.GetString(description, ("target", Identity.Entity(perishable, EntityManager))));
-    }
-
-    /// <summary>
-    /// Return an integer from 0 to maxStage representing how close to rotting an entity is. Used to
-    /// generate examine messages for items that are starting to rot.
-    /// </summary>
-    public int PerishStage(Entity<PerishableComponent> perishable, int maxStages)
-    {
-        if (perishable.Comp.RotAfter.TotalSeconds == 0 || perishable.Comp.RotAccumulator.TotalSeconds == 0)
-            return 0;
-        return (int)(1 + maxStages * perishable.Comp.RotAccumulator.TotalSeconds / perishable.Comp.RotAfter.TotalSeconds);
-    }
-
-    private void OnRejuvenate(EntityUid uid, RottingComponent component, RejuvenateEvent args)
-    {
-        RemCompDeferred<RottingComponent>(uid);
     }
 
     private void OnTempIsRotting(EntityUid uid, TemperatureComponent component, ref IsRottingEvent args)
@@ -157,7 +54,7 @@ public sealed class RottingSystem : SharedRottingSystem
     /// <returns></returns>
     private float GetRotRate(EntityUid uid)
     {
-        if (_container.TryGetContainingContainer(uid, out var container) &&
+        if (_container.TryGetContainingContainer((uid, null, null), out var container) &&
             TryComp<ProRottingContainerComponent>(container.Owner, out var rotContainer))
         {
             return rotContainer.DecayModifier;
@@ -227,7 +124,7 @@ public sealed class RottingSystem : SharedRottingSystem
                 continue;
             // We need a way to get the mass of the mob alone without armor etc in the future
             // or just remove the mass mechanics altogether because they aren't good.
-            var molRate = perishable.MolsPerSecondPerUnitMass * (float) rotting.RotUpdateRate.TotalSeconds;
+            var molRate = perishable.MolsPerSecondPerUnitMass * (float)rotting.RotUpdateRate.TotalSeconds;
             var tileMix = _atmosphere.GetTileMixture(uid, excite: true);
             tileMix?.AdjustMoles(Gas.Ammonia, molRate * physics.FixturesMass);
         }

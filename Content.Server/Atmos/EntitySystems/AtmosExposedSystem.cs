@@ -1,3 +1,4 @@
+using Content.Shared.Atmos;
 using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.EntitySystems

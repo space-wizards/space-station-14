@@ -27,6 +27,24 @@
   color: "#660099"
 
 - type: reagent
+  id: JuiceBluePumpkin
+  name: reagent-name-juice-blue-pumpkin
+  parent: BaseJuice
+  desc: reagent-desc-juice-blue-pumpkin
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: bluepumpkin
+  color: "#00BFFF"
+
+- type: reagent
+  id: JuiceBungo
+  name: reagent-name-juice-bungo
+  parent: BaseJuice
+  desc: reagent-desc-juice-bungo
+  physicalDesc: reagent-physical-desc-tart
+  flavor: bungo
+  color: "#F9E43D"
+
+- type: reagent
   id: JuiceCarrot
   name: reagent-name-juice-carrot
   parent: BaseJuice
@@ -63,6 +81,12 @@
   physicalDesc: reagent-physical-desc-citric
   flavor: sour
   color: "#fff690"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/lemonjuiceglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: JuiceLime
@@ -89,6 +113,12 @@
   physicalDesc: reagent-physical-desc-citric
   flavor: orange
   color: "#E78108"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/orangejuiceglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: JuicePineapple
@@ -125,3 +155,9 @@
   physicalDesc: reagent-physical-desc-sweet
   flavor: watermelon
   color: "#EF3520"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/watermelonglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false

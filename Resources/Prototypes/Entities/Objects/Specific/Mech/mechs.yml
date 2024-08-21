@@ -39,8 +39,8 @@
     doAfterDelay: 10
   - type: UserInterface
     interfaces:
-    - key: enum.MechUiKey.Key
-      type: MechBoundUserInterface
+      enum.MechUiKey.Key:
+        type: MechBoundUserInterface
   - type: MeleeWeapon
     hidden: true
     attackRate: 0.75
@@ -92,6 +92,19 @@
   - type: GuideHelp
     guides:
     - Robotics
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: start
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
   id: MechRipley

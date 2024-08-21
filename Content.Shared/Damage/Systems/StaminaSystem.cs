@@ -79,8 +79,7 @@ public sealed partial class StaminaSystem : EntitySystem
         {
             RemCompDeferred<ActiveStaminaComponent>(uid);
         }
-
-        SetStaminaAlert(uid);
+        _alerts.ClearAlert(uid, component.StaminaAlert);
     }
 
     private void OnStartup(EntityUid uid, StaminaComponent component, ComponentStartup args)
@@ -193,6 +192,11 @@ public sealed partial class StaminaSystem : EntitySystem
 
     private void OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, EntityUid target)
     {
+        // you can't inflict stamina damage on things with no stamina component
+        // this prevents stun batons from using up charges when throwing it at lockers or lights
+        if (!HasComp<StaminaComponent>(target))
+            return;
+
         var ev = new StaminaDamageOnHitAttemptEvent();
         RaiseLocalEvent(uid, ref ev);
         if (ev.Cancelled)
@@ -204,13 +208,10 @@ public sealed partial class StaminaSystem : EntitySystem
     private void SetStaminaAlert(EntityUid uid, StaminaComponent? component = null)
     {
         if (!Resolve(uid, ref component, false) || component.Deleted)
-        {
-            _alerts.ClearAlert(uid, AlertType.Stamina);
             return;
-        }
 
         var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, component.CritThreshold - component.StaminaDamage), component.CritThreshold, 7);
-        _alerts.ShowAlert(uid, AlertType.Stamina, (short) severity);
+        _alerts.ShowAlert(uid, component.StaminaAlert, (short) severity);
     }
 
     /// <summary>

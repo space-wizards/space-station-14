@@ -6,11 +6,31 @@
   showInVote: false # secret
   description: survival-description
   rules:
+    - MeteorSwarmScheduler
     - RampingStationEventScheduler
+    - SpaceTrafficControlEventScheduler
+    - SpaceTrafficControlFriendlyEventScheduler
+    - BasicRoundstartVariation
+
+- type: gamePreset
+  id: KesslerSyndrome
+  alias:
+    - kessler
+    - junk
+    - meteorhell
+  name: kessler-syndrome-title
+  showInVote: false # secret
+  description: kessler-syndrome-description
+  rules:
+    - KesslerSyndromeScheduler
+    - RampingStationEventScheduler
+    - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
 - type: gamePreset
   id: AllAtOnce
+  alias:
+  - all
   name: all-at-once-title
   description: all-at-once-description
   showInVote: false
@@ -19,7 +39,34 @@
     - Traitor
     - Revolutionary
     - Zombie
+    - KesslerSyndromeScheduler
     - RampingStationEventScheduler
+    - SpaceTrafficControlEventScheduler
+    - BasicRoundstartVariation
+
+- type: gamePreset
+  id: AllerAtOnce
+  alias:
+  - allall
+  - aller
+  - badidea
+  - punishment
+  name: aller-at-once-title
+  description: all-at-once-description
+  showInVote: false #Please god dont do this
+  rules:
+    - Nukeops
+    - Traitor
+    - Revolutionary
+    - Zombie
+    - BasicStationEventScheduler
+    - KesslerSyndromeScheduler
+    - MeteorSwarmMildScheduler
+    - MeteorSwarmScheduler
+    - RampingStationEventScheduler
+    - SpaceTrafficControlEventScheduler
+    - SpaceTrafficControlFriendlyEventScheduler
+    - BasicRoundstartVariation
 
 - type: gamePreset
   id: Extended
@@ -31,6 +78,8 @@
   description: extended-description
   rules:
   - BasicStationEventScheduler
+  - MeteorSwarmScheduler
+  - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
 
 - type: gamePreset
@@ -42,6 +91,7 @@
   showInVote: false #4boring4vote
   description: greenshift-description
   rules:
+  - SpaceTrafficControlFriendlyEventScheduler 
   - BasicRoundstartVariation
 
 - type: gamePreset
@@ -64,6 +114,9 @@
   description: secret-description
   rules:
     - BasicStationEventScheduler
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
+    - BasicRoundstartVariation
 
 - type: gamePreset
   id: SecretGreenshift #For Admin Use: Runs Greenshift but shows "Secret" in lobby.
@@ -72,6 +125,9 @@
   name: secret-title
   showInVote: false #Admin Use
   description: secret-description
+  rules:
+  - SpaceTrafficControlFriendlyEventScheduler 
+  - BasicRoundstartVariation
 
 - type: gamePreset
   id: Sandbox
@@ -88,6 +144,7 @@
   id: Traitor
   alias:
     - traitor
+    - tator
   name: traitor-title
   description: traitor-description
   showInVote: false
@@ -95,6 +152,8 @@
     - Traitor
     - SubGamemodesRule
     - BasicStationEventScheduler
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
 - type: gamePreset
@@ -121,6 +180,8 @@
     - Nukeops
     - SubGamemodesRule
     - BasicStationEventScheduler
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
 - type: gamePreset
@@ -136,6 +197,8 @@
     - Revolutionary
     - SubGamemodesRule
     - BasicStationEventScheduler
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
 - type: gamePreset
@@ -152,16 +215,22 @@
   rules:
   - Zombie
   - BasicStationEventScheduler
+  - MeteorSwarmScheduler
+  - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
 
 - type: gamePreset
-  id: Pirates
+  id: Zombieteors
   alias:
-    - pirates
-  name: pirates-title
-  description: pirates-description
+  - zombieteors
+  - zombombies
+  - meteombies
+  name: zombieteors-title
+  description: zombieteors-description
   showInVote: false
   rules:
-    - Pirates
-    - BasicStationEventScheduler
-    - BasicRoundstartVariation
+  - Zombie
+  - BasicStationEventScheduler
+  - KesslerSyndromeScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation

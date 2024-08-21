@@ -1,5 +1,7 @@
 #TODO: Someone should probably move the ore vein prototypes into their own file, or otherwise split this up in some way. This should not be 1.5k lines long.
 
+# Anyway
+# See WallRock variants for the remappings.
 
 #Asteroid rock
 - type: entity
@@ -90,6 +92,28 @@
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_asteroid_west
         - state: rock_gold
+
+- type: entity
+  id: AsteroidRockDiamond
+  parent: AsteroidRock
+  description: An ore vein rich with diamonds.
+  suffix: Diamond
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreDiamond
+    - type: Sprite
+      layers:
+        - state: rock_asteroid
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_asteroid_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_asteroid_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_asteroid_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_asteroid_west
+        - state: rock_diamond
 
 - type: entity
   id: AsteroidRockPlasma
@@ -274,6 +298,28 @@
         - state: rock_bananium
 
 - type: entity
+  id: AsteroidRockSalt
+  parent: AsteroidRock
+  description: An ore vein rich with salt.
+  suffix: Salt
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreSalt
+    - type: Sprite
+      layers:
+        - state: rock_asteroid
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_asteroid_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_asteroid_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_asteroid_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_asteroid_west
+        - state: rock_salt
+
+- type: entity
   id: AsteroidRockArtifactFragment
   parent: AsteroidRock
   description: A rock wall. What's that sticking out of it?
@@ -316,6 +362,9 @@
   - type: IconSmooth
     key: walls
     mode: NoSprite
+  - type: Icon
+    sprite: Structures/Walls/rock.rsi
+    state: ironrock
   - type: SmoothEdge
   - type: Sprite
     sprite: Structures/Walls/rock.rsi
@@ -331,28 +380,6 @@
         state: ironrock_west
 
 - type: entity
-  id: AsteroidRockSalt
-  parent: AsteroidRock
-  description: An ore vein rich with salt.
-  suffix: Salt
-  components:
-    - type: OreVein
-      oreChance: 1.0
-      currentOre: OreSalt
-    - type: Sprite
-      layers:
-        - state: rock_asteroid
-        - map: [ "enum.EdgeLayer.South" ]
-          state: rock_asteroid_south
-        - map: [ "enum.EdgeLayer.East" ]
-          state: rock_asteroid_east
-        - map: [ "enum.EdgeLayer.North" ]
-          state: rock_asteroid_north
-        - map: [ "enum.EdgeLayer.West" ]
-          state: rock_asteroid_west
-        - state: rock_salt
-
-- type: entity
   id: IronRockMining
   parent: IronRock
   name: ironrock
@@ -363,6 +390,248 @@
     oreChance: 0.33
     oreRarityPrototypeId: RandomOreDistributionStandard
 
+# Ore veins
+- type: entity
+  id: IronRockCoal
+  parent: IronRock
+  description: An ore vein rich with coal.
+  suffix: Coal
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreCoal
+    - type: Sprite
+      layers:
+        - state: ironrock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: ironrock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: ironrock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: ironrock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: ironrock_west
+        - state: rock_coal
+
+- type: entity
+  id: IronRockGold
+  parent: IronRock
+  description: An ore vein rich with gold.
+  suffix: Gold
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreGold
+    - type: Sprite
+      layers:
+        - state: ironrock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: ironrock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: ironrock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: ironrock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: ironrock_west
+        - state: rock_gold
+
+- type: entity
+  id: IronRockPlasma
+  parent: IronRock
+  description: An ore vein rich with plasma.
+  suffix: Plasma
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OrePlasma
+    - type: Sprite
+      layers:
+        - state: ironrock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: ironrock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: ironrock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: ironrock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: ironrock_west
+        - state: rock_phoron
+
+- type: entity
+  id: IronRockQuartz
+  parent: IronRock
+  description: An ore vein rich with quartz.
+  suffix: Quartz
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreSpaceQuartz
+    - type: Sprite
+      layers:
+        - state: ironrock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: ironrock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: ironrock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: ironrock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: ironrock_west
+        - state: rock_quartz
+
+- type: entity
+  id: IronRockSilver
+  parent: IronRock
+  description: An ore vein rich with silver.
+  suffix: Silver
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreSilver
+    - type: Sprite
+      layers:
+        - state: ironrock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: ironrock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: ironrock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: ironrock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: ironrock_west
+        - state: rock_silver
+
+- type: entity
+  id: IronRockIron
+  parent: IronRock
+  description: An ore vein rich with iron.
+  suffix: Iron
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreSteel
+    - type: Sprite
+      layers:
+        - state: ironrock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: ironrock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: ironrock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: ironrock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: ironrock_west
+        - state: rock_tin
+
+- type: entity
+  id: IronRockUranium
+  parent: IronRock
+  description: An ore vein rich with uranium.
+  suffix: Uranium
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreUranium
+    - type: Sprite
+      layers:
+        - state: ironrock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: ironrock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: ironrock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: ironrock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: ironrock_west
+        - state: rock_uranium
+
+- type: entity
+  id: IronRockBananium
+  parent: IronRock
+  description: An ore vein rich with bananium.
+  suffix: Bananium
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreBananium
+    - type: Sprite
+      layers:
+        - state: ironrock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: ironrock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: ironrock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: ironrock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: ironrock_west
+        - state: rock_bananium
+
+- type: entity
+  id: IronRockSalt
+  parent: IronRock
+  description: An ore vein rich with salt.
+  suffix: Salt
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreSalt
+    - type: Sprite
+      layers:
+        - state: ironrock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: ironrock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: ironrock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: ironrock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: ironrock_west
+        - state: rock_salt
+
+- type: entity
+  id: IronRockArtifactFragment
+  parent: IronRock
+  description: A rock wall. What's that sticking out of it?
+  suffix: Artifact Fragment
+  components:
+  - type: OreVein
+    oreChance: 1.0
+    currentOre: OreArtifactFragment
+  - type: Sprite
+    layers:
+    - state: ironrock
+    - map: [ "enum.EdgeLayer.South" ]
+      state: ironrock_south
+    - map: [ "enum.EdgeLayer.East" ]
+      state: ironrock_east
+    - map: [ "enum.EdgeLayer.North" ]
+      state: ironrock_north
+    - map: [ "enum.EdgeLayer.West" ]
+      state: ironrock_west
+    - state: rock_artifact_fragment
+
+- type: entity
+  id: IronRockDiamond
+  parent: IronRock
+  description: An ore vein rich with diamonds.
+  suffix: Diamond
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreDiamond
+    - type: Sprite
+      layers:
+        - state: ironrock
+        - map: [ "enum.EdgeLayer.South" ]
+          state: ironrock_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: ironrock_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: ironrock_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: ironrock_west
+        - state: rock_diamond
 
 # Rocks and ore veins
 - type: entity
@@ -375,7 +644,7 @@
       noRot: true
     - type: SoundOnGather
     - type: Gatherable
-      whitelist:
+      toolWhitelist:
         tags:
           - Pickaxe
     - type: Damageable
@@ -416,21 +685,28 @@
   description: An ore vein rich with coal.
   suffix: Coal
   components:
-    - type: OreVein
-      oreChance: 1.0
-      currentOre: OreCoal
-    - type: Sprite
-      layers:
-        - state: rock
-        - map: [ "enum.EdgeLayer.South" ]
-          state: rock_south
-        - map: [ "enum.EdgeLayer.East" ]
-          state: rock_east
-        - map: [ "enum.EdgeLayer.North" ]
-          state: rock_north
-        - map: [ "enum.EdgeLayer.West" ]
-          state: rock_west
-        - state: rock_coal
+  - type: EntityRemap
+    mask:
+      AsteroidRock: AsteroidRockCoal
+      WallRockBasalt: WallRockBasaltCoal
+      WallRockChromite: WallRockChromiteCoal
+      WallRockSand: WallRockSandCoal
+      WallRockSnow: WallRockSnowCoal
+  - type: OreVein
+    oreChance: 1.0
+    currentOre: OreCoal
+  - type: Sprite
+    layers:
+      - state: rock
+      - map: [ "enum.EdgeLayer.South" ]
+        state: rock_south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: rock_east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: rock_north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: rock_west
+      - state: rock_coal
 
 - type: entity
   id: WallRockGold
@@ -438,9 +714,38 @@
   description: An ore vein rich with gold.
   suffix: Gold
   components:
+  - type: EntityRemap
+    mask:
+      AsteroidRock: AsteroidRockGold
+      WallRockBasalt: WallRockBasaltGold
+      WallRockChromite: WallRockChromiteGold
+      WallRockSand: WallRockSandGold
+      WallRockSnow: WallRockSnowGold
+  - type: OreVein
+    oreChance: 1.0
+    currentOre: OreGold
+  - type: Sprite
+    layers:
+      - state: rock
+      - map: [ "enum.EdgeLayer.South" ]
+        state: rock_south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: rock_east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: rock_north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: rock_west
+      - state: rock_gold
+
+- type: entity
+  id: WallRockDiamond
+  parent: WallRock
+  description: An ore vein rich with diamonds.
+  suffix: Diamond
+  components:
     - type: OreVein
       oreChance: 1.0
-      currentOre: OreGold
+      currentOre: OreDiamond
     - type: Sprite
       layers:
         - state: rock
@@ -452,7 +757,7 @@
           state: rock_north
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_west
-        - state: rock_gold
+        - state: rock_diamond
 
 - type: entity
   id: WallRockPlasma
@@ -460,21 +765,28 @@
   description: An ore vein rich with plasma.
   suffix: Plasma
   components:
-    - type: OreVein
-      oreChance: 1.0
-      currentOre: OrePlasma
-    - type: Sprite
-      layers:
-        - state: rock
-        - map: [ "enum.EdgeLayer.South" ]
-          state: rock_south
-        - map: [ "enum.EdgeLayer.East" ]
-          state: rock_east
-        - map: [ "enum.EdgeLayer.North" ]
-          state: rock_north
-        - map: [ "enum.EdgeLayer.West" ]
-          state: rock_west
-        - state: rock_phoron
+  - type: EntityRemap
+    mask:
+      AsteroidRock: AsteroidRockPlasma
+      WallRockBasalt: WallRockBasaltPlasma
+      WallRockChromite: WallRockChromitePlasma
+      WallRockSand: WallRockSandPlasma
+      WallRockSnow: WallRockSnowPlasma
+  - type: OreVein
+    oreChance: 1.0
+    currentOre: OrePlasma
+  - type: Sprite
+    layers:
+      - state: rock
+      - map: [ "enum.EdgeLayer.South" ]
+        state: rock_south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: rock_east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: rock_north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: rock_west
+      - state: rock_phoron
 
 - type: entity
   id: WallRockQuartz
@@ -482,21 +794,28 @@
   description: An ore vein rich with quartz.
   suffix: Quartz
   components:
-    - type: OreVein
-      oreChance: 1.0
-      currentOre: OreSpaceQuartz
-    - type: Sprite
-      layers:
-        - state: rock
-        - map: [ "enum.EdgeLayer.South" ]
-          state: rock_south
-        - map: [ "enum.EdgeLayer.East" ]
-          state: rock_east
-        - map: [ "enum.EdgeLayer.North" ]
-          state: rock_north
-        - map: [ "enum.EdgeLayer.West" ]
-          state: rock_west
-        - state: rock_quartz
+  - type: EntityRemap
+    mask:
+      AsteroidRock: AsteroidRockQuartz
+      WallRockBasalt: WallRockBasaltQuartz
+      WallRockChromite: WallRockChromiteQuartz
+      WallRockSand: WallRockSandQuartz
+      WallRockSnow: WallRockSnowQuartz
+  - type: OreVein
+    oreChance: 1.0
+    currentOre: OreSpaceQuartz
+  - type: Sprite
+    layers:
+      - state: rock
+      - map: [ "enum.EdgeLayer.South" ]
+        state: rock_south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: rock_east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: rock_north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: rock_west
+      - state: rock_quartz
 
 - type: entity
   id: WallRockSilver
@@ -504,21 +823,28 @@
   description: An ore vein rich with silver.
   suffix: Silver
   components:
-    - type: OreVein
-      oreChance: 1.0
-      currentOre: OreSilver
-    - type: Sprite
-      layers:
-        - state: rock
-        - map: [ "enum.EdgeLayer.South" ]
-          state: rock_south
-        - map: [ "enum.EdgeLayer.East" ]
-          state: rock_east
-        - map: [ "enum.EdgeLayer.North" ]
-          state: rock_north
-        - map: [ "enum.EdgeLayer.West" ]
-          state: rock_west
-        - state: rock_silver
+  - type: EntityRemap
+    mask:
+      AsteroidRock: AsteroidRockSilver
+      WallRockBasalt: WallRockBasaltSilver
+      WallRockChromite: WallRockChromiteSilver
+      WallRockSand: WallRockSandSilver
+      WallRockSnow: WallRockSnowSilver
+  - type: OreVein
+    oreChance: 1.0
+    currentOre: OreSilver
+  - type: Sprite
+    layers:
+      - state: rock
+      - map: [ "enum.EdgeLayer.South" ]
+        state: rock_south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: rock_east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: rock_north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: rock_west
+      - state: rock_silver
 
 # Yes I know it drops steel but we may get smelting at some point
 - type: entity
@@ -527,6 +853,13 @@
   description: An ore vein rich with iron.
   suffix: Iron
   components:
+    - type: EntityRemap
+      mask:
+        AsteroidRock: AsteroidRockTin
+        WallRockBasalt: WallRockBasaltTin
+        WallRockChromite: WallRockChromiteTin
+        WallRockSand: WallRockSandTin
+        WallRockSnow: WallRockSnowTin
     - type: OreVein
       oreChance: 1.0
       currentOre: OreSteel
@@ -549,21 +882,28 @@
   description: An ore vein rich with uranium.
   suffix: Uranium
   components:
-    - type: OreVein
-      oreChance: 1.0
-      currentOre: OreUranium
-    - type: Sprite
-      layers:
-        - state: rock
-        - map: [ "enum.EdgeLayer.South" ]
-          state: rock_south
-        - map: [ "enum.EdgeLayer.East" ]
-          state: rock_east
-        - map: [ "enum.EdgeLayer.North" ]
-          state: rock_north
-        - map: [ "enum.EdgeLayer.West" ]
-          state: rock_west
-        - state: rock_uranium
+  - type: EntityRemap
+    mask:
+      AsteroidRock: AsteroidRockUranium
+      WallRockBasalt: WallRockBasaltUranium
+      WallRockChromite: WallRockChromiteUranium
+      WallRockSand: WallRockSandUranium
+      WallRockSnow: WallRockSnowUranium
+  - type: OreVein
+    oreChance: 1.0
+    currentOre: OreUranium
+  - type: Sprite
+    layers:
+      - state: rock
+      - map: [ "enum.EdgeLayer.South" ]
+        state: rock_south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: rock_east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: rock_north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: rock_west
+      - state: rock_uranium
 
 
 - type: entity
@@ -572,21 +912,28 @@
   description: An ore vein rich with bananium.
   suffix: Bananium
   components:
-    - type: OreVein
-      oreChance: 1.0
-      currentOre: OreBananium
-    - type: Sprite
-      layers:
-        - state: rock
-        - map: [ "enum.EdgeLayer.South" ]
-          state: rock_south
-        - map: [ "enum.EdgeLayer.East" ]
-          state: rock_east
-        - map: [ "enum.EdgeLayer.North" ]
-          state: rock_north
-        - map: [ "enum.EdgeLayer.West" ]
-          state: rock_west
-        - state: rock_bananium
+  - type: EntityRemap
+    mask:
+      AsteroidRock: AsteroidRockBananium
+      WallRockBasalt: WallRockBasaltBananium
+      WallRockChromite: WallRockChromiteBananium
+      WallRockSand: WallRockSandBananium
+      WallRockSnow: WallRockSnowBananium
+  - type: OreVein
+    oreChance: 1.0
+    currentOre: OreBananium
+  - type: Sprite
+    layers:
+      - state: rock
+      - map: [ "enum.EdgeLayer.South" ]
+        state: rock_south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: rock_east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: rock_north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: rock_west
+      - state: rock_bananium
 
 - type: entity
   id: WallRockArtifactFragment
@@ -594,21 +941,28 @@
   description: A rock wall. What's that sticking out of it?
   suffix: Artifact Fragment
   components:
-    - type: OreVein
-      oreChance: 1.0
-      currentOre: OreArtifactFragment
-    - type: Sprite
-      layers:
-        - state: rock
-        - map: [ "enum.EdgeLayer.South" ]
-          state: rock_south
-        - map: [ "enum.EdgeLayer.East" ]
-          state: rock_east
-        - map: [ "enum.EdgeLayer.North" ]
-          state: rock_north
-        - map: [ "enum.EdgeLayer.West" ]
-          state: rock_west
-        - state: rock_artifact_fragment
+  - type: EntityRemap
+    mask:
+      AsteroidRock: AsteroidRockArtifactFragment
+      WallRockBasalt: WallRockBasaltArtifactFragment
+      WallRockChromite: WallRockChromiteArtifactFragment
+      WallRockSand: WallRockSandArtifactFragment
+      WallRockSnow: WallRockSnowArtifactFragment
+  - type: OreVein
+    oreChance: 1.0
+    currentOre: OreArtifactFragment
+  - type: Sprite
+    layers:
+      - state: rock
+      - map: [ "enum.EdgeLayer.South" ]
+        state: rock_south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: rock_east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: rock_north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: rock_west
+      - state: rock_artifact_fragment
 
 - type: entity
   id: WallRockSalt
@@ -616,21 +970,28 @@
   description: An ore vein rich with salt.
   suffix: Salt
   components:
-    - type: OreVein
-      oreChance: 1.0
-      currentOre: OreSalt
-    - type: Sprite
-      layers:
-        - state: rock
-        - map: [ "enum.EdgeLayer.South" ]
-          state: rock_south
-        - map: [ "enum.EdgeLayer.East" ]
-          state: rock_east
-        - map: [ "enum.EdgeLayer.North" ]
-          state: rock_north
-        - map: [ "enum.EdgeLayer.West" ]
-          state: rock_west
-        - state: rock_salt
+  - type: EntityRemap
+    mask:
+      AsteroidRock: AsteroidRockSalt
+      WallRockBasalt: WallRockBasaltSalt
+      WallRockChromite: WallRockChromiteSalt
+      WallRockSand: WallRockSandSalt
+      WallRockSnow: WallRockSnowSalt
+  - type: OreVein
+    oreChance: 1.0
+    currentOre: OreSalt
+  - type: Sprite
+    layers:
+      - state: rock
+      - map: [ "enum.EdgeLayer.South" ]
+        state: rock_south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: rock_east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: rock_north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: rock_west
+      - state: rock_salt
 
 # Basalt variants
 - type: entity
@@ -697,6 +1058,28 @@
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_wall_west
         - state: rock_gold
+
+- type: entity
+  id: WallRockBasaltDiamond
+  parent: WallRockBasalt
+  description: An ore vein rich with diamonds.
+  suffix: Diamond
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreDiamond
+    - type: Sprite
+      layers:
+        - state: rock_wall
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_wall_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_wall_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_wall_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_wall_west
+        - state: rock_diamond
 
 - type: entity
   id: WallRockBasaltPlasma
@@ -942,6 +1325,28 @@
         - state: rock_gold
 
 - type: entity
+  id: WallRockSnowDiamond
+  parent: WallRockSnow
+  description: An ore vein rich with diamonds.
+  suffix: Diamond
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreDiamond
+    - type: Sprite
+      layers:
+        - state: rock_snow
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_snow_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_snow_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_snow_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_snow_west
+        - state: rock_diamond
+
+- type: entity
   id: WallRockSnowPlasma
   parent: WallRockSnow
   description: An ore vein rich with plasma.
@@ -1185,6 +1590,28 @@
         - state: rock_gold
 
 - type: entity
+  id: WallRockSandDiamond
+  parent: WallRockSand
+  description: An ore vein rich with diamonds.
+  suffix: Diamond
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreDiamond
+    - type: Sprite
+      layers:
+        - state: rock_sand
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_sand_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_sand_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_sand_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_sand_west
+        - state: rock_diamond
+
+- type: entity
   id: WallRockSandPlasma
   parent: WallRockSand
   description: An ore vein rich with plasma.
@@ -1293,7 +1720,6 @@
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_sand_west
         - state: rock_uranium
-
 
 - type: entity
   id: WallRockSandBananium
@@ -1426,6 +1852,28 @@
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_chromite_west
         - state: rock_gold
+
+- type: entity
+  id: WallRockChromiteDiamond
+  parent: WallRockChromite
+  description: An ore vein rich with diamonds.
+  suffix: Diamond
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreDiamond
+    - type: Sprite
+      layers:
+        - state: rock_chromite
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_chromite_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_chromite_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_chromite_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_chromite_west
+        - state: rock_diamond
 
 - type: entity
   id: WallRockChromitePlasma
@@ -1669,6 +2117,28 @@
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_andesite_west
         - state: rock_gold
+
+- type: entity
+  id: WallRockAndesiteDiamond
+  parent: WallRockAndesite
+  description: An ore vein rich with diamonds.
+  suffix: Diamond
+  components:
+    - type: OreVein
+      oreChance: 1.0
+      currentOre: OreDiamond
+    - type: Sprite
+      layers:
+        - state: rock_andesite
+        - map: [ "enum.EdgeLayer.South" ]
+          state: rock_andesite_south
+        - map: [ "enum.EdgeLayer.East" ]
+          state: rock_andesite_east
+        - map: [ "enum.EdgeLayer.North" ]
+          state: rock_andesite_north
+        - map: [ "enum.EdgeLayer.West" ]
+          state: rock_andesite_west
+        - state: rock_diamond
 
 - type: entity
   id: WallRockAndesitePlasma

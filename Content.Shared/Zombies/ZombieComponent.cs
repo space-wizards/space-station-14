@@ -14,7 +14,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Zombies;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ZombieComponent : Component, IAntagStatusIconComponent
+public sealed partial class ZombieComponent : Component
 {
     /// <summary>
     /// The baseline infection chance you have if you are completely nude
@@ -63,12 +63,6 @@ public sealed partial class ZombieComponent : Component, IAntagStatusIconCompone
     public string ZombieRoleId = "Zombie";
 
     /// <summary>
-    /// The EntityName of the humanoid to restore in case of cloning
-    /// </summary>
-    [DataField("beforeZombifiedEntityName"), ViewVariables(VVAccess.ReadOnly)]
-    public string BeforeZombifiedEntityName = string.Empty;
-
-    /// <summary>
     /// The CustomBaseLayers of the humanoid to restore in case of cloning
     /// </summary>
     [DataField("beforeZombifiedCustomBaseLayers")]
@@ -95,10 +89,7 @@ public sealed partial class ZombieComponent : Component, IAntagStatusIconCompone
     public TimeSpan NextTick;
 
     [DataField("zombieStatusIcon")]
-    public ProtoId<StatusIconPrototype> StatusIcon { get; set; } = "ZombieFaction";
-
-    [DataField]
-    public bool IconVisibleToGhost { get; set; } = true;
+    public ProtoId<FactionIconPrototype> StatusIcon { get; set; } = "ZombieFaction";
 
     /// <summary>
     /// Healing each second

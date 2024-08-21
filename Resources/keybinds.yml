@@ -187,6 +187,9 @@ binds:
 - function: OpenCharacterMenu
   type: State
   key: C
+- function: OpenEmotesMenu
+  type: State
+  key: Y
 - function: TextCursorSelect
   # TextCursorSelect HAS to be above ExamineEntity
   # So that LineEdit receives it correctly.
@@ -266,6 +269,16 @@ binds:
   type: State
   key: MouseMiddle
   canFocus: true
+- function: RotateObjectClockwise
+  type: State
+  key: R
+- function: RotateObjectCounterclockwise
+  type: State
+  key: R
+  mod1: Shift
+- function: FlipObject
+  type: State
+  key: F
 - function: TextCursorLeft
   type: State
   key: Left
@@ -452,6 +465,9 @@ binds:
 - function: OpenDecalSpawnWindow
   type: State
   key: F8
+- function: ToggleRoundEndSummaryWindow
+  type: Toggle
+  key: F9
 - function: OpenSandboxWindow
   type: State
   key: B
@@ -534,3 +550,33 @@ binds:
 - function: Hotbar9
   type: State
   key: Num9
+- function: MappingUnselect
+  type: State
+  key: MouseRight
+  canFocus: true
+- function: SaveMap
+  type: State
+  key: S
+  mod1: Control
+- function: MappingEnablePick
+  type: State
+  key: Num5
+- function: MappingEnableDelete
+  type: State
+  key: Num6
+- function: MappingPick
+  type: State
+  key: MouseLeft
+  canFocus: true
+- function: MappingRemoveDecal
+  type: State
+  key: MouseLeft
+  canFocus: true
+- function: MappingCancelEraseDecal
+  type: State
+  key: MouseRight
+  canFocus: true
+- function: MappingOpenContextMenu
+  type: State
+  key: MouseRight
+  canFocus: true

@@ -838,3 +838,31 @@
   - type: ConditionalSpawner
     prototypes:
     - MobLuminousEntity
+
+- type: entity
+  name: clown spider spawner
+  id: SpawnClownSpider
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: clown
+      sprite: Mobs/Animals/clownspider.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobClownSpider
+
+- type: entity
+  name: honk bot spawner
+  id: SpawnHonkBot
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: honkbot
+      sprite: Mobs/Silicon/Bots/honkbot.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobHonkBot

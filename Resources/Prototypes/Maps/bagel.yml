@@ -2,8 +2,8 @@
   id: Bagel
   mapName: 'Bagel Station'
   mapPath: /Maps/bagel.yml
-  minPlayers: 40
-  maxPlayers: 76
+  minPlayers: 35
+  maxPlayers: 70
   stations:
     Bagel:
       stationProto: StandardNanotrasenStation
@@ -16,16 +16,14 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_lox.yml
         - type: StationJobs
-          overflowJobs:
-            - Passenger
           availableJobs:
             #service
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
-            Bartender: [ 2, 2 ]
-            Botanist: [ 3, 3 ]
+            Bartender: [ 1, 2 ]
+            Botanist: [ 2, 2 ]
             Chef: [ 2, 2 ]
-            Janitor: [ 3, 3 ]
+            Janitor: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 2 ]

@@ -96,6 +96,16 @@ public sealed class AlertLevelSystem : EntitySystem
         RaiseLocalEvent(new AlertLevelPrototypeReloadedEvent());
     }
 
+    public string GetLevel(EntityUid station, AlertLevelComponent? alert = null)
+    {
+        if (!Resolve(station, ref alert))
+        {
+            return string.Empty;
+        }
+
+        return alert.CurrentLevel;
+    }
+
     public float GetAlertLevelDelay(EntityUid station, AlertLevelComponent? alert = null)
     {
         if (!Resolve(station, ref alert))

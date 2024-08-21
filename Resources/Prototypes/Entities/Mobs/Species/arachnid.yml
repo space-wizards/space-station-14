@@ -28,8 +28,6 @@
     spawned:
       - id: FoodMeatSpider
         amount: 5
-  - type: Inventory
-    templateId: arachnid
   - type: Reactive
     reactions:
     - reagents: [Water]
@@ -62,6 +60,7 @@
   - type: Speech
     speechVerb: Arachnid
     speechSounds: Arachnid
+    allowedEmotes: ['Click', 'Chitter']
   - type: Vocal
     sounds:
       Male: UnisexArachnid
@@ -79,16 +78,6 @@
       - map: [ "enum.HumanoidVisualLayers.LArm" ]
       - map: [ "enum.HumanoidVisualLayers.RLeg" ]
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-      - shader: StencilClear
-        sprite: Mobs/Species/Human/parts.rsi #PJB on stencil clear being on the left leg: "...this is 'fine'" -https://github.com/space-wizards/space-station-14/pull/12217#issuecomment-1291677115
-        # its fine, but its still very stupid that it has to be done like this instead of allowing sprites to just directly insert a stencil clear.
-        # sprite refactor when
-        state: l_leg
-      - shader: StencilMask
-        map: ["enum.HumanoidVisualLayers.StencilMask"]
-        sprite: Mobs/Customization/masking_helpers.rsi
-        state: unisex_full
-        visible: false
       - map: ["jumpsuit"]
       - map: ["enum.HumanoidVisualLayers.LFoot"]
       - map: ["enum.HumanoidVisualLayers.RFoot"]
@@ -121,13 +110,17 @@
         sprite: "Effects/creampie.rsi"
         state: "creampie_arachnid"
         visible: false
+  - type: Inventory
+    templateId: arachnid
+
 
 - type: entity
   parent: BaseSpeciesDummy
   id: MobArachnidDummy
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: HumanoidAppearance
     species: Arachnid
 
-#88w88
+
+#>88w88<

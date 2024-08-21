@@ -17,6 +17,15 @@
         reagents:
         - ReagentId: THC
           Quantity: 15
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Specific/Hydroponics/cannabis.rsi
+      state: produce
+    entries:
+      burger:
+        name: food-sequence-burger-content-cannabis
+      taco:
+        name: food-sequence-content-cannabis
 
 
 - type: entity
@@ -65,7 +74,143 @@
       - Smokable
   - type: Item
     size: Tiny
+    
+- type: entity
+  name: rainbow cannabis leaves
+  parent: LeavesCannabis
+  id: LeavesCannabisRainbow
+  description: "Is it supposed to be glowing like that...?"
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+  - type: Produce
+    seedId: rainbowCannabis
+  - type: PointLight
+    radius: 1.5
+    energy: 2
+  - type: RgbLightController
+    cycleRate: 0.6
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: SpaceDrugs
+          Quantity: 3
+        - ReagentId: Lipolicide
+          Quantity: 3
+        - ReagentId: MindbreakerToxin
+          Quantity: 2
+        - ReagentId: Happiness
+          Quantity: 2
+#       - ReagentId: ColorfulReagent
+#         Quantity: 1
+        - ReagentId: Psicodine
+          Quantity: 0.6
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+      state: produce
+    entries:
+      burger:
+        name: food-sequence-burger-content-rainbow-cannabis
+      taco:
+        name: food-sequence-content-rainbow-cannabis
 
+- type: entity
+  name: dried rainbow cannabis leaves
+  parent: LeavesCannabisDried
+  id: LeavesCannabisRainbowDried
+  description: "Dried rainbow cannabis leaves, ready to be ground."
+  components:
+  - type: Stack
+    stackType: LeavesCannabisRainbowDried
+    count: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 8.5 #fuck you saveload test fail
+        reagents:
+        - ReagentId: SpaceDrugs
+          Quantity: 2.4
+        - ReagentId: Lipolicide
+          Quantity: 2.4
+        - ReagentId: MindbreakerToxin
+          Quantity: 1.6
+        - ReagentId: Happiness
+          Quantity: 1.6
+#       - ReagentId: ColorfulReagent
+#         Quantity: 0.8
+        - ReagentId: Psicodine
+          Quantity: 0.48
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+    state: dried
+
+- type: entity
+  name: ground rainbow cannabis
+  parent: GroundCannabis
+  id: GroundCannabisRainbow
+  description: "Ground rainbow cannabis, ready to take you on a trip."
+  components:
+  - type: Stack
+    stackType: GroundCannabisRainbow
+    count: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: SpaceDrugs
+          Quantity: 4
+        - ReagentId: Lipolicide
+          Quantity: 4
+        - ReagentId: MindbreakerToxin
+          Quantity: 2.66
+        - ReagentId: Happiness
+          Quantity: 2.66
+#       - ReagentId: ColorfulReagent
+#         Quantity: 1.33
+        - ReagentId: Psicodine
+          Quantity: 0.8
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+    state: powderpile_rainbow
+    color: white
+  - type: Construction
+    graph: smokeableGroundCannabisRainbow
+    node: groundRainbow
+
+- type: entity
+  name: tea leaves
+  parent: ProduceBase
+  id: LeavesTea
+  description: "Can be dried out to make tea."
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/tea_plant.rsi
+  - type: Produce
+    seedId: teaPlant
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Vitamin
+          Quantity: 2
+
+- type: entity
+  name: dried tea leaves
+  parent: ProduceBase
+  id: LeavesTeaDried
+  description: "Dried tea leaves, ready to be ground."
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: TeaPowder
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/tea_plant.rsi
+    state: dried
 
 - type: entity
   name: tobacco leaves

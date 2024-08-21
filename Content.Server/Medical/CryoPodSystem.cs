@@ -13,6 +13,7 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
+using Content.Shared.Atmos;
 using Content.Shared.UserInterface;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
@@ -193,7 +194,8 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
             healthAnalyzer.ScannedEntity = entity.Comp.BodyContainer.ContainedEntity;
         }
 
-        _userInterfaceSystem.TrySendUiMessage(
+        // TODO: This should be a state my dude
+        _userInterfaceSystem.ServerSendUiMessage(
             entity.Owner,
             HealthAnalyzerUiKey.Key,
             new HealthAnalyzerScannedUserMessage(GetNetEntity(entity.Comp.BodyContainer.ContainedEntity),
@@ -246,7 +248,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         else
         {
             RemComp<ActiveCryoPodComponent>(entity);
-            _uiSystem.TryCloseAll(entity.Owner, HealthAnalyzerUiKey.Key);
+            _uiSystem.CloseUi(entity.Owner, HealthAnalyzerUiKey.Key);
         }
         UpdateAppearance(entity.Owner, entity.Comp);
     }
@@ -297,7 +299,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         }
 
         // if body is ejected - no need to display health-analyzer
-        _uiSystem.TryCloseAll(cryoPod.Owner, HealthAnalyzerUiKey.Key);
+        _uiSystem.CloseUi(cryoPod.Owner, HealthAnalyzerUiKey.Key);
     }
 
     #endregion

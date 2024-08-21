@@ -18,50 +18,31 @@ public sealed class IntrinsicUISystem : EntitySystem
 
     private void OnActionToggle(EntityUid uid, IntrinsicUIComponent component, ToggleIntrinsicUIEvent args)
     {
+        if (args.Key == null)
+            return;
+
         args.Handled = InteractUI(uid, args.Key, component);
     }
 
     private void InitActions(EntityUid uid, IntrinsicUIComponent component, MapInitEvent args)
     {
-        foreach (var entry in component.UIs)
+        foreach (var entry in component.UIs.Values)
         {
             _actionsSystem.AddAction(uid, ref entry.ToggleActionEntity, entry.ToggleAction);
         }
     }
 
-    public bool InteractUI(EntityUid uid, Enum? key, IntrinsicUIComponent? iui = null, ActorComponent? actor = null)
+    public bool InteractUI(EntityUid uid, Enum key, IntrinsicUIComponent? iui = null, ActorComponent? actor = null)
     {
         if (!Resolve(uid, ref iui, ref actor))
             return false;
-
-        if (key is null)
-        {
-            Log.Error($"Entity {ToPrettyString(uid)} has an invalid intrinsic UI.");
-        }
-
-        var ui = GetUIOrNull(uid, key, iui);
-
-        if (ui is null)
-        {
-            Log.Error($"Couldn't get UI {key} on {ToPrettyString(uid)}");
-            return false;
-        }
 
         var attempt = new IntrinsicUIOpenAttemptEvent(uid, key);
         RaiseLocalEvent(uid, attempt);
         if (attempt.Cancelled)
             return false;
 
-        _uiSystem.ToggleUi(ui, actor.PlayerSession);
-        return true;
-    }
-
-    private PlayerBoundUserInterface? GetUIOrNull(EntityUid uid, Enum? key, IntrinsicUIComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return null;
-
-        return key is null ? null : _uiSystem.GetUiOrNull(uid, key);
+        return _uiSystem.TryToggleUi(uid, key, actor.PlayerSession);
     }
 }
 

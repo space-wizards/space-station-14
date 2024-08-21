@@ -28,7 +28,7 @@ namespace Content.Shared.DeviceLinking.Systems
 
         private void OnActivated(EntityUid uid, TwoWayLeverComponent component, ActivateInWorldEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !args.Complex)
                 return;
 
             component.State = component.State switch

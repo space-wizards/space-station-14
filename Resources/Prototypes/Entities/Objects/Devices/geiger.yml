@@ -31,4 +31,7 @@
             Med: {state: geiger_on_med}
             High: {state: geiger_on_high}
             Extreme: {state: geiger_on_ext}
+    - type: PhysicalComposition
+      materialComposition:
+        Plastic: 100
 

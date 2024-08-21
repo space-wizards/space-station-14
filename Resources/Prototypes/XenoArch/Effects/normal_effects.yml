@@ -109,7 +109,7 @@
   components:
   - type: PointLight
     radius: 8
-    energy: 25
+    energy: 10
     color: "#daa3fd"
   - type: TriggerArtifact
   - type: FlashOnTrigger

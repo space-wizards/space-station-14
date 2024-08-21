@@ -100,7 +100,7 @@
     - state: idintern-service
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseGrandTheftContraband]
   id: CaptainIDCard
   name: captain ID card
   components:
@@ -580,7 +580,7 @@
   - type: Item
     heldPrefix: blue
   - type: IdCard
-    jobTitle: Centcom Agent
+    jobTitle: Centcomm Agent
 
 - type: entity
   name: passenger ID card
@@ -599,54 +599,6 @@
     - state: default
     - state: idpassenger
   - type: AgentIDCard
-    icons:
-    # TODO figure out a better way of doing this.
-    # Probably by adding a bool or icon-category data-field to the icon prototype?
-    - JobIconDetective
-    - JobIconQuarterMaster
-    - JobIconBotanist
-    - JobIconBoxer
-    - JobIconAtmosphericTechnician
-    - JobIconNanotrasen
-    - JobIconPrisoner
-    - JobIconJanitor
-    - JobIconChemist
-    - JobIconStationEngineer
-    - JobIconSecurityOfficer
-    - JobIconChiefMedicalOfficer
-    - JobIconRoboticist
-    - JobIconChaplain
-    - JobIconLawyer
-    - JobIconUnknown
-    - JobIconLibrarian
-    - JobIconCargoTechnician
-    - JobIconScientist
-    - JobIconResearchAssistant
-    - JobIconGeneticist
-    - JobIconClown
-    - JobIconCaptain
-    - JobIconHeadOfPersonnel
-    - JobIconVirologist
-    - JobIconShaftMiner
-    - JobIconPassenger
-    - JobIconChiefEngineer
-    - JobIconBartender
-    - JobIconHeadOfSecurity
-    - JobIconMedicalDoctor
-    - JobIconParamedic
-    - JobIconChef
-    - JobIconWarden
-    - JobIconResearchDirector
-    - JobIconMime
-    - JobIconMusician
-    - JobIconReporter
-    - JobIconPsychologist
-    - JobIconMedicalIntern
-    - JobIconTechnicalAssistant
-    - JobIconServiceWorker
-    - JobIconSecurityCadet
-    - JobIconZookeeper
-    - JobIconVisitor
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
     inHandsOnly: true
@@ -658,9 +610,9 @@
     default: PassengerIDCard
   - type: UserInterface
     interfaces:
-      - key: enum.AgentIDCardUiKey.Key
+      enum.AgentIDCardUiKey.Key:
         type: AgentIDCardBoundUserInterface
-      - key: enum.ChameleonUiKey.Key
+      enum.ChameleonUiKey.Key:
         type: ChameleonBoundUserInterface
 
 - type: entity
@@ -785,7 +737,7 @@
   - type: Item
     heldPrefix: blue
   - type: IdCard
-    jobTitle: Centcom Quarantine Officer
+    jobTitle: Centcomm Quarantine Officer
 
 - type: entity
   parent: IDCardStandard
@@ -840,3 +792,30 @@
     layers:
     - state: default
     - state: idseniorofficer
+
+- type: entity
+  parent: IDCardStandard
+  id: UniversalIDCard
+  name: universal ID card
+  suffix: Admin
+  description: An ID card that gives you access beyond your wildest dreams.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/id_cards.rsi
+    layers:
+    - state: admin
+    - state: idadmin
+  - type: Clothing
+    sprite: Objects/Misc/id_cards.rsi
+  - type: Item
+    heldPrefix: green
+  - type: IdCard
+    jobTitle: Universal
+    jobIcon: JobIconAdmin
+  - type: Access
+    groups:
+    - AllAccess
+    tags:
+    - CentralCommand
+    - NuclearOperative
+    - SyndicateAgent

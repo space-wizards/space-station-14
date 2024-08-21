@@ -11,13 +11,17 @@
   name: syndicate agent
   suffix: Human, Base
   components:
-    - type: Loadout
-      prototypes: [SyndicateOperativeGearExtremelyBasic]
-    - type: RandomMetadata
-      nameSegments: [names_death_commando]
-    - type: NpcFactionMember
-      factions:
-      - Syndicate
+  - type: RandomHumanoidAppearance
+    randomizeName: false
+    hair: HairBald
+  - type: Loadout
+    prototypes: [SyndicateOperativeGearExtremelyBasic]
+    roleLoadout: [ RoleSurvivalSyndicate ]
+  - type: RandomMetadata
+    nameSegments: [names_death_commando]
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
 
 - type: entity
   parent: MobHumanSyndicateAgentBase
@@ -25,68 +29,77 @@
   name: syndicate agent
   suffix: Human, Traitor
   components:
-    # make the player a traitor once its taken
-    - type: AutoTraitor
-      giveUplink: false
-      giveObjectives: false
+  # make the player a traitor once its taken
+  - type: AutoTraitor
+    giveUplink: false
+    giveObjectives: false
+
+- type: entity
+  parent: MobHumanSyndicateAgent
+  id: MobHumanSyndicateAgentMedic
+  name: syndicate medic
+  components:
+  - type: Loadout
+    prototypes: [SyndicateReinforcementMedic]
+    roleLoadout: [ RoleSurvivalSyndicate ]
+
+- type: entity
+  parent: MobHumanSyndicateAgent
+  id: MobHumanSyndicateAgentSpy
+  name: syndicate spy
+  components:
+  - type: Loadout
+    prototypes: [SyndicateReinforcementSpy]
+    roleLoadout: [ RoleSurvivalSyndicate ]
+
+- type: entity
+  parent: MobHumanSyndicateAgent
+  id: MobHumanSyndicateAgentThief
+  name: syndicate thief
+  components:
+  - type: Loadout
+    prototypes: [SyndicateReinforcementThief]
+    roleLoadout: [ RoleSurvivalSyndicate ]
 
 - type: entity
   parent: MobHumanSyndicateAgentBase
   id: MobHumanSyndicateAgentNukeops # Reinforcement exclusive to nukeops uplink
   suffix: Human, NukeOps
   components:
-    - type: NukeOperative
+  - type: NukeOperative
+  - type: RandomMetadata
+    nameSegments:
+    - nukeops-role-operator
+    - SyndicateNamesNormal
+  - type: Loadout
+    prototypes: [SyndicateOperativeGearFullNoUplink]
 
 # Nuclear Operative
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: Nuclear Operative
   parent: MobHuman
   id: MobHumanNukeOp
   components:
-    - type: NukeOperative
-    - type: RandomHumanoidAppearance
+  - type: NukeOperative
+  - type: RandomHumanoidAppearance
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: MobHuman
   id: MobHumanLoneNuclearOperative
   name: Lone Operative
   components:
-    - type: RandomHumanoidAppearance
-      randomizeName: false
-    - type: NukeOperative
-    - type: Loadout
-      prototypes: [SyndicateLoneOperativeGearFull]
-    - type: RandomMetadata
-      nameSegments:
-      - SyndicateNamesPrefix
-      - SyndicateNamesNormal
-    - type: NpcFactionMember
-      factions:
-      - Syndicate
-
-# Space Ninja
-- type: entity
-  noSpawn: true
-  name: Space Ninja
-  parent: MobHuman
-  id: MobHumanSpaceNinja
-  components:
   - type: RandomHumanoidAppearance
     randomizeName: false
+  - type: NukeOperative
   - type: Loadout
-    prototypes: [SpaceNinjaGear]
+    prototypes: [SyndicateLoneOperativeGearFull]
+    roleLoadout: [ RoleSurvivalSyndicate ]
+  - type: RandomMetadata
+    nameSegments:
+    - SyndicateNamesPrefix
+    - SyndicateNamesNormal
   - type: NpcFactionMember
     factions:
     - Syndicate
-  - type: SpaceNinja
-  - type: GenericAntag
-    rule: Ninja
-  - type: AutoImplant
-    implants:
-    - DeathAcidifierImplant
-  - type: RandomMetadata
-    nameSegments:
-    - names_ninja_title
-    - names_ninja

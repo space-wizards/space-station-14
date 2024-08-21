@@ -11,11 +11,11 @@ emergency-shuttle-command-dock-desc = Calls the emergency shuttle and docks it t
 emergency-shuttle-command-launch-desc = Early launches the emergency shuttle if possible.
 
 # Emergency shuttle
-emergency-shuttle-left = The Emergency Shuttle has left the station. Estimate {$transitTime} seconds until the shuttle arrives at CentCom.
+emergency-shuttle-left = The Emergency Shuttle has left the station. Estimate {$transitTime} seconds until the shuttle arrives at CentComm.
 emergency-shuttle-launch-time = The emergency shuttle will launch in {$consoleAccumulator} seconds.
-emergency-shuttle-docked = The Emergency Shuttle has docked with the station on the {$direction} side. It will leave in {$time} seconds.
+emergency-shuttle-docked = The Emergency Shuttle has docked {$direction} of the station, {$location}. It will leave in {$time} seconds.
 emergency-shuttle-good-luck = The Emergency Shuttle is unable to find a station. Good luck.
-emergency-shuttle-nearby = The Emergency Shuttle is unable to find a valid docking port. It has warped {$direction}.
+emergency-shuttle-nearby = The Emergency Shuttle is unable to find a valid docking port. It has warped in {$direction} of the station, {$location}.
 
 # Emergency shuttle console popup / announcement
 emergency-shuttle-console-no-early-launches = Early launch is disabled

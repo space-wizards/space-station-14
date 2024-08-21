@@ -7,7 +7,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.PneumaticCannon;
 using Content.Shared.StatusEffect;
-using Content.Shared.Tools.Components;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -22,6 +22,7 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
     [Dependency] private readonly GunSystem _gun = default!;
     [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly ItemSlotsSystem _slots = default!;
+    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
 
     public override void Initialize()
     {
@@ -38,10 +39,7 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
         if (args.Handled)
             return;
 
-        if (!TryComp<ToolComponent>(args.Used, out var tool))
-            return;
-
-        if (!tool.Qualities.Contains(component.ToolModifyPower))
+        if (!_toolSystem.HasQuality(args.Used, component.ToolModifyPower))
             return;
 
         var val = (int) component.Power;

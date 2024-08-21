@@ -61,14 +61,14 @@ namespace Content.Server.Access.Systems
 
         private void AfterUIOpen(EntityUid uid, AgentIDCardComponent component, AfterActivatableUIOpenEvent args)
         {
-            if (!_uiSystem.TryGetUi(uid, AgentIDCardUiKey.Key, out var ui))
+            if (!_uiSystem.HasUi(uid, AgentIDCardUiKey.Key))
                 return;
 
             if (!TryComp<IdCardComponent>(uid, out var idCard))
                 return;
 
-            var state = new AgentIDCardBoundUserInterfaceState(idCard.FullName ?? "", idCard.JobTitle ?? "", component.Icons);
-            _uiSystem.SetUiState(ui, state, args.Session);
+            var state = new AgentIDCardBoundUserInterfaceState(idCard.FullName ?? "", idCard.JobTitle ?? "", idCard.JobIcon);
+            _uiSystem.SetUiState(uid, AgentIDCardUiKey.Key, state);
         }
 
         private void OnJobChanged(EntityUid uid, AgentIDCardComponent comp, AgentIDCardJobChangedMessage args)
@@ -90,14 +90,10 @@ namespace Content.Server.Access.Systems
         private void OnJobIconChanged(EntityUid uid, AgentIDCardComponent comp, AgentIDCardJobIconChangedMessage args)
         {
             if (!TryComp<IdCardComponent>(uid, out var idCard))
-            {
                 return;
-            }
 
-            if (!_prototypeManager.TryIndex<StatusIconPrototype>(args.JobIcon, out var jobIcon))
-            {
+            if (!_prototypeManager.TryIndex(args.JobIconId, out var jobIcon))
                 return;
-            }
 
             _cardSystem.TryChangeJobIcon(uid, jobIcon, idCard);
 
@@ -105,11 +101,11 @@ namespace Content.Server.Access.Systems
                 _cardSystem.TryChangeJobDepartment(uid, job, idCard);
         }
 
-        private bool TryFindJobProtoFromIcon(StatusIconPrototype jobIcon, [NotNullWhen(true)] out JobPrototype? job)
+        private bool TryFindJobProtoFromIcon(JobIconPrototype jobIcon, [NotNullWhen(true)] out JobPrototype? job)
         {
             foreach (var jobPrototype in _prototypeManager.EnumeratePrototypes<JobPrototype>())
             {
-                if(jobPrototype.Icon == jobIcon.ID)
+                if (jobPrototype.Icon == jobIcon.ID)
                 {
                     job = jobPrototype;
                     return true;

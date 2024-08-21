@@ -7,6 +7,8 @@
   components:
   - type: HumanoidAppearance
     species: Moth
+    hideLayersOnEquip:
+    - HeadTop
   - type: Hunger
   - type: Thirst
   - type: Icon
@@ -22,6 +24,7 @@
     accent: zombieMoth
   - type: Speech
     speechVerb: Moth
+    allowedEmotes: ['Chitter', 'Squeak']
   - type: TypingIndicator
     proto: moth
   - type: Butcherable
@@ -61,6 +64,11 @@
     heatDamage:
       types:
         Heat : 3 #per second, scales with temperature & other constants
+  - type: TemperatureSpeed
+    thresholds:
+      289: 0.8
+      275: 0.6
+      250: 0.4
   - type: Sprite # sprite again because we want different layer ordering
     noRot: true
     drawdepth: Mobs
@@ -73,16 +81,6 @@
       - map: [ "enum.HumanoidVisualLayers.LArm" ]
       - map: [ "enum.HumanoidVisualLayers.RLeg" ]
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-      - shader: StencilClear
-        sprite: Mobs/Species/Human/parts.rsi #PJB on stencil clear being on the left leg: "...this is 'fine'" -https://github.com/space-wizards/space-station-14/pull/12217#issuecomment-1291677115
-        # its fine, but its still very stupid that it has to be done like this instead of allowing sprites to just directly insert a stencil clear.
-        # sprite refactor when
-        state: l_leg
-      - shader: StencilMask
-        map: [ "enum.HumanoidVisualLayers.StencilMask" ]
-        sprite: Mobs/Customization/masking_helpers.rsi
-        state: unisex_full
-        visible: false
       - map: [ "jumpsuit" ]
       - map: [ "enum.HumanoidVisualLayers.LHand" ]
       - map: [ "enum.HumanoidVisualLayers.RHand" ]
@@ -115,11 +113,27 @@
         sprite: "Effects/creampie.rsi"
         state: "creampie_moth"
         visible: false
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+
 
 - type: entity
   parent: BaseSpeciesDummy
   id: MobMothDummy
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: HumanoidAppearance
     species: Moth
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+

@@ -333,6 +333,7 @@
       - !type:Emote
         emote: Weh
         showInChat: true
+        force: true
         probability: 0.5
       - !type:Polymorph
         prototype: ArtifactLizard # Does the same thing as the original YML I made for this reagent.

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris and modified by Swept at https://github.com/discordia-space/CEV-Eris/commit/efce5b6c3be75458ce238dcc01510e8f8a653ca6",
+  "copyright": "Taken from cev-eris and modified by Swept at https://github.com/discordia-space/CEV-Eris/commit/efce5b6c3be75458ce238dcc01510e8f8a653ca6. Uplink radio sprites by Vermidia, derivative of other lisenced sprites in the repo",
   "size": {
     "x": 32,
     "y": 32
@@ -69,7 +69,7 @@
       "name": "off-walkietalkie-inhand-left",
       "directions": 4
     },
-	{
+    {
       "name": "old-radio"
     },
     {
@@ -79,6 +79,21 @@
     {
       "name": "old-radio-inhand-right",
       "directions": 4
+    },
+    {
+      "name": "old-radio-syndicat"
+    },
+    {
+      "name": "old-radio-urist"
+    },
+    {
+      "name": "old-radio-nukeop"
+    },
+    {
+      "name": "old-radio-ancestor"
+    },
+    {
+      "name": "old-radio-borg-assault"
     }
   ]
 }

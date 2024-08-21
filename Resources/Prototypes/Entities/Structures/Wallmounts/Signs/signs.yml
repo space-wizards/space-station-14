@@ -18,6 +18,15 @@
 
 - type: entity
   parent: BaseSignDirectional
+  id: SignDirectionalAtmos
+  name: atmos sign
+  description: A direction sign, pointing out which way the Atmospherics department is.
+  components:
+  - type: Sprite
+    state: direction_atmos
+
+- type: entity
+  parent: BaseSignDirectional
   id: SignDirectionalBar
   name: bar sign
   description: A direction sign, pointing out which way the bar is.
@@ -245,6 +254,15 @@
 
 - type: entity
   parent: BaseSign
+  id: SignAiUpload
+  name: ai upload sign
+  description: A sign, indicating an AI is present.
+  components:
+    - type: Sprite
+      state: ai_upload
+
+- type: entity
+  parent: BaseSign
   id: SignArcade
   name: arcade sign
   description: A sign indicating the arcade.
@@ -273,11 +291,11 @@
 - type: entity
   parent: BaseSign
   id: SignAnomaly
-  name: xenoarchaeology lab sign
+  name: xenoarcheology lab sign
   description: A sign indicating the xenoarchaeology lab.
   components:
   - type: Sprite
-    state: anomaly
+    state: xenoarch
 
 - type: entity
   parent: BaseSign
@@ -286,7 +304,7 @@
   description: A sign indicating the anomalous research lab.
   components:
   - type: Sprite
-    state: anomaly2
+    state: anomaly
 
 - type: entity
   parent: BaseSign
@@ -299,21 +317,38 @@
 
 - type: entity
   parent: BaseSign
-  id: SignAtmosMinsky
-  name: atmospherics sign
-  description: A sign indicating the atmospherics area.
-  components:
-  - type: Sprite
-    state: atmominsky
-
-- type: entity
-  parent: BaseSign
   id: SignBar
   name: bar sign
   description: A sign indicating the bar.
   components:
   - type: Sprite
     state: bar
+
+- type: entity
+  parent: BaseSign
+  id: SignKitchen
+  name: kitchen sign
+  description: The heart of the home. And disease.
+  components:
+  - type: Sprite
+    state: kitchen
+
+- type: entity
+  parent: BaseSign
+  id: SignTheater
+  name: theater sign
+  description: Would it even be Space Station without drama?
+  components:
+  - type: Sprite
+    layers:
+    - state: drama1
+      map: [ "base" ]
+  - type: RandomSprite
+    available:
+    - base:
+        drama1: null
+        drama2: null
+        drama3: null
 
 - type: entity
   parent: BaseSign
@@ -398,24 +433,6 @@
 
 - type: entity
   parent: BaseSign
-  id: SignChemistry1
-  name: chemistry sign
-  description: A sign indicating the chemistry lab.
-  components:
-  - type: Sprite
-    state: chemistry1
-
-- type: entity
-  parent: BaseSign
-  id: SignChemistry2
-  name: chemistry sign
-  description: A sign indicating the chemistry lab.
-  components:
-  - type: Sprite
-    state: chemistry2
-
-- type: entity
-  parent: BaseSign
   id: SignCloning
   name: cloning sign
   description: A sign indicating the cloning lab.
@@ -427,19 +444,20 @@
   parent: BaseSign
   id: SignConference
   name: conference room sign
-  description: A sign indicating the conference room.
+  description: Where work happens.
   components:
   - type: Sprite
     state: conference_room
 
 - type: entity
   parent: BaseSign
-  id: SignCourt
-  name: court sign
-  description: A sign labelling the courtroom.
+  id: SignCryo
+  name: cryosleep sign
+  description: Just like that? You're gonna chicken out?
   components:
   - type: Sprite
-    state: court
+    state: cryo
+
 
 - type: entity
   parent: BaseSign
@@ -461,18 +479,27 @@
 
 - type: entity
   parent: BaseSign
-  id: SignDrones
-  name: drones sign
-  description: A sign indicating drones.
+  id: SignRestroom
+  name: restroom sign
+  description: A sign indicating where you go to... What do you do here again?
   components:
   - type: Sprite
-    state: drones
+    state: restroom
+
+- type: entity
+  parent: BaseSign
+  id: SignMaterials
+  name: materials sign
+  description: An omen to the juicy vault of steel, glass, and plastic that lays before you.
+  components:
+  - type: Sprite
+    state: mats
 
 - type: entity
   parent: BaseSign
   id: SignEngine
-  name: engine sign
-  description: A sign indicating the engine room.
+  name: power sign
+  description: Where the powa happens.
   components:
   - type: Sprite
     state: engine
@@ -544,7 +571,7 @@
   parent: BaseSign
   id: SignHead
   name: head sign
-  description: A sign with a hat on it.
+  description: An official sign indicating the dwellings of a Nanotrasen-certified head of department.
   components:
   - type: Sprite
     state: commander
@@ -556,25 +583,7 @@
   description: A sign indicating a hydroponics area.
   components:
   - type: Sprite
-    state: hydro1
-
-- type: entity
-  parent: BaseSign
-  id: SignHydro2
-  name: hydro sign
-  description: A sign indicating a hydroponics area.
-  components:
-  - type: Sprite
-    state: hydro2
-
-- type: entity
-  parent: BaseSign
-  id: SignHydro3
-  name: hydro sign
-  description: A sign indicating a hydroponics area.
-  components:
-  - type: Sprite
-    state: hydro3
+    state: hydro
 
 - type: entity
   parent: BaseSign
@@ -606,8 +615,8 @@
 - type: entity
   parent: BaseSign
   id: SignLawyer
-  name: lawyer sign
-  description: A sign labelling an area where the Lawyers work.
+  name: law sign
+  description: A sign indicating the presence of the (typically absent) rule of law.
   components:
   - type: Sprite
     state: law
@@ -641,15 +650,6 @@
 
 - type: entity
   parent: BaseSign
-  id: SignMinerDock
-  name: miner dock sign
-  description: A sign indicating the miner dock.
-  components:
-  - type: Sprite
-    state: miner_dock
-
-- type: entity
-  parent: BaseSign
   id: SignMorgue
   name: morgue sign
   description: A sign indicating the morgue.
@@ -669,7 +669,7 @@
 - type: entity
   parent: BaseSign
   id: SignNosmoking
-  name: nosmoking sign
+  name: no smoking sign
   description: A sign indicating that smoking is not allowed in the vicinity.
   components:
   - type: Sprite
@@ -740,36 +740,27 @@
 
 - type: entity
   parent: BaseSign
-  id: SignScience1
-  name: science sign
-  description: A sign indicating the science area.
+  id: SignServer
+  name: server sign
+  description: Ever heard of Big Data? This is it, chump. The biggest.
   components:
   - type: Sprite
-    state: science1
+    state: data
 
 - type: entity
   parent: BaseSign
-  id: SignScience2
-  name: science sign
-  description: A sign indicating the science area.
+  id: SignCans
+  name: canisters sign
+  description: A sign indicating the auspicious presence of gas canisters.
   components:
   - type: Sprite
-    state: science2
-
-- type: entity
-  parent: BaseSign
-  id: SignShield
-  name: shield sign
-  description: A sign with a shield.
-  components:
-  - type: Sprite
-    state: shield
+    state: cans
 
 - type: entity
   parent: BaseSign
   id: SignShipDock
-  name: docking sign
-  description: A sign indicating the ship docking area.
+  name: evac sign
+  description: A sign indicating the where the evac shuttle will (likely) arrive.
   components:
   - type: Sprite
     state: dock
@@ -812,12 +803,12 @@
 
 - type: entity
   parent: BaseSign
-  id: SignToxins2
-  name: toxins sign
-  description: A sign indicating the toxin lab.
+  id: SignVault
+  name: vault sign
+  description: A sign indicating the vault. Who knows what secrets lie inside?
   components:
   - type: Sprite
-    state: toxins2
+    state: vault
 
 - type: entity
   parent: BaseSign
@@ -966,27 +957,9 @@
 
 - type: entity
   parent: BaseSign
-  id: SignXenobio2
-  name: xenobio sign
-  description: A sign indicating the xenobiology lab.
-  components:
-  - type: Sprite
-    state: xenobio2
-
-- type: entity
-  parent: BaseSign
-  id: SignXenolab
-  name: xenolab sign
-  description: A sign indicating the xenobiology lab.
-  components:
-  - type: Sprite
-    state: xenolab
-
-- type: entity
-  parent: BaseSign
   id: SignZomlab
   name: zombie lab sign
-  description: A sign indicating the zombie lab.
+  description: The final remains of a shut-down Nanotrasen research project that aimed to harness the powers of Romerol. I wonder how that went...
   components:
   - type: Sprite
     state: zomlab
@@ -1197,7 +1170,7 @@
   parent: BaseSign
   id: SignSmoking
   name: no smoking sign
-  description: A warning sign which reads 'NO SMOKING'
+  description: A warning sign which reads 'NO SMOKING'.
   components:
   - type: Sprite
     state: nosmoking2
@@ -1206,7 +1179,7 @@
   parent: BaseSign
   id: SignSomethingOld
   name: old sign
-  description: Technical information of some sort, shame its too worn-out to read.
+  description: Technical information of some sort, shame it's too worn-out to read.
   components:
   - type: Sprite
     state: something-old1
@@ -1215,7 +1188,7 @@
   parent: BaseSign
   id: SignSomethingOld2
   name: old sign
-  description: Looks like a planet crashing by some station above it. Its kinda scary.
+  description: Looks like a planet crashing by some station above it. It's kinda scary.
   components:
   - type: Sprite
     state: something-old2

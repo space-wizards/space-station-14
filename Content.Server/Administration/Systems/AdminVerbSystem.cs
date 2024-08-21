@@ -35,6 +35,9 @@ using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
+using Content.Server.Silicons.Laws;
+using Content.Shared.Silicons.Laws.Components;
+using Robust.Server.Player;
 using Robust.Shared.Physics.Components;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
@@ -67,6 +70,9 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly StationSystem _stations = default!;
         [Dependency] private readonly StationSpawningSystem _spawning = default!;
         [Dependency] private readonly ExamineSystemShared _examine = default!;
+        [Dependency] private readonly AdminFrozenSystem _freeze = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly SiliconLawSystem _siliconLawSystem = default!;
 
         private readonly Dictionary<ICommonSession, List<EditSolutionsEui>> _openSolutionUis = new();
 
@@ -130,26 +136,6 @@ namespace Content.Server.Administration.Systems
                     prayerVerb.Impact = LogImpact.Low;
                     args.Verbs.Add(prayerVerb);
 
-                    // Freeze
-                    var frozen = HasComp<AdminFrozenComponent>(args.Target);
-                    args.Verbs.Add(new Verb
-                    {
-                        Priority = -1, // This is just so it doesn't change position in the menu between freeze/unfreeze.
-                        Text = frozen
-                            ? Loc.GetString("admin-verbs-unfreeze")
-                            : Loc.GetString("admin-verbs-freeze"),
-                        Category = VerbCategory.Admin,
-                        Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/snow.svg.192dpi.png")),
-                        Act = () =>
-                        {
-                            if (frozen)
-                                RemComp<AdminFrozenComponent>(args.Target);
-                            else
-                                EnsureComp<AdminFrozenComponent>(args.Target);
-                        },
-                        Impact = LogImpact.Medium,
-                    });
-
                     // Erase
                     args.Verbs.Add(new Verb
                     {
@@ -199,7 +185,7 @@ namespace Content.Server.Administration.Systems
 
                             if (targetMind != null)
                             {
-                                _mindSystem.TransferTo(targetMind.Value, mobUid);
+                                _mindSystem.TransferTo(targetMind.Value, mobUid, true);
                             }
                         },
                         ConfirmationPopup = true,
@@ -227,7 +213,70 @@ namespace Content.Server.Administration.Systems
                         ConfirmationPopup = true,
                         Impact = LogImpact.High,
                     });
+
+                    // PlayerPanel
+                    args.Verbs.Add(new Verb
+                    {
+                        Text = Loc.GetString("admin-player-actions-player-panel"),
+                        Category = VerbCategory.Admin,
+                        Act = () => _console.ExecuteCommand(player, $"playerpanel \"{targetActor.PlayerSession.UserId}\""),
+                        Impact = LogImpact.Low
+                    });
                 }
+
+                // Freeze
+                var frozen = TryComp<AdminFrozenComponent>(args.Target, out var frozenComp);
+                var frozenAndMuted = frozenComp?.Muted ?? false;
+
+                if (!frozen)
+                {
+                    args.Verbs.Add(new Verb
+                    {
+                        Priority = -1, // This is just so it doesn't change position in the menu between freeze/unfreeze.
+                        Text = Loc.GetString("admin-verbs-freeze"),
+                        Category = VerbCategory.Admin,
+                        Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/snow.svg.192dpi.png")),
+                        Act = () =>
+                        {
+                            EnsureComp<AdminFrozenComponent>(args.Target);
+                        },
+                        Impact = LogImpact.Medium,
+                    });
+                }
+
+                if (!frozenAndMuted)
+                {
+                    // allow you to additionally mute someone when they are already frozen
+                    args.Verbs.Add(new Verb
+                    {
+                        Priority = -1, // This is just so it doesn't change position in the menu between freeze/unfreeze.
+                        Text = Loc.GetString("admin-verbs-freeze-and-mute"),
+                        Category = VerbCategory.Admin,
+                        Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/snow.svg.192dpi.png")),
+                        Act = () =>
+                        {
+                            _freeze.FreezeAndMute(args.Target);
+                        },
+                        Impact = LogImpact.Medium,
+                    });
+                }
+
+                if (frozen)
+                {
+                    args.Verbs.Add(new Verb
+                    {
+                        Priority = -1, // This is just so it doesn't change position in the menu between freeze/unfreeze.
+                        Text = Loc.GetString("admin-verbs-unfreeze"),
+                        Category = VerbCategory.Admin,
+                        Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/snow.svg.192dpi.png")),
+                        Act = () =>
+                        {
+                            RemComp<AdminFrozenComponent>(args.Target);
+                        },
+                        Impact = LogImpact.Medium,
+                    });
+                }
+
 
                 // Admin Logs
                 if (_adminManager.HasAdminFlag(player, AdminFlags.Logs))
@@ -294,6 +343,25 @@ namespace Content.Server.Administration.Systems
                     Impact = LogImpact.Low
                 });
 
+                if (TryComp<SiliconLawBoundComponent>(args.Target, out var lawBoundComponent))
+                {
+                    args.Verbs.Add(new Verb()
+                    {
+                        Text = Loc.GetString("silicon-law-ui-verb"),
+                        Category = VerbCategory.Admin,
+                        Act = () =>
+                        {
+                            var ui = new SiliconLawEui(_siliconLawSystem, EntityManager, _adminManager);
+                            if (!_playerManager.TryGetSessionByEntity(args.User, out var session))
+                            {
+                                return;
+                            }
+                            _euiManager.OpenEui(ui, session);
+                            ui.UpdateLaws(lawBoundComponent, args.Target);
+                        },
+                        Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/actions_borg.rsi"), "state-laws"),
+                    });
+                }
             }
         }
 
@@ -463,7 +531,7 @@ namespace Content.Server.Administration.Systems
                     Text = Loc.GetString("configure-verb-get-data-text"),
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
                     Category = VerbCategory.Debug,
-                    Act = () => _uiSystem.TryOpen(args.Target, ConfigurationUiKey.Key, actor.PlayerSession)
+                    Act = () => _uiSystem.OpenUi(args.Target, ConfigurationUiKey.Key, actor.PlayerSession)
                 };
                 args.Verbs.Add(verb);
             }

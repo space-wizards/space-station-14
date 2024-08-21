@@ -14,6 +14,9 @@
   - ClothingEyesChameleon
   - ClothingHeadsetChameleon
   - ClothingShoesChameleon
+  - BarberScissors
+  - ChameleonProjector
+  - AgentIDCard
 
 - type: thiefBackpackSet
   id: ToolsSet
@@ -27,10 +30,10 @@
   - ClothingEyesGlassesMeson
   - ClothingHandsGlovesColorYellow
   - JawsOfLife
+  - RemoteSignaller
   - Multitool
   - C4
   - C4
-  - ClothingMaskClown
 
 - type: thiefBackpackSet
   id: ChemistrySet
@@ -45,7 +48,7 @@
   - EphedrineChemistryBottle
   - SoapOmega
   - Syringe
-  - DrinkVodkaBottleFull
+  - DrinkShaker
 
 - type: thiefBackpackSet
   id: SyndieSet
@@ -55,10 +58,10 @@
     sprite: Objects/Specific/Syndicate/telecrystal.rsi
     state: telecrystal
   content:
-  - AgentIDCard
+  - RadioJammer
+  - TraitorCodePaper
   - Emag
-  - SyndicatePersonalAI
-  - ClothingHeadHatSyndieMAA
+  - Lighter
   - CigPackSyndicate
   - Telecrystal10 #The thief cannot use them, but it may induce communication with traitors
 
@@ -70,14 +73,10 @@
     sprite: Objects/Tanks/anesthetic.rsi
     state: icon
   content:
-  - ClothingHeadPyjamaSyndicateBlack
-  - ClothingUniformJumpsuitPyjamaSyndicateBlack
-  - NocturineChemistryBottle
   - NocturineChemistryBottle
   - NocturineChemistryBottle
   - HypopenBox
   - NitrousOxideTankFilled
-  - BedsheetSyndie
 
 - type: thiefBackpackSet
   id: CommunicatorSet
@@ -102,7 +101,6 @@
     state: icon
   content:
   - InvisibleCrate
-  - ClothingNeckCloakVoid
   - FultonBeacon
   - Fulton
   - SmokeGrenade

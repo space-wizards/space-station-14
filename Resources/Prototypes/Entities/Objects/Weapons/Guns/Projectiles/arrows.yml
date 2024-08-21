@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
   id: BaseArrow
   abstract: true
@@ -35,7 +35,6 @@
   - type: Tag
     tags:
     - Arrow
-    - CannonRestrict
   - type: Projectile
     deleteOnCollide: false
     onlyCollideWhenShot: true

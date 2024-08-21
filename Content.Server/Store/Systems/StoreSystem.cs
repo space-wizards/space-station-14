@@ -5,12 +5,11 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
-using Content.Shared.Store;
+using Content.Shared.Store.Components;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
-using System.Linq;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.Store.Systems;
 
@@ -44,7 +43,6 @@ public sealed partial class StoreSystem : EntitySystem
     private void OnMapInit(EntityUid uid, StoreComponent component, MapInitEvent args)
     {
         RefreshAllListings(component);
-        InitializeFromPreset(component.Preset, uid, component);
         component.StartingMap = Transform(uid).MapUid;
     }
 
@@ -54,7 +52,6 @@ public sealed partial class StoreSystem : EntitySystem
         if (MetaData(uid).EntityLifeStage == EntityLifeStage.MapInitialized)
         {
             RefreshAllListings(component);
-            InitializeFromPreset(component.Preset, uid, component);
         }
 
         var ev = new StoreAddedEvent();
@@ -100,7 +97,7 @@ public sealed partial class StoreSystem : EntitySystem
         if (args.Handled)
         {
             var msg = Loc.GetString("store-currency-inserted", ("used", args.Used), ("target", args.Target));
-            _popup.PopupEntity(msg, args.Target.Value);
+            _popup.PopupEntity(msg, args.Target.Value, args.User);
             QueueDel(args.Used);
         }
     }
@@ -166,44 +163,6 @@ public sealed partial class StoreSystem : EntitySystem
 
         UpdateUserInterface(null, uid, store);
         return true;
-    }
-
-    /// <summary>
-    /// Initializes a store based on a preset ID
-    /// </summary>
-    /// <param name="preset">The ID of a store preset prototype</param>
-    /// <param name="uid"></param>
-    /// <param name="component">The store being initialized</param>
-    public void InitializeFromPreset(string? preset, EntityUid uid, StoreComponent component)
-    {
-        if (preset == null)
-            return;
-
-        if (!_proto.TryIndex<StorePresetPrototype>(preset, out var proto))
-            return;
-
-        InitializeFromPreset(proto, uid, component);
-    }
-
-    /// <summary>
-    /// Initializes a store based on a given preset
-    /// </summary>
-    /// <param name="preset">The StorePresetPrototype</param>
-    /// <param name="uid"></param>
-    /// <param name="component">The store being initialized</param>
-    public void InitializeFromPreset(StorePresetPrototype preset, EntityUid uid, StoreComponent component)
-    {
-        component.Preset = preset.ID;
-        component.CurrencyWhitelist.UnionWith(preset.CurrencyWhitelist);
-        component.Categories.UnionWith(preset.Categories);
-        if (component.Balance == new Dictionary<string, FixedPoint2>() && preset.InitialBalance != null) //if we don't have a value stored, use the preset
-            TryAddCurrency(preset.InitialBalance, uid, component);
-
-        var ui = _ui.GetUiOrNull(uid, StoreUiKey.Key);
-        if (ui != null)
-        {
-            _ui.SetUiState(ui, new StoreInitializeState(preset.StoreName));
-        }
     }
 }
 

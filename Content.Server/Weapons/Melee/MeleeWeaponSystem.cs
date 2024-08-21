@@ -187,15 +187,10 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (session is { } pSession)
         {
             (targetCoordinates, targetLocalAngle) = _lag.GetCoordinatesAngle(target, pSession);
-        }
-        else
-        {
-            var xform = Transform(target);
-            targetCoordinates = xform.Coordinates;
-            targetLocalAngle = xform.LocalRotation;
+            return Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range);
         }
 
-        return Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range);
+        return Interaction.InRangeUnobstructed(user, target, range);
     }
 
     protected override void DoDamageEffect(List<EntityUid> targets, EntityUid? user, TransformComponent targetXform)

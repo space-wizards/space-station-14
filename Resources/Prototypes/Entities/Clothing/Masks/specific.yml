@@ -6,8 +6,7 @@
   suffix: Chameleon
   components:
     - type: Tag
-      tags: # ignore "WhitelistChameleon" tag
-        - HidesNose
+      tags: [] # ignore "WhitelistChameleon" tag
     - type: Sprite
       sprite: Clothing/Mask/gas.rsi
     - type: Clothing
@@ -19,8 +18,11 @@
     - type: IdentityBlocker # need that for default ClothingMaskGas
     - type: UserInterface
       interfaces:
-        - key: enum.ChameleonUiKey.Key
+        enum.ChameleonUiKey.Key:
           type: ChameleonBoundUserInterface
+    - type: HideLayerClothing
+      slots:
+      - Snout
 
 - type: entity
   parent: ClothingMaskGasChameleon
@@ -28,3 +30,73 @@
   suffix: Voice Mask, Chameleon
   components:
     - type: VoiceMasker
+    - type: HideLayerClothing
+      slots:
+      - Snout
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskWeldingGas
+  name: welding gas mask
+  description: A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/welding-gas.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Mask/welding-gas.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: FlashImmunity
+  - type: EyeProtection
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 200
+      Glass: 100
+  - type: StaticPrice
+    price: 100
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Snout
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskGoldenCursed
+  name: golden mask
+  description: Previously used in strange pantomimes, after one of the actors went mad on stage these masks have avoided use. You swear its face contorts when you're not looking.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/goldenmask.rsi
+    layers:
+    - state: icon
+      map: [ "mask" ]
+  - type: Clothing
+    sprite: Clothing/Mask/goldenmask.rsi
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.CursedMaskVisuals.State:
+        mask:
+          Neutral: { state: icon }
+          Despair: { state: icon-despair }
+          Joy: { state: icon-joy }
+          Anger: { state: icon-anger }
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: SelfEquipOnly
+  - type: CursedMask
+    despairDamageModifier:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.4
+  - type: HideLayerClothing
+    slots:
+    - Snout
+  - type: IngestionBlocker
+  - type: StaticPrice
+    price: 5000

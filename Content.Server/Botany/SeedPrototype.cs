@@ -1,17 +1,17 @@
 using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
 using Content.Shared.Atmos;
-using Content.Shared.Chemistry.Reagent;
+using Content.Shared.EntityEffects;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
-using Robust.Shared.Audio;
 
 namespace Content.Server.Botany;
 
 [Prototype("seed")]
-public sealed class SeedPrototype : SeedData, IPrototype
+public sealed partial class SeedPrototype : SeedData, IPrototype
 {
     [IdDataField] public string ID { get; private init; } = default!;
 }
@@ -80,7 +80,7 @@ public partial struct SeedChemQuantity
 
 // TODO reduce the number of friends to a reasonable level. Requires ECS-ing things like plant holder component.
 [Virtual, DataDefinition]
-[Access(typeof(BotanySystem), typeof(PlantHolderSystem), typeof(SeedExtractorSystem), typeof(PlantHolderComponent), typeof(ReagentEffect), typeof(MutationSystem))]
+[Access(typeof(BotanySystem), typeof(PlantHolderSystem), typeof(SeedExtractorSystem), typeof(PlantHolderComponent), typeof(EntityEffect), typeof(MutationSystem))]
 public partial class SeedData
 {
     #region Tracking
@@ -227,9 +227,12 @@ public partial class SeedData
 
     [DataField("plantIconState")] public string PlantIconState { get; set; } = "produce";
 
+    /// <summary>
+    /// Screams random sound, could be strict sound SoundPathSpecifier or collection SoundCollectionSpecifier
+    /// base class is SoundSpecifier
+    /// </summary>
     [DataField("screamSound")]
-    public SoundSpecifier ScreamSound = new SoundPathSpecifier("/Audio/Voice/Human/malescream_1.ogg");
-
+    public SoundSpecifier ScreamSound = new SoundCollectionSpecifier("PlantScreams", AudioParams.Default.WithVolume(-10));
 
     [DataField("screaming")] public bool CanScream;
 

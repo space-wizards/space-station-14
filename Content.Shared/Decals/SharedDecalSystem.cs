@@ -49,7 +49,7 @@ namespace Content.Shared.Decals
                     data[index] = chunk;
             }
 
-            args.State = new DecalGridState(data) { AllChunks = new(component.ChunkCollection.ChunkCollection.Keys) };
+            args.State = new DecalGridDeltaState(data, new(component.ChunkCollection.ChunkCollection.Keys));
         }
 
         private void OnGridInitialize(GridInitializeEvent msg)

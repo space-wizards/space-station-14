@@ -14,10 +14,12 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
-using Content.Shared.Preferences.Loadouts.Effects;
+using Content.Shared.Roles;
+using Content.Shared.Traits;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Database
@@ -26,6 +28,8 @@ namespace Content.Server.Database
     {
         private readonly ISawmill _opsLog;
 
+        public event Action<DatabaseNotification>? OnNotificationReceived;
+
         /// <param name="opsLog">Sawmill to trace log database operations to.</param>
         public ServerDbBase(ISawmill opsLog)
         {
@@ -33,9 +37,11 @@ namespace Content.Server.Database
         }
 
         #region Preferences
-        public async Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId)
+        public async Task<PlayerPreferences?> GetPlayerPreferencesAsync(
+            NetUserId userId,
+            CancellationToken cancel = default)
         {
-            await using var db = await GetDb();
+            await using var db = await GetDb(cancel);
 
             var prefs = await db.DbContext
                 .Preference
@@ -47,7 +53,7 @@ namespace Content.Server.Database
                     .ThenInclude(l => l.Groups)
                     .ThenInclude(group => group.Loadouts)
                 .AsSingleQuery()
-                .SingleOrDefaultAsync(p => p.UserId == userId.UserId);
+                .SingleOrDefaultAsync(p => p.UserId == userId.UserId, cancel);
 
             if (prefs is null)
                 return null;
@@ -180,9 +186,9 @@ namespace Content.Server.Database
 
         private static HumanoidCharacterProfile ConvertProfiles(Profile profile)
         {
-            var jobs = profile.Jobs.ToDictionary(j => j.JobName, j => (JobPriority) j.Priority);
-            var antags = profile.Antags.Select(a => a.AntagName);
-            var traits = profile.Traits.Select(t => t.TraitName);
+            var jobs = profile.Jobs.ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => (JobPriority) j.Priority);
+            var antags = profile.Antags.Select(a => new ProtoId<AntagPrototype>(a.AntagName));
+            var traits = profile.Traits.Select(t => new ProtoId<TraitPrototype>(t.TraitName));
 
             var sex = Sex.Male;
             if (Enum.TryParse<Sex>(profile.Sex, true, out var sexVal))
@@ -251,8 +257,8 @@ namespace Content.Server.Database
                 spawnPriority,
                 jobs,
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
-                antags.ToList(),
-                traits.ToList(),
+                antags.ToHashSet(),
+                traits.ToHashSet(),
                 loadouts
             );
         }
@@ -421,13 +427,16 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
-        protected static async Task<ServerBanExemptFlags?> GetBanExemptionCore(DbGuard db, NetUserId? userId)
+        protected static async Task<ServerBanExemptFlags?> GetBanExemptionCore(
+            DbGuard db,
+            NetUserId? userId,
+            CancellationToken cancel = default)
         {
             if (userId == null)
                 return null;
 
             var exemption = await db.DbContext.BanExemption
-                .SingleOrDefaultAsync(e => e.UserId == userId.Value.UserId);
+                .SingleOrDefaultAsync(e => e.UserId == userId.Value.UserId, cancellationToken: cancel);
 
             return exemption?.Flags;
         }
@@ -458,11 +467,11 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
-        public async Task<ServerBanExemptFlags> GetBanExemption(NetUserId userId)
+        public async Task<ServerBanExemptFlags> GetBanExemption(NetUserId userId, CancellationToken cancel)
         {
-            await using var db = await GetDb();
+            await using var db = await GetDb(cancel);
 
-            var flags = await GetBanExemptionCore(db, userId);
+            var flags = await GetBanExemptionCore(db, userId, cancel);
             return flags ?? ServerBanExemptFlags.None;
         }
 
@@ -515,13 +524,13 @@ namespace Content.Server.Database
         #endregion
 
         #region Playtime
-        public async Task<List<PlayTime>> GetPlayTimes(Guid player)
+        public async Task<List<PlayTime>> GetPlayTimes(Guid player, CancellationToken cancel)
         {
-            await using var db = await GetDb();
+            await using var db = await GetDb(cancel);
 
             return await db.DbContext.PlayTime
                 .Where(p => p.PlayerId == player)
-                .ToListAsync();
+                .ToListAsync(cancel);
         }
 
         public async Task UpdatePlayTimes(IReadOnlyCollection<PlayTimeUpdate> updates)
@@ -621,6 +630,11 @@ namespace Content.Server.Database
             return record == null ? null : MakePlayerRecord(record);
         }
 
+        protected async Task<bool> PlayerRecordExists(DbGuard db, NetUserId userId)
+        {
+            return await db.DbContext.Player.AnyAsync(p => p.UserId == userId);
+        }
+
         [return: NotNullIfNotNull(nameof(player))]
         protected PlayerRecord? MakePlayerRecord(Player? player)
         {
@@ -673,7 +687,7 @@ namespace Content.Server.Database
          */
         public async Task<Admin?> GetAdminDataForAsync(NetUserId userId, CancellationToken cancel)
         {
-            await using var db = await GetDb();
+            await using var db = await GetDb(cancel);
 
             return await db.DbContext.Admin
                 .Include(p => p.Flags)
@@ -688,7 +702,7 @@ namespace Content.Server.Database
 
         public async Task<AdminRank?> GetAdminRankDataForAsync(int id, CancellationToken cancel = default)
         {
-            await using var db = await GetDb();
+            await using var db = await GetDb(cancel);
 
             return await db.DbContext.AdminRank
                 .Include(r => r.Flags)
@@ -697,7 +711,7 @@ namespace Content.Server.Database
 
         public async Task RemoveAdminAsync(NetUserId userId, CancellationToken cancel)
         {
-            await using var db = await GetDb();
+            await using var db = await GetDb(cancel);
 
             var admin = await db.DbContext.Admin.SingleAsync(a => a.UserId == userId.UserId, cancel);
             db.DbContext.Admin.Remove(admin);
@@ -707,7 +721,7 @@ namespace Content.Server.Database
 
         public async Task AddAdminAsync(Admin admin, CancellationToken cancel)
         {
-            await using var db = await GetDb();
+            await using var db = await GetDb(cancel);
 
             db.DbContext.Admin.Add(admin);
 
@@ -716,7 +730,7 @@ namespace Content.Server.Database
 
         public async Task UpdateAdminAsync(Admin admin, CancellationToken cancel)
         {
-            await using var db = await GetDb();
+            await using var db = await GetDb(cancel);
 
             var existing = await db.DbContext.Admin.Include(a => a.Flags).SingleAsync(a => a.UserId == admin.UserId, cancel);
             existing.Flags = admin.Flags;
@@ -728,7 +742,7 @@ namespace Content.Server.Database
 
         public async Task RemoveAdminRankAsync(int rankId, CancellationToken cancel)
         {
-            await using var db = await GetDb();
+            await using var db = await GetDb(cancel);
 
             var admin = await db.DbContext.AdminRank.SingleAsync(a => a.Id == rankId, cancel);
             db.DbContext.AdminRank.Remove(admin);
@@ -738,7 +752,7 @@ namespace Content.Server.Database
 
         public async Task AddAdminRankAsync(AdminRank rank, CancellationToken cancel)
         {
-            await using var db = await GetDb();
+            await using var db = await GetDb(cancel);
 
             db.DbContext.AdminRank.Add(rank);
 
@@ -811,7 +825,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         public async Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel)
         {
-            await using var db = await GetDb();
+            await using var db = await GetDb(cancel);
 
             var existing = await db.DbContext.AdminRank
                 .Include(r => r.Flags)
@@ -1578,6 +1592,65 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #endregion
 
+        #region Job Whitelists
+
+        public async Task<bool> AddJobWhitelist(Guid player, ProtoId<JobPrototype> job)
+        {
+            await using var db = await GetDb();
+            var exists = await db.DbContext.RoleWhitelists
+                .Where(w => w.PlayerUserId == player)
+                .Where(w => w.RoleId == job.Id)
+                .AnyAsync();
+
+            if (exists)
+                return false;
+
+            var whitelist = new RoleWhitelist
+            {
+                PlayerUserId = player,
+                RoleId = job
+            };
+            db.DbContext.RoleWhitelists.Add(whitelist);
+            await db.DbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<List<string>> GetJobWhitelists(Guid player, CancellationToken cancel)
+        {
+            await using var db = await GetDb(cancel);
+            return await db.DbContext.RoleWhitelists
+                .Where(w => w.PlayerUserId == player)
+                .Select(w => w.RoleId)
+                .ToListAsync(cancellationToken: cancel);
+        }
+
+        public async Task<bool> IsJobWhitelisted(Guid player, ProtoId<JobPrototype> job)
+        {
+            await using var db = await GetDb();
+            return await db.DbContext.RoleWhitelists
+                .Where(w => w.PlayerUserId == player)
+                .Where(w => w.RoleId == job.Id)
+                .AnyAsync();
+        }
+
+        public async Task<bool> RemoveJobWhitelist(Guid player, ProtoId<JobPrototype> job)
+        {
+            await using var db = await GetDb();
+            var entry = await db.DbContext.RoleWhitelists
+                .Where(w => w.PlayerUserId == player)
+                .Where(w => w.RoleId == job.Id)
+                .SingleOrDefaultAsync();
+
+            if (entry == null)
+                return false;
+
+            db.DbContext.RoleWhitelists.Remove(entry);
+            await db.DbContext.SaveChangesAsync();
+            return true;
+        }
+
+        #endregion
+
         // SQLite returns DateTime as Kind=Unspecified, Npgsql actually knows for sure it's Kind=Utc.
         // Normalize DateTimes here so they're always Utc. Thanks.
         protected abstract DateTime NormalizeDatabaseTime(DateTime time);
@@ -1594,7 +1667,9 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             return db.DbContext.Database.HasPendingModelChanges();
         }
 
-        protected abstract Task<DbGuard> GetDb([CallerMemberName] string? name = null);
+        protected abstract Task<DbGuard> GetDb(
+            CancellationToken cancel = default,
+            [CallerMemberName] string? name = null);
 
         protected void LogDbOp(string? name)
         {
@@ -1606,6 +1681,16 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             public abstract ServerDbContext DbContext { get; }
 
             public abstract ValueTask DisposeAsync();
+        }
+
+        protected void NotificationReceived(DatabaseNotification notification)
+        {
+            OnNotificationReceived?.Invoke(notification);
+        }
+
+        public virtual void Shutdown()
+        {
+
         }
     }
 }

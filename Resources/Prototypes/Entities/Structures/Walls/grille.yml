@@ -32,7 +32,7 @@
       node: grille
       deconstructionTarget: start
     - type: Damageable
-      damageContainer: Inorganic
+      damageContainer: StructuralInorganic
       damageModifierSet: PerforatedMetallic
     - type: PowerConsumer
       showInMonitor: false
@@ -92,7 +92,7 @@
   id: ClockworkGrille
   parent: Grille
   name: clockwork grille
-  description: a flimsy framework of iron rods assembled in traditional Ratvarian fashion.
+  description: A flimsy framework of iron rods assembled in traditional Ratvarian fashion.
   components:
     - type: Sprite
       drawdepth: Walls

@@ -8,14 +8,14 @@ using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Mind;
-using Content.Shared.Mobs.Components;
+using Content.Shared.Rejuvenate;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Shared.Rejuvenate;
 
 namespace Content.Shared.Actions;
 
@@ -25,11 +25,11 @@ public abstract class SharedActionsSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -38,10 +38,12 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<InstantActionComponent, MapInitEvent>(OnActionMapInit);
         SubscribeLocalEvent<EntityTargetActionComponent, MapInitEvent>(OnActionMapInit);
         SubscribeLocalEvent<WorldTargetActionComponent, MapInitEvent>(OnActionMapInit);
+        SubscribeLocalEvent<EntityWorldTargetActionComponent, MapInitEvent>(OnActionMapInit);
 
         SubscribeLocalEvent<InstantActionComponent, ComponentShutdown>(OnActionShutdown);
         SubscribeLocalEvent<EntityTargetActionComponent, ComponentShutdown>(OnActionShutdown);
         SubscribeLocalEvent<WorldTargetActionComponent, ComponentShutdown>(OnActionShutdown);
+        SubscribeLocalEvent<EntityWorldTargetActionComponent, ComponentShutdown>(OnActionShutdown);
 
         SubscribeLocalEvent<ActionsComponent, DidEquipEvent>(OnDidEquip);
         SubscribeLocalEvent<ActionsComponent, DidEquipHandEvent>(OnHandEquipped);
@@ -56,10 +58,12 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<InstantActionComponent, ComponentGetState>(OnInstantGetState);
         SubscribeLocalEvent<EntityTargetActionComponent, ComponentGetState>(OnEntityTargetGetState);
         SubscribeLocalEvent<WorldTargetActionComponent, ComponentGetState>(OnWorldTargetGetState);
+        SubscribeLocalEvent<EntityWorldTargetActionComponent, ComponentGetState>(OnEntityWorldTargetGetState);
 
         SubscribeLocalEvent<InstantActionComponent, GetActionDataEvent>(OnGetActionData);
         SubscribeLocalEvent<EntityTargetActionComponent, GetActionDataEvent>(OnGetActionData);
         SubscribeLocalEvent<WorldTargetActionComponent, GetActionDataEvent>(OnGetActionData);
+        SubscribeLocalEvent<EntityWorldTargetActionComponent, GetActionDataEvent>(OnGetActionData);
 
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
     }
@@ -102,6 +106,11 @@ public abstract class SharedActionsSystem : EntitySystem
         args.State = new WorldTargetActionComponentState(component, EntityManager);
     }
 
+    private void OnEntityWorldTargetGetState(EntityUid uid, EntityWorldTargetActionComponent component, ref ComponentGetState args)
+    {
+        args.State = new EntityWorldTargetActionComponentState(component, EntityManager);
+    }
+
     private void OnGetActionData<T>(EntityUid uid, T component, ref GetActionDataEvent args) where T : BaseActionComponent
     {
         args.Action = component;
@@ -113,7 +122,7 @@ public abstract class SharedActionsSystem : EntitySystem
         bool logError = true)
     {
         result = null;
-        if (!Exists(uid))
+        if (uid == null || TerminatingOrDeleted(uid.Value))
             return false;
 
         var ev = new GetActionDataEvent();
@@ -145,9 +154,6 @@ public abstract class SharedActionsSystem : EntitySystem
 
     public void SetCooldown(EntityUid? actionId, TimeSpan start, TimeSpan end)
     {
-        if (actionId == null)
-            return;
-
         if (!TryGetActionData(actionId, out var action))
             return;
 
@@ -163,9 +169,6 @@ public abstract class SharedActionsSystem : EntitySystem
 
     public void ClearCooldown(EntityUid? actionId)
     {
-        if (actionId == null)
-            return;
-
         if (!TryGetActionData(actionId, out var action))
             return;
 
@@ -173,6 +176,27 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
 
         action.Cooldown = (cooldown.Start, GameTiming.CurTime);
+        Dirty(actionId.Value, action);
+    }
+
+    /// <summary>
+    ///     Sets the cooldown for this action only if it is bigger than the one it already has.
+    /// </summary>
+    public void SetIfBiggerCooldown(EntityUid? actionId, TimeSpan? cooldown)
+    {
+        if (cooldown == null ||
+            cooldown.Value <= TimeSpan.Zero ||
+            !TryGetActionData(actionId, out var action))
+        {
+            return;
+        }
+
+        var start = GameTiming.CurTime;
+        var end = start + cooldown;
+        if (action.Cooldown?.End > end)
+            return;
+
+        action.Cooldown = (start, end.Value);
         Dirty(actionId.Value, action);
     }
 
@@ -222,7 +246,7 @@ public abstract class SharedActionsSystem : EntitySystem
     }
 
     #region ComponentStateManagement
-    protected virtual void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
+    public virtual void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
     {
         // See client-side code.
     }
@@ -389,7 +413,7 @@ public abstract class SharedActionsSystem : EntitySystem
                 var targetWorldPos = _transformSystem.GetWorldPosition(entityTarget);
                 _rotateToFaceSystem.TryFaceCoordinates(user, targetWorldPos);
 
-                if (!ValidateEntityTarget(user, entityTarget, entityAction))
+                if (!ValidateEntityTarget(user, entityTarget, (actionEnt, entityAction)))
                     return;
 
                 _adminLogger.Add(LogType.Action,
@@ -411,9 +435,9 @@ public abstract class SharedActionsSystem : EntitySystem
                 }
 
                 var entityCoordinatesTarget = GetCoordinates(netCoordinatesTarget);
-                _rotateToFaceSystem.TryFaceCoordinates(user, entityCoordinatesTarget.ToMapPos(EntityManager, _transformSystem));
+                _rotateToFaceSystem.TryFaceCoordinates(user, _transformSystem.ToMapCoordinates(entityCoordinatesTarget).Position);
 
-                if (!ValidateWorldTarget(user, entityCoordinatesTarget, worldAction))
+                if (!ValidateWorldTarget(user, entityCoordinatesTarget, (actionEnt, worldAction)))
                     return;
 
                 _adminLogger.Add(LogType.Action,
@@ -427,6 +451,34 @@ public abstract class SharedActionsSystem : EntitySystem
                 }
 
                 break;
+            case EntityWorldTargetActionComponent entityWorldAction:
+            {
+                var actionEntity = GetEntity(ev.EntityTarget);
+                var actionCoords = GetCoordinates(ev.EntityCoordinatesTarget);
+
+                if (actionEntity is null && actionCoords is null)
+                {
+                    Log.Error($"Attempted to perform an entity-world-targeted action without an entity or world coordinates! Action: {name}");
+                    return;
+                }
+
+                var entWorldAction = new Entity<EntityWorldTargetActionComponent>(actionEnt, entityWorldAction);
+
+                if (!ValidateEntityWorldTarget(user, actionEntity, actionCoords, entWorldAction))
+                    return;
+
+                _adminLogger.Add(LogType.Action,
+                    $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(action.Container ?? user):provider}) targeted at {ToPrettyString(actionEntity):target} {actionCoords:target}.");
+
+                if (entityWorldAction.Event != null)
+                {
+                    entityWorldAction.Event.Entity = actionEntity;
+                    entityWorldAction.Event.Coords = actionCoords;
+                    Dirty(actionEnt, entityWorldAction);
+                    performEvent = entityWorldAction.Event;
+                }
+                break;
+            }
             case InstantActionComponent instantAction:
                 if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
                     return;
@@ -439,27 +491,53 @@ public abstract class SharedActionsSystem : EntitySystem
         }
 
         if (performEvent != null)
+        {
             performEvent.Performer = user;
+            performEvent.Action = actionEnt;
+        }
 
         // All checks passed. Perform the action!
         PerformAction(user, component, actionEnt, action, performEvent, curTime);
     }
 
-    public bool ValidateEntityTarget(EntityUid user, EntityUid target, EntityTargetActionComponent action)
+    public bool ValidateEntityTarget(EntityUid user, EntityUid target, Entity<EntityTargetActionComponent> actionEnt)
     {
-        if (!target.IsValid() || Deleted(target))
+        var comp = actionEnt.Comp;
+        if (!ValidateEntityTargetBase(user,
+                target,
+                comp.Whitelist,
+                comp.CheckCanInteract,
+                comp.CanTargetSelf,
+                comp.CheckCanAccess,
+                comp.Range))
             return false;
 
-        if (action.Whitelist != null && !action.Whitelist.IsValid(target, EntityManager))
+        var ev = new ValidateActionEntityTargetEvent(user, target);
+        RaiseLocalEvent(actionEnt, ref ev);
+        return !ev.Cancelled;
+    }
+
+    private bool ValidateEntityTargetBase(EntityUid user,
+        EntityUid? targetEntity,
+        EntityWhitelist? whitelist,
+        bool checkCanInteract,
+        bool canTargetSelf,
+        bool checkCanAccess,
+        float range)
+    {
+        if (targetEntity is not { } target || !target.IsValid() || Deleted(target))
             return false;
 
-        if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, target))
+        if (_whitelistSystem.IsWhitelistFail(whitelist, target))
+            return false;
+
+        if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, target))
             return false;
 
         if (user == target)
-            return action.CanTargetSelf;
+            return canTargetSelf;
 
-        if (!action.CheckCanAccess)
+        if (!checkCanAccess)
         {
             // even if we don't check for obstructions, we may still need to check the range.
             var xform = Transform(user);
@@ -468,28 +546,40 @@ public abstract class SharedActionsSystem : EntitySystem
             if (xform.MapID != targetXform.MapID)
                 return false;
 
-            if (action.Range <= 0)
+            if (range <= 0)
                 return true;
 
             var distance = (_transformSystem.GetWorldPosition(xform) - _transformSystem.GetWorldPosition(targetXform)).Length();
-            return distance <= action.Range;
+            return distance <= range;
         }
 
-        if (_interactionSystem.InRangeUnobstructed(user, target, range: action.Range)
-            && _containerSystem.IsInSameOrParentContainer(user, target))
-        {
-            return true;
-        }
-
-        return _interactionSystem.CanAccessViaStorage(user, target);
+        return _interactionSystem.InRangeAndAccessible(user, target, range: range);
     }
 
-    public bool ValidateWorldTarget(EntityUid user, EntityCoordinates coords, WorldTargetActionComponent action)
+    public bool ValidateWorldTarget(EntityUid user, EntityCoordinates coords, Entity<WorldTargetActionComponent> action)
     {
-        if (action.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
+        var comp = action.Comp;
+        if (!ValidateWorldTargetBase(user, coords, comp.CheckCanInteract, comp.CheckCanAccess, comp.Range))
             return false;
 
-        if (!action.CheckCanAccess)
+        var ev = new ValidateActionWorldTargetEvent(user, coords);
+        RaiseLocalEvent(action, ref ev);
+        return !ev.Cancelled;
+    }
+
+    private bool ValidateWorldTargetBase(EntityUid user,
+        EntityCoordinates? entityCoordinates,
+        bool checkCanInteract,
+        bool checkCanAccess,
+        float range)
+    {
+        if (entityCoordinates is not { } coords)
+            return false;
+
+        if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, null))
+            return false;
+
+        if (!checkCanAccess)
         {
             // even if we don't check for obstructions, we may still need to check the range.
             var xform = Transform(user);
@@ -497,13 +587,40 @@ public abstract class SharedActionsSystem : EntitySystem
             if (xform.MapID != coords.GetMapId(EntityManager))
                 return false;
 
-            if (action.Range <= 0)
+            if (range <= 0)
                 return true;
 
-            return coords.InRange(EntityManager, _transformSystem, Transform(user).Coordinates, action.Range);
+            return coords.InRange(EntityManager, _transformSystem, Transform(user).Coordinates, range);
         }
 
-        return _interactionSystem.InRangeUnobstructed(user, coords, range: action.Range);
+        return _interactionSystem.InRangeUnobstructed(user, coords, range: range);
+    }
+
+    public bool ValidateEntityWorldTarget(EntityUid user,
+        EntityUid? entity,
+        EntityCoordinates? coords,
+        Entity<EntityWorldTargetActionComponent> action)
+    {
+        var comp = action.Comp;
+        var entityValidated = ValidateEntityTargetBase(user,
+            entity,
+            comp.Whitelist,
+            comp.CheckCanInteract,
+            comp.CanTargetSelf,
+            comp.CheckCanAccess,
+            comp.Range);
+
+        var worldValidated
+            = ValidateWorldTargetBase(user, coords, comp.CheckCanInteract, comp.CheckCanAccess, comp.Range);
+
+        if (!entityValidated && !worldValidated)
+            return false;
+
+        var ev = new ValidateActionEntityWorldTargetEvent(user,
+            entityValidated ? entity : null,
+            worldValidated ? coords : null);
+        RaiseLocalEvent(action, ref ev);
+        return !ev.Cancelled;
     }
 
     public void PerformAction(EntityUid performer, ActionsComponent? component, EntityUid actionId, BaseActionComponent action, BaseActionEvent? actionEvent, TimeSpan curTime, bool predicted = true)
@@ -532,13 +649,12 @@ public abstract class SharedActionsSystem : EntitySystem
             handled = actionEvent.Handled;
         }
 
-        _audio.PlayPredicted(action.Sound, performer,predicted ? performer : null);
-        handled |= action.Sound != null;
-
         if (!handled)
             return; // no interaction occurred.
 
-        // reduce charges, start cooldown, and mark as dirty (if required).
+        // play sound, reduce charges, start cooldown, and mark as dirty (if required).
+
+        _audio.PlayPredicted(action.Sound, performer,predicted ? performer : null);
 
         var dirty = toggledBefore == action.Toggled;
 
@@ -561,6 +677,9 @@ public abstract class SharedActionsSystem : EntitySystem
 
         if (dirty && component != null)
             Dirty(performer, component);
+
+        var ev = new ActionPerformedEvent(performer);
+        RaiseLocalEvent(actionId, ref ev);
     }
     #endregion
 
@@ -837,6 +956,21 @@ public abstract class SharedActionsSystem : EntitySystem
     protected virtual void ActionRemoved(EntityUid performer, EntityUid actionId, ActionsComponent comp, BaseActionComponent action)
     {
         // See client-side system for UI code.
+    }
+
+    public bool ValidAction(BaseActionComponent action, bool canReach = true)
+    {
+        if (!action.Enabled)
+            return false;
+
+        if (action.Charges.HasValue && action.Charges <= 0)
+            return false;
+
+        var curTime = GameTiming.CurTime;
+        if (action.Cooldown.HasValue && action.Cooldown.Value.End > curTime)
+            return false;
+
+        return canReach || action is BaseTargetActionComponent { CheckCanAccess: false };
     }
 
     #endregion

@@ -30,6 +30,6 @@ public sealed partial class StationBiomeSystem : EntitySystem
         var mapId = Transform(station.Value).MapID;
         var mapUid = _mapManager.GetMapEntityId(mapId);
 
-        _biome.EnsurePlanet(mapUid, _proto.Index(map.Comp.Biome), map.Comp.Seed);
+        _biome.EnsurePlanet(mapUid, _proto.Index(map.Comp.Biome), map.Comp.Seed, mapLight: map.Comp.MapLightColor);
     }
 }

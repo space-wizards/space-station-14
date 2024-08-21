@@ -51,6 +51,10 @@ entities:
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
+    - type: DeviceNetwork
+      configurators: []
+      deviceLists: []
+      transmitFrequencyId: ShuttleTimer
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -671,15 +675,11 @@ entities:
     - type: Transform
       pos: 0.5,-0.5
       parent: 603
-    - type: AtmosDevice
-      joinedGrid: 603
   - uid: 487
     components:
     - type: Transform
       pos: -1.5,-0.5
       parent: 603
-    - type: AtmosDevice
-      joinedGrid: 603
 - proto: AirlockCommandLocked
   entities:
   - uid: 473
@@ -888,155 +888,98 @@ entities:
     - type: Transform
       pos: -3.5,15.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 602
   - uid: 471
     components:
     - type: Transform
       pos: -5.5,15.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 602
   - uid: 472
     components:
     - type: Transform
       pos: -7.5,15.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 602
   - uid: 541
     components:
     - type: Transform
       pos: -10.5,5.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 555
   - uid: 542
     components:
     - type: Transform
       pos: -10.5,6.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 555
   - uid: 543
     components:
     - type: Transform
       pos: -10.5,7.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 555
   - uid: 544
     components:
     - type: Transform
       pos: -10.5,2.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 555
   - uid: 545
     components:
     - type: Transform
       pos: 5.5,2.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 555
   - uid: 546
     components:
     - type: Transform
       pos: 5.5,5.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 555
   - uid: 547
     components:
     - type: Transform
       pos: 5.5,6.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 555
   - uid: 548
     components:
     - type: Transform
       pos: 5.5,7.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 555
   - uid: 549
     components:
     - type: Transform
       pos: 5.5,10.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 555
   - uid: 550
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,15.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 555
   - uid: 551
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 2.5,15.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 555
   - uid: 552
     components:
     - type: Transform
       pos: 0.5,14.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 555
   - uid: 553
     components:
     - type: Transform
       pos: -0.5,14.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 555
   - uid: 554
     components:
     - type: Transform
       pos: -1.5,14.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 555
   - uid: 556
     components:
     - type: Transform
       pos: -1.5,8.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 555
   - uid: 557
     components:
     - type: Transform
       pos: 0.5,8.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 555
 - proto: BoxSurvivalEngineering
   entities:
   - uid: 600
@@ -2258,6 +2201,14 @@ entities:
     - type: Transform
       pos: -3.4608088,12.544868
       parent: 603
+- proto: DefibrillatorCabinetFilled
+  entities:
+  - uid: 605
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -2.5,0.5
+      parent: 603
 - proto: EmergencyLight
   entities:
   - uid: 434
@@ -2688,16 +2639,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 0.5,-0.5
       parent: 603
-    - type: AtmosDevice
-      joinedGrid: 603
   - uid: 486
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -1.5,-0.5
       parent: 603
-    - type: AtmosDevice
-      joinedGrid: 603
 - proto: GasPressurePump
   entities:
   - uid: 156
@@ -2706,8 +2653,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -0.5,0.5
       parent: 603
-    - type: AtmosDevice
-      joinedGrid: 603
 - proto: GasVentPump
   entities:
   - uid: 89
@@ -2715,78 +2660,58 @@ entities:
     - type: Transform
       pos: -0.5,10.5
       parent: 603
-    - type: AtmosDevice
-      joinedGrid: 603
   - uid: 135
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,10.5
       parent: 603
-    - type: AtmosDevice
-      joinedGrid: 603
   - uid: 147
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,2.5
       parent: 603
-    - type: AtmosDevice
-      joinedGrid: 603
   - uid: 171
     components:
     - type: Transform
       pos: -0.5,2.5
       parent: 603
-    - type: AtmosDevice
-      joinedGrid: 603
   - uid: 172
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,5.5
       parent: 603
-    - type: AtmosDevice
-      joinedGrid: 603
   - uid: 342
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,2.5
       parent: 603
-    - type: AtmosDevice
-      joinedGrid: 603
   - uid: 373
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -8.5,-1.5
       parent: 603
-    - type: AtmosDevice
-      joinedGrid: 603
   - uid: 374
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -9.5,6.5
       parent: 603
-    - type: AtmosDevice
-      joinedGrid: 603
   - uid: 376
     components:
     - type: Transform
       pos: -4.5,12.5
       parent: 603
-    - type: AtmosDevice
-      joinedGrid: 603
   - uid: 396
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,1.5
       parent: 603
-    - type: AtmosDevice
-      joinedGrid: 603
 - proto: GeneratorBasic15kW
   entities:
   - uid: 214
@@ -3228,25 +3153,16 @@ entities:
     - type: Transform
       pos: -5.5,8.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 602
   - uid: 468
     components:
     - type: Transform
       pos: -4.5,8.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 602
   - uid: 469
     components:
     - type: Transform
       pos: -3.5,8.5
       parent: 603
-    - type: DeviceLinkSink
-      links:
-      - 602
 - proto: ShuttleWindow
   entities:
   - uid: 76

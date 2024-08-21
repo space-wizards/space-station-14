@@ -11,7 +11,11 @@
     - HEAD
     unfoldedSlots:
     - MASK
+    foldedHideLayers: []
+    unfoldedHideLayers:
+    - Snout
   - type: Mask
+    disableOnFolded: true
   - type: IngestionBlocker
   - type: IdentityBlocker
     coverage: MOUTH
@@ -25,7 +29,10 @@
   - type: Tag
     tags:
     - Bandana
-    - HidesNose
+  - type: HideLayerClothing
+    slots:
+    - Snout
+    hideOnToggle: true
 
 - type: entity
   parent: ClothingMaskBandanaBase

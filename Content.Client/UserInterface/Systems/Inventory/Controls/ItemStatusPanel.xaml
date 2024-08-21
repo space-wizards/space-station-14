@@ -3,22 +3,27 @@
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Controls"
     xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     VerticalAlignment="Bottom"
-    HorizontalAlignment="Center"
-    MinSize="150 0">
-    <PanelContainer
-        Name="Panel"
-        ModulateSelfOverride="#FFFFFFE6"
-        HorizontalExpand="True">
+    HorizontalAlignment="Center">
+    <PanelContainer Name="Panel">
         <PanelContainer.PanelOverride>
             <graphics:StyleBoxTexture
-                ContentMarginLeftOverride="6"
-                ContentMarginRightOverride="6"
-                ContentMarginTopOverride="4"
-                ContentMarginBottomOverride="4" />
+                PatchMarginBottom="4"
+                PatchMarginTop="6"
+                TextureScale="2 2"
+                Mode="Tile"/>
         </PanelContainer.PanelOverride>
-        <BoxContainer Orientation="Vertical" SeparationOverride="0">
-            <BoxContainer Name="StatusContents" Orientation="Vertical"/>
-            <Label Name="ItemNameLabel" StyleClasses="ItemStatus"/>
-        </BoxContainer>
     </PanelContainer>
+    <PanelContainer Name="HighlightPanel">
+        <PanelContainer.PanelOverride>
+            <graphics:StyleBoxTexture PatchMarginBottom="4" PatchMarginTop="6" TextureScale="2 2">
+            </graphics:StyleBoxTexture>
+        </PanelContainer.PanelOverride>
+    </PanelContainer>
+    <BoxContainer Name="Contents" Orientation="Vertical" Margin="0 6 0 4" RectClipContent="True">
+        <BoxContainer Name="StatusContents" Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Bottom" />
+        <Control>
+            <Label Name="NoItemLabel" ClipText="True" StyleClasses="ItemStatusNotHeld" Align="Left" Text="{Loc 'item-status-not-held'}" />
+            <Label Name="ItemNameLabel" ClipText="True" StyleClasses="ItemStatus" Align="Left" Visible="False" />
+        </Control>
+    </BoxContainer>
 </controls:ItemStatusPanel>

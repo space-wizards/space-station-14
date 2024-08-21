@@ -2,6 +2,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Reactions;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Robust.Shared.Audio;

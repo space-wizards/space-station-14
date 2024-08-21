@@ -65,8 +65,8 @@
     key: enum.AmeControllerUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.AmeControllerUiKey.Key
-      type: AmeControllerBoundUserInterface
+      enum.AmeControllerUiKey.Key:
+        type: AmeControllerBoundUserInterface
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -108,7 +108,7 @@
     mediumVoltageNode: ame
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: AmeController
   id: AmeControllerUnanchored
   suffix: Unanchored

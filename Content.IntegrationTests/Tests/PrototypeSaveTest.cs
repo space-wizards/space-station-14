@@ -38,31 +38,16 @@ public sealed class PrototypeSaveTest
         var mapManager = server.ResolveDependency<IMapManager>();
         var entityMan = server.ResolveDependency<IEntityManager>();
         var prototypeMan = server.ResolveDependency<IPrototypeManager>();
-        var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
         var seriMan = server.ResolveDependency<ISerializationManager>();
         var compFact = server.ResolveDependency<IComponentFactory>();
+        var mapSystem = server.System<SharedMapSystem>();
 
         var prototypes = new List<EntityPrototype>();
-        MapGridComponent grid = default!;
         EntityUid uid;
-        MapId mapId = default;
 
-        //Build up test environment
-        await server.WaitPost(() =>
-        {
-            // Create a one tile grid to stave off the grid 0 monsters
-            mapId = mapManager.CreateMap();
-
-            mapManager.AddUninitializedMap(mapId);
-
-            grid = mapManager.CreateGrid(mapId);
-
-            var tileDefinition = tileDefinitionManager["FloorSteel"]; // Wires n such disable ambiance while under the floor
-            var tile = new Tile(tileDefinition.TileId);
-            var coordinates = grid.Owner.ToCoordinates();
-
-            grid.SetTile(coordinates, tile);
-        });
+        await pair.CreateTestMap(false, "FloorSteel"); // Wires n such disable ambiance while under the floor
+        var mapId = pair.TestMap.MapId;
+        var grid = pair.TestMap.Grid;
 
         await server.WaitRunTicks(5);
 
@@ -93,7 +78,7 @@ public sealed class PrototypeSaveTest
 
         await server.WaitAssertion(() =>
         {
-            Assert.That(!mapManager.IsMapInitialized(mapId));
+            Assert.That(!mapSystem.IsInitialized(mapId));
             var testLocation = grid.Owner.ToCoordinates();
 
             Assert.Multiple(() =>
@@ -200,7 +185,7 @@ public sealed class PrototypeSaveTest
             IDependencyCollection dependencies, bool alwaysWrite = false,
             ISerializationContext? context = null)
         {
-            if (WritingComponent != "Transform" && (Prototype?.NoSpawn == false))
+            if (WritingComponent != "Transform" && Prototype?.HideSpawnMenu == false)
             {
                 // Maybe this will be necessary in the future, but at the moment it just indicates that there is some
                 // issue, like a non-nullable entityUid data-field. If a component MUST have an entity uid to work with,

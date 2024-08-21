@@ -18,27 +18,26 @@ public sealed partial class SensorMonitoringConsoleSystem
 
     private void UpdateConsoleUI(EntityUid uid, SensorMonitoringConsoleComponent comp)
     {
-        if (!_userInterface.TryGetUi(uid, SensorMonitoringConsoleUiKey.Key, out var ui))
+        if (!_userInterface.IsUiOpen(uid, SensorMonitoringConsoleUiKey.Key))
+        {
             return;
-
-        if (ui.SubscribedSessions.Count == 0)
-            return;
+        }
 
         ConsoleUIState? fullState = null;
         SensorMonitoringIncrementalUpdate? incrementalUpdate = null;
 
-        foreach (var session in ui.SubscribedSessions)
+        foreach (var actorUid in _userInterface.GetActors(uid, SensorMonitoringConsoleUiKey.Key))
         {
-            if (comp.InitialUIStateSent.Contains(session))
+            if (comp.InitialUIStateSent.Contains(actorUid))
             {
                 incrementalUpdate ??= CalculateIncrementalUpdate();
-                _userInterface.TrySendUiMessage(ui, incrementalUpdate, session);
+                _userInterface.ServerSendUiMessage(uid, SensorMonitoringConsoleUiKey.Key, incrementalUpdate, actorUid);
             }
             else
             {
                 fullState ??= CalculateFullState();
-                _userInterface.SetUiState(ui, fullState, session);
-                comp.InitialUIStateSent.Add(session);
+                _userInterface.SetUiState(uid, SensorMonitoringConsoleUiKey.Key, fullState);
+                comp.InitialUIStateSent.Add(actorUid);
             }
         }
 
@@ -131,9 +130,6 @@ public sealed partial class SensorMonitoringConsoleSystem
         if (!args.UiKey.Equals(SensorMonitoringConsoleUiKey.Key))
             return;
 
-        if (args.Session is not { } player)
-            return;
-
-        component.InitialUIStateSent.Remove(player);
+        component.InitialUIStateSent.Remove(args.Actor);
     }
 }

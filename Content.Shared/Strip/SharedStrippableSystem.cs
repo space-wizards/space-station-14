@@ -1,26 +1,46 @@
+using Content.Shared.CombatMode;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Strip.Components;
 
 namespace Content.Shared.Strip;
 
 public abstract class SharedStrippableSystem : EntitySystem
 {
+    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<StrippingComponent, CanDropTargetEvent>(OnCanDropOn);
         SubscribeLocalEvent<StrippableComponent, CanDropDraggedEvent>(OnCanDrop);
         SubscribeLocalEvent<StrippableComponent, DragDropDraggedEvent>(OnDragDrop);
+        SubscribeLocalEvent<StrippableComponent, ActivateInWorldEvent>(OnActivateInWorld);
     }
 
-    public (TimeSpan Time, bool Stealth) GetStripTimeModifiers(EntityUid user, EntityUid target, TimeSpan initialTime)
+    private void OnActivateInWorld(EntityUid uid, StrippableComponent component, ActivateInWorldEvent args)
     {
-        var userEv = new BeforeStripEvent(initialTime);
+        if (args.Handled || !args.Complex || args.Target == args.User)
+            return;
+
+        if (TryOpenStrippingUi(args.User, (uid, component)))
+            args.Handled = true;
+    }
+
+    /// <summary>
+    /// Modify the strip time via events. Raised directed at the item being stripped, the player stripping someone and the player being stripped.
+    /// </summary>
+    public (TimeSpan Time, bool Stealth) GetStripTimeModifiers(EntityUid user, EntityUid targetPlayer, EntityUid? targetItem, TimeSpan initialTime)
+    {
+        var itemEv = new BeforeItemStrippedEvent(initialTime, false);
+        if (targetItem != null)
+            RaiseLocalEvent(targetItem.Value, ref itemEv);
+        var userEv = new BeforeStripEvent(itemEv.Time, itemEv.Stealth);
         RaiseLocalEvent(user, ref userEv);
-        var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
-        RaiseLocalEvent(target, ref ev);
-        return (ev.Time, ev.Stealth);
+        var targetEv = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
+        RaiseLocalEvent(targetPlayer, ref targetEv);
+        return (targetEv.Time, targetEv.Stealth);
     }
 
     private void OnDragDrop(EntityUid uid, StrippableComponent component, ref DragDropDraggedEvent args)
@@ -29,22 +49,30 @@ public abstract class SharedStrippableSystem : EntitySystem
         if (args.Handled || args.Target != args.User)
             return;
 
-        StartOpeningStripper(args.User, (uid, component));
-        args.Handled = true;
+        if (TryOpenStrippingUi(args.User, (uid, component)))
+            args.Handled = true;
     }
 
-    public virtual void StartOpeningStripper(EntityUid user, Entity<StrippableComponent> component, bool openInCombat = false)
+    public bool TryOpenStrippingUi(EntityUid user, Entity<StrippableComponent> target, bool openInCombat = false)
     {
+        if (!openInCombat && TryComp<CombatModeComponent>(user, out var mode) && mode.IsInCombatMode)
+            return false;
 
+        if (!HasComp<StrippingComponent>(user))
+            return false;
+
+        _ui.OpenUi(target.Owner, StrippingUiKey.Key, user);
+        return true;
     }
 
     private void OnCanDropOn(EntityUid uid, StrippingComponent component, ref CanDropTargetEvent args)
     {
-        args.Handled = true;
-        args.CanDrop |= uid == args.User &&
-                        HasComp<StrippableComponent>(args.Dragged) &&
-                        HasComp<HandsComponent>(args.User) &&
-                        HasComp<StrippingComponent>(args.User);
+        var val = uid == args.User &&
+                  HasComp<StrippableComponent>(args.Dragged) &&
+                  HasComp<HandsComponent>(args.User) &&
+                  HasComp<StrippingComponent>(args.User);
+        args.Handled |= val;
+        args.CanDrop |= val;
     }
 
     private void OnCanDrop(EntityUid uid, StrippableComponent component, ref CanDropDraggedEvent args)

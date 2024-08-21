@@ -71,6 +71,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         SubscribeLocalEvent<UndockEvent>(OnUndock);
 
         SubscribeLocalEvent<PilotComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<PilotComponent, StopPilotingAlertEvent>(OnStopPilotingAlert);
 
         SubscribeLocalEvent<FTLDestinationComponent, ComponentStartup>(OnFtlDestStartup);
         SubscribeLocalEvent<FTLDestinationComponent, ComponentShutdown>(OnFtlDestShutdown);
@@ -136,13 +137,12 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     /// </summary>
     private void OnConsoleUIClose(EntityUid uid, ShuttleConsoleComponent component, BoundUIClosedEvent args)
     {
-        if ((ShuttleConsoleUiKey) args.UiKey != ShuttleConsoleUiKey.Key ||
-            args.Session.AttachedEntity is not { } user)
+        if ((ShuttleConsoleUiKey) args.UiKey != ShuttleConsoleUiKey.Key)
         {
             return;
         }
 
-        RemovePilot(user);
+        RemovePilot(args.Actor);
     }
 
     private void OnConsoleUIOpenAttempt(EntityUid uid, ShuttleConsoleComponent component,
@@ -197,6 +197,14 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         args.State = new PilotComponentState(GetNetEntity(component.Console));
     }
 
+    private void OnStopPilotingAlert(Entity<PilotComponent> ent, ref StopPilotingAlertEvent args)
+    {
+        if (ent.Comp.Console != null)
+        {
+            RemovePilot(ent, ent);
+        }
+    }
+
     /// <summary>
     /// Returns the position and angle of all dockingcomponents.
     /// </summary>
@@ -243,7 +251,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         RaiseLocalEvent(entity.Value, ref getShuttleEv);
         entity = getShuttleEv.Console;
 
-        TryComp<TransformComponent>(entity, out var consoleXform);
+        TryComp(entity, out TransformComponent? consoleXform);
         var shuttleGridUid = consoleXform?.GridUid;
 
         NavInterfaceState navState;
@@ -265,9 +273,9 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
                 new List<ShuttleExclusionObject>());
         }
 
-        if (_ui.TryGetUi(consoleUid, ShuttleConsoleUiKey.Key, out var bui))
+        if (_ui.HasUi(consoleUid, ShuttleConsoleUiKey.Key))
         {
-            _ui.SetUiState(bui, new ShuttleBoundUserInterfaceState(navState, mapState, dockState));
+            _ui.SetUiState(consoleUid, ShuttleConsoleUiKey.Key, new ShuttleBoundUserInterfaceState(navState, mapState, dockState));
         }
     }
 
@@ -318,7 +326,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
         component.SubscribedPilots.Add(entity);
 
-        _alertsSystem.ShowAlert(entity, AlertType.PilotingShuttle);
+        _alertsSystem.ShowAlert(entity, pilotComponent.PilotingAlert);
 
         pilotComponent.Console = uid;
         ActionBlockerSystem.UpdateCanMove(entity);
@@ -340,7 +348,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         if (!helm.SubscribedPilots.Remove(pilotUid))
             return;
 
-        _alertsSystem.ClearAlert(pilotUid, AlertType.PilotingShuttle);
+        _alertsSystem.ClearAlert(pilotUid, pilotComponent.PilotingAlert);
 
         _popup.PopupEntity(Loc.GetString("shuttle-pilot-end"), pilotUid, pilotUid);
 

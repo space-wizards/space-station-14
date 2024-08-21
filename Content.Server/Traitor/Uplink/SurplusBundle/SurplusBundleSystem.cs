@@ -3,76 +3,67 @@ using Content.Server.Storage.EntitySystems;
 using Content.Server.Store.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
-using Robust.Shared.Prototypes;
+using Content.Shared.Store.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Traitor.Uplink.SurplusBundle;
 
 public sealed class SurplusBundleSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly StoreSystem _store = default!;
 
-    private ListingData[] _listings = default!;
-
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<SurplusBundleComponent, MapInitEvent>(OnMapInit);
-
-        SubscribeLocalEvent<SurplusBundleComponent, ComponentInit>(OnInit);
-    }
-
-    private void OnInit(EntityUid uid, SurplusBundleComponent component, ComponentInit args)
-    {
-        var storePreset = _prototypeManager.Index<StorePresetPrototype>(component.StorePreset);
-
-        _listings = _store.GetAvailableListings(uid, null, storePreset.Categories).ToArray();
-
-        Array.Sort(_listings, (a, b) => (int) (b.Cost.Values.Sum() - a.Cost.Values.Sum())); //this might get weird with multicurrency but don't think about it
     }
 
     private void OnMapInit(EntityUid uid, SurplusBundleComponent component, MapInitEvent args)
     {
-        FillStorage(uid, component);
-    }
-
-    private void FillStorage(EntityUid uid, SurplusBundleComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
+        if (!TryComp<StoreComponent>(uid, out var store))
             return;
 
-        var cords = Transform(uid).Coordinates;
+        FillStorage((uid, component, store));
+    }
 
-        var content = GetRandomContent(component.TotalPrice);
+    private void FillStorage(Entity<SurplusBundleComponent, StoreComponent> ent)
+    {
+        var cords = Transform(ent).Coordinates;
+        var content = GetRandomContent(ent);
         foreach (var item in content)
         {
-            var ent = EntityManager.SpawnEntity(item.ProductEntity, cords);
-            _entityStorage.Insert(ent, uid);
+            var dode = Spawn(item.ProductEntity, cords);
+            _entityStorage.Insert(dode, ent);
         }
     }
 
     // wow, is this leetcode reference?
-    private List<ListingData> GetRandomContent(FixedPoint2 targetCost)
+    private List<ListingData> GetRandomContent(Entity<SurplusBundleComponent, StoreComponent> ent)
     {
         var ret = new List<ListingData>();
-        if (_listings.Length == 0)
+
+        var listings = _store.GetAvailableListings(ent, null, ent.Comp2.Categories)
+            .OrderBy(p => p.Cost.Values.Sum())
+            .ToList();
+
+        if (listings.Count == 0)
             return ret;
 
         var totalCost = FixedPoint2.Zero;
         var index = 0;
-        while (totalCost < targetCost)
+        while (totalCost < ent.Comp1.TotalPrice)
         {
             // All data is sorted in price descending order
             // Find new item with the lowest acceptable price
             // All expansive items will be before index, all acceptable after
-            var remainingBudget = targetCost - totalCost;
-            while (_listings[index].Cost.Values.Sum() > remainingBudget)
+            var remainingBudget = ent.Comp1.TotalPrice - totalCost;
+            while (listings[index].Cost.Values.Sum() > remainingBudget)
             {
                 index++;
-                if (index >= _listings.Length)
+                if (index >= listings.Count)
                 {
                     // Looks like no cheap items left
                     // It shouldn't be case for ss14 content
@@ -82,8 +73,8 @@ public sealed class SurplusBundleSystem : EntitySystem
             }
 
             // Select random listing and add into crate
-            var randomIndex = _random.Next(index, _listings.Length);
-            var randomItem = _listings[randomIndex];
+            var randomIndex = _random.Next(index, listings.Count);
+            var randomItem = listings[randomIndex];
             ret.Add(randomItem);
             totalCost += randomItem.Cost.Values.Sum();
         }

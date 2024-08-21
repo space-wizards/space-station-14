@@ -51,7 +51,7 @@ public abstract partial class SharedGunSystem
     /// </summary>
     private void OnChamberActivate(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ActivateInWorldEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !args.Complex)
             return;
 
         args.Handled = true;
@@ -108,7 +108,7 @@ public abstract partial class SharedGunSystem
             else
             {
                 // Similar to below just due to prediction.
-                TransformSystem.DetachParentToNull(chamberEnt.Value, Transform(chamberEnt.Value));
+                TransformSystem.DetachEntity(chamberEnt.Value, Transform(chamberEnt.Value));
             }
         }
 

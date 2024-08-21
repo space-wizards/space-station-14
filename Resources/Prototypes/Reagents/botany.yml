@@ -31,7 +31,7 @@
     - !type:PlantAdjustHealth
       amount: -0.5
     - !type:PlantAdjustMutationMod
-      prob: 0.3
+      probability: 0.3
       amount: 0.4
   metabolisms:
     Medicine:
@@ -115,10 +115,10 @@
     - !type:PlantAdjustNutrition
       amount: 0.05
     - !type:PlantAdjustWeeds
-      prob: 0.025
+      probability: 0.025
       amount: 1
     - !type:PlantAdjustPests
-      prob: 0.025
+      probability: 0.025
       amount: 1
     - !type:RobustHarvest {}
   metabolisms:
@@ -155,6 +155,21 @@
           - !type:ReagentThreshold
             min: 80
 
+- type: reagent
+  id: Sedin
+  name: reagent-name-sedin
+  group: Botanical
+  desc: reagent-desc-sedin
+  flavor: bitter
+  color: "#3CB371"
+  physicalDesc: reagent-physical-desc-sickly
+  plantMetabolism:
+    - !type:PlantAdjustHealth
+      amount: -2
+    - !type:PlantRestoreSeeds
+      probability: 0.20
+    - !type:PlantAdjustPotency
+      amount: -3 # Match this with current rate of Robust Harvest potency increase
 
 - type: reagent
   id: WeedKiller
@@ -222,6 +237,9 @@
         - !type:OrganType
           type: Rat
           shouldHave: false
+        - !type:OrganType
+           type: Vox
+           shouldHave: false
         - !type:ReagentThreshold
           reagent: Ammonia
           min: 0.8
@@ -247,6 +265,13 @@
           groups:
             Brute: -5
             Burn: -5
+          types:
+            Bloodloss: -5
+      - !type:Oxygenate # ammonia displaces nitrogen in vox blood
+        conditions:
+        - !type:OrganType
+          type: Vox
+        factor: -4
 
 
 - type: reagent
@@ -263,12 +288,12 @@
   - !type:PlantAdjustNutrition
     amount: 0.1
   - !type:PlantAdjustPests
-    prob: 0.1
+    probability: 0.1
     amount: -1
   - !type:PlantAdjustHealth
     amount: 0.1
   - !type:PlantAffectGrowth
-    prob: 0.2
+    probability: 0.2
     amount: 1
   - !type:PlantDiethylamine {}
   metabolisms:

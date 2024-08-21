@@ -7,6 +7,8 @@ namespace Content.Server.Speech.EntitySystems
 {
     public sealed class ScrambledAccentSystem : EntitySystem
     {
+        private static readonly Regex RegexLoneI = new(@"(?<=\ )i(?=[\ \.\?]|$)");
+
         [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
@@ -34,7 +36,7 @@ namespace Content.Server.Speech.EntitySystems
             msg = msg[0].ToString().ToUpper() + msg.Remove(0, 1);
 
             // Capitalize lone i's
-            msg = Regex.Replace(msg, @"(?<=\ )i(?=[\ \.\?]|$)", "I");
+            msg = RegexLoneI.Replace(msg, "I");
             return msg;
         }
 

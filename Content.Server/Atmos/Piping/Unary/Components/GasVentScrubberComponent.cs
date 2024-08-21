@@ -10,7 +10,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
     public sealed partial class GasVentScrubberComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Enabled { get; set; } = true;
+        public bool Enabled { get; set; } = false;
 
         [ViewVariables]
         public bool IsDirty { get; set; } = false;

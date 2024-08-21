@@ -6,6 +6,7 @@ using Content.Server.Fluids.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
+using Content.Shared.Atmos;
 using Content.Shared.Botany;
 using Content.Shared.Burial.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -297,17 +298,23 @@ public sealed class PlantHolderSystem : EntitySystem
             {
                 healthOverride = component.Health;
             }
-            component.Seed.Unique = false;
-            var seed = _botany.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User, healthOverride);
+            var packetSeed = component.Seed;
+            if (packetSeed.Sentient)
+            {
+                packetSeed = packetSeed.Clone(); // clone before modifying the seed
+                packetSeed.Sentient = false;
+            }
+            else
+            {
+                packetSeed.Unique = false;
+            }
+            var seed = _botany.SpawnSeedPacket(packetSeed, Transform(args.User).Coordinates, args.User, healthOverride);
             _randomHelper.RandomOffset(seed, 0.25f);
             var displayName = Loc.GetString(component.Seed.DisplayName);
             _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
                 ("seedName", displayName)), args.User);
-
-            if (component.Seed != null && component.Seed.CanScream)
-            {
-                _audio.PlayPvs(component.Seed.ScreamSound, uid, AudioParams.Default.WithVolume(-2));
-            }
+            
+            DoScream(entity.Owner, component.Seed);
 
             if (_random.Prob(0.3f))
                 component.Sampled = true;
@@ -515,10 +522,9 @@ public sealed class PlantHolderSystem : EntitySystem
 
         var environment = _atmosphere.GetContainingMixture(uid, true, true) ?? GasMixture.SpaceGas;
 
+        component.MissingGas = 0;
         if (component.Seed.ConsumeGasses.Count > 0)
         {
-            component.MissingGas = 0;
-
             foreach (var (gas, amount) in component.Seed.ConsumeGasses)
             {
                 if (environment.GetMoles(gas) < amount)
@@ -625,8 +631,15 @@ public sealed class PlantHolderSystem : EntitySystem
         }
         else if (component.Age < 0) // Revert back to seed packet!
         {
+            var packetSeed = component.Seed;
+            if (packetSeed.Sentient)
+            {
+                if (!packetSeed.Unique) // clone if necessary before modifying the seed
+                    packetSeed = packetSeed.Clone();
+                packetSeed.Sentient = false; // remove Sentient to avoid ghost role spam
+            }
             // will put it in the trays hands if it has any, please do not try doing this
-            _botany.SpawnSeedPacket(component.Seed, Transform(uid).Coordinates, uid);
+            _botany.SpawnSeedPacket(packetSeed, Transform(uid).Coordinates, uid);
             RemovePlant(uid, component);
             component.ForceUpdate = true;
             Update(uid, component);
@@ -731,6 +744,19 @@ public sealed class PlantHolderSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Force do scream on PlantHolder (like plant is screaming) using seed's ScreamSound specifier (collection or soundPath)
+    /// </summary>
+    /// <returns></returns>
+    public bool DoScream(EntityUid plantholder, SeedData? seed = null)
+    {
+        if (seed == null || seed.CanScream == false)
+            return false;
+
+        _audio.PlayPvs(seed.ScreamSound, plantholder);
+        return true;
+    }
+
     public void AutoHarvest(EntityUid uid, PlantHolderComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -751,8 +777,7 @@ public sealed class PlantHolderSystem : EntitySystem
         component.Harvest = false;
         component.LastProduce = component.Age;
 
-        if (component.Seed != null && component.Seed.CanScream)
-            _audio.PlayPvs(component.Seed.ScreamSound, uid, AudioParams.Default.WithVolume(-2));
+        DoScream(uid, component.Seed);
 
         if (component.Seed?.HarvestRepeat == HarvestType.NoRepeat)
             RemovePlant(uid, component);

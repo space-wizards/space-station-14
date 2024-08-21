@@ -107,17 +107,16 @@ public sealed partial class BonkSystem : EntitySystem
         var doAfterArgs = new DoAfterArgs(EntityManager, user, bonkableComponent.BonkDelay, new BonkDoAfterEvent(), uid, target: uid, used: climber)
         {
             BreakOnMove = true,
-            BreakOnDamage = true
+            BreakOnDamage = true,
+            DuplicateCondition = DuplicateConditions.SameTool | DuplicateConditions.SameTarget
         };
 
-        _doAfter.TryStartDoAfter(doAfterArgs);
-
-        return true;
+        return _doAfter.TryStartDoAfter(doAfterArgs);
     }
 
-    private void OnAttemptClimb(EntityUid uid, BonkableComponent component, AttemptClimbEvent args)
+    private void OnAttemptClimb(EntityUid uid, BonkableComponent component, ref AttemptClimbEvent args)
     {
-        if (args.Cancelled || !HasComp<ClumsyComponent>(args.Climber) || !HasComp<HandsComponent>(args.User))
+        if (args.Cancelled)
             return;
 
         if (TryStartBonk(uid, args.User, args.Climber, component))

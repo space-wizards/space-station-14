@@ -54,7 +54,7 @@ public delegate void CalcPlayTimeTrackersCallback(ICommonSession player, HashSet
 /// Operations like refreshing and sending play time info to clients are deferred until the next frame (note: not tick).
 /// </para>
 /// </remarks>
-public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager
+public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager, IPostInjectInit
 {
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IServerNetManager _net = default!;
@@ -62,6 +62,7 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ITaskManager _task = default!;
     [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
+    [Dependency] private readonly UserDbDataManager _userDb = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -79,6 +80,8 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager
     private readonly Dictionary<ICommonSession, PlayTimeData> _playTimeData = new();
 
     public event CalcPlayTimeTrackersCallback? CalcTrackers;
+
+    public event Action<ICommonSession>? SessionPlayTimeUpdated;
 
     public void Initialize()
     {
@@ -216,6 +219,7 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager
         };
 
         _net.ServerSendMessage(msg, pSession.Channel);
+        SessionPlayTimeUpdated?.Invoke(pSession);
     }
 
     /// <summary>
@@ -309,7 +313,7 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager
         var data = new PlayTimeData();
         _playTimeData.Add(session, data);
 
-        var playTimes = await _db.GetPlayTimes(session.UserId);
+        var playTimes = await _db.GetPlayTimes(session.UserId, cancel);
         cancel.ThrowIfCancellationRequested();
 
         foreach (var timer in playTimes)
@@ -366,6 +370,19 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager
         }
 
         time = data.TrackerTimes;
+        return true;
+    }
+
+    public bool TryGetTrackerTime(ICommonSession id, string tracker, [NotNullWhen(true)] out TimeSpan? time)
+    {
+        time = null;
+        if (!TryGetTrackerTimes(id, out var times))
+            return false;
+
+        if (!times.TryGetValue(tracker, out var t))
+            return false;
+
+        time = t;
         return true;
     }
 
@@ -444,5 +461,11 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager
         /// Set of trackers which are different from their DB values and need to be saved to DB.
         /// </summary>
         public readonly HashSet<string> DbTrackersDirty = new();
+    }
+
+    void IPostInjectInit.PostInject()
+    {
+        _userDb.AddOnLoadPlayer(LoadData);
+        _userDb.AddOnPlayerDisconnect(ClientDisconnected);
     }
 }

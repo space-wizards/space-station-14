@@ -26,7 +26,6 @@ public abstract class SharedMindSystem : EntitySystem
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
     [Dependency] private readonly SharedPlayerSystem _player = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
-    [Dependency] private readonly ISharedPlayerManager _playerMan = default!;
 
     [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
@@ -169,15 +168,17 @@ public abstract class SharedMindSystem : EntitySystem
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
     }
 
+    /// <summary>
+    /// Checks to see if the user's mind prevents them from suicide
+    /// Handles the suicide event without killing the user if true
+    /// </summary>
     private void OnSuicide(EntityUid uid, MindContainerComponent component, SuicideEvent args)
     {
         if (args.Handled)
             return;
 
         if (TryComp(component.Mind, out MindComponent? mind) && mind.PreventSuicide)
-        {
-            args.BlockSuicideAttempt(true);
-        }
+            args.Handled = true;
     }
 
     public EntityUid? GetMind(EntityUid uid, MindContainerComponent? mind = null)
@@ -371,7 +372,7 @@ public abstract class SharedMindSystem : EntitySystem
         if (Resolve(mindId, ref mind))
         {
             var query = GetEntityQuery<T>();
-            foreach (var uid in mind.AllObjectives)
+            foreach (var uid in mind.Objectives)
             {
                 if (query.TryGetComponent(uid, out objective))
                 {
@@ -380,6 +381,30 @@ public abstract class SharedMindSystem : EntitySystem
             }
         }
         objective = default;
+        return false;
+    }
+
+    /// <summary>
+    /// Tries to find an objective that has the same prototype as the argument.
+    /// </summary>
+    /// <remarks>
+    /// Will not work for objectives that have no prototype, or duplicate objectives with the same prototype.
+    /// <//remarks>
+    public bool TryFindObjective(Entity<MindComponent?> mind, string prototype, [NotNullWhen(true)] out EntityUid? objective)
+    {
+        objective = null;
+        if (!Resolve(mind, ref mind.Comp))
+            return false;
+
+        foreach (var uid in mind.Comp.Objectives)
+        {
+            if (MetaData(uid).EntityPrototype?.ID == prototype)
+            {
+                objective = uid;
+                return true;
+            }
+        }
+
         return false;
     }
 

@@ -20,3 +20,8 @@
   license: "CC-BY-3.0"
   copyright: "Constellations by Qwertyquerty. Converted to mono OGG."
   source: "https://www.youtube.com/channel/UCPYbhBUGhH7n_G4HLK2YipQ"
+
+- files: ["sunset.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Sunset by PigeonBeans. Exported in Mono OGG."
+  source: "https://soundcloud.com/pigeonbeans/sunset"

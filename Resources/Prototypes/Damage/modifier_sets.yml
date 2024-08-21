@@ -242,7 +242,7 @@
     Piercing: 0.2
     Shock: 0.0
     Cold: 0.0
-    Heat: -1 # heat damage cauterizes wounds, but will still hurt obviously.
+    Heat: -0.5 # heat damage cauterizes wounds, but will still hurt obviously.
     Poison: 0.0
     Radiation: 0.0
     Asphyxiation: 0.0
@@ -297,40 +297,8 @@
     Heat: 2.5
     Caustic: 0.0
 
-# terminator's flesh damage set
+# protects against radiation
 - type: damageModifierSet
-  id: CyberneticFlesh
+  id: PotassiumIodide
   coefficients:
-    Blunt: 0.2
-    Slash: 0.2
-    Piercing: 0.1
-    # fire and lasers burn it good
-    Heat: 1.0
-    # zap
-    Shock: 1.5
-    Cold: 0.25
-    Caustic: 0.25
-    # doesnt have organs to poison
-    Poison: 0.0
-    Cellular: 0.0
-
-# terminator's endoskeleton damage set
-- type: damageModifierSet
-  id: Cybernetic
-  coefficients:
-    # bonk
-    Blunt: 1.0
-    # alloy too hard to cut or shoot
-    Slash: 0.0
-    Piercing: 0.0
-    # no burning anymore
-    Heat: 0.0
-    # zap zap
-    Shock: 2.5
-    Cold: 0.0
-    Caustic: 0.0
-    Poison: 0.0
-    Cellular: 0.0
-  flatReductions:
-    # can't punch the endoskeleton to death
-    Blunt: 5
+    Radiation: 0.1

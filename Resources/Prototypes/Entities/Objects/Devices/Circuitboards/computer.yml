@@ -14,7 +14,7 @@
       price: 100
     - type: PhysicalComposition
       materialComposition:
-        Glass: 400
+        Glass: 230
       chemicalComposition:
         Silicon: 20
 
@@ -83,6 +83,17 @@
       prototype: ComputerCargoOrders
     - type: StaticPrice
       price: 750
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CargoSaleComputerCircuitboard
+  name: cargo sale computer board
+  description: A computer printed circuit board for a cargo sale computer.
+  components:
+    - type: Sprite
+      state: cpu_supply
+    - type: ComputerBoard
+      prototype: ComputerPalletConsole
 
 - type: entity
   id: CargoBountyComputerCircuitboard
@@ -218,7 +229,7 @@
       prototype: ComputerCrewMonitoring
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseGrandTheftContraband]
   id: IDComputerCircuitboard
   name: ID card computer board
   description: A computer printed circuit board for an ID card console.
@@ -384,3 +395,14 @@
       state: cpu_engineering
     - type: ComputerBoard
       prototype: ComputerSensorMonitoring
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: RoboticsConsoleCircuitboard
+  name: robotics control console board
+  description: A computer printed circuit board for a robotics control console.
+  components:
+    - type: Sprite
+      state: cpu_science
+    - type: ComputerBoard
+      prototype: ComputerRoboticsControl

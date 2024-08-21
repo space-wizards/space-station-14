@@ -1,4 +1,5 @@
-using Robust.Client.GameObjects;
+using Content.Shared.Pinpointer;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -14,7 +15,6 @@ public sealed class StationMapBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-        _window?.Close();
         EntityUid? gridUid = null;
 
         if (EntMan.TryGetComponent<TransformComponent>(Owner, out var xform))
@@ -22,14 +22,11 @@ public sealed class StationMapBoundUserInterface : BoundUserInterface
             gridUid = xform.GridUid;
         }
 
-        _window = new StationMapWindow(gridUid, Owner);
-        _window.OpenCentered();
-        _window.OnClose += Close;
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        _window?.Dispose();
+        _window = this.CreateWindow<StationMapWindow>();
+        _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+        if (EntMan.TryGetComponent<StationMapComponent>(Owner, out var comp) && comp.ShowLocation)
+            _window.Set(gridUid, Owner);
+        else
+            _window.Set(gridUid, null);
     }
 }

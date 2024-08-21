@@ -100,7 +100,7 @@ namespace Content.Server.GameTicking
             SetGamePreset(LobbyEnabled ? _configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset) : "sandbox");
         }
 
-        public void SetGamePreset(GamePresetPrototype preset, bool force = false)
+        public void SetGamePreset(GamePresetPrototype? preset, bool force = false)
         {
             // Do nothing if this game ticker is a dummy!
             if (DummyTicker)
@@ -226,7 +226,7 @@ namespace Content.Server.GameTicking
                 return false;
             }
 
-            if (HasComp<GhostComponent>(playerEntity))
+            if (TryComp<GhostComponent>(playerEntity, out var comp) && !comp.CanGhostInteract)
                 return false;
 
             if (mind.VisitingEntity != default)
@@ -251,7 +251,9 @@ namespace Content.Server.GameTicking
             //   (If the mob survives, that's a bug. Ghosting is kept regardless.)
             var canReturn = canReturnGlobal && _mind.IsCharacterDeadPhysically(mind);
 
-            if (canReturnGlobal && TryComp(playerEntity, out MobStateComponent? mobState))
+            if (_configurationManager.GetCVar(CCVars.GhostKillCrit) &&
+                canReturnGlobal &&
+                TryComp(playerEntity, out MobStateComponent? mobState))
             {
                 if (_mobState.IsCritical(playerEntity.Value, mobState))
                 {
@@ -274,35 +276,13 @@ namespace Content.Server.GameTicking
                 }
             }
 
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var coords = _transform.GetMoverCoordinates(position, xformQuery);
-
-            var ghost = Spawn(ObserverPrototypeName, coords);
-
-            // Try setting the ghost entity name to either the character name or the player name.
-            // If all else fails, it'll default to the default entity prototype name, "observer".
-            // However, that should rarely happen.
-            if (!string.IsNullOrWhiteSpace(mind.CharacterName))
-                _metaData.SetEntityName(ghost, mind.CharacterName);
-            else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
-                _metaData.SetEntityName(ghost, mind.Session.Name);
-
-            var ghostComponent = Comp<GhostComponent>(ghost);
-
-            if (mind.TimeOfDeath.HasValue)
-            {
-                _ghost.SetTimeOfDeath(ghost, mind.TimeOfDeath!.Value, ghostComponent);
-            }
+            var ghost = _ghost.SpawnGhost((mindId, mind), position, canReturn);
+            if (ghost == null)
+                return false;
 
             if (playerEntity != null)
                 _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
 
-            _ghost.SetCanReturnToBody(ghostComponent, canReturn);
-
-            if (canReturn)
-                _mind.Visit(mindId, ghost, mind);
-            else
-                _mind.TransferTo(mindId, ghost, mind: mind);
             return true;
         }
 

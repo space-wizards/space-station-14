@@ -9,6 +9,8 @@
       time: 36000 #10 hrs
     - !type:OverallPlaytimeRequirement
       time: 144000 #40 hrs
+    - !type:AgeRequirement
+      requiredAge: 21
   weight: 10
   startingGear: ResearchDirectorGear
   icon: "JobIconResearchDirector"
@@ -34,3 +36,6 @@
   equipment:
     id: RnDPDA
     ears: ClothingHeadsetRD
+  storage:
+    back:
+    - Flash

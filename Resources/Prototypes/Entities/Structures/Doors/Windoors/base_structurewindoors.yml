@@ -66,7 +66,7 @@
     damageContainer: Inorganic
     damageModifierSet: Glass
   - type: ExaminableDamage
-    messages: WindowMessages   
+    messages: WindowMessages
   - type: RCDDeconstructable
     cost: 8
     delay: 8
@@ -93,10 +93,11 @@
             max: 4
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: AccessReader
   - type: ContainerFill
     containers:
       board: [ DoorElectronics ]
+  - type: AccessReader
+    containerAccessProvider: board
   - type: ContainerContainer
     containers:
       board: !type:Container
@@ -129,8 +130,8 @@
     layoutId: Airlock
   - type: UserInterface
     interfaces:
-    - key: enum.WiresUiKey.Key
-      type: WiresBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: Appearance
   - type: WiresVisuals
   - type: Airtight
@@ -143,7 +144,7 @@
     containers:
     - board
   - type: StaticPrice
-    price: 100
+    price: 150
   - type: PryUnpowered
 
 - type: entity
@@ -171,6 +172,8 @@
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
+  - type: Damageable
+    damageModifierSet: RGlass
   - type: Destructible
     thresholds:
     - trigger:
@@ -197,7 +200,7 @@
     graph: Windoor
     node: windoorSecure
   - type: StaticPrice
-    price: 200
+    price: 350
 
 #Plasma Windoors
 - type: entity
@@ -250,13 +253,13 @@
     graph: Windoor
     node: pwindoor
   - type: StaticPrice
-    price: 170
+    price: 500
   - type: RadiationBlocker
     resistance: 2
 
 - type: entity
   id: BaseSecurePlasmaWindoor
-  parent: BaseWindoor
+  parent: BaseSecureWindoor
   abstract: true
   components:
   - type: Sprite
@@ -305,7 +308,7 @@
     graph: Windoor
     node: pwindoorSecure
   - type: StaticPrice
-    price: 312
+    price: 500
   - type: RadiationBlocker
     resistance: 4
 
@@ -360,13 +363,13 @@
     graph: Windoor
     node: uwindoor
   - type: StaticPrice
-    price: 180
+    price: 560
   - type: RadiationBlocker
     resistance: 3
 
 - type: entity
   id: BaseSecureUraniumWindoor
-  parent: BaseWindoor
+  parent: BaseSecureWindoor
   abstract: true
   components:
   - type: Sprite
@@ -415,6 +418,6 @@
     graph: Windoor
     node: uwindoorSecure
   - type: StaticPrice
-    price: 462
+    price: 750
   - type: RadiationBlocker
     resistance: 5

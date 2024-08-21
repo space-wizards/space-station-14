@@ -60,10 +60,10 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    - key: enum.VendingMachineUiKey.Key
-      type: VendingMachineBoundUserInterface
-    - key: enum.WiresUiKey.Key
-      type: WiresBoundUserInterface
+      enum.VendingMachineUiKey.Key:
+        type: VendingMachineBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: WiresPanel
   - type: Wires
     boardName: wires-board-name-vendingmachine
@@ -96,6 +96,7 @@
   - type: Actions
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-mechanical
+    weight: 0.025 # fuck you in particular (it now needs 40 vending machines to be as likely as 1 interesting animal)
   - type: StaticPrice
     price: 100
   - type: Appearance
@@ -195,6 +196,7 @@
   - type: GuideHelp
     guides:
     - Bartender
+    - Drinks
 
 - type: entity
   parent: VendingMachine
@@ -886,6 +888,7 @@
   - type: GuideHelp
     guides:
     - Security
+    - Antagonists
 
 - type: entity
   parent: VendingMachine
@@ -1337,7 +1340,7 @@
   - type: PointLight
     radius: 1.5
     energy: 1.6
-    color: "#9dc5c9"
+    color: "#b89f25"
   - type: AccessReader
     access: [["Salvage"]]
   - type: GuideHelp
@@ -1421,6 +1424,10 @@
       shader: unshaded
     - texture: Structures/Machines/VendingMachines/maintenance_panel.png
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.3
+    energy: 1.6
+    color: "#43ccb5"
   - type: AccessReader
     access: [["Medical"]]
   - type: GuideHelp
@@ -1454,6 +1461,10 @@
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#326e3f"
   - type: AccessReader
     access: [["Hydroponics"]]
 
@@ -1510,6 +1521,10 @@
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#d82929"
   - type: AccessReader
     access: [["Security"]]
 
@@ -1594,6 +1609,10 @@
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89e2a"
   - type: AccessReader
     access: [["Cargo"]]
 
@@ -1706,6 +1725,10 @@
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89e2a"
   - type: AccessReader
     access: [["Engineering"]]
 
@@ -1734,6 +1757,10 @@
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89e2a"
   - type: AccessReader
     access: [["Engineering"]]
 
@@ -1818,6 +1845,10 @@
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#6927C5"
   - type: AccessReader
     access: [["Janitor"]]
 
@@ -1874,6 +1905,10 @@
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#d82929"
   - type: AccessReader
     access: [["NuclearOperative"], ["SyndicateAgent"]]
 
@@ -1965,7 +2000,7 @@
   parent: VendingMachine
   id: VendingMachineCentDrobe
   name: CentDrobe
-  description: A one-of-a-kind vending machine for all your centcom aesthetic needs!
+  description: A one-of-a-kind vending machine for all your centcomm aesthetic needs!
   components:
   - type: VendingMachine
     pack: CentDrobeInventory
@@ -2084,6 +2119,7 @@
   - type: GuideHelp
     guides:
     - Chemicals
+    - Chemist
 
 - type: entity
   parent: VendingMachineChemicals

@@ -13,6 +13,7 @@ using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
@@ -31,6 +32,7 @@ public sealed class DrainSystem : SharedDrainSystem
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly PuddleSystem _puddleSystem = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -87,19 +89,25 @@ public sealed class DrainSystem : SharedDrainSystem
 
         // Try to transfer as much solution as possible to the drain
 
-        var transferSolution = _solutionContainerSystem.SplitSolution(containerSoln.Value,
-            FixedPoint2.Min(containerSolution.Volume, drainSolution.AvailableVolume));
+        var amountToPutInDrain = drainSolution.AvailableVolume;
+        var amountToSpillOnGround = containerSolution.Volume - drainSolution.AvailableVolume;
 
-        _solutionContainerSystem.TryAddSolution(drain.Solution.Value, transferSolution);
-
-        _audioSystem.PlayPvs(drain.ManualDrainSound, target);
-        _ambientSoundSystem.SetAmbience(target, true);
-
-        // If drain is full, spill
-
-        if (drainSolution.MaxVolume == drainSolution.Volume)
+        if (amountToPutInDrain > 0)
         {
-            _puddleSystem.TrySpillAt(Transform(target).Coordinates, containerSolution, out _);
+            var solutionToPutInDrain = _solutionContainerSystem.SplitSolution(containerSoln.Value, amountToPutInDrain);
+            _solutionContainerSystem.TryAddSolution(drain.Solution.Value, solutionToPutInDrain);
+
+            _audioSystem.PlayPvs(drain.ManualDrainSound, target);
+            _ambientSoundSystem.SetAmbience(target, true);
+        }
+
+
+        // Spill the remainder.
+
+        if (amountToSpillOnGround > 0)
+        {
+            var solutionToSpill = _solutionContainerSystem.SplitSolution(containerSoln.Value, amountToSpillOnGround);
+            _puddleSystem.TrySpillAt(Transform(target).Coordinates, solutionToSpill, out _);
             _popupSystem.PopupEntity(
                 Loc.GetString("drain-component-empty-verb-target-is-full-message", ("object", target)),
                 container);
@@ -155,7 +163,7 @@ public sealed class DrainSystem : SharedDrainSystem
 
             puddles.Clear();
 
-            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapPosition, drain.Range))
+            foreach (var entity in _lookup.GetEntitiesInRange(_transform.GetMapCoordinates(uid, xform), drain.Range))
             {
                 // No InRangeUnobstructed because there's no collision group that fits right now
                 // and these are placed by mappers and not buildable/movable so shouldnt really be a problem...

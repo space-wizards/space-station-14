@@ -165,6 +165,7 @@ marking-HumanHairProtagonist = Slightly Long Hair
 marking-HumanHairSpikey = Spiky
 marking-HumanHairSpiky = Spiky 2
 marking-HumanHairSpiky2 = Spiky 3
+marking-HumanHairSpookyLong = Spooky Long
 marking-HumanHairSwept = Swept Back Hair
 marking-HumanHairSwept2 = Swept Back Hair 2
 marking-HumanHairTailed = Tailed

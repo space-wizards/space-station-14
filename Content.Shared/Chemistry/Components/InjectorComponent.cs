@@ -24,7 +24,8 @@ public sealed partial class InjectorDoAfterEvent : SimpleDoAfterEvent
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class InjectorComponent : Component
 {
-    public const string SolutionName = "injector";
+    [DataField]
+    public string SolutionName = "injector";
 
     /// <summary>
     /// Whether or not the injector is able to draw from containers or if it's a single use
@@ -73,6 +74,12 @@ public sealed partial class InjectorComponent : Component
     public TimeSpan Delay = TimeSpan.FromSeconds(5);
 
     /// <summary>
+    /// Each additional 1u after first 5u increases the delay by X seconds.
+    /// </summary>
+    [DataField]
+    public TimeSpan DelayPerVolume = TimeSpan.FromSeconds(0.1);
+
+    /// <summary>
     /// The state of the injector. Determines it's attack behavior. Containers must have the
     /// right SolutionCaps to support injection/drawing. For InjectOnly injectors this should
     /// only ever be set to Inject
@@ -80,6 +87,22 @@ public sealed partial class InjectorComponent : Component
     [AutoNetworkedField]
     [DataField]
     public InjectorToggleMode ToggleState = InjectorToggleMode.Draw;
+
+    #region Arguments for injection doafter
+
+    /// <inheritdoc cref=DoAfterArgs.NeedHand>
+    [DataField]
+    public bool NeedHand = true;
+
+    /// <inheritdoc cref=DoAfterArgs.BreakOnHandChange>
+    [DataField]
+    public bool BreakOnHandChange = true;
+
+    /// <inheritdoc cref=DoAfterArgs.MovementThreshold>
+    [DataField]
+    public float MovementThreshold = 0.1f;
+
+    #endregion
 }
 
 /// <summary>

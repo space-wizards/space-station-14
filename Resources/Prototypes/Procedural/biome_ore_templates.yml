@@ -10,7 +10,7 @@
     WallRockSnow: WallRockSnowTin
   maxCount: 30
   minGroupSize: 10
-  maxGroupSize: 20
+  maxGroupSize: 15
   radius: 4
 
 - type: biomeMarkerLayer
@@ -23,7 +23,7 @@
     WallRockSnow: WallRockSnowQuartz
   maxCount: 30
   minGroupSize: 10
-  maxGroupSize: 20
+  maxGroupSize: 15
   radius: 4
 
 - type: biomeMarkerLayer
@@ -36,8 +36,8 @@
     WallRockSand: WallRockSandCoal
     WallRockSnow: WallRockSnowCoal
   maxCount: 30
-  minGroupSize: 10
-  maxGroupSize: 20
+  minGroupSize: 8
+  maxGroupSize: 12
   radius: 4
 
 - type: biomeMarkerLayer
@@ -50,8 +50,8 @@
     WallRockSand: WallRockSandSalt
     WallRockSnow: WallRockSnowSalt
   maxCount: 30
-  minGroupSize: 10
-  maxGroupSize: 20
+  minGroupSize: 8
+  maxGroupSize: 12
   radius: 4
 
 # Medium value
@@ -65,7 +65,7 @@
     WallRockChromite: WallRockChromiteGold
     WallRockSand: WallRockSandGold
     WallRockSnow: WallRockSnowGold
-  maxCount: 30
+  maxCount: 20
   minGroupSize: 5
   maxGroupSize: 10
   radius: 4
@@ -80,7 +80,7 @@
     WallRockChromite: WallRockChromiteSilver
     WallRockSand: WallRockSandSilver
     WallRockSnow: WallRockSnowSilver
-  maxCount: 30
+  maxCount: 20
   minGroupSize: 5
   maxGroupSize: 10
   radius: 4
@@ -97,8 +97,8 @@
     WallRockSand: WallRockSandPlasma
     WallRockSnow: WallRockSnowPlasma
   maxCount: 12
-  minGroupSize: 5
-  maxGroupSize: 10
+  minGroupSize: 4
+  maxGroupSize: 8
   radius: 4
 
 # Uranium
@@ -111,23 +111,23 @@
     WallRockChromite: WallRockChromiteUranium
     WallRockSand: WallRockSandUranium
     WallRockSnow: WallRockSnowUranium
-  maxCount: 12
-  minGroupSize: 5
-  maxGroupSize: 10
+  maxCount: 15
+  minGroupSize: 4
+  maxGroupSize: 8
   radius: 4
 
 - type: biomeMarkerLayer
-  id: OreBananium
+  id: OreDiamond
   entityMask:
-    AsteroidRock: AsteroidRockBananium
-    WallRock: WallRockBananium
-    WallRockBasalt: WallRockBasaltBananium
-    WallRockChromite: WallRockChromiteBananium
-    WallRockSand: WallRockSandBananium
-    WallRockSnow: WallRockSnowBananium
-  maxCount: 12
-  minGroupSize: 5
-  maxGroupSize: 10
+    AsteroidRock: AsteroidRockDiamond
+    WallRock: WallRockDiamond
+    WallRockBasalt: WallRockBasaltDiamond
+    WallRockChromite: WallRockChromiteDiamond
+    WallRockSand: WallRockSandDiamond
+    WallRockSnow: WallRockSnowDiamond
+  maxCount: 6
+  minGroupSize: 1
+  maxGroupSize: 2
   radius: 4
 
 # Artifact Fragment

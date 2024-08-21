@@ -78,9 +78,6 @@ accent-italian-words-replace-23 = greek
 accent-italian-words-24 = operatives
 accent-italian-words-replace-24 = greeks
 
-accent-italian-words-24 = ops
-accent-italian-words-replace-24 = greeks
-
 accent-italian-words-25 = sec
 accent-italian-words-replace-25 = polizia
 

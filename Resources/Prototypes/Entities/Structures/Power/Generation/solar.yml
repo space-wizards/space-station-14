@@ -1,6 +1,6 @@
 - type: entity
   id: SolarPanelBasePhysSprite
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: solar panel
   placement:
     mode: SnapgridCenter
@@ -49,6 +49,7 @@
     onBump: false
     requirePower: true
     highVoltageNode: output
+  - type: RequireProjectileTarget 
 
 - type: entity
   id: SolarPanel
@@ -157,6 +158,7 @@
     graph: SolarPanel
     node: solarassembly
     defaultTarget: solarpanel
+  - type: RequireProjectileTarget 
 
 - type: entity
   id: SolarTracker
@@ -201,3 +203,4 @@
   - type: Construction
     graph: SolarPanel
     node: solartracker
+  - type: RequireProjectileTarget 

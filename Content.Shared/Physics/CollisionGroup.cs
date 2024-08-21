@@ -48,6 +48,9 @@ public enum CollisionGroup
     MachineLayer = Opaque | MidImpassable | LowImpassable | BulletImpassable,
     ConveyorMask = Impassable | MidImpassable | LowImpassable | DoorPassable,
 
+    // Crates
+    CrateMask = Impassable | HighImpassable | LowImpassable,
+
     // Tables that SmallMobs can go under
     TableMask = Impassable | MidImpassable,
     TableLayer = MidImpassable,
@@ -55,7 +58,7 @@ public enum CollisionGroup
     // Tabletop machines, windoors, firelocks
     TabletopMachineMask = Impassable | HighImpassable,
     // Tabletop machines
-    TabletopMachineLayer = Opaque | HighImpassable | BulletImpassable,
+    TabletopMachineLayer = Opaque | BulletImpassable,
 
     // Airlocks, windoors, firelocks
     GlassAirlockLayer = HighImpassable | MidImpassable | BulletImpassable | InteractImpassable,

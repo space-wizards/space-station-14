@@ -1,0 +1,90 @@
+- type: htnCompound
+  id: DebugCounterCompound
+  branches:
+    - tasks:
+      - !type:HTNPrimitiveTask
+        operator: !type:AddFloatOperator
+          targetKey: Count
+          amount: 1
+
+      - !type:HTNPrimitiveTask
+        operator: !type:SayKeyOperator
+          key: Count
+
+      - !type:HTNPrimitiveTask
+          operator: !type:RandomOperator
+            targetKey: IdleTime
+            minKey: MinimumIdleTime
+            maxKey: MaximumIdleTime
+
+      - !type:HTNPrimitiveTask
+        operator: !type:WaitOperator
+          key: IdleTime
+        preconditions:
+          - !type:KeyExistsPrecondition
+            key: IdleTime
+
+- type: htnCompound
+  id: DebugRandomCounterCompound
+  branches:
+    - tasks:
+      - !type:HTNPrimitiveTask
+        operator: !type:SetRandomFloatOperator
+          targetKey: Count
+          minAmount: 0
+          maxAmount: 100
+
+      - !type:HTNPrimitiveTask
+        operator: !type:SayKeyOperator
+          key: Count
+
+      - !type:HTNPrimitiveTask
+          operator: !type:RandomOperator
+            targetKey: IdleTime
+            minKey: MinimumIdleTime
+            maxKey: MaximumIdleTime
+
+      - !type:HTNPrimitiveTask
+        operator: !type:WaitOperator
+          key: IdleTime
+        preconditions:
+          - !type:KeyExistsPrecondition
+            key: IdleTime
+
+- type: htnCompound
+  id: DebugRandomLessCompound
+  branches:
+    - tasks:
+      - !type:HTNPrimitiveTask
+        operator: !type:SetRandomFloatOperator
+          targetKey: Count
+          minAmount: 0
+          maxAmount: 100
+
+      - !type:HTNPrimitiveTask
+        operator: !type:SayKeyOperator
+          key: Count
+        preconditions:
+          - !type:KeyFloatLessPrecondition
+            key: Count
+            value: 50
+      
+      - !type:HTNPrimitiveTask
+          operator: !type:RandomOperator
+            targetKey: IdleTime
+            minKey: MinimumIdleTime
+            maxKey: MaximumIdleTime
+
+      - !type:HTNPrimitiveTask
+        operator: !type:WaitOperator
+          key: IdleTime
+        preconditions:
+          - !type:KeyExistsPrecondition
+            key: IdleTime
+
+    - tasks:
+      - !type:HTNPrimitiveTask
+        operator: !type:SpeakOperator
+          speech: "fuck!"
+
+ 

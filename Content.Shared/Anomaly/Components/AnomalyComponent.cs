@@ -152,25 +152,25 @@ public sealed partial class AnomalyComponent : Component
     /// <summary>
     /// The particle type that increases the severity of the anomaly.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public AnomalousParticleType SeverityParticleType;
 
     /// <summary>
     /// The particle type that destabilizes the anomaly.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public AnomalousParticleType DestabilizingParticleType;
 
     /// <summary>
     /// The particle type that weakens the anomalys health.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public AnomalousParticleType WeakeningParticleType;
 
     /// <summary>
     /// The particle type that change anomaly behaviour.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public AnomalousParticleType TransformationParticleType;
 
     #region Points and Vessels
@@ -201,20 +201,6 @@ public sealed partial class AnomalyComponent : Component
     [DataField("growingPointMultiplier")]
     public float GrowingPointMultiplier = 1.5f;
     #endregion
-
-    /// <summary>
-    /// The amount of damage dealt when either a player touches the anomaly
-    /// directly or by hitting the anomaly.
-    /// </summary>
-    [DataField(required: true)]
-    public DamageSpecifier AnomalyContactDamage = default!;
-
-    /// <summary>
-    /// The sound effect played when a player
-    /// burns themselves on an anomaly via contact.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier AnomalyContactDamageSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 
     /// <summary>
     /// A prototype entity that appears when an anomaly supercrit collapse.
@@ -317,6 +303,7 @@ public readonly record struct AnomalyHealthChangedEvent(EntityUid Anomaly, float
 
 /// <summary>
 /// Event broadcast when an anomaly's behavior is changed.
+/// This is raised after the relevant components are applied
 /// </summary>
 [ByRefEvent]
 public readonly record struct AnomalyBehaviorChangedEvent(EntityUid Anomaly, ProtoId<AnomalyBehaviorPrototype>? Old, ProtoId<AnomalyBehaviorPrototype>? New);

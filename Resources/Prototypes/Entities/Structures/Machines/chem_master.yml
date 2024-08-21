@@ -1,5 +1,5 @@
 - type: entity
-  id: chem_master
+  id: ChemMaster
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: ChemMaster 4000
   description: An industrial grade chemical manipulator with pill and bottle production included.
@@ -50,8 +50,8 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    - key: enum.ChemMasterUiKey.Key
-      type: ChemMasterBoundUserInterface
+      enum.ChemMasterUiKey.Key:
+        type: ChemMasterBoundUserInterface
   - type: ApcPowerReceiver
     powerLoad: 250
   - type: Appearance

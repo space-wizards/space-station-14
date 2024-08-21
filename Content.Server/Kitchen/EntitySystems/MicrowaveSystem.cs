@@ -1,3 +1,4 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Construction;
@@ -15,6 +16,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Construction.EntitySystems;
+using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -35,6 +37,10 @@ using Robust.Shared.Player;
 using System.Linq;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Content.Shared.Stacks;
+using Content.Server.Construction.Components;
+using Content.Shared.Chat;
+using Content.Shared.Damage;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -58,6 +64,10 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
         [Dependency] private readonly HandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedItemSystem _item = default!;
+        [Dependency] private readonly SharedStackSystem _stack = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedSuicideSystem _suicide = default!;
 
         [ValidatePrototypeId<EntityPrototype>]
         private const string MalfunctionSpark = "Spark";
@@ -72,14 +82,15 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<MicrowaveComponent, EntInsertedIntoContainerMessage>(OnContentUpdate);
             SubscribeLocalEvent<MicrowaveComponent, EntRemovedFromContainerMessage>(OnContentUpdate);
             SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(AnchorableSystem) });
+            SubscribeLocalEvent<MicrowaveComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
             SubscribeLocalEvent<MicrowaveComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<MicrowaveComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<MicrowaveComponent, AnchorStateChangedEvent>(OnAnchorChanged);
-            SubscribeLocalEvent<MicrowaveComponent, SuicideEvent>(OnSuicide);
+            SubscribeLocalEvent<MicrowaveComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
 
             SubscribeLocalEvent<MicrowaveComponent, SignalReceivedEvent>(OnSignalReceived);
 
-            SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((u, c, m) => Wzhzhzh(u, c, m.Session.AttachedEntity));
+            SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((u, c, m) => Wzhzhzh(u, c, m.Actor));
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectMessage>(OnEjectMessage);
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectSolidIndexedMessage>(OnEjectIndex);
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveSelectCookTimeMessage>(OnSelectTime);
@@ -199,16 +210,41 @@ namespace Content.Server.Kitchen.EntitySystems
                 {
                     foreach (var item in component.Storage.ContainedEntities)
                     {
-                        var metaData = MetaData(item);
-                        if (metaData.EntityPrototype == null)
+                        string? itemID = null;
+
+                        // If an entity has a stack component, use the stacktype instead of prototype id
+                        if (TryComp<StackComponent>(item, out var stackComp))
+                        {
+                            itemID = _prototype.Index<StackPrototype>(stackComp.StackTypeId).Spawn;
+                        }
+                        else
+                        {
+                            var metaData = MetaData(item);
+                            if (metaData.EntityPrototype == null)
+                            {
+                                continue;
+                            }
+                            itemID = metaData.EntityPrototype.ID;
+                        }
+
+                        if (itemID != recipeSolid.Key)
                         {
                             continue;
                         }
 
-                        if (metaData.EntityPrototype.ID == recipeSolid.Key)
+                        if (stackComp is not null)
+                        {
+                            if (stackComp.Count == 1)
+                            {
+                                _container.Remove(item, component.Storage);
+                            }
+                            _stack.Use(item, 1, stackComp);
+                            break;
+                        }
+                        else
                         {
                             _container.Remove(item, component.Storage);
-                            EntityManager.DeleteEntity(item);
+                            Del(item);
                             break;
                         }
                     }
@@ -219,7 +255,7 @@ namespace Content.Server.Kitchen.EntitySystems
         private void OnInit(Entity<MicrowaveComponent> ent, ref ComponentInit args)
         {
             // this really does have to be in ComponentInit
-            ent.Comp.Storage = _container.EnsureContainer<Container>(ent, "microwave_entity_container");
+            ent.Comp.Storage = _container.EnsureContainer<Container>(ent, ent.Comp.ContainerId);
         }
 
         private void OnMapInit(Entity<MicrowaveComponent> ent, ref MapInitEvent args)
@@ -227,12 +263,22 @@ namespace Content.Server.Kitchen.EntitySystems
             _deviceLink.EnsureSinkPorts(ent, ent.Comp.OnPort);
         }
 
-        private void OnSuicide(Entity<MicrowaveComponent> ent, ref SuicideEvent args)
+        /// <summary>
+        /// Kills the user by microwaving their head
+        /// TODO: Make this not awful, it keeps any items attached to your head still on and you can revive someone and cogni them so you have some dumb headless fuck running around. I've seen it happen.
+        /// </summary>
+        private void OnSuicideByEnvironment(Entity<MicrowaveComponent> ent, ref SuicideByEnvironmentEvent args)
         {
             if (args.Handled)
                 return;
 
-            args.SetHandled(SuicideKind.Heat);
+            // The act of getting your head microwaved doesn't actually kill you
+            if (!TryComp<DamageableComponent>(args.Victim, out var damageableComponent))
+                return;
+
+            // The application of lethal damage is what kills you...
+            _suicide.ApplyLethalDamage((args.Victim, damageableComponent), "Heat");
+
             var victim = args.Victim;
             var headCount = 0;
 
@@ -262,6 +308,7 @@ namespace Content.Server.Kitchen.EntitySystems
             ent.Comp.CurrentCookTimerTime = 10;
             Wzhzhzh(ent.Owner, ent.Comp, args.Victim);
             UpdateUserInterfaceState(ent.Owner, ent.Comp);
+            args.Handled = true;
         }
 
         private void OnSolutionChange(Entity<MicrowaveComponent> ent, ref SolutionContainerChangedEvent args)
@@ -271,7 +318,39 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnContentUpdate(EntityUid uid, MicrowaveComponent component, ContainerModifiedMessage args) // For some reason ContainerModifiedMessage just can't be used at all with Entity<T>. TODO: replace with Entity<T> syntax once that's possible
         {
+            if (component.Storage != args.Container)
+                return;
+
             UpdateUserInterfaceState(uid, component);
+        }
+
+        private void OnInsertAttempt(Entity<MicrowaveComponent> ent, ref ContainerIsInsertingAttemptEvent args)
+        {
+            if (args.Container.ID != ent.Comp.ContainerId)
+                return;
+
+            if (ent.Comp.Broken)
+            {
+                args.Cancel();
+                return;
+            }
+
+            if (TryComp<ItemComponent>(args.EntityUid, out var item))
+            {
+                if (_item.GetSizePrototype(item.Size) > _item.GetSizePrototype(ent.Comp.MaxItemSize))
+                {
+                    args.Cancel();
+                    return;
+                }
+            }
+            else
+            {
+                args.Cancel();
+                return;
+            }
+
+            if (ent.Comp.Storage.Count >= ent.Comp.Capacity)
+                args.Cancel();
         }
 
         private void OnInteractUsing(Entity<MicrowaveComponent> ent, ref InteractUsingEvent args)
@@ -355,11 +434,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
         public void UpdateUserInterfaceState(EntityUid uid, MicrowaveComponent component)
         {
-            var ui = _userInterface.GetUiOrNull(uid, MicrowaveUiKey.Key);
-            if (ui == null)
-                return;
-
-            _userInterface.SetUiState(ui, new MicrowaveUpdateUserInterfaceState(
+            _userInterface.SetUiState(uid, MicrowaveUiKey.Key, new MicrowaveUpdateUserInterfaceState(
                 GetNetEntityArray(component.Storage.ContainedEntities.ToArray()),
                 HasComp<ActiveMicrowaveComponent>(uid),
                 component.CurrentCookTimeButtonIndex,
@@ -382,6 +457,23 @@ namespace Content.Server.Kitchen.EntitySystems
         }
 
         /// <summary>
+        /// Explodes the microwave internally, turning it into a broken state, destroying its board, and spitting out its machine parts
+        /// </summary>
+        /// <param name="ent"></param>
+        public void Explode(Entity<MicrowaveComponent> ent)
+        {
+            ent.Comp.Broken = true; // Make broken so we stop processing stuff
+            _explosion.TriggerExplosive(ent);
+            if (TryComp<MachineComponent>(ent, out var machine))
+            {
+                _container.CleanContainer(machine.BoardContainer);
+                _container.EmptyContainer(machine.PartContainer);
+            }
+
+            _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                $"{ToPrettyString(ent)} exploded from unsafe cooking!");
+        }
+        /// <summary>
         /// Handles the attempted cooking of unsafe objects
         /// </summary>
         /// <remarks>
@@ -398,7 +490,7 @@ namespace Content.Server.Kitchen.EntitySystems
             ent.Comp1.MalfunctionTime = _gameTiming.CurTime + TimeSpan.FromSeconds(ent.Comp2.MalfunctionInterval);
             if (_random.Prob(ent.Comp2.ExplosionChance))
             {
-                _explosion.TriggerExplosive(ent);
+                Explode((ent, ent.Comp2));
                 return;  // microwave is fucked, stop the cooking.
             }
 
@@ -449,17 +541,35 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 AddComp<ActivelyMicrowavedComponent>(item);
 
-                var metaData = MetaData(item); //this simply begs for cooking refactor
-                if (metaData.EntityPrototype == null)
-                    continue;
+                string? solidID = null;
+                int amountToAdd = 1;
 
-                if (solidsDict.ContainsKey(metaData.EntityPrototype.ID))
+                // If a microwave recipe uses a stacked item, use the default stack prototype id instead of prototype id
+                if (TryComp<StackComponent>(item, out var stackComp))
                 {
-                    solidsDict[metaData.EntityPrototype.ID]++;
+                    solidID = _prototype.Index<StackPrototype>(stackComp.StackTypeId).Spawn;
+                    amountToAdd = stackComp.Count;
                 }
                 else
                 {
-                    solidsDict.Add(metaData.EntityPrototype.ID, 1);
+                    var metaData = MetaData(item); //this simply begs for cooking refactor
+                    if (metaData.EntityPrototype is not null)
+                        solidID = metaData.EntityPrototype.ID;
+                }
+
+                if (solidID is null)
+                {
+                    continue;
+                }
+
+
+                if (solidsDict.ContainsKey(solidID))
+                {
+                    solidsDict[solidID] += amountToAdd;
+                }
+                else
+                {
+                    solidsDict.Add(solidID, amountToAdd);
                 }
 
                 if (!TryComp<SolutionContainerManagerComponent>(item, out var solMan))
@@ -487,7 +597,8 @@ namespace Content.Server.Kitchen.EntitySystems
             activeComp.CookTimeRemaining = component.CurrentCookTimerTime * component.CookTimeMultiplier;
             activeComp.TotalTime = component.CurrentCookTimerTime; //this doesn't scale so that we can have the "actual" time
             activeComp.PortionedRecipe = portionedRecipe;
-            component.CurrentCookTimeEnd = _gameTiming.CurTime + TimeSpan.FromSeconds(component.CurrentCookTimerTime);
+            //Scale tiems with cook times
+            component.CurrentCookTimeEnd = _gameTiming.CurTime + TimeSpan.FromSeconds(component.CurrentCookTimerTime * component.CookTimeMultiplier);
             if (malfunctioning)
                 activeComp.MalfunctionTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.MalfunctionInterval);
             UpdateUserInterfaceState(uid, component);

@@ -31,7 +31,8 @@ public sealed partial class AnomalySystem
         {
             if (component.ScannedAnomaly != args.Anomaly)
                 continue;
-            _ui.TryCloseAll(uid, AnomalyScannerUiKey.Key);
+
+            _ui.CloseUi(uid, AnomalyScannerUiKey.Key);
         }
     }
 
@@ -108,7 +109,7 @@ public sealed partial class AnomalySystem
         Popup.PopupEntity(Loc.GetString("anomaly-scanner-component-scan-complete"), uid);
         UpdateScannerWithNewAnomaly(uid, args.Args.Target.Value, component);
 
-        if (TryComp<ActorComponent>(args.Args.User, out var actor)) _ui.TryOpen(uid, AnomalyScannerUiKey.Key, actor.PlayerSession);
+        _ui.OpenUi(uid, AnomalyScannerUiKey.Key, args.User);
 
         args.Handled = true;
     }
@@ -123,7 +124,7 @@ public sealed partial class AnomalySystem
             nextPulse = anomalyComponent.NextPulseTime;
 
         var state = new AnomalyScannerUserInterfaceState(GetScannerMessage(component), nextPulse);
-        _ui.TrySetUiState(uid, AnomalyScannerUiKey.Key, state);
+        _ui.SetUiState(uid, AnomalyScannerUiKey.Key, state);
     }
 
     public void UpdateScannerWithNewAnomaly(EntityUid scanner, EntityUid anomaly, AnomalyScannerComponent? scannerComp = null, AnomalyComponent? anomalyComp = null)
@@ -140,7 +141,7 @@ public sealed partial class AnomalySystem
         var msg = new FormattedMessage();
         if (component.ScannedAnomaly is not { } anomaly || !TryComp<AnomalyComponent>(anomaly, out var anomalyComp))
         {
-            msg.AddMarkup(Loc.GetString("anomaly-scanner-no-anomaly"));
+            msg.AddMarkupOrThrow(Loc.GetString("anomaly-scanner-no-anomaly"));
             return msg;
         }
 
@@ -148,14 +149,14 @@ public sealed partial class AnomalySystem
 
         //Severity
         if (secret != null && secret.Secret.Contains(AnomalySecretData.Severity))
-            msg.AddMarkup(Loc.GetString("anomaly-scanner-severity-percentage-unknown"));
+            msg.AddMarkupOrThrow(Loc.GetString("anomaly-scanner-severity-percentage-unknown"));
         else
-            msg.AddMarkup(Loc.GetString("anomaly-scanner-severity-percentage", ("percent", anomalyComp.Severity.ToString("P"))));
+            msg.AddMarkupOrThrow(Loc.GetString("anomaly-scanner-severity-percentage", ("percent", anomalyComp.Severity.ToString("P"))));
         msg.PushNewline();
 
         //Stability
         if (secret != null && secret.Secret.Contains(AnomalySecretData.Stability))
-            msg.AddMarkup(Loc.GetString("anomaly-scanner-stability-unknown"));
+            msg.AddMarkupOrThrow(Loc.GetString("anomaly-scanner-stability-unknown"));
         else
         {
             string stateLoc;
@@ -165,72 +166,72 @@ public sealed partial class AnomalySystem
                 stateLoc = Loc.GetString("anomaly-scanner-stability-high");
             else
                 stateLoc = Loc.GetString("anomaly-scanner-stability-medium");
-            msg.AddMarkup(stateLoc);
+            msg.AddMarkupOrThrow(stateLoc);
         }
         msg.PushNewline();
 
         //Point output
         if (secret != null && secret.Secret.Contains(AnomalySecretData.OutputPoint))
-            msg.AddMarkup(Loc.GetString("anomaly-scanner-point-output-unknown"));
+            msg.AddMarkupOrThrow(Loc.GetString("anomaly-scanner-point-output-unknown"));
         else
-            msg.AddMarkup(Loc.GetString("anomaly-scanner-point-output", ("point", GetAnomalyPointValue(anomaly, anomalyComp))));
+            msg.AddMarkupOrThrow(Loc.GetString("anomaly-scanner-point-output", ("point", GetAnomalyPointValue(anomaly, anomalyComp))));
         msg.PushNewline();
         msg.PushNewline();
 
         //Particles title
-        msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-readout"));
+        msg.AddMarkupOrThrow(Loc.GetString("anomaly-scanner-particle-readout"));
         msg.PushNewline();
 
         //Danger
         if (secret != null && secret.Secret.Contains(AnomalySecretData.ParticleDanger))
-            msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-danger-unknown"));
+            msg.AddMarkupOrThrow(Loc.GetString("anomaly-scanner-particle-danger-unknown"));
         else
-            msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-danger", ("type", GetParticleLocale(anomalyComp.SeverityParticleType))));
+            msg.AddMarkupOrThrow(Loc.GetString("anomaly-scanner-particle-danger", ("type", GetParticleLocale(anomalyComp.SeverityParticleType))));
         msg.PushNewline();
 
         //Unstable
         if (secret != null && secret.Secret.Contains(AnomalySecretData.ParticleUnstable))
-            msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-unstable-unknown"));
+            msg.AddMarkupOrThrow(Loc.GetString("anomaly-scanner-particle-unstable-unknown"));
         else
-            msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-unstable", ("type", GetParticleLocale(anomalyComp.DestabilizingParticleType))));
+            msg.AddMarkupOrThrow(Loc.GetString("anomaly-scanner-particle-unstable", ("type", GetParticleLocale(anomalyComp.DestabilizingParticleType))));
         msg.PushNewline();
 
         //Containment
         if (secret != null && secret.Secret.Contains(AnomalySecretData.ParticleContainment))
-            msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-containment-unknown"));
+            msg.AddMarkupOrThrow(Loc.GetString("anomaly-scanner-particle-containment-unknown"));
         else
-            msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-containment", ("type", GetParticleLocale(anomalyComp.WeakeningParticleType))));
+            msg.AddMarkupOrThrow(Loc.GetString("anomaly-scanner-particle-containment", ("type", GetParticleLocale(anomalyComp.WeakeningParticleType))));
         msg.PushNewline();
 
         //Transformation
         if (secret != null && secret.Secret.Contains(AnomalySecretData.ParticleTransformation))
-            msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-transformation-unknown"));
+            msg.AddMarkupOrThrow(Loc.GetString("anomaly-scanner-particle-transformation-unknown"));
         else
-            msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-transformation", ("type", GetParticleLocale(anomalyComp.TransformationParticleType))));
+            msg.AddMarkupOrThrow(Loc.GetString("anomaly-scanner-particle-transformation", ("type", GetParticleLocale(anomalyComp.TransformationParticleType))));
 
 
         //Behavior
         msg.PushNewline();
         msg.PushNewline();
-        msg.AddMarkup(Loc.GetString("anomaly-behavior-title"));
+        msg.AddMarkupOrThrow(Loc.GetString("anomaly-behavior-title"));
         msg.PushNewline();
 
         if (secret != null && secret.Secret.Contains(AnomalySecretData.Behavior))
-            msg.AddMarkup(Loc.GetString("anomaly-behavior-unknown"));
+            msg.AddMarkupOrThrow(Loc.GetString("anomaly-behavior-unknown"));
         else
         {
             if (anomalyComp.CurrentBehavior != null)
             {
                 var behavior = _prototype.Index(anomalyComp.CurrentBehavior.Value);
 
-                msg.AddMarkup("- " + Loc.GetString(behavior.Description));
+                msg.AddMarkupOrThrow("- " + Loc.GetString(behavior.Description));
                 msg.PushNewline();
                 var mod = Math.Floor((behavior.EarnPointModifier) * 100);
-                msg.AddMarkup("- " + Loc.GetString("anomaly-behavior-point", ("mod", mod)));
+                msg.AddMarkupOrThrow("- " + Loc.GetString("anomaly-behavior-point", ("mod", mod)));
             }
             else
             {
-                msg.AddMarkup(Loc.GetString("anomaly-behavior-balanced"));
+                msg.AddMarkupOrThrow(Loc.GetString("anomaly-behavior-balanced"));
             }
         }
 

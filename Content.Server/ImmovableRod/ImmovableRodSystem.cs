@@ -60,18 +60,21 @@ public sealed class ImmovableRodSystem : EntitySystem
             _physics.SetFriction(uid, phys, 0f);
             _physics.SetBodyStatus(uid, phys, BodyStatus.InAir);
 
-            if (!component.RandomizeVelocity)
-                return;
-
             var xform = Transform(uid);
-            var vel = component.DirectionOverride.Degrees switch
+            var (worldPos, worldRot) = _transform.GetWorldPositionRotation(uid);
+            var vel = worldRot.ToWorldVec() * component.MaxSpeed;
+
+            if (component.RandomizeVelocity)
             {
-                0f => _random.NextVector2(component.MinSpeed, component.MaxSpeed),
-                _ => _transform.GetWorldRotation(uid).RotateVec(component.DirectionOverride.ToVec()) * _random.NextFloat(component.MinSpeed, component.MaxSpeed)
-            };
+                vel = component.DirectionOverride.Degrees switch
+                {
+                    0f => _random.NextVector2(component.MinSpeed, component.MaxSpeed),
+                    _ => worldRot.RotateVec(component.DirectionOverride.ToVec()) * _random.NextFloat(component.MinSpeed, component.MaxSpeed)
+                };
+            }
 
             _physics.ApplyLinearImpulse(uid, vel, body: phys);
-            xform.LocalRotation = (vel - _transform.GetWorldPosition(uid)).ToWorldAngle() + MathHelper.PiOver2;
+            xform.LocalRotation = (vel - worldPos).ToWorldAngle() + MathHelper.PiOver2;
         }
     }
 

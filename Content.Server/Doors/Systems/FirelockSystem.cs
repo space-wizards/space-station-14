@@ -1,71 +1,59 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Systems;
-using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
-using Content.Shared.Access.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
-using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
-using Content.Shared.Popups;
-using Content.Shared.Prying.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Doors.Systems
 {
-    public sealed class FirelockSystem : EntitySystem
+    public sealed class FirelockSystem : SharedFirelockSystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
-        [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+        [Dependency] private readonly SharedMapSystem _mapping = default!;
+        [Dependency] private readonly PointLightSystem _pointLight = default!;
 
-        private static float _visualUpdateInterval = 0.5f;
-        private float _accumulatedFrameTime;
+        private const int UpdateInterval = 30;
+        private int _accumulatedTicks;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<FirelockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
-            SubscribeLocalEvent<FirelockComponent, GetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
-            SubscribeLocalEvent<FirelockComponent, DoorStateChangedEvent>(OnUpdateState);
-
-            SubscribeLocalEvent<FirelockComponent, BeforeDoorAutoCloseEvent>(OnBeforeDoorAutoclose);
             SubscribeLocalEvent<FirelockComponent, AtmosAlarmEvent>(OnAtmosAlarm);
 
-            // Visuals
-            SubscribeLocalEvent<FirelockComponent, MapInitEvent>(UpdateVisuals);
-            SubscribeLocalEvent<FirelockComponent, ComponentStartup>(UpdateVisuals);
             SubscribeLocalEvent<FirelockComponent, PowerChangedEvent>(PowerChanged);
+
         }
 
         private void PowerChanged(EntityUid uid, FirelockComponent component, ref PowerChangedEvent args)
         {
             // TODO this should REALLLLY not be door specific appearance thing.
             _appearance.SetData(uid, DoorVisuals.Powered, args.Powered);
+            component.Powered = args.Powered;
+            Dirty(uid, component);
         }
-
-        #region Visuals
-        private void UpdateVisuals(EntityUid uid, FirelockComponent component, EntityEventArgs args) => UpdateVisuals(uid, component);
 
         public override void Update(float frameTime)
         {
-            _accumulatedFrameTime += frameTime;
-            if (_accumulatedFrameTime < _visualUpdateInterval)
+            _accumulatedTicks += 1;
+            if (_accumulatedTicks < UpdateInterval)
                 return;
 
-            _accumulatedFrameTime -= _visualUpdateInterval;
+            _accumulatedTicks = 0;
 
             var airtightQuery = GetEntityQuery<AirtightComponent>();
             var appearanceQuery = GetEntityQuery<AppearanceComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
+            var pointLightQuery = GetEntityQuery<PointLightComponent>();
 
             var query = EntityQueryEnumerator<FirelockComponent, DoorComponent>();
             while (query.MoveNext(out var uid, out var firelock, out var door))
@@ -82,107 +70,18 @@ namespace Content.Server.Doors.Systems
                     && xformQuery.TryGetComponent(uid, out var xform)
                     && appearanceQuery.TryGetComponent(uid, out var appearance))
                 {
-                    var (fire, pressure) = CheckPressureAndFire(uid, firelock, xform, airtight, airtightQuery);
+                    var (pressure, fire) = CheckPressureAndFire(uid, firelock, xform, airtight, airtightQuery);
                     _appearance.SetData(uid, DoorVisuals.ClosedLights, fire || pressure, appearance);
+                    firelock.Temperature = fire;
+                    firelock.Pressure = pressure;
+                    Dirty(uid, firelock);
+
+                    if (pointLightQuery.TryComp(uid, out var pointLight))
+                    {
+                        _pointLight.SetEnabled(uid, fire | pressure, pointLight);
+                    }
                 }
             }
-        }
-
-        private void UpdateVisuals(EntityUid uid,
-            FirelockComponent? firelock = null,
-            DoorComponent? door = null,
-            AirtightComponent? airtight = null,
-            AppearanceComponent? appearance = null,
-            TransformComponent? xform = null)
-        {
-            if (!Resolve(uid, ref door, ref appearance, false))
-                return;
-
-            // only bother to check pressure on doors that are some variation of closed.
-            if (door.State != DoorState.Closed
-                && door.State != DoorState.Welded
-                && door.State != DoorState.Denying)
-            {
-                _appearance.SetData(uid, DoorVisuals.ClosedLights, false, appearance);
-                return;
-            }
-
-            var query = GetEntityQuery<AirtightComponent>();
-            if (!Resolve(uid, ref firelock, ref airtight, ref appearance, ref xform, false) || !query.Resolve(uid, ref airtight, false))
-                return;
-
-            var (fire, pressure) = CheckPressureAndFire(uid, firelock, xform, airtight, query);
-            _appearance.SetData(uid, DoorVisuals.ClosedLights, fire || pressure, appearance);
-        }
-        #endregion
-
-        public bool EmergencyPressureStop(EntityUid uid, FirelockComponent? firelock = null, DoorComponent? door = null)
-        {
-            if (!Resolve(uid, ref firelock, ref door))
-                return false;
-
-            if (door.State == DoorState.Open)
-            {
-                if (_doorSystem.TryClose(uid, door))
-                {
-                    return _doorSystem.OnPartialClose(uid, door);
-                }
-            }
-            return false;
-        }
-
-        private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
-        {
-            // Give the Door remote the ability to force a firelock open even if it is holding back dangerous gas
-            var overrideAccess = (args.User != null) && _accessReaderSystem.IsAllowed(args.User.Value, uid);
-
-            if (!this.IsPowered(uid, EntityManager) || (!overrideAccess && IsHoldingPressureOrFire(uid, component)))
-                args.Cancel();
-        }
-
-        private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, ref GetPryTimeModifierEvent args)
-        {
-            var state = CheckPressureAndFire(uid, component);
-
-            if (state.Fire)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("firelock-component-is-holding-fire-message"),
-                    uid, args.User, PopupType.MediumCaution);
-            }
-            else if (state.Pressure)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("firelock-component-is-holding-pressure-message"),
-                    uid, args.User, PopupType.MediumCaution);
-            }
-
-            if (state.Fire || state.Pressure)
-                args.PryTimeModifier *= component.LockedPryTimeModifier;
-        }
-
-        private void OnUpdateState(EntityUid uid, FirelockComponent component, DoorStateChangedEvent args)
-        {
-            var ev = new BeforeDoorAutoCloseEvent();
-            RaiseLocalEvent(uid, ev);
-            UpdateVisuals(uid, component, args);
-            if (ev.Cancelled)
-            {
-                return;
-            }
-
-            _doorSystem.SetNextStateChange(uid, component.AutocloseDelay);
-        }
-
-        private void OnBeforeDoorAutoclose(EntityUid uid, FirelockComponent component, BeforeDoorAutoCloseEvent args)
-        {
-            if (!this.IsPowered(uid, EntityManager))
-                args.Cancel();
-
-            // Make firelocks autoclose, but only if the last alarm type it
-            // remembers was a danger. This is to prevent people from
-            // flooding hallways with endless bad air/fire.
-            if (component.AlarmAutoClose &&
-                (_atmosAlarmable.TryGetHighestAlert(uid, out var alarm) && alarm != AtmosAlarmType.Danger || alarm == null))
-                args.Cancel();
         }
 
         private void OnAtmosAlarm(EntityUid uid, FirelockComponent component, AtmosAlarmEvent args)
@@ -193,7 +92,7 @@ namespace Content.Server.Doors.Systems
             if (!TryComp<DoorComponent>(uid, out var doorComponent))
                 return;
 
-            if (args.AlarmType == AtmosAlarmType.Normal || args.AlarmType == AtmosAlarmType.Warning)
+            if (args.AlarmType == AtmosAlarmType.Normal)
             {
                 if (doorComponent.State == DoorState.Closed)
                     _doorSystem.TryOpen(uid);
@@ -202,12 +101,6 @@ namespace Content.Server.Doors.Systems
             {
                 EmergencyPressureStop(uid, component, doorComponent);
             }
-        }
-
-        public bool IsHoldingPressureOrFire(EntityUid uid, FirelockComponent firelock)
-        {
-            var result = CheckPressureAndFire(uid, firelock);
-            return result.Pressure || result.Fire;
         }
 
         public (bool Pressure, bool Fire) CheckPressureAndFire(EntityUid uid, FirelockComponent firelock)
@@ -234,17 +127,17 @@ namespace Content.Server.Doors.Systems
                 return (false, false);
             }
 
-            if (!TryComp(xform.ParentUid, out GridAtmosphereComponent? gridAtmosphere))
+            if (!HasComp<GridAtmosphereComponent>(xform.ParentUid))
                 return (false, false);
 
             var grid = Comp<MapGridComponent>(xform.ParentUid);
-            var pos = grid.CoordinatesToTile(xform.Coordinates);
+            var pos = _mapping.CoordinatesToTile(xform.ParentUid, grid, xform.Coordinates);
             var minPressure = float.MaxValue;
             var maxPressure = float.MinValue;
             var minTemperature = float.MaxValue;
             var maxTemperature = float.MinValue;
-            bool holdingFire = false;
-            bool holdingPressure = false;
+            var holdingFire = false;
+            var holdingPressure = false;
 
             // We cannot simply use `_atmosSystem.GetAdjacentTileMixtures` because of how the `includeBlocked` option
             // works, we want to ignore the firelock's blocking, while including blockers on other tiles.
@@ -284,7 +177,7 @@ namespace Content.Server.Doors.Systems
                 {
                     // Is there some airtight entity blocking this direction? If yes, don't include this direction in the
                     // pressure differential
-                    if (HasAirtightBlocker(grid.GetAnchoredEntities(adjacentPos), dir.GetOpposite(), airtightQuery))
+                    if (HasAirtightBlocker(_mapping.GetAnchoredEntities(xform.ParentUid, grid, adjacentPos), dir.GetOpposite(), airtightQuery))
                         continue;
 
                     var p = gas.Pressure;

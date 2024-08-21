@@ -104,15 +104,14 @@ namespace Content.Shared.Atmos
         {
             return direction switch
             {
-                AtmosDirection.East => Angle.FromDegrees(90),
-                AtmosDirection.North => Angle.FromDegrees(180),
-                AtmosDirection.West => Angle.FromDegrees(270),
-                AtmosDirection.South => Angle.FromDegrees(0),
-
-                AtmosDirection.NorthEast => Angle.FromDegrees(135),
-                AtmosDirection.NorthWest => Angle.FromDegrees(205),
-                AtmosDirection.SouthWest => Angle.FromDegrees(315),
-                AtmosDirection.SouthEast => Angle.FromDegrees(45),
+                AtmosDirection.South => Angle.Zero,
+                AtmosDirection.East => new Angle(MathHelper.PiOver2),
+                AtmosDirection.North => new Angle(Math.PI),
+                AtmosDirection.West => new Angle(-MathHelper.PiOver2),
+                AtmosDirection.NorthEast => new Angle(Math.PI*3/4),
+                AtmosDirection.NorthWest => new Angle(-Math.PI*3/4),
+                AtmosDirection.SouthWest => new Angle(-MathHelper.PiOver4),
+                AtmosDirection.SouthEast => new Angle(MathHelper.PiOver4),
 
                 _ => throw new ArgumentOutOfRangeException(nameof(direction), $"It was {direction}."),
             };

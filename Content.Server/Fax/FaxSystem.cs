@@ -4,7 +4,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Paper;
+using Content.Server.Labels;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Tools;
@@ -16,7 +16,11 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
+using Content.Shared.Fax.Systems;
+using Content.Shared.Fax.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Labels.Components;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Paper;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -24,6 +28,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Content.Shared.NameModifier.Components;
 
 namespace Content.Server.Fax;
 
@@ -36,24 +41,16 @@ public sealed class FaxSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly PaperSystem _paperSystem = default!;
+    [Dependency] private readonly LabelSystem _labelSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly FaxecuteSystem _faxecute = default!;
 
     private const string PaperSlotId = "Paper";
-
-    /// <summary>
-    ///     The prototype ID to use for faxed or copied entities if we can't get one from
-    ///     the paper entity for whatever reason.
-    /// </summary>
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string DefaultPaperPrototypeId = "Paper";
-    
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string OfficePaperPrototypeId = "PaperOffice";
 
     public override void Initialize()
     {
@@ -235,8 +232,9 @@ public sealed class FaxSystem : EntitySystem
                 return;
             }
 
-            _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(args.User):user} renamed {ToPrettyString(uid)} from \"{component.FaxName}\" to \"{newName}\"");
+            _adminLogger.Add(LogType.Action,
+                LogImpact.Low,
+                $"{ToPrettyString(args.User):user} renamed {ToPrettyString(uid):tool} from \"{component.FaxName}\" to \"{newName}\"");
             component.FaxName = newName;
             _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-name-set"), uid);
             UpdateUserInterface(uid, component);
@@ -288,11 +286,13 @@ public sealed class FaxSystem : EntitySystem
                         !args.Data.TryGetValue(FaxConstants.FaxPaperContentData, out string? content))
                         return;
 
+                    args.Data.TryGetValue(FaxConstants.FaxPaperLabelData, out string? label);
                     args.Data.TryGetValue(FaxConstants.FaxPaperStampStateData, out string? stampState);
                     args.Data.TryGetValue(FaxConstants.FaxPaperStampedByData, out List<StampDisplayInfo>? stampedBy);
                     args.Data.TryGetValue(FaxConstants.FaxPaperPrototypeData, out string? prototypeId);
+                    args.Data.TryGetValue(FaxConstants.FaxPaperLockedData, out bool? locked);
 
-                    var printout = new FaxPrintout(content, name, prototypeId, stampState, stampedBy);
+                    var printout = new FaxPrintout(content, name, label, prototypeId, stampState, stampedBy, locked ?? false);
                     Receive(uid, printout, args.SenderAddress);
 
                     break;
@@ -307,18 +307,25 @@ public sealed class FaxSystem : EntitySystem
 
     private void OnFileButtonPressed(EntityUid uid, FaxMachineComponent component, FaxFileMessage args)
     {
+        args.Label = args.Label?[..Math.Min(args.Label.Length, FaxFileMessageValidation.MaxLabelSize)];
         args.Content = args.Content[..Math.Min(args.Content.Length, FaxFileMessageValidation.MaxContentSize)];
         PrintFile(uid, component, args);
     }
 
     private void OnCopyButtonPressed(EntityUid uid, FaxMachineComponent component, FaxCopyMessage args)
     {
-        Copy(uid, component, args);
+        if (HasComp<MobStateComponent>(component.PaperSlot.Item))
+            _faxecute.Faxecute(uid, component); // when button pressed it will hurt the mob.
+        else
+            Copy(uid, component, args);
     }
 
     private void OnSendButtonPressed(EntityUid uid, FaxMachineComponent component, FaxSendMessage args)
     {
-        Send(uid, component, args.Session.AttachedEntity);
+        if (HasComp<MobStateComponent>(component.PaperSlot.Item))
+            _faxecute.Faxecute(uid, component); // when button pressed it will hurt the mob.
+        else
+            Send(uid, component, args);
     }
 
     private void OnRefreshButtonPressed(EntityUid uid, FaxMachineComponent component, FaxRefreshMessage args)
@@ -336,14 +343,20 @@ public sealed class FaxSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
+        if (TryComp<FaxableObjectComponent>(component.PaperSlot.Item, out var faxable))
+            component.InsertingState = faxable.InsertingState;
+
+
         if (component.InsertingTimeRemaining > 0)
+        {
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Inserting);
+            Dirty(uid, component);
+        }
         else if (component.PrintingTimeRemaining > 0)
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
         else
             _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Normal);
     }
-
     private void UpdateUserInterface(EntityUid uid, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -358,7 +371,7 @@ public sealed class FaxSystem : EntitySystem
                       component.SendTimeoutRemaining <= 0 &&
                       component.InsertingTimeRemaining <= 0;
         var state = new FaxUiState(component.FaxName, component.KnownFaxes, canSend, canCopy, isPaperInserted, component.DestinationFaxAddress);
-        _userInterface.TrySetUiState(uid, FaxUiKey.Key, state);
+        _userInterface.SetUiState(uid, FaxUiKey.Key, state);
     }
 
     /// <summary>
@@ -403,26 +416,23 @@ public sealed class FaxSystem : EntitySystem
     /// </summary>
     public void PrintFile(EntityUid uid, FaxMachineComponent component, FaxFileMessage args)
     {
-        string prototype;
-        if (args.OfficePaper)
-            prototype = OfficePaperPrototypeId;
-        else
-            prototype = DefaultPaperPrototypeId;
+        var prototype = args.OfficePaper ? component.PrintOfficePaperId : component.PrintPaperId;
 
-        var name  = Loc.GetString("fax-machine-printed-paper-name");
-        
-        var printout = new FaxPrintout(args.Content, name, prototype);
+        var name = Loc.GetString("fax-machine-printed-paper-name");
+
+        var printout = new FaxPrintout(args.Content, name, args.Label, prototype);
         component.PrintingQueue.Enqueue(printout);
         component.SendTimeoutRemaining += component.SendTimeout;
 
         UpdateUserInterface(uid, component);
 
-        if (args.Session.AttachedEntity != null)
-            _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} added print job to {ToPrettyString(uid):tool} with text: {args.Content}");
-        else
-            _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"Someone added print job to {ToPrettyString(uid):tool} with text: {args.Content}");
+        // Unfortunately, since a paper entity does not yet exist, we have to emulate what LabelSystem will do.
+        var nameWithLabel = (args.Label is { } label) ? $"{name} ({label})" : name;
+        _adminLogger.Add(LogType.Action,
+            LogImpact.Low,
+            $"{ToPrettyString(args.Actor):actor} " +
+            $"added print job to \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
+            $"of {nameWithLabel}: {args.Content}");
     }
 
     /// <summary>
@@ -438,16 +448,21 @@ public sealed class FaxSystem : EntitySystem
         if (sendEntity == null)
             return;
 
-        if (!TryComp<MetaDataComponent>(sendEntity, out var metadata) ||
+        if (!TryComp(sendEntity, out MetaDataComponent? metadata) ||
             !TryComp<PaperComponent>(sendEntity, out var paper))
             return;
 
+        TryComp<LabelComponent>(sendEntity, out var labelComponent);
+        TryComp<NameModifierComponent>(sendEntity, out var nameMod);
+
         // TODO: See comment in 'Send()' about not being able to copy whole entities
         var printout = new FaxPrintout(paper.Content,
-                                       metadata.EntityName,
-                                       metadata.EntityPrototype?.ID ?? DefaultPaperPrototypeId,
+                                       nameMod?.BaseName ?? metadata.EntityName,
+                                       labelComponent?.CurrentLabel,
+                                       metadata.EntityPrototype?.ID ?? component.PrintPaperId,
                                        paper.StampState,
-                                       paper.StampedBy);
+                                       paper.StampedBy,
+                                       paper.EditingDisabled);
 
         component.PrintingQueue.Enqueue(printout);
         component.SendTimeoutRemaining += component.SendTimeout;
@@ -457,16 +472,18 @@ public sealed class FaxSystem : EntitySystem
 
         UpdateUserInterface(uid, component);
 
-        if (args.Session.AttachedEntity != null)
-            _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(args.Session.AttachedEntity.Value):actor} added copy job to {ToPrettyString(uid):tool} with text: {ToPrettyString(component.PaperSlot.Item):subject}");
+        _adminLogger.Add(LogType.Action,
+            LogImpact.Low,
+            $"{ToPrettyString(args.Actor):actor} " +
+            $"added copy job to \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
+            $"of {ToPrettyString(sendEntity):subject}: {printout.Content}");
     }
 
     /// <summary>
     ///     Sends message to addressee if paper is set and a known fax is selected
     ///     A timeout is set after sending, which is shared by the copy button.
     /// </summary>
-    public void Send(EntityUid uid, FaxMachineComponent? component = null, EntityUid? sender = null)
+    public void Send(EntityUid uid, FaxMachineComponent? component, FaxSendMessage args)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -481,15 +498,21 @@ public sealed class FaxSystem : EntitySystem
         if (!component.KnownFaxes.TryGetValue(component.DestinationFaxAddress, out var faxName))
             return;
 
-        if (!TryComp<MetaDataComponent>(sendEntity, out var metadata) ||
-            !TryComp<PaperComponent>(sendEntity, out var paper))
+        if (!TryComp(sendEntity, out MetaDataComponent? metadata) ||
+           !TryComp<PaperComponent>(sendEntity, out var paper))
             return;
+
+        TryComp<NameModifierComponent>(sendEntity, out var nameMod);
+
+        TryComp<LabelComponent>(sendEntity, out var labelComponent);
 
         var payload = new NetworkPayload()
         {
             { DeviceNetworkConstants.Command, FaxConstants.FaxPrintCommand },
-            { FaxConstants.FaxPaperNameData, metadata.EntityName },
+            { FaxConstants.FaxPaperNameData, nameMod?.BaseName ?? metadata.EntityName },
+            { FaxConstants.FaxPaperLabelData, labelComponent?.CurrentLabel },
             { FaxConstants.FaxPaperContentData, paper.Content },
+            { FaxConstants.FaxPaperLockedData, paper.EditingDisabled },
         };
 
         if (metadata.EntityPrototype != null)
@@ -497,7 +520,7 @@ public sealed class FaxSystem : EntitySystem
             // TODO: Ideally, we could just make a copy of the whole entity when it's
             // faxed, in order to preserve visuals, etc.. This functionality isn't
             // available yet, so we'll pass along the originating prototypeId and fall
-            // back to DefaultPaperPrototypeId in SpawnPaperFromQueue if we can't find one here.
+            // back to component.PrintPaperId in SpawnPaperFromQueue if we can't find one here.
             payload[FaxConstants.FaxPaperPrototypeData] = metadata.EntityPrototype.ID;
         }
 
@@ -509,7 +532,12 @@ public sealed class FaxSystem : EntitySystem
 
         _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{(sender != null ? ToPrettyString(sender.Value) : "Unknown"):user} sent fax from \"{component.FaxName}\" {ToPrettyString(uid)} to {faxName} ({component.DestinationFaxAddress}): {paper.Content}");
+        _adminLogger.Add(LogType.Action,
+            LogImpact.Low,
+            $"{ToPrettyString(args.Actor):actor} " +
+            $"sent fax from \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
+            $"to \"{faxName}\" ({component.DestinationFaxAddress}) " +
+            $"of {ToPrettyString(sendEntity):subject}: {paper.Content}");
 
         component.SendTimeoutRemaining += component.SendTimeout;
 
@@ -547,25 +575,33 @@ public sealed class FaxSystem : EntitySystem
 
         var printout = component.PrintingQueue.Dequeue();
 
-        var entityToSpawn = printout.PrototypeId.Length == 0 ? DefaultPaperPrototypeId : printout.PrototypeId;
+        var entityToSpawn = printout.PrototypeId.Length == 0 ? component.PrintPaperId.ToString() : printout.PrototypeId;
         var printed = EntityManager.SpawnEntity(entityToSpawn, Transform(uid).Coordinates);
 
         if (TryComp<PaperComponent>(printed, out var paper))
         {
-            _paperSystem.SetContent(printed, printout.Content);
+            _paperSystem.SetContent((printed, paper), printout.Content);
 
             // Apply stamps
             if (printout.StampState != null)
             {
                 foreach (var stamp in printout.StampedBy)
                 {
-                    _paperSystem.TryStamp(printed, stamp, printout.StampState);
+                    _paperSystem.TryStamp((printed, paper), stamp, printout.StampState);
                 }
             }
+
+            paper.EditingDisabled = printout.Locked;
         }
 
         _metaData.SetEntityName(printed, printout.Name);
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"\"{component.FaxName}\" {ToPrettyString(uid)} printed {ToPrettyString(printed)}: {printout.Content}");
+
+        if (printout.Label is { } label)
+        {
+            _labelSystem.Label(printed, label);
+        }
+
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"\"{component.FaxName}\" {ToPrettyString(uid):tool} printed {ToPrettyString(printed):subject}: {printout.Content}");
     }
 
     private void NotifyAdmins(string faxName)

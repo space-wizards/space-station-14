@@ -110,7 +110,10 @@ public abstract partial class SharedHandsSystem
             return false;
 
         var entity = hand.HeldEntity!.Value;
-        DoDrop(uid, hand, doDropInteraction: doDropInteraction, handsComp);
+
+        // if item is a fake item (like with pulling), just delete it rather than bothering with trying to drop it into the world
+        if (TryComp(entity, out VirtualItemComponent? @virtual))
+            _virtualSystem.DeleteVirtualItem((entity, @virtual), uid);
 
         if (TerminatingOrDeleted(entity))
             return true;
@@ -120,24 +123,27 @@ public abstract partial class SharedHandsSystem
             return true;
 
         var userXform = Transform(uid);
-        var isInContainer = ContainerSystem.IsEntityInContainer(uid);
+        var isInContainer = ContainerSystem.IsEntityOrParentInContainer(uid, xform: userXform);
 
-        if (targetDropLocation == null || isInContainer)
-        {
-            // If user is in a container, drop item into that container. Otherwise, attach to grid or map.\
-            // TODO recursively check upwards for containers
-
-            if (!isInContainer
-                || !ContainerSystem.TryGetContainingContainer(userXform.ParentUid, uid, out var container, skipExistCheck: true)
-                || !ContainerSystem.Insert((entity, itemXform), container))
-                TransformSystem.AttachToGridOrMap(entity, itemXform);
+        // if the user is in a container, drop the item inside the container
+        if (isInContainer) {
+            TransformSystem.DropNextTo((entity, itemXform), (uid, userXform));
             return true;
         }
+        
+        // drop the item with heavy calculations from their hands and place it at the calculated interaction range position
+        // The DoDrop is handle if there's no drop target
+        DoDrop(uid, hand, doDropInteraction: doDropInteraction, handsComp);
 
+        // if there's no drop location stop here
+        if (targetDropLocation == null)
+            return true;
+        
+        // otherwise, also move dropped item and rotate it properly according to grid/map
         var (itemPos, itemRot) = TransformSystem.GetWorldPositionRotation(entity);
         var origin = new MapCoordinates(itemPos, itemXform.MapID);
-        var target = targetDropLocation.Value.ToMap(EntityManager, TransformSystem);
-        TransformSystem.SetWorldPositionRotation(entity, GetFinalDropCoordinates(uid, origin, target), itemRot);
+        var target = TransformSystem.ToMapCoordinates(targetDropLocation.Value);
+        TransformSystem.SetWorldPositionRotation(entity, GetFinalDropCoordinates(uid, origin, target, entity), itemRot);
         return true;
     }
 
@@ -166,7 +172,7 @@ public abstract partial class SharedHandsSystem
     /// <summary>
     ///     Calculates the final location a dropped item will end up at, accounting for max drop range and collision along the targeted drop path, Does a check to see if a user should bypass those checks as well.
     /// </summary>
-    private Vector2 GetFinalDropCoordinates(EntityUid user, MapCoordinates origin, MapCoordinates target)
+    private Vector2 GetFinalDropCoordinates(EntityUid user, MapCoordinates origin, MapCoordinates target, EntityUid held)
     {
         var dropVector = target.Position - origin.Position;
         var requestedDropDistance = dropVector.Length();
@@ -180,7 +186,7 @@ public abstract partial class SharedHandsSystem
                 target = new MapCoordinates(origin.Position + dropVector, target.MapId);
             }
 
-            dropLength = _interactionSystem.UnobstructedDistance(origin, target, predicate: e => e == user);
+            dropLength = _interactionSystem.UnobstructedDistance(origin, target, predicate: e => e == user || e == held);
         }
 
         if (dropLength < requestedDropDistance)

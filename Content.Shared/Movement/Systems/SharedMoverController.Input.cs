@@ -83,53 +83,53 @@ namespace Content.Shared.Movement.Systems
             return oldMovement;
         }
 
-        protected void SetMoveInput(InputMoverComponent component, MoveButtons buttons)
+        protected void SetMoveInput(Entity<InputMoverComponent> entity, MoveButtons buttons)
         {
-            if (component.HeldMoveButtons == buttons)
+            if (entity.Comp.HeldMoveButtons == buttons)
                 return;
 
             // Relay the fact we had any movement event.
             // TODO: Ideally we'd do these in a tick instead of out of sim.
-            var moveEvent = new MoveInputEvent(component.Owner, component, component.HeldMoveButtons);
-            component.HeldMoveButtons = buttons;
-            RaiseLocalEvent(component.Owner, ref moveEvent);
-            Dirty(component.Owner, component);
+            var moveEvent = new MoveInputEvent(entity, entity.Comp.HeldMoveButtons);
+            entity.Comp.HeldMoveButtons = buttons;
+            RaiseLocalEvent(entity, ref moveEvent);
+            Dirty(entity, entity.Comp);
         }
 
-        private void OnMoverHandleState(EntityUid uid, InputMoverComponent component, ComponentHandleState args)
+        private void OnMoverHandleState(Entity<InputMoverComponent> entity, ref ComponentHandleState args)
         {
             if (args.Current is not InputMoverComponentState state)
                 return;
 
             // Handle state
-            component.LerpTarget = state.LerpTarget;
-            component.RelativeRotation = state.RelativeRotation;
-            component.TargetRelativeRotation = state.TargetRelativeRotation;
-            component.CanMove = state.CanMove;
-            component.RelativeEntity = EnsureEntity<InputMoverComponent>(state.RelativeEntity, uid);
+            entity.Comp.LerpTarget = state.LerpTarget;
+            entity.Comp.RelativeRotation = state.RelativeRotation;
+            entity.Comp.TargetRelativeRotation = state.TargetRelativeRotation;
+            entity.Comp.CanMove = state.CanMove;
+            entity.Comp.RelativeEntity = EnsureEntity<InputMoverComponent>(state.RelativeEntity, entity.Owner);
 
             // Reset
-            component.LastInputTick = GameTick.Zero;
-            component.LastInputSubTick = 0;
+            entity.Comp.LastInputTick = GameTick.Zero;
+            entity.Comp.LastInputSubTick = 0;
 
-            if (component.HeldMoveButtons != state.HeldMoveButtons)
+            if (entity.Comp.HeldMoveButtons != state.HeldMoveButtons)
             {
-                var moveEvent = new MoveInputEvent(uid, component, component.HeldMoveButtons);
-                component.HeldMoveButtons = state.HeldMoveButtons;
-                RaiseLocalEvent(uid, ref moveEvent);
+                var moveEvent = new MoveInputEvent(entity, entity.Comp.HeldMoveButtons);
+                entity.Comp.HeldMoveButtons = state.HeldMoveButtons;
+                RaiseLocalEvent(entity.Owner, ref moveEvent);
             }
         }
 
-        private void OnMoverGetState(EntityUid uid, InputMoverComponent component, ref ComponentGetState args)
+        private void OnMoverGetState(Entity<InputMoverComponent> entity, ref ComponentGetState args)
         {
             args.State = new InputMoverComponentState()
             {
-                CanMove = component.CanMove,
-                RelativeEntity = GetNetEntity(component.RelativeEntity),
-                LerpTarget = component.LerpTarget,
-                HeldMoveButtons = component.HeldMoveButtons,
-                RelativeRotation = component.RelativeRotation,
-                TargetRelativeRotation = component.TargetRelativeRotation,
+                CanMove = entity.Comp.CanMove,
+                RelativeEntity = GetNetEntity(entity.Comp.RelativeEntity),
+                LerpTarget = entity.Comp.LerpTarget,
+                HeldMoveButtons = entity.Comp.HeldMoveButtons,
+                RelativeRotation = entity.Comp.RelativeRotation,
+                TargetRelativeRotation = entity.Comp.TargetRelativeRotation,
             };
         }
 
@@ -142,9 +142,9 @@ namespace Content.Shared.Movement.Systems
 
         protected virtual void HandleShuttleInput(EntityUid uid, ShuttleButtons button, ushort subTick, bool state) {}
 
-        private void OnAutoParentChange(EntityUid uid, AutoOrientComponent component, ref EntParentChangedMessage args)
+        private void OnAutoParentChange(Entity<AutoOrientComponent> entity, ref EntParentChangedMessage args)
         {
-            ResetCamera(uid);
+            ResetCamera(entity.Owner);
         }
 
         public void RotateCamera(EntityUid uid, Angle angle)
@@ -233,59 +233,59 @@ namespace Content.Shared.Movement.Systems
             return rotation;
         }
 
-        private void OnFollowedParentChange(EntityUid uid, FollowedComponent component, ref EntParentChangedMessage args)
+        private void OnFollowedParentChange(Entity<FollowedComponent> entity, ref EntParentChangedMessage args)
         {
-            foreach (var foll in component.Following)
+            foreach (var foll in entity.Comp.Following)
             {
                 if (!MoverQuery.TryGetComponent(foll, out var mover))
                     continue;
 
                 var ev = new EntParentChangedMessage(foll, null, args.OldMapId, XformQuery.GetComponent(foll));
-                OnInputParentChange(foll, mover, ref ev);
+                OnInputParentChange((foll, mover), ref ev);
             }
         }
 
-        private void OnInputParentChange(EntityUid uid, InputMoverComponent component, ref EntParentChangedMessage args)
+        private void OnInputParentChange(Entity<InputMoverComponent> entity, ref EntParentChangedMessage args)
         {
             // If we change our grid / map then delay updating our LastGridAngle.
             var relative = args.Transform.GridUid;
             relative ??= args.Transform.MapUid;
 
-            if (component.LifeStage < ComponentLifeStage.Running)
+            if (entity.Comp.LifeStage < ComponentLifeStage.Running)
             {
-                component.RelativeEntity = relative;
-                Dirty(uid, component);
+                entity.Comp.RelativeEntity = relative;
+                Dirty(entity.Owner, entity.Comp);
                 return;
             }
 
             var oldMapId = args.OldMapId;
-            var mapId = args.Transform.MapID;
+            var mapId = args.Transform.MapUid;
 
             // If we change maps then reset eye rotation entirely.
             if (oldMapId != mapId)
             {
-                component.RelativeEntity = relative;
-                component.TargetRelativeRotation = Angle.Zero;
-                component.RelativeRotation = Angle.Zero;
-                component.LerpTarget = TimeSpan.Zero;
-                Dirty(uid, component);
+                entity.Comp.RelativeEntity = relative;
+                entity.Comp.TargetRelativeRotation = Angle.Zero;
+                entity.Comp.RelativeRotation = Angle.Zero;
+                entity.Comp.LerpTarget = TimeSpan.Zero;
+                Dirty(entity.Owner, entity.Comp);
                 return;
             }
 
             // If we go on a grid and back off then just reset the accumulator.
-            if (relative == component.RelativeEntity)
+            if (relative == entity.Comp.RelativeEntity)
             {
-                if (component.LerpTarget >= Timing.CurTime)
+                if (entity.Comp.LerpTarget >= Timing.CurTime)
                 {
-                    component.LerpTarget = TimeSpan.Zero;
-                    Dirty(uid, component);
+                    entity.Comp.LerpTarget = TimeSpan.Zero;
+                    Dirty(entity.Owner, entity.Comp);
                 }
 
                 return;
             }
 
-            component.LerpTarget = TimeSpan.FromSeconds(InputMoverComponent.LerpTime) + Timing.CurTime;
-            Dirty(uid, component);
+            entity.Comp.LerpTarget = TimeSpan.FromSeconds(InputMoverComponent.LerpTime) + Timing.CurTime;
+            Dirty(entity.Owner, entity.Comp);
         }
 
         private void HandleDirChange(EntityUid entity, Direction dir, ushort subTick, bool state)
@@ -299,7 +299,7 @@ namespace Content.Shared.Movement.Systems
                 DebugTools.AssertNotNull(relayMover.RelayEntity);
 
                 if (MoverQuery.TryGetComponent(entity, out var mover))
-                    SetMoveInput(mover, MoveButtons.None);
+                    SetMoveInput((entity, mover), MoveButtons.None);
 
                 if (!_mobState.IsIncapacitated(entity))
                     HandleDirChange(relayMover.RelayEntity, dir, subTick, state);
@@ -313,7 +313,7 @@ namespace Content.Shared.Movement.Systems
             // For stuff like "Moving out of locker" or the likes
             // We'll relay a movement input to the parent.
             if (_container.IsEntityInContainer(entity) &&
-                TryComp<TransformComponent>(entity, out var xform) &&
+                TryComp(entity, out TransformComponent? xform) &&
                 xform.ParentUid.IsValid() &&
                 _mobState.IsAlive(entity))
             {
@@ -321,18 +321,18 @@ namespace Content.Shared.Movement.Systems
                 RaiseLocalEvent(xform.ParentUid, ref relayMoveEvent);
             }
 
-            SetVelocityDirection(entity, moverComp, dir, subTick, state);
+            SetVelocityDirection((entity, moverComp), dir, subTick, state);
         }
 
-        private void OnInputInit(EntityUid uid, InputMoverComponent component, ComponentInit args)
+        private void OnInputInit(Entity<InputMoverComponent> entity, ref ComponentInit args)
         {
-            var xform = Transform(uid);
+            var xform = Transform(entity.Owner);
 
             if (!xform.ParentUid.IsValid())
                 return;
 
-            component.RelativeEntity = xform.GridUid ?? xform.MapUid;
-            component.TargetRelativeRotation = Angle.Zero;
+            entity.Comp.RelativeEntity = xform.GridUid ?? xform.MapUid;
+            entity.Comp.TargetRelativeRotation = Angle.Zero;
         }
 
         private void HandleRunChange(EntityUid uid, ushort subTick, bool walking)
@@ -344,7 +344,7 @@ namespace Content.Shared.Movement.Systems
                 // if we swap to relay then stop our existing input if we ever change back.
                 if (moverComp != null)
                 {
-                    SetMoveInput(moverComp, MoveButtons.None);
+                    SetMoveInput((uid, moverComp), MoveButtons.None);
                 }
 
                 HandleRunChange(relayMover.RelayEntity, subTick, walking);
@@ -353,7 +353,7 @@ namespace Content.Shared.Movement.Systems
 
             if (moverComp == null) return;
 
-            SetSprinting(uid, moverComp, subTick, walking);
+            SetSprinting((uid, moverComp), subTick, walking);
         }
 
         public (Vector2 Walking, Vector2 Sprinting) GetVelocityInput(InputMoverComponent mover)
@@ -404,7 +404,7 @@ namespace Content.Shared.Movement.Systems
         ///     composed into a single direction vector, <see cref="VelocityDir"/>. Enabling
         ///     opposite directions will cancel each other out, resulting in no direction.
         /// </summary>
-        public void SetVelocityDirection(EntityUid entity, InputMoverComponent component, Direction direction, ushort subTick, bool enabled)
+        public void SetVelocityDirection(Entity<InputMoverComponent> entity, Direction direction, ushort subTick, bool enabled)
         {
             // Logger.Info($"[{_gameTiming.CurTick}/{subTick}] {direction}: {enabled}");
 
@@ -417,26 +417,26 @@ namespace Content.Shared.Movement.Systems
                 _ => throw new ArgumentException(nameof(direction))
             };
 
-            SetMoveInput(entity, component, subTick, enabled, bit);
+            SetMoveInput(entity, subTick, enabled, bit);
         }
 
-        private void SetMoveInput(EntityUid entity, InputMoverComponent component, ushort subTick, bool enabled, MoveButtons bit)
+        private void SetMoveInput(Entity<InputMoverComponent> entity, ushort subTick, bool enabled, MoveButtons bit)
         {
             // Modifies held state of a movement button at a certain sub tick and updates current tick movement vectors.
-            ResetSubtick(component);
+            ResetSubtick(entity.Comp);
 
-            if (subTick >= component.LastInputSubTick)
+            if (subTick >= entity.Comp.LastInputSubTick)
             {
-                var fraction = (subTick - component.LastInputSubTick) / (float) ushort.MaxValue;
+                var fraction = (subTick - entity.Comp.LastInputSubTick) / (float) ushort.MaxValue;
 
-                ref var lastMoveAmount = ref component.Sprinting ? ref component.CurTickSprintMovement : ref component.CurTickWalkMovement;
+                ref var lastMoveAmount = ref entity.Comp.Sprinting ? ref entity.Comp.CurTickSprintMovement : ref entity.Comp.CurTickWalkMovement;
 
-                lastMoveAmount += DirVecForButtons(component.HeldMoveButtons) * fraction;
+                lastMoveAmount += DirVecForButtons(entity.Comp.HeldMoveButtons) * fraction;
 
-                component.LastInputSubTick = subTick;
+                entity.Comp.LastInputSubTick = subTick;
             }
 
-            var buttons = component.HeldMoveButtons;
+            var buttons = entity.Comp.HeldMoveButtons;
 
             if (enabled)
             {
@@ -447,7 +447,7 @@ namespace Content.Shared.Movement.Systems
                 buttons &= ~bit;
             }
 
-            SetMoveInput(component, buttons);
+            SetMoveInput(entity, buttons);
         }
 
         private void ResetSubtick(InputMoverComponent component)
@@ -460,11 +460,11 @@ namespace Content.Shared.Movement.Systems
             component.LastInputSubTick = 0;
         }
 
-        public void SetSprinting(EntityUid entity, InputMoverComponent component, ushort subTick, bool walking)
+        public void SetSprinting(Entity<InputMoverComponent> entity, ushort subTick, bool walking)
         {
             // Logger.Info($"[{_gameTiming.CurTick}/{subTick}] Sprint: {enabled}");
 
-            SetMoveInput(entity, component, subTick, walking, MoveButtons.Walk);
+            SetMoveInput(entity, subTick, walking, MoveButtons.Walk);
         }
 
         /// <summary>

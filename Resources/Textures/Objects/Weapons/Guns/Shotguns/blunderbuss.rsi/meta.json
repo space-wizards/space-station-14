@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by brainfood1183(Github) inspired by an image created by rezierré#5003 (Discord)",
+  "copyright": "Made by brainfood1183(Github) inspired by an image created by rezierré#5003 (Discord), wield sprites by RiceMar1244",
   "size": {
     "x": 32,
     "y": 32
@@ -19,6 +19,14 @@
         },
         {
             "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "wielded-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "wielded-inhand-right",
             "directions": 4
         }
     ]

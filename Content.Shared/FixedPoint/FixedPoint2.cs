@@ -48,6 +48,8 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 FromCents(int value) => new(value);
 
+        public static FixedPoint2 FromHundredths(int value) => new(value);
+
         public static FixedPoint2 New(float value)
         {
             return new((int) ApplyFloatEpsilon(value * ShiftConstant));
@@ -237,7 +239,7 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 Abs(FixedPoint2 a)
         {
-            return FixedPoint2.New(Math.Abs(a.Value));
+            return FromCents(Math.Abs(a.Value));
         }
 
         public static FixedPoint2 Dist(FixedPoint2 a, FixedPoint2 b)
@@ -245,14 +247,14 @@ namespace Content.Shared.FixedPoint
             return FixedPoint2.Abs(a - b);
         }
 
-        public static FixedPoint2 Clamp(FixedPoint2 reagent, FixedPoint2 min, FixedPoint2 max)
+        public static FixedPoint2 Clamp(FixedPoint2 number, FixedPoint2 min, FixedPoint2 max)
         {
             if (min > max)
             {
                 throw new ArgumentException($"{nameof(min)} {min} cannot be larger than {nameof(max)} {max}");
             }
 
-            return reagent < min ? min : reagent > max ? max : reagent;
+            return number < min ? min : number > max ? max : number;
         }
 
         public override readonly bool Equals(object? obj)
@@ -274,7 +276,7 @@ namespace Content.Shared.FixedPoint
             if (value == "MaxValue")
                 Value = int.MaxValue;
             else
-                this = New(Parse.Float(value));
+                this = New(Parse.Double(value));
         }
 
         public override readonly string ToString() => $"{ShiftDown().ToString(CultureInfo.InvariantCulture)}";
@@ -314,7 +316,7 @@ namespace Content.Shared.FixedPoint
 
     }
 
-    public static class FixedPointEnumerableExt
+    public static class FixedPoint2EnumerableExt
     {
         public static FixedPoint2 Sum(this IEnumerable<FixedPoint2> source)
         {

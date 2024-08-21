@@ -2,14 +2,13 @@ using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
-using Content.Shared.Coordinates;
 using Content.Shared.Database;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Stacks;
-using Robust.Shared.Audio;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -29,6 +28,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     [Dependency] protected readonly SharedAmbientSoundSystem AmbientSound = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public const string ActiveReclaimerContainerId = "active-material-reclaimer-container";
 
@@ -91,18 +91,17 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         if (HasComp<MobStateComponent>(item) && !CanGib(uid, item, component)) // whitelist? We be gibbing, boy!
             return false;
 
-        if (component.Whitelist is {} whitelist && !whitelist.IsValid(item))
+        if (_whitelistSystem.IsWhitelistFail(component.Whitelist, item) ||
+            _whitelistSystem.IsBlacklistPass(component.Blacklist, item))
             return false;
 
-        if (component.Blacklist is {} blacklist && blacklist.IsValid(item))
-            return false;
-
-        if (Container.TryGetContainingContainer(item, out _) && !Container.TryRemoveFromContainer(item))
+        if (Container.TryGetContainingContainer((item, null, null), out _) && !Container.TryRemoveFromContainer(item))
             return false;
 
         if (user != null)
         {
-            _adminLog.Add(LogType.Action, LogImpact.High,
+            _adminLog.Add(LogType.Action,
+                LogImpact.High,
                 $"{ToPrettyString(user.Value):player} destroyed {ToPrettyString(item)} in the material reclaimer, {ToPrettyString(uid)}");
         }
 
@@ -171,13 +170,19 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     /// <summary>
     /// Sets the Enabled field on the reclaimer.
     /// </summary>
-    public void SetReclaimerEnabled(EntityUid uid, bool enabled, MaterialReclaimerComponent? component = null)
+    public bool SetReclaimerEnabled(EntityUid uid, bool enabled, MaterialReclaimerComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
-            return;
+            return true;
+
+        if (component.Broken && enabled)
+            return false;
+
         component.Enabled = enabled;
         AmbientSound.SetAmbience(uid, enabled && component.Powered);
         Dirty(uid, component);
+
+        return true;
     }
 
     /// <summary>
@@ -189,7 +194,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         if (HasComp<ActiveMaterialReclaimerComponent>(uid))
             return false;
 
-        return component.Powered && component.Enabled;
+        return component.Powered && component.Enabled && !component.Broken;
     }
 
     /// <summary>
@@ -200,6 +205,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
     {
         return component.Powered &&
                component.Enabled &&
+               !component.Broken &&
                HasComp<BodyComponent>(victim) &&
                HasComp<EmaggedComponent>(uid);
     }

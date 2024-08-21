@@ -51,8 +51,8 @@
     enabled: false
   - type: UserInterface
     interfaces:
-      - key: enum.GasPressurePumpUiKey.Key
-        type: GasPressurePumpBoundUserInterface
+        enum.GasPressurePumpUiKey.Key:
+          type: GasPressurePumpBoundUserInterface
   - type: Construction
     graph: GasBinary
     node: pressurepump
@@ -92,7 +92,7 @@
       enabled: false
     - type: UserInterface
       interfaces:
-        - key: enum.GasVolumePumpUiKey.Key
+        enum.GasVolumePumpUiKey.Key:
           type: GasVolumePumpBoundUserInterface
     - type: Construction
       graph: GasBinary
@@ -301,6 +301,7 @@
             In: { state: vent_in }
             Out: { state: vent_out }
             Welded: { state: vent_welded }
+            Lockout: { state: vent_lockout }
     - type: PipeColorVisuals
     - type: GasVentPump
       inlet: inlet
@@ -358,6 +359,7 @@
   - type: PipeColorVisuals
   - type: Rotatable
   - type: GasRecycler
+  - type: PipeRestrictOverlap
   - type: NodeContainer
     nodes:
       inlet:
