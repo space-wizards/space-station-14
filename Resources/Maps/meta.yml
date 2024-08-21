@@ -10804,7 +10804,7 @@ entities:
       pos: -42.5,29.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -1375.567
+      secondsUntilStateChange: -2052.8645
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -60984,13 +60984,6 @@ entities:
     - type: Transform
       pos: -54.487633,-18.620468
       parent: 5350
-- proto: ClothingOuterCoatDetectiveLoadout
-  entities:
-  - uid: 23129
-    components:
-    - type: Transform
-      pos: -22.593464,38.504482
-      parent: 5350
 - proto: ClothingOuterCoatGentle
   entities:
   - uid: 13742
@@ -61018,6 +61011,13 @@ entities:
     components:
     - type: Transform
       pos: -5.527274,-39.534935
+      parent: 5350
+- proto: ClothingOuterCoatTrench
+  entities:
+  - uid: 16785
+    components:
+    - type: Transform
+      pos: -23.450022,38.487732
       parent: 5350
 - proto: ClothingOuterHardsuitEVAPrisoner
   entities:
@@ -117655,7 +117655,7 @@ entities:
       parent: 5350
 - proto: MachineFrame
   entities:
-  - uid: 19020
+  - uid: 22686
     components:
     - type: Transform
       pos: 41.5,-31.5
@@ -117720,11 +117720,6 @@ entities:
     - type: Transform
       pos: 28.5,22.5
       parent: 5350
-  - uid: 16785
-    components:
-    - type: Transform
-      pos: 37.5,-33.5
-      parent: 5350
   - uid: 17304
     components:
     - type: Transform
@@ -117734,6 +117729,11 @@ entities:
     components:
     - type: Transform
       pos: 52.5,36.5
+      parent: 5350
+  - uid: 19020
+    components:
+    - type: Transform
+      pos: 37.5,-33.5
       parent: 5350
   - uid: 22114
     components:
@@ -117809,7 +117809,7 @@ entities:
     - type: Transform
       pos: 36.5,-51.5
       parent: 5350
-  - uid: 22686
+  - uid: 22690
     components:
     - type: Transform
       pos: 37.5,-36.5
