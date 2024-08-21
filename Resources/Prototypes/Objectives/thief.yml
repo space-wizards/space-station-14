@@ -316,17 +316,6 @@
   - type: Objective
     difficulty: 1
 
-- type: entity
-  parent: BaseThiefStealObjective
-  id: ClothingNeckShockCollarStealObjective
-  components:
-  - type: NotJobRequirement
-    job: Warden
-  - type: StealCondition
-    stealGroup: ClothingNeckShockCollar
-  - type: Objective
-    difficulty: 1
-
 # Structures
 
 - type: entity
