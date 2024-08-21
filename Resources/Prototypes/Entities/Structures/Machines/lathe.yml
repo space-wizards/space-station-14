@@ -338,6 +338,9 @@
       - FauxTileAstroSnow
       - OreBagOfHolding
       - DeviceQuantumSpinInverter
+      - PKAUpgradeDamage
+      - PKAUpgradeRange
+      - PKAUpgradeFireRate
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - BoxBeanbag
