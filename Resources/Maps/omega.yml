@@ -58623,7 +58623,7 @@ entities:
   - uid: 10860
     components:
     - type: Transform
-      pos: -22.5,-1.5
+      pos: -17.5,1.5
       parent: 4812
     - type: ContainerContainer
       containers:
@@ -70301,6 +70301,13 @@ entities:
     components:
     - type: Transform
       pos: -37.5,-33.5
+      parent: 4812
+- proto: VendingMachineWinter
+  entities:
+  - uid: 4807
+    components:
+    - type: Transform
+      pos: -22.5,-1.5
       parent: 4812
 - proto: VendingMachineYouTool
   entities:
