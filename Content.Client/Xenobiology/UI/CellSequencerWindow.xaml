@@ -8,29 +8,23 @@
         <!-- Nav panel -->
         <BoxContainer Margin="8" MinWidth="175" Orientation="Vertical" VerticalExpand="True">
             <Button Name="SyncButton"
-                    Text="{Loc 'cell-sequencer-sync-button'}"
-                    ToolTip="{Loc 'cell-sequencer-sync-tooltip-info'}" />
+                    Text="{Loc 'cell-sequencer-menu-sync-button'}"
+                    ToolTip="{Loc 'cell-sequencer-menu-sync-tooltip-info'}"
+                    Margin="0 0 0 4" />
 
-            <customControls:HSeparator Margin="0 8" StyleClasses="LowDivider" />
-
-            <Button Name="ScanButton"
-                    Text="{Loc 'cell-sequencer-scan-button'}"
-                    ToolTip="{Loc 'cell-sequencer-scan-tooltip-info'}" />
-            <Button Name="CopyButton"
-                    Text="{Loc 'cell-sequencer-copy-button'}"
-                    ToolTip="{Loc 'cell-sequencer-copy-tooltip-info'}" />
-
-            <customControls:HSeparator Margin="0 8" StyleClasses="LowDivider" />
+            <customControls:HSeparator Margin="0 0 0 4" StyleClasses="LowDivider" />
 
             <Button Name="AddButton"
-                    Text="{Loc 'cell-sequencer-add-button'}"
-                    ToolTip="{Loc 'cell-sequencer-add-tooltip-info'}" />
+                    Text="{Loc 'cell-sequencer-menu-add-button'}"
+                    ToolTip="{Loc 'cell-sequencer-menu-add-tooltip-info'}"
+                    Margin="0 0 0 4" />
             <Button Name="RemoveButton"
-                    Text="{Loc 'cell-sequencer-remove-button'}"
-                    ToolTip="{Loc 'cell-sequencer-remove-tooltip-info'}" />
-            <Button Name="PrintButton"
-                    Text="{Loc 'cell-sequencer-print-button'}"
-                    ToolTip="{Loc 'cell-sequencer-print-tooltip-info'}" />
+                    Text="{Loc 'cell-sequencer-menu-remove-button'}"
+                    ToolTip="{Loc 'cell-sequencer-menu-remove-tooltip-info'}"
+                    Margin="0 0 0 4" />
+            <Button Name="ReplaceButton"
+                    Text="{Loc 'cell-sequencer-menu-replace-button'}"
+                    ToolTip="{Loc 'cell-sequencer-replace-tooltip-info'}" />
         </BoxContainer>
 
         <customControls:VSeparator Margin="4 0" StyleClasses="LowDivider" />
@@ -43,11 +37,11 @@
                 </PanelContainer.PanelOverride>
 
                 <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
-                        <Label Margin="0 0 0 2" Text="{Loc 'cell-sequencer-inside-label'}" HorizontalAlignment="Center" />
+                        <Label Margin="0 0 0 2" Text="{Loc 'cell-sequencer-menu-inside-label'}" HorizontalAlignment="Center" />
                         <customControls:HSeparator Margin="8 0" StyleClasses="LowDivider" />
                         <BoxContainer Name="InsideCellContainer" Orientation="Vertical" />
 
-                        <Label Margin="0 0 0 2" Text="{Loc 'cell-sequencer-remote-label'}" HorizontalAlignment="Center" />
+                        <Label Margin="0 0 0 2" Text="{Loc 'cell-sequencer-menu-remote-label'}" HorizontalAlignment="Center" />
                         <customControls:HSeparator Margin="8 0" StyleClasses="LowDivider" />
                         <BoxContainer Name="RemoteCellContainer" Orientation="Vertical" />
                 </BoxContainer>
@@ -57,13 +51,26 @@
         <customControls:VSeparator Margin="4 0" StyleClasses="LowDivider" />
 
         <!-- Info panel -->
-        <PanelContainer Margin="8" HorizontalExpand="True">
-            <PanelContainer.PanelOverride>
-                <graphics:StyleBoxFlat BackgroundColor="#000000FF" />
-            </PanelContainer.PanelOverride>
+        <BoxContainer Margin="8" MinWidth="175" Orientation="Vertical" VerticalExpand="True">
+            <PanelContainer HorizontalExpand="True" VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#000000FF" />
+                </PanelContainer.PanelOverride>
 
-            <Label Name="NoSelectedLabel" Text="{Loc 'cell-sequencer-no-selected-label'}" FontColorOverride="#ff0000" Align="Center"/>
+                <Label Name="NoSelectedLabel" Text="{Loc 'cell-sequencer-menu-no-selected-label'}" FontColorOverride="#ff0000" Align="Center"/>
 
-        </PanelContainer>
+                <BoxContainer Name="CellInfoContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="8" Visible="False">
+                    <Label Name="CellNameLabel"/>
+                    <customControls:HSeparator Margin="4 0" StyleClasses="LowDivider" />
+                    <RichTextLabel Name="CellColorLabel"/>
+                    <Label Name="CellStabilityLabel"/>
+                    <Label Name="CellRemoteLabel"/>
+                    <Label Name="CellCostLabel"/>
+                    <customControls:HSeparator Margin="4 0" StyleClasses="LowDivider" />
+                    <Label Text="{Loc 'cell-sequencer-menu-cell-modifiers-label'}"/>
+                    <RichTextLabel Name="CellModifiersText" />
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

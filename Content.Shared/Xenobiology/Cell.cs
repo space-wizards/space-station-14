@@ -14,16 +14,16 @@ public sealed class Cell : IEquatable<Cell>
     public readonly Color Color;
 
     [ViewVariables]
+    public readonly string Name;
+
+    [ViewVariables]
     public readonly float Stability;
 
     [ViewVariables]
     public readonly int Cost;
 
     [ViewVariables]
-    public readonly List<CellModifier> Modifiers;
-
-    [ViewVariables]
-    public readonly string Name;
+    public readonly List<ProtoId<CellModifierPrototype>> Modifiers;
 
     public Cell(Cell cell)
     {

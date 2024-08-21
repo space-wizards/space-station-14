@@ -8,7 +8,7 @@ namespace Content.Shared.Xenobiology.Systems;
 public abstract partial class SharedCellSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] protected readonly IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
@@ -53,9 +53,15 @@ public abstract partial class SharedCellSystem : EntitySystem
         if (!ent.Comp.AllowModifiers)
             return;
 
-        foreach (var modifier in cell.Modifiers)
+        foreach (var modifierId in cell.Modifiers)
         {
-            modifier.OnAdd(ent!, cell, EntityManager);
+            if (!_prototype.TryIndex(modifierId, out var modifierProto))
+                continue;
+
+            foreach (var modifier in modifierProto.Modifiers)
+            {
+                modifier.OnAdd(ent!, cell, EntityManager);
+            }
         }
     }
 
@@ -75,9 +81,15 @@ public abstract partial class SharedCellSystem : EntitySystem
         if (!ent.Comp.AllowModifiers)
             return;
 
-        foreach (var modifier in cell.Modifiers)
+        foreach (var modifierId in cell.Modifiers)
         {
-            modifier.OnRemove(ent!, cell, EntityManager);
+            if (!_prototype.TryIndex(modifierId, out var modifierProto))
+                continue;
+
+            foreach (var modifier in modifierProto.Modifiers)
+            {
+                modifier.OnRemove(ent!, cell, EntityManager);
+            }
         }
     }
 

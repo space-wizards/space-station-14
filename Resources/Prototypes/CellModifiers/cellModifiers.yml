@@ -1,0 +1,13 @@
+- type: cellModifier
+  id: Pacifism
+  name: cell-modifier-Pacifism-name
+  color: "#b4e514"
+  modifiers:
+    - !type:CellPacifismModifier
+
+- type: cellModifier
+  id: OwO
+  name: cell-modifier-OwO-name
+  color: "#ff0000"
+  modifiers: # Just for test remove later
+    - !type:CellOwOModifier

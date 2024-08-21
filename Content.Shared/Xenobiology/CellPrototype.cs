@@ -21,5 +21,5 @@ public sealed class CellPrototype : IPrototype
     public int Cost = 5;
 
     [DataField]
-    public List<CellModifier> Modifiers = [];
+    public List<ProtoId<CellModifierPrototype>> Modifiers = [];
 }

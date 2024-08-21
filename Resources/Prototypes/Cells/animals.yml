@@ -2,8 +2,8 @@
   id: Murine
   name: cell-Murine-name
   color: "#494546"
-  modifiers: # Just for test remove later
-    - !type:CellPacifismModifier
+  modifiers:
+  - Pacifism
 
 - type: cell
   id: Galliform
@@ -19,6 +19,8 @@
   id: Feliform
   name: cell-Feliform-name
   color: "#A0522D"
+  modifiers: # Just for test remove later
+  - OwO
 
 - type: cell
   id: Canid

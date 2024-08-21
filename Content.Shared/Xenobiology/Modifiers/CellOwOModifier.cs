@@ -1,21 +1,21 @@
-﻿using Content.Shared.CombatMode.Pacification;
-using Content.Shared.Xenobiology.Components;
+﻿using Content.Shared.Xenobiology.Components;
 using JetBrains.Annotations;
 
 namespace Content.Shared.Xenobiology.Modifiers;
 
+/// <summary>
+/// Doesn't do anything, because OwO is a northern component :(
+/// </summary>
 [Serializable, UsedImplicitly]
-public sealed partial class CellPacifismModifier : CellModifier
+public sealed partial class CellOwOModifier : CellModifier
 {
     public override void OnAdd(Entity<CellContainerComponent> ent, Cell cell, IEntityManager entityManager)
     {
         base.OnAdd(ent, cell, entityManager);
-        entityManager.EnsureComponent<PacifiedComponent>(ent);
     }
 
     public override void OnRemove(Entity<CellContainerComponent> ent, Cell cell, IEntityManager entityManager)
     {
         base.OnRemove(ent, cell, entityManager);
-        entityManager.RemoveComponent<PacifiedComponent>(ent);
     }
 }

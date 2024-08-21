@@ -25,17 +25,6 @@ public sealed class CellSequencerUiState : BoundUserInterfaceState
 public sealed class CellSequencerUiSyncMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
-public sealed class CellSequencerUiCopyMessage : BoundUserInterfaceMessage
-{
-    public readonly Cell? Cell;
-
-    public CellSequencerUiCopyMessage(Cell? cell)
-    {
-        Cell = cell;
-    }
-}
-
-[Serializable, NetSerializable]
 public sealed class CellSequencerUiAddMessage : BoundUserInterfaceMessage
 {
     public readonly Cell? Cell;
@@ -60,11 +49,11 @@ public sealed class CellSequencerUiRemoveMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class CellSequencerUiPrintMessage : BoundUserInterfaceMessage
+public sealed class CellSequencerUiReplaceMessage : BoundUserInterfaceMessage
 {
     public readonly Cell? Cell;
 
-    public CellSequencerUiPrintMessage(Cell? cell)
+    public CellSequencerUiReplaceMessage(Cell? cell)
     {
         Cell = cell;
     }

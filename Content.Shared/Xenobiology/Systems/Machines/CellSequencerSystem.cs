@@ -11,6 +11,7 @@ public sealed class CellSequencerSystem : EntitySystem
     [Dependency] private readonly CellClientSystem _cellClient = default!;
     [Dependency] private readonly CellServerSystem _cellServer = default!;
 
+    [Dependency] private readonly SharedCellSystem _cell = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
@@ -24,9 +25,9 @@ public sealed class CellSequencerSystem : EntitySystem
 
         SubscribeLocalEvent<CellSequencerComponent, CellSequencerUiSyncMessage>(OnSync);
 
-        SubscribeLocalEvent<CellSequencerComponent, CellSequencerUiCopyMessage>(OnCopy);
         SubscribeLocalEvent<CellSequencerComponent, CellSequencerUiAddMessage>(OnAdd);
         SubscribeLocalEvent<CellSequencerComponent, CellSequencerUiRemoveMessage>(OnRemove);
+        SubscribeLocalEvent<CellSequencerComponent, CellSequencerUiReplaceMessage>(OnReplace);
     }
 
     private void OnInsertIntoContainer(Entity<CellSequencerComponent> ent, ref EntInsertedIntoContainerMessage args)
@@ -46,15 +47,6 @@ public sealed class CellSequencerSystem : EntitySystem
     private void OnSync(Entity<CellSequencerComponent> ent, ref CellSequencerUiSyncMessage args)
     {
         Sync(ent);
-    }
-
-    private void OnCopy(Entity<CellSequencerComponent> ent, ref CellSequencerUiCopyMessage args)
-    {
-        if (args.Cell is null)
-        {
-            _popup.PopupPredicted(Loc.GetString("cell-sequencer-no-selected"), ent, null, PopupType.MediumCaution);
-            return;
-        }
     }
 
     private void OnAdd(Entity<CellSequencerComponent> ent, ref CellSequencerUiAddMessage args)
@@ -104,14 +96,39 @@ public sealed class CellSequencerSystem : EntitySystem
             return;
         }
 
-        foreach (var cell in serverEnt.Value.Comp.Cells)
-        {
-            if (cell != args.Cell)
-                continue;
-
-            _cellServer.RemoveCell(serverEnt.Value.Owner, ent.Owner, args.Cell);
-            Sync(ent);
+        if (!serverEnt.Value.Comp.Cells.Contains(args.Cell))
             return;
+
+        _cellServer.RemoveCell(serverEnt.Value.Owner, ent.Owner, args.Cell);
+        Sync(ent);
+    }
+
+    private void OnReplace(Entity<CellSequencerComponent> ent, ref CellSequencerUiReplaceMessage args)
+    {
+        if (args.Cell is null)
+        {
+            _popup.PopupPredicted(Loc.GetString("cell-sequencer-no-selected"), ent, null, PopupType.MediumCaution);
+            return;
+        }
+
+        if (!_cellClient.TryGetServer(ent.Owner, out var serverEnt))
+        {
+            _popup.PopupPredicted(Loc.GetString("cell-sequencer-no-connect"), ent, null, PopupType.MediumCaution);
+            return;
+        }
+
+        if (!serverEnt.Value.Comp.Cells.Contains(args.Cell))
+            return;
+
+        foreach (var container in ent.Comp.CellContainers)
+        {
+            _cell.ClearCells(container.Owner);
+            _cell.AddCell(container.Owner, args.Cell);
+
+            UpdateInsideCells(ent);
+
+            Sync(ent);
+            break;
         }
     }
 
