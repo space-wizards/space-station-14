@@ -18,6 +18,7 @@ public sealed partial class HelpButton : Control
 
     public List<ProtoId<GuideEntryPrototype>>? Entries
     {
+        get => _entries;
         set
         {
             _entries = value;
