@@ -13,11 +13,13 @@ public sealed class CellSequencerUiState : BoundUserInterfaceState
 {
     public readonly IReadOnlyList<Cell> InsideCells;
     public readonly IReadOnlyList<Cell> RemoteCells;
+    public readonly int Material;
 
-    public CellSequencerUiState(IReadOnlyList<Cell> insideCell, IReadOnlyList<Cell> remoteCells)
+    public CellSequencerUiState(IReadOnlyList<Cell> insideCell, IReadOnlyList<Cell> remoteCells, int material)
     {
         InsideCells = insideCell;
         RemoteCells = remoteCells;
+        Material = material;
     }
 }
 

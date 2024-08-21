@@ -9,5 +9,5 @@
   id: OwO
   name: cell-modifier-OwO-name
   color: "#ff0000"
-  modifiers: # Just for test remove later
+  modifiers:
     - !type:CellOwOModifier

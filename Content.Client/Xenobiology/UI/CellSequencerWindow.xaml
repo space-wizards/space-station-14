@@ -25,6 +25,8 @@
             <Button Name="ReplaceButton"
                     Text="{Loc 'cell-sequencer-menu-replace-button'}"
                     ToolTip="{Loc 'cell-sequencer-replace-tooltip-info'}" />
+
+            <Label Name="MaterialLabel" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
         </BoxContainer>
 
         <customControls:VSeparator Margin="4 0" StyleClasses="LowDivider" />

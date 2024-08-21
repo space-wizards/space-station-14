@@ -11,6 +11,7 @@ cell-sequencer-menu-cell-color-label = Color: [color={$color}]{$color}[/color]
 cell-sequencer-menu-cell-stability-label = Stability: {$stability}%
 cell-sequencer-menu-cell-remote-label = Remote: {$remote}
 cell-sequencer-menu-cell-cost-label = Cost: {$cost} plasma
+cell-sequencer-menu-cell-material-label = Material: {$material} plasma
 
 cell-sequencer-menu-cell-modifiers-label = Modifiers:
 cell-sequencer-menu-cell-modifier-message = - [color={$color}]{$name}[/color]
@@ -32,3 +33,4 @@ cell-sequencer-no-slot = The scan module is defective!
 cell-sequencer-no-selected = No sample selected for further operations!
 cell-sequencer-entity-is-empty = The sample is blank!
 cell-sequencer-entity-not-valid = The sample you're looking for is unreadable!
+cell-sequencer-not-enough-material = Not enough material!

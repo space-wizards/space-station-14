@@ -20,6 +20,7 @@ public sealed partial class CellSequencerWindow : FancyWindow
 
     private Cell? _selectedCell;
     private CellSequencerEntryControl? _sequencerEntry;
+    private int _material;
 
     public CellSequencerWindow()
     {
@@ -38,8 +39,10 @@ public sealed partial class CellSequencerWindow : FancyWindow
 
     public void UpdateState(CellSequencerUiState sequencerUiState)
     {
-        InsideCellContainer.RemoveAllChildren();
+        _material = sequencerUiState.Material;
+        MaterialLabel.Text = Loc.GetString("cell-sequencer-menu-cell-material-label", ("material", _material));
 
+        InsideCellContainer.RemoveAllChildren();
         foreach (var savedCell in sequencerUiState.InsideCells)
         {
             var entry = new CellSequencerEntryControl(savedCell, false);
@@ -64,8 +67,16 @@ public sealed partial class CellSequencerWindow : FancyWindow
         _sequencerEntry = entry;
         _sequencerEntry?.SetState(false);
 
-        RemoveButton.Visible = _selectedCell is not null;
-        ReplaceButton.Visible = _sequencerEntry?.Remote ?? false;
+        var isRemote = false;
+        if (_sequencerEntry is not null)
+            isRemote = _sequencerEntry.Remote;
+
+        var hasMaterial = false;
+        if (_selectedCell is not null)
+            hasMaterial = _material >= _selectedCell.Cost;
+
+        RemoveButton.Disabled = _selectedCell is null;
+        ReplaceButton.Disabled = !isRemote || !hasMaterial;
 
         NoSelectedLabel.Visible = _selectedCell is null;
         CellInfoContainer.Visible = _selectedCell is not null;

@@ -1,4 +1,5 @@
-﻿using Content.Shared.Popups;
+﻿using Content.Shared.Materials;
+using Content.Shared.Popups;
 using Content.Shared.Xenobiology.Components;
 using Content.Shared.Xenobiology.Components.Machines;
 using Content.Shared.Xenobiology.UI;
@@ -10,6 +11,8 @@ public sealed class CellSequencerSystem : EntitySystem
 {
     [Dependency] private readonly CellClientSystem _cellClient = default!;
     [Dependency] private readonly CellServerSystem _cellServer = default!;
+
+    [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
 
     [Dependency] private readonly SharedCellSystem _cell = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -23,6 +26,8 @@ public sealed class CellSequencerSystem : EntitySystem
         SubscribeLocalEvent<CellSequencerComponent, EntInsertedIntoContainerMessage>(OnInsertIntoContainer);
         SubscribeLocalEvent<CellSequencerComponent, EntRemovedFromContainerMessage>(OnRemovedFromContainer);
 
+        SubscribeLocalEvent<CellSequencerComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
+
         SubscribeLocalEvent<CellSequencerComponent, CellSequencerUiSyncMessage>(OnSync);
 
         SubscribeLocalEvent<CellSequencerComponent, CellSequencerUiAddMessage>(OnAdd);
@@ -34,19 +39,25 @@ public sealed class CellSequencerSystem : EntitySystem
     {
         UpdateInsideCellContainers(ent);
         UpdateInsideCells(ent);
-        Sync(ent);
+        UpdateUI(ent);
     }
 
     private void OnRemovedFromContainer(Entity<CellSequencerComponent> ent, ref EntRemovedFromContainerMessage args)
     {
         UpdateInsideCellContainers(ent);
         UpdateInsideCells(ent);
-        Sync(ent);
+        UpdateUI(ent);
+    }
+
+    private void OnMaterialAmountChanged(Entity<CellSequencerComponent> ent, ref MaterialAmountChangedEvent args)
+    {
+        ent.Comp.MaterialAmount = _materialStorage.GetMaterialAmount(ent, ent.Comp.RequiredMaterial);
+        UpdateUI(ent);
     }
 
     private void OnSync(Entity<CellSequencerComponent> ent, ref CellSequencerUiSyncMessage args)
     {
-        Sync(ent);
+        UpdateUI(ent);
     }
 
     private void OnAdd(Entity<CellSequencerComponent> ent, ref CellSequencerUiAddMessage args)
@@ -64,7 +75,7 @@ public sealed class CellSequencerSystem : EntitySystem
         }
 
         _cellServer.RegisterCell(serverEnt.Value.Owner, ent.Owner, args.Cell);
-        Sync(ent);
+        UpdateUI(ent);
     }
 
     private void OnRemove(Entity<CellSequencerComponent> ent, ref CellSequencerUiRemoveMessage args)
@@ -83,7 +94,7 @@ public sealed class CellSequencerSystem : EntitySystem
                     continue;
 
                 ent.Comp.Cells.Remove(args.Cell);
-                Sync(ent);
+                UpdateUI(ent);
                 return;
             }
 
@@ -100,7 +111,7 @@ public sealed class CellSequencerSystem : EntitySystem
             return;
 
         _cellServer.RemoveCell(serverEnt.Value.Owner, ent.Owner, args.Cell);
-        Sync(ent);
+        UpdateUI(ent);
     }
 
     private void OnReplace(Entity<CellSequencerComponent> ent, ref CellSequencerUiReplaceMessage args)
@@ -120,19 +131,27 @@ public sealed class CellSequencerSystem : EntitySystem
         if (!serverEnt.Value.Comp.Cells.Contains(args.Cell))
             return;
 
+        if (ent.Comp.MaterialAmount < args.Cell.Cost)
+        {
+            _popup.PopupPredicted(Loc.GetString("cell-sequencer-not-enough-material"), ent, null, PopupType.MediumCaution);
+            return;
+        }
+
         foreach (var container in ent.Comp.CellContainers)
         {
+            if (!_materialStorage.TrySetMaterialAmount(ent, ent.Comp.RequiredMaterial, ent.Comp.MaterialAmount - args.Cell.Cost))
+                break;
+
             _cell.ClearCells(container.Owner);
             _cell.AddCell(container.Owner, args.Cell);
 
             UpdateInsideCells(ent);
-
-            Sync(ent);
+            UpdateUI(ent);
             break;
         }
     }
 
-    private void Sync(Entity<CellSequencerComponent> ent)
+    private void UpdateUI(Entity<CellSequencerComponent> ent)
     {
         if (!_cellClient.TryGetServer(ent.Owner, out var serverEnt))
         {
@@ -140,7 +159,7 @@ public sealed class CellSequencerSystem : EntitySystem
             return;
         }
 
-        var state = new CellSequencerUiState(ent.Comp.Cells, serverEnt.Value.Comp.Cells);
+        var state = new CellSequencerUiState(ent.Comp.Cells, serverEnt.Value.Comp.Cells, ent.Comp.MaterialAmount);
         _userInterface.SetUiState(ent.Owner, CellSequencerUiKey.Key, state);
     }
 

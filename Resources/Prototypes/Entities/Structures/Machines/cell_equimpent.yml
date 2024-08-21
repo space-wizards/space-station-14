@@ -64,6 +64,12 @@
       dishSlot: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+    materialWhiteList:
+    - Plasma
   - type: ItemSlots
     slots:
       dishSlot:
