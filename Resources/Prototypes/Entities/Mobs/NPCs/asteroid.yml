@@ -63,8 +63,8 @@
     animation: WeaponArcPunch
     damage:
       types:
-        Slash: 15
-        Piercing: 10
+        Slash: 8
+        Piercing: 4
   - type: NpcFactionMember
     factions:
     - SimpleHostile
