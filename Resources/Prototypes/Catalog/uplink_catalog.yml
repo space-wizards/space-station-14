@@ -99,7 +99,7 @@
   name: uplink-gloves-north-star-name
   description: uplink-gloves-north-star-desc
   productEntity: ClothingHandsGlovesNorthStar
-  discountCategory: usualDiscounts
+  discountCategory: veryRareDiscounts
   discountDownTo:
     Telecrystal: 4
   cost:
@@ -1935,7 +1935,7 @@
   id: uplinkHotPotato
   name: uplink-hot-potato-name
   description: uplink-hot-potato-desc
-  discountCategory: rareDiscounts
+  discountCategory: usualDiscounts
   discountDownTo:
     Telecrystal: 2
   productEntity: HotPotato
@@ -1956,7 +1956,7 @@
   name: uplink-chimp-upgrade-kit-name
   description: uplink-chimp-upgrade-kit-desc
   productEntity: WeaponPistolCHIMPUpgradeKit
-  discountCategory: rareDiscounts
+  discountCategory: usualDiscounts
   discountDownTo:
     Telecrystal: 2
   cost:
