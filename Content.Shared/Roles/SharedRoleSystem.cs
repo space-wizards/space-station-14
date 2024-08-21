@@ -77,7 +77,7 @@ public abstract class SharedRoleSystem : EntitySystem
         bool silent = false)
     {
         if (protoId == "MindRoleJob")
-            MindAddRoleDo(mindId, protoId, mind, silent, "");
+            MindAddJobRole(mindId, mind, silent, "");
         else
             MindAddRoleDo(mindId, protoId, mind, silent);
     }
@@ -94,7 +94,22 @@ public abstract class SharedRoleSystem : EntitySystem
         bool silent = false,
         string? jobPrototype = null)
     {
-        MindAddRoleDo(mindId, "MindRoleJob", mind, silent, jobPrototype);
+        // Can't have someone get paid for two jobs now, can we
+        if (MindHasRole<JobRoleComponent>(mindId, out var jobRole)
+            && jobRole.Value.Comp.JobPrototype != jobPrototype)
+        {
+            Resolve(mindId, ref mind);
+            if (mind is not null)
+            {
+                _adminLogger.Add(LogType.Mind,
+                    LogImpact.Low,
+                    $"Job role of {_minds.MindOwnerLoggingString(mind)} changed from '{jobRole.Value.Comp.JobPrototype}' to '{jobPrototype}'");
+            }
+
+            jobRole.Value.Comp.JobPrototype = jobPrototype;
+        }
+        else
+            MindAddRoleDo(mindId, "MindRoleJob", mind, silent, jobPrototype);
     }
 
     /// <summary>
@@ -113,10 +128,6 @@ public abstract class SharedRoleSystem : EntitySystem
         }
 
         var antagonist = false;
-
-        //TODO:ERRANT what if it already has that role prototype?
-        //It should be modified instead
-        // Does that matter for anything other than Job?
 
         if (!_prototypes.TryIndex(protoId, out _))
         {
