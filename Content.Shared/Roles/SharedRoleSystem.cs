@@ -149,7 +149,7 @@ public abstract class SharedRoleSystem : EntitySystem
         TryComp<MindContainerComponent>(mind.OwnedEntity, out var mindCont);
         if (mindCont is not null && mind.OwnedEntity is not null)
         {
-            mindCont.MindRoles.Add(mindRoleId);
+            // mindCont.MindRoles.Add(mindRoleId);
         }
 
 
@@ -206,7 +206,7 @@ public abstract class SharedRoleSystem : EntitySystem
             TryComp<MindContainerComponent>(mind.OwnedEntity, out var mindCont);
             if (mindCont is not null)
             {
-                mindCont.MindRoles.Remove(role);
+                // mindCont.MindRoles.Remove(role);
                 if (mind.OwnedEntity is not null)
                 {
                     Dirty(mind.OwnedEntity.Value, mindCont );

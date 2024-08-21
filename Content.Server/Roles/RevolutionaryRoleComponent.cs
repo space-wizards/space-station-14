@@ -12,5 +12,5 @@ public sealed partial class RevolutionaryRoleComponent : BaseMindRoleComponent
     /// For headrevs, how many people you have converted.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public uint ConvertedCount = 0; //TODO:ERRANT test if this count works
+    public uint ConvertedCount = 0;
 }
