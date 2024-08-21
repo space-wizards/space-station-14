@@ -123,9 +123,10 @@
     state: icon
   discipline: Arsenal
   tier: 1
-  cost: 5000
+  cost: 7500
   recipeUnlocks:
   - ClothingBackpackElectropack
+  - ClothingNeckShockCollar
 
 # Tier 2
 

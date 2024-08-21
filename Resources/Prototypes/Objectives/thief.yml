@@ -318,12 +318,12 @@
 
 - type: entity
   parent: BaseThiefStealObjective
-  id: ClothingNeckShockCollarStealObjective
+  id: ClothingBackpackElectropackStealObjective
   components:
   - type: NotJobRequirement
     job: Warden
   - type: StealCondition
-    stealGroup: ClothingNeckShockCollar
+    stealGroup: ClothingBackpackElectropack
   - type: Objective
     difficulty: 1
 

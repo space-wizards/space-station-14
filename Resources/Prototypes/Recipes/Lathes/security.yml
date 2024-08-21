@@ -99,6 +99,14 @@
     Cloth: 500
 
 - type: latheRecipe
+  id: ClothingNeckShockCollar
+  result: ClothingNeckShockCollar
+  completetime: 4
+  materials:
+    steel: 350
+    plastic: 250
+
+- type: latheRecipe
   id: ForensicPad
   result: ForensicPad
   completetime: 4

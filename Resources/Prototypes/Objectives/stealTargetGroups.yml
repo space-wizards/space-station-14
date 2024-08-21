@@ -271,10 +271,10 @@
     state: icon
 
 - type: stealTargetGroup
-  id: ClothingNeckShockCollar
-  name: shock collar
+  id: ClothingBackpackElectropack
+  name: electro pack
   sprite:
-    sprite: Clothing/Neck/Misc/shock_collar.rsi
+    sprite: Clothing/Back/Backpacks/electropack.rsi
     state: icon
 
 #Thief structures
