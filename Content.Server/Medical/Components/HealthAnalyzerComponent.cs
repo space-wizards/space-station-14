@@ -55,4 +55,10 @@ public sealed partial class HealthAnalyzerComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier? ScanningEndSound;
+
+    /// <summary>
+    /// Whether to show up the popup
+    /// </summary>
+    [DataField]
+    public bool Silent;
 }
