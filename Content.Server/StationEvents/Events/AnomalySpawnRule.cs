@@ -14,6 +14,8 @@ public sealed class AnomalySpawnRule : StationEventSystem<AnomalySpawnRuleCompon
 
     protected override void Added(EntityUid uid, AnomalySpawnRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
+        base.Added(uid, component, gameRule, args);
+
         if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;
 
@@ -26,8 +28,6 @@ public sealed class AnomalySpawnRule : StationEventSystem<AnomalySpawnRuleCompon
             null, null,
             ("sighting", Loc.GetString($"anomaly-spawn-sighting-{RobustRandom.Next(1, 6)}"))
         );
-
-        base.Added(uid, component, gameRule, args);
     }
 
     protected override void Started(EntityUid uid, AnomalySpawnRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
