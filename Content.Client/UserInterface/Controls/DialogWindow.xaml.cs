@@ -87,6 +87,8 @@ public sealed partial class DialogWindow : FancyWindow
             Prompts.AddChild(box);
         }
 
+        _promptLines[0].Item2.GrabKeyboardFocus();
+
         OkButton.OnPressed += _ => Confirm();
 
         CancelButton.OnPressed += _ =>
