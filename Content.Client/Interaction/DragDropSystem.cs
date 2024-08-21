@@ -90,7 +90,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
     /// </summary>
     private bool _isReplaying;
 
-    private float _deadzone;
+    public float Deadzone;
 
     private DragState _state = DragState.NotDragging;
 
@@ -122,7 +122,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
 
     private void SetDeadZone(float deadZone)
     {
-        _deadzone = deadZone;
+        Deadzone = deadZone;
     }
 
     public override void Shutdown()
@@ -212,7 +212,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
 
         _draggedEntity = entity;
         _state = DragState.MouseDown;
-        _mouseDownScreenPos = _inputManager.MouseScreenPosition;
+        _mouseDownScreenPos = args.ScreenCoordinates;
         _mouseDownTime = 0;
 
         // don't want anything else to process the click,
@@ -240,8 +240,13 @@ public sealed class DragDropSystem : SharedDragDropSystem
 
         if (TryComp<SpriteComponent>(_draggedEntity, out var draggedSprite))
         {
+            var screenPos = _inputManager.MouseScreenPosition;
+            // No _draggedEntity in null window (Happens in tests)
+            if (!screenPos.IsValid)
+                return;
+
             // pop up drag shadow under mouse
-            var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
+            var mousePos = _eyeManager.PixelToMap(screenPos);
             _dragShadow = EntityManager.SpawnEntity("dragshadow", mousePos);
             var dragSprite = Comp<SpriteComponent>(_dragShadow.Value);
             dragSprite.CopyFrom(draggedSprite);
@@ -534,7 +539,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             case DragState.MouseDown:
             {
                 var screenPos = _inputManager.MouseScreenPosition;
-                if ((_mouseDownScreenPos!.Value.Position - screenPos.Position).Length() > _deadzone)
+                if ((_mouseDownScreenPos!.Value.Position - screenPos.Position).Length() > Deadzone)
                 {
                     StartDrag();
                 }
