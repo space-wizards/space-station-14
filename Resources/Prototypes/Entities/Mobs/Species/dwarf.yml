@@ -44,9 +44,9 @@
         - MobLayer
   - type: Vocal
     sounds:
-      Male: UnisexDwarf
+      Male: MaleDwarf
       Female: FemaleDwarf
-      Unsexed: UnisexDwarf
+      Unsexed: MaleDwarf
   - type: ReplacementAccent
     accent: dwarf
   - type: Speech

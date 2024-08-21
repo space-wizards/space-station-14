@@ -86,9 +86,9 @@
     speechVerb: Plant
   - type: Vocal
     sounds:
-      Male: UnisexDiona
-      Female: UnisexDiona
-      Unsexed: UnisexDiona
+      Male: MaleDiona
+      Female: FemaleDiona
+      Unsexed: MaleDiona
   - type: BodyEmotes
     soundsId: DionaBodyEmotes
   - type: IgnoreKudzu
