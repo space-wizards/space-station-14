@@ -24,7 +24,7 @@
   - type: Speech
     speechVerb: Robotic
   - type: VoiceOverride # This is for the wire that makes an electricity zapping noise.
-    nameOverride: wire-listen-pulse-identifier
+    nameOverride: null # This is changed to what it needs to be in the system.
     speechVerbOverride: Electricity
     enabled: false
   - type: ExtensionCableReceiver
