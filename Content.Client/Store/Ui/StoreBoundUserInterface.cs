@@ -33,7 +33,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
         _menu.OnListingButtonPressed += (_, listing) =>
         {
-            SendMessage(new StoreBuyListingMessage(listing));
+            SendMessage(new StoreBuyListingMessage(listing.ID));
         };
 
         _menu.OnCategoryButtonPressed += (_, category) =>

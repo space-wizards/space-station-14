@@ -37,14 +37,9 @@ public sealed class StoreRequestUpdateInterfaceMessage : BoundUserInterfaceMessa
 }
 
 [Serializable, NetSerializable]
-public sealed class StoreBuyListingMessage : BoundUserInterfaceMessage
+public sealed class StoreBuyListingMessage(ProtoId<ListingPrototype> listing) : BoundUserInterfaceMessage
 {
-    public ListingDataWithCostModifiers Listing;
-
-    public StoreBuyListingMessage(ListingDataWithCostModifiers listing)
-    {
-        Listing = listing;
-    }
+    public ProtoId<ListingPrototype> Listing = listing;
 }
 
 [Serializable, NetSerializable]
