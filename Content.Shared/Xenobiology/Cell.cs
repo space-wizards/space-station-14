@@ -21,6 +21,9 @@ public sealed class Cell
     [ViewVariables]
     public List<CellModifier> Modifiers;
 
+    [ViewVariables]
+    public string Name;
+
     public Cell(CellPrototype cell)
     {
         Id = cell.ID;
@@ -28,5 +31,6 @@ public sealed class Cell
         Stability = cell.Stability;
         Cost = cell.Cost;
         Modifiers = cell.Modifiers;
+        Name = "Cell";
     }
 }

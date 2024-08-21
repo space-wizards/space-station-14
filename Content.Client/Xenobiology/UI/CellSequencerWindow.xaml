@@ -1,5 +1,64 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     Title="{Loc 'cell-sequencer-menu-title'}"
     MinSize="600 400">
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+        <!-- Nav panel -->
+        <BoxContainer Margin="8" MinWidth="150" Orientation="Vertical" VerticalExpand="True">
+            <Button Name="SyncButton"
+                    Text="{Loc 'cell-sequencer-sync-button'}"
+                    ToolTip="{Loc 'cell-sequencer-sync-tooltip-info'}" />
+
+            <customControls:HSeparator Margin="0 8" StyleClasses="LowDivider" />
+
+            <Button Name="ScanButton"
+                    Text="{Loc 'cell-sequencer-scan-button'}"
+                    ToolTip="{Loc 'cell-sequencer-scan-tooltip-info'}" />
+            <Button Name="CopyButton"
+                    Text="{Loc 'cell-sequencer-copy-button'}"
+                    ToolTip="{Loc 'cell-sequencer-copy-tooltip-info'}" />
+
+            <customControls:HSeparator Margin="0 8" StyleClasses="LowDivider" />
+
+            <Button Name="AddButton"
+                    Text="{Loc 'cell-sequencer-add-button'}"
+                    ToolTip="{Loc 'cell-sequencer-add-tooltip-info'}" />
+            <Button Name="RemoveButton"
+                    Text="{Loc 'cell-sequencer-remove-button'}"
+                    ToolTip="{Loc 'cell-sequencer-remove-tooltip-info'}" />
+            <Button Name="PrintButton"
+                    Text="{Loc 'cell-sequencer-print-button'}"
+                    ToolTip="{Loc 'cell-sequencer-print-tooltip-info'}" />
+        </BoxContainer>
+
+        <customControls:VSeparator Margin="4 0" StyleClasses="LowDivider" />
+
+        <!-- Selection -->
+        <ScrollContainer MinWidth="150" Margin="8" VerticalExpand="True" HorizontalExpand="True">
+            <BoxContainer VerticalExpand="True" HorizontalExpand="True">
+                <PanelContainer Margin="8" VerticalExpand="True" HorizontalExpand="True">
+                    <PanelContainer.PanelOverride>
+                        <graphics:StyleBoxFlat BackgroundColor="#000000FF" />
+                    </PanelContainer.PanelOverride>
+
+                    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                        <Label Margin="8" Text="{Loc 'cell-sequencer-saved-label'}" HorizontalAlignment="Center" />
+                        <customControls:HSeparator Margin="0 8" StyleClasses="LowDivider" />
+                        <BoxContainer Name="SavedContainer" />
+                    </BoxContainer>
+                </PanelContainer>
+            </BoxContainer>
+        </ScrollContainer>
+
+        <customControls:VSeparator Margin="4 0" StyleClasses="LowDivider" />
+
+        <!-- Info panel -->
+        <PanelContainer Margin="8" HorizontalExpand="True">
+            <PanelContainer.PanelOverride>
+                <graphics:StyleBoxFlat BackgroundColor="#000000FF" />
+            </PanelContainer.PanelOverride>
+        </PanelContainer>
+    </BoxContainer>
 </controls:FancyWindow>

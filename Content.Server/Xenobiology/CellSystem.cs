@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using Content.Shared.Xenobiology;
 using Content.Shared.Xenobiology.Components;
@@ -65,7 +66,7 @@ public sealed class CellSystem : SharedCellSystem
             case CellCollectorDirection.Collection:
                 CollectCells(ent.Owner, args.Target.Value);
 
-                _popup.PopupEntity(Loc.GetString("cell-collector-collected"), ent);
+                _popup.PopupPredicted(Loc.GetString("cell-collector-collected"), ent, null);
 
                 if (ent.Comp.Damage is not null)
                     _damageable.TryChangeDamage(args.Target.Value, ent.Comp.Damage);
@@ -77,7 +78,7 @@ public sealed class CellSystem : SharedCellSystem
                 CollectCells(args.Target.Value, ent.Owner);
                 ClearCells(ent.Owner);
 
-                _popup.PopupEntity(Loc.GetString("cell-collector-transfer"), ent);
+                _popup.PopupPredicted(Loc.GetString("cell-collector-transfer"), ent, null);
                 break;
 
             default:
@@ -99,18 +100,38 @@ public sealed class CellSystem : SharedCellSystem
         switch (direction)
         {
             case CellCollectorDirection.Collection:
+                if (!ent.Comp2.Empty)
+                {
+                    if (!popup)
+                        return false;
+
+                    _popup.PopupPredicted(Loc.GetString("cell-collector-full"), ent, null, PopupType.SmallCaution);
+                    return false;
+                }
+
                 if (ent.Comp1.Usages == 0)
                 {
                     if (!popup)
                         return false;
 
-                    _popup.PopupEntity(Loc.GetString("cell-collector-already-used"), ent);
+                    _popup.PopupPredicted(Loc.GetString("cell-collector-already-used"), ent, null, PopupType.SmallCaution);
+                    return false;
+                }
+
+                if (!target.Comp.AllowCollection)
+                {
+                    if (!popup)
+                        return false;
+
+                    _popup.PopupPredicted(Loc.GetString("cell-collector-target-cant-collected"), ent, null, PopupType.SmallCaution);
                     return false;
                 }
                 break;
 
             case CellCollectorDirection.Transfer:
-                if (_entityWhitelist.IsWhitelistFail(target.Comp.ToolsTransferWhitelist, ent) || target.Comp.ToolsTransferWhitelist is null)
+                if (_entityWhitelist.IsWhitelistFail(target.Comp.ToolsTransferWhitelist, ent) ||
+                    target.Comp.ToolsTransferWhitelist is null ||
+                    !target.Comp.AllowTransfer)
                     return false;
 
                 if (ent.Comp2.Empty)
@@ -118,7 +139,7 @@ public sealed class CellSystem : SharedCellSystem
                     if (!popup)
                         return false;
 
-                    _popup.PopupEntity(Loc.GetString("cell-collector-empty"), ent);
+                    _popup.PopupPredicted(Loc.GetString("cell-collector-empty"), ent, null, PopupType.SmallCaution);
                     return false;
                 }
                 break;

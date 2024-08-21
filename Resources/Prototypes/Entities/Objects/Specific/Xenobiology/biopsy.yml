@@ -27,3 +27,5 @@
         Bloodloss: 5
   - type: CellContainer
     allowModifiers: false
+    allowTransfer: false
+    allowCollection: false

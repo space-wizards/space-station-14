@@ -28,7 +28,19 @@
     sprite: Objects/Specific/Xenobiology/petri_dish.rsi
   - type: CellContainer
     allowModifiers: false
+    allowCollection: false
     toolsTransferWhitelist:
       components:
         - CellCollector
   - type: CellDishVisuals
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishMurine
+  name: petri dish
+  description: This makes you feel well-cultured.
+  suffix: Murine
+  components:
+  - type: CellGeneration
+    cells:
+      - Murine
