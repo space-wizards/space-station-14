@@ -21,6 +21,7 @@ using Content.Shared.Popups;
 using Content.Shared.StationRecords;
 using Robust.Shared.Audio.Systems;
 using Content.Server.Chat.Managers;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Server.MassMedia.Systems;
 
@@ -35,7 +36,6 @@ public sealed class NewsSystem : SharedNewsSystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly IdCardSystem _idCardSystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
 
     public override void Initialize()
@@ -140,9 +140,9 @@ public sealed class NewsSystem : SharedNewsSystem
         if (!_accessReader.FindStationRecordKeys(msg.Actor, out _))
             return;
 
-        string? authorName = null;
-        if (_idCardSystem.TryFindIdCard(msg.Actor, out var idCard))
-            authorName = idCard.Comp.FullName;
+        var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(ent, msg.Actor);
+        RaiseLocalEvent(tryGetIdentityShortInfoEvent);
+        string? authorName = tryGetIdentityShortInfoEvent.Title;
 
         var title = msg.Title.Trim();
         var content = msg.Content.Trim();

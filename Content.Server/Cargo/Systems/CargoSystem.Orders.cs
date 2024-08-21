@@ -8,6 +8,7 @@ using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Paper;
 using Robust.Shared.Map;
@@ -175,9 +176,10 @@ namespace Content.Server.Cargo.Systems
             RaiseLocalEvent(ref ev);
             ev.FulfillmentEntity ??= station.Value;
 
-            _idCardSystem.TryFindIdCard(player, out var idCard);
-            // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
-            order.SetApproverData(idCard.Comp?.FullName, idCard.Comp?.JobTitle);
+
+            var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(uid, player);
+            RaiseLocalEvent(tryGetIdentityShortInfoEvent);
+            order.SetApproverData(tryGetIdentityShortInfoEvent.Title);
 
             if (!ev.Handled)
             {

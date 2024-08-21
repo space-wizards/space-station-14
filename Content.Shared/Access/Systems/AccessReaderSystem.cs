@@ -13,6 +13,7 @@ using Content.Shared.StationRecords;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Content.Shared.GameTicking;
+using Content.Shared.IdentityManagement;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -402,9 +403,16 @@ public sealed class AccessReaderSystem : EntitySystem
 
         // TODO pass the ID card on IsAllowed() instead of using this expensive method
         // Set name if the accessor has a card and that card has a name and allows itself to be recorded
-        if (_idCardSystem.TryFindIdCard(accessor, out var idCard)
-            && idCard.Comp is { BypassLogging: false, FullName: not null })
-            name = idCard.Comp.FullName;
+        if (!_idCardSystem.TryFindIdCard(accessor, out var idCard)
+            || !idCard.Comp.BypassLogging)
+        {
+            var getIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(ent, accessor, true);
+            RaiseLocalEvent(getIdentityShortInfoEvent);
+            if (getIdentityShortInfoEvent.Title != null)
+            {
+                name = getIdentityShortInfoEvent.Title;
+            }
+        }
 
         LogAccess(ent, name ?? Loc.GetString("access-reader-unknown-id"));
     }
