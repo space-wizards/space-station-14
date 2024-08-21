@@ -268,7 +268,10 @@ public sealed partial class ShuttleSystem
             return;
 
         startupTime ??= DefaultStartupTime;
-        hyperspaceTime ??= DefaultTravelTime;
+
+        Transform(shuttleUid).Coordinates.TryDistance(_entManager, coordinates, out var distance);
+
+        hyperspaceTime ??= DefaultTravelTime + distance / 15;
 
         hyperspace.StartupTime = startupTime.Value;
         hyperspace.TravelTime = hyperspaceTime.Value;
@@ -303,7 +306,10 @@ public sealed partial class ShuttleSystem
             return;
 
         startupTime ??= DefaultStartupTime;
-        hyperspaceTime ??= DefaultTravelTime;
+
+        Transform(shuttleUid).Coordinates.TryDistance(_entManager, Transform(target).Coordinates, out var distance);
+
+        hyperspaceTime ??= DefaultTravelTime + distance / 15;
 
         var config = _dockSystem.GetDockingConfig(shuttleUid, target, priorityTag);
         hyperspace.StartupTime = startupTime.Value;
