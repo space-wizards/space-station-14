@@ -41,6 +41,6 @@ public sealed partial class HelpButton : Control
         if (_entries is null || _entries.Count == 0)
             return;
 
-        _guidebookSystem!.OpenHelp(_entries);
+        _guidebookSystem?.OpenHelp(_entries);
     }
 }
