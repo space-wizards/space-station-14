@@ -15,9 +15,9 @@
       collection: MothDeathGasp
 
 - type: emoteSounds
-  parent: [UnisexMoth, BaseMaleGasp, MaleHuman]
+  parent: [UnisexMoth, MaleHuman]
   id: MaleMoth
 
 - type: emoteSounds
-  parent: [UnisexMoth, BaseFemaleGasp, FemaleHuman]
+  parent: [UnisexMoth, FemaleHuman]
   id: FemaleMoth
