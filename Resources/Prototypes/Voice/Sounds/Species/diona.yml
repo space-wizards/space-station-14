@@ -1,5 +1,4 @@
 - type: emoteSounds
-  parent: BaseHumanoidEmoteSounds
   id: UnisexDiona
   sounds:
     Scream:
@@ -8,9 +7,9 @@
       collection: DionaLaugh
 
 - type: emoteSounds
-  parent: [BaseMaleGasp, UnisexDiona, MaleHuman]
+  parent: [UnisexDiona, MaleHuman]
   id: MaleDiona
 
 - type: emoteSounds
-  parent: [BaseFemaleGasp, UnisexDiona, FemaleHuman]
+  parent: [UnisexDiona, FemaleHuman]
   id: FemaleDiona

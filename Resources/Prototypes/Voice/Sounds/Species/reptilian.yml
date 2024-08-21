@@ -1,5 +1,4 @@
 - type: emoteSounds
-  parent: BaseHumanoidEmoteSounds
   id: UnisexReptilian
   sounds:
     Scream:
@@ -8,9 +7,9 @@
       path: /Audio/Animals/lizard_happy.ogg
 
 - type: emoteSounds
-  parent: [BaseMaleGasp, UnisexReptilian, MaleHuman]
+  parent: [UnisexReptilian, MaleHuman]
   id: MaleReptilian
 
 - type: emoteSounds
-  parent: [BaseFemaleGasp, UnisexReptilian, FemaleHuman]
+  parent: [UnisexReptilian, FemaleHuman]
   id: FemaleReptilian
