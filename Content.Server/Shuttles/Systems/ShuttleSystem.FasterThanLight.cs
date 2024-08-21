@@ -269,9 +269,16 @@ public sealed partial class ShuttleSystem
 
         startupTime ??= DefaultStartupTime;
 
-        Transform(shuttleUid).Coordinates.TryDistance(_entManager, coordinates, out var distance);
+        var shuttleCoords = Transform(shuttleUid).Coordinates;
+        shuttleCoords.TryDistance(_entManager, coordinates, out var distance);
 
-        hyperspaceTime ??= DefaultTravelTime + distance / 15;
+        hyperspaceTime ??= distance * 0.075f;
+
+        var mapId = coordinates.GetMapId(EntityManager);
+
+        // If we travel between maps, then add the default travel time
+        if (mapId != shuttleCoords.GetMapId(EntityManager))
+            hyperspaceTime += DefaultTravelTime;
 
         hyperspace.StartupTime = startupTime.Value;
         hyperspace.TravelTime = hyperspaceTime.Value;
@@ -284,7 +291,6 @@ public sealed partial class ShuttleSystem
 
         _console.RefreshShuttleConsoles(shuttleUid);
 
-        var mapId = coordinates.GetMapId(EntityManager);
         var mapUid = _mapManager.GetMapEntityId(mapId);
         var ev = new FTLRequestEvent(mapUid);
         RaiseLocalEvent(shuttleUid, ref ev, true);
@@ -307,9 +313,16 @@ public sealed partial class ShuttleSystem
 
         startupTime ??= DefaultStartupTime;
 
-        Transform(shuttleUid).Coordinates.TryDistance(_entManager, Transform(target).Coordinates, out var distance);
+        var targetCoords = Transform(target).Coordinates;
 
-        hyperspaceTime ??= DefaultTravelTime + distance / 15;
+        var shuttleCoords = Transform(shuttleUid).Coordinates;
+        shuttleCoords.TryDistance(_entManager, targetCoords, out var distance);
+
+        hyperspaceTime ??= distance * 0.075f;
+
+        // If we travel between maps, then add the default travel time
+        if (targetCoords.GetMapId(EntityManager) != shuttleCoords.GetMapId(EntityManager))
+            hyperspaceTime += DefaultTravelTime;
 
         var config = _dockSystem.GetDockingConfig(shuttleUid, target, priorityTag);
         hyperspace.StartupTime = startupTime.Value;
