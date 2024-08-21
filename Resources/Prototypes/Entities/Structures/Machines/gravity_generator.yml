@@ -55,8 +55,6 @@
     idlePower: 50
     activePower: 2500
   - type: GravityGenerator
-    idlePower: 50
-    activePower: 2500
     lightRadiusMin: 0.75
     lightRadiusMax: 2.5
     spriteMap:
