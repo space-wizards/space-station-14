@@ -103,8 +103,8 @@
   result: ClothingNeckShockCollar
   completetime: 4
   materials:
-    steel: 350
-    plastic: 250
+    Steel: 350
+    Plastic: 250
 
 - type: latheRecipe
   id: ForensicPad
