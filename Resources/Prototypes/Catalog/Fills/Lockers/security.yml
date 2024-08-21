@@ -20,7 +20,7 @@
       - id: ClothingOuterHardsuitWarden
       - id: HoloprojectorSecurity
       - id: BookSpaceLaw
-      - id: ClothingBackpackElectropack
+      - id: ClothingNeckShockCollar
         amount: 2
       - id: RemoteSignaller
         amount: 2
@@ -46,7 +46,7 @@
       - id: DoorRemoteArmory
       - id: HoloprojectorSecurity
       - id: BookSpaceLaw
-      - id: ClothingBackpackElectropack
+      - id: ClothingNeckShockCollar
         amount: 2
       - id: RemoteSignaller
         amount: 2
