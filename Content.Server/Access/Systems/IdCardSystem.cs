@@ -10,7 +10,6 @@ using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Server.Kitchen.EntitySystems;
-using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Access.Systems;
 
@@ -27,24 +26,6 @@ public sealed class IdCardSystem : SharedIdCardSystem
         base.Initialize();
 
         SubscribeLocalEvent<IdCardComponent, BeingMicrowavedEvent>(OnMicrowaved);
-        SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
-    }
-
-    private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent ev)
-    {
-        if (ev.Handled)
-        {
-            return;
-        }
-
-        string? title = null;
-        if (TryFindIdCard(ev.ForActor, out var idCard) && !(ev.RequestForAccessLogging && idCard.Comp.BypassLogging))
-        {
-            title = FormatApprover(idCard);
-        }
-
-        ev.Title = title;
-        ev.Handled = true;
     }
 
     private void OnMicrowaved(EntityUid uid, IdCardComponent component, BeingMicrowavedEvent args)
@@ -106,20 +87,5 @@ public sealed class IdCardSystem : SharedIdCardSystem
                     $"{ToPrettyString(args.Microwave)} added {random.ID} access to {ToPrettyString(uid):entity}");
 
         }
-    }
-
-    private static string FormatApprover(IdCardComponent idCardComponent)
-    {
-        if (idCardComponent.FullName == null)
-        {
-            return idCardComponent.JobTitle ?? string.Empty;
-        }
-
-        if (idCardComponent.JobTitle == null)
-        {
-            return idCardComponent.FullName;
-        }
-
-        return idCardComponent.FullName + ", " + idCardComponent.JobTitle;
     }
 }

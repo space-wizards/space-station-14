@@ -67,5 +67,19 @@ namespace Content.Shared.Cargo
         {
             Approver = approver;
         }
+
+        public void SetApproverData(string? fullName, string? jobTitle)
+        {
+            var sb = new StringBuilder();
+            if (!string.IsNullOrWhiteSpace(fullName))
+            {
+                sb.Append($"{fullName} ");
+            }
+            if (!string.IsNullOrWhiteSpace(jobTitle))
+            {
+                sb.Append($"({jobTitle})");
+            }
+            Approver = sb.ToString();
+        }
     }
 }
