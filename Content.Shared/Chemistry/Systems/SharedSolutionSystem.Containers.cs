@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components.Solutions;
+using Content.Shared.Chemistry.Events;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -9,88 +10,175 @@ namespace Content.Shared.Chemistry.Systems;
 
 public partial class SharedSolutionSystem
 {
-    public bool TryGetSolution(Entity<SolutionHolderComponent?> containingEntity,
+    private void ContainersInit()
+    {
+        SubscribeLocalEvent<SolutionHolderComponent, EntInsertedIntoContainerMessage>(OnInserted);
+        SubscribeLocalEvent<SolutionHolderComponent, EntRemovedFromContainerMessage>(OnRemoved);
+    }
+    private void OnInserted(Entity<SolutionHolderComponent> ent, ref EntInsertedIntoContainerMessage args)
+    {
+        if (!SolutionQuery.TryComp(args.Entity, out var solComp))
+            return;
+        if (args.Container.ID != FormatSolutionContainerId(solComp.Name))
+        {
+            throw new InvalidOperationException($"Tried to add {ToPrettyString(args.Entity)} without solution component" +
+                                                $"to solution container: {ToPrettyString(ent)} with id:{args.Container.ID}");
+        }
+        solComp.Container = ent;
+        solComp.Parent = ent;
+        var solution = (args.Entity, solComp);
+        ent.Comp.SolutionIds.Add(solComp.Name);
+        ent.Comp.Solutions.Add(solution);
+        var ev = new SolutionAddedEvent(ent, solution);
+        RaiseLocalEvent(ent, ref ev);
+        RaiseLocalEvent(args.Entity, ref ev);
+    }
+    private void OnRemoved(Entity<SolutionHolderComponent> ent, ref EntRemovedFromContainerMessage args)
+    {
+        if (!SolutionQuery.TryComp(args.Entity, out var solComp))
+            return;
+        for (var index = 0; index < ent.Comp.SolutionIds.Count; index++)
+        {
+            var solutionId = ent.Comp.SolutionIds[index];
+            if (solutionId != solComp.Name)
+                continue;
+            ent.Comp.SolutionIds.RemoveAt(index);
+            ent.Comp.Solutions.RemoveAt(index);
+            break;
+        }
+        var ev = new SolutionRemovedEvent(ent, (args.Entity, solComp));
+        RaiseLocalEvent(ent, ref ev);
+        RaiseLocalEvent(args.Entity, ref ev);
+        QueueDel(args.Entity);//Solutions cannot exist outside of solutionHolders
+    }
+
+    public bool TryGetSolution(Entity<SolutionHolderComponent?> container,
         string solutionId,
         out Entity<SolutionComponent> solution,
         bool logIfMissing = true)
     {
-        if (!Resolve(containingEntity, ref containingEntity.Comp))
+        if (!Resolve(container, ref container.Comp))
         {
             solution = default;
             if (logIfMissing)
             {
-                Log.Error($"Target Entity: {ToPrettyString(containingEntity)} Does not have a SolutionHolderComponent " +
+                Log.Error($"Target Entity: {ToPrettyString(container)} Does not have a SolutionHolderComponent " +
                           $"and does not have any solutions!");
             }
             return false;
         }
-        for (var i = 0; i < containingEntity.Comp.SolutionIds.Count; i++)
+        for (var i = 0; i < container.Comp.SolutionIds.Count; i++)
         {
-            if (containingEntity.Comp.SolutionIds[i] != solutionId)
+            if (container.Comp.SolutionIds[i] != solutionId)
                 continue;
-            solution = containingEntity.Comp.Solutions[i];
+            solution = container.Comp.Solutions[i];
             return true;
         }
 
         if (logIfMissing)
         {
             Log.Error($"Solution with ID: {solutionId}, could not be found in solution containing entity:" +
-                      $" {ToPrettyString(containingEntity)}");
+                      $" {ToPrettyString(container)}");
         }
         solution = default;
         return false;
     }
 
-    public IEnumerable<Entity<SolutionComponent>> EnumerateSolutions(Entity<SolutionHolderComponent?> containingEntity)
+    public IEnumerable<Entity<SolutionComponent>> EnumerateSolutions(Entity<SolutionHolderComponent?> container)
     {
-        if (!Resolve(containingEntity, ref containingEntity.Comp))
+        if (!Resolve(container, ref container.Comp))
             yield break;
-        for (var i = 0; i < containingEntity.Comp.SolutionIds.Count; i++)
+        for (var i = 0; i < container.Comp.SolutionIds.Count; i++)
         {
-            yield return containingEntity.Comp.Solutions[i];
+            yield return container.Comp.Solutions[i];
         }
     }
 
-    public bool ResolveSolution(Entity<SolutionHolderComponent?> containingEntity,
+    public bool ResolveSolution(Entity<SolutionHolderComponent?> container,
         string solutionId,
-        [NotNullWhen(true)] ref Entity<SolutionComponent>? foundSolution,
+        ref Entity<SolutionComponent> foundSolution,
         bool logIfMissing = true)
     {
-        if (!Resolve(containingEntity, ref containingEntity.Comp, logIfMissing))
+        if (foundSolution.Owner != EntityUid.Invalid)
+            return true;
+        if (!Resolve(container, ref container.Comp, logIfMissing))
             return false;
-        if (!TryGetSolution(containingEntity, solutionId, out var solution, logIfMissing))
+        if (!TryGetSolution(container, solutionId, out var solution, logIfMissing))
             return false;
         foundSolution = solution;
         return true;
     }
 
-    public bool ResolveSolution(Entity<SolutionHolderComponent?, ContainerManagerComponent?> containingEntity,
+    public bool ResolveSolution(Entity<SolutionHolderComponent?> container,
+        string solutionId,
+        [NotNullWhen(true)] ref Entity<SolutionComponent>? foundSolution,
+        bool logIfMissing = true)
+    {
+        if (!Resolve(container, ref container.Comp, logIfMissing))
+            return false;
+        if (!TryGetSolution(container, solutionId, out var solution, logIfMissing))
+            return false;
+        foundSolution = solution;
+        return true;
+    }
+
+    public bool ResolveSolution(Entity<SolutionHolderComponent?, ContainerManagerComponent?> container,
         string solutionId,
         [NotNullWhen(true)] ref Entity<SolutionComponent>? solution)
     {
         if (!solution.HasValue
-            || !TryEnsureSolution(containingEntity, solutionId, out var foundSolution))
+            || !TryEnsureSolution(container, solutionId, out var foundSolution))
             return false;
         solution = foundSolution;
         return true;
     }
 
     [PublicAPI]
-    public bool TryEnsureSolution(Entity<SolutionHolderComponent?, ContainerManagerComponent?> containingEntity,
+    public bool TryEnsureSolution(Entity<SolutionHolderComponent?, ContainerManagerComponent?> container,
         string solutionId,
         out Entity<SolutionComponent> solution,
         float temperature = Atmospherics.T20C,
         bool canOverflow = true,
         bool canReact = true)
     {
-        return TryEnsureSolution(containingEntity, solutionId, out solution, FixedPoint2.MaxValue, temperature, canOverflow, canReact);
+        return TryEnsureSolution(container, solutionId, out solution, FixedPoint2.MaxValue, temperature, canOverflow, canReact);
     }
+
+
+    public bool RemoveSolution(Entity<SolutionHolderComponent?, ContainerManagerComponent?> container,
+        string solutionId)
+    {
+        if (!HolderQuery.Resolve(container, ref container.Comp1)
+            || ContainerManQuery.Resolve(container, ref container.Comp2))
+            return false;
+        for (var i = 0; i < container.Comp1.SolutionIds.Count; i++)
+        {
+            var solId = container.Comp1.SolutionIds[i];
+            if (solId != solutionId)
+                continue;
+            var solution = container.Comp1.Solutions[i];
+            ContainerSystem.RemoveEntity(container, solution, container.Comp2, force: true);
+            return true;
+        }
+        return false;
+    }
+
+    public bool RemoveSolution(Entity<SolutionComponent?> solution)
+    {
+        if (!Resolve(solution, ref solution.Comp)
+            || solution.Comp.Parent == EntityUid.Invalid)
+            return false;
+        return RemoveSolution((solution.Comp.Container, solution.Comp.Container, null),
+            solution.Comp.Name);
+    }
+
+
 
     /// <summary>
     /// Ensures that the specified entity will have a solution with the specified id, creating a solution if not already present.
     /// This will return false on clients if the solution is not found!
     /// </summary>
-    /// <param name="containingEntity">Entity that "contains" the solution</param>
+    /// <param name="container">Entity that "contains" the solution</param>
     /// <param name="solutionId">Unique Identifier for the solution</param>
     /// <param name="solution">Solution</param>
     /// <param name="maxVolume"></param>
@@ -99,7 +187,7 @@ public partial class SharedSolutionSystem
     /// <param name="canReact"></param>
     /// <returns>True if successful, False if there was an error or if a solution is not found on the client</returns>
     [PublicAPI]
-    public bool TryEnsureSolution(Entity<SolutionHolderComponent?,ContainerManagerComponent?> containingEntity,
+    public bool TryEnsureSolution(Entity<SolutionHolderComponent?,ContainerManagerComponent?> container,
         string solutionId,
         out Entity<SolutionComponent> solution,
         FixedPoint2 maxVolume,
@@ -107,11 +195,11 @@ public partial class SharedSolutionSystem
         bool canOverflow = true,
         bool canReact = true)
     {
-        if (!Resolve(containingEntity, ref containingEntity.Comp1, false))
-            AddComp<SolutionHolderComponent>(containingEntity);
-        var solutionContainer = ContainerSystem.EnsureContainer<ContainerSlot>(containingEntity,
+        if (!Resolve(container, ref container.Comp1, false))
+            AddComp<SolutionHolderComponent>(container);
+        var solutionContainer = ContainerSystem.EnsureContainer<ContainerSlot>(container,
             FormatSolutionContainerId(solutionId),
-            containingEntity);
+            container);
         if (solutionContainer.ContainedEntity != null)
         {
             if (!TryComp(solutionContainer.ContainedEntity, out SolutionComponent? oldSolComp))

@@ -19,7 +19,10 @@ namespace Content.Shared.Chemistry.Components.Solutions;
 public sealed partial class SolutionComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public EntityUid Container = EntityUid.Invalid;
+    public EntityUid Parent = EntityUid.Invalid;
+
+    [DataField]
+    public Entity<SolutionHolderComponent> Container = default!;
 
     [DataField, AutoNetworkedField]
     public List<ReagentData> Contents;

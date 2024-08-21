@@ -18,6 +18,6 @@ namespace Content.Shared.Fluids.Components
         public FixedPoint2 OverflowVolume = FixedPoint2.New(20);
 
         [DataField("solutionRef")]
-        public Entity<SolutionComponent>? Solution;
+        public Entity<SolutionComponent> Solution = default;
     }
 }

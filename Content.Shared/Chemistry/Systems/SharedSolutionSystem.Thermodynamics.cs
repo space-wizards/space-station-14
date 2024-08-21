@@ -3,31 +3,15 @@ using System.Runtime.InteropServices;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.Solutions;
+using Content.Shared.Chemistry.Events;
 using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Chemistry.Systems;
 
 public partial class SharedSolutionSystem
 {
-    protected void ChangeTotalVolume(Entity<SolutionComponent> solution,
-        ref SolutionComponent.ReagentData origin,
-        FixedPoint2 delta,
-        float? temperature)
-    {
-        SetTotalVolume(solution, solution.Comp.Volume + delta);
-        ChangeHeatCapacity(solution, CalcHeatCapacity(origin.ReagentEnt.Comp.SpecificHeat, delta), false);
-        if (temperature != null)
-            ChangeThermalEnergy(solution, CalcThermalEnergy(origin.ReagentEnt.Comp.SpecificHeat, delta, temperature.Value));
-        UpdatePrimaryReagent(solution, ref origin, delta);
-    }
 
-    protected void SetTotalVolume(Entity<SolutionComponent> solution, FixedPoint2 newVolume)
-    {
-        newVolume = FixedPoint2.Max(0, newVolume);
-        if (newVolume == solution.Comp.Volume)
-            return;
-        solution.Comp.Volume = newVolume;
-    }
+
 
     protected void ChangeHeatCapacity(Entity<SolutionComponent> solution, float heatCapacity, bool changesTemp)
     {
@@ -125,4 +109,25 @@ public partial class SharedSolutionSystem
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public float CalcThermalEnergy(float specificHeat, FixedPoint2 quantity, float temperature) =>
         CalcThermalEnergy(quantity.Float() * specificHeat, temperature);
+
+    protected void ChangeTotalVolume(Entity<SolutionComponent> solution,
+        ref SolutionComponent.ReagentData origin,
+        FixedPoint2 delta,
+        float? temperature)
+    {
+        SetTotalVolume(solution, solution.Comp.Volume + delta);
+        ChangeHeatCapacity(solution, CalcHeatCapacity(origin.ReagentEnt.Comp.SpecificHeat, delta), false);
+        if (temperature != null)
+            ChangeThermalEnergy(solution, CalcThermalEnergy(origin.ReagentEnt.Comp.SpecificHeat, delta, temperature.Value));
+        UpdatePrimaryReagent(solution, ref origin, delta);
+    }
+
+
+    private void SetTotalVolume(Entity<SolutionComponent> solution, FixedPoint2 newVolume)
+    {
+        newVolume = FixedPoint2.Max(0, newVolume);
+        if (newVolume == solution.Comp.Volume)
+            return;
+        solution.Comp.Volume = newVolume;
+    }
 }

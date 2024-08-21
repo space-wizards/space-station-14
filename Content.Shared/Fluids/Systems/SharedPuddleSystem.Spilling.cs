@@ -277,7 +277,7 @@ public abstract partial class SharedPuddleSystem
                 if (user != null)
                 {
                     AdminLogger.Add(LogType.Landed,
-                        $"{ToPrettyString(user.Value):user} threw {ToPrettyString(solution.Comp.Container):entity}" +
+                        $"{ToPrettyString(user.Value):user} threw {ToPrettyString(solution.Comp.Parent):entity}" +
                         $" which splashed a solution {SharedSolutionSystem.ToPrettyString(solution):solution} onto " +
                         $"{ToPrettyString(targetEnt):target}");
                 }
@@ -286,7 +286,7 @@ public abstract partial class SharedPuddleSystem
                     SolutionSystem.DoTileReactions(targetTile, solution, splitPercentage);
                 PopupSystem.PopupEntity(
                     Loc.GetString("spill-land-spilled-on-other",
-                        ("spillable", solution.Comp.Container),
+                        ("spillable", solution.Comp.Parent),
                         ("target", Identity.Entity(targetEnt.Owner, EntityManager))),
                     targetEnt,
                     PopupType.SmallCaution);
@@ -294,7 +294,7 @@ public abstract partial class SharedPuddleSystem
         }
         ColorFlashSystem.RaiseEffect(SolutionSystem.GetSolutionColor(solution),
             targets,
-            Filter.Pvs(solution.Comp.Container, entityManager: EntityManager));
+            Filter.Pvs(solution.Comp.Parent, entityManager: EntityManager));
         return TrySpillAt(targetCoords, solution, out puddle, sound);
     }
 

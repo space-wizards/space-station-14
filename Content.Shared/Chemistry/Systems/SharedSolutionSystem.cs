@@ -36,39 +36,20 @@ public abstract partial class SharedSolutionSystem : EntitySystem
     public const int VariantAlloc = 1;
 
     public EntityQuery<SolutionComponent> SolutionQuery;
-    private EntityQuery<SolutionHolderComponent> _containerQuery;
-    private EntityQuery<StandoutReagentComponent> _standoutReagentQuery;
+    protected EntityQuery<SolutionHolderComponent> HolderQuery;
+    protected EntityQuery<ContainerManagerComponent> ContainerManQuery;
+    protected EntityQuery<StandoutReagentComponent> StandoutReagentQuery;
 
     public override void Initialize()
     {
         SolutionQuery = EntityManager.GetEntityQuery<SolutionComponent>();
-        _containerQuery = EntityManager.GetEntityQuery<SolutionHolderComponent>();
+        HolderQuery = EntityManager.GetEntityQuery<SolutionHolderComponent>();
+        StandoutReagentQuery = EntityManager.GetEntityQuery<StandoutReagentComponent>();
+        ContainerManQuery = EntityManager.GetEntityQuery<ContainerManagerComponent>();
 
         SubscribeLocalEvent<SolutionComponent, AfterAutoHandleStateEvent>(HandleSolutionState);
-        SubscribeLocalEvent<SolutionHolderComponent, AfterAutoHandleStateEvent>(HandleSolutionHolderState);
-        SubscribeLocalEvent<SolutionComponent, MapInitEvent>(SolutionMapInit);
         SubscribeLocalEvent<StartingSolutionsComponent, MapInitEvent>(InitialSolutionMapInit);
-
-    }
-
-    private void HandleSolutionHolderState(Entity<SolutionHolderComponent> ent, ref AfterAutoHandleStateEvent args)
-    {
-        ent.Comp.Solutions.Clear();
-        foreach (var solEnt in ent.Comp.SolutionEntities)
-        {
-            if (!SolutionQuery.TryComp(solEnt, out var solComp))
-            {
-                Log.Error($"Entity: {ToPrettyString(solEnt)} is contained in a solution " +
-                          $"but does not have a solution component!");
-                continue;
-            }
-            ent.Comp.Solutions.Add((solEnt, solComp));
-        }
-    }
-
-    private void SolutionMapInit(Entity<SolutionComponent> ent, ref MapInitEvent args)
-    {
-        TrimAllocs(ent);
+        ContainersInit();
     }
 
     private void InitialSolutionMapInit(Entity<StartingSolutionsComponent> ent, ref MapInitEvent args)
@@ -126,7 +107,7 @@ public abstract partial class SharedSolutionSystem : EntitySystem
         bool needsReactionsProcessing = true,
         ReactionMixerComponent? mixerComponent = null)
     {
-        Resolve(solution.Comp.Container, ref mixerComponent, false);
+        Resolve(solution.Comp.Parent, ref mixerComponent, false);
         if (needsReactionsProcessing && solution.Comp.CanReact)
             ChemicalReactionSystem.FullyReactSolution(solution, mixerComponent);
 
@@ -189,7 +170,7 @@ public abstract partial class SharedSolutionSystem : EntitySystem
                             continue;
                         blendData.Add((quantData.Quantity, reagentData.ReagentEnt));
                         voidedVolume -= quantData.Quantity;
-                        if (_standoutReagentQuery.TryComp(reagentData.ReagentEnt, out var standoutReagent))
+                        if (StandoutReagentQuery.TryComp(reagentData.ReagentEnt, out var standoutReagent))
                         {
                             standoutReagents.Add((quantData.Quantity,
                                 (reagentData.ReagentEnt, reagentData.ReagentEnt, standoutReagent)));
@@ -206,7 +187,7 @@ public abstract partial class SharedSolutionSystem : EntitySystem
                             continue;
                         blendData.Add((quantData.Quantity, reagentData.ReagentEnt));
                         voidedVolume -= quantData.Quantity;
-                        if (_standoutReagentQuery.TryComp(reagentData.ReagentEnt, out var standoutReagent))
+                        if (StandoutReagentQuery.TryComp(reagentData.ReagentEnt, out var standoutReagent))
                         {
                             standoutReagents.Add((quantData.Quantity,
                                 (reagentData.ReagentEnt, reagentData.ReagentEnt, standoutReagent)));
@@ -290,7 +271,7 @@ public abstract partial class SharedSolutionSystem : EntitySystem
                             continue;
                         blendData.Add((reagentQuant.Quantity, reagentQuant.Entity));
                         voidedVolume -= reagentQuant.Quantity;
-                        if (_standoutReagentQuery.TryComp(reagentQuant.Entity, out var standoutReagent))
+                        if (StandoutReagentQuery.TryComp(reagentQuant.Entity, out var standoutReagent))
                         {
                             standoutReagents.Add((reagentQuant.Quantity,
                                 (reagentQuant.Entity, reagentQuant.Entity, standoutReagent)));
@@ -307,7 +288,7 @@ public abstract partial class SharedSolutionSystem : EntitySystem
                             continue;
                         blendData.Add((reagentQuant.Quantity, reagentQuant.Entity));
                         voidedVolume -= reagentQuant.Quantity;
-                        if (_standoutReagentQuery.TryComp(reagentQuant.Entity, out var standoutReagent))
+                        if (StandoutReagentQuery.TryComp(reagentQuant.Entity, out var standoutReagent))
                         {
                             standoutReagents.Add((reagentQuant.Quantity,
                                 (reagentQuant.Entity, reagentQuant.Entity, standoutReagent)));

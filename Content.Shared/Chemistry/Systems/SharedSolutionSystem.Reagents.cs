@@ -267,6 +267,7 @@ public partial class SharedSolutionSystem
         overflow = 0;
         if (!reagentQuantity.IsValid)
             return;
+        SetupUpdatedEvent(solution, out var ev);
         ref var reagentData = ref CollectionsMarshal.AsSpan(solution.Comp.Contents)[EnsureReagentData(solution, reagentQuantity)];
         if (reagentQuantity.ReagentDef.Variant == null)
         {
@@ -276,6 +277,7 @@ public partial class SharedSolutionSystem
                     out overflow,
                     temperature,
                     force);
+                TriggerUpdatedEvent(ref ev);
             return;
         }
         ref var variantData = ref CollectionsMarshal.AsSpan(reagentData.Variants)[EnsureVariantData(solution,
@@ -288,6 +290,7 @@ public partial class SharedSolutionSystem
             out overflow,
             temperature,
             force);
+        TriggerUpdatedEvent(ref ev);
     }
 
 
@@ -310,6 +313,7 @@ public partial class SharedSolutionSystem
 
         if (!TryGetReagentDataIndex(solution, reagentQuantity.ReagentDef, out var reagentIndex))
             return false;
+        SetupUpdatedEvent(solution, out var ev);
         ref var reagentData = ref CollectionsMarshal.AsSpan(solution.Comp.Contents)[reagentIndex];
         if (reagentQuantity.Variant == null)
         {
@@ -322,9 +326,12 @@ public partial class SharedSolutionSystem
                 temperature,
                 force);
             }
-
             if (!purge)
+            {
+                TriggerUpdatedEvent(ref ev);
                 return true;
+            }
+            TriggerUpdatedEvent(ref ev);
             PurgeReagent(solution, ref reagentData);
             return true;
         }
@@ -340,6 +347,7 @@ public partial class SharedSolutionSystem
             force);
         if (purge)
             PurgeReagent(solution, ref varData);
+        TriggerUpdatedEvent(ref ev);
         return true;
     }
 
@@ -367,6 +375,7 @@ public partial class SharedSolutionSystem
             return true;
         if (!TryGetReagentDataIndex(solution, reagentQuantity, out var reagentIndex))
             return false;
+        SetupUpdatedEvent(solution, out var ev);
         ref var reagentData = ref CollectionsMarshal.AsSpan(solution.Comp.Contents)[reagentIndex];
         if (reagentQuantity.Variant == null)
         {
@@ -376,6 +385,7 @@ public partial class SharedSolutionSystem
                 out overflow,
                 temperature,
                 force);
+            TriggerUpdatedEvent(ref ev);
             return true;
         }
         if (!TryGetVariantDataIndex(solution, reagentQuantity, reagentQuantity.Variant, out var index))
@@ -387,6 +397,7 @@ public partial class SharedSolutionSystem
             out overflow,
             temperature,
             force);
+        TriggerUpdatedEvent(ref ev);
         return true;
     }
 
@@ -404,6 +415,7 @@ public partial class SharedSolutionSystem
             return true;
         if (!TryGetReagentDataIndex(solution, reagent, out var reagentIndex))
             return false;
+        SetupUpdatedEvent(solution, out var ev);
         ref var reagentData = ref CollectionsMarshal.AsSpan(solution.Comp.Contents)[reagentIndex];
         ChangeReagentTotalQuantity_Implementation(solution,
             ref reagentData,
@@ -411,6 +423,7 @@ public partial class SharedSolutionSystem
             out overflow,
             temperature,
             force);
+        TriggerUpdatedEvent(ref ev);
         return true;
     }
 
@@ -428,12 +441,14 @@ public partial class SharedSolutionSystem
             return true;
         if (!TryGetReagentDataIndex(solution, reagent, out var reagentIndex))
             return false;
+        SetupUpdatedEvent(solution, out var ev);
         ChangeReagentTotalQuantity_Implementation(solution,
             ref CollectionsMarshal.AsSpan(solution.Comp.Contents)[reagentIndex],
             quantity,
             out overflow,
             temperature,
             force);
+        TriggerUpdatedEvent(ref ev);
         return true;
     }
 
@@ -457,6 +472,8 @@ public partial class SharedSolutionSystem
             return 0;
         var contentsSpan = CollectionsMarshal.AsSpan(solution.Comp.Contents);
         FixedPoint2 overflow = 0;
+        var success = false;
+        SetupUpdatedEvent(solution, out var ev);
         foreach (ref var reagentQuant in reagents.AsSpan())
         {
             if (!reagentQuant.IsValid
@@ -479,6 +496,7 @@ public partial class SharedSolutionSystem
                     null,
                     true);
                 overflow += localOverflow;
+                success = true;
                 continue;
             }
             ChangeReagentQuantity_Implementation(solution,
@@ -488,7 +506,10 @@ public partial class SharedSolutionSystem
                 null,
                 true);
             overflow += localOverflow2;
+            success = true;
         }
+        if (success)
+            TriggerUpdatedEvent(ref ev);
         return overflow;
     }
 
@@ -498,8 +519,12 @@ public partial class SharedSolutionSystem
         bool force = true,
         params ReagentQuantity[] reagents)
     {
+        if (reagents.Length == 0)
+            return 0;
         var contentsSpan = CollectionsMarshal.AsSpan(solution.Comp.Contents);
         FixedPoint2 overflow = 0;
+        SetupUpdatedEvent(solution, out var ev);
+        var success = false;
         foreach (ref var reagentQuant in reagents.AsSpan())
         {
             if (!reagentQuant.IsValid)
@@ -518,6 +543,7 @@ public partial class SharedSolutionSystem
                     temperature ,
                     force);
                 overflow += localOverflow;
+                success = true;
                 continue;
             }
             ChangeReagentQuantity_Implementation(solution,
@@ -527,15 +553,19 @@ public partial class SharedSolutionSystem
                 temperature,
                 force);
             overflow += localOverflow2;
+            success = true;
         }
+        if (success)
+            TriggerUpdatedEvent(ref ev);
         return overflow;
     }
 
     [PublicAPI]
     public SolutionContents SplitSolution(Entity<SolutionComponent> originSolution, float percentage = 0.5f)
     {
-        ScaleSolution(originSolution, percentage, out var overflow, true, true);
-        return GetReagents(originSolution,1f-percentage);
+        var output = GetReagents(originSolution, 1f - percentage);
+        ScaleSolution(originSolution, percentage, out _, true, true);
+        return output;
     }
 
     [PublicAPI]
@@ -588,12 +618,16 @@ public partial class SharedSolutionSystem
         bool force = true)
     {
         overflow = 0;
+        if (quantity <= 0)
+            return;
         WillOverflow(solution, quantity, out overflow);
         if ( !force)
             quantity -= overflow;
         if (quantity == 0)
             return;
+        SetupUpdatedEvent(solution, out var ev);
         overflow = -ChangeAllDataQuantities(solution, quantity, null);
+        TriggerUpdatedEvent(ref ev);
     }
 
     [PublicAPI]
@@ -606,6 +640,8 @@ public partial class SharedSolutionSystem
         overflow = 0;
         if (quantity == 0)
             return;
+        SetupUpdatedEvent(originSolution, out var originEv);
+        SetupUpdatedEvent(targetSolution, out var targetEv);
         if (quantity < 0)
         {
             quantity = -quantity;
@@ -619,11 +655,13 @@ public partial class SharedSolutionSystem
         if (quantity == 0)
             return;
         var missing = ChangeAllDataQuantities(originSolution, -quantity, null);
+        TriggerUpdatedEvent(ref originEv);
         if (missing >= quantity)
             return;
         overflow -= missing;
         //we don't care about underflow here because it isn't possible
         ChangeAllDataQuantities(targetSolution, quantity - missing, originSolution.Comp.Temperature);
+        TriggerUpdatedEvent(ref targetEv);
     }
 
     public void RemoveAllReagents(Entity<SolutionComponent> solution,  bool keepTemperature = true, bool purge = false)
@@ -645,13 +683,15 @@ public partial class SharedSolutionSystem
         ClearThermalEnergy(solution, !keepTemperature);
         if (purge)
             PurgeAllReagents(solution);
+        SetupUpdatedEvent(solution, out var ev);
+        TriggerUpdatedEvent(ref ev);
     }
 
     #endregion
 
     #region Internal
 
-    protected SolutionContents GetReagents(Entity<SolutionComponent> solution, float percentage = 1.0f)
+    private SolutionContents GetReagents(Entity<SolutionComponent> solution, float percentage = 1.0f)
     {
         var contents = new ReagentQuantity[solution.Comp.ReagentAndVariantCount];
         var i = 0;
@@ -681,7 +721,7 @@ public partial class SharedSolutionSystem
     /// <param name="delta"></param>
     /// <param name="temperature"></param>
     /// <returns>Underflow ammount</returns>
-    protected FixedPoint2 ChangeReagentDataQuantity(Entity<SolutionComponent> solution,
+    private FixedPoint2 ChangeReagentDataQuantity(Entity<SolutionComponent> solution,
         ref SolutionComponent.ReagentData reagentData,
         FixedPoint2 delta,
         float? temperature)
@@ -705,7 +745,7 @@ public partial class SharedSolutionSystem
     /// <param name="delta"></param>
     /// <param name="temperature"></param>
     /// <returns>Underflow</returns>
-    protected FixedPoint2 ChangeVariantDataQuantity(Entity<SolutionComponent> solution,
+    private FixedPoint2 ChangeVariantDataQuantity(Entity<SolutionComponent> solution,
         ref SolutionComponent.ReagentData parentData,
         ref SolutionComponent.VariantData variantData,
         FixedPoint2 delta,
@@ -721,7 +761,7 @@ public partial class SharedSolutionSystem
         return underflow;
     }
 
-    protected FixedPoint2 ChangeAllReagentVariantDataQuantity(
+    private FixedPoint2 ChangeAllReagentVariantDataQuantity(
         Entity<SolutionComponent> solution,
         ref SolutionComponent.ReagentData reagentData,
         FixedPoint2 delta,
@@ -775,7 +815,7 @@ public partial class SharedSolutionSystem
         return ChangeReagentDataQuantity(solution, ref reagentData, delta, temp);
     }
 
-    protected FixedPoint2 ChangeAllDataQuantities(
+    private FixedPoint2 ChangeAllDataQuantities(
         Entity<SolutionComponent> solution,
         FixedPoint2 delta,
         float? temperature)
@@ -816,7 +856,7 @@ public partial class SharedSolutionSystem
         return delta;
     }
 
-    protected void ChangeReagentQuantity_Implementation(Entity<SolutionComponent> solution,
+    private void ChangeReagentQuantity_Implementation(Entity<SolutionComponent> solution,
         ref SolutionComponent.ReagentData reagentData,
         FixedPoint2 delta,
         out FixedPoint2 overflow,
@@ -829,7 +869,7 @@ public partial class SharedSolutionSystem
         overflow -= ChangeReagentDataQuantity(solution, ref reagentData , delta, temperature);
     }
 
-    protected void ChangeVariantQuantity_Implementation(Entity<SolutionComponent> solution,
+    private void ChangeVariantQuantity_Implementation(Entity<SolutionComponent> solution,
         ref SolutionComponent.ReagentData reagentData,
         ref SolutionComponent.VariantData variantData,
         FixedPoint2 delta,
@@ -864,7 +904,7 @@ public partial class SharedSolutionSystem
     /// <param name="solution"></param>
     /// <param name="contents"></param>
     /// <returns></returns>
-    protected FixedPoint2 GetPrimaryReagentQuantity(Entity<SolutionComponent> solution,
+    private FixedPoint2 GetPrimaryReagentQuantity(Entity<SolutionComponent> solution,
         Span<SolutionComponent.ReagentData> contents)
     {
         return solution.Comp.Volume == 0
@@ -880,7 +920,7 @@ public partial class SharedSolutionSystem
     /// <param name="solution"></param>
     /// <param name="reagentData"></param>
     /// <returns></returns>
-    protected bool PurgeReagent(Entity<SolutionComponent> solution,
+    private bool PurgeReagent(Entity<SolutionComponent> solution,
         ref SolutionComponent.ReagentData reagentData)
     {
         if (!reagentData.IsValid)
@@ -901,7 +941,7 @@ public partial class SharedSolutionSystem
     /// <param name="variantData"></param>
     /// <param name="removeBaseIfLast"></param>
     /// <returns></returns>
-    protected bool PurgeReagent(
+    private bool PurgeReagent(
         Entity<SolutionComponent> solution,
         ref SolutionComponent.VariantData variantData,
         bool removeBaseIfLast = false)
@@ -939,7 +979,7 @@ public partial class SharedSolutionSystem
     /// </summary>
     /// <param name="solution">Target solution</param>
     /// <param name="resetTemperature"></param>
-    protected void PurgeAllReagents(Entity<SolutionComponent> solution, bool resetTemperature = true)
+    private void PurgeAllReagents(Entity<SolutionComponent> solution, bool resetTemperature = true)
     {
        solution.Comp.Contents.Clear();
        SetTotalVolume(solution, 0);
@@ -956,7 +996,7 @@ public partial class SharedSolutionSystem
     /// <param name="solution"></param>
     /// <param name="reagent"></param>
     /// <returns>reagentData index</returns>
-    protected int EnsureReagentData(
+    private int EnsureReagentData(
         Entity<SolutionComponent> solution,
         Entity<ReagentDefinitionComponent> reagent)
     {
@@ -980,7 +1020,7 @@ public partial class SharedSolutionSystem
     /// <param name="reagent"></param>
     /// <param name="variant"></param>
     /// <returns>variantData index</returns>
-    protected int EnsureVariantData(
+    private int EnsureVariantData(
         Entity<SolutionComponent> solution,
         Entity<ReagentDefinitionComponent> reagent,
         ReagentVariant variant)
@@ -1008,7 +1048,7 @@ public partial class SharedSolutionSystem
     /// <param name="reagent"></param>
     /// <param name="index">Index of reagentData</param>
     /// <returns>If reagentData is valid</returns>
-    protected bool TryGetReagentDataIndex(Entity<SolutionComponent> solution,
+    private bool TryGetReagentDataIndex(Entity<SolutionComponent> solution,
         Entity<ReagentDefinitionComponent> reagent,
         out int index)
     {
@@ -1031,7 +1071,7 @@ public partial class SharedSolutionSystem
     /// <param name="variant"></param>
     /// <param name="index">Index of variantData</param>
     /// <returns>If variantData is valid</returns>
-    protected bool TryGetVariantDataIndex(Entity<SolutionComponent> solution,
+    private bool TryGetVariantDataIndex(Entity<SolutionComponent> solution,
         Entity<ReagentDefinitionComponent> reagent,
         ReagentVariant variant,
         out int index)

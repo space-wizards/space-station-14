@@ -16,7 +16,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Maps;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
-using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Server.Audio;
 using Robust.Shared.Collections;
@@ -314,61 +313,10 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         UpdateAppearance(entity, entity.Comp);
     }
 
-    private void UpdateSlip(EntityUid entityUid, PuddleComponent component, Solution solution)
-    {
-        var isSlippery = false;
-        // The base sprite is currently at 0.3 so we require at least 2nd tier to be slippery or else it's too hard to see.
-        var amountRequired = FixedPoint2.New(component.OverflowVolume.Float() * LowThreshold);
-        var slipperyAmount = FixedPoint2.Zero;
-
-        foreach (var (reagent, quantity) in solution.Contents)
-        {
-            var reagentDef = _chemistryRegistry.Index(reagent.Prototype);
-
-            if (reagentDef.Comp.Slippery)
-            {
-                slipperyAmount += quantity;
-
-                if (slipperyAmount > amountRequired)
-                {
-                    isSlippery = true;
-                    break;
-                }
-            }
-        }
-
-        if (isSlippery)
-        {
-            var comp = EnsureComp<StepTriggerComponent>(entityUid);
-            _stepTrigger.SetActive(entityUid, true, comp);
-            var friction = EnsureComp<TileFrictionModifierComponent>(entityUid);
-            _tile.SetModifier(entityUid, TileFrictionController.DefaultFriction * 0.5f, friction);
-        }
-        else if (TryComp<StepTriggerComponent>(entityUid, out var comp))
-        {
-            _stepTrigger.SetActive(entityUid, false, comp);
-            RemCompDeferred<TileFrictionModifierComponent>(entityUid);
-        }
-    }
-
     private void OnAnchorChanged(Entity<PuddleComponent> entity, ref AnchorStateChangedEvent args)
     {
         if (!args.Anchored)
             QueueDel(entity);
-    }
-
-    /// <summary>
-    ///     Gets the current volume of the given puddle, which may not necessarily be PuddleVolume.
-    /// </summary>
-    public FixedPoint2 CurrentVolume(EntityUid uid, PuddleComponent? puddleComponent = null)
-    {
-        if (!Resolve(uid, ref puddleComponent))
-            return FixedPoint2.Zero;
-
-        return _solutionContainerSystem.ResolveSolution(uid, puddleComponent.SolutionName, ref puddleComponent.Solution,
-            out var solution)
-            ? solution.Volume
-            : FixedPoint2.Zero;
     }
 
     /// <summary>

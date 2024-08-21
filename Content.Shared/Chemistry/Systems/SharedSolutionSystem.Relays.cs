@@ -14,9 +14,9 @@ public partial class SharedSolutionSystem
     ) where T: notnull
     {
         RaiseLocalEvent(solution, eventArgs, broadcast);
-        if (raiseParent && solution.Comp.Container != EntityUid.Invalid)
+        if (raiseParent && solution.Comp.Parent != EntityUid.Invalid)
         {
-            RaiseLocalEvent(solution.Comp.Container, eventArgs, broadcast);
+            RaiseLocalEvent(solution.Comp.Parent, eventArgs, broadcast);
         }
     }
     protected void RaiseLocalSolutionEvent<T>(Entity<SolutionComponent> solution,
@@ -26,9 +26,9 @@ public partial class SharedSolutionSystem
     ) where T: notnull
     {
         RaiseLocalEvent(solution, ref eventArgs, broadcast);
-        if (raiseParent && solution.Comp.Container != EntityUid.Invalid)
+        if (raiseParent && solution.Comp.Parent != EntityUid.Invalid)
         {
-            RaiseLocalEvent(solution.Comp.Container, ref eventArgs, broadcast);
+            RaiseLocalEvent(solution.Comp.Parent, ref eventArgs, broadcast);
         }
     }
 

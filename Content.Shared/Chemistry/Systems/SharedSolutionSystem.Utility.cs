@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text;
 using Content.Shared.Chemistry.Components.Solutions;
+using Content.Shared.Chemistry.Events;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
@@ -266,4 +267,13 @@ public partial class SharedSolutionSystem
         return ReagentQuantitySpecifier.ResolveReagentEntity(ref reagentSpec, ChemistryRegistry,logIfMissing);
     }
 
+    private void SetupUpdatedEvent(Entity<SolutionComponent> solution, out SolutionUpdatedEvent ev)
+    {
+        ev = new SolutionUpdatedEvent(solution, solution.Comp.Container, solution.Comp.Volume);
+    }
+    private void TriggerUpdatedEvent(ref SolutionUpdatedEvent ev)
+    {
+        ev.VolumeDelta = ev.Solution.Comp.Volume-ev.VolumeDelta;
+        RaiseLocalSolutionEvent(ev.Solution, ref ev);
+    }
 }
