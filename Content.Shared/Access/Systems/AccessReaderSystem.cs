@@ -403,15 +403,11 @@ public sealed class AccessReaderSystem : EntitySystem
 
         // TODO pass the ID card on IsAllowed() instead of using this expensive method
         // Set name if the accessor has a card and that card has a name and allows itself to be recorded
-        if (!_idCardSystem.TryFindIdCard(accessor, out var idCard)
-            || !idCard.Comp.BypassLogging)
+        var getIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(ent, accessor, true);
+        RaiseLocalEvent(getIdentityShortInfoEvent);
+        if (getIdentityShortInfoEvent.Title != null)
         {
-            var getIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(ent, accessor, true);
-            RaiseLocalEvent(getIdentityShortInfoEvent);
-            if (getIdentityShortInfoEvent.Title != null)
-            {
-                name = getIdentityShortInfoEvent.Title;
-            }
+            name = getIdentityShortInfoEvent.Title;
         }
 
         LogAccess(ent, name ?? Loc.GetString("access-reader-unknown-id"));
