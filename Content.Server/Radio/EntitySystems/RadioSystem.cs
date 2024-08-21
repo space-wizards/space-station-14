@@ -71,9 +71,7 @@ public sealed class RadioSystem : EntitySystem
     /// </summary>
     /// <param name="messageSource">Entity that spoke the message</param>
     /// <param name="radioSource">Entity that picked up the message and will send it, e.g. headset</param>
-    /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>.
-    /// <param name="verbOverride">The verb to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>.
-    public void SendRadioMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource, bool escapeMarkup = true, string? nameOverride = null, string? verbOverride = null)
+      public void SendRadioMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource, bool escapeMarkup = true)
     {
         // TODO if radios ever garble / modify messages, feedback-prevention needs to be handled better than this.
         if (!_messages.Add(message))
@@ -82,14 +80,12 @@ public sealed class RadioSystem : EntitySystem
         var evt = new TransformSpeakerNameEvent(messageSource, MetaData(messageSource).EntityName);
         RaiseLocalEvent(messageSource, evt);
 
-        var name = nameOverride ?? evt.VoiceName;
+        var name = evt.VoiceName;
         name = FormattedMessage.EscapeText(name);
 
         var speech = _chat.GetSpeechVerb(messageSource, message);
 
-        if (verbOverride != null && _prototype.TryIndex<SpeechVerbPrototype>(verbOverride, out var overrideProto))
-            speech = overrideProto;
-        else if (_prototype.TryIndex(evt.SpeechVerb, out var evntProto))
+        if (_prototype.TryIndex(evt.SpeechVerb, out var evntProto))
             speech = evntProto;
 
         var content = escapeMarkup
