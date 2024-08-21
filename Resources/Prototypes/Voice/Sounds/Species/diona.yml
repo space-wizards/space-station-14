@@ -13,4 +13,4 @@
 
 - type: emoteSounds
   parent: [UnisexDiona, FemaleHuman]
-  id: MaleDiona
+  id: FemaleDiona
