@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System.Threading.Tasks;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -9,6 +10,11 @@ namespace Content.Shared.Administration
         // System users
         public static NetUserId SystemUserId { get; } = new NetUserId(Guid.Empty);
 
+        private readonly AhelpLogging _ahelpLogging;
+        public SharedBwoinkSystem(AhelpLogging ahelpLogging)
+        {
+            _ahelpLogging = ahelpLogging;
+        }
         public override void Initialize()
         {
             base.Initialize();
@@ -19,10 +25,22 @@ namespace Content.Shared.Administration
         protected virtual void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
         {
             // Specific side code in target.
+            _ = LogBwoinkAsync(message);
         }
 
-        protected void LogBwoink(BwoinkTextMessage message)
+        protected async Task LogBwoinkAsync(BwoinkTextMessage message)
         {
+            var roundStatus = RoundStatus.InRound; //Todo
+
+            await _ahelpLogging.LogAhelpMessageAsync(
+                ahelpRound: 0, //Todo
+                ahelpTarget: message.UserId.ToInt(),
+                sender: message.TrueSender.ToInt(),
+                senderEntity: 0, //Todo
+                isAdminned: message.TrueSender == SystemUserId,
+                targetOnline: true,  //Todo
+                message: message.Text,
+                roundStatus: roundStatus);
         }
 
         [Serializable, NetSerializable]
