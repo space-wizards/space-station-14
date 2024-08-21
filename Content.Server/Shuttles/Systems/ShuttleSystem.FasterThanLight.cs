@@ -255,11 +255,12 @@ public sealed partial class ShuttleSystem
     private float CalculateFTLTravelTime(EntityUid shuttleUid, EntityCoordinates coordinates)
     {
         var shuttleCoords = Transform(shuttleUid).Coordinates;
-        shuttleCoords.TryDistance(_entManager, coordinates, out var distance);
 
         // If we travel between maps, then return the default travel time. Otherwise, calculate the travel time by distance
         if (coordinates.GetMapId(EntityManager) != shuttleCoords.GetMapId(EntityManager))
             return DefaultTravelTime;
+
+        shuttleCoords.TryDistance(_entManager, coordinates, out var distance);
 
         return distance * 0.075f;
     }
