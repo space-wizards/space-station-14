@@ -54,7 +54,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      300: Dead
+      100: Dead
   - type: MeleeWeapon
     soundHit:
       path: "/Audio/Weapons/smash.ogg"
@@ -124,6 +124,7 @@
     layers:
     - state: goliath_tentacle_wiggle
   - type: StunOnContact
+    duration: 3
     blacklist:
       tags:
       - Goliath
