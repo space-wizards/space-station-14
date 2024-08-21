@@ -21,12 +21,6 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
     /// Length of the gibberish string sent when pulsing the wire
     /// </summary>
     private const int NoiseLength = 16;
-
-    /// <summary>
-    /// Identifier of the SpeechVerbPrototype to use when pulsing the wire
-    /// </summary>
-    [ValidatePrototypeId<SpeechVerbPrototype>]
-    private const string SpeechVerb = "Electricity";
     public override Color Color { get; set; } = Color.Green;
     public override string Name { get; set; } = "wire-name-listen";
 
@@ -85,7 +79,14 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
         if (!EntityManager.TryGetComponent<RadioMicrophoneComponent>(wire.Owner, out var radioMicroPhoneComp))
             return;
 
-        _radio.SendRadioMessage(wire.Owner, noiseMsg, _protoMan.Index<RadioChannelPrototype>(radioMicroPhoneComp.BroadcastChannel), wire.Owner, nameOverride: Loc.GetString("wire-listen-pulse-identifier"), verbOverride: SpeechVerb);
+        if (!EntityManager.TryGetComponent<VoiceOverrideComponent>(wire.Owner, out var voiceOverrideComp))
+            return;
+
+        // The reason for the override is to make the voice sound like its coming from electrity rather than the intercom.
+        // If you want to change the voice/verb, use the YAML!
+        voiceOverrideComp.Enabled = true;
+        _radio.SendRadioMessage(wire.Owner, noiseMsg, _protoMan.Index<RadioChannelPrototype>(radioMicroPhoneComp.BroadcastChannel), wire.Owner);
+        voiceOverrideComp.Enabled = false;
 
         base.Pulse(user, wire);
     }

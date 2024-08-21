@@ -23,6 +23,10 @@
   - type: Intercom
   - type: Speech
     speechVerb: Robotic
+  - type: VoiceOverride # This is for the wire that makes an electricity zapping noise.
+    nameOverride: wire-listen-pulse-identifier
+    speechVerbOverride: Electricity
+    enabled: false
   - type: ExtensionCableReceiver
   - type: Clickable
   - type: InteractionOutline
@@ -120,6 +124,7 @@
     mode: SnapgridCenter
     snap:
     - Wallmount
+
 
 - type: entity
   id: IntercomAssembly
