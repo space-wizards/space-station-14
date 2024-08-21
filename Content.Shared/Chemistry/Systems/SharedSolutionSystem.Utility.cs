@@ -1,6 +1,5 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -219,19 +218,38 @@ public partial class SharedSolutionSystem
             sb.Append("[");
         else
             sb.Append($"{name}:[");
-        var first = true;
+        var count = 0;
         foreach (var (id, quantity) in solution)
         {
-            if (first)
-            {
-                first = false;
-            }
-            else
-            {
-                sb.Append(", ");
-            }
 
             sb.AppendFormat("{0}: {1}u", id, quantity);
+            if (count < solution.Count-1)
+                sb.Append(", ");
+            count++;
+        }
+        sb.Append(']');
+        return sb.ToString();
+    }
+    public static string ToPrettyString(SolutionComponent solution)
+    {
+        var sb = new StringBuilder();
+        sb.Append($"{solution.Name}:[");
+        var index = 0;
+        foreach (ref var reagentData in CollectionsMarshal.AsSpan(solution.Contents))
+        {
+            sb.AppendFormat("{0}: {1}u", reagentData.ReagentId, reagentData.Quantity);
+            if (index < solution.ReagentAndVariantCount-1)
+                sb.Append(", ");
+            index++;
+            if (reagentData.Variants == null)
+                continue;
+            foreach (ref var variantData in CollectionsMarshal.AsSpan(reagentData.Variants))
+            {
+                sb.AppendFormat("{0}-{1}: {2}u", reagentData.ReagentId, variantData.Variant, reagentData.Quantity);
+                if (index < solution.ReagentAndVariantCount-1)
+                    sb.Append(", ");
+                index++;
+            }
         }
 
         sb.Append(']');
@@ -247,6 +265,5 @@ public partial class SharedSolutionSystem
     {
         return ReagentQuantitySpecifier.ResolveReagentEntity(ref reagentSpec, ChemistryRegistry,logIfMissing);
     }
-
 
 }

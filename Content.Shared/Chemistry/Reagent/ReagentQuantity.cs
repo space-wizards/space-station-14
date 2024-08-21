@@ -1,4 +1,4 @@
-using Content.Shared.Chemistry.Components.Reagents;
+﻿using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Chemistry.Reagent;
@@ -15,7 +15,7 @@ public partial struct ReagentQuantity: IEquatable<ReagentQuantity>
     public FixedPoint2 Quantity;
     public bool IsValid => ReagentDef.IsValid;
 
-    public Entity<ReagentDefinitionComponent> DefinitionEntity => ReagentDef.DefinitionEntity;
+    public Entity<ReagentDefinitionComponent> Entity => ReagentDef.Entity;
 
     public ReagentVariant? Variant => ReagentDef.Variant;
 
@@ -52,9 +52,9 @@ public partial struct ReagentQuantity: IEquatable<ReagentQuantity>
         data = ReagentDef.Variant;
     }
 
-    public void Deconstruct(out ReagentDef id, out FixedPoint2 quantity)
+    public void Deconstruct(out ReagentDef reagentDef, out FixedPoint2 quantity)
     {
-        id = ReagentDef;
+        reagentDef = ReagentDef;
         quantity = Quantity;
     }
 
@@ -88,7 +88,7 @@ public partial struct ReagentQuantity: IEquatable<ReagentQuantity>
     public static implicit operator ReagentQuantity((ReagentDef, FixedPoint2)d) => new(d.Item1, d.Item2);
     public static implicit operator ReagentDef(ReagentQuantity q) => q.ReagentDef;
     public static implicit operator FixedPoint2(ReagentQuantity q) => q.Quantity;
-    public static implicit operator Entity<ReagentDefinitionComponent>(ReagentQuantity q) => q.ReagentDef.DefinitionEntity;
+    public static implicit operator Entity<ReagentDefinitionComponent>(ReagentQuantity q) => q.ReagentDef.Entity;
     public static implicit operator ReagentVariant?(ReagentQuantity q) => q.ReagentDef.Variant;
     public static implicit operator string(ReagentQuantity q) => q.ReagentDef.Id;
 }

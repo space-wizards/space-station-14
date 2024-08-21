@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components.Reagents;
@@ -17,32 +18,49 @@ namespace Content.Shared.Chemistry;
 [UsedImplicitly]
 public sealed class ReactiveSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
-    [Dependency] private readonly SharedChemistryRegistrySystem _chemistryRegistry = default!;
+    [Robust.Shared.IoC.Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Robust.Shared.IoC.Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Robust.Shared.IoC.Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
+    [Robust.Shared.IoC.Dependency] private readonly SharedChemistryRegistrySystem _chemistryRegistry = default!;
 
-    public void DoEntityReaction(EntityUid uid, Entity<SolutionComponent> solution, ReactionMethod method)
+    public void DoEntityReaction(EntityUid uid, SolutionContents solutionContents, ReactionMethod method, float percentage = 1.0f)
     {
-        foreach (ref var reagentData in CollectionsMarshal.AsSpan(solution.Comp.Contents))
+        foreach (var reagentData in solutionContents)
         {
-            ReactionEntity(uid, method, reagentData, solution);
+            ReactionEntity(uid, method, reagentData, null, percentage);
         }
     }
 
-    public void ReactionEntity(EntityUid uid, ReactionMethod method, ReagentQuantity reagentQuantity, Entity<SolutionComponent>? source)
+    public void DoEntityReaction(EntityUid uid, Entity<SolutionComponent> solution, ReactionMethod method, float percentage = 1.0f)
+    {
+        foreach (ref var reagentData in CollectionsMarshal.AsSpan(solution.Comp.Contents))
+        {
+            ReactionEntity(uid, method, reagentData, solution, percentage);
+        }
+    }
+
+    public void ReactionEntity(EntityUid uid,
+        ReactionMethod method,
+        ReagentQuantity reagentQuantity,
+        Entity<SolutionComponent>? source,
+        float percentage = 1.0f)
     {
         // We throw if the reagent specified doesn't exist.
         ReactionEntity(uid, method, reagentQuantity, reagentQuantity, source);
     }
 
-    public void ReactionEntity(EntityUid uid, ReactionMethod method, Entity<ReagentDefinitionComponent> reagentDef,
-        ReagentQuantity reagentQuantity, Entity<SolutionComponent>? source)
+    public void ReactionEntity(EntityUid uid,
+        ReactionMethod method,
+        Entity<ReagentDefinitionComponent> reagentDef,
+        ReagentQuantity reagentQuantity,
+        Entity<SolutionComponent>? source,
+        float percentage = 1.0f)
     {
         if (!TryComp(uid, out ReactiveComponent? reactive))
             return;
+        var quantity = percentage*reagentQuantity.Quantity;
         // If we have a source solution, use the reagent quantity we have left. Otherwise, use the reaction volume specified.
-        var args = new EntityEffectReagentArgs(uid, EntityManager, null, source, reagentQuantity.Quantity,
+        var args = new EntityEffectReagentArgs(uid, EntityManager, null, source, quantity,
             reagentDef, method, 1f);
 
         // First, check if the reagent wants to apply any effects.
@@ -98,7 +116,9 @@ public sealed class ReactiveSystem : EntitySystem
                     {
                         var entity = args.TargetEntity;
                         _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
-                            $"Reactive effect {effect.GetType().Name:effect} of {ToPrettyString(entity):entity} using reagent {reagentDef.Comp.Id:reagent} with method {method} at {Transform(entity).Coordinates:coordinates}");
+                            $"Reactive effect {effect.GetType().Name:effect} of {ToPrettyString(entity):entity}" +
+                            $" using reagent {reagentDef.Comp.Id:reagent} with method {method} at " +
+                            $"{Transform(entity).Coordinates:coordinates}");
                     }
 
                     effect.Effect(args);
@@ -107,25 +127,66 @@ public sealed class ReactiveSystem : EntitySystem
         }
     }
 
-    public FixedPoint2 ReactionTile(TileRef tile, Entity<ReagentDefinitionComponent> reagentDef, FixedPoint2 reactVolume, IEntityManager entityManager)
+    public FixedPoint2 DoTileReaction(TileRef targetTile,
+        Entity<ReagentDefinitionComponent> reagent,
+        FixedPoint2 quantity)
     {
         var removed = FixedPoint2.Zero;
 
-        if (tile.Tile.IsEmpty)
+        if (targetTile.Tile.IsEmpty)
             return removed;
 
-        foreach (var reaction in reagentDef.Comp.TileReactions)
+        foreach (var reaction in reagent.Comp.TileReactions)
         {
-            removed += reaction.TileReact(tile, reagentDef, reactVolume - removed, entityManager);
+            removed += reaction.TileReact(targetTile,
+                reagent,
+                quantity - removed,
+                EntityManager);
 
-            if (removed > reactVolume)
+            if (removed > quantity)
                 throw new Exception("Removed more than we have!");
 
-            if (removed == reactVolume)
+            if (removed == quantity)
                 break;
         }
-
         return removed;
+    }
+
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public FixedPoint2 DoTileReaction(TileRef targetTile, ReagentQuantity reagentQuantity)
+    {
+        return DoTileReaction(targetTile, reagentQuantity, reagentQuantity);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void DoTileReaction(TileRef targetTile,ref ReagentQuantity reagentQuantity)
+    {
+        var removed = DoTileReaction(targetTile, reagentQuantity, reagentQuantity.Quantity);
+        reagentQuantity.Quantity -= removed;
+    }
+
+    public void DoTileReactions(TileRef targetTile, ref SolutionContents contents, float percentage = 1.0f)
+    {
+        percentage = Math.Clamp(percentage, 0, 1.0f);
+        for (var index = 0; index < contents.Count; index++)
+        {
+            var reagentQuant = contents[index];
+            var removed = DoTileReaction(targetTile, reagentQuant, reagentQuant.Quantity*percentage);
+            contents.Remove(index,removed);
+        }
+    }
+
+    public SolutionContents DoTileReactions(TileRef targetTile, SolutionContents contents, float percentage = 1.0f)
+    {
+        percentage = Math.Clamp(percentage, 0, 1.0f);
+        for (var index = 0; index < contents.Count; index++)
+        {
+            var reagentQuant = contents[index];
+            var removed = DoTileReaction(targetTile, reagentQuant, reagentQuant.Quantity*percentage);
+            contents.Remove(index,removed);
+        }
+        return contents;
     }
 }
 public enum ReactionMethod

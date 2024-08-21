@@ -3,6 +3,7 @@ using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
@@ -25,15 +26,18 @@ public abstract partial class SharedSolutionSystem : EntitySystem
     [Dependency] protected readonly INetManager NetManager = default!;
     [Dependency] protected readonly SharedChemistryRegistrySystem ChemistryRegistry = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
+    [Dependency] protected readonly ReactiveSystem ReactiveSystem = default!;
 
     public const float TemperatureEpsilon = 0.0005f;
     public const string SolutionContainerPrefix = "@Solution_";
+    public const string DefaultSolutionName = "Default";
     public const int SolutionAlloc = 2;
     public const int ReagentAlloc = 2;
     public const int VariantAlloc = 1;
 
     public EntityQuery<SolutionComponent> SolutionQuery;
     private EntityQuery<SolutionHolderComponent> _containerQuery;
+    private EntityQuery<StandoutReagentComponent> _standoutReagentQuery;
 
     public override void Initialize()
     {
@@ -152,40 +156,62 @@ public abstract partial class SharedSolutionSystem : EntitySystem
         if (TryGetPrimaryReagent(solEnt, out var reagent))
             AppearanceSystem.SetData(uid, SolutionContainerVisuals.BaseOverride, reagent.ToString(), appearanceComponent);
     }
+
     public Color GetSolutionColor(Entity<SolutionComponent> solution,
-        ICollection<Entity<ReagentDefinitionComponent>>? filter = null,
-        bool invertFilter = false)
+        bool invertFilter = false,
+        params ReagentDef[] filteredReagents)
+    {
+        return GetSolutionColor(solution, 0f, invertFilter, filteredReagents);
+    }
+
+    public Color GetSolutionColor(Entity<SolutionComponent> solution,
+        float standoutIncrease,
+        bool invertFilter = false,
+        params ReagentDef[] filteredReagents)
     {
         if (solution.Comp.Volume == 0)
             return Color.Transparent;
-        List<(FixedPoint2 quant, Entity<ReagentDefinitionComponent>? def, string id)> blendData = new();
+        List<(FixedPoint2 quant, Entity<ReagentDefinitionComponent> def)> blendData = new();
+        List<(FixedPoint2 quant, Entity<ReagentDefinitionComponent, StandoutReagentComponent> def)> standoutReagents = new();
+        FixedPoint2 standoutVolume = 0;
         var index = 0;
         var voidedVolume = solution.Comp.Volume;
         foreach (ref var quantData in CollectionsMarshal.AsSpan(solution.Comp.Contents))
         {
             var reagentData = solution.Comp.Contents[index];
-            if (filter != null)
+            if (filteredReagents.Length > 0)
             {
                 if (invertFilter)
                 {
-                    foreach (var filterEntry in filter)
+                    foreach (var filterEntry in filteredReagents)
                     {
-                        if (filterEntry.Comp.Id == reagentData.ReagentId)
+                        if (filterEntry.Id == reagentData.ReagentId)
                             continue;
-                        blendData.Add((quantData.Quantity, reagentData.ReagentEnt, reagentData.ReagentId));
+                        blendData.Add((quantData.Quantity, reagentData.ReagentEnt));
                         voidedVolume -= quantData.Quantity;
+                        if (_standoutReagentQuery.TryComp(reagentData.ReagentEnt, out var standoutReagent))
+                        {
+                            standoutReagents.Add((quantData.Quantity,
+                                (reagentData.ReagentEnt, reagentData.ReagentEnt, standoutReagent)));
+                            standoutVolume += quantData.Quantity;
+                        }
                         break;
                     }
-
                 }
                 else
                 {
-                    foreach (var filterEntry in filter)
+                    foreach (var filterEntry in filteredReagents)
                     {
-                        if (filterEntry.Comp.Id != reagentData.ReagentId)
+                        if (filterEntry.Id != reagentData.ReagentId)
                             continue;
-                        blendData.Add((quantData.Quantity, reagentData.ReagentEnt, reagentData.ReagentId));
+                        blendData.Add((quantData.Quantity, reagentData.ReagentEnt));
                         voidedVolume -= quantData.Quantity;
+                        if (_standoutReagentQuery.TryComp(reagentData.ReagentEnt, out var standoutReagent))
+                        {
+                            standoutReagents.Add((quantData.Quantity,
+                                (reagentData.ReagentEnt, reagentData.ReagentEnt, standoutReagent)));
+                            standoutVolume += quantData.Quantity;
+                        }
                         break;
                     }
                 }
@@ -199,21 +225,130 @@ public abstract partial class SharedSolutionSystem : EntitySystem
         Color mixColor = default;
         var totalVolume = solution.Comp.Volume - voidedVolume;
 
-        bool firstEntry = false;
-        foreach (var data in blendData)
+        if (blendData.Count == 0)
+            return Color.Transparent;
+        mixColor = blendData[0].def.Comp.SubstanceColor;
+        for (var i2 = 1; i2 < blendData.Count; i2++)
         {
-            var reagentDef = data.def;
-            if (!ChemistryRegistry.ResolveReagent(data.id, ref reagentDef))
-                continue;
-            if (!firstEntry)
-            {
-                mixColor = reagentDef.Value.Comp.SubstanceColor;
-                firstEntry = true;
-            }
-            var percentage = data.quant.Float() / totalVolume.Float();
-            mixColor = Color.InterpolateBetween(mixColor, reagentDef.Value.Comp.SubstanceColor, percentage);
+            var (quantity, def) = blendData[i2];
+            var percentage = quantity.Float() / totalVolume.Float();
+            mixColor = Color.InterpolateBetween(mixColor, def.Comp.SubstanceColor, percentage);
         }
-        return !firstEntry ? Color.Transparent : mixColor;
+
+        if (standoutReagents.Count <= 0 || !(standoutIncrease > 0))
+            return mixColor;
+        {
+            var standoutColor = standoutReagents[0].def.Comp1.SubstanceColor;
+            for (var i3 = 1; i3 < standoutReagents.Count; i3++)
+            {
+                var (quant, def) = standoutReagents[i3];
+                standoutColor = Color.InterpolateBetween(standoutColor,
+                    def.Comp1.SubstanceColor,
+                    quant.Float() / standoutVolume.Float());
+            }
+            mixColor = Color.InterpolateBetween(mixColor, standoutColor, standoutIncrease);
+        }
+        return mixColor;
+    }
+
+    public Color GetSolutionColor(SolutionContents solutionContents,
+        bool invertFilter = false,
+        params ReagentDef[] filteredReagents)
+    {
+        return GetSolutionColor(solutionContents,
+            0f,
+            invertFilter,
+            filteredReagents);
+    }
+
+    public Color GetSolutionColor(SolutionContents solutionContents,
+        float standoutIncrease,
+        bool invertFilter = false,
+        params ReagentDef[] filteredReagents)
+    {
+        if (solutionContents.Volume == 0)
+            return Color.Transparent;
+        List<(FixedPoint2 quant, Entity<ReagentDefinitionComponent> def)> blendData = new();
+        List<(FixedPoint2 quant, Entity<ReagentDefinitionComponent, StandoutReagentComponent> def)> standoutReagents = new();
+        FixedPoint2 standoutVolume = 0;
+        var voidedVolume = solutionContents.Volume;
+        foreach (var reagentQuant in solutionContents)
+        {
+            if (!reagentQuant.IsValid)
+            {
+                voidedVolume -= reagentQuant.Quantity;
+                Log.Error($"{reagentQuant.Id} has an invalid reagent definition!");
+                continue;
+            }
+            if (filteredReagents.Length > 0)
+            {
+                if (invertFilter)
+                {
+                    foreach (var filterEntry in filteredReagents)
+                    {
+                        if (filterEntry.Id == reagentQuant.ReagentDef.Id)
+                            continue;
+                        blendData.Add((reagentQuant.Quantity, reagentQuant.Entity));
+                        voidedVolume -= reagentQuant.Quantity;
+                        if (_standoutReagentQuery.TryComp(reagentQuant.Entity, out var standoutReagent))
+                        {
+                            standoutReagents.Add((reagentQuant.Quantity,
+                                (reagentQuant.Entity, reagentQuant.Entity, standoutReagent)));
+                            standoutVolume += reagentQuant.Quantity;
+                        }
+                        break;
+                    }
+                }
+                else
+                {
+                    foreach (var filterEntry in filteredReagents)
+                    {
+                        if (filterEntry.Id != reagentQuant.ReagentDef.Id)
+                            continue;
+                        blendData.Add((reagentQuant.Quantity, reagentQuant.Entity));
+                        voidedVolume -= reagentQuant.Quantity;
+                        if (_standoutReagentQuery.TryComp(reagentQuant.Entity, out var standoutReagent))
+                        {
+                            standoutReagents.Add((reagentQuant.Quantity,
+                                (reagentQuant.Entity, reagentQuant.Entity, standoutReagent)));
+                            standoutVolume += reagentQuant.Quantity;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        blendData.Sort((a, b)
+            => a.Item1.CompareTo(b.Item1));
+
+        Color mixColor = default;
+        var totalVolume = solutionContents.Volume - voidedVolume;
+
+        if (blendData.Count == 0)
+            return Color.Transparent;
+        mixColor = blendData[0].def.Comp.SubstanceColor;
+        for (var i2 = 1; i2 < blendData.Count; i2++)
+        {
+            var (quantity, def) = blendData[i2];
+            var percentage = quantity.Float() / totalVolume.Float();
+            mixColor = Color.InterpolateBetween(mixColor, def.Comp.SubstanceColor, percentage);
+        }
+
+        if (standoutReagents.Count <= 0 || !(standoutIncrease > 0))
+            return mixColor;
+        {
+            var standoutColor = standoutReagents[0].def.Comp1.SubstanceColor;
+            for (var i3 = 1; i3 < standoutReagents.Count; i3++)
+            {
+                var (quant, def) = standoutReagents[i3];
+                standoutColor = Color.InterpolateBetween(standoutColor,
+                    def.Comp1.SubstanceColor,
+                    quant.Float() / standoutVolume.Float());
+            }
+            mixColor = Color.InterpolateBetween(mixColor, standoutColor, standoutIncrease);
+        }
+        return mixColor;
     }
 
 }

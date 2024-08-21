@@ -1,5 +1,4 @@
 ﻿using System.Runtime.InteropServices;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.Chemistry.Reagent;
@@ -122,7 +121,6 @@ public partial class SharedSolutionSystem
     /// </summary>
     /// <param name="solution"></param>
     /// <param name="reagent"></param>
-    /// <param name="variant"></param>
     /// <returns></returns>
     [PublicAPI]
     public ReagentQuantity GetReagentQuantity(Entity<SolutionComponent> solution,
@@ -256,6 +254,7 @@ public partial class SharedSolutionSystem
     /// <param name="solution">Target solution</param>
     /// <param name="reagentQuantity">New Quantity value</param>
     /// <param name="overflow">How much </param>
+    /// <param name="temperature"></param>
     /// <param name="force">Should this ignore maxVolume</param>
     [PublicAPI]
     public void SetReagent(
@@ -280,7 +279,7 @@ public partial class SharedSolutionSystem
             return;
         }
         ref var variantData = ref CollectionsMarshal.AsSpan(reagentData.Variants)[EnsureVariantData(solution,
-            reagentQuantity.ReagentDef.DefinitionEntity,
+            reagentQuantity.ReagentDef.Entity,
             reagentQuantity.ReagentDef.Variant)];
         ChangeVariantQuantity_Implementation(solution,
             ref reagentData,
@@ -350,7 +349,7 @@ public partial class SharedSolutionSystem
     /// <param name="solution"></param>
     /// <param name="reagentQuantity"></param>
     /// <param name="overflow"></param>
-    /// <param name="variant"></param>
+    /// <param name="temperature"></param>
     /// <param name="force"></param>
     /// <returns>True if successful</returns>
     [PublicAPI]
@@ -440,7 +439,18 @@ public partial class SharedSolutionSystem
 
     [PublicAPI]
     public FixedPoint2 RemoveReagents(Entity<SolutionComponent> solution,
-        float? temperature = null,
+        FixedPoint2 quantity)
+    {
+        var scaleFactor = Math.Clamp(1f-quantity.Float() / solution.Comp.Volume.Float(), 0f, 1.0f);
+        if (scaleFactor == 0)
+            return 0;
+        var removedAmount = scaleFactor * solution.Comp.Volume;
+        ScaleSolution(solution, scaleFactor, out var overflow);
+        return removedAmount + overflow;
+    }
+
+    [PublicAPI]
+    public FixedPoint2 RemoveReagents(Entity<SolutionComponent> solution,
         params ReagentQuantity[] reagents)
     {
         if (reagents.Length == 0)
@@ -450,29 +460,42 @@ public partial class SharedSolutionSystem
         foreach (ref var reagentQuant in reagents.AsSpan())
         {
             if (!reagentQuant.IsValid
-                || !TryGetReagentDataIndex(solution, reagentQuant.ReagentDef.DefinitionEntity, out var index))
+                || !TryGetReagentDataIndex(solution, reagentQuant.ReagentDef.Entity, out var index))
                 continue;
             ref var reagentData = ref contentsSpan[index];
             if (reagentQuant.ReagentDef.Variant != null)
             {
-                if (!TryGetVariantDataIndex(solution, reagentQuant.ReagentDef.DefinitionEntity,
-                        reagentQuant.ReagentDef.Variant, out var varIndex))
+                if (!TryGetVariantDataIndex(solution,
+                        reagentQuant.ReagentDef.Entity,
+                        reagentQuant.ReagentDef.Variant,
+                        out var varIndex))
                     continue;
                 ref var variantData = ref CollectionsMarshal.AsSpan(reagentData.Variants)[varIndex];
-                ChangeVariantQuantity_Implementation(solution, ref reagentData, ref variantData,
-                    -reagentQuant.Quantity, out var localOverflow, temperature,true);
+                ChangeVariantQuantity_Implementation(solution,
+                    ref reagentData,
+                    ref variantData,
+                    -reagentQuant.Quantity,
+                    out var localOverflow,
+                    null,
+                    true);
                 overflow += localOverflow;
                 continue;
             }
-            ChangeReagentQuantity_Implementation(solution, ref reagentData, -reagentQuant.Quantity,
-                out var localOverflow2, temperature,true);
+            ChangeReagentQuantity_Implementation(solution,
+                ref reagentData,
+                -reagentQuant.Quantity,
+                out var localOverflow2,
+                null,
+                true);
             overflow += localOverflow2;
         }
         return overflow;
     }
 
     [PublicAPI]
-    public FixedPoint2 AddReagents(Entity<SolutionComponent> solution, float? temperature = null, bool force = true,
+    public FixedPoint2 AddReagents(Entity<SolutionComponent> solution,
+        float? temperature = null,
+        bool force = true,
         params ReagentQuantity[] reagents)
     {
         var contentsSpan = CollectionsMarshal.AsSpan(solution.Comp.Contents);
@@ -481,30 +504,38 @@ public partial class SharedSolutionSystem
         {
             if (!reagentQuant.IsValid)
                 continue;
-            ref var reagentData = ref contentsSpan[EnsureReagentData(solution, reagentQuant.ReagentDef.DefinitionEntity)];
+            ref var reagentData = ref contentsSpan[EnsureReagentData(solution, reagentQuant.ReagentDef.Entity)];
             if (reagentQuant.ReagentDef.Variant != null)
             {
                 ref var variantData = ref CollectionsMarshal.AsSpan(reagentData.Variants)[EnsureVariantData(solution,
-                    reagentQuant.ReagentDef.DefinitionEntity,
+                    reagentQuant.ReagentDef.Entity,
                     reagentQuant.ReagentDef.Variant)];
-                ChangeVariantQuantity_Implementation(solution, ref reagentData, ref variantData,
+                ChangeVariantQuantity_Implementation(solution,
+                    ref reagentData,
+                    ref variantData,
                     reagentQuant.Quantity,
-                    out var localOverflow, temperature ,force);
+                    out var localOverflow,
+                    temperature ,
+                    force);
                 overflow += localOverflow;
                 continue;
             }
-            ChangeReagentQuantity_Implementation(solution, ref reagentData, reagentQuant.Quantity,
-                out var localOverflow2, temperature, force);
+            ChangeReagentQuantity_Implementation(solution,
+                ref reagentData,
+                reagentQuant.Quantity,
+                out var localOverflow2,
+                temperature,
+                force);
             overflow += localOverflow2;
         }
         return overflow;
     }
 
     [PublicAPI]
-    public SolutionContents SplitSolution(Entity<SolutionComponent> originSolution)
+    public SolutionContents SplitSolution(Entity<SolutionComponent> originSolution, float percentage = 0.5f)
     {
-        ScaleSolution(originSolution, 0.5f, out var overflow, true, true);
-        return GetReagents(originSolution);
+        ScaleSolution(originSolution, percentage, out var overflow, true, true);
+        return GetReagents(originSolution,1f-percentage);
     }
 
     [PublicAPI]
@@ -512,7 +543,7 @@ public partial class SharedSolutionSystem
     {
         var percentage = quantity.Float()/solution.Comp.Volume.Float();
         var contents = GetReagents(solution, percentage);
-        var overFlow = RemoveReagents(solution, null,contents);
+        var overFlow = RemoveReagents(solution,contents);
         contents.Scale(100 - overFlow.Float() / contents.Volume.Float());
         return contents;
     }
@@ -648,6 +679,7 @@ public partial class SharedSolutionSystem
     /// <param name="solution"></param>
     /// <param name="reagentData"></param>
     /// <param name="delta"></param>
+    /// <param name="temperature"></param>
     /// <returns>Underflow ammount</returns>
     protected FixedPoint2 ChangeReagentDataQuantity(Entity<SolutionComponent> solution,
         ref SolutionComponent.ReagentData reagentData,
@@ -671,6 +703,7 @@ public partial class SharedSolutionSystem
     /// <param name="parentData"></param>
     /// /// <param name="variantData"></param>
     /// <param name="delta"></param>
+    /// <param name="temperature"></param>
     /// <returns>Underflow</returns>
     protected FixedPoint2 ChangeVariantDataQuantity(Entity<SolutionComponent> solution,
         ref SolutionComponent.ReagentData parentData,

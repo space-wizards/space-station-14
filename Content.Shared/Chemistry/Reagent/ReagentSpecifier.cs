@@ -51,7 +51,7 @@ public partial struct ReagentSpecifier: IEquatable<ReagentDef>
     public ReagentSpecifier(ReagentDef reagent)
         : this(reagent.Id, reagent.Variant)
     {
-        _cachedDefinitionEntity = reagent.DefinitionEntity;
+        _cachedDefinitionEntity = reagent.Entity;
     }
 
 

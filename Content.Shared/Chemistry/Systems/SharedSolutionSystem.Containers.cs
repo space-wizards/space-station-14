@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components.Solutions;
+using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 
@@ -73,6 +75,17 @@ public partial class SharedSolutionSystem
         return true;
     }
 
+    [PublicAPI]
+    public bool TryEnsureSolution(Entity<SolutionHolderComponent?, ContainerManagerComponent?> containingEntity,
+        string solutionId,
+        out Entity<SolutionComponent> solution,
+        float temperature = Atmospherics.T20C,
+        bool canOverflow = true,
+        bool canReact = true)
+    {
+        return TryEnsureSolution(containingEntity, solutionId, out solution, FixedPoint2.MaxValue, temperature, canOverflow, canReact);
+    }
+
     /// <summary>
     /// Ensures that the specified entity will have a solution with the specified id, creating a solution if not already present.
     /// This will return false on clients if the solution is not found!
@@ -80,11 +93,19 @@ public partial class SharedSolutionSystem
     /// <param name="containingEntity">Entity that "contains" the solution</param>
     /// <param name="solutionId">Unique Identifier for the solution</param>
     /// <param name="solution">Solution</param>
+    /// <param name="maxVolume"></param>
+    /// <param name="temperature"></param>
+    /// <param name="canOverflow"></param>
+    /// <param name="canReact"></param>
     /// <returns>True if successful, False if there was an error or if a solution is not found on the client</returns>
     [PublicAPI]
     public bool TryEnsureSolution(Entity<SolutionHolderComponent?,ContainerManagerComponent?> containingEntity,
         string solutionId,
-        out Entity<SolutionComponent> solution)
+        out Entity<SolutionComponent> solution,
+        FixedPoint2 maxVolume,
+        float temperature = Atmospherics.T20C,
+        bool canOverflow = true,
+        bool canReact = true)
     {
         if (!Resolve(containingEntity, ref containingEntity.Comp1, false))
             AddComp<SolutionHolderComponent>(containingEntity);
@@ -102,13 +123,23 @@ public partial class SharedSolutionSystem
             solution = (solutionContainer.ContainedEntity.Value, oldSolComp);
             return true;
         }
+        //todo client/server overrides
         if (NetManager.IsClient)
         {
             solution = default;
             return false;
         }
         var solEnt = Spawn();
-        var solComp = AddComp<SolutionComponent>(solEnt);
+
+        var solComp = new SolutionComponent
+        {
+            CanOverflow = canOverflow,
+            CanReact = canReact,
+            MaxVolume = maxVolume,
+            Temperature = temperature
+
+        };
+        AddComp(solEnt, solComp);
         if (!ContainerSystem.Insert(solEnt, solutionContainer))
         {
             Del(solEnt);

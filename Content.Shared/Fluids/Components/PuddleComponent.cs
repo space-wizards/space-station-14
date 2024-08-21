@@ -17,8 +17,6 @@ namespace Content.Shared.Fluids.Components
         [DataField]
         public FixedPoint2 OverflowVolume = FixedPoint2.New(20);
 
-        [DataField("solution")] public string SolutionName = "puddle";
-
         [DataField("solutionRef")]
         public Entity<SolutionComponent>? Solution;
     }

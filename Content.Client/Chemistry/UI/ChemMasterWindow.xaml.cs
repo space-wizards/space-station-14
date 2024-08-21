@@ -150,7 +150,7 @@ namespace Content.Client.Chemistry.UI
                 return "";
 
             var reagent = state.BufferReagents.OrderBy(r => r.Quantity).First().ReagentDef;
-            return !reagent.IsValid ? "" : reagent.DefinitionEntity.Comp.LocalizedName;
+            return !reagent.IsValid ? "" : reagent.Entity.Comp.LocalizedName;
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Content.Client.Chemistry.UI
 
             foreach (var (reagent, quantity) in state.BufferReagents)
             {
-                var name = reagent.DefinitionEntity.Comp.LocalizedName;
+                var name = reagent.Entity.Comp.LocalizedName;
                 BufferInfo.Children.Add(new BoxContainer
                     {
                         Orientation = LayoutOrientation.Horizontal,

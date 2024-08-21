@@ -1,6 +1,8 @@
+using System.Runtime.InteropServices;
 using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -26,7 +28,7 @@ public sealed partial class SolutionComponent : Component
     ///     The name of this solution
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string Name;
+    public string Name = SharedSolutionSystem.DefaultSolutionName;
 
     [DataField, AutoNetworkedField]
     public bool CanOverflow = true;

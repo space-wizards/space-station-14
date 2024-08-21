@@ -12,28 +12,28 @@ namespace Content.Shared.Chemistry.Reagent;
 public struct ReagentDef : IEquatable<ReagentDef>
 {
     public static readonly ReagentDef Invalid = new();
-    public string Id => DefinitionEntity.Comp.Id;
+    public string Id => Entity.Comp.Id;
 
     /// <summary>
     /// Any additional data that is unique to this reagent type. E.g., for blood this could be DNA data.
     /// </summary>
     public ReagentVariant? Variant;
 
-    public Entity<ReagentDefinitionComponent> DefinitionEntity;
+    public Entity<ReagentDefinitionComponent> Entity;
 
     public bool IsValid { get; private set; } = false;
 
     public ReagentDef()
     {
         IsValid = false;
-        DefinitionEntity = default!;
+        Entity = default!;
         Variant = null;
     }
 
     public ReagentDef(Entity<ReagentDefinitionComponent> reagentDef, ReagentVariant? variant)
     {
         IsValid = true;
-        DefinitionEntity = reagentDef;
+        Entity = reagentDef;
         Variant = variant;
     }
 
@@ -94,7 +94,7 @@ public struct ReagentDef : IEquatable<ReagentDef>
 
     public static implicit operator string(ReagentDef d) => d.Id;
     public static implicit operator ReagentDef(Entity<ReagentDefinitionComponent> def) => new(def, null);
-    public static implicit operator Entity<ReagentDefinitionComponent>(ReagentDef def) => def.DefinitionEntity;
+    public static implicit operator Entity<ReagentDefinitionComponent>(ReagentDef def) => def.Entity;
     public static implicit operator ReagentVariant?(ReagentDef def) => def.Variant;
 }
 
