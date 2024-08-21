@@ -10999,7 +10999,7 @@ entities:
       pos: -20.5,-5.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -21585.09
+      secondsUntilStateChange: -22228.79
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -30210,6 +30210,51 @@ entities:
     components:
     - type: Transform
       pos: -2.5,-33.5
+      parent: 30
+  - uid: 20722
+    components:
+    - type: Transform
+      pos: -62.5,-60.5
+      parent: 30
+  - uid: 20723
+    components:
+    - type: Transform
+      pos: -62.5,-61.5
+      parent: 30
+  - uid: 20724
+    components:
+    - type: Transform
+      pos: -62.5,-62.5
+      parent: 30
+  - uid: 20725
+    components:
+    - type: Transform
+      pos: -62.5,-63.5
+      parent: 30
+  - uid: 20726
+    components:
+    - type: Transform
+      pos: -62.5,-64.5
+      parent: 30
+  - uid: 20727
+    components:
+    - type: Transform
+      pos: -61.5,-64.5
+      parent: 30
+  - uid: 20728
+    components:
+    - type: Transform
+      pos: -63.5,-64.5
+      parent: 30
+  - uid: 20729
+    components:
+    - type: Transform
+      pos: -64.5,-64.5
+      parent: 30
+  - uid: 20730
+    components:
+    - type: Transform
+      pos: -60.5,-64.5
       parent: 30
   - uid: 21007
     components:
@@ -98630,13 +98675,6 @@ entities:
     - type: Transform
       pos: -24.501097,-36.300484
       parent: 30
-- proto: MaterialReclaimer
-  entities:
-  - uid: 4393
-    components:
-    - type: Transform
-      pos: 30.5,-7.5
-      parent: 30
 - proto: MaterialWoodPlank
   entities:
   - uid: 15132
@@ -116415,11 +116453,6 @@ entities:
       - SurveillanceCameraCommand
       nameSet: True
       id: Vault
-  - uid: 21183
-    components:
-    - type: Transform
-      pos: -0.5,19.5
-      parent: 30
   - uid: 21286
     components:
     - type: Transform

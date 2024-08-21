@@ -180,6 +180,39 @@
     node: groundRainbow
 
 - type: entity
+  name: tea leaves
+  parent: ProduceBase
+  id: LeavesTea
+  description: "Can be dried out to make tea."
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/tea_plant.rsi
+  - type: Produce
+    seedId: teaPlant
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Vitamin
+          Quantity: 2
+
+- type: entity
+  name: dried tea leaves
+  parent: ProduceBase
+  id: LeavesTeaDried
+  description: "Dried tea leaves, ready to be ground."
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: TeaPowder
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/tea_plant.rsi
+    state: dried
+
+- type: entity
   name: tobacco leaves
   parent: ProduceBase
   id: LeavesTobacco

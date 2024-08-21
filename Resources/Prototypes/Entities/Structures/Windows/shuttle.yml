@@ -52,7 +52,7 @@
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
-    price: 100
+    price: 150
 
 - type: entity
   parent: ShuttleWindow
