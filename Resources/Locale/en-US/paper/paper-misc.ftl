@@ -28,7 +28,7 @@ book-text-ame-scribbles = I don't know if you're trained already, so I hope this
       Don't forget to refuel it, it tends to stop at the worst possible time.
 
 book-text-combat-bakery-kit = Thank you for choosing our combat bakery kit!
-      Inclosed are two (2) CyberSun patented Throwing Croissants, and one (1) patent-pending Baguette Sword.
+      Enclosed are two (2) CyberSun patented Throwing Croissants, and one (1) patent-pending Baguette Sword.
       The included microwave board can be used to modify a standard NanoTrasen microwave to be capable of baking more weapons.
       Just like the baked weapons, be sure to eat this note after use. Good luck, agent.
 
