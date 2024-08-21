@@ -129,9 +129,10 @@
     board: MiniGravityGeneratorCircuitboard
   - type: ApcPowerReceiver
     powerLoad: 500
-  - type: GravityGenerator
+  - type: PowerCharge
     idlePower: 15
     activePower: 500
+  - type: GravityGenerator
     lightRadiusMin: 0.75
     lightRadiusMax: 2.5
   - type: StaticPrice
