@@ -271,19 +271,12 @@
     state: icon
 
 - type: stealTargetGroup
-  id: ClothingNeckShockCollar
-  name: shock collar
-  sprite:
-    sprite: Clothing/Neck/Misc/shock_collar.rsi
-    state: icon
-
-- type: stealTargetGroup
   id: WantedListCartridge
   name: wanted list cartridge
   sprite:
     sprite: Objects/Devices/cartridge.rsi
     state: cart-s
-    
+
 #Thief structures
 
 - type: stealTargetGroup
