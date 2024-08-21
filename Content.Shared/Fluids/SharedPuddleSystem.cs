@@ -76,16 +76,13 @@ public abstract partial class SharedPuddleSystem : EntitySystem
 
     private void OnGetFootstepSound(Entity<PuddleComponent> entity, ref GetFootstepSoundEvent args)
     {
-        if (!_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution,
-                out var solution))
+        if (!_solutionSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution))
             return;
 
-        var reagentId = solution.GetPrimaryReagentId();
-        if (!string.IsNullOrWhiteSpace(reagentId?.Prototype)
-            && _chemRegistry.TryIndex(reagentId.Value.Prototype, out var reagentDef))
-        {
-            args.Sound = reagentDef.Value.Comp.FootstepSound;
-        }
+        var reagentQuantity = _solutionSystem.GetPrimaryReagent(entity.Comp.Solution.Value);
+        if (reagentQuantity == null)
+            return;
+        args.Sound = reagentQuantity.Value.DefinitionEntity.Comp.FootstepSound;
     }
 
     private void HandlePuddleExamined(Entity<PuddleComponent> entity, ref ExaminedEvent args)
@@ -98,12 +95,12 @@ public abstract partial class SharedPuddleSystem : EntitySystem
             }
 
             if (HasComp<EvaporationComponent>(entity) &&
-                _solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName,
-                    ref entity.Comp.Solution, out var solution))
+                _solutionSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName,
+                    ref entity.Comp.Solution))
             {
-                if (CanFullyEvaporate(solution))
+                if (CanFullyEvaporate(entity.Comp.Solution.Value))
                     args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating"));
-                else if (solution.GetTotalPrototypeQuantity(EvaporationReagents) > FixedPoint2.Zero)
+                else if (_solutionSystem.GetTotalQuantity(entity.Comp.Solution.Value, EvaporationReagents) > FixedPoint2.Zero)
                     args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-partial"));
                 else
                     args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
@@ -112,54 +109,4 @@ public abstract partial class SharedPuddleSystem : EntitySystem
                 args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
         }
     }
-
-    #region Spill
-    // These methods are in Shared to make it easier to interact with PuddleSystem in Shared code.
-    // Note that they always fail when run on the client, not creating a puddle and returning false.
-    // Adding proper prediction to this system would require spawning temporary puddle entities on the
-    // client and replacing or merging them with the ones spawned by the server when the client goes to
-    // replicate those, and I am not enough of a wizard to attempt implementing that.
-
-    /// <summary>
-    ///     First splashes reagent on reactive entities near the spilling entity, then spills the rest regularly to a
-    ///     puddle. This is intended for 'destructive' spills, like when entities are destroyed or thrown.
-    /// </summary>
-    /// <remarks>
-    /// On the client, this will always set <paramref name="puddleUid"/> to <see cref="EntityUid.Invalid"> and return false.
-    /// </remarks>
-    public abstract bool TrySplashSpillAt(EntityUid uid,
-        EntityCoordinates coordinates,
-        Entity<SolutionComponent>  solution,
-        out EntityUid puddleUid,
-        bool sound = true,
-        EntityUid? user = null);
-
-    /// <summary>
-    ///     Spills solution at the specified coordinates.
-    /// Will add to an existing puddle if present or create a new one if not.
-    /// </summary>
-    /// <remarks>
-    /// On the client, this will always set <paramref name="puddleUid"/> to <see cref="EntityUid.Invalid"> and return false.
-    /// </remarks>
-    public abstract bool TrySpillAt(EntityCoordinates coordinates, Entity<SolutionComponent>  solution, out EntityUid puddleUid, bool sound = true);
-
-    /// <summary>
-    /// <see cref="TrySpillAt(EntityCoordinates, Solution, out EntityUid, bool)"/>
-    /// </summary>
-    /// <remarks>
-    /// On the client, this will always set <paramref name="puddleUid"/> to <see cref="EntityUid.Invalid"> and return false.
-    /// </remarks>
-    public abstract bool TrySpillAt(EntityUid uid, Entity<SolutionComponent>  solution, out EntityUid puddleUid, bool sound = true,
-        TransformComponent? transformComponent = null);
-
-    /// <summary>
-    /// <see cref="TrySpillAt(EntityCoordinates, Solution, out EntityUid, bool)"/>
-    /// </summary>
-    /// <remarks>
-    /// On the client, this will always set <paramref name="puddleUid"/> to <see cref="EntityUid.Invalid"> and return false.
-    /// </remarks>
-    public abstract bool TrySpillAt(TileRef tileRef, Entity<SolutionComponent>  solution, out EntityUid puddleUid, bool sound = true,
-        bool tileReact = true);
-
-    #endregion Spill
 }

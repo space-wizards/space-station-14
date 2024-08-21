@@ -62,6 +62,17 @@ public partial class SharedSolutionSystem
         return true;
     }
 
+    public bool ResolveSolution(Entity<SolutionHolderComponent?, ContainerManagerComponent?> containingEntity,
+        string solutionId,
+        [NotNullWhen(true)] ref Entity<SolutionComponent>? solution)
+    {
+        if (!solution.HasValue
+            || !TryEnsureSolution(containingEntity, solutionId, out var foundSolution))
+            return false;
+        solution = foundSolution;
+        return true;
+    }
+
     /// <summary>
     /// Ensures that the specified entity will have a solution with the specified id, creating a solution if not already present.
     /// This will return false on clients if the solution is not found!
