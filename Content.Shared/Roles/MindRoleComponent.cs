@@ -22,7 +22,7 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
     ///     True if this mindrole is an exclusive antagonist. Antag setting is not checked if this is True.
     /// </summary>
     [DataField]
-    public bool ExclusiveAntag { get; set; } = false; //TODO:ERRANT this is actually defined on the other prototypes, get it from there?
+    public bool ExclusiveAntag { get; set; } = false;
 
     /// <summary>
     ///     The time this role was created
@@ -34,10 +34,6 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
     /// </summary>
     public Entity<MindComponent> Mind { get; set; }
 
-
-
-
-    // TODO:ERRANT Merge The prototypes into one?
     /// <summary>
     ///     The Antagonist prototype of this role
     /// </summary>
@@ -49,28 +45,9 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
     /// </summary>
     [DataField]
     public ProtoId<JobPrototype>? JobPrototype { get; set; }
-
-    [DataField] // Testing datafield for merged prototypes
-    public ProtoId<IPrototype>? Proto { get; set; }
-
-    //TODO: add Briefing?
-
-    //TODO: Enum for Mind Role Type? (.Antag, .Job, .Misc) ?
 }
 
 public abstract partial class BaseMindRoleComponent : Component
-{
-
-}
-
-/// <summary>
-/// Mark the antagonist role component as being exclusive
-/// IE by default other antagonists should refuse to select the same entity for a different antag role
-/// </summary>
-// TODO:ERRANT Exclusive Antag
-[AttributeUsage(AttributeTargets.Class, Inherited = false)]
-[BaseTypeRequired(typeof(BaseMindRoleComponent))]
-public sealed partial class ExclusiveAntagonistAttribute : Attribute
 {
 
 }

@@ -8,5 +8,5 @@ namespace Content.Shared.Roles.Jobs;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class JobRoleComponent : Component
 {
-    //TODO:ERRANT Should job data be back here, after all? Figure it out later
+
 }

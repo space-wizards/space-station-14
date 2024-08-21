@@ -32,7 +32,7 @@ public sealed class ContainerSpawnPointSystem : EntitySystem
             if (spawnPoint.SpawnType == SpawnPointType.Unset)
             {
                 // make sure we also check the job here for various reasons.
-                if (spawnPoint.Job == null || spawnPoint.Job == args.Job) // TODO:ERRANT Test this
+                if (spawnPoint.Job == null || spawnPoint.Job == args.Job)
                     possibleContainers.Add((uid, spawnPoint, container, xform));
                 continue;
             }
@@ -44,7 +44,7 @@ public sealed class ContainerSpawnPointSystem : EntitySystem
 
             if (_gameTicker.RunLevel != GameRunLevel.InRound &&
                 spawnPoint.SpawnType == SpawnPointType.Job &&
-                (args.Job == null || spawnPoint.Job == args.Job)) // TODO:ERRANT Test this
+                (args.Job == null || spawnPoint.Job == args.Job))
             {
                 possibleContainers.Add((uid, spawnPoint, container, xform));
             }

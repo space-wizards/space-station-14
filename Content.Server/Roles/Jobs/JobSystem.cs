@@ -42,7 +42,7 @@ public sealed class JobSystem : SharedJobSystem
         _chat.DispatchServerMessage(session, Loc.GetString("job-greet-supervisors-warning", ("jobName", prototype.LocalizedName), ("supervisors", Loc.GetString(prototype.Supervisors))));
     }
 
-    public void MindAddJob(EntityUid mindId, string jobPrototypeId) //TODO:ERRANT test this (only used by a console comand?)
+    public void MindAddJob(EntityUid mindId, string jobPrototypeId)
     {
         if (MindHasJobWithId(mindId, jobPrototypeId))
             return;

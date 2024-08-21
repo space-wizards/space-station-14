@@ -89,7 +89,7 @@ public abstract class SharedRoleSystem : EntitySystem
     /// <param name="mind">If the mind component is provided, it will be checked if it belongs to the mind entity</param>
     /// <param name="silent">If true, no briefing will be generated upon receiving the mind role</param>
     /// <param name="jobPrototype">The Job prototype for the new role</param>
-    public void MindAddJobRole(EntityUid mindId, //TODO:ERRANT merge the two prototypes and make them both assignable
+    public void MindAddJobRole(EntityUid mindId,
         MindComponent? mind = null,
         bool silent = false,
         string? jobPrototype = null)
@@ -378,7 +378,6 @@ public abstract class SharedRoleSystem : EntitySystem
             }
             else if (comp.JobPrototype is not null && comp.AntagPrototype is not null)
             {
-                //TODO:ERRANT merge the two prototypes
                 Log.Error($" Mind Role Prototype '{role.Id}' contains both Job and Antagonist prototypes");
             }
 

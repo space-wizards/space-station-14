@@ -54,6 +54,7 @@
   components:
   - type: MindRole
     antagPrototype: Dragon
+    exclusiveAntag: true
   - type: DragonRole
   - type: RoleBriefing
     briefing: dragon-role-briefing
@@ -67,6 +68,7 @@
   components:
   - type: MindRole
     antagPrototype: SpaceNinja
+    exclusiveAntag: true
   - type: NinjaRole
 
 # Nukies
@@ -77,28 +79,27 @@
   description: mind-role-nukeops-description
   components:
   - type: MindRole
+    exclusiveAntag: true
     antagPrototype: Nukeops
   - type: NukeopsRole
 
 - type: entity
-  parent: BaseMindRoleAntag
+  parent: MindRoleNukeops
   id: MindRoleNukeopsMedic
   name: mind-role-nukeops-medic-name
   description: mind-role-nukeops-medic-description
   components:
   - type: MindRole
     antagPrototype: NukeopsMedic
-  - type: NukeopsRole
 
 - type: entity
-  parent: BaseMindRoleAntag
+  parent: MindRoleNukeops
   id: MindRoleNukeopsCommander
   name: mind-role-nukeops-commander-name
   description: mind-role-nukeops-commander-description
   components:
   - type: MindRole
     antagPrototype: NukeopsCommander
-  - type: NukeopsRole
 
 # Revolutionaries
 - type: entity
@@ -109,17 +110,17 @@
   components:
   - type: MindRole
     antagPrototype: HeadRev
+    exclusiveAntag: true
   - type: RevolutionaryRole
 
 - type: entity
-  parent: BaseMindRoleAntag
+  parent: MindRoleHeadRevolutionary
   id: MindRoleRevolutionary
   name: mind-role-revolutionary-name
   description: mind-role-revolutionary-description
   components:
   - type: MindRole
     antagPrototype: Rev
-  - type: RevolutionaryRole
 
 # Thief
 - type: entity
@@ -141,17 +142,17 @@
   components:
   - type: MindRole
     antagPrototype: Traitor
+    exclusiveAntag: true
   - type: TraitorRole
 
 - type: entity
-  parent: BaseMindRoleAntag
+  parent: MindRoleTraitor
   id: MindRoleTraitorSleeper
   name: mind-role-traitor-sleeper-name
   description: mind-role-traitor-sleeper-description
   components:
   - type: MindRole
     antagPrototype: TraitorSleeper
-  - type: TraitorRole
 
 # Zombie Squad
 - type: entity
@@ -162,6 +163,7 @@
   components:
   - type: MindRole
     antagPrototype: InitialInfected
+    exclusiveAntag: true
   - type: InitialInfectedRole
 
 - type: entity
@@ -172,4 +174,5 @@
   components:
   - type: MindRole
     antagPrototype: Zombie
+    exclusiveAntag: true
   - type: ZombieRole
