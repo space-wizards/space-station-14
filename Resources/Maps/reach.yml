@@ -5945,11 +5945,6 @@ entities:
       parent: 2
 - proto: CircuitImprinter
   entities:
-  - uid: 876
-    components:
-    - type: Transform
-      pos: 1.5,17.5
-      parent: 2
   - uid: 2495
     components:
     - type: Transform
@@ -7422,11 +7417,13 @@ entities:
       pos: -1.5,2.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -428.10837
+      secondsUntilStateChange: -524.5436
       state: Closing
     - type: DeviceNetwork
       deviceLists:
       - 13
+    - type: Firelock
+      emergencyCloseCooldown: 57.8332775
 - proto: Fireplace
   entities:
   - uid: 1103
@@ -11644,13 +11641,6 @@ entities:
     components:
     - type: Transform
       pos: 8.5,-8.5
-      parent: 2
-- proto: MaterialReclaimer
-  entities:
-  - uid: 1662
-    components:
-    - type: Transform
-      pos: 10.5,-8.5
       parent: 2
 - proto: MedicalBed
   entities:
@@ -16333,7 +16323,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -424.20837
+      secondsUntilStateChange: -520.64355
       state: Opening
   - uid: 2446
     components:
