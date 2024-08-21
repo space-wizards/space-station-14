@@ -88,7 +88,7 @@
     sounds:
       Male: MaleDiona
       Female: FemaleDiona
-      Unsexed: MaleDiona
+      Unsexed: UnisexDiona
   - type: BodyEmotes
     soundsId: DionaBodyEmotes
   - type: IgnoreKudzu

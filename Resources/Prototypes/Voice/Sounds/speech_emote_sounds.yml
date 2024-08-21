@@ -1,42 +1,3 @@
-# borgs
-- type: emoteSounds
-  id: UnisexSilicon
-  params:
-    variation: 0.05
-  sounds:
-    Beep:
-      path: /Audio/Machines/twobeep.ogg
-    Chime:
-      path: /Audio/Machines/chime.ogg
-    Buzz:
-      path: /Audio/Machines/buzz-sigh.ogg
-    Buzz-Two:
-      path: /Audio/Machines/buzz-two.ogg
-    Honk:
-      path: /Audio/Items/bikehorn.ogg
-    Ping:
-      path: /Audio/Effects/Cargo/ping.ogg
-
-- type: emoteSounds
-  id: UnisexSiliconSyndicate
-  params:
-    variation: 0.05
-  sounds:
-    Laugh:
-      path: /Audio/Voice/Silicon/syndieborg_laugh.ogg
-    Beep:
-      path: /Audio/Machines/twobeep.ogg
-    Chime:
-      path: /Audio/Machines/chime.ogg
-    Buzz:
-      path: /Audio/Machines/buzz-sigh.ogg
-    Buzz-Two:
-      path: /Audio/Machines/buzz-two.ogg
-    Honk:
-      path: /Audio/Items/bikehorn.ogg
-    Ping:
-      path: /Audio/Effects/Cargo/ping.ogg
-
 # body emotes
 - type: emoteSounds
   id: GeneralBodyEmotes
@@ -126,21 +87,3 @@
     path: /Audio/Animals/parrot_raught.ogg
     params:
       variation: 0.125
-
-- type: emoteSounds
-  id: Mothroach
-  params:
-    variation: 0.125
-  sounds:
-    Scream:
-      path: /Audio/Voice/Moth/moth_scream.ogg
-    Laugh:
-      path: /Audio/Voice/Moth/moth_laugh.ogg
-    Chitter:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
-    Squeak:
-      path: /Audio/Voice/Moth/moth_squeak.ogg
-    Buzz:
-      path: /Audio/Voice/Moth/moth_scream.ogg
-    DefaultDeathgasp:
-      collection: MothDeathGasp

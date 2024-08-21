@@ -1,7 +1,6 @@
 - type: emoteSounds
+  parent: BaseHumanoidEmoteSounds
   id: UnisexArachnid
-  params:
-    variation: 0.125
   sounds:
     Scream:
       path: /Audio/Voice/Arachnid/arachnid_scream.ogg
@@ -11,9 +10,3 @@
       path: /Audio/Voice/Arachnid/arachnid_chitter.ogg
     Click:
       path: /Audio/Voice/Arachnid/arachnid_click.ogg
-    Crying:
-      collection: MaleCry
-    Gasp:
-      collection: MaleGasp
-    DefaultDeathgasp:
-      collection: DeathGasp

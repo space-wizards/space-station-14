@@ -1,0 +1,15 @@
+- type: emoteSounds
+  id: BaseHumanoidEmoteSounds
+  abstract: true
+  params:
+    variation: 0.125
+  sounds:
+    Weh:
+      collection: Weh
+    Honk:
+      collection: CluwneHorn
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: DeathGasp
+    # Weh and Honk are for their respective reagents.

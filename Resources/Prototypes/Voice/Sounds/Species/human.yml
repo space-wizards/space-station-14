@@ -1,12 +1,11 @@
 - type: emoteSounds
-  id: MaleReptilian
-  params:
-    variation: 0.125
+  parent: BaseHumanoidEmoteSounds
+  id: MaleHuman
   sounds:
     Scream:
-      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+      collection: MaleScreams
     Laugh:
-      path: /Audio/Animals/lizard_happy.ogg
+      collection: MaleLaugh
     Sneeze:
       collection: MaleSneezes
     Cough:
@@ -19,20 +18,17 @@
       collection: MaleCry
     Whistle:
       collection: Whistles
-    Gasp:
-      collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
 
 - type: emoteSounds
-  id: FemaleReptilian
-  params:
-    variation: 0.125
+  parent: BaseHumanoidEmoteSounds
+  id: FemaleHuman
   sounds:
     Scream:
-      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+      collection: FemaleScreams
     Laugh:
-      path: /Audio/Animals/lizard_happy.ogg
+      collection: FemaleLaugh
     Sneeze:
       collection: FemaleSneezes
     Cough:

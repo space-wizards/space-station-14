@@ -44,7 +44,7 @@
     sounds:
       Male: MaleMoth
       Female: FemaleMoth
-      Unsexed: MaleMoth
+      Unsexed: UnisexMoth
   - type: MovementSpeedModifier
     weightlessAcceleration: 1.5 # Move around more easily in space.
     weightlessFriction: 1

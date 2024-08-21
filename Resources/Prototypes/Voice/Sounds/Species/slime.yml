@@ -1,0 +1,14 @@
+- type: emoteSounds
+  parent: BaseHumanoidEmoteSounds
+  id: UnisexSlime
+  sounds:
+    Squish:
+      collection: Squishes
+
+- type: emoteSounds
+  parent: [UnisexSlime, MaleHuman]
+  id: MaleSlime
+
+- type: emoteSounds
+  parent: [UnisexSlime, FemaleHuman]
+  id: FemaleSlime

@@ -1,14 +1,9 @@
 - type: emoteSounds
+  parent: BaseHumanoidEmoteSounds
   id: UnisexVox
   sounds:
     Scream:
       path: /Audio/Voice/Vox/shriek1.ogg
     Laugh:
       path: /Audio/Voice/Vox/vox_laugh.ogg
-    Gasp:
-      collection: MaleGasp
-    DefaultDeathgasp:
-      collection: DeathGasp
-  params:
-    variation: 0.125
     # We need vox sounds for the other emotes
