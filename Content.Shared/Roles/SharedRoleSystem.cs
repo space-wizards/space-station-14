@@ -77,7 +77,7 @@ public abstract class SharedRoleSystem : EntitySystem
         bool silent = false)
     {
         if (protoId == "MindRoleJob")
-            MindAddRoleDo(mindId, protoId, mind, silent, ""); //TODO:ERRANT prorotypes amirite
+            MindAddRoleDo(mindId, protoId, mind, silent, "");
         else
             MindAddRoleDo(mindId, protoId, mind, silent);
     }
@@ -124,7 +124,7 @@ public abstract class SharedRoleSystem : EntitySystem
             return;
         }
 
-        var mindRoleId = Spawn(protoId, MapCoordinates.Nullspace); //TODO:ERRANT Why is this not visible for the client
+        var mindRoleId = Spawn(protoId, MapCoordinates.Nullspace);
         EnsureComp<MindRoleComponent>(mindRoleId);
         var mindRoleComp = Comp<MindRoleComponent>(mindRoleId);
 
@@ -140,19 +140,6 @@ public abstract class SharedRoleSystem : EntitySystem
             antagonist = true;
 
         mind.MindRoles.Add(mindRoleId);
-
-
-
-        //Anti frustration debug feature  TODO:ERRANT Delete this when done
-        // No, seriously, REMOVE THIS it breaks tests
-        // Welp, test was rigged from the start
-        TryComp<MindContainerComponent>(mind.OwnedEntity, out var mindCont);
-        if (mindCont is not null && mind.OwnedEntity is not null)
-        {
-            // mindCont.MindRoles.Add(mindRoleId);
-        }
-
-
 
         var mindEv = new MindRoleAddedEvent(silent);
         RaiseLocalEvent(mindId, ref mindEv);
@@ -200,26 +187,6 @@ public abstract class SharedRoleSystem : EntitySystem
         foreach (var role in delete)
         {
             mind.MindRoles.Remove(role);
-
-
-            // debug only? //TODO:ERRANT Delete this when done
-            TryComp<MindContainerComponent>(mind.OwnedEntity, out var mindCont);
-            if (mindCont is not null)
-            {
-                // mindCont.MindRoles.Remove(role);
-                if (mind.OwnedEntity is not null)
-                {
-                    Dirty(mind.OwnedEntity.Value, mindCont );
-                }
-            }
-            else
-            {
-                Log.Error($"Error code Shiny Umbreon");
-            }
-            // end of debug
-
-
-
         }
 
         if (!found)

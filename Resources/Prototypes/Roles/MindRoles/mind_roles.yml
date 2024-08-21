@@ -19,15 +19,13 @@
   parent: BaseMindRole
   id: MindRoleObserver
   components:
-  - type: MindRole
   - type: ObserverRole
 
-#Observer
+#Ghostrole Marker
 - type: entity
   parent: BaseMindRole
   id: MindRoleGhostMarker
   components:
-  - type: MindRole
   - type: GhostRoleMarkerRole
 
 # The Job MindRole holds the mob's Job prototype
@@ -36,8 +34,16 @@
   id: MindRoleJob
   name: mind-role-job-name
   description: mind-role-job-description
+  # MindRoleComponent.JobPrototype is filled by SharedJobSystem
+
+# Subverted Silicon
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleSubvertedSilicon
+  name: mind-role-subverted-silicon-name
+  description: mind-role-subverted-silicon-description
   components:
-  - type: MindRole
+  - type: SubvertedSiliconRole
 
 # Dragon
 - type: entity

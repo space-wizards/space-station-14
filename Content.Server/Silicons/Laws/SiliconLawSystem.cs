@@ -191,7 +191,6 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
             return;
 
-        //_roles.MindAddRole(mindId, new SubvertedSiliconRoleComponent { PrototypeId = component.AntagonistRole }); TODO:ERRANT Silicion stuff
         _roles.MindAddRole(mindId, "MindRoleSubvertedSilicon");
     }
 

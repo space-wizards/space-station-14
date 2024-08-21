@@ -67,7 +67,7 @@ public abstract partial class BaseMindRoleComponent : Component
 /// Mark the antagonist role component as being exclusive
 /// IE by default other antagonists should refuse to select the same entity for a different antag role
 /// </summary>
-// TODO:ERRANT figure this out later
+// TODO:ERRANT Exclusive Antag
 [AttributeUsage(AttributeTargets.Class, Inherited = false)]
 [BaseTypeRequired(typeof(BaseMindRoleComponent))]
 public sealed partial class ExclusiveAntagonistAttribute : Attribute
