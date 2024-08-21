@@ -1,13 +1,13 @@
-using Content.Server.Temperature.Systems;
+using Content.Shared.Temperature.Systems;
 using Content.Shared.Temperature;
 using Robust.Shared.Audio;
 
-namespace Content.Server.Temperature.Components;
+namespace Content.Shared.Temperature.Components;
 
 /// <summary>
 /// Adds thermal energy to entities with <see cref="TemperatureComponent"/> placed on it.
 /// </summary>
-[RegisterComponent, Access(typeof(EntityHeaterSystem))]
+[RegisterComponent, Access(typeof(SharedEntityHeaterSystem))]
 public sealed partial class EntityHeaterComponent : Component
 {
     /// <summary>
