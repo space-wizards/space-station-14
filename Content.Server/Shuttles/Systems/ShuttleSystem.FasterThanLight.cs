@@ -269,16 +269,17 @@ public sealed partial class ShuttleSystem
 
         startupTime ??= DefaultStartupTime;
 
-        var shuttleCoords = Transform(shuttleUid).Coordinates;
-        shuttleCoords.TryDistance(_entManager, coordinates, out var distance);
-
-        hyperspaceTime ??= distance * 0.075f;
-
         var mapId = coordinates.GetMapId(EntityManager);
 
-        // If we travel between maps, then add the default travel time
-        if (mapId != shuttleCoords.GetMapId(EntityManager))
-            hyperspaceTime += DefaultTravelTime;
+        // Calculate FTL travelling time only if it's null
+        if (hyperspaceTime == null)
+        {
+            var shuttleCoords = Transform(shuttleUid).Coordinates;
+            shuttleCoords.TryDistance(_entManager, coordinates, out var distance);
+
+            // If we travel between maps, then set it to the default travel time. Otherwise, calculate the travel time by distance
+            hyperspaceTime = mapId != shuttleCoords.GetMapId(EntityManager) ? DefaultTravelTime : distance * 0.075f;
+        }
 
         hyperspace.StartupTime = startupTime.Value;
         hyperspace.TravelTime = hyperspaceTime.Value;
@@ -313,20 +314,8 @@ public sealed partial class ShuttleSystem
 
         startupTime ??= DefaultStartupTime;
 
-        var targetCoords = Transform(target).Coordinates;
-
-        var shuttleCoords = Transform(shuttleUid).Coordinates;
-        shuttleCoords.TryDistance(_entManager, targetCoords, out var distance);
-
-        hyperspaceTime ??= distance * 0.075f;
-
-        // If we travel between maps, then add the default travel time
-        if (targetCoords.GetMapId(EntityManager) != shuttleCoords.GetMapId(EntityManager))
-            hyperspaceTime += DefaultTravelTime;
-
         var config = _dockSystem.GetDockingConfig(shuttleUid, target, priorityTag);
         hyperspace.StartupTime = startupTime.Value;
-        hyperspace.TravelTime = hyperspaceTime.Value;
         hyperspace.StateTime = StartEndTime.FromStartDuration(
             _gameTiming.CurTime,
             TimeSpan.FromSeconds(hyperspace.StartupTime));
@@ -348,9 +337,26 @@ public sealed partial class ShuttleSystem
         else
         {
             // FTL back to its own position.
+            hyperspace.TravelTime = hyperspaceTime ?? DefaultTravelTime;
             hyperspace.TargetCoordinates = Transform(shuttleUid).Coordinates;
             Log.Error($"Unable to FTL grid {ToPrettyString(shuttleUid)} to target properly?");
+
+            return;
         }
+
+        // Calculate FTL travelling time only if it's null
+        if (hyperspaceTime == null)
+        {
+            var targetCoords = hyperspace.TargetCoordinates;
+            var shuttleCoords = Transform(shuttleUid).Coordinates;
+
+            shuttleCoords.TryDistance(_entManager, targetCoords, out var distance);
+
+            // If we travel between maps, then set it to the default travel time. Otherwise, calculate the travel time by distance
+            hyperspaceTime = targetCoords.GetMapId(EntityManager) != shuttleCoords.GetMapId(EntityManager) ? DefaultTravelTime : distance * 0.075f;
+        }
+
+        hyperspace.TravelTime = hyperspaceTime.Value;
     }
 
     private bool TrySetupFTL(EntityUid uid, ShuttleComponent shuttle, [NotNullWhen(true)] out FTLComponent? component)
