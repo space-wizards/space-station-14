@@ -15,4 +15,7 @@ public sealed partial class UpgradeableGunComponent : Component
 
     [DataField]
     public SoundSpecifier? InsertSound = new SoundPathSpecifier("/Audio/Effects/thunk.ogg");
+
+    [DataField]
+    public int MaxUpgradeCount = 2;
 }
