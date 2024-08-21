@@ -6,9 +6,9 @@
       collection: Squishes
 
 - type: emoteSounds
-  parent: [UnisexSlime, MaleHuman]
+  parent: [BaseMaleGasp, UnisexSlime, MaleHuman]
   id: MaleSlime
 
 - type: emoteSounds
-  parent: [UnisexSlime, FemaleHuman]
+  parent: [BaseFemaleGasp, UnisexSlime, FemaleHuman]
   id: FemaleSlime

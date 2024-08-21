@@ -1,5 +1,12 @@
 - type: emoteSounds
-  parent: BaseHumanoidEmoteSounds
+  id: BaseMothDeathGasp
+  abstract: true
+  sounds:
+    DefaultDeathgasp:
+      collection: MothDeathGasp
+
+- type: emoteSounds
+  parent: [BaseMothDeathGasp, BaseHumanoidEmoteSounds]
   id: UnisexMoth
   sounds:
     Scream:
@@ -12,13 +19,11 @@
       path: /Audio/Voice/Moth/moth_squeak.ogg
     Buzz:
       path: /Audio/Voice/Moth/moth_scream.ogg
-    DefaultDeathgasp:
-      collection: MothDeathGasp
 
 - type: emoteSounds
-  parent: [UnisexMoth, MaleHuman]
+  parent: [BaseMothDeathGasp, BaseMaleGasp, UnisexMoth, MaleHuman]
   id: MaleMoth
 
 - type: emoteSounds
-  parent: [UnisexMoth, FemaleHuman]
+  parent: [BaseMothDeathGasp, BaseFemaleGasp, UnisexMoth, FemaleHuman]
   id: FemaleMoth

@@ -8,9 +8,9 @@
       path: /Audio/Animals/lizard_happy.ogg
 
 - type: emoteSounds
-  parent: [UnisexReptilian, MaleHuman]
+  parent: [BaseMaleGasp, UnisexReptilian, MaleHuman]
   id: MaleReptilian
 
 - type: emoteSounds
-  parent: [UnisexReptilian, FemaleHuman]
+  parent: [BaseFemaleGasp, UnisexReptilian, FemaleHuman]
   id: FemaleReptilian

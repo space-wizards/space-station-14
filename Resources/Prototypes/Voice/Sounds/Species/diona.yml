@@ -8,9 +8,9 @@
       collection: DionaLaugh
 
 - type: emoteSounds
-  parent: [UnisexDiona, MaleHuman]
+  parent: [BaseMaleGasp, UnisexDiona, MaleHuman]
   id: MaleDiona
 
 - type: emoteSounds
-  parent: [UnisexDiona, FemaleHuman]
+  parent: [BaseFemaleGasp, UnisexDiona, FemaleHuman]
   id: FemaleDiona

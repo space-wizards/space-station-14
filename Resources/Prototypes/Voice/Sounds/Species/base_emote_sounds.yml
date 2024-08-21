@@ -13,3 +13,21 @@
     DefaultDeathgasp:
       collection: DeathGasp
     # Weh and Honk are for their respective reagents.
+
+- type: emoteSounds
+  id: BaseMaleGasp
+  abstract: true
+  sounds:
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MaleDeathGasp
+
+- type: emoteSounds
+  id: BaseFemaleGasp
+  abstract: true
+  sounds:
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp

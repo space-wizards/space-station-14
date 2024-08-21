@@ -1,5 +1,5 @@
 - type: emoteSounds
-  parent: BaseHumanoidEmoteSounds
+  parent: [BaseMaleGasp, BaseHumanoidEmoteSounds]
   id: MaleHuman
   sounds:
     Scream:
@@ -18,11 +18,9 @@
       collection: MaleCry
     Whistle:
       collection: Whistles
-    DefaultDeathgasp:
-      collection: MaleDeathGasp
 
 - type: emoteSounds
-  parent: BaseHumanoidEmoteSounds
+  parent: [BaseFemaleGasp, BaseHumanoidEmoteSounds]
   id: FemaleHuman
   sounds:
     Scream:
@@ -41,7 +39,3 @@
       collection: FemaleCry
     Whistle:
       collection: Whistles
-    Gasp:
-      collection: FemaleGasp
-    DefaultDeathgasp:
-      collection: FemaleDeathGasp
