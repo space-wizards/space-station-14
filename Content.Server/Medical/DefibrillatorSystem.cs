@@ -12,6 +12,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Medical;
 using Content.Shared.Mind;
@@ -47,6 +48,7 @@ public sealed class DefibrillatorSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -103,6 +105,24 @@ public sealed class DefibrillatorSystem : EntitySystem
 
         if (!component.CanDefibCrit && _mobState.IsCritical(target, mobState))
             return false;
+
+        if (TryComp(target, out DefibrillatorBlockedComponent? blockOne))
+        {
+            if (user != null)
+                _popup.PopupEntity(Loc.GetString(blockOne.Popup, ("target", target)), uid, user.Value);
+            return false;
+        }
+
+        var slots = _inventory.GetSlotEnumerator(target, SlotFlags.OUTERCLOTHING);
+        while (slots.MoveNext(out var slot))
+        {
+            if (TryComp(slot.ContainedEntity, out DefibrillatorBlockedComponent? blockTwo))
+            {
+                if (user != null)
+                    _popup.PopupEntity(Loc.GetString(blockTwo.Popup, ("target", target)), uid, user.Value);
+                return false;
+            }
+        }
 
         return true;
     }
