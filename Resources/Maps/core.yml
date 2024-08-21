@@ -102197,13 +102197,6 @@ entities:
     - type: Transform
       pos: 40.59389,-23.47827
       parent: 2
-- proto: MaterialReclaimer
-  entities:
-  - uid: 5732
-    components:
-    - type: Transform
-      pos: 36.5,19.5
-      parent: 2
 - proto: MaterialWoodPlank
   entities:
   - uid: 15031
