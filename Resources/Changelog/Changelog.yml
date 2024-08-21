@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: Stacking multiple deflecting items at once has been removed; now only
-      your best item is used.
-    type: Tweak
-  id: 6679
-  time: '2024-06-04T13:26:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28539
 - author: moonheart08
   changes:
   - message: AME power output is no longer super-buffed. Larger stations will now
@@ -3862,3 +3854,10 @@
   id: 7178
   time: '2024-08-21T18:55:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31273
+- author: Winkarst-cpu
+  changes:
+  - message: Now getting creamed will not reveal a person's identity.
+    type: Fix
+  id: 7179
+  time: '2024-08-21T21:50:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31291
