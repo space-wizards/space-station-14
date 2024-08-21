@@ -337,11 +337,8 @@ public sealed partial class ShuttleSystem
         else
         {
             // FTL back to its own position.
-            hyperspace.TravelTime = hyperspaceTime ?? DefaultTravelTime;
             hyperspace.TargetCoordinates = Transform(shuttleUid).Coordinates;
             Log.Error($"Unable to FTL grid {ToPrettyString(shuttleUid)} to target properly?");
-
-            return;
         }
 
         // Calculate FTL travelling time only if it's null
