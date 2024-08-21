@@ -252,6 +252,18 @@ public sealed partial class ShuttleSystem
         return true;
     }
 
+    private float CalculateFTLTravelTime(EntityUid shuttleUid, EntityCoordinates coordinates)
+    {
+        var shuttleCoords = Transform(shuttleUid).Coordinates;
+        shuttleCoords.TryDistance(_entManager, coordinates, out var distance);
+
+        // If we travel between maps, then return the default travel time. Otherwise, calculate the travel time by distance
+        if (coordinates.GetMapId(EntityManager) != shuttleCoords.GetMapId(EntityManager))
+            return DefaultTravelTime;
+
+        return distance * 0.075f;
+    }
+
     /// <summary>
     /// Moves a shuttle from its current position to the target one without any checks. Goes through the hyperspace map while the timer is running.
     /// </summary>
@@ -269,17 +281,8 @@ public sealed partial class ShuttleSystem
 
         startupTime ??= DefaultStartupTime;
 
-        var mapId = coordinates.GetMapId(EntityManager);
-
         // Calculate FTL travelling time only if it's null
-        if (hyperspaceTime == null)
-        {
-            var shuttleCoords = Transform(shuttleUid).Coordinates;
-            shuttleCoords.TryDistance(_entManager, coordinates, out var distance);
-
-            // If we travel between maps, then set it to the default travel time. Otherwise, calculate the travel time by distance
-            hyperspaceTime = mapId != shuttleCoords.GetMapId(EntityManager) ? DefaultTravelTime : distance * 0.075f;
-        }
+        hyperspaceTime ??= CalculateFTLTravelTime(shuttleUid, coordinates);
 
         hyperspace.StartupTime = startupTime.Value;
         hyperspace.TravelTime = hyperspaceTime.Value;
@@ -292,6 +295,7 @@ public sealed partial class ShuttleSystem
 
         _console.RefreshShuttleConsoles(shuttleUid);
 
+        var mapId = coordinates.GetMapId(EntityManager);
         var mapUid = _mapManager.GetMapEntityId(mapId);
         var ev = new FTLRequestEvent(mapUid);
         RaiseLocalEvent(shuttleUid, ref ev, true);
@@ -342,16 +346,7 @@ public sealed partial class ShuttleSystem
         }
 
         // Calculate FTL travelling time only if it's null
-        if (hyperspaceTime == null)
-        {
-            var targetCoords = hyperspace.TargetCoordinates;
-            var shuttleCoords = Transform(shuttleUid).Coordinates;
-
-            shuttleCoords.TryDistance(_entManager, targetCoords, out var distance);
-
-            // If we travel between maps, then set it to the default travel time. Otherwise, calculate the travel time by distance
-            hyperspaceTime = targetCoords.GetMapId(EntityManager) != shuttleCoords.GetMapId(EntityManager) ? DefaultTravelTime : distance * 0.075f;
-        }
+        hyperspaceTime ??= CalculateFTLTravelTime(shuttleUid, hyperspace.TargetCoordinates);
 
         hyperspace.TravelTime = hyperspaceTime.Value;
     }
