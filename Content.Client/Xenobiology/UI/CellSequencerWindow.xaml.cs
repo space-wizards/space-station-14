@@ -10,13 +10,14 @@ namespace Content.Client.Xenobiology.UI;
 public sealed partial class CellSequencerWindow : FancyWindow
 {
     public event Action? OnSync;
-    public event Action? OnScan;
-    public event Action? OnCopy;
-    public event Action? OnAdd;
-    public event Action? OnRemove;
-    public event Action? OnPrint;
 
-    private Cell? _slectedCell;
+    public event Action<Cell?>? OnCopy;
+    public event Action<Cell?>? OnAdd;
+    public event Action<Cell?, bool>? OnRemove;
+    public event Action<Cell?>? OnPrint;
+
+    private Cell? _selectedCell;
+    private CellSequencerEntryControl? _sequencerEntry;
 
     public CellSequencerWindow()
     {
@@ -24,23 +25,44 @@ public sealed partial class CellSequencerWindow : FancyWindow
 
         SyncButton.OnPressed += _ => OnSync?.Invoke();
 
-        ScanButton.OnPressed += _ => OnScan?.Invoke();
-        CopyButton.OnPressed += _ => OnCopy?.Invoke();
-
-        AddButton.OnPressed += _ => OnAdd?.Invoke();
-        RemoveButton.OnPressed += _ => OnRemove?.Invoke();
-        PrintButton.OnPressed += _ => OnPrint?.Invoke();
+        CopyButton.OnPressed += _ => OnCopy?.Invoke(_selectedCell);
+        AddButton.OnPressed += _ => OnAdd?.Invoke(_selectedCell);
+        RemoveButton.OnPressed += _ =>
+        {
+            OnRemove?.Invoke(_selectedCell, _sequencerEntry?.Remote ?? false);
+            SelectedCellEntry(null);
+        };
+        PrintButton.OnPressed += _ => OnPrint?.Invoke(_selectedCell);
     }
 
     public void UpdateState(CellSequencerUiState sequencerUiState)
     {
-        _slectedCell = sequencerUiState.SelectedCell;
+        InsideCellContainer.RemoveAllChildren();
 
-        SavedContainer.RemoveAllChildren();
-        foreach (var savedCell in sequencerUiState.SavedCells)
+        foreach (var savedCell in sequencerUiState.InsideCells)
         {
-            var entry = new CellSequencerEntryControl(savedCell);
-            SavedContainer.AddChild(entry);
+            var entry = new CellSequencerEntryControl(savedCell, false);
+            entry.OnSelect += SelectedCellEntry;
+            InsideCellContainer.AddChild(entry);
         }
+
+        RemoteCellContainer.RemoveAllChildren();
+        foreach (var savedCell in sequencerUiState.RemoteCells)
+        {
+            var entry = new CellSequencerEntryControl(savedCell, true);
+            entry.OnSelect += SelectedCellEntry;
+            RemoteCellContainer.AddChild(entry);
+        }
+    }
+
+    private void SelectedCellEntry(CellSequencerEntryControl? entry)
+    {
+        _sequencerEntry?.SetState(true);
+
+        _selectedCell = entry?.Cell;
+        _sequencerEntry = entry;
+        _sequencerEntry?.SetState(false);
+
+        NoSelectedLabel.Visible = _selectedCell is null;
     }
 }

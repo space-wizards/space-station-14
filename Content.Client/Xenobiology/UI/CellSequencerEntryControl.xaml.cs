@@ -8,12 +8,26 @@ namespace Content.Client.Xenobiology.UI;
 [GenerateTypedNameReferences]
 public sealed partial class CellSequencerEntryControl : Control
 {
-    public CellSequencerEntryControl(Cell cell)
+    public readonly Cell Cell;
+    public readonly bool Remote;
+    public event Action<CellSequencerEntryControl>? OnSelect;
+
+    public CellSequencerEntryControl(Cell cell, bool remote)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
+        Cell = cell;
+        Remote = remote;
+
         Name.Text = cell.Name;
         Color.ModulateSelfOverride = cell.Color;
+
+        Button.OnPressed += _ => OnSelect?.Invoke(this);
+    }
+
+    public void SetState(bool value)
+    {
+        Button.Disabled = !value;
     }
 }

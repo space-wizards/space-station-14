@@ -3,10 +3,10 @@
     xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
     xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     Title="{Loc 'cell-sequencer-menu-title'}"
-    MinSize="600 400">
+    MinSize="750 400">
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
         <!-- Nav panel -->
-        <BoxContainer Margin="8" MinWidth="150" Orientation="Vertical" VerticalExpand="True">
+        <BoxContainer Margin="8" MinWidth="175" Orientation="Vertical" VerticalExpand="True">
             <Button Name="SyncButton"
                     Text="{Loc 'cell-sequencer-sync-button'}"
                     ToolTip="{Loc 'cell-sequencer-sync-tooltip-info'}" />
@@ -36,20 +36,22 @@
         <customControls:VSeparator Margin="4 0" StyleClasses="LowDivider" />
 
         <!-- Selection -->
-        <ScrollContainer MinWidth="150" Margin="8" VerticalExpand="True" HorizontalExpand="True">
-            <BoxContainer VerticalExpand="True" HorizontalExpand="True">
-                <PanelContainer Margin="8" VerticalExpand="True" HorizontalExpand="True">
-                    <PanelContainer.PanelOverride>
-                        <graphics:StyleBoxFlat BackgroundColor="#000000FF" />
-                    </PanelContainer.PanelOverride>
+        <ScrollContainer MinWidth="175" VerticalExpand="True" HorizontalExpand="True">
+            <PanelContainer Margin="8" VerticalExpand="True" HorizontalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#000000FF" />
+                </PanelContainer.PanelOverride>
 
-                    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-                        <Label Margin="8" Text="{Loc 'cell-sequencer-saved-label'}" HorizontalAlignment="Center" />
-                        <customControls:HSeparator Margin="0 8" StyleClasses="LowDivider" />
-                        <BoxContainer Name="SavedContainer" />
-                    </BoxContainer>
-                </PanelContainer>
-            </BoxContainer>
+                <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+                        <Label Margin="0 0 0 2" Text="{Loc 'cell-sequencer-inside-label'}" HorizontalAlignment="Center" />
+                        <customControls:HSeparator Margin="8 0" StyleClasses="LowDivider" />
+                        <BoxContainer Name="InsideCellContainer" Orientation="Vertical" />
+
+                        <Label Margin="0 0 0 2" Text="{Loc 'cell-sequencer-remote-label'}" HorizontalAlignment="Center" />
+                        <customControls:HSeparator Margin="8 0" StyleClasses="LowDivider" />
+                        <BoxContainer Name="RemoteCellContainer" Orientation="Vertical" />
+                </BoxContainer>
+            </PanelContainer>
         </ScrollContainer>
 
         <customControls:VSeparator Margin="4 0" StyleClasses="LowDivider" />
@@ -59,6 +61,9 @@
             <PanelContainer.PanelOverride>
                 <graphics:StyleBoxFlat BackgroundColor="#000000FF" />
             </PanelContainer.PanelOverride>
+
+            <Label Name="NoSelectedLabel" Text="{Loc 'cell-sequencer-no-selected-label'}" FontColorOverride="#ff0000" Align="Center"/>
+
         </PanelContainer>
     </BoxContainer>
 </controls:FancyWindow>

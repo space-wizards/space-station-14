@@ -1,57 +1,71 @@
 - type: cell
   id: Murine
+  name: cell-Murine-name
   color: "#494546"
   modifiers: # Just for test remove later
     - !type:CellPacifismModifier
 
 - type: cell
   id: Galliform
-  color: "#744331"
+  name: cell-Galliform-name
+  color: "#C2B280"
 
 - type: cell
   id: Bovine
-  color: "#744331"
+  name: cell-Bovine-name
+  color: "#7F5B3E"
 
 - type: cell
   id: Feliform
-  color: "#744331"
+  name: cell-Feliform-name
+  color: "#A0522D"
 
 - type: cell
   id: Canid
-  color: "#744331"
+  name: cell-Canid-name
+  color: "#D2691E"
 
 - type: cell
   id: Ursine
-  color: "#744331"
+  name: cell-Ursine-name
+  color: "#8B4513"
 
 - type: cell
   id: Cyprinid
-  color: "#744331"
+  name: cell-Cyprinid-name
+  color: "#4682B4"
 
 - type: cell
   id: CartilaginousCyprinid
-  color: "#744331"
+  name: cell-CartilaginousCyprinid-name
+  color: "#5F9EA0"
 
 - type: cell
   id: Ophidic
-  color: "#744331"
+  name: cell-Ophidic-name
+  color: "#556B2F"
 
 - type: cell
   id: Anura
-  color: "#744331"
+  name: cell-Anura-name
+  color: "#ADFF2F"
 
 - type: cell
   id: Caudata
-  color: "#744331"
+  name: cell-Caudata-name
+  color: "#32CD32"
 
 - type: cell
   id: Atypical
-  color: "#744331"
+  name: cell-Atypical-name
+  color: "#FFD700"
 
 - type: cell
   id: Aphid
-  color: "#744331"
+  name: cell-Aphid-name
+  color: "#7FFF00"
 
 - type: cell
   id: Pseudoarachnoid
-  color: "#744331"
+  name: cell-Pseudoarachnoid-name
+  color: "#DDA0DD"

@@ -5,9 +5,12 @@ namespace Content.Shared.Xenobiology.Components.Machines;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class CellSequencerComponent : Component
 {
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string DishSlot = "dishSlot";
 
     [ViewVariables]
-    public Cell? SelectedCell;
+    public List<Cell> Cells = [];
+
+    [ViewVariables]
+    public List<Entity<CellContainerComponent>> CellContainers = [];
 }

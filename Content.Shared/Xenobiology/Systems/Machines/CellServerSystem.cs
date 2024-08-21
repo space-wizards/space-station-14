@@ -86,6 +86,8 @@ public sealed class CellServerSystem : EntitySystem
             return;
 
         server.Comp.Cells.Remove(cell);
+        Dirty(server);
+
         DispatchChangedEvent(server, client);
     }
 

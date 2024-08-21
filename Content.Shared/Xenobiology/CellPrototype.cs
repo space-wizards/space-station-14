@@ -9,6 +9,9 @@ public sealed class CellPrototype : IPrototype
     public string ID { get; } = string.Empty;
 
     [DataField]
+    public LocId Name;
+
+    [DataField]
     public float Stability = 1;
 
     [DataField]

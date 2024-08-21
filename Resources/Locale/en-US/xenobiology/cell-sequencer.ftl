@@ -1,7 +1,9 @@
 cell-sequencer-menu-title = Cell sequencer
 
-cell-sequencer-selected-label = Selected
-cell-sequencer-saved-label = Saved
+cell-sequencer-inside-label = Inside
+cell-sequencer-remote-label = Remote
+
+cell-sequencer-no-selected-label = Cell not selected
 
 cell-sequencer-sync-button = Sync
 cell-sequencer-sync-tooltip-info = Sync.

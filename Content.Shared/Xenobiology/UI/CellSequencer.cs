@@ -11,48 +11,61 @@ public enum CellSequencerUiKey
 [Serializable, NetSerializable]
 public sealed class CellSequencerUiState : BoundUserInterfaceState
 {
-    public readonly Cell? SelectedCell;
-    public readonly IReadOnlySet<Cell> SavedCells;
+    public readonly IReadOnlyList<Cell> InsideCells;
+    public readonly IReadOnlyList<Cell> RemoteCells;
 
-    public CellSequencerUiState(Cell? selectedCell, IReadOnlySet<Cell> savedCells)
+    public CellSequencerUiState(IReadOnlyList<Cell> insideCell, IReadOnlyList<Cell> remoteCells)
     {
-        SelectedCell = selectedCell;
-        SavedCells = savedCells;
+        InsideCells = insideCell;
+        RemoteCells = remoteCells;
     }
 }
 
 [Serializable, NetSerializable]
-public sealed class CellSequencerUiSyncMessage : BoundUserInterfaceMessage
-{
-
-}
-
-[Serializable, NetSerializable]
-public sealed class CellSequencerUiScanMessage : BoundUserInterfaceMessage
-{
-
-}
+public sealed class CellSequencerUiSyncMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
 public sealed class CellSequencerUiCopyMessage : BoundUserInterfaceMessage
 {
+    public readonly Cell? Cell;
 
+    public CellSequencerUiCopyMessage(Cell? cell)
+    {
+        Cell = cell;
+    }
 }
 
 [Serializable, NetSerializable]
 public sealed class CellSequencerUiAddMessage : BoundUserInterfaceMessage
 {
+    public readonly Cell? Cell;
 
+    public CellSequencerUiAddMessage(Cell? cell)
+    {
+        Cell = cell;
+    }
 }
 
 [Serializable, NetSerializable]
 public sealed class CellSequencerUiRemoveMessage : BoundUserInterfaceMessage
 {
+    public readonly Cell? Cell;
+    public readonly bool Remote;
 
+    public CellSequencerUiRemoveMessage(Cell? cell, bool remote)
+    {
+        Cell = cell;
+        Remote = remote;
+    }
 }
 
 [Serializable, NetSerializable]
 public sealed class CellSequencerUiPrintMessage : BoundUserInterfaceMessage
 {
+    public readonly Cell? Cell;
 
+    public CellSequencerUiPrintMessage(Cell? cell)
+    {
+        Cell = cell;
+    }
 }

@@ -19,12 +19,28 @@ public sealed class CellSequencerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CellSequencerComponent, CellSequencerUiSyncMessage>(OnSync);
-        SubscribeLocalEvent<CellSequencerComponent, CellSequencerUiScanMessage>(OnScan);
-        SubscribeLocalEvent<CellSequencerComponent, CellSequencerUiCopyMessage>(OnCopy);
+        SubscribeLocalEvent<CellSequencerComponent, EntInsertedIntoContainerMessage>(OnInsertIntoContainer);
+        SubscribeLocalEvent<CellSequencerComponent, EntRemovedFromContainerMessage>(OnRemovedFromContainer);
 
+        SubscribeLocalEvent<CellSequencerComponent, CellSequencerUiSyncMessage>(OnSync);
+
+        SubscribeLocalEvent<CellSequencerComponent, CellSequencerUiCopyMessage>(OnCopy);
         SubscribeLocalEvent<CellSequencerComponent, CellSequencerUiAddMessage>(OnAdd);
         SubscribeLocalEvent<CellSequencerComponent, CellSequencerUiRemoveMessage>(OnRemove);
+    }
+
+    private void OnInsertIntoContainer(Entity<CellSequencerComponent> ent, ref EntInsertedIntoContainerMessage args)
+    {
+        UpdateInsideCellContainers(ent);
+        UpdateInsideCells(ent);
+        Sync(ent);
+    }
+
+    private void OnRemovedFromContainer(Entity<CellSequencerComponent> ent, ref EntRemovedFromContainerMessage args)
+    {
+        UpdateInsideCellContainers(ent);
+        UpdateInsideCells(ent);
+        Sync(ent);
     }
 
     private void OnSync(Entity<CellSequencerComponent> ent, ref CellSequencerUiSyncMessage args)
@@ -32,39 +48,9 @@ public sealed class CellSequencerSystem : EntitySystem
         Sync(ent);
     }
 
-    private void OnScan(Entity<CellSequencerComponent> ent, ref CellSequencerUiScanMessage args)
-    {
-        if (!_container.TryGetContainer(ent, ent.Comp.DishSlot, out var container))
-        {
-            _popup.PopupPredicted(Loc.GetString("cell-sequencer-no-slot"), ent, null, PopupType.LargeCaution);
-            return;
-        }
-
-        if (container.ContainedEntities.Count == 0)
-        {
-            _popup.PopupPredicted(Loc.GetString("cell-sequencer-no-entity"), ent, null, PopupType.MediumCaution);
-            return;
-        }
-
-        if (!TryComp<CellContainerComponent>(container.ContainedEntities[0], out var cellContainerComponent))
-        {
-            _popup.PopupPredicted(Loc.GetString("cell-sequencer-entity-not-valid"), ent, null, PopupType.LargeCaution);
-            return;
-        }
-
-        if (cellContainerComponent.Cells.Count == 0)
-        {
-            _popup.PopupPredicted(Loc.GetString("cell-sequencer-entity-is-empty"), ent, null, PopupType.MediumCaution);
-            return;
-        }
-
-        ent.Comp.SelectedCell = cellContainerComponent.Cells[0];
-        Sync(ent);
-    }
-
     private void OnCopy(Entity<CellSequencerComponent> ent, ref CellSequencerUiCopyMessage args)
     {
-        if (ent.Comp.SelectedCell is null)
+        if (args.Cell is null)
         {
             _popup.PopupPredicted(Loc.GetString("cell-sequencer-no-selected"), ent, null, PopupType.MediumCaution);
             return;
@@ -79,32 +65,54 @@ public sealed class CellSequencerSystem : EntitySystem
             return;
         }
 
-        if (ent.Comp.SelectedCell is null)
+        if (args.Cell is null)
         {
             _popup.PopupPredicted(Loc.GetString("cell-sequencer-no-selected"), ent, null, PopupType.MediumCaution);
             return;
         }
 
-        _cellServer.RegisterCell(serverEnt.Value.Owner, ent.Owner, ent.Comp.SelectedCell);
+        _cellServer.RegisterCell(serverEnt.Value.Owner, ent.Owner, args.Cell);
         Sync(ent);
     }
 
     private void OnRemove(Entity<CellSequencerComponent> ent, ref CellSequencerUiRemoveMessage args)
     {
+        if (args.Cell is null)
+        {
+            _popup.PopupPredicted(Loc.GetString("cell-sequencer-no-selected"), ent, null, PopupType.MediumCaution);
+            return;
+        }
+
+        if (!args.Remote)
+        {
+            foreach (var cell in ent.Comp.Cells)
+            {
+                if (cell != args.Cell)
+                    continue;
+
+                ent.Comp.Cells.Remove(args.Cell);
+                Sync(ent);
+                return;
+            }
+
+            return;
+        }
+
         if (!_cellClient.TryGetServer(ent.Owner, out var serverEnt))
         {
             _popup.PopupPredicted(Loc.GetString("cell-sequencer-no-connect"), ent, null, PopupType.MediumCaution);
             return;
         }
 
-        if (ent.Comp.SelectedCell is null)
+        foreach (var cell in serverEnt.Value.Comp.Cells)
         {
-            _popup.PopupPredicted(Loc.GetString("cell-sequencer-no-selected"), ent, null, PopupType.MediumCaution);
+            if (cell != args.Cell)
+                continue;
+
+            _cellServer.RemoveCell(serverEnt.Value.Owner, ent.Owner, args.Cell);
+            Sync(ent);
             return;
         }
-
-        _cellServer.RemoveCell(serverEnt.Value.Owner, ent.Owner, ent.Comp.SelectedCell);
-        Sync(ent);
     }
 
     private void Sync(Entity<CellSequencerComponent> ent)
@@ -115,7 +123,38 @@ public sealed class CellSequencerSystem : EntitySystem
             return;
         }
 
-        var state = new CellSequencerUiState(ent.Comp.SelectedCell, serverEnt.Value.Comp.Cells);
+        var state = new CellSequencerUiState(ent.Comp.Cells, serverEnt.Value.Comp.Cells);
         _userInterface.SetUiState(ent.Owner, CellSequencerUiKey.Key, state);
+    }
+
+    private void UpdateInsideCells(Entity<CellSequencerComponent> ent)
+    {
+        var list = new List<Cell>();
+        foreach (var container in ent.Comp.CellContainers)
+        {
+            foreach (var cell in container.Comp.Cells)
+            {
+                list.Add(cell);
+            }
+        }
+
+        ent.Comp.Cells = list;
+    }
+
+    private void UpdateInsideCellContainers(Entity<CellSequencerComponent> ent)
+    {
+        if (!_container.TryGetContainer(ent, ent.Comp.DishSlot, out var container))
+            return;
+
+        var list = new List<Entity<CellContainerComponent>>();
+        foreach (var entityUid in container.ContainedEntities)
+        {
+            if (!TryComp<CellContainerComponent>(entityUid, out var cellContainerComponent))
+                continue;
+
+            list.Add((entityUid, cellContainerComponent));
+        }
+
+        ent.Comp.CellContainers = list;
     }
 }

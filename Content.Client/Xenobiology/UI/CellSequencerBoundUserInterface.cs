@@ -22,11 +22,10 @@ public sealed class CellSequencerBoundUserInterface : BoundUserInterface
 
         _window.OnSync += () => SendMessage(new CellSequencerUiSyncMessage());
 
-        _window.OnScan += () => SendMessage(new CellSequencerUiScanMessage());
-        _window.OnCopy += () => SendMessage(new CellSequencerUiCopyMessage());
-
-        _window.OnAdd += () => SendMessage(new CellSequencerUiAddMessage());
-        _window.OnRemove += () => SendMessage(new CellSequencerUiRemoveMessage());
+        _window.OnCopy += cell => SendMessage(new CellSequencerUiCopyMessage(cell));
+        _window.OnAdd += cell => SendMessage(new CellSequencerUiAddMessage(cell));
+        _window.OnRemove += (cell, remote) => SendMessage(new CellSequencerUiRemoveMessage(cell, remote));
+        _window.OnPrint += cell => SendMessage(new CellSequencerUiPrintMessage(cell));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

@@ -6,7 +6,7 @@ namespace Content.Shared.Xenobiology.Components.Machines;
 public sealed partial class CellServerComponent : Component
 {
     [DataField, ViewVariables, AutoNetworkedField]
-    public HashSet<Cell> Cells = [];
+    public List<Cell> Cells = [];
 
     [ViewVariables, AutoNetworkedField]
     public int Id;
