@@ -13039,6 +13039,28 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -65.5,21.5
       parent: 30
+  - uid: 4393
+    components:
+    - type: Transform
+      pos: -52.5,2.5
+      parent: 30
+  - uid: 20731
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -59.5,-7.5
+      parent: 30
+  - uid: 20732
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -52.5,-7.5
+      parent: 30
+  - uid: 20733
+    components:
+    - type: Transform
+      pos: -59.5,2.5
+      parent: 30
 - proto: AtmosDeviceFanTiny
   entities:
   - uid: 9123
