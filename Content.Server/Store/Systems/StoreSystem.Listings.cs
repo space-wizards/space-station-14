@@ -1,4 +1,4 @@
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
@@ -14,7 +14,28 @@ public sealed partial class StoreSystem
     /// <param name="component">The store to refresh</param>
     public void RefreshAllListings(StoreComponent component)
     {
-        component.FullListingsCatalog = GetAllListings();
+        var previousState = component.FullListingsCatalog;
+        var newState = GetAllListings();
+        // if we refresh list with existing cost modifiers - they will be removed,
+        // need to restore them
+        if (previousState.Count != 0)
+        {
+            foreach (var previousStateListingItem in previousState)
+            {
+                if (!previousStateListingItem.IsCostModified
+                    || !TryGetListing(newState, previousStateListingItem.ID, out var found))
+                {
+                    continue;
+                }
+
+                foreach (var (modifierSourceId, costModifier) in previousStateListingItem.CostModifiersBySourceId)
+                {
+                    found.AddCostModifier(modifierSourceId, costModifier);
+                }
+            }
+        }
+
+        component.FullListingsCatalog = newState;
     }
 
     /// <summary>
@@ -129,6 +150,21 @@ public sealed partial class StoreSystem
             if (listing.Categories.Contains(cat))
                 return true;
         }
+        return false;
+    }
+
+    private bool TryGetListing(IReadOnlyCollection<ListingDataWithCostModifiers> collection, string listingId, [MaybeNullWhen(false)] out ListingDataWithCostModifiers found)
+    {
+        foreach(var current in collection)
+        {
+            if (current.ID == listingId)
+            {
+                found = current;
+                return true;
+            }
+        }
+
+        found = null!;
         return false;
     }
 }
