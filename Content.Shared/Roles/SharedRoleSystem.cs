@@ -4,7 +4,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -103,7 +102,7 @@ public abstract class SharedRoleSystem : EntitySystem
             {
                 _adminLogger.Add(LogType.Mind,
                     LogImpact.Low,
-                    $"Job role of {_minds.MindOwnerLoggingString(mind)} changed from '{jobRole.Value.Comp.JobPrototype}' to '{jobPrototype}'");
+                    $"Job Role of {_minds.MindOwnerLoggingString(mind)} changed from '{jobRole.Value.Comp.JobPrototype}' to '{jobPrototype}'");
             }
 
             jobRole.Value.Comp.JobPrototype = jobPrototype;
@@ -129,7 +128,7 @@ public abstract class SharedRoleSystem : EntitySystem
 
         var antagonist = false;
 
-        if (!_prototypes.TryIndex(protoId, out _))
+        if (!_prototypes.TryIndex(protoId, out var protoEnt))
         {
             Log.Error($"Failed to add role {protoId} to mind {mindId} : Role prototype does not exist");
             return;
@@ -161,9 +160,10 @@ public abstract class SharedRoleSystem : EntitySystem
             RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
         }
 
+        var name = Loc.GetString(protoEnt.Name);
         _adminLogger.Add(LogType.Mind,
             LogImpact.Low,
-            $"Role {protoId.ToString()} added to mind of {_minds.MindOwnerLoggingString(mind)}");
+            $"{name} added to mind of {_minds.MindOwnerLoggingString(mind)}");
     }
 
     /// <summary>
