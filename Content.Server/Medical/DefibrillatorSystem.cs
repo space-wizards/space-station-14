@@ -49,17 +49,8 @@ public sealed class DefibrillatorSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<DefibrillatorComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<DefibrillatorComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<DefibrillatorComponent, DefibrillatorZapDoAfterEvent>(OnDoAfter);
-    }
-
-    private void OnInit(Entity<DefibrillatorComponent> entity, ref ComponentInit args)
-    {
-        if (!TryComp<UseDelayComponent>(entity, out var useDelay))
-            return;
-
-        _useDelay.SetLength((entity.Owner, useDelay), entity.Comp.ZapDelay, entity.Comp.DelayId);
     }
 
     private void OnAfterInteract(EntityUid uid, DefibrillatorComponent component, AfterInteractEvent args)
@@ -151,6 +142,7 @@ public sealed class DefibrillatorSystem : EntitySystem
         _electrocution.TryDoElectrocution(target, null, component.ZapDamage, component.WritheDuration, true, ignoreInsulation: true);
         if (!TryComp<UseDelayComponent>(uid, out var useDelay))
             return;
+        _useDelay.SetLength((uid, useDelay), component.ZapDelay, component.DelayId);
         _useDelay.TryResetDelay((uid, useDelay), id: component.DelayId);
 
         ICommonSession? session = null;
