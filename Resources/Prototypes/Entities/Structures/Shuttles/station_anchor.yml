@@ -108,5 +108,5 @@
       - machine_board
     - type: UserInterface
       interfaces:
-      - key: enum.PowerChargeUiKey.Key
-        type: PowerChargeBoundUserInterface
+        enum.PowerChargeUiKey.Key:
+          type: PowerChargeBoundUserInterface

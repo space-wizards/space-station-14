@@ -69,8 +69,8 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    - key: enum.PowerChargeUiKey.Key
-      type: PowerChargeBoundUserInterface
+      enum.PowerChargeUiKey.Key:
+        type: PowerChargeBoundUserInterface
   - type: Appearance
   - type: PointLight
     radius: 2.5

@@ -1,5 +1,6 @@
 using Content.Shared.Anomaly;
 using JetBrains.Annotations;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Anomaly.Ui;
 

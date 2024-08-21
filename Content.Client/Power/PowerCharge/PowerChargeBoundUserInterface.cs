@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Power;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Power.PowerCharge;
 
@@ -22,9 +23,8 @@ public sealed class PowerChargeBoundUserInterface : BoundUserInterface
         if (!EntMan.TryGetComponent(Owner, out PowerChargeComponent? component))
             return;
 
-        _window = new PowerChargeWindow(this, component.WindowTitle);
-        _window.OpenCentered();
-        _window.OnClose += Close;
+        _window = this.CreateWindow<PowerChargeWindow>();
+        _window.UpdateWindow(this, component.WindowTitle);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -34,17 +34,5 @@ public sealed class PowerChargeBoundUserInterface : BoundUserInterface
             return;
 
         _window?.UpdateState(chargeState);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-
-        if (_window != null)
-            _window.OnClose -= Close;
-
-        _window?.Dispose();
     }
 }

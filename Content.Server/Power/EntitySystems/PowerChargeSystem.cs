@@ -49,7 +49,7 @@ public sealed class PowerChargeSystem : EntitySystem
 
     private void OnSwitchGenerator(EntityUid uid, PowerChargeComponent component, SwitchChargingMachineMessage args)
     {
-        SetSwitchedOn(uid, component, args.On, session:args.Session);
+        SetSwitchedOn(uid, component, args.On, user: args.Actor);
     }
 
     private void OnUIOpenAttempt(EntityUid uid, PowerChargeComponent component, ActivatableUIOpenAttemptEvent args)
@@ -80,13 +80,13 @@ public sealed class PowerChargeSystem : EntitySystem
     }
 
     private void SetSwitchedOn(EntityUid uid, PowerChargeComponent component, bool on,
-        ApcPowerReceiverComponent? powerReceiver = null, ICommonSession? session = null)
+        ApcPowerReceiverComponent? powerReceiver = null, EntityUid? user = null)
     {
         if (!Resolve(uid, ref powerReceiver))
             return;
 
-        if (session is { AttachedEntity: { } })
-            _adminLogger.Add(LogType.Action, on ? LogImpact.Medium : LogImpact.High, $"{session:player} set ${ToPrettyString(uid):target} to {(on ? "on" : "off")}");
+        if (user is { } )
+            _adminLogger.Add(LogType.Action, on ? LogImpact.Medium : LogImpact.High, $"{ToPrettyString(user):player} set ${ToPrettyString(uid):target} to {(on ? "on" : "off")}");
 
         component.SwitchedOn = on;
         UpdatePowerState(component, powerReceiver);
@@ -181,7 +181,7 @@ public sealed class PowerChargeSystem : EntitySystem
     private void UpdateUI(Entity<PowerChargeComponent, ApcPowerReceiverComponent> ent, float chargeRate)
     {
         var (_, component, powerReceiver) = ent;
-        if (!_uiSystem.IsUiOpen(ent, component.UiKey))
+        if (!_uiSystem.IsUiOpen(ent.Owner, component.UiKey))
             return;
 
         var chargeTarget = chargeRate < 0 ? 0 : component.MaxCharge;
@@ -216,8 +216,8 @@ public sealed class PowerChargeSystem : EntitySystem
             chargeEta
         );
 
-        _uiSystem.TrySetUiState(
-            ent,
+        _uiSystem.SetUiState(
+            ent.Owner,
             component.UiKey,
             state);
 
