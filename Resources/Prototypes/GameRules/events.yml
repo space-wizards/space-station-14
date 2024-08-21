@@ -268,7 +268,6 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: true
     earliestStart: 15
     weight: 6
     duration: 50
@@ -289,7 +288,6 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: true
     earliestStart: 15
     weight: 6
     duration: 50
@@ -313,7 +311,6 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: true
     weight: 6
     duration: 50
   - type: VentCrittersRule
@@ -366,7 +363,6 @@
   parent: BaseStationEventLongDelay
   components:
   - type: StationEvent
-    startAnnouncement: true
     earliestStart: 15
     minimumPlayers: 15
     weight: 5
@@ -378,7 +374,6 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: true
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
@@ -397,7 +392,6 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: true
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
@@ -412,7 +406,6 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: true
     earliestStart: 20
     minimumPlayers: 20
     weight: 1.5
@@ -499,6 +492,7 @@
     weight: 8
     minimumPlayers: 15
     maxOccurrences: 1 # can only happen once per round
+    startAnnouncement: true
     duration: null # the rule has to last the whole round not 1 second
     occursDuringRoundEnd: false
   - type: AlertLevelInterceptionRule
