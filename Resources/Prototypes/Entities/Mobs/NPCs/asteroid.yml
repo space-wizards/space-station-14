@@ -54,7 +54,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      125: Dead
+      150: Dead
   - type: MeleeWeapon
     soundHit:
       path: "/Audio/Weapons/smash.ogg"
@@ -64,7 +64,7 @@
     damage:
       types:
         Slash: 8
-        Piercing: 4
+        Piercing: 6
   - type: NpcFactionMember
     factions:
     - SimpleHostile
