@@ -40,11 +40,11 @@
     prefix: figurines-musician-
     count: 2
 
-# - type: localizedDataset # TODO add something
-#   id: FigurinesBoxer
-#   values:
-#     prefix: figurines-boxer-
-#     count: 0
+- type: localizedDataset
+  id: FigurinesBoxer
+  values:
+    prefix: figurines-boxer-
+    count: 1
 
 - type: localizedDataset
   id: FigurinesCaptain
@@ -62,7 +62,7 @@
   id: FigurinesWarden
   values:
     prefix: figurines-warden-
-    count: 3
+    count: 4
 
 - type: localizedDataset
   id: FigurinesDetective
@@ -74,7 +74,7 @@
   id: FigurinesSecurity
   values:
     prefix: figurines-security-
-    count: 3
+    count: 4
 
 - type: localizedDataset
   id: FigurinesLawyer

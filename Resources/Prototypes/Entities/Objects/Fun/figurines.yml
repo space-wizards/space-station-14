@@ -109,8 +109,8 @@
   components:
   - type: Sprite
     state: boxer
-  # - type: SpeakOnUse # TODO add something
-  #   pack: FigurinesBoxer
+  - type: SpeakOnUse
+    pack: FigurinesBoxer
 
 - type: entity
   parent: BaseFigurine
