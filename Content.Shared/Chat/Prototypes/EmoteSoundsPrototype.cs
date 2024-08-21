@@ -23,6 +23,7 @@ public sealed class EmoteSoundsPrototype : IPrototype, IInheritingPrototype
 
     /// <inheritdoc/>
     [AbstractDataField]
+    [NeverPushInheritance]
     public bool Abstract { get; }
 
     /// <summary>
