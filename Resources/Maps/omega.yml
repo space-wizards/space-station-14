@@ -58632,6 +58632,9 @@ entities:
     - type: Transform
       pos: -17.5,1.5
       parent: 4812
+    - type: ContainerContainer
+      containers:
+        stash: !type:ContainerSlot {}
   - uid: 11290
     components:
     - type: Transform
