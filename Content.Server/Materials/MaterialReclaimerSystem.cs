@@ -21,14 +21,19 @@ using Content.Server.Administration.Logs;
 using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Systems;
+using Content.Server.Repairable;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Content.Shared.Destructible;
+using Content.Shared.Emag.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Materials;
 
 /// <inheritdoc/>
 public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 {
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
@@ -46,12 +51,14 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MaterialReclaimerComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<MaterialReclaimerComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<MaterialReclaimerComponent, InteractUsingEvent>(OnInteractUsing,
-            before: new []{typeof(WiresSystem), typeof(SolutionTransferSystem)});
+            before: [typeof(WiresSystem), typeof(SolutionTransferSystem)]);
         SubscribeLocalEvent<MaterialReclaimerComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
         SubscribeLocalEvent<ActiveMaterialReclaimerComponent, PowerChangedEvent>(OnActivePowerChanged);
+
+        SubscribeLocalEvent<MaterialReclaimerComponent, BreakageEventArgs>(OnBreakage);
+        SubscribeLocalEvent<MaterialReclaimerComponent, RepairedEvent>(OnRepaired);
     }
     private void OnStartup(Entity<MaterialReclaimerComponent> entity, ref ComponentStartup args)
     {
@@ -123,6 +130,30 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             TryFinishProcessItem(entity, null, entity.Comp);
     }
 
+    private void OnBreakage(Entity<MaterialReclaimerComponent> ent, ref BreakageEventArgs args)
+    {
+        //un-emags itself when it breaks
+        RemComp<EmaggedComponent>(ent);
+        SetBroken(ent, true);
+    }
+
+    private void OnRepaired(Entity<MaterialReclaimerComponent> ent, ref RepairedEvent args)
+    {
+        SetBroken(ent, false);
+    }
+
+    public void SetBroken(Entity<MaterialReclaimerComponent> ent, bool val)
+    {
+        if (ent.Comp.Broken == val)
+            return;
+
+        _appearance.SetData(ent, RecyclerVisuals.Broken, val);
+        SetReclaimerEnabled(ent, false);
+
+        ent.Comp.Broken = val;
+        Dirty(ent);
+    }
+
     /// <inheritdoc/>
     public override bool TryFinishProcessItem(EntityUid uid, MaterialReclaimerComponent? component = null, ActiveMaterialReclaimerComponent? active = null)
     {
@@ -140,7 +171,8 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
         // scales the output if the process was interrupted.
         var completion = 1f - Math.Clamp((float) Math.Round((active.EndTime - Timing.CurTime) / active.Duration),
-            0f, 1f);
+            0f,
+            1f);
         Reclaim(uid, item, completion, component);
 
         return true;
@@ -197,7 +229,8 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
         foreach (var (storedMaterial, storedAmount) in storage.Storage)
         {
-            var stacks = _materialStorage.SpawnMultipleFromMaterial(storedAmount, storedMaterial,
+            var stacks = _materialStorage.SpawnMultipleFromMaterial(storedAmount,
+                storedMaterial,
                 xform.Coordinates,
                 out var materialOverflow);
             var amountConsumed = storedAmount - materialOverflow;
