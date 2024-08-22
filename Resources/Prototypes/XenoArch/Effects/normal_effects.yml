@@ -659,7 +659,7 @@
     - id: PresentRandomInsane
       prob: 0.02
 
-  - type: artifactEffect
+- type: artifactEffect
   id: EffectBoom
   targetDepth: 4
   effectHint: artifact-effect-hint-environment
@@ -717,7 +717,6 @@
       orGroup: fauna
       maxAmount: 1
       prob: 0.03
-      maxAmount: 1
     - id: MobGrenadePenguin
       orGroup: fauna
       maxAmount: 2
@@ -750,31 +749,33 @@
     - Lead
     - ForeverWeed
     - Romerol
-      prob: 0.1
 
 - type: artifactEffect
-  id: EffectClownSpider
+  id: EffectPolyClownSpider
   targetDepth: 4
   effectHint: artifact-effect-hint-polymorph
   components:
   - type: PolyOthersArtifact
     polymorphPrototypeName: ArtifactClownSpider
+    range: 5
 
 - type: artifactEffect
-  id: EffectFinfin
+  id: EffectPolyFinfin
   targetDepth: 4
   effectHint: artifact-effect-hint-polymorph
   components:
   - type: PolyOthersArtifact
     polymorphPrototypeName: ArtifactFinfin
+    range: 5
 
 - type: artifactEffect
-  id: EffectPolymorphBee
+  id: EffectPolyBee
   targetDepth: 4
   effectHint: artifact-effect-hint-polymorph
   components:
   - type: PolyOthersArtifact
     polymorphPrototypeName: ArtifactBee
+    range: 5
 
 - type: artifactEffect
   id: EffectHealAllPowerful
@@ -794,7 +795,7 @@
         Airloss: -600
         Toxin: -600
 
-  - type: artifactEffect
+- type: artifactEffect
   id: EffectSuperHeat
   targetDepth: 4
   effectHint: artifact-effect-hint-release
