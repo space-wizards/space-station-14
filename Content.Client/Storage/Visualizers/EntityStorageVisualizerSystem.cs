@@ -43,7 +43,12 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
 
             if (TryComp<SpriteComponent>(proto, out var sprite))
                 foreach (var layer in args.Sprite.AllLayers)
+                {
+                    if (layer.RsiState.Name == "paper")
+                        continue;
+
                     layer.Rsi = sprite.BaseRSI;
+                }
 
             Del(proto);
         } else if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.LockerRSI, out var prototype2, args.Component))
