@@ -1,1 +1,1 @@
-cmd-persistencesave-no-path = filePath was not specified and CCVar {$cvar} is not set. Manually set the filePath param in order to save the map.
+cmd-persistencesave-no-path = No se especificó filePath y CCVar {$cvar} no está configurada. Configure manualmente el parámetro filePath para guardar el mapa.

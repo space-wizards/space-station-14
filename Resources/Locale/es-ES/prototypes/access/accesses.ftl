@@ -1,44 +1,67 @@
-id-card-access-level-command = Command
-id-card-access-level-captain = Captain
-id-card-access-level-head-of-personnel = Head of Personnel
-id-card-access-level-cryogenics = Cryogenics
+id-card-access-level-command = Comando
 
-id-card-access-level-head-of-security = Head of Security
-id-card-access-level-security = Security
-id-card-access-level-armory = Armory
-id-card-access-level-brig = Brig
+id-card-access-level-captain = Capitán
+
+id-card-access-level-head-of-personnel = Jefe de Personal
+
+id-card-access-level-cryogenics = Criogenia
+
+id-card-access-level-head-of-security = Jefe de Seguridad
+
+id-card-access-level-security = Seguridad
+
+id-card-access-level-armory = Armería
+
+id-card-access-level-brig = Brigada
+
 id-card-access-level-detective = Detective
 
-id-card-access-level-chief-engineer = Chief Engineer
-id-card-access-level-engineering = Engineering
-id-card-access-level-atmospherics = Atmospherics
+id-card-access-level-chief-engineer = Ingeniero Jefe
 
-id-card-access-level-research-director = Research Director
-id-card-access-level-research = Research
+id-card-access-level-engineering = Ingeniería
 
-id-card-access-level-chief-medical-officer = Chief Medical Officer
-id-card-access-level-medical = Medical
-id-card-access-level-chemistry = Chemistry
-id-card-access-level-paramedic = Paramedic
+id-card-access-level-atmospherics = Atmosféricos
 
-id-card-access-level-quartermaster = Quartermaster
-id-card-access-level-cargo = Cargo
-id-card-access-level-salvage = Salvage
+id-card-access-level-research-director = Director de Investigación
+
+id-card-access-level-research = Investigación
+
+id-card-access-level-chief-medical-officer = Jefe Médico
+
+id-card-access-level-medical = Médico
+
+id-card-access-level-chemistry = Química
+
+id-card-access-level-paramedic = Paramédico
+
+id-card-access-level-quartermaster = Intendente
+
+id-card-access-level-cargo = Carga
+
+id-card-access-level-salvage = Salvamento
 
 id-card-access-level-bar = Bar
-id-card-access-level-kitchen = Kitchen
-id-card-access-level-hydroponics = Hydroponics
-id-card-access-level-service = Service
-id-card-access-level-janitor = Janitor
-id-card-access-level-theatre = Theatre
-id-card-access-level-chapel = Chapel
-id-card-access-level-lawyer = Lawyer
 
-id-card-access-level-maintenance = Maintenance
+id-card-access-level-kitchen = Cocina
 
-id-card-access-level-external = External
+id-card-access-level-hydroponics = Hidroponía
 
-id-card-access-level-nuclear-operative = Nuclear Operative
-id-card-access-level-syndicate-agent = Syndicate Agent
+id-card-access-level-service = Servicio
 
-id-card-access-level-central-command = Central Command
+id-card-access-level-janitor = Conserje
+
+id-card-access-level-theatre = Teatro
+
+id-card-access-level-chapel = Capilla
+
+id-card-access-level-lawyer = Abogado
+
+id-card-access-level-maintenance = Mantenimiento
+
+id-card-access-level-external = Externo
+
+id-card-access-level-nuclear-operative = Operativo Nuclear
+
+id-card-access-level-syndicate-agent = Agente del Sindicato
+
+id-card-access-level-central-command = Comando Central

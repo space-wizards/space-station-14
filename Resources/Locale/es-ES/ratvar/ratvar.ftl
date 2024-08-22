@@ -1,2 +1,2 @@
-ratvar-has-risen = RATVAR HAS AWOKEN
+ratvar-has-risen = RATVAR HA DESPERTADO
 ratvar-has-risen-sender = ???

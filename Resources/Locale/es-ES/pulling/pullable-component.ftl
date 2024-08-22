@@ -1,4 +1,4 @@
 ## PullingVerb
 
-pulling-verb-get-data-text = Pull
-pulling-verb-get-data-text-stop-pulling = Stop pulling
+pulling-verb-get-data-text = Arrastrar
+pulling-verb-get-data-text-stop-pulling = Dejar de arrastrar

@@ -1,90 +1,90 @@
-book-text-demonomicon1 = How To Summon a Demon
-          - by J.G. Wizgerald
+book-text-demonomicon1 = Cómo Invocar un Demonio
+          - por J.G. Wizgerald
 
-          1. todo finish writing demon summoning guide
+          1. por hacer terminar de escribir la guía de invocación de demonios
 
-book-text-demonomicon2 = How To Summon a Lemon
-          - by J.G. Wizgerald
+book-text-demonomicon2 = Cómo Invocar un Limón
+          - por J.G. Wizgerald
 
-          1. todo finish writing lemon summoning guide
-          2. WAit. Typo. Oh shit. Sorry guys
+          1. por hacer terminar de escribir la guía de invocación de limones
+          2. Espera. Error tipográfico. Oh diablos. Lo siento, chicos
 
-book-text-demonomicon3 = Cool Demon Names I Found
-      - by Ms. Mossrock
+book-text-demonomicon3 = Nombres Geniales de Demonios que Encontré
+      - por Ms. Mossrock
 
       Abraxas
       Nephilim
       Baal
-      Leviathan
+      Leviatán
       Gary
       Moloch
-      Scylla
+      Cíclope
       Phenex
 
-book-text-chemistry-insane = IGOR CHEMISTRY GUIDE TO CHEMISTRY
+book-text-chemistry-insane = GUÍA DE QUÍMICA DE IGOR CHEMISTRY
 
-      TITLE: GUIDE TO CHEMISTRY
+      TÍTULO: GUÍA DE QUÍMICA
 
-      ABSTRACT: GUIDE TO CHEMISTRY
+      RESUMEN: GUÍA DE QUÍMICA
 
-      SECTION: WISE WORDS OF IGOR CHEMISTRY
+      SECCIÓN: SABIAS PALABRAS DE IGOR CHEMISTRY
 
-      MY NUMBER ONE TIP. IS TO ALWAYS HAVE FUN. YOU NEVER KNOW WHEN IT'LL ALL END.
-      SO JUST KEEP AT IT!!
+      MI CONSEJO NÚMERO UNO. SIEMPRE DIVIÉRTETE. NUNCA SABES CUANDO TODO TERMINARÁ.
+      ¡ASÍ QUE SIGUE ASÍ!
 
-      MY NUMBER TWO TIP. I JUST CAN'T STOP FUCKING GRINDING UP JUMPSUITS. MY "COLLEAGUES" (agents) KEEP YELLING AT ME
-      TO STOP AND THAT 'itll come out of our paychecks' BUT THE STUFF IS SO GOOD. I'M LIKE AN INTERIOR DECORATION GENIUS.
-      SAXOPHONES AND BATTERIES TAKE MY MIND OFF OF IT BUT I'M ALWAYS BACK TO THE JUMPSUITS. HOO WEE.
+      MI CONSEJO NÚMERO DOS. SIMPLEMENTE NO PUEDO DEJAR DE MOLER TRAJES DE LABORATORIO. MIS "COLEGAS" (agentes) SIGUEN GRITÁNDOME
+      QUE DEJE DE HACERLO Y QUE 'saldrá de nuestros salarios', PERO LA MEZCLA ES TAN BUENA. SOY COMO UN GENIO EN DECORACIÓN DE INTERIORES.
+      LOS SAXOFONES Y LAS BATERÍAS ME DISTRAEN, PERO SIEMPRE REGRESO A LOS TRAJES DE LABORATORIO. ¡HOO WEE!
 
-      MY NUMBER THREE TIP. THANK YOU FOR READING!! IGOR CHEMISTRY
+      MI CONSEJO NÚMERO TRES. ¡GRACIAS POR LEER! IGOR CHEMISTRY
 
-      CONCLUSION: IGOR CHEMISTRY
+      CONCLUSIÓN: IGOR CHEMISTRY
 
-book-text-botanics = ** Applications of Botanical Specimens Found In Nanotrasen Territories **
+book-text-botanics = ** Aplicaciones de Especímenes Botánicos Encontrados en los Territorios de Nanotrasen **
 
-      Many plants, when ground, yield useful chemicals. S. (spessmens) papaver and S. aloe vera
-      are known for their basic healing properties.
+      Muchas plantas, cuando se muelen, producen químicos útiles. S. (especímenes) papaver y S. aloe vera
+      son conocidos por sus propiedades curativas básicas.
 
-      S. lucidum, or lingzhi, is known for its potent ability to save those near death from toxins. Eating too much
-      is known to cause adverse effects.
+      S. lucidum, o lingzhi, es conocido por su potente capacidad para salvar a aquellos cerca de la muerte de las toxinas. Comer demasiado
+      se sabe que causa efectos adversos.
 
-      S. amanita, a powerfully poisonous specimen (Rest In Peace Sir Alacaster), and S. galactica, a
-      seemingly ordinary antitoxin, appear to have some sort of relation to eachother.
+      S. amanita, un espécimen poderosamente venenoso (Descansa en Paz Sir Alacaster), y S. galactica, un
+      aparentemente ordinario antídoto, parecen tener alguna relación entre sí.
 
-      Some research is being done on combinations of the medicinal plants discussed, and they may prove fruitful.
+      Se está investigando sobre combinaciones de las plantas medicinales discutidas, y podrían resultar fructíferas.
 
       ----
 
-      - penned by James Alacaster and Golzuk Amaranth
+      - escrito por James Alacaster y Golzuk Amaranth
 
-book-text-gnome = All Hail Our Gnome King
+book-text-gnome = ¡Que Viva Nuestro Rey Gnomo!
 
-      He who is the grand cartographer who placed our kind into the world of the Island!
+      ¡Él es el gran cartógrafo que colocó a nuestra gente en el mundo de la Isla!
 
-      He who loves those with the largest of Hats!
+      ¡Él que ama a aquellos con los Sombreros más Grandes!
 
-      Struck down by the evildoers who cannot appreciate our kind!
+      ¡Derrotado por los malhechores que no pueden apreciar a nuestra gente!
 
-      Our revenge will be dealt in full! He will Rise once more! hee Hoo!
+      ¡Nuestra venganza será completa! ¡Él Resurgirá una vez más! ¡hee Hoo!
 
-book-text-fishing = When I grow up, I want to be one of the harvesters of the space sea!
+book-text-fishing = Cuando crezca, quiero ser uno de los cosechadores del mar espacial!
 
-      I think before my days are done I want to catch the fabled space fish!
+      Creo que antes de que terminen mis días quiero atrapar el legendario pez espacial!
 
-      I'm like a little rat sailing the seas of cheese! The bastards come to end me but I am as sly as a cat and as lucky as they come!
+      ¡Soy como una pequeña rata navegando los mares de queso! ¡Los bastardos vienen a acabar conmigo pero soy tan astuto como un gato y tan afortunado como se puede!
 
-      Press the <L BUMPER> and <R TRIGGER> to activate the fishing minigame.
+      Presiona <L BUMPER> y <R TRIGGER> para activar el minijuego de pesca.
 
-      - Sgt. John Baker Aclopoly
+      - Sargento John Baker Aclopoly
 
-book-text-detective = CHAPTER 1: SMALL ADVENTURES IN A BIG STATION
+book-text-detective = CAPÍTULO 1: PEQUEÑAS AVENTURAS EN UNA GRAN ESTACIÓN
 
-      This station is filled with crime and grime...
+      Esta estación está llena de crimen y suciedad...
 
-      I was shooting hoops down on Bagel when I heard a cry and a laser shot. I walked under the table nearby to hide, but there wasn't a second shot.
+      Estaba jugando a encestar en Bagel cuando escuché un grito y un disparo láser. Me escondí debajo de la mesa cercana, pero no hubo un segundo disparo.
 
-      Outside, the engineerin chief got blasted by two Syndies hooked up with some fierce contraband. There wasn't enough of him for an open casket funeral.
+      Afuera, el jefe de ingeniería fue alcanzado por dos Syndies equipados con algún contrabando feroz. No quedó suficiente de él para un funeral de ataúd abierto.
 
-      Things always go wild here.. I'll never look at clowns the same.
+      Las cosas siempre se descontrolan aquí... Nunca volveré a ver a los payasos de la misma manera.
 
-      The question is.. Who did it?
+      La pregunta es... ¿Quién lo hizo?

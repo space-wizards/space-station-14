@@ -1,47 +1,42 @@
+### Interfaz de Usuario
+rcd-component-examine-mode-details = Actualmente está configurado en el modo '{$mode}'.
+rcd-component-examine-build-details = Actualmente está configurado para construir {MAKEPLURAL($name)}.
 
-### UI
+### Mensajes de Interacción
 
-rcd-component-examine-mode-details = It's currently set to '{$mode}' mode.
-rcd-component-examine-build-details = It's currently set to build {MAKEPLURAL($name)}.
+#### Cambio de Modo
+rcd-component-change-mode = El RCD ahora está configurado en el modo '{$mode}'.
+rcd-component-change-build-mode = El RCD ahora está configurado para construir {MAKEPLURAL($name)}.
 
+#### Contador de Munición
+rcd-component-no-ammo-message = ¡El RCD se ha quedado sin cargas!
+rcd-component-insufficient-ammo-message = ¡El RCD no tiene suficientes cargas restantes!
 
-### Interaction Messages
+#### Deconstrucción
+rcd-component-tile-indestructible-message = ¡Ese tile no puede ser destruido!
+rcd-component-deconstruct-target-not-on-whitelist-message = ¡No puedes deconstruir eso!
+rcd-component-nothing-to-deconstruct-message = ¡No hay nada que deconstruir!
+rcd-component-tile-obstructed-message = ¡No puedes deconstruir tiles cuando hay algo encima de ellos!
 
-# Mode change
-rcd-component-change-mode = The RCD is now set to '{$mode}' mode.
-rcd-component-change-build-mode = The RCD is now set to build {MAKEPLURAL($name)}.
+#### Construcción
+rcd-component-no-valid-grid = ¡Estás demasiado lejos en el espacio abierto para construir aquí!
+rcd-component-must-build-on-empty-tile-message = ¡Ya existe una fundación aquí!
+rcd-component-cannot-build-on-empty-tile-message = ¡No puedes construir eso sin una fundación!
+rcd-component-must-build-on-subfloor-message = ¡Solo puedes construir eso en un subpiso expuesto!
+rcd-component-cannot-build-on-subfloor-message = ¡No puedes construir eso en un subpiso expuesto!
+rcd-component-cannot-build-on-occupied-tile-message = ¡No puedes construir aquí, el espacio ya está ocupado!
+rcd-component-cannot-build-identical-tile = ¡Ese tile ya existe allí!
 
-# Ammo count
-rcd-component-no-ammo-message = The RCD has run out of charges!
-rcd-component-insufficient-ammo-message = The RCD doesn't have enough charges left!
+### Categorías
 
-# Deconstruction
-rcd-component-tile-indestructible-message = That tile can't be destructed!
-rcd-component-deconstruct-target-not-on-whitelist-message = You can't deconstruct that!
-rcd-component-nothing-to-deconstruct-message = There's nothing to deconstruct!
-rcd-component-tile-obstructed-message = You can't deconstruct tiles when there's something on top of them!
-
-# Construction
-rcd-component-no-valid-grid = You're too far into open space to build here!
-rcd-component-must-build-on-empty-tile-message = A foundation already exists here!
-rcd-component-cannot-build-on-empty-tile-message = You can't build that without a foundation!
-rcd-component-must-build-on-subfloor-message = You can only build that on exposed subfloor!
-rcd-component-cannot-build-on-subfloor-message = You can't build that on exposed subfloor!
-rcd-component-cannot-build-on-occupied-tile-message = You can't build here, the space is already occupied!
-rcd-component-cannot-build-identical-tile = That tile already exists there!
-
-
-### Category names
-
-rcd-component-walls-and-flooring = Walls and flooring
-rcd-component-windows-and-grilles = Windows and grilles
+rcd-component-walls-and-flooring = Muros y pisos
+rcd-component-windows-and-grilles = Ventanas y rejas
 rcd-component-airlocks = Airlocks
-rcd-component-electrical = Electrical
-rcd-component-lighting = Lighting
+rcd-component-electrical = Eléctrico
+rcd-component-lighting = Iluminación
 
+### Nombres de Prototipos (Nota: los objetos construibles se pluralizan)
 
-### Prototype names (note: constructable items will be puralized)
-
-rcd-component-deconstruct = deconstruct
-rcd-component-floor-steel = steel tile
-rcd-component-plating = hull plate
+rcd-component-deconstruct = deconstruir
+rcd-component-floor-steel = tile de acero
+rcd-component-plating = placa de casco

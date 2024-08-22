@@ -1,2 +1,2 @@
-salvage-ruler-command-description = Measures grids on this map to get a total world AABB. Use for salvage bounds specifications.
-salvage-ruler-command-help-text = Usage: {$command}
+salvage-ruler-command-description = Mide las cuadrículas en este mapa para obtener el AABB total del mundo. Úsalo para especificaciones de límites de salvamento.
+salvage-ruler-command-help-text = Uso: {$command}

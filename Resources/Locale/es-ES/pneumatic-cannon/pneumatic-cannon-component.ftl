@@ -1,20 +1,17 @@
-﻿### Loc for the pneumatic cannon.
+﻿pneumatic-cannon-component-itemslot-name = Tanque de gas
 
-pneumatic-cannon-component-itemslot-name = Gas Tank
+## Se muestra al intentar disparar, pero no hay gas
 
-## Shown when trying to fire, but no gas
+pneumatic-cannon-component-fire-no-gas = { CAPITALIZE(THE($cannon)) } hace un clic, pero no sale gas.
 
-pneumatic-cannon-component-fire-no-gas = { CAPITALIZE(THE($cannon)) } clicks, but no gas comes out.
-
-## Shown when changing power.
+## Se muestra al cambiar la potencia.
 
 pneumatic-cannon-component-change-power = { $power ->
-    [High] You set the limiter to maximum power. It feels a little too powerful...
-    [Medium] You set the limiter to medium power.
-    *[Low] You set the limiter to low power.
+    [High] Ajustas el limitador a potencia máxima. Parece un poco demasiado poderoso...
+    [Medium] Ajustas el limitador a potencia media.
+    *[Low] Ajustas el limitador a baja potencia.
 }
 
-## Shown when being stunned by having the power too high.
+## Se muestra al ser aturdido por tener la potencia demasiado alta.
 
-pneumatic-cannon-component-power-stun = The pure force of { THE($cannon) } knocks you over!
-
+pneumatic-cannon-component-power-stun = ¡La fuerza pura de { THE($cannon) } te tumba!

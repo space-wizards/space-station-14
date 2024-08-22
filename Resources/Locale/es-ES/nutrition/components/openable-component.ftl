@@ -1,2 +1,2 @@
-openable-component-verb-open = Open
-openable-component-verb-close = Close
+openable-component-verb-open = Abrir
+openable-component-verb-close = Cerrar

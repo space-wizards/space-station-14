@@ -1,16 +1,16 @@
-
 ### UI
 
-paper-ui-blank-page-message = This page intentionally left blank
+paper-ui-blank-page-message = Esta página ha sido intencionalmente dejada en blanco.
 
-# Shown when paper with words examined details
-paper-component-examine-detail-has-words = {CAPITALIZE(THE($paper))} has something written on it.
-# Shown when paper with stamps examined
-paper-component-examine-detail-stamped-by = {CAPITALIZE(THE($paper))} {CONJUGATE-HAVE($paper)} been stamped by: {$stamps}.
+# Mostrado cuando se examinan detalles en un papel con palabras
+paper-component-examine-detail-has-words = {CAPITALIZE(THE($paper))} tiene algo escrito en él.
 
-paper-component-action-stamp-paper-other = {CAPITALIZE(THE($user))} stamps {THE($target)} with {THE($stamp)}.
-paper-component-action-stamp-paper-self = You stamp {THE($target)} with {THE($stamp)}.
+# Mostrado cuando se examinan papeles con sellos
+paper-component-examine-detail-stamped-by = {CAPITALIZE(THE($paper))} {CONJUGATE-HAVE($paper)} sido sellado por: {$stamps}.
 
-paper-ui-save-button = Save ({$keybind})
+paper-component-action-stamp-paper-other = {CAPITALIZE(THE($user))} sella {THE($target)} con {THE($stamp)}.
+paper-component-action-stamp-paper-self = Tú sellas {THE($target)} con {THE($stamp)}.
 
-paper-tamper-proof-modified-message = This page was written using tamper-proof ink.
+paper-ui-save-button = Guardar ({$keybind})
+
+paper-tamper-proof-modified-message = Esta página fue escrita usando tinta a prueba de manipulaciones.

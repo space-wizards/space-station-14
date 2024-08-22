@@ -1,10 +1,10 @@
-cryostorage-insert-message-permanent = [color=white]You are now inside of a [bold][color=cyan]cryogenic sleep unit[/color][/bold]. If you [bold]disconnect[/bold], [bold]ghost[/bold], or [bold]wait {$time} minutes[/bold], [color=red]your body will be removed[/color] and your job slot will be opened. You can exit at any time to prevent this.[/color]
-cryostorage-insert-message-temp = [color=white]You are now inside of a [bold][color=cyan]cryogenic sleep unit[/color][/bold]. If you [bold]ghost[/bold] or [bold]wait {$time} minutes[/bold], [color=red]your body will be removed[/color] and your job slot will be opened. If you [bold][color=cyan]disconnect[/color][/bold], your body will be safely held until you rejoin.[/color]
+cryostorage-insert-message-permanent = [color=white]Ahora estás dentro de una [bold][color=cyan]unidad de sueño criogénico[/color][/bold]. Si [bold]te desconectas[/bold], [bold]te conviertes en fantasma[/bold] o [bold]esperas {$time} minutos[/bold], [color=red]tu cuerpo será removido[/color] y tu puesto de trabajo se abrirá. Puedes salir en cualquier momento para evitar esto.[/color]
+cryostorage-insert-message-temp = [color=white]Ahora estás dentro de una [bold][color=cyan]unidad de sueño criogénico[/color][/bold]. Si [bold]te conviertes en fantasma[/bold] o [bold]esperas {$time} minutos[/bold], [color=red]tu cuerpo será removido[/color] y tu puesto de trabajo se abrirá. Si [bold][color=cyan]te desconectas[/color][/bold], tu cuerpo será mantenido de manera segura hasta que te reincorpores.[/color]
 
-cryostorage-ui-window-title = Cryogenic Sleep Unit
+cryostorage-ui-window-title = Unidad de Sueño Criogénico
 cryostorage-ui-label-slot-name = [bold]{CAPITALIZE($slot)}:[/bold]
-cryostorage-ui-button-remove = Remove
-cryostorage-ui-filler-hand = inhand
-cryostorage-ui-label-no-bodies = No bodies in cryostorage
+cryostorage-ui-button-remove = Remover
+cryostorage-ui-filler-hand = en mano
+cryostorage-ui-label-no-bodies = No hay cuerpos en criogenia
 
-cryostorage-popup-access-denied = Access denied!
+cryostorage-popup-access-denied = ¡Acceso denegado!

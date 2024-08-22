@@ -1,1 +1,1 @@
-objective-condition-kill-person-title = Kill or maroon {$targetName}, {CAPITALIZE($job)}
+objective-condition-kill-person-title = Mata o abandona a {$targetName}, {CAPITALIZE($job)}

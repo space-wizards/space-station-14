@@ -1,6 +1,6 @@
-﻿intercom-menu-title = Intercom
-intercom-channel-label = Channel:
-intercom-button-text-mic = Mic.
-intercom-button-text-speaker = Spkr.
-intercom-options-none = No channels
-intercom-flavor-text-left = Keep lines free of chatter
+﻿intercom-menu-title = Intercomunicador
+intercom-channel-label = Canal:
+intercom-button-text-mic = Micrófono
+intercom-button-text-speaker = Altavoz
+intercom-options-none = Sin canales
+intercom-flavor-text-left = Mantén las líneas libres de charla

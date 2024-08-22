@@ -1,2 +1,2 @@
-powersink-examine-drain-amount = The power sink is draining [color={$markupDrainColor}]{$amount} kW[/color].
-powersink-immiment-explosion-announcement = System scans have detected a rogue power consuming device is becoming unstable.  Staff are advised to locate and disconnect this device immediately before the station is damaged.
+powersink-examine-drain-amount = El sumidero de energía está drenando [color={$markupDrainColor}]{$amount} kW[/color].
+powersink-immiment-explosion-announcement = Los escáneres del sistema han detectado que un dispositivo de consumo de energía fuera de control está volviéndose inestable. Se aconseja al personal que localice y desconecte este dispositivo inmediatamente antes de que la estación sufra daños.

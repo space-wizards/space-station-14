@@ -1,38 +1,51 @@
-﻿roles-antag-syndicate-agent-name = Syndicate agent
-roles-antag-syndicate-agent-objective = Complete your objectives without being caught.
+﻿roles-antag-syndicate-agent-name = Agente del Sindicato
 
-roles-antag-syndicate-agent-sleeper-name = Syndicate sleeper agent
-roles-antag-syndicate-agent-sleeper-objective = A form of syndicate agent that can activate at any point in the middle of the shift.
+roles-antag-syndicate-agent-objective = Completa tus objetivos sin ser capturado.
 
-roles-antag-initial-infected-name = Initial Infected
-roles-antag-initial-infected-objective = Once you turn, infect as many other crew members as possible.
+roles-antag-syndicate-agent-sleeper-name = Agente Durmiente del Sindicato
 
-roles-antag-zombie-name = Zombie
-roles-antag-zombie-objective = Turn as many humans as possible into zombies.
+roles-antag-syndicate-agent-sleeper-objective = Una forma de agente del sindicato que puede activarse en cualquier momento durante el turno.
 
-roles-antag-suspicion-innocent-name = Innocent
-roles-antag-suspicion-innocent-objective = Discover and eliminate all traitors.
+roles-antag-initial-infected-name = Infectado Inicial
 
-roles-antag-suspicion-suspect-name = Suspect
-roles-antag-suspicion-suspect-objective = Kill the innocents.
+roles-antag-initial-infected-objective = Una vez que te conviertas, infecta a tantos miembros de la tripulación como sea posible.
 
-roles-antag-nuclear-operative-commander-name = Nuclear operative commander
-roles-antag-nuclear-operative-commander-objective = Lead your team to the destruction of the station.
+roles-antag-zombie-name = Zombi
 
-roles-antag-nuclear-operative-agent-name = Nuclear operative agent
-roles-antag-nuclear-operative-agent-objective = Like default operative, the team's treatment will have priority.
+roles-antag-zombie-objective = Convierte a tantos humanos como sea posible en zombis.
 
-roles-antag-nuclear-operative-name = Nuclear operative
-roles-antag-nuclear-operative-objective = Find the nuke disk and blow up the station.
+roles-antag-suspicion-innocent-name = Inocente
 
-roles-antag-subverted-silicon-name = Subverted silicon
-roles-antag-subverted-silicon-objective = Follow your new laws and do bad unto the station.
+roles-antag-suspicion-innocent-objective = Descubre y elimina a todos los traidores.
 
-roles-antag-space-ninja-name = Space Ninja
-roles-antag-space-ninja-objective = Use your stealth to sabotage the station, nom on electrical wires.
+roles-antag-suspicion-suspect-name = Sospechoso
 
-roles-antag-thief-name = Thief
-roles-antag-thief-objective = Add some NT property to your personal collection without using violence.
+roles-antag-suspicion-suspect-objective = Mata a los inocentes.
 
-roles-antag-dragon-name = Space Dragon
-roles-antag-dragon-objective = Create a carp army to take over this quadrant.
+roles-antag-nuclear-operative-commander-name = Comandante Operativo Nuclear
+
+roles-antag-nuclear-operative-commander-objective = Lidera a tu equipo hacia la destrucción de la estación.
+
+roles-antag-nuclear-operative-agent-name = Agente Operativo Nuclear
+
+roles-antag-nuclear-operative-agent-objective = Al igual que el operativo por defecto, el tratamiento del equipo tendrá prioridad.
+
+roles-antag-nuclear-operative-name = Operativo Nuclear
+
+roles-antag-nuclear-operative-objective = Encuentra el disco de la bomba nuclear y haz volar la estación.
+
+roles-antag-subverted-silicon-name = Silicona Subvertida
+
+roles-antag-subverted-silicon-objective = Sigue tus nuevas leyes y haz el mal en la estación.
+
+roles-antag-space-ninja-name = Ninja Espacial
+
+roles-antag-space-ninja-objective = Usa tu sigilo para sabotear la estación, come cables eléctricos.
+
+roles-antag-thief-name = Ladrón
+
+roles-antag-thief-objective = Agrega propiedades de NT a tu colección personal sin usar violencia.
+
+roles-antag-dragon-name = Dragón Espacial
+
+roles-antag-dragon-objective = Crea un ejército de carps para tomar el control de este cuadrante.

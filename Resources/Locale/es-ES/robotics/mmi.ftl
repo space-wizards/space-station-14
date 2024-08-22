@@ -1,15 +1,15 @@
-positronic-brain-installed = Neural activity detected.
-positronic-brain-off = No neural activity detected.
-positronic-brain-still-searching = Synthetic neuron descrambling in progress...
-positronic-brain-searching = Beginning synthetic neuron descrambling...
+positronic-brain-installed = Actividad neural detectada.
+positronic-brain-off = No se detectó actividad neural.
+positronic-brain-still-searching = Desciframiento de neuronas sintéticas en progreso...
+positronic-brain-searching = Comenzando el desciframiento de neuronas sintéticas...
 
-positronic-brain-role-name = positronic brain
-positronic-brain-role-description = Serve the station crew.
+positronic-brain-role-name = cerebro positrónico
+positronic-brain-role-description = Servir a la tripulación de la estación.
 
-positronic-brain-wipe-device-verb-text = Wipe Brain
-positronic-brain-wiped-device = The neural activity was terminated.
+positronic-brain-wipe-device-verb-text = Borrar cerebro
+positronic-brain-wiped-device = La actividad neural fue terminada.
 
-positronic-brain-stop-searching-verb-text = Stop searching
-positronic-brain-stopped-searching = Neuron descrambling halted.
+positronic-brain-stop-searching-verb-text = Detener búsqueda
+positronic-brain-stopped-searching = El desciframiento de neuronas se detuvo.
 
-positronic-brain-slot-component-slot-name-brain = Brain
+positronic-brain-slot-component-slot-name-brain = Cerebro

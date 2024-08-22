@@ -1,16 +1,16 @@
-radio-jammer-component-on-use = The jammer is now {$state}.
-radio-jammer-component-on-state = on
-radio-jammer-component-off-state = off
+radio-jammer-component-on-use = El bloqueador está ahora {$state}.
+radio-jammer-component-on-state = encendido
+radio-jammer-component-off-state = apagado
 
-radio-jammer-component-examine-on-state = The light is currently [color=darkgreen]on[/color].
-radio-jammer-component-examine-off-state = The light is currently [color=darkred]off[/color].
+radio-jammer-component-examine-on-state = La luz está actualmente [color=darkgreen]encendida[/color].
+radio-jammer-component-examine-off-state = La luz está actualmente [color=darkred]apagada[/color].
 
-radio-jammer-component-setting-high = High
-radio-jammer-component-setting-medium = Medium
-radio-jammer-component-setting-low = Low
+radio-jammer-component-setting-high = Alto
+radio-jammer-component-setting-medium = Medio
+radio-jammer-component-setting-low = Bajo
 
-radio-jammer-component-set-message-high = The jammer is now operating at high power.
-radio-jammer-component-set-message-medium = The jammer is now operating at medium power.
-radio-jammer-component-set-message-low = The jammer is now operating at low power.
+radio-jammer-component-set-message-high = El bloqueador está ahora funcionando a alta potencia.
+radio-jammer-component-set-message-medium = El bloqueador está ahora funcionando a potencia media.
+radio-jammer-component-set-message-low = El bloqueador está ahora funcionando a baja potencia.
 
-radio-jammer-component-switch-setting = The power level switch is set to "[color=yellow]{$powerLevel}[/color]".
+radio-jammer-component-switch-setting = El interruptor de nivel de potencia está ajustado a "[color=yellow]{$powerLevel}[/color]".

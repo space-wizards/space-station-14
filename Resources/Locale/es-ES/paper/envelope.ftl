@@ -1,11 +1,11 @@
-envelope-verb-seal = Seal
-envelope-verb-tear = Tear
+envelope-verb-seal = Sellar
+envelope-verb-tear = Rasgar
 
-envelope-letter-slot = Letter
+envelope-letter-slot = Carta
 
-envelope-sealed-examine = [color=gray]{CAPITALIZE(THE($envelope))} is sealed.[/color]
-envelope-torn-examine = [color=yellow]{CAPITALIZE(THE($envelope))} is torn and unusable![/color]
+envelope-sealed-examine = [color=gray]{CAPITALIZE(THE($envelope))} está sellado.[/color]
+envelope-torn-examine = [color=yellow]{CAPITALIZE(THE($envelope))} está rasgado e inutilizable![/color]
 
-envelope-default-message = TO: 
+envelope-default-message = PARA: 
   
-  FROM: 
+  DE: 

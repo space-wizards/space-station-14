@@ -1,3 +1,3 @@
-rcd-ammo-component-on-examine = It holds {$charges} charges.
-rcd-ammo-component-after-interact-full = The RCD is full!
-rcd-ammo-component-after-interact-refilled = You refill the RCD.
+rcd-ammo-component-on-examine = Contiene {$charges} cargas.
+rcd-ammo-component-after-interact-full = ¡El RCD está lleno!
+rcd-ammo-component-after-interact-refilled = Has recargado el RCD.
