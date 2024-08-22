@@ -1,5 +1,4 @@
-﻿station-event-meteor-swarm-start-announcement = Meteors have been detected on collision course with the station.
-station-event-meteor-swarm-end-announcement = The meteor swarm has passed. Please return to your stations.
-
-station-event-space-dust-start-announcement = The station is passing through a debris cloud, expect minor damage to external fittings and fixtures.
-station-event-meteor-urist-start-announcement = The station is colliding with an unidentified swarm of debris. Please stay calm and do not listen to them.
+﻿station-event-meteor-swarm-start-announcement = Se han detectado meteoritos en curso de colisión con la estación.
+station-event-meteor-swarm-end-announcement = La tormenta de meteoritos ha pasado. Por favor, regresen a sus estaciones.
+station-event-space-dust-start-announcement = La estación está atravesando una nube de escombros; esperen daños menores en las instalaciones y ajustes externos.
+station-event-meteor-urist-start-announcement = La estación está colisionando con un enjambre no identificado de escombros. Por favor, mantengan la calma y no les presten atención.

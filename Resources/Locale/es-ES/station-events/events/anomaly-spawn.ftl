@@ -1,7 +1,7 @@
-anomaly-spawn-event-announcement = Our readings have detected a dangerous interspacial anomaly. Please inform the research team about { $sighting }.
+anomaly-spawn-event-announcement = Hemos detectado una peligrosa anomalía interespacial. Por favor, informe al equipo de investigación sobre { $sighting }.
 
-anomaly-spawn-sighting-1 = low pulsating sounds heard throughout the station
-anomaly-spawn-sighting-2 = strange sources of light
-anomaly-spawn-sighting-3 = inexplicable shapes
-anomaly-spawn-sighting-4 = forms causing severe mental distress
-anomaly-spawn-sighting-5 = strange effects on the local environment
+anomaly-spawn-sighting-1 = sonidos pulsantes bajos escuchados en toda la estación
+anomaly-spawn-sighting-2 = fuentes de luz extrañas
+anomaly-spawn-sighting-3 = formas inexplicables
+anomaly-spawn-sighting-4 = formas que causan un severo malestar mental
+anomaly-spawn-sighting-5 = efectos extraños en el entorno local

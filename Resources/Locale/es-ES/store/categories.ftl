@@ -1,25 +1,24 @@
 # Uplink
-store-category-debug = debug category
-store-category-debug2 = debug category 2
-store-category-weapons = Weaponry
-store-category-ammo = Ammo
-store-category-explosives = Explosives
-store-category-chemicals = Chemicals
-store-category-deception = Deception
-store-category-disruption = Disruption
-store-category-implants = Implants
-store-category-allies = Allies
-store-category-job = Job
-store-category-wearables = Wearables
-store-category-pointless = Pointless
+store-category-debug = Categoría de depuración
+store-category-debug2 = Categoría de depuración 2
+store-category-weapons = Armas
+store-category-ammo = Munición
+store-category-explosives = Explosivos
+store-category-chemicals = Químicos
+store-category-deception = Engaño
+store-category-disruption = Disrupción
+store-category-implants = Implantes
+store-category-allies = Aliados
+store-category-job = Trabajo
+store-category-wearables = Equipamiento
+store-category-pointless = Inútil
 
 # Revenant
-store-category-abilities = Abilities
+store-category-abilities = Habilidades
 
 # Wizard
-store-caregory-spellbook-offensive = Offensive Spells
-store-caregory-spellbook-defensive = Defensive Spells
-store-caregory-spellbook-utility = Utility Spells
-store-caregory-spellbook-equipment = Wizard Equipment
-store-caregory-spellbook-events = Event Spells
-
+store-caregory-spellbook-offensive = Hechizos Ofensivos
+store-caregory-spellbook-defensive = Hechizos Defensivos
+store-caregory-spellbook-utility = Hechizos de Utilidad
+store-caregory-spellbook-equipment = Equipamiento de Mago
+store-caregory-spellbook-events = Hechizos de Eventos

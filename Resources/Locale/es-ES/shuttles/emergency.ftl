@@ -1,35 +1,35 @@
 # Commands
 ## Delay shuttle round end
-emergency-shuttle-command-round-desc = Stops the timer that ends the round when the emergency shuttle exits hyperspace.
-emergency-shuttle-command-round-yes = Round delayed.
-emergency-shuttle-command-round-no = Unable to delay round end.
+emergency-shuttle-command-round-desc = Detiene el temporizador que finaliza la ronda cuando el transbordador de emergencia sale de la hiperesfera.
+emergency-shuttle-command-round-yes = Ronda retrasada.
+emergency-shuttle-command-round-no = No se pudo retrasar el final de la ronda.
 
 ## Dock emergency shuttle
-emergency-shuttle-command-dock-desc = Calls the emergency shuttle and docks it to the station... if it can.
+emergency-shuttle-command-dock-desc = Llama al transbordador de emergencia y lo acopla a la estación... si es posible.
 
 ## Launch emergency shuttle
-emergency-shuttle-command-launch-desc = Early launches the emergency shuttle if possible.
+emergency-shuttle-command-launch-desc = Lanza el transbordador de emergencia anticipadamente si es posible.
 
 # Emergency shuttle
-emergency-shuttle-left = The Emergency Shuttle has left the station. Estimate {$transitTime} seconds until the shuttle arrives at CentComm.
-emergency-shuttle-launch-time = The emergency shuttle will launch in {$consoleAccumulator} seconds.
-emergency-shuttle-docked = The Emergency Shuttle has docked {$direction} of the station, {$location}. It will leave in {$time} seconds.
-emergency-shuttle-good-luck = The Emergency Shuttle is unable to find a station. Good luck.
-emergency-shuttle-nearby = The Emergency Shuttle is unable to find a valid docking port. It has warped in {$direction} of the station, {$location}.
+emergency-shuttle-left = El Transbordador de Emergencia ha salido de la estación. Estime {$transitTime} segundos hasta que el transbordador llegue a CentComm.
+emergency-shuttle-launch-time = El transbordador de emergencia lanzará en {$consoleAccumulator} segundos.
+emergency-shuttle-docked = El Transbordador de Emergencia se ha acoplado {$direction} de la estación, {$location}. Saldrá en {$time} segundos.
+emergency-shuttle-good-luck = El Transbordador de Emergencia no puede encontrar una estación. Buena suerte.
+emergency-shuttle-nearby = El Transbordador de Emergencia no puede encontrar un puerto de acoplamiento válido. Ha aparecido en {$direction} de la estación, {$location}.
 
 # Emergency shuttle console popup / announcement
-emergency-shuttle-console-no-early-launches = Early launch is disabled
-emergency-shuttle-console-auth-left = {$remaining} authorizations needed until shuttle is launched early.
-emergency-shuttle-console-auth-revoked = Early launch authorization revoked, {$remaining} authorizations needed.
-emergency-shuttle-console-denied = Access denied
+emergency-shuttle-console-no-early-launches = Lanzamiento anticipado deshabilitado
+emergency-shuttle-console-auth-left = {$remaining} autorizaciones necesarias hasta que el transbordador sea lanzado anticipadamente.
+emergency-shuttle-console-auth-revoked = Autorización para lanzamiento anticipado revocada, {$remaining} autorizaciones necesarias.
+emergency-shuttle-console-denied = Acceso denegado
 
 # UI
-emergency-shuttle-console-window-title = Emergency Shuttle Console
-emergency-shuttle-ui-engines = ENGINES:
-emergency-shuttle-ui-idle = Idle
-emergency-shuttle-ui-repeal-all = Repeal All
-emergency-shuttle-ui-early-authorize = Early Launch Authorization
-emergency-shuttle-ui-authorize = AUTHORIZE
-emergency-shuttle-ui-repeal = REPEAL
-emergency-shuttle-ui-authorizations = Authorizations
-emergency-shuttle-ui-remaining = Remaining: {$remaining}
+emergency-shuttle-console-window-title = Consola del Transbordador de Emergencia
+emergency-shuttle-ui-engines = MOTORES:
+emergency-shuttle-ui-idle = Inactivo
+emergency-shuttle-ui-repeal-all = Revocar Todo
+emergency-shuttle-ui-early-authorize = Autorización para Lanzamiento Anticipado
+emergency-shuttle-ui-authorize = AUTORIZAR
+emergency-shuttle-ui-repeal = REVOCAR
+emergency-shuttle-ui-authorizations = Autorizaciones
+emergency-shuttle-ui-remaining = Restantes: {$remaining}

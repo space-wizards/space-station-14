@@ -1,35 +1,37 @@
-﻿# Spells
-spellbook-fireball-name = Fireball
-spellbook-fireball-desc = Get most crew exploding with rage when they see this fireball heading toward them!
+﻿# Hechizos
 
-spellbook-blink-name = Blink
-spellbook-blink-desc = Don't blink or you'll miss yourself teleporting away.
+spellbook-fireball-name = Bola de Fuego
+spellbook-fireball-desc = ¡Haz que la mayoría de la tripulación explote de rabia cuando vean esta bola de fuego dirigiéndose hacia ellos!
 
-spellbook-force-wall-name = Force Wall
-spellbook-force-wall-desc = Make three walls of pure force that you can pass through, but other's can't.
+spellbook-blink-name = Parpadeo
+spellbook-blink-desc = No parpadees o te perderás al teletransportarte.
 
-spellbook-polymoprh-spider-name = Spider Polymoprh
-spellbook-polymorph-spider-desc = Transforms you into a spider, man!
+spellbook-force-wall-name = Muro de Fuerza
+spellbook-force-wall-desc = Crea tres muros de pura fuerza que puedes atravesar, pero que otros no pueden.
 
-spellbook-polymorph-rod-name = Rod Polymorph
-spellbook-polymorph-rod-desc = Change into an Immovable Rod with limited movement.
+spellbook-polymoprh-spider-name = Polimorfia de Araña
+spellbook-polymorph-spider-desc = ¡Transforma a tu personaje en una araña, amigo!
 
-spellbook-charge-name = Charge
-spellbook-charge-desc = Adds a charge back to your wand!
+spellbook-polymorph-rod-name = Polimorfia de Bastón
+spellbook-polymorph-rod-desc = Transfórmate en un Bastón Inamovible con movimiento limitado.
 
-# Equipment
+spellbook-charge-name = Carga
+spellbook-charge-desc = ¡Añade una carga de vuelta a tu varita!
 
-spellbook-wand-polymorph-door-name = Wand of Entrance
-spellbook-wand-polymorph-door-description = For when you need a get-away route.
+# Equipos
 
-spellbook-wand-polymorph-carp-name = Wand of Carp Polymorph
-spellbook-wand-polymorph-carp-description = For when you need a carp filet quick and the clown is looking juicy.
+spellbook-wand-polymorph-door-name = Varita de Entrada
+spellbook-wand-polymorph-door-description = Para cuando necesites una ruta de escape.
 
-# Events
+spellbook-wand-polymorph-carp-name = Varita de Polimorfia de Carpa
+spellbook-wand-polymorph-carp-description = Para cuando necesites un filete de carpa rápido y el payaso parece jugoso.
 
-spellbook-event-summon-ghosts-name = Summon Ghosts
-spellbook-event-summon-ghosts-description = Who ya gonna call?
+# Eventos
 
-# Upgrades
-spellbook-upgrade-fireball-name = Upgrade Fireball
-spellbook-upgrade-fireball-description = Upgrades Fireball to a maximum of level 3!
+spellbook-event-summon-ghosts-name = Invocar Fantasmas
+spellbook-event-summon-ghosts-description = ¿A quién vas a llamar?
+
+# Mejoras
+
+spellbook-upgrade-fireball-name = Mejora de Bola de Fuego
+spellbook-upgrade-fireball-description = ¡Mejora la Bola de Fuego hasta un máximo de nivel 3!

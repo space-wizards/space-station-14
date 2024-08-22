@@ -1,4 +1,4 @@
 ## PowerGridCheck
 
-station-event-power-grid-check-start-announcement = Abnormal activity detected in the station's powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.
-station-event-power-grid-check-end-announcement = Power has been restored to the station. We apologize for the inconvenience.
+station-event-power-grid-check-start-announcement = Se ha detectado actividad anormal en la red eléctrica de la estación. Como medida de precaución, la energía de la estación se desconectará por un período indeterminado.
+station-event-power-grid-check-end-announcement = La energía ha sido restaurada en la estación. Pedimos disculpas por los inconvenientes.

@@ -1,11 +1,11 @@
-docking-component-dock = Dock
-docking-component-undock = Undock
+docking-component-dock = Acoplar
+docking-component-undock = Desacoplar
 
-cmd-dock-desc = Attempts to dock 2 airlocks together. Doesn't check whether it is valid.
+cmd-dock-desc = Intenta acoplar 2 esclusas de aire juntas. No verifica si es válido.
 cmd-dock-help = dock <airlock entityuid1> <airlock entityuid2>
 
-cmd-dock-args = Invalid number of args
-cmd-dock-invalid = Invalid EntityUid {$entity}
-cmd-dock-found = No docking component found on {$airlock}
-cmd-dock-success = Successfully docked
-cmd-dock-fail = Unable to dock
+cmd-dock-args = Número de argumentos inválido
+cmd-dock-invalid = Entidad {$entity} inválida
+cmd-dock-found = No se encontró componente de acoplamiento en {$airlock}
+cmd-dock-success = Acoplamiento exitoso
+cmd-dock-fail = No se pudo acoplar
