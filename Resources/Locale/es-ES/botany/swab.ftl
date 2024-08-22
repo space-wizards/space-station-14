@@ -1,4 +1,4 @@
-botany-swab-from = You carefully collect pollen from the plant.
-botany-swab-to = You carefully dust pollen on the plant.
-swab-used = This swab has been used to collect something.
-swab-unused = This swab is clean and ready to be used.
+botany-swab-from = Recoges cuidadosamente polen de la planta.
+botany-swab-to = Aplicar polen cuidadosamente sobre la planta.
+swab-used = Este hisopo ha sido usado para recoger algo.
+swab-unused = Este hisopo está limpio y listo para usar.

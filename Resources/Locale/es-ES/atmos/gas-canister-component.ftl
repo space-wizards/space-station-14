@@ -2,19 +2,19 @@
 
 # Bound Interface
 
-gas-canister-bound-user-interface-title = Gas Canister
+gas-canister-bound-user-interface-title = Contenedor de Gas
 
 # Popup
-gas-canister-popup-denied = Access denied
+gas-canister-popup-denied = Acceso denegado
 
 # window
 
-gas-canister-window-ok-text = OK
-gas-canister-window-edit-text = Edit
-gas-canister-window-label-label = Label:
-gas-canister-window-pressure-label = Pressure:
-gas-canister-window-release-pressure-label = Release pressure:
-gas-canister-window-valve-label = Valve:
-gas-canister-window-valve-closed-text = Closed
-gas-canister-window-valve-open-text = Open
-gas-canister-window-pressure-format-text = {$pressure}kPa
+gas-canister-window-ok-text = Aceptar
+gas-canister-window-edit-text = Editar
+gas-canister-window-label-label = Etiqueta:
+gas-canister-window-pressure-label = Presión:
+gas-canister-window-release-pressure-label = Liberar presión:
+gas-canister-window-valve-label = Válvula:
+gas-canister-window-valve-closed-text = Cerrada
+gas-canister-window-valve-open-text = Abierta
+gas-canister-window-pressure-format-text = {$pressure} kPa

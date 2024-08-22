@@ -1,4 +1,4 @@
-advertisement-chemdrobe-1 = Our clothes are 0.5% more resistant to acid spills! Get yours now!
-advertisement-chemdrobe-2 = Professional laboratory clothing, designed by NanoTrasen!
-advertisement-chemdrobe-3 = I'm pretty sure these will protect you against acid spills!
-advertisement-chemdrobe-4 = The best fashion formula!
+advertisement-chemdrobe-1 = ¡Nuestra ropa es un 0.5% más resistente a los derrames de ácido! ¡Consigue la tuya ahora!
+advertisement-chemdrobe-2 = Ropa de laboratorio profesional, diseñada por NanoTrasen.
+advertisement-chemdrobe-3 = ¡Estoy bastante seguro de que esto te protegerá contra los derrames de ácido!
+advertisement-chemdrobe-4 = ¡La mejor fórmula de moda!

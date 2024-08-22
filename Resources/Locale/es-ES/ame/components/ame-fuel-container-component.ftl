@@ -1,1 +1,1 @@
-ame-fuel-container-component-on-examine-detailed-message = Fuel: [color={$colorName}]{$amount}/{$capacity}[/color]
+ame-fuel-container-component-on-examine-detailed-message = Combustible: [color={$colorName}]{$amount}/{$capacity}[/color]

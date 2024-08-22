@@ -1,26 +1,26 @@
 ﻿### GasTankComponent stuff.
 
 # Examine text showing pressure in tank.
-comp-gas-tank-examine = Pressure: [color=orange]{PRESSURE($pressure)}[/color].
+comp-gas-tank-examine = Presión: [color=orange]{PRESSURE($pressure)}[/color].
 
 # Examine text when internals are active.
-comp-gas-tank-connected = It's connected to an external component.
+comp-gas-tank-connected = Está conectado a un componente externo.
 
 # Examine text when valve is open or closed.
-comp-gas-tank-examine-open-valve = Gas release valve is [color=red]open[/color].
-comp-gas-tank-examine-closed-valve = Gas release valve is [color=green]closed[/color].
+comp-gas-tank-examine-open-valve = La válvula de liberación de gas está [color=red]abierta[/color].
+comp-gas-tank-examine-closed-valve = La válvula de liberación de gas está [color=green]cerrada[/color].
 
 ## ControlVerb
-control-verb-open-control-panel-text = Open Control Panel
+control-verb-open-control-panel-text = Abrir panel de control
 
 ## UI
-gas-tank-window-internals-toggle-button = Toggle
-gas-tank-window-output-pressure-label = Output Pressure
-gas-tank-window-tank-pressure-text = Pressure: {$tankPressure} kPA
-gas-tank-window-internal-text = Internals: {$status}
-gas-tank-window-internal-connected = [color=green]Connected[/color]
-gas-tank-window-internal-disconnected = [color=red]Disconnected[/color]
+gas-tank-window-internals-toggle-button = Alternar
+gas-tank-window-output-pressure-label = Presión de salida
+gas-tank-window-tank-pressure-text = Presión: {$tankPressure} kPA
+gas-tank-window-internal-text = Internos: {$status}
+gas-tank-window-internal-connected = [color=green]Conectado[/color]
+gas-tank-window-internal-disconnected = [color=red]Desconectado[/color]
 
 ## Valve
-comp-gas-tank-open-valve = Open Valve
-comp-gas-tank-close-valve = Close Valve
+comp-gas-tank-open-valve = Abrir válvula
+comp-gas-tank-close-valve = Cerrar válvula

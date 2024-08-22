@@ -1,3 +1,3 @@
-advertisement-detdrobe-1 = Apply your brilliant deductive methods in style!
-advertisement-detdrobe-2 = Come here and dress up like Sherlock Holmes!
-advertisement-detdrobe-3 = Our outfits are very conservative!
+advertisement-detdrobe-1 = ¡Aplica tus brillantes métodos deductivos con estilo!
+advertisement-detdrobe-2 = ¡Ven aquí y vístete como Sherlock Holmes!
+advertisement-detdrobe-3 = ¡Nuestros atuendos son muy conservadores!

@@ -1,1 +1,1 @@
-flammable-component-resist-message = You stop, drop, and roll!
+flammable-component-resist-message = ¡Quieto, al suelo y a rodar!
