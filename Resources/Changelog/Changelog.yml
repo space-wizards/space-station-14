@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: moonheart08
-  changes:
-  - message: AME power output is no longer super-buffed. Larger stations will now
-      require multiple engines to stay powered.
-    type: Tweak
-  id: 6680
-  time: '2024-06-04T15:59:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28419
-- author: blueDev2
-  changes:
-  - message: Fixed microwave recipes that use stacked materials
-    type: Fix
-  id: 6681
-  time: '2024-06-04T17:12:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28225
-- author: Tayrtahn
-  changes:
-  - message: Mops and rags now show the liquids they soak up.
-    type: Add
-  id: 6682
-  time: '2024-06-04T18:48:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28590
 - author: Boaz1111
   changes:
   - message: Revamped Cluster's Head Offices
@@ -3861,3 +3839,28 @@
   id: 7179
   time: '2024-08-21T21:50:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31291
+- author: Sarahon
+  changes:
+  - message: Now can add head(top) cosmetics to humanoids and dwarfs.
+    type: Add
+  - message: Added "long ears" for human and dwarf head(top) cosmetic.
+    type: Add
+  id: 7180
+  time: '2024-08-21T23:44:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30490
+- author: Winkarst-cpu
+  changes:
+  - message: Now vending machines show valid icons.
+    type: Fix
+  id: 7181
+  time: '2024-08-22T14:40:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30064
+- author: EmoGarbage404
+  changes:
+  - message: Jackboots now reduce slowness from injuries by 50%.
+    type: Add
+  - message: Removed combat boots from the security loadout.
+    type: Remove
+  id: 7182
+  time: '2024-08-22T14:56:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30586
