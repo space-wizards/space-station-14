@@ -1,4 +1,4 @@
-character-info-title = Character
-character-info-roles-antagonist-text = Antagonist Roles
-character-info-objectives-label = Objectives
-character-info-no-profession = No Profession
+character-info-title = Personas
+character-info-roles-antagonist-text = Roles antagonista
+character-info-objectives-label = Objetivos
+character-info-no-profession = Sin profesión
