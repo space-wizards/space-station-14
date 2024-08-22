@@ -1,36 +1,35 @@
 ### UI
 
-chat-manager-max-message-length = Your message exceeds {$maxMessageLength} character limit
-chat-manager-ooc-chat-enabled-message = OOC chat has been enabled.
-chat-manager-ooc-chat-disabled-message = OOC chat has been disabled.
-chat-manager-looc-chat-enabled-message = LOOC chat has been enabled.
-chat-manager-looc-chat-disabled-message = LOOC chat has been disabled.
-chat-manager-dead-looc-chat-enabled-message = Dead players can now use LOOC.
-chat-manager-dead-looc-chat-disabled-message = Dead players can no longer use LOOC.
-chat-manager-crit-looc-chat-enabled-message = Crit players can now use LOOC.
-chat-manager-crit-looc-chat-disabled-message = Crit players can no longer use LOOC.
-chat-manager-admin-ooc-chat-enabled-message = Admin OOC chat has been enabled.
-chat-manager-admin-ooc-chat-disabled-message = Admin OOC chat has been disabled.
+chat-manager-max-message-length = Tu mensaje excede el límite de {$maxMessageLength} caracteres.
+chat-manager-ooc-chat-enabled-message = El chat OOC ha sido habilitado.
+chat-manager-ooc-chat-disabled-message = El chat OOC ha sido deshabilitado.
+chat-manager-looc-chat-enabled-message = El chat LOOC ha sido habilitado.
+chat-manager-looc-chat-disabled-message = El chat LOOC ha sido deshabilitado.
+chat-manager-dead-looc-chat-enabled-message = Los jugadores muertos ahora pueden usar LOOC.
+chat-manager-dead-looc-chat-disabled-message = Los jugadores muertos ya no pueden usar LOOC.
+chat-manager-crit-looc-chat-enabled-message = Los jugadores en crítico ahora pueden usar LOOC.
+chat-manager-crit-looc-chat-disabled-message = Los jugadores en crítico ya no pueden usar LOOC.
+chat-manager-admin-ooc-chat-enabled-message = El chat OOC para administradores ha sido habilitado.
+chat-manager-admin-ooc-chat-disabled-message = El chat OOC para administradores ha sido deshabilitado.
 
-chat-manager-max-message-length-exceeded-message = Your message exceeded {$limit} character limit
-chat-manager-no-headset-on-message = You don't have a headset on!
-chat-manager-no-radio-key = No radio key specified!
-chat-manager-no-such-channel = There is no channel with key '{$key}'!
-chat-manager-whisper-headset-on-message = You can't whisper on the radio!
+chat-manager-max-message-length-exceeded-message = Tu mensaje excedió el límite de {$limit} caracteres.
+chat-manager-no-headset-on-message = ¡No tienes un auricular puesto!
+chat-manager-no-radio-key = ¡No se especificó una clave de radio!
+chat-manager-no-such-channel = No existe un canal con la clave '{$key}'.
+chat-manager-whisper-headset-on-message = ¡No puedes susurrar por radio!
 
 chat-manager-server-wrap-message = [bold]{$message}[/bold]
 chat-manager-sender-announcement = Central Command
-chat-manager-sender-announcement-wrap-message = [font size=14][bold]{$sender} Announcement:[/font][font size=12]
+chat-manager-sender-announcement-wrap-message = [font size=14][bold]{$sender} Anuncio:[/font][font size=12]
                                                 {$message}[/bold][/font]
-chat-manager-entity-say-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent]{$message}[/BubbleContent]"[/font]
-chat-manager-entity-say-bold-wrap-message = [BubbleHeader][bold][Name]{$entityName}[/Name][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent][bold]{$message}[/bold][/BubbleContent]"[/font]
+chat-manager-entity-say-wrap-message = [BubbleHeader][bold][Nombre]{$entityName}[/Nombre][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent]{$message}[/BubbleContent]"[/font]
+chat-manager-entity-say-bold-wrap-message = [BubbleHeader][bold][Nombre]{$entityName}[/Nombre][/bold][/BubbleHeader] {$verb}, [font={$fontType} size={$fontSize}]"[BubbleContent][bold]{$message}[/bold][/BubbleContent]"[/font]
 
-chat-manager-entity-whisper-wrap-message = [font size=11][italic][BubbleHeader][Name]{$entityName}[/Name][/BubbleHeader] whispers,"[BubbleContent]{$message}[/BubbleContent]"[/italic][/font]
-chat-manager-entity-whisper-unknown-wrap-message = [font size=11][italic][BubbleHeader]Someone[/BubbleHeader] whispers, "[BubbleContent]{$message}[/BubbleContent]"[/italic][/font]
+chat-manager-entity-whisper-wrap-message = [font size=11][italic][BubbleHeader][Nombre]{$entityName}[/Nombre][/BubbleHeader] susurra,"[BubbleContent]{$message}[/BubbleContent]"[/italic][/font]
+chat-manager-entity-whisper-unknown-wrap-message = [font size=11][italic][BubbleHeader]Alguien[/BubbleHeader] susurra, "[BubbleContent]{$message}[/BubbleContent]"[/italic][/font]
 
-# THE() is not used here because the entity and its name can technically be disconnected if a nameOverride is passed...
 chat-manager-entity-me-wrap-message = [italic]{ PROPER($entity) ->
-    *[false] The {$entityName} {$message}[/italic]
+    *[false] El {$entityName} {$message}[/italic]
      [true] {CAPITALIZE($entityName)} {$message}[/italic]
     }
 
@@ -45,109 +44,109 @@ chat-manager-send-admin-announcement-wrap-message = [bold]{$adminChannelName}: {
 
 chat-manager-send-hook-ooc-wrap-message = OOC: [bold](D){$senderName}:[/bold] {$message}
 
-chat-manager-dead-channel-name = DEAD
+chat-manager-dead-channel-name = MUERTO
 chat-manager-admin-channel-name = ADMIN
 
-chat-manager-rate-limited = You are sending messages too quickly!
-chat-manager-rate-limit-admin-announcement = Player { $player } breached chat rate limits. Watch them if this is a regular occurence.
+chat-manager-rate-limited = ¡Estás enviando mensajes demasiado rápido!
+chat-manager-rate-limit-admin-announcement = El jugador { $player } ha superado los límites de velocidad de chat. Vigílalo si esto ocurre con frecuencia.
 
-## Speech verbs for chat
+## Verbos de habla para el chat
 
-chat-speech-verb-suffix-exclamation = !
-chat-speech-verb-suffix-exclamation-strong = !!
+chat-speech-verb-suffix-exclamation = ¡
+chat-speech-verb-suffix-exclamation-strong = ¡¡
 chat-speech-verb-suffix-question = ?
 chat-speech-verb-suffix-stutter = -
 chat-speech-verb-suffix-mumble = ..
 
-chat-speech-verb-name-none = None
-chat-speech-verb-name-default = Default
-chat-speech-verb-default = says
-chat-speech-verb-name-exclamation = Exclaiming
-chat-speech-verb-exclamation = exclaims
-chat-speech-verb-name-exclamation-strong = Yelling
-chat-speech-verb-exclamation-strong = yells
-chat-speech-verb-name-question = Asking
-chat-speech-verb-question = asks
-chat-speech-verb-name-stutter = Stuttering
-chat-speech-verb-stutter = stutters
-chat-speech-verb-name-mumble = Mumbling
-chat-speech-verb-mumble = mumbles
+chat-speech-verb-name-none = Ninguno
+chat-speech-verb-name-default = Predeterminado
+chat-speech-verb-default = dice
+chat-speech-verb-name-exclamation = Exclamando
+chat-speech-verb-exclamation = exclama
+chat-speech-verb-name-exclamation-strong = Gritando
+chat-speech-verb-exclamation-strong = grita
+chat-speech-verb-name-question = Preguntando
+chat-speech-verb-question = pregunta
+chat-speech-verb-name-stutter = Tartamudeando
+chat-speech-verb-stutter = tartamudea
+chat-speech-verb-name-mumble = Murmurando
+chat-speech-verb-mumble = murmura
 
-chat-speech-verb-name-arachnid = Arachnid
-chat-speech-verb-insect-1 = chitters
-chat-speech-verb-insect-2 = chirps
-chat-speech-verb-insect-3 = clicks
+chat-speech-verb-name-arachnid = Araña
+chat-speech-verb-insect-1 = chasquea
+chat-speech-verb-insect-2 = chirría
+chat-speech-verb-insect-3 = clickea
 
-chat-speech-verb-name-moth = Moth
-chat-speech-verb-winged-1 = flutters
-chat-speech-verb-winged-2 = flaps
-chat-speech-verb-winged-3 = buzzes
+chat-speech-verb-name-moth = Polilla
+chat-speech-verb-winged-1 = aletea
+chat-speech-verb-winged-2 = agita
+chat-speech-verb-winged-3 = zumba
 
-chat-speech-verb-name-slime = Slime
-chat-speech-verb-slime-1 = sloshes
-chat-speech-verb-slime-2 = burbles
-chat-speech-verb-slime-3 = oozes
+chat-speech-verb-name-slime = Limosa
+chat-speech-verb-slime-1 = chapotea
+chat-speech-verb-slime-2 = burbujea
+chat-speech-verb-slime-3 = rezuma
 
 chat-speech-verb-name-plant = Diona
-chat-speech-verb-plant-1 = rustles
-chat-speech-verb-plant-2 = sways
-chat-speech-verb-plant-3 = creaks
+chat-speech-verb-plant-1 = susurra
+chat-speech-verb-plant-2 = se balancea
+chat-speech-verb-plant-3 = cruje
 
-chat-speech-verb-name-robotic = Robotic
-chat-speech-verb-robotic-1 = states
-chat-speech-verb-robotic-2 = beeps
-chat-speech-verb-robotic-3 = boops
+chat-speech-verb-name-robotic = Robótico
+chat-speech-verb-robotic-1 = declara
+chat-speech-verb-robotic-2 = emite pitidos
+chat-speech-verb-robotic-3 = hace beep
 
-chat-speech-verb-name-reptilian = Reptilian
-chat-speech-verb-reptilian-1 = hisses
-chat-speech-verb-reptilian-2 = snorts
-chat-speech-verb-reptilian-3 = huffs
+chat-speech-verb-name-reptilian = Reptil
+chat-speech-verb-reptilian-1 = sisea
+chat-speech-verb-reptilian-2 = resopla
+chat-speech-verb-reptilian-3 = exhala
 
-chat-speech-verb-name-skeleton = Skeleton
-chat-speech-verb-skeleton-1 = rattles
-chat-speech-verb-skeleton-2 = clacks
-chat-speech-verb-skeleton-3 = gnashes
+chat-speech-verb-name-skeleton = Esqueleto
+chat-speech-verb-skeleton-1 = tintinea
+chat-speech-verb-skeleton-2 = chasquea
+chat-speech-verb-skeleton-3 = rechina
 
 chat-speech-verb-name-vox = Vox
-chat-speech-verb-vox-1 = screeches
-chat-speech-verb-vox-2 = shrieks
-chat-speech-verb-vox-3 = croaks
+chat-speech-verb-vox-1 = chirría
+chat-speech-verb-vox-2 = grita
+chat-speech-verb-vox-3 = croa
 
-chat-speech-verb-name-canine = Canine
-chat-speech-verb-canine-1 = barks
-chat-speech-verb-canine-2 = woofs
-chat-speech-verb-canine-3 = howls
+chat-speech-verb-name-canine = Canino
+chat-speech-verb-canine-1 = ladra
+chat-speech-verb-canine-2 = gime
+chat-speech-verb-canine-3 = aúlla
 
-chat-speech-verb-name-small-mob = Mouse
+chat-speech-verb-name-small-mob = Ratón
 chat-speech-verb-small-mob-1 = squeaks
 chat-speech-verb-small-mob-2 = pieps
 
-chat-speech-verb-name-large-mob = Carp
-chat-speech-verb-large-mob-1 = roars
-chat-speech-verb-large-mob-2 = growls
+chat-speech-verb-name-large-mob = Carpa
+chat-speech-verb-large-mob-1 = ruge
+chat-speech-verb-large-mob-2 = gruñe
 
-chat-speech-verb-name-monkey = Monkey
-chat-speech-verb-monkey-1 = chimpers
-chat-speech-verb-monkey-2 = screeches
+chat-speech-verb-name-monkey = Mono
+chat-speech-verb-monkey-1 = chimp
+chat-speech-verb-monkey-2 = grita
 
 chat-speech-verb-name-cluwne = Cluwne
 
-chat-speech-verb-name-parrot = Parrot
-chat-speech-verb-parrot-1 = squawks
-chat-speech-verb-parrot-2 = tweets
-chat-speech-verb-parrot-3 = chirps
+chat-speech-verb-name-parrot = Loro
+chat-speech-verb-parrot-1 = grazia
+chat-speech-verb-parrot-2 = tuita
+chat-speech-verb-parrot-3 = chirría
 
-chat-speech-verb-cluwne-1 = giggles
-chat-speech-verb-cluwne-2 = guffaws
-chat-speech-verb-cluwne-3 = laughs
+chat-speech-verb-cluwne-1 = ríe
+chat-speech-verb-cluwne-2 = se descojona
+chat-speech-verb-cluwne-3 = se ríe
 
-chat-speech-verb-name-ghost = Ghost
-chat-speech-verb-ghost-1 = complains
-chat-speech-verb-ghost-2 = breathes
-chat-speech-verb-ghost-3 = hums
-chat-speech-verb-ghost-4 = mutters
+chat-speech-verb-name-ghost = Fantasma
+chat-speech-verb-ghost-1 = se queja
+chat-speech-verb-ghost-2 = respira
+chat-speech-verb-ghost-3 = tararea
+chat-speech-verb-ghost-4 = murmura
 
-chat-speech-verb-name-electricity = Electricity
-chat-speech-verb-electricity-1 = crackles
-chat-speech-verb-electricity-2 = buzzes
-chat-speech-verb-electricity-3 = screeches
+chat-speech-verb-name-electricity = Electricidad
+chat-speech-verb-electricity-1 = chisporrotea
+chat-speech-verb-electricity-2 = zumba
+chat-speech-verb-electricity-3 = chirría

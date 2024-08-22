@@ -1,5 +1,5 @@
-damage-group-brute = Brute
-damage-group-burn = Burn
-damage-group-airloss = Airloss
-damage-group-toxin = Toxin
-damage-group-genetic = Genetic
+damage-group-brute = Bruto
+damage-group-burn = Quemadura
+damage-group-airloss = Pérdida de aire
+damage-group-toxin = Tóxico
+damage-group-genetic = Genético

@@ -1,12 +1,12 @@
-flatpack-unpack-no-room = No room to unpack!
-flatpack-examine = Use a [color=yellow]multitool[/color] to unpack this.
-flatpack-entity-name = {$name} flatpack
-flatpack-entity-description = A flatpack used for constructing {INDEFINITE($name)} {$name}.
+flatpack-unpack-no-room = ¡No hay espacio para desempaquetar!
+flatpack-examine = Usa un [color=yellow]multiherramienta[/color] para desempaquetar esto.
+flatpack-entity-name = {THE($name)} empaquetado
+flatpack-entity-description = Un paquete utilizado para construir {INDEFINITE($name)} {$name}.
 
-flatpacker-item-slot-name = Machine board slot
+flatpacker-item-slot-name = Ranura para placa de máquina
 flatpacker-ui-title = Flatpacker 1001
-flatpacker-ui-materials-label = Materials
-flatpacker-ui-cost-label = Packing Cost
-flatpacker-ui-no-board-label = No board present!
-flatpacker-ui-insert-board = Insert a board to begin.
-flatpacker-ui-pack-button = Pack
+flatpacker-ui-materials-label = Materiales
+flatpacker-ui-cost-label = Costo de empaquetado
+flatpacker-ui-no-board-label = ¡No hay placa presente!
+flatpacker-ui-insert-board = Inserta una placa para comenzar.
+flatpacker-ui-pack-button = Empaquetar

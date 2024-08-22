@@ -1,284 +1,229 @@
-## General stuff
+## Cosas generales
 
-ui-options-title = Game Options
-ui-options-tab-accessibility = Accessibility
-ui-options-tab-graphics = Graphics
-ui-options-tab-controls = Controls
+ui-options-title = Opciones del Juego
+ui-options-tab-accessibility = Accesibilidad
+ui-options-tab-graphics = Gráficos
+ui-options-tab-controls = Controles
 ui-options-tab-audio = Audio
-ui-options-tab-network = Network
+ui-options-tab-network = Red
 ui-options-tab-misc = General
 
-ui-options-apply = Save & apply
-ui-options-reset-all = Reset changed
-ui-options-default = Reset to defaults
+ui-options-apply = Guardar y aplicar
+ui-options-reset-all = Restablecer cambios
+ui-options-default = Restablecer a valores predeterminados
 
 ui-options-value-percent = { TOSTRING($value, "P0") }
 
-# Misc/General menu
+# Menú Misc/General
 
-ui-options-discordrich = Enable Discord Rich Presence
-ui-options-general-ui-style = UI Style
+ui-options-discordrich = Habilitar Presencia Rica de Discord
+ui-options-general-ui-style = Estilo de UI
 ui-options-general-discord = Discord
 ui-options-general-cursor = Cursor
-ui-options-general-speech = Speech
-ui-options-general-storage = Storage
-ui-options-general-accessibility = Accessibility
+ui-options-general-speech = Voz
+ui-options-general-storage = Almacenamiento
+ui-options-general-accessibility = Accesibilidad
 
-## Audio menu
+## Menú de Audio
 
-ui-options-master-volume = Master Volume:
-ui-options-midi-volume = MIDI (Instrument) Volume:
-ui-options-ambient-music-volume = Ambient music volume:
-ui-options-ambience-volume = Ambience volume:
-ui-options-lobby-volume = Lobby & Round-end volume:
-ui-options-interface-volume = Interface volume:
-ui-options-ambience-max-sounds = Ambience simultaneous sounds:
-ui-options-lobby-music = Lobby & Round-end Music
-ui-options-restart-sounds = Round Restart Sounds
-ui-options-event-music = Event Music
-ui-options-admin-sounds = Play Admin Sounds
-ui-options-volume-label = Volume
+ui-options-master-volume = Volumen principal:
+ui-options-midi-volume = Volumen de instrumentos (MIDI):
+ui-options-ambient-music-volume = Volumen de música ambiental:
+ui-options-ambience-volume = Volumen de ambiente:
+ui-options-lobby-volume = Volumen del lobby y fin de ronda:
+ui-options-interface-volume = Volumen de la interfaz:
+ui-options-ambience-max-sounds = Sonidos simultáneos de ambiente:
+ui-options-lobby-music = Música del lobby y fin de ronda
+ui-options-restart-sounds = Sonidos de reinicio de ronda
+ui-options-event-music = Música de eventos
+ui-options-admin-sounds = Reproducir sonidos de administrador
+ui-options-volume-label = Volumen
 
-## Graphics menu
+## Menú de Gráficos
 
-ui-options-display-label = Display
-ui-options-quality-label = Quality
-ui-options-misc-label = Misc
-ui-options-interface-label = Interface
+ui-options-display-label = Pantalla
+ui-options-quality-label = Calidad
+ui-options-misc-label = Misceláneo
+ui-options-interface-label = Interfaz
 
-
-ui-options-show-held-item = Show held item next to cursor
-ui-options-show-combat-mode-indicators = Show combat mode indicators with cursor
-ui-options-opaque-storage-window = Opaque storage window
-ui-options-show-ooc-patron-color = Show OOC Patreon color
-ui-options-show-looc-on-head = Show LOOC chat above characters head
-ui-options-fancy-speech = Show names in speech bubbles
-ui-options-fancy-name-background = Add background to speech bubble names
+ui-options-show-held-item = Mostrar objeto sostenido junto al cursor
+ui-options-show-combat-mode-indicators = Mostrar indicadores de modo de combate con el cursor
+ui-options-opaque-storage-window = Ventana de almacenamiento opaca
+ui-options-show-ooc-patron-color = Mostrar color Patreon OOC
+ui-options-show-looc-on-head = Mostrar chat LOOC sobre cabeza de los personajes
+ui-options-fancy-speech = Mostrar nombres en burbujas de diálogo
+ui-options-fancy-name-background = Agregar fondo a nombres en burbujas de diálogo
 ui-options-vsync = VSync
-ui-options-fullscreen = Fullscreen
-ui-options-lighting-label = Lighting Quality:
-ui-options-lighting-very-low = Very Low
-ui-options-lighting-low = Low
-ui-options-lighting-medium = Medium
-ui-options-lighting-high = High
-ui-options-scale-label = UI Scale:
-ui-options-scale-auto = Automatic ({ TOSTRING($scale, "P0") })
+ui-options-fullscreen = Pantalla completa
+ui-options-lighting-label = Calidad de iluminación:
+ui-options-lighting-very-low = Muy baja
+ui-options-lighting-low = Baja
+ui-options-lighting-medium = Media
+ui-options-lighting-high = Alta
+ui-options-scale-label = Escala de UI:
+ui-options-scale-auto = Automático ({ TOSTRING($scale, "P0") })
 ui-options-scale-75 = 75%
 ui-options-scale-100 = 100%
 ui-options-scale-125 = 125%
 ui-options-scale-150 = 150%
 ui-options-scale-175 = 175%
 ui-options-scale-200 = 200%
-ui-options-hud-theme = HUD theme:
-ui-options-hud-theme-default = Default
+ui-options-hud-theme = Tema HUD:
+ui-options-hud-theme-default = Predeterminado
 ui-options-hud-theme-plasmafire = Plasmafire
 ui-options-hud-theme-slimecore = Slimecore
 ui-options-hud-theme-clockwork = Clockwork
 ui-options-hud-theme-retro = Retro
-ui-options-hud-theme-minimalist = Minimalist
+ui-options-hud-theme-minimalist = Minimalista
 ui-options-hud-theme-ashen = Ashen
-ui-options-hud-layout-default = Default
-ui-options-hud-layout-separated = Separated
-ui-options-vp-stretch = Stretch viewport to fit game window
-ui-options-vp-scale = Fixed viewport scale:
+ui-options-hud-layout-default = Predeterminado
+ui-options-hud-layout-separated = Separado
+ui-options-vp-stretch = Estirar el viewport para ajustarse a la ventana del juego
+ui-options-vp-scale = Escala de viewport fija:
 ui-options-vp-scale-value = x{ $scale }
-ui-options-vp-integer-scaling = Prefer integer scaling (might cause black bars/clipping)
-ui-options-vp-integer-scaling-tooltip = If this option is enabled, the viewport will be scaled using an integer value
-                                        at specific resolutions. While this results in crisp textures, it also often
-                                        means that black bars appear at the top/bottom of the screen or that part
-                                        of the viewport is not visible.
-ui-options-vp-vertical-fit = Vertical viewport fitting
-ui-options-vp-vertical-fit-tooltip = When enabled, the main viewport will ignore the horizontal axis entirely when
-                                     fitting to your screen. If your screen is smaller than the viewport, then this
-                                     will cause the viewport to be cut off on the horizontal axis.
-ui-options-vp-low-res = Low-resolution viewport
-ui-options-parallax-low-quality = Low-quality Parallax (background)
-ui-options-fps-counter = Show FPS counter
-ui-options-vp-width = Viewport width:
-ui-options-hud-layout = HUD layout:
+ui-options-vp-integer-scaling = Preferir escalado entero (puede causar barras negras/recorte)
+ui-options-vp-integer-scaling-tooltip = Si esta opción está habilitada, el viewport se escalará usando un valor entero
+                                        en resoluciones específicas. Aunque esto resulta en texturas nítidas, también suele
+                                        significar que aparecen barras negras en la parte superior/inferior de la pantalla o que parte
+                                        del viewport no es visible.
+ui-options-vp-vertical-fit = Ajuste vertical del viewport
+ui-options-vp-vertical-fit-tooltip = Cuando está habilitado, el viewport principal ignorará completamente el eje horizontal al ajustarse a tu pantalla. Si tu pantalla es más pequeña que el viewport, esto hará que el viewport se corte en el eje horizontal.
+ui-options-vp-low-res = Viewport de baja resolución
+ui-options-parallax-low-quality = Paralaje de baja calidad (fondo)
+ui-options-fps-counter = Mostrar contador FPS
+ui-options-vp-width = Ancho del viewport:
+ui-options-hud-layout = Diseño HUD:
 
-## Controls menu
+## Menú de Controles
 
-ui-options-binds-reset-all = Reset ALL keybinds
-ui-options-binds-explanation = Click to change binding, right-click to clear
-ui-options-unbound = Unbound
-ui-options-bind-reset = Reset
-ui-options-key-prompt = Press a key...
+ui-options-binds-reset-all = Restablecer TODOS los atajos de teclado
+ui-options-binds-explanation = Haz clic para cambiar el enlace, haz clic derecho para borrar
+ui-options-unbound = Sin asignar
+ui-options-bind-reset = Restablecer
+ui-options-key-prompt = Presiona una tecla...
 
-ui-options-header-movement = Movement
-ui-options-header-camera = Camera
-ui-options-header-interaction-basic = Basic Interaction
-ui-options-header-interaction-adv = Advanced Interaction
-ui-options-header-ui = User Interface
-ui-options-header-misc = Miscellaneous
-ui-options-header-hotbar = Hotbar
-ui-options-header-shuttle = Shuttle
-ui-options-header-map-editor = Map Editor
-ui-options-header-dev = Development
+ui-options-header-movement = Movimiento
+ui-options-header-camera = Cámara
+ui-options-header-interaction-basic = Interacción básica
+ui-options-header-interaction-adv = Interacción avanzada
+ui-options-header-ui = Interfaz de usuario
+ui-options-header-misc = Misceláneo
+ui-options-header-hotbar = Barra de acceso rápido
+ui-options-header-shuttle = Transbordador
+ui-options-header-map-editor = Editor de mapas
+ui-options-header-dev = Desarrollo
 ui-options-header-general = General
 
-ui-options-hotkey-keymap = Use US QWERTY Keys
-ui-options-hotkey-toggle-walk = Toggle Walk
+ui-options-hotkey-keymap = Usar teclas US QWERTY
+ui-options-hotkey-toggle-walk = Alternar caminar
 
-ui-options-function-move-up = Move Up
-ui-options-function-move-left = Move Left
-ui-options-function-move-down = Move Down
-ui-options-function-move-right = Move Right
-ui-options-function-walk = Walk
+ui-options-function-move-up = Mover arriba
+ui-options-function-move-left = Mover izquierda
+ui-options-function-move-down = Mover abajo
+ui-options-function-move-right = Mover derecha
+ui-options-function-walk = Caminar
 
-ui-options-function-camera-rotate-left = Rotate left
-ui-options-function-camera-rotate-right = Rotate right
-ui-options-function-camera-reset = Reset
-ui-options-function-zoom-in = Zoom in
-ui-options-function-zoom-out = Zoom out
-ui-options-function-reset-zoom = Reset zoom
+ui-options-function-camera-rotate-left = Rotar izquierda
+ui-options-function-camera-rotate-right = Rotar derecha
+ui-options-function-camera-reset = Resetear
+ui-options-function-zoom-in = Acercar
+ui-options-function-zoom-out = Alejar
+ui-options-function-reset-zoom = Resetear zoom
 
-ui-options-function-use = Use
-ui-options-function-use-secondary = Use secondary
-ui-options-function-alt-use = Alt use
-ui-options-function-wide-attack = Wide attack
-ui-options-function-activate-item-in-hand = Activate item in hand
-ui-options-function-alt-activate-item-in-hand = Alternative activate item in hand
-ui-options-function-activate-item-in-world = Activate item in world
-ui-options-function-alt-activate-item-in-world = Alternative activate item in world
-ui-options-function-drop = Drop item
-ui-options-function-examine-entity = Examine
-ui-options-function-swap-hands = Swap hands
-ui-options-function-move-stored-item = Move stored item
-ui-options-function-rotate-stored-item = Rotate stored item
-ui-options-function-save-item-location = Save item location
-ui-options-static-storage-ui = Lock storage window to hotbar
+ui-options-function-use = Usar
+ui-options-function-use-secondary = Usar secundario
+ui-options-function-alt-use = Alt usar
+ui-options-function-wide-attack = Ataque amplio
+ui-options-function-activate-item-in-hand = Activar objeto en mano
+ui-options-function-alt-activate-item-in-hand = Activar alternativo objeto en mano
+ui-options-function-activate-item-in-world = Activar objeto en mundo
+ui-options-function-alt-activate-item-in-world = Activar alternativo objeto en mundo
+ui-options-function-drop = Soltar objeto
+ui-options-function-examine-entity = Examinar
+ui-options-function-swap-hands = Intercambiar manos
+ui-options-function-move-stored-item = Mover objeto almacenado
+ui-options-function-rotate-stored-item = Rotar objeto almacenado
+ui-options-function-save-item-location = Guardar ubicación de objeto
+ui-options-static-storage-ui = Bloquear ventana de almacenamiento a barra de acceso rápido
 
-ui-options-function-smart-equip-backpack = Smart-equip to backpack
-ui-options-function-smart-equip-belt = Smart-equip to belt
-ui-options-function-open-backpack = Open backpack
-ui-options-function-open-belt = Open belt
-ui-options-function-throw-item-in-hand = Throw item
-ui-options-function-try-pull-object = Pull object
-ui-options-function-move-pulled-object = Move pulled object
-ui-options-function-release-pulled-object = Release pulled object
-ui-options-function-point = Point at location
-ui-options-function-rotate-object-clockwise = Rotate clockwise
-ui-options-function-rotate-object-counterclockwise = Rotate counterclockwise
-ui-options-function-flip-object = Flip
+ui-options-function-smart-equip-backpack = Equipar inteligentemente a mochila
+ui-options-function-smart-equip-belt = Equipar inteligentemente a cinturón
+ui-options-function-open-backpack = Abrir mochila
+ui-options-function-open-belt = Abrir cinturón
+ui-options-function-throw-item-in-hand = Lanzar objeto en mano
+ui-options-function-try-pull-object = Intentar tirar de objeto
+ui-options-function-move-pulled-object = Mover objeto tirado
+ui-options-function-release-pulled-object = Liberar objeto tirado
+ui-options-function-point = Señalar ubicación
+ui-options-function-rotate-object-clockwise = Rotar en sentido horario
+ui-options-function-rotate-object-counterclockwise = Rotar en sentido antihorario
+ui-options-function-flip-object = Voltear
 
-ui-options-function-focus-chat-input-window = Focus chat
-ui-options-function-focus-local-chat-window = Focus chat (IC)
-ui-options-function-focus-emote = Focus chat (Emote)
-ui-options-function-focus-whisper-chat-window = Focus chat (Whisper)
-ui-options-function-focus-radio-window = Focus chat (Radio)
-ui-options-function-focus-looc-window = Focus chat (LOOC)
-ui-options-function-focus-ooc-window = Focus chat (OOC)
-ui-options-function-focus-admin-chat-window = Focus chat (Admin)
-ui-options-function-focus-dead-chat-window = Focus chat (Dead)
-ui-options-function-focus-console-chat-window = Focus chat (Console)
-ui-options-function-cycle-chat-channel-forward = Cycle channel (Forward)
-ui-options-function-cycle-chat-channel-backward = Cycle channel (Backward)
-ui-options-function-open-character-menu = Open character menu
-ui-options-function-open-context-menu = Open context menu
-ui-options-function-open-crafting-menu = Open crafting menu
-ui-options-function-open-inventory-menu = Open inventory
-ui-options-function-open-a-help = Open admin help
-ui-options-function-open-abilities-menu = Open action menu
-ui-options-function-open-emotes-menu = Open emotes menu
-ui-options-function-toggle-round-end-summary-window = Toggle round end summary window
-ui-options-function-open-entity-spawn-window = Open entity spawn menu
-ui-options-function-open-sandbox-window = Open sandbox menu
-ui-options-function-open-tile-spawn-window = Open tile spawn menu
-ui-options-function-open-decal-spawn-window = Open decal spawn menu
-ui-options-function-open-admin-menu = Open admin menu
-ui-options-function-open-guidebook = Open guidebook
-ui-options-function-window-close-all = Close all windows
-ui-options-function-window-close-recent = Close recent window
-ui-options-function-show-escape-menu = Toggle game menu
-ui-options-function-escape-context = Close recent window or toggle game menu
+ui-options-function-focus-chat-input-window = Enfocar entrada de chat
+ui-options-function-focus-local-chat-window = Enfocar chat (IC)
+ui-options-function-focus-emote = Enfocar chat (Emote)
+ui-options-function-focus-whisper-chat-window = Enfocar chat (Susurro)
+ui-options-function-focus-radio-window = Enfocar chat (Radio)
+ui-options-function-focus-looc-window = Enfocar chat (LOOC)
+ui-options-function-focus-ooc-window = Enfocar chat (OOC)
+ui-options-function-focus-admin-chat-window = Enfocar chat (Admin)
+ui-options-function-focus-dead-chat-window = Enfocar chat (Muerto)
+ui-options-function-focus-console-chat-window = Enfocar chat (Consola)
+ui-options-function-cycle-chat-channel-forward = Cambiar canal (Adelante)
+ui-options-function-cycle-chat-channel-backward = Cambiar canal (Atrás)
+ui-options-function-open-character-menu = Abrir menú de personaje
+ui-options-function-open-context-menu = Abrir menú contextual
+ui-options-function-open-crafting-menu = Abrir menú de crafting
+ui-options-function-open-inventory-menu = Abrir inventario
+ui-options-function-open-a-help = Abrir ayuda admin
+ui-options-function-open-abilities-menu = Abrir menú de acciones
+ui-options-function-open-emotes-menu = Abrir menú de emotes
+ui-options-function-toggle-round-end-summary-window = Alternar ventana de resumen final de ronda
+ui-options-function-open-entity-spawn-window = Abrir menú de spawn de entidad
+ui-options-function-open-sandbox-window = Abrir menú sandbox
+ui-options-function-open-tile-spawn-window = Abrir menú de spawn de tile
+ui-options-function-open-decal-spawn-window = Abrir menú de spawn de decal
+ui-options-function-open-admin-menu = Abrir menú admin
+ui-options-function-open-guidebook = Abrir guía
+ui-options-function-window-close-all = Cerrar todas las ventanas
+ui-options-function-show-debug-console = Abrir consola
+ui-options-function-show-debug-monitors = Mostrar monitores de depuración
+ui-options-function-inspect-entity = Inspeccionar entidad
+ui-options-function-hide-ui = Ocultar UI
 
-ui-options-function-take-screenshot = Take screenshot
-ui-options-function-take-screenshot-no-ui = Take screenshot (without UI)
-ui-options-function-toggle-fullscreen = Toggle fullscreen
+ui-options-net-predict = Predicción del lado del cliente
+ui-options-net-interp-ratio = Tamaño del buffer de estado
+ui-options-net-interp-ratio-tooltip = Aumentar esto generalmente hará que el juego sea más resistente
+                                      a la pérdida de paquetes del servidor al cliente, sin embargo,
+                                      al hacerlo efectivamente añade un poco más de latencia y requiere que
+                                      el cliente prediga más ticks futuros.
 
-ui-options-function-editor-place-object = Place object
-ui-options-function-editor-cancel-place = Cancel placement
-ui-options-function-editor-grid-place = Place in grid
-ui-options-function-editor-line-place = Place line
-ui-options-function-editor-rotate-object = Rotate
-ui-options-function-editor-flip-object = Flip
-ui-options-function-editor-copy-object = Copy
+ui-options-net-predict-tick-bias = Sesgo de tick de predicción
+ui-options-net-predict-tick-bias-tooltip = Aumentar esto generalmente hará que el juego sea más resistente
+                                           a la pérdida de paquetes del cliente al servidor, sin embargo,
+                                           al hacerlo efectivamente añade un poco más de latencia y requiere que
+                                           el cliente prediga más ticks futuros.
 
-ui-options-function-show-debug-console = Open Console
-ui-options-function-show-debug-monitors = Show Debug Monitors
-ui-options-function-inspect-entity = Inspect Entity
-ui-options-function-hide-ui = Hide UI
+ui-options-net-pvs-spawn = Presupuesto de spawn de entidad PVS
+ui-options-net-pvs-spawn-tooltip = Esto limita la tasa a la cual el servidor enviará entidades recién creadas
+                                   al cliente. Reducir esto puede ayudar a reducir los tartamudeos debido al spawn de entidades,
+                                   pero puede llevar a la aparición repentina de objetos en escena (pop-in).
 
-ui-options-function-hotbar1 = Hotbar slot 1
-ui-options-function-hotbar2 = Hotbar slot 2
-ui-options-function-hotbar3 = Hotbar slot 3
-ui-options-function-hotbar4 = Hotbar slot 4
-ui-options-function-hotbar5 = Hotbar slot 5
-ui-options-function-hotbar6 = Hotbar slot 6
-ui-options-function-hotbar7 = Hotbar slot 7
-ui-options-function-hotbar8 = Hotbar slot 8
-ui-options-function-hotbar9 = Hotbar slot 9
-ui-options-function-hotbar0 = Hotbar slot 0
-ui-options-function-loadout1 = Hotbar Loadout 1
-ui-options-function-loadout2 = Hotbar Loadout 2
-ui-options-function-loadout3 = Hotbar Loadout 3
-ui-options-function-loadout4 = Hotbar Loadout 4
-ui-options-function-loadout5 = Hotbar Loadout 5
-ui-options-function-loadout6 = Hotbar Loadout 6
-ui-options-function-loadout7 = Hotbar Loadout 7
-ui-options-function-loadout8 = Hotbar Loadout 8
-ui-options-function-loadout9 = Hotbar Loadout 9
-ui-options-function-loadout0 = Hotbar Loadout 0
+ui-options-net-pvs-entry = Presupuesto de entidad PVS
+ui-options-net-pvs-entry-tooltip = Esto limita la tasa a la cual el servidor enviará entidades recién visibles
+                                   al cliente. Reducir esto puede ayudar a reducir los tartamudeos,
+                                   pero puede llevar a la aparición repentina de objetos en escena (pop-in).
 
-ui-options-function-shuttle-strafe-up = Strafe up
-ui-options-function-shuttle-strafe-right = Strafe right
-ui-options-function-shuttle-strafe-left = Strafe left
-ui-options-function-shuttle-strafe-down = Strafe down
-ui-options-function-shuttle-rotate-left = Rotate left
-ui-options-function-shuttle-rotate-right = Rotate right
-ui-options-function-shuttle-brake = Brake
+ui-options-net-pvs-leave = Tasa de desenganche PVS
+ui-options-net-pvs-leave-tooltip = Esto limita la tasa a la cual el cliente removerá entidades fuera de vista.
+                                   Reducir esto puede ayudar a reducir los tartamudeos al moverse,
+                                   pero ocasionalmente podría llevar a predicciones erróneas y otros problemas.
 
-## Network menu
+cmd-options-desc = Abre el menú de opciones, opcionalmente con una pestaña específica seleccionada.
+cmd-options-help = Uso: options [tab]
 
-ui-options-net-predict = Client-side prediction
-
-ui-options-net-interp-ratio = State buffer size
-ui-options-net-interp-ratio-tooltip = Increasing this will generally make the game more resistant
-                                      to server->client packet-loss, however in doing so it
-                                      effectively adds slightly more latency and requires the
-                                      client to predict more future ticks.
-
-ui-options-net-predict-tick-bias = Prediction tick bias
-ui-options-net-predict-tick-bias-tooltip = Increasing this will generally make the game more resistant
-                                           to client->server packet-loss, however in doing so it
-                                           effectively adds slightly more latency and requires the
-                                           client to predict more future ticks.
-
-ui-options-net-pvs-spawn = PVS entity spawn budget
-ui-options-net-pvs-spawn-tooltip = This limits the rate at which the server will send newly spawned
-                                       entities to the client. Lowering this can help reduce
-                                       stuttering due to entity spawning, but can lead to pop-in.
-
-ui-options-net-pvs-entry = PVS entity budget
-ui-options-net-pvs-entry-tooltip = This limits the rate at which the server will send newly visible
-                                       entities to the client. Lowering this can help reduce
-                                       stuttering, but can lead to pop-in.
-
-ui-options-net-pvs-leave = PVS detach rate
-ui-options-net-pvs-leave-tooltip = This limits the rate at which the client will remove
-                                       out-of-view entities. Lowering this can help reduce
-                                       stuttering when walking around, but could occasionally
-                                       lead to mispredicts and other issues.
-
-## Toggle window console command
-cmd-options-desc = Opens options menu, optionally with a specific tab selected.
-cmd-options-help = Usage: options [tab]
-
-## Accessibility menu
-
-ui-options-enable-color-name = Add colors to character names
-ui-options-colorblind-friendly = Colorblind friendly mode
-ui-options-reduced-motion = Reduce motion of visual effects
-ui-options-chat-window-opacity = Chat window opacity
-ui-options-screen-shake-intensity = Screen shake intensity
+ui-options-enable-color-name = Agregar colores a los nombres de los personajes
+ui-options-colorblind-friendly = Modo amigable para daltónicos
+ui-options-reduced-motion = Reducir movimiento de efectos visuales
+ui-options-chat-window-opacity = Opacidad de la ventana de chat
+ui-options-screen-shake-intensity = Intensidad del temblor de pantalla

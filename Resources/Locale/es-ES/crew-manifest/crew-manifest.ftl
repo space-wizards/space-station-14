@@ -1,4 +1,4 @@
-crew-manifest-window-title = Crew Manifest
-crew-manifest-button-label = Crew Manifest
-crew-manifest-button-description = Show a list of your fellow crewmembers
-crew-manifest-no-valid-station = Invalid station, or empty manifest!
+crew-manifest-window-title = Manifesto de la Tripulación
+crew-manifest-button-label = Manifesto de la Tripulación
+crew-manifest-button-description = Muestra una lista de tus compañeros de tripulación
+crew-manifest-no-valid-station = Estación inválida o manifiesto vacío

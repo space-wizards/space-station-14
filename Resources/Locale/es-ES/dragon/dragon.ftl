@@ -1,5 +1,5 @@
-dragon-round-end-agent-name = dragon
+dragon-round-end-agent-name = dragón
 
-objective-issuer-dragon = [color=#7567b6]Space Dragon[/color]
+objective-issuer-dragon = [color=#7567b6]Dragón Espacial[/color]
 
-dragon-role-briefing = Summon 3 carp rifts and take over this quadrant!
+dragon-role-briefing = ¡Invoca 3 rendijas de carpa y toma el control de este cuadrante!

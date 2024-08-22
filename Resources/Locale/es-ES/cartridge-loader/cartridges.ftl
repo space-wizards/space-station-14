@@ -1,21 +1,21 @@
-device-pda-slot-component-slot-name-cartridge = Cartridge
+device-pda-slot-component-slot-name-cartridge = Cartucho
 
-default-program-name = Program
-notekeeper-program-name = Notekeeper
-news-read-program-name = Station news
+default-program-name = Programa
+notekeeper-program-name = Notas
+news-read-program-name = Noticias de la estación
 
-crew-manifest-program-name = Crew manifest
-crew-manifest-cartridge-loading = Loading ...
+crew-manifest-program-name = Manifestación de la tripulación
+crew-manifest-cartridge-loading = Cargando ...
 
 net-probe-program-name = NetProbe
-net-probe-scan = Scanned {$device}!
-net-probe-label-name = Name
-net-probe-label-address = Address
-net-probe-label-frequency = Frequency
-net-probe-label-network = Network
+net-probe-scan = ¡Escaneado {$device}!
+net-probe-label-name = Nombre
+net-probe-label-address = Dirección
+net-probe-label-frequency = Frecuencia
+net-probe-label-network = Red
 
 log-probe-program-name = LogProbe
-log-probe-scan = Downloaded logs from {$device}!
-log-probe-label-time = Time
-log-probe-label-accessor = Accessed by
+log-probe-scan = ¡Descargados los registros de {$device}!
+log-probe-label-time = Hora
+log-probe-label-accessor = Accedido por
 log-probe-label-number = #

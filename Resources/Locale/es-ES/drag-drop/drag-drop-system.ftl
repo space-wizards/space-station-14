@@ -1,1 +1,1 @@
-drag-drop-system-out-of-range-text = You can't reach there!
+drag-drop-system-out-of-range-text = No llegas hasta ahí!

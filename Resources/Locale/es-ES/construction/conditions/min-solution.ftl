@@ -1,2 +1,2 @@
-construction-examine-condition-min-solution = First, add {$quantity}u of {$reagent}.
-construction-guide-condition-min-solution = Add {$quantity}u of {$reagent}
+construction-examine-condition-min-solution = Primero, añade {$quantity}u de {$reagent}.
+construction-guide-condition-min-solution = Añade {$quantity}u de {$reagent}.
