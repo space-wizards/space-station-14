@@ -1,4 +1,4 @@
 story-template-generic =
- This is { INDEFINITE($bookGenre) } {$bookGenre} about { INDEFINITE($char1Adj) } {$char1Adj} {$char1Type} and { INDEFINITE($char2Adj) } {$char2Adj} {$char2Type}. Due to {$event}, they {$actionTrait} {$action} { INDEFINITE($char3Type) } {$char3Type} {$location}.
+ Este es { INDEFINITE($bookGenre) } {$bookGenre} sobre { INDEFINITE($char1Adj) } {$char1Adj} {$char1Type} y { INDEFINITE($char2Adj) } {$char2Adj} {$char2Type}. Debido a {$event}, ellos {$actionTrait} {$action} { INDEFINITE($char3Type) } {$char3Type} {$location}.
 
- The {$element} is {$elementTrait}.
+ El {$element} es {$elementTrait}.

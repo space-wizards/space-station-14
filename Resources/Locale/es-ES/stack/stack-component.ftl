@@ -1,23 +1,23 @@
 ### UI
 
-# Shown when a stack is examined in details range
+# Mostrado cuando se examina una pila en detalle
 comp-stack-examine-detail-count = {$count ->
-    [one] There is [color={$markupCountColor}]{$count}[/color] thing
-    *[other] There are [color={$markupCountColor}]{$count}[/color] things
-} in the stack.
+    [one] Hay [color={$markupCountColor}]{$count}[/color] cosa
+    *[other] Hay [color={$markupCountColor}]{$count}[/color] cosas
+} en la pila.
 
-# Stack status control
-comp-stack-status = Count: [color=white]{$count}[/color]
+# Control del estado de la pila
+comp-stack-status = Contar: [color=white]{$count}[/color]
 
-### Interaction Messages
+### Mensajes de Interacción
 
-# Shown when attempting to add to a stack that is full
-comp-stack-already-full = Stack is already full.
+# Mostrado cuando se intenta agregar a una pila que está llena
+comp-stack-already-full = La pila ya está llena.
 
-# Shown when a stack becomes full
-comp-stack-becomes-full = Stack is now full.
+# Mostrado cuando una pila se llena
+comp-stack-becomes-full = La pila ahora está llena.
 
-# Text related to splitting a stack
-comp-stack-split = You split the stack.
-comp-stack-split-halve = Halve
-comp-stack-split-too-small = Stack is too small to split.
+# Texto relacionado con la división de una pila
+comp-stack-split = Has dividido la pila.
+comp-stack-split-halve = Dividir a la mitad
+comp-stack-split-too-small = La pila es demasiado pequeña para dividirla.

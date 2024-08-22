@@ -1,3 +1,3 @@
-traitor-codes-message-singular = syndicate codeword:
-traitor-codes-message-plural = syndicate codewords:
-traitor-codes-none = no known codewords
+traitor-codes-message-singular = código de sindicato:
+traitor-codes-message-plural = códigos de sindicato:
+traitor-codes-none = ningún código conocido

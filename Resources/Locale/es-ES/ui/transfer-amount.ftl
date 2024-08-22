@@ -1,13 +1,13 @@
-﻿### Loc for the transfer amount eui window
+﻿### Loc para la ventana de cantidad de transferencia
 
-## Title
+## Título
 
-ui-transfer-amount-title = Change Transfer Amount
+ui-transfer-amount-title = Cambiar Cantidad de Transferencia
 
-## Text for the button to apply changes
+## Texto para el botón para aplicar cambios
 
-ui-transfer-amount-apply = Set Amount
+ui-transfer-amount-apply = Establecer Cantidad
 
-## Placeholder text for the amount line edit
+## Texto de marcador de posición para el campo de cantidad
 
-ui-transfer-amount-line-edit-placeholder = Amount
+ui-transfer-amount-line-edit-placeholder = Cantidads

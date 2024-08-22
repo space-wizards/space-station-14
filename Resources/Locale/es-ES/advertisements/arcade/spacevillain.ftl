@@ -1,6 +1,6 @@
 advertisement-space-villain-1 = ¿Eres lo suficientemente valiente para pasarte este juego?
 advertisement-space-villain-2 = ¡Vence al villano y gana un premio!
-advertisement-space-villain-3 = ¡ENFRENTAME!
+advertisement-space-villain-3 = ¡ENFRÉNTATE A MÍ!
 advertisement-space-villain-4 = ¡El espacio necesita un héroe!
 advertisement-space-villain-5 = ¡Estoy esperando a un héroe!
 advertisement-space-villain-6 = ¿Alguien puede salvarnos?
@@ -13,7 +13,6 @@ advertisement-space-villain-12 = ¡TEMEME!
 advertisement-space-villain-13 = ¿Te atreves a enfrentarte a mí en batalla?
 advertisement-space-villain-14 = ¡Cuidado, estoy vivo!
 advertisement-space-villain-15 = ¡Tengo hambre!
-
 thankyou-space-villain-1 = ¿Y a dónde crees que vas, mocoso?
 thankyou-space-villain-2 = ¿Es todo lo que tienes?
 thankyou-space-villain-3 = ¡Esta pelea no ha terminado!

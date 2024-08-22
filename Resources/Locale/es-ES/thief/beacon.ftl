@@ -1,8 +1,8 @@
-thief-fulton-set = Delivery coordinates are set.
-thief-fulton-clear = Delivery coordinates cleared.
+thief-fulton-set = Las coordenadas de entrega están configuradas.
+thief-fulton-clear = Coordenadas de entrega eliminadas.
 
-thief-fulton-examined-set = Coordinates entered. Bluespace teleportation of the nearest objects will be performed when the evacuation shuttle departs.
-thief-fulton-examined-unset = Beacon coordinates are not set.
+thief-fulton-examined-set = Coordenadas ingresadas. La teletransportación bluespace de los objetos cercanos se realizará cuando el transbordador de evacuación parta.
+thief-fulton-examined-unset = Las coordenadas del Beacon no están configuradas.
 
-thief-fulton-verb-text = Set coordinates
-thief-fulton-verb-message = Set the coordinates of your thief's hideout, where all nearby items will be sent at the end of the round.
+thief-fulton-verb-text = Configurar coordenadas
+thief-fulton-verb-message = Configura las coordenadas del escondite del ladrón, donde se enviarán todos los objetos cercanos al final de la ronda.

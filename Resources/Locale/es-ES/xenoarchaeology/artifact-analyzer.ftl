@@ -1,42 +1,42 @@
-analysis-console-menu-title = analysis console
-analysis-console-server-list-button = Server List
-analysis-console-scan-button = Scan
-analysis-console-scan-tooltip-info = Scan artifacts to learn information about their structure.
-analysis-console-print-button = Print
-analysis-console-print-tooltip-info = Print out the current information about the artifact.
-analysis-console-extract-button = Extract
-analysis-console-extract-button-info = Extract points from an artifact based on the newly explored nodes.
-analysis-console-bias-up = Up
-analysis-console-bias-down = Down
-analysis-console-bias-button-info-up = Toggles the bias an artifact has in moving between its nodes. Up heads toward zero depth.
-analysis-console-bias-button-info-down = Toggles the bias an artifact has in moving between its nodes. Down heads toward ever-higher depths.
+analysis-console-menu-title = consola de análisis
+analysis-console-server-list-button = Lista de servidores
+analysis-console-scan-button = Escanear
+analysis-console-scan-tooltip-info = Escanear artefactos para obtener información sobre su estructura.
+analysis-console-print-button = Imprimir
+analysis-console-print-tooltip-info = Imprimir la información actual sobre el artefacto.
+analysis-console-extract-button = Extraer
+analysis-console-extract-button-info = Extraer puntos de un artefacto basándose en los nuevos nodos explorados.
+analysis-console-bias-up = Arriba
+analysis-console-bias-down = Abajo
+analysis-console-bias-button-info-up = Cambia el sesgo que tiene un artefacto al moverse entre sus nodos. Arriba se dirige hacia una profundidad de cero.
+analysis-console-bias-button-info-down = Cambia el sesgo que tiene un artefacto al moverse entre sus nodos. Abajo se dirige hacia profundidades cada vez mayores.
 
-analysis-console-info-no-scanner = No analyzer connected! Please connect one using a multitool.
-analysis-console-info-no-artifact = No artifact present! Place one on the pad then scan for information.
-analysis-console-info-ready = Systems operational. Ready to scan.
+analysis-console-info-no-scanner = ¡No hay analizador conectado! Por favor, conecta uno usando una herramienta multifunción.
+analysis-console-info-no-artifact = ¡No hay artefacto presente! Coloca uno en el soporte y luego escanea para obtener información.
+analysis-console-info-ready = Sistemas operativos. Listo para escanear.
 
-analysis-console-info-id = NODE_ID: {$id}
-analysis-console-info-depth = DEPTH: {$depth}
-analysis-console-info-triggered-true = ACTIVATED: TRUE
-analysis-console-info-triggered-false = ACTIVATED: FALSE
-analysis-console-info-effect = REACTION: {$effect}
-analysis-console-info-trigger = STIMULUS: {$trigger}
-analysis-console-info-edges = EDGES: {$edges}
-analysis-console-info-value = UNEXTRACTED_VALUE: {$value}
+analysis-console-info-id = ID_DEL_NODO: {$id}
+analysis-console-info-depth = PROFUNDIDAD: {$depth}
+analysis-console-info-triggered-true = ACTIVADO: VERDADERO
+analysis-console-info-triggered-false = ACTIVADO: FALSO
+analysis-console-info-effect = REACCIÓN: {$effect}
+analysis-console-info-trigger = ESTÍMULO: {$trigger}
+analysis-console-info-edges = BORDES: {$edges}
+analysis-console-info-value = VALOR_NO_EXTRAÍDO: {$value}
 
-analysis-console-info-scanner = Scanning...
-analysis-console-info-scanner-paused = Paused.
+analysis-console-info-scanner = Escaneando...
+analysis-console-info-scanner-paused = En pausa.
 analysis-console-progress-text = {$seconds ->
-    [one] T-{$seconds} second
-    *[other] T-{$seconds} seconds
+    [one] T-{$seconds} segundo
+    *[other] T-{$seconds} segundos
 }
-analysis-console-no-server-connected = Cannot extract. No server connected.
-analysis-console-no-artifact-placed = No artifact on scanner.
-analysis-console-no-points-to-extract = No points to extract.
+nalysis-console-no-server-connected = No se puede extraer. No hay servidor conectado.
+analysis-console-no-artifact-placed = No hay artefacto en el escáner.
+analysis-console-no-points-to-extract = No hay puntos para extraer.
 
-analyzer-artifact-component-upgrade-analysis = analysis duration
+analyzer-artifact-component-upgrade-analysis = duración del análisis
 
-analysis-console-print-popup = The console printed out a report.
-analyzer-artifact-extract-popup = Energy shimmers on the artifact's surface!
+analysis-console-print-popup = La consola imprimió un informe.
+analyzer-artifact-extract-popup = ¡La energía brilla en la superficie del artefacto!
 
-analysis-report-title = Artifact Report: Node {$id}
+analysis-report-title = Informe del Artefacto: Nodo {$id}

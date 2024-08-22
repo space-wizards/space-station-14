@@ -1,15 +1,14 @@
 ﻿### EmitterComponent
 
-# Shows when attempting to turn the emitter on or off without proper access
-comp-emitter-access-locked = The {$target} is access locked!
+# Muestra cuando se intenta encender o apagar el emisor sin el acceso adecuado
+comp-emitter-access-locked = ¡El {$target} está bloqueado por acceso!
 
-# Shows when turning the emitter on/off
-comp-emitter-turned-on = The {$target} turns on.
+# Muestra al encender o apagar el emisor
+comp-emitter-turned-on = El {$target} se enciende.
+comp-emitter-turned-off = El {$target} se apaga.
 
-comp-emitter-turned-off = The {$target} turns off.
+# Muestra si el usuario intenta activar el emisor mientras no está anclado.
+comp-emitter-not-anchored = ¡El {$target} no está anclado al suelo!
 
-# Shows if the user attempts to activate the emitter while it's un-anchored.
-comp-emitter-not-anchored = The {$target} isn't anchored to the ground!
-
-emitter-component-current-type = The current selected type is: {$type}.
-emitter-component-type-set = Type set to: {$type}
+emitter-component-current-type = El tipo actualmente seleccionado es: {$type}.
+emitter-component-type-set = Tipo establecido en: {$type}

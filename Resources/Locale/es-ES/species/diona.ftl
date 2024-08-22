@@ -1,1 +1,1 @@
-diona-hurt-by-herbicide-popup = The chemical wilts some of your greenery!
+diona-hurt-by-herbicide-popup = ¡El químico marchita parte de tu vegetación!

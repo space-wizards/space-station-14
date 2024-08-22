@@ -1,1 +1,1 @@
-attach-to-grandparent-verb-get-data-text = Attach to grid
+attach-to-grandparent-verb-get-data-text = Adjuntar al antepasado

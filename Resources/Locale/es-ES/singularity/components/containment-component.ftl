@@ -1,13 +1,13 @@
-﻿comp-containment-turned-on = The containment field generator boots up.
-comp-containment-turned-off = The containment field generator shuts down.
+﻿comp-containment-turned-on = El generador de campo de contención se activa.
+comp-containment-turned-off = El generador de campo de contención se apaga.
 
-comp-containment-on = It's switched [color=green]on[/color], ready to generate a connection.
-comp-containment-off = It's switched [color=red]off[/color].
+comp-containment-on = Está [color=green]encendido[/color], listo para generar una conexión.
+comp-containment-off = Está [color=red]apagado[/color].
 
-comp-containment-connected = The containment field generator shoots out a light as it establishes a connection!
-comp-containment-disconnected = The containment field generator light fades away, severing the connection.
+comp-containment-connected = ¡El generador de campo de contención emite una luz mientras establece una conexión!
+comp-containment-disconnected = La luz del generador de campo de contención se desvanece, cortando la conexión.
 
-comp-containment-anchor-warning = You cannot unanchor the containment field generator while it's on or connected!
-comp-containment-toggle-warning = You cannot turn the generator off while it's connected.
+comp-containment-anchor-warning = ¡No puedes desanclar el generador de campo de contención mientras esté encendido o conectado!
+comp-containment-toggle-warning = ¡No puedes apagar el generador mientras esté conectado!
 
-comp-field-vaporized = The {$entity} hits the field and vaporizes into nothing!
+comp-field-vaporized = ¡El {$entity} choca con el campo y se vaporiza en nada!

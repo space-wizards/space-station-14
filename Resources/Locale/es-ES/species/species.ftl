@@ -1,11 +1,11 @@
 ﻿## Species Names
 
-species-name-human = Human
-species-name-dwarf = Dwarf
-species-name-reptilian = Reptilian
-species-name-slime = Slime Person
+species-name-human = Humano
+species-name-dwarf = Enano
+species-name-reptilian = Reptiliano
+species-name-slime = Slime
 species-name-diona = Diona
-species-name-arachnid = Arachnid
-species-name-moth = Moth Person
-species-name-skeleton = Skeleton
+species-name-arachnid = Arácnido
+species-name-moth = Polilla
+species-name-skeleton = Esqueleto
 species-name-vox = Vox

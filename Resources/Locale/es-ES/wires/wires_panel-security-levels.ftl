@@ -1,8 +1,8 @@
-# Examination for different levels of wiring protection
-wires-panel-component-on-examine-security-level1 = There is a steel plate preventing access to the internal wiring. Use a [color=cyan]Crowbar[/color] to remove it.
-wires-panel-component-on-examine-security-level2 = A steel plate has been welded to the inside of the [color=lightgray]maintenance panel[/color]. Use a [color=cyan]Welder[/color] to free it.
-wires-panel-component-on-examine-security-level3 = There is a plasteel plate preventing access to the internal wiring. Use a [color=cyan]Crowbar[/color] to remove it.
-wires-panel-component-on-examine-security-level4 = A plasteel plate has been welded to the inside of the [color=lightgray]maintenance panel[/color]. Use a [color=cyan]Welder[/color] to free it.
-wires-panel-component-on-examine-security-level5 = The inside of the [color=lightgray]maintenance panel[/color] is protected by a security grille. Use [color=cyan]Wirecutters[/color] to remove  it.
-wires-panel-component-on-examine-security-level6 = A plasteel plate sits within the interior of the [color=lightgray]maintenance panel[/color]. Use a [color=cyan]Crowbar[/color] to remove it.
-wires-panel-component-on-examine-security-level7 = A welded plasteel plate protects the interior of the [color=lightgray]maintenance panel[/color]. Use a [color=cyan]Welder[/color] to free it.
+# Examen para diferentes niveles de protección del cableado
+wires-panel-component-on-examine-security-level1 = Hay una placa de acero que impide el acceso al cableado interno. Utilice una [color=cyan]Palanca[/color] para retirarla.
+wires-panel-component-on-examine-security-level2 = Se ha soldado una placa de acero al interior del [color=lightgray]panel de mantenimiento[/color]. Utiliza un [color=cyan]Soldador[/color] para liberarla.
+wires-panel-component-on-examine-security-level3 = Hay una placa de plasteel que impide el acceso al cableado interno. Usa una [color=cyan]Palanca[/color] para quitarla.
+wires-panel-component-on-examine-security-level4 = Se ha soldado una placa de plasteel al interior del [color=lightgray]panel de mantenimiento[/color]. Utiliza un [color=cyan]Soldador[/color] para liberarla.
+wires-panel-component-on-examine-security-level5 = El interior del [color=lightgray]panel-de-mantenimiento[/color] está protegido por una rejilla de seguridad. Utilice [color=cyan]Cortaalambres[/color] para quitarla.
+wires-panel-component-on-examine-security-level6 = Una placa de plasteel se encuentra en el interior del [color=lightgray]panel de mantenimiento[/color]. Usa una [color=cyan]Palanca[/color] para quitarla.
+wires-panel-component-on-examine-security-level7 = Una placa de plasteel soldada protege el interior del [color=lightgray]panel-de-mantenimiento[/color]. Utiliza un [color=cyan]Soldador[/color] para liberarla.

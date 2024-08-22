@@ -1,12 +1,12 @@
 # Shown when greeted with the Suspicion role
-suspicion-role-greeting = You're a {$roleName}!
+suspicion-role-greeting = ¡Eres un(a) {$roleName}!
 
 # Shown when greeted with the Suspicion role
-suspicion-objective = Objective: {$objectiveText}
+suspicion-objective = Objetivo: {$objectiveText}
 
 # Shown when greeted with the Suspicion role
 suspicion-partners-in-crime = {$partnersCount ->
-    [zero] You're on your own. Good luck!
-    [one] Your partner in crime is {$partnerNames}.
-    *[other] Your partners in crime are {$partnerNames}.
-    }
+    [zero] Estás solo(a). ¡Buena suerte!
+    [one] Tu compañero(a) en el crimen es {$partnerNames}.
+    *[other] Tus compañeros(as) en el crimen son {$partnerNames}.
+}

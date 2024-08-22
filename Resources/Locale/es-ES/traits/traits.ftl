@@ -1,55 +1,55 @@
-trait-blindness-name = Blindness
-trait-blindness-desc = You are legally blind, and can't see clearly past a few meters in front of you.
+trait-blindness-name = Ceguera
+trait-blindness-desc = Eres legalmente ciego y no puedes ver claramente más allá de unos pocos metros frente a ti.
 
-trait-poor-vision-name = Short-sighted
-trait-poor-vision-desc = Your eyes are not what they once were, you have difficulty seeing things far away without corrective glasses.
+trait-poor-vision-name = Miopía
+trait-poor-vision-desc = Tus ojos no son lo que solían ser; tienes dificultad para ver cosas a lo lejos sin gafas correctivas.
 
-trait-narcolepsy-name = Narcolepsy
-trait-narcolepsy-desc = You fall asleep randomly.
+trait-narcolepsy-name = Narcolepsia
+trait-narcolepsy-desc = Te duermes aleatoriamente.
 
-trait-pacifist-name = Pacifist
-trait-pacifist-desc = You cannot attack or hurt any living beings.
+trait-pacifist-name = Pacifista
+trait-pacifist-desc = No puedes atacar ni dañar a ningún ser viviente.
 
-permanent-blindness-trait-examined = [color=lightblue]{CAPITALIZE(POSS-ADJ($target))} eyes are glassy and unfocused. It doesn't seem like {SUBJECT($target)} can see you well, if at all.[/color]
+permanent-blindness-trait-examined = [color=lightblue]{CAPITALIZE(POSS-ADJ($target))} ojos están vidriosos y desenfocados. No parece que {SUBJECT($target)} pueda verte bien, si es que puede verte en absoluto.[/color]
 
-trait-lightweight-name = Lightweight drunk
-trait-lightweight-desc = Alcohol has a stronger effect on you.
+trait-lightweight-name = Sensible al alcohol
+trait-lightweight-desc = El alcohol tiene un efecto más fuerte en ti.
 
-trait-muted-name = Muted
-trait-muted-desc = You can't speak.
+trait-muted-name = Mudo
+trait-muted-desc = No puedes hablar.
 
 trait-paracusia-name = Paracusia
-trait-paracusia-desc = You hear sounds that aren't really there.
+trait-paracusia-desc = Oyes sonidos que en realidad no están presentes.
 
-trait-unrevivable-name = Unrevivable
-trait-unrevivable-desc = You are unable to be revived by defibrillators.
+trait-unrevivable-name = No reanimable
+trait-unrevivable-desc = No puedes ser reanimado por desfibriladores.
 
-trait-pirate-accent-name = Pirate accent
-trait-pirate-accent-desc = You can't stop speaking like a pirate!
+trait-pirate-accent-name = Acento de pirata
+trait-pirate-accent-desc = ¡No puedes dejar de hablar como un pirata!
 
-trait-accentless-name = Accentless
-trait-accentless-desc = You don't have the accent that your species would usually have
+trait-accentless-name = Sin acento
+trait-accentless-desc = No tienes el acento que tu especie normalmente tendría.
 
-trait-frontal-lisp-name = Frontal lisp
-trait-frontal-lisp-desc = You thpeak with a lithp.
+trait-frontal-lisp-name = Lisp frontal
+trait-frontal-lisp-desc = Hablas con un lisp.
 
-trait-socialanxiety-name = Stutter
-trait-socialanxiety-desc = You speak with a stutter.
+trait-socialanxiety-name = Tartamudeo
+trait-socialanxiety-desc = Hablas con tartamudeo.
 
-trait-southern-name = Southern drawl
-trait-southern-desc = You have a different way of speakin'.
+trait-southern-name = Acento sureño
+trait-southern-desc = Tienes una manera diferente de hablar.
 
-trait-snoring-name = Snoring
-trait-snoring-desc = You will snore while sleeping.
+trait-snoring-name = Ronquido
+trait-snoring-desc = Roncas mientras duermes.
 
-trait-liar-name = Pathological liar
-trait-liar-desc = You can hardly bring yourself to tell the truth. Sometimes you lie anyway.
+trait-liar-name = Mentiroso patológico
+trait-liar-desc = Te resulta difícil decir la verdad; a veces mientes de todos modos.
 
-trait-cowboy-name = Cowboy accent
-trait-cowboy-desc = You speak with a distinct cowboy accent!
+trait-cowboy-name = Acento de vaquero
+trait-cowboy-desc = ¡Hablas con un acento distintivo de vaquero!
 
-trait-german-name = German accent
-trait-german-desc = You seem to come from space Germany.
+trait-german-name = Acento alemán
+trait-german-desc = Pareces venir del espacio Alemania.
 
-trait-italian-name = Italian accent
-trait-italian-desc = Mamma mia! You seem to have lived in space Italy!
+trait-italian-name = Acento italiano
+trait-italian-desc = ¡Mamma mia! Parece que has vivido en el espacio Italia!

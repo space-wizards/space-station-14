@@ -1,8 +1,8 @@
-zzzz-fmt-direction-North = North
-zzzz-fmt-direction-South = South
-zzzz-fmt-direction-East = East
-zzzz-fmt-direction-West = West
-zzzz-fmt-direction-NorthEast = NorthEast
-zzzz-fmt-direction-SouthEast = SouthEast
-zzzz-fmt-direction-NorthWest = NorthWest
-zzzz-fmt-direction-SouthWest = SouthWest
+zzzz-fmt-direction-North = Norte
+zzzz-fmt-direction-South = Sur
+zzzz-fmt-direction-East = Este
+zzzz-fmt-direction-West = Oeste
+zzzz-fmt-direction-NorthEast = Noreste
+zzzz-fmt-direction-SouthEast = Sureste
+zzzz-fmt-direction-NorthWest = Noroeste
+zzzz-fmt-direction-SouthWest = Suroeste

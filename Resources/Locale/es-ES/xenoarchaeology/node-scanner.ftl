@@ -1,2 +1,2 @@
-node-scan-popup = The node ID is {$id}
-node-scan-tooltip = Scan artifact
+node-scan-popup = El ID del nodo es {$id}
+node-scan-tooltip = Artefacto de escaneo

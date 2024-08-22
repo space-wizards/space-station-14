@@ -1,14 +1,14 @@
 ### UI
 
-# Shown when examining the window. Each entry represents the window's health condition
-comp-window-damaged-1 = It looks fully intact.
-comp-window-damaged-2 = It has a few scratches
-comp-window-damaged-3 = It has a few small cracks.
-comp-window-damaged-4 = It has several big cracks running along its surface.
-comp-window-damaged-5 = It has deep cracks across multiple layers.
-comp-window-damaged-6 = It's extremely cracked and on the verge of shattering.
+# Se muestra al examinar la ventana. Cada entrada representa el estado de salud de la ventana
+comp-window-damaged-1 = Parece completamente intacta.
+comp-window-damaged-2 = Tiene algunos arañazos
+comp-window-damaged-3 = Tiene algunas pequeñas grietas.
+comp-window-damaged-4 = Tiene varias grietas grandes a lo largo de su superficie.
+comp-window-damaged-5 = Tiene grietas profundas a lo largo de varias capas.
+comp-window-damaged-6 = Está extremadamente agrietada y a punto de romperse.
 
-### Interaction Messages
+### Mensajes de Interacción
 
-# Shown when knocking on a window
-comp-window-knock = *knock knock*
+# Se muestra al golpear una ventana
+comp-window-knock = *toc toc*

@@ -1,3 +1,3 @@
-dump-verb-name = Dump out on ground
-dump-disposal-verb-name = Dump out into {$unit}
-dump-placeable-verb-name = Dump out onto {$surface}
+dump-verb-name = Volcar en el suelo
+dump-disposal-verb-name = Volcar en {$unit}
+dump-placeable-verb-name = Volcar sobre {$surface}

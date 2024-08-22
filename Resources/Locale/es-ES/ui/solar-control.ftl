@@ -1,10 +1,9 @@
-solar-control-window-title = Solar Control Console
-solar-control-window-output-power = Output Power:
+solar-control-window-title = Consola de Control Solar
+solar-control-window-output-power = Potencia de Salida:
 solar-control-window-watts = W
-solar-control-window-sun-angle = Sun Angle:
+solar-control-window-sun-angle = Ángulo del Sol:
 solar-control-window-degrees = °
-solar-control-window-panel-angle = Panel Angle:
-solar-control-window-panel-angular-velocity = Panel Angular Velocity:
+solar-control-window-panel-angle = Ángulo del Panel:
+solar-control-window-panel-angular-velocity = Velocidad Angular del Panel:
 solar-control-window-degrees-per-minute = °/min.
-solar-control-window-press-enter-to-confirm = Press Enter to confirm.
-
+solar-control-window-press-enter-to-confirm = Presiona Enter para confirmar.
