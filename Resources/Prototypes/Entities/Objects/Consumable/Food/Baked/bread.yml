@@ -624,6 +624,21 @@
           Quantity: 1
         - ReagentId: Blackpepper
           Quantity: 1
+  - type: Clothing
+    slots: [ BELT ]
+    equippedPrefix: baguette
+    quickEquip: false
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: baguette-inhand-left
+      right:
+      - state: baguette-inhand-right
+  - type: MeleeWeapon
+    wideAnimationRotation: -120
+    damage:
+      types:
+        Blunt: 1 # bonk
 # Tastes like France.
 
 - type: entity
