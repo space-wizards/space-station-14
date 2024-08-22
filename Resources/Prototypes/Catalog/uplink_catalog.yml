@@ -1743,3 +1743,19 @@
     blacklist:
       components:
       - SurplusBundle
+
+- type: listing
+  id: UplinkCombatBakery
+  name: uplink-combat-bakery-name
+  description: uplink-combat-bakery-desc
+  icon: { sprite:  Objects/Consumable/Food/Baked/bread.rsi, state: baguette}
+  productEntity: CombatBakeryKit
+  cost:
+    Telecrystal: 3
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Chef
+    - Mime

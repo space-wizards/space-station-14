@@ -144,7 +144,7 @@
     containers:
     - board
   - type: StaticPrice
-    price: 100
+    price: 150
   - type: PryUnpowered
 
 - type: entity
@@ -200,7 +200,7 @@
     graph: Windoor
     node: windoorSecure
   - type: StaticPrice
-    price: 200
+    price: 350
   - type: Tag
     tags:
       - SecureWindoor
@@ -258,7 +258,7 @@
     graph: Windoor
     node: pwindoor
   - type: StaticPrice
-    price: 170
+    price: 500
   - type: RadiationBlocker
     resistance: 2
 
@@ -313,7 +313,7 @@
     graph: Windoor
     node: pwindoorSecure
   - type: StaticPrice
-    price: 312
+    price: 500
   - type: RadiationBlocker
     resistance: 4
   - type: Tag
@@ -373,7 +373,7 @@
     graph: Windoor
     node: uwindoor
   - type: StaticPrice
-    price: 180
+    price: 560
   - type: RadiationBlocker
     resistance: 3
 
@@ -428,7 +428,7 @@
     graph: Windoor
     node: uwindoorSecure
   - type: StaticPrice
-    price: 462
+    price: 750
   - type: RadiationBlocker
     resistance: 5
   - type: Tag

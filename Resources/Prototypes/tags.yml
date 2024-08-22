@@ -510,6 +510,9 @@
   id: DiscreteHealthAnalyzer #So construction recipes don't eat medical PDAs
 
 - type: Tag
+  id: DNASolutionScannable
+
+- type: Tag
   id: DockArrivals
 
 - type: Tag
@@ -541,6 +544,9 @@
 
 - type: Tag
   id: DrinkCan
+
+- type: Tag
+  id: DrinkCup
 
 - type: Tag
   id: DrinkGlass
@@ -649,6 +655,9 @@
 
 - type: Tag
   id: Goat
+
+- type: Tag
+  id: Goliath
 
 - type: Tag
   id: GPS
@@ -1262,6 +1271,12 @@
 
 - type: Tag
   id: Toolbox
+
+- type: Tag
+  id: ToothSharkminnow
+
+- type: Tag
+  id: ToothSpaceCarp
 
 - type: Tag
   id: Torch
