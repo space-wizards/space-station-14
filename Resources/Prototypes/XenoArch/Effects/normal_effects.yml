@@ -638,8 +638,30 @@
     - id: RandomAnomalySpawner
 
 - type: artifactEffect
-  id: EffectBoom
+  id: EffectPortal
   targetDepth: 3
+  effectHint: artifact-effect-hint-displacement
+  components:
+  - type: PortalArtifact
+
+- type: artifactEffect
+  id: EffectLesserPresentSpawn
+  targetDepth: 3
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 5
+    spawns:
+    - id: PresentRandom
+      prob: 0.95
+    - id: PresentRandomUnsafe
+      prob: 0.03
+    - id: PresentRandomInsane
+      prob: 0.02
+
+  - type: artifactEffect
+  id: EffectBoom
+  targetDepth: 4
   effectHint: artifact-effect-hint-environment
   components:
   - type: TriggerArtifact
@@ -652,11 +674,171 @@
     maxIntensity: 50
 
 - type: artifactEffect
-  id: EffectPortal
-  targetDepth: 3
-  effectHint: artifact-effect-hint-displacement
+  id: EffectMajorCashSpawn
+  targetDepth: 4
+  effectHint: artifact-effect-hint-creation
   components:
-  - type: PortalArtifact
+  - type: SpawnArtifact
+    maxSpawns: 10
+    spawns:
+    - id: SpaceCash100
+      maxAmount: 5
+      prob: 0.75
+    - id: SpaceCash1000
+      maxAmount: 2
+      prob: 0.5
+    - id: SpaceCash5000
+      prob: 0.25
+    - id: SpaceCash10000
+      prob: 0.1
+    - id: SpaceCash50000
+      prob: 0.01
+
+- type: artifactEffect
+  id: EffectFaunaSpawnDangerous
+  targetDepth: 4
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 10
+    spawns:
+    - id: MobAdultSlimesYellowAngry
+      orGroup: fauna
+    - id: MobAngryBee
+      orGroup: fauna
+    - id: MobBearSpace
+      orGroup: fauna
+    - id: MobBee
+      orGroup: fauna
+      maxAmount: 10
+    - id: MobKangarooSpace
+      orGroup: fauna
+    - id: MobMonkeySyndicateAgent #so lucky
+      orGroup: fauna
+      maxAmount: 1
+      prob: 0.03
+      maxAmount: 1
+    - id: MobGrenadePenguin
+      orGroup: fauna
+      maxAmount: 2
+    - id: MobPurpleSnake
+      orGroup: fauna
+    - id: MobSpiderSpace
+      orGroup: fauna
+    - id: MobTick
+      orGroup: fauna
+    - id: MobXenoRavager
+      orGroup: fauna
+
+- type: artifactEffect
+  id: EffectFoamVeryDangerous
+  targetDepth: 4
+  effectHint: artifact-effect-hint-biochemical
+  components:
+  - type: FoamArtifact
+    minFoamAmount: 30
+    maxFoamAmount: 40
+    reagents:
+    - SpaceDrugs
+    - Nocturine
+    - MuteToxin
+    - Phlogiston
+    - CarpoToxin
+    - Uranium
+    - BuzzochloricBees
+    - JuiceThatMakesYouWeh
+    - Lead
+    - ForeverWeed
+    - Romerol
+      prob: 0.1
+
+- type: artifactEffect
+  id: EffectClownSpider
+  targetDepth: 4
+  effectHint: artifact-effect-hint-polymorph
+  components:
+  - type: PolyOthersArtifact
+    polymorphPrototypeName: ArtifactClownSpider
+
+- type: artifactEffect
+  id: EffectFinfin
+  targetDepth: 4
+  effectHint: artifact-effect-hint-polymorph
+  components:
+  - type: PolyOthersArtifact
+    polymorphPrototypeName: ArtifactFinfin
+
+- type: artifactEffect
+  id: EffectPolymorphBee
+  targetDepth: 4
+  effectHint: artifact-effect-hint-polymorph
+  components:
+  - type: PolyOthersArtifact
+    polymorphPrototypeName: ArtifactBee
+
+- type: artifactEffect
+  id: EffectHealAllPowerful
+  targetDepth: 4
+  effectHint: artifact-effect-hint-environment
+  components:
+  - type: DamageNearbyArtifact
+    damageChance: 1
+    radius: 30
+    whitelist:
+      components:
+      - MobState
+    damage:
+      groups:
+        Brute: -900
+        Burn: -900
+        Airloss: -600
+        Toxin: -600
+
+  - type: artifactEffect
+  id: EffectSuperHeat
+  targetDepth: 4
+  effectHint: artifact-effect-hint-release
+  components:
+    - type: TemperatureArtifact
+      targetTemp: 5000
+
+- type: artifactEffect
+  id: EffectSuperCold
+  targetDepth: 4
+  effectHint: artifact-effect-hint-consumption
+  components:
+  - type: TemperatureArtifact
+    targetTemp: 2
+
+- type: artifactEffect
+  id: EffectShatterStructure
+  targetDepth: 4
+  effectHint: artifact-effect-hint-environment
+  components:
+  - type: DamageNearbyArtifact
+    damageChance: 0.85
+    whitelist:
+      tags:
+      - Window
+      - Wall
+    damage:
+      types:
+        Structural: 300
+
+- type: artifactEffect
+  id: EffectPresentSpawn
+  targetDepth: 4
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 7
+    spawns:
+    - id: PresentRandom
+      prob: 0.8
+    - id: PresentRandomUnsafe
+      prob: 0.13
+    - id: PresentRandomInsane
+      prob: 0.7
 
 - type: artifactEffect
   id: EffectSingulo
