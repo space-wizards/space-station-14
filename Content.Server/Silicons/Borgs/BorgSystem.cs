@@ -313,9 +313,10 @@ public sealed partial class BorgSystem : SharedBorgSystem
     private void OnKeysChanged(Entity<BorgChassisComponent> ent, ref EncryptionChannelsChangedEvent args)
     {
         var channels = new HashSet<string>(ent.Comp.DefaultRadioChannels);
-        if (args.Component.Channels.Count > 0)
-            channels.UnionWith(args.Component.Channels);
-        EnsureComp<IntrinsicRadioTransmitterComponent>(ent.Owner).Channels = new HashSet<string>(channels);
-        EnsureComp<ActiveRadioComponent>(ent.Owner).Channels = new HashSet<string>(channels);
+        channels.UnionWith(args.Component.Channels);
+        if (TryComp<IntrinsicRadioTransmitterComponent>(ent.Owner, out var intrinsicRadio))
+            intrinsicRadio.Channels = new HashSet<string>(channels);
+        if (TryComp<ActiveRadioComponent>(ent.Owner, out var activeRadio))
+            activeRadio.Channels = new HashSet<string>(channels);
     }
 }
