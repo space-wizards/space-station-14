@@ -13,9 +13,9 @@ gun-Burst = ráfaga
 gun-FullAuto = full-auto
 
 # BallisticAmmoProvider
-gun-ballistic-cycle = Ciclar
-gun-ballistic-cycled = Ciclado
-gun-ballistic-cycled-empty = Ciclado (vacío)
+gun-ballistic-cycle = Amartillar
+gun-ballistic-cycled = Amartillado
+gun-ballistic-cycled-empty = Amartillado (vacío)
 gun-ballistic-transfer-invalid = ¡{CAPITALIZE(THE($ammoEntity))} no encaja dentro de {THE($targetEntity)}!
 gun-ballistic-transfer-empty = {CAPITALIZE(THE($entity))} está vacío.
 gun-ballistic-transfer-target-full = {CAPITALIZE(THE($entity))} ya está completamente cargado.
