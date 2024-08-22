@@ -1,1 +1,1 @@
-make-sentient-verb-get-data-text = Make Sentient
+make-sentient-verb-get-data-text = Dar conciencia

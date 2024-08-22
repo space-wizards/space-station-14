@@ -1,4 +1,4 @@
-﻿medical-item-finished-using = You have finished healing with the {$item}
-medical-item-cant-use = There is no damage you can heal with the {$item}
-medical-item-stop-bleeding = They have stopped bleeding
-medical-item-popup-target = {CAPITALIZE(THE($user))} is trying to heal you with the {$item}!
+﻿medical-item-finished-using = Has terminado de sanar con el {$item}
+medical-item-cant-use = No hay daño que puedas sanar con el {$item}
+medical-item-stop-bleeding = Ha dejado de sangrar
+medical-item-popup-target = {CAPITALIZE(THE($user))} está tratando de curarte con el {$item}!
