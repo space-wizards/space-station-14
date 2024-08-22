@@ -17,7 +17,7 @@ public sealed partial class RechargeBasicEntityAmmoComponent : Component
 
     [DataField("rechargeSound")]
     [AutoNetworkedField]
-    public SoundSpecifier RechargeSound = new SoundPathSpecifier("/Audio/Magic/forcewall.ogg")
+    public SoundSpecifier? RechargeSound = new SoundPathSpecifier("/Audio/Magic/forcewall.ogg")
     {
         Params = AudioParams.Default.WithVolume(-5f)
     };
@@ -27,4 +27,7 @@ public sealed partial class RechargeBasicEntityAmmoComponent : Component
     AutoNetworkedField]
     [AutoPausedField]
     public TimeSpan? NextCharge;
+
+    [DataField, AutoNetworkedField]
+    public bool ShowExamineText = true;
 }

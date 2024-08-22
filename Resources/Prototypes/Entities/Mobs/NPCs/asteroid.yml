@@ -26,6 +26,7 @@
     - TemporaryBlindness
     - RadiationProtection
     - Drowsiness
+    - Adrenaline
   - type: StandingState
   - type: Tag
     tags:
@@ -180,3 +181,156 @@
     state: goliath_tentacle_retract
   - type: EffectVisuals
   - type: AnimationPlayer
+
+- type: entity
+  id: MobHivelord
+  parent: [ BaseMobAsteroid, FlyingMobBase ]
+  name: hivelord
+  description: A truly alien creature, it is a mass of unknown organic material, constantly fluctuating. When attacking, pieces of it split off and attack in tandem with the original.
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Asteroid/hivelord.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: hivelord
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: hivelord
+      Dead:
+        Base: hivelord_dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.5
+    baseSprintSpeed : 4.0
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      75: Dead
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 0
+  - type: Gun
+    fireRate: 0.66
+    selectedMode: SemiAuto
+    showExamineText: false
+    availableModes:
+    - SemiAuto
+    soundGunshot: null
+  - type: RechargeBasicEntityAmmo
+    showExamineText: false
+    rechargeCooldown: 0
+    rechargeSound: null
+  - type: BasicEntityAmmoProvider
+    proto: MobHivelordBrood
+    capacity: 1
+    count: 1
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: SimpleRangedHostileCompound
+    blackboard:
+      VisionRadius: !type:Single
+        4
+      AggroVisionRadius: !type:Single
+        9
+  - type: Butcherable
+    spawned:
+    - id: FoodHivelordRemains
+
+- type: entity
+  id: MobHivelordBrood
+  parent: [ BaseMobAsteroid, FlyingMobBase ]
+  name: hivelord brood
+  description: A fragment of the original hivelord, rallying behind its original. One isn't much of a threat, but...
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Asteroid/hivelord.rsi
+    layers:
+    - state: hivelordbrood
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.5
+    baseSprintSpeed : 4.0
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      5: Dead
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+    angle: 0
+    attackRate: 1.0
+    range: 0.75
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Slash: 7
+  - type: Ammo
+    muzzleFlash: null
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+    blackboard: # highly aggressive
+      VisionRadius: !type:Single
+        15
+      AggroVisionRadius: !type:Single
+        15
+  - type: TimedDespawn
+    lifetime: 100
+
+- type: entity
+  id: FoodHivelordRemains
+  parent: FoodBase
+  name: hivelord remains
+  description: All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly. Try not to think about what you're eating.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Rororium
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Consumable/Food/rorocore.rsi
+    state: boiled
+  - type: Item
+    size: Normal
+  - type: Perishable
+    rotAfter: 120 # rot after 2 minutes
+    molsPerSecondPerUnitMass: 0
+    forceRotProgression: true
+  - type: RotInto
+    entity: FoodHivelordRemainsInert
+    stage: 1
+  - type: StaticPrice
+    price: 5000
+
+- type: entity
+  id: FoodHivelordRemainsInert
+  parent: BaseItem
+  name: inert hivelord remains
+  description: All that remains of a hivelord... Now all is truly lost.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/rorocore.rsi
+    state: boiled
+    color: "#664444"
+  - type: SpaceGarbage
+  - type: Item
+    size: Normal
+  - type: StaticPrice
+    price: 500
