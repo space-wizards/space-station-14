@@ -122308,13 +122308,6 @@ entities:
     - type: Transform
       pos: -9.303419,-25.688816
       parent: 8364
-- proto: MaterialReclaimer
-  entities:
-  - uid: 16712
-    components:
-    - type: Transform
-      pos: -27.5,-15.5
-      parent: 8364
 - proto: MaterialWoodPlank
   entities:
   - uid: 2613
