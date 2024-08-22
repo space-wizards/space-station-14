@@ -185,5 +185,4 @@
       - !type:GenericStatusEffect
         key: Adrenaline
         component: IgnoreSlowOnDamage
-        time: 12
-        refresh: false
+        time: 120
