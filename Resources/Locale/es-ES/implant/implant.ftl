@@ -1,27 +1,27 @@
-## Implanter Attempt Messages
+## Mensajes de Intento de Implantación
 
-implanter-component-implanting-target = {$user} is trying to implant you with something!
-implanter-component-implant-failed = The {$implant} cannot be given to {$target}!
-implanter-draw-failed-permanent = The {$implant} in {$target} is fused with them and cannot be removed!
-implanter-draw-failed = You tried to remove an implant but found nothing.
-implanter-component-implant-already = {$target} already has the {$implant}!
+implanter-component-implanting-target = ¡{$user} está intentando implantarte algo!
+implanter-component-implant-failed = ¡El {$implant} no puede ser implantado en {$target}!
+implanter-draw-failed-permanent = ¡El {$implant} en {$target} está fusionado con ellos y no puede ser removido!
+implanter-draw-failed = Intentaste remover un implante pero no encontraste nada.
+implanter-component-implant-already = ¡{$target} ya tiene el {$implant}!
 
 ## UI
-implanter-draw-text = Draw
-implanter-inject-text = Inject
+implanter-draw-text = Extraer
+implanter-inject-text = Inyectar
 
-implanter-empty-text = Empty
+implanter-empty-text = Vacío
 
 implanter-label = [color=green]{$implantName}[/color]
-    Mode: [color=white]{$modeString}[/color]
+    Modo: [color=white]{$modeString}[/color]
 
 implanter-contained-implant-text = [color=green]{$desc}[/color]
 
-## Implant Popups
+## Popups de Implantes
 
-scramble-implant-activated-popup = Your appearance shifts and changes!
+scramble-implant-activated-popup = ¡Tu apariencia cambia y se transforma!
 
-## Implant Messages
+## Mensajes de Implantes
 
-deathrattle-implant-dead-message = {$user} has died {$position}.
-deathrattle-implant-critical-message = {$user} life signs critical, immediate assistance required {$position}.
+deathrattle-implant-dead-message = {$user} ha muerto {$position}.
+deathrattle-implant-critical-message = {$user} señales vitales críticas, se requiere asistencia inmediata {$position}.

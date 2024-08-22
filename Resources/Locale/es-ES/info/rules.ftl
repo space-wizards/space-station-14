@@ -1,9 +1,9 @@
 ﻿# Rules
 
-ui-rules-header = Wizard's Den Official Server Rules
-ui-rules-header-rp = Wizard's Den Roleplay Official Server Rules
-ui-rules-accept = I have read and agree to follow the rules
-ui-rules-wait = The accept button will be enabled after {$time} seconds.
+ui-rules-header = Reglas Oficiales del Servidor de Estación Carpa
+ui-rules-header-rp = Reglas Oficiales del Servidor de Roleplay de Estación Carpa
+ui-rules-accept = He leído y acepto seguir las reglas
+ui-rules-wait = El botón de aceptación se habilitará después de {$time} segundos.
 
-ui-rules-button-home = Home
-ui-rules-button-back = Back
+ui-rules-button-home = Inicio
+ui-rules-button-back = Atrás

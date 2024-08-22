@@ -1,9 +1,9 @@
-gateway-window-title = Gateway
-gateway-window-open-portal = Open Portal
-gateway-window-no-destinations = No destinations found.
-gateway-window-portal-cooldown = Cooldown
-gateway-window-portal-unlock = Next unlock
-gateway-window-locked = Locked
+gateway-window-title = Puerta de enlace
+gateway-window-open-portal = Abrir Portal
+gateway-window-no-destinations = No se encontraron destinos.
+gateway-window-portal-cooldown = Tiempo de espera
+gateway-window-portal-unlock = Próximo desbloqueo
+gateway-window-locked = Bloqueado
 
-gateway-access-denied = Access denied!
-gateway-close-portal = Close Portal
+gateway-access-denied = ¡Acceso denegado!
+gateway-close-portal = Cerrar Portal

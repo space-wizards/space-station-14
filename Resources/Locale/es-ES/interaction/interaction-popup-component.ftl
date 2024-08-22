@@ -1,97 +1,97 @@
-### Interaction Popup component
+### Interacción Popup
 
-## Petting animals
+## Acariciar animales
 
-petting-success-generic = You pet {THE($target)} on {POSS-ADJ($target)} head.
-petting-success-soft-floofy = You pet {THE($target)} on {POSS-ADJ($target)} soft floofy head.
+petting-success-generic = Acaricias a {THE($target)} en su cabeza.
+petting-success-soft-floofy = Acaricias a {THE($target)} en su suave y esponjosa cabeza.
 
-petting-success-bingus = You pet {THE($target)} on {POSS-ADJ($target)} wrinkly little head.
-petting-success-bird = You pet {THE($target)} on {POSS-ADJ($target)} cute feathery head.
-petting-success-carp = You pet {THE($target)} on {POSS-ADJ($target)} fishy little head.
-petting-success-cat = You pet {THE($target)} on {POSS-ADJ($target)} fuzzy little head.
-petting-success-corrupted-corgi = In an act of hubris, you pet {THE($target)} on {POSS-ADJ($target)} cursed little head.
-petting-success-crab = You pet {THE($target)} on {POSS-ADJ($target)} smooth little head.
-petting-success-dehydrated-carp = You pet {THE($target)} on {POSS-ADJ($target)} dry little head. {CAPITALIZE(OBJECT($target))} seems to like you now!
-petting-success-dog = You pet {THE($target)} on {POSS-ADJ($target)} soft floofy head.
-petting-success-frog = You pet {THE($target)} on {POSS-ADJ($target)} slippery little head.
-petting-success-goat = You pet {THE($target)} on {POSS-ADJ($target)} horned floofy head.
-petting-success-goose = Against all odds, you manage to pet {THE($target)} on {POSS-ADJ($target)} horrible little head.
-petting-success-kangaroo = You pet {THE($target)} on {POSS-ADJ($target)} Strayan head.
-petting-success-possum = You pet {THE($target)} on {POSS-ADJ($target)} horrible little head.
-petting-success-pig = You pet {THE($target)} on {POSS-ADJ($target)} hairy head.
-petting-success-raccoon = You pet {THE($target)} on {POSS-ADJ($target)} trash eating little head.
-petting-success-reptile = You pet {THE($target)} on {POSS-ADJ($target)} scaly little head.
-petting-success-sloth = You pet {THE($target)} on {POSS-ADJ($target)} slow moving head.
-petting-success-space-cat = You pet {THE($target)} on {POSS-ADJ($target)} glass domed head.
-petting-success-tarantula = You pet {THE($target)} on {POSS-ADJ($target)} hairy little head.
-petting-success-holo = You pet {THE($target)} on {POSS-ADJ($target)} metallic spiky head.
-petting-success-dragon = Dodging teeth, claws, and flames, you pet {THE($target)} on {POSS-ADJ($target)} massive scaled head.
-petting-success-hamster = You pet {THE($target)} on {POSS-ADJ($target)} fluffy little head.
-petting-success-bear = You reluctantly pet {THE($target)} on {POSS-ADJ($target)} mystical head.
-petting-success-slimes = You pet {THE($target)} on {POSS-ADJ($target)} mucous surface.
-petting-success-snake = You pet {THE($target)} on {POSS-ADJ($target)} scaly large head.
-petting-success-monkey = You pet {THE($target)} on {POSS-ADJ($target)} mischevious little head.
-petting-success-nymph = You pet {THE($target)} on {POSS-ADJ($target)} wooden little head.
+petting-success-bingus = Acaricias a {THE($target)} en su cabeza arrugada.
+petting-success-bird = Acaricias a {THE($target)} en su cabeza tierna y plumosa.
+petting-success-carp = Acaricias a {THE($target)} en su cabeza de pez.
+petting-success-cat = Acaricias a {THE($target)} en su cabeza peluda.
+petting-success-corrupted-corgi = En un acto de arrogancia, acaricias a {THE($target)} en su cabeza maldita.
+petting-success-crab = Acaricias a {THE($target)} en su cabeza suave.
+petting-success-dehydrated-carp = Acaricias a {THE($target)} en su cabeza seca. ¡{CAPITALIZE(OBJECT($target))} parece gustarte ahora!
+petting-success-dog = Acaricias a {THE($target)} en su suave y esponjosa cabeza.
+petting-success-frog = Acaricias a {THE($target)} en su cabeza resbaladiza.
+petting-success-goat = Acaricias a {THE($target)} en su cabeza con cuernos y esponjosa.
+petting-success-goose = Contra todo pronóstico, logras acariciar a {THE($target)} en su horrible cabeza.
+petting-success-kangaroo = Acaricias a {THE($target)} en su cabeza australiana.
+petting-success-possum = Acaricias a {THE($target)} en su horrible cabeza.
+petting-success-pig = Acaricias a {THE($target)} en su cabeza peluda.
+petting-success-raccoon = Acaricias a {THE($target)} en su cabeza que come basura.
+petting-success-reptile = Acaricias a {THE($target)} en su cabeza escamosa.
+petting-success-sloth = Acaricias a {THE($target)} en su cabeza de movimiento lento.
+petting-success-space-cat = Acaricias a {THE($target)} en su cabeza con cúpula de vidrio.
+petting-success-tarantula = Acaricias a {THE($target)} en su cabeza peluda.
+petting-success-holo = Acaricias a {THE($target)} en su cabeza metálica y espinosa.
+petting-success-dragon = Esquivando dientes, garras y llamas, acaricias a {THE($target)} en su enorme cabeza escalada.
+petting-success-hamster = Acaricias a {THE($target)} en su cabeza peluda.
+petting-success-bear = Acaricias a regañadientes a {THE($target)} en su cabeza mística.
+petting-success-slimes = Acaricias a {THE($target)} en su superficie mucosa.
+petting-success-snake = Acaricias a {THE($target)} en su cabeza grande y escamosa.
+petting-success-monkey = Acaricias a {THE($target)} en su cabeza traviesa.
+petting-success-nymph = Acaricias a {THE($target)} en su cabeza de madera.
 
-petting-failure-generic = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} aloof towards you.
+petting-failure-generic = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} {CONJUGATE-BE($target)} distante contigo.
 
-petting-failure-bat = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} too hard to catch!
-petting-failure-carp = You reach out to pet {THE($target)}, but {POSS-ADJ($target)} sharp teeth make you think twice.
-petting-failure-corrupted-corgi = You reach out to pet {THE($target)}, but think better of it.
-petting-failure-crab = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BASIC($target, "snap", "snaps")} {POSS-ADJ($target)} claws in your general direction!
-petting-failure-dehydrated-carp = You pet {THE($target)} on {POSS-ADJ($target)} dry little head.
-petting-failure-goat = You reach out to pet {THE($target)}, but {SUBJECT($target)} stubbornly {CONJUGATE-BASIC($target, "refuse", "refuses")}!
-petting-failure-goose = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} too horrible!
-petting-failure-possum = You reach out to pet {THE($target)}, but are met with hisses and snarls!
-petting-failure-pig = You reach out to pet {THE($target)}, but are met with irritated oinks and squeals!
-petting-failure-raccoon = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} busy raccooning around.
-petting-failure-sloth = You reach out to pet {THE($target)}, but {SUBJECT($target)} somehow { CONJUGATE-BASIC($target, "dodge", "dodges") } with ludicrous speed!
-petting-failure-holo = You reach out to pet {THE($target)}, but {POSS-ADJ($target)} spikes almost impale your hand!
-petting-failure-dragon = You raise your hand, but as {THE($target)} {CONJUGATE-BASIC($target, "roar", "roars")}, you decide you'd rather not be toasty carp food.
-petting-failure-hamster = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BASIC($target, "attempt", "attempts")} to bite your finger and only your quick reflexes save you from an almost fatal injury.
-petting-failure-bear = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BASIC($target, "growl", "growls")}, making you think twice.
-petting-failure-monkey = You reach out to pet {THE($target)}, but {SUBJECT($target)} almost {CONJUGATE-BASIC($target, "bite", "bites")} your fingers!
-petting-failure-nymph = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BASIC($target, "move", "moves")} {POSS-ADJ($target)} branches away.
-petting-failure-shadow = You try to pet {THE($target)}, but your hand passes through the cold darkness of {POSS-ADJ($target)} body.
+petting-failure-bat = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} {CONJUGATE-BE($target)} demasiado difícil de atrapar!
+petting-failure-carp = Intentas acariciar a {THE($target)}, pero los dientes afilados de su te hacen pensarlo dos veces.
+petting-failure-corrupted-corgi = Intentas acariciar a {THE($target)}, pero piensas mejor en ello.
+petting-failure-crab = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} {CONJUGATE-BASIC($target, "snap", "snaps")} su pinzas en tu dirección general!
+petting-failure-dehydrated-carp = Acaricias a {THE($target)} en su cabeza seca.
+petting-failure-goat = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} obstinadamente {CONJUGATE-BASIC($target, "refuse", "refuses")}!
+petting-failure-goose = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} {CONJUGATE-BE($target)} demasiado horrible!
+petting-failure-possum = Intentas acariciar a {THE($target)}, pero te encuentras con siseos y gruñidos!
+petting-failure-pig = Intentas acariciar a {THE($target)}, pero te encuentras con gruñidos e irritantes chillidos!
+petting-failure-raccoon = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} {CONJUGATE-BE($target)} ocupado en sus travesuras de mapache.
+petting-failure-sloth = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} de alguna manera { CONJUGATE-BASIC($target, "dodge", "dodges") } con velocidad ridícula!
+petting-failure-holo = Intentas acariciar a {THE($target)}, pero las espinas de su casi perforan tu mano!
+petting-failure-dragon = Levantas tu mano, pero mientras {THE($target)} {CONJUGATE-BASIC($target, "roar", "roars")}, decides que prefieres no ser comida de pez caliente.
+petting-failure-hamster = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} {CONJUGATE-BASIC($target, "attempt", "attempts")} a morder tu dedo y solo tus reflejos rápidos te salvan de una lesión casi fatal.
+petting-failure-bear = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} {CONJUGATE-BASIC($target, "growl", "growls")}, haciéndote pensarlo dos veces.
+petting-failure-monkey = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} casi {CONJUGATE-BASIC($target, "bite", "bites")} tus dedos!
+petting-failure-nymph = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} {CONJUGATE-BASIC($target, "move", "moves")} las ramas de su lejos.
+petting-failure-shadow = Intentas acariciar a {THE($target)}, pero tu mano pasa a través de la fría oscuridad del cuerpo de su.
 
-## Petting silicons
+## Acariciar silicios
 
-petting-success-honkbot = You pet {THE($target)} on {POSS-ADJ($target)} slippery metal head.
-petting-success-mimebot = You pet {THE($target)} on {POSS-ADJ($target)} cold metal head.
-petting-success-cleanbot = You pet {THE($target)} on {POSS-ADJ($target)} damp metal head.
-petting-success-medibot = You pet {THE($target)} on {POSS-ADJ($target)} sterile metal head.
-petting-success-generic-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} metal head.
-petting-success-salvage-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} dirty metal head.
-petting-success-engineer-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} reflective metal head.
-petting-success-janitor-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} damp metal head.
-petting-success-medical-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} sterile metal head.
-petting-success-service-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} dapper looking metal head.
-petting-success-syndicate-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} menacing metal head.
-petting-success-recycler = You pet {THE($target)} on {POSS-ADJ($target)} mildly threatening steel exterior.
+petting-success-honkbot = Acaricias a {THE($target)} en su cabeza metálica resbaladiza.
+petting-success-mimebot = Acaricias a {THE($target)} en su fría cabeza metálica.
+petting-success-cleanbot = Acaricias a {THE($target)} en su húmeda cabeza metálica.
+petting-success-medibot = Acaricias a {THE($target)} en su cabeza metálica estéril.
+petting-success-generic-cyborg = Acaricias a {THE($target)} en su cabeza metálica.
+petting-success-salvage-cyborg = Acaricias a {THE($target)} en su cabeza metálica sucia.
+petting-success-engineer-cyborg = Acaricias a {THE($target)} en su cabeza metálica reflectante.
+petting-success-janitor-cyborg = Acaricias a {THE($target)} en su cabeza metálica húmeda.
+petting-success-medical-cyborg = Acaricias a {THE($target)} en su cabeza metálica estéril.
+petting-success-service-cyborg = Acaricias a {THE($target)} en su cabeza metálica elegante.
+petting-success-syndicate-cyborg = Acaricias a {THE($target)} en su cabeza metálica amenazante.
+petting-success-recycler = Acaricias a {THE($target)} en su exterior de acero ligeramente amenazante.
 
-petting-failure-honkbot = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BASIC($target, "honk", "honks")} in refusal!
-petting-failure-cleanbot = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} busy mopping!
-petting-failure-mimebot = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} busy miming!
-petting-failure-medibot = You reach out to pet {THE($target)}, but {POSS-ADJ($target)} syringe nearly stabs your hand!
-petting-failure-generic-cyborg = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} busy stating laws!
-petting-failure-salvage-cyborg = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} busy drilling!
-petting-failure-engineer-cyborg = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} busy repairing!
-petting-failure-janitor-cyborg = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} busy cleaning!
-petting-failure-medical-cyborg = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} busy saving lives!
-petting-failure-service-cyborg = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} busy serving others!
-petting-failure-syndicate-cyborg = You reach out to pet {THE($target)}, but {POSS-ADJ($target)} treacherous affiliation makes you reconsider.
+petting-failure-honkbot = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} {CONJUGATE-BASIC($target, "honk", "honks")} en rechazo!
+petting-failure-cleanbot = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} {CONJUGATE-BE($target)} ocupado limpiando!
+petting-failure-mimebot = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} {CONJUGATE-BE($target)} ocupado imitando!
+petting-failure-medibot = Intentas acariciar a {THE($target)}, pero la jeringa de su casi apuñala tu mano!
+petting-failure-generic-cyborg = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} {CONJUGATE-BE($target)} ocupado enunciar leyes!
+petting-failure-salvage-cyborg = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} {CONJUGATE-BE($target)} ocupado perforando!
+petting-failure-engineer-cyborg = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} {CONJUGATE-BE($target)} ocupado reparando!
+petting-failure-janitor-cyborg = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} {CONJUGATE-BE($target)} ocupado limpiando!
+petting-failure-medical-cyborg = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} {CONJUGATE-BE($target)} ocupado salvando vidas!
+petting-failure-service-cyborg = Intentas acariciar a {THE($target)}, pero {SUBJECT($target)} {CONJUGATE-BE($target)} ocupado atendiendo a otros!
+petting-failure-syndicate-cyborg = Intentas acariciar a {THE($target)}, pero la afiliación traicionera de su te hace reconsiderar.
 
-## Rattling fences
+## Sacudir cercas
 
-fence-rattle-success = *rattle*
+fence-rattle-success = *sacudida*
 
-## Hugging players
+## Abrazar jugadores
 
-hugging-success-generic = You hug {THE($target)}.
-hugging-success-generic-others = { CAPITALIZE(THE($user)) } hugs {THE($target)}.
-hugging-success-generic-target = { CAPITALIZE(THE($user)) } hugs you.
+hugging-success-generic = Abrazas a {THE($target)}.
+hugging-success-generic-others = { CAPITALIZE(THE($user)) } abraza a {THE($target)}.
+hugging-success-generic-target = { CAPITALIZE(THE($user)) } te abraza.
 
-## Other
+## Otro
 
-petting-success-tesla = You pet {THE($target)}, violating the laws of nature and physics.
-petting-failure-tesla = You reach out towards {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BASIC($target, "zap", "zaps")} your hand away.
+petting-success-tesla = Acaricias a {THE($target)}, violando las leyes de la naturaleza y la física.
+petting-failure-tesla = Intentas acercarte a {THE($target)}, pero {SUBJECT($target)} {CONJUGATE-BASIC($target, "zap", "zaps")} tu mano lejos.

@@ -1,15 +1,14 @@
-logic-gate-examine = It is currently {INDEFINITE($gate)} {$gate} gate.
+logic-gate-examine = Actualmente es un {$gate} gate indefinido {$gate}.
+logic-gate-cycle = Cambió a {$gate} gate indefinido {$gate}
 
-logic-gate-cycle = Switched to {INDEFINITE($gate)} {$gate} gate
+power-sensor-examine = Actualmente está comprobando la batería de la red {$output ->
+    [true] de salida
+    *[false] de entrada
+}.
+power-sensor-voltage-examine = Está comprobando la red de poder {$voltage}.
 
-power-sensor-examine = It is currently checking the network's {$output ->
-    [true] output
-    *[false] input
-} battery.
-power-sensor-voltage-examine = It is checking the {$voltage} power network.
-
-power-sensor-switch = Switched to checking the network's {$output ->
-    [true] output
-    *[false] input
-} battery.
-power-sensor-voltage-switch = Switched network to {$voltage}!
+power-sensor-switch = Cambió a comprobar la batería de la red {$output ->
+    [true] de salida
+    *[false] de entrada
+}.
+power-sensor-voltage-switch = Cambiada la red a {$voltage}!

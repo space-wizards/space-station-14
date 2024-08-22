@@ -1,8 +1,8 @@
-lathe-category-ammo = Ammo
-lathe-category-circuitry = Circuitry
-lathe-category-lights = Lights
+lathe-category-ammo = Munición
+lathe-category-circuitry = Circuitos
+lathe-category-lights = Luces
 lathe-category-mechs = Mechs
-lathe-category-parts = Parts
-lathe-category-robotics = Robotics
-lathe-category-tools = Tools
-lathe-category-weapons = Weapons
+lathe-category-parts = Partes
+lathe-category-robotics = Robótica
+lathe-category-tools = Herramientas
+lathe-category-weapons = Armas

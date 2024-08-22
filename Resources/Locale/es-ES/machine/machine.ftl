@@ -1,22 +1,22 @@
-machine-insert-item = {CAPITALIZE(THE($user))} inserted {THE($item)} into {THE($machine)}.
+machine-insert-item = {CAPITALIZE(THE($user))} insertó {THE($item)} en {THE($machine)}.
 
-machine-upgrade-examinable-verb-text = Upgrades
-machine-upgrade-examinable-verb-message = Examine the machine upgrades.
-machine-upgrade-increased-by-percentage = [color=yellow]{CAPITALIZE($upgraded)}[/color] increased by {$percent}%.
-machine-upgrade-decreased-by-percentage = [color=yellow]{CAPITALIZE($upgraded)}[/color] decreased by {$percent}%.
-machine-upgrade-increased-by-amount = [color=yellow]{CAPITALIZE($upgraded)}[/color] increased by {$difference}.
-machine-upgrade-decreased-by-amount = [color=yellow]{CAPITALIZE($upgraded)}[/color] decreased by {$difference}.
-machine-upgrade-not-upgraded = [color=yellow]{CAPITALIZE($upgraded)}[/color] not upgraded.
+machine-upgrade-examinable-verb-text = Mejoras
+machine-upgrade-examinable-verb-message = Examina las mejoras de la máquina.
+machine-upgrade-increased-by-percentage = [color=yellow]{CAPITALIZE($upgraded)}[/color] aumentó en {$percent}%.
+machine-upgrade-decreased-by-percentage = [color=yellow]{CAPITALIZE($upgraded)}[/color] disminuyó en {$percent}%.
+machine-upgrade-increased-by-amount = [color=yellow]{CAPITALIZE($upgraded)}[/color] aumentó en {$difference}.
+machine-upgrade-decreased-by-amount = [color=yellow]{CAPITALIZE($upgraded)}[/color] disminuyó en {$difference}.
+machine-upgrade-not-upgraded = [color=yellow]{CAPITALIZE($upgraded)}[/color] no fue mejorado.
 
-machine-part-name-capacitor = Capacitor
-machine-part-name-manipulator = Manipulator
-machine-part-name-matter-bin = Matter Bin
-machine-part-name-power-cell = Power Cell
+machine-part-name-capacitor = Condensador
+machine-part-name-manipulator = Manipulador
+machine-part-name-matter-bin = Caja de Materia
+machine-part-name-power-cell = Célula de Energía
 
-two-way-lever-left = push left
-two-way-lever-right = push right
-two-way-lever-cant = can't push the lever that way!
+two-way-lever-left = empujar hacia la izquierda
+two-way-lever-right = empujar hacia la derecha
+two-way-lever-cant = ¡No puedes empujar la palanca de esa manera!
 
-recycler-count-items = Recycled {$items} objects.
+recycler-count-items = {$items} objetos reciclados.
 
-machine-already-in-use = {CAPITALIZE(THE($machine))} is already in use.
+machine-already-in-use = {CAPITALIZE(THE($machine))} ya está en uso.

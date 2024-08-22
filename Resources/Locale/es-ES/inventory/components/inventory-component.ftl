@@ -1,4 +1,4 @@
-inventory-component-can-equip-cannot = You can't equip this!
-inventory-component-can-equip-does-not-fit = This doesn't fit!
+inventory-component-can-equip-cannot = ¡No puedes equipar esto!
+inventory-component-can-equip-does-not-fit = ¡Esto no encaja!
 
-inventory-component-can-unequip-cannot = You can't unequip this!
+inventory-component-can-unequip-cannot = ¡No puedes desequipar esto!
