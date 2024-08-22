@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using Content.Server.Database;
-using Microsoft.EntityFrameworkCore; // This is likely where ServerDbContext is defined
+using Microsoft.EntityFrameworkCore;
 
 namespace Content.Server.Administration.Logs
 {
@@ -9,13 +9,14 @@ namespace Content.Server.Administration.Logs
         [Dependency] private readonly ServerDbContext _dbContext = default!;
 
         public async Task LogAhelpMessageAsync(int ahelpRound,
-            int ahelpTarget,
-            int sender,
+            Guid ahelpTarget,
+            Guid sender,
             int senderEntity,
             bool isAdminned,
             bool targetOnline,
             string message,
-            RoundStatus roundStatus)
+            string roundStatus,
+            DateTime timeSent)
         {
             // Find or create the AhelpExchange
             var ahelpExchange = await _dbContext.AhelpExchanges
@@ -32,7 +33,7 @@ namespace Content.Server.Administration.Logs
                 await _dbContext.SaveChangesAsync();
             }
 
-            // Create a new AhelpMessage
+            // Create a new AhelpMessage and log it to a exchange
             var ahelpMessage = new AhelpMessage
             {
                 AhelpId = ahelpExchange.AhelpId,
@@ -42,24 +43,33 @@ namespace Content.Server.Administration.Logs
                 SenderEntity = senderEntity,
                 IsAdminned = isAdminned,
                 TargetOnline = targetOnline,
-                Message = message
+                Message = message,
+                TimeSent = timeSent
             };
 
             _dbContext.AhelpMessages.Add(ahelpMessage);
             await _dbContext.SaveChangesAsync();
         }
 
+        //This is not used but it might be used in the future
         public async Task LogAhelpParticipantAsync(int ahelpId, int playerId)
         {
-            // Create a new AhelpParticipant
-            var ahelpParticipant = new AhelpParticipant
-            {
-                AhelpId = ahelpId,
-                PlayerId = playerId
-            };
+            // Check if the participant already exists
+            var existingParticipant = await _dbContext.AhelpParticipants
+                .FirstOrDefaultAsync(p => p.AhelpId == ahelpId && p.PlayerId == playerId);
 
-            _dbContext.AhelpParticipants.Add(ahelpParticipant);
-            await _dbContext.SaveChangesAsync();
+            if (existingParticipant == null)
+            {
+                // Create a new AhelpParticipant if not already exists
+                var ahelpParticipant = new AhelpParticipant
+                {
+                    AhelpId = ahelpId,
+                    PlayerId = playerId
+                };
+
+                _dbContext.AhelpParticipants.Add(ahelpParticipant);
+                await _dbContext.SaveChangesAsync();
+            }
         }
     }
 }
