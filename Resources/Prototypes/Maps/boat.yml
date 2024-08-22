@@ -15,7 +15,9 @@
             !type:NanotrasenNameGenerator
             prefixCreator: 'AS'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_omega.yml 
+          emergencyShuttlePath: /Maps/Shuttles/emergency_cluster.yml 
+        - type: StationCargoShuttle
+          path: /Maps/Shuttles/cargo_fland.yml
         - type: StationJobs
           availableJobs:
             #service
