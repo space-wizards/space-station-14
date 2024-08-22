@@ -10804,7 +10804,7 @@ entities:
       pos: -42.5,29.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -1271.2194
+      secondsUntilStateChange: -2052.8645
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -34441,13 +34441,6 @@ entities:
     components:
     - type: Transform
       pos: -29.53436,40.699295
-      parent: 5350
-- proto: Cablecuffs
-  entities:
-  - uid: 22690
-    components:
-    - type: Transform
-      pos: 38.5058,-36.452374
       parent: 5350
 - proto: CableHV
   entities:
@@ -60128,11 +60121,6 @@ entities:
     - type: Transform
       pos: 22.521395,-12.417425
       parent: 5350
-  - uid: 19020
-    components:
-    - type: Transform
-      pos: 66.56803,33.64219
-      parent: 5350
 - proto: ClothingEyesGlassesThermal
   entities:
   - uid: 23947
@@ -60996,13 +60984,6 @@ entities:
     - type: Transform
       pos: -54.487633,-18.620468
       parent: 5350
-- proto: ClothingOuterCoatDetectiveLoadout
-  entities:
-  - uid: 23129
-    components:
-    - type: Transform
-      pos: -22.593464,38.504482
-      parent: 5350
 - proto: ClothingOuterCoatGentle
   entities:
   - uid: 13742
@@ -61030,6 +61011,13 @@ entities:
     components:
     - type: Transform
       pos: -5.527274,-39.534935
+      parent: 5350
+- proto: ClothingOuterCoatTrench
+  entities:
+  - uid: 16785
+    components:
+    - type: Transform
+      pos: -23.450022,38.487732
       parent: 5350
 - proto: ClothingOuterHardsuitEVAPrisoner
   entities:
@@ -115293,11 +115281,6 @@ entities:
     - type: Transform
       pos: 27.507141,-21.391407
       parent: 5350
-  - uid: 22700
-    components:
-    - type: Transform
-      pos: 39.5683,-36.56175
-      parent: 5350
 - proto: HydroponicsToolMiniHoe
   entities:
   - uid: 3137
@@ -116364,29 +116347,6 @@ entities:
     - type: Transform
       pos: 24.5,-13.5
       parent: 5350
-  - uid: 16785
-    components:
-    - type: Transform
-      pos: -56.5,-23.5
-      parent: 5350
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1495
-        moles:
-        - 3.848459
-        - 14.477538
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
 - proto: LockerBotanistFilled
   entities:
   - uid: 2618
@@ -117695,6 +117655,11 @@ entities:
       parent: 5350
 - proto: MachineFrame
   entities:
+  - uid: 22686
+    components:
+    - type: Transform
+      pos: 41.5,-31.5
+      parent: 5350
   - uid: 26436
     components:
     - type: Transform
@@ -117764,6 +117729,11 @@ entities:
     components:
     - type: Transform
       pos: 52.5,36.5
+      parent: 5350
+  - uid: 19020
+    components:
+    - type: Transform
+      pos: 37.5,-33.5
       parent: 5350
   - uid: 22114
     components:
@@ -117839,6 +117809,11 @@ entities:
     - type: Transform
       pos: 36.5,-51.5
       parent: 5350
+  - uid: 22690
+    components:
+    - type: Transform
+      pos: 37.5,-36.5
+      parent: 5350
   - uid: 22702
     components:
     - type: Transform
@@ -117861,6 +117836,11 @@ entities:
       parent: 5350
 - proto: MaintenanceWeaponSpawner
   entities:
+  - uid: 5341
+    components:
+    - type: Transform
+      pos: 38.5,-36.5
+      parent: 5350
   - uid: 17307
     components:
     - type: Transform
@@ -117930,13 +117910,6 @@ entities:
     components:
     - type: Transform
       pos: -17.38306,-3.5393329
-      parent: 5350
-- proto: MaterialReclaimer
-  entities:
-  - uid: 5341
-    components:
-    - type: Transform
-      pos: -37.5,22.5
       parent: 5350
 - proto: MaterialWoodPlank1
   entities:
@@ -143622,11 +143595,6 @@ entities:
     - type: Transform
       pos: 4.5,-49.5
       parent: 5350
-  - uid: 22686
-    components:
-    - type: Transform
-      pos: 41.5,-31.5
-      parent: 5350
   - uid: 26437
     components:
     - type: Transform
@@ -167149,13 +167117,6 @@ entities:
     components:
     - type: Transform
       pos: -23.5,-63.5
-      parent: 5350
-- proto: WoodenBuckler
-  entities:
-  - uid: 22704
-    components:
-    - type: Transform
-      pos: 37.46614,-33.453953
       parent: 5350
 - proto: Wrench
   entities:
