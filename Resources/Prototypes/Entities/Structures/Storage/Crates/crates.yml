@@ -30,7 +30,7 @@
     containers:
     - entity_storage
   - type: StaticPrice
-    price: 80
+    price: 100
   - type: Paintable
     group: CratePlastic
 
@@ -421,7 +421,7 @@
         layer:
         - LargeMobLayer
   - type: StaticPrice
-    price: 60
+    price: 75
 
 - type: entity
   parent: CrateGeneric
