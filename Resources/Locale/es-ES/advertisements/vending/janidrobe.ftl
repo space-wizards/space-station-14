@@ -1,5 +1,5 @@
-advertisement-janidrobe-1 = Come and get your janitorial clothing, now endorsed by lizard janitors everywhere!
-advertisement-janidrobe-2 = Here to keep you clean as you clean up non-clean things!
-advertisement-janidrobe-3 = Stylishly yellow!
-advertisement-janidrobe-4 = Polish your appearance with JaniDrobe!
-advertisement-janidrobe-5 = Shine like a shiny floor!
+advertisement-janidrobe-1 = ¡Ven y consigue tu ropa de limpieza, ahora respaldada por los conserjes lagartos en todas partes!
+advertisement-janidrobe-2 = ¡Aquí para mantenerte limpio mientras limpias cosas no limpias!
+advertisement-janidrobe-3 = ¡Con estilo amarillo!
+advertisement-janidrobe-4 = ¡Luce impecable con JaniDrobe!
+advertisement-janidrobe-5 = ¡Brilla como un suelo reluciente!

@@ -1,11 +1,11 @@
-atmos-plaque-component-desc-zum = This plaque commemorates the rise of the Atmos ZUM division. May they carry the torch that the Atmos ZAS, LINDA and FEA divisions left behind.
-atmos-plaque-component-desc-fea = This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands.
-atmos-plaque-component-desc-linda =This plaque commemorates the fall of the Atmos LINDA division. For all the charred, dizzy, and brittle men who have died in its hands.
-atmos-plaque-component-desc-zas = This plaque commemorates the fall of the Atmos ZAS division. For all the charred, dizzy, and brittle men who have died in its hands.
+atmos-plaque-component-desc-zum = Esta placa conmemora el ascenso de la división Atmos ZUM. Que lleven la antorcha que las divisiones Atmos ZAS, LINDA y FEA dejaron atrás.
+atmos-plaque-component-desc-fea = Esta placa conmemora la caída de la división Atmos FEA. Por todos los hombres carbonizados, mareados y quebradizos que han muerto a sus manos.
+atmos-plaque-component-desc-linda = Esta placa conmemora la caída de la división Atmos LINDA. Por todos los hombres carbonizados, mareados y quebradizos que han muerto a sus manos.
+atmos-plaque-component-desc-zas = Esta placa conmemora la caída de la división Atmos ZAS. Por todos los hombres carbonizados, mareados y quebradizos que han muerto a sus manos.
 atmos-plaque-component-desc-unset = Uhm
 
-atmos-plaque-component-name-zum = ZUM Atmospherics Division plaque
-atmos-plaque-component-name-fea = FEA Atmospherics Division plaque
-atmos-plaque-component-name-linda = LINDA Atmospherics Division plaque
-atmos-plaque-component-name-zas = ZAS Atmospherics Division plaque
+atmos-plaque-component-name-zum = Placa de la división Atmos ZUM
+atmos-plaque-component-name-fea = Placa de la división Atmos FEA
+atmos-plaque-component-name-linda = Placa de la división Atmos LINDA
+atmos-plaque-component-name-zas = Placa de la división Atmos ZAS
 atmos-plaque-component-name-unset = Uhm

@@ -1,21 +1,21 @@
-ame-controller-component-fuel-slot-fail-whitelist = You can't put that in the controller...
-ame-controller-component-fuel-slot-fail-locked = Power down the AME before manipulating its fuel.
-ame-controller-component-fuel-slot-success-insert = You insert the jar into the fuel slot.
+ame-controller-component-fuel-slot-fail-whitelist = No puedes poner eso en el controlador...
+ame-controller-component-fuel-slot-fail-locked = Apaga el AME antes de manipular su combustible.
+ame-controller-component-fuel-slot-success-insert = Inserta el frasco en la ranura de combustible.
 
 ## UI
 
-ame-window-title = Antimatter Control Unit
-ame-window-engine-status-label = Engine Status:
-ame-window-engine-injection-status-not-injecting-label = Not Injecting
-ame-window-engine-injection-status-injecting-label = Injecting...
-ame-window-toggle-injection-button = Toggle Injection
-ame-window-fuel-status-label = Fuel Status:
-ame-window-fuel-not-inserted-text = No fuel inserted
-ame-window-injection-amount-label = Injection amount:
-ame-window-refresh-parts-button = Refresh Parts
-ame-window-core-count-label = Core count:
-ame-window-power-currentsupply-label = Current power supply:
-ame-window-power-targetsupply-label = Targeted power supply:
-ame-window-eject-button = Eject
-ame-window-increase-fuel-button = Increase
-ame-window-decrease-fuel-button = Decrease
+ame-window-title = Unidad de Control de Antimateria
+ame-window-engine-status-label = Estado del Motor:
+ame-window-engine-injection-status-not-injecting-label = No Inyectando
+ame-window-engine-injection-status-injecting-label = Inyectando...
+ame-window-toggle-injection-button = Alternar Inyección
+ame-window-fuel-status-label = Estado del Combustible:
+ame-window-fuel-not-inserted-text = No hay combustible insertado
+ame-window-injection-amount-label = Cantidad de Inyección:
+ame-window-refresh-parts-button = Actualizar Componentes
+ame-window-core-count-label = Contador de Núcleos:
+ame-window-power-currentsupply-label = Suministro de Energía Actual:
+ame-window-power-targetsupply-label = Suministro de Energía Objetivo:
+ame-window-eject-button = Expulsar
+ame-window-increase-fuel-button = Aumentar
+ame-window-decrease-fuel-button = Disminuir

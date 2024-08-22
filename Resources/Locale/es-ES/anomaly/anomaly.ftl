@@ -1,97 +1,97 @@
-anomaly-component-contact-damage = The anomaly sears off your skin!
+anomaly-component-contact-damage = ¡La anomalía quema tu piel!
 
-anomaly-vessel-component-anomaly-assigned = Anomaly assigned to vessel.
-anomaly-vessel-component-not-assigned = This vessel is not assigned to any anomaly. Try using a scanner on it.
-anomaly-vessel-component-assigned = This vessel is currently assigned to an anomaly.
+anomaly-vessel-component-anomaly-assigned = Anomalía asignada al recipiente.
+anomaly-vessel-component-not-assigned = Este recipiente no está asignado a ninguna anomalía. Intenta usar un escáner activo en ella.
+anomaly-vessel-component-assigned = Este recipiente está actualmente asignado a una anomalía.
 
-anomaly-particles-delta = Delta particles
-anomaly-particles-epsilon = Epsilon particles
-anomaly-particles-zeta = Zeta particles
-anomaly-particles-omega = Omega particles
-anomaly-particles-sigma = Sigma particles
+anomaly-particles-delta = Partículas Delta
+anomaly-particles-epsilon = Partículas Epsilon
+anomaly-particles-zeta = Partículas Zeta
+anomaly-particles-omega = Partículas Omega
+anomaly-particles-sigma = Partículas Sigma
 
-anomaly-scanner-component-scan-complete = Scan complete!
+anomaly-scanner-component-scan-complete = ¡Escaneo completado!
 
-anomaly-scanner-ui-title = anomaly scanner
-anomaly-scanner-no-anomaly = No anomaly currently scanned.
-anomaly-scanner-severity-percentage = Current severity: [color=gray]{$percent}[/color]
-anomaly-scanner-severity-percentage-unknown = Current severity: [color=red]ERROR[/color]
-anomaly-scanner-stability-low = Current anomaly state: [color=gold]Decaying[/color]
-anomaly-scanner-stability-medium = Current anomaly state: [color=forestgreen]Stable[/color]
-anomaly-scanner-stability-high = Current anomaly state: [color=crimson]Growing[/color]
-anomaly-scanner-stability-unknown = Current anomaly state: [color=red]ERROR[/color]
-anomaly-scanner-point-output = Point output: [color=gray]{$point}[/color]
-anomaly-scanner-point-output-unknown = Point output: [color=red]ERROR[/color]
-anomaly-scanner-particle-readout = Particle Reaction Analysis:
-anomaly-scanner-particle-danger = - [color=crimson]Danger type:[/color] {$type}
-anomaly-scanner-particle-unstable = - [color=plum]Unstable type:[/color] {$type}
-anomaly-scanner-particle-containment = - [color=goldenrod]Containment type:[/color] {$type}
-anomaly-scanner-particle-transformation = - [color=#6b75fa]Transformation type:[/color] {$type}
-anomaly-scanner-particle-danger-unknown = - [color=crimson]Danger type:[/color] [color=red]ERROR[/color]
-anomaly-scanner-particle-unstable-unknown = - [color=plum]Unstable type:[/color] [color=red]ERROR[/color]
-anomaly-scanner-particle-containment-unknown = - [color=goldenrod]Containment type:[/color] [color=red]ERROR[/color]
-anomaly-scanner-particle-transformation-unknown = - [color=#6b75fa]Transformation type:[/color] [color=red]ERROR[/color]
-anomaly-scanner-pulse-timer = Time until next pulse: [color=gray]{$time}[/color]
+anomaly-scanner-ui-title = Escáner de Anomalías
+anomaly-scanner-no-anomaly = No se ha escaneado ninguna anomalía actualmente.
+anomaly-scanner-severity-percentage = Severidad actual: [color=gray]{$percent}[/color]
+anomaly-scanner-severity-percentage-unknown = Severidad actual: [color=red]ERROR[/color]
+anomaly-scanner-stability-low = Estado actual de la anomalía: [color=gold]En descomposición[/color]
+anomaly-scanner-stability-medium = Estado actual de la anomalía: [color=forestgreen]Estable[/color]
+anomaly-scanner-stability-high = Estado actual de la anomalía: [color=crimson]Creciendo[/color]
+anomaly-scanner-stability-unknown = Estado actual de la anomalía: [color=red]ERROR[/color]
+anomaly-scanner-point-output = Salida de puntos: [color=gray]{$point}[/color]
+anomaly-scanner-point-output-unknown = Salida de puntos: [color=red]ERROR[/color]
+anomaly-scanner-particle-readout = Análisis de Reacción de Partículas:
+anomaly-scanner-particle-danger = - [color=crimson]Peligro:[/color] {$type}
+anomaly-scanner-particle-unstable = - [color=plum]Inestabilizar:[/color] {$type}
+anomaly-scanner-particle-containment = - [color=goldenrod]Contención:[/color] {$type}
+anomaly-scanner-particle-transformation = - [color=#6b75fa]Transformación:[/color] {$type}
+anomaly-scanner-particle-danger-unknown = - [color=crimson]Peligro:[/color] [color=red]ERROR[/color]
+anomaly-scanner-particle-unstable-unknown = - [color=plum]Inestable:[/color] [color=red]ERROR[/color]
+anomaly-scanner-particle-containment-unknown = - [color=goldenrod]Contención:[/color] [color=red]ERROR[/color]
+anomaly-scanner-particle-transformation-unknown = - [color=#6b75fa]Transformación:[/color] [color=red]ERROR[/color]
+anomaly-scanner-pulse-timer = Tiempo hasta el próximo pulso: [color=gray]{$time}[/color]
 
-anomaly-gorilla-core-slot-name = Anomaly core
-anomaly-gorilla-charge-none = It has no [bold]anomaly core[/bold] inside of it.
-anomaly-gorilla-charge-limit = It has [color={$count ->
+anomaly-gorilla-core-slot-name = Núcleo de Anomalía
+anomaly-gorilla-charge-none = No tiene ningún [bold]núcleo de anomalía[/bold] dentro de él.
+anomaly-gorilla-charge-limit = Tiene [color={$count ->
     [3]green
     [2]yellow
     [1]orange
     [0]red
     *[other]purple
 }]{$count} {$count ->
-    [one]charge
-    *[other]charges
-}[/color] remaining.
-anomaly-gorilla-charge-infinite = It has [color=gold]infinite charges[/color]. [italic]For now...[/italic]
+    [one]carga
+    *[other]cargas
+}[/color] restantes.
+anomaly-gorilla-charge-infinite = Tiene [color=gold]cargas infinitas[/color]. [italic]Por ahora...[/italic]
 
-anomaly-sync-connected = Anomaly successfully attached
-anomaly-sync-disconnected = The connection to the anomaly has been lost!
-anomaly-sync-no-anomaly = No anomaly in range.
-anomaly-sync-examine-connected = It is [color=darkgreen]attached[/color] to an anomaly.
-anomaly-sync-examine-not-connected = It is [color=darkred]not attached[/color] to an anomaly.
-anomaly-sync-connect-verb-text = Attach anomaly
-anomaly-sync-connect-verb-message = Attach a nearby anomaly to {THE($machine)}.
+anomaly-sync-connected = Anomalía adjunta con éxito
+anomaly-sync-disconnected = ¡Se ha perdido la conexión con la anomalía!
+anomaly-sync-no-anomaly = No hay anomalías en el rango.
+anomaly-sync-examine-connected = Está [color=darkgreen]adjunto[/color] a una anomalía.
+anomaly-sync-examine-not-connected = [color=darkred]No está adjunto[/color] a una anomalía.
+anomaly-sync-connect-verb-text = Adjuntar anomalía
+anomaly-sync-connect-verb-message = Adjunta una anomalía cercana a {THE($machine)}.
 
-anomaly-generator-ui-title = Anomaly Generator
-anomaly-generator-fuel-display = Fuel:
-anomaly-generator-cooldown = Cooldown: [color=gray]{$time}[/color]
-anomaly-generator-no-cooldown = Cooldown: [color=gray]Complete[/color]
-anomaly-generator-yes-fire = Status: [color=forestgreen]Ready[/color]
-anomaly-generator-no-fire = Status: [color=crimson]Not ready[/color]
-anomaly-generator-generate = Generate Anomaly
+anomaly-generator-ui-title = Generador de Anomalías
+anomaly-generator-fuel-display = Combustible:
+anomaly-generator-cooldown = Tiempo de reutilización: [color=gray]{$time}[/color]
+anomaly-generator-no-cooldown = Tiempo de reutilización: [color=gray]Completo[/color]
+anomaly-generator-yes-fire = Estado: [color=forestgreen]Listo[/color]
+anomaly-generator-no-fire = Estado: [color=crimson]No listo[/color]
+anomaly-generator-generate = Generar Anomalía
 anomaly-generator-charges = {$charges ->
-    [one] {$charges} charge
-    *[other] {$charges} charges
+    [one] {$charges} carga
+    *[other] {$charges} cargas
 }
-anomaly-generator-announcement = An anomaly has been generated!
+anomaly-generator-announcement = ¡Se ha generado una anomalía!
 
-anomaly-command-pulse = Pulses a target anomaly
-anomaly-command-supercritical = Makes a target anomaly go supercritical
+anomaly-command-pulse = Emite pulsos a una anomalía objetivo
+anomaly-command-supercritical = Hace que una anomalía objetivo se vuelva supercrítica
 
-# Flavor text on the footer
-anomaly-generator-flavor-left = Anomaly may spawn inside the operator.
+# Texto de sabor en el pie
+anomaly-generator-flavor-left = La anomalía puede aparecer dentro del operador.
 anomaly-generator-flavor-right = v1.1
 
-anomaly-behavior-unknown = [color=red]ERROR. Cannot be read.[/color]
+anomaly-behavior-unknown = [color=red]ERROR. No se puede leer.[/color]
 
-anomaly-behavior-title = behavior deviation analysis:
-anomaly-behavior-point =[color=gold]Anomaly produces {$mod}% of the points[/color] 
+anomaly-behavior-title = Análisis de desviación de comportamiento:
+anomaly-behavior-point = [color=gold]La anomalía produce {$mod}% de los puntos[/color]
 
-anomaly-behavior-safe = [color=forestgreen]The anomaly is extremely stable. Extremely rare pulsations.[/color]
-anomaly-behavior-slow = [color=forestgreen]The frequency of pulsations is much less frequent.[/color]
-anomaly-behavior-light = [color=forestgreen]Pulsation power is significantly reduced.[/color]
-anomaly-behavior-balanced = No behavior deviations detected.
-anomaly-behavior-delayed-force = The frequency of pulsations is greatly reduced, but their power is increased.
-anomaly-behavior-rapid = The frequency of the pulsation is much higher, but its strength is attenuated.
-anomaly-behavior-reflect = A protective coating was detected.
-anomaly-behavior-nonsensivity = A weak reaction to particles was detected.
-anomaly-behavior-sensivity = Amplified reaction to particles was detected.
-anomaly-behavior-invisibility = Light wave distortion has been detected.
-anomaly-behavior-secret = Interference detected. Some data cannot be read
-anomaly-behavior-inconstancy = [color=crimson]Impermanence has been detected. Particle types can change over time.[/color]
-anomaly-behavior-fast = [color=crimson]The pulsation frequency is strongly increased.[/color]
-anomaly-behavior-strenght = [color=crimson]The pulsation power is significantly increased.[/color]
-anomaly-behavior-moving = [color=crimson]Coordinate instability was detected.[/color]
+anomaly-behavior-safe = [color=forestgreen]La anomalía es extremadamente estable. Pulsaciones poco frecuentes.[/color]
+anomaly-behavior-slow = [color=forestgreen]La frecuencia de pulsaciones es mucho menor.[/color]
+anomaly-behavior-light = [color=forestgreen]La potencia de pulsación está significativamente reducida.[/color]
+anomaly-behavior-balanced = No se detectaron desviaciones de comportamiento.
+anomaly-behavior-delayed-force = La frecuencia de pulsaciones está muy reducida, pero su potencia está aumentada.
+anomaly-behavior-rapid = La frecuencia de pulsaciones es mucho mayor, pero su fuerza está atenuada.
+anomaly-behavior-reflect = Se detectó un revestimiento protector.
+anomaly-behavior-nonsensivity = Se detectó una reacción débil a las partículas.
+anomaly-behavior-sensivity = Se detectó una reacción amplificada a las partículas.
+anomaly-behavior-invisibility = Se ha detectado distorsión de las ondas de luz.
+anomaly-behavior-secret = Interferencia detectada. Algunos datos no se pueden leer.
+anomaly-behavior-inconstancy = [color=crimson]Se ha detectado impermanencia. Los tipos de partículas pueden cambiar con el tiempo.[/color]
+anomaly-behavior-fast = [color=crimson]La frecuencia de pulsaciones está fuertemente aumentada.[/color]
+anomaly-behavior-strenght = [color=crimson]La potencia de pulsación está significativamente aumentada.[/color]
+anomaly-behavior-moving = [color=crimson]Se detectó inestabilidad en las coordenadas.[/color]

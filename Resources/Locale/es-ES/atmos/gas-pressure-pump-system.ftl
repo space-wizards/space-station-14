@@ -1,2 +1,2 @@
 # Examine Text
-gas-pressure-pump-system-examined = The pump is set to [color={$statusColor}]{PRESSURE($pressure)}[/color].
+gas-pressure-pump-system-examined = La bomba está configurada a [color={$statusColor}]{PRESSURE($pressure)}[/color].

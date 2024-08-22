@@ -1,35 +1,36 @@
 ## Entity
 
-plant-holder-component-plant-success-message = You plant the {$seedName} {$seedNoun}.
-plant-holder-component-already-seeded-message = The {$name} already has seeds in it!
-plant-holder-component-remove-weeds-message = You remove the weeds from the {$name}.
-plant-holder-component-remove-weeds-others-message = {$otherName} starts uprooting the weeds.
-plant-holder-component-no-weeds-message = This plot is devoid of weeds! It doesn't need uprooting.
-plant-holder-component-remove-plant-message = You remove the plant from the {$name}.
-plant-holder-component-remove-plant-others-message = {$name} removes the plant.
-plant-holder-component-no-plant-message = There is no plant to remove.
-plant-holder-component-empty-message = {$owner} is empty!
-plant-holder-component-spray-message = You spray {$owner}.
-plant-holder-component-transfer-message = You transfer {$amount}u to {$owner}.
-plant-holder-component-nothing-to-sample-message = There is nothing to take a sample of!
-plant-holder-component-already-sampled-message = This plant has already been sampled.
-plant-holder-component-dead-plant-message = This plant is dead.
-plant-holder-component-take-sample-message = You take a sample from the {$seedName}.
-plant-holder-component-compost-message = You compost {$usingItem} into {$owner}.
-plant-holder-component-compost-others-message = {$user} composts {$usingItem} into {$owner}.
-plant-holder-component-nothing-planted-message = It has nothing planted in it..
-plant-holder-component-something-already-growing-message = [color=green]{$seedName}[/color] {$toBeForm} growing here.
-plant-holder-component-something-already-growing-low-health-message = The plant looks [color=red]{$healthState}[/color].
-plant-holder-component-plant-old-adjective = old and wilting
-plant-holder-component-plant-unhealthy-adjective = unhealthy
-plant-holder-component-dead-plant-matter-message = It's full of [color=red]dead plant matter[/color].
-plant-holder-component-weed-high-level-message = It's filled with [color=green]weeds[/color]!
-plant-holder-component-pest-high-level-message = It's filled with [color=gray]tiny worms[/color]!
-plant-holder-component-water-level-message = Water:     [color=cyan]{$waterLevel}[/color].
-plant-holder-component-nutrient-level-message = Nutrient: [color=orange]{$nutritionLevel}[/color].
-plant-holder-component-toxins-high-warning = The [color=red]toxicity level alert[/color] is flashing red.
-plant-holder-component-light-improper-warning = The [color=yellow]improper light level alert[/color] is blinking.
-plant-holder-component-heat-improper-warning = The [color=orange]improper temperature level alert[/color] is blinking.
-plant-holder-component-pressure-improper-warning = The [color=lightblue]improper environment pressure alert[/color] is blinking.
-plant-holder-component-gas-missing-warning = The [color=cyan]improper gas environment alert[/color] is blinking.
-plant-holder-component-early-sample-message = The plant hasn't grown enough to take a sample yet.
+plant-holder-component-plant-success-message = Plantas el {$seedName} {$seedNoun}.
+plant-holder-component-already-seeded-message = ¡El {$name} ya tiene semillas!
+plant-holder-component-remove-weeds-message = Eliminas las malas hierbas del {$name}.
+plant-holder-component-remove-weeds-others-message = {$otherName} comienza a desarraigar las malas hierbas.
+plant-holder-component-no-weeds-message = ¡Este terreno está libre de malas hierbas! No necesita desarraigar.
+plant-holder-component-remove-plant-message = Retiras la planta del {$name}.
+plant-holder-component-remove-plant-others-message = {$name} retira la planta.
+plant-holder-component-no-plant-message = No hay ninguna planta que retirar.
+plant-holder-component-empty-message = ¡{$owner} está vacío!
+plant-holder-component-spray-message = Rocías {$owner}.
+plant-holder-component-transfer-message = Transfieres {$amount}u a {$owner}.
+plant-holder-component-nothing-to-sample-message = ¡No hay nada de lo que tomar una muestra!
+plant-holder-component-already-sampled-message = Esta planta ya ha sido muestreada.
+plant-holder-component-dead-plant-message = Esta planta está muerta.
+plant-holder-component-take-sample-message = Tomas una muestra del {$seedName}.
+plant-holder-component-compost-message = Compostas {$usingItem} en {$owner}.
+plant-holder-component-compost-others-message = {$user} compostas {$usingItem} en {$owner}.
+plant-holder-component-nothing-planted-message = No tiene nada plantado.
+plant-holder-component-something-already-growing-message = [color=green]{$seedName}[/color] {$toBeForm} creciendo aquí.
+plant-holder-component-something-already-growing-low-health-message = La planta se ve [color=red]{$healthState}[/color].
+plant-holder-component-plant-old-adjective = vieja y marchita
+plant-holder-component-plant-unhealthy-adjective = poco saludable
+plant-holder-component-dead-plant-matter-message = Está lleno de [color=red]materia vegetal muerta[/color].
+plant-holder-component-weed-high-level-message = ¡Está lleno de [color=green]malas hierbas[/color]!
+plant-holder-component-pest-high-level-message = ¡Está lleno de [color=gray]gusanos diminutos[/color]!
+plant-holder-component-water-level-message = Agua:     [color=cyan]{$waterLevel}[/color].
+plant-holder-component-nutrient-level-message = Nutrientes: [color=orange]{$nutritionLevel}[/color].
+plant-holder-component-toxins-high-warning = El [color=red]alerta de nivel de toxicidad[/color] está parpadeando en rojo.
+plant-holder-component-light-improper-warning = La [color=yellow]alerta de nivel de luz inadecuado[/color] está parpadeando.
+plant-holder-component-heat-improper-warning = La [color=orange]alerta de nivel de temperatura inadecuado[/color] está parpadeando.
+plant-holder-component-pressure-improper-warning = La [color=lightblue]alerta de presión ambiental inadecuada[/color] está parpadeando.
+plant-holder-component-gas-missing-warning = La [color=cyan]alerta de ambiente de gas inadecuado[/color] está parpadeando.
+plant-holder-component-early-sample-message = La planta no ha crecido lo suficiente para tomar una muestra aún.
+
