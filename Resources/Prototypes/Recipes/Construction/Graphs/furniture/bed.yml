@@ -58,17 +58,3 @@
           steps:
             - tool: Screwing
               doAfter: 1
-    - node: medicalbed
-      entity: MedicalBed
-      edges:
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetPlasteel1
-              amount: 2
-            - !type:SpawnPrototype
-              prototype: MaterialDurathread1
-              amount: 2
-          steps:
-            - tool: Screwing
-              doAfter: 1
