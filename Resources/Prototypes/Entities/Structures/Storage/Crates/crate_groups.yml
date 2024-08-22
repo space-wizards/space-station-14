@@ -1,0 +1,53 @@
+- type: paintableGroup
+  category: crates
+  id: CrateSteel
+  iconPriority: 100
+  state: icon
+  stylePaths:
+    basic:       CrateGenericSteel
+    electrical:  CrateElectrical
+    radiation:   CrateRadiation
+    engineering: CrateEngineering
+    science:     CrateScience
+    surgery:     CrateSurgery
+
+- type: paintableGroup
+  category: crates
+  id: CratePlastic
+  iconPriority: 90
+  state: icon
+  stylePaths:
+    basic:       CratePlastic
+    hydroponics: CrateHydroponics
+    medical:     CrateMedical
+    oxygen:      CrateInternals
+
+- type: paintableGroup
+  category: crates
+  id: CrateSteelSec
+  iconPriority: 80
+  state: icon
+  stylePaths:
+    basic:       CrateSecure
+    secgear:     CrateSecgear
+    engineering: CrateEngineeringSecure
+    medical:     CrateMedicalSecure
+    chemistry:   CrateChemistrySecure
+    private:     CratePrivateSecure
+    science:     CrateScienceSecure
+    plasma:      CratePlasma
+    hydroponics: CrateHydroSecure
+    weapon:      CrateWeaponSecure
+    command:     CrateCommandSecure
+
+# - type: PaintableGroup
+#   category: crates
+#   id: PlasticSec
+#   iconPriority: 70
+#   state: icon
+#   stylePaths:
+#     basic:       [ "Structures/Storage/Crates/plastic.rsi" ]
+#     medical:     [ "Structures/Storage/Crates/medicrate_secure.rsi" ]
+#     chemistry:   [ "Structures/Storage/Crates/chemcrate_secure.rsi" ]
+#     science:     [ "Structures/Storage/Crates/scicrate_secure.rsi" ]
+#     hydroponics: [ "Structures/Storage/Crates/hydro_secure.rsi" ]

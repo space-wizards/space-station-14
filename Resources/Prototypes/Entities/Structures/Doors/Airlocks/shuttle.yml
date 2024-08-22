@@ -1,16 +1,11 @@
 - type: entity
-  parent: AirlockRCDResistant
+  parent: Airlock
   id: AirlockShuttle
   suffix: Docking
   name: external airlock
   description: Necessary for connecting two space craft together.
   components:
   - type: Docking
-  - type: DockingSignalControl
-  - type: DeviceLinkSource
-    ports:
-      - DoorStatus
-      - DockStatus
   - type: Fixtures
     fixtures:
       fix1:
@@ -19,9 +14,9 @@
           bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
         density: 100
         mask:
-          - FullTileMask
+        - FullTileMask
         layer:
-          - AirlockLayer
+        - AirlockLayer
       docking:
         shape:
           !type:PhysShapeCircle
@@ -62,15 +57,13 @@
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
   - type: Airtight
+    fixVacuum: true
     noAirWhenFullyAirBlocked: false
-    airBlockedDirection:
-      - South
   - type: Tag
     tags:
-      - ForceNoFixRotations
-  - type: PaintableAirlock
+    - ForceNoFixRotations
+  - type: Paintable
     group: Shuttle
-    department: null
   - type: Construction
     graph: AirlockShuttle
     node: airlock
@@ -82,19 +75,32 @@
   suffix: Glass, Docking
   description: Necessary for connecting two space craft together.
   components:
+  - type: Docking
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/shuttle.rsi
+    snapCardinals: false
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+    - state: closed_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseUnlit"]
+    - state: welded
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: bolted_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseBolted"]
+    - state: emergency_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
+    - state: panel_open
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Occluder
     enabled: false
-  - type: PaintableAirlock
+  - type: Paintable
     group: ShuttleGlass
   - type: Door
     occludes: false
-  - type: Fixtures
-    fixtures:
-      fix1:
-        layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
-        - GlassAirlockLayer
 
 - type: entity
   id: AirlockShuttleAssembly
@@ -116,13 +122,37 @@
 
 - type: entity
   id: AirlockGlassShuttleSyndicate
-  parent: AirlockGlassShuttle
+  parent: AirlockShuttle
   name: external airlock
   suffix: Glass, Docking
   description: Necessary for connecting two space craft together.
   components:
+  - type: Docking
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/shuttle_syndicate.rsi
+    snapCardinals: false
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+    - state: closed_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseUnlit"]
+    - state: welded
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: bolted_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseBolted"]
+    - state: emergency_unlit
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
+    - state: panel_open
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Occluder
+    enabled: false
+  - type: Paintable
+    group: ShuttleGlass
+  - type: Door
+    occludes: false
 
 - type: entity
   parent: AirlockShuttle

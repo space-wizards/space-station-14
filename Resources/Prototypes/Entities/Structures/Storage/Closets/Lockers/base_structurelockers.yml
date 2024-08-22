@@ -49,6 +49,8 @@
     node: done
     containers:
     - entity_storage
+  - type: Paintable
+    group: LockerSecure
 
 - type: entity
   id: LockerBaseSecure
