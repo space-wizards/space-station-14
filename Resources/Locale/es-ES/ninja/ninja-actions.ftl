@@ -1,8 +1,8 @@
-ninja-no-power = Not enough charge in suit battery!
-ninja-revealed = You have been revealed!
-ninja-suit-cooldown = The suit needs time to recuperate from the last attack.
+ninja-no-power = No hay suficiente carga en la batería del traje!
+ninja-revealed = ¡Has sido revelado!
+ninja-suit-cooldown = El traje necesita tiempo para recuperarse del último ataque.
 
-ninja-research-steal-fail = No new research nodes were stolen...
-ninja-research-steal-success = Stole {$count} new nodes from {THE($server)}.
+ninja-research-steal-fail = No se robaron nuevos nodos de investigación...
+ninja-research-steal-success = Robó {$count} nuevos nodos de {THE($server)}.
 
-ninja-criminal-records-hack-announcement = ERROR: Criminal records has detected a [REDACTED] error #*;"
+ninja-criminal-records-hack-announcement = ERROR: Los registros criminales han detectado un error [REDACTED] #*;

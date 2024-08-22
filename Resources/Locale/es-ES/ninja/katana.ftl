@@ -1,6 +1,6 @@
-ninja-katana-recalled = Your Energy Katana teleports into your hand!
-ninja-hands-full = Your hands are full!
+ninja-katana-recalled = Tu Katana Energética se teleporta a tu mano!
+ninja-hands-full = ¡Tus manos están llenas!
 
-dash-ability-not-held = You aren't holding your katana!
-dash-ability-no-charges = No charges left!
-dash-ability-cant-see = You can't see that!
+dash-ability-not-held = ¡No estás sosteniendo tu katana!
+dash-ability-no-charges = ¡No quedan cargas!
+dash-ability-cant-see = ¡No puedes ver eso!

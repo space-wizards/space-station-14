@@ -1,10 +1,9 @@
-parse-bool-fail = Unable to parse {$arg} as a bool
-parse-float-fail = Unable to parse {$arg} as a float
+parse-bool-fail = No se puede analizar {$arg} como un valor booleano
+parse-float-fail = No se puede analizar {$arg} como un número decimal
 
-lockeyes-command-description = Prevents eyes from being rotated any further
+lockeyes-command-description = Evita que los ojos se roten más
 lockeyes-command-help = lockeyes <true/false>
 
-rotateeyes-command-description = Rotates every player's current eye to the specified rotation
-rotateeyes-command-help = rotateeyes <degrees (default 0)>
-rotateeyes-command-count = Set {$count} eye rotations
-
+rotateeyes-command-description = Rote los ojos actuales de cada jugador a la rotación especificada
+rotateeyes-command-help = rotateeyes <grados (predeterminado 0)>
+rotateeyes-command-count = Establece {$count} rotaciones de ojos
