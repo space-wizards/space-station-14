@@ -3,10 +3,10 @@
 namespace Content.Shared.Roles.Jobs;
 
 /// <summary>
-///     Added to mind entities to hold the data for the player's current job.
+///     Added to mind role entities to mark them as a job role entity.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class JobRoleComponent : Component
+public sealed partial class JobRoleComponent : BaseMindRoleComponent
 {
 
 }
