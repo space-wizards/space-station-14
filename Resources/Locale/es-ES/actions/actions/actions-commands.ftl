@@ -1,12 +1,13 @@
 ﻿## Actions Commands loc
 
 ## Upgradeaction command loc
-upgradeaction-command-need-one-argument = upgradeaction needs at least one argument, the action entity uid. The second optional argument is a specified level.
-upgradeaction-command-max-two-arguments = upgradeaction has a maximum of two arguments, the action entity uid and the (optional) level to set.
-upgradeaction-command-second-argument-not-number = upgradeaction's second argument can only be a number.
-upgradeaction-command-less-than-required-level = upgradeaction cannot accept a level of 0 or lower.
-upgradeaction-command-incorrect-entityuid-format = You must use a valid entityuid format for upgradeaction.
-upgradeaction-command-entity-does-not-exist = This entity does not exist, a valid entity is required for upgradeaction.
-upgradeaction-command-entity-is-not-action = This entity doesn't have the action upgrade component, so this action cannot be leveled.
-upgradeaction-command-cannot-level-up = The action cannot be leveled up.
-upgradeaction-command-description = Upgrades an action by one level, or to the specified level, if applicable.
+upgradeaction-command-need-one-argument = La mejora de acción necesita al menos un argumento, el UID de la entidad de acción. El segundo argumento opcional es un nivel especificado.
+upgradeaction-command-max-two-arguments = La mejora de acción tiene un máximo de dos argumentos, el UID de la entidad de acción y el (opcional) nivel a establecer.
+upgradeaction-command-second-argument-not-number = El segundo argumento de la mejora de acción solo puede ser un número.
+upgradeaction-command-less-than-required-level = La mejora de acción no puede aceptar un nivel de 0 o menor.
+upgradeaction-command-incorrect-entityuid-format = Debes usar un formato de UID de entidad válido para la mejora de acción.
+upgradeaction-command-entity-does-not-exist = Esta entidad no existe, se requiere una entidad válida para la mejora de acción.
+upgradeaction-command-entity-is-not-action = Esta entidad no tiene el componente de mejora de acción, por lo que esta acción no puede ser nivelada.
+upgradeaction-command-cannot-level-up = La acción no puede ser mejorada.
+upgradeaction-command-description = Mejora una acción en un nivel, o al nivel especificado, si es aplicable.
+

@@ -1,5 +1,5 @@
-spider-web-action-nogrid = There is no floor under you!
-spider-web-action-success = You place webs around you.
-spider-web-action-fail = You can't place webs here! All cardinal directions already have webs!
+spider-web-action-nogrid = ¡No hay suelo debajo de ti!
+spider-web-action-success = Colocas telarañas a tu alrededor.
+spider-web-action-fail = ¡No puedes colocar telarañas aquí! ¡Todas las direcciones cardinales ya tienen telarañas!
 
-sericulture-failure-hunger = Your stomach is too empty to make any more webs!
+sericulture-failure-hunger = ¡Tu estómago está demasiado vacío para hacer más telarañas!

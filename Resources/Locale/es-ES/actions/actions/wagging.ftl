@@ -1,2 +1,2 @@
-action-name-toggle-wagging = Wagging Tail
-action-description-toggle-wagging = Start or stop wagging tail.
+action-name-toggle-wagging = Sacudir la Cola
+action-description-toggle-wagging = Comenzar o parar de sacudir la cola.
