@@ -9,8 +9,8 @@
             <RichTextLabel Name="LawNumberLabel" StyleClasses="LabelKeyText"/>
             <customControls:HSeparator Margin="0 5 0 5"/>
             <RichTextLabel Name="LawLabel"/>
-            <BoxContainer Name="LawAnnouncementButtons" Orientation="Horizontal" HorizontalExpand="True" Margin="5 5 5 5">
-                <Control Margin="0 5 5 5" />
+            <BoxContainer Name="LawAnnouncementButtons" Orientation="Horizontal" HorizontalExpand="True" Margin="0 5 0 5">
+                <Control Margin="0 5 0 5" />
                 <!-- Buttons are added via C# code-->
             </BoxContainer>
         </BoxContainer>

@@ -41,21 +41,9 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
             return;
 
         if (keyHolder.Channels.Count == 0)
-        {
-
             RemComp<ActiveRadioComponent>(uid);
-            TryComp<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
-            if (intrinsicRadio != null)
-                EnsureComp<ActiveRadioComponent>(uid).Channels = new(intrinsicRadio.Channels);
-        }
         else
-        {
-            HashSet<string> channels = new(keyHolder.Channels);
-            TryComp<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
-            if (intrinsicRadio != null)
-                channels.UnionWith(intrinsicRadio.Channels);
-            EnsureComp<ActiveRadioComponent>(uid).Channels = channels;
-        }
+            EnsureComp<ActiveRadioComponent>(uid).Channels = new(keyHolder.Channels);
     }
 
     private void OnSpeak(EntityUid uid, WearingHeadsetComponent component, EntitySpokeEvent args)

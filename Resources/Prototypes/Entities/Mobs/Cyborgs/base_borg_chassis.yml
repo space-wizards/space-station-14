@@ -82,16 +82,16 @@
   - type: Hands
     showInHands: false
     disableExplosionRecursion: true
-  - type: ActiveRadio
-    channels:
-    - Binary
-    - Common
   - type: EncryptionKeyHolder
     keySlots: 8
     keysExtractionMethod: Prying
   - type: ComplexInteraction
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+    - Common
+  - type: ActiveRadio
     channels:
     - Binary
     - Common

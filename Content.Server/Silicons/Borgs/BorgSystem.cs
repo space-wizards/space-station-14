@@ -8,6 +8,7 @@ using Content.Server.PowerCell;
 using Content.Server.Radio.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Alert;
+using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -310,30 +311,15 @@ public sealed partial class BorgSystem : SharedBorgSystem
         return true;
     }
 
-    private void OnKeysChanged(EntityUid uid, BorgChassisComponent component, EncryptionChannelsChangedEvent args)
+    private void OnKeysChanged(Entity<BorgChassisComponent> ent, ref EncryptionChannelsChangedEvent args)
     {
-        UpdateRadioChannels(uid, component, args.Component);
-    }
-
-    private void UpdateRadioChannels(EntityUid uid, BorgChassisComponent chassis, EncryptionKeyHolderComponent? keyHolder = null)
-    {
-        if (!Resolve(uid, ref keyHolder))
-            return;
-
-        if (keyHolder.Channels.Count == 0)
-        {
-            RemComp<ActiveRadioComponent>(uid);
-            TryComp<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
-            if (intrinsicRadio != null)
-                EnsureComp<ActiveRadioComponent>(uid).Channels = new(intrinsicRadio.Channels);
-        }
-        else
-        {
-            HashSet<string> channels = new(keyHolder.Channels);
-            TryComp<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
-            if (intrinsicRadio != null)
-                channels.UnionWith(intrinsicRadio.Channels);
-            EnsureComp<ActiveRadioComponent>(uid).Channels = channels;
-        }
+        var channels = new HashSet<string> { SharedChatSystem.BinaryChannel};
+        TryComp<IntrinsicRadioTransmitterComponent>(ent.Owner, out var intrinsicRadio);
+        RemComp<ActiveRadioComponent>(ent.Owner);
+        if (intrinsicRadio != null)
+            channels.UnionWith(intrinsicRadio.Channels);
+        if (args.Component.Channels.Count > 0)
+            channels.UnionWith(args.Component.Channels);
+        EnsureComp<ActiveRadioComponent>(ent.Owner).Channels = new HashSet<string>(channels);
     }
 }
