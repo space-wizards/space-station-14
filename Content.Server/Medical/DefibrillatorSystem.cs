@@ -58,9 +58,6 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (args.Handled || args.Target is not { } target)
             return;
 
-        if (!TryComp(uid, out UseDelayComponent? useDelay) || _useDelay.IsDelayed((uid, useDelay)) || _useDelay.IsDelayed((uid, useDelay), component.DelayId))
-            return;
-
         args.Handled = TryStartZap(uid, target, args.User, component);
     }
 
@@ -90,6 +87,9 @@ public sealed class DefibrillatorSystem : EntitySystem
                 _popup.PopupEntity(Loc.GetString("defibrillator-not-on"), uid, user.Value);
             return false;
         }
+
+        if (!TryComp(uid, out UseDelayComponent? useDelay) || _useDelay.IsDelayed((uid, useDelay), component.DelayId))
+            return false;
 
         if (!TryComp<MobStateComponent>(target, out var mobState))
             return false;
