@@ -21,7 +21,7 @@ namespace Content.Client.Singularity
 
         private const float MaxDistance = 20f;
 
-        private const float MaxDeformation = 7.0f;
+        private const float MaxDeformation = 8.0f;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         public override bool RequestScreenTexture => true;
@@ -139,8 +139,8 @@ namespace Content.Client.Singularity
 
                     if (_haveEventHorizons[i] && _intensities[i] > 0.0f)
                     {
-                        deformation -= MathF.Pow(deformation / MaxDeformation, 32.0f);
-                        if (deformation < -MaxDeformation)
+                        deformation += MathF.Pow(deformation / MaxDeformation, 32.0f);
+                        if (deformation > 2.0f * MaxDeformation)
                             deformation = 0.0f;
                     }
                 }
