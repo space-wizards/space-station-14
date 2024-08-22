@@ -1,40 +1,40 @@
-# Glass
-materials-glass = glass
-materials-reinforced-glass = reinforced glass
-materials-plasma-glass = plasma glass
-materials-reinforced-plasma-glass = reinforced plasma glass
+# Vidrio
+materials-glass = vidrio
+materials-reinforced-glass = vidrio reforzado
+materials-plasma-glass = vidrio de plasma
+materials-reinforced-plasma-glass = vidrio de plasma reforzado
 
-# Metals
-materials-steel = steel
-materials-gold = gold
-materials-silver = silver
+# Metales
+materials-steel = acero
+materials-gold = oro
+materials-silver = plata
 materials-plasteel = plasteel
 
-# Other
-materials-biomass = biomass
-materials-cardboard = cardboard
-materials-cloth = cloth
-materials-durathread = durathread
+# Otros
+materials-biomass = biomasa
+materials-cardboard = cartulina
+materials-cloth = tela
+materials-durathread = duratela
 materials-plasma = plasma
-materials-plastic = plastic
-materials-wood = wood
-materials-paper = paper
-materials-uranium = uranium
-materials-bananium = bananium
-materials-meat = meat
-materials-web = silk
-materials-bones = bone
-materials-coal = coal
-materials-diamond = diamond
-materials-gunpowder = gunpowder
+materials-plastic = plástico
+materials-wood = madera
+materials-paper = papel
+materials-uranium = uranio
+materials-bananium = bananio
+materials-meat = carne
+materials-web = seda
+materials-bones = hueso
+materials-coal = carbón
+materials-diamond = diamante
+materials-gunpowder = pólvora
 
-# Ores
-materials-raw-iron = raw iron
-materials-raw-quartz = raw quartz
-materials-raw-gold = raw gold
-materials-raw-silver = raw silver
-materials-raw-plasma = raw plasma
-materials-raw-uranium = raw uranium
-materials-raw-bananium = raw bananium
-materials-raw-salt = raw salt
-materials-raw-diamond = raw diamond
+# Minerales
+materials-raw-iron = hierro crudo
+materials-raw-quartz = cuarzo crudo
+materials-raw-gold = oro crudo
+materials-raw-silver = plata cruda
+materials-raw-plasma = plasma cruda
+materials-raw-uranium = uranio crudo
+materials-raw-bananium = bananio crudo
+materials-raw-salt = sal gorda
+materials-raw-diamond = diamante crudo

@@ -1,5 +1,5 @@
-signal-port-selector-menu-title = Port Selector
-signal-port-selector-menu-clear = Clear
-signal-port-selector-menu-link-defaults = Link defaults
-signal-port-selector-help = Select the ports you want to link up
-signal-port-selector-menu-done = Done
+signal-port-selector-menu-title = Selector de Puerto
+signal-port-selector-menu-clear = Borrar
+signal-port-selector-menu-link-defaults = Enlazar predeterminados
+signal-port-selector-help = Selecciona los puertos que deseas enlazar
+signal-port-selector-menu-done = Hecho

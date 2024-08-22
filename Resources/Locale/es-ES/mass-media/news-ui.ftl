@@ -1,37 +1,37 @@
-news-read-ui-next-text = ▶
-news-read-ui-prev-text = ◀
-news-read-ui-next-tooltip = Next
-news-read-ui-prev-tooltip = Prev
-news-read-ui-default-title = Station News
-news-read-ui-not-found-text = No articles found
-news-read-ui-time-prefix-text = Publication time:
-news-reader-ui-mute-tooltip = Mute notifications
-news-read-ui-notification-off =  ̶♫̶
-news-read-ui-notification-on = ♫
-news-read-ui-no-author = Anonymous
-news-read-ui-author-prefix = Author:
-news-write-ui-default-title = News Management
-news-write-ui-articles-label = Articles:
-news-write-ui-delete-text = Delete
-news-write-ui-publish-text = Publish
-news-write-ui-create-text = Create
-news-write-ui-cancel-text = Cancel
-news-write-ui-preview-text = Preview
-news-write-ui-article-count-0 = 0 Articles
-news-write-ui-article-count-text = {$count} Articles
-news-write-ui-footer-text = News#Manager™ Authoring System
-news-write-ui-new-article = New Article
-news-write-ui-article-name-label = Title:
-news-write-no-access-popup = No access
-news-writer-text-length-exceeded = Text exceeds maximum length
-news-write-ui-richtext-tooltip = News articles support rich text
-    The following rich text tags are supported:
+news-read-ui-next-text = ➡
+news-read-ui-prev-text = ⬅
+news-read-ui-next-tooltip = Siguiente
+news-read-ui-prev-tooltip = Anterior
+news-read-ui-default-title = Noticias de la Estación
+news-read-ui-not-found-text = No se encontraron artículos
+news-read-ui-time-prefix-text = Tiempo de publicación:
+news-reader-ui-mute-tooltip = Silenciar notificaciones
+news-read-ui-notification-off =  ̶🎵̶
+news-read-ui-notification-on = 🎵
+news-read-ui-no-author = Anónimo
+news-read-ui-author-prefix = Autor:
+news-write-ui-default-title = Gestión de Noticias
+news-write-ui-articles-label = Artículos:
+news-write-ui-delete-text = Eliminar
+news-write-ui-publish-text = Publicar
+news-write-ui-create-text = Crear
+news-write-ui-cancel-text = Cancelar
+news-write-ui-preview-text = Vista previa
+news-write-ui-article-count-0 = 0 Artículos
+news-write-ui-article-count-text = {$count} Artículos
+news-write-ui-footer-text = Sistema de Autoría de Noticias#Gestor
+news-write-ui-new-article = Nuevo Artículo
+news-write-ui-article-name-label = Título:
+news-write-no-access-popup = Sin acceso
+news-writer-text-length-exceeded = El texto excede la longitud máxima
+news-write-ui-richtext-tooltip = Los artículos de noticias admiten texto enriquecido
+    Los siguientes etiquetas de texto enriquecido son compatibles:
     {"[color=Gray][bullet/]heading \\[size=1-3\\]"}
-    {"[bullet/]bold"}
-    {"[bullet/]italic"}
-    {"[bullet/]bolditalic"}
+    {"[bullet/]negrita"}
+    {"[bullet/]cursiva"}
+    {"[bullet/]negrita cursiva"}
     {"[bullet/]color"}
-    {"[bullet/]bullet[/color]"}
+    {"[bullet/]bulleto[/color]"}
 
-news-pda-notification-header = New news article
-news-publish-admin-announcement = {$actor} published news article {$title} by {$author}
+news-pda-notification-header = Nuevo artículo de noticias
+news-publish-admin-announcement = {$actor} publicó el artículo de noticias {$title} por {$author}

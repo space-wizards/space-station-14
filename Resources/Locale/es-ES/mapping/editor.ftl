@@ -1,7 +1,7 @@
-mapping-entities = Entities
-mapping-tiles = Tiles
-mapping-decals = Decals
+mapping-entities = Entidades
+mapping-tiles = Baldosas
+mapping-decals = Decales
 
-mapping-replace = Replace
-mapping-erase-entity = Erase Entity
-mapping-erase-decal = Erase Decal
+mapping-replace = Reemplazar
+mapping-erase-entity = Eliminar Entidad
+mapping-erase-decal = Eliminar Decale
