@@ -72,9 +72,6 @@
         Poison: -0.2
         Cold: -0.4
         Blunt: -0.2
-  - type: Construction
-    graph: bed
-    node: medicalbed
   - type: GuideHelp
     guides:
     - Medical Doctor
