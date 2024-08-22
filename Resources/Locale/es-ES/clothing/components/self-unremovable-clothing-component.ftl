@@ -1,1 +1,1 @@
-comp-self-unremovable-clothing = This cannot be removed without outside help.
+comp-self-unremovable-clothing = Esto no se puede quitar sin ayuda externa.

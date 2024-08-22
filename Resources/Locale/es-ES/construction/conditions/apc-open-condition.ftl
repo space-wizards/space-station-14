@@ -1,5 +1,5 @@
 # APC
-construction-examine-condition-apc-open = First, screw open the APC.
-construction-examine-condition-apc-close = First, screw shut the APC.
-construction-step-condition-apc-open = The APC electronics panel must be screwed open.
-construction-step-condition-apc-close = The APC electronics panel must be screwed shut.
+construction-examine-condition-apc-open = Primero, desenrosca el APC.
+construction-examine-condition-apc-close = Primero, atornilla el APC.
+construction-step-condition-apc-open = El panel electrónico del APC debe estar desenroscado.
+construction-step-condition-apc-close = El panel electrónico del APC debe estar atornillado.

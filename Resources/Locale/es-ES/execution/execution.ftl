@@ -1,17 +1,17 @@
-execution-verb-name = Execute
-execution-verb-message = Use your weapon to execute someone.
+execution-verb-name = Ejecutar
+execution-verb-message = Usa tu arma para ejecutar a alguien.
 
-# All the below localisation strings have access to the following variables
-# attacker (the person committing the execution)
-# victim (the person being executed)
-# weapon (the weapon used for the execution)
+# Todas las cadenas de localización a continuación tienen acceso a las siguientes variables
+# agresor (la persona que realiza la ejecución)
+# víctima (la persona que está siendo ejecutada)
+# arma (arma utilizada para la ejecución)
 
-execution-popup-melee-initial-internal = You ready {THE($weapon)} against {$victim}'s throat.
-execution-popup-melee-initial-external = {$attacker} readies {POSS-ADJ($attacker)} {$weapon} against the throat of {$victim}.
-execution-popup-melee-complete-internal = You slit the throat of {$victim}!
-execution-popup-melee-complete-external = {$attacker} slits the throat of {$victim}!
+execution-popup-melee-initial-internal = ¿Listo con {THE($weapon)} contra la garganta de {$victim}?
+execution-popup-melee-initial-external = {$agresor} prepara su {$weapon} contra la garganta de {$victima}.
+execution-popup-melee-complete-internal = ¡Has cortado la garganta de {$victima}!
+execution-popup-melee-complete-external = {$agresor} corta la garganta de {$victima}!
 
-execution-popup-self-initial-internal = You ready {THE($weapon)} against your own throat.
-execution-popup-self-initial-external = {$attacker} readies {POSS-ADJ($attacker)} {$weapon} against their own throat.
-execution-popup-self-complete-internal = You slit your own throat!
-execution-popup-self-complete-external = {$attacker} slits their own throat!
+execution-popup-self-initial-internal = ¿Listo con {THE($weapon)} contra tu propia garganta?
+execution-popup-self-initial-external = {$agresor} prepara su {$weapon} contra su propia garganta.
+execution-popup-self-complete-internal = ¡Te has cortado la garganta tú mismo!
+execution-popup-self-complete-external = {$agresor} se ha cortado la garganta él mismo!

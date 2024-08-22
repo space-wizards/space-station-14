@@ -1,14 +1,14 @@
-spray-painter-window-title = Spray painter
+spray-painter-window-title = Pintura en aerosol
 
-spray-painter-style-not-available = Cannot apply the selected style to this type of airlock
-spray-painter-selected-style = Selected style:
+spray-painter-style-not-available = No se puede aplicar el estilo seleccionado a este tipo de puerta de aire
+spray-painter-selected-style = Estilo seleccionado:
 
-spray-painter-selected-color = Selected color:
-spray-painter-color-red = red
-spray-painter-color-yellow = yellow
-spray-painter-color-brown = brown
-spray-painter-color-green = green
-spray-painter-color-cyan = cyan
-spray-painter-color-blue = blue
-spray-painter-color-white = white
-spray-painter-color-black = black
+spray-painter-selected-color = Color seleccionado:
+spray-painter-color-red = rojo
+spray-painter-color-yellow = amarillo
+spray-painter-color-brown = marrón
+spray-painter-color-green = verde
+spray-painter-color-cyan = cian
+spray-painter-color-blue = azul
+spray-painter-color-white = blanco
+spray-painter-color-black = negro

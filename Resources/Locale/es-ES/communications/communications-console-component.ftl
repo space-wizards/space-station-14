@@ -1,26 +1,26 @@
 # User interface
-comms-console-menu-title = Communications Console
-comms-console-menu-announcement-placeholder = Announcement text...
-comms-console-menu-announcement-button = Announce
-comms-console-menu-announcement-button-tooltip = Send your message as a station-wide radio announcement.
-comms-console-menu-broadcast-button = Broadcast
-comms-console-menu-broadcast-button-tooltip = Broadcast your message to wall-mounted screens around the station. Note: They fit only ten characters!
-comms-console-menu-alert-level-button-tooltip = Change the station alert level. Applies immediately on selecting.
-comms-console-menu-call-shuttle = Call emergency shuttle
-comms-console-menu-recall-shuttle = Recall emergency shuttle
-comms-console-menu-emergency-shuttle-button-tooltip = Calls or recalls the emergency shuttle. You can only recall when there's enough time left.
-comms-console-menu-time-remaining = Time remaining: {$time}
+comms-console-menu-title = Consola de Comunicaciones
+comms-console-menu-announcement-placeholder = Texto del anuncio...
+comms-console-menu-announcement-button = Anunciar
+comms-console-menu-announcement-button-tooltip = Envía tu mensaje como un anuncio de radio a nivel de estación.
+comms-console-menu-broadcast-button = Transmitir
+comms-console-menu-broadcast-button-tooltip = Transmite tu mensaje a las pantallas montadas en las paredes de la estación. Nota: ¡Solo caben diez caracteres!
+comms-console-menu-alert-level-button-tooltip = Cambia el nivel de alerta de la estación. Se aplica inmediatamente al seleccionar.
+comms-console-menu-call-shuttle = Llamar al transbordador de emergencia
+comms-console-menu-recall-shuttle = Recuperar el transbordador de emergencia
+comms-console-menu-emergency-shuttle-button-tooltip = Llama o recupera el transbordador de emergencia. Solo puedes recuperar cuando queda suficiente tiempo.
+comms-console-menu-time-remaining = Tiempo restante: {$time}
 
 # Popup
-comms-console-permission-denied = Permission denied
-comms-console-shuttle-unavailable = Shuttle is currently unavailable
-comms-console-message-too-long = Message is too long
+comms-console-permission-denied = Permiso denegado
+comms-console-shuttle-unavailable = El transbordador no está disponible en este momento
+comms-console-message-too-long = El mensaje es demasiado largo
 
 # Placeholder values
-comms-console-announcement-sent-by = Sent by
-comms-console-announcement-unknown-sender = Unknown
+comms-console-announcement-sent-by = Enviado por
+comms-console-announcement-unknown-sender = Desconocido
 
 # Comms console variant titles
-comms-console-announcement-title-station = Communications Console
-comms-console-announcement-title-centcom = Central Command
-comms-console-announcement-title-nukie = Syndicate Nuclear Operative
+comms-console-announcement-title-station = Consola de Comunicaciones
+comms-console-announcement-title-centcom = Mando Central
+comms-console-announcement-title-nukie = Operativo Nuclear del Sindicato

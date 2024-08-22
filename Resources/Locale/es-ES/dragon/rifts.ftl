@@ -1,9 +1,9 @@
-carp-rift-warning = A rift is causing an unnaturally large energy flux {$location}. Stop it at all costs!
-carp-rift-duplicate = Cannot have 2 charging rifts at the same time!
-carp-rift-examine = It is [color=yellow]{$percentage}%[/color] charged!
-carp-rift-max = You have reached your maximum amount of rifts
-carp-rift-anchor = Rifts require a stable surface to spawn.
-carp-rift-proximity = Too close to a nearby rift! Need to be at least {$proximity}m away.
-carp-rift-space-proximity = Too close to space! Need to be at least {$proximity}m away.
-carp-rift-weakened = You are unable to summon more rifts in your weakened state.
-carp-rift-destroyed = A rift has been destroyed! You are now weakened temporarily.
+carp-rift-warning = Se está produciendo una brecha causando un flujo energético desnaturalizado {$location}. ¡Deténlo en todo momento!
+carp-rift-duplicate = No se pueden tener dos brechas en el mismo lugar al mismo tiempo!
+carp-rift-examine = Está cargado en [color=yellow]{$percentage}%[/color]!
+carp-rift-max = Has alcanzado el máximo de brechas
+carp-rift-anchor = Las brechas requieren una superficie estable para aparecer.
+carp-rift-proximity = Demasiado cerca de una brecha! Necesitas estar al menos {$proximity}m lejos.
+carp-rift-space-proximity = Demasiado cerca del espacio! Necesitas estar al menos {$proximity}m lejos.
+carp-rift-weakened = No puedes invocar más brechas estando debilitado.
+carp-rift-destroyed = Una brecha ha sido destruido! Ahora estás temporalmente debilitado.

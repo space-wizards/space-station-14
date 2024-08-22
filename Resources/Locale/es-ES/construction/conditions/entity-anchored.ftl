@@ -1,4 +1,4 @@
-construction-examine-condition-entity-anchored = First, anchor it.
-construction-examine-condition-entity-unanchored = First, unanchor it.
-construction-step-condition-entity-anchored = It must be anchored.
-construction-step-condition-entity-unanchored = It must be unanchored.
+construction-examine-condition-entity-anchored = Primero, ancla el {$entityName}.
+construction-examine-condition-entity-unanchored = Primero, desancla el {$entityName}.
+construction-step-condition-entity-anchored = Debe estar anclado.
+construction-step-condition-entity-unanchored = Debe estar desanclado.

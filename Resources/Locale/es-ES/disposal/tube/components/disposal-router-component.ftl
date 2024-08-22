@@ -1,6 +1,6 @@
 ## UI
 
-disposal-router-window-title = Disposal Router
-disposal-router-window-tags-label = Tags:
-disposal-router-window-tag-input-tooltip = A comma separated list of tags
-disposal-router-window-tag-input-confirm-button = Confirm
+disposal-router-window-title = Enrutador de deshechos
+disposal-router-window-tags-label = Etiquetas:
+disposal-router-window-tag-input-tooltip = Lista de etiquetas separadas por comas
+disposal-router-window-tag-input-confirm-button = Confirmar

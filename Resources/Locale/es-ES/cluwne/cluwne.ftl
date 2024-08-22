@@ -1,2 +1,2 @@
-cluwne-transform = {CAPITALIZE(THE($target))} turned into a cluwne!
-cluwne-name-prefix = cluwnified {$baseName}
+cluwne-transform = ¡{CAPITALIZE(THE($target))} se ha convertido en un cluwne!
+cluwne-name-prefix = cluwnificado {$baseName}

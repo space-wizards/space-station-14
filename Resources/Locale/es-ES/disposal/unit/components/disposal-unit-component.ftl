@@ -1,28 +1,29 @@
 ## UI
 
-ui-disposal-unit-title = Disposal Unit
+ui-disposal-unit-title = Unidad de Deshechos
 
-ui-disposal-unit-label-state = State:
-ui-disposal-unit-label-pressure = Pressure:
-ui-disposal-unit-label-status = Ready
+ui-disposal-unit-label-state = Estado:
+ui-disposal-unit-label-pressure = Presión:
+ui-disposal-unit-label-status = Listo
 
-ui-disposal-unit-button-flush = Flush
-ui-disposal-unit-button-eject = Eject Contents
-ui-disposal-unit-button-power = Power
+ui-disposal-unit-button-flush = Limpiar
+ui-disposal-unit-button-eject = Expulsar Contenidos
+ui-disposal-unit-button-power = Energía
 
 ## Verbs
-disposal-flush-verb-get-data-text = Flush
-disposal-self-insert-verb-get-data-text = Jump inside
-disposal-eject-verb-get-data-text = Eject contents
+disposal-flush-verb-get-data-text = Limpiar
+disposal-self-insert-verb-get-data-text = Introducirse
+disposal-eject-verb-get-data-text = Expulsar contenidos
 
 ## No hands
-disposal-unit-no-hands = You don't have hands!
+disposal-unit-no-hands = ¡No tienes manos!
 
-# state
-disposal-unit-state-Ready = Ready
-# Yes I want it to always say Pressurizing
-disposal-unit-state-Flushed = Pressurizing
-disposal-unit-state-Pressurizing = Pressurizing
+# estado
+disposal-unit-state-Ready = Listo
+# Sí, quiero que siempre diga Presurizando
+disposal-unit-state-Flushed = Presurizando
+disposal-unit-state-Pressurizing = Presurizando
 
-# putting people in
-disposal-unit-being-inserted = {CAPITALIZE($user)} is trying to force you into a disposal chute!
+# poniendo personas en
+disposal-unit-being-inserted = {CAPITALIZE($user)} está intentando forzarte a entrar en un conducto de deshechos.
+

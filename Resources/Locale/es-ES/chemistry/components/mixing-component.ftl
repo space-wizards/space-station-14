@@ -1,17 +1,19 @@
 # Types
-mixing-verb-default-mix = mix
-mixing-verb-default-grind = grind
-mixing-verb-default-juice = juice
-mixing-verb-default-condense = condense
-mixing-verb-centrifuge = centrifugation
-mixing-verb-electrolysis = electrolyze
-mixing-verb-holy = bless
-mixing-verb-stir = stir
-mixing-verb-shake = shake
+mixing-verb-default-mix = mezclar
+mixing-verb-default-grind = moler
+mixing-verb-default-juice = exprimir
+mixing-verb-default-condense = condensar
+mixing-verb-centrifuge = centrifugar
+mixing-verb-electrolysis = electrólisis
+mixing-verb-holy = bendecir
+mixing-verb-stir = revolver
+mixing-verb-shake = agitar
+
 
 ## Entity
 
-default-mixing-success = You mix the {$mixed} with the {$mixer}
-bible-mixing-success = You bless the {$mixed} with the {$mixer}
-spoon-mixing-success = You stir the {$mixed} with the {$mixer}
+default-mixing-success = Mezclas el {$mixed} con el {$mixer}.
+bible-mixing-success = Bendices el {$mixed} con el {$mixer}.
+spoon-mixing-success = Revuelves el {$mixed} con el {$mixer}.
+
 

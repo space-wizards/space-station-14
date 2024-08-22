@@ -1,1 +1,1 @@
-melee-stamina = Not enough stamina
+melee-stamina = No tienes suficiente resistencia

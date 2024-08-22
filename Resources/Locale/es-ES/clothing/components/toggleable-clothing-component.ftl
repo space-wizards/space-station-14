@@ -1,3 +1,3 @@
-toggle-clothing-verb-text = Toggle {CAPITALIZE($entity)}
+toggle-clothing-verb-text = Activar/Desactivar {CAPITALIZE($entity)}
 
-toggleable-clothing-remove-first = You have to unequip {$entity} first.
+toggleable-clothing-remove-first = Primero debes quitarte {$entity}.

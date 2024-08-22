@@ -1,45 +1,45 @@
 ﻿# Popups
 
-network-configurator-device-saved = Successfully saved network device {$device} with address {$address}!
-network-configurator-device-failed = Failed to save network device {$device}! No address assigned!
-network-configurator-too-many-devices = Too many devices stored on this device!
-network-configurator-update-ok = Device storage updated.
-network-configurator-device-already-saved = network device: {$device} is already saved.
-network-configurator-device-access-denied = Access denied!
-network-configurator-link-mode-started = Started linking device: {$device}
-network-configurator-link-mode-stopped = Stopped linking.
-network-configurator-mode-link = Link
-network-configurator-mode-list = List
-network-configurator-switched-mode = Switched mode to: {$mode}
+network-configurator-device-saved = ¡Dispositivo de red {$device} guardado con éxito con la dirección {$address}!
+network-configurator-device-failed = ¡No se pudo guardar el dispositivo de red {$device}! ¡No se asignó ninguna dirección!
+network-configurator-too-many-devices = ¡Demasiados dispositivos almacenados en este dispositivo!
+network-configurator-update-ok = Almacenamiento de dispositivos actualizado.
+network-configurator-device-already-saved = El dispositivo de red: {$device} ya está guardado.
+network-configurator-device-access-denied = ¡Acceso denegado!
+network-configurator-link-mode-started = Comenzó a vincular el dispositivo: {$device}
+network-configurator-link-mode-stopped = Vinculación detenida.
+network-configurator-mode-link = Vinculación
+network-configurator-mode-list = Lista
+network-configurator-switched-mode = Cambiado a modo: {$mode}
 
 # Verbs
-network-configurator-save-device = Save device
-network-configurator-configure = Configure
-network-configurator-switch-mode = Switch mode
-network-configurator-link-defaults = Link defaults
-network-configurator-start-link = Start link
-network-configurator-link = Link
+network-configurator-save-device = Guardar dispositivo
+network-configurator-configure = Configurar
+network-configurator-switch-mode = Cambiar modo
+network-configurator-link-defaults = Vincular predeterminados
+network-configurator-start-link = Iniciar vinculación
+network-configurator-link = Vincular
 
-# ui
-network-configurator-title-saved-devices = Saved Devices
-network-configurator-title-device-configuration = Device Configuration
-network-configurator-ui-clear-button = Clear
-network-configurator-ui-count-label = {$count} Devices
+# UI
+network-configurator-title-saved-devices = Dispositivos Guardados
+network-configurator-title-device-configuration = Configuración del Dispositivo
+network-configurator-ui-clear-button = Limpiar
+network-configurator-ui-count-label = {$count} Dispositivos
 
-# tooltips
-network-configurator-tooltip-set = Sets targets device list
-network-configurator-tooltip-add = Adds to targets device list
-network-configurator-tooltip-edit = Edit targets device list
-network-configurator-tooltip-clear = Clear targets device list
-network-configurator-tooltip-copy = Copy targets device list to held tool
-network-configurator-tooltip-show = Show a holographic visualization of targets device list
+# Tooltips
+network-configurator-tooltip-set = Establece la lista de dispositivos objetivo
+network-configurator-tooltip-add = Añade a la lista de dispositivos objetivo
+network-configurator-tooltip-edit = Edita la lista de dispositivos objetivo
+network-configurator-tooltip-clear = Limpia la lista de dispositivos objetivo
+network-configurator-tooltip-copy = Copia la lista de dispositivos objetivo al instrumento en uso
+network-configurator-tooltip-show = Muestra una visualización holográfica de la lista de dispositivos objetivo
 
-# examine
-network-configurator-examine-mode-link = [color=red]Link[/color]
-network-configurator-examine-mode-list = [color=green]List[/color]
-network-configurator-examine-current-mode = Current mode: {$mode}
-network-configurator-examine-switch-modes = Press {$key} to switch modes
+# Examine
+network-configurator-examine-mode-link = [color=red]Vinculación[/color]
+network-configurator-examine-mode-list = [color=green]Lista[/color]
+network-configurator-examine-current-mode = Modo actual: {$mode}
+network-configurator-examine-switch-modes = Presiona {$key} para cambiar de modo
 
-# item status
-network-configurator-item-status-label = Mode: {$mode}
-    Switch: {$keybinding}
+# Item Status
+network-configurator-item-status-label = Modo: {$mode}
+    Cambio: {$keybinding}

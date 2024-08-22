@@ -1,7 +1,7 @@
 ## ConstructionMenu.xaml.cs
 
-construction-menu-title = Construction
-construction-menu-place-ghost = Place construction ghost
-construction-menu-clear-all = Clear All
-construction-menu-eraser-mode = Eraser Mode
-construction-menu-craft = Craft
+construction-menu-title = Construcción
+construction-menu-place-ghost = Colocar marco de construcción
+construction-menu-clear-all = Limpiar Todo
+construction-menu-eraser-mode = Modo Borrador
+construction-menu-craft = Fabricar

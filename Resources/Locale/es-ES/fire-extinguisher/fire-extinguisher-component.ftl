@@ -1,3 +1,3 @@
-fire-extinguisher-component-after-interact-refilled-message = {$owner} is now refilled
-fire-extinguisher-component-safety-on-message = Its safety is on!
-fire-extinguisher-component-verb-text = Toggle safety
+fire-extinguisher-component-after-interact-refilled-message = Ahora {$owner} está rellenado
+fire-extinguisher-component-safety-on-message = Su seguridad está encendida!
+fire-extinguisher-component-verb-text = Cambiar seguridad
