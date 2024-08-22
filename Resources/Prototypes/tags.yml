@@ -657,6 +657,9 @@
   id: Goat
 
 - type: Tag
+  id: Goliath
+
+- type: Tag
   id: GPS
 
 - type: Tag
@@ -1259,6 +1262,12 @@
 
 - type: Tag
   id: Toolbox
+
+- type: Tag
+  id: ToothSharkminnow
+
+- type: Tag
+  id: ToothSpaceCarp
 
 - type: Tag
   id: Torch
