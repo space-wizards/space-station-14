@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Handcuff range is buffed to one tile of distance.
-    type: Tweak
-  id: 6684
-  time: '2024-06-05T20:14:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28576
 - author: Cojoke-dot
   changes:
   - message: A variety of objects around the station now need to be clicked on in
@@ -3864,3 +3857,13 @@
   id: 7183
   time: '2024-08-22T17:05:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31306
+- author: EmoGarbage404
+  changes:
+  - message: Moved the mining asteroid slightly closer to the station.
+    type: Tweak
+  - message: Things pulled in by the salvage magnet should spawn closer to the station
+      at a more consistent distance.
+    type: Tweak
+  id: 7184
+  time: '2024-08-22T19:29:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31296
