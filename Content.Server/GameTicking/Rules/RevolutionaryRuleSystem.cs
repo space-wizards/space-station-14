@@ -105,7 +105,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         args.AddLine(Loc.GetString("rev-headrev-count", ("initialCount", sessionData.Count)));
         foreach (var (mind, data, name) in sessionData)
         {
-            var role = _role.MindGetRole<RevolutionaryRoleComponent>(mind);
+            _role.MindHasRole<RevolutionaryRoleComponent>(mind, out var role);
             var count = CompOrNull<RevolutionaryRoleComponent>(role)?.ConvertedCount ?? 0;
 
             args.AddLine(Loc.GetString("rev-headrev-name-user",
@@ -149,12 +149,14 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         if (ev.User != null)
         {
-            _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(ev.User.Value)} converted {ToPrettyString(ev.Target)} into a Revolutionary");
+            _adminLogManager.Add(LogType.Mind,
+                LogImpact.Medium,
+                $"{ToPrettyString(ev.User.Value)} converted {ToPrettyString(ev.Target)} into a Revolutionary");
 
             if (_mind.TryGetMind(ev.User.Value, out var revMindId, out _))
             {
-                if (_role.MindHasRole<RevolutionaryRoleComponent>(revMindId, out var role))
-                    Comp<RevolutionaryRoleComponent>(role.Value).ConvertedCount++;
+                if (_role.MindHasRole<RevolutionaryRoleComponent>(revMindId, out _, out var role))
+                    role.Value.Comp.ConvertedCount++;
             }
         }
 

@@ -49,9 +49,7 @@ public sealed class NinjaConditionsSystem : EntitySystem
     private void OnSpiderChargeRequirementCheck(EntityUid uid, SpiderChargeConditionComponent comp, ref RequirementCheckEvent args)
     {
         if (args.Cancelled || !_roles.MindHasRole<NinjaRoleComponent>(args.MindId))
-        {
             return;
-        }
 
         // choose spider charge detonation point
         var warps = new List<EntityUid>();

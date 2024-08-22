@@ -137,12 +137,10 @@ public abstract class SharedJobSystem : EntitySystem
         if (mindId is null)
             return false;
 
-        if (!_roles.MindHasRole<JobRoleComponent>(mindId.Value, out var role))
-            return false;
+        if (_roles.MindHasRole<JobRoleComponent>(mindId.Value, out var role))
+            job = role.Value.Comp.JobPrototype;
 
-        job = role.Value.Comp.JobPrototype;
-
-        return true;
+        return (job is not null);
     }
 
     /// <summary>

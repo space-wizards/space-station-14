@@ -102,7 +102,7 @@ public abstract class SharedRoleSystem : EntitySystem
             {
                 _adminLogger.Add(LogType.Mind,
                     LogImpact.Low,
-                    $"Job Role of {_minds.MindOwnerLoggingString(mind)} changed from '{jobRole.Value.Comp.JobPrototype}' to '{jobPrototype}'");
+                    $"Job Role of {ToPrettyString(mind.OwnedEntity)} changed from '{jobRole.Value.Comp.JobPrototype}' to '{jobPrototype}'");
             }
 
             jobRole.Value.Comp.JobPrototype = jobPrototype;
@@ -134,6 +134,10 @@ public abstract class SharedRoleSystem : EntitySystem
             return;
         }
 
+        //TODO don't let a prototype being added a second time
+        //If that was somehow to occur, a second mindrole for that comp would be created
+        //Meaning any mind role checks could return wrong results, since they just return the first match they find
+
         var mindRoleId = Spawn(protoId, MapCoordinates.Nullspace);
         EnsureComp<MindRoleComponent>(mindRoleId);
         var mindRoleComp = Comp<MindRoleComponent>(mindRoleId);
@@ -161,9 +165,20 @@ public abstract class SharedRoleSystem : EntitySystem
         }
 
         var name = Loc.GetString(protoEnt.Name);
-        _adminLogger.Add(LogType.Mind,
-            LogImpact.Low,
-            $"{name} added to mind of {_minds.MindOwnerLoggingString(mind)}");
+        if (mind.OwnedEntity is not null)
+        {
+            _adminLogger.Add(LogType.Mind,
+                LogImpact.Low,
+                $"{name} added to mind of {ToPrettyString(mind.OwnedEntity)}");
+        }
+        else
+        {
+            //TODO: This is not tied to the player on the Admin Log filters.
+            //Probably only happens when Job Role is added on initial spawn, before the mind entity is put in a mob
+            _adminLogger.Add(LogType.Mind,
+                LogImpact.Low,
+                $"{name} added to {ToPrettyString(mindId)}");
+        }
     }
 
     /// <summary>
@@ -213,7 +228,7 @@ public abstract class SharedRoleSystem : EntitySystem
         }
         _adminLogger.Add(LogType.Mind,
             LogImpact.Low,
-            $"'Role {typeof(T).Name}' removed from mind of {_minds.MindOwnerLoggingString(mind)}");
+            $"'Role {typeof(T).Name}' removed from mind of {ToPrettyString(mind.OwnedEntity)}");
         return true;
     }
 
@@ -238,15 +253,20 @@ public abstract class SharedRoleSystem : EntitySystem
     }
 
     /// <summary>
-    /// Finds and outputs the first mind role of a specific type
+    /// Finds the first mind role of a specific T type on a mind entity.
+    /// Outputs entity components for the mind role's MindRoleComponent and for T
     /// </summary>
     /// <param name="mindId">The mind entity</param>
     /// <typeparam name="T">The type of the role to find.</typeparam>
-    /// <param name="role">The output role</param>
+    /// <param name="role">The Mind Role entity component</param>
+    /// <param name="roleT">The Mind Role's entity component for T</param>
     /// <returns>True if the role is found</returns>
-    public bool MindHasRole<T>(EntityUid mindId, [NotNullWhen(true)] out Entity<MindRoleComponent>? role) where T : IComponent
+    public bool MindHasRole<T>(EntityUid mindId,
+        [NotNullWhen(true)] out Entity<MindRoleComponent>? role,
+        [NotNullWhen(true)] out Entity<T>? roleT) where T : IComponent
     {
         role = null;
+        roleT = null;
 
         if (!TryComp<MindComponent>(mindId, out var mind))
             return false;
@@ -259,6 +279,7 @@ public abstract class SharedRoleSystem : EntitySystem
                 continue;
 
             role = (roleEnt,Comp<MindRoleComponent>(roleEnt));
+            roleT = (roleEnt,Comp<T>(roleEnt));
             found = true;
             break;
         }
@@ -267,7 +288,8 @@ public abstract class SharedRoleSystem : EntitySystem
     }
 
     /// <summary>
-    /// Finds and outputs the first mind role of a specific type
+    /// Finds the first mind role of a specific type on a mind entity.
+    /// Outputs an entity component for the mind role's MindRoleComponent
     /// </summary>
     /// <param name="mindId">The mind entity</param>
     /// <param name="type">The Type to look for</param>
@@ -306,21 +328,37 @@ public abstract class SharedRoleSystem : EntitySystem
     }
 
     /// <summary>
-    /// Finds the first mind role of a specific type
+    /// Finds the first mind role of a specific type on a mind entity.
+    /// Outputs an entity component for the mind role's MindRoleComponent
+    /// </summary>
+    /// <param name="mindId">The mind entity</param>
+    /// <param name="role">The Mind Role entity component</param>
+    /// <typeparam name="T">The type of the role to find.</typeparam>
+    /// <returns>True if the role is found</returns>
+    public bool MindHasRole<T>(EntityUid mindId,
+        [NotNullWhen(true)] out Entity<MindRoleComponent>? role) where T : IComponent
+    {
+        return MindHasRole<T>(mindId, out role, out _);
+    }
+
+    /// <summary>
+    /// Finds the first mind role of a specific type on a mind entity.
     /// </summary>
     /// <param name="mindId">The mind entity</param>
     /// <typeparam name="T">The type of the role to find.</typeparam>
     /// <returns>True if the role is found</returns>
     public bool MindHasRole<T>(EntityUid mindId) where T : IComponent
     {
-        return MindHasRole<T>(mindId, out _);
+        return MindHasRole<T>(mindId, out _, out _);
     }
 
+    //TODO: Delete this later
     /// <summary>
     /// Returns the first mind role of a specific type
     /// </summary>
     /// <param name="mindId">The mind entity</param>
     /// <returns>Entity Component of the mind role</returns>
+    [Obsolete("Use MindHasRole's output value")]
     public Entity<MindRoleComponent>? MindGetRole<T>(EntityUid mindId) where T : IComponent
     {
         Entity<MindRoleComponent>? result = null;

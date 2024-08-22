@@ -515,12 +515,8 @@ public sealed class GhostRoleSystem : EntitySystem
 
         _roleSystem.MindAddRole(newMind, "MindRoleGhostMarker");
 
-        var markerRole = _roleSystem.MindGetRole<GhostRoleMarkerRoleComponent>(newMind);
-        if (markerRole is not null)
-        {
-            var marker = Comp<GhostRoleMarkerRoleComponent>(markerRole.Value.Owner);
-            marker.Name = role.RoleName;
-        }
+        if(_roleSystem.MindHasRole<GhostRoleMarkerRoleComponent>(newMind, out _, out var markerRole))
+            markerRole.Value.Comp.Name = role.RoleName;
 
         _mindSystem.SetUserId(newMind, player.UserId);
         _mindSystem.TransferTo(newMind, mob);

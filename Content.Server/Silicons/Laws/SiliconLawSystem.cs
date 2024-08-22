@@ -188,10 +188,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (component.AntagonistRole == null || !_mind.TryGetMind(uid, out var mindId, out _))
             return;
 
-        if (_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
-            return;
-
-        _roles.MindAddRole(mindId, "MindRoleSubvertedSilicon");
+        if (!_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
+            _roles.MindAddRole(mindId, "MindRoleSubvertedSilicon");
     }
 
     public SiliconLawset GetLaws(EntityUid uid, SiliconLawBoundComponent? component = null)
