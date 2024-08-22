@@ -39,7 +39,7 @@
   name: chat-radio-science
   keycode: 'n'
   frequency: 1351
-  color: "#b05efa"
+  color: "#c261c2"
 
 - type: radioChannel
   id: Security
