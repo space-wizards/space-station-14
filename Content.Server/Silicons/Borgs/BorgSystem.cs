@@ -22,7 +22,6 @@ using Content.Shared.Pointing;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Radio;
-using Content.Shared.Radio.Components;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
@@ -313,13 +312,10 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
     private void OnKeysChanged(Entity<BorgChassisComponent> ent, ref EncryptionChannelsChangedEvent args)
     {
-        var channels = new HashSet<string> { SharedChatSystem.BinaryChannel};
-        TryComp<IntrinsicRadioTransmitterComponent>(ent.Owner, out var intrinsicRadio);
-        RemComp<ActiveRadioComponent>(ent.Owner);
-        if (intrinsicRadio != null)
-            channels.UnionWith(intrinsicRadio.Channels);
+        var channels = new HashSet<string>(ent.Comp.DefaultRadioChannels);
         if (args.Component.Channels.Count > 0)
             channels.UnionWith(args.Component.Channels);
+        EnsureComp<IntrinsicRadioTransmitterComponent>(ent.Owner).Channels = new HashSet<string>(channels);
         EnsureComp<ActiveRadioComponent>(ent.Owner).Channels = new HashSet<string>(channels);
     }
 }

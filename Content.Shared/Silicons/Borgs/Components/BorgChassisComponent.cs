@@ -1,9 +1,12 @@
 ﻿using Content.Shared.Alert;
+using Content.Shared.Chat;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
+using Content.Shared.Radio;
 
 namespace Content.Shared.Silicons.Borgs.Components;
 
@@ -78,6 +81,9 @@ public sealed partial class BorgChassisComponent : Component
 
     [DataField]
     public ProtoId<AlertPrototype> NoBatteryAlert = "BorgBatteryNone";
+
+    [DataField(customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
+    public HashSet<string> DefaultRadioChannels = new HashSet<string> { SharedChatSystem.BinaryChannel };
 }
 
 [Serializable, NetSerializable]
