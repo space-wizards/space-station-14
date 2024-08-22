@@ -1795,6 +1795,10 @@
         - !type:AdjustReagent
           reagent: Theobromine
           amount: 0.05
+        - !type:GenericStatusEffect
+          key: Drowsiness
+          time: 1.0
+          type: Remove
   fizziness: 0.25
 
 - type: reagent
@@ -1822,6 +1826,10 @@
         - !type:AdjustReagent
           reagent: Theobromine
           amount: 0.05
+        - !type:GenericStatusEffect
+          key: Drowsiness
+          time: 1.0
+          type: Remove
   fizziness: 0.15
 
 - type: reagent
@@ -1849,6 +1857,10 @@
         - !type:AdjustReagent
           reagent: Theobromine
           amount: 0.05
+        - !type:GenericStatusEffect
+          key: Drowsiness
+          time: 1.0
+          type: Remove
   fizziness: 0.15
 
 - type: reagent
@@ -1876,6 +1888,10 @@
         - !type:AdjustReagent
           reagent: Theobromine
           amount: 0.05
+        - !type:GenericStatusEffect
+          key: Drowsiness
+          time: 1.0
+          type: Remove
   fizziness: 0.25
 
 - type: reagent
@@ -1903,6 +1919,10 @@
         - !type:AdjustReagent
           reagent: Theobromine
           amount: 0.05
+        - !type:GenericStatusEffect
+          key: Drowsiness
+          time: 1.0
+          type: Remove
   fizziness: 0.15
 
 - type: reagent
@@ -1930,4 +1950,8 @@
         - !type:AdjustReagent
           reagent: Theobromine
           amount: 0.05
+        - !type:GenericStatusEffect
+          key: Drowsiness
+          time: 1.0
+          type: Remove
   fizziness: 0.25

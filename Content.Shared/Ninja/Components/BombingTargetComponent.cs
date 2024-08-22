@@ -4,6 +4,4 @@ namespace Content.Shared.Ninja.Components;
 /// Makes this warp point a valid bombing target for ninja's spider charge.
 /// </summary>
 [RegisterComponent]
-public sealed partial class BombingTargetComponent : Component
-{
-}
+public sealed partial class BombingTargetComponent : Component;

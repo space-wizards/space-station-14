@@ -84,6 +84,8 @@
       amount: 12
     Sugar:
       amount: 5
+    Milk:
+      amount: 5
   effects:
     - !type:CreateEntityReactionEffect
       entity: FoodCakeBatter

@@ -172,11 +172,11 @@
       proto: OreUranium
 
 - type: salvageLoot
-  id: OreBananium
+  id: OreDiamond
   guaranteed: true
   loots:
     - !type:BiomeMarkerLoot
-      proto: OreBananium
+      proto: OreDiamond
 
 - type: salvageLoot
   id: OreArtifactFragment

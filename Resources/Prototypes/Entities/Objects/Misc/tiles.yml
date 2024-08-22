@@ -42,6 +42,165 @@
         Blunt: 5
 
 - type: entity
+  name: steel dark checker tile
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelCheckerDark
+  components:
+  - type: Sprite
+    state: checker-dark
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelCheckerDark
+  - type: Stack
+    stackType: FloorTileSteelCheckerDark
+
+- type: entity
+  name: steel light checker tile
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelCheckerLight
+  components:
+  - type: Sprite
+    state: checker-light
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelCheckerLight
+  - type: Stack
+    stackType: FloorTileSteelCheckerLight
+
+- type: entity
+  name: dark tile
+  parent: FloorTileItemBase
+  id: FloorTileItemDark
+  components:
+  - type: Sprite
+    state: dark
+  - type: Item
+    heldPrefix: dark
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorDark
+  - type: Stack
+    stackType: FloorTileDark
+  - type: Construction
+    graph: TileDark
+    node: darktile
+
+- type: entity
+  name: dark steel diagonal mini tile
+  parent: FloorTileItemDark
+  id: FloorTileItemDarkDiagonalMini
+  components:
+  - type: Sprite
+    state: dark-diagonal-mini
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorDarkDiagonalMini
+  - type: Stack
+    stackType: FloorTileDarkDiagonalMini
+
+- type: entity
+  name: dark steel diagonal tile
+  parent: FloorTileItemDark
+  id: FloorTileItemDarkDiagonal
+  components:
+  - type: Sprite
+    state: dark-diagonal
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorDarkDiagonal
+  - type: Stack
+    stackType: FloorTileDarkDiagonal
+
+- type: entity
+  name: dark steel herringbone
+  parent: FloorTileItemDark
+  id: FloorTileItemDarkHerringbone
+  components:
+  - type: Sprite
+    state: dark-herringbone
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorDarkHerringbone
+  - type: Stack
+    stackType: FloorTileDarkHerringbone
+
+- type: entity
+  name: dark steel mini tile
+  parent: FloorTileItemDark
+  id: FloorTileItemDarkMini
+  components:
+  - type: Sprite
+    state: dark-mini
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorDarkMini
+  - type: Stack
+    stackType: FloorTileDarkMini
+
+- type: entity
+  name: dark steel mono tile
+  parent: FloorTileItemDark
+  id: FloorTileItemDarkMono
+  components:
+  - type: Sprite
+    state: dark-mono
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorDarkMono
+  - type: Stack
+    stackType: FloorTileDarkMono
+
+- type: entity
+  name: dark steel pavement
+  parent: FloorTileItemDark
+  id: FloorTileItemDarkPavement
+  components:
+  - type: Sprite
+    state: dark-pavement
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorDarkPavement
+  - type: Stack
+    stackType: FloorTileDarkPavement
+
+- type: entity
+  name: dark steel vertical pavement
+  parent: FloorTileItemDark
+  id: FloorTileItemDarkPavementVertical
+  components:
+  - type: Sprite
+    state: dark-pavement-vertical
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorDarkPavementVertical
+  - type: Stack
+    stackType: FloorTileDarkPavementVertical
+
+- type: entity
+  name: offset dark steel tile
+  parent: FloorTileItemDark
+  id: FloorTileItemDarkOffset
+  components:
+  - type: Sprite
+    state: dark-offset
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorDarkOffset
+  - type: Stack
+    stackType: FloorTileDarkOffset
+
+- type: entity
   name: steel tile
   parent: FloorTileItemBase
   id: FloorTileItemSteel
@@ -61,28 +220,247 @@
     node: steeltile
 
 - type: entity
-  name: steel dark checker tile
+  name: offset steel tile
   parent: FloorTileItemSteel
-  id: FloorTileItemSteelCheckerDark
+  id: FloorTileItemSteelOffset
   components:
   - type: Sprite
-    state: checker-dark
+    state: steel-offset
   - type: FloorTile
     outputs:
       - Plating
-      - FloorSteelCheckerDark
+      - FloorSteelOffset
+  - type: Stack
+    stackType: FloorTileSteelOffset
 
 - type: entity
-  name: steel light checker tile
+  name: steel diagonal mini tile
   parent: FloorTileItemSteel
-  id: FloorTileItemSteelCheckerLight
+  id: FloorTileItemSteelDiagonalMini
   components:
   - type: Sprite
-    state: checker-light
+    state: steel-diagonal-mini
   - type: FloorTile
     outputs:
       - Plating
-      - FloorSteelCheckerLight
+      - FloorSteelDiagonalMini
+  - type: Stack
+    stackType: FloorTileSteelDiagonalMini
+
+- type: entity
+  name: steel diagonal tile
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelDiagonal
+  components:
+  - type: Sprite
+    state: steel-diagonal
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelDiagonal
+  - type: Stack
+    stackType: FloorTileSteelDiagonal
+
+- type: entity
+  name: steel herringbone
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelHerringbone
+  components:
+  - type: Sprite
+    state: steel-herringbone
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelHerringbone
+  - type: Stack
+    stackType: FloorTileSteelHerringbone
+
+- type: entity
+  name: steel mini tile
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelMini
+  components:
+  - type: Sprite
+    state: steel-mini
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelMini
+  - type: Stack
+    stackType: FloorTileSteelMini
+
+- type: entity
+  name: steel mono tile
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelMono
+  components:
+  - type: Sprite
+    state: steel-mono
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelMono
+  - type: Stack
+    stackType: FloorTileSteelMono
+
+- type: entity
+  name: steel pavement
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelPavement
+  components:
+  - type: Sprite
+    state: steel-pavement
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelPavement
+  - type: Stack
+    stackType: FloorTileSteelPavement
+
+- type: entity
+  name: steel vertical pavement
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelPavementVertical
+  components:
+  - type: Sprite
+    state: steel-pavement-vertical
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelPavementVertical
+  - type: Stack
+    stackType: FloorTileSteelPavementVertical
+
+- type: entity
+  name: white tile
+  parent: FloorTileItemBase
+  id: FloorTileItemWhite
+  components:
+  - type: Sprite
+    state: white
+  - type: Item
+    heldPrefix: white
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWhite
+  - type: Stack
+    stackType: FloorTileWhite
+  - type: Construction
+    graph: TileWhite
+    node: whitetile
+
+- type: entity
+  name: offset white steel tile
+  parent: FloorTileItemWhite
+  id: FloorTileItemWhiteOffset
+  components:
+  - type: Sprite
+    state: white-offset
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWhiteOffset
+  - type: Stack
+    stackType: FloorTileWhiteOffset
+
+- type: entity
+  name: white steel diagonal mini tile
+  parent: FloorTileItemWhite
+  id: FloorTileItemWhiteDiagonalMini
+  components:
+  - type: Sprite
+    state: white-diagonal-mini
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWhiteDiagonalMini
+  - type: Stack
+    stackType: FloorTileWhiteDiagonalMini
+
+- type: entity
+  name: white steel diagonal tile
+  parent: FloorTileItemWhite
+  id: FloorTileItemWhiteDiagonal
+  components:
+  - type: Sprite
+    state: white-diagonal
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWhiteDiagonal
+  - type: Stack
+    stackType: FloorTileWhiteDiagonal
+
+- type: entity
+  name: white steel herringbone
+  parent: FloorTileItemWhite
+  id: FloorTileItemWhiteHerringbone
+  components:
+  - type: Sprite
+    state: white-herringbone
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWhiteHerringbone
+  - type: Stack
+    stackType: FloorTileWhiteHerringbone
+
+- type: entity
+  name: white steel mini tile
+  parent: FloorTileItemWhite
+  id: FloorTileItemWhiteMini
+  components:
+  - type: Sprite
+    state: white-mini
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWhiteMini
+  - type: Stack
+    stackType: FloorTileWhiteMini
+
+- type: entity
+  name: white steel mono tile
+  parent: FloorTileItemWhite
+  id: FloorTileItemWhiteMono
+  components:
+  - type: Sprite
+    state: white-mono
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWhiteMono
+  - type: Stack
+    stackType: FloorTileWhiteMono
+
+- type: entity
+  name: white steel pavement
+  parent: FloorTileItemWhite
+  id: FloorTileItemWhitePavement
+  components:
+  - type: Sprite
+    state: white-pavement
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWhitePavement
+  - type: Stack
+    stackType: FloorTileWhitePavement
+
+- type: entity
+  name: white steel vertical pavement
+  parent: FloorTileItemWhite
+  id: FloorTileItemWhitePavementVertical
+  components:
+  - type: Sprite
+    state: white-pavement-vertical
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWhitePavementVertical
+  - type: Stack
+    stackType: FloorTileWhitePavementVertical
 
 - type: entity
   name: steel tile
@@ -121,44 +499,6 @@
   - type: Construction
     graph: TileWood
     node: woodtile
-
-- type: entity
-  name: white tile
-  parent: FloorTileItemBase
-  id: FloorTileItemWhite
-  components:
-  - type: Sprite
-    state: white
-  - type: Item
-    heldPrefix: white
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorWhite
-  - type: Stack
-    stackType: FloorTileWhite
-  - type: Construction
-    graph: TileWhite
-    node: whitetile
-
-- type: entity
-  name: dark tile
-  parent: FloorTileItemBase
-  id: FloorTileItemDark
-  components:
-  - type: Sprite
-    state: dark
-  - type: Item
-    heldPrefix: dark
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorDark
-  - type: Stack
-    stackType: FloorTileDark
-  - type: Construction
-    graph: TileDark
-    node: darktile
 
 - type: entity
   name: techmaint floor
@@ -523,6 +863,34 @@
     stackType: FloorTileConcrete
 
 - type: entity
+  name: concrete mono tile
+  parent: FloorTileItemConcrete
+  id: FloorTileItemConcreteMono
+  components:
+  - type: Sprite
+    state: concrete-mono
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorConcreteMono
+  - type: Stack
+    stackType: FloorTileConcreteMono
+
+- type: entity
+  name: concrete smooth
+  parent: FloorTileItemConcrete
+  id: FloorTileItemConcreteSmooth
+  components:
+  - type: Sprite
+    state: concrete-smooth
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorConcreteSmooth
+  - type: Stack
+    stackType: FloorTileConcreteSmooth
+
+- type: entity
   parent: FloorTileItemBase
   id: FloorTileItemGrayConcrete
   name: gray concrete tile
@@ -539,6 +907,34 @@
     stackType: FloorTileGrayConcrete
 
 - type: entity
+  name: gray concrete mono tile
+  parent: FloorTileItemGrayConcrete
+  id: FloorTileItemGrayConcreteMono
+  components:
+  - type: Sprite
+    state: grayconcrete-mono
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorGrayConcreteMono
+  - type: Stack
+    stackType: FloorTileGrayConcreteMono
+
+- type: entity
+  name: gray concrete smooth
+  parent: FloorTileItemGrayConcrete
+  id: FloorTileItemGrayConcreteSmooth
+  components:
+  - type: Sprite
+    state: grayconcrete-smooth
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorGrayConcreteSmooth
+  - type: Stack
+    stackType: FloorTileGrayConcreteSmooth
+
+- type: entity
   parent: FloorTileItemBase
   id: FloorTileItemOldConcrete
   name: old concrete tile
@@ -553,6 +949,34 @@
     - FloorOldConcrete
   - type: Stack
     stackType: FloorTileOldConcrete
+
+- type: entity
+  name: old concrete mono tile
+  parent: FloorTileItemOldConcrete
+  id: FloorTileItemOldConcreteMono
+  components:
+  - type: Sprite
+    state: oldconcrete-mono
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorOldConcreteMono
+  - type: Stack
+    stackType: FloorTileOldConcreteMono
+
+- type: entity
+  name: old concrete smooth
+  parent: FloorTileItemOldConcrete
+  id: FloorTileItemOldConcreteSmooth
+  components:
+  - type: Sprite
+    state: oldconcrete-smooth
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorOldConcreteSmooth
+  - type: Stack
+    stackType: FloorTileOldConcreteSmooth
 
 # Carpets
 - type: entity
