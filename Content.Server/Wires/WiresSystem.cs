@@ -156,6 +156,7 @@ public sealed class WiresSystem : SharedWiresSystem
             for (var i = 0; i < enumeratedList.Count; i++)
             {
                 (int id, Wire d) = enumeratedList[i];
+                d.Id = i;
 
                 d.Id = i;
 

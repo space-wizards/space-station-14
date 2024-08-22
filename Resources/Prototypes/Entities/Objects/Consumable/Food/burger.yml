@@ -33,6 +33,8 @@
   name: bottom bun
   description: It's time to start building the burger tower. 
   components:
+  - type: Item
+    size: Normal #patch until there is an adequate resizing system in place 
   - type: Food
   - type: Sprite
     drawdepth: Mobs
@@ -40,18 +42,21 @@
     sprite: Objects/Consumable/Food/burger.rsi
     layers:
     - state: bun_bottom
+    - map: ["foodSequenceLayers"]
   - type: FoodSequenceStartPoint
     key: burger
-    maxLayers: 20
+    maxLayers: 10
     startPosition: 0, 0
     offset: 0, 0.1
-    nameGeneration: food-sequence-standart-gen
-    nameSuffix: food-sequence-burger-suffix
+    minLayerOffset: -0.05, 0
+    maxLayerOffset: 0.05, 0
+    nameGeneration: food-sequence-burger-gen
   - type: Appearance
   - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 5
+        canReact: false # Dont want cause reactions inside burgers after merging ingredients
         reagents:
         - ReagentId: Nutriment
           Quantity: 3.3 # 1/2 of a bun
@@ -60,7 +65,7 @@
   id: FoodBreadBunTop
   parent: FoodBreadSliceBase
   name: top bun
-  description: the perfect finish for your burger tower
+  description: The perfect finish for your burger tower.
   components:
   - type: Food
   - type: Sprite
@@ -75,12 +80,12 @@
         - ReagentId: Nutriment
           Quantity: 3.3 # 1/2 of a bun
   - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Consumable/Food/burger.rsi
+      state: bun_top
     entries:
       burger:
         final: true
-        sprite:
-          sprite: Objects/Consumable/Food/burger.rsi
-          state: bun_top
   
 # Base
 
