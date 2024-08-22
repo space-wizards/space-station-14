@@ -139087,13 +139087,6 @@ entities:
     - type: Transform
       pos: 41.613995,-4.120341
       parent: 2
-- proto: MaterialReclaimer
-  entities:
-  - uid: 3264
-    components:
-    - type: Transform
-      pos: -54.5,-30.5
-      parent: 2
 - proto: MatterBinStockPart
   entities:
   - uid: 23592

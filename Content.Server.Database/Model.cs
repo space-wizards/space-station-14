@@ -713,6 +713,11 @@ namespace Content.Server.Database
         /// Intended for use with residential IP ranges that are often used maliciously.
         /// </remarks>
         BlacklistedRange = 1 << 2,
+
+        /// <summary>
+        /// Represents having all possible exemption flags.
+        /// </summary>
+        All = int.MaxValue,
         // @formatter:on
     }
 
