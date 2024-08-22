@@ -41,8 +41,8 @@
   - type: InstantAction
     itemIconStyle: BigAction
     icon:
-      sprite: Interface/Misc/job_icons.rsi
-      state: Captain
+      sprite: Interface/Actions/actions_ai.rsi
+      state: ai_core
     event: !type:JumpToCoreEvent
 
 - type: entity
@@ -67,8 +67,8 @@
   - type: InstantAction
     itemIconStyle: BigAction
     icon:
-      sprite: Interface/Misc/job_icons.rsi
-      state: Captain
+      sprite: Interface/Actions/actions_ai.rsi
+      state: camera_light
     event: !type:RelayedActionComponentChangeEvent
       components:
       - type: LightOnCollideCollider
@@ -128,18 +128,6 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: Corporate
-
-- type: entity
-  id: NTDefaultCircuitBoard
-  parent: BaseElectronics
-  name: circuit board (NT Default)
-  description: An electronics board containing the NT Default lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: NTDefault
 
 - type: entity
   id: NTDefaultCircuitBoard
