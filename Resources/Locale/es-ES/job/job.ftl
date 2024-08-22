@@ -1,6 +1,6 @@
-job-greet-station-name = Welcome aboard {$stationName}.
-job-greet-introduce-job-name = Your role is: {$jobName}.
-job-greet-important-disconnect-admin-notify = You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via ahelp.
-job-greet-supervisors-warning = As the {$jobName} you answer directly to {$supervisors}. Special circumstances may change this.
-job-greet-crew-shortages = As this station was initially staffed with a skeleton crew, additional access has been added to your ID card.
-job-not-available-wait-in-lobby = The round has started, but you did not receive any of your preferred job roles (or have no preferred job roles selected) and chose to remain in the lobby. You can change this behavior on the customization screen.
+job-greet-station-name = Bienvenido a bordo de la {$stationName}.
+job-greet-introduce-job-name = Tu rol es: {$jobName}.
+job-greet-important-disconnect-admin-notify = Estás desempeñando un rol que es importante para el Progreso del Juego. Si necesitas desconectarte, por favor notifica a los administradores a través de ahelp.
+job-greet-supervisors-warning = Como {$jobName} respondes directamente a {$supervisors}. En algunos casos esto puede cambiar.
+job-greet-crew-shortages = Dado que esta estación fue inicialmente equipada con una tripulación mínima, se ha añadido acceso adicional a tu tarjeta de identificación.
+job-not-available-wait-in-lobby = La ronda ha comenzado, pero no recibiste ninguno de tus roles preferidos (o no seleccionaste roles preferidos) y elegiste permanecer en el vestíbulo. Puedes cambiar este comportamiento en la pantalla de personalización.

@@ -1,28 +1,28 @@
-### Gravity Generator
+### Generador de Gravedad
 
-## UI
+## Interfaz de Usuario
 
-gravity-generator-window-title = Gravity Generator
+gravity-generator-window-title = Generador de Gravedad
 
-## UI field names
+## Nombres de campos de la interfaz de usuario
 
-gravity-generator-window-status = Status:
-gravity-generator-window-power = Power:
+gravity-generator-window-status = Estado:
+gravity-generator-window-power = Potencia:
 gravity-generator-window-eta = ETA:
-gravity-generator-window-charge = Charge:
+gravity-generator-window-charge = Carga:
 
-## UI statuses
-gravity-generator-window-status-fully-charged = Fully Charged
-gravity-generator-window-status-off = Off
-gravity-generator-window-status-charging = Charging
-gravity-generator-window-status-discharging = Discharging
+## Estados de la interfaz de usuario
+gravity-generator-window-status-fully-charged = Totalmente Cargado
+gravity-generator-window-status-off = Apagado
+gravity-generator-window-status-charging = Cargando
+gravity-generator-window-status-discharging = Descargando
 
-## UI Power Buttons
-gravity-generator-window-power-on = On
-gravity-generator-window-power-off = Off
+## Botones de Potencia de la Interfaz de Usuario
+gravity-generator-window-power-on = Encendido
+gravity-generator-window-power-off = Apagado
 gravity-generator-window-power-label = { $draw } / { $max } W
 
-## UI ETA label
+## Etiqueta ETA de la Interfaz de Usuario
 
 gravity-generator-window-eta-none = N/A
 gravity-generator-window-eta-value = { TOSTRING($left, "m\\:ss") }

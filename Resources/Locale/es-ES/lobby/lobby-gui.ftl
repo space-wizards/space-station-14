@@ -1,8 +1,8 @@
-﻿ui-lobby-title = Lobby
-ui-lobby-ahelp-button = AHelp
-ui-lobby-options-button = Options
-ui-lobby-leave-button = Leave
-ui-lobby-observe-button = Observe
-ui-lobby-ready-up-button = Ready Up
-ui-lobby-online-players-block = Online Players
-ui-lobby-server-info-block = Server Info
+﻿ui-lobby-title = Sala de Espera
+ui-lobby-ahelp-button = Ayuda A
+ui-lobby-options-button = Opciones
+ui-lobby-leave-button = Salir
+ui-lobby-observe-button = Observar
+ui-lobby-ready-up-button = Listo
+ui-lobby-online-players-block = Jugadores en línea
+ui-lobby-server-info-block = Información del Servidor

@@ -1,11 +1,11 @@
-forensic-residue = {LOC($adjective)} residue
-forensic-residue-colored = {LOC($adjective)} {LOC($color)} residue
+forensic-residue = {LOC($adjective)} residuo
+forensic-residue-colored = {LOC($adjective)} residuo {LOC($color)}
 
-residue-unknown = unknown
-residue-slippery = slippery
+residue-unknown = desconocido
+residue-slippery = resbaladizo
 
-residue-green = green
-residue-blue = blue
-residue-red = red
-residue-grey = grey
-residue-brown = brown
+residue-green = verde
+residue-blue = azul
+residue-red = rojo
+residue-grey = gris
+residue-brown = marrón

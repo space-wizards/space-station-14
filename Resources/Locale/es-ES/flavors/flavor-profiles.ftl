@@ -1,272 +1,257 @@
-flavor-profile = Tastes {$flavor}.
-flavor-profile-multiple = Tastes {$flavors} and {$lastFlavor}.
-flavor-profile-unknown = Tastes indescribable.
+flavor-profile = Sabe a {$flavor}.
+flavor-profile-multiple = Sabe a {$flavors} y {$lastFlavor}.
+flavor-profile-unknown = Sabe a indescriptible.
 
-# Base flavors. Use these when you can't think of anything.
-# These are specifically flavors that are placed in front
-# of other flavors. When the flavors are processed, these
-# will go in front so you don't get this like "Tastes like tomatoes, sweet and spicy",
-# instead, you get "Tastes sweet, spicy and like tomatoes".
+# Sabores base. Usa estos cuando no puedas pensar en nada.
+# Estos son específicamente sabores que se colocan al frente
+# de otros sabores. Cuando se procesan los sabores, estos
+# irán al frente para que no obtengas algo a "Sabe a tomates, dulce y picante",
+# en su lugar, obtienes "Sabe a dulce, picante y a tomates".
 
-flavor-base-savory = savory
-flavor-base-sweet = sweet
-flavor-base-salty = salty
-flavor-base-sour = sour
-flavor-base-bitter = bitter
-flavor-base-spicy = spicy
-flavor-base-metallic = metallic
-flavor-base-meaty = meaty
-flavor-base-fishy = fishy
-flavor-base-crabby = crabby
-flavor-base-cheesy = cheesy
-flavor-base-funny = funny
-flavor-base-tingly = tingly
-flavor-base-acid = acidic
-flavor-base-leafy = leafy
-flavor-base-minty = minty
-flavor-base-nutty = nutty
-flavor-base-chalky = chalky
-flavor-base-oily = oily
-flavor-base-peppery = peppery
-flavor-base-slimy = slimy
-flavor-base-magical = magical
-flavor-base-fiber = fibrous
-flavor-base-cold = cold
-flavor-base-spooky = spooky
-flavor-base-smokey = smokey
-flavor-base-fruity = fruity
-flavor-base-creamy = creamy
-flavor-base-fizzy = fizzy
-flavor-base-shocking = shocking
-flavor-base-cheap = cheap
-flavor-base-piquant = piquant
-flavor-base-sharp = sharp
-flavor-base-syrupy = syrupy
-flavor-base-spaceshroom = mysterious
-flavor-base-clean = clean
-flavor-base-alkaline = alkaline
-flavor-base-holy = holy
+flavor-base-savory = salado
+flavor-base-sweet = dulce
+flavor-base-salty = salado
+flavor-base-sour = ácido
+flavor-base-bitter = amargo
+flavor-base-spicy = picante
+flavor-base-metallic = metálico
+flavor-base-meaty = carnoso
+flavor-base-fishy = a pescado
+flavor-base-crabby = a cangrejo
+flavor-base-cheesy = a queso
+flavor-base-funny = gracioso
+flavor-base-tingly = cosquilleante
+flavor-base-acid = ácido
+flavor-base-leafy = a hojas
+flavor-base-minty = a menta
+flavor-base-nutty = a nuez
+flavor-base-chalky = a tiza
+flavor-base-oily = aceitoso
+flavor-base-peppery = a pimienta
+flavor-base-slimy = viscoso
+flavor-base-magical = mágico
+flavor-base-fiber = fibroso
+flavor-base-cold = frío
+flavor-base-spooky = espeluznante
+flavor-base-smokey = ahumado
+flavor-base-fruity = afrutado
+flavor-base-creamy = cremoso
+flavor-base-fizzy = gaseoso
+flavor-base-shocking = impactante
+flavor-base-cheap = barato
+flavor-base-piquant = picante
+flavor-base-sharp = agudo
+flavor-base-syrupy = almibarado
+flavor-base-spaceshroom = misterioso
+flavor-base-clean = limpio
+flavor-base-alkaline = alcalino
+flavor-base-holy = sagrado
 flavor-base-horrible = horrible
 # lmao
 flavor-base-terrible = terrible
-flavor-base-mindful = mindful
+flavor-base-mindful = consciente
 
-# Complex flavors. Put a flavor here when you want something that's more
-# specific.
+# Sabores complejos. Coloca un sabor aquí cuando quieras algo más
+# específico.
 
-flavor-complex-nothing = like nothing
-flavor-complex-honey = like honey
+flavor-complex-nothing = a nada
+flavor-complex-honey = a miel
 
-# Condiments
+# Condimentos
 
-flavor-complex-ketchunaise = like tomatoes and mayonnaise
-flavor-complex-mayonnaise = like mayonnaise
-flavor-complex-mustard = like mustard
+flavor-complex-ketchunaise = a tomates y mayonesa
+flavor-complex-mayonnaise = a mayonesa
+flavor-complex-mustard = a mostaza
 
+# Sabores específicos de alimentos.
 
-# Food-specific flavors.
+## Productos químicos alimentarios. En caso de que tengas algo que tenga esto dentro.
+flavor-complex-nutriment = a nutrición
+flavor-complex-vitamin = a vitaminas
+flavor-complex-protein = a proteína
 
-## Food chemicals. In case you get something that has this inside.
-flavor-complex-nutriment = like nutrition
-flavor-complex-vitamin = like vitamins
-flavor-complex-protein = like protein
+## Sabor genérico de alimentos. Esto debe ser reemplazado con un perfil de sabor real,
+## si tienes alimentos que se parecen a esto.
+flavor-complex-food = a comida
 
-## Generic food taste. This should be replaced with an actual flavor profile,
-## if you have food that looks like this.
-flavor-complex-food = like food
+## Ingredientes básicos (sabores genéricos)
+flavor-complex-bun = a panecillo
+flavor-complex-bread = a pan
+flavor-complex-batter = a masa
+flavor-complex-butter = a mantequilla
+flavor-complex-egg = a huevo
+flavor-complex-raw-egg = a huevo crudo
+flavor-complex-bacon = a tocino
+flavor-complex-chicken = a pollo
+flavor-complex-duck = a pato
+flavor-complex-chocolate = a chocolate
+flavor-complex-pasta = a pasta
+flavor-complex-rice = a arroz
+flavor-complex-oats = a avena
+flavor-complex-jelly = a gelatina
+flavor-complex-soy = a soja
+flavor-complex-ice-cream = a helado
+flavor-complex-dough = a masa
+flavor-complex-sweet-dough = a masa dulce
+flavor-complex-tofu = a tofu
+flavor-complex-miso = a miso
+flavor-complex-lemoon = a laurel
+flavor-complex-muffin = a un muffin
+flavor-complex-peas = a guisantes
+flavor-complex-pineapple = a piña
+flavor-complex-onion = a cebolla
+flavor-complex-eggplant = a berenjena
+flavor-complex-carrot = a zanahorias
+flavor-complex-cabbage = a coles
+flavor-complex-potatoes = a patatas
+flavor-complex-pumpkin = a calabazas
+flavor-complex-mushroom = a champiñones
+flavor-complex-tomato = a tomates
+flavor-complex-corn = a maíz
+flavor-complex-banana = a plátanos
+flavor-complex-apple = a manzanas
+flavor-complex-cotton = a algodón
+flavor-complex-bungo = a dulzura tropical
+flavor-complex-raisins = a uvas pasas
+flavor-complex-orange = a naranjas
+flavor-complex-watermelon = a sandía
+flavor-complex-garlic = a ajo
+flavor-complex-grape = a uvas
+flavor-complex-berry = a bayas
+flavor-complex-meatballs = a albóndigas
+flavor-complex-nettles = a ortigas
+flavor-complex-jungle = a selva
+flavor-complex-vegetables = a vegetales
+# úsa esto cuando hay varios tipos de vegetales
 
-## Basic foodstuffs (ingredients, generic flavors)
-flavor-complex-bun = like bun
-flavor-complex-bread = like bread
-flavor-complex-batter = like batter
-flavor-complex-butter = like butter
-flavor-complex-egg = like egg
-flavor-complex-raw-egg = like raw egg
-flavor-complex-bacon = like bacon
-flavor-complex-chicken = like chicken
-flavor-complex-duck = like duck
-flavor-complex-chocolate = like chocolate
-flavor-complex-pasta = like pasta
-flavor-complex-rice = like rice
-flavor-complex-oats = like oats
-flavor-complex-jelly = like jelly
-flavor-complex-soy = like soy
-flavor-complex-ice-cream = like ice cream
-flavor-complex-dough = like dough
-flavor-complex-sweet-dough = like sweet dough
-flavor-complex-tofu = like tofu
-flavor-complex-miso = like miso
-flavor-complex-lemoon = like laurel
-flavor-complex-muffin = like a muffin
-flavor-complex-peas = like peas
-flavor-complex-pineapple = like pineapple
-flavor-complex-onion = like onion
-flavor-complex-eggplant = like eggplant
-flavor-complex-carrot = like carrots
-flavor-complex-cabbage = like cabbages
-flavor-complex-potatoes = like potatoes
-flavor-complex-pumpkin = like pumpkins
-flavor-complex-mushroom = like mushrooms
-flavor-complex-tomato = like tomatoes
-flavor-complex-corn = like corn
-flavor-complex-banana = like bananas
-flavor-complex-apple = like apples
-flavor-complex-cotton = like cottons
-flavor-complex-bungo = like tropical sweetness
-flavor-complex-raisins = like dried grapes
-flavor-complex-orange = like oranges
-flavor-complex-watermelon = like watermelon
-flavor-complex-garlic = like garlic
-flavor-complex-grape = like grapes
-flavor-complex-berry = like berries
-flavor-complex-meatballs = like meatballs
-flavor-complex-nettles = like nettles
-flavor-complex-jungle = like jungle
-flavor-complex-vegetables = like vegetables
-# use it when there multiple types of veggies
+## Comidas complejas (comidas cocinadas, sabores chistes, etc)
 
-## Complex foodstuffs (cooked foods, joke flavors, etc)
+flavor-complex-pink = a rosa
+flavor-complex-curry = a curry
+flavor-complex-borsch-1 = a borscht
+flavor-complex-borsch-2 = a bortsch
+flavor-complex-borsch-3 = a borstch
+flavor-complex-borsch-4 = a borsh
+flavor-complex-borsch-5 = a borscht
+flavor-complex-mre-brownie = a un brownie barato
+flavor-complex-fortune-cookie = a azar
+flavor-complex-nutribrick = a si estuvieras en una jungla
+flavor-complex-cheap-noodles = a fideos baratos
+flavor-complex-syndi-cakes = a un pastel de frutas contundente
+flavor-complex-sus-jerky = a sospechoso
+flavor-complex-boritos = a videojuegos
+flavor-complex-nachos = a nachos
+flavor-complex-donk = a pizza barata
+flavor-complex-copypasta = a un chiste repetitivo
+flavor-complex-bad-joke = a un chiste malo
+flavor-complex-memory-leek = a una bomba de fork
+flavor-complex-gunpowder = a pólvora
+flavor-complex-validhunting = a caza válida
+flavor-complex-people = a personas
+flavor-complex-cat = a gato
+flavor-complex-homerun = a un jonrón
+flavor-complex-grass = a césped
+flavor-complex-flare = a una bengala humeante
+flavor-complex-cobwebs = a telarañas
+flavor-complex-sadness = a tristeza
+flavor-complex-hope = a esperanza
+flavor-complex-chaos = a caos
+flavor-complex-squirming = a retorcimiento
+flavor-complex-electrons = a electrones
+flavor-complex-parents = a los padres de alguien
+flavor-complex-plastic = a plástico
+flavor-complex-glue = a pegamento
+flavor-complex-spaceshroom-cooked = a umami espacial
+flavor-complex-lost-friendship = a amistad perdida
+flavor-complex-light = a una luz que se apaga
+flavor-complex-profits = a ganancias
+flavor-complex-fishops = a los temidos fishops
+flavor-complex-blue-pumpkin = a un bocado de agua de piscina
+flavor-complex-violets = a violetas
+flavor-complex-pyrotton = a una boca ardiente
+flavor-complex-mothballs = a bolas de naftalina
+flavor-complex-paint-thinner = a diluyente de pintura
 
-flavor-complex-pink = like pink
-flavor-complex-curry = like curry
-flavor-complex-borsch-1 = like borsch
-flavor-complex-borsch-2 = like bortsch
-flavor-complex-borsch-3 = like borstch
-flavor-complex-borsch-4 = like borsh
-flavor-complex-borsch-5 = like borscht
-flavor-complex-mre-brownie = like a cheap brownie
-flavor-complex-fortune-cookie = like random chance
-flavor-complex-nutribrick = like you're operating in a jungle
-flavor-complex-cheap-noodles = like cheap noodles
-flavor-complex-syndi-cakes = like a hearty fruit cake
-flavor-complex-sus-jerky = like sus
-flavor-complex-boritos = like gaming
-flavor-complex-nachos = like nachos
-flavor-complex-donk = like cheap pizza
-flavor-complex-copypasta = like a repetitive joke
-flavor-complex-bad-joke = like a bad joke
-flavor-complex-memory-leek = like a fork bomb
-flavor-complex-gunpowder = like gunpowder
-flavor-complex-validhunting = like validhunting
-flavor-complex-people = like people
-flavor-complex-cat = like cat
-flavor-complex-homerun = like a home run
-flavor-complex-grass = like grass
-flavor-complex-flare = like a smoking flare
-flavor-complex-cobwebs = like cobwebs
-flavor-complex-sadness = like sadness
-flavor-complex-hope = like hope
-flavor-complex-chaos = like chaos
-flavor-complex-squirming = like squirming
-flavor-complex-electrons = like electrons
-flavor-complex-parents = like someone's parents
-flavor-complex-plastic = like plastic
-flavor-complex-glue = like glue
-flavor-complex-spaceshroom-cooked = like space umami
-flavor-complex-lost-friendship = like lost friendship
-flavor-complex-light = like a light gone out
-flavor-complex-profits = like profits
-flavor-complex-fishops = like the dreaded fishops
-flavor-complex-blue-pumpkin = like a mouthful of pool water
-flavor-complex-violets = like violets
-flavor-complex-pyrotton = like a burning mouth
-flavor-complex-mothballs = like mothballs
-flavor-complex-paint-thinner = like paint thinner
+# Sabores específicos de bebidas.
 
-# Drink-specific flavors.
+## Sabor genérico de alcohol/refrescos. Esto debe ser reemplazado con un perfil de sabor real.
+flavor-complex-alcohol = a alcohol
+flavor-complex-soda = a refresco
+flavor-complex-juice = a jugo
+flavor-complex-rocksandstones = a rocas y piedras
 
-## Generic alcohol/soda taste. This should be replaced with an actual flavor profile.
-flavor-complex-alcohol = like alcohol
-flavor-complex-soda = like soda
-flavor-complex-juice = like juice
-flavor-complex-rocksandstones = like rocks and stones
+## Bebidas básicas
+flavor-complex-water = a agua
+flavor-complex-beer = a orina
+flavor-complex-cognac = a alcohol seco y picante
+flavor-complex-mead = a miel fermentada
+flavor-complex-vermouth = a corteza de uvas herbales
+flavor-complex-ale = a pan
+flavor-complex-tonic-water = a agua enfadada
+flavor-complex-cola = a cola
+flavor-complex-energy-drink = a ácido de batería
+flavor-complex-dr-gibb = a mala práctica
+flavor-complex-ginger-soda = a jengibre
+flavor-complex-grape-soda = a soda de uva
+flavor-complex-lemon-lime-soda = a soda de limón-lima
+flavor-complex-pwr-game-soda = a videojuegos
+flavor-complex-root-beer-soda = a cerveza de raíz
+flavor-complex-citrus-soda = a soda cítrica
+flavor-complex-space-up-soda = a espacio
+flavor-complex-starkist-soda = a soda de naranja
+flavor-complex-fourteen-loko-soda = a malta dulce
+flavor-complex-vodka = a grano fermentado
+flavor-complex-tequila = a muerte fermentada
+flavor-complex-sake = a arroz alcohólico dulce
+flavor-complex-rum = a azúcar fermentado
+flavor-complex-coconut-rum = a azúcar fermentado a nuez
+flavor-complex-coffee-liquor = a café fuerte y amargo
+flavor-complex-whiskey = a melaza
+flavor-complex-shitty-wine = a cáscaras de uva
+flavor-complex-champagne = a pan recién horneado
+flavor-complex-iced-tea = a té helado
+flavor-complex-coffee = a café
+flavor-complex-milk = a leche
+flavor-complex-tea = a té
+flavor-complex-ice = a hielo
+flavor-complex-mopwata = a agua estancada y sucia
 
-## Basic drinks
-flavor-complex-water = like water
-flavor-complex-beer = like piss
-flavor-complex-cognac = like dry spicy alcohol
-flavor-complex-mead = like fermented honey
-flavor-complex-vermouth = like herbal grape rinds
-flavor-complex-ale = like bread
-flavor-complex-tonic-water = like angry water
-flavor-complex-cola = like cola
-flavor-complex-energy-drink = like battery acid
-flavor-complex-dr-gibb = like malpractice
-flavor-complex-ginger-soda = like ginger
-flavor-complex-grape-soda = like grape soda
-flavor-complex-lemon-lime-soda = like lemon-lime soda
-flavor-complex-pwr-game-soda = like gaming
-flavor-complex-root-beer-soda = like root beer
-flavor-complex-citrus-soda = like citrus soda
-flavor-complex-space-up-soda = like space
-flavor-complex-starkist-soda = like orange soda
-flavor-complex-fourteen-loko-soda = like sweet malt
-flavor-complex-vodka = like fermented grain
-flavor-complex-tequila = like fermented death
-flavor-complex-sake = like sweet, alcoholic rice
-flavor-complex-rum = like fermented sugar
-flavor-complex-coconut-rum = like nutty fermented sugar
-flavor-complex-coffee-liquor = like strong, bitter coffee
-flavor-complex-whiskey = like molasses
-flavor-complex-shitty-wine = like grape rinds
-flavor-complex-champagne = like freshly baked bread
-flavor-complex-iced-tea = like iced tea
-flavor-complex-coffee = like coffee
-flavor-complex-milk = like milk
-flavor-complex-tea = like tea
-flavor-complex-ice = like ice
-flavor-complex-mopwata = like stagnant, dirty water
-
-## Cocktails
-flavor-complex-arnold-palmer = like a hole-in-one
-flavor-complex-blue-hawaiian = like the tropics
-flavor-complex-cosmopolitan = sweet and tangy
-flavor-complex-painkiller = like spiked pineapple juice
-flavor-complex-pina-colada = like tropical sun
-flavor-complex-long-island = suspiciously like iced tea
-flavor-complex-three-mile-island = like tea brewed in nuclear runoff
-flavor-complex-whiskey-cola = like carbonated molasses
-flavor-complex-root-beer-float = like ice cream in root beer
-flavor-complex-black-russian = like alcoholic coffee
-flavor-complex-white-russian = like alcoholic sweetened coffee
-flavor-complex-moonshine = like pure alcohol
-flavor-complex-singulo = like a bottomless hole
-flavor-complex-syndie-bomb = like bitter whiskey
-flavor-complex-tequila-sunrise = like a mexican morning
-flavor-complex-irish-coffee = like an alcoholic wakeup call
-flavor-complex-iced-beer = like ice cold piss
-flavor-complex-gargle-blaster = like somebody smashed your head with a lemon-covered brick of gold
-flavor-complex-bloody-mary = like a bad hangover
-flavor-complex-beepsky = like oil and whiskey
-flavor-complex-banana-honk = like a banana milkshake
-flavor-complex-atomic-bomb = like a nuclear wasteland
-flavor-complex-atomic-cola = like hoarding bottle caps
-flavor-complex-cuba-libre = like spiked cola
-flavor-complex-gin-tonic = like spiked lemon-lime soda
-flavor-complex-screwdriver = like spiked orange juice
-flavor-complex-vodka-red-bool = like a heart attack
-flavor-complex-irish-bool = caffine and Ireland
-flavor-complex-xeno-basher = like killing bugs
-flavor-complex-budget-insuls-drink = like door hacking
-flavor-complex-watermelon-wakeup = like a sweet wakeup call
-flavor-complex-rubberneck = like synthetics
-flavor-complex-irish-car-bomb = like a spiked cola float
-flavor-complex-themartinez = like violets and lemon vodka
-flavor-complex-cogchamp = like brass
-flavor-complex-white-gilgamesh = like lightly carbonated cream
-flavor-complex-antifreeze = warm
-
-### This is exactly what pilk tastes like. I'm not even joking. I might've been a little drunk though
-flavor-complex-pilk = like sweet milk
-
-# Medicine/chemical-specific flavors.
-
-## Generic flavors.
-flavor-complex-medicine = like medicine
-
-flavor-complex-carpet = like a handful of fur
-flavor-complex-bee = unbeelievable
-flavor-complex-sax = like jazz
-flavor-complex-bottledlightning = like lightning in a bottle
-flavor-complex-punishment = like punishment
-flavor-weh = like weh
+## Cócteles
+flavor-complex-arnold-palmer = a un hoyo en uno
+flavor-complex-blue-hawaiian = a los trópicos
+flavor-complex-cosmopolitan = dulce y ácido
+flavor-complex-painkiller = a jugo de piña con alcohol
+flavor-complex-pina-colada = a sol tropical
+flavor-complex-long-island = sospechosamente a té helado
+flavor-complex-three-mile-island = a té hervido en desechos nucleares
+flavor-complex-whiskey-cola = a melaza carbonatada
+flavor-complex-root-beer-float = a helado en cerveza de raíz
+flavor-complex-black-russian = a café alcohólico
+flavor-complex-white-russian = a café endulzado con alcohol
+flavor-complex-moonshine = a alcohol puro
+flavor-complex-singulo = a un agujero sin fondo
+flavor-complex-syndie-bomb = a whiskey amargo
+flavor-complex-tequila-sunrise = a una mañana mexicana
+flavor-complex-irish-coffee = a una llamada de despertar alcohólica
+flavor-complex-iced-beer = a orina helada
+flavor-complex-gargle-blaster = a si alguien te hubiera golpeado la cabeza con un ladrillo cubierto de limón
+flavor-complex-bloody-mary = a una resaca mala
+flavor-complex-beepsky = a aceite y whiskey
+flavor-complex-banana-honk = a un batido de plátano
+flavor-complex-atomic-bomb = a un páramo nuclear
+flavor-complex-atomic-cola = a acumular tapas de botella
+flavor-complex-cuba-libre = a cola con alcohol
+flavor-complex-gin-tonic = a soda de limón-lima con alcohol
+flavor-complex-screwdriver = a jugo de naranja con alcohol
+flavor-complex-vodka-red-bool = a un ataque al corazón
+flavor-complex-irish-bool = cafeína e Irlanda
+flavor-complex-xeno-basher = a matar bichos
+flavor-complex-budget-insuls-drink = a hackeo de puertas
+flavor-complex-watermelon-wakeup = a una dulce llamada de despertar
+flavor-complex-rubberneck = a sintéticos
+flavor-complex-irish-car-bomb = a un float de cola con alcohol
+flavor-complex-themartinez = a violetas y vodka de limón
+flavor-complex-cogchamp = a latón
+flavor-complex-white-gilgamesh = a crema ligeramente carbonatada
+flavor-complex-antifreeze = cálido
+flavor-complex-pilk = a leche dulce

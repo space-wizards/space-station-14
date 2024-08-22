@@ -1,17 +1,17 @@
-hand-labeler-ui-header = Hand Labeler
+hand-labeler-ui-header = Etiquetadora Manual
 
-# The content of the label in the UI above the text entry input.
-hand-labeler-current-text-label = Label:
+# El contenido de la etiqueta en la interfaz sobre el campo de entrada de texto.
+hand-labeler-current-text-label = Etiqueta:
 
-# When the hand labeler applies a label successfully
-hand-labeler-successfully-applied = Applied label successfully
+# Cuando la etiquetadora manual aplica una etiqueta con éxito
+hand-labeler-successfully-applied = Etiqueta aplicada con éxito
 
-# When the hand labeler removes a label successfully
-hand-labeler-successfully-removed = Removed label successfully
+# Cuando la etiquetadora manual elimina una etiqueta con éxito
+hand-labeler-successfully-removed = Etiqueta eliminada con éxito
 
-# Appended to the description of an object with a label on input
-hand-labeler-has-label = This object has a label on it, which reads '{$label}'
+# Añadido a la descripción de un objeto con una etiqueta en la entrada
+hand-labeler-has-label = Este objeto tiene una etiqueta que dice '{$label}'
 
-# Verb text
-hand-labeler-remove-label-text = Remove label
-hand-labeler-add-label-text = Apply label
+# Texto del verbo
+hand-labeler-remove-label-text = Eliminar etiqueta
+hand-labeler-add-label-text = Aplicar etiqueta

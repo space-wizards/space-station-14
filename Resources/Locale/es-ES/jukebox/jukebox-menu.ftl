@@ -1,5 +1,5 @@
 jukebox-menu-title = Jukebox
-jukebox-menu-selectedsong = Selected Song:
-jukebox-menu-buttonplay = Play
-jukebox-menu-buttonpause = Pause
-jukebox-menu-buttonstop = Stop
+jukebox-menu-selectedsong = Canción seleccionada:
+jukebox-menu-buttonplay = Reproducir
+jukebox-menu-buttonpause = Pausar
+jukebox-menu-buttonstop = Detener

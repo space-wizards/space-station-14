@@ -1,6 +1,6 @@
-lube-success = {CAPITALIZE(THE($target))} has been covered in lube!
-lubed-name-prefix = lubed {$baseName}
-lube-failure = Can't cover {THE($target)} in lube!
-lube-slip = {CAPITALIZE(THE($target))} slips out of your hands!
-lube-verb-text = Apply Lube
-lube-verb-message = Lube an object
+lube-success = {CAPITALIZE(THE($target))} ha sido cubierto con lubricante!
+lubed-name-prefix = lubricó {$baseName}
+lube-failure = No puedes cubrir {THE($target)} con lubricante!
+lube-slip = {CAPITALIZE(THE($target))} se escapa de tus manos!
+lube-verb-text = Aplicar Lubricante
+lube-verb-message = Lubricar un objeto

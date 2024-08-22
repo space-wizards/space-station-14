@@ -1,1 +1,1 @@
-﻿item-status-not-held = No held item
+﻿item-status-not-held = Ningún objeto sujeto

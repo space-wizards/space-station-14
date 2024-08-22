@@ -1,23 +1,23 @@
-lobby-state-paused = Paused
-lobby-state-soon = Round starting soon
-lobby-state-right-now-question = Right Now?
-lobby-state-right-now-confirmation = Right Now
-lobby-state-round-start-countdown-text = Round starts In: {$timeLeft}
-lobby-state-ready-button-join-state = Join
-lobby-state-ready-button-ready-up-state = Ready Up
-lobby-state-player-status-not-ready = Not Ready
-lobby-state-player-status-ready = Ready
-lobby-state-player-status-observer = Observer
-lobby-state-player-status-round-not-started = The round hasn't started yet
+lobby-state-paused = Pausado
+lobby-state-soon = Pronto comenzará la ronda
+lobby-state-right-now-question = ¿Ahora?
+lobby-state-right-now-confirmation = Ahora
+lobby-state-round-start-countdown-text = La ronda comienza en: {$timeLeft}
+lobby-state-ready-button-join-state = Unirse
+lobby-state-ready-button-ready-up-state = Listos
+lobby-state-player-status-not-ready = No listo
+lobby-state-player-status-ready = Listo
+lobby-state-player-status-observer = Observador
+lobby-state-player-status-round-not-started = Aún no ha comenzado la ronda
 lobby-state-player-status-round-time =
-    The round time is: {$hours} {$hours ->
-    [1]hour
-    *[other]hours
-    } and {$minutes} {$minutes ->
-    [1]minute
-    *[other]minutes
+    Duración de la ronda: {$hours} {$hours ->
+    [1]hora
+    *[other]horas
+    } y {$minutes} {$minutes ->
+    [1]minuto
+    *[other]minutos
     }
-lobby-state-song-text = Playing: [color=white]{$songTitle}[/color] by [color=white]{$songArtist}[/color]
-lobby-state-song-no-song-text = No lobby song playing.
-lobby-state-song-unknown-title = [color=dimgray]Unknown title[/color]
-lobby-state-song-unknown-artist = [color=dimgray]Unknown artist[/color]
+lobby-state-song-text = Reproduciendo: [color=white]{$songTitle}[/color] por [color=white]{$songArtist}[/color]
+lobby-state-song-no-song-text = No hay canción en la sala de espera.
+lobby-state-song-unknown-title = [color=dimgray]Título desconocido[/color]
+lobby-state-song-unknown-artist = [color=dimgray]Artista desconocido[/color]
