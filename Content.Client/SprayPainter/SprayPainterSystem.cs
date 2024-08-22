@@ -1,44 +1,39 @@
-using Content.Shared.SprayPainter;
-using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
-using Robust.Shared.Utility;
 using System.Linq;
-using Robust.Shared.Graphics;
+using Content.Shared.SprayPainter;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.SprayPainter;
 
 public sealed class SprayPainterSystem : SharedSprayPainterSystem
 {
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    public Dictionary<string, List<SprayPainterEntry>> Entries { get; private set; } = new();
 
-    public List<SprayPainterEntry> Entries { get; private set; } = new();
-
-    protected override void CacheStyles()
+    public override void Initialize()
     {
-        base.CacheStyles();
+        base.Initialize();
 
-        Entries.Clear();
-        foreach (var style in Styles)
+        foreach (var category in Targets.Keys)
         {
-            var name = style.Name;
-            string? iconPath = Groups
-              .FindAll(x => x.StylePaths.ContainsKey(name))?
-              .MaxBy(x => x.IconPriority)?.StylePaths[name];
-            if (iconPath == null)
-            {
-                Entries.Add(new SprayPainterEntry(name, null));
-                continue;
-            }
+            var target = Targets[category];
+            Entries.Add(category, new());
 
-            RSIResource doorRsi = _resourceCache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / new ResPath(iconPath));
-            if (!doorRsi.RSI.TryGetState("closed", out var icon))
+            foreach (string style in target.Styles)
             {
-                Entries.Add(new SprayPainterEntry(name, null));
-                continue;
-            }
+                var group = target.Groups
+                    .FindAll(x => x.StylePaths.ContainsKey(style))
+                    .MaxBy(x => x.IconPriority);
 
-            Entries.Add(new SprayPainterEntry(name, icon.Frame0));
+                if (group == null ||
+                    !group.StylePaths.TryGetValue(style, out var protoId) ||
+                    !_prototypeManager.TryIndex(protoId, out var proto))
+                {
+                    Entries[category].Add(new SprayPainterEntry(style, null));
+                    continue;
+                }
+
+                Entries[category].Add(new SprayPainterEntry(style, proto));
+            }
         }
     }
 }
@@ -46,11 +41,11 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
 public sealed class SprayPainterEntry
 {
     public string Name;
-    public Texture? Icon;
+    public EntityPrototype? Proto;
 
-    public SprayPainterEntry(string name, Texture? icon)
+    public SprayPainterEntry(string name, EntityPrototype? proto)
     {
         Name = name;
-        Icon = icon;
+        Proto = proto;
     }
 }
