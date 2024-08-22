@@ -632,23 +632,6 @@
     - !type:TileNotBlocked
 
 - type: construction
-  id: MedicalBed
-  name: medical bed
-  description: A hospital bed for patients to recover in. Resting here provides fairly slow healing.
-  graph: bed
-  startNode: start
-  targetNode: medicalbed
-  category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/furniture.rsi
-    state: bed-MED
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
   id: DogBed
   name: dog bed
   description: A comfy-looking dog bed. You can even strap your pet in, in case the gravity turns off.
@@ -732,7 +715,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsBlack
   name: black curtains
@@ -762,7 +745,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsCyan
   name: cyan curtains
@@ -777,7 +760,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsGreen
   name: green curtains
@@ -792,7 +775,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsOrange
   name: orange curtains
@@ -807,7 +790,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsPink
   name: pink curtains
@@ -822,7 +805,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsPurple
   name: purple curtains
@@ -837,7 +820,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsRed
   name: red curtains
