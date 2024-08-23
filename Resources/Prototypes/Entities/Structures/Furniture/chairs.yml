@@ -341,6 +341,7 @@
     size: Huge
   - type: Appearance
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
         Blunt: 8
@@ -349,6 +350,7 @@
   - type: Construction
     graph: Seat
     node: chairFolding
+  - type: DamageExaminable
 
 - type: entity
   parent: ChairFolding
