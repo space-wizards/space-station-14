@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ps3moira
-  changes:
-  - message: Lit cigars inhand sprites are now visible.
-    type: Fix
-  id: 6686
-  time: '2024-06-05T21:16:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28641
 - author: Tayrtahn
   changes:
   - message: Slimes, diona, and kudzu are less dramatically affected by having certain
@@ -3867,3 +3860,10 @@
   id: 7185
   time: '2024-08-23T00:11:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31045
+- author: lzk228
+  changes:
+  - message: Added second jester suit and hat in clown loadouts.
+    type: Add
+  id: 7186
+  time: '2024-08-23T01:29:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30673
