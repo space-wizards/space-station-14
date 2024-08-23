@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: Bots now have Insulation and NoSlip
-    type: Tweak
-  id: 6689
-  time: '2024-06-06T09:32:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28621
 - author: Flareguy
   changes:
   - message: Nerfed the explosive power of fuel tanks.
@@ -3865,3 +3858,10 @@
   id: 7188
   time: '2024-08-23T05:05:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30749
+- author: Sarahon
+  changes:
+  - message: Brand new emote sprites and colours to the Y menu.
+    type: Add
+  id: 7189
+  time: '2024-08-23T05:08:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30887
