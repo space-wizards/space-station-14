@@ -655,5 +655,79 @@ namespace Content.Server.Database
                 return "<null thread>";
             }
         }
+
+        #region Ahelp Logging
+
+        public async Task<AhelpExchange?> GetAhelpExchangeAsync(int id)
+
+        {
+            await using var db = await GetDbImpl();
+            return await db.SqliteDbContext.AhelpExchanges.FindAsync(id);
+        }
+
+        public async Task<AhelpExchange?> GetAhelpExchangeAsync(int exchangeId, int roundId)
+        {
+            await using var db = await GetDbImpl();
+            return await db.SqliteDbContext.AhelpExchanges
+                .Where(e => e.AhelpId == exchangeId && e.AhelpRound == roundId)
+                .FirstOrDefaultAsync();
+        }
+
+        public override async Task<AhelpExchange?> GetAhelpExchangeAsync(int exchangeId, Guid ahelpTarget)
+        {
+            await using var db = await GetDbImpl();
+            return await db.SqliteDbContext.AhelpExchanges
+                .Where(e => e.AhelpId == exchangeId && e.AhelpTarget == ahelpTarget)
+                .FirstOrDefaultAsync();
+        }
+
+        public override async Task AddAhelpExchangeAsync(AhelpExchange exchange)
+        {
+            await using var db = await GetDbImpl();
+            db.SqliteDbContext.AhelpExchanges.Add(exchange);
+            await db.SqliteDbContext.SaveChangesAsync();
+        }
+
+        public  async Task<AhelpMessage?> GetAhelpMessageAsync(int id)
+        {
+            await using var db = await GetDbImpl();
+            return await db.SqliteDbContext.AhelpMessages.FindAsync(id);
+        }
+
+        public override async Task AddAhelpMessageAsync(AhelpMessage message)
+        {
+            await using var db = await GetDbImpl();
+            db.SqliteDbContext.AhelpMessages.Add(message);
+            await db.SqliteDbContext.SaveChangesAsync();
+        }
+
+        public  async Task<AhelpParticipant?> GetAhelpParticipantAsync(int id)
+        {
+            await using var db = await GetDbImpl();
+            return await db.SqliteDbContext.AhelpParticipants.FindAsync(id);
+        }
+
+        public override async Task AddAhelpParticipantAsync(AhelpParticipant participant)
+        {
+            await using var db = await GetDbImpl();
+            db.SqliteDbContext.AhelpParticipants.Add(participant);
+            await db.SqliteDbContext.SaveChangesAsync();
+        }
+
+        public override Task<AhelpParticipant?> GetAhelpParticipantAsync(int exchangeId, int participantId)
+        {
+            return Task.FromResult<AhelpParticipant?>(null);
+        }
+
+        public override async Task<int> GetMaxMessageIdForExchange(int ahelpId)
+        {
+            await using var db = await GetDbImpl();
+            return await db.SqliteDbContext.AhelpMessages
+                .Where(m => m.AhelpId == ahelpId)
+                .MaxAsync(m => (int?)m.Id) ?? 0;
+        }
+
+
+        #endregion
     }
 }

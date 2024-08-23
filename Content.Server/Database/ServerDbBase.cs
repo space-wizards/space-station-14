@@ -1077,6 +1077,17 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             return await db.DbContext.AdminLog.CountAsync(log => log.RoundId == round);
         }
 
+        public abstract Task<AhelpExchange?> GetAhelpExchangeAsync(int ahelpRound, Guid ahelpTarget);
+
+        public abstract Task AddAhelpExchangeAsync(AhelpExchange exchange);
+
+        public abstract Task AddAhelpMessageAsync(AhelpMessage message);
+
+        public abstract Task<AhelpParticipant?> GetAhelpParticipantAsync(int ahelpId, int playerId);
+
+        public abstract Task AddAhelpParticipantAsync(AhelpParticipant participant);
+
+        public abstract Task<int> GetMaxMessageIdForExchange(int ahelpId);
         #endregion
 
         #region Whitelist

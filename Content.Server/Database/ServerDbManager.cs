@@ -248,6 +248,12 @@ namespace Content.Server.Database
         IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null);
         IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null);
         Task<int> CountAdminLogs(int round);
+        Task<AhelpExchange?> GetAhelpExchangeAsync(int ahelpRound, Guid ahelpTarget);
+        Task AddAhelpExchangeAsync(AhelpExchange exchange);
+        Task AddAhelpMessageAsync(AhelpMessage message);
+        Task<AhelpParticipant?> GetAhelpParticipantAsync(int ahelpId, int playerId);
+        Task AddAhelpParticipantAsync(AhelpParticipant participant);
+        Task<int> GetMaxMessageIdForExchange(int ahelpId);
 
         #endregion
 
@@ -774,6 +780,42 @@ namespace Content.Server.Database
         {
             DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.CountAdminLogs(round));
+        }
+
+        public Task<AhelpExchange?> GetAhelpExchangeAsync(int ahelpRound, Guid ahelpTarget)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetAhelpExchangeAsync(ahelpRound, ahelpTarget));
+        }
+
+        public Task AddAhelpExchangeAsync(AhelpExchange exchange)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddAhelpExchangeAsync(exchange));
+        }
+
+        public Task AddAhelpMessageAsync(AhelpMessage message)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddAhelpMessageAsync(message));
+        }
+
+        public Task<AhelpParticipant?> GetAhelpParticipantAsync(int ahelpId, int playerId)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetAhelpParticipantAsync(ahelpId, playerId));
+        }
+
+        public Task AddAhelpParticipantAsync(AhelpParticipant participant)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddAhelpParticipantAsync(participant));
+        }
+
+        public Task<int> GetMaxMessageIdForExchange(int ahelpId)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetMaxMessageIdForExchange(ahelpId));
         }
 
         public Task<bool> GetWhitelistStatusAsync(NetUserId player)

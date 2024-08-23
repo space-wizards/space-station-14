@@ -1,12 +1,17 @@
+using System;
 using System.Threading.Tasks;
 using Content.Server.Database;
-using Microsoft.EntityFrameworkCore;
 
 namespace Content.Server.Administration.Logs
 {
     public sealed class AhelpLogging
     {
-        [Dependency] private readonly ServerDbContext _dbContext = default!;
+        private readonly IServerDbManager _dbManager;
+
+        public AhelpLogging(IServerDbManager dbManager)
+        {
+            _dbManager = dbManager;
+        }
 
         public async Task LogAhelpMessageAsync(int ahelpRound,
             Guid ahelpTarget,
@@ -19,8 +24,7 @@ namespace Content.Server.Administration.Logs
             DateTime timeSent)
         {
             // Find or create the AhelpExchange
-            var ahelpExchange = await _dbContext.AhelpExchanges
-                .FirstOrDefaultAsync(e => e.AhelpRound == ahelpRound && e.AhelpTarget == ahelpTarget);
+            var ahelpExchange = await _dbManager.GetAhelpExchangeAsync(ahelpRound, ahelpTarget);
 
             if (ahelpExchange == null)
             {
@@ -29,14 +33,14 @@ namespace Content.Server.Administration.Logs
                     AhelpRound = ahelpRound,
                     AhelpTarget = ahelpTarget
                 };
-                _dbContext.AhelpExchanges.Add(ahelpExchange);
-                await _dbContext.SaveChangesAsync();
+                await _dbManager.AddAhelpExchangeAsync(ahelpExchange);
             }
 
-            // Create a new AhelpMessage and log it to a exchange
+            // Create a new AhelpMessage and log it
             var ahelpMessage = new AhelpMessage
             {
                 AhelpId = ahelpExchange.AhelpId,
+                Id = await GenerateUniqueMessageIdAsync(ahelpExchange.AhelpId),
                 SentAt = DateTime.UtcNow,
                 RoundStatus = roundStatus,
                 Sender = sender,
@@ -47,28 +51,29 @@ namespace Content.Server.Administration.Logs
                 TimeSent = timeSent
             };
 
-            _dbContext.AhelpMessages.Add(ahelpMessage);
-            await _dbContext.SaveChangesAsync();
+            await _dbManager.AddAhelpMessageAsync(ahelpMessage);
         }
 
-        //This is not used but it might be used in the future
+        private async Task<int> GenerateUniqueMessageIdAsync(int exchangeId)
+        {
+            var maxId = await _dbManager.GetMaxMessageIdForExchange(exchangeId);
+            return maxId + 1;
+        }
+
+        // This is not used but it might be used in the future
         public async Task LogAhelpParticipantAsync(int ahelpId, int playerId)
         {
-            // Check if the participant already exists
-            var existingParticipant = await _dbContext.AhelpParticipants
-                .FirstOrDefaultAsync(p => p.AhelpId == ahelpId && p.PlayerId == playerId);
+            var existingParticipant = await _dbManager.GetAhelpParticipantAsync(ahelpId, playerId);
 
             if (existingParticipant == null)
             {
-                // Create a new AhelpParticipant if not already exists
                 var ahelpParticipant = new AhelpParticipant
                 {
                     AhelpId = ahelpId,
                     PlayerId = playerId
                 };
 
-                _dbContext.AhelpParticipants.Add(ahelpParticipant);
-                await _dbContext.SaveChangesAsync();
+                await _dbManager.AddAhelpParticipantAsync(ahelpParticipant);
             }
         }
     }

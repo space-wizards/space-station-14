@@ -211,13 +211,37 @@ namespace Content.Server.Database
             // so you can safely delete admins (GDPR right to erasure) while keeping the notes intact
 
             // Ahelp Logging configuration
+            modelBuilder.Entity<AhelpMessage>(entity =>
+            {
+                entity.HasKey(e => new { e.AhelpId, e.Id });
+
+                entity.HasIndex(e => e.SentAt);
+
+                entity.HasOne(e => e.Player)
+                    .WithMany()
+                    .HasForeignKey(e => e.Sender)
+                    .HasPrincipalKey(p => p.UserId);
+
+                entity.Property(e => e.Message)
+                    .IsRequired();
+
+                entity.Property(e => e.SentAt)
+                    .HasConversion(v => v.ToUniversalTime(), v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+
+                entity.Property(e => e.TimeSent)
+                    .HasConversion(v => v.ToUniversalTime(), v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+            });
+
             modelBuilder.Entity<AhelpExchange>(entity =>
             {
                 entity.HasKey(e => e.AhelpId);
 
                 entity.HasIndex(e => e.AhelpRound);
 
-                entity.HasIndex(e => e.AhelpTarget);
+                entity.HasOne<Player>()
+                    .WithMany()
+                    .HasForeignKey(e => e.AhelpTarget)
+                    .HasPrincipalKey(p => p.UserId);
 
                 entity.HasMany(e => e.AhelpMessages)
                     .WithOne(e => e.AhelpExchange)
@@ -230,20 +254,17 @@ namespace Content.Server.Database
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity<AhelpMessage>(entity =>
+            modelBuilder.Entity<AhelpParticipant>(entity =>
             {
-                entity.HasKey(e => new { e.AhelpId, e.Id });
+                entity.HasKey(ap => new { ap.AhelpId, ap.PlayerId });
 
-                entity.HasIndex(e => e.SentAt);
-
-                entity.HasIndex(e => e.Sender);
-
-                entity.Property(e => e.Message)
-                    .IsRequired();
+                entity.HasOne(ap => ap.Player)
+                    .WithMany()
+                    .HasForeignKey(ap => ap.PlayerId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity<AhelpParticipant>()
-                .HasKey(ap => new { ap.AhelpId, ap.PlayerId });
+
 
             modelBuilder.Entity<AdminNote>()
                 .HasOne(note => note.Player)
@@ -771,7 +792,7 @@ namespace Content.Server.Database
         [Required] public int AhelpRound { get; set; }
 
         [Required]
-        [ForeignKey("Player")]
+        [ForeignKey(nameof(Player))]
         public Guid AhelpTarget { get; set; }
 
         public ICollection<AhelpMessage> AhelpMessages { get; set; } = new List<AhelpMessage>();
@@ -792,7 +813,7 @@ namespace Content.Server.Database
         [Required] public string? RoundStatus { get; set; }
 
         [Required]
-        [ForeignKey("Player")]
+        [ForeignKey(nameof(Player))]
         public Guid Sender { get; set; }
 
         public Player Player { get; set; } = null!;

@@ -494,6 +494,53 @@ namespace Content.Server.Database
         }
         #endregion
 
+        #region Ahelp Logging
+
+        public override async Task<AhelpExchange?> GetAhelpExchangeAsync(int ahelpRound, Guid ahelpTarget)
+        {
+            await using var db = await GetDbImpl();
+            return await db.PgDbContext.AhelpExchanges
+                .FirstOrDefaultAsync(e => e.AhelpRound == ahelpRound && e.AhelpTarget == ahelpTarget);
+        }
+
+        public override async Task AddAhelpExchangeAsync(AhelpExchange exchange)
+        {
+            await using var db = await GetDbImpl();
+            db.PgDbContext.AhelpExchanges.Add(exchange);
+            await db.PgDbContext.SaveChangesAsync();
+        }
+
+        public override async Task AddAhelpMessageAsync(AhelpMessage message)
+        {
+            await using var db = await GetDbImpl();
+            db.PgDbContext.AhelpMessages.Add(message);
+            await db.PgDbContext.SaveChangesAsync();
+        }
+
+        public override async Task<AhelpParticipant?> GetAhelpParticipantAsync(int ahelpId, int playerId)
+        {
+            await using var db = await GetDbImpl();
+            return await db.PgDbContext.AhelpParticipants
+                .FirstOrDefaultAsync(p => p.AhelpId == ahelpId && p.PlayerId == playerId);
+        }
+
+        public override async Task AddAhelpParticipantAsync(AhelpParticipant participant)
+        {
+            await using var db = await GetDbImpl();
+            db.PgDbContext.AhelpParticipants.Add(participant);
+            await db.PgDbContext.SaveChangesAsync();
+        }
+
+        public override async Task<int> GetMaxMessageIdForExchange(int ahelpId)
+        {
+            await using var db = await GetDbImpl();
+            return await db.PgDbContext.AhelpMessages
+                .Where(m => m.AhelpId == ahelpId)
+                .MaxAsync(m => (int?)m.Id) ?? 0;
+        }
+
+        #endregion
+
         public override async Task<int> AddConnectionLogAsync(
             NetUserId userId,
             string userName,
