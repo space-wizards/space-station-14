@@ -3,7 +3,6 @@ using Content.Shared.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
@@ -40,7 +39,8 @@ public sealed class EscapeInventorySystem : EntitySystem
             if (comp.PenaltyTimer <= 0)
                 continue;
             comp.PenaltyTimer -= frameTime;
-            if (comp.PenaltyTimer <= 0) {
+            if (comp.PenaltyTimer <= 0)
+            {
                 // make the item able to be picked up again
                 AddComp<ItemComponent>(uid);
             }
