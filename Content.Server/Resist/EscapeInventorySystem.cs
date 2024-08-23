@@ -21,6 +21,11 @@ public sealed class EscapeInventorySystem : EntitySystem
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
+    /// <summary>
+    ///     Initial amount of time when you cannot be picked up when dropped while escaping
+    /// </summary>
+    private const float BasePenaltyTime = 1.0f;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -110,7 +115,7 @@ public sealed class EscapeInventorySystem : EntitySystem
             return;
         // so we are being dropped while we are escaping.
         _doAfterSystem.Cancel(component.DoAfter);
-        component.PenaltyTimer = 1f;
+        component.PenaltyTimer = BasePenaltyTime;
         RemComp<ItemComponent>(uid);
     }
 }
