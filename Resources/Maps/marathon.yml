@@ -10999,7 +10999,7 @@ entities:
       pos: -20.5,-5.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -22228.79
+      secondsUntilStateChange: -22976.215
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -13022,6 +13022,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -65.5,13.5
       parent: 30
+  - uid: 4393
+    components:
+    - type: Transform
+      pos: -52.5,2.5
+      parent: 30
   - uid: 11451
     components:
     - type: Transform
@@ -13038,6 +13043,23 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -65.5,21.5
+      parent: 30
+  - uid: 20731
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -59.5,-7.5
+      parent: 30
+  - uid: 20732
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -52.5,-7.5
+      parent: 30
+  - uid: 20733
+    components:
+    - type: Transform
+      pos: -59.5,2.5
       parent: 30
 - proto: AtmosDeviceFanTiny
   entities:
@@ -50356,13 +50378,6 @@ entities:
     - type: Transform
       pos: 12.458031,22.694685
       parent: 30
-- proto: ClothingBeltMilitaryWebbing
-  entities:
-  - uid: 15115
-    components:
-    - type: Transform
-      pos: 33.456085,32.56812
-      parent: 30
 - proto: ClothingBeltPlantFilled
   entities:
   - uid: 3498
@@ -50503,11 +50518,6 @@ entities:
     components:
     - type: Transform
       pos: -48.531364,30.586998
-      parent: 30
-  - uid: 15265
-    components:
-    - type: Transform
-      pos: 47.465996,44.649086
       parent: 30
 - proto: ClothingEyesGlassesThermal
   entities:
@@ -50987,20 +50997,6 @@ entities:
     - type: Transform
       pos: 7.503625,43.354942
       parent: 30
-- proto: ClothingNeckCloakGoliathCloak
-  entities:
-  - uid: 10443
-    components:
-    - type: Transform
-      pos: 41.46685,-71.67568
-      parent: 30
-- proto: ClothingNeckCloakMiner
-  entities:
-  - uid: 12304
-    components:
-    - type: Transform
-      pos: 38.513725,-64.51438
-      parent: 30
 - proto: ClothingNeckCloakTrans
   entities:
   - uid: 3344
@@ -51143,13 +51139,6 @@ entities:
     - type: Transform
       pos: -39.286102,56.736275
       parent: 30
-- proto: ClothingOuterArmorCult
-  entities:
-  - uid: 18249
-    components:
-    - type: Transform
-      pos: -72.51071,-48.502575
-      parent: 30
 - proto: ClothingOuterArmorReflective
   entities:
   - uid: 16932
@@ -51180,13 +51169,6 @@ entities:
     components:
     - type: Transform
       pos: 40.490578,30.452217
-      parent: 30
-- proto: ClothingOuterCoatDetectiveLoadout
-  entities:
-  - uid: 11366
-    components:
-    - type: Transform
-      pos: 4.503509,-14.329939
       parent: 30
 - proto: ClothingOuterCoatGentle
   entities:
@@ -51229,6 +51211,13 @@ entities:
     components:
     - type: Transform
       pos: 19.488726,8.340895
+      parent: 30
+- proto: ClothingOuterCoatTrench
+  entities:
+  - uid: 15265
+    components:
+    - type: Transform
+      pos: 4.48031,-14.490032
       parent: 30
 - proto: ClothingOuterHardsuitEVAPrisoner
   entities:
@@ -51303,20 +51292,6 @@ entities:
     components:
     - type: Transform
       pos: -9.241632,-47.33087
-      parent: 30
-- proto: ClothingOuterVestWeb
-  entities:
-  - uid: 16931
-    components:
-    - type: Transform
-      pos: -40.528282,22.694292
-      parent: 30
-- proto: ClothingOuterVestWebMerc
-  entities:
-  - uid: 16034
-    components:
-    - type: Transform
-      pos: 16.536156,36.4687
       parent: 30
 - proto: ClothingOuterWinterSec
   entities:
@@ -51499,6 +51474,13 @@ entities:
     components:
     - type: Transform
       pos: -56.564133,39.58168
+      parent: 30
+- proto: ClothingUniformJumpskirtOldDress
+  entities:
+  - uid: 15115
+    components:
+    - type: Transform
+      pos: -72.460976,-48.531662
       parent: 30
 - proto: ClothingUniformJumpskirtPerformer
   entities:
@@ -53202,6 +53184,13 @@ entities:
     components:
     - type: Transform
       pos: -33.36232,-13.359482
+      parent: 30
+- proto: CultAltarSpawner
+  entities:
+  - uid: 11366
+    components:
+    - type: Transform
+      pos: 38.5,-67.5
       parent: 30
 - proto: d20Dice
   entities:
@@ -98455,6 +98444,11 @@ entities:
     - type: Transform
       pos: -3.5,-16.5
       parent: 30
+  - uid: 10357
+    components:
+    - type: Transform
+      pos: 33.5,32.5
+      parent: 30
   - uid: 13449
     components:
     - type: Transform
@@ -98595,6 +98589,11 @@ entities:
     components:
     - type: Transform
       pos: 46.5,45.5
+      parent: 30
+  - uid: 16034
+    components:
+    - type: Transform
+      pos: 39.5,-67.5
       parent: 30
   - uid: 16218
     components:
@@ -110455,13 +110454,6 @@ entities:
     - type: Transform
       pos: 33.5,15.5
       parent: 30
-- proto: RitualDagger
-  entities:
-  - uid: 10357
-    components:
-    - type: Transform
-      pos: 39.487907,-67.53489
-      parent: 30
 - proto: SalvageMagnet
   entities:
   - uid: 2040
@@ -110469,6 +110461,18 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 44.5,-18.5
+      parent: 30
+- proto: SalvageSpawnerScrapCommon
+  entities:
+  - uid: 10443
+    components:
+    - type: Transform
+      pos: 41.5,-73.5
+      parent: 30
+  - uid: 12304
+    components:
+    - type: Transform
+      pos: 38.5,-64.5
       parent: 30
 - proto: Scalpel
   entities:
