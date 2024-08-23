@@ -7324,9 +7324,6 @@ entities:
     - type: Transform
       pos: -1.5,2.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
   - uid: 1078
     components:
     - type: Transform
