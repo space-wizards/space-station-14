@@ -1,104 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: The player can now use the gasping emote
-    type: Tweak
-  id: 6673
-  time: '2024-06-03T12:10:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28466
-- author: Cojoke-dot
-  changes:
-  - message: Bullets no longer hit crates unless directly clicked on while shooting.
-    type: Tweak
-  - message: Bullets now pass over mobs that are lying down unless directly clicked
-      on while shooting.
-    type: Tweak
-  id: 6674
-  time: '2024-06-03T13:04:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28072
-- author: AJCM-git
-  changes:
-  - message: Ninja stealth mode, stealth boxes and everything with stealth won't show
-      up in equipment HUDs like the medical or security HUD anymore.
-    type: Fix
-  id: 6675
-  time: '2024-06-03T16:12:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28270
-- author: TheShuEd
-  changes:
-  - message: Added italian and cowboy accents
-    type: Add
-  - message: Now you can't choose all the accents at once.
-    type: Fix
-  id: 6676
-  time: '2024-06-03T18:47:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28046
-- author: RenQ
-  changes:
-  - message: The moths now have their own "death grasp"
-    type: Add
-  id: 6677
-  time: '2024-06-03T18:48:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28409
-- author: lzk228
-  changes:
-  - message: Borgs ID now will be shown in LogProbe instead of Unknown.
-    type: Tweak
-  id: 6678
-  time: '2024-06-03T18:48:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27788
-- author: FairlySadPanda
-  changes:
-  - message: Stacking multiple deflecting items at once has been removed; now only
-      your best item is used.
-    type: Tweak
-  id: 6679
-  time: '2024-06-04T13:26:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28539
-- author: moonheart08
-  changes:
-  - message: AME power output is no longer super-buffed. Larger stations will now
-      require multiple engines to stay powered.
-    type: Tweak
-  id: 6680
-  time: '2024-06-04T15:59:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28419
-- author: blueDev2
-  changes:
-  - message: Fixed microwave recipes that use stacked materials
-    type: Fix
-  id: 6681
-  time: '2024-06-04T17:12:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28225
-- author: Tayrtahn
-  changes:
-  - message: Mops and rags now show the liquids they soak up.
-    type: Add
-  id: 6682
-  time: '2024-06-04T18:48:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28590
-- author: Boaz1111
-  changes:
-  - message: Revamped Cluster's Head Offices
-    type: Tweak
-  id: 6683
-  time: '2024-06-05T17:50:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28627
-- author: Plykiya
-  changes:
-  - message: Handcuff range is buffed to one tile of distance.
-    type: Tweak
-  id: 6684
-  time: '2024-06-05T20:14:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28576
-- author: Cojoke-dot
-  changes:
-  - message: A variety of objects around the station now need to be clicked on in
-      order for bullets to hit them.
-    type: Tweak
-  id: 6685
-  time: '2024-06-05T20:47:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28571
 - author: ps3moira
   changes:
   - message: Lit cigars inhand sprites are now visible.
@@ -3862,3 +3762,108 @@
   id: 7172
   time: '2024-08-20T10:57:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29661
+- author: cranberriez
+  changes:
+  - message: Added Discord webhook error logging!
+    type: Tweak
+  id: 7173
+  time: '2024-08-20T21:12:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30835
+- author: Repo
+  changes:
+  - message: Added copy to clipboard button for connection failure UI.
+    type: Add
+  id: 7174
+  time: '2024-08-20T21:31:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30760
+- author: Lank
+  changes:
+  - message: Removed the shock collar and associated thief objective.
+    type: Remove
+  id: 7175
+  time: '2024-08-21T17:56:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31229
+- author: EmoGarbage404
+  changes:
+  - message: Increased the view range on the handheld mass scanner and decreased the
+      power draw.
+    type: Tweak
+  - message: Handheld radars no longer spin with the player while moving.
+    type: Fix
+  id: 7176
+  time: '2024-08-21T18:33:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31284
+- author: Beck Thompson
+  changes:
+  - message: Nuclear authentication code folder that spawns the nuclear authentication
+      codes when opened.
+    type: Add
+  id: 7177
+  time: '2024-08-21T18:53:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31272
+- author: Brandon-Huu
+  changes:
+  - message: Nukie shuttle now spawns with the nuclear authentication code folder.
+      This fixes the issue where the nuclear codes would only ever have the codes
+      for the nuclear operatives nuke and not the stations.
+    type: Fix
+  id: 7178
+  time: '2024-08-21T18:55:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31273
+- author: Winkarst-cpu
+  changes:
+  - message: Now getting creamed will not reveal a person's identity.
+    type: Fix
+  id: 7179
+  time: '2024-08-21T21:50:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31291
+- author: Sarahon
+  changes:
+  - message: Now can add head(top) cosmetics to humanoids and dwarfs.
+    type: Add
+  - message: Added "long ears" for human and dwarf head(top) cosmetic.
+    type: Add
+  id: 7180
+  time: '2024-08-21T23:44:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30490
+- author: Winkarst-cpu
+  changes:
+  - message: Now vending machines show valid icons.
+    type: Fix
+  id: 7181
+  time: '2024-08-22T14:40:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30064
+- author: EmoGarbage404
+  changes:
+  - message: Jackboots now reduce slowness from injuries by 50%.
+    type: Add
+  - message: Removed combat boots from the security loadout.
+    type: Remove
+  id: 7182
+  time: '2024-08-22T14:56:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30586
+- author: metalgearsloth
+  changes:
+  - message: Fix the inventory GUI being visible when you don't have an inventory.
+    type: Fix
+  id: 7183
+  time: '2024-08-22T17:05:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31306
+- author: EmoGarbage404
+  changes:
+  - message: Moved the mining asteroid slightly closer to the station.
+    type: Tweak
+  - message: Things pulled in by the salvage magnet should spawn closer to the station
+      at a more consistent distance.
+    type: Tweak
+  id: 7184
+  time: '2024-08-22T19:29:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31296
+- author: lzk228
+  changes:
+  - message: Removed names from implanters. No more meta. (You still can see which
+      implant is inside via examining or holding implanter in hand).
+    type: Tweak
+  id: 7185
+  time: '2024-08-23T00:11:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31045
