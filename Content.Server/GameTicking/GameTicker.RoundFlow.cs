@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Announcements;
 using Content.Server.Discord;
 using Content.Server.GameTicking.Events;
+using Content.Server.GameTicking.Replays;
 using Content.Server.Ghost;
 using Content.Server.Maps;
 using Content.Shared.CCVar;
@@ -50,6 +51,7 @@ namespace Content.Server.GameTicking
         private RoundEndMessageEvent.RoundEndPlayerInfo[]? _replayRoundPlayerInfo;
 
         private string? _replayRoundText;
+        private List<ReplayEvent>? _replayEvents = new();
 
         [ViewVariables]
         public GameRunLevel RunLevel

@@ -1,6 +1,11 @@
+using System.Linq;
+using Content.Server.GameTicking.Replays;
+using Content.Server.Mind;
 using Content.Shared.CCVar;
+using Content.Shared.Roles;
 using Robust.Shared;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Player;
 using Robust.Shared.Replays;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
@@ -15,7 +20,7 @@ public sealed partial class GameTicker
     [Dependency] private readonly IReplayRecordingManager _replays = default!;
     [Dependency] private readonly IResourceManager _resourceManager = default!;
     [Dependency] private readonly ISerializationManager _serialman = default!;
-
+    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     private ISawmill _sawmillReplays = default!;
 
@@ -51,6 +56,7 @@ public sealed partial class GameTicker
             // Set the round end player and text back to null to prevent it from writing the previous round's data.
             _replayRoundPlayerInfo = null;
             _replayRoundText = null;
+            _replayEvents = new List<ReplayEvent>();
 
             if (!string.IsNullOrEmpty(tempDir))
             {
@@ -130,6 +136,7 @@ public sealed partial class GameTicker
         metadata["server_id"] = new ValueDataNode(_configurationManager.GetCVar(CCVars.ServerId));
         metadata["server_name"] = new ValueDataNode(_configurationManager.GetCVar(CCVars.AdminLogsServerName));
         metadata["roundId"] = new ValueDataNode(RoundId.ToString());
+        metadata["events"] = _serialman.WriteValue(_replayEvents, true, null);
     }
 
     private ResPath GetAutoReplayPath()
@@ -150,4 +157,75 @@ public sealed partial class GameTicker
     }
 
     private sealed record ReplayRecordState(ResPath? MoveToPath);
+
+    public void RecordReplayEvent(ReplayEvent replayEvent)
+    {
+        if (!_replays.IsRecording)
+            return;
+
+        DebugTools.AssertNotNull(replayEvent.EventType);
+        DebugTools.AssertNotNull(replayEvent.Severity);
+        DebugTools.AssertNotNull(replayEvent.Time);
+
+        _sawmillReplays.Debug($"Recording replay event: {replayEvent.EventType}");
+        if (_replayEvents == null)
+        {
+            // If this happens, someone messed up.
+            _sawmillReplays.Error("Tried to record a replay event, but the events list is null. This should never happen.");
+            return;
+        }
+        _replayEvents.Add(replayEvent);
+    }
+
+    /// <summary>
+    /// Gets the player info for a player entity.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown if the entity is not a player.
+    /// </exception>
+    public ReplayEventPlayer GetPlayerInfo(EntityUid player)
+    {
+        if (EntityManager.TryGetComponent<ActorComponent>(player, out var actorComponent))
+        {
+            return GetPlayerInfo(actorComponent.PlayerSession);
+        }
+
+        throw new InvalidOperationException("Tried to get player info for an entity that is not a player.");
+    }
+
+    /// <summary>
+    /// Generates a <see cref="ReplayEventPlayer"/> from a session for use in replay events.
+    /// </summary>
+    public ReplayEventPlayer GetPlayerInfo(ICommonSession session)
+    {
+        var hasMind = _mindSystem.TryGetMind(session, out var mindId, out var mindComponent);
+
+        var playerIcName = "Unknown";
+        var antag = false;
+        var roles = new List<RoleInfo>();
+        if (hasMind && mindComponent != null)
+        {
+            antag = _roles.MindIsAntagonist(mindId);
+            if (mindComponent.CharacterName != null)
+            {
+                playerIcName = mindComponent.CharacterName;
+            }
+            else if (mindComponent.CurrentEntity != null && TryName(mindComponent.CurrentEntity.Value, out var name))
+            {
+                playerIcName = name;
+            }
+
+            roles = _roles.MindGetAllRoles(mindId);
+        }
+
+        return new ReplayEventPlayer()
+        {
+            PlayerGuid = session.UserId,
+            PlayerICName = playerIcName,
+            PlayerOOCName = session.Name,
+            Antag = antag,
+            JobPrototypes = roles.Where(role => !role.Antagonist).Select(role => role.Prototype).ToArray(),
+            AntagPrototypes = roles.Where(role => role.Antagonist).Select(role => role.Prototype).ToArray(),
+        };
+    }
 }
