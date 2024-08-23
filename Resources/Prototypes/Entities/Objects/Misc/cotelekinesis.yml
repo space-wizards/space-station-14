@@ -1,0 +1,83 @@
+# implanter
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: COTelekinesisImplant
+  name: Telekinesis implant
+  description: This implant gives you extraordinary powers!
+  categories: [HideSpawnMenu]
+  components:
+    - type: SubdermalImplant
+      permanent: true
+      implantAction: COActionTelekinesis
+    - type: TriggerImplantAction
+    - type: Tag
+      tags:
+        - SubdermalImplant
+        - HideContextMenu
+    - type: COTelekinesis
+
+- type: entity
+  id: COTelekinesisImplanter
+  name: Telekinesis implanter
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: COTelekinesisImplant
+
+# action
+
+- type: entity
+  id: COActionTelekinesis
+  name: Telekinesis
+  description: Use your mind powers!
+  noSpawn: true
+  components:
+    - type: InstantAction
+      useDelay: 1
+      icon: { sprite: Objects/Magic/cotelekinesis.rsi, state: icon }
+      iconOn: { sprite: Objects/Magic/cotelekinesis.rsi, state: icon-on }
+      sound: !type:SoundPathSpecifier
+        path: /Audio/Magic/staff_animation.ogg
+
+      itemIconStyle: NoItem
+      event: !type:ToggleActionEvent # tags
+    - type: Icon
+      sprite: Objects/Magic/cotelekinesis.rsi
+      state: icon
+      shader: unshaded
+    - type: Tag
+      tags:
+        - ExtraordTelekinesis
+
+
+- type: Tag
+  id: ExtraordTelekinesis
+
+# tether gun
+
+- type: entity
+  name: telekinesis ability
+  suffix: DO NOT MAP
+  parent:
+    - BaseItem
+  id: COTelekinesisAbilityPower
+  description: Manipulates gravity around objects to fling them at high velocities.
+  components:
+    - type: Item
+      storedRotation: -90
+    - type: Tag
+      tags:
+        - ExtraordTelekinesis
+    - type: ItemToggle
+      onUse: false
+    - type: COTelekinesisHand
+      frequency: 5
+      dampingRatio: 1
+      maxForce: 800
+    - type: Unremoveable
+    - type: Sprite
+      sprite: Objects/Magic/cotelekinesis.rsi
+      layers:
+        - state: icon
+    - type: Appearance
