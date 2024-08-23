@@ -25,3 +25,15 @@
   id: SalvageBoots
   equipment:
     shoes: ClothingShoesBootsSalvage
+
+# Mantle
+- type: loadoutEffectGroup
+  id: MinerCloak
+  equipment:
+    neck: ClothingNeckCloakMiner
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 187200 #52 hrs (1 hour per week for 1 year)
