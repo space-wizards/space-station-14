@@ -482,11 +482,11 @@ public sealed class StationAiVisionSystem : EntitySystem
 
             if (TargetTile != null)
             {
-                if (vis2.TryGetValue(TargetTile.Value, out var tileVis2))
+                if (vis1.TryGetValue(TargetTile.Value, out var tileVis))
                 {
                     DebugTools.Assert(seedTiles.Contains(TargetTile.Value));
 
-                    if (tileVis2 != 0)
+                    if (tileVis != 0)
                     {
                         lock (System)
                         {
@@ -505,9 +505,9 @@ public sealed class StationAiVisionSystem : EntitySystem
                     if (!System._viewportTiles.Contains(tile))
                         continue;
 
-                    var tileVis2 = vis2.GetValueOrDefault(tile, 0);
+                    var tileVis = vis1.GetValueOrDefault(tile, 0);
 
-                    if (tileVis2 != 0)
+                    if (tileVis != 0)
                     {
                         // No idea if it's better to do this inside or out.
                         lock (VisibleTiles)
