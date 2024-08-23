@@ -286,6 +286,7 @@
       - id: PetCarrier
       - id: DrinkMopwataBottleRandom
       - id: LidSalami
+      - id: GoldGemRing
         weight: 0.05
 
 - type: entity

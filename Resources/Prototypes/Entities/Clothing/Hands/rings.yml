@@ -1,0 +1,103 @@
+- type: entity
+  parent: RingBase
+  id: GoldRing
+  name: gold ring
+  components:
+    - type: Sprite
+      sprite: Clothing/Hands/Rings/basic.rsi
+      layers:
+        - state: ring
+          color: "#ffc833"
+    - type: StaticPrice
+      price: 300
+    - type: Appearance
+
+- type: entity
+  parent: RingBase
+  id: SilverRing
+  name: silver ring
+  components:
+    - type: Sprite
+      sprite: Clothing/Hands/Rings/basic.rsi
+      layers:
+        - state: ring
+    - type: StaticPrice
+      price: 275
+    - type: Appearance
+
+- type: entity
+  parent: RingBase
+  id: GoldRingDiamond
+  name: gold diamond ring
+  components:
+    - type: Sprite
+      sprite: Clothing/Hands/Rings/basic.rsi
+      layers:
+        - state: ring
+          color: "#ffc833"
+        - state: gem
+          color: "#c1ffff"
+    - type: StaticPrice
+      price: 1500
+    - type: Appearance
+
+- type: entity
+  parent: RingBase
+  id: SilverRingDiamond
+  name: silver diamond ring
+  components:
+    - type: Sprite
+      sprite: Clothing/Hands/Rings/basic.rsi
+      layers:
+        - state: ring
+        - state: gem
+          color: "#c1ffff"
+    - type: StaticPrice
+      price: 1400
+    - type: Appearance
+    - type: RandomSprite
+      getAllGroups: true
+      available:
+        - gemColor:
+            gem: Rainbow
+
+- type: entity
+  parent: RingBase
+  id: GoldRingGem
+  name: gold gem ring
+  components:
+    - type: Sprite
+      sprite: Clothing/Hands/Rings/basic.rsi
+      layers:
+        - state: ring
+          color: "#ffc833"
+        - state: gem
+          map: [ "gemColor" ]
+    - type: StaticPrice
+      price: 2100
+    - type: Appearance
+    - type: RandomSprite
+      getAllGroups: true
+      available:
+        - gemColor:
+            gem: Rainbow
+
+- type: entity
+  parent: RingBase
+  id: SilverRingGem
+  name: silver gem ring
+  components:
+    - type: Sprite
+      sprite: Clothing/Hands/Rings/basic.rsi
+      layers:
+        - state: ring
+        - state: gem
+          map: [ "gemColor" ]
+    - type: StaticPrice
+      price: 2000
+    - type: Appearance
+    - type: RandomSprite
+      getAllGroups: true
+      available:
+        - gemColor:
+            gem: Rainbow

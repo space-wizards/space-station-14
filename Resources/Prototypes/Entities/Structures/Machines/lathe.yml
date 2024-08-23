@@ -200,6 +200,11 @@
       - ClothingHeadHatWelding
       - WetFloorSign
       - ClothingHeadHatCone
+      - GoldRing
+      - SilverRing
+      - GoldRingDimond
+      - SilverRingDimond
+
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - BoxLethalshot
