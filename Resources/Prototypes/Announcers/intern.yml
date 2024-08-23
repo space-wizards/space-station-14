@@ -25,24 +25,24 @@
       collection: InternWelcomeAnnouncements
 
     # Alert levels
-    # - id: alertGreen # Everything is fine
-    #   path: alerts/green.ogg
-    # - id: alertBlue # Something is amiss
-    #   path: alerts/blue.ogg
-    # - id: alertViolet # Viral infection or misc medical emergencies, listen to Medical
-    #   path: alerts/violet.ogg
-    # - id: alertWhite # Glimmer is too high, listen to Epistemics
-    #   path: alerts/white.ogg
-    # - id: alertYellow # The station is being largely damaged, listen to Engineering
-    #   path: alerts/yellow.ogg
-    # - id: alertRed # Generic many things are bad, listen to Security
-    #   path: alerts/red.ogg
-    # - id: alertGamma # There is a massive immediate threat to the station, listen to Central Command
-    #   path: alerts/gamma.ogg
-    # - id: alertDelta # The station is being or about to be massively destroyed, run for your life
-    #   path: alerts/delta.ogg
-    # - id: alertEpsilon # The station has been terminated, good luck survivors!
-    #   path: alerts/epsilon.ogg
+    - id: alertGreen # Everything is fine
+      path: alerts/green.ogg
+    - id: alertBlue # Something is amiss
+      path: alerts/blue.ogg
+    - id: alertViolet # Viral infection or misc medical emergencies, listen to Medical
+      path: alerts/violet.ogg
+    - id: alertWhite # Glimmer is too high, listen to Epistemics
+      path: alerts/white.ogg
+    - id: alertYellow # The station is being largely damaged, listen to Engineering
+      path: alerts/yellow.ogg
+    - id: alertRed # Generic many things are bad, listen to Security
+      path: alerts/red.ogg
+    - id: alertGamma # There is a massive immediate threat to the station, listen to Central Command
+      path: alerts/gamma.ogg
+    - id: alertDelta # The station is being or about to be massively destroyed, run for your life
+      path: alerts/delta.ogg
+    - id: alertEpsilon # The station has been terminated, good luck survivors!
+      path: alerts/epsilon.ogg
 
     # Events
     ## Wizard's Den
@@ -79,9 +79,9 @@
     # - id: meteorSwarmComplete # Meteors have stopped flying at the station
     #   path: events/meteors-complete.ogg
     # - id: mouseMigration # Several mice have appeared in a random place
-    #   path: events/mouse_migration.ogg
+    #   path: events/vent_critters.ogg
     # - id: cockroachMigration # Several cockroaches have appeared in a random place
-    #   path: events/cockroach_migration.ogg
+    #   path: events/vent_critters.ogg
     - id: powerGridCheck # The station's power is offline for some moments
       path: events/power_grid_check.ogg
     - id: powerGridCheckComplete # The station's power is online again
@@ -95,9 +95,9 @@
     # - id: ventClog # A random reagent is coming out of a scrubber
     #   path: events/vent_clog.ogg
     # - id: slimesSpawn # Some simple slimes are appearing in vents
-    #   path: events/slimes_spawn.ogg
+    #   path: events/vent_critters.ogg
     # - id: spiderSpawn # Some simple spiders are appearing in vents
-    #   path: events/spider_spawn.ogg
+    #   path: events/vent_critters.ogg
     # - id: immovableRodSpawn # The station is moving into an immovable rod, don't die or something, ask Engineering for help repairing it
     #   path: events/immovable_rod_spawn.ogg
     - id: ionStorm # AI-controlled equipment are now weird, check their laws

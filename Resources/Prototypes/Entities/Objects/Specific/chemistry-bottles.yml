@@ -321,7 +321,7 @@
             - ReagentId: Toxin
               Quantity: 30
 
-# added methadone as a bottle so it can spawn for use
+- type: entity
   id: MethadoneChemistryBottle
   name: methadone bottle
   parent: BaseChemistryBottleFilled

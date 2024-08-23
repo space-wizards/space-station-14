@@ -1,6 +1,6 @@
 - type: gameMap
   id: Boat
-  mapName: 'NTAS. White Whale'
+  mapName: 'White Whale'
   mapPath: /Maps/boat.yml
   randomRotation: false
   minPlayers: 1
@@ -10,12 +10,14 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate:  '{0} NTAS. White Whale {1}'
+          mapNameTemplate:  '{0} White Whale {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'NTAS'
+            prefixCreator: 'AS'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_omega.yml 
+          emergencyShuttlePath: /Maps/Shuttles/emergency_cluster.yml 
+        - type: StationCargoShuttle
+          path: /Maps/Shuttles/cargo_fland.yml
         - type: StationJobs
           availableJobs:
             #service
