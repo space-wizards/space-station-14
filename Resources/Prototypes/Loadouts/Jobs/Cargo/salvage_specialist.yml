@@ -27,7 +27,7 @@
     shoes: ClothingShoesBootsSalvage
 
 # Mantle
-- type: loadoutEffectGroup
+- type: loadout
   id: MinerCloak
   equipment:
     neck: ClothingNeckCloakMiner
