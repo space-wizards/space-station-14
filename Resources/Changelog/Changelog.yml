@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Aeshus
-  changes:
-  - message: Space Law gives security exception for syndicate communication equipment.
-    type: Fix
-  id: 6692
-  time: '2024-06-06T19:24:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28668
 - author: Dutch-VanDerLinde
   changes:
   - message: Fixed janitors not spawning with a survival box in their bag
@@ -3864,3 +3857,11 @@
   id: 7191
   time: '2024-08-23T09:14:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30092
+- author: SlamBamActionman
+  changes:
+  - message: Janitor's galoshes now apply slowdown over slippery surfaces, and has
+      a max slowdown cap over sticky surfaces.
+    type: Tweak
+  id: 7192
+  time: '2024-08-23T09:59:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30967
