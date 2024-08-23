@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Silly server pins by Keld",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
+        {
+            "name": "vulture"
+        },
+        {
+            "name": "vulture-equipped",
+            "directions": 4
+        },
+        {
+            "name": "lizard"
+        },
+        {
+            "name": "lizard-equipped",
+            "directions": 4
+        },
+        {
+            "name": "leviathan"
+        },
+        {
+            "name": "leviathan-equipped",
+            "directions": 4
+        },
+        {
+            "name": "salamander"
+        },
+        {
+            "name": "salamander-equipped",
+            "directions": 4
+        },
+        {
+            "name": "miros"
+        },
+        {
+            "name": "miros-equipped",
+            "directions": 4
+        },
+        {
+            "name": "frontier"
+        },
+        {
+            "name": "frontier-equipped",
+            "directions": 4
+        },
+        {
+            "name": "delta-v"
+        },
+        {
+            "name": "delta-v-equipped",
+            "directions": 4
+        },
+        {
+            "name": "cosmatic-drift"
+        },
+        {
+            "name": "cosmatic-drift-equipped",
+            "directions": 4
+        },
+        {
+            "name": "axolotl"
+        },
+        {
+            "name": "axolotl-equipped",
+            "directions": 4
+        }
+    ]
+}
+
