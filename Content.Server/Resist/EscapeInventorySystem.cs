@@ -110,10 +110,7 @@ public sealed class EscapeInventorySystem : EntitySystem
             return;
         // so we are being dropped while we are escaping.
         _doAfterSystem.Cancel(component.DoAfter);
-        /*
-         * TODO: Set this to 1 or something lower on PR approval, this is just for demoing
-         */
-        component.PenaltyTimer = 5f;
+        component.PenaltyTimer = 1f;
         RemComp<ItemComponent>(uid);
     }
 }
