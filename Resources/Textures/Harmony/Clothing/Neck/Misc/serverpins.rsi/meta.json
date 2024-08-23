@@ -1,73 +1,73 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "PixelTK leaves his mark on upstream",
+  "copyright": "Silly server pins by Keld",
   "size": {
     "x": 32,
     "y": 32
   },
     "states": [
         {
-            "name": "aro"
+            "name": "vulture"
         },
         {
-            "name": "aro-equipped",
+            "name": "vulture-equipped",
             "directions": 4
         },
         {
-            "name": "asex"
+            "name": "lizard"
         },
         {
-            "name": "asex-equipped",
+            "name": "lizard-equipped",
             "directions": 4
         },
         {
-            "name": "bi"
+            "name": "leviathan"
         },
         {
-            "name": "bi-equipped",
+            "name": "leviathan-equipped",
             "directions": 4
         },
         {
-            "name": "inter"
+            "name": "salamander"
         },
         {
-            "name": "inter-equipped",
+            "name": "salamander-equipped",
             "directions": 4
         },
         {
-            "name": "les"
+            "name": "miros"
         },
         {
-            "name": "les-equipped",
+            "name": "miros-equipped",
             "directions": 4
         },
         {
-            "name": "lgbt"
+            "name": "frontier"
         },
         {
-            "name": "lgbt-equipped",
+            "name": "frontier-equipped",
             "directions": 4
         },
         {
-            "name": "non"
+            "name": "delta-v"
         },
         {
-            "name": "non-equipped",
+            "name": "delta-v-equipped",
             "directions": 4
         },
         {
-            "name": "pan"
+            "name": "cosmatic-drift"
         },
         {
-            "name": "pan-equipped",
+            "name": "cosmatic-drift-equipped",
             "directions": 4
         },
         {
-            "name": "trans"
+            "name": "axolotl"
         },
         {
-            "name": "trans-equipped",
+            "name": "axolotl-equipped",
             "directions": 4
         }
     ]

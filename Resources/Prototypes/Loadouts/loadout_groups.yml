@@ -25,14 +25,6 @@
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
-#  - ClothingNeckSalamanderPin
-#  - ClothingNeckMirosPin
-#  - ClothingNeckLeviathanPin
-#  - ClothingNeckVulturePin
-#  - ClothingNeckAxolotlPin
-#  - ClothingNeckFrontierPin
-#  - ClothingNeckDeltaVPin
-#  - ClothingNeckCosmaticDriftPin
 
 - type: loadoutGroup
   id: Glasses
