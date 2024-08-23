@@ -1,0 +1,8 @@
+- type: entity
+  parent: IDCardStandard
+  id: HeccdiverIDCard
+  name: heccdiver ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: heccdiver
