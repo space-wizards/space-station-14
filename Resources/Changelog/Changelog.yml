@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: A variety of objects around the station now need to be clicked on in
-      order for bullets to hit them.
-    type: Tweak
-  id: 6685
-  time: '2024-06-05T20:47:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28571
 - author: ps3moira
   changes:
   - message: Lit cigars inhand sprites are now visible.
@@ -3867,3 +3859,11 @@
   id: 7184
   time: '2024-08-22T19:29:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31296
+- author: lzk228
+  changes:
+  - message: Removed names from implanters. No more meta. (You still can see which
+      implant is inside via examining or holding implanter in hand).
+    type: Tweak
+  id: 7185
+  time: '2024-08-23T00:11:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31045
