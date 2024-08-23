@@ -34,18 +34,11 @@
   noSpawn: true
   components:
     - type: InstantAction
-      useDelay: 1
+      useDelay: 5
       icon: { sprite: Objects/Magic/cotelekinesis.rsi, state: icon }
       iconOn: { sprite: Objects/Magic/cotelekinesis.rsi, state: icon-on }
-      sound: !type:SoundPathSpecifier
-        path: /Audio/Magic/staff_animation.ogg
-
       itemIconStyle: NoItem
       event: !type:ToggleActionEvent # tags
-    - type: Icon
-      sprite: Objects/Magic/cotelekinesis.rsi
-      state: icon
-      shader: unshaded
     - type: Tag
       tags:
         - ExtraordTelekinesis

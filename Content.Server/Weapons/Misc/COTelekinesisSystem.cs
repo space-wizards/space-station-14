@@ -2,12 +2,15 @@ using Content.Shared.Implants;
 using Content.Shared.Tag;
 using Content.Shared.Toggleable;
 using Content.Shared.Weapons.Misc;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Weapons.Misc;
 
 public sealed class COTelekinesisSystem : COSharedTelekinesisSystem
 {
     [Dependency] protected readonly COSharedTelekinesisHandSystem _telekinesisHand = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+
     [ValidatePrototypeId<TagPrototype>]
     public const string TelekinesisTag = "ExtraordTelekinesis";
 
@@ -15,27 +18,6 @@ public sealed class COTelekinesisSystem : COSharedTelekinesisSystem
     {
         base.Initialize();
         SubscribeLocalEvent<COTelekinesisComponent, ImplantImplantedEvent>(ImplantGive);
-        SubscribeLocalEvent<COTelekinesisComponent, ToggleActionEvent>(TelekinesisAction);
-    }
-
-    private void TelekinesisAction(Entity<COTelekinesisComponent> ent, ref ToggleActionEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        TryTelekinesisTether((ent.Owner, ent.Comp), args.Performer);
-        args.Handled = true;
-    }
-
-    private bool TryTelekinesisTether(Entity<COTelekinesisComponent?> ent, EntityUid user)
-    {
-        if (!Resolve(ent, ref ent.Comp, false))
-            return false;
-
-        bool enabled = TryTether((ent.Owner, ent.Comp), user);
-
-        _actionsSystem.SetToggled(ent.Comp.Action, enabled);
-        return enabled;
     }
 
     /// <summary>
@@ -50,10 +32,9 @@ public sealed class COTelekinesisSystem : COSharedTelekinesisSystem
         }
     }
 
-    protected override void StartTether(EntityUid user)
+    protected override void StartTether(Entity<COTelekinesisComponent?> ent, EntityUid user)
     {
         var coords = Transform(user).Coordinates;
-
         var entityUid = Spawn(AbilityPowerTelekinesis, coords);
 
         if (_hands.TryPickup(user, entityUid) == false)
@@ -62,6 +43,8 @@ public sealed class COTelekinesisSystem : COSharedTelekinesisSystem
             EntityManager.DeleteEntity(entityUid);
             return;
         }
+
+        _audioSystem.PlayPredicted(ent.Comp.ActivateSound, user, null);
     }
 
     protected override void StopTether(EntityUid? telekinesis)
