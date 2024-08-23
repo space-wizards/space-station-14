@@ -132,7 +132,7 @@
     - ClothingNeckAutismPin
 
 - type: loadout
-  id: ClothingNeckGoldAutismPin
+  id: ClothingNeckNeurodiversityPin
   storage:
     back:
-    - ClothingNeckGoldAutismPin
+    - ClothingNeckGoldNeurodiversityPin
