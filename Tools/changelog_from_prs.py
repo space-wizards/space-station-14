@@ -36,10 +36,10 @@ prs = json.loads(process.stdout)
 
 def get_entry_type(pull_message: str) -> str:
     types = {
-        "a": "Add",
+        "add": "Add",
         "r": "Remove",
-        "t": "Tweak",
-        "f": "Fix",
+        "tweak": "Tweak",
+        "fix": "Fix",
     }
     choice = input(f"Type for this entry: '{pull_message}'\n")
     result = types.get(choice)
@@ -51,7 +51,7 @@ with open(file_path, "a+") as file:
         author = pull["author"]["login"]
         message = pull["title"]
         # entry_type = get_entry_type(message)
-        entry_type = "None"
+        entry_type = "Tweak"
         merged_at = pull["mergedAt"]
         time = datetime.fromisoformat(merged_at).strftime(time_format)
         url = pull["url"]

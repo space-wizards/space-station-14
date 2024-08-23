@@ -1196,6 +1196,7 @@
     speciesId: monkey
   - type: Deathgasp
     prototype: MonkeyDeathgasp
+  - type: Blindable
   - type: Cuffable
   - type: RotationVisuals
     defaultRotation: 90
