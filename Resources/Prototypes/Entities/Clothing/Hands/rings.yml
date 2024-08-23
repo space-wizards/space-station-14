@@ -55,11 +55,6 @@
     - type: StaticPrice
       price: 1400
     - type: Appearance
-    - type: RandomSprite
-      getAllGroups: true
-      available:
-        - gemColor:
-            gem: Rainbow
 
 - type: entity
   parent: RingBase
