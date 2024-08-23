@@ -3,8 +3,10 @@ using Content.Shared.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.Movement.Events;
 using Content.Shared.Resist;
 using Content.Shared.Storage;
@@ -27,6 +29,22 @@ public sealed class EscapeInventorySystem : EntitySystem
         SubscribeLocalEvent<CanEscapeInventoryComponent, MoveInputEvent>(OnRelayMovement);
         SubscribeLocalEvent<CanEscapeInventoryComponent, EscapeInventoryEvent>(OnEscape);
         SubscribeLocalEvent<CanEscapeInventoryComponent, DroppedEvent>(OnDropped);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        var query = EntityQueryEnumerator<CanEscapeInventoryComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.PenaltyTimer <= 0)
+                continue;
+            comp.PenaltyTimer -= frameTime;
+            if (comp.PenaltyTimer <= 0) {
+                // make the item able to be picked up again
+                AddComp<ItemComponent>(uid);
+            }
+        }
     }
 
     private void OnRelayMovement(EntityUid uid, CanEscapeInventoryComponent component, ref MoveInputEvent args)
@@ -88,7 +106,14 @@ public sealed class EscapeInventorySystem : EntitySystem
 
     private void OnDropped(EntityUid uid, CanEscapeInventoryComponent component, DroppedEvent args)
     {
-        if (component.DoAfter != null)
-            _doAfterSystem.Cancel(component.DoAfter);
+        if (component.DoAfter == null)
+            return;
+        // so we are being dropped while we are escaping.
+        _doAfterSystem.Cancel(component.DoAfter);
+        /*
+         * TODO: Set this to 1 or something lower on PR approval, this is just for demoing
+         */
+        component.PenaltyTimer = 5f;
+        RemComp<ItemComponent>(uid);
     }
 }
