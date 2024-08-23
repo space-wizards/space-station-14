@@ -2,6 +2,11 @@
 - type: loadout
   id: JesterHat
   equipment:
+    head: ClothingHeadHatJester
+
+- type: loadout
+  id: JesterAltHat
+  equipment:
     head: ClothingHeadHatJesterAlt
 
 # Jumpsuit
@@ -17,6 +22,11 @@
 
 - type: loadout
   id: JesterSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitJester
+
+- type: loadout
+  id: JesterAltSuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitJesterAlt
 
