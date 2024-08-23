@@ -247,24 +247,7 @@ namespace Content.Server.Database
                     .WithOne(e => e.AhelpExchange)
                     .HasForeignKey(e => e.AhelpId)
                     .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasMany(e => e.AhelpParticipants)
-                    .WithOne(e => e.AhelpExchange)
-                    .HasForeignKey(e => e.AhelpId)
-                    .OnDelete(DeleteBehavior.Cascade);
             });
-
-            modelBuilder.Entity<AhelpParticipant>(entity =>
-            {
-                entity.HasKey(ap => new { ap.AhelpId, ap.PlayerId });
-
-                entity.HasOne(ap => ap.Player)
-                    .WithMany()
-                    .HasForeignKey(ap => ap.PlayerId)
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
-
-
 
             modelBuilder.Entity<AdminNote>()
                 .HasOne(note => note.Player)
@@ -796,7 +779,6 @@ namespace Content.Server.Database
         public Guid AhelpTarget { get; set; }
 
         public ICollection<AhelpMessage> AhelpMessages { get; set; } = new List<AhelpMessage>();
-        public ICollection<AhelpParticipant> AhelpParticipants { get; set; } = new List<AhelpParticipant>();
     }
 
     public class AhelpMessage
@@ -825,20 +807,6 @@ namespace Content.Server.Database
         public DateTime TimeSent { get; set; }
 
         public AhelpExchange AhelpExchange { get; set; } = null!;
-    }
-
-    public class AhelpParticipant
-    {
-        [Required]
-        [ForeignKey("AhelpExchange")]
-        public int AhelpId { get; set; }
-
-        [Required]
-        [ForeignKey("Player")]
-        public int PlayerId { get; set; }
-
-        public AhelpExchange AhelpExchange { get; set; } = null!;
-        public Player Player { get; set; } = null!;
     }
 
     // Used by SS14.Admin

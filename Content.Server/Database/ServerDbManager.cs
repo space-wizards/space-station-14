@@ -251,8 +251,6 @@ namespace Content.Server.Database
         Task<AhelpExchange?> GetAhelpExchangeAsync(int ahelpRound, Guid ahelpTarget);
         Task AddAhelpExchangeAsync(AhelpExchange exchange);
         Task AddAhelpMessageAsync(AhelpMessage message);
-        Task<AhelpParticipant?> GetAhelpParticipantAsync(int ahelpId, int playerId);
-        Task AddAhelpParticipantAsync(AhelpParticipant participant);
         Task<int> GetMaxMessageIdForExchange(int ahelpId);
 
         #endregion
@@ -798,18 +796,6 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.AddAhelpMessageAsync(message));
-        }
-
-        public Task<AhelpParticipant?> GetAhelpParticipantAsync(int ahelpId, int playerId)
-        {
-            DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetAhelpParticipantAsync(ahelpId, playerId));
-        }
-
-        public Task AddAhelpParticipantAsync(AhelpParticipant participant)
-        {
-            DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.AddAhelpParticipantAsync(participant));
         }
 
         public Task<int> GetMaxMessageIdForExchange(int ahelpId)

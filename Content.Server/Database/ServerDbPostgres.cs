@@ -517,20 +517,6 @@ namespace Content.Server.Database
             await db.PgDbContext.SaveChangesAsync();
         }
 
-        public override async Task<AhelpParticipant?> GetAhelpParticipantAsync(int ahelpId, int playerId)
-        {
-            await using var db = await GetDbImpl();
-            return await db.PgDbContext.AhelpParticipants
-                .FirstOrDefaultAsync(p => p.AhelpId == ahelpId && p.PlayerId == playerId);
-        }
-
-        public override async Task AddAhelpParticipantAsync(AhelpParticipant participant)
-        {
-            await using var db = await GetDbImpl();
-            db.PgDbContext.AhelpParticipants.Add(participant);
-            await db.PgDbContext.SaveChangesAsync();
-        }
-
         public override async Task<int> GetMaxMessageIdForExchange(int ahelpId)
         {
             await using var db = await GetDbImpl();

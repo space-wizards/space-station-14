@@ -59,22 +59,5 @@ namespace Content.Server.Administration.Logs
             var maxId = await _dbManager.GetMaxMessageIdForExchange(exchangeId);
             return maxId + 1;
         }
-
-        // This is not used but it might be used in the future
-        public async Task LogAhelpParticipantAsync(int ahelpId, int playerId)
-        {
-            var existingParticipant = await _dbManager.GetAhelpParticipantAsync(ahelpId, playerId);
-
-            if (existingParticipant == null)
-            {
-                var ahelpParticipant = new AhelpParticipant
-                {
-                    AhelpId = ahelpId,
-                    PlayerId = playerId
-                };
-
-                await _dbManager.AddAhelpParticipantAsync(ahelpParticipant);
-            }
-        }
     }
 }

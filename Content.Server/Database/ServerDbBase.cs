@@ -1083,10 +1083,6 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         public abstract Task AddAhelpMessageAsync(AhelpMessage message);
 
-        public abstract Task<AhelpParticipant?> GetAhelpParticipantAsync(int ahelpId, int playerId);
-
-        public abstract Task AddAhelpParticipantAsync(AhelpParticipant participant);
-
         public abstract Task<int> GetMaxMessageIdForExchange(int ahelpId);
         #endregion
 

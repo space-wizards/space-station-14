@@ -701,24 +701,6 @@ namespace Content.Server.Database
             await db.SqliteDbContext.SaveChangesAsync();
         }
 
-        public  async Task<AhelpParticipant?> GetAhelpParticipantAsync(int id)
-        {
-            await using var db = await GetDbImpl();
-            return await db.SqliteDbContext.AhelpParticipants.FindAsync(id);
-        }
-
-        public override async Task AddAhelpParticipantAsync(AhelpParticipant participant)
-        {
-            await using var db = await GetDbImpl();
-            db.SqliteDbContext.AhelpParticipants.Add(participant);
-            await db.SqliteDbContext.SaveChangesAsync();
-        }
-
-        public override Task<AhelpParticipant?> GetAhelpParticipantAsync(int exchangeId, int participantId)
-        {
-            return Task.FromResult<AhelpParticipant?>(null);
-        }
-
         public override async Task<int> GetMaxMessageIdForExchange(int ahelpId)
         {
             await using var db = await GetDbImpl();
