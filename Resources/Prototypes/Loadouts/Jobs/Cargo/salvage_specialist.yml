@@ -40,7 +40,7 @@
 - type: loadout
   id: MinerCloak
   effects:
- - !type:GroupLoadoutEffect
+  - !type:GroupLoadoutEffect
     proto: SeniorSalvager
   equipment:
     neck: ClothingNeckCloakMiner
