@@ -155,7 +155,7 @@
     path: /Audio/Jukebox/in_the_pocket.ogg
 
 - type: jukebox
-  id: LaxLullaby
+  id: FFXPrelude
   name: FFX - Prelude
   path:
     path: /Audio/Jukebox/prelude.ogg
