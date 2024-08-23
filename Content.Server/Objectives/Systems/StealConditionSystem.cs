@@ -1,5 +1,6 @@
 using Content.Server.Objectives.Components;
 using Content.Server.Objectives.Components.Targets;
+using Content.Shared.Interaction;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
@@ -20,6 +21,7 @@ public sealed class StealConditionSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
@@ -101,8 +103,8 @@ public sealed class StealConditionSystem : EntitySystem
         //check stealAreas
         if (condition.CheckStealAreas)
         {
-            var areasQuery = AllEntityQuery<StealAreaComponent>();
-            while (areasQuery.MoveNext(out var uid, out var area))
+            var areasQuery = AllEntityQuery<TransformComponent, StealAreaComponent>();
+            while (areasQuery.MoveNext(out var uid, out var xform, out var area))
             {
                 if (!area.Owners.Contains(mind.Owner))
                     continue;
@@ -110,6 +112,9 @@ public sealed class StealConditionSystem : EntitySystem
                 var nearestEnt = _lookup.GetEntitiesInRange(uid, area.Range);
                 foreach (var ent in nearestEnt)
                 {
+                    if (!_interaction.InRangeUnobstructed((uid, xform), ent, range: area.Range))
+                        continue;
+
                     CheckEntity(ent, condition, ref containerStack, ref count);
                 }
             }
