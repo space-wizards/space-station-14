@@ -44,7 +44,8 @@ public sealed class COTelekinesisSystem : COSharedTelekinesisSystem
             return;
         }
 
-        _audioSystem.PlayPredicted(ent.Comp.ActivateSound, user, null);
+        if (Resolve(ent, ref ent.Comp))
+            _audioSystem.PlayPredicted(ent.Comp.ActivateSound, user, null);
     }
 
     protected override void StopTether(EntityUid? telekinesis)
