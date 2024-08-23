@@ -23,7 +23,7 @@
   equipment: ClothingNeckMirosPin
 
 - type: startingGear
- id: ClothingNeckMirosPin
+  id: ClothingNeckMirosPin
   storage:
     back:
     - ClothingNeckMirosPin
