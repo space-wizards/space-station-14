@@ -1,10 +1,12 @@
 using System.Numerics;
+using Content.Client.Pinpointer;
 using Content.Shared.Silicons.StationAi;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Silicons.StationAi;
 
@@ -21,6 +23,13 @@ public sealed class StationAiOverlay : Overlay
 
     private IRenderTexture? _staticTexture;
     private IRenderTexture? _stencilTexture;
+
+    protected NavMapData _data = new();
+
+    // Only update the frame-data at a lower rate in case someone has a billion hz monitor.
+    private float _accumulator;
+
+    private const float UpdateRate = 1f / 30f;
 
     public StationAiOverlay()
     {
@@ -54,14 +63,23 @@ public sealed class StationAiOverlay : Overlay
 
         if (grid != null)
         {
-            // TODO: Pass in attached entity's grid.
-            // TODO: Credit OD on the moved to code
-            // TODO: Call the moved-to code here.
+            _accumulator -= (float) IoCManager.Resolve<IGameTiming>().FrameTime.TotalSeconds;
 
-            _visibleTiles.Clear();
-            _entManager.System<StationAiVisionSystem>().GetView((gridUid, grid), worldBounds, _visibleTiles);
+            if (_accumulator <= 0f)
+            {
+                _accumulator += UpdateRate;
+                // TODO: I hate this shit
+                _data.UpdateNavMap((gridUid, grid));
 
-            var gridMatrix = xforms.GetWorldMatrix(gridUid);
+                // TODO: Pass in attached entity's grid.
+                // TODO: Credit OD on the moved to code
+                // TODO: Call the moved-to code here.
+
+                _visibleTiles.Clear();
+                _entManager.System<StationAiVisionSystem>().GetView((gridUid, grid), worldBounds, _visibleTiles);
+            }
+
+            var (_, _, gridMatrix, gridInvMatrix) = xforms.GetWorldPositionRotationMatrixWithInv(gridUid);
             var matty =  Matrix3x2.Multiply(gridMatrix, invMatrix);
 
             // Draw visible tiles to stencil
@@ -77,16 +95,17 @@ public sealed class StationAiOverlay : Overlay
             },
             Color.Transparent);
 
-            // Once this is gucci optimise rendering.
+            // Create background texture.
             worldHandle.RenderInRenderTarget(_staticTexture!,
             () =>
             {
                 worldHandle.SetTransform(invMatrix);
-                var shader = _proto.Index<ShaderPrototype>("CameraStatic").Instance();
-                worldHandle.UseShader(shader);
-                worldHandle.DrawRect(worldBounds, Color.White);
-            },
-            Color.Black);
+                worldHandle.DrawRect(worldBounds, Color.Black);
+                worldHandle.SetTransform(matty);
+                var localAABB = gridInvMatrix.TransformBox(worldBounds);
+
+                _data.Draw(worldHandle, vec => new Vector2(vec.X, -vec.Y), localAABB);
+            }, Color.Transparent);
         }
         // Not on a grid
         else
