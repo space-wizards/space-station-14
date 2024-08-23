@@ -245,7 +245,7 @@ uplink-super-surplus-bundle-desc = Contains 125 telecrystals worth of completely
 
 # Tools
 uplink-toolbox-name = Toolbox
-uplink-toolbox-desc = A full compliment of tools for the mechanically inclined traitor. Includes a pair of insulated combat gloves, syndicate gas mask and a utility belt.
+uplink-toolbox-desc = A full compliment of tools for the mechanically inclined traitor. Includes a pair of insulated combat gloves and a syndicate gas mask as well.
 
 uplink-syndicate-jaws-of-life-name = Jaws Of Life
 uplink-syndicate-jaws-of-life-desc = A combined prying and cutting tool. Useful for entering the station or its departments.
@@ -439,3 +439,6 @@ uplink-barber-scissors-desc = A good tool to give your fellow agent a nice hairc
 
 uplink-backpack-syndicate-name = Syndicate backpack
 uplink-backpack-syndicate-desc = Lightweight explosion-proof а backpack for holding various traitor goods
+
+uplink-combat-bakery-name = Combat Bakery Kit
+uplink-combat-bakery-desc = A kit of clandestine baked weapons. Contains a baguette which a skilled mime could use as a sword and a pair of throwing croissants. Once the job is done, eat the evidence.
