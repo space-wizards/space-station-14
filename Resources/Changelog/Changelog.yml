@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Nerfed the explosive power of fuel tanks.
-    type: Tweak
-  id: 6690
-  time: '2024-06-06T10:08:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28650
 - author: ElectroJr
   changes:
   - message: The job/antag preferences window now has some buttons that link to relevant
@@ -3865,3 +3858,10 @@
   id: 7189
   time: '2024-08-23T05:08:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30887
+- author: jimmy12or
+  changes:
+  - message: Added a recipe for cream. Heat some milk and shake some air into it.
+    type: Add
+  id: 7190
+  time: '2024-08-23T05:13:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30503
