@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: The job/antag preferences window now has some buttons that link to relevant
-      guidebook entries
-    type: Add
-  id: 6691
-  time: '2024-06-06T12:05:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28614
 - author: Aeshus
   changes:
   - message: Space Law gives security exception for syndicate communication equipment.
@@ -3865,3 +3857,10 @@
   id: 7190
   time: '2024-08-23T05:13:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30503
+- author: SlamBamActionman
+  changes:
+  - message: Codewords are now highlighted for traitors.
+    type: Add
+  id: 7191
+  time: '2024-08-23T09:14:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30092
