@@ -505,7 +505,7 @@ public sealed class StationAiVisionSystem : EntitySystem
                     if (!System._viewportTiles.Contains(tile))
                         continue;
 
-                    var tileVis2 = vis2.GetValueOrDefault(tile, 0);
+                    var tileVis2 = vis1.GetValueOrDefault(tile, 0);
 
                     if (tileVis2 != 0)
                     {
