@@ -484,5 +484,12 @@ Entries:
   id: 60
   time: '2024-08-19T03:02:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31097
+- author: lzk228
+  changes:
+  - message: Admeme implanter injects and draws faster than default implanter.
+    type: Tweak
+  id: 61
+  time: '2024-08-23T00:11:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31045
 Name: Admin
 Order: 1
