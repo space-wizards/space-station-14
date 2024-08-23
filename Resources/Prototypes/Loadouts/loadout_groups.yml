@@ -619,6 +619,12 @@
   - CargoWinterBoots
 
 - type: loadoutGroup
+  id: SalvageSpecialistNeck
+  name: loadout-group-salvage-specialist-neck
+  loadouts:
+  - MinerCloak
+
+- type: loadoutGroup
   id: SalvageSpecialistBackpack
   name: loadout-group-salvage-specialist-backpack
   loadouts:
