@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Fixed janitors not spawning with a survival box in their bag
-    type: Fix
-  id: 6693
-  time: '2024-06-06T22:26:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28669
 - author: blueDev2
   changes:
   - message: Rebalanced medicated suture and regen mesh to only require 1 brute pack/ointment
@@ -3865,3 +3858,10 @@
   id: 7192
   time: '2024-08-23T09:59:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30967
+- author: coolsurf6
+  changes:
+  - message: Increased the maximum number of reptilian chest markings to 3.
+    type: Tweak
+  id: 7193
+  time: '2024-08-23T14:24:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30786
