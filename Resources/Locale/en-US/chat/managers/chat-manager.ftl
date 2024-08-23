@@ -122,6 +122,16 @@ chat-speech-verb-name-small-mob = Mouse
 chat-speech-verb-small-mob-1 = squeaks
 chat-speech-verb-small-mob-2 = pieps
 
+chat-speech-verb-name-raccoon = Raccoon
+chat-speech-verb-raccoon-1 = chitters
+chat-speech-verb-raccoon-2 = squeaks
+chat-speech-verb-raccoon-3 = growls
+
+chat-speech-verb-name-possum = Possum
+chat-speech-verb-possum-1 = hisses
+chat-speech-verb-possum-2 = squeaks
+chat-speech-verb-possum-3 = growls
+
 chat-speech-verb-name-large-mob = Carp
 chat-speech-verb-large-mob-1 = roars
 chat-speech-verb-large-mob-2 = growls

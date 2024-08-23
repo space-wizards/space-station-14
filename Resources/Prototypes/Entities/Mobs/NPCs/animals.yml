@@ -1724,7 +1724,7 @@
         name: food-sequence-content-rat
       skewer:
         name: food-sequence-content-rat
-        sprite: 
+        sprite:
           sprite: Objects/Consumable/Food/skewer.rsi
           state: skewer-rat
 
@@ -2562,6 +2562,118 @@
   - type: Tag
     tags:
     - VimPilot
+
+- type: entity
+  parent: MobRaccoon
+  id: MobRaccoonGhost
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-raccoon-name
+    description: ghost-role-information-raccoon-description
+    rules: ghost-role-information-freeagent-rules
+  - type: GhostTakeoverAvailable
+  - type: Vocal
+    sounds:
+      Male: Raccoon
+      Female: Raccoon
+      Unsexed: Raccoon
+    wilhelmProbability: 0.001
+  - type: Speech
+    speechSounds: Raccoon
+    speechVerb: Raccoon
+    allowedEmotes: ['Squeak']
+  - type: ReplacementAccent
+    accent: raccoon
+
+- type: entity
+  parent: MobPossum
+  id: MobPossumGhost
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-possum-name
+    description: ghost-role-information-possum-description
+    rules: ghost-role-information-freeagent-rules
+  - type: GhostTakeoverAvailable
+  - type: Vocal
+    sounds:
+      Male: Possum
+      Female: Possum
+      Unsexed: Possum
+    wilhelmProbability: 0.001
+  - type: Speech
+    speechSounds: Possum
+    speechVerb: Possum
+    allowedEmotes: ['Squeak']
+  - type: ReplacementAccent
+    accent: possum
+
+- type: entity
+  name: janitor rat
+  parent: MobMouse
+  id: MobJanitorRat
+  description: Squeaky cleaner.
+  components:
+  - type: Body
+    prototype: JanitorRat
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-janitorrat-name
+    description: ghost-role-information-janitorrat-description
+  - type: GhostTakeoverAvailable
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/mouse.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: mouse-0
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: mouse-moving-0
+    noMovementLayers:
+      movement:
+        state: mouse-0
+  - type: Clothing
+    quickEquip: false
+    sprite: Mobs/Animals/mouse.rsi
+    equippedPrefix: 0
+    slots:
+    - HEAD
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: mouse-0
+      Critical:
+        Base: dead-0
+      Dead:
+        Base: splat-0
+  - type: Food
+  - type: Thirst
+    startingThirst: 25  # spawn with Okay thirst state
+    thresholds:
+      OverHydrated: 35
+      Okay: 25
+      Thirsty: 15
+      Parched: 10
+      Dead: 0
+    baseDecayRate: 0.04
+  - type: Hunger
+    currentHunger: 25   # spawn with Okay hunger state
+    thresholds:
+      Overfed: 35
+      Okay: 25
+      Peckish: 15
+      Starving: 10
+      Dead: 0
+    baseDecayRate: 0.04
 
 - type: entity
   name: fox

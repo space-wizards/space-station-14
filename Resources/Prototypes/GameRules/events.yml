@@ -9,6 +9,7 @@
     - id: BureaucraticError
     - id: ClericalError
     - id: CockroachMigration
+    - id: TrashAnimalMigration
     - id: GasLeak
     - id: IonStorm # its calm like 90% of the time smh
     - id: KudzuGrowth
@@ -319,6 +320,21 @@
       prob: 0.03
     - id: MobMothroach
       prob: 0.008
+
+- type: entity
+  id: TrashAnimalMigration
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    weight: 4
+    duration: 50
+  - type: VentCrittersRule
+    entries:
+    - id: MobRaccoonGhost
+      prob: 0.03
+    - id: MobPossumGhost
+      prob: 0.03
+
 
 - type: entity
   id: PowerGridCheck
