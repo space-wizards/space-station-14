@@ -44,7 +44,7 @@ public sealed partial class DockingSystem
         Box2 shuttleAABB,
         Angle targetGridRotation,
         FixturesComponent shuttleFixtures,
-        MapGridComponent grid,
+        Entity<MapGridComponent> gridEntity,
         bool isMap,
         out Matrix3x2 matty,
         out Box2 shuttleDockedAABB,
@@ -75,7 +75,7 @@ public sealed partial class DockingSystem
         var gridXformMatrix = Matrix3Helpers.CreateTransform(gridDockXform.LocalPosition, gridDockAngle);
         matty = Matrix3x2.Multiply(stationDockMatrix, gridXformMatrix);
 
-        if (!ValidSpawn(grid, matty, offsetAngle, shuttleFixtures, isMap))
+        if (!ValidSpawn(gridEntity, matty, offsetAngle, shuttleFixtures, isMap))
             return false;
 
         shuttleDockedAABB = matty.TransformBox(shuttleAABB);
@@ -183,7 +183,7 @@ public sealed partial class DockingSystem
                             shuttleAABB,
                             targetGridAngle,
                             shuttleFixturesComp,
-                            targetGridGrid,
+                            (targetGrid, targetGridGrid),
                             isMap,
                             out var matty,
                             out var dockedAABB,
@@ -194,7 +194,7 @@ public sealed partial class DockingSystem
 
                     // Can't just use the AABB as we want to get bounds as tight as possible.
                     var gridPosition = new EntityCoordinates(targetGrid, Vector2.Transform(Vector2.Zero, matty));
-                    var spawnPosition = new EntityCoordinates(targetGridXform.MapUid!.Value, gridPosition.ToMapPos(EntityManager, _transform));
+                    var spawnPosition = new EntityCoordinates(targetGridXform.MapUid!.Value, _transform.ToMapCoordinates(gridPosition).Position);
 
                     // TODO: use tight bounds
                     var dockedBounds = new Box2Rotated(shuttleAABB.Translated(spawnPosition.Position), targetAngle, spawnPosition.Position);
@@ -235,7 +235,8 @@ public sealed partial class DockingSystem
                                     _xformQuery.GetComponent(otherGridUid),
                                     shuttleAABB,
                                     targetGridAngle,
-                                    shuttleFixturesComp, targetGridGrid,
+                                    shuttleFixturesComp,
+                                    (targetGrid, targetGridGrid),
                                     isMap,
                                     out _,
                                     out var otherdockedAABB,
@@ -303,7 +304,7 @@ public sealed partial class DockingSystem
     /// <summary>
     /// Checks whether the shuttle can warp to the specified position.
     /// </summary>
-    private bool ValidSpawn(MapGridComponent grid, Matrix3x2 matty, Angle angle, FixturesComponent shuttleFixturesComp, bool isMap)
+    private bool ValidSpawn(Entity<MapGridComponent> gridEntity, Matrix3x2 matty, Angle angle, FixturesComponent shuttleFixturesComp, bool isMap)
     {
         var transform = new Transform(Vector2.Transform(Vector2.Zero, matty), angle);
 
@@ -317,9 +318,9 @@ public sealed partial class DockingSystem
             // If it's a map check no hard collidable anchored entities overlap
             if (isMap)
             {
-                foreach (var tile in grid.GetLocalTilesIntersecting(aabb))
+                foreach (var tile in _mapSystem.GetLocalTilesIntersecting(gridEntity.Owner, gridEntity.Comp, aabb))
                 {
-                    var anchoredEnumerator = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
+                    var anchoredEnumerator = _mapSystem.GetAnchoredEntitiesEnumerator(gridEntity.Owner, gridEntity.Comp, tile.GridIndices);
 
                     while (anchoredEnumerator.MoveNext(out var anc))
                     {
@@ -337,7 +338,7 @@ public sealed partial class DockingSystem
             // If it's not a map check it doesn't overlap the grid.
             else
             {
-                if (grid.GetLocalTilesIntersecting(aabb).Any())
+                if (_mapSystem.GetLocalTilesIntersecting(gridEntity.Owner, gridEntity.Comp, aabb).Any())
                     return false;
             }
         }
