@@ -279,6 +279,18 @@ binds:
 - function: FlipObject
   type: State
   key: F
+- function: ArcadeUp
+  type: State
+  key: Up
+- function: ArcadeDown
+  type: State
+  key: Down
+- function: ArcadeLeft
+  type: State
+  key: Left
+- function: ArcadeRight
+  type: State
+  key: Right
 - function: TextCursorLeft
   type: State
   key: Left
@@ -496,18 +508,6 @@ binds:
   type: State
   key: MouseMiddle
   mod1: Shift
-- function: ArcadeUp
-  type: State
-  key: Up
-- function: ArcadeDown
-  type: State
-  key: Down
-- function: ArcadeLeft
-  type: State
-  key: Left
-- function: ArcadeRight
-  type: State
-  key: Right
 - function: Arcade1
   type: State
   key: Space
