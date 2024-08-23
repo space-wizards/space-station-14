@@ -8,7 +8,7 @@
   "copyright": "Taken from https://github.com/goonstation/goonstation at commit e77d85d9c1d93aa32da7702737ceeac2b56738ac, slightly modified by PixelTK",
   "states": [
       {
-        "name": "back",
+        "name": "back"
       },
       {
         "name": "belt"
