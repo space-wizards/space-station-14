@@ -96,7 +96,7 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
 
     private void AddWipeVerb(EntityUid uid, ToggleableGhostRoleComponent component, GetVerbsEvent<ActivationVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract)
+        if (args.Hands == null || !args.CanAccess || !args.CanInteract)
             return;
 
         if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind)

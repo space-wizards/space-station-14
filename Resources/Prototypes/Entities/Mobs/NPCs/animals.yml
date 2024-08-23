@@ -376,6 +376,8 @@
       behaviors:
       - !type:GibBehavior { }
   - type: NonSpreaderZombie
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-organic
 
 - type: entity
   name: glockroach
@@ -442,7 +444,7 @@
     insertingState: inserting_mothroach
   - type: MothAccent
   - type: Sprite
-    sprite: Mobs/Animals/mothroach.rsi
+    sprite: Mobs/Animals/mothroach/mothroach.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: mothroach
@@ -457,7 +459,7 @@
     size: Normal
   - type: Clothing
     quickEquip: false
-    sprite: Mobs/Animals/mothroach.rsi
+    sprite: Mobs/Animals/mothroach/mothroach.rsi
     equippedPrefix: 0
     slots:
     - HEAD
@@ -536,6 +538,41 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: InventorySlots
+  - type: Inventory
+    speciesId: hamster
+    templateId: hamster
+    displacements:
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: head
+      mask:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: mask
+      suitstorage:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: suitstorage
+      eyes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: eyes
+      neck:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: neck
 
 
 # Note that the mallard duck is actually a male drake mallard, with the brown duck being the female variant of the same species, however ss14 lacks sex specific textures
@@ -788,6 +825,7 @@
   - type: GuideHelp
     guides:
     - Chef
+    - FoodRecipes
 
 - type: entity
   name: crab
@@ -1049,7 +1087,10 @@
 
 - type: entity
   name: kangaroo
-  parent: [ SimpleMobBase, MobCombat ]
+  parent:
+  - SimpleMobBase
+  - MobCombat
+  - StripableInventoryBase
   id: MobKangaroo
   description: A large marsupial herbivore. It has powerful hind legs, with nails that resemble long claws.
   components:
@@ -1079,15 +1120,9 @@
     templateId: kangaroo
   - type: ReplacementAccent
     accent: kangaroo
-  - type: InventorySlots
-  - type: Strippable
   - type: Butcherable
     spawned:
     - id: FoodMeat
-  - type: UserInterface
-    interfaces:
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1151,7 +1186,7 @@
 - type: entity
   name: genetic ancestor
   id: MobBaseAncestor
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, StripableInventoryBase]
   description: The genetic bipedal ancestor of... Uh... Something. Yeah, there's definitely something on the station that descended from whatever this is.
   abstract: true
   components:
@@ -1159,7 +1194,6 @@
   - type: Inventory
     templateId: monkey
     speciesId: monkey
-  - type: InventorySlots
   - type: Deathgasp
     prototype: MonkeyDeathgasp
   - type: Cuffable
@@ -1178,11 +1212,6 @@
         layer:
         - MobLayer
   - type: Stripping
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1259,6 +1288,17 @@
     tags:
     - VimPilot
     - DoorBumpOpener
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+    reactions:
+    - reagents: [ Water, SpaceCleaner ]
+      methods: [ Touch ]
+      effects:
+      - !type:WashCreamPieReaction
+
+
 
 - type: entity
   name: monkey
@@ -1291,6 +1331,7 @@
         Burn: 3
     clumsySound:
       path: /Audio/Animals/monkey_scream.ogg
+
 
 - type: entity
   name: monkey
@@ -1443,7 +1484,7 @@
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-kobold
   - type: GhostRole
-    prob: 0.1
+    prob: 0.05
     makeSentient: true
     name: ghost-role-information-kobold-name
     description: ghost-role-information-kobold-description
@@ -1501,7 +1542,7 @@
 - type: entity
   name: guidebook monkey
   parent: MobMonkey
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   id: MobGuidebookMonkey
   description: A hopefully helpful monkey whose only purpose in life is for you to click on. Does this count as having a monkey give you a tutorial?
   components:
@@ -1652,7 +1693,14 @@
     wilhelmProbability: 0.001
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
-    combatToggleAction: ActionCombatModeToggleOff
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 0
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: CanEscapeInventory
@@ -1664,6 +1712,21 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Mobs/Animals/mouse.rsi
+      state: dead-0
+    entries:
+      burger:
+        name: food-sequence-burger-content-rat
+      taco:
+        name: food-sequence-content-rat
+      skewer:
+        name: food-sequence-content-rat
+        sprite: 
+          sprite: Objects/Consumable/Food/skewer.rsi
+          state: skewer-rat
+
 
 - type: entity
   parent: MobMouse
@@ -1720,6 +1783,10 @@
   - type: Item
     size: Tiny
     heldPrefix: 1
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Mobs/Animals/mouse.rsi
+      state: dead-1
 
 - type: entity
   parent: MobMouse
@@ -1749,6 +1816,10 @@
   - type: Item
     size: Tiny
     heldPrefix: 2
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Mobs/Animals/mouse.rsi
+      state: dead-2
 
 - type: entity
   name: cancer mouse
@@ -2056,7 +2127,7 @@
 
 - type: entity
   name: grenade penguin
-  parent: [ MobPenguin, MobCombat ]
+  parent: [ MobPenguin, MobCombat, BaseSyndicateContraband ]
   id: MobGrenadePenguin
   description: A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
   components:
@@ -2152,11 +2223,13 @@
     states:
       Alive:
         Base: snake
+      Critical:
+        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
     spawned:
-    - id: FoodMeat
+    - id: FoodMeatSnake
       amount: 1
   - type: InteractionPopup
     successChance: 0.6
@@ -2371,7 +2444,7 @@
 
 - type: entity
   name: possum
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, StripableInventoryBase]
   id: MobPossum
   description: '"O Possum! My Possum!" -- Walt Whitman, 1865'
   components:
@@ -2396,12 +2469,6 @@
   - type: Inventory
     speciesId: possum
     templateId: pet
-  - type: InventorySlots
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2446,7 +2513,7 @@
 
 - type: entity
   name: raccoon
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, StripableInventoryBase]
   id: MobRaccoon
   description: Trash panda!
   components:
@@ -2471,12 +2538,6 @@
   - type: Inventory
     speciesId: possum #close enough
     templateId: pet
-  - type: InventorySlots
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2503,7 +2564,7 @@
 
 - type: entity
   name: fox
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, StripableInventoryBase]
   id: MobFox
   description: They're a fox.
   components:
@@ -2535,12 +2596,6 @@
   - type: Inventory
     speciesId: fox
     templateId: pet
-  - type: InventorySlots
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2585,7 +2640,7 @@
 
 - type: entity
   name: corgi
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, StripableInventoryBase]
   id: MobCorgi
   description: Finally, a space corgi!
   components:
@@ -2612,12 +2667,6 @@
   - type: Inventory
     speciesId: dog
     templateId: pet
-  - type: InventorySlots
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2721,7 +2770,6 @@
   - type: Inventory
     speciesId: puppy
     templateId: pet
-  - type: InventorySlots
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2736,7 +2784,7 @@
 
 - type: entity
   name: cat
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, StripableInventoryBase]
   id: MobCat
   description: Feline pet, very funny.
   components:
@@ -2761,12 +2809,6 @@
   - type: Inventory
     speciesId: cat
     templateId: pet
-  - type: InventorySlots
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2958,7 +3000,7 @@
 
 - type: entity
   name: sloth
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, StripableInventoryBase]
   id: MobSloth
   description: Very slow animal. For people with low energy.
   components:
@@ -2986,12 +3028,6 @@
   - type: Inventory
     speciesId: sloth
     templateId: pet
-  - type: InventorySlots
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -3018,7 +3054,7 @@
 
 - type: entity
   name: ferret
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, StripableInventoryBase]
   id: MobFerret
   description: Just a silly little guy!
   components:
@@ -3043,12 +3079,6 @@
   - type: Inventory
     speciesId: fox #close enough
     templateId: pet
-  - type: InventorySlots
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -3076,7 +3106,7 @@
 
 - type: entity
   name: hamster
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: [ SimpleMobBase, MobCombat, StripableInventoryBase]
   id: MobHamster
   description: A cute, fluffy, robust hamster.
   components:
@@ -3140,12 +3170,6 @@
   - type: Inventory
     speciesId: hamster
     templateId: hamster
-  - type: InventorySlots
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -3219,10 +3243,19 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Mobs/Animals/hamster.rsi
+      state: dead-0
+    entries:
+      burger:
+        name: food-sequence-burger-content-hamster
+      taco:
+        name: food-sequence-content-hamster
 
 - type: entity
   name: pig
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, StripableInventoryBase]
   id: MobPig
   description: Oink.
   components:
@@ -3258,12 +3291,6 @@
     offspring:
     - id: MobPig
   - type: ReproductivePartner
-  - type: InventorySlots
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -3294,7 +3321,7 @@
 
 - type: entity
   name: diona nymph
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, StripableInventoryBase]
   id: MobDionaNymph
   description: It's like a cat, only.... branch-ier.
   components:
@@ -3319,15 +3346,9 @@
   - type: Inventory
     speciesId: cat
     templateId: pet
-  - type: InventorySlots
-  - type: Strippable
   - type: Bloodstream
     bloodReagent: Sap
     bloodMaxVolume: 60
-  - type: UserInterface
-    interfaces:
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:

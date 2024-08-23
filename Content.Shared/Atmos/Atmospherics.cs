@@ -286,7 +286,8 @@ namespace Content.Shared.Atmos
         ///     (The pressure threshold is so low that it doesn't make sense to do any calculations,
         ///     so it just applies this flat value).
         /// </summary>
-        public const int LowPressureDamage = 4;
+        // Original value is 4, buff back when we have proper ways for players to deal with breaches.
+        public const int LowPressureDamage = 1;
 
         public const float WindowHeatTransferCoefficient = 0.1f;
 

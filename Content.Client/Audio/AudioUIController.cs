@@ -54,7 +54,7 @@ public sealed class AudioUIController : UIController
     {
         if (!string.IsNullOrEmpty(value))
         {
-            var resource = _cache.GetResource<AudioResource>(value);
+            var resource = GetSoundOrFallback(value, CCVars.UIClickSound.DefaultValue);
             var source =
                 _audioManager.CreateAudioSource(resource);
 
@@ -77,7 +77,7 @@ public sealed class AudioUIController : UIController
     {
         if (!string.IsNullOrEmpty(value))
         {
-            var hoverResource = _cache.GetResource<AudioResource>(value);
+            var hoverResource = GetSoundOrFallback(value, CCVars.UIHoverSound.DefaultValue);
             var hoverSource =
                 _audioManager.CreateAudioSource(hoverResource);
 
@@ -94,5 +94,13 @@ public sealed class AudioUIController : UIController
         {
             UIManager.SetHoverSound(null);
         }
+    }
+
+    private AudioResource GetSoundOrFallback(string path, string fallback)
+    {
+        if (!_cache.TryGetResource(path, out AudioResource? resource))
+            return _cache.GetResource<AudioResource>(fallback);
+
+        return resource;
     }
 }

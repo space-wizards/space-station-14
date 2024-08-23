@@ -1,0 +1,263 @@
+- type: localizedDataset
+  id: FigurinesHoP
+  values:
+    prefix: figurines-hop-
+    count: 2
+
+- type: localizedDataset
+  id: FigurinesPassenger
+  values:
+    prefix: figurines-passenger-
+    count: 2
+
+- type: localizedDataset
+  id: FigurinesGreytider
+  values:
+    prefix: figurines-greytider-
+    count: 5
+
+- type: localizedDataset
+  id: FigurinesClown
+  values:
+    prefix: figurines-clown-
+    count: 5
+
+- type: localizedDataset
+  id: FigurinesHoloClown
+  values:
+    prefix: figurines-holoclown-
+    count: 1
+
+- type: localizedDataset
+  id: FigurinesMime
+  values:
+    prefix: figurines-mime-
+    count: 5
+
+- type: localizedDataset
+  id: FigurinesMusician
+  values:
+    prefix: figurines-musician-
+    count: 2
+
+- type: localizedDataset
+  id: FigurinesBoxer
+  values:
+    prefix: figurines-boxer-
+    count: 1
+
+- type: localizedDataset
+  id: FigurinesCaptain
+  values:
+    prefix: figurines-captain-
+    count: 3
+
+- type: localizedDataset
+  id: FigurinesHoS
+  values:
+    prefix: figurines-hos-
+    count: 3
+
+- type: localizedDataset
+  id: FigurinesWarden
+  values:
+    prefix: figurines-warden-
+    count: 4
+
+- type: localizedDataset
+  id: FigurinesDetective
+  values:
+    prefix: figurines-detective-
+    count: 2
+
+- type: localizedDataset
+  id: FigurinesSecurity
+  values:
+    prefix: figurines-security-
+    count: 4
+
+- type: localizedDataset
+  id: FigurinesLawyer
+  values:
+    prefix: figurines-lawyer-
+    count: 2
+
+- type: localizedDataset
+  id: FigurinesCargoTech
+  values:
+    prefix: figurines-cargotech-
+    count: 3
+
+- type: localizedDataset
+  id: FigurinesSalvage
+  values:
+    prefix: figurines-salvage-
+    count: 1
+
+- type: localizedDataset
+  id: FigurinesQM
+  values:
+    prefix: figurines-qm-
+    count: 7
+
+- type: localizedDataset
+  id: FigurinesCE
+  values:
+    prefix: figurines-ce-
+    count: 5
+
+- type: localizedDataset
+  id: FigurinesEngineer
+  values:
+    prefix: figurines-engineer-
+    count: 3
+
+- type: localizedDataset
+  id: FigurinesAtmosTech
+  values:
+    prefix: figurines-atmostech-
+    count: 5
+
+- type: localizedDataset
+  id: FigurinesRD
+  values:
+    prefix: figurines-rd-
+    count: 2
+
+- type: localizedDataset
+  id: FigurinesScientist
+  values:
+    prefix: figurines-scientist-
+    count: 5
+
+- type: localizedDataset
+  id: FigurinesCMO
+  values:
+    prefix: figurines-cmo-
+    count: 2
+
+- type: localizedDataset
+  id: FigurinesChemist
+  values:
+    prefix: figurines-chemist-
+    count: 1
+
+- type: localizedDataset
+  id: FigurinesParamedic
+  values:
+    prefix: figurines-paramedic-
+    count: 2
+
+- type: localizedDataset
+  id: FigurinesDoctor
+  values:
+    prefix: figurines-doctor-
+    count: 3
+
+- type: localizedDataset
+  id: FigurinesLibrarian
+  values:
+    prefix: figurines-librarian-
+    count: 2
+
+- type: localizedDataset
+  id: FigurinesChaplain
+  values:
+    prefix: figurines-chaplain-
+    count: 3
+
+- type: localizedDataset
+  id: FigurinesChef
+  values:
+    prefix: figurines-chef-
+    count: 1
+
+- type: localizedDataset
+  id: FigurinesBartender
+  values:
+    prefix: figurines-bartender-
+    count: 2
+
+- type: localizedDataset
+  id: FigurinesBotanist
+  values:
+    prefix: figurines-botanist-
+    count: 2
+
+- type: localizedDataset
+  id: FigurinesJanitor
+  values:
+    prefix: figurines-janitor-
+    count: 2
+
+- type: localizedDataset
+  id: FigurinesNukie
+  values:
+    prefix: figurines-nukie-
+    count: 4
+
+- type: localizedDataset
+  id: FigurinesNukieElite
+  values:
+    prefix: figurines-nukie-elite-
+    count: 3
+
+- type: localizedDataset
+  id: FigurinesNukieCommander
+  values:
+    prefix: figurines-nukie-commander-
+    count: 1
+
+- type: localizedDataset
+  id: FigurinesFootsoldier
+  values:
+    prefix: figurines-footsoldier-
+    count: 2
+
+- type: localizedDataset
+  id: FigurinesWizard
+  values:
+    prefix: figurines-wizard-
+    count: 1
+
+- type: localizedDataset
+  id: FigurinesSpaceDragon
+  values:
+    prefix: figurines-space-dragon-
+    count: 1
+
+# - type: localizedDataset # TODO add something
+#   id: FigurinesQueen
+#   values:
+#     prefix: figurines-queen-
+#     count: 0
+
+- type: localizedDataset
+  id: FigurinesRatKing
+  values:
+    prefix: figurines-rat-king-
+    count: 3
+
+- type: localizedDataset
+  id: FigurinesRatServant
+  values:
+    prefix: figurines-rat-servant-
+    count: 2
+
+- type: localizedDataset
+  id: FigurinesMouse
+  values:
+    prefix: figurines-mouse-
+    count: 7
+
+- type: localizedDataset
+  id: FigurinesSlime
+  values:
+    prefix: figurines-slime-
+    count: 3
+
+- type: localizedDataset
+  id: FigurinesHamlet
+  values:
+    prefix: figurines-hamlet-
+    count: 8

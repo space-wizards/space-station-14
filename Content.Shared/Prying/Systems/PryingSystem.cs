@@ -109,7 +109,7 @@ public sealed class PryingSystem : EntitySystem
 
         if (comp != null || Resolve(user, ref comp, false))
         {
-            canev = new BeforePryEvent(user, comp.PryPowered, comp.Force);
+            canev = new BeforePryEvent(user, comp.PryPowered, comp.Force, true);
         }
         else
         {
@@ -119,7 +119,7 @@ public sealed class PryingSystem : EntitySystem
                 return false;
             }
 
-            canev = new BeforePryEvent(user, false, false);
+            canev = new BeforePryEvent(user, false, false, false);
         }
 
         RaiseLocalEvent(target, ref canev);

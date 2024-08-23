@@ -33,10 +33,10 @@
   copyright: "Made by dj-34 (https://github.com/dj-34)"
   source: "https://github.com/ss220-space/Paradise/blob/05043bcfb35c2e7bcf1efbdbfbf976e1a2504bc2/sound/effects/epsilon.ogg"
 
-- files: ["siren.ogg"]
-  license: "CC-BY-SA-3.0"
-  copyright: "Taken from Parsdise SS13"
-  source: "https://github.com/ParadiseSS13/Paradise/blob/master/sound/effects/new_siren.ogg"
+- files: ["gamma.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Bhijin & Myr for Space Station 14"
+  source: "https://github.com/space-wizards/space-station-14"
 
 - files: ["redalert.ogg"]
   license: "CC-BY-SA-3.0"

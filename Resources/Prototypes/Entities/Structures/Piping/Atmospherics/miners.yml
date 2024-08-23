@@ -30,7 +30,7 @@
     - type: AtmosDevice
     - type: GasMiner
       maxExternalPressure: 300
-      spawnAmount: 200
+      spawnAmount: 400
 
 - type: entity
   name: O2 gas miner
@@ -66,8 +66,6 @@
   parent: GasMinerBase
   id: GasMinerNitrogen
   suffix: Shuttle, 300kPa
-  placement:
-    mode: SnapgridCenter
   components:
     - type: GasMiner
       spawnGas: Nitrogen
@@ -94,8 +92,6 @@
   name: CO2 gas miner
   parent: GasMinerBase
   id: GasMinerCarbonDioxide
-  placement:
-    mode: SnapgridCenter
   components:
     - type: GasMiner
       spawnGas: CarbonDioxide
@@ -104,8 +100,6 @@
   name: plasma gas miner
   parent: GasMinerBase
   id: GasMinerPlasma
-  placement:
-    mode: SnapgridCenter
   components:
     - type: GasMiner
       spawnGas: Plasma
@@ -114,8 +108,6 @@
   name: tritium gas miner
   parent: GasMinerBase
   id: GasMinerTritium
-  placement:
-    mode: SnapgridCenter
   components:
     - type: GasMiner
       spawnGas: Tritium
@@ -124,8 +116,6 @@
   name: water vapor gas miner
   parent: GasMinerBase
   id: GasMinerWaterVapor
-  placement:
-    mode: SnapgridCenter
   components:
     - type: GasMiner
       spawnGas: WaterVapor
@@ -134,8 +124,6 @@
   name: ammonia gas miner
   parent: GasMinerBase
   id: GasMinerAmmonia
-  placement:
-    mode: SnapgridCenter
   components:
     - type: GasMiner
       spawnGas: Ammonia
@@ -144,8 +132,6 @@
   name: nitrous oxide gas miner
   parent: GasMinerBase
   id: GasMinerNitrousOxide
-  placement:
-    mode: SnapgridCenter
   components:
     - type: GasMiner
       spawnGas: NitrousOxide

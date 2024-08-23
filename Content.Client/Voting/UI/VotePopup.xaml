@@ -1,8 +1,8 @@
-﻿<Control xmlns="https://spacestation14.io" MinWidth="300">
+﻿<Control xmlns="https://spacestation14.io" MinWidth="300" MaxWidth="500">
     <PanelContainer StyleClasses="AngleRect" />
     <BoxContainer Margin="4" Orientation="Vertical">
         <Label Name="VoteCaller" />
-        <Label Name="VoteTitle" />
+        <RichTextLabel Name="VoteTitle" />
 
         <GridContainer Columns="3" Name="VoteOptionsContainer" />
         <BoxContainer Orientation="Horizontal">

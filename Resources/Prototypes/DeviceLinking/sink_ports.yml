@@ -94,6 +94,16 @@
   description: signal-port-description-logic-input
 
 - type: sinkPort
+  id: MemoryInput
+  name: signal-port-name-logic-input
+  description: signal-port-description-logic-memory-input
+
+- type: sinkPort
+  id: MemoryEnable
+  name: signal-port-name-logic-enable
+  description: signal-port-description-logic-enable
+
+- type: sinkPort
   id: SetParticleDelta
   name: signal-port-name-set-particle-delta
   description: signal-port-description-set-particle-delta
