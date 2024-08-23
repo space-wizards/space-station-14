@@ -30,6 +30,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
 
     private GuidebookWindow? _guideWindow;
     private MenuButton? GuidebookButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.GuidebookButton;
+    private ProtoId<GuideEntryPrototype> _lastEntry;
 
     public void OnStateEntered(LobbyState state)
     {
@@ -142,7 +143,10 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
             GuidebookButton.Pressed = false;
 
         if (_guideWindow != null)
+        {
             _guideWindow.ReturnContainer.Visible = false;
+            _lastEntry = _guideWindow._lastEntry;
+        }
     }
 
     private void OnWindowOpen()
@@ -191,6 +195,10 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
             {
                 RecursivelyAddChildren(guide, guides);
             }
+        }
+        if (guides.ContainsKey(_lastEntry))
+        {
+            selected = _lastEntry;
         }
 
         _guideWindow.UpdateGuides(guides, rootEntries, forceRoot, selected);
