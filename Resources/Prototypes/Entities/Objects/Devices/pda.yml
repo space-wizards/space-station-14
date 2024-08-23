@@ -115,6 +115,18 @@
     speechVerb: Robotic
 
 - type: entity
+  id: BaseSecurityPDA
+  abstract: true
+  components:
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
+
+- type: entity
   parent: BasePDA
   id: BaseMedicalPDA
   abstract: true
@@ -186,13 +198,6 @@
     accentVColor: "#A32D26"
   - type: Icon
     state: pda-interncadet
-  - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
-    preinstalled:
-    - CrewManifestCartridge
-    - NotekeeperCartridge
-    - NewsReaderCartridge
-    - WantedListCartridge
 
 - type: entity
   parent: BasePDA
@@ -413,7 +418,7 @@
     state: pda-library
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseSecurityPDA]
   id: LawyerPDA
   name: lawyer PDA
   description: For lawyers to poach dubious clients.
@@ -431,13 +436,6 @@
     borderColor: "#6f6192"
   - type: Icon
     state: pda-lawyer
-  - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
-    preinstalled:
-    - CrewManifestCartridge
-    - NotekeeperCartridge
-    - NewsReaderCartridge
-    - WantedListCartridge
 
 - type: entity
   parent: BasePDA
@@ -454,7 +452,7 @@
     state: pda-janitor
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseSecurityPDA]
   id: CaptainPDA
   name: captain PDA
   description: Surprisingly no different from your PDA.
@@ -472,13 +470,6 @@
     borderColor: "#7C5D00"
   - type: Icon
     state: pda-captain
-  - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
-    preinstalled:
-    - CrewManifestCartridge
-    - NotekeeperCartridge
-    - NewsReaderCartridge
-    - WantedListCartridge
 
 - type: entity
   parent: BasePDA
@@ -627,7 +618,7 @@
     state: pda-science
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseSecurityPDA]
   id: HoSPDA
   name: head of security PDA
   description: Whosoever bears this PDA is the law.
@@ -640,16 +631,9 @@
     accentHColor: "#447987"
   - type: Icon
     state: pda-hos
-  - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
-    preinstalled:
-    - CrewManifestCartridge
-    - NotekeeperCartridge
-    - NewsReaderCartridge
-    - WantedListCartridge
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseSecurityPDA]
   id: WardenPDA
   name: warden PDA
   description: The OS appears to have been jailbroken.
@@ -662,16 +646,9 @@
     accentVColor: "#949137"
   - type: Icon
     state: pda-warden
-  - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
-    preinstalled:
-    - CrewManifestCartridge
-    - NotekeeperCartridge
-    - NewsReaderCartridge
-    - WantedListCartridge
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseSecurityPDA]
   id: SecurityPDA
   name: security PDA
   description: Red to hide the stains of passenger blood.
@@ -683,16 +660,9 @@
     borderColor: "#A32D26"
   - type: Icon
     state: pda-security
-  - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
-    preinstalled:
-    - CrewManifestCartridge
-    - NotekeeperCartridge
-    - NewsReaderCartridge
-    - WantedListCartridge
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseSecurityPDA]
   id: CentcomPDA
   name: CentComm PDA
   description: Light green sign of walking bureaucracy.
@@ -709,13 +679,6 @@
     borderColor: "#00842e"
   - type: Icon
     state: pda-centcom
-  - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
-    preinstalled:
-    - CrewManifestCartridge
-    - NotekeeperCartridge
-    - NewsReaderCartridge
-    - WantedListCartridge
 
 - type: entity
   parent: CentcomPDA
@@ -830,7 +793,7 @@
           - Cartridge
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseSecurityPDA]
   id: ERTLeaderPDA
   name: ERT Leader PDA
   suffix: Leader
@@ -845,13 +808,6 @@
     accentVColor: "#447987"
   - type: Icon
     state: pda-ert
-  - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
-    preinstalled:
-    - CrewManifestCartridge
-    - NotekeeperCartridge
-    - NewsReaderCartridge
-    - WantedListCartridge
 
 - type: entity
   parent: ERTLeaderPDA
@@ -985,7 +941,7 @@
     state: pda-boxer
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseSecurityPDA]
   id: DetectivePDA
   name: detective PDA
   description: Smells like rain... pouring down the rooftops...
@@ -997,13 +953,6 @@
     borderColor: "#774705"
   - type: Icon
     state: pda-detective
-  - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
-    preinstalled:
-    - CrewManifestCartridge
-    - NotekeeperCartridge
-    - NewsReaderCartridge
-    - WantedListCartridge
 
 - type: entity
   parent: BaseMedicalPDA
@@ -1092,7 +1041,7 @@
     state: pda-seniorphysician
 
 - type: entity
-  parent: BasePDA
+  parent: [BasePDA, BaseSecurityPDA]
   id: SeniorOfficerPDA
   name: senior officer PDA
   description: Beaten, battered and broken, but just barely useable.
@@ -1105,13 +1054,6 @@
     accentVColor: "#DFDFDF"
   - type: Icon
     state: pda-seniorofficer
-  - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
-    preinstalled:
-    - CrewManifestCartridge
-    - NotekeeperCartridge
-    - NewsReaderCartridge
-    - WantedListCartridge
 
 - type: entity
   parent: SyndiPDA
