@@ -8,10 +8,10 @@
   },
     "states": [
         {
-            "name": "goldautism"
+            "name": "neurodiversity"
         },
         {
-            "name": "goldautism-equipped",
+            "name": "neurodiversity-equipped",
             "directions": 4
         }
     ]
