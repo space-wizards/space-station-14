@@ -202,8 +202,8 @@
       - ClothingHeadHatCone
       - GoldRing
       - SilverRing
-      - GoldRingDimond
-      - SilverRingDimond
+      - GoldRingDiamond
+      - SilverRingDiamond
 
   - type: EmagLatheRecipes
     emagStaticRecipes:
