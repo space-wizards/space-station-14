@@ -18,6 +18,7 @@
     - Human
     - Moth
     - Reptilian
+    - Gray
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox
