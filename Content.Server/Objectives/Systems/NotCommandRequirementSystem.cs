@@ -21,7 +21,7 @@ public sealed class NotCommandRequirementSystem : EntitySystem
             return;
 
         // cheap equivalent to checking that job department is command, since all command members require admin notification when leaving
-        if (_job.MindTryGetJob(args.MindId, out _, out var prototype) && prototype.RequireAdminNotify)
+        if (_job.MindTryGetJob(args.MindId, out var prototype) && prototype.RequireAdminNotify)
             args.Cancelled = true;
     }
 }

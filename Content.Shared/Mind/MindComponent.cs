@@ -87,16 +87,20 @@ public sealed partial class MindComponent : Component
     /// <summary>
     ///     Prevents user from ghosting out
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("preventGhosting")]
+    [DataField]
     public bool PreventGhosting { get; set; }
 
     /// <summary>
     ///     Prevents user from suiciding
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("preventSuicide")]
+    [DataField]
     public bool PreventSuicide { get; set; }
+
+    /// <summary>
+    ///     Mind Role Entities belonging to this Mind
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public List<EntityUid> MindRoles = new List<EntityUid>();
 
     /// <summary>
     ///     The mind's current antagonist/special role, or lack thereof;
@@ -113,6 +117,7 @@ public sealed partial class MindComponent : Component
     public ICommonSession? Session { get; set; }
 }
 
+//TODO:ERRANT move this to its own file?
 /// <summary>
 ///     The core properties of Role Types, not intended to be alterable or uploadable under any conditions
 /// </summary>
@@ -146,7 +151,7 @@ public sealed partial class RoleTypePrototype : IPrototype
 /// </summary>
 public enum RoleEnum
 {
-    SubvertedSilicon,
+    SubvertedSilicon, //TODO:ERRANT should this stay or not?
     Silicon,
     TeamAntagonist,
     SoloAntagonist,

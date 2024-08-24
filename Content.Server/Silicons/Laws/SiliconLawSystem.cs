@@ -10,7 +10,6 @@ using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
-using Content.Shared.Examine;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
@@ -22,22 +21,21 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Silicons.Laws;
 
 /// <inheritdoc/>
 public sealed class SiliconLawSystem : SharedSiliconLawSystem
 {
-    [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
-    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -190,11 +188,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (component.AntagonistRole == null || !_mind.TryGetMind(uid, out var mindId, out _))
             return;
 
-        if (_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
-            return;
-
-        //TODO:ERRANT review
-        _roles.MindAddRole(mindId, new SubvertedSiliconRoleComponent { PrototypeId = component.AntagonistRole, RoleType = "SubvertedSilicon"});
+        if (!_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
+            _roles.MindAddRole(mindId, "MindRoleSubvertedSilicon");
     }
 
     public SiliconLawset GetLaws(EntityUid uid, SiliconLawBoundComponent? component = null)

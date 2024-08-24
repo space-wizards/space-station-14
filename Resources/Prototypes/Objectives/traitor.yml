@@ -7,7 +7,7 @@
     issuer: objective-issuer-syndicate
   - type: RoleRequirement
     roles:
-      components:
+      mindRoles:
       - TraitorRole
 
 - type: entity

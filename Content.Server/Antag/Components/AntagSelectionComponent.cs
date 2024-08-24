@@ -145,9 +145,16 @@ public partial struct AntagSelectionDefinition()
 
     /// <summary>
     /// Components added to the player's mind.
+    /// Do NOT use this to add role-type components. Add those as MindRoles instead
     /// </summary>
     [DataField]
     public ComponentRegistry MindComponents = new();
+
+    /// <summary>
+    /// List of Mind Role Prototypes to be added to the player's mind.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<EntityPrototype>>? MindRoles;
 
     /// <summary>
     /// A set of starting gear that's equipped to the player.

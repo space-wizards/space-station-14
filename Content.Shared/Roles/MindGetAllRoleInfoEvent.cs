@@ -8,10 +8,7 @@ namespace Content.Shared.Roles;
 /// </summary>
 /// <param name="Roles">The list of roles on the player.</param>
 [ByRefEvent]
-public readonly record struct MindGetAllRolesEvent(List<RoleInfo> Roles);
-
-[ByRefEvent] //TODO:ERRANT This should probably be merged with MindGetAllRolesEvent
-public readonly record struct GetAllRoleTypesEvent(List<RoleTypePrototype> RoleTypes);
+public readonly record struct MindGetAllRoleInfoEvent(List<RoleInfo> Roles);
 
 /// <summary>
 ///     Returned by <see cref="MindGetAllRolesEvent"/> to give some information about a player's role.
@@ -21,4 +18,4 @@ public readonly record struct GetAllRoleTypesEvent(List<RoleTypePrototype> RoleT
 /// <param name="Antagonist">Whether or not this role makes this player an antagonist.</param>
 /// <param name="PlayTimeTrackerId">The <see cref="PlayTimeTrackerPrototype"/> id associated with the role.</param>
 /// <param name="Prototype">The prototype ID of the role</param>
-public readonly record struct RoleInfo(Component Component, string Name, bool Antagonist, string? PlayTimeTrackerId, string Prototype);
+public readonly record struct RoleInfo(string Name, bool Antagonist, string? PlayTimeTrackerId, string Prototype);

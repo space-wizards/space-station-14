@@ -3,11 +3,11 @@
 namespace Content.Server.Ghost.Roles;
 
 /// <summary>
-/// This is used for round end display of ghost roles.
-/// It also inherits RoleType, which can be used to set an initial RoleType protoID for the ghostrole
+/// Added to mind role entities to tag that they are a ghostrole.
+/// It also holds the name for the round end display
 /// </summary>
 [RegisterComponent]
-public sealed partial class GhostRoleMarkerRoleComponent : BaseRoleComponent
+public sealed partial class GhostRoleMarkerRoleComponent : BaseMindRoleComponent
 {
     [DataField] public string? Name;
 

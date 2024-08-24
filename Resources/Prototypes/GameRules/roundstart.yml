@@ -102,7 +102,6 @@
     - prefRoles: [ NukeopsCommander ]
       fallbackRoles: [ Nukeops, NukeopsMedic ]
       spawnerPrototype: SpawnPointNukeopsCommander
-      roleType: TeamAntagonist # Remove
       startingGear: SyndicateCommanderGearFull
       roleLoadout:
       - RoleSurvivalSyndicate
@@ -115,15 +114,12 @@
       - type: NpcFactionMember
         factions:
         - Syndicate
-      mindComponents:
-      - type: NukeopsRole
-        prototype: NukeopsCommander
-        roleType: TeamAntagonist
+      mindRoles:
+      - MindRoleNukeopsCommander
     - prefRoles: [ NukeopsMedic ]
       fallbackRoles: [ Nukeops, NukeopsCommander ]
       spawnerPrototype: SpawnPointNukeopsMedic
       startingGear: SyndicateOperativeMedicFull
-      roleType: TeamAntagonist # Remove
       roleLoadout:
       - RoleSurvivalSyndicate
       components:
@@ -135,17 +131,14 @@
       - type: NpcFactionMember
         factions:
         - Syndicate
-      mindComponents:
-      - type: NukeopsRole
-        prototype: NukeopsMedic
-        roleType: TeamAntagonist
+      mindRoles:
+      - MindRoleNukeopsMedic
     - prefRoles: [ Nukeops ]
       fallbackRoles: [ NukeopsCommander, NukeopsMedic ]
       spawnerPrototype: SpawnPointNukeopsOperative
       max: 3
       playerRatio: 10
       startingGear: SyndicateOperativeGearFull
-      roleType: TeamAntagonist # Remove
       roleLoadout:
       - RoleSurvivalSyndicate
       components:
@@ -157,10 +150,8 @@
       - type: NpcFactionMember
         factions:
         - Syndicate
-      mindComponents:
-      - type: NukeopsRole
-        prototype: Nukeops
-        roleType: TeamAntagonist
+      mindRoles:
+      - MindRoleNukeops
 
 - type: entity
   abstract: true
@@ -191,15 +182,12 @@
     - prefRoles: [ Traitor ]
       max: 8
       playerRatio: 10
-      roleType: SoloAntagonist # Remove
       blacklist:
         components:
         - AntagImmune
       lateJoinAdditional: true
-      mindComponents:
-      - type: TraitorRole
-        prototype: Traitor
-        roleType: SoloAntagonist
+      mindRoles:
+      - MindRoleTraitor
 
 - type: entity
   id: Revolutionary
@@ -213,7 +201,6 @@
     - prefRoles: [ HeadRev ]
       max: 3
       playerRatio: 15
-      roleType: TeamAntagonist # Remove
       briefing:
         text: head-rev-role-greeting
         color: CornflowerBlue
@@ -222,10 +209,8 @@
       components:
       - type: Revolutionary
       - type: HeadRevolutionary
-      mindComponents:
-      - type: RevolutionaryRole
-        prototype: HeadRev
-        roleType: TeamAntagonist
+      mindRoles:
+      - MindRoleHeadRevolutionary
 
 - type: entity
   id: Sandbox
@@ -254,7 +239,6 @@
     - prefRoles: [ InitialInfected ]
       max: 6
       playerRatio: 10
-      roleType: TeamAntagonist # Remove
       blacklist:
         components:
         - ZombieImmune
@@ -268,10 +252,8 @@
       - type: ZombifyOnDeath
       - type: IncurableZombie
       - type: InitialInfected
-      mindComponents:
-      - type: InitialInfectedRole
-        prototype: InitialInfected
-        roleType: TeamAntagonist
+      mindRoles:
+      - MindRoleInitialInfected
 
 # event schedulers
 
@@ -326,8 +308,8 @@
       tableId: SpaceTrafficControlTable
 
 - type: entity
-  id: SpaceTrafficControlFriendlyEventScheduler 
-  parent: BaseGameRule                  
+  id: SpaceTrafficControlFriendlyEventScheduler
+  parent: BaseGameRule
   components:
   - type: BasicStationEventScheduler
     minimumTimeUntilFirstEvent: 1200 # 20 mins
