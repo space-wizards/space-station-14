@@ -3,6 +3,12 @@
   name: job-name-warden
   description: job-description-warden
   playTimeTracker: JobWarden
+  requirements:
+  - !type:TraitsRequirement # No Pacifist or Blind Sec
+    inverted: true
+    traits:
+    - Pacifist
+    - Blindness
   startingGear: WardenGear
   icon: "JobIconWarden"
   requireAdminNotify: true
