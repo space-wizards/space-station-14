@@ -52,7 +52,7 @@ public sealed class EscapeInventorySystem : EntitySystem
         // Make sure there's nothing stopped the removal (like being glued)
         if (!_containerSystem.CanRemove(uid, container))
         {
-            _popupSystem.PopupPredicted(Loc.GetString("escape-inventory-component-failed-resisting"), uid, uid);
+            _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-failed-resisting"), uid, uid);
             return;
         }
 
