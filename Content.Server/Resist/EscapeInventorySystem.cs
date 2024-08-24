@@ -40,9 +40,7 @@ public sealed class EscapeInventorySystem : EntitySystem
         ref GettingPickedUpAttemptEvent args)
     {
         if (_timing.CurTime < component.PenaltyTimer)
-        {
             args.Cancel();
-        }
     }
     private void OnRelayMovement(EntityUid uid, CanEscapeInventoryComponent component, ref MoveInputEvent args)
     {
