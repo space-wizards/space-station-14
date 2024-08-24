@@ -620,7 +620,7 @@
 
 - type: loadoutGroup
   id: SalvageSpecialistNeck
-  name: Mantle
+  name: loadout-group-salvage-specialist-neck
   loadouts:
   - MinerCloak
 
