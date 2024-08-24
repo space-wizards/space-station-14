@@ -23,8 +23,8 @@ public sealed class ToggleCellDrawSystem : EntitySystem
 
     private void OnActivateAttempt(Entity<ToggleCellDrawComponent> ent, ref ItemToggleActivateAttemptEvent args)
     {
-        if (!_cell.HasDrawCharge(ent, ent.Comp, user: args.User)
-            || !_cell.HasActivatableCharge(ent, ent.Comp, user: args.User))
+        if (!_cell.HasDrawCharge(ent, user: args.User)
+            || !_cell.HasActivatableCharge(ent user: args.User))
             args.Cancelled = true;
     }
 
