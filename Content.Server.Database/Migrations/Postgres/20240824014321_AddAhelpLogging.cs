@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Content.Server.Database.Migrations.Postgres
 {
     /// <inheritdoc />
-    public partial class AddAhelpExchangeTable : Migration
+    public partial class AddAhelpLogging : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,8 @@ namespace Content.Server.Database.Migrations.Postgres
                     ahelp_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ahelp_round = table.Column<int>(type: "integer", nullable: false),
-                    ahelp_target = table.Column<Guid>(type: "uuid", nullable: false)
+                    ahelp_target = table.Column<Guid>(type: "uuid", nullable: false),
+                    server_name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -64,30 +65,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "ahelp_participants",
-                columns: table => new
-                {
-                    ahelp_id = table.Column<int>(type: "integer", nullable: false),
-                    player_id = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ahelp_participants", x => new { x.ahelp_id, x.player_id });
-                    table.ForeignKey(
-                        name: "FK_ahelp_participants_ahelp_exchanges_ahelp_id",
-                        column: x => x.ahelp_id,
-                        principalTable: "ahelp_exchanges",
-                        principalColumn: "ahelp_id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ahelp_participants_player_player_id",
-                        column: x => x.player_id,
-                        principalTable: "player",
-                        principalColumn: "player_id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_ahelp_exchanges_ahelp_round",
                 table: "ahelp_exchanges",
@@ -107,11 +84,6 @@ namespace Content.Server.Database.Migrations.Postgres
                 name: "IX_ahelp_messages_sent_at",
                 table: "ahelp_messages",
                 column: "sent_at");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ahelp_participants_player_id",
-                table: "ahelp_participants",
-                column: "player_id");
         }
 
         /// <inheritdoc />
@@ -119,9 +91,6 @@ namespace Content.Server.Database.Migrations.Postgres
         {
             migrationBuilder.DropTable(
                 name: "ahelp_messages");
-
-            migrationBuilder.DropTable(
-                name: "ahelp_participants");
 
             migrationBuilder.DropTable(
                 name: "ahelp_exchanges");

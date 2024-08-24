@@ -438,6 +438,90 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("admin_watchlists", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.AhelpExchange", b =>
+                {
+                    b.Property<int>("AhelpId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ahelp_id");
+
+                    b.Property<int>("AhelpRound")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ahelp_round");
+
+                    b.Property<Guid>("AhelpTarget")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ahelp_target");
+
+                    b.Property<string>("ServerName")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("server_name");
+
+                    b.HasKey("AhelpId")
+                        .HasName("PK_ahelp_exchanges");
+
+                    b.HasIndex("AhelpRound");
+
+                    b.HasIndex("AhelpTarget");
+
+                    b.ToTable("ahelp_exchanges", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AhelpMessage", b =>
+                {
+                    b.Property<int>("AhelpId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ahelp_id");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ahelp_messages_id");
+
+                    b.Property<bool>("IsAdminned")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("is_adminned");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("message");
+
+                    b.Property<string>("RoundStatus")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("round_status");
+
+                    b.Property<Guid>("Sender")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("sender");
+
+                    b.Property<int>("SenderEntity")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("sender_entity");
+
+                    b.Property<DateTime>("SentAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("sent_at");
+
+                    b.Property<bool>("TargetOnline")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("target_online");
+
+                    b.Property<DateTime>("TimeSent")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("time_sent");
+
+                    b.HasKey("AhelpId", "Id")
+                        .HasName("PK_ahelp_messages");
+
+                    b.HasIndex("Sender")
+                        .HasDatabaseName("IX_ahelp_messages_sender");
+
+                    b.HasIndex("SentAt");
+
+                    b.ToTable("ahelp_messages", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.Antag", b =>
                 {
                     b.Property<int>("Id")
@@ -1568,6 +1652,39 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Round");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.AhelpExchange", b =>
+                {
+                    b.HasOne("Content.Server.Database.Player", null)
+                        .WithMany()
+                        .HasForeignKey("AhelpTarget")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_ahelp_exchanges_player_player_id");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AhelpMessage", b =>
+                {
+                    b.HasOne("Content.Server.Database.AhelpExchange", "AhelpExchange")
+                        .WithMany("AhelpMessages")
+                        .HasForeignKey("AhelpId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_ahelp_messages_ahelp_exchanges_ahelp_id");
+
+                    b.HasOne("Content.Server.Database.Player", "Player")
+                        .WithMany()
+                        .HasForeignKey("Sender")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_ahelp_messages_player_sender");
+
+                    b.Navigation("AhelpExchange");
+
+                    b.Navigation("Player");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Antag", b =>
                 {
                     b.HasOne("Content.Server.Database.Profile", "Profile")
@@ -1937,6 +2054,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Admins");
 
                     b.Navigation("Flags");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AhelpExchange", b =>
+                {
+                    b.Navigation("AhelpMessages");
                 });
 
             modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
