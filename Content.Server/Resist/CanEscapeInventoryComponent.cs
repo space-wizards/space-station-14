@@ -23,7 +23,8 @@ public sealed partial class CanEscapeInventoryComponent : Component
     /// No one can pick you up before current time reaches this value.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan PenaltyTimer = TimeSpan.MaxValue;
+    [AutoPausedField]
+    public TimeSpan PenaltyTimer = TimeSpan.Zero;
 
     public bool IsEscaping => DoAfter != null;
 
