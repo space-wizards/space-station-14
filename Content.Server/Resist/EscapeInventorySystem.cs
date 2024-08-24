@@ -9,6 +9,7 @@ using Content.Shared.Item;
 using Content.Shared.Movement.Events;
 using Content.Shared.Resist;
 using Content.Shared.Storage;
+using Robust.Shared.Timing;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Resist;
@@ -20,11 +21,9 @@ public sealed class EscapeInventorySystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
-    /// <summary>
-    ///     Initial amount of time when you cannot be picked up when dropped while escaping
-    /// </summary>
-    private const float BasePenaltyTime = 1.0f;
+
 
     public override void Initialize()
     {
@@ -41,14 +40,11 @@ public sealed class EscapeInventorySystem : EntitySystem
         var query = EntityQueryEnumerator<CanEscapeInventoryComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.PenaltyTimer <= 0)
+            if ( _timing.CurTime < comp.PenaltyTimer)
                 continue;
-            comp.PenaltyTimer -= frameTime;
-            if (comp.PenaltyTimer <= 0)
-            {
-                // make the item able to be picked up again
-                AddComp<ItemComponent>(uid);
-            }
+            comp.PenaltyTimer = TimeSpan.MaxValue;
+            EnsureComp<ItemComponent>(uid);
+
         }
     }
 
@@ -107,15 +103,16 @@ public sealed class EscapeInventorySystem : EntitySystem
 
         _containerSystem.AttachParentToContainerOrGrid((uid, Transform(uid)));
         args.Handled = true;
+        component.PenaltyTimer = _timing.CurTime + TimeSpan.FromSeconds(component.BasePenaltyTime);
+        RemComp<ItemComponent>(uid);
     }
 
     private void OnDropped(EntityUid uid, CanEscapeInventoryComponent component, DroppedEvent args)
     {
         if (component.DoAfter == null)
             return;
-        // so we are being dropped while we are escaping.
         _doAfterSystem.Cancel(component.DoAfter);
-        component.PenaltyTimer = BasePenaltyTime;
+        component.PenaltyTimer = _timing.CurTime + TimeSpan.FromSeconds(component.BasePenaltyTime);
         RemComp<ItemComponent>(uid);
     }
 }
