@@ -16,9 +16,15 @@ public sealed class ToggleCellDrawSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ToggleCellDrawComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ToggleCellDrawComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
         SubscribeLocalEvent<ToggleCellDrawComponent, ItemToggledEvent>(OnToggled);
         SubscribeLocalEvent<ToggleCellDrawComponent, PowerCellSlotEmptyEvent>(OnEmpty);
+    }
+
+    private void OnMapInit(Entity<ToggleCellDrawComponent> ent, ref MapInitEvent args)
+    {
+        _cell.SetDrawEnabled(uid, _toggle.IsActivated(ent.Owner));
     }
 
     private void OnActivateAttempt(Entity<ToggleCellDrawComponent> ent, ref ItemToggleActivateAttemptEvent args)
