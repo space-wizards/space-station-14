@@ -1,6 +1,6 @@
 #Terragov outfit starting gear definitons.
 
-Heccdiver
+## Heccdiver
 - type: startingGear
   id: HeccdiverGear
   equipment:
