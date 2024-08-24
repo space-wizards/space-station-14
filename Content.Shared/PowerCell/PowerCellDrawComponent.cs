@@ -8,7 +8,7 @@ namespace Content.Shared.PowerCell;
 /// </summary>
 /// <remarks>
 /// With ActivatableUI it will activate and deactivate when the ui is opened and closed, drawing power inbetween.
-/// Requires <see cref="ItemToggleComponent"/> to work.
+/// If it has <see cref="ItemToggleComponent"/> it must also be toggled to work.
 /// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class PowerCellDrawComponent : Component

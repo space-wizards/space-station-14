@@ -14,11 +14,11 @@ public sealed partial class PowerCellSystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        var query = EntityQueryEnumerator<PowerCellDrawComponent, PowerCellSlotComponent, ItemToggleComponent>();
+        var query = EntityQueryEnumerator<PowerCellDrawComponent, PowerCellSlotComponent>();
 
-        while (query.MoveNext(out var uid, out var comp, out var slot, out var toggle))
+        while (query.MoveNext(out var uid, out var comp, out var slot))
         {
-            if (!comp.Enabled || !toggle.Activated)
+            if (!comp.Enabled || !Toggle.IsActivated(uid))
                 continue;
 
             if (Timing.CurTime < comp.NextUpdateTime)
@@ -32,7 +32,7 @@ public sealed partial class PowerCellSystem
             if (_battery.TryUseCharge(batteryEnt.Value, comp.DrawRate, battery))
                 continue;
 
-            Toggle.TryDeactivate((uid, toggle));
+            Toggle.TryDeactivate(uid, predicted: false);
 
             var ev = new PowerCellSlotEmptyEvent();
             RaiseLocalEvent(uid, ref ev);
