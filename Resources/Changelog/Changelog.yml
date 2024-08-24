@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AJCM-git
-  changes:
-  - message: Guidebook no longer lists every single rule
-    type: Fix
-  id: 6695
-  time: '2024-06-07T11:28:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28680
 - author: Plykiya
   changes:
   - message: You can now place construction ghosts without getting blocked by things
@@ -3864,3 +3857,10 @@
   id: 7194
   time: '2024-08-24T00:10:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31382
+- author: Winkarst-cpu
+  changes:
+  - message: The damage dealt by the folded chair can now be inspected.
+    type: Fix
+  id: 7195
+  time: '2024-08-24T00:16:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31378
