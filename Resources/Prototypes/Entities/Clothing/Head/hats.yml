@@ -49,9 +49,9 @@
   description: A stylish clothing option for security officers.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/beret_security.rsi
+    sprite: GreyStation/Clothing/Head/Hats/beret_security.rsi # GreyStation - Resprite
   - type: Clothing
-    sprite: Clothing/Head/Hats/beret_security.rsi
+    sprite: GreyStation/Clothing/Head/Hats/beret_security.rsi # GreyStation - Resprite
   - type: Tag
     tags:
     - ClothMade

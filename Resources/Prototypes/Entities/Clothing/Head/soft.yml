@@ -245,9 +245,9 @@
   description: It's a robust baseball hat in tasteful red colour.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Soft/secsoft.rsi
+    sprite: GreyStation/Clothing/Head/Soft/secsoft.rsi # GreyStation - Resprite
   - type: Clothing
-    sprite: Clothing/Head/Soft/secsoft.rsi
+    sprite: GreyStation/Clothing/Head/Soft/secsoft.rsi # GreyStation - Resprite
 
 - type: entity
   parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatSecsoft]
