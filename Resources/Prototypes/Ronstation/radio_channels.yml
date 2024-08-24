@@ -1,5 +1,5 @@
 - type: radioChannel
-  id: Terragov
+  id: TerraGov
   name: chat-radio-terragov
   frequency: 1133
   color: "#7fe9cd"
