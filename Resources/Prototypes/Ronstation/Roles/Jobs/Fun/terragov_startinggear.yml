@@ -10,9 +10,9 @@
     eyes: ClothingEyesGlassesSunglasses
     outerClothing: ClothingOuterHardsuitHeccdiver
     gloves: ClothingHandsGlovesCombat
-    shoes: ClothingShoesBootsJack
+    shoes: ClothingShoesBootsCombat
     id: HeccdiverPDA
-    pocket1: RadioHandheld
+    pocket1: RadioHandheldTerragov
     pocket2: FlashlightLantern
     belt: ClothingBeltMilitaryWebbingMedFilled
   storage:
