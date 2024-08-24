@@ -16,11 +16,13 @@ public sealed class MiningOverlay : Overlay
     [Dependency] private readonly IPlayerManager _player = default!;
     private readonly EntityLookupSystem _lookup;
     private readonly SpriteSystem _sprite;
+    private readonly TransformSystem _xform;
 
     private readonly EntityQuery<SpriteComponent> _spriteQuery;
     private readonly EntityQuery<TransformComponent> _xformQuery;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
+    public override bool RequestScreenTexture => true;
 
     public MiningOverlay()
     {
@@ -28,6 +30,7 @@ public sealed class MiningOverlay : Overlay
 
         _lookup = _entityManager.System<EntityLookupSystem>();
         _sprite = _entityManager.System<SpriteSystem>();
+        _xform = _entityManager.System<TransformSystem>();
 
         _spriteQuery = _entityManager.GetEntityQuery<SpriteComponent>();
         _xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
@@ -66,7 +69,7 @@ public sealed class MiningOverlay : Overlay
             if (layer.ActualRsi?.Path == null || layer.RsiState.Name == null)
                 continue;
 
-            var worldMatrix = Matrix3Helpers.CreateTranslation(xform.WorldPosition);
+            var worldMatrix = Matrix3Helpers.CreateTranslation(_xform.GetWorldPosition(xform));
             var scaledWorld = Matrix3x2.Multiply(scaleMatrix, worldMatrix);
             var matty = Matrix3x2.Multiply(rotationMatrix, scaledWorld);
             handle.SetTransform(matty);

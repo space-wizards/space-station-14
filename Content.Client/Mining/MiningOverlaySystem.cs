@@ -33,7 +33,6 @@ public sealed class MiningOverlaySystem : EntitySystem
 
     private void OnPlayerDetached(Entity<MiningScannerViewerComponent> ent, ref LocalPlayerDetachedEvent args)
     {
-        _overlay.RequestScreenTexture = false;
         _overlayMan.RemoveOverlay(_overlay);
     }
 
@@ -41,7 +40,6 @@ public sealed class MiningOverlaySystem : EntitySystem
     {
         if (_player.LocalEntity == ent)
         {
-            _overlay.RequestScreenTexture = true;
             _overlayMan.AddOverlay(_overlay);
         }
     }
@@ -50,7 +48,6 @@ public sealed class MiningOverlaySystem : EntitySystem
     {
         if (_player.LocalEntity == ent)
         {
-            _overlay.RequestScreenTexture = false;
             _overlayMan.RemoveOverlay(_overlay);
         }
     }
