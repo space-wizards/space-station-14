@@ -7,12 +7,12 @@
   name: heccdiver ID card
   components:
   - type: Sprite
-    sprite: Ronstation/Objects/Misc/id_cards.rsi
+    #sprite: Ronstation/Objects/Misc/id_cards.rsi
     layers:
-    - state: heccdiver
+    - state: pirate #heccdiver
   - type: Clothing
     slots:
     - idcard
-    sprite: Ronstation/Objects/Misc/id_cards.rsi
+    #sprite: Ronstation/Objects/Misc/id_cards.rsi
     layers:
-    - state: heccdiver
+    - state: pirate #heccdiver
