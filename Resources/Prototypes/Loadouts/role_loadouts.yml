@@ -54,6 +54,7 @@
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
+  - Mixologist
 
 - type: roleLoadout
   id: JobServiceWorker
