@@ -1,0 +1,30 @@
+#Heccdiver Hardsuit
+- type: entity
+  id: ClothingHeadHelmetHardsuitHeccdiver
+  parent: [ ClothingOuterHardsuitBase, BaseTerragovContraband ]
+  id: ClothingOuterHardsuitHeccdiver
+  name: heccdiver hardsuit
+  description: An elite suit used by an elite task force.
+  components:
+  - type: Sprite
+    sprite: Ronstation/Clothing/OuterClothing/Hardsuits/heccdiver.rsi
+  - type: Clothing
+    sprite: Ronstation/Clothing/OuterClothing/Hardsuits/heccdiver.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Caustic: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.90
+    sprintModifier: 0.90
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitHeccdiver

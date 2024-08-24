@@ -1,0 +1,13 @@
+- type: entity
+  parent: [ BasePDA, BaseTerragovContraband ]
+  id: HeccdiverPDA
+  name: heccdiver PDA
+  description: Looks a lot different than normal PDAs.
+  components:
+  - type: Pda
+    id: HeccdiverIDCard
+    state: pda-heccdiver
+  - type: PdaBorderColor
+    borderColor: "#2F3030"
+  - type: Icon
+    state: pda-heccdiver

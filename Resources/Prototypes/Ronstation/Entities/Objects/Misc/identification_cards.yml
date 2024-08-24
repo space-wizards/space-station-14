@@ -1,5 +1,5 @@
 - type: entity
-  parent: IDCardStandard
+  parent: [ IDCardStandard, BaseTerragovContraband ]
   id: HeccdiverIDCard
   name: heccdiver ID card
   components:

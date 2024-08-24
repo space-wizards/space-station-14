@@ -1,0 +1,35 @@
+## Heccdiver
+
+- type: entity
+  id: RandomHumanoidSpawnerHeccdiver
+  name: HECCdiver
+  suffix: TerragovRole, Heccdiver
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Hardsuits/heccdiver.rsi
+      state: icon
+    - type: RandomMetadata
+      nameSegments:
+        - NamesFirstMilitaryLeader
+        - NamesLastMilitary
+    - type: RandomHumanoidSpawner
+      settings: Heccdiver
+
+- type: randomHumanoidSettings
+  id: Heccdiver
+  parent: EventHumanoidMindShielded
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-Heccdiver-name
+      description: ghost-role-information-Heccdiver-description
+      rules: ghost-role-information-Heccdiver-rules
+      raffle:
+        settings: short
+    - type: Loadout
+      prototypes: [ HeccdiverGear ]
+      roleLoadout: [ RoleSurvivalEVA ]
+    - type: RandomMetadata
+      nameSegments:
+        - NamesFirstMilitaryLeader
+        - NamesLastMilitary
