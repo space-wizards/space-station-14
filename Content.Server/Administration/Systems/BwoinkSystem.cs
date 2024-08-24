@@ -707,7 +707,8 @@ namespace Content.Server.Administration.Systems
                     GameRunLevel.InRound => "InRound",
                     GameRunLevel.PostRound => "PostRound",
                 },
-                timeSent: DateTime.UtcNow
+                timeSent: DateTime.UtcNow,
+                serverName: _gameTicker.ServerName!
             );
 
             string adminPrefixWebhook = "";

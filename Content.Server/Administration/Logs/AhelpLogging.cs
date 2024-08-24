@@ -8,7 +8,6 @@ namespace Content.Server.Administration.Logs
     public sealed class AhelpLogging
     {
         private readonly IServerDbManager _dbManager;
-        private readonly GameTicker _gameTicker = default!;
 
         public AhelpLogging(IServerDbManager dbManager)
         {
@@ -23,7 +22,8 @@ namespace Content.Server.Administration.Logs
             bool targetOnline,
             string message,
             string roundStatus,
-            DateTime timeSent)
+            DateTime timeSent,
+            string serverName)
         {
             // Find or create the AhelpExchange
             var ahelpExchange = await _dbManager.GetAhelpExchangeAsync(ahelpRound, ahelpTarget);
@@ -34,7 +34,7 @@ namespace Content.Server.Administration.Logs
                 {
                     AhelpRound = ahelpRound,
                     AhelpTarget = ahelpTarget,
-                    ServerName = _gameTicker.ServerName
+                    ServerName = serverName
                 };
                 await _dbManager.AddAhelpExchangeAsync(ahelpExchange);
             }
