@@ -6,7 +6,7 @@ using Robust.Shared.Player;
 namespace Content.Client.Mining;
 
 /// <summary>
-/// This handles...
+/// This handles the lifetime of the <see cref="MiningOverlay"/> for a given entity.
 /// </summary>
 public sealed class MiningOverlaySystem : EntitySystem
 {
