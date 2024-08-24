@@ -4,24 +4,13 @@
   description: job-description-hos
   playTimeTracker: JobHeadOfSecurity
   requirements:
-#    - !type:RoleTimeRequirement
-#      role: JobWarden
-#      time: 10800 #3 hrs
-#    - !type:RoleTimeRequirement
-#      role: JobSecurityOfficer
-#      time: 36000 #10 hrs
-#    - !type:DepartmentTimeRequirement
-#      department: Security
-#      time: 108000 # 30 hrs
-#    - !type:OverallPlaytimeRequirement
-#      time: 144000 #40 hrs
     - !type:AgeRequirement
       requiredAge: 21
     - !type:TraitsRequirement # No Pacifist or Blind Sec
       inverted: true
       traits:
-    - Pacifist
-    - Blindness
+      - Pacifist
+      - Blindness
   weight: 10
   startingGear: HoSGear
   icon: "JobIconHeadOfSecurity"

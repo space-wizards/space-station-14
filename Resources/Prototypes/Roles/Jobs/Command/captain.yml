@@ -4,25 +4,13 @@
   description: job-description-captain
   playTimeTracker: JobCaptain
   requirements:
-#    - !type:DepartmentTimeRequirement
-#      department: Engineering
-#      time: 54000 # 15 hours
-#    - !type:DepartmentTimeRequirement
-#      department: Medical
-#      time: 54000 # 15 hours
-#    - !type:DepartmentTimeRequirement
-#      department: Security
-#      time: 54000 # 15 hours
-#    - !type:DepartmentTimeRequirement
-#      department: Command
-#      time: 54000 # 15 hours
     - !type:AgeRequirement
       requiredAge: 21
-    - !type:TraitsRequirement # No Pacifist or Blind Sec
+    - !type:TraitsRequirement
       inverted: true
       traits:
-    - Pacifist
-    - Blindness
+      - Pacifist
+      - Blindness
   weight: 20
   startingGear: CaptainGear
   icon: "JobIconCaptain"
