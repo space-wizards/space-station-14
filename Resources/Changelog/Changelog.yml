@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Whisper, DrSmugleaf
-  changes:
-  - message: Players can now add ' to their character names. Please ensure your character
-      names still follow server naming conventions.
-    type: Add
-  id: 6700
-  time: '2024-06-08T10:37:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28652
 - author: EmoGarbage404
   changes:
   - message: Fixed singularity decay being underpowered, leading to continuous growth
@@ -3871,3 +3863,10 @@
   id: 7199
   time: '2024-08-24T15:56:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31225
+- author: DevilishMilk
+  changes:
+  - message: Moths and mothroaches are now able to eat bandanas.
+    type: Tweak
+  id: 7200
+  time: '2024-08-24T23:30:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31405
