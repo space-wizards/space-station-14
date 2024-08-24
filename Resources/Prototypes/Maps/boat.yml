@@ -2,8 +2,7 @@
   id: Boat
   mapName: 'White Whale'
   mapPath: /Maps/boat.yml
-  randomRotation: false
-  minPlayers: 1
+  minPlayers: 40
   maxPlayers: 80
   stations:
     Boat:
@@ -15,7 +14,7 @@
             !type:NanotrasenNameGenerator
             prefixCreator: 'AS'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_cluster.yml 
+          emergencyShuttlePath: /Maps/Shuttles/emergency_accordia.yml 
         - type: StationCargoShuttle
           path: /Maps/Shuttles/cargo_fland.yml
         - type: StationJobs
