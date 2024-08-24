@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You can now place construction ghosts without getting blocked by things
-      like grilles or windows.
-    type: Fix
-  id: 6696
-  time: '2024-06-08T00:57:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28706
 - author: Lyndomen
   changes:
   - message: Space Dragons will drop bodies upon being gibbed/butchered
@@ -3864,3 +3856,11 @@
   id: 7195
   time: '2024-08-24T00:16:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31378
+- author: EmoGarbage404
+  changes:
+  - message: The mining asteroid dungeons now spawn with more equipment, scrap, and
+      treasure in them.
+    type: Add
+  id: 7196
+  time: '2024-08-24T02:06:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31290
