@@ -385,6 +385,10 @@
     damage:
       types:
         Blunt: 1
+  - type: DamageOtherOnHit # so you can throw the book at 'em
+    damage:
+      types:
+        Blunt: 1
 
 - type: entity
   parent: BookBase
