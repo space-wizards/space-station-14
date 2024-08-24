@@ -35,6 +35,12 @@ ghost-role-information-mouse-description = A hungry and mischievous mouse.
 ghost-role-information-mothroach-name = Mothroach
 ghost-role-information-mothroach-description = A cute but mischievous mothroach.
 
+ghost-role-information-raccoon-name = Raccoon
+ghost-role-information-raccoon-description = A run of the mill trash panda.
+
+ghost-role-information-possum-name = Possum
+ghost-role-information-possum-description = Screams, eats trash, screams some more.
+
 ghost-role-information-giant-spider-name = Giant spider
 ghost-role-information-giant-spider-description = This station's inhabitants look mighty tasty, and your sticky web is perfect to catch them!
 ghost-role-information-giant-spider-rules = You are a [color=red][bold]Team Antagonist[/bold][/color] with all other giant spiders.
