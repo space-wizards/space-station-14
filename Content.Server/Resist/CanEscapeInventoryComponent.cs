@@ -9,13 +9,13 @@ public sealed partial class CanEscapeInventoryComponent : Component
     /// <summary>
     /// Base doafter length for uncontested breakouts.
     /// </summary>
-    [DataField("baseResistTime")]
+    [DataField]
     public float BaseResistTime = 5f;
 
     /// <summary>
     ///     Initial amount of time when you cannot be picked up when dropped while escaping
     /// </summary>
-    [DataField("basePenaltyTime")]
+    [DataField]
     public float BasePenaltyTime = 1.0f;
 
     /// <summary>

@@ -32,22 +32,18 @@ public sealed class EscapeInventorySystem : EntitySystem
         SubscribeLocalEvent<CanEscapeInventoryComponent, MoveInputEvent>(OnRelayMovement);
         SubscribeLocalEvent<CanEscapeInventoryComponent, EscapeInventoryEvent>(OnEscape);
         SubscribeLocalEvent<CanEscapeInventoryComponent, DroppedEvent>(OnDropped);
+        SubscribeLocalEvent<CanEscapeInventoryComponent, GettingPickedUpAttemptEvent>(OnPickupAttempt);
     }
 
-    public override void Update(float frameTime)
+    private void OnPickupAttempt(EntityUid uid,
+        CanEscapeInventoryComponent component,
+        ref GettingPickedUpAttemptEvent args)
     {
-        base.Update(frameTime);
-        var query = EntityQueryEnumerator<CanEscapeInventoryComponent>();
-        while (query.MoveNext(out var uid, out var comp))
+        if (_timing.CurTime < component.PenaltyTimer)
         {
-            if ( _timing.CurTime < comp.PenaltyTimer)
-                continue;
-            comp.PenaltyTimer = TimeSpan.MaxValue;
-            EnsureComp<ItemComponent>(uid);
-
+            args.Cancel();
         }
     }
-
     private void OnRelayMovement(EntityUid uid, CanEscapeInventoryComponent component, ref MoveInputEvent args)
     {
         if (!args.HasDirectionalMovement)
@@ -104,7 +100,6 @@ public sealed class EscapeInventorySystem : EntitySystem
         _containerSystem.AttachParentToContainerOrGrid((uid, Transform(uid)));
         args.Handled = true;
         component.PenaltyTimer = _timing.CurTime + TimeSpan.FromSeconds(component.BasePenaltyTime);
-        RemComp<ItemComponent>(uid);
     }
 
     private void OnDropped(EntityUid uid, CanEscapeInventoryComponent component, DroppedEvent args)
@@ -113,6 +108,5 @@ public sealed class EscapeInventorySystem : EntitySystem
             return;
         _doAfterSystem.Cancel(component.DoAfter);
         component.PenaltyTimer = _timing.CurTime + TimeSpan.FromSeconds(component.BasePenaltyTime);
-        RemComp<ItemComponent>(uid);
     }
 }
