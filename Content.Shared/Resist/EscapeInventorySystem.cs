@@ -7,7 +7,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
-using Content.Shared.Resist;
 using Content.Shared.Storage;
 using Robust.Shared.Timing;
 using Robust.Shared.Containers;
@@ -53,7 +52,7 @@ public sealed class EscapeInventorySystem : EntitySystem
         // Make sure there's nothing stopped the removal (like being glued)
         if (!_containerSystem.CanRemove(uid, container))
         {
-            _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-failed-resisting"), uid, uid);
+            _popupSystem.PopupPredicted(Loc.GetString("escape-inventory-component-failed-resisting"), uid, uid);
             return;
         }
 
@@ -84,8 +83,8 @@ public sealed class EscapeInventorySystem : EntitySystem
         if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs, out component.DoAfter))
             return;
 
-        _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting"), user, user);
-        _popupSystem.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting-target"), container, container);
+        _popupSystem.PopupPredicted(Loc.GetString("escape-inventory-component-start-resisting"), user, user);
+        _popupSystem.PopupPredicted(Loc.GetString("escape-inventory-component-start-resisting-target"), container, container);
     }
 
     private void OnEscape(EntityUid uid, CanEscapeInventoryComponent component, EscapeInventoryEvent args)
