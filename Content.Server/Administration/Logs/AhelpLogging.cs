@@ -1,12 +1,14 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.Database;
+using Content.Server.GameTicking;
 
 namespace Content.Server.Administration.Logs
 {
     public sealed class AhelpLogging
     {
         private readonly IServerDbManager _dbManager;
+        private readonly GameTicker _gameTicker = default!;
 
         public AhelpLogging(IServerDbManager dbManager)
         {
@@ -31,7 +33,8 @@ namespace Content.Server.Administration.Logs
                 ahelpExchange = new AhelpExchange
                 {
                     AhelpRound = ahelpRound,
-                    AhelpTarget = ahelpTarget
+                    AhelpTarget = ahelpTarget,
+                    ServerName = _gameTicker.ServerName
                 };
                 await _dbManager.AddAhelpExchangeAsync(ahelpExchange);
             }

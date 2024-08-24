@@ -690,6 +690,8 @@ namespace Content.Server.Administration.Systems
                 RaiseNetworkEvent(msg, channel);
             }
 
+            bool targetOnline = _playerManager.TryGetSessionById(message.UserId, out var _);
+
             // Log the Bwoink message to the database
             await _ahelpLogging.LogAhelpMessageAsync(
                 ahelpRound: _gameTicker.RoundId,
@@ -697,7 +699,7 @@ namespace Content.Server.Administration.Systems
                 sender: message.TrueSender,
                 senderEntity: Convert.ToInt32(senderSession.AttachedEntity.ToString()),
                 isAdminned: senderAdmin != null,
-                targetOnline: true, //to implement
+                targetOnline: targetOnline,
                 message: message.Text,
                 roundStatus: _gameTicker.RunLevel switch
                 {

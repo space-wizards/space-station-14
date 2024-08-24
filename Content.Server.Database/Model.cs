@@ -778,6 +778,8 @@ namespace Content.Server.Database
         [ForeignKey(nameof(Player))]
         public Guid AhelpTarget { get; set; }
 
+        public string? ServerName { get; set; } = string.Empty;
+
         public ICollection<AhelpMessage> AhelpMessages { get; set; } = new List<AhelpMessage>();
     }
 
