@@ -161,8 +161,8 @@
 - type: entity
   parent: ClothingMaskPullableBase
   id: ClothingMaskBreath
-  name: breath mask
-  description: Might as well keep this on 24/7.
+  name: air mask
+  description: It'll at least keep your lungs dry...
   components:
   - type: Item
     size: Tiny
