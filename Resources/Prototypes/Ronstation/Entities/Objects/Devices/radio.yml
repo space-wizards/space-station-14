@@ -5,10 +5,10 @@
   id: RadioHandheldTerragov
   components:
   - type: RadioMicrophone
-    broadcastChannel: TerraGov
+    broadcastChannel: Handheld
   - type: RadioSpeaker
     channels:
-    - TerraGov
+    - Handheld
   - type: Sprite
     sprite: Ronstation/Objects/Devices/terragovhandy.rsi
   - type: Item
