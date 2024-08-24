@@ -6,7 +6,7 @@
   suffix: TerragovRole, Heccdiver
   components:
     - type: Sprite
-      sprite: Clothing/OuterClothing/Hardsuits/heccdiver.rsi
+      sprite: Ronstation/Clothing/OuterClothing/Hardsuits/heccdiver.rsi
       state: icon
     - type: RandomMetadata
       nameSegments:
