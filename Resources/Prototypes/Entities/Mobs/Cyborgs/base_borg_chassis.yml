@@ -227,8 +227,13 @@
   - type: Emoting
   - type: GuideHelp
     guides:
-      - Cyborgs
+    - Cyborgs
+    - Robotics
   - type: StepTriggerImmune
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
 
 - type: entity
   abstract: true
@@ -239,6 +244,7 @@
     deviceNetId: Wireless
     receiveFrequencyId: CyborgControl
     transmitFrequencyId: RoboticsConsole
+    savableAddress: false
   - type: OnUseTimerTrigger
     delay: 10
     examinable: false

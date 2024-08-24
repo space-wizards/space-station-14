@@ -124,7 +124,7 @@
       - Screwdriver
       - Welder
       - Wrench
-      - Crowbar
+      - CrowbarGreen
       - Multitool
       - NetworkConfigurator
       - SprayPainter
@@ -277,6 +277,7 @@
     dynamicRecipes:
       - PowerDrill
       - MiningDrill
+      - MiningDrillDiamond
       - AnomalyScanner
       - AnomalyLocator
       - AnomalyLocatorWide
@@ -418,7 +419,6 @@
     - AutolatheMachineCircuitboard
     - CircuitImprinterMachineCircuitboard
     - OreProcessorMachineCircuitboard
-    - MaterialReclaimerMachineCircuitboard
     - ElectrolysisUnitMachineCircuitboard
     - CentrifugeMachineCircuitboard
     - ChemDispenserMachineCircuitboard
@@ -534,7 +534,7 @@
   id: ExosuitFabricator
   parent: BaseLatheLube
   name: exosuit fabricator
-  description: Creates parts for robotics and other mechanical needs
+  description: Creates parts for robotics and other mechanical needs.
   components:
   - type: Sprite
     sprite: Structures/Machines/exosuit_fabricator.rsi
@@ -648,7 +648,7 @@
 - type: entity
   id: Biofabricator
   parent: BaseLathe
-  name: biofabricator
+  name: biocube fabricator
   description: Produces animal cubes using biomass.
   components:
   - type: Sprite
@@ -657,16 +657,20 @@
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
+      color: "#ffaa99"
     - state: unlit
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
+      color: "#ffaaaa"
     - state: inserting
       map: ["enum.MaterialStorageVisualLayers.Inserting"]
+      color: "#ffaaaa"
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
     board: BiofabricatorMachineCircuitboard
   - type: MaterialStorage
+    ignoreColor: true
     whitelist:
       tags:
         - Sheet
@@ -758,6 +762,7 @@
       - BoxShotgunIncendiary
       - BoxShotgunUranium
       - BoxShellTranquilizer
+      - ClothingBackpackElectropack
       - ExplosivePayload
       - FlashPayload
       - GrenadeBlast
@@ -1060,13 +1065,6 @@
       - ClothingOuterWinterWardenUnarmored
       - ClothingOuterWinterQM
       - ClothingOuterWinterRD
-      - ClothingNeckMantleCap
-      - ClothingNeckMantleCE
-      - ClothingNeckMantleCMO
-      - ClothingNeckMantleHOP
-      - ClothingNeckMantleHOS
-      - ClothingNeckMantleRD
-      - ClothingNeckMantleQM
       - ClothingOuterWinterMusician
       - ClothingOuterWinterClown
       - ClothingOuterWinterMime
@@ -1169,17 +1167,18 @@
     - type: Lathe
       idleState: icon
       runningState: building
+      defaultProductionAmount: 10
       staticRecipes:
-        - SheetSteel30
-        - SheetGlass30
-        - SheetRGlass30
-        - SheetPlasma30
-        - SheetPGlass30
-        - SheetRPGlass30
-        - SheetUranium30
-        - IngotGold30
-        - IngotSilver30
-        - MaterialBananium10
+        - SheetSteel
+        - SheetGlass1
+        - SheetRGlass
+        - SheetPlasma1
+        - SheetPGlass1
+        - SheetRPGlass1
+        - SheetUranium1
+        - IngotGold1
+        - IngotSilver1
+        - MaterialBananium1
         - MaterialDiamond
 
 - type: entity
@@ -1196,19 +1195,19 @@
     materialUseMultiplier: 0.75
     timeMultiplier: 0.5
     staticRecipes:
-      - SheetSteel30
-      - SheetGlass30
-      - SheetRGlass30
-      - SheetPlasma30
-      - SheetPGlass30
-      - SheetRPGlass30
-      - SheetPlasteel30
-      - SheetUranium30
-      - SheetUGlass30
-      - SheetRUGlass30
-      - IngotGold30
-      - IngotSilver30
-      - MaterialBananium10
+      - SheetSteel
+      - SheetGlass1
+      - SheetRGlass
+      - SheetPlasma1
+      - SheetPGlass1
+      - SheetRPGlass1
+      - SheetPlasteel1
+      - SheetUranium1
+      - SheetUGlass1
+      - SheetRUGlass1
+      - IngotGold1
+      - IngotSilver1
+      - MaterialBananium1
       - MaterialDiamond
 
 - type: entity
