@@ -16,10 +16,17 @@ public abstract class SharedPowerCellSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<PowerCellDrawComponent, MapInitEvent>(OnMapInit);
+
         SubscribeLocalEvent<PowerCellSlotComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<PowerCellSlotComponent, EntInsertedIntoContainerMessage>(OnCellInserted);
         SubscribeLocalEvent<PowerCellSlotComponent, EntRemovedFromContainerMessage>(OnCellRemoved);
         SubscribeLocalEvent<PowerCellSlotComponent, ContainerIsInsertingAttemptEvent>(OnCellInsertAttempt);
+    }
+
+    private void OnMapInit(Entity<PowerCellDrawComponent> ent, ref MapInitEvent args)
+    {
+        QueueUpdate((ent, ent.Comp));
     }
 
     private void OnRejuvenate(EntityUid uid, PowerCellSlotComponent component, RejuvenateEvent args)
