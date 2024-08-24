@@ -1,8 +1,18 @@
+
+#IDs with layers
+
 - type: entity
   parent: [ IDCardStandard, BaseTerragovContraband ]
   id: HeccdiverIDCard
   name: heccdiver ID card
   components:
   - type: Sprite
+    sprite: Ronstation/Objects/Misc/id_cards.rsi
+    layers:
+    - state: heccdiver
+  - type: Clothing
+    slots:
+    - idcard
+    sprite: Ronstation/Objects/Misc/id_cards.rsi
     layers:
     - state: heccdiver
