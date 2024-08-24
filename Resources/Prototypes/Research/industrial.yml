@@ -11,6 +11,7 @@
   cost: 7500
   recipeUnlocks:
   - MiningDrill
+  - MineralScannerEmpty
   - WeaponGrapplingGun
   - BorgModuleMining
   - BorgModuleGrapplingGun
@@ -180,6 +181,7 @@
   recipeUnlocks:
     - OreBagOfHolding
     - MiningDrillDiamond
+    - AdvancedMineralScannerEmpty
 
 # Tier 3
 
