@@ -27,6 +27,7 @@
 - type: startingGear
   id: SecurityOfficerGear
   equipment:
+    neck: ClothingNeckSecurityOfficerBadge # GreyStation - Addition
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetSecurity
     pocket1: WeaponPistolMk58

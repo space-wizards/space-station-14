@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by ps3moira#9488 on discord",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-NECK",
+      "directions": 4
+    }
+  ]
+}
