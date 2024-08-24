@@ -296,6 +296,7 @@
       - Implanter
       - PillCanister
       - ChemistryEmptyBottle01
+      - BaseChemistryEmptyVial
       - AdvMopItem
       - WeaponSprayNozzle
       - ClothingBackpackWaterTank
@@ -909,6 +910,7 @@
       - PillCanister
       - BodyBag
       - ChemistryEmptyBottle01
+      - BaseChemistryEmptyVial
       - RollerBedSpawnFolded
       - CheapRollerBedSpawnFolded
       - EmergencyRollerBedSpawnFolded
