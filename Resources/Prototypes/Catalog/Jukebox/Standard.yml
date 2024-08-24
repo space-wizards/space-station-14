@@ -183,3 +183,9 @@
   name: Hideki Okugawa - You Blow My Mind
   path:
     path: /Audio/Jukebox/you_blow_my_mind.ogg
+
+- type: jukebox
+  id: TheNomai 
+  name: Andrew Prahlow - The Nomai
+  path:
+    path: /Audio/Jukebox/the_nomai.ogg
