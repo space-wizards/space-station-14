@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Fixed RGB lights & eswords sometimes not working and showing up as black.
-    type: Fix
-  id: 6699
-  time: '2024-06-08T10:27:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28741
 - author: Whisper, DrSmugleaf
   changes:
   - message: Players can now add ' to their character names. Please ensure your character
@@ -3871,3 +3864,10 @@
   id: 7198
   time: '2024-08-24T09:37:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31380
+- author: erohrs2
+  changes:
+  - message: Dinnerware Vending Machine access changed from "Service" to "Kitchen".
+    type: Tweak
+  id: 7199
+  time: '2024-08-24T15:56:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31225
