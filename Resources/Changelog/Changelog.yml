@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Lyndomen
-  changes:
-  - message: Space Dragons will drop bodies upon being gibbed/butchered
-    type: Fix
-  id: 6697
-  time: '2024-06-08T05:49:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28709
 - author: metalgearsloth
   changes:
   - message: Fix some loadout groups not getting validated properly.
@@ -3864,3 +3857,17 @@
   id: 7196
   time: '2024-08-24T02:06:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31290
+- author: EmoGarbage404
+  changes:
+  - message: The salvage magnet can now pull in large chunks of space debris. Be wary
+      of space carp infestations!
+    type: Add
+  - message: The small asteroids and pieces of debris that generated around the station
+      have been removed.
+    type: Remove
+  - message: The salvage magnet now randomly picks what type of pulls will be offered
+      instead of always having a consistent number of each.
+    type: Tweak
+  id: 7197
+  time: '2024-08-24T02:09:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31113
