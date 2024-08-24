@@ -29,6 +29,7 @@
   - type: Tag
     tags:
     - Bandana
+    - ClothMade
   - type: HideLayerClothing
     slots:
     - Snout
@@ -68,7 +69,6 @@
     sprite: Clothing/Head/Bandanas/botany.rsi
   - type: Tag
     tags:
-    - ClothMade
     - WhitelistChameleon
 
 - type: entity
