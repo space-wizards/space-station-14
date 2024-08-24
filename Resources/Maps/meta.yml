@@ -10804,7 +10804,7 @@ entities:
       pos: -42.5,29.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -2052.8645
+      secondsUntilStateChange: -2186.3599
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -60772,13 +60772,6 @@ entities:
     components:
     - type: Transform
       pos: 6.498452,-14.246428
-      parent: 5350
-- proto: ClothingNeckCloakHerald
-  entities:
-  - uid: 24179
-    components:
-    - type: Transform
-      pos: -32.42196,-65.44334
       parent: 5350
 - proto: ClothingNeckCloakTrans
   entities:
