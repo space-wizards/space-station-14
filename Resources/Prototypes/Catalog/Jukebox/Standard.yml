@@ -189,3 +189,9 @@
   name: Andrew Prahlow - The Nomai
   path:
     path: /Audio/Jukebox/the_nomai.ogg
+
+- type: jukebox
+  id: TheFluteTune 
+  name: J-Cut & Kolt Siewerts - The Flute Tune (Soulpride Remix)
+  path:
+    path: /Audio/Jukebox/the_flute_tune.ogg
