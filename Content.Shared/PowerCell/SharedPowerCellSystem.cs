@@ -1,6 +1,4 @@
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Item.ItemToggle;
-using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Containers;
@@ -13,7 +11,6 @@ public abstract class SharedPowerCellSystem : EntitySystem
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] protected readonly ItemToggleSystem Toggle = default!;
 
     public override void Initialize()
     {
@@ -23,9 +20,6 @@ public abstract class SharedPowerCellSystem : EntitySystem
         SubscribeLocalEvent<PowerCellSlotComponent, EntInsertedIntoContainerMessage>(OnCellInserted);
         SubscribeLocalEvent<PowerCellSlotComponent, EntRemovedFromContainerMessage>(OnCellRemoved);
         SubscribeLocalEvent<PowerCellSlotComponent, ContainerIsInsertingAttemptEvent>(OnCellInsertAttempt);
-
-        SubscribeLocalEvent<PowerCellDrawComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
-        SubscribeLocalEvent<PowerCellDrawComponent, ItemToggledEvent>(OnToggled);
     }
 
     private void OnRejuvenate(EntityUid uid, PowerCellSlotComponent component, RejuvenateEvent args)
@@ -70,16 +64,13 @@ public abstract class SharedPowerCellSystem : EntitySystem
         RaiseLocalEvent(uid, new PowerCellChangedEvent(true), false);
     }
 
-    private void OnActivateAttempt(Entity<PowerCellDrawComponent> ent, ref ItemToggleActivateAttemptEvent args)
+    /// <summary>
+    /// Makes the draw logic update in the next tick.
+    /// </summary>
+    public void QueueUpdate(Entity<PowerCellDrawComponent?> ent)
     {
-        if (!HasDrawCharge(ent, ent.Comp, user: args.User)
-            || !HasActivatableCharge(ent, ent.Comp, user: args.User))
-            args.Cancelled = true;
-    }
-
-    private void OnToggled(Entity<PowerCellDrawComponent> ent, ref ItemToggledEvent args)
-    {
-        ent.Comp.NextUpdateTime = Timing.CurTime;
+        if (Resolve(ent, ref ent.Comp))
+            ent.Comp.NextUpdateTime = Timing.CurTime;
     }
 
     public void SetDrawEnabled(Entity<PowerCellDrawComponent?> ent, bool enabled)
