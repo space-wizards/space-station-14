@@ -11,6 +11,7 @@
     - Reptilian
     - SlimePerson
     - Vox
+    - Gray
 
 - type: guideEntry
   id: Arachnid
@@ -51,3 +52,8 @@
   id: Vox
   name: species-name-vox
   text: "/ServerInfo/Guidebook/Mobs/Vox.xml"
+
+- type: guideEntry
+  id: Gray
+  name: Gray
+  text: "/ServerInfo/Guidebook/Mobs/Gray.xml"
