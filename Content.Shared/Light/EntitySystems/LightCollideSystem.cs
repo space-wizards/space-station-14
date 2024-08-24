@@ -26,7 +26,9 @@ public sealed class LightCollideSystem : EntitySystem
             return;
 
         // Regenerate contacts for everything we were colliding with.
-        foreach (var contact in _physics.GetContacts(ent.Owner))
+        var contacts = _physics.GetContacts(ent.Owner);
+
+        while (contacts.MoveNext(out var contact))
         {
             if (!contact.IsTouching)
                 continue;
