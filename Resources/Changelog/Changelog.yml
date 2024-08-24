@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: blueDev2
-  changes:
-  - message: Rebalanced medicated suture and regen mesh to only require 1 brute pack/ointment
-      respectively
-    type: Tweak
-  id: 6694
-  time: '2024-06-07T01:24:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28679
 - author: AJCM-git
   changes:
   - message: Guidebook no longer lists every single rule
@@ -3865,3 +3857,10 @@
   id: 7193
   time: '2024-08-23T14:24:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30786
+- author: FATFSAAM2
+  changes:
+  - message: Added 3 new voicelines for the boxer figurine.
+    type: Add
+  id: 7194
+  time: '2024-08-24T00:10:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31382
