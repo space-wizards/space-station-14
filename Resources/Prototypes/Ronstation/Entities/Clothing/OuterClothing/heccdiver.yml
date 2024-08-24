@@ -1,6 +1,5 @@
 #Heccdiver Hardsuit
 - type: entity
-  id: ClothingOuterHardsuitHeccdiver
   parent: [ ClothingOuterHardsuitBase, BaseTerragovContraband ]
   id: ClothingOuterHardsuitHeccdiver
   name: heccdiver hardsuit
