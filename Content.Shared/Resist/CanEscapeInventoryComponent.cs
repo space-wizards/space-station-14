@@ -1,9 +1,10 @@
 using Content.Shared.DoAfter;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Resist;
+namespace Content.Shared.Resist;
 
-[RegisterComponent, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 public sealed partial class CanEscapeInventoryComponent : Component
 {
     /// <summary>

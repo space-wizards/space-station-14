@@ -1,4 +1,3 @@
-using Content.Server.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DoAfter;
@@ -7,17 +6,18 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Movement.Events;
+using Content.Shared.Popups;
 using Content.Shared.Resist;
 using Content.Shared.Storage;
 using Robust.Shared.Timing;
 using Robust.Shared.Containers;
 
-namespace Content.Server.Resist;
+namespace Content.Shared.Resist;
 
 public sealed class EscapeInventorySystem : EntitySystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
