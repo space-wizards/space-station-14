@@ -1,48 +1,4 @@
 ﻿Entries:
-- author: blueDev2
-  changes:
-  - message: Rebalanced medicated suture and regen mesh to only require 1 brute pack/ointment
-      respectively
-    type: Tweak
-  id: 6694
-  time: '2024-06-07T01:24:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28679
-- author: AJCM-git
-  changes:
-  - message: Guidebook no longer lists every single rule
-    type: Fix
-  id: 6695
-  time: '2024-06-07T11:28:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28680
-- author: Plykiya
-  changes:
-  - message: You can now place construction ghosts without getting blocked by things
-      like grilles or windows.
-    type: Fix
-  id: 6696
-  time: '2024-06-08T00:57:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28706
-- author: Lyndomen
-  changes:
-  - message: Space Dragons will drop bodies upon being gibbed/butchered
-    type: Fix
-  id: 6697
-  time: '2024-06-08T05:49:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28709
-- author: metalgearsloth
-  changes:
-  - message: Fix some loadout groups not getting validated properly.
-    type: Fix
-  id: 6698
-  time: '2024-06-08T10:03:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28731
-- author: ElectroJr
-  changes:
-  - message: Fixed RGB lights & eswords sometimes not working and showing up as black.
-    type: Fix
-  id: 6699
-  time: '2024-06-08T10:27:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28741
 - author: Whisper, DrSmugleaf
   changes:
   - message: Players can now add ' to their character names. Please ensure your character
@@ -3865,3 +3821,53 @@
   id: 7193
   time: '2024-08-23T14:24:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30786
+- author: FATFSAAM2
+  changes:
+  - message: Added 3 new voicelines for the boxer figurine.
+    type: Add
+  id: 7194
+  time: '2024-08-24T00:10:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31382
+- author: Winkarst-cpu
+  changes:
+  - message: The damage dealt by the folded chair can now be inspected.
+    type: Fix
+  id: 7195
+  time: '2024-08-24T00:16:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31378
+- author: EmoGarbage404
+  changes:
+  - message: The mining asteroid dungeons now spawn with more equipment, scrap, and
+      treasure in them.
+    type: Add
+  id: 7196
+  time: '2024-08-24T02:06:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31290
+- author: EmoGarbage404
+  changes:
+  - message: The salvage magnet can now pull in large chunks of space debris. Be wary
+      of space carp infestations!
+    type: Add
+  - message: The small asteroids and pieces of debris that generated around the station
+      have been removed.
+    type: Remove
+  - message: The salvage magnet now randomly picks what type of pulls will be offered
+      instead of always having a consistent number of each.
+    type: Tweak
+  id: 7197
+  time: '2024-08-24T02:09:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31113
+- author: Winkarst-cpu
+  changes:
+  - message: Now you can move the pointer in chat by holding down the arrow keys.
+    type: Fix
+  id: 7198
+  time: '2024-08-24T09:37:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31380
+- author: erohrs2
+  changes:
+  - message: Dinnerware Vending Machine access changed from "Service" to "Kitchen".
+    type: Tweak
+  id: 7199
+  time: '2024-08-24T15:56:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31225

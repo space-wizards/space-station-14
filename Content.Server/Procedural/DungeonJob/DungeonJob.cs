@@ -239,6 +239,9 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
             case MobsDunGen mob:
                 await PostGen(mob, dungeons[^1], random);
                 break;
+            case EntityTableDunGen entityTable:
+                await PostGen(entityTable, dungeons[^1], random);
+                break;
             case NoiseDistanceDunGen distance:
                 dungeons.Add(await GenerateNoiseDistanceDunGen(position, distance, reservedTiles, seed, random));
                 break;
