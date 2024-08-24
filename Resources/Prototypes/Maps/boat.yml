@@ -2,8 +2,8 @@
   id: Boat
   mapName: 'White Whale'
   mapPath: /Maps/boat.yml
-  randomRotation: false
-  minPlayers: 1
+  randomRotation: true
+  minPlayers: 40
   maxPlayers: 80
   stations:
     Boat:
