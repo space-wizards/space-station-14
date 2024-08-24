@@ -23,7 +23,7 @@ public sealed class ItemToggleSystem : EntitySystem
     [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-    private EntityQuery _query;
+    private EntityQuery<ItemToggleComponent> _query;
 
     public override void Initialize()
     {
