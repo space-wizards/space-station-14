@@ -5,9 +5,11 @@
   description: Looks a lot different than normal PDAs.
   components:
   - type: Pda
+    sprite: Ronstation/Objects/Devices/pda.rsi
     id: HeccdiverIDCard
     state: pda-heccdiver
   - type: PdaBorderColor
     borderColor: "#2F3030"
   - type: Icon
+    sprite: Ronstation/Objects/Devices/pda.rsi
     state: pda-heccdiver

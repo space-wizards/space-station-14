@@ -1,23 +1,23 @@
 #Terragov outfit starting gear definitons.
 
-#Heccdiver
-#- type: startingGear
-#  id: HeccdiverGear
-#  equipment:
-#    jumpsuit: ClothingUniformJumpsuitHeccdiver
-#    back: ClothingBackpackDuffel
-#    mask: ClothingMaskGas
-#    eyes: ClothingEyesGlassesSunglasses
-#    outerClothing: ClothingOuterHardsuitHeccdiver
-#    gloves: ClothingHandsGlovesCombat
-#    shoes: ClothingShoesBootsCombat
-#    id: HeccdiverPDA
-#    pocket1: RadioHandheldTerragov
-#    pocket2: FlashlightLantern
-#    belt: ClothingBeltMilitaryWebbingMedFilled
-#  storage:
-#    back:
-#    - BoxSurvival
-#    - MagazinePistol
-#    - WeaponPistolMk58
-#    - CrowbarRed
+Heccdiver
+- type: startingGear
+  id: HeccdiverGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHeccdiver
+    back: ClothingBackpackDuffel
+    mask: ClothingMaskGas
+    eyes: ClothingEyesGlassesSunglasses
+    outerClothing: ClothingOuterHardsuitHeccdiver
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsCombat
+    id: HeccdiverPDA
+    pocket1: RadioHandheldTerragov
+    pocket2: FlashlightLantern
+    belt: ClothingBeltMilitaryWebbingMedFilled
+  storage:
+    back:
+    - BoxSurvival
+    - MagazinePistol
+    - WeaponPistolMk58
+    - CrowbarRed

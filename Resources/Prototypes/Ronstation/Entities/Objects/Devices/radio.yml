@@ -5,7 +5,7 @@
   id: RadioHandheldTerragov
   components:
   - type: RadioMicrophone
-    broadcastChannel: Handheld
+    broadcastChannel: Handheld #Cannot make a new channel for Terragov.
   - type: RadioSpeaker
     channels:
     - Handheld
