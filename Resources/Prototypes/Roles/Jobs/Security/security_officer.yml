@@ -3,6 +3,12 @@
   name: job-name-security
   description: job-description-security
   playTimeTracker: JobSecurityOfficer
+  requirements:
+  - !type:TraitsRequirement # No Pacifist or Blind Sec
+    inverted: true
+    traits:
+    - Pacifist
+    - Blindness
   startingGear: SecurityOfficerGear
   icon: "JobIconSecurityOfficer"
   supervisors: job-supervisors-hos
