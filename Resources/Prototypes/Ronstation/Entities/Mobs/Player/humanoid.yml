@@ -1,6 +1,7 @@
 ## Heccdiver
 
-id: RandomHumanoidSpawnerHeccdiver
+- type: entity
+  id: RandomHumanoidSpawnerHeccdiver
   name: HECCdiver
   suffix: TerragovRole, Heccdiver
   components:
