@@ -18,6 +18,11 @@
 #      time: 54000 # 15 hours
     - !type:AgeRequirement
       requiredAge: 21
+    - !type:TraitsRequirement # No Pacifist or Blind Sec
+    inverted: true
+    traits:
+    - Pacifist
+    - Blindness
   weight: 20
   startingGear: CaptainGear
   icon: "JobIconCaptain"
