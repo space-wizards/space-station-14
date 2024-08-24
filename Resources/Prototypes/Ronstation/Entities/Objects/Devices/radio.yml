@@ -8,7 +8,7 @@
     broadcastChannel: Terragov
   - type: RadioSpeaker
     channels:
-    - Security
+    - Terragov
   - type: Sprite
     sprite: Ronstation/Objects/Devices/terragovhandy.rsi
   - type: Item
