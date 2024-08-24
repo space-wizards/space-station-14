@@ -7,10 +7,13 @@ using Content.Server.NPC.Queries.Queries;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Storage.Components;
+using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Nutrition.Components;
@@ -48,6 +51,7 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly WeldableSystem _weldable = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly MobThresholdSystem _thresholdSystem = default!;
 
     private EntityQuery<PuddleComponent> _puddleQuery;
     private EntityQuery<TransformComponent> _xformQuery;
@@ -293,8 +297,14 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 return (float) ev.Count / ev.Capacity;
             }
-            case TargetHealthCon:
+            case TargetHealthCon con:
             {
+                if (!TryComp(targetUid, out DamageableComponent? damage))
+                    return 0f;
+                if (con.TargetState != MobState.Invalid && _thresholdSystem.TryGetPercentageForState(targetUid, con.TargetState, damage.TotalDamage, out var percentage))
+                    return Math.Clamp((float)(1 - percentage), 0f, 1f);
+                if (_thresholdSystem.TryGetIncapPercentage(targetUid, damage.TotalDamage, out var incapPercentage))
+                    return Math.Clamp((float)(1 - incapPercentage), 0f, 1f);
                 return 0f;
             }
             case TargetInLOSCon:

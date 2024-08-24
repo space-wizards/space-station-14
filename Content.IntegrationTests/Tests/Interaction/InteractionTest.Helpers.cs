@@ -91,7 +91,7 @@ public abstract partial class InteractionTest
         Target = NetEntity.Invalid;
         await Server.WaitPost(() =>
         {
-            Target = SEntMan.GetNetEntity(SEntMan.SpawnEntity(prototype, SEntMan.GetCoordinates(TargetCoords)));
+            Target = SEntMan.GetNetEntity(SEntMan.SpawnAtPosition(prototype, SEntMan.GetCoordinates(TargetCoords)));
         });
 
         await RunTicks(5);
@@ -171,7 +171,7 @@ public abstract partial class InteractionTest
             // turn on welders
             if (enableToggleable && SEntMan.TryGetComponent(item, out itemToggle) && !itemToggle.Activated)
             {
-                Assert.That(ItemToggleSys.TryActivate(item, playerEnt, itemToggle: itemToggle));
+                Assert.That(ItemToggleSys.TryActivate((item, itemToggle), user: playerEnt));
             }
         });
 

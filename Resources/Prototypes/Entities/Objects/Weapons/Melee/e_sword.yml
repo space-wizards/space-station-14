@@ -13,10 +13,12 @@
   - type: ItemToggleActiveSound
     activeSound:
       path: /Audio/Weapons/ebladehum.ogg
-  - type: ItemToggleSharp
+  - type: ComponentToggler
+    components:
+    - type: Sharp
+    - type: DisarmMalus
+      malus: 0.6
   - type: ItemToggleHot
-  - type: ItemToggleDisarmMalus
-    activatedDisarmMalus: 0.6
   - type: ItemToggleSize
     activatedSize: Huge
   - type: ItemToggleMeleeWeapon
@@ -74,10 +76,7 @@
       right:
       - state: inhand-right-blade
         shader: unshaded
-  - type: DisarmMalus
-    malus: 0
   - type: Reflect
-    enabled: false
   - type: IgnitionSource
     temperature: 700
 
@@ -88,7 +87,6 @@
   suffix: E-Dagger
   description: 'A dark ink pen.'
   components:
-  - type: EnergySword
   - type: ItemToggle
     soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
@@ -114,8 +112,11 @@
       path: /Audio/Weapons/ebladehum.ogg
       params:
         volume: -6
-  - type: ItemToggleDisarmMalus
-    activatedDisarmMalus: 0.4
+  - type: ComponentToggler
+    components:
+    - type: Sharp
+    - type: DisarmMalus
+      malus: 0.4
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:
@@ -183,15 +184,12 @@
   id: EnergyCutlass
   description: An exotic energy weapon.
   components:
-  - type: EnergySword
   - type: ItemToggleMeleeWeapon
     activatedDamage:
         types:
             Slash: 10
             Heat: 12
     deactivatedSecret: true
-  - type: ItemToggleDisarmMalus
-    activatedDisarmMalus: 0.6
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
     layers:
@@ -220,8 +218,8 @@
   id: EnergySwordDouble
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. This can be stored in pockets.
   components:
-  - type: EnergySword
   - type: ItemToggle
+    onUse: false # wielding events control it instead
     soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
       params:
@@ -246,9 +244,13 @@
       path: /Audio/Weapons/ebladehum.ogg
       params:
         volume: 3
-  - type: ItemToggleDisarmMalus
-    activatedDisarmMalus: 0.7
+  - type: ComponentToggler
+    components:
+    - type: Sharp
+    - type: DisarmMalus
+      malus: 0.7
   - type: Wieldable
+    wieldSound: null # esword light sound instead
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 1.5

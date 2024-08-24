@@ -66,7 +66,6 @@
   description: Pointy end into target!
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/harpoons.rsi
     layers:
     - state: tail
       color: darkgray
@@ -89,73 +88,16 @@
     angle: 0
 
 - type: entity
-  parent: BaseItem
-  id: BaseHarpoonBomb
-  abstract: true
-  components:
-  - type: Item
-    size: Small
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/explosive_harpoons.rsi
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape: !type:PhysShapeCircle
-          radius: 0.2
-        density: 5
-        mask:
-        - ItemMask
-        restitution: 0.3
-        friction: 0.2
-      projectile:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.1,-0.1,0.1,0.1"
-        hard: false
-        mask:
-        - Impassable
-        - BulletImpassable
-  - type: Ammo
-    muzzleFlash: null
-  - type: Tag
-    tags:
-    - Harpoon
-  - type: Projectile
-    deleteOnCollide: true
-    onlyCollideWhenShot: true
-    damage:
-      types:
-        Piercing: 25
-  - type: SolutionContainerManager
-    solutions:
-      ammo:
-        maxVol: 2
-  - type: RefillableSolution
-    solution: ammo
-  - type: InjectableSolution
-    solution: ammo
-  - type: SolutionInjectOnEmbed
-    transferAmount: 2
-    solution: ammo
-  - type: SolutionTransfer
-    maxTransferAmount: 2
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 1
-    fillBaseName: solution
-
-- type: entity
+  parent: BaseHarpoon
   id: HarpoonBomb
   name: explosive harpoon
-  parent: BaseHarpoonBomb
   description: This'll really blow their minds...
   components:
-  - type: Item
-    size: Small
-  - type: CartridgeAmmo
-    proto: HarpoonBombBullet
-    deleteOnSpawn: true
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/explosive_harpoons.rsi
     state: explosive
-
+  - type: CartridgeAmmo
+    proto: HarpoonBombBullet
+    deleteOnSpawn: true
+  - type: Projectile
+    deleteOnCollide: true

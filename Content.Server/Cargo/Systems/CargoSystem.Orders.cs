@@ -40,6 +40,7 @@ namespace Content.Server.Cargo.Systems
             SubscribeLocalEvent<CargoOrderConsoleComponent, BoundUIOpenedEvent>(OnOrderUIOpened);
             SubscribeLocalEvent<CargoOrderConsoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<CargoOrderConsoleComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<CargoOrderConsoleComponent, BankBalanceUpdatedEvent>(OnOrderBalanceUpdated);
             Reset();
         }
 
@@ -314,6 +315,15 @@ namespace Content.Server.Cargo.Systems
         }
 
         #endregion
+
+
+        private void OnOrderBalanceUpdated(Entity<CargoOrderConsoleComponent> ent, ref BankBalanceUpdatedEvent args)
+        {
+            if (!_uiSystem.IsUiOpen(ent.Owner, CargoConsoleUiKey.Orders))
+                return;
+
+            UpdateOrderState(ent, args.Station);
+        }
 
         private void UpdateOrderState(EntityUid consoleUid, EntityUid? station)
         {

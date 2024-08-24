@@ -337,7 +337,8 @@
   - type: Sprite
     sprite: Mobs/Silicon/Bots/supplybot.rsi
     layers:
-    - state: supplybot
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: supplybot
   - type: SpriteMovement
     movementLayers:
       movement:
