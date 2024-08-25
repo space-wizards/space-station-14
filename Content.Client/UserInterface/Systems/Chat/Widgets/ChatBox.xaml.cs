@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Content.Client.UserInterface.Systems.Chat.Controls;
 using Content.Shared.Chat;
 using Content.Shared.Input;
@@ -20,8 +21,11 @@ namespace Content.Client.UserInterface.Systems.Chat.Widgets;
 public partial class ChatBox : UIWidget
 #pragma warning restore RA0003
 {
+    private static readonly Color HighlightColor = Color.FromHex("#e5ffcc");
     private readonly ChatUIController _controller;
     private readonly IEntityManager _entManager;
+
+    private List<string> _keywords = [];
 
     public bool Main { get; set; }
 
@@ -37,6 +41,7 @@ public partial class ChatBox : UIWidget
         ChatInput.Input.OnTextChanged += OnTextChanged;
         ChatInput.ChannelSelector.OnChannelSelect += OnChannelSelect;
         ChatInput.FilterButton.Popup.OnChannelFilter += OnChannelFilter;
+        ChatInput.FilterButton.Popup.OnNewHighlight += OnNewHighlight;
 
         _controller = UserInterfaceManager.GetUIController<ChatUIController>();
         _controller.MessageAdded += OnMessageAdded;
@@ -62,6 +67,12 @@ public partial class ChatBox : UIWidget
         msg.Read = true;
 
         var color = msg.MessageColorOverride ?? msg.Channel.TextColor();
+        
+        // Highlight any words choosen by the client.
+        foreach (var keyword in _keywords)
+        {
+            msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, keyword, "color", HighlightColor.ToHex());
+        }
 
         AddLine(msg.WrappedMessage, color);
     }
@@ -185,5 +196,16 @@ public partial class ChatBox : UIWidget
         ChatInput.Input.OnKeyBindDown -= OnInputKeyBindDown;
         ChatInput.Input.OnTextChanged -= OnTextChanged;
         ChatInput.ChannelSelector.OnChannelSelect -= OnChannelSelect;
+    }
+    
+    private void OnNewHighlight(LineEditEventArgs args)
+    {
+        // Fill the array with keywords separated by commas, disregarding empty entries.
+        string[] arr_keywords = args.Text.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        _keywords.Clear();
+        foreach (var keyword in arr_keywords)
+        {
+            _keywords.Add(keyword);
+        }
     }
 }

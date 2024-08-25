@@ -4,7 +4,9 @@
     <PanelContainer Name="FilterPopupPanel" StyleClasses="BorderedWindowPanel">
         <BoxContainer Orientation="Horizontal">
             <Control MinSize="4 0"/>
-            <BoxContainer Name="FilterVBox" MinWidth="110" Margin="0 10" Orientation="Vertical" SeparationOverride="4"/>
+            <BoxContainer Name="FilterVBox" MinWidth="210" Margin="0 10" Orientation="Vertical" SeparationOverride="4">
+                <LineEdit Name="HighlightEdit" PlaceHolder="Words to highlight..."/>
+            </BoxContainer>
         </BoxContainer>
     </PanelContainer>
 </controls:ChannelFilterPopup>
