@@ -111,7 +111,7 @@
 
 - type: entity
   name: bluecherry muffin
-  parent: FoodMuffinBase
+  parent: FoodBakedBase
   id: FoodBakedMuffinBluecherry
   description: Blue cherries inside a delicious muffin.
   components:
