@@ -52,9 +52,8 @@ public sealed class StationAiOverlay : Overlay
 
         if (grid != null)
         {
-            // TODO: Pass in attached entity's grid.
-            // TODO: Credit OD on the moved to code
-            // TODO: Call the moved-to code here.
+            var lookups = _entManager.System<EntityLookupSystem>();
+            var xforms = _entManager.System<SharedTransformSystem>();
 
             _visibleTiles.Clear();
             _entManager.System<StationAiVisionSystem>().GetView((gridUid, grid), worldBounds, _visibleTiles);
