@@ -125,7 +125,9 @@ public sealed class UseDelaySystem : EntitySystem
     /// </summary>
     public UseDelayInfo GetLastEndingDelay(Entity<UseDelayComponent> ent)
     {
-        var last = ent.Comp.Delays[DefaultId];
+        if (!ent.Comp.Delays.TryGetValue(DefaultId, out var last))
+            return new UseDelayInfo(TimeSpan.Zero);
+
         foreach (var entry in ent.Comp.Delays)
         {
             if (entry.Value.EndTime > last.EndTime)

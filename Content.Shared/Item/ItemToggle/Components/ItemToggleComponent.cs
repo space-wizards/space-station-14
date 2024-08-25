@@ -8,7 +8,7 @@ namespace Content.Shared.Item.ItemToggle.Components;
 /// </summary>
 /// <remarks>
 /// If you need extended functionality (e.g. requiring power) then add a new component and use events:
-/// ItemToggleActivateAttemptEvent, ItemToggleDeactivateAttemptEvent or ItemToggleForceToggleEvent.
+/// ItemToggleActivateAttemptEvent, ItemToggleDeactivateAttemptEvent, ItemToggledEvent.
 /// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ItemToggleComponent : Component
@@ -18,6 +18,19 @@ public sealed partial class ItemToggleComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Activated = false;
+
+    /// <summary>
+    /// Can the entity be activated in the world.
+    /// </summary>
+    [DataField]
+    public bool OnActivate = true;
+
+    /// <summary>
+    /// If this is set to false then the item can't be toggled by pressing Z.
+    /// Use another system to do it then.
+    /// </summary>
+    [DataField]
+    public bool OnUse = true;
 
     /// <summary>
     ///     Whether the item's toggle can be predicted by the client.
@@ -45,12 +58,6 @@ public sealed partial class ItemToggleComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public SoundSpecifier? SoundFailToActivate;
-
-    /// <summary>
-    /// Whether or not to toggle the entity's lights on or off.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
-    public bool ToggleLight = true;
 }
 
 /// <summary>

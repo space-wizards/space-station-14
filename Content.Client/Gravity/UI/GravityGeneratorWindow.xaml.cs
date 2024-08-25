@@ -12,22 +12,23 @@ namespace Content.Client.Gravity.UI
     {
         private readonly ButtonGroup _buttonGroup = new();
 
-        private readonly GravityGeneratorBoundUserInterface _owner;
+        public event Action<bool>? OnPowerSwitch;
 
-        public GravityGeneratorWindow(GravityGeneratorBoundUserInterface owner)
+        public GravityGeneratorWindow()
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
-            _owner = owner;
-
             OnButton.Group = _buttonGroup;
             OffButton.Group = _buttonGroup;
 
-            OnButton.OnPressed += _ => _owner.SetPowerSwitch(true);
-            OffButton.OnPressed += _ => _owner.SetPowerSwitch(false);
+            OnButton.OnPressed += _ => OnPowerSwitch?.Invoke(true);
+            OffButton.OnPressed += _ => OnPowerSwitch?.Invoke(false);
+        }
 
-            EntityView.SetEntity(owner.Owner);
+        public void SetEntity(EntityUid uid)
+        {
+            EntityView.SetEntity(uid);
         }
 
         public void UpdateState(SharedGravityGeneratorComponent.GeneratorState state)

@@ -1,0 +1,12 @@
+- type: entity
+  id: FtlVisualizerEntity
+  categories: [ HideSpawnMenu ]
+  description: Visualizer for shuttles arriving. You shouldn't see this!
+  components:
+  - type: FtlVisualizer
+    sprite:
+      sprite: /Textures/Effects/medi_holo.rsi
+      state: medi_holo
+  - type: Tag
+    tags:
+    - HideContextMenu

@@ -155,7 +155,12 @@ public sealed class AccessReaderSystem : EntitySystem
             return IsAllowedInternal(access, stationKeys, reader);
 
         if (!_containerSystem.TryGetContainer(target, reader.ContainerAccessProvider, out var container))
-            return Paused(target); // when mapping, containers with electronics arent spawned
+            return false;
+
+        // If entity is paused then always allow it at this point.
+        // Door electronics is kind of a mess but yeah, it should only be an unpaused ent interacting with it
+        if (Paused(target))
+            return true;
 
         foreach (var entity in container.ContainedEntities)
         {
@@ -382,17 +387,14 @@ public sealed class AccessReaderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Logs an access
+    /// Logs an access for a specific entity.
     /// </summary>
     /// <param name="ent">The reader to log the access on</param>
     /// <param name="accessor">The accessor to log</param>
-    private void LogAccess(Entity<AccessReaderComponent> ent, EntityUid accessor)
+    public void LogAccess(Entity<AccessReaderComponent> ent, EntityUid accessor)
     {
-        if (IsPaused(ent))
+        if (IsPaused(ent) || ent.Comp.LoggingDisabled)
             return;
-
-        if (ent.Comp.AccessLog.Count >= ent.Comp.AccessLogLimit)
-            ent.Comp.AccessLog.Dequeue();
 
         string? name = null;
         if (TryComp<NameIdentifierComponent>(accessor, out var nameIdentifier))
@@ -404,7 +406,21 @@ public sealed class AccessReaderSystem : EntitySystem
             && idCard.Comp is { BypassLogging: false, FullName: not null })
             name = idCard.Comp.FullName;
 
-        name ??= Loc.GetString("access-reader-unknown-id");
+        LogAccess(ent, name ?? Loc.GetString("access-reader-unknown-id"));
+    }
+
+    /// <summary>
+    /// Logs an access with a predetermined name
+    /// </summary>
+    /// <param name="ent">The reader to log the access on</param>
+    /// <param name="name">The name to log as</param>
+    public void LogAccess(Entity<AccessReaderComponent> ent, string name)
+    {
+        if (IsPaused(ent) || ent.Comp.LoggingDisabled)
+            return;
+
+        if (ent.Comp.AccessLog.Count >= ent.Comp.AccessLogLimit)
+            ent.Comp.AccessLog.Dequeue();
 
         var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
         ent.Comp.AccessLog.Enqueue(new AccessRecord(stationTime, name));

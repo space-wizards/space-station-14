@@ -14,6 +14,7 @@
     makeSentient: true
     name: ghost-role-information-space-dragon-name
     description: ghost-role-information-space-dragon-description
+    rules: ghost-role-information-space-dragon-rules
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -95,6 +96,16 @@
   - type: Flammable
     damage:
       types: {}
+  - type: StatusEffects # Overwriting basesimplemob to remove flash, getting flashed as dragon just feelsbad
+    allowed:
+    - SlowedDown
+    - Stutter
+    - Electrocution
+    - ForcedSleep
+    - TemporaryBlindness
+    - Pacified
+    - RadiationProtection
+    - Drowsiness
   - type: Temperature
     heatDamageThreshold: 800
   - type: Metabolizer
@@ -142,7 +153,6 @@
 - type: entity
   parent: BaseMobDragon
   id: MobDragon
-  suffix: No role or objectives
   components:
   - type: Dragon
     spawnRiftAction: ActionSpawnRift
@@ -154,10 +164,10 @@
     - MinorAntagonists
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   id: DragonsBreathGun
   name: dragon's lung
-  description: For dragon's breathing
+  description: For dragon's breathing.
   components:
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 5
@@ -180,6 +190,7 @@
   components:
   - type: GhostRole
     description: ghost-role-information-space-dragon-dungeon-description
+    rules: ghost-role-information-space-dragon-dungeon-rules
     raffle:
       settings: default
   - type: SlowOnDamage

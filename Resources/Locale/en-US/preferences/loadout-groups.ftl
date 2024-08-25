@@ -1,8 +1,21 @@
+# Errors
+loadout-group-species-restriction = This item is not available for your current species.
+
 # Miscellaneous
 loadout-group-trinkets = Trinkets
 loadout-group-glasses = Glasses
 loadout-group-backpack = Backpack
 loadout-group-instruments = Instruments
+loadout-group-survival-basic = Survival Box
+loadout-group-survival-extended = Extended Survival Box
+loadout-group-survival-clown = Clown Survival Box
+loadout-group-survival-medical = Medical Survival Box
+loadout-group-survival-security = Security Survival Box
+loadout-group-survival-syndicate = Github is forcing me to write text that is literally twice-impossible for the player to ever see, send help
+loadout-group-breath-tool = Species-dependent breath tools
+loadout-group-tank-harness = Species-specific survival equipment
+loadout-group-EVA-tank = Species-specific gas tank
+loadout-group-survival-mime = Mime Survival Box
 
 # Command
 loadout-group-captain-head = Captain head
@@ -23,6 +36,7 @@ loadout-group-passenger-mask = Passenger mask
 loadout-group-passenger-gloves = Passenger gloves
 loadout-group-passenger-outerclothing = Passenger outer clothing
 loadout-group-passenger-shoes = Passenger shoes
+loadout-group-passenger-neck = Passenger neck
 
 loadout-group-bartender-head = Bartender head
 loadout-group-bartender-jumpsuit = Bartender jumpsuit
@@ -48,6 +62,7 @@ loadout-group-janitor-head = Janitor head
 loadout-group-janitor-jumpsuit = Janitor jumpsuit
 loadout-group-janitor-gloves = Janitor gloves
 loadout-group-janitor-outerclothing = Janitor outer clothing
+loadout-group-janitor-plunger = Janitor plunger
 
 loadout-group-botanist-head = Botanist head
 loadout-group-botanist-jumpsuit = Botanist jumpsuit
@@ -66,6 +81,7 @@ loadout-group-mime-jumpsuit = Mime jumpsuit
 loadout-group-mime-backpack = Mime backpack
 loadout-group-mime-outerclothing = Mime outer clothing
 
+loadout-group-musician-jumpsuit = Musician jumpsuit
 loadout-group-musician-outerclothing = Musician outer clothing
 
 # Cargo
@@ -148,6 +164,7 @@ loadout-group-detective-jumpsuit = Detective jumpsuit
 loadout-group-detective-outerclothing = Detective outer clothing
 
 loadout-group-security-cadet-jumpsuit = Security cadet jumpsuit
+loadout-group-security-star = Security Star
 
 # Medical
 loadout-group-medical-gloves = Medical gloves
@@ -179,6 +196,8 @@ loadout-group-paramedic-shoes = Paramedic shoes
 
 # Wildcards
 loadout-group-reporter-jumpsuit = Reporter jumpsuit
+
+loadout-group-psychologist-jumpsuit = Psychologist jumpsuit
 
 loadout-group-boxer-jumpsuit = Boxer jumpsuit
 loadout-group-boxer-gloves = Boxer gloves

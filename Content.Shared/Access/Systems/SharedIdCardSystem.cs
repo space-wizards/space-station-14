@@ -114,7 +114,7 @@ public abstract class SharedIdCardSystem : EntitySystem
         return true;
     }
 
-    public bool TryChangeJobIcon(EntityUid uid, StatusIconPrototype jobIcon, IdCardComponent? id = null, EntityUid? player = null)
+    public bool TryChangeJobIcon(EntityUid uid, JobIconPrototype jobIcon, IdCardComponent? id = null, EntityUid? player = null)
     {
         if (!Resolve(uid, ref id))
         {
@@ -147,7 +147,7 @@ public abstract class SharedIdCardSystem : EntitySystem
         foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
         {
             if (department.Roles.Contains(job.ID))
-                id.JobDepartments.Add("department-" + department.ID);
+                id.JobDepartments.Add(department.ID);
         }
 
         Dirty(uid, id);

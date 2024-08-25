@@ -292,7 +292,7 @@
   name: lemoon cake
   parent: FoodCakeBase
   id: FoodCakeLemoon
-  description: A cake that represents the moon of earth
+  description: A cake that represents the moon of earth.
   components:
   - type: Sprite
     state: lemoon
@@ -699,7 +699,7 @@
     name: ghost-role-information-Cak-name
     allowMovement: true
     description: ghost-role-information-Cak-description
-    rules: ghost-role-information-Cak-rules
+    rules: ghost-role-information-nonantagonist-rules
     raffle:
       settings: short
   - type: GhostTakeoverAvailable
@@ -784,3 +784,12 @@
   - type: Tag
     tags:
     - Slice
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Consumable/Food/Baked/cake.rsi
+      state: suppermatter-shard
+    entries:
+      burger:
+        name: food-sequence-burger-content-suppermatter
+      taco:
+        name: food-sequence-content-suppermatter

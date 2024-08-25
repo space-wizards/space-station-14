@@ -5,6 +5,7 @@ using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
 using Content.Shared.CCVar;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -22,7 +23,6 @@ namespace Content.Server.Power.EntitySystems
         [Dependency] private readonly PowerNetConnectorSystem _powerNetConnector = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IParallelManager _parMan = default!;
-        [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
 
         private readonly PowerState _powerState = new();
         private readonly HashSet<PowerNet> _powerNetReconnectQueue = new();

@@ -1,11 +1,11 @@
 ﻿<DefaultWindow
-    xmlns="https://spacestation14.io" Title="{Loc Add Atmos}">
+    xmlns="https://spacestation14.io" Title="{Loc admin-ui-atmos-add}">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc Grid}" MinSize="100 0" />
+            <Label Text="{Loc admin-ui-atmos-grid}" MinSize="100 0" />
             <Control MinSize="50 0" />
             <OptionButton Name="GridOptions" MinSize="100 0" HorizontalExpand="True" />
         </BoxContainer>
-        <Button Name="SubmitButton" Text="{Loc Add Atmos}" />
+        <Button Name="SubmitButton" Text="{Loc admin-ui-atmos-add}" />
     </BoxContainer>
 </DefaultWindow>

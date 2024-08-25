@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e, modified by лазік#7305",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e, modified by лазік#7305. equipped-MASK-vox & equipped-HELMET-vox states taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/bc095ad398790a2b718b2bab4f2157cdd80a51da/icons/mob/clothing/species/vox/mask.dmi and modified by Flareguy",
   "size": {
     "x": 32,
     "y": 32
@@ -18,7 +18,15 @@
       "directions": 4
     },
     {
+      "name": "equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
       "name": "equipped-MASK",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-vox",
       "directions": 4
     },
     {

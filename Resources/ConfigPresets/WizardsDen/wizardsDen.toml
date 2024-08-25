@@ -5,8 +5,11 @@
 desc             = "Official English Space Station 14 servers. Vanilla, roleplay ruleset."
 lobbyenabled     = true
 soft_max_players = 80
+panic_bunker.enabled = true
+panic_bunker.disable_with_admins = true
+panic_bunker.enable_without_admins = true
 panic_bunker.show_reason = true
-panic_bunker.custom_reason = "You have not played on a Wizard's Den server long enough to connect to this server. Please play on another Wizard's Den server for now."
+panic_bunker.custom_reason = "You have not played on a Wizard's Den server long enough to connect to this server. Please play on Wizard's Den Lizard, Leviathan, or Farm Grass Hopper until you have more playtime."
 
 [infolinks]
 bug_report = "https://github.com/space-wizards/space-station-14/issues/new/choose"
@@ -34,6 +37,4 @@ limit = 10.0
 see_own_notes = true
 deadmin_on_join = true
 new_player_threshold = 600
-
-[worldgen]
-enabled = true
+alert.min_players_sharing_connection = 2

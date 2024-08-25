@@ -67,6 +67,7 @@
     deviceNetId: Wireless
     receiveFrequencyId: PDA
     prefix: device-address-prefix-console
+    savableAddress: false
   - type: WirelessNetworkConnection
     range: 500
   - type: CartridgeLoader
@@ -103,12 +104,24 @@
     - DoorBumpOpener
   - type: Input
     context: "human"
+  - type: SentienceTarget # sentient PDA = pAI lite
+    flavorKind: station-event-random-sentience-flavor-mechanical
+    weight: 0.001 # 1,000 PDAs = as likely to be picked as 1 regular animal
+  - type: BlockMovement
+    blockInteraction: false # lets the PDA toggle its own flashlight
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechVerb: Robotic
 
 - type: entity
   parent: BasePDA
   id: BaseMedicalPDA
   abstract: true
   components:
+  - type: ItemToggle
+    onUse: false
+  - type: ItemTogglePointLight
   - type: HealthAnalyzer
     scanDelay: 1
     scanningEndSound:
@@ -217,6 +230,8 @@
     borderColor: "#d7d7d0"
   - type: Icon
     state: pda-cook
+  - type: ReplacementAccent # for random sentience event
+    accent: italian
 
 - type: entity
   parent: BasePDA
@@ -254,9 +269,7 @@
     borderColor: "#C18199"
   - type: Icon
     state: pda-clown
-  - type: Slippery
-    paralyzeTime: 4
-    launchForwardsMultiplier: 1.5
+  - type: Slippery # secretly made of bananium
   - type: StepTrigger
   - type: CollisionWake
     enabled: false
@@ -298,6 +311,7 @@
     accentHColor: "#333333"
   - type: Icon
     state: pda-mime
+  - type: Muted # for random sentience event
 
 - type: entity
   name: chaplain PDA
@@ -638,7 +652,7 @@
 - type: entity
   parent: BasePDA
   id: CentcomPDA
-  name: CentCom PDA
+  name: CentComm PDA
   description: Light green sign of walking bureaucracy.
   components:
   - type: Pda
@@ -665,8 +679,10 @@
     id: UniversalIDCard
   - type: HealthAnalyzer
     scanDelay: 0
+    silent: true
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
+    notificationsEnabled: false
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
