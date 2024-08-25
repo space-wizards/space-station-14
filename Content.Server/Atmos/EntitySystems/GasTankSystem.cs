@@ -338,7 +338,7 @@ namespace Content.Server.Atmos.EntitySystems
                     range = GasTankComponent.MaxExplosionRange;
                 }
 
-                _explosions.TriggerExplosive(owner, radius: range);
+//                _explosions.TriggerExplosive(owner, radius: range);
 
                 return;
             }
