@@ -192,9 +192,7 @@
 - type: entity
   parent: BoxSurvival
   id: BoxMime
-  name: survival box
-  description: It's a box with basic internals inside.
-  suffix: Emergency
+  suffix: Mime, Emergency
   components:
   - type: StorageFill
     contents:
@@ -208,7 +206,7 @@
 - type: entity
   parent: BoxSurvivalNitrogen
   id: BoxMimeNitrogen
-  suffix: Emergency N2
+  suffix: Mime, Emergency N2
   components:
   - type: StorageFill
     contents:
