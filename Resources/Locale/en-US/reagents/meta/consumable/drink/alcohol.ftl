@@ -285,3 +285,24 @@ reagent-desc-uap = An unidentified alcoholic product...
 
 reagent-name-theehorsepussy = The Horsepussy
 reagent-desc-theehorsepussy = They are going this drink after me when i die
+
+reagent-name-lovetap = Love tap
+reagent-desc-lovetap = Straight Root Beer, with a love tap of Rum.
+
+reagent-name-calimotxo = Calimotxo
+reagent-desc-calimotxo = A classy, 50/50 mix of Wine and Cola.
+
+reagent-name-reaganomics = Reaganomics
+reagent-desc-reaganomics = Why would we ever want anything else?
+
+reagent-name-gatorwine = Gatorwine
+reagent-desc-gatorwine = No Reptillians were harmed in the making of this drink.
+
+reagent-name-rotgut = Rotgut
+reagent-desc-rotgut = A perfect excuse to check up with that cute girl in the emergency ward.
+
+reagent-name-white-gilgamesh = White Gilgamesh
+reagent-desc-white-gilgamesh = it isn't good
+
+reagent-name-bumwine = Bum Wine
+reagent-desc-bumwine = For the economical drinker. You know drinks are free though, right?
