@@ -19,16 +19,20 @@
   - type: Item
     size: Tiny
 
+# Muffins
+
 - type: entity
+  name: muffin
   parent: FoodInjectableBase
-  id: FoodMuffinBase
-  abstract: true
+  id: FoodBakedMuffin
+  description: A delicious and spongy little cake.
   components:
   - type: Food
     trash: 
     - FoodPlateMuffinTin
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/misc.rsi
+    state: muffin
   - type: SolutionContainerManager
     solutions:
       food:
@@ -44,29 +48,9 @@
   - type: Item
     size: Tiny
 
-# Muffins
-
-- type: entity
-  name: muffin
-  parent: FoodMuffinBase
-  id: FoodBakedMuffin
-  description: A delicious and spongy little cake.
-  components:
-  - type: Sprite
-    state: muffin
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 2
-
 - type: entity
   name: berry muffin
-  parent: FoodMuffinBase
+  parent: FoodBakedMuffin
   id: FoodBakedMuffinBerry
   description: A delicious and spongy little cake, with berries.
   components:
@@ -89,7 +73,7 @@
 
 - type: entity
   name: cherry muffin
-  parent: FoodMuffinBase
+  parent: FoodBakedMuffin
   id: FoodBakedMuffinCherry
   description: A sweet muffin with cherry bits.
   components:
@@ -112,7 +96,7 @@
 
 - type: entity
   name: bluecherry muffin
-  parent: FoodMuffinBase
+  parent: FoodBakedMuffin
   id: FoodBakedMuffinBluecherry
   description: Blue cherries inside a delicious muffin.
   components:
@@ -124,7 +108,7 @@
 
 - type: entity
   name: chocolate muffin
-  parent: FoodMuffinBase
+  parent: FoodBakedMuffin
   id: FoodBakedMuffinChocolate
   description: A delicious and spongy chocolate muffin.
   components:
@@ -144,7 +128,7 @@
 
 - type: entity
   name: banana muffin
-  parent: FoodMuffinBase
+  parent: FoodBakedMuffin
   id: FoodBakedMuffinBanana
   description: A delicious and spongy banana muffin.
   components:
