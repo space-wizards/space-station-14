@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: UBlueberry
-  changes:
-  - message: The guidebook has been heavily reorganized to improve convenience for
-      all types of users.
-    type: Tweak
-  id: 6703
-  time: '2024-06-08T23:00:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28603
 - author: Psychpsyo
   changes:
   - message: New lobby background art!
@@ -3869,3 +3861,10 @@
   id: 7202
   time: '2024-08-25T04:48:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31413
+- author: themias
+  changes:
+  - message: Thin firelocks now respect rotation when built
+    type: Fix
+  id: 7203
+  time: '2024-08-25T04:57:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31371
