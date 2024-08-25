@@ -62,7 +62,7 @@ entities:
           version: 6
         -1,1:
           ind: -1,1
-          tiles: eQAAAAAARQAAAAAARQAAAAAARQAAAAAARQAAAAAARQAAAAAAeQAAAAAAeAAAAAAAeAAAAAAAeQAAAAAAWQAAAAADWQAAAAABWQAAAAADWQAAAAACWQAAAAACWQAAAAAAeQAAAAAARQAAAAAARQAAAAAARQAAAAAARQAAAAAARQAAAAAAeQAAAAAAeAAAAAAAeAAAAAAAeQAAAAAAWQAAAAADWQAAAAACWQAAAAACWQAAAAABWQAAAAABWQAAAAAAeQAAAAAAeQAAAAAAHQAAAAACeQAAAAAAHQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAWQAAAAADWQAAAAABWQAAAAABWQAAAAACWQAAAAACWQAAAAAAWQAAAAABWQAAAAABWQAAAAABWQAAAAAAWQAAAAADWQAAAAABWQAAAAAAWQAAAAACWQAAAAAAWQAAAAAAWQAAAAADWQAAAAABWQAAAAACWQAAAAAAWQAAAAACWQAAAAAAWQAAAAAAWQAAAAAAWQAAAAAAWQAAAAABWQAAAAADWQAAAAADWQAAAAAAWQAAAAADWQAAAAABWQAAAAABWQAAAAACWQAAAAACWQAAAAABWQAAAAABWQAAAAABWQAAAAACeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAHQAAAAABHQAAAAADeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAHQAAAAAAeQAAAAAAeQAAAAAAHQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAADdgAAAAABeQAAAAAAHQAAAAABHQAAAAACeQAAAAAAHQAAAAADNgAAAAAANgAAAAAAHQAAAAABNgAAAAAANgAAAAAAHQAAAAABdgAAAAABdgAAAAAAdgAAAAADdgAAAAAAdgAAAAABdgAAAAACHQAAAAADHQAAAAADeQAAAAAAHQAAAAACNgAAAAAAHQAAAAACHQAAAAABHQAAAAADNgAAAAAAHQAAAAABdgAAAAACdgAAAAABdgAAAAAAdgAAAAACdgAAAAABeQAAAAAAHQAAAAAAHQAAAAABeQAAAAAAHQAAAAAANgAAAAAANgAAAAAANgAAAAAANgAAAAAANgAAAAAAHQAAAAABeQAAAAAAdgAAAAAAdgAAAAACdgAAAAAAdgAAAAACeQAAAAAAHQAAAAABHQAAAAABeQAAAAAAHQAAAAADNgAAAAAANgAAAAAANgAAAAAANgAAAAAANgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAdgAAAAABeQAAAAAAeQAAAAAAHQAAAAADHQAAAAAAeQAAAAAAHQAAAAAAHQAAAAACHQAAAAADNgAAAAAAHQAAAAADHQAAAAACLAAAAAAAeQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAADeQAAAAAAHQAAAAACHQAAAAADeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAALAAAAAAALAAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAeQAAAAAAHQAAAAAAHQAAAAABHQAAAAACHQAAAAACPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAUAAAAAAAeQAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAeQAAAAAAHQAAAAADHQAAAAABHQAAAAADHQAAAAABPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAHQAAAAADHQAAAAABHQAAAAAAHQAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAABwAAAAAABwAAAAAABwAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeQAAAAAAHQAAAAABHQAAAAABeQAAAAAAHQAAAAAAHQAAAAACHQAAAAADHQAAAAAAHQAAAAACHQAAAAAD
+          tiles: eQAAAAAARQAAAAAARQAAAAAARQAAAAAARQAAAAAARQAAAAAAeQAAAAAAeAAAAAAAeAAAAAAAeQAAAAAAWQAAAAADWQAAAAABWQAAAAADWQAAAAACWQAAAAACWQAAAAAAeQAAAAAARQAAAAAARQAAAAAARQAAAAAARQAAAAAARQAAAAAAeQAAAAAAeAAAAAAAeAAAAAAAeQAAAAAAWQAAAAADWQAAAAACWQAAAAACWQAAAAABWQAAAAABWQAAAAAAeQAAAAAAeQAAAAAAHQAAAAACeQAAAAAAHQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAWQAAAAADWQAAAAABWQAAAAABWQAAAAACWQAAAAACWQAAAAAAWQAAAAABWQAAAAABWQAAAAABWQAAAAAAWQAAAAADWQAAAAABWQAAAAAAWQAAAAACWQAAAAAAWQAAAAAAWQAAAAADWQAAAAABWQAAAAACWQAAAAAAWQAAAAACWQAAAAAAWQAAAAAAWQAAAAAAWQAAAAAAWQAAAAABWQAAAAADWQAAAAADWQAAAAAAWQAAAAADWQAAAAABWQAAAAABWQAAAAACWQAAAAACWQAAAAABWQAAAAABWQAAAAABWQAAAAACeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAHQAAAAABHQAAAAADeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAHQAAAAAAeQAAAAAAeQAAAAAAHQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAADdgAAAAABeQAAAAAAHQAAAAABHQAAAAACeQAAAAAAHQAAAAADNgAAAAAANgAAAAAAHQAAAAABNgAAAAAANgAAAAAAHQAAAAABdgAAAAABdgAAAAAAdgAAAAADdgAAAAAAdgAAAAABdgAAAAACHQAAAAADHQAAAAADeQAAAAAAHQAAAAACNgAAAAAAHQAAAAACHQAAAAABHQAAAAADNgAAAAAAHQAAAAABdgAAAAACdgAAAAABdgAAAAAAdgAAAAACdgAAAAABeQAAAAAAHQAAAAAAHQAAAAABeQAAAAAAHQAAAAAANgAAAAAANgAAAAAANgAAAAAANgAAAAAANgAAAAAAHQAAAAABeQAAAAAAdgAAAAAAdgAAAAACdgAAAAAAdgAAAAACeQAAAAAAHQAAAAABHQAAAAABeQAAAAAAHQAAAAADNgAAAAAANgAAAAAANgAAAAAANgAAAAAANgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAdgAAAAABeQAAAAAAeQAAAAAAHQAAAAADHQAAAAAAeQAAAAAAHQAAAAAAHQAAAAACHQAAAAADNgAAAAAAHQAAAAADHQAAAAACUAAAAAAAeQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAADeQAAAAAAHQAAAAACHQAAAAADeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAALAAAAAAALAAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAeQAAAAAAHQAAAAAAHQAAAAABHQAAAAACHQAAAAACPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAALAAAAAAAeQAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAeQAAAAAAHQAAAAADHQAAAAABHQAAAAADHQAAAAABPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAHQAAAAADHQAAAAABHQAAAAAAHQAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAABwAAAAAABwAAAAAABwAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeQAAAAAAHQAAAAABHQAAAAABeQAAAAAAHQAAAAAAHQAAAAACHQAAAAADHQAAAAAAHQAAAAACHQAAAAAD
           version: 6
         0,1:
           ind: 0,1
@@ -19203,6 +19203,11 @@ entities:
     - type: Transform
       pos: -28.5,-23.5
       parent: 4812
+  - uid: 12629
+    components:
+    - type: Transform
+      pos: 26.5,13.5
+      parent: 4812
 - proto: CableApcStack
   entities:
   - uid: 6196
@@ -30516,13 +30521,6 @@ entities:
     - type: Transform
       pos: -36.403183,-24.261238
       parent: 4812
-- proto: ClothingUniformJumpskirtJanimaid
-  entities:
-  - uid: 9040
-    components:
-    - type: Transform
-      pos: 10.492298,52.554813
-      parent: 4812
 - proto: ClothingUniformJumpskirtOperative
   entities:
   - uid: 9053
@@ -31810,6 +31808,14 @@ entities:
     components:
     - type: Transform
       pos: -36.5,30.5
+      parent: 4812
+- proto: CurtainsWhiteOpen
+  entities:
+  - uid: 12616
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -15.5,27.5
       parent: 4812
 - proto: DawInstrumentMachineCircuitboard
   entities:
@@ -36944,11 +36950,10 @@ entities:
           ent: null
 - proto: FloorDrain
   entities:
-  - uid: 2490
+  - uid: 2489
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -15.5,29.5
+      pos: -15.5,27.5
       parent: 4812
     - type: Fixtures
       fixtures: {}
@@ -55037,11 +55042,6 @@ entities:
     - type: Transform
       pos: 10.5,30.5
       parent: 4812
-  - uid: 3229
-    components:
-    - type: Transform
-      pos: -15.5,29.5
-      parent: 4812
   - uid: 3421
     components:
     - type: Transform
@@ -56895,13 +56895,6 @@ entities:
     - type: Transform
       pos: 8.48969,29.428799
       parent: 4812
-- proto: MaterialReclaimer
-  entities:
-  - uid: 4807
-    components:
-    - type: Transform
-      pos: 20.5,19.5
-      parent: 4812
 - proto: MaterialWoodPlank
   entities:
   - uid: 8415
@@ -58631,7 +58624,7 @@ entities:
   - uid: 10860
     components:
     - type: Transform
-      pos: -22.5,-1.5
+      pos: -17.5,1.5
       parent: 4812
     - type: ContainerContainer
       containers:
@@ -61601,6 +61594,12 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,-38.5
+      parent: 4812
+  - uid: 12628
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 26.5,11.5
       parent: 4812
 - proto: ReinforcedPlasmaWindow
   entities:
@@ -65513,10 +65512,10 @@ entities:
       parent: 4812
 - proto: SoapNT
   entities:
-  - uid: 2495
+  - uid: 3229
     components:
     - type: Transform
-      pos: -15.503267,29.527489
+      pos: -15.515801,27.503595
       parent: 4812
 - proto: SodaDispenser
   entities:
@@ -66945,6 +66944,49 @@ entities:
       parent: 4812
 - proto: SurveillanceCameraCommand
   entities:
+  - uid: 2495
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 7.5,46.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: AI Core Entrance
+  - uid: 3962
+    components:
+    - type: Transform
+      pos: -6.5,32.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: Bridge West
+  - uid: 9040
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 15.5,45.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: AI Core Maint
+  - uid: 11618
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 10.5,53.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: AI Core Core
   - uid: 12081
     components:
     - type: Transform
@@ -67041,6 +67083,28 @@ entities:
       - SurveillanceCameraCommand
       nameSet: True
       id: AI Core Entrance
+  - uid: 12322
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 3.5,45.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: AI Core Airlock
+  - uid: 12466
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 2.5,43.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: AI Core Airlock Ext
   - uid: 12522
     components:
     - type: Transform
@@ -67072,6 +67136,39 @@ entities:
       - SurveillanceCameraCommand
       nameSet: True
       id: EvA Storage
+  - uid: 12617
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.5,26.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: Bridge Entrance East
+  - uid: 12618
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -15.5,29.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: Captain Bathroom
+  - uid: 12619
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -7.5,26.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: Bridge Entrance West
 - proto: SurveillanceCameraEngineering
   entities:
   - uid: 12064
@@ -67128,6 +67225,189 @@ entities:
       - SurveillanceCameraEngineering
       nameSet: True
       id: Atmospherics
+  - uid: 12587
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -34.5,3.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos Lobby
+  - uid: 12588
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -41.5,9.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos North
+  - uid: 12589
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -50.5,-0.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos Tanks South
+  - uid: 12590
+    components:
+    - type: Transform
+      pos: -50.5,13.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos Tanks North
+  - uid: 12591
+    components:
+    - type: Transform
+      pos: -48.5,-4.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos Airlock
+  - uid: 12592
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -43.5,-1.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Smes Room
+  - uid: 12593
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -40.5,-1.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos Cleanroom
+  - uid: 12594
+    components:
+    - type: Transform
+      pos: -31.5,-9.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Engineering Lobby
+  - uid: 12595
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -45.5,-14.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Engineering Maints Door
+  - uid: 12602
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -53.5,-24.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Solars Southwest Power Room
+  - uid: 12603
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -57.5,-22.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Solars Southwest Airlock
+  - uid: 12608
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 32.5,-38.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Solars Southeast Power Room
+  - uid: 12609
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 39.5,-36.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Solars Southeast Airlock
+  - uid: 12612
+    components:
+    - type: Transform
+      pos: 23.5,3.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Technical Storage
+  - uid: 12614
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 22.5,8.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Secure Storage
+  - uid: 12625
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -36.5,-7.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Engi Maint Junction
+  - uid: 12626
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -40.5,-5.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Engineering
 - proto: SurveillanceCameraGeneral
   entities:
   - uid: 12060
@@ -67320,6 +67600,93 @@ entities:
       - SurveillanceCameraGeneral
       nameSet: True
       id: Dormitory
+  - uid: 12583
+    components:
+    - type: Transform
+      pos: 11.5,34.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: North Airlock External
+  - uid: 12584
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 12.5,32.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: North Airlock Internal
+  - uid: 12586
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -20.5,11.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Tool Room
+  - uid: 12604
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -21.5,-32.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Chaplain Crematorium
+  - uid: 12605
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -24.5,-37.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Chaplain Office
+  - uid: 12606
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 8.5,-35.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Disposals
+  - uid: 12615
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,20.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Main Hallway Bridge
+  - uid: 12627
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -23.5,-11.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Main Hall Library
 - proto: SurveillanceCameraMedical
   entities:
   - uid: 12072
@@ -67344,6 +67711,70 @@ entities:
       - SurveillanceCameraMedical
       nameSet: True
       id: Virology
+  - uid: 12596
+    components:
+    - type: Transform
+      pos: -18.5,-23.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraMedical
+      nameSet: True
+      id: Medical Triage
+  - uid: 12597
+    components:
+    - type: Transform
+      pos: -18.5,-18.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraMedical
+      nameSet: True
+      id: Morgue
+  - uid: 12598
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -16.5,-16.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraMedical
+      nameSet: True
+      id: Cloning
+  - uid: 12599
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -24.5,-26.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraMedical
+      nameSet: True
+      id: CMO Office
+  - uid: 12600
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -22.5,-26.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraMedical
+      nameSet: True
+      id: Surgery
+  - uid: 12601
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -10.5,-27.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraMedical
+      nameSet: True
+      id: Medical Storage
 - proto: SurveillanceCameraRouterCommand
   entities:
   - uid: 2732
@@ -67455,6 +67886,28 @@ entities:
       - SurveillanceCameraScience
       nameSet: True
       id: Research Director's Room
+  - uid: 12607
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 18.5,-25.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraScience
+      nameSet: True
+      id: Sci Maint Junction
+  - uid: 12610
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 31.5,-27.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraScience
+      nameSet: True
+      id: Anomaly Generator
 - proto: SurveillanceCameraSecurity
   entities:
   - uid: 12058
@@ -67542,6 +67995,67 @@ entities:
       - SurveillanceCameraSecurity
       nameSet: True
       id: Detective office
+  - uid: 12611
+    components:
+    - type: Transform
+      pos: 18.5,-12.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Detective Observation Room
+  - uid: 12620
+    components:
+    - type: Transform
+      pos: -26.5,19.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Security Cell 1
+  - uid: 12621
+    components:
+    - type: Transform
+      pos: -26.5,16.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Security Cell 2
+  - uid: 12622
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -31.5,23.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Perma Entrance
+  - uid: 12623
+    components:
+    - type: Transform
+      pos: -29.5,26.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Perma Cell 1
+  - uid: 12624
+    components:
+    - type: Transform
+      pos: -25.5,26.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Perma Cell 2
 - proto: SurveillanceCameraService
   entities:
   - uid: 12546
@@ -67710,6 +68224,28 @@ entities:
       - SurveillanceCameraSupply
       nameSet: True
       id: Salvagers
+  - uid: 12585
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 15.5,30.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSupply
+      nameSet: True
+      id: QM office
+  - uid: 12613
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 27.5,15.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSupply
+      nameSet: True
+      id: Salvage Bay Airlock
 - proto: Syringe
   entities:
   - uid: 6248
@@ -69487,12 +70023,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 10.5,29.5
       parent: 4812
-  - uid: 2489
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -15.5,27.5
-      parent: 4812
   - uid: 3452
     components:
     - type: Transform
@@ -69516,6 +70046,13 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -19.5,28.5
+      parent: 4812
+- proto: ToiletGoldenDirtyWater
+  entities:
+  - uid: 2490
+    components:
+    - type: Transform
+      pos: -15.5,29.5
       parent: 4812
 - proto: TomatoSeeds
   entities:
@@ -69610,13 +70147,6 @@ entities:
     components:
     - type: Transform
       pos: -53.589386,-16.742252
-      parent: 4812
-- proto: ToyAi
-  entities:
-  - uid: 3962
-    components:
-    - type: Transform
-      pos: 10.469682,53.04013
       parent: 4812
 - proto: ToyIan
   entities:
@@ -69774,6 +70304,17 @@ entities:
         - Right: Reverse
         - Middle: Off
         11244:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+  - uid: 12630
+    components:
+    - type: Transform
+      pos: 27.5,11.5
+      parent: 4812
+    - type: DeviceLinkSource
+      linkedPorts:
+        12628:
         - Left: Forward
         - Right: Reverse
         - Middle: Off
@@ -70308,6 +70849,13 @@ entities:
     components:
     - type: Transform
       pos: -37.5,-33.5
+      parent: 4812
+- proto: VendingMachineWinter
+  entities:
+  - uid: 4807
+    components:
+    - type: Transform
+      pos: -22.5,-1.5
       parent: 4812
 - proto: VendingMachineYouTool
   entities:
