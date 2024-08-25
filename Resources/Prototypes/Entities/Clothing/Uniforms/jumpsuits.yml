@@ -1189,9 +1189,9 @@
   description: A sign of skill and prestige within the security department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi
+    sprite: GreyStation/Clothing/Uniforms/Jumpsuit/senior_officer.rsi # GreyStation - Resprite
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi
+    sprite: GreyStation/Clothing/Uniforms/Jumpsuit/senior_officer.rsi # GreyStation - Resprite
 
 - type: entity
   parent: ClothingUniformBase
