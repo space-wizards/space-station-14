@@ -1,2 +1,2 @@
 item-toggle-activate = Activate
-item-toggle-deactivate = Deactive
+item-toggle-deactivate = Deactivate

@@ -96,12 +96,7 @@ public sealed class StationAiVisionSystem : EntitySystem
             // Get all other relevant tiles.
             while (tileEnumerator.MoveNext(out var tileRef))
             {
-                var tileBounds = _lookup.GetLocalBounds(tileRef.GridIndices, grid.Comp.TileSize).Enlarged(-0.05f);
-
-                _occluders.Clear();
-                _lookup.GetLocalEntitiesIntersecting(grid.Owner, tileBounds, _occluders, LookupFlags.Static);
-
-                if (_occluders.Count > 0)
+                if (IsOccluded(grid, tileRef.GridIndices))
                 {
                     _opaque.Add(tileRef.GridIndices);
                 }
@@ -124,6 +119,25 @@ public sealed class StationAiVisionSystem : EntitySystem
         _parallel.ProcessNow(_job, _job.Data.Count);
 
         return TargetFound;
+    }
+
+    private bool IsOccluded(Entity<MapGridComponent> grid, Vector2i tile)
+    {
+        var tileBounds = _lookup.GetLocalBounds(tile, grid.Comp.TileSize).Enlarged(-0.05f);
+        _occluders.Clear();
+        _lookup.GetLocalEntitiesIntersecting(grid.Owner, tileBounds, _occluders, LookupFlags.Static);
+        var anyOccluders = false;
+
+        foreach (var occluder in _occluders)
+        {
+            if (!occluder.Comp.Enabled)
+                continue;
+
+            anyOccluders = true;
+            break;
+        }
+
+        return anyOccluders;
     }
 
     /// <summary>
@@ -161,12 +175,7 @@ public sealed class StationAiVisionSystem : EntitySystem
 
         while (tileEnumerator.MoveNext(out var tileRef))
         {
-            var tileBounds = _lookup.GetLocalBounds(tileRef.GridIndices, grid.Comp.TileSize).Enlarged(-0.05f);
-
-            _occluders.Clear();
-            _lookup.GetLocalEntitiesIntersecting(grid.Owner, tileBounds, _occluders, LookupFlags.Static);
-
-            if (_occluders.Count > 0)
+            if (IsOccluded(grid, tileRef.GridIndices))
             {
                 _opaque.Add(tileRef.GridIndices);
             }
@@ -182,12 +191,7 @@ public sealed class StationAiVisionSystem : EntitySystem
             if (_viewportTiles.Contains(tileRef.GridIndices))
                 continue;
 
-            var tileBounds = _lookup.GetLocalBounds(tileRef.GridIndices, grid.Comp.TileSize).Enlarged(-0.05f);
-
-            _occluders.Clear();
-            _lookup.GetLocalEntitiesIntersecting(grid.Owner, tileBounds, _occluders, LookupFlags.Static);
-
-            if (_occluders.Count > 0)
+            if (IsOccluded(grid, tileRef.GridIndices))
             {
                 _opaque.Add(tileRef.GridIndices);
             }
@@ -479,11 +483,11 @@ public sealed class StationAiVisionSystem : EntitySystem
 
             if (TargetTile != null)
             {
-                if (vis2.TryGetValue(TargetTile.Value, out var tileVis2))
+                if (vis1.TryGetValue(TargetTile.Value, out var tileVis))
                 {
                     DebugTools.Assert(seedTiles.Contains(TargetTile.Value));
 
-                    if (tileVis2 != 0)
+                    if (tileVis != 0)
                     {
                         lock (System)
                         {
@@ -502,9 +506,9 @@ public sealed class StationAiVisionSystem : EntitySystem
                     if (!System._viewportTiles.Contains(tile))
                         continue;
 
-                    var tileVis2 = vis2.GetValueOrDefault(tile, 0);
+                    var tileVis = vis1.GetValueOrDefault(tile, 0);
 
-                    if (tileVis2 != 0)
+                    if (tileVis != 0)
                     {
                         // No idea if it's better to do this inside or out.
                         lock (VisibleTiles)

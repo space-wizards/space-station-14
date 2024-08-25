@@ -25,7 +25,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
-using Content.Shared.Power.Components;
+using Content.Shared.Power;
 using Content.Shared.Verbs;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;

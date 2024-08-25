@@ -4,7 +4,7 @@ using Content.Server.Wires;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
-using Content.Shared.Power.Components;
+using Content.Shared.Power;
 using Content.Shared.Wires;
 using Robust.Shared.Player;
 
