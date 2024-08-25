@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Psychpsyo
-  changes:
-  - message: New lobby background art!
-    type: Add
-  id: 6704
-  time: '2024-06-08T23:29:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28724
 - author: AJCM-git
   changes:
   - message: When people with less than an hour playing join the game, the guidebook
@@ -3868,3 +3861,10 @@
   id: 7203
   time: '2024-08-25T04:57:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31371
+- author: IProduceWidgets
+  changes:
+  - message: Oasis Voxbox is no longer a pressure bomb. (Thanks Delta)
+    type: Fix
+  id: 7204
+  time: '2024-08-25T05:42:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31415
