@@ -15028,7 +15028,7 @@ entities:
     - type: Transform
       pos: 10.5,-12.5
       parent: 60
-  - uid: 21759
+  - uid: 21758
     components:
     - type: Transform
       pos: 10.5,-13.5
@@ -122655,12 +122655,12 @@ entities:
     - type: Transform
       pos: -33.5,-21.5
       parent: 60
-  - uid: 21186
+  - uid: 21085
     components:
     - type: Transform
       pos: 44.5,17.5
       parent: 60
-  - uid: 21187
+  - uid: 21186
     components:
     - type: Transform
       pos: 43.5,17.5
@@ -122687,17 +122687,17 @@ entities:
     - type: Transform
       pos: 6.5,-26.5
       parent: 60
-  - uid: 21754
+  - uid: 21753
     components:
     - type: Transform
       pos: 43.5,11.5
       parent: 60
-  - uid: 21755
+  - uid: 21754
     components:
     - type: Transform
       pos: 45.5,17.5
       parent: 60
-  - uid: 21758
+  - uid: 21755
     components:
     - type: Transform
       pos: 45.5,11.5
@@ -123867,7 +123867,7 @@ entities:
         24352:
         - On: On
         - Off: Off
-  - uid: 21753
+  - uid: 21187
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
@@ -123875,19 +123875,19 @@ entities:
       parent: 60
     - type: DeviceLinkSource
       linkedPorts:
-        21187:
-        - On: Open
-        - Off: Close
         21186:
         - On: Open
         - Off: Close
-        21755:
+        21085:
         - On: Open
         - Off: Close
         21754:
         - On: Open
         - Off: Close
-        21758:
+        21753:
+        - On: Open
+        - Off: Close
+        21755:
         - On: Open
         - Off: Close
 - proto: SignAnomaly
@@ -131001,11 +131001,6 @@ entities:
       parent: 60
 - proto: SurveillanceCameraRouterGeneral
   entities:
-  - uid: 21085
-    components:
-    - type: Transform
-      pos: 24.5,18.5
-      parent: 60
   - uid: 24662
     components:
     - type: Transform
@@ -134411,6 +134406,11 @@ entities:
     components:
     - type: Transform
       pos: -51.5,8.5
+      parent: 60
+  - uid: 21759
+    components:
+    - type: Transform
+      pos: 24.5,18.5
       parent: 60
 - proto: TelecomServerCircuitboard
   entities:
