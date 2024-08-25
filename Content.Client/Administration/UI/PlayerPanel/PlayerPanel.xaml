@@ -1,0 +1,36 @@
+<ui:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+    Title="{Loc ban-panel-title}" MinSize="300 300">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal">
+        <Label Name="PlayerName"/>
+        <Button Name="UsernameCopyButton" Text="{Loc player-panel-copy-username}"/>
+        </BoxContainer>
+       <BoxContainer Orientation="Horizontal">
+           <Label Name="Whitelisted"/>
+           <controls:ConfirmButton Name="WhitelistToggle" Text="{Loc 'player-panel-false'}" Visible="False"></controls:ConfirmButton>
+       </BoxContainer>
+       <Label Name="Playtime"/>
+       <Label Name="Notes"/>
+       <Label Name="Bans"/>
+       <Label Name="RoleBans"/>
+       <Label Name="SharedConnections"/>
+
+       <BoxContainer Align="Center">
+           <GridContainer Rows="5">
+            <Button Name="NotesButton" Text="{Loc player-panel-show-notes}" SetWidth="136" Disabled="True"/>
+            <Button Name="AhelpButton" Text="{Loc player-panel-help}" Disabled="True"/>
+            <Button Name="FreezeButton" Text = "{Loc player-panel-freeze}" Disabled="True"/>
+            <controls:ConfirmButton Name="KickButton" Text="{Loc player-panel-kick}" Disabled="True"/>
+            <controls:ConfirmButton Name="DeleteButton" Text="{Loc player-panel-delete}" Disabled="True"/>
+            <Button Name="ShowBansButton" Text="{Loc player-panel-show-bans}" SetWidth="136" Disabled="True"/>
+            <Button Name="LogsButton" Text="{Loc player-panel-logs}" Disabled="True"/>
+            <Button Name="FreezeAndMuteToggleButton" Text="{Loc player-panel-freeze-and-mute}" Disabled="True"/>
+            <Button Name="BanButton" Text="{Loc player-panel-ban}" Disabled="True"/>
+            <controls:ConfirmButton Name="RejuvenateButton" Text="{Loc player-panel-rejuvenate}" Disabled="True"/>
+           </GridContainer>
+       </BoxContainer>
+    </BoxContainer>
+</ui:FancyWindow>

@@ -1,5 +1,5 @@
 - type: entity
-  name: Mimic
+  name: mimic
   id: MobMimic
   parent: [ SimpleMobBase, MobCombat ]
   description: Surprise. # When this gets a proper write this should use the object's actual description >:)

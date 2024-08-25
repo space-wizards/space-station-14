@@ -175,9 +175,11 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         var dungeonOffset = new Vector2(0f, dungeonOffsetDistance);
         dungeonOffset = dungeonRotation.RotateVec(dungeonOffset);
         var dungeonMod = _prototypeManager.Index<SalvageDungeonModPrototype>(mission.Dungeon);
-        var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(dungeonMod.Proto);
-        var dungeon = await WaitAsyncTask(_dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, (Vector2i) dungeonOffset,
+        var dungeonConfig = _prototypeManager.Index(dungeonMod.Proto);
+        var dungeons = await WaitAsyncTask(_dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, (Vector2i) dungeonOffset,
             _missionParams.Seed));
+
+        var dungeon = dungeons.First();
 
         // Aborty
         if (dungeon.Rooms.Count == 0)

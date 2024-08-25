@@ -25,10 +25,7 @@ public sealed class FaxBoundUi : BoundUserInterface
     {
         base.Open();
 
-        _window = new FaxWindow();
-        _window.OpenCentered();
-
-        _window.OnClose += Close;
+        _window = this.CreateWindow<FaxWindow>();
         _window.FileButtonPressed += OnFileButtonPressed;
         _window.CopyButtonPressed += OnCopyButtonPressed;
         _window.SendButtonPressed += OnSendButtonPressed;
@@ -103,12 +100,5 @@ public sealed class FaxBoundUi : BoundUserInterface
             return;
 
         _window.UpdateState(cast);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (disposing)
-            _window?.Dispose();
     }
 }

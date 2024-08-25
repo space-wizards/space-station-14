@@ -9,7 +9,7 @@ public static class StaticPowerSystem
     public static bool IsPowered(this EntitySystem system, EntityUid uid, IEntityManager entManager, ApcPowerReceiverComponent? receiver = null)
     {
         if (receiver == null && !entManager.TryGetComponent(uid, out receiver))
-            return false;
+            return true;
 
         return receiver.Powered;
     }
