@@ -25,6 +25,8 @@ using Robust.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Damage.Components;
+using Content.Shared.Power;
+using Content.Shared.Power.Components;
 
 namespace Content.Server.Light.EntitySystems
 {

@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: Zonespace27
-  changes:
-  - message: Fixed a typo under the "Cargonia" header in the glossary.
-    type: Fix
-  id: 6707
-  time: '2024-06-10T13:19:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28818
-- author: EmoGarbage404
-  changes:
-  - message: Fixed drinks page not having a search bar.
-    type: Fix
-  id: 6708
-  time: '2024-06-10T13:20:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28815
-- author: Aquif
-  changes:
-  - message: It is now possible to save after chaining you job unavailable preference.
-    type: Fix
-  id: 6709
-  time: '2024-06-11T02:48:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28839
 - author: lzk228
   changes:
   - message: Added reward info in cargo bounty label.
@@ -3865,3 +3844,25 @@
   id: 7206
   time: '2024-08-25T10:35:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30189
+- author: EmoGarbage404
+  changes:
+  - message: Added blueprints! These can be found by salvagers and inserted into an
+      autolathe in order to unlock new recipes.
+    type: Add
+  id: 7207
+  time: '2024-08-25T12:06:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31138
+- author: deltanedas
+  changes:
+  - message: Fixed borgs losing access when they run out of power.
+    type: Fix
+  id: 7208
+  time: '2024-08-25T12:17:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31392
+- author: metalgearsloth
+  changes:
+  - message: Actions now activate on key-down, not key-up.
+    type: Tweak
+  id: 7209
+  time: '2024-08-25T12:36:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31191
