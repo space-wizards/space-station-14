@@ -36,13 +36,13 @@
         - WallLayer
   - type: AccessReader
     access: [["Security"]]
+  - type: LockAnchor
+  - type: LockUnanchor
   - type: Lock
     locked: false
     lockOnClick: true # toggle lock just by clicking on barrier
     lockTime: 5
     unlockTime: 5
-    anchorOnLock: true
-    unanchorOnUnlock: true
     lockedFixtureId: barrier
   - type: Damageable
     damageContainer: Inorganic
