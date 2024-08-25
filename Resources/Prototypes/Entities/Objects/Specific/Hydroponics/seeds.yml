@@ -654,6 +654,8 @@
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/pyrotton.rsi
 
+- type: entity
+  parent: SeedBase
   id: RealCapfruitSeeds
   name: packet of capfruit seeds
   description: "Is it real, or is it fake?"
