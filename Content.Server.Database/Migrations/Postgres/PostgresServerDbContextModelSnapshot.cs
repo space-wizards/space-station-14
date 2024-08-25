@@ -906,6 +906,7 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.Property<string>("GroupName")
                         .IsRequired()
+                        .HasColumnType("text")
                         .HasColumnName("group_name");
 
                     b.Property<int>("ProfileRoleLoadoutId")
@@ -935,6 +936,7 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.Property<string>("RoleName")
                         .IsRequired()
+                        .HasColumnType("text")
                         .HasColumnName("role_name");
 
                     b.HasKey("Id")
