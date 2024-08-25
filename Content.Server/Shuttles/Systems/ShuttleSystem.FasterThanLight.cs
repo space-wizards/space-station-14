@@ -703,10 +703,16 @@ public sealed partial class ShuttleSystem
     /// Tries to get the target position to FTL near the target coordinates.
     /// If the target coordinates have a mapgrid then will try to offset the AABB.
     /// </summary>
-    private bool TryGetFTLProximity(EntityUid shuttleUid, EntityCoordinates targetCoordinates,
+    /// <param name="minOffset">Min offset for the final FTL.</param>
+    /// <param name="maxOffset">Max offset for the final FTL from the box we spawn.</param>
+    private bool TryGetFTLProximity(
+        EntityUid shuttleUid,
+        EntityCoordinates targetCoordinates,
         out EntityCoordinates coordinates, out Angle angle,
+        float minOffset = 0f, float maxOffset = 64f,
         TransformComponent? xform = null, TransformComponent? targetXform = null)
     {
+        DebugTools.Assert(minOffset < maxOffset);
         coordinates = EntityCoordinates.Invalid;
         angle = Angle.Zero;
 
@@ -722,20 +728,10 @@ public sealed partial class ShuttleSystem
         // Can't just get an AABB of every grid as we may spawn very far away.
         var nearbyGrids = new HashSet<EntityUid>();
         var shuttleAABB = Comp<MapGridComponent>(shuttleUid).LocalAABB;
-        Box2 targetLocalAABB;
 
-        if (TryComp<MapGridComponent>(targetXform.GridUid, out var targetGrid))
-        {
-            targetLocalAABB = targetGrid.LocalAABB.Translated(targetCoordinates.Position);
-            nearbyGrids.Add(targetXform.GridUid.Value);
-        }
-        else
-        {
-            targetLocalAABB = new Box2();
-        }
-
-        // Max offset for the final FTL from the box we spawn.
-        var maxOffset = 64f;
+        // Start with small point.
+        // If our target pos is offset we mot even intersect our target's AABB so we don't include it.
+        var targetLocalAABB = Box2.CenteredAround(targetCoordinates.Position, Vector2.One);
 
         // How much we expand the target AABB be.
         // We half it because we only need the width / height in each direction if it's placed at a particular spot.
@@ -801,7 +797,6 @@ public sealed partial class ShuttleSystem
 
         // Now we have a targetAABB. This has already been expanded to account for our fat ass.
         Vector2 spawnPos;
-        var offset = Vector2.Zero;
 
         if (TryComp<PhysicsComponent>(shuttleUid, out var shuttleBody))
         {
@@ -809,17 +804,16 @@ public sealed partial class ShuttleSystem
             _physics.SetAngularVelocity(shuttleUid, 0f, body: shuttleBody);
         }
 
-        if (TryComp(shuttleUid, out MapGridComponent? shuttleGrid))
-        {
-            offset = -shuttleGrid.LocalAABB.Center;
-        }
-
+        // TODO: This should prefer the position's angle instead.
         // TODO: This is pretty crude for multiple landings.
         if (nearbyGrids.Count > 1 || !HasComp<MapComponent>(targetXform.GridUid))
         {
+            // Pick a random angle
+            var offsetAngle = _random.NextAngle();
+
             // Our valid spawn positions are <targetAABB width / height +  offset> away.
-            var minRadius = MathF.Min(targetAABB.Width / 2f, targetAABB.Height / 2f);
-            spawnPos = targetAABB.Center + _random.NextVector2(minRadius, minRadius + maxOffset);
+            var minRadius = MathF.Max(targetAABB.Width / 2f, targetAABB.Height / 2f);
+            spawnPos = targetAABB.Center + offsetAngle.RotateVec(new Vector2(_random.NextFloat(minRadius + minOffset, minRadius + maxOffset), 0f));
         }
         else if (shuttleBody != null)
         {
@@ -828,6 +822,14 @@ public sealed partial class ShuttleSystem
         else
         {
             spawnPos = _transform.GetWorldPosition(targetXform);
+        }
+
+        var offset = Vector2.Zero;
+
+        // Offset it because transform does not correspond to AABB position.
+        if (TryComp(shuttleUid, out MapGridComponent? shuttleGrid))
+        {
+            offset = -shuttleGrid.LocalAABB.Center;
         }
 
         if (!HasComp<MapComponent>(targetXform.GridUid))
@@ -860,7 +862,7 @@ public sealed partial class ShuttleSystem
             return false;
         }
 
-        if (!TryGetFTLProximity(shuttleUid, new EntityCoordinates(targetUid, Vector2.Zero), out var coords, out var angle, xform, targetXform))
+        if (!TryGetFTLProximity(shuttleUid, new EntityCoordinates(targetUid, Vector2.Zero), out var coords, out var angle, xform: xform, targetXform: targetXform))
             return false;
 
         _transform.SetCoordinates(shuttleUid, xform, coords, rotation: angle);
@@ -906,7 +908,6 @@ public sealed partial class ShuttleSystem
             var aabb = fixture.Shape.ComputeAABB(transform, 0);
 
             // Shift it slightly
-            aabb = aabb.Translated(-grid.TileSizeHalfVector);
             // Create a small border around it.
             aabb = aabb.Enlarged(0.2f);
             aabbs.Add(aabb);
