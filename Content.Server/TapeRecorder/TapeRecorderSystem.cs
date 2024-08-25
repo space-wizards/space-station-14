@@ -1,8 +1,8 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Hands.Systems;
-using Content.Server.Paper;
 using Content.Server.Speech;
 using Content.Server.VoiceMask;
+using Content.Shared.Paper;
 using Content.Shared.TapeRecorder;
 using Content.Shared.TapeRecorder.Components;
 using Content.Shared.TapeRecorder.Events;
@@ -138,7 +138,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
         if (Exists(player))
             _handsSystem.PickupOrDrop(player, paper, checkActionBlocker: false);
 
-        if (!HasComp<PaperComponent>(paper))
+        if (!TryComp<PaperComponent>(paper, out var paperComp))
             return;
 
         _metaDataSystem.SetEntityName(paper, Loc.GetString("tape-recorder-transcript-title"));
@@ -163,7 +163,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
         text.AppendLine();
         text.Append(Loc.GetString("tape-recorder-print-end-text"));
 
-        _paperSystem.SetContent(paper, text.ToString());
+        _paperSystem.SetContent((paper, paperComp), text.ToString());
 
         comp.CooldownEndTime = _gameTiming.CurTime + comp.PrintCooldown;
     }
