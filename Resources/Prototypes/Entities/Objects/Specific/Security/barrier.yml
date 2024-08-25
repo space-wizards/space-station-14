@@ -34,8 +34,6 @@
           radius: 0.45
         layer:
         - WallLayer
-  - type: DeployableBarrier
-    fixture: barrier
   - type: AccessReader
     access: [["Security"]]
   - type: Lock
@@ -43,6 +41,9 @@
     lockOnClick: true # toggle lock just by clicking on barrier
     lockTime: 5
     unlockTime: 5
+    anchorOnLock: true
+    unanchorOnUnlock: true
+    lockedFixtureId: barrier
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

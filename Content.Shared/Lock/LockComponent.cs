@@ -34,6 +34,24 @@ public sealed partial class LockComponent : Component
     public bool UnlockOnClick = true;
 
     /// <summary>
+    /// Whether or not the entity will be anchored once it's locked.
+    /// </summary>
+    [DataField]
+    public bool AnchorOnLock = false;
+
+    /// <summary>
+    /// Whether or not the entity will be unanchored once it's unlocked.
+    /// </summary>
+    [DataField]
+    public bool UnanchorOnUnlock = false;
+
+    /// <summary>
+    /// The fixture to set when lock is locked.
+    /// </summary>
+    [DataField]
+    public string LockedFixtureId = string.Empty;
+
+    /// <summary>
     /// The sound played when unlocked.
     /// </summary>
     [DataField("unlockingSound"), ViewVariables(VVAccess.ReadWrite)]

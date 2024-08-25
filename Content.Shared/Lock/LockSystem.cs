@@ -7,6 +7,8 @@ using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
@@ -15,6 +17,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Wires;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Lock;
@@ -31,6 +34,10 @@ public sealed class LockSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _sharedPopupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
+    [Dependency] private readonly PullingSystem _pullingSystem = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -58,6 +65,11 @@ public sealed class LockSystem : EntitySystem
     private void OnStartup(EntityUid uid, LockComponent lockComp, ComponentStartup args)
     {
         _appearanceSystem.SetData(uid, LockVisuals.Locked, lockComp.Locked);
+
+        var fixture = _fixtureSystem.GetFixtureOrNull(uid, lockComp.LockedFixtureId);
+
+        if (fixture != null)
+            _physicsSystem.SetHard(uid, fixture, lockComp.Locked);
     }
 
     private void OnActivated(EntityUid uid, LockComponent lockComp, ActivateInWorldEvent args)
@@ -141,6 +153,28 @@ public sealed class LockSystem : EntitySystem
 
         var ev = new LockToggledEvent(true);
         RaiseLocalEvent(uid, ref ev, true);
+
+        var fixture = _fixtureSystem.GetFixtureOrNull(uid, lockComp.LockedFixtureId);
+
+        // Make the fixture hard if we can
+        if (fixture != null)
+            _physicsSystem.SetHard(uid, fixture, true);
+
+        if (!lockComp.AnchorOnLock)
+            return true;
+
+        var transform = Transform(uid);
+
+        // Check to be safe
+        if (transform.GridUid == null || transform.Anchored)
+            return true;
+
+        _transformSystem.AnchorEntity(uid, transform);
+
+        // Stop pulling if we are anchored, or we might break something
+        if (TryComp<PullableComponent>(uid, out var pullable))
+            _pullingSystem.TryStopPull(uid, pullable);
+
         return true;
     }
 
@@ -172,6 +206,23 @@ public sealed class LockSystem : EntitySystem
 
         var ev = new LockToggledEvent(false);
         RaiseLocalEvent(uid, ref ev, true);
+
+        var fixture = _fixtureSystem.GetFixtureOrNull(uid, lockComp.LockedFixtureId);
+
+        // Make the fixture not hard if we can
+        if (fixture != null)
+            _physicsSystem.SetHard(uid, fixture, false);
+
+        if (!lockComp.UnanchorOnUnlock)
+            return;
+
+        var transform = Transform(uid);
+
+        // Check to be safe
+        if (!transform.Anchored)
+            return;
+
+        _transformSystem.Unanchor(uid, transform);
     }
 
 
