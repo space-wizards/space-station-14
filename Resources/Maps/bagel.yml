@@ -15639,7 +15639,7 @@ entities:
       parent: 60
 - proto: BedsheetQM
   entities:
-  - uid: 4515
+  - uid: 5932
     components:
     - type: Transform
       pos: 45.5,16.5
@@ -55135,12 +55135,6 @@ entities:
     - type: Transform
       pos: -11.5,-55.5
       parent: 60
-  - uid: 5932
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 43.5,12.5
-      parent: 60
   - uid: 5968
     components:
     - type: Transform
@@ -56080,6 +56074,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -66.5,12.5
       parent: 60
+  - uid: 4515
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 43.634438,14.652265
+      parent: 60
   - uid: 4627
     components:
     - type: Transform
@@ -56217,11 +56217,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 43.5,9.5
-      parent: 60
-  - uid: 13094
-    components:
-    - type: Transform
-      pos: 44.5,14.5
       parent: 60
   - uid: 13255
     components:
@@ -56379,6 +56374,12 @@ entities:
     components:
     - type: Transform
       pos: -44.5,-9.5
+      parent: 60
+  - uid: 24780
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 45.431313,14.60539
       parent: 60
 - proto: ChairOfficeLight
   entities:
@@ -67579,7 +67580,7 @@ entities:
       parent: 60
 - proto: DresserQuarterMasterFilled
   entities:
-  - uid: 11972
+  - uid: 12640
     components:
     - type: Transform
       pos: 44.5,16.5
@@ -101420,11 +101421,6 @@ entities:
     - type: Transform
       pos: 32.5,-80.5
       parent: 60
-  - uid: 12653
-    components:
-    - type: Transform
-      pos: 44.5,17.5
-      parent: 60
   - uid: 12657
     components:
     - type: Transform
@@ -101669,6 +101665,11 @@ entities:
     components:
     - type: Transform
       pos: -79.5,12.5
+      parent: 60
+  - uid: 13086
+    components:
+    - type: Transform
+      pos: 44.5,17.5
       parent: 60
   - uid: 13110
     components:
@@ -120271,11 +120272,6 @@ entities:
     - type: Transform
       pos: 21.5,27.5
       parent: 60
-  - uid: 11746
-    components:
-    - type: Transform
-      pos: 45.5,17.5
-      parent: 60
   - uid: 11749
     components:
     - type: Transform
@@ -120361,6 +120357,11 @@ entities:
     components:
     - type: Transform
       pos: 19.5,27.5
+      parent: 60
+  - uid: 11972
+    components:
+    - type: Transform
+      pos: 45.5,17.5
       parent: 60
   - uid: 11973
     components:
@@ -120589,15 +120590,15 @@ entities:
     - type: Transform
       pos: -65.5,18.5
       parent: 60
-  - uid: 13086
-    components:
-    - type: Transform
-      pos: 43.5,17.5
-      parent: 60
   - uid: 13090
     components:
     - type: Transform
       pos: 45.5,19.5
+      parent: 60
+  - uid: 13094
+    components:
+    - type: Transform
+      pos: 43.5,17.5
       parent: 60
   - uid: 13097
     components:
@@ -130993,7 +130994,7 @@ entities:
       parent: 60
 - proto: SurveillanceCameraRouterEngineering
   entities:
-  - uid: 6038
+  - uid: 11746
     components:
     - type: Transform
       pos: 10.5,17.5
@@ -131038,10 +131039,10 @@ entities:
       parent: 60
 - proto: SurveillanceCameraRouterSupply
   entities:
-  - uid: 13192
+  - uid: 6038
     components:
     - type: Transform
-      pos: 43.5,14.5
+      pos: 43.5,12.5
       parent: 60
 - proto: SurveillanceCameraScience
   entities:
@@ -132405,6 +132406,11 @@ entities:
     components:
     - type: Transform
       pos: 36.5,-1.5
+      parent: 60
+  - uid: 13192
+    components:
+    - type: Transform
+      pos: 44.5,14.5
       parent: 60
   - uid: 13204
     components:
@@ -141644,11 +141650,6 @@ entities:
     - type: Transform
       pos: 34.5,27.5
       parent: 60
-  - uid: 12640
-    components:
-    - type: Transform
-      pos: 42.5,17.5
-      parent: 60
   - uid: 12646
     components:
     - type: Transform
@@ -141658,6 +141659,11 @@ entities:
     components:
     - type: Transform
       pos: 22.5,27.5
+      parent: 60
+  - uid: 12653
+    components:
+    - type: Transform
+      pos: 42.5,17.5
       parent: 60
   - uid: 12674
     components:
