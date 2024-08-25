@@ -18,7 +18,7 @@ public sealed class FrictionContactsSystem : SharedContactsSystem<FrictionContac
     {
         var otherUid = args.OtherEntity;
 
-        if (!HasComp(otherUid, typeof(MovementSpeedModifierComponent)))
+        if (!HasComp<MovementSpeedModifierComponent>(otherUid))
             return;
 
         EntityUpdateContacts(otherUid);
@@ -28,7 +28,7 @@ public sealed class FrictionContactsSystem : SharedContactsSystem<FrictionContac
     {
         var otherUid = args.OtherEntity;
 
-        if (!HasComp(otherUid, typeof(MovementSpeedModifierComponent)))
+        if (!HasComp<MovementSpeedModifierComponent>(otherUid))
             return;
 
         EntityUpdateContacts(otherUid);
@@ -39,10 +39,20 @@ public sealed class FrictionContactsSystem : SharedContactsSystem<FrictionContac
         if (!EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physicsComponent))
             return;
 
-        if (!TryComp(uid, out MovementSpeedModifierComponent? speedModifier))
+        if (!TryComp<MovementSpeedModifierComponent>(uid, out var speedModifier))
             return;
 
-        var frictionComponent = TouchesFrictionContactsComponent(uid, physicsComponent);
+        FrictionContactsComponent? frictionComponent = null;
+
+        foreach (var ent in Physics.GetContactingEntities(uid, physicsComponent))
+        {
+            if (!TryComp<FrictionContactsComponent>(ent, out var frictionContacts))
+                continue;
+
+            frictionComponent = frictionContacts;
+
+            break;
+        }
 
         if (frictionComponent == null)
         {
@@ -52,18 +62,5 @@ public sealed class FrictionContactsSystem : SharedContactsSystem<FrictionContac
         {
             SpeedModifierSystem.ChangeFriction(uid, frictionComponent.MobFriction, frictionComponent.MobFrictionNoInput, frictionComponent.MobAcceleration, speedModifier);
         }
-    }
-
-    private FrictionContactsComponent? TouchesFrictionContactsComponent(EntityUid uid, PhysicsComponent physicsComponent)
-    {
-        foreach (var ent in Physics.GetContactingEntities(uid, physicsComponent))
-        {
-            if (!TryComp(ent, out FrictionContactsComponent? frictionContacts))
-                continue;
-
-            return frictionContacts;
-        }
-
-        return null;
     }
 }
