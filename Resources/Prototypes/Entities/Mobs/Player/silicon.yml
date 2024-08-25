@@ -166,15 +166,6 @@
           Empty: { state: empty }
           Occupied: { state: full }
 
-
-  # Fix all of the interaction stuff etc. and make it actually work
-  # Also thanks moony for whatever gameticker spawning is doing.
-  # TODO: move camera stuff to shared and check it works + parallel
-  # TODO: Bump viewer range / PVS for AI specifically
-  # TODO: Get interactions working (need some kind of component for it idk)
-  # TODO: Need interaction validation
-  # TODO: Merge borg PR and get the vis working
-
 - type: entity
   id: PlayerStationAiEmpty
   name: AI Core
@@ -284,15 +275,6 @@
   components:
   - type: Eye
     pvsScale: 1.5
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.IncorporealState.Base:
-        base:
-          True:
-            color: '#FFFFFFFF'
-          False:
-            color: '#FFFFFF0A'
   - type: Visibility
     layer: 2
   - type: Sprite
