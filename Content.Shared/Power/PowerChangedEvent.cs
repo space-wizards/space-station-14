@@ -1,4 +1,4 @@
-namespace Content.Shared.Power.Components;
+namespace Content.Shared.Power;
 
 /// <summary>
 /// Raised whenever an ApcPowerReceiver becomes powered / unpowered.
