@@ -54,6 +54,9 @@ public sealed class LockSystem : EntitySystem
         SubscribeLocalEvent<LockComponent, UnlockDoAfter>(OnDoAfterUnlock);
         SubscribeLocalEvent<LockComponent, StorageInteractAttemptEvent>(OnStorageInteractAttempt);
 
+        SubscribeLocalEvent<LockAnchorComponent, LockToggledEvent>(LockToggledAnchor);
+        SubscribeLocalEvent<LockUnanchorComponent, LockToggledEvent>(LockToggledUnanchor);
+
         SubscribeLocalEvent<LockedWiresPanelComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
         SubscribeLocalEvent<LockedWiresPanelComponent, AttemptChangePanelEvent>(OnAttemptChangePanel);
         SubscribeLocalEvent<LockedAnchorableComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
@@ -160,21 +163,6 @@ public sealed class LockSystem : EntitySystem
         if (fixture != null)
             _physicsSystem.SetHard(uid, fixture, true);
 
-        if (!lockComp.AnchorOnLock)
-            return true;
-
-        var transform = Transform(uid);
-
-        // Check to be safe
-        if (transform.GridUid == null || transform.Anchored)
-            return true;
-
-        _transformSystem.AnchorEntity(uid, transform);
-
-        // Stop pulling if we are anchored, or we might break something
-        if (TryComp<PullableComponent>(uid, out var pullable))
-            _pullingSystem.TryStopPull(uid, pullable);
-
         return true;
     }
 
@@ -212,17 +200,6 @@ public sealed class LockSystem : EntitySystem
         // Make the fixture not hard if we can
         if (fixture != null)
             _physicsSystem.SetHard(uid, fixture, false);
-
-        if (!lockComp.UnanchorOnUnlock)
-            return;
-
-        var transform = Transform(uid);
-
-        // Check to be safe
-        if (!transform.Anchored)
-            return;
-
-        _transformSystem.Unanchor(uid, transform);
     }
 
 
@@ -366,6 +343,38 @@ public sealed class LockSystem : EntitySystem
     {
         if (ent.Comp.Locked)
             args.Cancelled = true;
+    }
+
+    private void LockToggledAnchor(EntityUid uid, LockAnchorComponent component, LockToggledEvent args)
+    {
+        if (!args.Locked)
+            return;
+
+        var transform = Transform(uid);
+
+        // Check to be safe
+        if (transform.GridUid == null || transform.Anchored)
+            return;
+
+        _transformSystem.AnchorEntity(uid, transform);
+
+        // Stop pulling if we are anchored, or we might break something
+        if (TryComp<PullableComponent>(uid, out var pullable))
+            _pullingSystem.TryStopPull(uid, pullable);
+    }
+
+    private void LockToggledUnanchor(EntityUid uid, LockUnanchorComponent component, LockToggledEvent args)
+    {
+        if (args.Locked)
+            return;
+
+        var transform = Transform(uid);
+
+        // Check to be safe
+        if (!transform.Anchored)
+            return;
+
+        _transformSystem.Unanchor(uid, transform);
     }
 
     private void OnLockToggleAttempt(Entity<LockedWiresPanelComponent> ent, ref LockToggleAttemptEvent args)
