@@ -57,8 +57,6 @@ public sealed class StationAiOverlay : Overlay
             // TODO: Call the moved-to code here.
 
             _visibleTiles.Clear();
-            var lookups = _entManager.System<EntityLookupSystem>();
-            var xforms = _entManager.System<SharedTransformSystem>();
             _entManager.System<StationAiVisionSystem>().GetView((gridUid, grid), worldBounds, _visibleTiles);
 
             var gridMatrix = xforms.GetWorldMatrix(gridUid);
