@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: AJCM-git
-  changes:
-  - message: When people with less than an hour playing join the game, the guidebook
-      is automatically opened for them.
-    type: Tweak
-  id: 6705
-  time: '2024-06-09T16:26:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28774
 - author: Aeshus
   changes:
   - message: Salvage has a comprehensive guide.
@@ -3868,3 +3860,10 @@
   id: 7204
   time: '2024-08-25T05:42:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31415
+- author: PopGamer46
+  changes:
+  - message: Security cadets now spawn with jackboots instead of combat boots
+    type: Tweak
+  id: 7205
+  time: '2024-08-25T06:58:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31419
