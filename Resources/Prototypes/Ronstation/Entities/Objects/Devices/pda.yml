@@ -14,3 +14,15 @@
   - type: Icon
     sprite: Ronstation/Objects/Devices/pda.rsi
     state: pda-heccdiver
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
+    cartridgeSlot:
+      priority: -1
+      name: Cartridge
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Machines/id_insert.ogg
+      whitelist:
+        components:
+          - Cartridge
