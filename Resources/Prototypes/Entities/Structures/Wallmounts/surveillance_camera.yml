@@ -21,7 +21,6 @@
         mask:
         - GhostImpassable
   - type: LightOnCollide
-    fixtureId: light
   - type: PointLight
     enabled: false
     radius: 5

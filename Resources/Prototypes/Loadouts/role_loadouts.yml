@@ -28,7 +28,6 @@
 # Silicons
 - type: roleLoadout
   id: JobStationAi
-  canCustomiseName: true
   nameDataset: names_ai
 
 # Civilian
