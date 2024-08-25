@@ -28,6 +28,7 @@
 - type: startingGear
   id: DetectiveGear
   equipment:
+    shoes: ClothingShoesBootsJackFilled # GreyStation Addition
     eyes: ClothingEyesGlassesSecurity
     id: DetectivePDA
     ears: ClothingHeadsetSecurity

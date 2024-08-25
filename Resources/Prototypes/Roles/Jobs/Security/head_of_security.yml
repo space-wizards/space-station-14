@@ -38,6 +38,7 @@
 - type: startingGear
   id: HoSGear
   equipment:
+    shoes: ClothingShoesBootsJackFilled # GreyStation Addition
     eyes: ClothingEyesGlassesSecurity
     id: HoSPDA
     gloves: ClothingHandsGlovesCombat

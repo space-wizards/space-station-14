@@ -999,12 +999,12 @@
   - ArmorVestSlim
   - SecurityOfficerWintercoat
 
-- type: loadoutGroup
-  id: SecurityShoes
-  name: loadout-group-security-shoes
-  loadouts:
-  - JackBoots
-  - SecurityWinterBoots
+#- type: loadoutGroup # GreyStation - Loadout removal
+#  id: SecurityShoes
+#  name: loadout-group-security-shoes
+#  loadouts:
+#  - JackBoots
+#  - SecurityWinterBoots
 
 - type: loadoutGroup
   id: SecurityPDA
