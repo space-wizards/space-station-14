@@ -25,7 +25,8 @@
   abstract: true
   components:
   - type: Food
-    trash: FoodPlateMuffinTin
+    trash: 
+    - FoodPlateMuffinTin
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/misc.rsi
   - type: SolutionContainerManager
@@ -111,7 +112,7 @@
 
 - type: entity
   name: bluecherry muffin
-  parent: FoodBakedBase
+  parent: FoodMuffinBase
   id: FoodBakedMuffinBluecherry
   description: Blue cherries inside a delicious muffin.
   components:
