@@ -333,7 +333,7 @@
   - SecurityBackpack
   - SecurityBelt
   - HeadofSecurityOuterClothing
-  - SecurityShoes
+#  - SecurityShoes # GreyStation - Loadout removal
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
@@ -347,7 +347,7 @@
   - SecurityBackpack
   - SecurityBelt
   - WardenOuterClothing
-  - SecurityShoes
+#  - SecurityShoes # GreyStation - Loadout removal
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
@@ -360,7 +360,7 @@
   - SecurityJumpsuit
   - SecurityBackpack
   - SecurityOuterClothing
-  - SecurityShoes
+#  - SecurityShoes # GreyStation - Loadout removal
   - SecurityPDA
   - SecurityBelt
   - SurvivalSecurity
@@ -377,7 +377,7 @@
   - DetectiveJumpsuit
   - SecurityBackpack
   - DetectiveOuterClothing
-  - SecurityShoes
+#  - SecurityShoes # GreyStation - Loadout removal
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
