@@ -222,8 +222,6 @@ namespace Content.Server.Database
             {
                 var loadout = new RoleLoadout(role.RoleName)
                 {
-                    // Validate later if it's even possible.
-                    EntityName = role.CustomName,
                 };
 
                 foreach (var group in role.Groups)
@@ -321,7 +319,6 @@ namespace Content.Server.Database
                 var dz = new ProfileRoleLoadout()
                 {
                     RoleName = role,
-                    CustomName = loadouts.EntityName,
                 };
 
                 foreach (var (group, groupLoadouts) in loadouts.SelectedLoadouts)
