@@ -219,8 +219,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             if (action.Event != null)
             {
                 action.Event.Target = coords;
-                action.Event.Performer = user;
-                action.Event.Action = actionId;
             }
 
             _actionsSystem.PerformAction(user, actionComp, actionId, action, action.Event, _timing.CurTime);
@@ -254,8 +252,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             if (action.Event != null)
             {
                 action.Event.Target = entity;
-                action.Event.Performer = user;
-                action.Event.Action = actionId;
             }
 
             _actionsSystem.PerformAction(user, actionComp, actionId, action, action.Event, _timing.CurTime);
@@ -295,8 +291,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             {
                 action.Event.Entity = entity;
                 action.Event.Coords = coords;
-                action.Event.Performer = user;
-                action.Event.Action = actionId;
             }
 
             _actionsSystem.PerformAction(user, actionComp, actionId, action, action.Event, _timing.CurTime);
