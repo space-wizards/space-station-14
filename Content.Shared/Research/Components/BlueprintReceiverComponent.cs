@@ -13,6 +13,6 @@ public sealed partial class BlueprintReceiverComponent : Component
     [DataField]
     public string ContainerId = "blueprint";
 
-    [DataField]
+    [DataField(required: true)]
     public EntityWhitelist Whitelist = new();
 }
