@@ -19,6 +19,7 @@ public sealed partial class MatchstickComponent : Component
     /// <summary>
     ///     How long will matchstick last in seconds.
     /// </summary>
+    [DataField("duration")]
     public int Duration = 10;
 
     /// <summary>
