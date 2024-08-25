@@ -105,10 +105,11 @@ public sealed partial class GunSystem : SharedGunSystem
             var fromCoordinates = GetCoordinates(a.coordinates);
             if (sourceGrid.HasValue)
             { // if there is a source grid, make sure effects are parented to it, fix rotation
-                ent = SpawnAttachedTo(HitscanProto, TransformSystem.WithEntityId(fromCoordinates, sourceGrid.Value), traversal: false);
+                ent = SpawnAttachedTo(HitscanProto, TransformSystem.WithEntityId(fromCoordinates, sourceGrid.Value));
                 var xform = Transform(ent);
                 var sourceGridRot = TransformSystem.GetWorldRotation(sourceGrid.Value);
                 // subtract grid rotation, flip over Y-axis
+                xform.GridTraversal = false;
                 xform.LocalRotation = (Angle.FromDegrees(180) - (sourceGridRot - a.angle)).Opposite();
             }
             else
