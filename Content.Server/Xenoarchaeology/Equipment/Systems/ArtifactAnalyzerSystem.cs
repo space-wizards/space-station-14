@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.Paper;
 using Content.Server.Power.Components;
 using Content.Server.Research.Systems;
 using Content.Shared.UserInterface;
@@ -9,8 +8,10 @@ using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Audio;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
+using Content.Shared.Paper;
 using Content.Shared.Placeable;
 using Content.Shared.Popups;
+using Content.Shared.Power;
 using Content.Shared.Research.Components;
 using Content.Shared.Xenoarchaeology.Equipment;
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
@@ -290,7 +291,8 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             return;
 
         _popup.PopupEntity(Loc.GetString("analysis-console-print-popup"), uid);
-        _paper.SetContent(report, msg.ToMarkup());
+        if (TryComp<PaperComponent>(report, out var paperComp))
+            _paper.SetContent((report, paperComp), msg.ToMarkup());
         UpdateUserInterface(uid, component);
     }
 

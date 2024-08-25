@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseStructureDynamic
   id: CrateGeneric
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: crate
   description: A large container for items.
   components:
@@ -83,7 +83,7 @@
       paper_label: !type:ContainerSlot
   - type: ItemSlots
   - type: StaticPrice
-    price: 50
+    price: 75
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
@@ -94,7 +94,7 @@
 - type: entity
   parent: CrateGeneric
   id: CrateBaseWeldable
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Weldable
   - type: ResistLocker

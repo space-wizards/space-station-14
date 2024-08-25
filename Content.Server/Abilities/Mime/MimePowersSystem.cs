@@ -1,4 +1,5 @@
 using Content.Server.Popups;
+using Content.Shared.Abilities.Mime;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Events;
 using Content.Shared.Alert;
@@ -29,6 +30,9 @@ namespace Content.Server.Abilities.Mime
             base.Initialize();
             SubscribeLocalEvent<MimePowersComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<MimePowersComponent, InvisibleWallActionEvent>(OnInvisibleWall);
+
+            SubscribeLocalEvent<MimePowersComponent, BreakVowAlertEvent>(OnBreakVowAlert);
+            SubscribeLocalEvent<MimePowersComponent, RetakeVowAlertEvent>(OnRetakeVowAlert);
         }
 
         public override void Update(float frameTime)
@@ -96,6 +100,22 @@ namespace Content.Server.Abilities.Mime
             // Make sure we set the invisible wall to despawn properly
             Spawn(component.WallPrototype, _turf.GetTileCenter(tile.Value));
             // Handle args so cooldown works
+            args.Handled = true;
+        }
+
+        private void OnBreakVowAlert(Entity<MimePowersComponent> ent, ref BreakVowAlertEvent args)
+        {
+            if (args.Handled)
+                return;
+            BreakVow(ent, ent);
+            args.Handled = true;
+        }
+
+        private void OnRetakeVowAlert(Entity<MimePowersComponent> ent, ref RetakeVowAlertEvent args)
+        {
+            if (args.Handled)
+                return;
+            RetakeVow(ent, ent);
             args.Handled = true;
         }
 
