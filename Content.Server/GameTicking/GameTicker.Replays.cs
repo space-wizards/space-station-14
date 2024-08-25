@@ -1,10 +1,17 @@
 using System.Linq;
 using Content.Server.GameTicking.Replays;
 using Content.Server.Mind;
+using Content.Server.Pinpointer;
 using Content.Shared.CCVar;
+using Content.Shared.MassMedia.Systems;
+using Content.Shared.Mobs;
 using Content.Shared.Roles;
+using Content.Shared.Slippery;
+using Content.Shared.Stunnable;
+using Robust.Server.GameObjects;
 using Robust.Shared;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Replays;
 using Robust.Shared.Serialization.Manager;
@@ -21,6 +28,8 @@ public sealed partial class GameTicker
     [Dependency] private readonly IResourceManager _resourceManager = default!;
     [Dependency] private readonly ISerializationManager _serialman = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly NavMapSystem _navMapSystem = default!;
+    [Dependency] private readonly TransformSystem _transformSystem = default!;
 
     private ISawmill _sawmillReplays = default!;
 
@@ -28,6 +37,12 @@ public sealed partial class GameTicker
     {
         _replays.RecordingFinished += ReplaysOnRecordingFinished;
         _replays.RecordingStopped += ReplaysOnRecordingStopped;
+
+        // Using an event here because mob stuff is in shared and we cannot call RecordReplayEvent from there.
+        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<SlipEvent>(OnSlip); // Here as well
+        SubscribeLocalEvent<ActorComponent, StunnedEvent>(OnStun); // I can probably make this shared or smth
+        SubscribeLocalEvent<NewsArticlePublishedEvent>(OnNewsPublished);
     }
 
     /// <summary>
@@ -158,14 +173,27 @@ public sealed partial class GameTicker
 
     private sealed record ReplayRecordState(ResPath? MoveToPath);
 
-    public void RecordReplayEvent(ReplayEvent replayEvent)
+    /// <summary>
+    /// Records a replay event. This is the main way to record events in the replay system.
+    /// </summary>
+    /// <param name="replayEvent">The event to record</param>
+    /// <param name="source">Optional source that will be used for location data</param>
+    public void RecordReplayEvent(ReplayEvent replayEvent, EntityUid? source = null)
     {
         if (!_replays.IsRecording)
             return;
 
+        replayEvent.Time ??= _gameTiming.CurTime.TotalSeconds;
+
+        if (source.HasValue)
+        {
+            replayEvent.Position = _transformSystem.GetWorldPosition(source.Value);
+            replayEvent.NearestBeacon =
+                _navMapSystem.GetNearestBeaconString(_transformSystem.GetMapCoordinates(source.Value));
+        }
+
         DebugTools.AssertNotNull(replayEvent.EventType);
         DebugTools.AssertNotNull(replayEvent.Severity);
-        DebugTools.AssertNotNull(replayEvent.Time);
 
         _sawmillReplays.Debug($"Recording replay event: {replayEvent.EventType}");
         if (_replayEvents == null)
@@ -190,7 +218,15 @@ public sealed partial class GameTicker
             return GetPlayerInfo(actorComponent.PlayerSession);
         }
 
-        throw new InvalidOperationException("Tried to get player info for an entity that is not a player.");
+        _sawmillReplays.Warning($"Tried to get player info for entity {player}, but it's not a player entity.");
+        return new ReplayEventPlayer()
+        {
+            PlayerGuid = new NetUserId(Guid.Empty),
+            PlayerICName = EntityManager.GetComponent<MetaDataComponent>(player).EntityName, // Fallback, best we can do.
+            PlayerOOCName = "Unknown",
+            JobPrototypes = [],
+            AntagPrototypes = [],
+        };
     }
 
     /// <summary>
@@ -223,9 +259,74 @@ public sealed partial class GameTicker
             PlayerGuid = session.UserId,
             PlayerICName = playerIcName,
             PlayerOOCName = session.Name,
-            Antag = antag,
             JobPrototypes = roles.Where(role => !role.Antagonist).Select(role => role.Prototype).ToArray(),
             AntagPrototypes = roles.Where(role => role.Antagonist).Select(role => role.Prototype).ToArray(),
         };
+    }
+
+
+    private void OnMobStateChanged(MobStateChangedEvent ev)
+    {
+        ReplayEventPlayer? targetInfo = null;
+        if (EntityManager.TryGetComponent<ActorComponent>(ev.Target, out var actorComponent))
+        {
+            targetInfo = GetPlayerInfo(actorComponent.PlayerSession);
+        }
+
+        if (targetInfo == null)
+        {
+            RecordReplayEvent(new MobStateChangedNPCReplayEvent()
+            {
+                EventType = ReplayEventType.MobStateChanged,
+                Severity = ReplayEventSeverity.Medium,
+                Target = EntityManager.GetComponent<MetaDataComponent>(ev.Target).EntityName,
+                OldState = ev.OldMobState,
+                NewState = ev.NewMobState,
+            }, ev.Target);
+        }
+        else
+        {
+            RecordReplayEvent(new MobStateChangedPlayerReplayEvent()
+            {
+                Target = (ReplayEventPlayer) targetInfo,
+                Severity = ReplayEventSeverity.Medium,
+                EventType = ReplayEventType.MobStateChanged,
+                OldState = ev.OldMobState,
+                NewState = ev.NewMobState,
+            }, ev.Target);
+        }
+    }
+
+    private void OnSlip(ref SlipEvent ev)
+    {
+        RecordReplayEvent(new GenericPlayerEvent()
+        {
+            EventType = ReplayEventType.MobSlipped,
+            Severity = ReplayEventSeverity.Low,
+            Target = GetPlayerInfo(ev.Slipped),
+        }, ev.Slipped);
+    }
+
+    private void OnStun(EntityUid uid, ActorComponent actor, ref StunnedEvent ev)
+    {
+        RecordReplayEvent(new GenericPlayerEvent()
+        {
+            EventType = ReplayEventType.MobStunned,
+            Severity = ReplayEventSeverity.Low,
+            Target = GetPlayerInfo(actor.PlayerSession),
+        }, uid);
+    }
+
+    private void OnNewsPublished(ref NewsArticlePublishedEvent ev)
+    {
+        RecordReplayEvent(new NewsArticlePublishedReplayEvent()
+        {
+            EventType = ReplayEventType.NewsArticlePublished,
+            Severity = ReplayEventSeverity.Medium,
+            Content = ev.Article.Content,
+            Title = ev.Article.Title,
+            Author = ev.Article.Author,
+            ShareTime = ev.Article.ShareTime,
+        });
     }
 }

@@ -8,6 +8,7 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Replays;
 using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
@@ -156,6 +157,14 @@ namespace Content.Server.RoundEnd
 
             _countdownTokenSource = new();
 
+            _gameTicker.RecordReplayEvent(new ShuttleReplayEvent()
+            {
+                Source = requester == null ? null : _gameTicker.GetPlayerInfo(requester.Value),
+                Countdown = (int)countdownTime.TotalSeconds,
+                Severity = ReplayEventSeverity.High,
+                EventType = ReplayEventType.EvacuationShuttleCalled,
+                Time = _gameTiming.CurTick.Value
+            });
             if (requester != null)
             {
                 _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {ToPrettyString(requester.Value):user}");
@@ -224,6 +233,12 @@ namespace Content.Server.RoundEnd
             _countdownTokenSource.Cancel();
             _countdownTokenSource = null;
 
+            _gameTicker.RecordReplayEvent(new ShuttleReplayEvent()
+            {
+                Source = requester == null ? null : _gameTicker.GetPlayerInfo(requester.Value),
+                Severity = ReplayEventSeverity.High,
+                EventType = ReplayEventType.EvacuationShuttleRecalled,
+            });
             if (requester != null)
             {
                 _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {ToPrettyString(requester.Value):user}");

@@ -19,6 +19,7 @@ public enum ReplayEventType : byte
     #region Gameflow
 
     GameRuleStarted,
+    GameRuleEnded,
     RoundEnded,
 
     #endregion
@@ -28,9 +29,8 @@ public enum ReplayEventType : byte
     CargoProductOrdered,
     CargoProductSold,
 
-    MobCrit,
-    MobDied,
-    MobRevived,
+    MobStateChanged,
+
     MobSlipped,
     MobStunned,
 
@@ -39,7 +39,6 @@ public enum ReplayEventType : byte
     NukeDefused,
 
     PowerEngineSpawned, // Tesla or Singularity
-    ContainmentFieldEngaged,
     ContainmentFieldDisengaged,
 
     ItemBoughtFromStore, // Item bought from an (for example) uplink.
@@ -49,11 +48,13 @@ public enum ReplayEventType : byte
     AnnouncementSent, // Comms console
     ChatMessageSent,
     AlertLevelChanged,
+    NewsArticlePublished,
 
     TechnologyUnlocked,
 
     EvacuationShuttleCalled,
     EvacuationShuttleDocked,
+    EvacuationShuttleDockedCentCom,
     EvacuationShuttleDeparted,
     EvacuationShuttleRecalled,
     #endregion

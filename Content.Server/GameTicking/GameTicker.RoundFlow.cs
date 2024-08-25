@@ -338,6 +338,11 @@ namespace Content.Server.GameTicking
 
             DebugTools.Assert(RunLevel == GameRunLevel.InRound);
             _sawmill.Info("Ending round!");
+            RecordReplayEvent(new ReplayEvent()
+            {
+                EventType = ReplayEventType.RoundEnded,
+                Severity = ReplayEventSeverity.Medium,
+            });
 
             RunLevel = GameRunLevel.PostRound;
 

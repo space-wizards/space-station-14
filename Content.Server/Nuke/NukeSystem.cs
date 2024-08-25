@@ -2,6 +2,8 @@ using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Chat.Systems;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.GameTicking;
+using Content.Server.GameTicking.Replays;
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
@@ -43,6 +45,7 @@ public sealed class NukeSystem : EntitySystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
 
     /// <summary>
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
@@ -260,6 +263,12 @@ public sealed class NukeSystem : EntitySystem
 
         var ev = new NukeDisarmSuccessEvent();
         RaiseLocalEvent(ev);
+        _ticker.RecordReplayEvent(new GenericPlayerEvent()
+        {
+            Severity = ReplayEventSeverity.Critical,
+            EventType = ReplayEventType.NukeDefused,
+            Target = _ticker.GetPlayerInfo(args.User),
+        }, args.User);
 
         args.Handled = true;
     }
@@ -458,6 +467,12 @@ public sealed class NukeSystem : EntitySystem
         // We are collapsing the randomness here, otherwise we would get separate random song picks for checking duration and when actually playing the song afterwards
         _selectedNukeSong = _audio.GetSound(component.ArmMusic);
 
+        _ticker.RecordReplayEvent(new ReplayEvent()
+        {
+            Severity = ReplayEventSeverity.Critical,
+            EventType = ReplayEventType.NukeArmed,
+        }, uid);
+
         // warn a crew
         var announcement = Loc.GetString("nuke-component-announcement-armed",
             ("time", (int) component.RemainingTime),
@@ -565,6 +580,11 @@ public sealed class NukeSystem : EntitySystem
         {
             OwningStation = transform.GridUid,
         });
+        _ticker.RecordReplayEvent(new ReplayEvent()
+        {
+            Severity = ReplayEventSeverity.Critical,
+            EventType = ReplayEventType.NukeDetonated,
+        }, uid);
 
         _sound.StopStationEventMusic(uid, StationEventMusicType.Nuke);
         Del(uid);

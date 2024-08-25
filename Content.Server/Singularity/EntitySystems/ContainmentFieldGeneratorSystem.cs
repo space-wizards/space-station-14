@@ -1,4 +1,6 @@
 using Content.Server.Administration.Logs;
+using Content.Server.GameTicking;
+using Content.Server.GameTicking.Replays;
 using Content.Server.Popups;
 using Content.Server.Singularity.Events;
 using Content.Shared.Construction.Components;
@@ -24,6 +26,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     public override void Initialize()
     {
@@ -171,6 +174,11 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         ChangeFieldVisualizer(generator);
         _adminLogger.Add(LogType.FieldGeneration, LogImpact.Medium, $"{ToPrettyString(uid)} lost field connections"); // Ideally LogImpact would depend on if there is a singulo nearby
         _popupSystem.PopupEntity(Loc.GetString("comp-containment-disconnected"), uid, PopupType.LargeCaution);
+        _gameTicker.RecordReplayEvent(new ReplayEvent()
+        {
+            EventType = ReplayEventType.ContainmentFieldDisengaged,
+            Severity = ReplayEventSeverity.Critical, // round ending event, usually.
+        }, uid);
     }
 
     #endregion

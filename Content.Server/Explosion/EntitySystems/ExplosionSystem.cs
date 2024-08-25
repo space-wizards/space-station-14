@@ -4,6 +4,8 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Explosion.Components;
+using Content.Server.GameTicking;
+using Content.Server.GameTicking.Replays;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.Armor;
@@ -52,6 +54,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     private EntityQuery<TransformComponent> _transformQuery;
     private EntityQuery<FlammableComponent> _flammableQuery;
@@ -258,6 +261,20 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         if (!addLog)
             return;
 
+        _gameTicker.RecordReplayEvent(new ReplayExplosionEvent()
+        {
+            Severity = ReplayEventSeverity.High,
+            EventType = ReplayEventType.Explosion,
+            Intensity = totalIntensity,
+            Slope = slope,
+            MaxTileIntensity = maxTileIntensity,
+            TileBreakScale = tileBreakScale,
+            MaxTileBreak = maxTileBreak,
+            CanCreateVacuum = canCreateVacuum,
+            Type = typeId,
+            Source = user == null ? null : _gameTicker.GetPlayerInfo(user.Value),
+        }, user);
+
         if (user == null)
         {
             _adminLogger.Add(LogType.Explosion, LogImpact.High,
@@ -297,7 +314,22 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         }
 
         if (addLog) // dont log if already created a separate, more detailed, log.
+        {
             _adminLogger.Add(LogType.Explosion, LogImpact.High, $"Explosion ({typeId}) spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}");
+
+            _gameTicker.RecordReplayEvent(new ReplayExplosionEvent()
+            {
+                Severity = ReplayEventSeverity.High,
+                EventType = ReplayEventType.Explosion,
+                Intensity = totalIntensity,
+                Slope = slope,
+                MaxTileIntensity = maxTileIntensity,
+                TileBreakScale = tileBreakScale,
+                MaxTileBreak = maxTileBreak,
+                CanCreateVacuum = canCreateVacuum,
+                Type = typeId,
+            });
+        }
 
         // try to combine explosions on the same tile if they are the same type
         foreach (var queued in _queuedExplosions)

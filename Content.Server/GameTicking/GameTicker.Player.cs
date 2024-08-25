@@ -95,7 +95,6 @@ namespace Content.Server.GameTicking
                         {
                             PlayerOOCName = args.Session.Name,
                             PlayerICName = "N/A",
-                            Antag = false,
                             PlayerGuid = args.Session.UserId,
                         },
                     });
@@ -163,7 +162,6 @@ namespace Content.Server.GameTicking
                         {
                             PlayerOOCName = args.Session.Name,
                             PlayerICName = "N/A",
-                            Antag = false,
                             PlayerGuid = args.Session.UserId,
                         },
                     });

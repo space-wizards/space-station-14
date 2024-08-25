@@ -21,7 +21,4 @@ public partial struct ReplayEventPlayer
     public string[]? AntagPrototypes;
 
     public NetEntity? PlayerNetEntity;
-
-    [DataField]
-    public bool? Antag;
 }

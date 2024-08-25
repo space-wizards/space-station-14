@@ -1,4 +1,7 @@
-﻿namespace Content.Server.GameTicking.Replays;
+﻿using System.Numerics;
+using Content.Shared.Mobs;
+
+namespace Content.Server.GameTicking.Replays;
 
 /// <summary>
 /// Represents an event that occured during gameplay, such as a chat message, a player joining, etc.
@@ -8,13 +11,19 @@
 public partial class ReplayEvent
 {
     [DataField]
-    public uint Time;
+    public double? Time;
 
     [DataField]
     public ReplayEventSeverity Severity;
 
     [DataField]
     public ReplayEventType EventType;
+
+    [DataField]
+    public string? NearestBeacon;
+
+    [DataField]
+    public Vector2 Position;
 };
 
 /// <summary>
@@ -50,4 +59,143 @@ public sealed partial class GenericObjectEvent : ReplayEvent
 
     [DataField]
     public string? Origin;
+}
+
+[Serializable, DataDefinition]
+public sealed partial class MobStateChangedPlayerReplayEvent : ReplayEvent
+{
+    [DataField]
+    public ReplayEventPlayer Target;
+
+    [DataField]
+    public MobState OldState;
+
+    [DataField]
+    public MobState NewState;
+}
+
+[Serializable, DataDefinition]
+public sealed partial class MobStateChangedNPCReplayEvent : ReplayEvent
+{
+    [DataField]
+    public string Target;
+
+    [DataField]
+    public MobState OldState;
+
+    [DataField]
+    public MobState NewState;
+}
+
+[Serializable, DataDefinition]
+public sealed partial class StoreBuyReplayEvent : ReplayEvent
+{
+    [DataField]
+    public ReplayEventPlayer Buyer;
+
+    [DataField]
+    public string Item;
+
+    [DataField]
+    public int Cost;
+}
+
+[Serializable, DataDefinition]
+public sealed partial class ReplayExplosionEvent : ReplayEvent
+{
+    [DataField]
+    public ReplayEventPlayer? Source;
+
+    [DataField]
+    public float Intensity;
+
+    [DataField]
+    public float Slope;
+
+    [DataField]
+    public float MaxTileIntensity;
+
+    [DataField]
+    public float TileBreakScale;
+
+    [DataField]
+    public int MaxTileBreak;
+
+    [DataField]
+    public bool CanCreateVacuum;
+
+    [DataField]
+    public string Type;
+}
+
+[Serializable, DataDefinition]
+public sealed partial class ChatAnnouncementReplayEvent : ReplayEvent
+{
+    [DataField]
+    public string Message;
+
+    [DataField]
+    public string Sender;
+}
+
+[Serializable, DataDefinition]
+public sealed partial class ChatMessageReplayEvent : ReplayEvent
+{
+    [DataField]
+    public string Message;
+
+    [DataField]
+    public ReplayEventPlayer Sender;
+
+    [DataField]
+    public string Type;
+}
+
+[Serializable, DataDefinition]
+public sealed partial class AlertLevelChangedReplayEvent : ReplayEvent
+{
+    [DataField]
+    public string AlertLevel;
+}
+
+[Serializable, DataDefinition]
+public sealed partial class NewsArticlePublishedReplayEvent : ReplayEvent
+{
+    [DataField]
+    public string Title;
+
+    [DataField]
+    public string Content;
+
+    [DataField]
+    public string? Author;
+
+    [DataField]
+    public TimeSpan ShareTime;
+}
+
+[Serializable, DataDefinition]
+public sealed partial class TechnologyUnlockedReplayEvent : ReplayEvent
+{
+    [DataField]
+    public string Name;
+
+    [DataField]
+    public string Discipline;
+
+    [DataField]
+    public int Tier;
+
+    [DataField]
+    public ReplayEventPlayer Player;
+}
+
+[Serializable, DataDefinition]
+public sealed partial class ShuttleReplayEvent : ReplayEvent
+{
+    [DataField]
+    public int? Countdown;
+
+    [DataField]
+    public ReplayEventPlayer? Source;
 }

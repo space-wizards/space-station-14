@@ -7,7 +7,9 @@ using Content.Server.Chat.Systems;
 using Content.Server.Communications;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
+using Content.Server.GameTicking.Replays;
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
 using Content.Server.RoundEnd;
@@ -68,6 +70,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     private const float ShuttleSpawnBuffer = 1f;
 
@@ -219,6 +222,13 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             };
             _deviceNetworkSystem.QueuePacket(uid, null, payload, netComp.TransmitFrequency);
         }
+
+        _gameTicker.RecordReplayEvent(new ShuttleReplayEvent()
+        {
+            Severity = ReplayEventSeverity.High,
+            EventType = ReplayEventType.EvacuationShuttleDeparted,
+            Countdown = (int)ftlTime.TotalSeconds,
+        });
     }
 
     /// <summary>
@@ -252,6 +262,12 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
             _deviceNetworkSystem.QueuePacket(shuttle, null, payload, net.TransmitFrequency);
         }
+
+        _gameTicker.RecordReplayEvent(new ReplayEvent()
+        {
+            Severity = ReplayEventSeverity.High,
+            EventType = ReplayEventType.EvacuationShuttleDockedCentCom,
+        });
     }
 
     /// <summary>
@@ -270,6 +286,12 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
 
         var targetGrid = _station.GetLargestGrid(Comp<StationDataComponent>(stationUid));
+
+        _gameTicker.RecordReplayEvent(new ReplayEvent()
+        {
+            Severity = ReplayEventSeverity.High,
+            EventType = ReplayEventType.EvacuationShuttleDocked,
+        });
 
         // UHH GOOD LUCK
         if (targetGrid == null)
