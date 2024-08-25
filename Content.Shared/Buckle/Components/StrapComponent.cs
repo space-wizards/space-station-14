@@ -90,6 +90,12 @@ public sealed partial class StrapComponent : Component
     /// </summary>
     [DataField]
     public float BuckleDoafterTime = 2f;
+
+    /// <summary>
+    /// Whether InteractHand will buckle the user to the strap.
+    /// </summary>
+    [DataField]
+    public bool BuckleOnInteractHand = true;
 }
 
 public enum StrapPosition
