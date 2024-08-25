@@ -6,12 +6,11 @@
   components:
   - type: Sprite
     sprite: Ronstation/Objects/Devices/pda.rsi
-  - type: Icon
-    sprite: Ronstation/Objects/Devices/pda.rsi
   - type: Pda
     id: HeccdiverIDCard
     state: pda-heccdiver
   - type: PdaBorderColor
     borderColor: "#2F3030"
   - type: Icon
+    sprite: Ronstation/Objects/Devices/pda.rsi
     state: pda-heccdiver
