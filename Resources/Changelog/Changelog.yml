@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Added reward info in cargo bounty label.
-    type: Tweak
-  id: 6710
-  time: '2024-06-11T09:33:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28853
-- author: Tayrtahn
-  changes:
-  - message: Announcements for the location of the evac shuttle, the armed nuke, and
-      more will no longer send you in the opposite direction.
-    type: Fix
-  id: 6711
-  time: '2024-06-11T22:18:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28869
-- author: Boaz1111
-  changes:
-  - message: Refactors Cluster's Armoury
-    type: Tweak
-  id: 6712
-  time: '2024-06-12T01:07:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28854
 - author: Deserty0
   changes:
   - message: '"no materials loaded" messege now appears in lathes!'
@@ -3866,3 +3844,25 @@
   id: 7209
   time: '2024-08-25T12:36:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31191
+- author: PJB3005
+  changes:
+  - message: PACMAN and SUPERPACMAN now ramp their power output significantly faster.
+    type: Tweak
+  id: 7210
+  time: '2024-08-25T16:11:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31403
+- author: Blackern5000
+  changes:
+  - message: Space scanning technology is now T1 industrial, this includes cyborg
+      GPS modules and handheld mass scanners.
+    type: Tweak
+  id: 7211
+  time: '2024-08-25T16:47:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31321
+- author: ShadowCommander
+  changes:
+  - message: Rollerbeds no longer buckle yourself when clicked on.
+    type: Remove
+  id: 7212
+  time: '2024-08-25T17:09:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30001
