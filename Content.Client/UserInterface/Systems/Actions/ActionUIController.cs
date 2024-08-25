@@ -121,7 +121,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             var boundKey = hotbarKeys[i];
             builder = builder.Bind(boundKey, new PointerInputCmdHandler((in PointerInputCmdArgs args) =>
             {
-                if (args.State != BoundKeyState.Up)
+                if (args.State != BoundKeyState.Down)
                     return false;
 
                 TriggerAction(boundId);
