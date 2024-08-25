@@ -51,7 +51,7 @@
     layers:
       - state: match_burnt
   - type: Matchstick
-    currentState: Burnt
+    state: Burnt
 
 - type: entity
   name: match box
