@@ -15028,7 +15028,7 @@ entities:
     - type: Transform
       pos: 10.5,-12.5
       parent: 60
-  - uid: 21760
+  - uid: 21759
     components:
     - type: Transform
       pos: 10.5,-13.5
@@ -122655,11 +122655,18 @@ entities:
     - type: Transform
       pos: -33.5,-21.5
       parent: 60
-  - uid: 21187
+  - uid: 21186
     components:
     - type: Transform
       pos: 44.5,17.5
       parent: 60
+  - uid: 21187
+    components:
+    - type: Transform
+      pos: 43.5,17.5
+      parent: 60
+    - type: DeviceLinkSink
+      invokeCounter: 1
   - uid: 21334
     components:
     - type: Transform
@@ -122680,24 +122687,17 @@ entities:
     - type: Transform
       pos: 6.5,-26.5
       parent: 60
-  - uid: 21753
-    components:
-    - type: Transform
-      pos: 43.5,17.5
-      parent: 60
-    - type: DeviceLinkSink
-      invokeCounter: 1
-  - uid: 21755
+  - uid: 21754
     components:
     - type: Transform
       pos: 43.5,11.5
       parent: 60
-  - uid: 21758
+  - uid: 21755
     components:
     - type: Transform
       pos: 45.5,17.5
       parent: 60
-  - uid: 21759
+  - uid: 21758
     components:
     - type: Transform
       pos: 45.5,11.5
@@ -123867,7 +123867,7 @@ entities:
         24352:
         - On: On
         - Off: Off
-  - uid: 21754
+  - uid: 21753
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
@@ -123875,19 +123875,19 @@ entities:
       parent: 60
     - type: DeviceLinkSource
       linkedPorts:
-        21753:
-        - On: Open
-        - Off: Close
         21187:
         - On: Open
         - Off: Close
-        21758:
+        21186:
         - On: Open
         - Off: Close
         21755:
         - On: Open
         - Off: Close
-        21759:
+        21754:
+        - On: Open
+        - Off: Close
+        21758:
         - On: Open
         - Off: Close
 - proto: SignAnomaly
@@ -131006,11 +131006,6 @@ entities:
     - type: Transform
       pos: 24.5,18.5
       parent: 60
-  - uid: 21186
-    components:
-    - type: Transform
-      pos: -49.5,7.5
-      parent: 60
   - uid: 24662
     components:
     - type: Transform
@@ -131733,6 +131728,13 @@ entities:
       - SurveillanceCameraSupply
       nameSet: True
       id: Salvage Airlock 1
+- proto: SurveillanceCameraWirelessRouterConstructed
+  entities:
+  - uid: 21760
+    components:
+    - type: Transform
+      pos: -49.5,7.5
+      parent: 60
 - proto: SurveillanceCameraWirelessRouterEntertainment
   entities:
   - uid: 17205
