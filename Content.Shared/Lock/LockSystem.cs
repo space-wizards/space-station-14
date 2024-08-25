@@ -17,6 +17,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Wires;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
 
@@ -69,10 +70,13 @@ public sealed class LockSystem : EntitySystem
     {
         _appearanceSystem.SetData(uid, LockVisuals.Locked, lockComp.Locked);
 
+        if (!TryComp<FixturesComponent>(uid, out var fixturesComponent))
+            return;
+
         var fixture = _fixtureSystem.GetFixtureOrNull(uid, lockComp.LockedFixtureId);
 
         if (fixture != null)
-            _physicsSystem.SetHard(uid, fixture, lockComp.Locked);
+            _physicsSystem.SetHard(uid, fixture, lockComp.Locked, fixturesComponent);
     }
 
     private void OnActivated(EntityUid uid, LockComponent lockComp, ActivateInWorldEvent args)
@@ -157,11 +161,14 @@ public sealed class LockSystem : EntitySystem
         var ev = new LockToggledEvent(true);
         RaiseLocalEvent(uid, ref ev, true);
 
+        if (!TryComp<FixturesComponent>(uid, out var fixturesComponent))
+            return true;
+
         var fixture = _fixtureSystem.GetFixtureOrNull(uid, lockComp.LockedFixtureId);
 
         // Make the fixture hard if we can
         if (fixture != null)
-            _physicsSystem.SetHard(uid, fixture, true);
+            _physicsSystem.SetHard(uid, fixture, true, fixturesComponent);
 
         return true;
     }
@@ -195,11 +202,14 @@ public sealed class LockSystem : EntitySystem
         var ev = new LockToggledEvent(false);
         RaiseLocalEvent(uid, ref ev, true);
 
+        if (!TryComp<FixturesComponent>(uid, out var fixturesComponent))
+            return;
+
         var fixture = _fixtureSystem.GetFixtureOrNull(uid, lockComp.LockedFixtureId);
 
         // Make the fixture not hard if we can
         if (fixture != null)
-            _physicsSystem.SetHard(uid, fixture, false);
+            _physicsSystem.SetHard(uid, fixture, false, fixturesComponent);
     }
 
 
