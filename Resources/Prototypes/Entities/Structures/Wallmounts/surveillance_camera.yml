@@ -8,6 +8,11 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
+      # This exists for examine.
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
       light:
         shape:
           !type:PhysShapeCircle
