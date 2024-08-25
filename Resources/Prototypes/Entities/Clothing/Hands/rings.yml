@@ -2,6 +2,7 @@
   parent: RingBase
   id: GoldRing
   name: gold ring
+  description: A precious ring.
   components:
     - type: Sprite
       sprite: Clothing/Hands/Rings/basic.rsi
@@ -16,6 +17,7 @@
   parent: RingBase
   id: SilverRing
   name: silver ring
+  description: Looks slighly less valuable than a gold one.
   components:
     - type: Sprite
       sprite: Clothing/Hands/Rings/basic.rsi
@@ -29,6 +31,7 @@
   parent: RingBase
   id: GoldRingDiamond
   name: gold diamond ring
+  description: Made from ethically mined space diamonds.
   components:
     - type: Sprite
       sprite: Clothing/Hands/Rings/basic.rsi
@@ -45,6 +48,7 @@
   parent: RingBase
   id: SilverRingDiamond
   name: silver diamond ring
+  description: Made from ethically mined space diamonds.
   components:
     - type: Sprite
       sprite: Clothing/Hands/Rings/basic.rsi
@@ -60,6 +64,7 @@
   parent: RingBase
   id: GoldRingGem
   name: gold gem ring
+  description: Shiney and valuable!
   components:
     - type: Sprite
       sprite: Clothing/Hands/Rings/basic.rsi
@@ -81,6 +86,7 @@
   parent: RingBase
   id: SilverRingGem
   name: silver gem ring
+  description: Shiney and not quite as valuable!
   components:
     - type: Sprite
       sprite: Clothing/Hands/Rings/basic.rsi
