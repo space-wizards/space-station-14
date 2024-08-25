@@ -10,9 +10,7 @@
     sprite: Ronstation/Objects/Misc/id_cards.rsi
     layers:
     - state: heccdiver
-  - type: Clothing
-    slots:
-    - idcard
-    sprite: Ronstation/Objects/Misc/id_cards.rsi
-    layers:
-    - state: heccdiver
+  - type: Access
+    tags:
+    - HeccDiver
+    - TerraGov
