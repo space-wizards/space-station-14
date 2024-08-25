@@ -33,7 +33,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
     {
         if (args.Length < 2)
         {
-            shell.WriteError($"Not enough arguments!"); //A!
+            shell.WriteError(Loc.GetString("cmd-weather-error-no-arguments"));
             return;
         }
 
@@ -56,7 +56,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
         {
             if (!ProtoMan.TryIndex(args[1], out weather))
             {
-                shell.WriteError("Unknown Weather prototype");
+                shell.WriteError(Loc.GetString("cmd-weather-error-unknown-proto"));
                 return;
             }
         }
@@ -72,7 +72,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
             }
             else
             {
-                shell.WriteError("the time is in the wrong format!");
+                shell.WriteError(Loc.GetString("cmd-weather-error-wrong-time"));
             }
         }
 
