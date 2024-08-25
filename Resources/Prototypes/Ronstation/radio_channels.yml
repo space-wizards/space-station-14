@@ -1,7 +1,0 @@
-#- type: radioChannel
-#  id: TerraGov
-#  name: chat-radio-terragov
-#  frequency: 1133
-#  color: "#7fe9cd"
-#  # long range since otherwise it'd defeat the point of a handheld terragov radio independent of telecomms
-#  longRange: true
