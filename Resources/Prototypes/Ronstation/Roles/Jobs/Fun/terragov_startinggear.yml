@@ -18,6 +18,10 @@
   storage:
     back:
     - BoxSurvival
-    - MagazinePistol
-    - WeaponPistolMk58
+    - WeaponRevolverMateba
+    - SpeedLoaderMagnumAP
+    - SpeedLoaderMagnumAP
+    - SpeedLoaderMagnumAP
     - CrowbarRed
+    inhand:
+    - WeaponLaserGun
