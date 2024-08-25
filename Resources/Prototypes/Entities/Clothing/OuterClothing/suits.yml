@@ -160,6 +160,7 @@
       lastVisibility: 0.1
   - type: PowerCellDraw
     drawRate: 1.8 # 200 seconds on the default cell
+  - type: ToggleCellDraw
   # throwing star ability
   - type: ItemCreator
     action: ActionCreateThrowingStar
