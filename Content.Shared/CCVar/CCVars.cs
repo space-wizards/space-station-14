@@ -1240,6 +1240,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> AtmosHeatScale =
             CVarDef.Create("atmos.heat_scale", 8f, CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Toggle for Atmos tank canister explosions
+        /// </summary
+        public static readonly CVarDef<bool> AtmosTankFragment =
+            CVarDef.Create("atmos.tank_fragment", true, CVar.SERVERONLY);
+
         /*
          * MIDI instruments
          */
