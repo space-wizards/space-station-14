@@ -68,13 +68,17 @@ public sealed partial class ItemStatusPanel : Control
 
         var panel = (StyleBoxTexture) Panel.PanelOverride!;
         panel.Texture = texture;
-        panel.SetPatchMargin(flat, patchMargin.Right);
         panel.SetPatchMargin(cutOut, patchMargin.Left);
+        panel.SetPatchMargin(flat, patchMargin.Right);
+        panel.SetPatchMargin(StyleBox.Margin.Top, patchMargin.Top);
+        panel.SetPatchMargin(StyleBox.Margin.Bottom, patchMargin.Bottom);
 
         var panelHighlight = (StyleBoxTexture) HighlightPanel.PanelOverride!;
         panelHighlight.Texture = textureHighlight;
-        panelHighlight.SetPatchMargin(flat, patchMargin.Left);
-        panelHighlight.SetPatchMargin(cutOut, patchMargin.Right);
+        panelHighlight.SetPatchMargin(cutOut, patchMargin.Left);
+        panelHighlight.SetPatchMargin(flat, patchMargin.Right);
+        panelHighlight.SetPatchMargin(StyleBox.Margin.Top, patchMargin.Top);
+        panelHighlight.SetPatchMargin(StyleBox.Margin.Bottom, patchMargin.Bottom);
 
         _side = location;
     }
