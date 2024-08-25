@@ -630,9 +630,9 @@
   description: A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/security_grey.rsi
+    sprite: GreyStation/Clothing/Uniforms/Jumpsuit/security_grey.rsi # Grey Station - Resprited
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/security_grey.rsi
+    sprite: GreyStation/Clothing/Uniforms/Jumpsuit/security_grey.rsi # Grey Station - Resprited
 
 - type: entity
   parent: [ClothingUniformBase, BaseRestrictedContraband]
