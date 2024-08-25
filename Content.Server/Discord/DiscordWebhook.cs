@@ -8,6 +8,9 @@ namespace Content.Server.Discord;
 
 public sealed class DiscordWebhook : IPostInjectInit
 {
+    private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions
+        { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
+
     [Dependency] private readonly ILogManager _log = default!;
 
     private const string BaseUrl = "https://discord.com/api/v10/webhooks";
@@ -68,7 +71,11 @@ public sealed class DiscordWebhook : IPostInjectInit
     public async Task<HttpResponseMessage> CreateMessage(WebhookIdentifier identifier, WebhookPayload payload)
     {
         var url = $"{GetUrl(identifier)}?wait=true";
-        return await _http.PostAsJsonAsync(url, payload, new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
+        var response = await _http.PostAsJsonAsync(url, payload, JsonOptions);
+
+        LogResponse(response, "Create");
+
+        return response;
     }
 
     /// <summary>
@@ -80,7 +87,11 @@ public sealed class DiscordWebhook : IPostInjectInit
     public async Task<HttpResponseMessage> DeleteMessage(WebhookIdentifier identifier, ulong messageId)
     {
         var url = $"{GetUrl(identifier)}/messages/{messageId}";
-        return await _http.DeleteAsync(url);
+        var response = await _http.DeleteAsync(url);
+
+        LogResponse(response, "Delete");
+
+        return response;
     }
 
     /// <summary>
@@ -93,11 +104,40 @@ public sealed class DiscordWebhook : IPostInjectInit
     public async Task<HttpResponseMessage> EditMessage(WebhookIdentifier identifier, ulong messageId, WebhookPayload payload)
     {
         var url = $"{GetUrl(identifier)}/messages/{messageId}";
-        return await _http.PatchAsJsonAsync(url, payload, new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
+        var response = await _http.PatchAsJsonAsync(url, payload, JsonOptions);
+
+        LogResponse(response, "Edit");
+
+        return response;
     }
 
     void IPostInjectInit.PostInject()
     {
         _sawmill = _log.GetSawmill("DISCORD");
     }
+
+    /// <summary>
+    ///     Logs detailed information about the HTTP response received from a Discord webhook request.
+    ///     If the response status code is non-2XX it logs the status code, relevant rate limit headers.
+    /// </summary>
+    /// <param name="response">The HTTP response received from the Discord API.</param>
+    /// <param name="methodName">The name (constant) of the method that initiated the webhook request (e.g., "Create", "Edit", "Delete").</param>
+    private void LogResponse(HttpResponseMessage response, string methodName)
+    {
+        if (!response.IsSuccessStatusCode)
+        {
+            _sawmill.Error($"Failed to {methodName} message. Status code: {response.StatusCode}.");
+
+            if (response.Headers.TryGetValues("Retry-After", out var retryAfter))
+                _sawmill.Debug($"Failed webhook response Retry-After: {string.Join(", ", retryAfter)}");
+
+            if (response.Headers.TryGetValues("X-RateLimit-Global", out var globalRateLimit))
+                _sawmill.Debug($"Failed webhook response X-RateLimit-Global: {string.Join(", ", globalRateLimit)}");
+
+            if (response.Headers.TryGetValues("X-RateLimit-Scope", out var rateLimitScope))
+                _sawmill.Debug($"Failed webhook response X-RateLimit-Scope: {string.Join(", ", rateLimitScope)}");
+        }
+    }
+
+
 }

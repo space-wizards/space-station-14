@@ -88,14 +88,14 @@ public sealed partial class DungeonJob
             var groupSize = random.Next(gen.MinGroupSize, gen.MaxGroupSize + 1);
 
             // While we have remaining tiles keep iterating
-            while (groupSize >= 0 && availableTiles.Count > 0)
+            while (groupSize > 0 && availableTiles.Count > 0)
             {
                 var startNode = random.PickAndTake(availableTiles);
                 frontier.Clear();
                 frontier.Add(startNode);
 
                 // This essentially may lead to a vein being split in multiple areas but the count matters more than position.
-                while (frontier.Count > 0 && groupSize >= 0)
+                while (frontier.Count > 0 && groupSize > 0)
                 {
                     // Need to pick a random index so we don't just get straight lines of ores.
                     var frontierIndex = random.Next(frontier.Count);
@@ -108,9 +108,6 @@ public sealed partial class DungeonJob
                     {
                         for (var y = -1; y <= 1; y++)
                         {
-                            if (x != 0 && y != 0)
-                                continue;
-
                             var neighbor = new Vector2i(node.X + x, node.Y + y);
 
                             if (frontier.Contains(neighbor) || !availableTiles.Contains(neighbor))
@@ -142,7 +139,7 @@ public sealed partial class DungeonJob
 
             if (groupSize > 0)
             {
-                _sawmill.Warning($"Found remaining group size for ore veins!");
+                _sawmill.Warning($"Found remaining group size for ore veins of {gen.Replacement ?? "null"}!");
             }
         }
     }
