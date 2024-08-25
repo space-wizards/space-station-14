@@ -270,13 +270,6 @@
     sprite: Clothing/Neck/Medals/clownmedal.rsi
     state: icon
 
-- type: stealTargetGroup
-  id: ClothingNeckShockCollar
-  name: shock collar
-  sprite:
-    sprite: Clothing/Neck/Misc/shock_collar.rsi
-    state: icon
-
 #Thief structures
 
 - type: stealTargetGroup
