@@ -1,5 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using Content.Shared.Sound;
 using Content.Shared.Sound.Components;
 
