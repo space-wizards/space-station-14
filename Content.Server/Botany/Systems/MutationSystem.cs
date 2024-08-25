@@ -34,7 +34,8 @@ public sealed class MutationSystem : EntitySystem
                     var args = new EntityEffectBaseArgs(plantHolder, EntityManager);
                     mutation.Mutation.Effect(args);
                 }
-                if (mutation.Persists) //Stat adjustments do not persist by being an attached effect, they just change the stat.
+                 //Stat adjustments do not persist by being an attached effect, they just change the stat.
+                if (mutation.Persists && !seed.Mutations.Any(m => m.Name == mutation.Name))
                     seed.Mutations.Add(mutation);
             }
         }
