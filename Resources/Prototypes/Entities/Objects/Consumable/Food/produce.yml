@@ -2584,7 +2584,8 @@
     flavors:
       - cherry
   - type: Food
-    trash: TrashCherryPit
+    trash:
+    - TrashCherryPit
   - type: SolutionContainerManager
     solutions:
       food:
