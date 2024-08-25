@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix sometimes spawning without bags.
-    type: Fix
-  id: 6702
-  time: '2024-06-08T18:48:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28734
 - author: UBlueberry
   changes:
   - message: The guidebook has been heavily reorganized to improve convenience for
@@ -3869,3 +3862,10 @@
   id: 7201
   time: '2024-08-25T02:02:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31398
+- author: metalgearsloth
+  changes:
+  - message: Fix grids sometimes overlapping on roundstart.
+    type: Fix
+  id: 7202
+  time: '2024-08-25T04:48:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31413
