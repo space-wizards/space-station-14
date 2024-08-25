@@ -2,6 +2,7 @@
   parent: [ BoxBase, BaseBagOpenClose ]
   id: RingBox
   name: ring box
+  description: Made from a high quality wood!
   components:
     - type: Sprite
       sprite: Objects/Specific/Chapel/ringbox.rsi
