@@ -4,6 +4,21 @@
   description: Components added / removed from an entity that gets inserted into an AI core.
   noSpawn: true
   components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+    - Common
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+  - type: ActiveRadio
+    receiveAllChannels: true
+    globalReceive: true
   - type: IgnoreUIRange
   - type: StationAiHeld
   - type: StationAiOverlay
