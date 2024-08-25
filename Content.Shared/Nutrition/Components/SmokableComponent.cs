@@ -13,8 +13,8 @@ namespace Content.Shared.Nutrition.Components
         /// <summary>
         ///     Time taken to complete a smokable in seconds
         /// </summary>
-        [DataField("inhaleAmount"), ViewVariables(VVAccess.ReadWrite)]
-        public FixedPoint2 InhalationTime { get; private set; } = FixedPoint2.New(360f);
+        [DataField("smokableDuration"), ViewVariables(VVAccess.ReadWrite)]
+        public FixedPoint2 SmokableDuration { get; private set; } = FixedPoint2.New(360f);
 
         [DataField("initialVolume"), ViewVariables(VVAccess.ReadWrite)]
         public Dictionary<EntityUid, FixedPoint2> InitialVolume = new();

@@ -139,7 +139,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 ///     Calculates the amount of reagents inhaled from the volume of chemiclas inside the smoke by the time required to finish the smoke
                 /// </summary>
                 var storedVolume = smokable.InitialVolume[uid];
-                var inhaledAmount = storedVolume / (smokable.InhalationTime / UpdateTimer);
+                var inhaledAmount = storedVolume / (smokable.SmokableDuration / UpdateTimer);
                 var inhaledSolution = _solutionContainerSystem.SplitSolution(soln.Value, inhaledAmount);
 
                 if (solution.Volume == FixedPoint2.Zero)
