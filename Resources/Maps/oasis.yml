@@ -14440,8 +14440,6 @@ entities:
       pos: -11.5,19.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 231
   - uid: 18245
@@ -126218,8 +126216,6 @@ entities:
       pos: -16.5,17.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 231
 - proto: GasVentScrubber
@@ -128140,8 +128136,6 @@ entities:
       pos: -10.5,17.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 231
     - type: AtmosPipeColor
@@ -128153,8 +128147,6 @@ entities:
       pos: -13.5,19.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 231
     - type: AtmosPipeColor
@@ -128166,8 +128158,6 @@ entities:
       pos: -12.5,19.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 231
     - type: AtmosPipeColor
