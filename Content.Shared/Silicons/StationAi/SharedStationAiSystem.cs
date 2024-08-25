@@ -11,6 +11,7 @@ using Content.Shared.StationAi;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -19,6 +20,7 @@ namespace Content.Shared.Silicons.StationAi;
 public abstract partial class SharedStationAiSystem : EntitySystem
 {
     [Dependency] private   readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private   readonly ItemSlotsSystem _slots = default!;
     [Dependency] private   readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private   readonly MetaDataSystem _metadata = default!;
@@ -199,6 +201,10 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void OnAiShutdown(Entity<StationAiCoreComponent> ent, ref ComponentShutdown args)
     {
+        // TODO: Tryqueuedel
+        if (_net.IsClient)
+            return;
+
         QueueDel(ent.Comp.RemoteEntity);
         ent.Comp.RemoteEntity = null;
     }
