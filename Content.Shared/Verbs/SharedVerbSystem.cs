@@ -3,6 +3,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.VirtualItem;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Verbs
 {
