@@ -72,14 +72,7 @@ public sealed class StealConditionSystem : EntitySystem
     private void OnAfterAssign(Entity<StealConditionComponent> condition, ref ObjectiveAfterAssignEvent args)
     {
         var group = _proto.Index(condition.Comp.StealGroup);
-
-        string localizedName = Loc.GetString($"ent-{group.ID}");
-
-        //Protection in case localization doesn't work for some reason
-        if (localizedName.StartsWith("ent-"))
-        {
-            localizedName = Loc.GetString(group.Name);
-        }
+        string localizedName = Loc.GetString(group.Name);
 
         var title =condition.Comp.OwnerText == null
             ? Loc.GetString(condition.Comp.ObjectiveNoOwnerText, ("itemName", localizedName))

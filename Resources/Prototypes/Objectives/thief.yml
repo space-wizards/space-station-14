@@ -437,7 +437,7 @@
   - type: NotJobRequirement
     job: HeadOfPersonnel
   - type: StealCondition
-    stealGroup: MobCorgiIan
+    stealGroup: AnimalIan
   - type: Objective
     difficulty: 2.5
 
@@ -457,7 +457,7 @@
   - type: NotJobRequirement
     job: Detective
   - type: StealCondition
-    stealGroup: MobMcGriff
+    stealGroup: AnimalMcGriff
   - type: Objective
     difficulty: 1
 
@@ -468,7 +468,7 @@
   - type: NotJobRequirement
     job: Chemist
   - type: StealCondition
-    stealGroup: MobWalter
+    stealGroup: AnimalWalter
   - type: Objective
     difficulty: 1
 
@@ -477,7 +477,7 @@
   id: MortyStealObjective
   components:
   - type: StealCondition
-    stealGroup: MobPossumMorty
+    stealGroup: AnimalMorty
   - type: Objective
     difficulty: 0.5
 
@@ -488,7 +488,7 @@
   - type: NotJobRequirement
     job: Captain
   - type: StealCondition
-    stealGroup: MobFoxRenault
+    stealGroup: AnimalRenault
   - type: Objective
     difficulty: 2
 
@@ -499,7 +499,7 @@
   - type: NotJobRequirement
     job: SecurityOfficer
   - type: StealCondition
-    stealGroup: MobSpiderShiva
+    stealGroup: AnimalShiva
   - type: Objective
     difficulty: 2
 
@@ -510,7 +510,7 @@
   - type: NotJobRequirement
     job: AtmosphericTechnician
   - type: StealCondition
-    stealGroup: MobCrabAtmos
+    stealGroup: AnimalTropico
   - type: Objective
     difficulty: 1
 
