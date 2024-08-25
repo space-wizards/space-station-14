@@ -12,6 +12,7 @@ namespace Content.Server.Ghost
     {
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
+        [Dependency] private readonly SharedMindSystem _mind = default!;
 
         public string Command => "ghost";
         public string Description => Loc.GetString("ghost-command-description");
@@ -43,14 +44,13 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            var minds = _entities.System<SharedMindSystem>();
-            if (!minds.TryGetMind(player, out var mindId, out var mind))
+            if (!_mind.TryGetMind(player, out var mindId, out var mind))
             {
-                mindId = minds.CreateMind(player.UserId);
+                mindId = _mind.CreateMind(player.UserId);
                 mind = _entities.GetComponent<MindComponent>(mindId);
             }
 
-            if (!_entities.System<GameTicker>().OnGhostAttempt(mindId, true, true, mind))
+            if (!_ticker.OnGhostAttempt(mindId, true, true, mind))
             {
                 shell.WriteLine(Loc.GetString("ghost-command-denied"));
             }
