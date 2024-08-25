@@ -33,6 +33,10 @@
       },
       {
         "name": "pda-heccdiver"
+      },
+      {
+        "name": "equipped-IDCARD",
+        "directions": 4
       }
     ]
 }
