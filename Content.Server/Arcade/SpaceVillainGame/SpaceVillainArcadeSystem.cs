@@ -2,6 +2,7 @@ using Content.Server.Power.Components;
 using Content.Shared.UserInterface;
 using Content.Server.Advertise;
 using Content.Server.Advertise.Components;
+using Content.Shared.Power;
 using static Content.Shared.Arcade.SharedSpaceVillainArcadeComponent;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
