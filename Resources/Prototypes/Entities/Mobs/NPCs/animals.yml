@@ -1708,7 +1708,6 @@
     price: 50
   - type: BadFood
   - type: NonSpreaderZombie
-  - type: PreventSpiller
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
@@ -1723,7 +1722,7 @@
         name: food-sequence-content-rat
       skewer:
         name: food-sequence-content-rat
-        sprite: 
+        sprite:
           sprite: Objects/Consumable/Food/skewer.rsi
           state: skewer-rat
 
