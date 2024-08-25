@@ -26,6 +26,8 @@
     count: 8
   - type: Item
     size: Normal
+    shape:
+    - 0,0,2,1
   - type: Tag
     tags:
     - Pizza
