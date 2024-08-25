@@ -13770,8 +13770,6 @@ entities:
       pos: 12.5,-13.5
       parent: 60
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 930
 - proto: AltarSpawner
@@ -96606,8 +96604,6 @@ entities:
       pos: 13.5,-12.5
       parent: 60
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 930
 - proto: GasVentScrubber
@@ -97963,8 +97959,6 @@ entities:
       pos: 10.5,-12.5
       parent: 60
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 930
   - uid: 24665
@@ -97974,8 +97968,6 @@ entities:
       pos: 12.5,-10.5
       parent: 60
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 930
 - proto: GasVolumePump
