@@ -126,6 +126,7 @@
   # TODO: or just have sentient speedboots be fast idk
   - type: PowerCellDraw
     drawRate: 0.6
+  # no ToggleCellDraw since dont want to lose access when power is gone
   - type: ItemSlots
     slots:
       cell_slot:
@@ -244,6 +245,7 @@
     deviceNetId: Wireless
     receiveFrequencyId: CyborgControl
     transmitFrequencyId: RoboticsConsole
+    savableAddress: false
   - type: OnUseTimerTrigger
     delay: 10
     examinable: false

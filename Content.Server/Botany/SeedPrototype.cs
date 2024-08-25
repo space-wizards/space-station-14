@@ -227,9 +227,12 @@ public partial class SeedData
 
     [DataField("plantIconState")] public string PlantIconState { get; set; } = "produce";
 
+    /// <summary>
+    /// Screams random sound, could be strict sound SoundPathSpecifier or collection SoundCollectionSpecifier
+    /// base class is SoundSpecifier
+    /// </summary>
     [DataField("screamSound")]
-    public SoundSpecifier ScreamSound = new SoundPathSpecifier("/Audio/Voice/Human/malescream_1.ogg");
-
+    public SoundSpecifier ScreamSound = new SoundCollectionSpecifier("PlantScreams", AudioParams.Default.WithVolume(-10));
 
     [DataField("screaming")] public bool CanScream;
 
