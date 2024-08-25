@@ -368,6 +368,7 @@
   loadouts:
   - BotanistHead
   - BotanistBandana
+  - BotanistBeret
 
 - type: loadoutGroup
   id: BotanistJumpsuit

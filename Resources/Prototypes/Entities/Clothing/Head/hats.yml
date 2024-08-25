@@ -157,6 +157,17 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatBeretSeniorBotanist
+  name: botanical beret
+  description: A green beret featuring a small blue flower given to experienced botanists.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_botany.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_botany.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatBeretBrigmedic
   name: brigmedical beret
   description: White beret, looks like a cream pie on the head.
