@@ -1,8 +1,6 @@
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Mining.Components;
-using Content.Shared.Mobs.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
@@ -16,7 +14,6 @@ public sealed class MiningScannerSystem : EntitySystem
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
 
     /// <inheritdoc/>
@@ -45,42 +42,20 @@ public sealed class MiningScannerSystem : EntitySystem
 
     public void UpdateViewerComponent(EntityUid uid)
     {
-        // Don't do updates on non-mobs.
-        if (!HasComp<MobStateComponent>(uid))
-            return;
-
         Entity<MiningScannerComponent>? scannerEnt = null;
 
-        if (_inventory.TryGetContainerSlotEnumerator(uid, out var enumerator))
+        var ents = _inventory.GetHandOrInventoryEntities(uid);
+        foreach (var ent in ents)
         {
-            while (enumerator.MoveNext(out var slot))
-            {
-                foreach (var ent in slot.ContainedEntities)
-                {
-                    if (!TryComp<MiningScannerComponent>(ent, out var scannerComponent) ||
-                        !TryComp<ItemToggleComponent>(ent, out var toggle))
-                        continue;
-
-                    if (!toggle.Activated)
-                        continue;
-
-                    if (scannerEnt == null || scannerComponent.Range > scannerEnt.Value.Comp.Range)
-                       scannerEnt = (ent, scannerComponent);
-                }
-            }
-        }
-
-        foreach (var hand in _hands.EnumerateHands(uid))
-        {
-            if (!TryComp<MiningScannerComponent>(hand.HeldEntity, out var scannerComponent) ||
-                !TryComp<ItemToggleComponent>(hand.HeldEntity, out var toggle))
+            if (!TryComp<MiningScannerComponent>(ent, out var scannerComponent) ||
+                !TryComp<ItemToggleComponent>(ent, out var toggle))
                 continue;
 
             if (!toggle.Activated)
                 continue;
 
             if (scannerEnt == null || scannerComponent.Range > scannerEnt.Value.Comp.Range)
-                scannerEnt = (hand.HeldEntity.Value, scannerComponent);
+                scannerEnt = (ent, scannerComponent);
         }
 
         if (_net.IsServer)
@@ -119,7 +94,8 @@ public sealed class MiningScannerSystem : EntitySystem
 
             viewer.NextPingTime = _timing.CurTime + viewer.PingDelay;
             viewer.LastPingLocation = xform.Coordinates;
-            _audio.PlayEntity(viewer.PingSound, uid, uid);
+            if (_net.IsClient && _timing.IsFirstTimePredicted)
+                _audio.PlayEntity(viewer.PingSound, uid, uid);
         }
     }
 }

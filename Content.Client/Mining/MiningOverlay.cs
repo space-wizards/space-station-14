@@ -24,6 +24,8 @@ public sealed class MiningOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
 
+    private readonly HashSet<Entity<MiningScannerViewableComponent>> _viewableEnts = new();
+
     public MiningOverlay()
     {
         IoCManager.InjectDependencies(this);
@@ -50,10 +52,11 @@ public sealed class MiningOverlay : Overlay
 
         var gridRot = localXform.GridUid == null ? 0 : _xformQuery.CompOrNull(localXform.GridUid.Value)?.LocalRotation ?? 0;
         var rotationMatrix = Matrix3Helpers.CreateRotation(gridRot);
-        var scaleMatrix = Matrix3Helpers.CreateScale(new Vector2(1, 1));
+        var scaleMatrix = Matrix3Helpers.CreateScale(args.Viewport.Eye?.Scale ?? Vector2.One);
 
-        var viewable = _lookup.GetEntitiesInRange<MiningScannerViewableComponent>(viewerComp.LastPingLocation.Value, viewerComp.ViewRange);
-        foreach (var ore in viewable)
+        _viewableEnts.Clear();
+        _lookup.GetEntitiesInRange(viewerComp.LastPingLocation.Value, viewerComp.ViewRange, _viewableEnts);
+        foreach (var ore in _viewableEnts)
         {
             if (!_xformQuery.TryComp(ore, out var xform) ||
                 !_spriteQuery.TryComp(ore, out var sprite))
