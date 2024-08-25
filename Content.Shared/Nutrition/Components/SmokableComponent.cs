@@ -10,11 +10,14 @@ namespace Content.Shared.Nutrition.Components
         [DataField("solution")]
         public string Solution { get; private set; } = "smokable";
 
-        /// <summary>
-        ///     Solution inhale amount per second.
+        /// </summary>
+        ///     Time taken to complete a smokable in seconds
         /// </summary>
         [DataField("inhaleAmount"), ViewVariables(VVAccess.ReadWrite)]
-        public FixedPoint2 InhaleAmount { get; private set; } = FixedPoint2.New(0.05f);
+        public FixedPoint2 InhalationTime { get; private set; } = FixedPoint2.New(360f);
+
+        [DataField("initialVolume"), ViewVariables(VVAccess.ReadWrite)]
+        public Dictionary<EntityUid, FixedPoint2> InitialVolume = new();
 
         [DataField("state")]
         public SmokableState State { get; set; } = SmokableState.Unlit;

@@ -119,6 +119,11 @@ namespace Content.Server.Nutrition.EntitySystems
                     continue;
                 }
 
+                if (!smokable.InitialVolume.ContainsKey(uid))
+                {
+                    smokable.InitialVolume[uid] = solution.Volume;
+                }
+
                 if (smokable.ExposeTemperature > 0 && smokable.ExposeVolume > 0)
                 {
                     var transform = Transform(uid);
@@ -130,11 +135,17 @@ namespace Content.Server.Nutrition.EntitySystems
                     }
                 }
 
-                var inhaledSolution = _solutionContainerSystem.SplitSolution(soln.Value, smokable.InhaleAmount * _timer);
+                /// <summary>
+                ///     Calculates the amount of chemicals inhaled based off the InhalationTime by the current volume of the smokable
+                /// </summary>
+                var storedVolume = smokable.InitialVolume[uid];
+                var inhaledAmount = storedVolume / (smokable.InhalationTime / UpdateTimer);
+                var inhaledSolution = _solutionContainerSystem.SplitSolution(soln.Value, inhaledAmount);
 
                 if (solution.Volume == FixedPoint2.Zero)
                 {
                     RaiseLocalEvent(uid, new SmokableSolutionEmptyEvent(), true);
+                    smokable.InitialVolume.Remove(uid);
                 }
 
                 if (inhaledSolution.Volume == FixedPoint2.Zero)
