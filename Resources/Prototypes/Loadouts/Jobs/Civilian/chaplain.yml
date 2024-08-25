@@ -1,45 +1,25 @@
 # Head
 - type: loadout
   id: ChaplainHead
-  equipment: ChaplainHead
-
-- type: startingGear
-  id: ChaplainHead
   equipment:
     head: ClothingHeadHatFez
 
 - type: loadout
-  id: ChaplainNunHood
-  equipment: ChaplainNunHood
-
-- type: startingGear
   id: ChaplainNunHood
   equipment:
     head: ClothingHeadHatHoodNunHood
 
 - type: loadout
   id: ChaplainPlagueHat
-  equipment: ChaplainPlagueHat
-
-- type: startingGear
-  id: ChaplainPlagueHat
   equipment:
     head: ClothingHeadHatPlaguedoctor
 
 - type: loadout
   id: ChaplainWitchHat
-  equipment: ChaplainWitchHat
-
-- type: startingGear
-  id: ChaplainWitchHat
   equipment:
     head: ClothingHeadHatWitch
 
 - type: loadout
-  id: ChaplainWitchHatAlt
-  equipment: ChaplainWitchHatAlt
-
-- type: startingGear
   id: ChaplainWitchHatAlt
   equipment:
     head: ClothingHeadHatWitch1
@@ -47,46 +27,26 @@
 # Mask
 - type: loadout
   id: ChaplainMask
-  equipment: ChaplainMask
-
-- type: startingGear
-  id: ChaplainMask
   equipment:
     mask: ClothingMaskPlague
 
 # Jumpsuit
 - type: loadout
   id: ChaplainJumpsuit
-  equipment: ChaplainJumpsuit
-
-- type: startingGear
-  id: ChaplainJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitChaplain
 
 - type: loadout
-  id: ChaplainJumpskirt
-  equipment: ChaplainJumpskirt
-
-- type: startingGear
   id: ChaplainJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtChaplain
 
 - type: loadout
   id: ChaplainRobesDark
-  equipment: ChaplainRobesDark
-
-- type: startingGear
-  id: ChaplainRobesDark
   equipment:
     jumpsuit: ClothingUniformJumpsuitMonasticRobeDark
 
 - type: loadout
-  id: ChaplainRobesLight
-  equipment: ChaplainRobesLight
-
-- type: startingGear
   id: ChaplainRobesLight
   equipment:
     jumpsuit: ClothingUniformJumpsuitMonasticRobeLight
@@ -94,46 +54,26 @@
 # Neck
 - type: loadout
   id: ChaplainNeck
-  equipment: ChaplainNeck
-
-- type: startingGear
-  id: ChaplainNeck
   equipment:
     neck: ClothingNeckStoleChaplain
 
 # Outer clothing
 - type: loadout
   id: ChaplainPlagueSuit
-  equipment: ChaplainPlagueSuit
-
-- type: startingGear
-  id: ChaplainPlagueSuit
   equipment:
     outerClothing: ClothingOuterPlagueSuit
 
 - type: loadout
-  id: ChaplainNunRobe
-  equipment: ChaplainNunRobe
-
-- type: startingGear
   id: ChaplainNunRobe
   equipment:
     outerClothing: ClothingOuterNunRobe
 
 - type: loadout
   id: ChaplainBlackHoodie
-  equipment: ChaplainBlackHoodie
-
-- type: startingGear
-  id: ChaplainBlackHoodie
   equipment:
     outerClothing: ClothingOuterHoodieBlack
 
 - type: loadout
-  id: ChaplainHoodie
-  equipment: ChaplainHoodie
-
-- type: startingGear
   id: ChaplainHoodie
   equipment:
     outerClothing: ClothingOuterHoodieChaplain
