@@ -16,23 +16,26 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Database
 {
-    public sealed class ServerDbPostgres : ServerDbBase
+    public sealed partial class ServerDbPostgres : ServerDbBase
     {
         private readonly DbContextOptions<PostgresServerDbContext> _options;
+        private readonly ISawmill _notifyLog;
         private readonly SemaphoreSlim _prefsSemaphore;
         private readonly Task _dbReadyTask;
 
         private int _msLag;
 
-        public ServerDbPostgres(
-            DbContextOptions<PostgresServerDbContext> options,
+        public ServerDbPostgres(DbContextOptions<PostgresServerDbContext> options,
+            string connectionString,
             IConfigurationManager cfg,
-            ISawmill opsLog)
+            ISawmill opsLog,
+            ISawmill notifyLog)
             : base(opsLog)
         {
             var concurrency = cfg.GetCVar(CCVars.DatabasePgConcurrency);
 
             _options = options;
+            _notifyLog = notifyLog;
             _prefsSemaphore = new SemaphoreSlim(concurrency, concurrency);
 
             _dbReadyTask = Task.Run(async () =>
@@ -49,6 +52,8 @@ namespace Content.Server.Database
             });
 
             cfg.OnValueChanged(CCVars.DatabasePgFakeLag, v => _msLag = v, true);
+
+            InitNotificationListener(connectionString);
         }
 
         #region Ban
@@ -78,7 +83,8 @@ namespace Content.Server.Database
             await using var db = await GetDbImpl();
 
             var exempt = await GetBanExemptionCore(db, userId);
-            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned: false, exempt)
+            var newPlayer = userId == null || !await PlayerRecordExists(db, userId.Value);
+            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned: false, exempt, newPlayer)
                 .OrderByDescending(b => b.BanTime);
 
             var ban = await query.FirstOrDefaultAsync();
@@ -98,7 +104,8 @@ namespace Content.Server.Database
             await using var db = await GetDbImpl();
 
             var exempt = await GetBanExemptionCore(db, userId);
-            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned, exempt);
+            var newPlayer = !await db.PgDbContext.Player.AnyAsync(p => p.UserId == userId);
+            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned, exempt, newPlayer);
 
             var queryBans = await query.ToArrayAsync();
             var bans = new List<ServerBanDef>(queryBans.Length);
@@ -122,7 +129,8 @@ namespace Content.Server.Database
             ImmutableArray<byte>? hwId,
             DbGuardImpl db,
             bool includeUnbanned,
-            ServerBanExemptFlags? exemptFlags)
+            ServerBanExemptFlags? exemptFlags,
+            bool newPlayer)
         {
             DebugTools.Assert(!(address == null && userId == null && hwId == null));
 
@@ -141,7 +149,9 @@ namespace Content.Server.Database
             {
                 var newQ = db.PgDbContext.Ban
                     .Include(p => p.Unban)
-                    .Where(b => b.Address != null && EF.Functions.ContainsOrEqual(b.Address.Value, address));
+                    .Where(b => b.Address != null
+                                && EF.Functions.ContainsOrEqual(b.Address.Value, address)
+                                && !(b.ExemptFlags.HasFlag(ServerBanExemptFlags.BlacklistedRange) && !newPlayer));
 
                 query = query == null ? newQ : query.Union(newQ);
             }
@@ -167,6 +177,9 @@ namespace Content.Server.Database
 
             if (exemptFlags is { } exempt)
             {
+                if (exempt != ServerBanExemptFlags.None)
+                    exempt |= ServerBanExemptFlags.BlacklistedRange; // Any kind of exemption should bypass BlacklistedRange
+
                 query = query.Where(b => (b.ExemptFlags & exempt) == 0);
             }
 
@@ -206,7 +219,8 @@ namespace Content.Server.Database
                 ban.Reason,
                 ban.Severity,
                 aUid,
-                unbanDef);
+                unbanDef,
+                ban.ExemptFlags);
         }
 
         private static ServerUnbanDef? ConvertUnban(ServerUnban? unban)
@@ -243,7 +257,8 @@ namespace Content.Server.Database
                 ExpirationTime = serverBan.ExpirationTime?.UtcDateTime,
                 RoundId = serverBan.RoundId,
                 PlaytimeAtNote = serverBan.PlaytimeAtNote,
-                PlayerUserId = serverBan.UserId?.UserId
+                PlayerUserId = serverBan.UserId?.UserId,
+                ExemptFlags = serverBan.ExemptFlags
             });
 
             await db.PgDbContext.SaveChangesAsync();

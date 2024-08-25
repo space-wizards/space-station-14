@@ -214,3 +214,10 @@
   materials:
     Steel: 400
     Glass: 200
+
+- type: latheRecipe
+  id: ClothingHeadHatCone
+  result: ClothingHeadHatCone
+  completetime: 3
+  materials:
+    Plastic: 200

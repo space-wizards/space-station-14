@@ -15,7 +15,7 @@
           true
     - type: NpcFactionMember
       factions:
-        - SimpleHostile
+      - Dragon
     - type: Sprite
       drawdepth: Mobs
       sprite: Mobs/Aliens/Carps/space.rsi
@@ -54,6 +54,9 @@
       spawned:
         - id: FoodMeatFish
           amount: 2
+        - id: MaterialToothSpaceCarp1
+          amount: 1
+          maxAmount: 4
     - type: MeleeWeapon
       altDisarm: false
       angle: 0
@@ -163,6 +166,7 @@
       makeSentient: true
       name: ghost-role-information-sentient-carp-name
       description: ghost-role-information-sentient-carp-description
+      rules: ghost-role-information-space-dragon-summoned-carp-rules
       raffle:
         settings: short
     - type: GhostTakeoverAvailable
@@ -233,6 +237,9 @@
       spawned:
         - id: FoodMeatFish
           amount: 4
+        - id: MaterialToothSharkminnow1
+          amount: 1
+          maxAmount: 3
     - type: MeleeWeapon
       damage:
         types:

@@ -10,3 +10,42 @@
   - type: Item
     size: Small
     storedRotation: -90
+
+- type: entity
+  parent: [ClothingEyesBase, BaseFoldable]
+  id: ClothingHeadEyeBaseFlippable
+  abstract: true
+  components:
+  - type: Appearance
+  - type: FlippableClothingVisuals
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: fold-flip-verb
+    foldVerbText: fold-flip-verb
+  - type: FoldableClothing
+  - type: Sprite
+    layers:
+    - map: [ "unfoldedLayer" ]
+      state: icon
+    - map: ["foldedLayer"]
+      state: icon
+      visible: false
+      scale: -1,1
+
+- type: entity
+  parent: ClothingHeadEyeBaseFlippable
+  id: ClothingHeadEyeBaseFlipped
+  suffix: flipped
+  abstract: true
+  components:
+  - type: Foldable
+    folded: true
+  - type: Sprite
+    layers:
+    - map: [ "unfoldedLayer" ]
+      state: icon
+      visible: false
+    - map: ["foldedLayer"]
+      state: icon
+      visible: true
+      scale: -1,1

@@ -10,6 +10,8 @@ using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Examine;
+using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using Content.Shared.Power.Generation.Teg;
 using Content.Shared.Rounding;
 using Robust.Server.GameObjects;
@@ -179,7 +181,7 @@ public sealed class TegSystem : EntitySystem
         component.LastGeneration = electricalEnergy;
 
         // Turn energy (at atmos tick rate) into wattage.
-        var power = electricalEnergy * _atmosphere.AtmosTickRate;
+        var power = electricalEnergy / args.dt;
         // Add ramp factor. This magics slight power into existence, but allows us to ramp up.
         supplier.MaxSupply = power * component.RampFactor;
 
