@@ -41,7 +41,7 @@ namespace Content.Server.Ghost
                 mind = _entities.GetComponent<MindComponent>(mindId);
             }
 
-            if (!_entities.System<GameTicker>().OnGhostAttempt(mindId, true, true, mind))
+            if (!_entities.System<GhostSystem>().OnGhostAttempt(mindId, true, true, mind))
             {
                 shell.WriteLine(Loc.GetString("ghost-command-denied"));
             }

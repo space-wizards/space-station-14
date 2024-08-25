@@ -13,6 +13,7 @@ using Robust.Shared.Player;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chat;
 using Content.Shared.Mind.Components;
+using Content.Server.Ghost;
 
 namespace Content.Server.Chat;
 
@@ -23,7 +24,7 @@ public sealed class SuicideSystem : EntitySystem
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly GhostSystem _ghostSystem = default!;
     [Dependency] private readonly SharedSuicideSystem _suicide = default!;
 
     public override void Initialize()
@@ -82,7 +83,7 @@ public sealed class SuicideSystem : EntitySystem
         if (_tagSystem.HasTag(victim, "CannotSuicide"))
             args.CanReturnToBody = true;
 
-        if (_gameTicker.OnGhostAttempt(victim.Comp.Mind.Value, args.CanReturnToBody, mind: mindComponent))
+        if (_ghostSystem.OnGhostAttempt(victim.Comp.Mind.Value, args.CanReturnToBody, mind: mindComponent))
             args.Handled = true;
     }
 
