@@ -145,7 +145,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         if (_guideWindow != null)
         {
             _guideWindow.ReturnContainer.Visible = false;
-            _lastEntry = _guideWindow._lastEntry;
+            _lastEntry = _guideWindow.LastEntry;
         }
     }
 
@@ -180,8 +180,6 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         if (GuidebookButton != null)
             GuidebookButton.SetClickPressed(!_guideWindow.IsOpen);
 
-        selected ??= _configuration.GetCVar(CCVars.DefaultGuide);
-
         if (guides == null)
         {
             guides = _prototypeManager.EnumeratePrototypes<GuideEntryPrototype>()
@@ -198,7 +196,11 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         }
         if (guides.ContainsKey(_lastEntry))
         {
-            selected = _lastEntry;
+            selected ??= _lastEntry;
+        }
+        else
+        {
+            selected ??= _configuration.GetCVar(CCVars.DefaultGuide);
         }
 
         _guideWindow.UpdateGuides(guides, rootEntries, forceRoot, selected);
