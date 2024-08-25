@@ -12,12 +12,14 @@ public sealed partial class MatchstickComponent : Component
     /// <summary>
     ///     Current state to matchstick. Can be <code>Unlit</code>, <code>Lit</code> or <code>Burnt</code>.
     /// </summary>
+    [DataField("state")]
     [AutoNetworkedField]
     public SmokableState CurrentState = SmokableState.Unlit;
 
     /// <summary>
     ///     How long will matchstick last in seconds.
     /// </summary>
+    [DataField("duration")]
     public int Duration = 10;
 
     /// <summary>
@@ -29,5 +31,5 @@ public sealed partial class MatchstickComponent : Component
     /// <summary>
     ///     Sound played when you ignite the matchstick.
     /// </summary>
-    [DataField(required: true)] public SoundSpecifier IgniteSound = default!;
+    [DataField("igniteSound", required: true)] public SoundSpecifier IgniteSound = default!;
 }
