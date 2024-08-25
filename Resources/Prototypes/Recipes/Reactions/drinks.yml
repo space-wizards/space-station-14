@@ -1215,3 +1215,83 @@
     TheHorsepussy: 3
   sound:
     path: /Audio/Animals/spooky_horse.ogg
+
+- type: reaction
+  id: Calimotxo
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Wine:
+      amount: 1
+    Cola:
+      amount: 1
+  products:
+    Calimotxo: 2
+    
+- type: reaction
+  id: LoveTap
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Rum:
+      amount: 1
+    RootBeer:
+      amount: 9
+  products:
+    LoveTap: 10
+    
+- type: reaction
+  id: Raeganomics
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    THC:
+      amount: 1
+    Nicotine:
+      amount: 1
+    Lemonade:
+      amount: 1
+    Vodka:
+      amount: 2
+  products:
+    Reaganomics: 5
+    
+- type: reaction
+  id: GatorWine
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    LemonAsterade:
+      amount: 1
+    Wine:
+      amount: 1
+  products:
+    GatorWine: 2
+    
+- type: reaction
+  id: Rotgut
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    Water:
+      amount: 1
+    Sugar:
+      amount: 4
+    Nicotine:
+      amount: 5
+  products:
+    Rotgut: 10
+    
+- type: reaction
+  id: BumWine
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Wine:
+      amount: 2
+    Sugar:
+      amount: 1
+    Water:
+      amount: 3
+  products:
+    BumWine: 5

@@ -2019,9 +2019,9 @@
 
 - type: reagent
   id: TheHorsepussy
-  name: reagent-name-thehorsepussy
+  name: reagent-name-theehorsepussy
   parent: BaseAlcohol
-  desc: reagent-desc-thehorsepussy
+  desc: reagent-desc-theehorsepussy
   physicalDesc: reagent-physical-desc-evil
   flavor: horsepussy
   color: "#7BD18C"
@@ -2055,5 +2055,140 @@
         - !type:MobStateCondition
           mobstate: Alive
 
+- type: reagent
+  id: Calimotxo
+  name: reagent-name-calimotxo
+  parent: BaseAlcohol
+  desc: reagent-desc-calimotxo
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: cola
+  color: "#663100"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/martiniglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  fizziness: 0.8
 
+- type: reagent
+  id: LoveTap
+  name: reagent-name-lovetap
+  parent: BaseAlcohol
+  desc: reagent-desc-lovetap
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: rootbeersoda
+  color: "#381c07"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/rootbeerglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  fizziness: 0.8
 
+- type: reagent
+  id: Reaganomics
+  name: reagent-name-reaganomics
+  parent: BaseSoda
+  desc: reagent-desc-reaganomics
+  physicalDesc: reagent-physical-desc-evil
+  flavor: energydrink
+  color: "#ff6500"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 5
+        type: Add
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
+    Medicine:
+      effects:
+      - !type:HealthChange
+        probability: 0.25
+        damage:
+          types:
+            Blunt: 20
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        - !type:MobStateCondition
+          mobstate: Alive
+  fizziness: 0.2
+  
+- type: reagent
+  id: GatorWine
+  name: reagent-name-gatorwine
+  parent: BaseAlcohol
+  desc: reagent-desc-gatorwine
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: sweet
+  color: "#ffee3e"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/martiniglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  fizziness: 0.8
+  
+- type: reagent
+  id: Rotgut
+  name: reagent-name-rotgut
+  parent: BaseSoda
+  desc: reagent-desc-rotgut
+  physicalDesc: reagent-physical-desc-murky
+  flavor: flavor-base-horrible
+  color: "#8a8048"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 5
+        type: Add
+    Medicine:
+      effects:
+      - !type:HealthChange
+        probability: 0.25
+        damage:
+          types:
+            Poison: 10
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        - !type:MobStateCondition
+          mobstate: Alive
+  fizziness: 0
+  
+- type: reagent
+  id: BumWine
+  name: reagent-name-bumwine
+  parent: BaseAlcohol
+  desc: reagent-desc-bumwine
+  physicalDesc: reagent-physical-desc-syrupy
+  flavor: sweet
+  color: "#e74f4f"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/wineglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  fizziness: 0.9
