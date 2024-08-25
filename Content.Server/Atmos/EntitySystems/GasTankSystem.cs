@@ -68,6 +68,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             _tankFragmentEnabled = value;
         }
+
         private void OnGasShutdown(Entity<GasTankComponent> gasTank, ref ComponentShutdown args)
         {
             DisconnectFromInternals(gasTank);
