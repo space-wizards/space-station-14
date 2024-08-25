@@ -24,9 +24,8 @@
   id: FoodMuffinBase
   abstract: true
   components:
-  - type: FlavorProfile
-    flavors:
-      - sweet
+  - type: Food
+    trash: FoodPlateMuffinTin
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/misc.rsi
   - type: SolutionContainerManager
@@ -38,8 +37,9 @@
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 2
-  - type: Food
-    trash: FoodPlateMuffinTin
+  - type: FlavorProfile
+    flavors:
+      - sweet
   - type: Item
     size: Tiny
 
