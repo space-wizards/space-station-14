@@ -19,11 +19,10 @@ public sealed partial class MatchstickComponent : Component
     /// <summary>
     ///     How long will matchstick last in seconds.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
     public int Duration = 10;
 
     /// <summary>
-    ///     Burnout
+    ///     The time that the match will burn out. If null, that means the match is unlit.
     /// </summary>
     [AutoNetworkedField]
     public TimeSpan? TimeMatchWillBurnOut = null;

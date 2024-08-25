@@ -39,7 +39,10 @@ public sealed class MatchstickSystem : SharedMatchstickSystem
             // Check if the match has expired.
             var burnoutTime = match.TimeMatchWillBurnOut;
             if (burnoutTime != null && _timing.CurTime > burnoutTime)
+            {
                 SetState(uid, match, SmokableState.Burnt);
+                match.TimeMatchWillBurnOut = null;
+            }
         }
     }
 }
