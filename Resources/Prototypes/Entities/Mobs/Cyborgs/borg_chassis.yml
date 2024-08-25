@@ -265,11 +265,6 @@
     access: [["Medical"], ["Command"], ["Research"]]
   - type: Inventory
     templateId: borgDutch
-  - type: MovementSound
-    sound:
-      collection: FootstepHoverBorg
-      params:
-        loop: true
   - type: SolutionScanner
   - type: InteractionPopup
     interactSuccessString: petting-success-medical-cyborg

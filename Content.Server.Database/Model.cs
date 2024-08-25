@@ -458,7 +458,6 @@ namespace Content.Server.Database
         /// <summary>
         /// The corresponding group prototype.
         /// </summary>
-        [StringLength(256)]
         public string GroupName { get; set; } = string.Empty;
 
         /// <summary>
