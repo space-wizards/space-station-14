@@ -1,3 +1,40 @@
+- type: entityTable
+  id: BasicCalmEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: AnomalySpawn
+    - id: BluespaceArtifact
+    - id: BluespaceLocker
+    - id: BreakerFlip
+    - id: BureaucraticError
+    - id: ClericalError
+    - id: CockroachMigration
+    - id: GasLeak
+    - id: IonStorm # its calm like 90% of the time smh
+    - id: KudzuGrowth
+    - id: MassHallucinations
+    - id: MimicVendorRule
+    - id: MouseMigration
+    - id: PowerGridCheck
+    - id: SlimesSpawn
+    - id: SolarFlare
+    - id: SpiderClownSpawn
+    - id: SpiderSpawn
+    - id: VentClog
+
+- type: entityTable
+  id: BasicAntagEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: ClosetSkeleton
+    - id: DragonSpawn
+    - id: KingRatMigration
+    - id: NinjaSpawn
+    - id: RevenantSpawn
+    - id: SleeperAgents
+    - id: ZombieOutbreak
+
+
 - type: entity
   id: BaseStationEvent
   parent: BaseGameRule
@@ -525,45 +562,6 @@
     maxSoundDistance: 7
     sounds:
       collection: Paracusia
-
-- type: entity
-  id: ImmovableRodSpawn
-  parent: BaseGameRule
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-immovable-rod-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    weight: 3.5
-    duration: 1
-    earliestStart: 30
-    minimumPlayers: 20
-  - type: ImmovableRodRule
-    rodPrototypes:
-    - id: ImmovableRodKeepTilesStill
-      prob: 0.95
-      orGroup: rodProto
-    - id: ImmovableRodMop
-      prob: 0.0072
-      orGroup: rodProto
-    - id: ImmovableRodShark
-      prob: 0.0072
-      orGroup: rodProto
-    - id: ImmovableRodClown
-      prob: 0.0072
-      orGroup: rodProto
-    - id: ImmovableRodBanana
-      prob: 0.0072
-      orGroup: rodProto
-    - id: ImmovableRodHammer
-      prob: 0.0072
-      orGroup: rodProto
-    - id: ImmovableRodThrongler
-      prob: 0.0072
-      orGroup: rodProto
-    - id: ImmovableRodGibstick
-      prob: 0.0072
-      orGroup: rodProto
 
 - type: entity
   parent: BaseGameRule

@@ -311,7 +311,7 @@
     - id: BolaEnergy
       amount: !type:ConstantNumberSelector
         value: 2
-    - id: BookSecretDocuments
+    - id: WeaponEnergyShotgun
     - id: BookSpaceLaw
     - id: BoxEncryptionKeySecurity
     - id: CigarGoldCase

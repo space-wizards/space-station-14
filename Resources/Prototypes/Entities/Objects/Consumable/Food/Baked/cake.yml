@@ -784,3 +784,12 @@
   - type: Tag
     tags:
     - Slice
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Consumable/Food/Baked/cake.rsi
+      state: suppermatter-shard
+    entries:
+      burger:
+        name: food-sequence-burger-content-suppermatter
+      taco:
+        name: food-sequence-content-suppermatter
