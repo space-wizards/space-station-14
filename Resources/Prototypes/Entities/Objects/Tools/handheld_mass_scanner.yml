@@ -26,6 +26,7 @@
           False: { visible: false }
   - type: PowerCellDraw
     drawRate: 1.5
+  - type: ToggleCellDraw
   - type: ActivatableUI
     key: enum.RadarConsoleUiKey.Key
     inHandsOnly: true
