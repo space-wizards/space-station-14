@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Announcements for the location of the evac shuttle, the armed nuke, and
-      more will no longer send you in the opposite direction.
-    type: Fix
-  id: 6711
-  time: '2024-06-11T22:18:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28869
 - author: Boaz1111
   changes:
   - message: Refactors Cluster's Armoury
@@ -3866,3 +3858,11 @@
   id: 7210
   time: '2024-08-25T16:11:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31403
+- author: Blackern5000
+  changes:
+  - message: Space scanning technology is now T1 industrial, this includes cyborg
+      GPS modules and handheld mass scanners.
+    type: Tweak
+  id: 7211
+  time: '2024-08-25T16:47:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31321
