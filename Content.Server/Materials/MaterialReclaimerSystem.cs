@@ -26,7 +26,6 @@ using Content.Shared.Destructible;
 using Content.Shared.Emag.Components;
 using Content.Shared.Power;
 using Robust.Shared.Prototypes;
-using Content.Shared.Power.Components;
 
 namespace Content.Server.Materials;
 

@@ -41,7 +41,6 @@ using Content.Shared.Stacks;
 using Content.Server.Construction.Components;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
-using Content.Shared.Power.Components;
 
 namespace Content.Server.Kitchen.EntitySystems
 {

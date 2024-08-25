@@ -431,15 +431,8 @@ namespace Content.Server.Database
         public Profile Profile { get; set; } = null!;
 
         /// <summary>
-        /// If the loadout supports custom naming what is it.
-        /// </summary>
-        [StringLength(256)]
-        public string? CustomName { get; set; } = null;
-
-        /// <summary>
         /// The corresponding role prototype on the profile.
         /// </summary>
-        [StringLength(256)]
         public string RoleName { get; set; } = string.Empty;
 
         /// <summary>

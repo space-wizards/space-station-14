@@ -1,7 +1,6 @@
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
-using Content.Shared.Power.EntitySystems;
 using Content.Shared.Wires;
 
 namespace Content.Server.Wires;

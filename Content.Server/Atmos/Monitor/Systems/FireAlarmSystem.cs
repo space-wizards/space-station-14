@@ -12,7 +12,6 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Emag.Systems;
-using Content.Shared.Power.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 

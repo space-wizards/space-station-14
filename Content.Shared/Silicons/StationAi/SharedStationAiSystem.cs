@@ -6,7 +6,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
-using Content.Shared.Power.Components;
+using Content.Shared.Power;
 using Content.Shared.StationAi;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;

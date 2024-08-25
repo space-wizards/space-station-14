@@ -293,8 +293,6 @@
             color: '#FFFFFFFF'
           False:
             color: '#FFFFFF0A'
-  - type: Incorporeal
-    visible: false
   - type: Visibility
     layer: 2
   - type: Sprite

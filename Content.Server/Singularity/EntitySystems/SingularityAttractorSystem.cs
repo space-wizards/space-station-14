@@ -5,7 +5,6 @@ using Content.Shared.Singularity.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using System.Numerics;
-using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.Singularity.EntitySystems;
 
