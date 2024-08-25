@@ -10,7 +10,7 @@ namespace Content.Shared.Nutrition.Components
         [DataField("solution")]
         public string Solution { get; private set; } = "smokable";
 
-        /// </summary>
+        /// <summary>
         ///     Time taken to complete a smokable in seconds
         /// </summary>
         [DataField("inhaleAmount"), ViewVariables(VVAccess.ReadWrite)]

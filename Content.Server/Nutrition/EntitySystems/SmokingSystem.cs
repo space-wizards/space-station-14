@@ -136,7 +136,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 }
 
                 /// <summary>
-                ///     Calculates the amount of chemicals inhaled based off the InhalationTime by the current volume of the smokable
+                ///     Calculates the amount of reagents inhaled from the volume of chemiclas inside the smoke by the time required to finish the smoke
                 /// </summary>
                 var storedVolume = smokable.InitialVolume[uid];
                 var inhaledAmount = storedVolume / (smokable.InhalationTime / UpdateTimer);
