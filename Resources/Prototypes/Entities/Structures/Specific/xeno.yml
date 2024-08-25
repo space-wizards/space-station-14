@@ -57,6 +57,7 @@
   description: A statue of one of the brave carp that got us where we are today. Made with real teeth!
   components:
   - type: Sprite
+    noRot: true
     sprite: Structures/Specific/carp_statue.rsi
     layers:
     - state: statue
