@@ -8,9 +8,6 @@
     sprite: Harmony/Clothiong/Neck/Misc/vulturepin.rsi
   - type: Clothing
     sprite: Harmony/Clothiong/Neck/Misc/vulturepin.rsi
-    clothingVisuals:
-      neck:
-      - state: vulture-equipped
 
 # - type: entity
   # parent: ClothingNeckPinBase

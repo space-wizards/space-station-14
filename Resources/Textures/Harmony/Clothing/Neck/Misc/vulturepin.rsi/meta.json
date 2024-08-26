@@ -8,10 +8,10 @@
   },
     "states": [
         {
-            "name": "vulture"
+            "name": "icon"
         },
         {
-            "name": "vulture-equipped",
+            "name": "equipped-NECK",
             "directions": 4
         }
     ]
