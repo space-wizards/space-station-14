@@ -65,7 +65,9 @@ public sealed class MaskSystem : EntitySystem
     /// <summary>
     private void ToggleMaskComponents(EntityUid uid, MaskComponent mask, EntityUid wearer, bool isEquip = false)
     {
-        Dirty(uid, mask);
+        // It will get dirty in the clothing system anyway
+        // We prevent flickering of the sprite this way
+        // Dirty(uid, mask);
 
         if (mask.ToggleActionEntity is { } action)
             _actionSystem.SetToggled(action, mask.IsToggled);
