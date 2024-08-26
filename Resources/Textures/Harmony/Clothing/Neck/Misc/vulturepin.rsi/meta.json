@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Vulture Pin by DieselMohawk for use in Harmony. Have fun :)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
+        {
+            "name": "vulture"
+        },
+        {
+            "name": "vulture-equipped",
+            "directions": 4
+        }
+    ]
+}
+
