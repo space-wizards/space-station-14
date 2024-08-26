@@ -31,3 +31,6 @@ hud-chatbox-channel-Server = Server
 hud-chatbox-channel-Visual = Actions
 hud-chatbox-channel-Damage = Damage
 hud-chatbox-channel-Unspecified = Unspecified
+
+hud-chatbox-highlights-placeholder = Words to highlight...
+hud-chatbox-highlights-tooltip = Highlights the chat with any provided sequence of comma-separated words, confirm the selection by pressing Enter.
