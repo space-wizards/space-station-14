@@ -5,9 +5,9 @@
   description: Given to the crew of Vulture
   components:
   - type: Sprite
-    sprite: Harmony/Clothiong/Neck/Misc/vulturepin.rsi
+    sprite: Harmony/Clothing/Neck/Misc/vulturepin.rsi
   - type: Clothing
-    sprite: Harmony/Clothiong/Neck/Misc/vulturepin.rsi
+    sprite: Harmony/Clothing/Neck/Misc/vulturepin.rsi
 
 # - type: entity
   # parent: ClothingNeckPinBase
