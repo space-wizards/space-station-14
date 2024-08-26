@@ -1808,6 +1808,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> MOTD =
             CVarDef.Create("chat.motd", "", CVar.SERVER | CVar.SERVERONLY | CVar.ARCHIVE, "A message broadcast to each player that joins the lobby.");
 
+        /// <summary>
+        /// A string containing a list of comma-separated words to be highlighted in the chat.
+        /// </summary>
+        public static readonly CVarDef<string> ChatHighlights =
+            CVarDef.Create("chat.highlights", "", CVar.CLIENTONLY | CVar.ARCHIVE, "A list of comma-separated words to be highlighted in the chat.");
+
         /*
          * AFK
          */
