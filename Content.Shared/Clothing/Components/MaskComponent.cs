@@ -21,7 +21,10 @@ public sealed partial class MaskComponent : Component
     public bool IsToggled;
 
     [DataField, AutoNetworkedField]
-    public string EquippedPrefix = "toggled";
+    public string? EquippedPrefix = null;
+
+    [DataField, AutoNetworkedField]
+    public string? UnequippedPrefix = "up";
 
     /// <summary>
     /// When <see langword="true"/> will function normally, otherwise will not react to events

@@ -174,8 +174,7 @@ public abstract class ClothingSystem : EntitySystem
 
     private void OnMaskToggled(Entity<ClothingComponent> ent, ref ItemMaskToggledEvent args)
     {
-        //TODO: sprites for 'pulled down' state. defaults to invisible due to no sprite with this prefix
-        SetEquippedPrefix(ent, args.IsToggled ? args.equippedPrefix : null, ent);
+        SetEquippedPrefix(ent, args.IsEquip ? args.EquippedPrefix : (args.IsToggled ? args.UnequippedPrefix : args.EquippedPrefix), ent);
         CheckEquipmentForLayerHide(ent.Owner, args.Wearer);
     }
 
