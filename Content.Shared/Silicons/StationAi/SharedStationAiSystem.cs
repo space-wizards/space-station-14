@@ -1,9 +1,12 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
+using Content.Shared.Administration.Managers;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Database;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
+using Content.Shared.Mind;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Power;
@@ -12,6 +15,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -19,17 +23,19 @@ namespace Content.Shared.Silicons.StationAi;
 
 public abstract partial class SharedStationAiSystem : EntitySystem
 {
+    [Dependency] private   readonly ISharedAdminManager _admin = default!;
     [Dependency] private   readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private   readonly INetManager _net = default!;
     [Dependency] private   readonly ItemSlotsSystem _slots = default!;
+    [Dependency] private   readonly ItemToggleSystem _toggles = default!;
     [Dependency] private   readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private   readonly MetaDataSystem _metadata = default!;
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private   readonly SharedContainerSystem _containers = default!;
     [Dependency] private   readonly SharedDoorSystem _doors = default!;
     [Dependency] private   readonly SharedEyeSystem _eye = default!;
-    [Dependency] private   readonly ItemToggleSystem _toggles = default!;
     [Dependency] protected readonly SharedMapSystem Maps = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private   readonly SharedMoverController _mover = default!;
     [Dependency] private   readonly SharedTransformSystem _xforms = default!;
     [Dependency] private   readonly SharedUserInterfaceSystem _uiSystem = default!;
@@ -41,6 +47,9 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     // StationAiWhitelist is a general whitelist to stop it being able to interact with anything
     // StationAiOverlay handles the static overlay. It also handles interaction blocking on client and server
     // for anything under it.
+
+    [ValidatePrototypeId<EntityPrototype>]
+    private static readonly EntProtoId DefaultAi = "StationAiBrain";
 
     public override void Initialize()
     {
@@ -68,6 +77,29 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiCoreComponent, MapInitEvent>(OnAiMapInit);
         SubscribeLocalEvent<StationAiCoreComponent, ComponentShutdown>(OnAiShutdown);
         SubscribeLocalEvent<StationAiCoreComponent, PowerChangedEvent>(OnCorePower);
+        SubscribeLocalEvent<StationAiCoreComponent, GetVerbsEvent<Verb>>(OnCoreVerbs);
+    }
+
+    private void OnCoreVerbs(Entity<StationAiCoreComponent> ent, ref GetVerbsEvent<Verb> args)
+    {
+        if (!_admin.IsAdmin(args.User) ||
+            TryGetHeld((ent.Owner, ent.Comp), out _))
+        {
+            return;
+        }
+
+        var user = args.User;
+
+        args.Verbs.Add(new Verb()
+        {
+            Text = Loc.GetString("station-ai-takeover"),
+            Act = () =>
+            {
+                var brain = SpawnInContainerOrDrop(DefaultAi, ent.Owner, StationAiCoreComponent.Container);
+                _mind.ControlMob(user, brain);
+            },
+            Impact = LogImpact.High,
+        });
     }
 
     private void OnAiAccessible(Entity<StationAiOverlayComponent> ent, ref AccessibleOverrideEvent args)

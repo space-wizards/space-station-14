@@ -32,6 +32,24 @@ public abstract partial class SharedStationAiSystem
         _xforms.DropNextTo(core.Comp.RemoteEntity.Value, core.Owner) ;
     }
 
+    /// <summary>
+    /// Tries to get the entity held in the AI core.
+    /// </summary>
+    private bool TryGetHeld(Entity<StationAiCoreComponent?> entity, out EntityUid held)
+    {
+        held = EntityUid.Invalid;
+
+        if (!Resolve(entity.Owner, ref entity.Comp))
+            return false;
+
+        if (!_containers.TryGetContainer(entity.Owner, StationAiCoreComponent.Container, out var container) ||
+            container.ContainedEntities.Count == 0)
+            return false;
+
+        held = container.ContainedEntities[0];
+        return true;
+    }
+
     private bool TryGetCore(EntityUid ent, out Entity<StationAiCoreComponent?> core)
     {
         if (!_containers.TryGetContainingContainer(ent, out var container) ||
@@ -87,8 +105,13 @@ public abstract partial class SharedStationAiSystem
 
     private void OnTargetVerbs(Entity<StationAiWhitelistComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanComplexInteract || !ent.Comp.Enabled || !HasComp<StationAiHeldComponent>(args.User))
+        if (!args.CanComplexInteract ||
+            !ent.Comp.Enabled ||
+            !HasComp<StationAiHeldComponent>(args.User) ||
+            !HasComp<StationAiWhitelistComponent>(args.Target))
+        {
             return;
+        }
 
         var user = args.User;
         var target = args.Target;

@@ -5,6 +5,7 @@ using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Silicons.StationAi;
 
@@ -21,6 +22,9 @@ public sealed class StationAiOverlay : Overlay
 
     private IRenderTexture? _staticTexture;
     private IRenderTexture? _stencilTexture;
+
+    private float _updateRate = 1f / 30f;
+    private float _accumulator;
 
     public StationAiOverlay()
     {
@@ -49,14 +53,19 @@ public sealed class StationAiOverlay : Overlay
         _entManager.TryGetComponent(gridUid, out MapGridComponent? grid);
 
         var invMatrix = args.Viewport.GetWorldToLocalMatrix();
+        _accumulator -= (float) IoCManager.Resolve<IGameTiming>().FrameTime.TotalSeconds;
 
         if (grid != null)
         {
             var lookups = _entManager.System<EntityLookupSystem>();
             var xforms = _entManager.System<SharedTransformSystem>();
 
-            _visibleTiles.Clear();
-            _entManager.System<StationAiVisionSystem>().GetView((gridUid, grid), worldBounds, _visibleTiles);
+            if (_accumulator <= 0f)
+            {
+                _accumulator = MathF.Max(0f, _accumulator + _updateRate);
+                _visibleTiles.Clear();
+                _entManager.System<StationAiVisionSystem>().GetView((gridUid, grid), worldBounds, _visibleTiles);
+            }
 
             var gridMatrix = xforms.GetWorldMatrix(gridUid);
             var matty =  Matrix3x2.Multiply(gridMatrix, invMatrix);
