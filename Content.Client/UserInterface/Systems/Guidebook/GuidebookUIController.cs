@@ -30,7 +30,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
 
     private GuidebookWindow? _guideWindow;
     private MenuButton? GuidebookButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.GuidebookButton;
-    private ProtoId<GuideEntryPrototype> _lastEntry;
+    private ProtoId<GuideEntryPrototype>? _lastEntry;
 
     public void OnStateEntered(LobbyState state)
     {
@@ -194,15 +194,18 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
                 RecursivelyAddChildren(guide, guides);
             }
         }
-        if (guides.ContainsKey(_lastEntry))
-        {
-            selected ??= _lastEntry;
-        }
-        else
-        {
-            selected ??= _configuration.GetCVar(CCVars.DefaultGuide);
-        }
 
+        if (selected == null)
+        {
+            if (_lastEntry != null && guides.ContainsKey((ProtoId<GuideEntryPrototype>)_lastEntry))
+            {
+                selected = _lastEntry;
+            }
+            else
+            {
+                selected = _configuration.GetCVar(CCVars.DefaultGuide);
+            }
+        }
         _guideWindow.UpdateGuides(guides, rootEntries, forceRoot, selected);
 
         // Expand up to depth-2.
