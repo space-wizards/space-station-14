@@ -25,6 +25,8 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
         _menu.ArticleEditorPanel.PublishButtonPressed += OnPublishButtonPressed;
         _menu.DeleteButtonPressed += OnDeleteButtonPressed;
 
+        _menu.ArticleEditorPanel.ArticleDraftUpdated += OnArticleDraftUpdated;
+
         SendMessage(new NewsWriterArticlesRequestMessage());
     }
 
@@ -34,7 +36,7 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
         if (state is not NewsWriterBoundUserInterfaceState cast)
             return;
 
-        _menu?.UpdateUI(cast.Articles, cast.PublishEnabled, cast.NextPublish);
+        _menu?.UpdateUI(cast.Articles, cast.PublishEnabled, cast.NextPublish, cast.TitleDraft, cast.ContentDraft);
     }
 
     private void OnPublishButtonPressed()
@@ -66,5 +68,10 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
             return;
 
         SendMessage(new NewsWriterDeleteMessage(articleNum));
+    }
+
+    private void OnArticleDraftUpdated(string title, string content)
+    {
+        SendMessage(new NewsWriterArticleDraftMessage(title, content));
     }
 }

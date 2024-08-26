@@ -52,6 +52,7 @@ public sealed class NewsSystem : SharedNewsSystem
             subs.Event<NewsWriterDeleteMessage>(OnWriteUiDeleteMessage);
             subs.Event<NewsWriterArticlesRequestMessage>(OnRequestArticlesUiMessage);
             subs.Event<NewsWriterPublishMessage>(OnWriteUiPublishMessage);
+            subs.Event<NewsWriterArticleDraftMessage>(OnNewsWriterDraftUpdatedMessage);
         });
 
         // News reader
@@ -257,7 +258,7 @@ public sealed class NewsSystem : SharedNewsSystem
         if (!TryGetArticles(ent, out var articles))
             return;
 
-        var state = new NewsWriterBoundUserInterfaceState(articles.ToArray(), ent.Comp.PublishEnabled, ent.Comp.NextPublish);
+        var state = new NewsWriterBoundUserInterfaceState(articles.ToArray(), ent.Comp.PublishEnabled, ent.Comp.NextPublish, ent.Comp.TitleDraft, ent.Comp.ContentDraft);
         _ui.SetUiState(ent.Owner, NewsWriterUiKey.Key, state);
     }
 
@@ -319,4 +320,9 @@ public sealed class NewsSystem : SharedNewsSystem
         return true;
     }
 
+    private void OnNewsWriterDraftUpdatedMessage(Entity<NewsWriterComponent> ent, ref NewsWriterArticleDraftMessage args)
+    {
+        ent.Comp.TitleDraft = args.TitleDraft;
+        ent.Comp.ContentDraft = args.ContentDraft;
+    }
 }

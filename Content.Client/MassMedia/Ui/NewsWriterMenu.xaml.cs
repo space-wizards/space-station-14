@@ -4,6 +4,7 @@ using Robust.Client.UserInterface.XAML;
 using Content.Shared.MassMedia.Systems;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.MassMedia.Ui;
 
@@ -31,7 +32,7 @@ public sealed partial class NewsWriterMenu : FancyWindow
         ButtonCreate.OnPressed += OnCreate;
     }
 
-    public void UpdateUI(NewsArticle[] articles, bool publishEnabled, TimeSpan nextPublish)
+    public void UpdateUI(NewsArticle[] articles, bool publishEnabled, TimeSpan nextPublish, string titleDraft, string contentDraft)
     {
         ArticlesContainer.Children.Clear();
         ArticleCount.Text = Loc.GetString("news-write-ui-article-count-text", ("count", articles.Length));
@@ -54,6 +55,9 @@ public sealed partial class NewsWriterMenu : FancyWindow
 
         ButtonCreate.Disabled = !publishEnabled;
         _nextPublish = nextPublish;
+
+        ArticleEditorPanel.TitleField.Text = titleDraft;
+        ArticleEditorPanel.ContentField.TextRope = new Rope.Leaf(contentDraft);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

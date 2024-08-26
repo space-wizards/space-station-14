@@ -15,12 +15,16 @@ public sealed class NewsWriterBoundUserInterfaceState : BoundUserInterfaceState
     public readonly NewsArticle[] Articles;
     public readonly bool PublishEnabled;
     public readonly TimeSpan NextPublish;
+    public readonly string TitleDraft;
+    public readonly string ContentDraft;
 
-    public NewsWriterBoundUserInterfaceState(NewsArticle[] articles, bool publishEnabled, TimeSpan nextPublish)
+    public NewsWriterBoundUserInterfaceState(NewsArticle[] articles, bool publishEnabled, TimeSpan nextPublish, string titleDraft, string contentDraft)
     {
         Articles = articles;
         PublishEnabled = publishEnabled;
         NextPublish = nextPublish;
+        TitleDraft = titleDraft;
+        ContentDraft = contentDraft;
     }
 }
 
@@ -52,4 +56,17 @@ public sealed class NewsWriterDeleteMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class NewsWriterArticlesRequestMessage : BoundUserInterfaceMessage
 {
+}
+
+[Serializable, NetSerializable]
+public sealed class NewsWriterArticleDraftMessage : BoundUserInterfaceMessage
+{
+    public readonly string TitleDraft;
+    public readonly string ContentDraft;
+
+    public NewsWriterArticleDraftMessage(string titleDraft, string contentDraft)
+    {
+        TitleDraft = titleDraft;
+        ContentDraft = contentDraft;
+    }
 }
