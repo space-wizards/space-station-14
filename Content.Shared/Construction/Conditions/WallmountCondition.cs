@@ -41,8 +41,11 @@ namespace Content.Shared.Construction.Conditions
 
             var tagSystem = entManager.System<TagSystem>();
 
-            var userToObjRaycastResults = physics.IntersectRayWithPredicate(entManager.GetComponent<TransformComponent>(user).MapID, rUserToObj, maxLength: length,
-                predicate: (e) => !tagSystem.HasTag(e, "Wall"));
+            var userToObjRaycastResults = physics.IntersectRayWithPredicate(
+                entManager.GetComponent<TransformComponent>(user).MapID,
+                rUserToObj,
+                maxLength: length,
+                predicate: (e) => tagSystem.HasTag(e, "Wall") || tagSystem.HasTag(e, "Window"));
 
             var targetWall = userToObjRaycastResults.FirstOrNull();
 
