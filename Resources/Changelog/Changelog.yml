@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: robertGN
-  changes:
-  - message: Syndicate communications consoles can no longer recall the emergency
-      shuttle.
-    type: Fix
-  id: 6714
-  time: '2024-06-12T13:32:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28803
-- author: deltanedas
-  changes:
-  - message: Fixed opening the PDA UI sometimes breaking.
-    type: Fix
-  id: 6715
-  time: '2024-06-12T18:10:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28896
-- author: notafet
-  changes:
-  - message: The singularity is now safe to operate up to PA level 3.
-    type: Fix
-  id: 6716
-  time: '2024-06-12T22:56:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28906
 - author: stalengd
   changes:
   - message: Players can now correctly toggle internals on pets.
@@ -3866,3 +3844,24 @@
   id: 7213
   time: '2024-08-26T02:46:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30668
+- author: Moomoobeef
+  changes:
+  - message: Silicons like medbots, janibots, and honkbots now make sound when speaking.
+    type: Fix
+  id: 7214
+  time: '2024-08-26T09:09:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31471
+- author: Winkarst-cpu
+  changes:
+  - message: The color of the science radio channel was changed.
+    type: Tweak
+  id: 7215
+  time: '2024-08-26T12:02:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31319
+- author: slarticodefast
+  changes:
+  - message: Fixed energy sword visuals.
+    type: Fix
+  id: 7216
+  time: '2024-08-26T13:00:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31478
