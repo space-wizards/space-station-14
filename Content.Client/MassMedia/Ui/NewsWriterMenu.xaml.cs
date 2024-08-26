@@ -17,6 +17,8 @@ public sealed partial class NewsWriterMenu : FancyWindow
 
     public event Action<int>? DeleteButtonPressed;
 
+    public event Action? CreateButtonPressed;
+
     public NewsWriterMenu()
     {
         RobustXamlLoader.Load(this);
@@ -97,5 +99,6 @@ public sealed partial class NewsWriterMenu : FancyWindow
     private void OnCreate(BaseButton.ButtonEventArgs buttonEventArgs)
     {
         ArticleEditorPanel.Visible = true;
+        CreateButtonPressed?.Invoke();
     }
 }

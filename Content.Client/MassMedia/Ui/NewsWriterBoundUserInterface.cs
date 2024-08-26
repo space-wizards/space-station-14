@@ -25,6 +25,7 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
         _menu.ArticleEditorPanel.PublishButtonPressed += OnPublishButtonPressed;
         _menu.DeleteButtonPressed += OnDeleteButtonPressed;
 
+        _menu.CreateButtonPressed += OnCreateButtonPressed;
         _menu.ArticleEditorPanel.ArticleDraftUpdated += OnArticleDraftUpdated;
 
         SendMessage(new NewsWriterArticlesRequestMessage());
@@ -68,6 +69,11 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
             return;
 
         SendMessage(new NewsWriterDeleteMessage(articleNum));
+    }
+
+    private void OnCreateButtonPressed()
+    {
+        SendMessage(new NewsWriterRequestArticleDraftMessage());
     }
 
     private void OnArticleDraftUpdated(string title, string content)

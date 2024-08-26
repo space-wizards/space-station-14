@@ -53,6 +53,7 @@ public sealed class NewsSystem : SharedNewsSystem
             subs.Event<NewsWriterArticlesRequestMessage>(OnRequestArticlesUiMessage);
             subs.Event<NewsWriterPublishMessage>(OnWriteUiPublishMessage);
             subs.Event<NewsWriterArticleDraftMessage>(OnNewsWriterDraftUpdatedMessage);
+            subs.Event<NewsWriterRequestArticleDraftMessage>(OnRequestArticleDraftMessage);
         });
 
         // News reader
@@ -324,5 +325,10 @@ public sealed class NewsSystem : SharedNewsSystem
     {
         ent.Comp.TitleDraft = args.TitleDraft;
         ent.Comp.ContentDraft = args.ContentDraft;
+    }
+
+    private void OnRequestArticleDraftMessage(Entity<NewsWriterComponent> ent, ref NewsWriterRequestArticleDraftMessage msg)
+    {
+        UpdateWriterUi(ent);
     }
 }

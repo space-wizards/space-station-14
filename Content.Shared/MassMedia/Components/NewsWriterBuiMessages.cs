@@ -70,3 +70,8 @@ public sealed class NewsWriterArticleDraftMessage : BoundUserInterfaceMessage
         ContentDraft = contentDraft;
     }
 }
+
+[Serializable, NetSerializable]
+public sealed class NewsWriterRequestArticleDraftMessage : BoundUserInterfaceMessage
+{
+}
