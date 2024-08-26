@@ -86,7 +86,7 @@
 #    sprite: Structures/Storage/canister.rsi
 #    state: water_vapor
 #  product: WaterVaporCanister
-#  cost: 26000
+#  cost: 17000
 #  category: cargoproduct-category-name-atmospherics
 #  group: market
 
@@ -108,6 +108,6 @@
 #    sprite: Structures/Storage/canister.rsi
 #    state: green
 #  product: TritiumCanister
-#  cost: 155000
+#  cost: 146000
 #  category: cargoproduct-category-name-atmospherics
 #  group: market
