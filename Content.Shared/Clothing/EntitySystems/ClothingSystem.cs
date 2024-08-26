@@ -106,7 +106,7 @@ public abstract class ClothingSystem : EntitySystem
                             //Checks for mask toggling. TODO: Make a generic system for this
                             if (comp.HideOnToggle && TryComp(item, out MaskComponent? mask))
                             {
-                                if (clothing.EquippedPrefix != mask.EquippedPrefix)
+                                if (clothing.EquippedPrefix != mask.PulledUpPrefix)
                                 {
                                     shouldLayerShow = false;
                                     break;
@@ -174,7 +174,7 @@ public abstract class ClothingSystem : EntitySystem
 
     private void OnMaskToggled(Entity<ClothingComponent> ent, ref ItemMaskToggledEvent args)
     {
-        SetEquippedPrefix(ent, args.IsEquip ? args.EquippedPrefix : (args.IsToggled ? args.UnequippedPrefix : args.EquippedPrefix), ent);
+        SetEquippedPrefix(ent, args.IsEquip ? args.PulledUpPrefix : (args.IsToggled ? args.PulledDownPrefix : args.PulledUpPrefix), ent);
         CheckEquipmentForLayerHide(ent.Owner, args.Wearer);
     }
 
