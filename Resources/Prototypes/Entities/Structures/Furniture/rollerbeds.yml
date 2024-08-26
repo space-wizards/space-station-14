@@ -55,6 +55,7 @@
       rotation: -90
       buckleOffset: "0,0.15"
       unbuckleOffset: "0,0.15"
+      buckleOnInteractHand: False
     - type: Appearance
     - type: GenericVisualizer
       visuals:

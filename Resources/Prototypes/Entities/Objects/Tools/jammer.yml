@@ -1,6 +1,6 @@
 - type: entity
   name: radio jammer
-  parent: BaseItem
+  parent: [BaseItem, BaseSyndicateContraband]
   id: RadioJammer
   description: This device will disrupt any nearby outgoing radio communication as well as suit sensors when activated.
   components:
