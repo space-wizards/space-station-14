@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: Tranquilizer Shotguns shells now have a unique sprite
-    type: Tweak
-  - message: You now print boxes of Tranquilizer Boxes rather than a single shell
-    type: Tweak
-  id: 6718
-  time: '2024-06-13T02:17:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28903
 - author: Plykiya
   changes:
   - message: Gauze continues to heal even when you stop someone's bleeding.
@@ -3865,3 +3856,10 @@
   id: 7217
   time: '2024-08-26T22:24:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31495
+- author: 12rabbits
+  changes:
+  - message: The guidebook now remembers where you left off when re-opened.
+    type: Tweak
+  id: 7218
+  time: '2024-08-26T23:06:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31375
