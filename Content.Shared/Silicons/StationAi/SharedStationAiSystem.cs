@@ -15,6 +15,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -48,12 +49,18 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     // StationAiOverlay handles the static overlay. It also handles interaction blocking on client and server
     // for anything under it.
 
+    private EntityQuery<BroadphaseComponent> _broadphaseQuery;
+    private EntityQuery<MapGridComponent> _gridQuery;
+
     [ValidatePrototypeId<EntityPrototype>]
     private static readonly EntProtoId DefaultAi = "StationAiBrain";
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _broadphaseQuery = GetEntityQuery<BroadphaseComponent>();
+        _gridQuery = GetEntityQuery<MapGridComponent>();
 
         InitializeAirlock();
         InitializeHeld();
@@ -138,7 +145,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             return;
         }
 
-        if (!TryComp(targetXform.GridUid, out MapGridComponent? grid))
+        if (!_broadphaseQuery.TryComp(targetXform.GridUid, out var broadphase) || !_gridQuery.TryComp(targetXform.GridUid, out var grid))
         {
             return;
         }
@@ -147,7 +154,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         lock (_vision)
         {
-            if (_vision.IsAccessible((targetXform.GridUid.Value, grid), targetTile, fastPath: true))
+            if (_vision.IsAccessible((targetXform.GridUid.Value, broadphase, grid), targetTile, fastPath: true))
             {
                 args.Result = BoundUserInterfaceRangeResult.Pass;
             }
@@ -167,14 +174,14 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         // Validate it's in camera range yes this is expensive.
         // Yes it needs optimising
-        if (!TryComp(targetXform.GridUid, out MapGridComponent? grid))
+        if (!_broadphaseQuery.TryComp(targetXform.GridUid, out var broadphase) || !_gridQuery.TryComp(targetXform.GridUid, out var grid))
         {
             return;
         }
 
         var targetTile = Maps.LocalToTile(targetXform.GridUid.Value, grid, targetXform.Coordinates);
 
-        args.InRange = _vision.IsAccessible((targetXform.GridUid.Value, grid), targetTile);
+        args.InRange = _vision.IsAccessible((targetXform.GridUid.Value, broadphase, grid), targetTile);
     }
 
     private void OnHolderInteract(Entity<StationAiHolderComponent> ent, ref AfterInteractEvent args)

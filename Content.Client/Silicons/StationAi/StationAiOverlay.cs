@@ -4,6 +4,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -13,6 +14,7 @@ public sealed class StationAiOverlay : Overlay
 {
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
@@ -51,11 +53,12 @@ public sealed class StationAiOverlay : Overlay
         _entManager.TryGetComponent(playerEnt, out TransformComponent? playerXform);
         var gridUid = playerXform?.GridUid ?? EntityUid.Invalid;
         _entManager.TryGetComponent(gridUid, out MapGridComponent? grid);
+        _entManager.TryGetComponent(gridUid, out BroadphaseComponent? broadphase);
 
         var invMatrix = args.Viewport.GetWorldToLocalMatrix();
-        _accumulator -= (float) IoCManager.Resolve<IGameTiming>().FrameTime.TotalSeconds;
+        _accumulator -= (float) _timing.FrameTime.TotalSeconds;
 
-        if (grid != null)
+        if (grid != null && broadphase != null)
         {
             var lookups = _entManager.System<EntityLookupSystem>();
             var xforms = _entManager.System<SharedTransformSystem>();
@@ -64,7 +67,7 @@ public sealed class StationAiOverlay : Overlay
             {
                 _accumulator = MathF.Max(0f, _accumulator + _updateRate);
                 _visibleTiles.Clear();
-                _entManager.System<StationAiVisionSystem>().GetView((gridUid, grid), worldBounds, _visibleTiles);
+                _entManager.System<StationAiVisionSystem>().GetView((gridUid, broadphase, grid), worldBounds, _visibleTiles);
             }
 
             var gridMatrix = xforms.GetWorldMatrix(gridUid);

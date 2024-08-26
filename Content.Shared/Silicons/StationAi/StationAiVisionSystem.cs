@@ -1,5 +1,6 @@
 using Content.Shared.StationAi;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Threading;
 using Robust.Shared.Utility;
 
@@ -25,6 +26,8 @@ public sealed class StationAiVisionSystem : EntitySystem
     private readonly HashSet<Entity<StationAiVisionComponent>> _seeds = new();
     private readonly HashSet<Vector2i> _viewportTiles = new();
 
+    private EntityQuery<OccluderComponent> _occluderQuery;
+
     // Dummy set
     private readonly HashSet<Vector2i> _singleTiles = new();
 
@@ -40,6 +43,8 @@ public sealed class StationAiVisionSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
+        _occluderQuery = GetEntityQuery<OccluderComponent>();
 
         _seedJob = new()
         {
@@ -57,16 +62,16 @@ public sealed class StationAiVisionSystem : EntitySystem
     /// <summary>
     /// Returns whether a tile is accessible based on vision.
     /// </summary>
-    public bool IsAccessible(Entity<MapGridComponent> grid, Vector2i tile, float expansionSize = 8.5f, bool fastPath = false)
+    public bool IsAccessible(Entity<BroadphaseComponent, MapGridComponent> grid, Vector2i tile, float expansionSize = 8.5f, bool fastPath = false)
     {
         _viewportTiles.Clear();
         _opaque.Clear();
         _seeds.Clear();
         _viewportTiles.Add(tile);
-        var localBounds = _lookup.GetLocalBounds(tile, grid.Comp.TileSize);
+        var localBounds = _lookup.GetLocalBounds(tile, grid.Comp2.TileSize);
         var expandedBounds = localBounds.Enlarged(expansionSize);
 
-        _seedJob.Grid = grid;
+        _seedJob.Grid = (grid.Owner, grid.Comp2);
         _seedJob.ExpandedBounds = expandedBounds;
         _parallel.ProcessNow(_seedJob);
         _job.Data.Clear();
@@ -107,18 +112,18 @@ public sealed class StationAiVisionSystem : EntitySystem
         }
 
         _singleTiles.Clear();
-        _job.Grid = grid;
+        _job.Grid = (grid.Owner, grid.Comp2);
         _job.VisibleTiles = _singleTiles;
         _parallel.ProcessNow(_job, _job.Data.Count);
 
         return _job.VisibleTiles.Contains(tile);
     }
 
-    private bool IsOccluded(Entity<MapGridComponent> grid, Vector2i tile)
+    private bool IsOccluded(Entity<BroadphaseComponent, MapGridComponent> grid, Vector2i tile)
     {
-        var tileBounds = _lookup.GetLocalBounds(tile, grid.Comp.TileSize).Enlarged(-0.05f);
+        var tileBounds = _lookup.GetLocalBounds(tile, grid.Comp2.TileSize).Enlarged(-0.05f);
         _occluders.Clear();
-        _lookup.GetLocalEntitiesIntersecting(grid.Owner, tileBounds, _occluders, LookupFlags.Static);
+        _lookup.GetLocalEntitiesIntersecting((grid.Owner, grid.Comp1), tileBounds, _occluders, query: _occluderQuery, flags: LookupFlags.Static | LookupFlags.Approximate);
         var anyOccluders = false;
 
         foreach (var occluder in _occluders)
@@ -137,14 +142,14 @@ public sealed class StationAiVisionSystem : EntitySystem
     /// Gets a byond-equivalent for tiles in the specified worldAABB.
     /// </summary>
     /// <param name="expansionSize">How much to expand the bounds before to find vision intersecting it. Makes this the largest vision size + 1 tile.</param>
-    public void GetView(Entity<MapGridComponent> grid, Box2Rotated worldBounds, HashSet<Vector2i> visibleTiles, float expansionSize = 8.5f)
+    public void GetView(Entity<BroadphaseComponent, MapGridComponent> grid, Box2Rotated worldBounds, HashSet<Vector2i> visibleTiles, float expansionSize = 8.5f)
     {
         _viewportTiles.Clear();
         _opaque.Clear();
         _seeds.Clear();
 
         // TODO: Would be nice to be able to run this while running the other stuff.
-        _seedJob.Grid = grid;
+        _seedJob.Grid = (grid.Owner, grid.Comp2);
         var invMatrix = _xforms.GetInvWorldMatrix(grid);
         var localAabb = invMatrix.TransformBox(worldBounds);
         var enlargedLocalAabb = invMatrix.TransformBox(worldBounds.Enlarged(expansionSize));
@@ -200,7 +205,7 @@ public sealed class StationAiVisionSystem : EntitySystem
             _job.BoundaryTiles.Add(new HashSet<Vector2i>());
         }
 
-        _job.Grid = grid;
+        _job.Grid = (grid.Owner, grid.Comp2);
         _job.VisibleTiles = visibleTiles;
         _parallel.ProcessNow(_job, _job.Data.Count);
     }
@@ -280,7 +285,7 @@ public sealed class StationAiVisionSystem : EntitySystem
 
         public void Execute()
         {
-            System._lookup.GetLocalEntitiesIntersecting(Grid.Owner, ExpandedBounds, System._seeds);
+            System._lookup.GetLocalEntitiesIntersecting(Grid.Owner, ExpandedBounds, System._seeds, flags: LookupFlags.All | LookupFlags.Approximate);
         }
     }
 
