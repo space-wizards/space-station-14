@@ -17,13 +17,9 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
     [Dependency] private readonly ItemToggleSystem _toggle = default!;
 
-    private EntityQuery<TransformComponent> _xformQuery;
-
     public override void Initialize()
     {
         base.Initialize();
-
-        _xformQuery = GetEntityQuery<TransformComponent>();
 
         SubscribeLocalEvent<ClothingSpeedModifierComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<ClothingSpeedModifierComponent, ComponentHandleState>(OnHandleState);
@@ -48,12 +44,9 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         component.WalkModifier = state.WalkModifier;
         component.SprintModifier = state.SprintModifier;
 
-        if (!_xformQuery.TryGetComponent(uid, out var xform))
-            return;
-
         // Avoid raising the event for the container if nothing changed.
         // We'll still set the values in case they're slightly different but within tolerance.
-        if (diff && _container.TryGetContainingContainer(xform.ParentUid, uid, out var container))
+        if (diff && _container.TryGetContainingContainer((uid, null, null), out var container))
         {
             _movementSpeed.RefreshMovementSpeedModifiers(container.Owner);
         }
@@ -117,10 +110,7 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         // make sentient boots slow or fast too
         _movementSpeed.RefreshMovementSpeedModifiers(ent);
 
-        if (!_xformQuery.TryGetComponent(ent.Owner, out var xform))
-            return;
-
-        if (_container.TryGetContainingContainer(xform.ParentUid, ent.Owner, out var container))
+        if (_container.TryGetContainingContainer((ent.Owner, null, null), out var container))
         {
             // inventory system will automatically hook into the event raised by this and update accordingly
             _movementSpeed.RefreshMovementSpeedModifiers(container.Owner);

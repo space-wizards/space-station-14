@@ -548,7 +548,7 @@
   parent: BaseTree
   id: LightTree01
   name: glowing tree
-  description: a marvelous tree filled with strange energy.
+  description: A marvelous tree filled with strange energy.
   components:
   - type: PointLight
     radius: 2.0
