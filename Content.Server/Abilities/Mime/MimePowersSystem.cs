@@ -78,8 +78,8 @@ namespace Content.Server.Abilities.Mime
             if (tile == null)
                 return;
 
-            // Check if the tile is blocked, and don't create the wall if so
-            if (_turf.IsTileBlocked(tile.Value, CollisionGroup.AllMask))
+            // Check if the tile is blocked by a wall or mob, and don't create the wall if so
+            if (_turf.IsTileBlocked(tile.Value, CollisionGroup.MobLayer | CollisionGroup.WallLayer))
             {
                 _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-failed"), uid, uid);
                 return;
