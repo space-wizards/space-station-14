@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: stalengd
-  changes:
-  - message: Players can now correctly toggle internals on pets.
-    type: Fix
-  id: 6717
-  time: '2024-06-13T02:17:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28904
-- author: Cojoke-dot
-  changes:
-  - message: Tranquilizer Shotguns shells now have a unique sprite
-    type: Tweak
-  - message: You now print boxes of Tranquilizer Boxes rather than a single shell
-    type: Tweak
-  id: 6718
-  time: '2024-06-13T02:17:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28903
 - author: Plykiya
   changes:
   - message: Gauze continues to heal even when you stop someone's bleeding.
@@ -3865,3 +3849,17 @@
   id: 7216
   time: '2024-08-26T13:00:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31478
+- author: CuteBoi
+  changes:
+  - message: Replaced small fans on most shuttles with directional fans.
+    type: Fix
+  id: 7217
+  time: '2024-08-26T22:24:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31495
+- author: 12rabbits
+  changes:
+  - message: The guidebook now remembers where you left off when re-opened.
+    type: Tweak
+  id: 7218
+  time: '2024-08-26T23:06:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31375
