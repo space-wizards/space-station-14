@@ -50,7 +50,7 @@
       - id: ClothingHandsGlovesLatex
       - id: ClothingHeadsetMedical
       - id: ClothingEyesHudMedical
-      - id: ClothingBeltMedical
+      - id: ClothingBeltMedicalFilled
       - id: ClothingHeadHatSurgcapGreen
         prob: 0.1
         orGroup: Surgcaps
@@ -84,7 +84,7 @@
       - id: ClothingHandsGlovesLatex
       - id: ClothingHeadsetMedical
       - id: ClothingEyesHudMedical
-      - id: ClothingBeltMedical
+      - id: ClothingBeltMedicalFilled
       - id: ClothingHeadHatSurgcapGreen
         prob: 0.1
         orGroup: Surgcaps
