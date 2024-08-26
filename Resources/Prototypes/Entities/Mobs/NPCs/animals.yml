@@ -1,3 +1,4 @@
+
 - type: entity
   name: bat
   parent: [ SimpleMobBase, FlyingMobBase, MobCombat ]
@@ -3108,7 +3109,7 @@
   name: weasel
   parent: [SimpleMobBase, StripableInventoryBase]
   id: MobWeasel
-  description: Just a weaselly fella!
+  description: Just a weaselly little fella!
   components:
   - type: Sprite
     drawdepth: Mobs
