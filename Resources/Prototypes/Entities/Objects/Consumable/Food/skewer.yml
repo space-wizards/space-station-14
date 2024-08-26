@@ -1,39 +1,5 @@
 # When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_single.yml
-# Base
-
-- type: entity
-  parent: FoodInjectableBase
-  id: FoodSkewerBase
-  abstract: true
-  components:
-  - type: Food
-    trash: 
-    - FoodKebabSkewer
-  - type: Sprite
-    sprite: Objects/Consumable/Food/skewer.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
-  - type: Item
-    size: Small
-    storedRotation: -90
-
 # Kebabs
-
-# Thoughts on custom kebab system. Kebab items are separated into layers. Only
-# cutlets and specific items should be put on skewers, which is why i've tagged the cutlets
-# among other reasons. The system would specify between large and small skewer items, since
-# there is only so much space the sprite can hold. There are four "spots" on the skewer for
-# items, which means only 2 large items at a time can be on one. For examplehe thought it
-# you can put two lizard tails on a skewer with two cutlets inbetween.
-# This system of layers and spots also means that skewers can be progressively "eaten", meaning
-# that layers are made invisible as it gets eaten.
-
-# NOTE: Rats take up spots 2 and 4 and tails take up 1 and 3. This is important for sprite layering.
 
 - type: entity
   name: skewer
@@ -43,137 +9,36 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/skewer.rsi
-    state: skewer
+    state: 
+    layers:
+    - state: skewer
+    - map: ["foodSequenceLayers"]
+  - type: MeleeWeapon
+    wideAnimationRotation: -120
+    damage:
+      types:
+        Piercing: 4
+    angle: 0
+    animation: WeaponArcThrust
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
   - type: Tag
     tags:
     - Trash
     - Skewer
-
-# Custom Kebab Example
-
-- type: entity
-  name: Hawaiian kebab
-  parent: FoodSkewerBase
-  id: FoodMeatHawaiianKebab
-  description: A delicious kebab made of pineapple, ham and green peppers.
-  components:
-  - type: Sprite
-    layers:
-      - state: skewer
-      - state: skewer-meat-alpha1
-        color: yellow
-      - state: skewer-meat-alpha2
-        color: brown
-      - state: skewer-meat-alpha3
-        color: green
-      - state: skewer-meat-alpha4
-        color: brown
-  - type: Tag
-    tags:
-    - Meat
-    - Fruit
-
-- type: entity
-  name: meat kebab
-  parent: FoodSkewerBase
-  id: FoodMeatKebab
-  description: Delicious meat, on a stick.
-  components:
-  - type: Sprite
-    layers:
-      - state: skewer
-      - state: skewer-meat1
-      - state: skewer-meat2
-      - state: skewer-meat3
-      - state: skewer-meat4
-  - type: Tag
-    tags:
-    - Meat
-
-- type: entity
-  name: human kebab
-  parent: FoodMeatKebab
-  id: FoodMeatHumanKebab
-  description: Human meat. On a stick!
-
-- type: entity
-  name: lizard-tail kebab
-  parent: FoodMeatKebab
-  id: FoodMeatLizardtailKebab
-  description: Severed lizard tail on a stick.
-  components:
-  - type: Sprite
-    layers:
-      - state: skewer
-      - state: skewer-tail1
-
-- type: entity
-  name: rat kebab
-  parent: FoodMeatKebab
-  id: FoodMeatRatKebab
-  description: Not so delicious rat meat, on a stick.
-  components:
-  - type: Sprite
-    layers:
-      - state: skewer
-      - state: skewer-rat1
+  - type: Food
+    trash: 
+    - FoodKebabSkewer
   - type: SolutionContainerManager
     solutions:
       food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 2
-
-- type: entity
-  name: double rat kebab
-  parent: FoodMeatKebab
-  id: FoodMeatRatdoubleKebab
-  description: A double serving of not so delicious rat meat, on a stick.
-  components:
-  - type: Sprite
-    layers:
-      - state: skewer
-      - state: skewer-rat1
-      - state: skewer-rat2
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 12
-        - ReagentId: Vitamin
-          Quantity: 6
-
-- type: entity
-  name: fiesta kebab
-  parent: FoodSkewerBase
-  id: FoodMeatFiestaKebab
-  description: Always a cruise ship party somewhere in the world, right?
-  components:
-  - type: Sprite
-    layers:
-      - state: skewer
-      - state: skewer-pepper4
-      - state: skewer-corn2
-      - state: skewer-mushroom2
-      - state: skewer-tomato1
-
-- type: entity
-  name: snake kebab
-  parent: FoodSkewerBase
-  id: FoodMeatSnakeKebab
-  description: Snake meat on a stick. It's a little tough.
-  components:
-  - type: Sprite
-    layers:
-      - state: skewer
-      - state: skewer-snake1
-      - state: skewer-snake2
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 12
+        canReact: false # Dont want cause reactions inside skewers after merging ingredients
+        maxVol: 0
+  - type: FoodSequenceStartPoint
+    key: skewer
+    maxLayers: 4
+    startPosition: -0.27, -0.19
+    inverseLayers: true 
+    offset: 0.2, 0.1
+    nameGeneration: food-sequence-skewer-gen
+    contentSeparator: ", "
