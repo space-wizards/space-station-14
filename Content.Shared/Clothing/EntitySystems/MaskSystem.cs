@@ -84,8 +84,6 @@ public sealed class MaskSystem : EntitySystem
 
         comp.IsToggled = args.IsFolded;
 
-        Dirty(uid, comp);
-
         ToggleMaskComponents(uid, comp, uid, false, comp.IsToggled);
     }
 }
