@@ -1,19 +1,31 @@
 - type: latheRecipe
   id: Fulton
   result: Fulton1
+  category: Tools
   completetime: 1
   materials:
     Steel: 200
-    Cloth: 100
+    Cloth: 500
 
 - type: latheRecipe
   id: FultonBeacon
   result: FultonBeacon
+  category: Tools
   completetime: 5
   materials:
     Steel: 1000
     Glass: 500
     # If they get spammed make it cost silver.
+
+- type: latheRecipe
+  id: SeismicCharge
+  result: SeismicCharge
+  category: Tools
+  completetime: 1
+  materials:
+    Plastic: 1500
+    Steel: 100
+    Silver: 100
 
 - type: latheRecipe
   id: MiningDrill

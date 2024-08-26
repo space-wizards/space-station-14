@@ -1,17 +1,23 @@
-using System.Linq;
-using System.Numerics;
+using Content.Server.Administration.Logs;
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind;
 using Content.Server.Roles.Jobs;
 using Content.Server.Warps;
 using Content.Shared.Actions;
+using Content.Shared.CCVar;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Eye;
+using Content.Shared.FixedPoint;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
@@ -19,11 +25,15 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using System.Linq;
+using System.Numerics;
 
 namespace Content.Server.Ghost
 {
@@ -44,6 +54,14 @@ namespace Content.Server.Ghost
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly SharedMindSystem _mind = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly DamageableSystem _damageable = default!;
 
         private EntityQuery<GhostComponent> _ghostQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
@@ -144,7 +162,7 @@ namespace Content.Server.Ghost
             if (component.MustBeDead && (_mobState.IsAlive(uid) || _mobState.IsCritical(uid)))
                 return;
 
-            _ticker.OnGhostAttempt(mindId, component.CanReturn, mind: mind);
+            OnGhostAttempt(mindId, component.CanReturn, mind: mind);
         }
 
         private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
@@ -473,5 +491,102 @@ namespace Content.Server.Ghost
             Log.Debug($"Spawned ghost \"{ToPrettyString(ghost)}\" for {mind.Comp.CharacterName}.");
             return ghost;
         }
+
+        public bool OnGhostAttempt(EntityUid mindId, bool canReturnGlobal, bool viaCommand = false, MindComponent? mind = null)
+        {
+            if (!Resolve(mindId, ref mind))
+                return false;
+
+            var playerEntity = mind.CurrentEntity;
+
+            if (playerEntity != null && viaCommand)
+                _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} is attempting to ghost via command");
+
+            var handleEv = new GhostAttemptHandleEvent(mind, canReturnGlobal);
+            RaiseLocalEvent(handleEv);
+
+            // Something else has handled the ghost attempt for us! We return its result.
+            if (handleEv.Handled)
+                return handleEv.Result;
+
+            if (mind.PreventGhosting)
+            {
+                if (mind.Session != null) // Logging is suppressed to prevent spam from ghost attempts caused by movement attempts
+                {
+                    _chatManager.DispatchServerMessage(mind.Session, Loc.GetString("comp-mind-ghosting-prevented"),
+                        true);
+                }
+
+                return false;
+            }
+
+            if (TryComp<GhostComponent>(playerEntity, out var comp) && !comp.CanGhostInteract)
+                return false;
+
+            if (mind.VisitingEntity != default)
+            {
+                _mind.UnVisit(mindId, mind: mind);
+            }
+
+            var position = Exists(playerEntity)
+                ? Transform(playerEntity.Value).Coordinates
+                : _gameTicker.GetObserverSpawnPoint();
+
+            if (position == default)
+                return false;
+
+            // Ok, so, this is the master place for the logic for if ghosting is "too cheaty" to allow returning.
+            // There's no reason at this time to move it to any other place, especially given that the 'side effects required' situations would also have to be moved.
+            // + If CharacterDeadPhysically applies, we're physically dead. Therefore, ghosting OK, and we can return (this is critical for gibbing)
+            //   Note that we could theoretically be ICly dead and still physically alive and vice versa.
+            //   (For example, a zombie could be dead ICly, but may retain memories and is definitely physically active)
+            // + If we're in a mob that is critical, and we're supposed to be able to return if possible,
+            //   we're succumbing - the mob is killed. Therefore, character is dead. Ghosting OK.
+            //   (If the mob survives, that's a bug. Ghosting is kept regardless.)
+            var canReturn = canReturnGlobal && _mind.IsCharacterDeadPhysically(mind);
+
+            if (_configurationManager.GetCVar(CCVars.GhostKillCrit) &&
+                canReturnGlobal &&
+                TryComp(playerEntity, out MobStateComponent? mobState))
+            {
+                if (_mobState.IsCritical(playerEntity.Value, mobState))
+                {
+                    canReturn = true;
+
+                    //todo: what if they dont breathe lol
+                    //cry deeply
+
+                    FixedPoint2 dealtDamage = 200;
+
+                    if (TryComp<DamageableComponent>(playerEntity, out var damageable)
+                        && TryComp<MobThresholdsComponent>(playerEntity, out var thresholds))
+                    {
+                        var playerDeadThreshold = _mobThresholdSystem.GetThresholdForState(playerEntity.Value, MobState.Dead, thresholds);
+                        dealtDamage = playerDeadThreshold - damageable.TotalDamage;
+                    }
+
+                    DamageSpecifier damage = new(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), dealtDamage);
+
+                    _damageable.TryChangeDamage(playerEntity, damage, true);
+                }
+            }
+
+            var ghost = SpawnGhost((mindId, mind), position, canReturn);
+
+            if (ghost == null)
+                return false;
+
+            if (playerEntity != null)
+                _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
+
+            return true;
+        }
+    }
+
+    public sealed class GhostAttemptHandleEvent(MindComponent mind, bool canReturnGlobal) : HandledEntityEventArgs
+    {
+        public MindComponent Mind { get; } = mind;
+        public bool CanReturnGlobal { get; } = canReturnGlobal;
+        public bool Result { get; set; }
     }
 }
