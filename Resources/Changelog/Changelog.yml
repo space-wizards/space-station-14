@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: notafet
-  changes:
-  - message: The singularity is now safe to operate up to PA level 3.
-    type: Fix
-  id: 6716
-  time: '2024-06-12T22:56:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28906
 - author: stalengd
   changes:
   - message: Players can now correctly toggle internals on pets.
@@ -3865,3 +3858,10 @@
   id: 7215
   time: '2024-08-26T12:02:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31319
+- author: slarticodefast
+  changes:
+  - message: Fixed energy sword visuals.
+    type: Fix
+  id: 7216
+  time: '2024-08-26T13:00:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31478
