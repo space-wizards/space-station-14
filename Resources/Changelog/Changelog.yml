@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Fixed opening the PDA UI sometimes breaking.
-    type: Fix
-  id: 6715
-  time: '2024-06-12T18:10:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28896
 - author: notafet
   changes:
   - message: The singularity is now safe to operate up to PA level 3.
@@ -3865,3 +3858,10 @@
   id: 7214
   time: '2024-08-26T09:09:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31471
+- author: Winkarst-cpu
+  changes:
+  - message: The color of the science radio channel was changed.
+    type: Tweak
+  id: 7215
+  time: '2024-08-26T12:02:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31319
