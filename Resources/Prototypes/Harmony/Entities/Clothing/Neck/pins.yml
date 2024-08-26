@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingNeckPinBase
+  parent: ClothingNeckBase
   id: ClothingNeckVulturePin
   name: vulture pin
   description: Given to the crew of Vulture
