@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Deserty0
-  changes:
-  - message: '"no materials loaded" messege now appears in lathes!'
-    type: Fix
-  id: 6713
-  time: '2024-06-12T10:32:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28885
-- author: robertGN
-  changes:
-  - message: Syndicate communications consoles can no longer recall the emergency
-      shuttle.
-    type: Fix
-  id: 6714
-  time: '2024-06-12T13:32:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28803
 - author: deltanedas
   changes:
   - message: Fixed opening the PDA UI sometimes breaking.
@@ -3866,3 +3851,17 @@
   id: 7212
   time: '2024-08-25T17:09:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30001
+- author: lzk228
+  changes:
+  - message: Cotton dough added to the game! Check the guidebook for new recipes.
+    type: Add
+  id: 7213
+  time: '2024-08-26T02:46:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30668
+- author: Moomoobeef
+  changes:
+  - message: Silicons like medbots, janibots, and honkbots now make sound when speaking.
+    type: Fix
+  id: 7214
+  time: '2024-08-26T09:09:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31471
