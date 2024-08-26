@@ -37,7 +37,7 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
         if (state is not NewsWriterBoundUserInterfaceState cast)
             return;
 
-        _menu?.UpdateUI(cast.Articles, cast.PublishEnabled, cast.NextPublish, cast.TitleDraft, cast.ContentDraft);
+        _menu?.UpdateUI(cast.Articles, cast.PublishEnabled, cast.NextPublish, cast.DraftTitle, cast.DraftContent);
     }
 
     private void OnPublishButtonPressed()
@@ -73,11 +73,11 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
 
     private void OnCreateButtonPressed()
     {
-        SendMessage(new NewsWriterRequestArticleDraftMessage());
+        SendMessage(new NewsWriterRequestDraftMessage());
     }
 
     private void OnArticleDraftUpdated(string title, string content)
     {
-        SendMessage(new NewsWriterArticleDraftMessage(title, content));
+        SendMessage(new NewsWriterSaveDraftMessage(title, content));
     }
 }

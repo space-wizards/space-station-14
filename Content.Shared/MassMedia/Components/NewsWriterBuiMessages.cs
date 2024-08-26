@@ -15,16 +15,16 @@ public sealed class NewsWriterBoundUserInterfaceState : BoundUserInterfaceState
     public readonly NewsArticle[] Articles;
     public readonly bool PublishEnabled;
     public readonly TimeSpan NextPublish;
-    public readonly string TitleDraft;
-    public readonly string ContentDraft;
+    public readonly string DraftTitle;
+    public readonly string DraftContent;
 
-    public NewsWriterBoundUserInterfaceState(NewsArticle[] articles, bool publishEnabled, TimeSpan nextPublish, string titleDraft, string contentDraft)
+    public NewsWriterBoundUserInterfaceState(NewsArticle[] articles, bool publishEnabled, TimeSpan nextPublish, string draftTitle, string draftContent)
     {
         Articles = articles;
         PublishEnabled = publishEnabled;
         NextPublish = nextPublish;
-        TitleDraft = titleDraft;
-        ContentDraft = contentDraft;
+        DraftTitle = draftTitle;
+        DraftContent = draftContent;
     }
 }
 
@@ -59,19 +59,19 @@ public sealed class NewsWriterArticlesRequestMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class NewsWriterArticleDraftMessage : BoundUserInterfaceMessage
+public sealed class NewsWriterSaveDraftMessage : BoundUserInterfaceMessage
 {
-    public readonly string TitleDraft;
-    public readonly string ContentDraft;
+    public readonly string DraftTitle;
+    public readonly string DraftContent;
 
-    public NewsWriterArticleDraftMessage(string titleDraft, string contentDraft)
+    public NewsWriterSaveDraftMessage(string draftTitle, string draftContent)
     {
-        TitleDraft = titleDraft;
-        ContentDraft = contentDraft;
+        DraftTitle = draftTitle;
+        DraftContent = draftContent;
     }
 }
 
 [Serializable, NetSerializable]
-public sealed class NewsWriterRequestArticleDraftMessage : BoundUserInterfaceMessage
+public sealed class NewsWriterRequestDraftMessage : BoundUserInterfaceMessage
 {
 }
