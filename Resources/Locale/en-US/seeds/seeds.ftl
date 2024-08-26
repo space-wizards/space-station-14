@@ -131,4 +131,4 @@ seeds-pyrotton-display-name = pyrotton plant
 seeds-capfruit-name = capfruit
 seeds-capfruit-display-name = capfruit tree
 seeds-cherry-name = cherry
-seeds-cherry-display-name = cherry plant
+seeds-cherry-display-name = cherry tree
