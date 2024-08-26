@@ -1,0 +1,10 @@
+- type: entity
+  parent: [ UnsensoredClothingUniformBase, BaseTerragovContraband ]
+  id: ClothingUniformJumpsuitHeccdiver
+  name: heccdiver jumpsuit
+  description: The very capable wear this, apparently.
+  components:
+  - type: Sprite
+    sprite: Ronstation/Clothing/Uniforms/Jumpsuit/heccdiver.rsi
+  - type: Clothing
+    sprite: Ronstation/Clothing/Uniforms/Jumpsuit/heccdiver.rsi
