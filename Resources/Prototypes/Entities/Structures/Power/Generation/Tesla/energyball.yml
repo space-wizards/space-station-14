@@ -61,7 +61,7 @@
         layer:
         - GlassLayer
   - type: PointLight
-    radius: 16
+    radius: 10
     energy: 16
   - type: EventHorizon
     radius: 0.5
