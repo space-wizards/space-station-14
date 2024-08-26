@@ -63,12 +63,12 @@ public sealed class MaskSystem : EntitySystem
     /// <summary>
     /// Called after setting IsToggled, raises events and dirties.
     /// <summary>
-    private void ToggleMaskComponents(EntityUid uid, MaskComponent mask, EntityUid wearer, bool isEquip = false)
+    private void ToggleMaskComponents(EntityUid uid, MaskComponent mask, EntityUid wearer, bool isEquip = false, bool isFolded = false)
     {
         if (mask.ToggleActionEntity is { } action)
             _actionSystem.SetToggled(action, mask.IsToggled);
 
-        var maskEv = new ItemMaskToggledEvent(wearer, mask.PulledUpPrefix, mask.PulledDownPrefix, mask.IsToggled, isEquip);
+        var maskEv = new ItemMaskToggledEvent(wearer, mask.PulledUpPrefix, mask.PulledDownPrefix, mask.IsToggled, isEquip, isFolded);
         RaiseLocalEvent(uid, ref maskEv);
 
         var wearerEv = new WearerMaskToggledEvent(mask.IsToggled);
@@ -77,10 +77,15 @@ public sealed class MaskSystem : EntitySystem
 
     private void OnFolded(Entity<MaskComponent> ent, ref FoldedEvent args)
     {
-        if (ent.Comp.DisableOnFolded)
-            ent.Comp.IsEnabled = !args.IsFolded;
-        ent.Comp.IsToggled = args.IsFolded;
+        var (uid, comp) = ent;
 
-        ToggleMaskComponents(ent.Owner, ent.Comp, ent.Owner);
+        if (comp.DisableOnFolded)
+            comp.IsEnabled = !args.IsFolded;
+
+        comp.IsToggled = args.IsFolded;
+
+        Dirty(uid, comp);
+
+        ToggleMaskComponents(uid, comp, uid, false, comp.IsToggled);
     }
 }

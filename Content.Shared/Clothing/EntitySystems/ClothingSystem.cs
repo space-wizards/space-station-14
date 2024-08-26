@@ -174,7 +174,7 @@ public abstract class ClothingSystem : EntitySystem
 
     private void OnMaskToggled(Entity<ClothingComponent> ent, ref ItemMaskToggledEvent args)
     {
-        SetEquippedPrefix(ent, args.IsEquip ? args.PulledUpPrefix : (args.IsToggled ? args.PulledDownPrefix : args.PulledUpPrefix), ent);
+        SetEquippedPrefix(ent, (args.IsEquip || args.IsFolded) ? args.PulledUpPrefix : (args.IsToggled ? args.PulledDownPrefix : args.PulledUpPrefix), ent);
         CheckEquipmentForLayerHide(ent.Owner, args.Wearer);
     }
 
