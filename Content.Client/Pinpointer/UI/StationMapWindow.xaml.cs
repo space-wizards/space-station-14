@@ -44,9 +44,12 @@ public sealed partial class StationMapWindow : FancyWindow
         {
             if (child is not Button)
                 continue;
-
             Button button = (child as Button)!;
-            button.Visible = string.IsNullOrEmpty(newFilter) || button.Label.Text!.Contains(newFilter, StringComparison.OrdinalIgnoreCase);
+
+            button.Visible = string.IsNullOrEmpty(newFilter) || (
+                !string.IsNullOrEmpty(button.Label.Text) &&
+                button.Label.Text!.Contains(newFilter, StringComparison.OrdinalIgnoreCase)
+            );
         };
     }
 
@@ -70,7 +73,7 @@ public sealed partial class StationMapWindow : FancyWindow
             }
 
             // If same color, sort by text
-            return a.Text!.CompareTo(b.Text!);
+            return string.Compare(a.Text, b.Text);
         });
 
         foreach (var beacon in navMap.Beacons.Values.Order(beaconCompare))
