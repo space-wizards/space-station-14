@@ -1133,3 +1133,14 @@
   id: horsepussy
   flavorType: Complex
   description: flavor-complex-horsepussy
+
+- type: flavor
+  id: drinkdrink
+  flavorType: Base
+  description: flavor-base-drinkdrink
+
+- type: flavor
+  id: kingsoda
+  flavorType: Base
+  description: flavor-base-kingsoda
+

@@ -50,6 +50,8 @@ flavor-base-horrible = horrible
 # lmao
 flavor-base-terrible = terrible
 flavor-base-mindful = mindful
+flavor-base-kingsoda = like you're a champion
+flavor-base-drinkdrink = like dogshit
 
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
@@ -257,6 +259,7 @@ flavor-complex-themartinez = like violets and lemon vodka
 flavor-complex-cogchamp = like brass
 flavor-complex-white-gilgamesh = like lightly carbonated cream
 flavor-complex-antifreeze = warm
+
 
 ### This is exactly what pilk tastes like. I'm not even joking. I might've been a little drunk though
 flavor-complex-pilk = like sweet milk

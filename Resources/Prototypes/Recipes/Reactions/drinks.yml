@@ -1295,3 +1295,93 @@
       amount: 3
   products:
     BumWine: 5
+    
+- type: reaction
+  id: VoxRocks
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Dylovene:
+      amount: 5
+    IcedBeer:
+      amount: 5
+  products:
+    VoxRocks: 10
+    
+- type: reaction
+  id: KingSoda
+  reactants:
+    CoconutWater:
+      amount: 1
+    IcedCoffee:
+      amount: 1.5
+    Cola:
+      amount: 0.5
+    JuiceWatermelon:
+      amount: 1
+    DrGibb:
+      amount: 1
+    IcedGreenTea:
+      amount: 1.5
+    LemonLime:
+      amount: 1
+    JuiceLime:
+      amount: 1
+    Starkist:
+      amount: 1
+    EnergyDrink:
+      amount: 1
+    IceCream:
+      amount: 2.5
+    SodaWater:
+      amount: 1
+    SpaceMountainWind:
+      amount: 1
+    SpaceUp:
+      amount: 1
+    TonicWater:
+      amount: 1
+    Tea:
+      amount: 1
+    RootBeerFloat:
+      amount: 1.5
+  products:
+    KingSoda: 20
+   
+- type: reaction
+  id: JungleJuice
+  reactants:
+    Beer:
+      amount: 0.5
+    ManlyDorf:
+      amount: 1.5
+    Vermouth:
+      amount: 1
+    Cognac:
+      amount: 1
+    Gin:
+      amount: 1
+    Mead:
+      amount: 1
+    Rum:
+      amount: 1
+    BraveBull:
+      amount: 1.5
+    BlackRussian:
+      amount: 1.5
+    Whiskey:
+      amount: 1
+    Wine:
+      amount: 1
+  products:
+    JungleJuice: 10
+    
+- type: reaction
+  id: TheDrink
+  reactants:
+    KingSoda:
+      amount: 1
+    JungleJuice:
+      amount: 1
+  products:
+    TheDrink: 2

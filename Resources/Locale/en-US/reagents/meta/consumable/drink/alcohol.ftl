@@ -306,3 +306,12 @@ reagent-desc-white-gilgamesh = it isn't good
 
 reagent-name-bumwine = Bum Wine
 reagent-desc-bumwine = For the economical drinker. You know drinks are free though, right?
+
+reagent-name-voxrocks = Vox & Rocks
+reagent-desc-voxrocks = Ensure our feathered friends a seat at the table with this modern, oxygen-depriving beer.
+
+reagent-name-junglejuice = Jungle Juice
+reagent-desc-junglejuice = Dont let the captain see, or youll have to pour it out.
+
+reagent-name-drinkdrink = Drink
+reagent-desc-drinkdrink = Finally.

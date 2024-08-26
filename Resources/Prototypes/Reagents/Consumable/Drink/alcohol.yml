@@ -2192,3 +2192,52 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   fizziness: 0.9
+  
+- type: reagent
+  id: VoxRocks
+  name: reagent-name-voxrocks
+  parent: BaseSoda
+  desc: reagent-desc-voxrocks
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: medicine
+  color: "#a12b68"
+  recognizable: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
+      - !type:AdjustReagent
+        reagent: Dylovene
+        amount: 0.5
+      - !type:AdjustReagent
+        reagent: Oxygen
+        amount: -25
+  fizziness: .7
+  
+- type: reagent
+  id: JungleJuice
+  name: reagent-name-junglejuice
+  parent: BaseAlcohol
+  desc: reagent-desc-junglejuice
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: spaceshroom
+  color: "#310b01"
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  fizziness: 0.8
+  
+- type: reagent
+  id: TheDrink
+  name: reagent-name-drinkdrink
+  parent: BaseAlcohol
+  desc: reagent-desc-drinkdrink
+  physicalDesc: reagent-physical-desc-exhilarating
+  flavor: drinkdrink
+  color: "#10101a"
+  recognizable: true
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  fizziness: 1
