@@ -8,13 +8,6 @@
   },
     "states": [
         {
-            "name": "vulture"
-        },
-        {
-            "name": "vulture-equipped",
-            "directions": 4
-        },
-        {
             "name": "lizard"
         },
         {
