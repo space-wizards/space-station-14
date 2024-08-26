@@ -9,6 +9,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Power;
 using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
@@ -725,7 +726,7 @@ public sealed class WiresSystem : SharedWiresSystem
                     break;
                 }
 
-                Tool.PlayToolSound(toolEntity, tool, user);
+                Tool.PlayToolSound(toolEntity, tool, null);
                 if (wire.Action == null || wire.Action.Cut(user, wire))
                 {
                     wire.IsCut = true;
@@ -746,7 +747,7 @@ public sealed class WiresSystem : SharedWiresSystem
                     break;
                 }
 
-                Tool.PlayToolSound(toolEntity, tool, user);
+                Tool.PlayToolSound(toolEntity, tool, null);
                 if (wire.Action == null || wire.Action.Mend(user, wire))
                 {
                     wire.IsCut = false;

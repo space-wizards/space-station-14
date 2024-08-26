@@ -522,10 +522,9 @@ public sealed class PlantHolderSystem : EntitySystem
 
         var environment = _atmosphere.GetContainingMixture(uid, true, true) ?? GasMixture.SpaceGas;
 
+        component.MissingGas = 0;
         if (component.Seed.ConsumeGasses.Count > 0)
         {
-            component.MissingGas = 0;
-
             foreach (var (gas, amount) in component.Seed.ConsumeGasses)
             {
                 if (environment.GetMoles(gas) < amount)
