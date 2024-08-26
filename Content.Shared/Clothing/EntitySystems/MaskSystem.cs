@@ -45,7 +45,7 @@ public sealed class MaskSystem : EntitySystem
 
         var dir = mask.IsToggled ? "down" : "up";
         var msg = $"action-mask-pull-{dir}-popup-message";
-        _popupSystem.PopupClient(Loc.GetString(msg, ("mask", uid)), args.Performer, args.Performer);
+        _popupSystem.PopupEntity(Loc.GetString(msg, ("mask", uid)), args.Performer, args.Performer);
 
         ToggleMaskComponents(uid, mask, args.Performer);
     }
@@ -65,10 +65,6 @@ public sealed class MaskSystem : EntitySystem
     /// <summary>
     private void ToggleMaskComponents(EntityUid uid, MaskComponent mask, EntityUid wearer, bool isEquip = false)
     {
-        // It will get dirty in the clothing system anyway
-        // We prevent flickering of the sprite this way
-        // Dirty(uid, mask);
-
         if (mask.ToggleActionEntity is { } action)
             _actionSystem.SetToggled(action, mask.IsToggled);
 
