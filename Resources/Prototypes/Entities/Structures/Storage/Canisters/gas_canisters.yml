@@ -115,7 +115,7 @@
         - state: yellow
     - type: GasCanister
       gasMixture:
-        volume: 1000
+        volume: 10000
         moles: # List of gasses for easy reference
           - 0 # oxygen
           - 0 # nitrogen
@@ -151,7 +151,7 @@
           acts: [ "Destruction" ]
         - !type:DumpCanisterBehavior
 
-# Filled canisters, contain 1871.71051 moles each
+# Filled canisters, contain 18717.1051 moles each
 
 - type: entity
   parent: GasCanister
@@ -164,10 +164,10 @@
       - state: grey
   - type: GasCanister
     gasMixture:
-      volume: 1000
+      volume: 10000
       moles:
-        - 393.0592071 # oxygen 21%
-        - 1478.6513029 # nitrogen 79%
+        - 3930.592071 # oxygen 21%
+        - 14786.513029 # nitrogen 79%
       temperature: 293.15
   - type: Destructible
     thresholds:
@@ -204,9 +204,9 @@
       - state: blue
   - type: GasCanister
     gasMixture:
-      volume: 1000
+      volume: 10000
       moles:
-        - 1871.71051 # oxygen
+        - 18717.1051 # oxygen
       temperature: 293.15
   - type: Destructible
     thresholds:
@@ -240,9 +240,9 @@
   components:
   - type: GasCanister
     gasMixture:
-      volume: 1000
+      volume: 10000
       moles:
-        - 18710.71051 # oxygen
+        - 187107.1051 # oxygen
       temperature: 72
   - type: AccessReader
     access: [["Atmospherics"]]
@@ -258,10 +258,10 @@
         - state: red
     - type: GasCanister
       gasMixture:
-        volume: 1000
+        volume: 10000
         moles:
           - 0 # oxygen
-          - 1871.71051 # nitrogen
+          - 18717.1051 # nitrogen
         temperature: 293.15
     - type: Destructible
       thresholds:
@@ -295,10 +295,10 @@
   components:
   - type: GasCanister
     gasMixture:
-      volume: 1000
+      volume: 10000
       moles:
         - 0 # oxygen
-        - 18710.71051 # nitrogen
+        - 187107.1051 # nitrogen
       temperature: 72
   - type: AccessReader
     access: [["Atmospherics"]]
@@ -314,11 +314,11 @@
         - state: black
     - type: GasCanister
       gasMixture:
-        volume: 1000
+        volume: 10000
         moles:
           - 0 # oxygen
           - 0 # nitrogen
-          - 1871.71051 # CO2
+          - 18717.1051 # CO2
         temperature: 293.15
     - type: Destructible
       thresholds:
@@ -354,11 +354,11 @@
   components:
   - type: GasCanister
     gasMixture:
-      volume: 1000
+      volume: 10000
       moles:
         - 0 # oxygen
         - 0 # nitrogen
-        - 18710.71051 # CO2
+        - 187107.1051 # CO2
       temperature: 72
   - type: AccessReader
     access: [["Atmospherics"]]
@@ -374,12 +374,12 @@
         - state: orange
     - type: GasCanister
       gasMixture:
-        volume: 1000
+        volume: 10000
         moles:
           - 0 # oxygen
           - 0 # nitrogen
           - 0 # carbon dioxide
-          - 1871.71051 # plasma
+          - 18717.1051 # plasma
         temperature: 293.15
     - type: Destructible
       thresholds:
@@ -418,13 +418,13 @@
         - state: green
     - type: GasCanister
       gasMixture:
-        volume: 1000
+        volume: 10000
         moles:
           - 0 # oxygen
           - 0 # nitrogen
           - 0 # CO2
           - 0 # Plasma
-          - 1871.71051 # Tritium
+          - 18717.1051 # Tritium
         temperature: 293.15
     - type: Destructible
       thresholds:
@@ -463,14 +463,14 @@
         - state: water_vapor
     - type: GasCanister
       gasMixture:
-        volume: 1000
+        volume: 10000
         moles:
           - 0 # oxygen
           - 0 # nitrogen
           - 0 # CO2
           - 0 # Plasma
           - 0 # Tritium
-          - 1871.71051 # Water vapor
+          - 18717.1051 # Water vapor
         temperature: 293.15
     - type: Destructible
       thresholds:
@@ -507,7 +507,7 @@
         - state: greenys
     - type: GasCanister
       gasMixture:
-        volume: 1000
+        volume: 10000
         moles:
           - 0 # oxygen
           - 0 # nitrogen
@@ -515,7 +515,7 @@
           - 0 # Plasma
           - 0 # Tritium
           - 0 #  Water vapor
-          - 1871.71051 # Ammonia
+          - 18717.1051 # Ammonia
         temperature: 293.15
     - type: Destructible
       thresholds:
@@ -554,7 +554,7 @@
         - state: redws
     - type: GasCanister
       gasMixture:
-        volume: 1000
+        volume: 10000
         moles:
           - 0 # oxygen
           - 0 # nitrogen
@@ -563,7 +563,7 @@
           - 0 # Tritium
           - 0 #  Water vapor
           - 0 # Ammonia
-          - 1871.71051 # N2O
+          - 18717.1051 # N2O
         temperature: 293.15
     - type: Destructible
       thresholds:
@@ -600,7 +600,7 @@
     - state: frezon
   - type: GasCanister
     gasMixture:
-      volume: 1000
+      volume: 10000
       moles:
       - 0 # oxygen
       - 0 # nitrogen
@@ -610,7 +610,7 @@
       - 0 # Water vapor
       - 0 # Ammonia
       - 0 # N2O
-      - 1871.71051 # Frezon
+      - 18717.1051 # Frezon
       temperature: 293.15
   - type: Destructible
     thresholds:
