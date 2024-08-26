@@ -19,6 +19,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Localizations;
+using Content.Shared.Power;
 
 namespace Content.Server.Shuttles.Systems;
 
