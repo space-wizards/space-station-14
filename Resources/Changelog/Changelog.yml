@@ -530,6 +530,7 @@ Entries:
 =======
 ﻿Entries:
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> upstream/master
 - author: Plykiya
   changes:
@@ -756,6 +757,8 @@ Entries:
   id: 6713
   time: '2024-06-12T10:32:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28885
+=======
+>>>>>>> upstream/master
 - author: robertGN
   changes:
   - message: Syndicate communications consoles can no longer recall the emergency
@@ -4616,3 +4619,10 @@ Entries:
   id: 7212
   time: '2024-08-25T17:09:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30001
+- author: lzk228
+  changes:
+  - message: Cotton dough added to the game! Check the guidebook for new recipes.
+    type: Add
+  id: 7213
+  time: '2024-08-26T02:46:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30668
