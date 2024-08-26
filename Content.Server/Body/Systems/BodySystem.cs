@@ -1,5 +1,4 @@
 using Content.Server.Body.Components;
-using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Humanoid;
 using Content.Shared.Body.Components;

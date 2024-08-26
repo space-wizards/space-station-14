@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Numerics;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
@@ -34,6 +32,8 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using System.Linq;
+using System.Numerics;
 
 namespace Content.Server.Ghost
 {
