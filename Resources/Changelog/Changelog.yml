@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Added order quantity to cargo invoice label.
-    type: Tweak
-  id: 6723
-  time: '2024-06-13T18:36:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28821
 - author: osjarw
   changes:
   - message: Added context menu action for scanning artifacts.
@@ -3864,3 +3857,10 @@
   id: 7222
   time: '2024-08-27T11:37:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31508
+- author: Winkarst-cpu
+  changes:
+  - message: Now the syndicate raid helmet is marked as a Syndicate contraband.
+    type: Fix
+  id: 7223
+  time: '2024-08-27T13:01:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31512
