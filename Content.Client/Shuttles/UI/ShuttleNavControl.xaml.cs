@@ -199,7 +199,9 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
             var gridMatrix = _transform.GetWorldMatrix(gUid);
             var matty = Matrix3x2.Multiply(gridMatrix, ourWorldMatrixInvert);
-            var color = _shuttles.GetIFFColor(grid, self: false, iff);
+
+            var labelColor = _shuttles.GetIFFColor(grid, self: false, iff);
+            var coordColor = new Color(labelColor.R * 0.8f, labelColor.G * 0.8f, labelColor.B * 0.8f, 0.5f);
 
             // Others default:
             // Color.FromHex("#FFC000FF")
@@ -211,27 +213,40 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
             {
                 var gridBounds = grid.Comp.LocalAABB;
 
-                var gridCentre = Vector2.Transform(gridBody.LocalCenter, matty);
+                var gridLocalCentre = gridBody.LocalCenter;
+                var gridCentre = Vector2.Transform(gridLocalCentre, matty);
                 gridCentre.Y = -gridCentre.Y;
+
                 var distance = gridCentre.Length();
                 var labelText = Loc.GetString("shuttle-console-iff-label", ("name", labelName),
                     ("distance", $"{distance:0.0}"));
 
+                var coordsText = $"({gridLocalCentre.X:0.0}, {gridLocalCentre.Y:0.0})";
+
                 // yes 1.0 scale is intended here.
                 var labelDimensions = handle.GetDimensions(Font, labelText, 1f);
+                var coordsDimensions = handle.GetDimensions(Font, coordsText, 0.7f);
 
                 // y-offset the control to always render below the grid (vertically)
                 var yOffset = Math.Max(gridBounds.Height, gridBounds.Width) * MinimapScale / 1.8f;
 
-                // The actual position in the UI. We offset the matrix position to render it off by half its width
-                // plus by the offset.
-                var uiPosition = ScalePosition(gridCentre)- new Vector2(labelDimensions.X / 2f, -yOffset);
+                // The actual position in the UI. We centre the label by offsetting the matrix position 
+                // by half the label's width, plus the y-offset
+                var gridScaledPosition = ScalePosition(gridCentre);
 
-                // Look this is uggo so feel free to cleanup. We just need to clamp the UI position to within the viewport.
-                uiPosition = new Vector2(Math.Clamp(uiPosition.X, 0f, PixelWidth - labelDimensions.X ),
-                    Math.Clamp(uiPosition.Y, 0f, PixelHeight - labelDimensions.Y));
+                var labelUiPosition = gridScaledPosition - new Vector2(labelDimensions.X / 2f, -yOffset);
+                var coordUiPosition = gridScaledPosition - new Vector2(coordsDimensions.X / 2f, -yOffset - labelDimensions.Y);
 
-                handle.DrawString(Font, uiPosition, labelText, color);
+                // clamp the label's UI position to within the viewport extents so it hugs the edges of the viewport
+                // coord label intentionally isn't clamped so we don't get ugly clutter at the edges
+                var controlExtents = PixelSize - labelDimensions;
+                labelUiPosition = Vector2.Clamp(labelUiPosition, Vector2.Zero, controlExtents);
+
+                // draw IFF label
+                handle.DrawString(Font, labelUiPosition, labelText, labelColor);
+
+                // draw coords as another smaller string to make it prettier
+                handle.DrawString(Font, coordUiPosition, coordsText, 0.7f, coordColor);
             }
 
             // Detailed view
@@ -241,7 +256,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
             if (!gridAABB.Intersects(viewAABB))
                 continue;
 
-            DrawGrid(handle, matty, grid, color);
+            DrawGrid(handle, matty, grid, labelColor);
             DrawDocks(handle, gUid, matty);
         }
     }
