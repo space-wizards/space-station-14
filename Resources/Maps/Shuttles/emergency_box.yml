@@ -26,7 +26,7 @@ entities:
       name: NT Evac Box
     - type: Transform
       pos: 0.06253052,0.58707
-      parent: 484
+      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -492,18 +492,6 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: NavMap
-  - uid: 484
-    components:
-    - type: MetaData
-      name: Map Entity
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: PhysicsMap
-    - type: GridTree
-    - type: MovedGrids
-    - type: Broadphase
-    - type: OccluderTree
 - proto: AirCanister
   entities:
   - uid: 526
@@ -612,26 +600,30 @@ entities:
       rot: 3.141592653589793 rad
       pos: 15.5,-4.5
       parent: 1
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
+  - uid: 484
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,1.5
+      parent: 1
   - uid: 580
     components:
     - type: Transform
+      rot: -1.5707963267948966 rad
       pos: 0.5,9.5
       parent: 1
   - uid: 581
     components:
     - type: Transform
+      rot: -1.5707963267948966 rad
       pos: 0.5,7.5
       parent: 1
   - uid: 582
     components:
     - type: Transform
-      pos: 0.5,1.5
-      parent: 1
-  - uid: 583
-    components:
-    - type: Transform
+      rot: -1.5707963267948966 rad
       pos: 0.5,-0.5
       parent: 1
 - proto: BookHowToSurvive
