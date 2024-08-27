@@ -13,7 +13,6 @@ namespace Content.Client.Administration.Systems
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
         private AdminNameOverlay _adminNameOverlay = default!;
@@ -23,7 +22,7 @@ namespace Content.Client.Administration.Systems
 
         private void InitializeOverlay()
         {
-            _adminNameOverlay = new AdminNameOverlay(this, EntityManager, _eyeManager, _resourceCache, _entityLookup, _configurationManager, _userInterfaceManager);
+            _adminNameOverlay = new AdminNameOverlay(this, EntityManager, _eyeManager, _resourceCache, _entityLookup, _userInterfaceManager);
             _adminManager.AdminStatusUpdated += OnAdminStatusUpdated;
         }
 

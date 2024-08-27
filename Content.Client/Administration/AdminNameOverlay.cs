@@ -15,17 +15,15 @@ internal sealed class AdminNameOverlay : Overlay
     private readonly IEntityManager _entityManager;
     private readonly IEyeManager _eyeManager;
     private readonly EntityLookupSystem _entityLookup;
-    private readonly IConfigurationManager _configurationManager;
     private readonly IUserInterfaceManager _userInterfaceManager;
     private readonly Font _font;
 
-    public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, EntityLookupSystem entityLookup, IConfigurationManager configurationManager, IUserInterfaceManager userInterfaceManager)
+    public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, EntityLookupSystem entityLookup, IUserInterfaceManager userInterfaceManager)
     {
         _system = system;
         _entityManager = entityManager;
         _eyeManager = eyeManager;
         _entityLookup = entityLookup;
-        _configurationManager = configurationManager;
         _userInterfaceManager = userInterfaceManager;
         ZIndex = 200;
         _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
@@ -61,13 +59,7 @@ internal sealed class AdminNameOverlay : Overlay
                 continue;
             }
 
-            var uiScale = _configurationManager.GetCVar(CVars.DisplayUIScale);
-            if (uiScale == 0.0f)
-            {
-                // DisplayUIScale can be 0 if left at the default
-                uiScale = _userInterfaceManager.DefaultUIScale;
-            }
-
+            var uiScale = _userInterfaceManager.RootControl.UIScale;
             var lineoffset = new Vector2(0f, 11f) * uiScale;
             var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center +
                                                               new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
