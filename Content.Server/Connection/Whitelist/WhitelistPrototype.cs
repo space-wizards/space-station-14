@@ -17,7 +17,7 @@ namespace Content.Server.Connection.Whitelist;
 /// Next means the next condition in the list is checked.
 /// If the condition doesn't match, the next condition is checked.
 /// </summary>
-[Prototype("PlayerConnectionWhitelist")]
+[Prototype("playerConnectionWhitelist")]
 public sealed class PlayerConnectionWhitelistPrototype : IPrototype
 {
     [IdDataField]

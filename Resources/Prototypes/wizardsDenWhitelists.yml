@@ -1,6 +1,6 @@
 ﻿# This is the whitelist used for Wizard's Den Salamander
 
-- type: PlayerConnectionWhitelist
+- type: playerConnectionWhitelist
   id: salamanderMrpWhitelist
   conditions:
   - !type:ConditionManualBlacklistMembership # Deny blacklisted (MRP ban)

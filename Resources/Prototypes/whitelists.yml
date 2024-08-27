@@ -1,4 +1,4 @@
-﻿- type: PlayerConnectionWhitelist
+﻿- type: playerConnectionWhitelist
   id: basicWhitelist # Basic whitelist using only the ManualWhitelist condition
   conditions:
     - !type:ConditionManualWhitelistMembership
