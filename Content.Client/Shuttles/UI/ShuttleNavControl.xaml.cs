@@ -239,9 +239,9 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                 // Normalize the grid position if it exceeds the viewport bounds
                 // normalizing it instead of clamping it preserves the direction of the vector and prevents corner-hugging
                 var gridOffset = gridScaledPosition / PixelSize - new Vector2(0.5f, 0.5f);
-                if (gridOffset.X > 0.5 || gridOffset.X < -0.5 || gridOffset.Y > 0.5 || gridOffset.Y < -0.5)
+                var offsetMax = Math.Max(Math.Abs(gridOffset.X), Math.Abs(gridOffset.Y)) * 2f;
+                if (offsetMax > 1)
                 {
-                    var offsetMax = Math.Max(Math.Abs(gridOffset.X), Math.Abs(gridOffset.Y)) * 2f; // gridOffset.Length();
                     gridOffset = new Vector2(gridOffset.X / offsetMax, gridOffset.Y / offsetMax);
 
                     gridScaledPosition = (gridOffset + new Vector2(0.5f, 0.5f)) * PixelSize;
