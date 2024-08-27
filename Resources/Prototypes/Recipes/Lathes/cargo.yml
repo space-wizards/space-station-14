@@ -1,6 +1,5 @@
-﻿- type: latheRecipe
+- type: latheRecipe
   id: ConveyorBeltAssembly
-  result: ConveyorBeltAssembly
   completetime: 4
   materials:
     Steel: 500
@@ -8,7 +7,6 @@
 
 - type: latheRecipe
   id: AppraisalTool
-  result: AppraisalTool
   completetime: 4
   materials:
     Steel: 500

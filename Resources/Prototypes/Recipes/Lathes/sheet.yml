@@ -16,7 +16,6 @@
 
 - type: latheRecipe
   id: SheetGlass1
-  result: SheetGlass1
   completetime: 0
   materials:
     RawQuartz: 100
@@ -48,7 +47,6 @@
 
 - type: latheRecipe
   id: SheetPGlass1
-  result: SheetPGlass1
   completetime: 0
   materials:
     RawQuartz: 100
@@ -64,7 +62,6 @@
 
 - type: latheRecipe
   id: SheetRPGlass1
-  result: SheetRPGlass1
   completetime: 0
   materials:
     RawQuartz: 100
@@ -84,7 +81,6 @@
 
 - type: latheRecipe
   id: SheetPlasma1
-  result: SheetPlasma1
   completetime: 0
   materials:
     RawPlasma: 100
@@ -98,7 +94,6 @@
 
 - type: latheRecipe
   id: SheetPlasteel1
-  result: SheetPlasteel1
   completetime: 0
   materials:
     RawPlasma: 100
@@ -123,7 +118,6 @@
 
 - type: latheRecipe
   id: SheetUGlass1
-  result: SheetUGlass1
   completetime: 0
   materials:
     RawUranium: 100
@@ -139,7 +133,6 @@
 
 - type: latheRecipe
   id: SheetRUGlass1
-  result: SheetRUGlass1
   completetime: 0
   materials:
     RawUranium: 100
@@ -187,21 +180,18 @@
 
 - type: latheRecipe
   id: SheetUranium1
-  result: SheetUranium1
   completetime: 0
   materials:
     RawUranium: 100
 
 - type: latheRecipe
   id: IngotGold1
-  result: IngotGold1
   completetime: 0
   materials:
     RawGold: 100
 
 - type: latheRecipe
   id: IngotSilver1
-  result: IngotSilver1
   completetime: 0
   materials:
     RawSilver: 100
@@ -216,7 +206,6 @@
 
 - type: latheRecipe
   id: MaterialBananium1
-  result: MaterialBananium1
   completetime: 0
   materials:
     RawBananium: 100

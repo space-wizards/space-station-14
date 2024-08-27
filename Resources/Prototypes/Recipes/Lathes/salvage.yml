@@ -9,7 +9,6 @@
 
 - type: latheRecipe
   id: FultonBeacon
-  result: FultonBeacon
   category: Tools
   completetime: 5
   materials:
@@ -19,7 +18,6 @@
 
 - type: latheRecipe
   id: SeismicCharge
-  result: SeismicCharge
   category: Tools
   completetime: 1
   materials:
@@ -28,19 +26,16 @@
     Silver: 100
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: MiningDrill
-  result: MiningDrill
-  category: Tools
   completetime: 3
   materials:
     Steel: 500
     Plastic: 100
 
 - type: latheRecipe
+  parent: MiningDrill
   id: MiningDrillDiamond
-  result: MiningDrillDiamond
-  category: Tools
-  completetime: 3
   materials:
     Steel: 600
     Plastic: 200
