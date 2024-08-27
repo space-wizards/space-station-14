@@ -27,7 +27,7 @@ public partial class ChatBox : UIWidget
     private readonly ChatUIController _controller;
     private readonly IEntityManager _entManager;
 
-    private List<string> _keywords = [];
+    private List<string> _highlights = [];
 
     public bool Main { get; set; }
 
@@ -43,11 +43,21 @@ public partial class ChatBox : UIWidget
         ChatInput.Input.OnTextChanged += OnTextChanged;
         ChatInput.ChannelSelector.OnChannelSelect += OnChannelSelect;
         ChatInput.FilterButton.Popup.OnChannelFilter += OnChannelFilter;
-        ChatInput.FilterButton.Popup.OnNewHighlight += SetHighlights;
+        ChatInput.FilterButton.Popup.OnNewHighlights += SetHighlights;
 
         _controller = UserInterfaceManager.GetUIController<ChatUIController>();
         _controller.MessageAdded += OnMessageAdded;
         _controller.RegisterChat(this);
+
+        // Load highlights and forward them to the Popup.
+        var cfg = IoCManager.Resolve<IConfigurationManager>();
+        string highlights = cfg.GetCVar(CCVars.ChatHighlights);
+
+        if (!string.IsNullOrEmpty(highlights))
+        {
+            SetHighlights(highlights);
+            ChatInput.FilterButton.Popup.SetHighlights(highlights);
+        }
     }
 
     private void OnTextEntered(LineEditEventArgs args)
@@ -71,9 +81,9 @@ public partial class ChatBox : UIWidget
         var color = msg.MessageColorOverride ?? msg.Channel.TextColor();
         
         // Highlight any words choosen by the client.
-        foreach (var keyword in _keywords)
+        foreach (var highlight in _highlights)
         {
-            msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, keyword, "color", HighlightColor.ToHex());
+            msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, highlight, "color", HighlightColor.ToHex());
         }
 
         AddLine(msg.WrappedMessage, color);
@@ -188,18 +198,6 @@ public partial class ChatBox : UIWidget
         _controller.NotifyChatTextChange();
     }
 
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-
-        if (!disposing) return;
-        _controller.UnregisterChat(this);
-        ChatInput.Input.OnTextEntered -= OnTextEntered;
-        ChatInput.Input.OnKeyBindDown -= OnInputKeyBindDown;
-        ChatInput.Input.OnTextChanged -= OnTextChanged;
-        ChatInput.ChannelSelector.OnChannelSelect -= OnChannelSelect;
-    }
-    
     private void SetHighlights(string highlights)
     {
         // Save the newly provided list of highlighs if different.
@@ -210,12 +208,24 @@ public partial class ChatBox : UIWidget
             cfg.SaveToFile();
         }
 
-        // Fill the array with keywords separated by commas, disregarding empty entries.
-        string[] arr_keywords = highlights.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-        _keywords.Clear();
-        foreach (var keyword in arr_keywords)
+        // Fill the array with the highlights separated by commas, disregarding empty entries.
+        string[] arr_highlights = highlights.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        _highlights.Clear();
+        foreach (var keyword in arr_highlights)
         {
-            _keywords.Add(keyword);
+            _highlights.Add(keyword);
         }
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+
+        if (!disposing) return;
+        _controller.UnregisterChat(this);
+        ChatInput.Input.OnTextEntered -= OnTextEntered;
+        ChatInput.Input.OnKeyBindDown -= OnInputKeyBindDown;
+        ChatInput.Input.OnTextChanged -= OnTextChanged;
+        ChatInput.ChannelSelector.OnChannelSelect -= OnChannelSelect;
     }
 }
