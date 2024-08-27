@@ -629,8 +629,8 @@
   id: CargoTechnicianID
   name: loadout-group-cargo-technician-id
   loadouts:
-  - CargoPDA
-  - SeniorCargoPDA
+  - CargoTechnicianPDA
+  - SeniorCargoTechnicianPDA
 
 - type: loadoutGroup
   id: SalvageSpecialistNeck
