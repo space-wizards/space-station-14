@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Gauze continues to heal even when you stop someone's bleeding.
-    type: Fix
-  id: 6719
-  time: '2024-06-13T02:19:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28844
-- author: Doomsdrayk
-  changes:
-  - message: Fixed guns appearing to cycle their bolt when wielded.
-    type: Fix
-  id: 6720
-  time: '2024-06-13T06:30:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28756
 - author: Doomsdrayk
   changes:
   - message: The Drozd and C-20r do not unwield on use again.
@@ -3863,3 +3849,17 @@
   id: 7218
   time: '2024-08-26T23:06:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31375
+- author: Dimastra
+  changes:
+  - message: Fixed meat kudzu not dealing damage.
+    type: Fix
+  id: 7219
+  time: '2024-08-27T00:30:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31494
+- author: JIPDawg
+  changes:
+  - message: Gas miners are now indestructible, can be pulled and only anchored.
+    type: Tweak
+  id: 7220
+  time: '2024-08-27T00:48:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31370
