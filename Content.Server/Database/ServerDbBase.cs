@@ -1066,6 +1066,29 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await db.DbContext.SaveChangesAsync();
         }
 
+        public async Task<bool> GetBlacklistStatusAsync(NetUserId player)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.Blacklist.AnyAsync(w => w.UserId == player);
+        }
+
+        public async Task AddToBlacklistAsync(NetUserId player)
+        {
+            await using var db = await GetDb();
+
+            db.DbContext.Blacklist.Add(new Blacklist() { UserId = player });
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task RemoveFromBlacklistAsync(NetUserId player)
+        {
+            await using var db = await GetDb();
+            var entry = await db.DbContext.Blacklist.SingleAsync(w => w.UserId == player);
+            db.DbContext.Blacklist.Remove(entry);
+            await db.DbContext.SaveChangesAsync();
+        }
+
         #endregion
 
         #region Uploaded Resources Logs
