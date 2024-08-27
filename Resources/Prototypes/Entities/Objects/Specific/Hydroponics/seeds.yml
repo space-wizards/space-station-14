@@ -701,6 +701,6 @@
   id: KisserTomatoSeeds
   components:
     - type: Seed
-      seedId: kissertomato
+      seedId: kisserTomato
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/tomatokisser.rsi

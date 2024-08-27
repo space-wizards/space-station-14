@@ -30,8 +30,6 @@
   components:
   - type: StationEvent
     startAnnouncement: true
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     weight: 5
     reoccurrenceDelay: 30
     duration: 1

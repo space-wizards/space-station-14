@@ -276,6 +276,26 @@
   - type: NukeCodePaper
 
 - type: entity
+  id: BoxFolderNuclearCodes
+  parent: BaseItem
+  name: nuclear code folder
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: folder-colormap
+      color: "#cc2323"
+    - state: folder-base
+    - state: folder-stamp-inverse
+      color: "#1dff00"
+  - type: SpawnItemsOnUse
+    items:
+    - id: NukeCodePaper
+    sound:
+      path: /Audio/Effects/packetrip.ogg
+  - type: Appearance
+
+- type: entity
   id: BoxFolderBase
   parent: BoxBase
   name: folder

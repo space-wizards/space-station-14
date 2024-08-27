@@ -2018,7 +2018,7 @@
           probability: 0.1
 
 - type: reagent
-  id: TheHorsepussy
+  id: TheeHorsepussy
   name: reagent-name-theehorsepussy
   parent: BaseAlcohol
   desc: reagent-desc-theehorsepussy
@@ -2151,7 +2151,7 @@
   parent: BaseSoda
   desc: reagent-desc-rotgut
   physicalDesc: reagent-physical-desc-murky
-  flavor: flavor-base-horrible
+  flavor: horrible
   color: "#8a8048"
   metabolisms:
     Drink:

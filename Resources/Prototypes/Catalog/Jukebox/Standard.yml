@@ -128,7 +128,7 @@
   id: DontDrinkIt
   name: Pilotredsky - Don't Drink It
   path:
-    path: /Audio/Jukebox/don't_drink_it.ogg
+    path: /Audio/Jukebox/dont_drink_it.ogg
 
 - type: jukebox
   id: EternalSanctity
