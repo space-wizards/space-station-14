@@ -86,7 +86,7 @@ public abstract class SharedLatheSystem : EntitySystem
         InverseRecipes.Clear();
         foreach (var latheRecipe in _proto.EnumeratePrototypes<LatheRecipePrototype>())
         {
-            if (GetResult(latheRecipe) is not {} result)
+            if (latheRecipe.Result is not {} result)
                 continue;
 
             InverseRecipes.GetOrNew(result).Add(latheRecipe);
@@ -111,7 +111,7 @@ public abstract class SharedLatheSystem : EntitySystem
         if (!string.IsNullOrWhiteSpace(proto.Name))
             return Loc.GetString(proto.Name);
 
-        if (GetResult(proto) is {} result)
+        if (proto.Result is {} result)
         {
             return _proto.Index(result).Name;
         }
@@ -126,25 +126,6 @@ public abstract class SharedLatheSystem : EntitySystem
         return string.Empty;
     }
 
-    /// <summary>
-    /// Get the resulting item made by this recipe.
-    /// Returns null if this recipe is for creating reagents.
-    /// </summary>
-    [PublicAPI]
-    public EntProtoId? GetResult(LatheRecipePrototype proto)
-    {
-        if (proto.ResultOverride is {} result)
-            return result;
-
-        if (proto.ResultReagents != null)
-            return null;
-
-        // only check on debug to fail tests, don't want too much overhead in release
-        DebugTools.Assert(_proto.HasIndex<EntityPrototype>(proto.ID), $"Lathe recipe {proto.ID} didn't specify a result and there is no entity with the same ID!");
-
-        return proto.ID;
-    }
-
     [PublicAPI]
     public string GetRecipeDescription(ProtoId<LatheRecipePrototype> proto)
     {
@@ -156,7 +137,7 @@ public abstract class SharedLatheSystem : EntitySystem
         if (!string.IsNullOrWhiteSpace(proto.Description))
             return Loc.GetString(proto.Description);
 
-        if (GetResult(proto) is {} result)
+        if (proto.Result is {} result)
         {
             return _proto.Index(result).Description;
         }

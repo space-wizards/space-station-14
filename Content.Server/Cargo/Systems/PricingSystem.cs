@@ -6,7 +6,6 @@ using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -31,7 +30,6 @@ public sealed class PricingSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly SharedLatheSystem _lathe = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
     /// <inheritdoc/>
@@ -165,7 +163,7 @@ public sealed class PricingSystem : EntitySystem
     {
         var price = 0.0;
 
-        if (_lathe.GetResult(recipe) is { } result)
+        if (recipe.Result is { } result)
         {
             price += GetEstimatedPrice(_prototypeManager.Index(result));
         }

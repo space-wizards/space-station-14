@@ -39,11 +39,9 @@ namespace Content.Shared.Research.Prototypes
 
         /// <summary>
         ///     The prototype name of the resulting entity when the recipe is printed.
-        ///     If this is null then it will fall back to the entity prototype with the same id as this recipe.
-        ///     This makes it function like an override.
         /// </summary>
-        [DataField("result")]
-        public EntProtoId? ResultOverride;
+        [DataField]
+        public EntProtoId? Result;
 
         [DataField]
         public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2>? ResultReagents;
