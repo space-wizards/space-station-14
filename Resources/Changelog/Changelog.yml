@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: Lasers now pass over things unless clicked like projectiles
-    type: Tweak
-  id: 6725
-  time: '2024-06-14T02:04:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28768
 - author: Boaz1111
   changes:
   - message: The PKA can now mine rocks in one hit again.
@@ -3864,3 +3857,11 @@
   id: 7224
   time: '2024-08-27T13:19:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31514
+- author: Aeshus
+  changes:
+  - message: The Health Analyzer now displays the patient's picture, species, and
+      current status.
+    type: Add
+  id: 7225
+  time: '2024-08-27T14:57:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30834
