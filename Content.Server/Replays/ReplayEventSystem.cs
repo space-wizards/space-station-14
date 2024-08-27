@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Text;
 using Content.Server.Mind;
 using Content.Server.Pinpointer;
 using Content.Shared.MassMedia.Systems;
@@ -31,7 +32,7 @@ public sealed class ReplayEventSystem : EntitySystem
 
     public override void Initialize()
     {
-        _replays.RecordingStopped += ReplaysOnRecordingStopped;
+        _replays.RecordingStopped2 += ReplaysOnRecordingStopped;
         _replays.RecordingStarted += ReplaysOnRecordingStarted;
 
         // Using an event here because mob stuff is in shared and we cannot call RecordReplayEvent from there.
@@ -48,9 +49,11 @@ public sealed class ReplayEventSystem : EntitySystem
         _replayEvents = new List<ReplayEvent>();
     }
 
-    private void ReplaysOnRecordingStopped(MappingDataNode metadata)
+    private void ReplaysOnRecordingStopped(ReplayRecordingStopped replayRecordingStopped)
     {
-        metadata["events"] = _serialman.WriteValue(_replayEvents, true, null);
+        var events = _serialman.WriteValue(_replayEvents, true, null);
+        var bytes = Encoding.UTF8.GetBytes(events.ToString());
+        replayRecordingStopped.Writer.WriteBytes(replayRecordingStopped.Writer.BaseReplayPath / "events.yaml", new ReadOnlyMemory<byte>(bytes));
     }
 
         /// <summary>
