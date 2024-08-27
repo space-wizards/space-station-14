@@ -1,7 +1,7 @@
 - type: entity
   id: CrateSecurityArmor
   parent: CrateSecgear
-  name: Type I vest crate
+  name: Type I armor vest crate
   description: Contains three well-rounded Type I vests. Requires Security access to open.
   components:
   - type: StorageFill
@@ -12,7 +12,7 @@
 - type: entity
   id: CrateSecurityArmorBulletproof
   parent: CrateSecgear
-  name: Type III vest crate
+  name: Type III armor vest crate
   description: Contains three bulletproof Type III vests. Requires Security access to open.
   components:
   - type: StorageFill
@@ -74,7 +74,7 @@
   id: CrateSecuritySupplies
   parent: CrateSecgear
   name: officer gear crate
-  description: Contains two SecGlasses, black gloves, combat boots, protective masks, and empty security belts. Requires Security access to open.
+  description: Contains two SecGlasses, black gloves, jackboots, protective masks, and empty security belts. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
@@ -82,7 +82,7 @@
         amount: 2
       - id: ClothingHandsGlovesColorBlack
         amount: 2
-      - id: ClothingShoesBootsCombatFilled
+      - id: ClothingShoesBootsJackFilled
         amount: 2 # yes they get knives
       - id: ClothingMaskGasSecurity
         amount: 2
@@ -90,25 +90,6 @@
         amount: 2
       - id: BookSecurity
         amount: 2
-
-- type: entity
-  id: CrateSecurityForensics
-  parent: CrateSecgear
-  name: forensics crate
-  description: Contains a forensic scanner, LogProde cartridge, box of forensic pads, and box of evidence markers. Requires Security access to open.
-  components:
-  - type: StorageFill
-    contents: # no gloves, suffer the fibres for losing your detective
-      - id: ForensicScanner
-      - id: LogProbeCartridge
-      - id: BoxForensicPad
-      - id: BoxEvidenceMarkers
-      - id: DrinkDetFlask
-        prob: 0.2 # so you're telling me the detective got drunk...
-      - id: ClothingBeltHolsterFilled
-        prob: 0.1 # ...lost their gun...
-      - id: MobRandomCargoCorpse
-        prob: 0.05 # ...and locked themselves in from the outside?
 
 - type: entity
   id: CrateRestraints

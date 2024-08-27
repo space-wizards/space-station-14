@@ -51,20 +51,10 @@
 - type: cargoProduct
   id: SecuritySupplies
   icon:
-    sprite: Clothing/Shoes/Boots/combatboots.rsi
+    sprite: Clothing/Shoes/Boots/jackboots.rsi
     state: icon
   product: CrateSecuritySupplies
   cost: 800
-  category: cargoproduct-category-name-security
-  group: market
-
-- type: cargoProduct
-  id: SecurityForensics
-  icon:
-    sprite: Clothing/Head/Hats/brownfedora.rsi
-    state: icon
-  product: CrateSecurityForensics
-  cost: 1500
   category: cargoproduct-category-name-security
   group: market
 
@@ -104,6 +94,6 @@
     sprite: Objects/Specific/Security/barrier.rsi
     state: idle
   product: DeployableBarrier
-  cost: 350
+  cost: 800
   category: cargoproduct-category-name-security
   group: market
