@@ -877,6 +877,22 @@
           min: 5
 
 - type: reagent
+  id: Syndizine
+  name: reagent-name-syndizine
+  desc: reagent-desc-syndizine
+  group: Medicine
+  physicalDesc: reagent-physical-desc-enigmatic
+  flavor: magical
+  color: "#911d06"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:MakeSyndient
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+
+- type: reagent
   id: Ethyloxyephedrine
   name: reagent-name-ethyloxyephedrine
   desc: reagent-desc-ethyloxyephedrine
