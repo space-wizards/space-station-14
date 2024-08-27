@@ -629,7 +629,7 @@
   - CargoWinterBoots
 
 - type: loadoutGroup
-  id: CargoTechnicianID
+  id: CargoTechnicianPDA
   name: loadout-group-cargo-technician-id
   loadouts:
   - CargoTechnicianPDA
