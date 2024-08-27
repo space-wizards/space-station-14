@@ -1241,10 +1241,10 @@ namespace Content.Shared.CCVar
             CVarDef.Create("atmos.heat_scale", 8f, CVar.SERVERONLY);
 
         /// <summary>
-        ///     Toggle for Atmos tank canister explosions
-        /// </summary
-        public static readonly CVarDef<bool> AtmosTankFragment =
-            CVarDef.Create("atmos.tank_fragment", true, CVar.SERVERONLY);
+        /// Max range for explosions caused by a gas reaction.
+        /// </summary>
+        public static readonly CVarDef<float> AtmosTankFragment =
+            CVarDef.Create("atmos.max_explosion_Range", 26f, CVar.SERVERONLY);
 
         /*
          * MIDI instruments

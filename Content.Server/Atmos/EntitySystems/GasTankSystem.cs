@@ -39,7 +39,7 @@ namespace Content.Server.Atmos.EntitySystems
         private const float TimerDelay = 0.5f;
         private float _timer = 0f;
         private const float MinimumSoundValvePressure = 10.0f;
-        private bool _tankFragmentEnabled;
+        private float _maxExplosionRange;
 
         public override void Initialize()
         {
@@ -55,18 +55,18 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<GasTankComponent, GasAnalyzerScanEvent>(OnAnalyzed);
             SubscribeLocalEvent<GasTankComponent, PriceCalculationEvent>(OnGasTankPrice);
             SubscribeLocalEvent<GasTankComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerb);
-            _cvar.OnValueChanged(CCVars.AtmosTankFragment, UpdateFragment, true);
+            _cvar.OnValueChanged(CCVars.AtmosTankFragment, UpdateMaxRange, true);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
-            _cvar.UnsubValueChanged(CCVars.AtmosTankFragment, UpdateFragment);
+            _cvar.UnsubValueChanged(CCVars.AtmosTankFragment, UpdateMaxRange);
         }
 
-        private void UpdateFragment(bool value)
+        private void UpdateMaxRange(float value)
         {
-            _tankFragmentEnabled = value;
+            _maxExplosionRange = value;
         }
 
         private void OnGasShutdown(Entity<GasTankComponent> gasTank, ref ComponentShutdown args)
@@ -336,7 +336,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             var pressure = component.Air.Pressure;
 
-            if (pressure > component.TankFragmentPressure && _tankFragmentEnabled)
+            if (pressure > component.TankFragmentPressure && _maxExplosionRange != 0)
             {
                 // Give the gas a chance to build up more pressure.
                 for (var i = 0; i < 3; i++)
@@ -349,9 +349,9 @@ namespace Content.Server.Atmos.EntitySystems
 
                 // Let's cap the explosion, yeah?
                 // !1984
-                if (range > GasTankComponent.MaxExplosionRange)
+                if (range > GasTankComponent.MaxExplosionRange || range > _maxExplosionRange)
                 {
-                    range = GasTankComponent.MaxExplosionRange;
+                    range = Math.Min(GasTankComponent.MaxExplosionRange, _maxExplosionRange);
                 }
 
                 _explosions.TriggerExplosive(owner, radius: range);
