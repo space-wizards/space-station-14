@@ -557,7 +557,7 @@
   productPrototypes:
     - MobTomatoKiller
   mutationPrototypes:
-    - kissertomato
+    - kisserTomato
   harvestRepeat: Repeat
   lifespan: 25
   maturation: 15
@@ -1860,7 +1860,7 @@
       PotencyDivisor: 25
 
 - type: seed
-  id: kissertomato
+  id: kisserTomato
   name: seeds-kissertomato-name
   noun: seeds-noun-seeds
   displayName: seeds-kissertomato-display-name

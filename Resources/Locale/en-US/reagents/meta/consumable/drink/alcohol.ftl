@@ -301,9 +301,6 @@ reagent-desc-gatorwine = No Reptillians were harmed in the making of this drink.
 reagent-name-rotgut = Rotgut
 reagent-desc-rotgut = A perfect excuse to check up with that cute girl in the emergency ward.
 
-reagent-name-white-gilgamesh = White Gilgamesh
-reagent-desc-white-gilgamesh = it isn't good
-
 reagent-name-bumwine = Bum Wine
 reagent-desc-bumwine = For the economical drinker. You know drinks are free though, right?
 

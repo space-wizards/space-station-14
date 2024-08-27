@@ -1203,7 +1203,7 @@
     UAP: 6
 
 - type: reaction
-  id: TheHorsepussy
+  id: TheeHorsepussy
   requiredMixerCategories:
     - Stir
   reactants:
@@ -1212,7 +1212,7 @@
     Methadone:
       amount: 1
   products:
-    TheHorsepussy: 3
+    TheeHorsepussy: 3
   sound:
     path: /Audio/Animals/spooky_horse.ogg
 

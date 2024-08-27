@@ -345,7 +345,7 @@
       state: securitron1
       sprite: Mobs/Silicon/Bots/securitron.rsi
   - type: Construction
-    graph: Medibot
+    graph: MediBot
     node: bot
   - type: InteractionPopup
     interactSuccessString: petting-success-securitron

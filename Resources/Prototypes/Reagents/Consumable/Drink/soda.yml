@@ -271,6 +271,6 @@
   name: reagent-name-kingsoda
   parent: BaseSoda
   desc: reagent-desc-kingsoda
-  physicalDesc: fizzy
+  physicalDesc: reagent-physical-desc-fizzy
   flavor: kingsoda
   color: "#9F3400"
