@@ -6,6 +6,7 @@ using Robust.Shared.Utility;
 using System.Diagnostics;
 using Content.Server.Administration.Managers;
 using Content.Shared.CCVar;
+using Content.Shared.Power;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
