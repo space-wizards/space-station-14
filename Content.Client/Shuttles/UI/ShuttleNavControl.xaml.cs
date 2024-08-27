@@ -221,7 +221,8 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                 var labelText = Loc.GetString("shuttle-console-iff-label", ("name", labelName),
                     ("distance", $"{distance:0.0}"));
 
-                var coordsText = $"({gridLocalCentre.X:0.0}, {gridLocalCentre.Y:0.0})";
+                var mapCoords = _transform.GetWorldPosition(gUid);
+                var coordsText = $"({mapCoords.X:0.0}, {mapCoords.Y:0.0})";
 
                 // yes 1.0 scale is intended here.
                 var labelDimensions = handle.GetDimensions(Font, labelText, 1f);
