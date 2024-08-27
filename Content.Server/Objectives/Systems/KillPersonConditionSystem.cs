@@ -7,8 +7,6 @@ using Content.Shared.Objectives.Components;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Configuration;
 using Robust.Shared.Random;
-using System.Diagnostics;
-using System.Linq;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -109,41 +107,49 @@ public sealed class KillPersonConditionSystem : EntitySystem
     {
         if (!TryComp<TargetObjectiveComponent>(uid, out var target))
         {
-            Debug.Fail($"Missing components for {uid}.");
+            Log.Error($"Missing components for {uid}.");
             args.Cancelled = true;
             return;
         }
 
-        // target already assigned
+        // Target already assigned
         if (target.Target != null)
         {
-            Debug.Fail($"Target already assigned for {uid}.");
+            Log.Error($"Target already assigned for {uid}.");
             args.Cancelled = true;
             return;
         }
 
         var traitors = _traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind);
 
+        List<EntityUid> validTraitorMinds = [];
+
+        // Going through each OTHER traitor
+        foreach (var traitor in traitors)
+        {
+            // Assume it will be a valid traitor.
+            validTraitorMinds.Add(traitor.Id);
+
+            // Going through each of OUR objectives.
+            foreach (var objective in args.Mind.Objectives)
+            {
+                // If one of OUR objectives already targets a traitor, remove them from the vaild list.
+                if (TryComp<TargetObjectiveComponent>(objective, out var targetComp) && targetComp.Target == traitor.Id)
+                {
+                    validTraitorMinds.RemoveAt(validTraitorMinds.Count - 1);
+                    continue;
+                }
+            }
+        }
+
         // No other traitors
-        if (traitors.Count == 0)
+        if (validTraitorMinds.Count == 0)
         {
             args.Cancelled = true;
             return;
         }
 
-        var targetTraitorMind = _random.Pick(traitors).Id;
-
-        // Make sure the current traitor doesn't have any targets targeting this traitor already.
-        foreach (var objective in args.Mind.Objectives)
-        {
-            if (TryComp<TargetObjectiveComponent>(objective, out var targetComp) && targetComp.Target == targetTraitorMind)
-            {
-                args.Cancelled = true;
-                return;
-            }
-        }
-
-        _target.SetTarget(uid, targetTraitorMind, target);
+        _target.SetTarget(uid, _random.Pick(validTraitorMinds), target);
     }
 
     private float GetProgress(EntityUid target, bool requireDead)
