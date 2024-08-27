@@ -53,7 +53,7 @@ public sealed class ReplayEventSystem : EntitySystem
     {
         var events = _serialman.WriteValue(_replayEvents, true, null);
         var bytes = Encoding.UTF8.GetBytes(events.ToString());
-        replayRecordingStopped.Writer.WriteBytes(replayRecordingStopped.Writer.BaseReplayPath / "events.yaml", new ReadOnlyMemory<byte>(bytes));
+        replayRecordingStopped.Writer.WriteBytes(replayRecordingStopped.Writer.BaseReplayPath / "events.yml", new ReadOnlyMemory<byte>(bytes));
     }
 
         /// <summary>
