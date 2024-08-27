@@ -20,6 +20,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Content.Shared.CCVar;
 
+
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
@@ -34,12 +35,12 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
-        [Dependency] private readonly IConfigurationManager _cvar = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private const float TimerDelay = 0.5f;
         private float _timer = 0f;
         private const float MinimumSoundValvePressure = 10.0f;
-        private float _maxExplosionRange;
+        private float _maxExplosionRange = 26f;
 
         public override void Initialize()
         {
@@ -55,13 +56,12 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<GasTankComponent, GasAnalyzerScanEvent>(OnAnalyzed);
             SubscribeLocalEvent<GasTankComponent, PriceCalculationEvent>(OnGasTankPrice);
             SubscribeLocalEvent<GasTankComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerb);
-            _cvar.OnValueChanged(CCVars.AtmosTankFragment, UpdateMaxRange, true);
+            Subs.CVar(_cfg, CCVars.AtmosTankFragment, UpdateMaxRange);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
-            _cvar.UnsubValueChanged(CCVars.AtmosTankFragment, UpdateMaxRange);
         }
 
         private void UpdateMaxRange(float value)
