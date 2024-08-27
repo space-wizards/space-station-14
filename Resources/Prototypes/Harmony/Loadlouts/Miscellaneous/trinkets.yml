@@ -38,15 +38,15 @@
     # back:
     # - ClothingNeckLeviathanPin
 
-- type: loadout
-  id: ClothingNeckVulturePin
-  equipment: ClothingNeckVulturePin
+# - type: loadout
+  # id: ClothingNeckVulturePin
+  # equipment: ClothingNeckVulturePin
 
-- type: startingGear
-  id: ClothingNeckVulturePin
-  storage:
-    back:
-    - ClothingNeckVulturePin
+# - type: startingGear
+  # id: ClothingNeckVulturePin
+  # storage:
+    # back:
+    # - ClothingNeckVulturePin
 
 # - type: loadout
   # id: ClothingNeckAxolotlPin
