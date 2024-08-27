@@ -18,6 +18,12 @@ public sealed partial class ConditionNotesDateRange : WhitelistCondition
     public NoteSeverity MinimumSeverity  = NoteSeverity.Minor;
 
     /// <summary>
+    /// The minimum number of notes required.
+    /// </summary>
+    [DataField]
+    public int MinimumNotes = 1;
+
+    /// <summary>
     /// Range in days to check for notes.
     /// </summary>
     [DataField]

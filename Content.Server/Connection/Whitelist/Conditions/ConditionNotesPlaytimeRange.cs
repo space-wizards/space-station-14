@@ -14,6 +14,12 @@ public sealed partial class ConditionNotesPlaytimeRange : WhitelistCondition
     public NoteSeverity MinimumSeverity  = NoteSeverity.Minor;
 
     /// <summary>
+    /// The minimum number of notes required.
+    /// </summary>
+    [DataField]
+    public int MinimumNotes = 1;
+
+    /// <summary>
     /// The range in minutes to check for notes.
     /// </summary>
     [DataField]

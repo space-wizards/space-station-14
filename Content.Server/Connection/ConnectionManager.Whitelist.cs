@@ -137,6 +137,7 @@ public sealed partial class ConnectionManager
             conditionNotes.IncludeExpired,
             conditionNotes.IncludeSecret,
             conditionNotes.MinimumSeverity,
+            conditionNotes.MinimumNotes,
             adminRemarksRecord => adminRemarksRecord.CreatedAt > range);
     }
 
@@ -172,12 +173,19 @@ public sealed partial class ConnectionManager
             conditionNotesPlaytimeRange.IncludeExpired,
             conditionNotesPlaytimeRange.IncludeSecret,
             conditionNotesPlaytimeRange.MinimumSeverity,
+            conditionNotesPlaytimeRange.MinimumNotes,
             adminRemarksRecord => adminRemarksRecord.PlaytimeAtNote >= overallTracker.TimeSpent - TimeSpan.FromMinutes(conditionNotesPlaytimeRange.Range));
     }
 
-    private bool CheckRemarks(List<IAdminRemarksRecord> remarks, bool includeExpired, bool includeSecret, NoteSeverity minimumSeverity, Func<IAdminRemarksRecord, bool> additionalCheck)
+    private bool CheckRemarks(List<IAdminRemarksRecord> remarks, bool includeExpired, bool includeSecret, NoteSeverity minimumSeverity, int MinimumNotes, Func<IAdminRemarksRecord, bool> additionalCheck)
     {
         var utcNow = DateTime.UtcNow;
+
+        var notes = remarks.Count(r => r is AdminNoteRecord note && note.Severity >= minimumSeverity && (includeSecret || !note.Secret) && (includeExpired || note.ExpirationTime == null || note.ExpirationTime > utcNow));
+        if (notes < MinimumNotes)
+        {
+            return false;
+        }
 
         foreach (var adminRemarksRecord in remarks)
         {
