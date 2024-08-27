@@ -49,13 +49,11 @@ public sealed partial class ConnectionManager
 
     public async Task<(bool isWhitelisted, string? denyMessage)> IsWhitelisted(PlayerConnectionWhitelistPrototype whitelist, NetUserData data, ISawmill sawmill)
     {
-        Dictionary<NetUserId, List<IAdminRemarksRecord>> cacheRemarks = new();
-        Dictionary<NetUserId, List<PlayTime>> cachePlaytime = new();
+        var cacheRemarks = await _db.GetAllAdminRemarks(data.UserId);
+        var cachePlaytime = await _db.GetPlayTimes(data.UserId);
 
         foreach (var condition in whitelist.Conditions)
         {
-            var remarks = await GetAdminRemarks(data.UserId);
-            var playtime = await GetPlayTime(data.UserId);
             bool matched;
             string denyMessage;
             switch (condition)
@@ -73,7 +71,7 @@ public sealed partial class ConnectionManager
                     denyMessage = Loc.GetString("whitelist-blacklisted");
                     break;
                 case ConditionNotesDateRange conditionNotes:
-                    matched = await CheckConditionNotesDateRange(conditionNotes, remarks);
+                    matched = CheckConditionNotesDateRange(conditionNotes, cacheRemarks);
                     denyMessage = Loc.GetString("whitelist-notes");
                     break;
                 case ConditionPlayerCount conditionPlayerCount:
@@ -81,11 +79,11 @@ public sealed partial class ConnectionManager
                     denyMessage = Loc.GetString("whitelist-player-count");
                     break;
                 case ConditionPlaytime conditionPlaytime:
-                    matched = await CheckConditionPlaytime(conditionPlaytime, playtime);
+                    matched = CheckConditionPlaytime(conditionPlaytime, cachePlaytime);
                     denyMessage = Loc.GetString("whitelist-playtime", ("minutes", conditionPlaytime.MinimumPlaytime));
                     break;
                 case ConditionNotesPlaytimeRange conditionNotesPlaytimeRange:
-                    matched = await CheckConditionNotesPlaytimeRange(conditionNotesPlaytimeRange, remarks, playtime);
+                    matched = CheckConditionNotesPlaytimeRange(conditionNotesPlaytimeRange, cacheRemarks, cachePlaytime);
                     denyMessage = Loc.GetString("whitelist-notes");
                     break;
                 default:
@@ -117,32 +115,6 @@ public sealed partial class ConnectionManager
         }
         sawmill.Verbose($"User {data.UserName} passed all whitelist conditions");
         return (true, null);
-
-        // Local function to get admin remarks for a user.
-        async Task<List<IAdminRemarksRecord>> GetAdminRemarks(NetUserId userId)
-        {
-            if (cacheRemarks.TryGetValue(userId, out var remarks))
-            {
-                return remarks;
-            }
-
-            var records = await _db.GetAllAdminRemarks(userId.UserId);
-            cacheRemarks.Add(userId, records);
-            return records;
-        }
-
-        // Local function to get playtime for a user.
-        async Task<List<PlayTime>> GetPlayTime(NetUserId userId)
-        {
-            if (cachePlaytime.TryGetValue(userId, out var playtime))
-            {
-                return playtime;
-            }
-
-            var records = await _db.GetPlayTimes(userId.UserId);
-            cachePlaytime.Add(userId, records);
-            return records;
-        }
     }
 
     #region Condition Checking
@@ -157,7 +129,7 @@ public sealed partial class ConnectionManager
         return await _db.GetBlacklistStatusAsync(data.UserId);
     }
 
-    private async Task<bool> CheckConditionNotesDateRange(ConditionNotesDateRange conditionNotes, List<IAdminRemarksRecord> remarks)
+    private bool CheckConditionNotesDateRange(ConditionNotesDateRange conditionNotes, List<IAdminRemarksRecord> remarks)
     {
         var range = DateTime.UtcNow.AddDays(-conditionNotes.Range);
 
@@ -174,7 +146,7 @@ public sealed partial class ConnectionManager
         return count >= conditionPlayerCount.MinimumPlayers && count <= conditionPlayerCount.MaximumPlayers;
     }
 
-    private async Task<bool> CheckConditionPlaytime(ConditionPlaytime conditionPlaytime, List<PlayTime> playtime)
+    private bool CheckConditionPlaytime(ConditionPlaytime conditionPlaytime, List<PlayTime> playtime)
     {
         var tracker = playtime.Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
         if (tracker is null)
@@ -185,7 +157,7 @@ public sealed partial class ConnectionManager
         return tracker.TimeSpent.TotalMinutes >= conditionPlaytime.MinimumPlaytime;
     }
 
-    private async Task<bool> CheckConditionNotesPlaytimeRange(
+    private bool CheckConditionNotesPlaytimeRange(
         ConditionNotesPlaytimeRange conditionNotesPlaytimeRange,
         List<IAdminRemarksRecord> remarks,
         List<PlayTime> playtime)

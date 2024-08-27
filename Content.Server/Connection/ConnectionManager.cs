@@ -276,13 +276,6 @@ namespace Content.Server.Connection
                 return (ConnectionDenyReason.Full, Loc.GetString("soft-player-cap-full"), null);
             }
 
-            if (bans.Count > 0)
-            {
-                var firstBan = bans[0];
-                var message = firstBan.FormatBanMessage(_cfg, _loc);
-                return (ConnectionDenyReason.Ban, message, bans);
-            }
-
             // Checks for whitelist IF it's enabled AND the user isn't an admin. Admins are always allowed.
             if (_cfg.GetCVar(CCVars.WhitelistEnabled) && adminData is null)
             {
