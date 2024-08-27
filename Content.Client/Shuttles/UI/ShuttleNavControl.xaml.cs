@@ -213,8 +213,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
             {
                 var gridBounds = grid.Comp.LocalAABB;
 
-                var gridLocalCentre = gridBody.LocalCenter;
-                var gridCentre = Vector2.Transform(gridLocalCentre, matty);
+                var gridCentre = Vector2.Transform(gridBody.LocalCenter, matty);
                 gridCentre.Y = -gridCentre.Y;
 
                 var distance = gridCentre.Length();
@@ -233,14 +232,26 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
                 // The actual position in the UI. We centre the label by offsetting the matrix position 
                 // by half the label's width, plus the y-offset
-                var gridScaledPosition = ScalePosition(gridCentre);
+                var gridScaledPosition = ScalePosition(gridCentre) - new Vector2(0, -yOffset);
 
-                var labelUiPosition = gridScaledPosition - new Vector2(labelDimensions.X / 2f, -yOffset);
-                var coordUiPosition = gridScaledPosition - new Vector2(coordsDimensions.X / 2f, -yOffset - labelDimensions.Y);
+                var coordUiPosition = gridScaledPosition - new Vector2(coordsDimensions.X / 2f, -labelDimensions.Y);
 
-                // clamp the label's UI position to within the viewport extents so it hugs the edges of the viewport
+                // Normalize the grid position if it exceeds the viewport bounds
+                // normalizing it instead of clamping it preserves the direction of the vector and prevents corner-hugging
+                var gridOffset = gridScaledPosition / PixelSize - new Vector2(0.5f, 0.5f);
+                if (gridOffset.X > 0.5 || gridOffset.X < -0.5 || gridOffset.Y > 0.5 || gridOffset.Y < -0.5)
+                {
+                    var offsetMax = Math.Max(Math.Abs(gridOffset.X), Math.Abs(gridOffset.Y)) * 2f; // gridOffset.Length();
+                    gridOffset = new Vector2(gridOffset.X / offsetMax, gridOffset.Y / offsetMax);
+
+                    gridScaledPosition = (gridOffset + new Vector2(0.5f, 0.5f)) * PixelSize;
+                }
+
+                var labelUiPosition = gridScaledPosition - new Vector2(labelDimensions.X / 2f, 0);
+
+                // clamp the IFF label's UI position to within the viewport extents so it hugs the edges of the viewport
                 // coord label intentionally isn't clamped so we don't get ugly clutter at the edges
-                var controlExtents = PixelSize - labelDimensions;
+                var controlExtents = PixelSize - new Vector2(labelDimensions.X * 2f, labelDimensions.Y);
                 labelUiPosition = Vector2.Clamp(labelUiPosition, Vector2.Zero, controlExtents);
 
                 // draw IFF label
