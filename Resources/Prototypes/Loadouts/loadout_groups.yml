@@ -626,6 +626,13 @@
   - CargoWinterBoots
 
 - type: loadoutGroup
+  id: CargoTechnicianID
+  name: loadout-group-cargo-technician-id
+  loadouts:
+  - CargoPDA
+  - SeniorCargoPDA
+
+- type: loadoutGroup
   id: SalvageSpecialistNeck
   name: loadout-group-salvage-specialist-neck
   loadouts:
