@@ -1,0 +1,221 @@
+# Okay so my general thought is this:
+# 1. Generate the large mass
+# 2. Generate smaller masses offset
+# 3. Generate N normal dungeons around the larger mass, preferably near the border
+# 4. Generate large paths / small paths around the place
+# 5. Spawn ores + fill the rest and the normal stuff
+
+# If you want mobs they needed to be added at specific steps due to how dungeons work at the moment.
+
+- type: dungeonConfig
+  id: VGRoid
+  layers:
+    - !type:PrototypeDunGen
+      proto: VGRoidBlob
+    - !type:PrototypeDunGen
+      proto: VGRoidExterior
+    - !type:PrototypeDunGen
+      proto: VGRoidSmaller
+    - !type:PrototypeDunGen
+      proto: VGRoidSmallPaths
+    # Fill
+    - !type:PrototypeDunGen
+      proto: VGRoidFill
+    # Ores
+    - !type:OreDunGen
+      replacement: IronRock
+      entity: IronRockIron
+      count: 50
+      minGroupSize: 10
+      maxGroupSize: 15
+    - !type:OreDunGen
+      replacement: IronRock
+      entity: IronRockCoal
+      count: 50
+      minGroupSize: 8
+      maxGroupSize: 12
+    - !type:OreDunGen
+      replacement: IronRock
+      entity: IronRockQuartz
+      count: 50
+      minGroupSize: 10
+      maxGroupSize: 15
+    - !type:OreDunGen
+      replacement: IronRock
+      entity: IronRockSalt
+      count: 50
+      minGroupSize: 8
+      maxGroupSize: 12
+    - !type:OreDunGen
+      replacement: IronRock
+      entity: IronRockGold
+      count: 40
+      minGroupSize: 8
+      maxGroupSize: 12
+    - !type:OreDunGen
+      replacement: IronRock
+      entity: IronRockSilver
+      count: 40
+      minGroupSize: 8
+      maxGroupSize: 12
+    - !type:OreDunGen
+      replacement: IronRock
+      entity: IronRockPlasma
+      count: 35
+      minGroupSize: 4
+      maxGroupSize: 8
+    - !type:OreDunGen
+      replacement: IronRock
+      entity: IronRockUranium
+      count: 35
+      minGroupSize: 4
+      maxGroupSize: 8
+    - !type:OreDunGen
+      replacement: IronRock
+      entity: IronRockArtifactFragment
+      count: 25
+      minGroupSize: 1
+      maxGroupSize: 3
+    - !type:OreDunGen
+      replacement: IronRock
+      entity: IronRockDiamond
+      count: 15
+      minGroupSize: 1
+      maxGroupSize: 2
+
+# Configs
+- type: dungeonConfig
+  id: VGRoidBlob
+  layers:
+  - !type:NoiseDistanceDunGen
+    size: 272, 272
+    distanceConfig: !type:DunGenEuclideanSquaredDistance
+      blendWeight: 0.80
+    layers:
+    - tile: FloorAsteroidSand
+      threshold: 0.50
+      noise:
+        frequency: 0.010
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 5
+        lacunarity: 2
+        gain: 0.5
+
+- type: dungeonConfig
+  id: VGRoidSmaller
+  minOffset: 40
+  maxOffset: 60
+  layers:
+  - !type:NoiseDistanceDunGen
+    size: 150, 150
+    distanceConfig: !type:DunGenEuclideanSquaredDistance
+    layers:
+    - tile: FloorAsteroidSand
+      threshold: 0.50
+      noise:
+        frequency: 0.080
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 5
+        lacunarity: 1.5
+        gain: 0.5
+
+- type: dungeonConfig
+  id: VGRoidExterior
+  reserveTiles: true
+  data:
+    tiles:
+      FallbackTile: PlatingAsteroid
+      WidenTile: FloorAsteroidSand
+  layers:
+  - !type:PrototypeDunGen
+    proto: VGRoidExteriorDungeons
+  - !type:SplineDungeonConnectorDunGen
+
+- type: dungeonConfig
+  id: VGRoidExteriorDungeons
+  reserveTiles: true
+  minCount: 2
+  maxCount: 3
+  layers:
+  - !type:ExteriorDunGen
+    proto: Experiment
+  - !type:EntityTableDunGen
+    minCount: 25
+    maxCount: 40
+    table: !type:NestedSelector
+      tableId: SalvageScrapSpawnerCommon
+  - !type:EntityTableDunGen
+    minCount: 30
+    maxCount: 40
+    table: !type:NestedSelector
+      tableId: SalvageScrapSpawnerValuable
+  - !type:EntityTableDunGen
+    minCount: 15
+    maxCount: 25
+    table: !type:NestedSelector
+      tableId: SalvageTreasureSpawnerCommon
+  - !type:EntityTableDunGen
+    minCount: 15
+    maxCount: 25
+    table: !type:NestedSelector
+      tableId: SalvageEquipmentSpawnerCommon
+  - !type:EntityTableDunGen
+    minCount: 15
+    maxCount: 20
+    table: !type:NestedSelector
+      tableId: SalvageTreasureSpawnerValuable
+  - !type:EntityTableDunGen
+    minCount: 15
+    maxCount: 20
+    table: !type:NestedSelector
+      tableId: SalvageEquipmentSpawnerValuable
+  - !type:MobsDunGen
+    minCount: 8
+    maxCount: 15
+    groups:
+    - id: MobGoliath
+      amount: 1
+
+#- type: dungeonConfig
+#  id: VGRoidInteriorDungeons
+#  minCount: 3
+#  maxCount: 5
+#  # Just randomly spawn these in bounds, doesn't really matter if they go out.
+
+- type: dungeonConfig
+  id: VGRoidSmallPaths
+  reserveTiles: true
+  layers:
+  - !type:ReplaceTileDunGen
+    layers:
+    - tile: FloorAsteroidSand
+      threshold: 0.75
+      noise:
+        frequency: 0.040
+        noiseType: OpenSimplex2
+        fractalType: Ridged
+        lacunarity: 1.5
+        octaves: 2
+        gain: 2.0
+  # Mobs
+  # If you want exterior dungeon mobs add them under the prototype.
+  - !type:MobsDunGen
+    minCount: 20
+    maxCount: 30
+    groups:
+    - id: MobGoliath
+      amount: 1
+
+#- type: dungeonConfig
+#  id: VGRoidOres
+
+# Fill with rocks.
+- type: dungeonConfig
+  id: VGRoidFill
+  data:
+    entities:
+      Fill: IronRock
+  layers:
+  - !type:FillGridDunGen

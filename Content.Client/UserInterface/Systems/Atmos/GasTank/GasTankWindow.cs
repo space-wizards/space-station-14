@@ -15,23 +15,29 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank;
 public sealed class GasTankWindow
     : BaseWindow
 {
+    [Dependency] private readonly IResourceCache _cache = default!;
+
     private readonly RichTextLabel _lblPressure;
     private readonly FloatSpinBox _spbPressure;
     private readonly RichTextLabel _lblInternals;
     private readonly Button _btnInternals;
+    private readonly Label _topLabel;
 
-    public GasTankWindow(GasTankBoundUserInterface owner, string uidName)
+    public event Action<float>? OnOutputPressure;
+    public event Action? OnToggleInternals;
+
+    public GasTankWindow()
     {
+        IoCManager.InjectDependencies(this);
         Control contentContainer;
         BoxContainer topContainer;
         TextureButton btnClose;
-        var resourceCache = IoCManager.Resolve<IResourceCache>();
         var rootContainer = new LayoutContainer { Name = "GasTankRoot" };
         AddChild(rootContainer);
 
         MouseFilter = MouseFilterMode.Stop;
 
-        var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
+        var panelTex = _cache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
         var back = new StyleBoxTexture
         {
             Texture = panelTex,
@@ -78,7 +84,17 @@ public sealed class GasTankWindow
 
         LayoutContainer.SetAnchorPreset(topContainerWrap, LayoutContainer.LayoutPreset.Wide);
 
-        var font = resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
+        var font = _cache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
+
+        _topLabel = new Label
+        {
+            FontOverride = font,
+            FontColorOverride = StyleNano.NanoGold,
+            VerticalAlignment = VAlignment.Center,
+            HorizontalExpand = true,
+            HorizontalAlignment = HAlignment.Left,
+            Margin = new Thickness(0, 0, 20, 0),
+        };
 
         var topRow = new BoxContainer
         {
@@ -86,16 +102,7 @@ public sealed class GasTankWindow
             Margin = new Thickness(4, 2, 12, 2),
             Children =
             {
-                (new Label
-                {
-                    Text = uidName,
-                    FontOverride = font,
-                    FontColorOverride = StyleNano.NanoGold,
-                    VerticalAlignment = VAlignment.Center,
-                    HorizontalExpand = true,
-                    HorizontalAlignment = HAlignment.Left,
-                    Margin = new Thickness(0, 0, 20, 0),
-                }),
+                _topLabel,
                 (btnClose = new TextureButton
                 {
                     StyleClasses = {DefaultWindow.StyleClassWindowCloseButton},
@@ -168,15 +175,20 @@ public sealed class GasTankWindow
         // Handlers
         _spbPressure.OnValueChanged += args =>
         {
-            owner.SetOutputPressure(args.Value);
+            OnOutputPressure?.Invoke(args.Value);
         };
 
         _btnInternals.OnPressed += args =>
         {
-            owner.ToggleInternals();
+            OnToggleInternals?.Invoke();
         };
 
         btnClose.OnPressed += _ => Close();
+    }
+
+    public void SetTitle(string name)
+    {
+        _topLabel.Text = name;
     }
 
     public void UpdateState(GasTankBoundUserInterfaceState state)
