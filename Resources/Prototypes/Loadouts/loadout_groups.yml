@@ -629,10 +629,19 @@
   - CargoWinterBoots
 
 - type: loadoutGroup
+  id: CargoTechnicianID
+  name: loadout-group-cargo-technician-id
+  loadouts:
+  - CargoTechnicianPDA
+  - SeniorCargoTechnicianPDA
+
+- type: loadoutGroup
   id: SalvageSpecialistNeck
   name: loadout-group-salvage-specialist-neck
   loadouts:
   - MinerCloak
+  - Mantle
+  - BrownScarf
 
 - type: loadoutGroup
   id: SalvageSpecialistBackpack
