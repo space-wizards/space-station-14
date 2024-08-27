@@ -187,7 +187,7 @@
 - type: entity
   parent: [ClothingEyesBase, BaseCommandContraband]
   id: ClothingEyesGlassesCommand
-  name: command glasses
+  name: administration glasses
   description: Upgraded sunglasses that provide flash immunity and show ID card status. 
   components:
   - type: Sprite
