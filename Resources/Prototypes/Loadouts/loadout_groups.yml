@@ -916,8 +916,8 @@
   - HeadofSecurityJumpskirt
   - HeadofSecurityTurtleneck
   - HeadofSecurityTurtleneckSkirt
-  - HeadofSecurityFormalSuit
-  - HeadofSecurityFormalSkirt
+  #- HeadofSecurityFormalSuit # GreyStation - Loadout removal
+  #- HeadofSecurityFormalSkirt # GreyStation - Loadout removal
 
 - type: loadoutGroup
   id: HeadofSecurityNeck
