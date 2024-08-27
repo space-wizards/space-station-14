@@ -9,9 +9,9 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
-using Content.Server.GameTicking.Replays;
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
+using Content.Server.Replays;
 using Content.Server.RoundEnd;
 using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
@@ -70,7 +70,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly ReplayEventSystem _replayEventSystem = default!;
 
     private const float ShuttleSpawnBuffer = 1f;
 
@@ -223,7 +223,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             _deviceNetworkSystem.QueuePacket(uid, null, payload, netComp.TransmitFrequency);
         }
 
-        _gameTicker.RecordReplayEvent(new ShuttleReplayEvent()
+        _replayEventSystem.RecordReplayEvent(new ShuttleReplayEvent()
         {
             Severity = ReplayEventSeverity.High,
             EventType = ReplayEventType.EvacuationShuttleDeparted,
@@ -263,7 +263,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             _deviceNetworkSystem.QueuePacket(shuttle, null, payload, net.TransmitFrequency);
         }
 
-        _gameTicker.RecordReplayEvent(new ReplayEvent()
+        _replayEventSystem.RecordReplayEvent(new ReplayEvent()
         {
             Severity = ReplayEventSeverity.High,
             EventType = ReplayEventType.EvacuationShuttleDockedCentCom,
@@ -287,7 +287,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
         var targetGrid = _station.GetLargestGrid(Comp<StationDataComponent>(stationUid));
 
-        _gameTicker.RecordReplayEvent(new ReplayEvent()
+        _replayEventSystem.RecordReplayEvent(new ReplayEvent()
         {
             Severity = ReplayEventSeverity.High,
             EventType = ReplayEventType.EvacuationShuttleDocked,

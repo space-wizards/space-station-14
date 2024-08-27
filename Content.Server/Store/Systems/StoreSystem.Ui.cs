@@ -2,8 +2,8 @@ using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Replays;
 using Content.Server.PDA.Ringer;
+using Content.Server.Replays;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared.Actions;
@@ -33,7 +33,7 @@ public sealed partial class StoreSystem
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly ReplayEventSystem _replayEventSystem = default!;
 
     private void InitializeUi()
     {
@@ -262,9 +262,9 @@ public sealed partial class StoreSystem
             LogImpact.Low,
             $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _prototypeManager)}\" from {ToPrettyString(uid)}");
 
-        _gameTicker.RecordReplayEvent(new StoreBuyReplayEvent()
+        _replayEventSystem.RecordReplayEvent(new StoreBuyReplayEvent()
         {
-            Buyer = _gameTicker.GetPlayerInfo(buyer),
+            Buyer = _replayEventSystem.GetPlayerInfo(buyer),
             Severity = ReplayEventSeverity.Medium,
             Item = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _prototypeManager),
             EventType = ReplayEventType.ItemBoughtFromStore,

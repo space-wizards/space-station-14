@@ -5,9 +5,9 @@ using Content.Server.Atmos.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Explosion.Components;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Replays;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NPC.Pathfinding;
+using Content.Server.Replays;
 using Content.Shared.Armor;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
@@ -55,6 +55,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly ReplayEventSystem _replayEventSystem = default!;
 
     private EntityQuery<TransformComponent> _transformQuery;
     private EntityQuery<FlammableComponent> _flammableQuery;
@@ -261,7 +262,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         if (!addLog)
             return;
 
-        _gameTicker.RecordReplayEvent(new ReplayExplosionEvent()
+        _replayEventSystem.RecordReplayEvent(new ReplayExplosionEvent()
         {
             Severity = ReplayEventSeverity.High,
             EventType = ReplayEventType.Explosion,
@@ -272,7 +273,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             MaxTileBreak = maxTileBreak,
             CanCreateVacuum = canCreateVacuum,
             Type = typeId,
-            Source = user == null ? null : _gameTicker.GetPlayerInfo(user.Value),
+            Source = user == null ? null : _replayEventSystem.GetPlayerInfo(user.Value),
         }, user);
 
         if (user == null)
@@ -317,7 +318,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         {
             _adminLogger.Add(LogType.Explosion, LogImpact.High, $"Explosion ({typeId}) spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}");
 
-            _gameTicker.RecordReplayEvent(new ReplayExplosionEvent()
+            _replayEventSystem.RecordReplayEvent(new ReplayExplosionEvent()
             {
                 Severity = ReplayEventSeverity.High,
                 EventType = ReplayEventType.Explosion,

@@ -6,8 +6,8 @@ using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.Examine;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Replays;
 using Content.Server.Players.RateLimiting;
+using Content.Server.Replays;
 using Content.Server.Speech.Components;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Station.Components;
@@ -65,6 +65,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly ReplayEventSystem _replayEventSystem = default!;
 
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
@@ -335,7 +336,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             _audio.PlayGlobal(announcementSound == null ? DefaultAnnouncementSound : _audio.GetSound(announcementSound), Filter.Broadcast(), true, AudioParams.Default.WithVolume(-2f));
         }
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
-        _gameTicker.RecordReplayEvent(new ChatAnnouncementReplayEvent()
+        _replayEventSystem.RecordReplayEvent(new ChatAnnouncementReplayEvent()
         {
             Message = message,
             Sender = sender,
@@ -372,7 +373,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             _audio.PlayGlobal(announcementSound?.ToString() ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
         }
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement from {sender}: {message}");
-        _gameTicker.RecordReplayEvent(new ChatAnnouncementReplayEvent()
+        _replayEventSystem.RecordReplayEvent(new ChatAnnouncementReplayEvent()
         {
             Message = message,
             Sender = sender,
@@ -420,7 +421,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
-        _gameTicker.RecordReplayEvent(new ChatAnnouncementReplayEvent()
+        _replayEventSystem.RecordReplayEvent(new ChatAnnouncementReplayEvent()
         {
             Message = message,
             Sender = sender,
@@ -487,10 +488,10 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (!HasComp<ActorComponent>(source) || hideLog)
             return;
 
-        _gameTicker.RecordReplayEvent(new ChatMessageReplayEvent()
+        _replayEventSystem.RecordReplayEvent(new ChatMessageReplayEvent()
         {
             Message = message,
-            Sender = _gameTicker.GetPlayerInfo(source),
+            Sender = _replayEventSystem.GetPlayerInfo(source),
             Severity = ReplayEventSeverity.Low,
             EventType = ReplayEventType.ChatMessageSent,
             Type = ChatChannel.Local.ToString(), // To string because external parsers don't know about ChatChannel
@@ -581,10 +582,10 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
 
         _replay.RecordServerMessage(new ChatMessage(ChatChannel.Whisper, message, wrappedMessage, GetNetEntity(source), null, MessageRangeHideChatForReplay(range)));
-        _gameTicker.RecordReplayEvent(new ChatMessageReplayEvent()
+        _replayEventSystem.RecordReplayEvent(new ChatMessageReplayEvent()
         {
             Message = message,
-            Sender = _gameTicker.GetPlayerInfo(source),
+            Sender = _replayEventSystem.GetPlayerInfo(source),
             Severity = ReplayEventSeverity.Low,
             EventType = ReplayEventType.ChatMessageSent,
             Type = ChatChannel.Whisper.ToString(),
@@ -638,10 +639,10 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (checkEmote)
             TryEmoteChatInput(source, action);
         SendInVoiceRange(ChatChannel.Emotes, action, wrappedMessage, source, range, author);
-        _gameTicker.RecordReplayEvent(new ChatMessageReplayEvent()
+        _replayEventSystem.RecordReplayEvent(new ChatMessageReplayEvent()
         {
             Message = action,
-            Sender = _gameTicker.GetPlayerInfo(source),
+            Sender = _replayEventSystem.GetPlayerInfo(source),
             Severity = ReplayEventSeverity.Low,
             EventType = ReplayEventType.ChatMessageSent,
             Type = ChatChannel.Emotes.ToString(),
@@ -674,10 +675,10 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         SendInVoiceRange(ChatChannel.LOOC, message, wrappedMessage, source, hideChat ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal, player.UserId);
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
-        _gameTicker.RecordReplayEvent(new ChatMessageReplayEvent()
+        _replayEventSystem.RecordReplayEvent(new ChatMessageReplayEvent()
         {
             Message = message,
-            Sender = _gameTicker.GetPlayerInfo(source),
+            Sender = _replayEventSystem.GetPlayerInfo(source),
             Severity = ReplayEventSeverity.Low,
             EventType = ReplayEventType.ChatMessageSent,
             Type = ChatChannel.LOOC.ToString(),
@@ -706,10 +707,10 @@ public sealed partial class ChatSystem : SharedChatSystem
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
         }
 
-        _gameTicker.RecordReplayEvent(new ChatMessageReplayEvent()
+        _replayEventSystem.RecordReplayEvent(new ChatMessageReplayEvent()
         {
             Message = message,
-            Sender = _gameTicker.GetPlayerInfo(source),
+            Sender = _replayEventSystem.GetPlayerInfo(source),
             Severity = ReplayEventSeverity.Low,
             EventType = ReplayEventType.ChatMessageSent,
             Type = ChatChannel.Dead.ToString(),

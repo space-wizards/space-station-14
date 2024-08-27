@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.Radio.EntitySystems;
+using Content.Server.Replays;
 using Content.Shared.Access.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
@@ -23,6 +24,7 @@ namespace Content.Server.Research.Systems
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly RadioSystem _radio = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly ReplayEventSystem _replayEventSystem = default!;
 
         public override void Initialize()
         {

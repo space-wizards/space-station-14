@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Replays;
+using Content.Server.Replays;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Robust.Shared.Audio;
@@ -18,7 +18,7 @@ public sealed class AlertLevelSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly ReplayEventSystem _replayEventSystem = default!;
 
     // Until stations are a prototype, this is how it's going to have to be.
     public const string DefaultAlertLevelSet = "stationAlerts";
@@ -196,7 +196,7 @@ public sealed class AlertLevelSystem : EntitySystem
         }
 
         RaiseLocalEvent(new AlertLevelChangedEvent(station, level));
-        _gameTicker.RecordReplayEvent(new AlertLevelChangedReplayEvent()
+        _replayEventSystem.RecordReplayEvent(new AlertLevelChangedReplayEvent()
         {
             AlertLevel = level,
             Severity = ReplayEventSeverity.High,

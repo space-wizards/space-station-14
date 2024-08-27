@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Network;
 
-namespace Content.Server.GameTicking.Replays;
+namespace Content.Server.Replays;
 
 [Serializable, DataDefinition]
 public partial struct ReplayEventPlayer

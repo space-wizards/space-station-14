@@ -1,6 +1,6 @@
 using Content.Server.Cargo.Components;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Replays;
+using Content.Server.Replays;
 using Content.Shared.Stacks;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
@@ -15,7 +15,7 @@ namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem
 {
-    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly ReplayEventSystem _replayEventSystem = default!;
 
     /*
      * Handles cargo shuttle / trade mechanics.
@@ -238,7 +238,7 @@ public sealed partial class CargoSystem
         GetPalletGoods(gridUid, out var toSell, out amount);
 
         Log.Debug($"Cargo sold {toSell.Count} entities for {amount}");
-        _gameTicker.RecordReplayEvent(new CargoObjectSoldReplayEvent()
+        _replayEventSystem.RecordReplayEvent(new CargoObjectSoldReplayEvent()
         {
             Amount = amount,
             ObjectsSold = toSell.Count,

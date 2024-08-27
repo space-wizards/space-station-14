@@ -8,7 +8,7 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Replays;
+using Content.Server.Replays;
 using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
@@ -43,6 +43,7 @@ namespace Content.Server.RoundEnd
         [Dependency] private readonly EmergencyShuttleSystem _shuttle = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly ReplayEventSystem _replayEventSystem = default!;
 
         public TimeSpan DefaultCooldownDuration { get; set; } = TimeSpan.FromSeconds(30);
 
@@ -157,9 +158,9 @@ namespace Content.Server.RoundEnd
 
             _countdownTokenSource = new();
 
-            _gameTicker.RecordReplayEvent(new ShuttleReplayEvent()
+            _replayEventSystem.RecordReplayEvent(new ShuttleReplayEvent()
             {
-                Source = requester == null ? null : _gameTicker.GetPlayerInfo(requester.Value),
+                Source = requester == null ? null : _replayEventSystem.GetPlayerInfo(requester.Value),
                 Countdown = (int)countdownTime.TotalSeconds,
                 Severity = ReplayEventSeverity.High,
                 EventType = ReplayEventType.EvacuationShuttleCalled,
@@ -233,9 +234,9 @@ namespace Content.Server.RoundEnd
             _countdownTokenSource.Cancel();
             _countdownTokenSource = null;
 
-            _gameTicker.RecordReplayEvent(new ShuttleReplayEvent()
+            _replayEventSystem.RecordReplayEvent(new ShuttleReplayEvent()
             {
-                Source = requester == null ? null : _gameTicker.GetPlayerInfo(requester.Value),
+                Source = requester == null ? null : _replayEventSystem.GetPlayerInfo(requester.Value),
                 Severity = ReplayEventSeverity.High,
                 EventType = ReplayEventType.EvacuationShuttleRecalled,
             });

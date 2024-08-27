@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Cargo.Components;
-using Content.Server.GameTicking.Replays;
 using Content.Server.Labels.Components;
+using Content.Server.Replays;
 using Content.Server.Station.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
@@ -206,14 +206,14 @@ namespace Content.Server.Cargo.Systems
             // Log order approval
             _adminLogger.Add(LogType.Action, LogImpact.Low,
                 $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] with balance at {bank.Balance}");
-            _gameTicker.RecordReplayEvent(new CargoProductsOrderedReplayEvent
+            _replayEventSystem.RecordReplayEvent(new CargoProductsOrderedReplayEvent
             {
-                ApprovedBy = _gameTicker.GetPlayerInfo(player),
+                ApprovedBy = _replayEventSystem.GetPlayerInfo(player),
                 Product = new CargoReplayProduct
                 {
                     ProductId = order.ProductId,
                     Reason = order.Reason,
-                    OrderedBy = _gameTicker.GetPlayerInfo(player)
+                    OrderedBy = _replayEventSystem.GetPlayerInfo(player)
                 },
                 Severity = ReplayEventSeverity.Medium,
                 EventType = ReplayEventType.CargoProductOrdered,

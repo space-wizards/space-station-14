@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Server.Administration;
-using Content.Server.GameTicking.Replays;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Replays;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
@@ -164,7 +164,7 @@ public sealed partial class GameTicker
 
         _sawmill.Info($"Started game rule {ToPrettyString(ruleEntity)}");
         _adminLogger.Add(LogType.EventStarted, $"Started game rule {ToPrettyString(ruleEntity)}");
-        RecordReplayEvent(new GenericObjectEvent()
+        _replayEventSystem.RecordReplayEvent(new GenericObjectEvent()
         {
             Target = id,
             Severity = ReplayEventSeverity.Medium,
@@ -200,7 +200,7 @@ public sealed partial class GameTicker
 
         _sawmill.Info($"Ended game rule {ToPrettyString(ruleEntity)}");
         _adminLogger.Add(LogType.EventStopped, $"Ended game rule {ToPrettyString(ruleEntity)}");
-        RecordReplayEvent(new GenericObjectEvent()
+        _replayEventSystem.RecordReplayEvent(new GenericObjectEvent()
         {
             Target = id,
             Severity = ReplayEventSeverity.Medium,

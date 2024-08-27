@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using Content.Shared.Mobs;
 
-namespace Content.Server.GameTicking.Replays;
+namespace Content.Server.Replays;
 
 /// <summary>
 /// Represents an event that occured during gameplay, such as a chat message, a player joining, etc.

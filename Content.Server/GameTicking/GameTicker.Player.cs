@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Server.Database;
-using Content.Server.GameTicking.Replays;
+using Content.Server.Replays;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
@@ -86,7 +86,7 @@ namespace Content.Server.GameTicking
                         _roundStartTime = _gameTiming.CurTime + LobbyDuration;
                     }
 
-                    RecordReplayEvent(new GenericPlayerEvent()
+                    _replayEventSystem.RecordReplayEvent(new GenericPlayerEvent()
                     {
                         Severity = ReplayEventSeverity.Low,
                         EventType = ReplayEventType.PlayerJoin,
@@ -153,7 +153,7 @@ namespace Content.Server.GameTicking
 
                     _userDb.ClientDisconnected(session);
 
-                    RecordReplayEvent(new GenericPlayerEvent()
+                    _replayEventSystem.RecordReplayEvent(new GenericPlayerEvent()
                     {
                         Severity = ReplayEventSeverity.Low,
                         EventType = ReplayEventType.PlayerLeave,

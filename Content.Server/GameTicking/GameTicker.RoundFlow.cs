@@ -2,9 +2,9 @@ using System.Linq;
 using Content.Server.Announcements;
 using Content.Server.Discord;
 using Content.Server.GameTicking.Events;
-using Content.Server.GameTicking.Replays;
 using Content.Server.Ghost;
 using Content.Server.Maps;
+using Content.Server.Replays;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
@@ -28,6 +28,7 @@ namespace Content.Server.GameTicking
     {
         [Dependency] private readonly DiscordWebhook _discord = default!;
         [Dependency] private readonly ITaskManager _taskManager = default!;
+        [Dependency] private readonly ReplayEventSystem _replayEventSystem = default!;
 
         private static readonly Counter RoundNumberMetric = Metrics.CreateCounter(
             "ss14_round_number",
@@ -51,7 +52,6 @@ namespace Content.Server.GameTicking
         private RoundEndMessageEvent.RoundEndPlayerInfo[]? _replayRoundPlayerInfo;
 
         private string? _replayRoundText;
-        private List<ReplayEvent>? _replayEvents = new();
 
         [ViewVariables]
         public GameRunLevel RunLevel
@@ -338,7 +338,7 @@ namespace Content.Server.GameTicking
 
             DebugTools.Assert(RunLevel == GameRunLevel.InRound);
             _sawmill.Info("Ending round!");
-            RecordReplayEvent(new ReplayEvent()
+            _replayEventSystem.RecordReplayEvent(new ReplayEvent()
             {
                 EventType = ReplayEventType.RoundEnded,
                 Severity = ReplayEventSeverity.Medium,

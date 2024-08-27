@@ -1,4 +1,4 @@
-﻿namespace Content.Server.GameTicking.Replays;
+﻿namespace Content.Server.Replays;
 
 /// <summary>
 /// Used to identify the type of a <see cref="ReplayEvent"/> for external tools to parse the replay

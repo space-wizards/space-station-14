@@ -1,6 +1,5 @@
-using Content.Server.GameTicking;
-using Content.Server.GameTicking.Replays;
 using Content.Server.ParticleAccelerator.Components;
+using Content.Server.Replays;
 using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Physics.Events;
@@ -11,7 +10,7 @@ public sealed class SingularityGeneratorSystem : EntitySystem
 {
     #region Dependencies
     [Dependency] private readonly IViewVariablesManager _vvm = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly ReplayEventSystem _replayEventSystem = default!;
     #endregion Dependencies
 
     public override void Initialize()
@@ -48,7 +47,7 @@ public sealed class SingularityGeneratorSystem : EntitySystem
 
         SetPower(uid, 0, comp);
         EntityManager.SpawnEntity(comp.SpawnPrototype, Transform(uid).Coordinates);
-        _gameTicker.RecordReplayEvent(new GenericObjectEvent()
+        _replayEventSystem.RecordReplayEvent(new GenericObjectEvent()
         {
             EventType = ReplayEventType.PowerEngineSpawned,
             Severity = ReplayEventSeverity.High,
