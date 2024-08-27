@@ -45,3 +45,8 @@
   equipment:
     neck: ClothingNeckCloakMiner
 
+- type: loadout
+  id: BrownScarf
+  equipment:
+    neck: ClothingNeckScarfStripedBrown
+
