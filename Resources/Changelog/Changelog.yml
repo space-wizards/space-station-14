@@ -531,6 +531,7 @@ Entries:
 ﻿Entries:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> upstream/master
 - author: Plykiya
   changes:
@@ -853,6 +854,8 @@ Entries:
   id: 6726
   time: '2024-06-14T02:40:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27476
+=======
+>>>>>>> upstream/master
 - author: KyuPolaris
   changes:
   - message: Chickens now make a clucking sound when they speak.
@@ -4626,3 +4629,96 @@ Entries:
   id: 7213
   time: '2024-08-26T02:46:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30668
+- author: Moomoobeef
+  changes:
+  - message: Silicons like medbots, janibots, and honkbots now make sound when speaking.
+    type: Fix
+  id: 7214
+  time: '2024-08-26T09:09:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31471
+- author: Winkarst-cpu
+  changes:
+  - message: The color of the science radio channel was changed.
+    type: Tweak
+  id: 7215
+  time: '2024-08-26T12:02:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31319
+- author: slarticodefast
+  changes:
+  - message: Fixed energy sword visuals.
+    type: Fix
+  id: 7216
+  time: '2024-08-26T13:00:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31478
+- author: CuteBoi
+  changes:
+  - message: Replaced small fans on most shuttles with directional fans.
+    type: Fix
+  id: 7217
+  time: '2024-08-26T22:24:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31495
+- author: 12rabbits
+  changes:
+  - message: The guidebook now remembers where you left off when re-opened.
+    type: Tweak
+  id: 7218
+  time: '2024-08-26T23:06:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31375
+- author: Dimastra
+  changes:
+  - message: Fixed meat kudzu not dealing damage.
+    type: Fix
+  id: 7219
+  time: '2024-08-27T00:30:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31494
+- author: JIPDawg
+  changes:
+  - message: Gas miners are now indestructible, can be pulled and only anchored.
+    type: Tweak
+  id: 7220
+  time: '2024-08-27T00:48:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31370
+- author: SaphireLattice
+  changes:
+  - message: Safety Moth poster graphics for hardhats and pipes are no longer swapped
+      around
+    type: Fix
+  id: 7221
+  time: '2024-08-27T11:32:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31507
+- author: Winkarst-cpu
+  changes:
+  - message: Explosive ammunition is now marked as a contraband.
+    type: Fix
+  id: 7222
+  time: '2024-08-27T11:37:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31508
+- author: Winkarst-cpu
+  changes:
+  - message: Now the syndicate raid helmet is marked as a Syndicate contraband.
+    type: Fix
+  id: 7223
+  time: '2024-08-27T13:01:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31512
+- author: Winkarst-cpu
+  changes:
+  - message: The explorer gas mask is now restricted to the cargo.
+    type: Fix
+  id: 7224
+  time: '2024-08-27T13:19:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31514
+- author: Aeshus
+  changes:
+  - message: The Health Analyzer now displays the patient's picture, species, and
+      current status.
+    type: Add
+  id: 7225
+  time: '2024-08-27T14:57:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30834
+- author: Aeshus
+  changes:
+  - message: Cryosleep no longer gives arrival shuttle directions.
+    type: Fix
+  id: 7226
+  time: '2024-08-27T15:02:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30888
