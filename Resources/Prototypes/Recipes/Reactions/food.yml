@@ -73,6 +73,22 @@
       entity: FoodDoughTortilla
 
 - type: reaction
+  id: CreateDoughCotton
+  impact: Low
+  quantized: true
+  conserveEnergy: false
+  reactants:
+    Fiber:
+      amount: 10
+    Flour:
+      amount: 5
+    Water:
+      amount: 10
+  effects:
+  - !type:CreateEntityReactionEffect
+    entity: FoodDoughCotton
+
+- type: reaction
   id: CreateCakeBatter
   impact: Low
   quantized: true
@@ -83,6 +99,8 @@
     Egg:
       amount: 12
     Sugar:
+      amount: 5
+    Milk:
       amount: 5
   effects:
     - !type:CreateEntityReactionEffect
@@ -415,3 +433,14 @@
     Carbon: 1
     Water: 1
     Nitrogen: 2
+
+- type: reaction
+  id: ReduceMilk #makes Cream renewable
+  minTemp: 320
+  requiredMixerCategories:
+  - Shake
+  reactants:
+   Milk:
+    amount: 2
+  products:
+   Cream: 1

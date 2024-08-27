@@ -2,8 +2,8 @@
   id: Core
   mapName: 'Core'
   mapPath: /Maps/core.yml
-  minPlayers: 30
-  maxPlayers: 60
+  minPlayers: 35
+  maxPlayers: 70
   stations:
     Core:
       stationProto: StandardNanotrasenStation
@@ -37,7 +37,7 @@
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
             MedicalDoctor: [ 3, 4 ]
-            Chemist: [ 1, 2 ]
+            Chemist: [ 2, 2 ]
             MedicalIntern: [ 2, 2 ]
             Paramedic: [ 1, 2 ]
             #science

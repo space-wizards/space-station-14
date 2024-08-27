@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Power.Components;
@@ -46,6 +47,11 @@ namespace Content.Server.Power.EntitySystems
             _provQuery = GetEntityQuery<ApcPowerProviderComponent>();
         }
 
+        private void OnExamined(Entity<ApcPowerReceiverComponent> ent, ref ExaminedEvent args)
+        {
+            args.PushMarkup(GetExamineText(ent.Comp.Powered));
+        }
+
         private void OnGetVerbs(EntityUid uid, ApcPowerReceiverComponent component, GetVerbsEvent<Verb> args)
         {
             if (!_adminManager.HasAdminFlag(args.User, AdminFlags.Admin))
@@ -59,17 +65,6 @@ namespace Content.Server.Power.EntitySystems
                 Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")), // "smite" is a lightning bolt
                 Act = () => component.NeedsPower = !component.NeedsPower
             });
-        }
-
-        ///<summary>
-        ///Adds some markup to the examine text of whatever object is using this component to tell you if it's powered or not, even if it doesn't have an icon state to do this for you.
-        ///</summary>
-        private void OnExamined(EntityUid uid, ApcPowerReceiverComponent component, ExaminedEvent args)
-        {
-            args.PushMarkup(Loc.GetString("power-receiver-component-on-examine-main",
-                                            ("stateText", Loc.GetString( component.Powered
-                                                ? "power-receiver-component-on-examine-powered"
-                                                : "power-receiver-component-on-examine-unpowered"))));
         }
 
         private void OnProviderShutdown(EntityUid uid, ApcPowerProviderComponent component, ComponentShutdown args)
@@ -202,6 +197,18 @@ namespace Content.Server.Power.EntitySystems
         public void SetLoad(ApcPowerReceiverComponent comp, float load)
         {
             comp.Load = load;
+        }
+
+        public override bool ResolveApc(EntityUid entity, [NotNullWhen(true)] ref SharedApcPowerReceiverComponent? component)
+        {
+            if (component != null)
+                return true;
+
+            if (!TryComp(entity, out ApcPowerReceiverComponent? receiver))
+                return false;
+
+            component = receiver;
+            return true;
         }
     }
 }

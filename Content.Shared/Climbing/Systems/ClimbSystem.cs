@@ -1,5 +1,4 @@
 using Content.Shared.ActionBlocker;
-using Content.Shared.Body.Systems;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Climbing.Components;
 using Content.Shared.Climbing.Events;
@@ -15,6 +14,7 @@ using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
@@ -35,6 +35,7 @@ public sealed partial class ClimbSystem : VirtualController
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -44,6 +45,7 @@ public sealed partial class ClimbSystem : VirtualController
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
 
+    private EntityQuery<ClimbableComponent> _climbableQuery;
     private EntityQuery<FixturesComponent> _fixturesQuery;
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -51,6 +53,7 @@ public sealed partial class ClimbSystem : VirtualController
     {
         base.Initialize();
 
+        _climbableQuery = GetEntityQuery<ClimbableComponent>();
         _fixturesQuery = GetEntityQuery<FixturesComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
 
@@ -350,10 +353,37 @@ public sealed partial class ClimbSystem : VirtualController
     {
         if (args.OurFixtureId != ClimbingFixtureName
             || !component.IsClimbing
-            || component.NextTransition != null
-            || args.OurFixture.Contacts.Count > 1)
+            || component.NextTransition != null)
         {
             return;
+        }
+
+        if (args.OurFixture.Contacts.Count > 1)
+        {
+            foreach (var contact in args.OurFixture.Contacts.Values)
+            {
+                if (!contact.IsTouching)
+                    continue;
+
+                var otherEnt = contact.EntityA;
+                var otherFixture = contact.FixtureA;
+                var otherFixtureId = contact.FixtureAId;
+                if (uid == contact.EntityA)
+                {
+                    otherEnt = contact.EntityB;
+                    otherFixture = contact.FixtureB;
+                    otherFixtureId = contact.FixtureBId;
+                }
+
+                if (args.OtherEntity == otherEnt && args.OtherFixtureId == otherFixtureId)
+                    continue;
+
+                if (otherFixture is { Hard: true } &&
+                    _climbableQuery.HasComp(otherEnt))
+                {
+                    return;
+                }
+            }
         }
 
         foreach (var otherFixture in args.OurFixture.Contacts.Keys)
@@ -422,6 +452,12 @@ public sealed partial class ClimbSystem : VirtualController
             return false;
         }
 
+        if (_containers.IsEntityInContainer(user))
+        {
+            reason = Loc.GetString("comp-climbable-cant-reach");
+            return false;
+        }
+
         reason = string.Empty;
         return true;
     }
@@ -454,6 +490,12 @@ public sealed partial class ClimbSystem : VirtualController
 
         if (!_interactionSystem.InRangeUnobstructed(user, target, component.Range, predicate: Ignored)
             || !_interactionSystem.InRangeUnobstructed(user, dragged, component.Range, predicate: Ignored))
+        {
+            reason = Loc.GetString("comp-climbable-cant-reach");
+            return false;
+        }
+
+        if (_containers.IsEntityInContainer(user) || _containers.IsEntityInContainer(dragged))
         {
             reason = Loc.GetString("comp-climbable-cant-reach");
             return false;
