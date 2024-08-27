@@ -12,6 +12,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Voting;
 using Robust.Server;
+using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Utility;
@@ -78,7 +79,7 @@ namespace Content.Server.Voting
 
         private ISawmill _sawmill = default!;
 
-        private const int MaxArgCount = 10;
+        private const int MaxArgCount = 11;
 
         public override string Command => "customvote";
 
@@ -86,21 +87,28 @@ namespace Content.Server.Voting
         {
             _sawmill = Logger.GetSawmill("vote");
 
-            if (args.Length < 3 || args.Length > MaxArgCount)
+            if (args.Length < 4 || args.Length > MaxArgCount)
             {
-                shell.WriteError(Loc.GetString("shell-need-between-arguments",("lower", 3), ("upper", 10)));
+                shell.WriteError(Loc.GetString("shell-need-between-arguments",("lower", 4), ("upper", MaxArgCount)));
                 return;
             }
 
             var title = args[0];
 
+            if (!bool.TryParse(args[1], out var showVotes))
+            {
+                shell.WriteError(Loc.GetString("shell-argument-must-be-boolean"));
+                return;
+            }
+
             var options = new VoteOptions
             {
                 Title = title,
                 Duration = TimeSpan.FromSeconds(30),
+                ShowVotes = showVotes,
             };
 
-            for (var i = 1; i < args.Length; i++)
+            for (var i = 2; i < args.Length; i++)
             {
                 options.Options.Add((args[i], i));
             }
@@ -108,9 +116,9 @@ namespace Content.Server.Voting
             options.SetInitiatorOrServer(shell.Player);
 
             if (shell.Player != null)
-                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{shell.Player} initiated a custom vote: {options.Title} - {string.Join("; ", options.Options.Select(x => x.text))}");
+                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{shell.Player} initiated a custom vote: {options.Title}, - {string.Join("; ", options.Options.Select(x => x.text))} - show votes: {showVotes}");
             else
-                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Initiated a custom vote: {options.Title} - {string.Join("; ", options.Options.Select(x => x.text))}");
+                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Initiated a custom vote: {options.Title} - {string.Join("; ", options.Options.Select(x => x.text))} - show votes: {showVotes}");
 
             var vote = _voteManager.CreateVote(options);
 
@@ -143,6 +151,9 @@ namespace Content.Server.Voting
         {
             if (args.Length == 1)
                 return CompletionResult.FromHint(Loc.GetString("cmd-customvote-arg-title"));
+
+            if (args.Length == 2)
+                return CompletionResult.FromHintOptions(CompletionHelper.Booleans, Loc.GetString("cmd-customvote-arg-showvotes"));
 
             if (args.Length > MaxArgCount)
                 return CompletionResult.Empty;
@@ -187,7 +198,9 @@ namespace Content.Server.Voting
                     {
                         Title = voteOptions.InitiatorText,
                         Color = 13438992, // #CD1010
-                        Description = voteOptions.Title,
+                        Description = Loc.GetString("custom-vote-webhook-description",
+                                ("title", voteOptions.Title),
+                                ("showVotes", voteOptions.ShowVotes)),
                         Footer = new WebhookEmbedFooter
                         {
                             Text = Loc.GetString(

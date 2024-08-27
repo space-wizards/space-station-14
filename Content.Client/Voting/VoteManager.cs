@@ -155,7 +155,7 @@ namespace Content.Client.Voting
                 {
                     Entries = message.Options
                         .Select(c => new VoteEntry(c.name))
-                        .ToArray()
+                        .ToArray(),
                 };
 
                 existingVote = vote;
@@ -182,6 +182,7 @@ namespace Content.Client.Voting
             // It can't hurt to just re-set this stuff since I'm lazy and the server is sending it anyways, so...
             existingVote.Initiator = message.VoteInitiator;
             existingVote.Title = message.VoteTitle;
+            existingVote.ShowVotes = message.ShowVotes;
             existingVote.StartTime = _gameTiming.RealServerToLocal(message.StartTime);
             existingVote.EndTime = _gameTiming.RealServerToLocal(message.EndTime);
 
@@ -245,6 +246,7 @@ namespace Content.Client.Voting
             public string Initiator = "";
             public int? OurVote;
             public int Id;
+            public bool ShowVotes;
 
             public ActiveVote(int voteId)
             {

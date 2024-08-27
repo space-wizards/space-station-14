@@ -17,6 +17,7 @@ namespace Content.Shared.Voting
         public (ushort votes, string name)[] Options = default!;
         public bool IsYourVoteDirty;
         public byte? YourVote;
+        public bool ShowVotes;
 
         public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
         {
@@ -43,6 +44,8 @@ namespace Content.Shared.Voting
             {
                 YourVote = buffer.ReadBoolean() ? buffer.ReadByte() : null;
             }
+
+            ShowVotes = buffer.ReadBoolean();
         }
 
         public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
@@ -75,6 +78,7 @@ namespace Content.Shared.Voting
                     buffer.Write(YourVote.Value);
                 }
             }
+            buffer.Write(ShowVotes);
         }
 
         public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableOrdered;

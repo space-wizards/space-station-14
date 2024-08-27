@@ -57,7 +57,7 @@ namespace Content.Server.Voting.Managers
 
             var ghostVotePercentageRequirement = _cfg.GetCVar(CCVars.VoteRestartGhostPercentage);
             var ghostCount = 0;
-            
+
             foreach (var player in _playerManager.Sessions)
             {
                 _playerManager.UpdateState(player);
@@ -174,7 +174,8 @@ namespace Content.Server.Voting.Managers
                 Title = Loc.GetString("ui-vote-gamemode-title"),
                 Duration = alone
                     ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
-                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerPreset))
+                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerPreset)),
+                ShowVotes = false,
             };
 
             if (alone)
@@ -220,7 +221,8 @@ namespace Content.Server.Voting.Managers
                 Title = Loc.GetString("ui-vote-map-title"),
                 Duration = alone
                     ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
-                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerMap))
+                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerMap)),
+                ShowVotes = false,
             };
 
             if (alone)

@@ -55,7 +55,9 @@ namespace Content.Client.Voting.UI
             for (var i = 0; i < _voteButtons.Length; i++)
             {
                 var entry = _vote.Entries[i];
-                _voteButtons[i].Text = Loc.GetString("ui-vote-button", ("text", entry.Text), ("votes", entry.Votes));
+                _voteButtons[i].Text = _vote.ShowVotes
+                    ? Loc.GetString("ui-vote-button", ("text", entry.Text), ("votes", entry.Votes))
+                    : entry.Text; // There is no need to use Loc.GetString here because no formatting is needed.
 
                 if (_vote.OurVote == i)
                     _voteButtons[i].Pressed = true;

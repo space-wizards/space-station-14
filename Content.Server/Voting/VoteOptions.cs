@@ -34,6 +34,11 @@ namespace Content.Server.Voting
         public TimeSpan? InitiatorTimeout { get; set; }
 
         /// <summary>
+        /// Show the current number of votes in each of the options while the vote is ongoing.
+        /// </summary>
+        public bool ShowVotes { get; set; } = true;
+
+        /// <summary>
         ///     The options of the vote. Each entry is a tuple of the player-shown text,
         ///     and a data object that can be used to keep track of options later.
         /// </summary>
