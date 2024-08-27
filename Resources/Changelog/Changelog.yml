@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Doomsdrayk
-  changes:
-  - message: The Drozd and C-20r do not unwield on use again.
-    type: Fix
-  id: 6721
-  time: '2024-06-13T18:10:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28728
 - author: EmoGarbage404
   changes:
   - message: Fixed constructed items rotating strangely.
@@ -3863,3 +3856,11 @@
   id: 7220
   time: '2024-08-27T00:48:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31370
+- author: SaphireLattice
+  changes:
+  - message: Safety Moth poster graphics for hardhats and pipes are no longer swapped
+      around
+    type: Fix
+  id: 7221
+  time: '2024-08-27T11:32:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31507
