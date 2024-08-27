@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: osjarw
-  changes:
-  - message: Added context menu action for scanning artifacts.
-    type: Add
-  id: 6724
-  time: '2024-06-14T02:01:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26873
 - author: Cojoke-dot
   changes:
   - message: Lasers now pass over things unless clicked like projectiles
@@ -3864,3 +3857,10 @@
   id: 7223
   time: '2024-08-27T13:01:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31512
+- author: Winkarst-cpu
+  changes:
+  - message: The explorer gas mask is now restricted to the cargo.
+    type: Fix
+  id: 7224
+  time: '2024-08-27T13:19:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31514
