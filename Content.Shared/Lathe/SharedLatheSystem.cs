@@ -19,7 +19,7 @@ public abstract class SharedLatheSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
 
-    private readonly Dictionary<string, List<LatheRecipePrototype>> _inverseRecipeDictionary = new();
+    public readonly Dictionary<string, List<LatheRecipePrototype>> InverseRecipes = new();
 
     public override void Initialize()
     {
@@ -83,20 +83,20 @@ public abstract class SharedLatheSystem : EntitySystem
 
     private void BuildInverseRecipeDictionary()
     {
-        _inverseRecipeDictionary.Clear();
+        InverseRecipes.Clear();
         foreach (var latheRecipe in _proto.EnumeratePrototypes<LatheRecipePrototype>())
         {
             if (GetResult(latheRecipe) is not {} result)
                 continue;
 
-            _inverseRecipeDictionary.GetOrNew(result).Add(latheRecipe);
+            InverseRecipes.GetOrNew(result).Add(latheRecipe);
         }
     }
 
     public bool TryGetRecipesFromEntity(string prototype, [NotNullWhen(true)] out List<LatheRecipePrototype>? recipes)
     {
         recipes = new();
-        if (_inverseRecipeDictionary.TryGetValue(prototype, out var r))
+        if (InverseRecipes.TryGetValue(prototype, out var r))
             recipes.AddRange(r);
         return recipes.Count != 0;
     }
