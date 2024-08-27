@@ -95,7 +95,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
             return;
 
         // Handle singularities some admin smited into a locker.
-        if (_containerSystem.TryGetContainingContainer(uid, out var container, transform: xform)
+        if (_containerSystem.TryGetContainingContainer((uid, xform, null), out var container)
         && !AttemptConsumeEntity(uid, container.Owner, eventHorizon))
         {
             // Locker is indestructible. Consume everything else in the locker instead of magically teleporting out.
@@ -214,7 +214,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
                 if (_containerSystem.Insert(entity, target_container))
                     break;
 
-                _containerSystem.TryGetContainingContainer(target_container.Owner, out target_container);
+                _containerSystem.TryGetContainingContainer((target_container.Owner, null, null), out target_container);
             }
 
             // If we couldn't or there was no container to insert into just dump them to the map/grid.
@@ -470,7 +470,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     {
         var drop_container = args.Container;
         if (drop_container is null)
-            _containerSystem.TryGetContainingContainer(uid, out drop_container);
+            _containerSystem.TryGetContainingContainer((uid, null, null), out drop_container);
 
         foreach (var container in comp.GetAllContainers())
         {

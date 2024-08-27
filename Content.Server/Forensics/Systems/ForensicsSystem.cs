@@ -1,11 +1,16 @@
 using Content.Server.Body.Components;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics.Components;
 using Content.Server.Popups;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.DoAfter;
+using Content.Shared.Fluids.Components;
 using Content.Shared.Forensics;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -23,20 +28,35 @@ namespace Content.Server.Forensics
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+
         public override void Initialize()
         {
             SubscribeLocalEvent<FingerprintComponent, ContactInteractionEvent>(OnInteract);
             SubscribeLocalEvent<FingerprintComponent, MapInitEvent>(OnFingerprintInit);
             SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit);
 
-            SubscribeLocalEvent<DnaComponent, BeingGibbedEvent>(OnBeingGibbed);
+            SubscribeLocalEvent<ForensicsComponent, BeingGibbedEvent>(OnBeingGibbed);
             SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ForensicsComponent, GotRehydratedEvent>(OnRehydrated);
             SubscribeLocalEvent<CleansForensicsComponent, AfterInteractEvent>(OnAfterInteract, after: new[] { typeof(AbsorbentSystem) });
             SubscribeLocalEvent<ForensicsComponent, CleanForensicsDoAfterEvent>(OnCleanForensicsDoAfter);
             SubscribeLocalEvent<DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
+            SubscribeLocalEvent<DnaSubstanceTraceComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
             SubscribeLocalEvent<CleansForensicsComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
+        }
 
+        private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> ent, ref SolutionContainerChangedEvent ev)
+        {
+            var soln = GetSolutionsDNA(ev.Solution);
+            if (soln.Count > 0)
+            {
+                var comp = EnsureComp<ForensicsComponent>(ent.Owner);
+                foreach (string dna in soln)
+                {
+                    comp.DNAs.Add(dna);
+                }
+            }
         }
 
         private void OnInteract(EntityUid uid, FingerprintComponent component, ContactInteractionEvent args)
@@ -51,15 +71,26 @@ namespace Content.Server.Forensics
 
         private void OnDNAInit(EntityUid uid, DnaComponent component, MapInitEvent args)
         {
-            component.DNA = GenerateDNA();
+            if (component.DNA == String.Empty)
+            {
+                component.DNA = GenerateDNA();
+
+                var ev = new GenerateDnaEvent { Owner = uid, DNA = component.DNA };
+                RaiseLocalEvent(uid, ref ev);
+            }
         }
 
-        private void OnBeingGibbed(EntityUid uid, DnaComponent component, BeingGibbedEvent args)
+        private void OnBeingGibbed(EntityUid uid, ForensicsComponent component, BeingGibbedEvent args)
         {
+            string dna = Loc.GetString("forensics-dna-unknown");
+
+            if (TryComp(uid, out DnaComponent? dnaComp))
+                dna = dnaComp.DNA;
+
             foreach (EntityUid part in args.GibbedParts)
             {
                 var partComp = EnsureComp<ForensicsComponent>(part);
-                partComp.DNAs.Add(component.DNA);
+                partComp.DNAs.Add(dna);
                 partComp.CanDnaBeCleaned = false;
             }
         }
@@ -106,6 +137,34 @@ namespace Content.Server.Forensics
             }
         }
 
+        public List<string> GetSolutionsDNA(EntityUid uid)
+        {
+            List<string> list = new();
+            if (TryComp<SolutionContainerManagerComponent>(uid, out var comp))
+            {
+                foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, comp)))
+                {
+                    list.AddRange(GetSolutionsDNA(soln.Comp.Solution));
+                }
+            }
+            return list;
+        }
+
+        public List<string> GetSolutionsDNA(Solution soln)
+        {
+            List<string> list = new();
+            foreach (var reagent in soln.Contents)
+            {
+                foreach (var data in reagent.Reagent.EnsureReagentData())
+                {
+                    if (data is DnaData)
+                    {
+                        list.Add(((DnaData) data).DNA);
+                    }
+                }
+            }
+            return list;
+        }
         private void OnAfterInteract(Entity<CleansForensicsComponent> cleanForensicsEntity, ref AfterInteractEvent args)
         {
             if (args.Handled || !args.CanReach || args.Target == null)
@@ -159,7 +218,6 @@ namespace Content.Server.Forensics
                 var cleanDelay = cleanForensicsEntity.Comp.CleanDelay;
                 var doAfterArgs = new DoAfterArgs(EntityManager, user, cleanDelay, new CleanForensicsDoAfterEvent(), cleanForensicsEntity, target: target, used: cleanForensicsEntity)
                 {
-                    BreakOnHandChange = true,
                     NeedHand = true,
                     BreakOnDamage = true,
                     BreakOnMove = true,

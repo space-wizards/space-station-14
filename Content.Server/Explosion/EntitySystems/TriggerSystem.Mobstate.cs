@@ -38,16 +38,20 @@ public sealed partial class TriggerSystem
             Trigger(uid);
     }
 
+    /// <summary>
+    /// Checks if the user has any implants that prevent suicide to avoid some cheesy strategies
+    /// Prevents suicide by handling the event without killing the user
+    /// </summary>
     private void OnSuicide(EntityUid uid, TriggerOnMobstateChangeComponent component, SuicideEvent args)
     {
         if (args.Handled)
             return;
 
-        if (component.PreventSuicide)
-        {
-            _popupSystem.PopupEntity(Loc.GetString("suicide-prevented"), args.Victim, args.Victim);
-            args.BlockSuicideAttempt(component.PreventSuicide);
-        }
+        if (!component.PreventSuicide)
+            return;
+
+        _popupSystem.PopupEntity(Loc.GetString("suicide-prevented"), args.Victim, args.Victim);
+        args.Handled = true;
     }
 
     private void OnSuicideRelay(EntityUid uid, TriggerOnMobstateChangeComponent component, ImplantRelayEvent<SuicideEvent> args)

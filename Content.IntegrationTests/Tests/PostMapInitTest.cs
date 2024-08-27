@@ -49,21 +49,18 @@ namespace Content.IntegrationTests.Tests
             "Fland",
             "Meta",
             "Packed",
-            "Cluster",
             "Omega",
             "Bagel",
-            "Origin",
             "CentComm",
             "Box",
-            "Europa",
-            "Saltern",
             "Core",
             "Marathon",
             "MeteorArena",
-            "Atlas",
+            "Saltern",
             "Reach",
             "Train",
-            "Oasis"
+            "Oasis",
+            "Cog"
         };
 
         /// <summary>

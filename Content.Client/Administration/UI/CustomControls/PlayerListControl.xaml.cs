@@ -21,11 +21,11 @@ public sealed partial class PlayerListControl : BoxContainer
 
     private readonly IEntityManager _entManager;
     private readonly IUserInterfaceManager _uiManager;
-    
+
     private PlayerInfo? _selectedPlayer;
 
     private List<PlayerInfo> _playerList = new();
-    private readonly List<PlayerInfo> _sortedPlayerList = new();
+    private List<PlayerInfo> _sortedPlayerList = new();
 
     public Comparison<PlayerInfo>? Comparison;
     public Func<PlayerInfo, string, string>? OverrideText;
@@ -110,19 +110,30 @@ public sealed partial class PlayerListControl : BoxContainer
         if (Comparison != null)
             _sortedPlayerList.Sort((a, b) => Comparison(a, b));
 
-        // Ensure pinned players are always at the top
-        _sortedPlayerList.Sort((a, b) => a.IsPinned != b.IsPinned && a.IsPinned ? -1 : 1);
-
         PlayerListContainer.PopulateList(_sortedPlayerList.Select(info => new PlayerListData(info)).ToList());
         if (_selectedPlayer != null)
             PlayerListContainer.Select(new PlayerListData(_selectedPlayer));
     }
 
+
     public void PopulateList(IReadOnlyList<PlayerInfo>? players = null)
     {
+        // Maintain existing pin statuses
+        var pinnedPlayers = _playerList.Where(p => p.IsPinned).ToDictionary(p => p.SessionId);
+
         players ??= _adminSystem.PlayerList;
 
         _playerList = players.ToList();
+
+        // Restore pin statuses
+        foreach (var player in _playerList)
+        {
+            if (pinnedPlayers.TryGetValue(player.SessionId, out var pinnedPlayer))
+            {
+                player.IsPinned = pinnedPlayer.IsPinned;
+            }
+        }
+
         if (_selectedPlayer != null && !_playerList.Contains(_selectedPlayer))
             _selectedPlayer = null;
 
