@@ -59,18 +59,6 @@ public sealed partial class ClothingComponent : Component
     [DataField("sprite")]
     public string? RsiPath;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("maleMask")]
-    public ClothingMask MaleMask = ClothingMask.UniformFull;
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("femaleMask")]
-    public ClothingMask FemaleMask = ClothingMask.UniformFull;
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("unisexMask")]
-    public ClothingMask UnisexMask = ClothingMask.UniformFull;
-
     /// <summary>
     /// Name of the inventory slot the clothing is in.
     /// </summary>
@@ -81,6 +69,13 @@ public sealed partial class ClothingComponent : Component
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan UnequipDelay = TimeSpan.Zero;
+
+    /// <summary>
+    /// Offset for the strip time for an entity with this component.
+    /// Only applied when it is being equipped or removed by another player.
+    /// </summary>
+    [DataField]
+    public TimeSpan StripDelay = TimeSpan.Zero;
 }
 
 [Serializable, NetSerializable]

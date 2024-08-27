@@ -1,0 +1,363 @@
+- type: latheRecipe
+  id: FloorTileItemDark
+  result: FloorTileItemDark
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemDarkDiagonalMini
+  result: FloorTileItemDarkDiagonalMini
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemDarkDiagonal
+  result: FloorTileItemDarkDiagonal
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemDarkHerringbone
+  result: FloorTileItemDarkHerringbone
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemDarkMini
+  result: FloorTileItemDarkMini
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemDarkMono
+  result: FloorTileItemDarkMono
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemDarkPavement
+  result: FloorTileItemDarkPavement
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemDarkPavementVertical
+  result: FloorTileItemDarkPavementVertical
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemDarkOffset
+  result: FloorTileItemDarkOffset
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemSteelCheckerDark
+  result: FloorTileItemSteelCheckerDark
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemSteel
+  result: FloorTileItemSteel
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemSteelOffset
+  result: FloorTileItemSteelOffset
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemSteelDiagonalMini
+  result: FloorTileItemSteelDiagonalMini
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemSteelDiagonal
+  result: FloorTileItemSteelDiagonal
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemSteelHerringbone
+  result: FloorTileItemSteelHerringbone
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemSteelMini
+  result: FloorTileItemSteelMini
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemSteelMono
+  result: FloorTileItemSteelMono
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemSteelPavement
+  result: FloorTileItemSteelPavement
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemSteelPavementVertical
+  result: FloorTileItemSteelPavementVertical
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemWhite
+  result: FloorTileItemWhite
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemWhiteOffset
+  result: FloorTileItemWhiteOffset
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemWhiteDiagonalMini
+  result: FloorTileItemWhiteDiagonalMini
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemWhiteDiagonal
+  result: FloorTileItemWhiteDiagonal
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemWhiteHerringbone
+  result: FloorTileItemWhiteHerringbone
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemWhiteMini
+  result: FloorTileItemWhiteMini
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemWhiteMono
+  result: FloorTileItemWhiteMono
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemWhitePavement
+  result: FloorTileItemWhitePavement
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemWhitePavementVertical
+  result: FloorTileItemWhitePavementVertical
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemSteelCheckerLight
+  result: FloorTileItemSteelCheckerLight
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+# Other steel
+- type: latheRecipe
+  id: FloorTileItemGratingMaint
+  result: FloorTileItemGratingMaint
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemTechmaint
+  result: FloorTileItemTechmaint
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  id: FloorTileItemSteelMaint
+  result: FloorTileItemSteelMaint
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+
+# Wood
+- type: latheRecipe
+  id: FloorTileItemWood
+  result: FloorTileItemWood
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodLarge
+  result: FloorTileItemWoodLarge
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+- type: latheRecipe
+  id: FloorTileItemWoodPattern
+  result: FloorTileItemWoodPattern
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Wood: 25
+
+# Concrete
+- type: latheRecipe
+  id: FloorTileItemConcrete
+  result: FloorTileItemConcrete
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+    Plastic: 25
+
+- type: latheRecipe
+  id: FloorTileItemConcreteMono
+  result: FloorTileItemConcreteMono
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+    Plastic: 25
+
+- type: latheRecipe
+  id: FloorTileItemConcreteSmooth
+  result: FloorTileItemConcreteSmooth
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+    Plastic: 25
+
+- type: latheRecipe
+  id: FloorTileItemGrayConcrete
+  result: FloorTileItemGrayConcrete
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+    Plastic: 25
+
+- type: latheRecipe
+  id: FloorTileItemGrayConcreteMono
+  result: FloorTileItemGrayConcreteMono
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+    Plastic: 25
+
+- type: latheRecipe
+  id: FloorTileItemGrayConcreteSmooth
+  result: FloorTileItemGrayConcreteSmooth
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+    Plastic: 25
+
+- type: latheRecipe
+  id: FloorTileItemOldConcrete
+  result: FloorTileItemOldConcrete
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+    Plastic: 25
+
+- type: latheRecipe
+  id: FloorTileItemOldConcreteMono
+  result: FloorTileItemOldConcreteMono
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+    Plastic: 25
+
+- type: latheRecipe
+  id: FloorTileItemOldConcreteSmooth
+  result: FloorTileItemOldConcreteSmooth
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
+    Plastic: 25

@@ -4,6 +4,7 @@
   name: camera
   description: A surveillance camera. It's watching you. Kinda.
   components:
+  - type: StationAiVision
   - type: Clickable
   - type: InteractionOutline
   - type: Construction

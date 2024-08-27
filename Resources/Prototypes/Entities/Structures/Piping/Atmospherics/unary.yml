@@ -55,6 +55,7 @@
             In: { state: vent_in }
             Out: { state: vent_out }
             Welded: { state: vent_welded }
+            Lockout: { state: vent_lockout }
     - type: GasVentPump
     - type: Construction
       graph: GasUnary
@@ -76,7 +77,6 @@
   placement:
     mode: SnapgridCenter
   components:
-    # TODO ATMOS: Find sprite for this.
     - type: Sprite
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
@@ -84,7 +84,7 @@
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeHalf
           map: [ "enum.PipeVisualLayers.Pipe" ]
-        - state: vent_off
+        - state: vent_passive
           map: [ "enum.SubfloorLayers.FirstLayer" ]
     - type: Appearance
     - type: PipeColorVisuals

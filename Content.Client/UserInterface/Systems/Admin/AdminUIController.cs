@@ -230,7 +230,7 @@ public sealed class AdminUIController : UIController,
 
         if (function == EngineKeyFunctions.UIClick)
             _conHost.ExecuteCommand($"vv {uid}");
-        else if (function == EngineKeyFunctions.UseSecondary)
+        else if (function == EngineKeyFunctions.UIRightClick)
             _verb.OpenVerbMenu(uid, true);
         else
             return;

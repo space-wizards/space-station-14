@@ -103,6 +103,13 @@ namespace Content.Server.DeviceNetwork.Components
         public bool SendBroadcastAttemptEvent = false;
 
         /// <summary>
+        ///     Whether this device's address can be saved to device-lists
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("savableAddress")]
+        public bool SavableAddress = true;
+
+        /// <summary>
         ///     A list of device-lists that this device is on.
         /// </summary>
         [DataField]

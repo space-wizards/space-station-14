@@ -55,8 +55,10 @@
   - type: ItemToggleSize
     activatedSize: Large
   - type: ItemToggleHot
-  - type: ItemToggleDisarmMalus
-    activatedDisarmMalus: 0.6
+  - type: ComponentToggler
+    components:
+    - type: DisarmMalus
+      malus: 0.6
   - type: ToggleableLightVisuals
     spriteLayer: flame
     inhandVisuals:
