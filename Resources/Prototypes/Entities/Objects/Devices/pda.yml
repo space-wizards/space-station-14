@@ -358,6 +358,21 @@
 
 - type: entity
   parent: BasePDA
+  id: SeniorCargoPDA
+  name: senior cargo PDA
+  description: Lovingly crafted for the raccoons in cargo.
+  components:
+  - type: Pda
+    id: SeniorCargoIDCard
+    state: pda-seniorcargo
+  - type: PdaBorderColor
+    borderColor: "#E39751"
+    accentVColor: "#FF9500"
+  - type: Icon
+    state: pda-seniorcargo
+
+- type: entity
+  parent: BasePDA
   id: SalvagePDA
   name: salvage PDA
   description: Smells like ash.
