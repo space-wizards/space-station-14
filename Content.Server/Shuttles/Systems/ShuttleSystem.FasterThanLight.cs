@@ -187,6 +187,11 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public bool TryAddFTLDestination(MapId mapId, bool enabled, [NotNullWhen(true)] out FTLDestinationComponent? component)
     {
+        return TryAddFTLDestination(mapId, enabled, true, false, out component);
+    }
+
+    public bool TryAddFTLDestination(MapId mapId, bool enabled, bool requireDisk, bool beaconsOnly, [NotNullWhen(true)] out FTLDestinationComponent? component)
+    {
         var mapUid = _mapSystem.GetMapOrInvalid(mapId);
         component = null;
 
@@ -195,10 +200,13 @@ public sealed partial class ShuttleSystem
 
         component = EnsureComp<FTLDestinationComponent>(mapUid);
 
-        if (component.Enabled == enabled)
+        if (component.Enabled == enabled && component.RequireCoordinateDisk == requireDisk && component.BeaconsOnly == beaconsOnly)
             return true;
 
         component.Enabled = enabled;
+        component.RequireCoordinateDisk = requireDisk;
+        component.BeaconsOnly = beaconsOnly;
+
         _console.RefreshShuttleConsoles();
         Dirty(mapUid, component);
         return true;
