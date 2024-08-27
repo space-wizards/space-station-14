@@ -850,47 +850,55 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -0.5,9.5
       parent: 670
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
-  - uid: 640
+  - uid: 231
     components:
     - type: Transform
-      pos: -7.5,-2.5
-      parent: 670
-  - uid: 641
-    components:
-    - type: Transform
+      rot: -1.5707963267948966 rad
       pos: -7.5,-0.5
       parent: 670
-  - uid: 642
+  - uid: 232
     components:
     - type: Transform
-      pos: 2.5,-2.5
+      rot: -1.5707963267948966 rad
+      pos: -7.5,-2.5
       parent: 670
-  - uid: 643
+  - uid: 234
     components:
     - type: Transform
-      pos: 2.5,-0.5
-      parent: 670
-  - uid: 644
-    components:
-    - type: Transform
-      pos: 2.5,5.5
-      parent: 670
-  - uid: 645
-    components:
-    - type: Transform
-      pos: 2.5,7.5
-      parent: 670
-  - uid: 646
-    components:
-    - type: Transform
+      rot: -1.5707963267948966 rad
       pos: -7.5,7.5
       parent: 670
-  - uid: 647
+  - uid: 240
     components:
     - type: Transform
+      rot: -1.5707963267948966 rad
       pos: -7.5,5.5
+      parent: 670
+  - uid: 241
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 2.5,7.5
+      parent: 670
+  - uid: 242
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 2.5,5.5
+      parent: 670
+  - uid: 264
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 2.5,-0.5
+      parent: 670
+  - uid: 270
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 2.5,-2.5
       parent: 670
 - proto: BedsheetMedical
   entities:
