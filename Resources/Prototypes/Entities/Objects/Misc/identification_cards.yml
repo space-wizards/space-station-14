@@ -205,6 +205,16 @@
     job: CargoTechnician
 
 - type: entity
+  parent: CargoIDCard
+  id: SeniorCargoIDCard
+  name: senior cargo ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idseniorcargo
+
+- type: entity
   parent: IDCardStandard
   id: SalvageIDCard
   name: salvage ID card
