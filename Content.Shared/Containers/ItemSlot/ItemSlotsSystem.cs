@@ -245,7 +245,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// </summary>
         /// <param name="excludeUserAudio">If true, will exclude the user when playing sound. Does nothing client-side.
         /// Useful for predicted interactions</param>
-        private void Insert(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
+        private void Insert(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = true)
         {
             bool? inserted = slot.ContainerSlot != null ? _containers.Insert(item, slot.ContainerSlot) : null;
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
@@ -300,7 +300,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Tries to insert item into a specific slot.
         /// </summary>
         /// <returns>False if failed to insert item</returns>
-        public bool TryInsert(EntityUid uid, string id, EntityUid item, EntityUid? user, ItemSlotsComponent? itemSlots = null, bool excludeUserAudio = false)
+        public bool TryInsert(EntityUid uid, string id, EntityUid item, EntityUid? user, ItemSlotsComponent? itemSlots = null, bool excludeUserAudio = true)
         {
             if (!Resolve(uid, ref itemSlots))
                 return false;
@@ -315,7 +315,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Tries to insert item into a specific slot.
         /// </summary>
         /// <returns>False if failed to insert item</returns>
-        public bool TryInsert(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
+        public bool TryInsert(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = true)
         {
             if (!CanInsert(uid, item, user, slot))
                 return false;
@@ -329,7 +329,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Does not check action blockers.
         /// </summary>
         /// <returns>False if failed to insert item</returns>
-        public bool TryInsertFromHand(EntityUid uid, ItemSlot slot, EntityUid user, HandsComponent? hands = null, bool excludeUserAudio = false)
+        public bool TryInsertFromHand(EntityUid uid, ItemSlot slot, EntityUid user, HandsComponent? hands = null, bool excludeUserAudio = true)
         {
             if (!Resolve(user, ref hands, false))
                 return false;
@@ -359,7 +359,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Useful for predicted interactions
         /// </param>
         /// <returns>False if failed to insert item</returns>
-        public bool TryInsertEmpty(Entity<ItemSlotsComponent?> ent, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
+        public bool TryInsertEmpty(Entity<ItemSlotsComponent?> ent, EntityUid item, EntityUid? user, bool excludeUserAudio = true)
         {
             if (!Resolve(ent, ref ent.Comp, false))
                 return false;
@@ -443,7 +443,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// </summary>
         /// <param name="excludeUserAudio">If true, will exclude the user when playing sound. Does nothing client-side.
         /// Useful for predicted interactions</param>
-        private void Eject(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
+        private void Eject(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = true)
         {
             bool? ejected = slot.ContainerSlot != null ? _containers.Remove(item, slot.ContainerSlot) : null;
             // ContainerSlot automatically raises a directed EntRemovedFromContainerMessage
@@ -459,7 +459,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Try to eject an item from a slot.
         /// </summary>
         /// <returns>False if item slot is locked or has no item inserted</returns>
-        public bool TryEject(EntityUid uid, ItemSlot slot, EntityUid? user, [NotNullWhen(true)] out EntityUid? item, bool excludeUserAudio = false)
+        public bool TryEject(EntityUid uid, ItemSlot slot, EntityUid? user, [NotNullWhen(true)] out EntityUid? item, bool excludeUserAudio = true)
         {
             item = null;
 
@@ -482,7 +482,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// </summary>
         /// <returns>False if the id is not valid, the item slot is locked, or it has no item inserted</returns>
         public bool TryEject(EntityUid uid, string id, EntityUid? user,
-            [NotNullWhen(true)] out EntityUid? item, ItemSlotsComponent? itemSlots = null, bool excludeUserAudio = false)
+            [NotNullWhen(true)] out EntityUid? item, ItemSlotsComponent? itemSlots = null, bool excludeUserAudio = true)
         {
             item = null;
 
@@ -503,7 +503,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     False if the id is not valid, the item slot is locked, or it has no item inserted. True otherwise, even
         ///     if the user has no hands.
         /// </returns>
-        public bool TryEjectToHands(EntityUid uid, ItemSlot slot, EntityUid? user, bool excludeUserAudio = false)
+        public bool TryEjectToHands(EntityUid uid, ItemSlot slot, EntityUid? user, bool excludeUserAudio = true)
         {
             if (!TryEject(uid, slot, user, out var item, excludeUserAudio))
                 return false;
