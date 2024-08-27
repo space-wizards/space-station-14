@@ -630,6 +630,8 @@
   name: loadout-group-salvage-specialist-neck
   loadouts:
   - MinerCloak
+  - Mantle
+  - BrownScarf
 
 - type: loadoutGroup
   id: SalvageSpecialistBackpack
