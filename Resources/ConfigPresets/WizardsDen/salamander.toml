@@ -10,7 +10,7 @@ rules_file = "MRPRuleset"
 
 [whitelist]
 enabled = true
-prototypeList = "salamanderMrpWhitelist"
+prototype_list = "salamanderMrpWhitelist"
 
 [shuttle]
 emergency_early_launch_allowed = true
