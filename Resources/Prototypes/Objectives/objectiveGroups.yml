@@ -28,7 +28,7 @@
   weights:
     KillRandomPersonObjective: 1
     KillRandomHeadObjective: 0.25
-    KillRandomTraitorObjective: 0.2
+    KillRandomTraitorObjective: 0.15
 
 - type: weightedRandom
   id: TraitorObjectiveGroupState
