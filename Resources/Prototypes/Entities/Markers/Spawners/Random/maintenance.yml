@@ -160,6 +160,7 @@
       - id: CigarGold
       - id: ClothingUniformJumpsuitFamilyGuy
       - id: WristwatchGold
+      - id: RubberStampGreytide
 
 - type: entityTable
   id: MaintToolsTable
