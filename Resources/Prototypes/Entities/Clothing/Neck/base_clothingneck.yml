@@ -16,9 +16,9 @@
     spawned:
     - id: MaterialCloth1
       amount: 2
-  - type: PhysicalComposition # 75% of amount cloth on buthering
+  - type: PhysicalComposition # 50% of amount cloth on buthering
     materialComposition:
-      Cloth: 150
+      Cloth: 100
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager

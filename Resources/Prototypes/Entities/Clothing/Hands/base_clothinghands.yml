@@ -38,9 +38,9 @@
     spawned:
     - id: MaterialCloth1
       amount: 1
-  - type: PhysicalComposition # 75% of amount cloth on buthering
+  - type: PhysicalComposition # 50% of amount cloth on buthering
     materialComposition:
-      Cloth: 75
+      Cloth: 50
 
 # gloves that cover the fingertips and have synthetic fibers
 - type: entity
