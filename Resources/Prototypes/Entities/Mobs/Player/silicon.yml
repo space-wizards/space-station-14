@@ -17,8 +17,16 @@
     - Service
     - Supply
   - type: ActiveRadio
-    receiveAllChannels: true
-    globalReceive: true
+    channels:
+    - Binary
+    - Common
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
   - type: IgnoreUIRange
   - type: StationAiHeld
   - type: StationAiOverlay
@@ -232,6 +240,7 @@
   suffix: Job spawn
   components:
   - type: ContainerSpawnPoint
+    spawnType: Job
     containerId: station_ai_mind_slot
     job: StationAi
   - type: Sprite
